@@ -1,0 +1,6 @@
+bin\Debug\Window.exe
+bin\Debug\Window.pdb
+bin\Debug\OpenGL.dll
+bin\Debug\OpenGL.pdb
+..\Binaries\Debug\Window.exe
+..\Binaries\Debug\Window.pdb

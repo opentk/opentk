@@ -1,0 +1,6 @@
+bin\Release\OpenGL.dll
+bin\Release\OpenGL.pdb
+bin\Debug\OpenGL.dll
+bin\Debug\OpenGL.pdb
+..\Binaries\Debug\OpenGL.dll
+..\Binaries\Debug\OpenGL.pdb

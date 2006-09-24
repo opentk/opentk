@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OpenTK.OpenGL.Bind.Properties" GeneratedClassName="Bind">
+  <Profiles />
+  <Settings>
+    <Setting Name="OutputGLClass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">GL</Value>
+    </Setting>
+    <Setting Name="OutputNamespace" Type="System.String" Scope="User">
+      <Value Profile="(Default)">OpenTK.OpenGL</Value>
+    </Setting>
+    <Setting Name="OutputPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\Source\OpenGL\OpenGL\Bindings</Value>
+    </Setting>
+    <Setting Name="InputPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\Specifications</Value>
+    </Setting>
+    <Setting Name="OutputPlatformNamespace" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Platform</Value>
+    </Setting>
+    <Setting Name="WriteInternalImportsClass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Imports</Value>
+    </Setting>
+    <Setting Name="OutputEnumsClass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Enums</Value>
+    </Setting>
+    <Setting Name="OutputContextClass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Context</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
