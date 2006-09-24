@@ -1,0 +1,3 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\OpenTK.OpenGL.Examples.Window.Properties.Resources.resources
+obj\Debug\OpenTK.OpenGL.Window.csproj.GenerateResource.Cache

@@ -1,0 +1,3 @@
+..\..\Binaries\Debug\OpenTK.OpenGL.Bind.exe.config
+..\..\Binaries\Debug\OpenTK.OpenGL.Bind.exe
+..\..\Binaries\Debug\OpenTK.OpenGL.Bind.pdb
