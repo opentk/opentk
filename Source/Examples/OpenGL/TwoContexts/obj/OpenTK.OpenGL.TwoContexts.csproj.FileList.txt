@@ -1,4 +1,0 @@
-obj\Debug\ResolveAssemblyReference.cache
-obj\Debug\OpenTK.OpenGL.Examples.TwoContexts.Properties.Resources.resources
-obj\Debug\OpenTK.OpenGL.Test.TwoContexts.resources
-obj\Debug\OpenTK.OpenGL.TwoContexts.csproj.GenerateResource.Cache

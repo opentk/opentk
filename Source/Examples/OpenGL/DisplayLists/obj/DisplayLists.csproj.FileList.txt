@@ -1,4 +1,0 @@
-bin\Debug\DisplayLists.exe
-bin\Debug\DisplayLists.pdb
-bin\Debug\OpenGL.dll
-bin\Debug\OpenGL.pdb

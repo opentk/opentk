@@ -1,4 +1,0 @@
-..\Binaries\Debug\Bind.exe.config
-$(SolutionDir)Binaries\Debug\Bind.exe.config
-$(SolutionDir)Binaries\Debug\Bind.exe
-$(SolutionDir)Binaries\Debug\Bind.pdb
