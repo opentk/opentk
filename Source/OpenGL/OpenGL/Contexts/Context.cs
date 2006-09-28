@@ -19,8 +19,7 @@ namespace OpenTK.OpenGL
         public abstract System.Delegate GetAddress(string function_string, Type function_type);
         public abstract void MakeCurrent();
 
-        public abstract void Load();
-        public abstract void LoadExtensions();
+        //public abstract void LoadExtensions();
 
         public abstract void Dispose();
 

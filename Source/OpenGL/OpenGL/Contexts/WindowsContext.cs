@@ -97,8 +97,8 @@ namespace OpenTK.OpenGL.Platform
 
             Load();
 
-            if (load_extensions)
-                LoadExtensions();
+            //if (load_extensions)
+            //    LoadExtensions();
         }
 
         public override void SwapBuffers()

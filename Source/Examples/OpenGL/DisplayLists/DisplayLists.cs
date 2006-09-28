@@ -15,7 +15,7 @@ namespace OpenTK.OpenGL.Test
     public partial class DisplayLists : Form
     {
         Context context;
-        uint[] lists = new uint[2];
+        int[] lists = new int[2];
 
         public DisplayLists()
         {
