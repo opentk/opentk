@@ -1,5 +1,0 @@
-obj\Debug\OpenGL.dll
-obj\Debug\OpenGL.pdb
-..\..\Binaries\Debug\OpenGL.dll
-..\..\Binaries\Debug\OpenGL.pdb
-obj\Debug\ResolveAssemblyReference.cache
