@@ -42,13 +42,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Glu.cs" />
-    <Compile Include="Bindings\GLConstants.cs" />
-    <Compile Include="Bindings\GLFunctions.cs" />
-    <Compile Include="Bindings\GLWrappers.cs" />
+    <Compile Include="Bindings\ContextLoad.cs" />
+    <Compile Include="Bindings\GL.cs" />
     <Compile Include="Bindings\WindowsContextLoad.cs" />
     <Compile Include="Bindings\WindowsVistaContextLoad.cs" />
     <Compile Include="Bindings\X11ContextLoad.cs" />
+    <Compile Include="Glu.cs" />
     <Compile Include="Contexts\Context.cs" />
     <Compile Include="Contexts\WindowsContext.cs" />
     <Compile Include="Contexts\WindowsVistaContext.cs" />

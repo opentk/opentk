@@ -1,0 +1,13 @@
+Todo:
++ Add more examples (e.g. the GLSL example I wrote, some of kanato's examples etc).
++ Change the hierarchy of the WindowsContext and WindowsVistaContext classes. The should have a common ancestor who manages the windows creation (it should be the same for both).
++ Add more constructors to the WindowsContext classes. This probably needs updating of the WinAPI assembly.
++ Add X11Context constructors.
++ Find out what is needed for the MacOS platform (how to do function loading and window management without X11).
++ Add full bindings to Glu, Wgl, Glx and Agl.
++ Add the Math module.
++ Research and add the Input module.
++ Review and add the timer module.
++ Review and add the OpenAL module.
++ Add projects for MonoDevelop.
++ See if using Nant for building is a good idea.

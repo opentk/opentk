@@ -1,0 +1,5 @@
+OpenTK 0.3.0 -> 0.3.1
++ Updated the binding generator to version 0.7.4, based on the work done for Tao.
++ Updated the Context load functions. Now Context loads all functions are extensions, and the derived classes override this behavior as needed.
++ Changed the uint array used in the DisplayLists example to an int array.
++ Added the changelog! :)

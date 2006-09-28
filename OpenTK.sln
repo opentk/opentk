@@ -3,15 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{80BD2C66-A90B-42E7-BED8-CBF7BB8C2E3F}"
 	ProjectSection(SolutionItems) = preProject
+		changelog.txt = changelog.txt
 		license.txt = license.txt
+		Todo.txt = Todo.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specifications", "Specifications", "{B23A6DCD-9FE9-4523-95FB-01C8D4631555}"
 	ProjectSection(SolutionItems) = preProject
+		Specifications\cs_types.txt = Specifications\cs_types.txt
 		Specifications\enum.spec = Specifications\enum.spec
 		Specifications\enumext.spec = Specifications\enumext.spec
 		Specifications\gl.spec = Specifications\gl.spec
-		Specifications\TypeMap.txt = Specifications\TypeMap.txt
+		Specifications\gl_types.txt = Specifications\gl_types.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{E9FF51BB-295E-4891-AA30-D1374F26DCE0}"
