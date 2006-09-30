@@ -246,6 +246,10 @@ namespace OpenTK.OpenGL.Bind
                     p.Type = "Enums." + p.Type;
                     continue;
                 }
+                else if (p.Type == "GLenum")
+                {
+                    p.Type = "Enums." + f.Category;
+                }
                 else if (GLtypes.TryGetValue(p.Type, out s))
                     p.Type = s;
 

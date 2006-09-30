@@ -14,6 +14,18 @@ namespace OpenTK.OpenGL.Bind
     /// </summary>
     public class Function
     {
+        #region Category property
+
+        private string _category;
+
+        public string Category
+        {
+            get { return _category; }
+            set { _category = value; }
+        }
+
+        #endregion
+
         #region Wrapper type property
 
         private WrapperTypes _wrapper_type = WrapperTypes.None;

@@ -10,6 +10,8 @@ OpenTK 0.3.1 -> 0.3.2
 + + Added the PreviousType property to the Function class. This is used when generating wrappers for functions with type-checked arrays (e.g. float[] arrays etc).
 + + Corrected some type aliases in cs_types.txt
 + + Added the missing wrappers for glReadPixels! (this falls in the out void array).
++ + A missing enum now defaults to Enum.[Function category] (a new property was added to the Function class and the SpecReader.ReadFunctions function was modified). I should test this to see if it works ok.
++ Added the GLSL.Lesson01 example.
 
 OpenTK 0.3.0 -> 0.3.1
 + Updated the binding generator to version 0.7.4, based on the work done for Tao.
