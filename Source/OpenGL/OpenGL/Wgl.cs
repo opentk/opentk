@@ -21,7 +21,7 @@ namespace OpenTK.OpenGL
         /// </summary>
         public class Constant
         {
-            #region WGL constants.
+            #region WGL constants
 
             public const int WGLEXT_VERSION = 4;
             public const int FRONT_COLOR_BUFFER_BIT_ARB = 0x00000001;
@@ -215,7 +215,7 @@ namespace OpenTK.OpenGL
             #endregion
         }
 
-        #region WGL functions.
+        #region WGL functions
 
         [DllImport(_dll_name)]
         public static extern int GetProcAddress(int hwnd);

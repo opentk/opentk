@@ -53,14 +53,12 @@ namespace OpenTK.OpenGL
 
         public static string GetString(int name)
         {
-            IntPtr i = GetString_(name);
-            return Marshal.PtrToStringAnsi(i);
+            return Marshal.PtrToStringAnsi(GetString_(name));
         }
 
         public static string ErrorString(int name)
         {
-            IntPtr i = ErrorString_(name);
-            return Marshal.PtrToStringAnsi(i);
+            return Marshal.PtrToStringAnsi(ErrorString_(name));
         }
 
         #endregion
