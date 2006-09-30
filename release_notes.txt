@@ -1,0 +1,44 @@
+================================================================================
+
+OpenTK 0.3.2 alpha Release notes
+
+================================================================================
+
+The version number for this release is
+Major:		0
+Minor:		3
+Release:	2
+Revision:	0
+
+--------------------------------------------------------------------------------
+
+IMPORTANT: This release is not only intended for testing, NOT for development. Use at your own risk! (see below for the reasons)
+
+--------------------------------------------------------------------------------
+
+For support, bug reports, feature requests and flames, please visit the OpenTK forums: http://opentk.sourceforge.net/forum
+
+--------------------------------------------------------------------------------
+
+The odd minor version number denotes that this is a WIP (Work In Progress). This means that the source and the public API (APplication Interface) changes rapidly from release to release.
+
+--------------------------------------------------------------------------------
+
+This is an alpha release. This means it is not feature complete - more features are planned or are in currently in development. When all planned features are ready for testing, this package will move to the beta phase, were the focus will change to testing and bug-fixing.
+
+In this release, missing features include (but are not limited to) context management, platform support, platform specific methods and window management.
+
+
+================================================================================
+
+This package contains the source for:
+OpenTK.OpenGL			(0.3.2)
+OpenTK.OpenGL.Bind		(0.7.5)
+OpenTK.Platform.Windows		(0.1.0.1)
+
+--------------------------------------------------------------------------------
+
+OpenTK.OpenGL.Examples		(DisplayLists, Window, TwoContexts)
+OpenTK.OpenGL.Examples.GLSL	(Lesson01)
+
+================================================================================
