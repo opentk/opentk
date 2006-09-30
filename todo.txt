@@ -14,3 +14,5 @@ Todo:
 + + Clean up the code.
 + + Add comments and documentation (faqs, pitfalls, best practices).
 + + + Add the CLS compliant attribute to the Gl class.
++ Add more platform bindings.
++ Add cross-platform way of overriding the Application.Idle handler.

@@ -5614,11 +5614,11 @@ namespace OpenTK.OpenGL
             public delegate void GenQueries(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
             public delegate void DeleteQueries_(GLsizei n, IntPtr ids);
             public delegate GLboolean IsQuery(GLuint id);
-            public delegate void BeginQuery(GLenum target, GLuint id);
-            public delegate void EndQuery(GLenum target);
-            public delegate void GetQueryiv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetQueryObjectiv(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetQueryObjectuiv(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLuint[] parameters);
+            public delegate void BeginQuery(Enums.VERSION_1_5 target, GLuint id);
+            public delegate void EndQuery(Enums.VERSION_1_5 target);
+            public delegate void GetQueryiv(Enums.VERSION_1_5 target, Enums.VERSION_1_5 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void GetQueryObjectiv(GLuint id, Enums.VERSION_1_5 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void GetQueryObjectuiv(GLuint id, Enums.VERSION_1_5 pname, [MarshalAs(UnmanagedType.LPArray)] GLuint[] parameters);
             public delegate void BindBuffer(GLenum target, GLuint buffer);
             public delegate void DeleteBuffers_(GLsizei n, IntPtr buffers);
             public delegate void GenBuffers(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffers);
@@ -5639,19 +5639,19 @@ namespace OpenTK.OpenGL
             public delegate void BindAttribLocation_(GLuint program, GLuint index, IntPtr name);
             public delegate void CompileShader(GLuint shader);
             public delegate GLuint CreateProgram();
-            public delegate GLuint CreateShader(GLenum type);
+            public delegate GLuint CreateShader(Enums.VERSION_2_0 type);
             public delegate void DeleteProgram(GLuint program);
             public delegate void DeleteShader(GLuint shader);
             public delegate void DetachShader(GLuint program, GLuint shader);
             public delegate void DisableVertexAttribArray(GLuint index);
             public delegate void EnableVertexAttribArray(GLuint index);
-            public delegate void GetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
-            public delegate void GetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public delegate void GetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] Enums.VERSION_2_0[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public delegate void GetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] Enums.VERSION_2_0[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
             public delegate void GetAttachedShaders(GLuint program, GLsizei maxCount, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, [MarshalAs(UnmanagedType.LPArray)] GLuint[] obj);
             public delegate GLint GetAttribLocation_(GLuint program, IntPtr name);
-            public delegate void GetProgramiv(GLuint program, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void GetProgramiv(GLuint program, Enums.VERSION_2_0 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetProgramInfoLog(GLuint program, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] infoLog);
-            public delegate void GetShaderiv(GLuint shader, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void GetShaderiv(GLuint shader, Enums.VERSION_2_0 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetShaderInfoLog(GLuint shader, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] infoLog);
             public delegate void GetShaderSource(GLuint shader, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] source);
             public delegate GLint GetUniformLocation_(GLuint program, IntPtr name);
@@ -5878,15 +5878,15 @@ namespace OpenTK.OpenGL
             public delegate void GenQueriesARB(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
             public delegate void DeleteQueriesARB_(GLsizei n, IntPtr ids);
             public delegate GLboolean IsQueryARB(GLuint id);
-            public delegate void BeginQueryARB(GLenum target, GLuint id);
-            public delegate void EndQueryARB(GLenum target);
-            public delegate void GetQueryivARB(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetQueryObjectivARB(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetQueryObjectuivARB(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLuint[] parameters);
+            public delegate void BeginQueryARB(Enums.ARB_occlusion_query target, GLuint id);
+            public delegate void EndQueryARB(Enums.ARB_occlusion_query target);
+            public delegate void GetQueryivARB(Enums.ARB_occlusion_query target, Enums.ARB_occlusion_query pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void GetQueryObjectivARB(GLuint id, Enums.ARB_occlusion_query pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void GetQueryObjectuivARB(GLuint id, Enums.ARB_occlusion_query pname, [MarshalAs(UnmanagedType.LPArray)] GLuint[] parameters);
             public delegate void DeleteObjectARB(GLhandleARB obj);
-            public delegate GLhandleARB GetHandleARB(GLenum pname);
+            public delegate GLhandleARB GetHandleARB(Enums.ARB_shader_objects pname);
             public delegate void DetachObjectARB(GLhandleARB containerObj, GLhandleARB attachedObj);
-            public delegate GLhandleARB CreateShaderObjectARB(GLenum shaderType);
+            public delegate GLhandleARB CreateShaderObjectARB(Enums.ARB_shader_objects shaderType);
             public delegate void ShaderSourceARB_(GLhandleARB shaderObj, GLsizei count, IntPtr @string, IntPtr length);
             public delegate void CompileShaderARB(GLhandleARB shaderObj);
             public delegate GLhandleARB CreateProgramObjectARB();
@@ -5913,17 +5913,17 @@ namespace OpenTK.OpenGL
             public delegate void UniformMatrix2fvARB_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
             public delegate void UniformMatrix3fvARB_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
             public delegate void UniformMatrix4fvARB_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
-            public delegate void GetObjectParameterfvARB(GLhandleARB obj, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            public delegate void GetObjectParameterivARB(GLhandleARB obj, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void GetObjectParameterfvARB(GLhandleARB obj, Enums.ARB_shader_objects pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void GetObjectParameterivARB(GLhandleARB obj, Enums.ARB_shader_objects pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetInfoLogARB(GLhandleARB obj, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] infoLog);
             public delegate void GetAttachedObjectsARB(GLhandleARB containerObj, GLsizei maxCount, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, [MarshalAs(UnmanagedType.LPArray)] GLhandleARB[] obj);
             public delegate GLint GetUniformLocationARB_(GLhandleARB programObj, IntPtr name);
-            public delegate void GetActiveUniformARB(GLhandleARB programObj, GLuint index, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] name);
+            public delegate void GetActiveUniformARB(GLhandleARB programObj, GLuint index, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] Enums.ARB_shader_objects[] type, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] name);
             public delegate void GetUniformfvARB(GLhandleARB programObj, GLint location, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetUniformivARB(GLhandleARB programObj, GLint location, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetShaderSourceARB(GLhandleARB obj, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] source);
             public delegate void BindAttribLocationARB_(GLhandleARB programObj, GLuint index, IntPtr name);
-            public delegate void GetActiveAttribARB(GLhandleARB programObj, GLuint index, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] name);
+            public delegate void GetActiveAttribARB(GLhandleARB programObj, GLuint index, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] Enums.ARB_vertex_shader[] type, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] name);
             public delegate GLint GetAttribLocationARB_(GLhandleARB programObj, IntPtr name);
             public delegate void DrawBuffersARB_(GLsizei n, IntPtr bufs);
             public delegate void ClampColorARB(GLenum target, GLenum clamp);
@@ -6551,22 +6551,22 @@ namespace OpenTK.OpenGL
             public delegate void DepthBoundsEXT(GLclampd zmin, GLclampd zmax);
             public delegate void BlendEquationSeparateEXT(Enums.BlendEquationModeEXT modeRGB, Enums.BlendEquationModeEXT modeAlpha);
             public delegate GLboolean IsRenderbufferEXT(GLuint renderbuffer);
-            public delegate void BindRenderbufferEXT(GLenum target, GLuint renderbuffer);
+            public delegate void BindRenderbufferEXT(Enums.EXT_framebuffer_object target, GLuint renderbuffer);
             public delegate void DeleteRenderbuffersEXT_(GLsizei n, IntPtr renderbuffers);
             public delegate void GenRenderbuffersEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] renderbuffers);
-            public delegate void RenderbufferStorageEXT(GLenum target, GLenum internalformat, GLsizei width, GLsizei height);
-            public delegate void GetRenderbufferParameterivEXT(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void RenderbufferStorageEXT(Enums.EXT_framebuffer_object target, Enums.EXT_framebuffer_object internalformat, GLsizei width, GLsizei height);
+            public delegate void GetRenderbufferParameterivEXT(Enums.EXT_framebuffer_object target, Enums.EXT_framebuffer_object pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate GLboolean IsFramebufferEXT(GLuint framebuffer);
-            public delegate void BindFramebufferEXT(GLenum target, GLuint framebuffer);
+            public delegate void BindFramebufferEXT(Enums.EXT_framebuffer_object target, GLuint framebuffer);
             public delegate void DeleteFramebuffersEXT_(GLsizei n, IntPtr framebuffers);
             public delegate void GenFramebuffersEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] framebuffers);
-            public delegate GLenum CheckFramebufferStatusEXT(GLenum target);
-            public delegate void FramebufferTexture1DEXT(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
-            public delegate void FramebufferTexture2DEXT(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
-            public delegate void FramebufferTexture3DEXT(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset);
-            public delegate void FramebufferRenderbufferEXT(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer);
-            public delegate void GetFramebufferAttachmentParameterivEXT(GLenum target, GLenum attachment, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GenerateMipmapEXT(GLenum target);
+            public delegate GLenum CheckFramebufferStatusEXT(Enums.EXT_framebuffer_object target);
+            public delegate void FramebufferTexture1DEXT(Enums.EXT_framebuffer_object target, Enums.EXT_framebuffer_object attachment, Enums.EXT_framebuffer_object textarget, GLuint texture, GLint level);
+            public delegate void FramebufferTexture2DEXT(Enums.EXT_framebuffer_object target, Enums.EXT_framebuffer_object attachment, Enums.EXT_framebuffer_object textarget, GLuint texture, GLint level);
+            public delegate void FramebufferTexture3DEXT(Enums.EXT_framebuffer_object target, Enums.EXT_framebuffer_object attachment, Enums.EXT_framebuffer_object textarget, GLuint texture, GLint level, GLint zoffset);
+            public delegate void FramebufferRenderbufferEXT(Enums.EXT_framebuffer_object target, Enums.EXT_framebuffer_object attachment, Enums.EXT_framebuffer_object renderbuffertarget, GLuint renderbuffer);
+            public delegate void GetFramebufferAttachmentParameterivEXT(Enums.EXT_framebuffer_object target, Enums.EXT_framebuffer_object attachment, Enums.EXT_framebuffer_object pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void GenerateMipmapEXT(Enums.EXT_framebuffer_object target);
             public delegate void StringMarkerGREMEDY_(GLsizei len, IntPtr @string);
         }
         #endregion
@@ -7512,15 +7512,15 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glIsQuery")]
             public static extern GLboolean IsQuery(GLuint id);
             [DllImport("opengl32", EntryPoint = "glBeginQuery")]
-            public static extern void BeginQuery(GLenum target, GLuint id);
+            public static extern void BeginQuery(Enums.VERSION_1_5 target, GLuint id);
             [DllImport("opengl32", EntryPoint = "glEndQuery")]
-            public static extern void EndQuery(GLenum target);
+            public static extern void EndQuery(Enums.VERSION_1_5 target);
             [DllImport("opengl32", EntryPoint = "glGetQueryiv")]
-            public static extern void GetQueryiv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void GetQueryiv(Enums.VERSION_1_5 target, Enums.VERSION_1_5 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetQueryObjectiv")]
-            public static extern void GetQueryObjectiv(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void GetQueryObjectiv(GLuint id, Enums.VERSION_1_5 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetQueryObjectuiv")]
-            public static extern void GetQueryObjectuiv(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLuint[] parameters);
+            public static extern void GetQueryObjectuiv(GLuint id, Enums.VERSION_1_5 pname, [MarshalAs(UnmanagedType.LPArray)] GLuint[] parameters);
             [DllImport("opengl32", EntryPoint = "glBindBuffer")]
             public static extern void BindBuffer(GLenum target, GLuint buffer);
             [DllImport("opengl32", EntryPoint = "glDeleteBuffers")]
@@ -7562,7 +7562,7 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glCreateProgram")]
             public static extern GLuint CreateProgram();
             [DllImport("opengl32", EntryPoint = "glCreateShader")]
-            public static extern GLuint CreateShader(GLenum type);
+            public static extern GLuint CreateShader(Enums.VERSION_2_0 type);
             [DllImport("opengl32", EntryPoint = "glDeleteProgram")]
             public static extern void DeleteProgram(GLuint program);
             [DllImport("opengl32", EntryPoint = "glDeleteShader")]
@@ -7574,19 +7574,19 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glEnableVertexAttribArray")]
             public static extern void EnableVertexAttribArray(GLuint index);
             [DllImport("opengl32", EntryPoint = "glGetActiveAttrib")]
-            public static extern void GetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public static extern void GetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] Enums.VERSION_2_0[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
             [DllImport("opengl32", EntryPoint = "glGetActiveUniform")]
-            public static extern void GetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public static extern void GetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] Enums.VERSION_2_0[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
             [DllImport("opengl32", EntryPoint = "glGetAttachedShaders")]
             public static extern void GetAttachedShaders(GLuint program, GLsizei maxCount, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, [MarshalAs(UnmanagedType.LPArray)] GLuint[] obj);
             [DllImport("opengl32", EntryPoint = "glGetAttribLocation")]
             public static extern GLint GetAttribLocation_(GLuint program, IntPtr name);
             [DllImport("opengl32", EntryPoint = "glGetProgramiv")]
-            public static extern void GetProgramiv(GLuint program, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void GetProgramiv(GLuint program, Enums.VERSION_2_0 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetProgramInfoLog")]
             public static extern void GetProgramInfoLog(GLuint program, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] infoLog);
             [DllImport("opengl32", EntryPoint = "glGetShaderiv")]
-            public static extern void GetShaderiv(GLuint shader, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void GetShaderiv(GLuint shader, Enums.VERSION_2_0 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetShaderInfoLog")]
             public static extern void GetShaderInfoLog(GLuint shader, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] infoLog);
             [DllImport("opengl32", EntryPoint = "glGetShaderSource")]

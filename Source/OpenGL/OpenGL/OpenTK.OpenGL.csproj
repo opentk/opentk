@@ -52,6 +52,7 @@
     <Compile Include="Contexts\WindowsContext.cs" />
     <Compile Include="Contexts\WindowsVistaContext.cs" />
     <Compile Include="Contexts\X11Context.cs" />
+    <Compile Include="MissingEnums.cs" />
     <Compile Include="Wgl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

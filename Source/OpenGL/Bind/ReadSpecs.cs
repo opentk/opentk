@@ -45,7 +45,7 @@ namespace OpenTK.OpenGL.Bind
                     line.StartsWith("dlflags:") ||
                     line.StartsWith("glxflags:") ||
                     line.StartsWith("vectorequiv:") ||
-                    line.StartsWith("category:") ||
+                    //line.StartsWith("category:") ||
                     line.StartsWith("version:") ||
                     line.StartsWith("glxsingle:") ||
                     line.StartsWith("glxropcode:") ||
@@ -110,6 +110,9 @@ namespace OpenTK.OpenGL.Bind
                                 break;
                             case "version":
                                 f.Version = words[1];
+                                break;
+                            case "category":
+                                f.Category = words[1];
                                 break;
                         }
                     }
