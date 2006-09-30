@@ -14,6 +14,18 @@ namespace OpenTK.OpenGL.Bind
     /// </summary>
     public class Function
     {
+        #region Wrapper type property
+
+        private WrapperTypes _wrapper_type = WrapperTypes.None;
+
+        public WrapperTypes WrapperType
+        {
+            get { return _wrapper_type; }
+            set { _wrapper_type = value; }
+        }
+
+        #endregion
+
         #region Needs wrapper property
 
         bool _needs_wrapper;
@@ -111,7 +123,7 @@ namespace OpenTK.OpenGL.Bind
         }
 
         #endregion
-        
+
         #region ToString function
 
         /// <summary>
@@ -122,6 +134,25 @@ namespace OpenTK.OpenGL.Bind
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(ReturnValue + " " + Name + Parameters.ToString());
+            return sb.ToString();
+        }
+
+        #endregion
+
+        #region Call function string
+
+        public string CallString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(Name);
+            sb.Append("(");
+            foreach (Parameter p in Parameters)
+            {
+                sb.Append(p.Name);
+                sb.Append(", ");
+            }
+            sb.Replace(", ", ")", sb.Length - 2, 2);
+
             return sb.ToString();
         }
 

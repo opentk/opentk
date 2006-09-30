@@ -9,6 +9,18 @@ using System.Collections;
 
 namespace OpenTK.OpenGL.Bind
 {
+    public enum WrapperTypes
+    {
+        None,
+        VoidPointerIn,
+        VoidPointerOut,
+        ArrayOut,
+        ArrayIn,
+        UShortMaskParameter,
+        ReturnsString,
+        ReturnsVoidPointer,
+    }
+
     static class Translation
     {
         public static char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
@@ -188,7 +200,8 @@ namespace OpenTK.OpenGL.Bind
         }
         #endregion
 
-        #region TranslateReturnValue
+        #region Translate return value
+
         private static void TranslateReturnValue(Function f, Hashtable enums)
         {
             string s;
@@ -198,27 +211,26 @@ namespace OpenTK.OpenGL.Bind
 
             if (GLtypes.TryGetValue(f.ReturnValue, out s))
                 f.ReturnValue = s;
-            //if (CStypes.TryGetValue(f.ReturnValue, out s))
-            //    f.ReturnValue = s;
 
             if (f.ReturnValue == "void[]")
             {
+                f.NeedsWrapper = true;
+                f.WrapperType = WrapperTypes.ReturnsVoidPointer;
                 f.ReturnValue = "IntPtr";
             }
 
-            if (f.ReturnValue == "string")
-            {
-                f.ReturnValue = "IntPtr";
-            }
-
-            if (f.ReturnValue == "IntPtr")
+            if (f.ReturnValue == "GLstring")
             {
                 f.NeedsWrapper = true;
+                f.WrapperType = WrapperTypes.ReturnsString;
+                f.ReturnValue = "IntPtr";
             }
         }
+
         #endregion
 
-        #region TranslateParameters
+        #region Translate parameters
+
         private static void TranslateParameters(Function f, Hashtable enums)
         {
             string s;
@@ -236,18 +248,42 @@ namespace OpenTK.OpenGL.Bind
                 }
                 else if (GLtypes.TryGetValue(p.Type, out s))
                     p.Type = s;
-                //if (CStypes.TryGetValue(p.Type, out s))
-                //    p.Type = s;
 
-                if (p.Array && !p.Type.Contains("void"))
+                if (p.Array &&
+                    !p.Type.Contains("void") &&
+                    !p.Type.Contains("string") &&
+                    (p.Flow == Parameter.FlowDirection.In || p.Flow == Parameter.FlowDirection.Undefined))
+                {
+                    f.NeedsWrapper = true;
+                    f.WrapperType = WrapperTypes.ArrayIn;
+                    p.Type = "IntPtr";
+                    p.Array = false;
+                    //p.UnmanagedType = System.Runtime.InteropServices.UnmanagedType.LPArray;
+                }
+                if (p.Array &&
+                    !p.Type.Contains("void") &&
+                    (p.Flow == Parameter.FlowDirection.Out))
                 {
                     p.UnmanagedType = System.Runtime.InteropServices.UnmanagedType.LPArray;
+                    //f.NeedsWrapper = true;
+                    //f.WrapperType = WrapperTypes.ArrayOut;
                 }
-                else if (p.Array && p.Type.Contains("void"))
+                else if (p.Array &&
+                    p.Type.Contains("void") &&
+                    (p.Flow == Parameter.FlowDirection.In || p.Flow == Parameter.FlowDirection.Undefined))
                 {
+                    f.NeedsWrapper = true;
+                    f.WrapperType = WrapperTypes.VoidPointerIn;
                     p.Array = false;
                     p.Type = "IntPtr";
+                }
+                else if (p.Array && p.Type.Contains("void") &&
+                    (p.Flow == Parameter.FlowDirection.Out))
+                {
                     f.NeedsWrapper = true;
+                    f.WrapperType = WrapperTypes.VoidPointerOut;
+                    p.Array = false;
+                    p.Type = "IntPtr";
                 }
                
                 //if (p.Flow == Parameter.FlowDirection.Out && p.Type.Contains("string"))
@@ -259,9 +295,10 @@ namespace OpenTK.OpenGL.Bind
                 //}
             }
         }
+
         #endregion
 
-        #region GenerateWrapper
+        #region Generate wrappers
         private static Function GenerateWrapper(Function f)
         {
             if (!f.NeedsWrapper)

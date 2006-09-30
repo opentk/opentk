@@ -7,6 +7,7 @@ GLhalfNV,		Int16	#UInt16
 GLcharARB,		Char
 
 # Normal types.
+GLsizei,		Int32
 GLsizeiptr,		IntPtr
 GLintptr,		IntPtr
 GLenum,			Int32
@@ -15,13 +16,12 @@ GLbitfield,		Int32	#UInt32
 # GLvoid*,		IntPtr
 # GLvoid,		void
 GLchar,			Char
-GLbyte,			SByte
+GLbyte,			Byte	#SByte
+GLubyte,		Byte
 GLshort,		Int16
-GLint,			Int32
-GLubyte,		SByte
 GLushort,		Int16	#UInt16
+GLint,			Int32
 GLuint,			Int32	#UInt32
-GLsizei,		Int32
 GLfloat,		Single
 GLclampf,		Single
 GLdouble,		Double
