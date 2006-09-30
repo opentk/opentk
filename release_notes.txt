@@ -18,11 +18,13 @@ IMPORTANT: This release is not only intended for testing, NOT for development. U
 
 For support, bug reports, feature requests and flames, please visit the OpenTK forums: http://opentk.sourceforge.net/forum
 
+The latest version is always available at http://sourceforge.net/projects/opentk
+
+For the bleeding efge code, do a svn checkout at https://svn.sourceforge.net/svnroot/opentk
+
 --------------------------------------------------------------------------------
 
 The odd minor version number denotes that this is a WIP (Work In Progress). This means that the source and the public API (APplication Interface) changes rapidly from release to release.
-
---------------------------------------------------------------------------------
 
 This is an alpha release. This means it is not feature complete - more features are planned or are in currently in development. When all planned features are ready for testing, this package will move to the beta phase, were the focus will change to testing and bug-fixing.
 
