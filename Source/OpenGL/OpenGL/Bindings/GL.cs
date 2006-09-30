@@ -10,19 +10,19 @@ namespace OpenTK.OpenGL
     using GLhalfARB = System.Int16;
     using GLhalfNV = System.Int16;
     using GLcharARB = System.Char;
+    using GLsizei = System.Int32;
     using GLsizeiptr = System.IntPtr;
     using GLintptr = System.IntPtr;
     using GLenum = System.Int32;
     using GLboolean = System.Boolean;
     using GLbitfield = System.Int32;
     using GLchar = System.Char;
-    using GLbyte = System.SByte;
+    using GLbyte = System.Byte;
+    using GLubyte = System.Byte;
     using GLshort = System.Int16;
-    using GLint = System.Int32;
-    using GLubyte = System.SByte;
     using GLushort = System.Int16;
+    using GLint = System.Int32;
     using GLuint = System.Int32;
-    using GLsizei = System.Int32;
     using GLfloat = System.Single;
     using GLclampf = System.Single;
     using GLdouble = System.Double;
@@ -5154,192 +5154,192 @@ namespace OpenTK.OpenGL
             public delegate GLuint GenLists(GLsizei range);
             public delegate void ListBase(GLuint @base);
             public delegate void Begin(Enums.BeginMode mode);
-            public delegate void Bitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] bitmap);
+            public delegate void Bitmap_(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, IntPtr bitmap);
             public delegate void Color3b(GLbyte red, GLbyte green, GLbyte blue);
-            public delegate void Color3bv([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public delegate void Color3bv_(IntPtr v);
             public delegate void Color3d(GLdouble red, GLdouble green, GLdouble blue);
-            public delegate void Color3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void Color3dv_(IntPtr v);
             public delegate void Color3f(GLfloat red, GLfloat green, GLfloat blue);
-            public delegate void Color3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Color3fv_(IntPtr v);
             public delegate void Color3i(GLint red, GLint green, GLint blue);
-            public delegate void Color3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void Color3iv_(IntPtr v);
             public delegate void Color3s(GLshort red, GLshort green, GLshort blue);
-            public delegate void Color3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void Color3sv_(IntPtr v);
             public delegate void Color3ub(GLubyte red, GLubyte green, GLubyte blue);
-            public delegate void Color3ubv([MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
+            public delegate void Color3ubv_(IntPtr v);
             public delegate void Color3ui(GLuint red, GLuint green, GLuint blue);
-            public delegate void Color3uiv([MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
+            public delegate void Color3uiv_(IntPtr v);
             public delegate void Color3us(GLushort red, GLushort green, GLushort blue);
-            public delegate void Color3usv([MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public delegate void Color3usv_(IntPtr v);
             public delegate void Color4b(GLbyte red, GLbyte green, GLbyte blue, GLbyte alpha);
-            public delegate void Color4bv([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public delegate void Color4bv_(IntPtr v);
             public delegate void Color4d(GLdouble red, GLdouble green, GLdouble blue, GLdouble alpha);
-            public delegate void Color4dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void Color4dv_(IntPtr v);
             public delegate void Color4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
-            public delegate void Color4fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Color4fv_(IntPtr v);
             public delegate void Color4i(GLint red, GLint green, GLint blue, GLint alpha);
-            public delegate void Color4iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void Color4iv_(IntPtr v);
             public delegate void Color4s(GLshort red, GLshort green, GLshort blue, GLshort alpha);
-            public delegate void Color4sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void Color4sv_(IntPtr v);
             public delegate void Color4ub(GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha);
-            public delegate void Color4ubv([MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
+            public delegate void Color4ubv_(IntPtr v);
             public delegate void Color4ui(GLuint red, GLuint green, GLuint blue, GLuint alpha);
-            public delegate void Color4uiv([MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
+            public delegate void Color4uiv_(IntPtr v);
             public delegate void Color4us(GLushort red, GLushort green, GLushort blue, GLushort alpha);
-            public delegate void Color4usv([MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public delegate void Color4usv_(IntPtr v);
             public delegate void EdgeFlag(Enums.Boolean flag);
             public delegate void EdgeFlagv(Enums.Boolean[] flag);
             public delegate void End();
             public delegate void Indexd(GLdouble c);
-            public delegate void Indexdv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] c);
+            public delegate void Indexdv_(IntPtr c);
             public delegate void Indexf(GLfloat c);
-            public delegate void Indexfv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] c);
+            public delegate void Indexfv_(IntPtr c);
             public delegate void Indexi(GLint c);
-            public delegate void Indexiv([MarshalAs(UnmanagedType.LPArray)] GLint[] c);
+            public delegate void Indexiv_(IntPtr c);
             public delegate void Indexs(GLshort c);
-            public delegate void Indexsv([MarshalAs(UnmanagedType.LPArray)] GLshort[] c);
+            public delegate void Indexsv_(IntPtr c);
             public delegate void Normal3b(GLbyte nx, GLbyte ny, GLbyte nz);
-            public delegate void Normal3bv([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public delegate void Normal3bv_(IntPtr v);
             public delegate void Normal3d(GLdouble nx, GLdouble ny, GLdouble nz);
-            public delegate void Normal3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void Normal3dv_(IntPtr v);
             public delegate void Normal3f(GLfloat nx, GLfloat ny, GLfloat nz);
-            public delegate void Normal3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Normal3fv_(IntPtr v);
             public delegate void Normal3i(GLint nx, GLint ny, GLint nz);
-            public delegate void Normal3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void Normal3iv_(IntPtr v);
             public delegate void Normal3s(GLshort nx, GLshort ny, GLshort nz);
-            public delegate void Normal3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void Normal3sv_(IntPtr v);
             public delegate void RasterPos2d(GLdouble x, GLdouble y);
-            public delegate void RasterPos2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void RasterPos2dv_(IntPtr v);
             public delegate void RasterPos2f(GLfloat x, GLfloat y);
-            public delegate void RasterPos2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void RasterPos2fv_(IntPtr v);
             public delegate void RasterPos2i(GLint x, GLint y);
-            public delegate void RasterPos2iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void RasterPos2iv_(IntPtr v);
             public delegate void RasterPos2s(GLshort x, GLshort y);
-            public delegate void RasterPos2sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void RasterPos2sv_(IntPtr v);
             public delegate void RasterPos3d(GLdouble x, GLdouble y, GLdouble z);
-            public delegate void RasterPos3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void RasterPos3dv_(IntPtr v);
             public delegate void RasterPos3f(GLfloat x, GLfloat y, GLfloat z);
-            public delegate void RasterPos3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void RasterPos3fv_(IntPtr v);
             public delegate void RasterPos3i(GLint x, GLint y, GLint z);
-            public delegate void RasterPos3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void RasterPos3iv_(IntPtr v);
             public delegate void RasterPos3s(GLshort x, GLshort y, GLshort z);
-            public delegate void RasterPos3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void RasterPos3sv_(IntPtr v);
             public delegate void RasterPos4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void RasterPos4dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void RasterPos4dv_(IntPtr v);
             public delegate void RasterPos4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void RasterPos4fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void RasterPos4fv_(IntPtr v);
             public delegate void RasterPos4i(GLint x, GLint y, GLint z, GLint w);
-            public delegate void RasterPos4iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void RasterPos4iv_(IntPtr v);
             public delegate void RasterPos4s(GLshort x, GLshort y, GLshort z, GLshort w);
-            public delegate void RasterPos4sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void RasterPos4sv_(IntPtr v);
             public delegate void Rectd(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2);
-            public delegate void Rectdv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v1, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v2);
+            public delegate void Rectdv_(IntPtr v1, IntPtr v2);
             public delegate void Rectf(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2);
-            public delegate void Rectfv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v1, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v2);
+            public delegate void Rectfv_(IntPtr v1, IntPtr v2);
             public delegate void Recti(GLint x1, GLint y1, GLint x2, GLint y2);
-            public delegate void Rectiv([MarshalAs(UnmanagedType.LPArray)] GLint[] v1, [MarshalAs(UnmanagedType.LPArray)] GLint[] v2);
+            public delegate void Rectiv_(IntPtr v1, IntPtr v2);
             public delegate void Rects(GLshort x1, GLshort y1, GLshort x2, GLshort y2);
-            public delegate void Rectsv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v1, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v2);
+            public delegate void Rectsv_(IntPtr v1, IntPtr v2);
             public delegate void TexCoord1d(GLdouble s);
-            public delegate void TexCoord1dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void TexCoord1dv_(IntPtr v);
             public delegate void TexCoord1f(GLfloat s);
-            public delegate void TexCoord1fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord1fv_(IntPtr v);
             public delegate void TexCoord1i(GLint s);
-            public delegate void TexCoord1iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void TexCoord1iv_(IntPtr v);
             public delegate void TexCoord1s(GLshort s);
-            public delegate void TexCoord1sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void TexCoord1sv_(IntPtr v);
             public delegate void TexCoord2d(GLdouble s, GLdouble t);
-            public delegate void TexCoord2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void TexCoord2dv_(IntPtr v);
             public delegate void TexCoord2f(GLfloat s, GLfloat t);
-            public delegate void TexCoord2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord2fv_(IntPtr v);
             public delegate void TexCoord2i(GLint s, GLint t);
-            public delegate void TexCoord2iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void TexCoord2iv_(IntPtr v);
             public delegate void TexCoord2s(GLshort s, GLshort t);
-            public delegate void TexCoord2sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void TexCoord2sv_(IntPtr v);
             public delegate void TexCoord3d(GLdouble s, GLdouble t, GLdouble r);
-            public delegate void TexCoord3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void TexCoord3dv_(IntPtr v);
             public delegate void TexCoord3f(GLfloat s, GLfloat t, GLfloat r);
-            public delegate void TexCoord3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord3fv_(IntPtr v);
             public delegate void TexCoord3i(GLint s, GLint t, GLint r);
-            public delegate void TexCoord3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void TexCoord3iv_(IntPtr v);
             public delegate void TexCoord3s(GLshort s, GLshort t, GLshort r);
-            public delegate void TexCoord3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void TexCoord3sv_(IntPtr v);
             public delegate void TexCoord4d(GLdouble s, GLdouble t, GLdouble r, GLdouble q);
-            public delegate void TexCoord4dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void TexCoord4dv_(IntPtr v);
             public delegate void TexCoord4f(GLfloat s, GLfloat t, GLfloat r, GLfloat q);
-            public delegate void TexCoord4fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord4fv_(IntPtr v);
             public delegate void TexCoord4i(GLint s, GLint t, GLint r, GLint q);
-            public delegate void TexCoord4iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void TexCoord4iv_(IntPtr v);
             public delegate void TexCoord4s(GLshort s, GLshort t, GLshort r, GLshort q);
-            public delegate void TexCoord4sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void TexCoord4sv_(IntPtr v);
             public delegate void Vertex2d(GLdouble x, GLdouble y);
-            public delegate void Vertex2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void Vertex2dv_(IntPtr v);
             public delegate void Vertex2f(GLfloat x, GLfloat y);
-            public delegate void Vertex2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Vertex2fv_(IntPtr v);
             public delegate void Vertex2i(GLint x, GLint y);
-            public delegate void Vertex2iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void Vertex2iv_(IntPtr v);
             public delegate void Vertex2s(GLshort x, GLshort y);
-            public delegate void Vertex2sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void Vertex2sv_(IntPtr v);
             public delegate void Vertex3d(GLdouble x, GLdouble y, GLdouble z);
-            public delegate void Vertex3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void Vertex3dv_(IntPtr v);
             public delegate void Vertex3f(GLfloat x, GLfloat y, GLfloat z);
-            public delegate void Vertex3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Vertex3fv_(IntPtr v);
             public delegate void Vertex3i(GLint x, GLint y, GLint z);
-            public delegate void Vertex3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void Vertex3iv_(IntPtr v);
             public delegate void Vertex3s(GLshort x, GLshort y, GLshort z);
-            public delegate void Vertex3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void Vertex3sv_(IntPtr v);
             public delegate void Vertex4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void Vertex4dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void Vertex4dv_(IntPtr v);
             public delegate void Vertex4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void Vertex4fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Vertex4fv_(IntPtr v);
             public delegate void Vertex4i(GLint x, GLint y, GLint z, GLint w);
-            public delegate void Vertex4iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void Vertex4iv_(IntPtr v);
             public delegate void Vertex4s(GLshort x, GLshort y, GLshort z, GLshort w);
-            public delegate void Vertex4sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void ClipPlane(Enums.ClipPlaneName plane, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] equation);
+            public delegate void Vertex4sv_(IntPtr v);
+            public delegate void ClipPlane_(Enums.ClipPlaneName plane, IntPtr equation);
             public delegate void ColorMaterial(Enums.MaterialFace face, Enums.ColorMaterialParameter mode);
             public delegate void CullFace(Enums.CullFaceMode mode);
             public delegate void Fogf(Enums.FogParameter pname, GLfloat param);
-            public delegate void Fogfv(Enums.FogParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void Fogfv_(Enums.FogParameter pname, IntPtr parameters);
             public delegate void Fogi(Enums.FogParameter pname, GLint param);
-            public delegate void Fogiv(Enums.FogParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void Fogiv_(Enums.FogParameter pname, IntPtr parameters);
             public delegate void FrontFace(Enums.FrontFaceDirection mode);
             public delegate void Hint(Enums.HintTarget target, Enums.HintMode mode);
             public delegate void Lightf(Enums.LightName light, Enums.LightParameter pname, GLfloat param);
-            public delegate void Lightfv(Enums.LightName light, Enums.LightParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void Lightfv_(Enums.LightName light, Enums.LightParameter pname, IntPtr parameters);
             public delegate void Lighti(Enums.LightName light, Enums.LightParameter pname, GLint param);
-            public delegate void Lightiv(Enums.LightName light, Enums.LightParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void Lightiv_(Enums.LightName light, Enums.LightParameter pname, IntPtr parameters);
             public delegate void LightModelf(Enums.LightModelParameter pname, GLfloat param);
-            public delegate void LightModelfv(Enums.LightModelParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void LightModelfv_(Enums.LightModelParameter pname, IntPtr parameters);
             public delegate void LightModeli(Enums.LightModelParameter pname, GLint param);
-            public delegate void LightModeliv(Enums.LightModelParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void LightModeliv_(Enums.LightModelParameter pname, IntPtr parameters);
             public delegate void LineStipple(GLint factor, GLushort pattern);
             public delegate void LineWidth(GLfloat width);
             public delegate void Materialf(Enums.MaterialFace face, Enums.MaterialParameter pname, GLfloat param);
-            public delegate void Materialfv(Enums.MaterialFace face, Enums.MaterialParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void Materialfv_(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters);
             public delegate void Materiali(Enums.MaterialFace face, Enums.MaterialParameter pname, GLint param);
-            public delegate void Materialiv(Enums.MaterialFace face, Enums.MaterialParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void Materialiv_(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters);
             public delegate void PointSize(GLfloat size);
             public delegate void PolygonMode(Enums.MaterialFace face, Enums.PolygonMode mode);
-            public delegate void PolygonStipple([MarshalAs(UnmanagedType.LPArray)] GLubyte[] mask);
+            public delegate void PolygonStipple_(IntPtr mask);
             public delegate void Scissor(GLint x, GLint y, GLsizei width, GLsizei height);
             public delegate void ShadeModel(Enums.ShadingModel mode);
             public delegate void TexParameterf(Enums.TextureTarget target, Enums.TextureParameterName pname, GLfloat param);
-            public delegate void TexParameterfv(Enums.TextureTarget target, Enums.TextureParameterName pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void TexParameterfv_(Enums.TextureTarget target, Enums.TextureParameterName pname, IntPtr parameters);
             public delegate void TexParameteri(Enums.TextureTarget target, Enums.TextureParameterName pname, GLint param);
-            public delegate void TexParameteriv(Enums.TextureTarget target, Enums.TextureParameterName pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void TexParameteriv_(Enums.TextureTarget target, Enums.TextureParameterName pname, IntPtr parameters);
             public delegate void TexImage1D(Enums.TextureTarget target, GLint level, GLint internalformat, GLsizei width, GLint border, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void TexImage2D(Enums.TextureTarget target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void TexEnvf(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, GLfloat param);
-            public delegate void TexEnvfv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void TexEnvfv_(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, IntPtr parameters);
             public delegate void TexEnvi(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, GLint param);
-            public delegate void TexEnviv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void TexEnviv_(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, IntPtr parameters);
             public delegate void TexGend(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLdouble param);
-            public delegate void TexGendv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
+            public delegate void TexGendv_(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters);
             public delegate void TexGenf(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLfloat param);
-            public delegate void TexGenfv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void TexGenfv_(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters);
             public delegate void TexGeni(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLint param);
-            public delegate void TexGeniv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void TexGeniv_(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters);
             public delegate void FeedbackBuffer(GLsizei size, Enums.FeedbackType type, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] buffer);
             public delegate void SelectBuffer(GLsizei size, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffer);
             public delegate GLint RenderMode(Enums.RenderingMode mode);
@@ -5366,22 +5366,22 @@ namespace OpenTK.OpenGL
             public delegate void Flush();
             public delegate void PopAttrib();
             public delegate void PushAttrib(Enums.AttribMask mask);
-            public delegate void Map1d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint stride, GLint order, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] points);
-            public delegate void Map1f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint stride, GLint order, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
-            public delegate void Map2d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] points);
-            public delegate void Map2f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
+            public delegate void Map1d_(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint stride, GLint order, IntPtr points);
+            public delegate void Map1f_(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint stride, GLint order, IntPtr points);
+            public delegate void Map2d_(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, IntPtr points);
+            public delegate void Map2f_(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, IntPtr points);
             public delegate void MapGrid1d(GLint un, GLdouble u1, GLdouble u2);
             public delegate void MapGrid1f(GLint un, GLfloat u1, GLfloat u2);
             public delegate void MapGrid2d(GLint un, GLdouble u1, GLdouble u2, GLint vn, GLdouble v1, GLdouble v2);
             public delegate void MapGrid2f(GLint un, GLfloat u1, GLfloat u2, GLint vn, GLfloat v1, GLfloat v2);
             public delegate void EvalCoord1d(GLdouble u);
-            public delegate void EvalCoord1dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] u);
+            public delegate void EvalCoord1dv_(IntPtr u);
             public delegate void EvalCoord1f(GLfloat u);
-            public delegate void EvalCoord1fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] u);
+            public delegate void EvalCoord1fv_(IntPtr u);
             public delegate void EvalCoord2d(GLdouble u, GLdouble v);
-            public delegate void EvalCoord2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] u);
+            public delegate void EvalCoord2dv_(IntPtr u);
             public delegate void EvalCoord2f(GLfloat u, GLfloat v);
-            public delegate void EvalCoord2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] u);
+            public delegate void EvalCoord2fv_(IntPtr u);
             public delegate void EvalMesh1(Enums.MeshMode1 mode, GLint i1, GLint i2);
             public delegate void EvalPoint1(GLint i);
             public delegate void EvalMesh2(Enums.MeshMode2 mode, GLint i1, GLint i2, GLint j1, GLint j2);
@@ -5397,12 +5397,12 @@ namespace OpenTK.OpenGL
             public delegate void PixelTransferi(Enums.PixelTransferParameter pname, GLint param);
             public delegate void PixelStoref(Enums.PixelStoreParameter pname, GLfloat param);
             public delegate void PixelStorei(Enums.PixelStoreParameter pname, GLint param);
-            public delegate void PixelMapfv(Enums.PixelMap map, GLint mapsize, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] values);
-            public delegate void PixelMapuiv(Enums.PixelMap map, GLint mapsize, [MarshalAs(UnmanagedType.LPArray)] GLuint[] values);
-            public delegate void PixelMapusv(Enums.PixelMap map, GLint mapsize, [MarshalAs(UnmanagedType.LPArray)] GLushort[] values);
+            public delegate void PixelMapfv_(Enums.PixelMap map, GLint mapsize, IntPtr values);
+            public delegate void PixelMapuiv_(Enums.PixelMap map, GLint mapsize, IntPtr values);
+            public delegate void PixelMapusv_(Enums.PixelMap map, GLint mapsize, IntPtr values);
             public delegate void ReadBuffer(Enums.ReadBufferMode mode);
             public delegate void CopyPixels(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelCopyType type);
-            public delegate void ReadPixels_(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, out IntPtr pixels);
+            public delegate void ReadPixels_(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void DrawPixels_(GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void GetBooleanv(Enums.GetPName pname, Enums.Boolean[] parameters);
             public delegate void GetClipPlane(Enums.ClipPlaneName plane, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] equation);
@@ -5421,13 +5421,13 @@ namespace OpenTK.OpenGL
             public delegate void GetPixelMapuiv(Enums.PixelMap map, [MarshalAs(UnmanagedType.LPArray)] GLuint[] values);
             public delegate void GetPixelMapusv(Enums.PixelMap map, [MarshalAs(UnmanagedType.LPArray)] GLushort[] values);
             public delegate void GetPolygonStipple([MarshalAs(UnmanagedType.LPArray)] GLubyte[] mask);
-            public delegate GLstring GetString(Enums.StringName name);
+            public delegate IntPtr GetString_(Enums.StringName name);
             public delegate void GetTexEnvfv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetTexEnviv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetTexGendv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
             public delegate void GetTexGenfv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetTexGeniv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetTexImage(Enums.TextureTarget target, GLint level, Enums.PixelFormat format, Enums.PixelType type, out IntPtr pixels);
+            public delegate void GetTexImage(Enums.TextureTarget target, GLint level, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void GetTexParameterfv(Enums.TextureTarget target, Enums.GetTextureParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetTexParameteriv(Enums.TextureTarget target, Enums.GetTextureParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetTexLevelParameterfv(Enums.TextureTarget target, GLint level, Enums.GetTextureParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
@@ -5437,11 +5437,11 @@ namespace OpenTK.OpenGL
             public delegate void DepthRange(GLclampd near, GLclampd far);
             public delegate void Frustum(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
             public delegate void LoadIdentity();
-            public delegate void LoadMatrixf([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
-            public delegate void LoadMatrixd([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
+            public delegate void LoadMatrixf_(IntPtr m);
+            public delegate void LoadMatrixd_(IntPtr m);
             public delegate void MatrixMode(Enums.MatrixMode mode);
-            public delegate void MultMatrixf([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
-            public delegate void MultMatrixd([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
+            public delegate void MultMatrixf_(IntPtr m);
+            public delegate void MultMatrixd_(IntPtr m);
             public delegate void Ortho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
             public delegate void PopMatrix();
             public delegate void PushMatrix();
@@ -5472,24 +5472,24 @@ namespace OpenTK.OpenGL
             public delegate void CopyTexSubImage2D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height);
             public delegate void TexSubImage1D(Enums.TextureTarget target, GLint level, GLint xoffset, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void TexSubImage2D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            public delegate GLboolean AreTexturesResident(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures, Enums.Boolean[] residences);
+            public delegate GLboolean AreTexturesResident_(GLsizei n, IntPtr textures, Enums.Boolean[] residences);
             public delegate void BindTexture(Enums.TextureTarget target, GLuint texture);
-            public delegate void DeleteTextures(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures);
+            public delegate void DeleteTextures_(GLsizei n, IntPtr textures);
             public delegate void GenTextures(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures);
             public delegate GLboolean IsTexture(GLuint texture);
-            public delegate void PrioritizeTextures(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures, [MarshalAs(UnmanagedType.LPArray)] GLclampf[] priorities);
+            public delegate void PrioritizeTextures_(GLsizei n, IntPtr textures, IntPtr priorities);
             public delegate void Indexub(GLubyte c);
-            public delegate void Indexubv([MarshalAs(UnmanagedType.LPArray)] GLubyte[] c);
+            public delegate void Indexubv_(IntPtr c);
             public delegate void PopClientAttrib();
             public delegate void PushClientAttrib(Enums.ClientAttribMask mask);
             public delegate void BlendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
             public delegate void BlendEquation(GLenum mode);
             public delegate void DrawRangeElements_(Enums.BeginMode mode, GLuint start, GLuint end, GLsizei count, GLenum type, IntPtr indices);
             public delegate void ColorTable_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr table);
-            public delegate void ColorTableParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            public delegate void ColorTableParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void ColorTableParameterfv_(GLenum target, GLenum pname, IntPtr parameters);
+            public delegate void ColorTableParameteriv_(GLenum target, GLenum pname, IntPtr parameters);
             public delegate void CopyColorTable(GLenum target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width);
-            public delegate void GetColorTable_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr table);
+            public delegate void GetColorTable_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr table);
             public delegate void GetColorTableParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetColorTableParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void ColorSubTable_(GLenum target, GLsizei start, GLsizei count, Enums.PixelFormat format, Enums.PixelType type, IntPtr data);
@@ -5497,20 +5497,20 @@ namespace OpenTK.OpenGL
             public delegate void ConvolutionFilter1D_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
             public delegate void ConvolutionFilter2D_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
             public delegate void ConvolutionParameterf(GLenum target, GLenum pname, GLfloat parameters);
-            public delegate void ConvolutionParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void ConvolutionParameterfv_(GLenum target, GLenum pname, IntPtr parameters);
             public delegate void ConvolutionParameteri(GLenum target, GLenum pname, GLint parameters);
-            public delegate void ConvolutionParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void ConvolutionParameteriv_(GLenum target, GLenum pname, IntPtr parameters);
             public delegate void CopyConvolutionFilter1D(GLenum target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width);
             public delegate void CopyConvolutionFilter2D(GLenum target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width, GLsizei height);
-            public delegate void GetConvolutionFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr image);
+            public delegate void GetConvolutionFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
             public delegate void GetConvolutionParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetConvolutionParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetSeparableFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr row, out IntPtr column, out IntPtr span);
+            public delegate void GetSeparableFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column, IntPtr span);
             public delegate void SeparableFilter2D_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column);
-            public delegate void GetHistogram_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, out IntPtr values);
+            public delegate void GetHistogram_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values);
             public delegate void GetHistogramParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetHistogramParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetMinmax_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, out IntPtr values);
+            public delegate void GetMinmax_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values);
             public delegate void GetMinmaxParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetMinmaxParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void Histogram(GLenum target, GLsizei width, Enums.PixelInternalFormat internalformat, Enums.Boolean sink);
@@ -5523,41 +5523,41 @@ namespace OpenTK.OpenGL
             public delegate void ActiveTexture(GLenum texture);
             public delegate void ClientActiveTexture(GLenum texture);
             public delegate void MultiTexCoord1d(GLenum target, GLdouble s);
-            public delegate void MultiTexCoord1dv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void MultiTexCoord1dv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord1f(GLenum target, GLfloat s);
-            public delegate void MultiTexCoord1fv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void MultiTexCoord1fv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord1i(GLenum target, GLint s);
-            public delegate void MultiTexCoord1iv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void MultiTexCoord1iv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord1s(GLenum target, GLshort s);
-            public delegate void MultiTexCoord1sv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void MultiTexCoord1sv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord2d(GLenum target, GLdouble s, GLdouble t);
-            public delegate void MultiTexCoord2dv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void MultiTexCoord2dv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord2f(GLenum target, GLfloat s, GLfloat t);
-            public delegate void MultiTexCoord2fv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void MultiTexCoord2fv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord2i(GLenum target, GLint s, GLint t);
-            public delegate void MultiTexCoord2iv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void MultiTexCoord2iv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord2s(GLenum target, GLshort s, GLshort t);
-            public delegate void MultiTexCoord2sv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void MultiTexCoord2sv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord3d(GLenum target, GLdouble s, GLdouble t, GLdouble r);
-            public delegate void MultiTexCoord3dv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void MultiTexCoord3dv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord3f(GLenum target, GLfloat s, GLfloat t, GLfloat r);
-            public delegate void MultiTexCoord3fv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void MultiTexCoord3fv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord3i(GLenum target, GLint s, GLint t, GLint r);
-            public delegate void MultiTexCoord3iv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void MultiTexCoord3iv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord3s(GLenum target, GLshort s, GLshort t, GLshort r);
-            public delegate void MultiTexCoord3sv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void MultiTexCoord3sv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord4d(GLenum target, GLdouble s, GLdouble t, GLdouble r, GLdouble q);
-            public delegate void MultiTexCoord4dv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void MultiTexCoord4dv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord4f(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q);
-            public delegate void MultiTexCoord4fv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void MultiTexCoord4fv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord4i(GLenum target, GLint s, GLint t, GLint r, GLint q);
-            public delegate void MultiTexCoord4iv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void MultiTexCoord4iv_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord4s(GLenum target, GLshort s, GLshort t, GLshort r, GLshort q);
-            public delegate void MultiTexCoord4sv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void LoadTransposeMatrixf([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
-            public delegate void LoadTransposeMatrixd([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
-            public delegate void MultTransposeMatrixf([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
-            public delegate void MultTransposeMatrixd([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
+            public delegate void MultiTexCoord4sv_(GLenum target, IntPtr v);
+            public delegate void LoadTransposeMatrixf_(IntPtr m);
+            public delegate void LoadTransposeMatrixd_(IntPtr m);
+            public delegate void MultTransposeMatrixf_(IntPtr m);
+            public delegate void MultTransposeMatrixd_(IntPtr m);
             public delegate void SampleCoverage(GLclampf value, Enums.Boolean invert);
             public delegate void CompressedTexImage3D(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, IntPtr data);
             public delegate void CompressedTexImage2D(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, IntPtr data);
@@ -5565,54 +5565,54 @@ namespace OpenTK.OpenGL
             public delegate void CompressedTexSubImage3D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
             public delegate void CompressedTexSubImage2D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
             public delegate void CompressedTexSubImage1D(Enums.TextureTarget target, GLint level, GLint xoffset, GLsizei width, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
-            public delegate void GetCompressedTexImage(Enums.TextureTarget target, GLint level, out IntPtr img);
+            public delegate void GetCompressedTexImage(Enums.TextureTarget target, GLint level, IntPtr img);
             public delegate void BlendFuncSeparate(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
             public delegate void FogCoordf(GLfloat coord);
-            public delegate void FogCoordfv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] coord);
+            public delegate void FogCoordfv_(IntPtr coord);
             public delegate void FogCoordd(GLdouble coord);
-            public delegate void FogCoorddv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] coord);
+            public delegate void FogCoorddv_(IntPtr coord);
             public delegate void FogCoordPointer_(GLenum type, GLsizei stride, IntPtr pointer);
             public delegate void MultiDrawArrays(Enums.BeginMode mode, [MarshalAs(UnmanagedType.LPArray)] GLint[] first, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLsizei primcount);
-            public delegate void MultiDrawElements(Enums.BeginMode mode, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLenum type, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] indices, GLsizei primcount);
+            public delegate void MultiDrawElements_(Enums.BeginMode mode, IntPtr count, GLenum type, IntPtr indices, GLsizei primcount);
             public delegate void PointParameterf(GLenum pname, GLfloat param);
-            public delegate void PointParameterfv(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void PointParameterfv_(GLenum pname, IntPtr parameters);
             public delegate void PointParameteri(GLenum pname, GLint param);
-            public delegate void PointParameteriv(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void PointParameteriv_(GLenum pname, IntPtr parameters);
             public delegate void SecondaryColor3b(GLbyte red, GLbyte green, GLbyte blue);
-            public delegate void SecondaryColor3bv([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public delegate void SecondaryColor3bv_(IntPtr v);
             public delegate void SecondaryColor3d(GLdouble red, GLdouble green, GLdouble blue);
-            public delegate void SecondaryColor3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void SecondaryColor3dv_(IntPtr v);
             public delegate void SecondaryColor3f(GLfloat red, GLfloat green, GLfloat blue);
-            public delegate void SecondaryColor3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void SecondaryColor3fv_(IntPtr v);
             public delegate void SecondaryColor3i(GLint red, GLint green, GLint blue);
-            public delegate void SecondaryColor3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void SecondaryColor3iv_(IntPtr v);
             public delegate void SecondaryColor3s(GLshort red, GLshort green, GLshort blue);
-            public delegate void SecondaryColor3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void SecondaryColor3sv_(IntPtr v);
             public delegate void SecondaryColor3ub(GLubyte red, GLubyte green, GLubyte blue);
-            public delegate void SecondaryColor3ubv([MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
+            public delegate void SecondaryColor3ubv_(IntPtr v);
             public delegate void SecondaryColor3ui(GLuint red, GLuint green, GLuint blue);
-            public delegate void SecondaryColor3uiv([MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
+            public delegate void SecondaryColor3uiv_(IntPtr v);
             public delegate void SecondaryColor3us(GLushort red, GLushort green, GLushort blue);
-            public delegate void SecondaryColor3usv([MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public delegate void SecondaryColor3usv_(IntPtr v);
             public delegate void SecondaryColorPointer_(GLint size, Enums.ColorPointerType type, GLsizei stride, IntPtr pointer);
             public delegate void WindowPos2d(GLdouble x, GLdouble y);
-            public delegate void WindowPos2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void WindowPos2dv_(IntPtr v);
             public delegate void WindowPos2f(GLfloat x, GLfloat y);
-            public delegate void WindowPos2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void WindowPos2fv_(IntPtr v);
             public delegate void WindowPos2i(GLint x, GLint y);
-            public delegate void WindowPos2iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void WindowPos2iv_(IntPtr v);
             public delegate void WindowPos2s(GLshort x, GLshort y);
-            public delegate void WindowPos2sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void WindowPos2sv_(IntPtr v);
             public delegate void WindowPos3d(GLdouble x, GLdouble y, GLdouble z);
-            public delegate void WindowPos3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void WindowPos3dv_(IntPtr v);
             public delegate void WindowPos3f(GLfloat x, GLfloat y, GLfloat z);
-            public delegate void WindowPos3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void WindowPos3fv_(IntPtr v);
             public delegate void WindowPos3i(GLint x, GLint y, GLint z);
-            public delegate void WindowPos3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void WindowPos3iv_(IntPtr v);
             public delegate void WindowPos3s(GLshort x, GLshort y, GLshort z);
-            public delegate void WindowPos3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void WindowPos3sv_(IntPtr v);
             public delegate void GenQueries(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
-            public delegate void DeleteQueries(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
+            public delegate void DeleteQueries_(GLsizei n, IntPtr ids);
             public delegate GLboolean IsQuery(GLuint id);
             public delegate void BeginQuery(GLenum target, GLuint id);
             public delegate void EndQuery(GLenum target);
@@ -5620,23 +5620,23 @@ namespace OpenTK.OpenGL
             public delegate void GetQueryObjectiv(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetQueryObjectuiv(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLuint[] parameters);
             public delegate void BindBuffer(GLenum target, GLuint buffer);
-            public delegate void DeleteBuffers(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffers);
+            public delegate void DeleteBuffers_(GLsizei n, IntPtr buffers);
             public delegate void GenBuffers(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffers);
             public delegate GLboolean IsBuffer(GLuint buffer);
             public delegate void BufferData_(GLenum target, GLsizeiptr size, IntPtr data, GLenum usage);
             public delegate void BufferSubData_(GLenum target, GLintptr offset, GLsizeiptr size, IntPtr data);
-            public delegate void GetBufferSubData_(GLenum target, GLintptr offset, GLsizeiptr size, out IntPtr data);
-            public delegate IntPtr MapBuffer_(GLenum target, GLenum access);
+            public delegate void GetBufferSubData_(GLenum target, GLintptr offset, GLsizeiptr size, IntPtr data);
+            public delegate IntPtr MapBuffer(GLenum target, GLenum access);
             public delegate GLboolean UnmapBuffer(GLenum target);
             public delegate void GetBufferParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetBufferPointerv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] parameters);
             public delegate void BlendEquationSeparate(Enums.BlendEquationModeEXT modeRGB, Enums.BlendEquationModeEXT modeAlpha);
-            public delegate void DrawBuffers(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLenum[] bufs);
+            public delegate void DrawBuffers_(GLsizei n, IntPtr bufs);
             public delegate void StencilOpSeparate(GLenum face, Enums.StencilOp sfail, Enums.StencilOp dpfail, Enums.StencilOp dppass);
             public delegate void StencilFuncSeparate(Enums.StencilFunction frontfunc, Enums.StencilFunction backfunc, GLint reference, GLuint mask);
             public delegate void StencilMaskSeparate(GLenum face, GLuint mask);
             public delegate void AttachShader(GLuint program, GLuint shader);
-            public delegate void BindAttribLocation(GLuint program, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public delegate void BindAttribLocation_(GLuint program, GLuint index, IntPtr name);
             public delegate void CompileShader(GLuint shader);
             public delegate GLuint CreateProgram();
             public delegate GLuint CreateShader(GLenum type);
@@ -5648,13 +5648,13 @@ namespace OpenTK.OpenGL
             public delegate void GetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
             public delegate void GetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
             public delegate void GetAttachedShaders(GLuint program, GLsizei maxCount, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, [MarshalAs(UnmanagedType.LPArray)] GLuint[] obj);
-            public delegate GLint GetAttribLocation(GLuint program, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public delegate GLint GetAttribLocation_(GLuint program, IntPtr name);
             public delegate void GetProgramiv(GLuint program, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetProgramInfoLog(GLuint program, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] infoLog);
             public delegate void GetShaderiv(GLuint shader, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetShaderInfoLog(GLuint shader, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] infoLog);
             public delegate void GetShaderSource(GLuint shader, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] source);
-            public delegate GLint GetUniformLocation(GLuint program, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public delegate GLint GetUniformLocation_(GLuint program, IntPtr name);
             public delegate void GetUniformfv(GLuint program, GLint location, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetUniformiv(GLuint program, GLint location, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetVertexAttribdv(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
@@ -5664,7 +5664,7 @@ namespace OpenTK.OpenGL
             public delegate GLboolean IsProgram(GLuint program);
             public delegate GLboolean IsShader(GLuint shader);
             public delegate void LinkProgram(GLuint program);
-            public delegate void ShaderSource(GLuint shader, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] string[] @string, [MarshalAs(UnmanagedType.LPArray)] GLint[] length);
+            public delegate void ShaderSource_(GLuint shader, GLsizei count, string[] @string, IntPtr length);
             public delegate void UseProgram(GLuint program);
             public delegate void Uniform1f(GLint location, GLfloat v0);
             public delegate void Uniform2f(GLint location, GLfloat v0, GLfloat v1);
@@ -5674,93 +5674,93 @@ namespace OpenTK.OpenGL
             public delegate void Uniform2i(GLint location, GLint v0, GLint v1);
             public delegate void Uniform3i(GLint location, GLint v0, GLint v1, GLint v2);
             public delegate void Uniform4i(GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
-            public delegate void Uniform1fv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void Uniform2fv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void Uniform3fv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void Uniform4fv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void Uniform1iv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
-            public delegate void Uniform2iv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
-            public delegate void Uniform3iv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
-            public delegate void Uniform4iv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
-            public delegate void UniformMatrix2fv(GLint location, GLsizei count, Enums.Boolean transpose, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void UniformMatrix3fv(GLint location, GLsizei count, Enums.Boolean transpose, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void UniformMatrix4fv(GLint location, GLsizei count, Enums.Boolean transpose, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public delegate void Uniform1fv_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform2fv_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform3fv_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform4fv_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform1iv_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform2iv_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform3iv_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform4iv_(GLint location, GLsizei count, IntPtr value);
+            public delegate void UniformMatrix2fv_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
+            public delegate void UniformMatrix3fv_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
+            public delegate void UniformMatrix4fv_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
             public delegate void ValidateProgram(GLuint program);
             public delegate void VertexAttrib1d(GLuint index, GLdouble x);
-            public delegate void VertexAttrib1dv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib1dv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib1f(GLuint index, GLfloat x);
-            public delegate void VertexAttrib1fv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib1fv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib1s(GLuint index, GLshort x);
-            public delegate void VertexAttrib1sv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib1sv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2d(GLuint index, GLdouble x, GLdouble y);
-            public delegate void VertexAttrib2dv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib2dv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2f(GLuint index, GLfloat x, GLfloat y);
-            public delegate void VertexAttrib2fv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib2fv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2s(GLuint index, GLshort x, GLshort y);
-            public delegate void VertexAttrib2sv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib2sv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3d(GLuint index, GLdouble x, GLdouble y, GLdouble z);
-            public delegate void VertexAttrib3dv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib3dv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3f(GLuint index, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void VertexAttrib3fv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib3fv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3s(GLuint index, GLshort x, GLshort y, GLshort z);
-            public delegate void VertexAttrib3sv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void VertexAttrib4Nbv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
-            public delegate void VertexAttrib4Niv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
-            public delegate void VertexAttrib4Nsv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib3sv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4Nbv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4Niv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4Nsv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4Nub(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w);
-            public delegate void VertexAttrib4Nubv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
-            public delegate void VertexAttrib4Nuiv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
-            public delegate void VertexAttrib4Nusv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
-            public delegate void VertexAttrib4bv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public delegate void VertexAttrib4Nubv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4Nuiv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4Nusv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4bv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4d(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void VertexAttrib4dv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib4dv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4f(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void VertexAttrib4fv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            public delegate void VertexAttrib4iv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void VertexAttrib4fv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4iv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4s(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w);
-            public delegate void VertexAttrib4sv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void VertexAttrib4ubv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
-            public delegate void VertexAttrib4uiv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
-            public delegate void VertexAttrib4usv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public delegate void VertexAttrib4sv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4ubv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4uiv_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4usv_(GLuint index, IntPtr v);
             public delegate void VertexAttribPointer_(GLuint index, GLint size, GLenum type, Enums.Boolean normalized, GLsizei stride, IntPtr pointer);
             public delegate void ActiveTextureARB(GLenum texture);
             public delegate void ClientActiveTextureARB(GLenum texture);
             public delegate void MultiTexCoord1dARB(GLenum target, GLdouble s);
-            public delegate void MultiTexCoord1dvARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void MultiTexCoord1dvARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord1fARB(GLenum target, GLfloat s);
-            public delegate void MultiTexCoord1fvARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void MultiTexCoord1fvARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord1iARB(GLenum target, GLint s);
-            public delegate void MultiTexCoord1ivARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void MultiTexCoord1ivARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord1sARB(GLenum target, GLshort s);
-            public delegate void MultiTexCoord1svARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void MultiTexCoord1svARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord2dARB(GLenum target, GLdouble s, GLdouble t);
-            public delegate void MultiTexCoord2dvARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void MultiTexCoord2dvARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord2fARB(GLenum target, GLfloat s, GLfloat t);
-            public delegate void MultiTexCoord2fvARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void MultiTexCoord2fvARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord2iARB(GLenum target, GLint s, GLint t);
-            public delegate void MultiTexCoord2ivARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void MultiTexCoord2ivARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord2sARB(GLenum target, GLshort s, GLshort t);
-            public delegate void MultiTexCoord2svARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void MultiTexCoord2svARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord3dARB(GLenum target, GLdouble s, GLdouble t, GLdouble r);
-            public delegate void MultiTexCoord3dvARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void MultiTexCoord3dvARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord3fARB(GLenum target, GLfloat s, GLfloat t, GLfloat r);
-            public delegate void MultiTexCoord3fvARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void MultiTexCoord3fvARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord3iARB(GLenum target, GLint s, GLint t, GLint r);
-            public delegate void MultiTexCoord3ivARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void MultiTexCoord3ivARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord3sARB(GLenum target, GLshort s, GLshort t, GLshort r);
-            public delegate void MultiTexCoord3svARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void MultiTexCoord3svARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord4dARB(GLenum target, GLdouble s, GLdouble t, GLdouble r, GLdouble q);
-            public delegate void MultiTexCoord4dvARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void MultiTexCoord4dvARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord4fARB(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q);
-            public delegate void MultiTexCoord4fvARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void MultiTexCoord4fvARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord4iARB(GLenum target, GLint s, GLint t, GLint r, GLint q);
-            public delegate void MultiTexCoord4ivARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void MultiTexCoord4ivARB_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord4sARB(GLenum target, GLshort s, GLshort t, GLshort r, GLshort q);
-            public delegate void MultiTexCoord4svARB(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void LoadTransposeMatrixfARB([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
-            public delegate void LoadTransposeMatrixdARB([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
-            public delegate void MultTransposeMatrixfARB([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
-            public delegate void MultTransposeMatrixdARB([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
+            public delegate void MultiTexCoord4svARB_(GLenum target, IntPtr v);
+            public delegate void LoadTransposeMatrixfARB_(IntPtr m);
+            public delegate void LoadTransposeMatrixdARB_(IntPtr m);
+            public delegate void MultTransposeMatrixfARB_(IntPtr m);
+            public delegate void MultTransposeMatrixdARB_(IntPtr m);
             public delegate void SampleCoverageARB(GLclampf value, Enums.Boolean invert);
             public delegate void CompressedTexImage3DARB(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, IntPtr data);
             public delegate void CompressedTexImage2DARB(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, IntPtr data);
@@ -5768,115 +5768,115 @@ namespace OpenTK.OpenGL
             public delegate void CompressedTexSubImage3DARB(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
             public delegate void CompressedTexSubImage2DARB(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
             public delegate void CompressedTexSubImage1DARB(Enums.TextureTarget target, GLint level, GLint xoffset, GLsizei width, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
-            public delegate void GetCompressedTexImageARB(Enums.TextureTarget target, GLint level, out IntPtr img);
+            public delegate void GetCompressedTexImageARB(Enums.TextureTarget target, GLint level, IntPtr img);
             public delegate void PointParameterfARB(GLenum pname, GLfloat param);
-            public delegate void PointParameterfvARB(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            public delegate void WeightbvARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLbyte[] weights);
-            public delegate void WeightsvARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLshort[] weights);
-            public delegate void WeightivARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLint[] weights);
-            public delegate void WeightfvARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] weights);
-            public delegate void WeightdvARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] weights);
-            public delegate void WeightubvARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] weights);
-            public delegate void WeightusvARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLushort[] weights);
-            public delegate void WeightuivARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLuint[] weights);
+            public delegate void PointParameterfvARB_(GLenum pname, IntPtr parameters);
+            public delegate void WeightbvARB_(GLint size, IntPtr weights);
+            public delegate void WeightsvARB_(GLint size, IntPtr weights);
+            public delegate void WeightivARB_(GLint size, IntPtr weights);
+            public delegate void WeightfvARB_(GLint size, IntPtr weights);
+            public delegate void WeightdvARB_(GLint size, IntPtr weights);
+            public delegate void WeightubvARB_(GLint size, IntPtr weights);
+            public delegate void WeightusvARB_(GLint size, IntPtr weights);
+            public delegate void WeightuivARB_(GLint size, IntPtr weights);
             public delegate void WeightPointerARB_(GLint size, GLenum type, GLsizei stride, IntPtr pointer);
             public delegate void VertexBlendARB(GLint count);
             public delegate void CurrentPaletteMatrixARB(GLint index);
-            public delegate void MatrixIndexubvARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] indices);
-            public delegate void MatrixIndexusvARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLushort[] indices);
-            public delegate void MatrixIndexuivARB(GLint size, [MarshalAs(UnmanagedType.LPArray)] GLuint[] indices);
+            public delegate void MatrixIndexubvARB_(GLint size, IntPtr indices);
+            public delegate void MatrixIndexusvARB_(GLint size, IntPtr indices);
+            public delegate void MatrixIndexuivARB_(GLint size, IntPtr indices);
             public delegate void MatrixIndexPointerARB_(GLint size, GLenum type, GLsizei stride, IntPtr pointer);
             public delegate void WindowPos2dARB(GLdouble x, GLdouble y);
-            public delegate void WindowPos2dvARB([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void WindowPos2dvARB_(IntPtr v);
             public delegate void WindowPos2fARB(GLfloat x, GLfloat y);
-            public delegate void WindowPos2fvARB([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void WindowPos2fvARB_(IntPtr v);
             public delegate void WindowPos2iARB(GLint x, GLint y);
-            public delegate void WindowPos2ivARB([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void WindowPos2ivARB_(IntPtr v);
             public delegate void WindowPos2sARB(GLshort x, GLshort y);
-            public delegate void WindowPos2svARB([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void WindowPos2svARB_(IntPtr v);
             public delegate void WindowPos3dARB(GLdouble x, GLdouble y, GLdouble z);
-            public delegate void WindowPos3dvARB([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void WindowPos3dvARB_(IntPtr v);
             public delegate void WindowPos3fARB(GLfloat x, GLfloat y, GLfloat z);
-            public delegate void WindowPos3fvARB([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void WindowPos3fvARB_(IntPtr v);
             public delegate void WindowPos3iARB(GLint x, GLint y, GLint z);
-            public delegate void WindowPos3ivARB([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void WindowPos3ivARB_(IntPtr v);
             public delegate void WindowPos3sARB(GLshort x, GLshort y, GLshort z);
-            public delegate void WindowPos3svARB([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void WindowPos3svARB_(IntPtr v);
             public delegate void VertexAttrib1dARB(GLuint index, GLdouble x);
-            public delegate void VertexAttrib1dvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib1dvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib1fARB(GLuint index, GLfloat x);
-            public delegate void VertexAttrib1fvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib1fvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib1sARB(GLuint index, GLshort x);
-            public delegate void VertexAttrib1svARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib1svARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2dARB(GLuint index, GLdouble x, GLdouble y);
-            public delegate void VertexAttrib2dvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib2dvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2fARB(GLuint index, GLfloat x, GLfloat y);
-            public delegate void VertexAttrib2fvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib2fvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2sARB(GLuint index, GLshort x, GLshort y);
-            public delegate void VertexAttrib2svARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib2svARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3dARB(GLuint index, GLdouble x, GLdouble y, GLdouble z);
-            public delegate void VertexAttrib3dvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib3dvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3fARB(GLuint index, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void VertexAttrib3fvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib3fvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3sARB(GLuint index, GLshort x, GLshort y, GLshort z);
-            public delegate void VertexAttrib3svARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void VertexAttrib4NbvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
-            public delegate void VertexAttrib4NivARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
-            public delegate void VertexAttrib4NsvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib3svARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4NbvARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4NivARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4NsvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4NubARB(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w);
-            public delegate void VertexAttrib4NubvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
-            public delegate void VertexAttrib4NuivARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
-            public delegate void VertexAttrib4NusvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
-            public delegate void VertexAttrib4bvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public delegate void VertexAttrib4NubvARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4NuivARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4NusvARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4bvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4dARB(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void VertexAttrib4dvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib4dvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4fARB(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void VertexAttrib4fvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            public delegate void VertexAttrib4ivARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void VertexAttrib4fvARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4ivARB_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4sARB(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w);
-            public delegate void VertexAttrib4svARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void VertexAttrib4ubvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
-            public delegate void VertexAttrib4uivARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
-            public delegate void VertexAttrib4usvARB(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public delegate void VertexAttrib4svARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4ubvARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4uivARB_(GLuint index, IntPtr v);
+            public delegate void VertexAttrib4usvARB_(GLuint index, IntPtr v);
             public delegate void VertexAttribPointerARB_(GLuint index, GLint size, GLenum type, Enums.Boolean normalized, GLsizei stride, IntPtr pointer);
             public delegate void EnableVertexAttribArrayARB(GLuint index);
             public delegate void DisableVertexAttribArrayARB(GLuint index);
             public delegate void ProgramStringARB_(GLenum target, GLenum format, GLsizei len, IntPtr @string);
             public delegate void BindProgramARB(GLenum target, GLuint program);
-            public delegate void DeleteProgramsARB(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] programs);
+            public delegate void DeleteProgramsARB_(GLsizei n, IntPtr programs);
             public delegate void GenProgramsARB(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] programs);
             public delegate void ProgramEnvParameter4dARB(GLenum target, GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void ProgramEnvParameter4dvARB(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
+            public delegate void ProgramEnvParameter4dvARB_(GLenum target, GLuint index, IntPtr parameters);
             public delegate void ProgramEnvParameter4fARB(GLenum target, GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void ProgramEnvParameter4fvARB(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void ProgramEnvParameter4fvARB_(GLenum target, GLuint index, IntPtr parameters);
             public delegate void ProgramLocalParameter4dARB(GLenum target, GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void ProgramLocalParameter4dvARB(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
+            public delegate void ProgramLocalParameter4dvARB_(GLenum target, GLuint index, IntPtr parameters);
             public delegate void ProgramLocalParameter4fARB(GLenum target, GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void ProgramLocalParameter4fvARB(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void ProgramLocalParameter4fvARB_(GLenum target, GLuint index, IntPtr parameters);
             public delegate void GetProgramEnvParameterdvARB(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
             public delegate void GetProgramEnvParameterfvARB(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetProgramLocalParameterdvARB(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
             public delegate void GetProgramLocalParameterfvARB(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetProgramivARB(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetProgramStringARB_(GLenum target, GLenum pname, out IntPtr @string);
+            public delegate void GetProgramStringARB_(GLenum target, GLenum pname, IntPtr @string);
             public delegate void GetVertexAttribdvARB(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
             public delegate void GetVertexAttribfvARB(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetVertexAttribivARB(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetVertexAttribPointervARB(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer);
             public delegate GLboolean IsProgramARB(GLuint program);
             public delegate void BindBufferARB(GLenum target, GLuint buffer);
-            public delegate void DeleteBuffersARB(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffers);
+            public delegate void DeleteBuffersARB_(GLsizei n, IntPtr buffers);
             public delegate void GenBuffersARB(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffers);
             public delegate GLboolean IsBufferARB(GLuint buffer);
             public delegate void BufferDataARB_(GLenum target, GLsizeiptrARB size, IntPtr data, GLenum usage);
             public delegate void BufferSubDataARB_(GLenum target, GLintptrARB offset, GLsizeiptrARB size, IntPtr data);
-            public delegate void GetBufferSubDataARB_(GLenum target, GLintptrARB offset, GLsizeiptrARB size, out IntPtr data);
-            public delegate IntPtr MapBufferARB_(GLenum target, GLenum access);
+            public delegate void GetBufferSubDataARB_(GLenum target, GLintptrARB offset, GLsizeiptrARB size, IntPtr data);
+            public delegate IntPtr MapBufferARB(GLenum target, GLenum access);
             public delegate GLboolean UnmapBufferARB(GLenum target);
             public delegate void GetBufferParameterivARB(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetBufferPointervARB(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] parameters);
             public delegate void GenQueriesARB(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
-            public delegate void DeleteQueriesARB(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
+            public delegate void DeleteQueriesARB_(GLsizei n, IntPtr ids);
             public delegate GLboolean IsQueryARB(GLuint id);
             public delegate void BeginQueryARB(GLenum target, GLuint id);
             public delegate void EndQueryARB(GLenum target);
@@ -5887,7 +5887,7 @@ namespace OpenTK.OpenGL
             public delegate GLhandleARB GetHandleARB(GLenum pname);
             public delegate void DetachObjectARB(GLhandleARB containerObj, GLhandleARB attachedObj);
             public delegate GLhandleARB CreateShaderObjectARB(GLenum shaderType);
-            public delegate void ShaderSourceARB(GLhandleARB shaderObj, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] @string, [MarshalAs(UnmanagedType.LPArray)] GLint[] length);
+            public delegate void ShaderSourceARB_(GLhandleARB shaderObj, GLsizei count, IntPtr @string, IntPtr length);
             public delegate void CompileShaderARB(GLhandleARB shaderObj);
             public delegate GLhandleARB CreateProgramObjectARB();
             public delegate void AttachObjectARB(GLhandleARB containerObj, GLhandleARB obj);
@@ -5902,37 +5902,37 @@ namespace OpenTK.OpenGL
             public delegate void Uniform2iARB(GLint location, GLint v0, GLint v1);
             public delegate void Uniform3iARB(GLint location, GLint v0, GLint v1, GLint v2);
             public delegate void Uniform4iARB(GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
-            public delegate void Uniform1fvARB(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void Uniform2fvARB(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void Uniform3fvARB(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void Uniform4fvARB(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void Uniform1ivARB(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
-            public delegate void Uniform2ivARB(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
-            public delegate void Uniform3ivARB(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
-            public delegate void Uniform4ivARB(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
-            public delegate void UniformMatrix2fvARB(GLint location, GLsizei count, Enums.Boolean transpose, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void UniformMatrix3fvARB(GLint location, GLsizei count, Enums.Boolean transpose, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
-            public delegate void UniformMatrix4fvARB(GLint location, GLsizei count, Enums.Boolean transpose, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public delegate void Uniform1fvARB_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform2fvARB_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform3fvARB_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform4fvARB_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform1ivARB_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform2ivARB_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform3ivARB_(GLint location, GLsizei count, IntPtr value);
+            public delegate void Uniform4ivARB_(GLint location, GLsizei count, IntPtr value);
+            public delegate void UniformMatrix2fvARB_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
+            public delegate void UniformMatrix3fvARB_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
+            public delegate void UniformMatrix4fvARB_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
             public delegate void GetObjectParameterfvARB(GLhandleARB obj, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetObjectParameterivARB(GLhandleARB obj, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetInfoLogARB(GLhandleARB obj, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] infoLog);
             public delegate void GetAttachedObjectsARB(GLhandleARB containerObj, GLsizei maxCount, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, [MarshalAs(UnmanagedType.LPArray)] GLhandleARB[] obj);
-            public delegate GLint GetUniformLocationARB(GLhandleARB programObj, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] name);
+            public delegate GLint GetUniformLocationARB_(GLhandleARB programObj, IntPtr name);
             public delegate void GetActiveUniformARB(GLhandleARB programObj, GLuint index, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] name);
             public delegate void GetUniformfvARB(GLhandleARB programObj, GLint location, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetUniformivARB(GLhandleARB programObj, GLint location, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetShaderSourceARB(GLhandleARB obj, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] source);
-            public delegate void BindAttribLocationARB(GLhandleARB programObj, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] name);
+            public delegate void BindAttribLocationARB_(GLhandleARB programObj, GLuint index, IntPtr name);
             public delegate void GetActiveAttribARB(GLhandleARB programObj, GLuint index, GLsizei maxLength, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] GLenum[] type, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] name);
-            public delegate GLint GetAttribLocationARB(GLhandleARB programObj, [MarshalAs(UnmanagedType.LPArray)] GLcharARB[] name);
-            public delegate void DrawBuffersARB(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLenum[] bufs);
+            public delegate GLint GetAttribLocationARB_(GLhandleARB programObj, IntPtr name);
+            public delegate void DrawBuffersARB_(GLsizei n, IntPtr bufs);
             public delegate void ClampColorARB(GLenum target, GLenum clamp);
             public delegate void BlendColorEXT(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
             public delegate void PolygonOffsetEXT(GLfloat factor, GLfloat bias);
             public delegate void TexImage3DEXT(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void TexSubImage3DEXT(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void GetTexFilterFuncSGIS(Enums.TextureTarget target, GLenum filter, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] weights);
-            public delegate void TexFilterFuncSGIS(Enums.TextureTarget target, GLenum filter, GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] weights);
+            public delegate void TexFilterFuncSGIS_(Enums.TextureTarget target, GLenum filter, GLsizei n, IntPtr weights);
             public delegate void TexSubImage1DEXT(Enums.TextureTarget target, GLint level, GLint xoffset, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void TexSubImage2DEXT(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void CopyTexImage1DEXT(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width, GLint border);
@@ -5940,10 +5940,10 @@ namespace OpenTK.OpenGL
             public delegate void CopyTexSubImage1DEXT(Enums.TextureTarget target, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width);
             public delegate void CopyTexSubImage2DEXT(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height);
             public delegate void CopyTexSubImage3DEXT(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height);
-            public delegate void GetHistogramEXT_(Enums.HistogramTargetEXT target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, out IntPtr values);
+            public delegate void GetHistogramEXT_(Enums.HistogramTargetEXT target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values);
             public delegate void GetHistogramParameterfvEXT(Enums.HistogramTargetEXT target, Enums.GetHistogramParameterPNameEXT pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetHistogramParameterivEXT(Enums.HistogramTargetEXT target, Enums.GetHistogramParameterPNameEXT pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetMinmaxEXT_(Enums.MinmaxTargetEXT target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, out IntPtr values);
+            public delegate void GetMinmaxEXT_(Enums.MinmaxTargetEXT target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values);
             public delegate void GetMinmaxParameterfvEXT(Enums.MinmaxTargetEXT target, Enums.GetMinmaxParameterPNameEXT pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetMinmaxParameterivEXT(Enums.MinmaxTargetEXT target, Enums.GetMinmaxParameterPNameEXT pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void HistogramEXT(Enums.HistogramTargetEXT target, GLsizei width, Enums.PixelInternalFormat internalformat, Enums.Boolean sink);
@@ -5953,41 +5953,41 @@ namespace OpenTK.OpenGL
             public delegate void ConvolutionFilter1DEXT_(Enums.ConvolutionTargetEXT target, Enums.PixelInternalFormat internalformat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
             public delegate void ConvolutionFilter2DEXT_(Enums.ConvolutionTargetEXT target, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
             public delegate void ConvolutionParameterfEXT(Enums.ConvolutionTargetEXT target, Enums.ConvolutionParameterEXT pname, GLfloat parameters);
-            public delegate void ConvolutionParameterfvEXT(Enums.ConvolutionTargetEXT target, Enums.ConvolutionParameterEXT pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void ConvolutionParameterfvEXT_(Enums.ConvolutionTargetEXT target, Enums.ConvolutionParameterEXT pname, IntPtr parameters);
             public delegate void ConvolutionParameteriEXT(Enums.ConvolutionTargetEXT target, Enums.ConvolutionParameterEXT pname, GLint parameters);
-            public delegate void ConvolutionParameterivEXT(Enums.ConvolutionTargetEXT target, Enums.ConvolutionParameterEXT pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void ConvolutionParameterivEXT_(Enums.ConvolutionTargetEXT target, Enums.ConvolutionParameterEXT pname, IntPtr parameters);
             public delegate void CopyConvolutionFilter1DEXT(Enums.ConvolutionTargetEXT target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width);
             public delegate void CopyConvolutionFilter2DEXT(Enums.ConvolutionTargetEXT target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width, GLsizei height);
-            public delegate void GetConvolutionFilterEXT_(Enums.ConvolutionTargetEXT target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr image);
+            public delegate void GetConvolutionFilterEXT_(Enums.ConvolutionTargetEXT target, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
             public delegate void GetConvolutionParameterfvEXT(Enums.ConvolutionTargetEXT target, Enums.ConvolutionParameterEXT pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetConvolutionParameterivEXT(Enums.ConvolutionTargetEXT target, Enums.ConvolutionParameterEXT pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void GetSeparableFilterEXT_(Enums.SeparableTargetEXT target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr row, out IntPtr column, out IntPtr span);
+            public delegate void GetSeparableFilterEXT_(Enums.SeparableTargetEXT target, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column, IntPtr span);
             public delegate void SeparableFilter2DEXT_(Enums.SeparableTargetEXT target, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column);
             public delegate void ColorTableSGI_(Enums.ColorTableTargetSGI target, Enums.PixelInternalFormat internalformat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr table);
-            public delegate void ColorTableParameterfvSGI(Enums.ColorTableTargetSGI target, Enums.ColorTableParameterPNameSGI pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            public delegate void ColorTableParameterivSGI(Enums.ColorTableTargetSGI target, Enums.ColorTableParameterPNameSGI pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void ColorTableParameterfvSGI_(Enums.ColorTableTargetSGI target, Enums.ColorTableParameterPNameSGI pname, IntPtr parameters);
+            public delegate void ColorTableParameterivSGI_(Enums.ColorTableTargetSGI target, Enums.ColorTableParameterPNameSGI pname, IntPtr parameters);
             public delegate void CopyColorTableSGI(Enums.ColorTableTargetSGI target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width);
-            public delegate void GetColorTableSGI_(Enums.ColorTableTargetSGI target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr table);
+            public delegate void GetColorTableSGI_(Enums.ColorTableTargetSGI target, Enums.PixelFormat format, Enums.PixelType type, IntPtr table);
             public delegate void GetColorTableParameterfvSGI(Enums.ColorTableTargetSGI target, Enums.GetColorTableParameterPNameSGI pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetColorTableParameterivSGI(Enums.ColorTableTargetSGI target, Enums.GetColorTableParameterPNameSGI pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void PixelTexGenSGIX(GLenum mode);
             public delegate void PixelTexGenParameteriSGIS(Enums.PixelTexGenParameterNameSGIS pname, GLint param);
-            public delegate void PixelTexGenParameterivSGIS(Enums.PixelTexGenParameterNameSGIS pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void PixelTexGenParameterivSGIS_(Enums.PixelTexGenParameterNameSGIS pname, IntPtr parameters);
             public delegate void PixelTexGenParameterfSGIS(Enums.PixelTexGenParameterNameSGIS pname, GLfloat param);
-            public delegate void PixelTexGenParameterfvSGIS(Enums.PixelTexGenParameterNameSGIS pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void PixelTexGenParameterfvSGIS_(Enums.PixelTexGenParameterNameSGIS pname, IntPtr parameters);
             public delegate void GetPixelTexGenParameterivSGIS(Enums.PixelTexGenParameterNameSGIS pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetPixelTexGenParameterfvSGIS(Enums.PixelTexGenParameterNameSGIS pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void TexImage4DSGIS(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, GLsizei depth, GLsizei size4d, GLint border, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             public delegate void TexSubImage4DSGIS(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint woffset, GLsizei width, GLsizei height, GLsizei depth, GLsizei size4d, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            public delegate GLboolean AreTexturesResidentEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures, Enums.Boolean[] residences);
+            public delegate GLboolean AreTexturesResidentEXT_(GLsizei n, IntPtr textures, Enums.Boolean[] residences);
             public delegate void BindTextureEXT(Enums.TextureTarget target, GLuint texture);
-            public delegate void DeleteTexturesEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures);
+            public delegate void DeleteTexturesEXT_(GLsizei n, IntPtr textures);
             public delegate void GenTexturesEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures);
             public delegate GLboolean IsTextureEXT(GLuint texture);
-            public delegate void PrioritizeTexturesEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures, [MarshalAs(UnmanagedType.LPArray)] GLclampf[] priorities);
-            public delegate void DetailTexFuncSGIS(Enums.TextureTarget target, GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
+            public delegate void PrioritizeTexturesEXT_(GLsizei n, IntPtr textures, IntPtr priorities);
+            public delegate void DetailTexFuncSGIS_(Enums.TextureTarget target, GLsizei n, IntPtr points);
             public delegate void GetDetailTexFuncSGIS(Enums.TextureTarget target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
-            public delegate void SharpenTexFuncSGIS(Enums.TextureTarget target, GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
+            public delegate void SharpenTexFuncSGIS_(Enums.TextureTarget target, GLsizei n, IntPtr points);
             public delegate void GetSharpenTexFuncSGIS(Enums.TextureTarget target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
             public delegate void SampleMaskSGIS(GLclampf value, Enums.Boolean invert);
             public delegate void SamplePatternSGIS(Enums.SamplePatternSGIS pattern);
@@ -6002,13 +6002,13 @@ namespace OpenTK.OpenGL
             public delegate void VertexPointerEXT_(GLint size, Enums.VertexPointerType type, GLsizei stride, GLsizei count, IntPtr pointer);
             public delegate void BlendEquationEXT(Enums.BlendEquationModeEXT mode);
             public delegate void SpriteParameterfSGIX(GLenum pname, GLfloat param);
-            public delegate void SpriteParameterfvSGIX(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void SpriteParameterfvSGIX_(GLenum pname, IntPtr parameters);
             public delegate void SpriteParameteriSGIX(GLenum pname, GLint param);
-            public delegate void SpriteParameterivSGIX(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void SpriteParameterivSGIX_(GLenum pname, IntPtr parameters);
             public delegate void PointParameterfEXT(GLenum pname, GLfloat param);
-            public delegate void PointParameterfvEXT(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void PointParameterfvEXT_(GLenum pname, IntPtr parameters);
             public delegate void PointParameterfSGIS(GLenum pname, GLfloat param);
-            public delegate void PointParameterfvSGIS(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void PointParameterfvSGIS_(GLenum pname, IntPtr parameters);
             public delegate GLint GetInstrumentsSGIX();
             public delegate void InstrumentsBufferSGIX(GLsizei size, [MarshalAs(UnmanagedType.LPArray)] GLint[] buffer);
             public delegate GLint PollInstrumentsSGIX([MarshalAs(UnmanagedType.LPArray)] GLint[] marker_p);
@@ -6017,33 +6017,33 @@ namespace OpenTK.OpenGL
             public delegate void StopInstrumentsSGIX(GLint marker);
             public delegate void FrameZoomSGIX(GLint factor);
             public delegate void TagSampleBufferSGIX();
-            public delegate void DeformationMap3dSGIX(Enums.FfdTargetSGIX target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, GLdouble w1, GLdouble w2, GLint wstride, GLint worder, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] points);
-            public delegate void DeformationMap3fSGIX(Enums.FfdTargetSGIX target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, GLfloat w1, GLfloat w2, GLint wstride, GLint worder, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
+            public delegate void DeformationMap3dSGIX_(Enums.FfdTargetSGIX target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, GLdouble w1, GLdouble w2, GLint wstride, GLint worder, IntPtr points);
+            public delegate void DeformationMap3fSGIX_(Enums.FfdTargetSGIX target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, GLfloat w1, GLfloat w2, GLint wstride, GLint worder, IntPtr points);
             public delegate void DeformSGIX(Enums.FfdMaskSGIX mask);
             public delegate void LoadIdentityDeformationMapSGIX(Enums.FfdMaskSGIX mask);
-            public delegate void ReferencePlaneSGIX([MarshalAs(UnmanagedType.LPArray)] GLdouble[] equation);
+            public delegate void ReferencePlaneSGIX_(IntPtr equation);
             public delegate void FlushRasterSGIX();
-            public delegate void FogFuncSGIS(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
+            public delegate void FogFuncSGIS_(GLsizei n, IntPtr points);
             public delegate void GetFogFuncSGIS([MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
             public delegate void ImageTransformParameteriHP(GLenum target, GLenum pname, GLint param);
             public delegate void ImageTransformParameterfHP(GLenum target, GLenum pname, GLfloat param);
-            public delegate void ImageTransformParameterivHP(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void ImageTransformParameterfvHP(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void ImageTransformParameterivHP_(GLenum target, GLenum pname, IntPtr parameters);
+            public delegate void ImageTransformParameterfvHP_(GLenum target, GLenum pname, IntPtr parameters);
             public delegate void GetImageTransformParameterivHP(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetImageTransformParameterfvHP(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void ColorSubTableEXT_(GLenum target, GLsizei start, GLsizei count, Enums.PixelFormat format, Enums.PixelType type, IntPtr data);
             public delegate void CopyColorSubTableEXT(GLenum target, GLsizei start, GLint x, GLint y, GLsizei width);
             public delegate void HintPGI(GLenum target, GLint mode);
             public delegate void ColorTableEXT_(GLenum target, Enums.PixelInternalFormat internalFormat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr table);
-            public delegate void GetColorTableEXT_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr data);
+            public delegate void GetColorTableEXT_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr data);
             public delegate void GetColorTableParameterivEXT(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetColorTableParameterfvEXT(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetListParameterfvSGIX(GLuint list, Enums.ListParameterName pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetListParameterivSGIX(GLuint list, Enums.ListParameterName pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void ListParameterfSGIX(GLuint list, Enums.ListParameterName pname, GLfloat param);
-            public delegate void ListParameterfvSGIX(GLuint list, Enums.ListParameterName pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void ListParameterfvSGIX_(GLuint list, Enums.ListParameterName pname, IntPtr parameters);
             public delegate void ListParameteriSGIX(GLuint list, Enums.ListParameterName pname, GLint param);
-            public delegate void ListParameterivSGIX(GLuint list, Enums.ListParameterName pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void ListParameterivSGIX_(GLuint list, Enums.ListParameterName pname, IntPtr parameters);
             public delegate void IndexMaterialEXT(Enums.MaterialFace face, GLenum mode);
             public delegate void IndexFuncEXT(GLenum func, GLclampf reference);
             public delegate void LockArraysEXT(GLint first, GLsizei count);
@@ -6052,17 +6052,17 @@ namespace OpenTK.OpenGL
             public delegate void CullParameterfvEXT(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void FragmentColorMaterialSGIX(Enums.MaterialFace face, Enums.MaterialParameter mode);
             public delegate void FragmentLightfSGIX(GLenum light, GLenum pname, GLfloat param);
-            public delegate void FragmentLightfvSGIX(GLenum light, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void FragmentLightfvSGIX_(GLenum light, GLenum pname, IntPtr parameters);
             public delegate void FragmentLightiSGIX(GLenum light, GLenum pname, GLint param);
-            public delegate void FragmentLightivSGIX(GLenum light, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void FragmentLightivSGIX_(GLenum light, GLenum pname, IntPtr parameters);
             public delegate void FragmentLightModelfSGIX(Enums.FragmentLightModelParameterSGIX pname, GLfloat param);
-            public delegate void FragmentLightModelfvSGIX(Enums.FragmentLightModelParameterSGIX pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void FragmentLightModelfvSGIX_(Enums.FragmentLightModelParameterSGIX pname, IntPtr parameters);
             public delegate void FragmentLightModeliSGIX(Enums.FragmentLightModelParameterSGIX pname, GLint param);
-            public delegate void FragmentLightModelivSGIX(Enums.FragmentLightModelParameterSGIX pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void FragmentLightModelivSGIX_(Enums.FragmentLightModelParameterSGIX pname, IntPtr parameters);
             public delegate void FragmentMaterialfSGIX(Enums.MaterialFace face, Enums.MaterialParameter pname, GLfloat param);
-            public delegate void FragmentMaterialfvSGIX(Enums.MaterialFace face, Enums.MaterialParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void FragmentMaterialfvSGIX_(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters);
             public delegate void FragmentMaterialiSGIX(Enums.MaterialFace face, Enums.MaterialParameter pname, GLint param);
-            public delegate void FragmentMaterialivSGIX(Enums.MaterialFace face, Enums.MaterialParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void FragmentMaterialivSGIX_(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters);
             public delegate void GetFragmentLightfvSGIX(GLenum light, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetFragmentLightivSGIX(GLenum light, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetFragmentMaterialfvSGIX(Enums.MaterialFace face, Enums.MaterialParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
@@ -6078,59 +6078,59 @@ namespace OpenTK.OpenGL
             public delegate GLuint GenAsyncMarkersSGIX(GLsizei range);
             public delegate void DeleteAsyncMarkersSGIX(GLuint marker, GLsizei range);
             public delegate GLboolean IsAsyncMarkerSGIX(GLuint marker);
-            public delegate void VertexPointervINTEL(GLint size, Enums.VertexPointerType type, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer);
-            public delegate void NormalPointervINTEL(Enums.NormalPointerType type, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer);
-            public delegate void ColorPointervINTEL(GLint size, Enums.VertexPointerType type, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer);
-            public delegate void TexCoordPointervINTEL(GLint size, Enums.VertexPointerType type, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer);
+            public delegate void VertexPointervINTEL_(GLint size, Enums.VertexPointerType type, IntPtr pointer);
+            public delegate void NormalPointervINTEL_(Enums.NormalPointerType type, IntPtr pointer);
+            public delegate void ColorPointervINTEL_(GLint size, Enums.VertexPointerType type, IntPtr pointer);
+            public delegate void TexCoordPointervINTEL_(GLint size, Enums.VertexPointerType type, IntPtr pointer);
             public delegate void PixelTransformParameteriEXT(GLenum target, GLenum pname, GLint param);
             public delegate void PixelTransformParameterfEXT(GLenum target, GLenum pname, GLfloat param);
-            public delegate void PixelTransformParameterivEXT(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void PixelTransformParameterfvEXT(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void PixelTransformParameterivEXT_(GLenum target, GLenum pname, IntPtr parameters);
+            public delegate void PixelTransformParameterfvEXT_(GLenum target, GLenum pname, IntPtr parameters);
             public delegate void SecondaryColor3bEXT(GLbyte red, GLbyte green, GLbyte blue);
-            public delegate void SecondaryColor3bvEXT([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public delegate void SecondaryColor3bvEXT_(IntPtr v);
             public delegate void SecondaryColor3dEXT(GLdouble red, GLdouble green, GLdouble blue);
-            public delegate void SecondaryColor3dvEXT([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void SecondaryColor3dvEXT_(IntPtr v);
             public delegate void SecondaryColor3fEXT(GLfloat red, GLfloat green, GLfloat blue);
-            public delegate void SecondaryColor3fvEXT([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void SecondaryColor3fvEXT_(IntPtr v);
             public delegate void SecondaryColor3iEXT(GLint red, GLint green, GLint blue);
-            public delegate void SecondaryColor3ivEXT([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void SecondaryColor3ivEXT_(IntPtr v);
             public delegate void SecondaryColor3sEXT(GLshort red, GLshort green, GLshort blue);
-            public delegate void SecondaryColor3svEXT([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void SecondaryColor3svEXT_(IntPtr v);
             public delegate void SecondaryColor3ubEXT(GLubyte red, GLubyte green, GLubyte blue);
-            public delegate void SecondaryColor3ubvEXT([MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
+            public delegate void SecondaryColor3ubvEXT_(IntPtr v);
             public delegate void SecondaryColor3uiEXT(GLuint red, GLuint green, GLuint blue);
-            public delegate void SecondaryColor3uivEXT([MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
+            public delegate void SecondaryColor3uivEXT_(IntPtr v);
             public delegate void SecondaryColor3usEXT(GLushort red, GLushort green, GLushort blue);
-            public delegate void SecondaryColor3usvEXT([MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public delegate void SecondaryColor3usvEXT_(IntPtr v);
             public delegate void SecondaryColorPointerEXT_(GLint size, Enums.ColorPointerType type, GLsizei stride, IntPtr pointer);
             public delegate void TextureNormalEXT(GLenum mode);
             public delegate void MultiDrawArraysEXT(Enums.BeginMode mode, [MarshalAs(UnmanagedType.LPArray)] GLint[] first, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLsizei primcount);
-            public delegate void MultiDrawElementsEXT(Enums.BeginMode mode, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLenum type, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] indices, GLsizei primcount);
+            public delegate void MultiDrawElementsEXT_(Enums.BeginMode mode, IntPtr count, GLenum type, IntPtr indices, GLsizei primcount);
             public delegate void FogCoordfEXT(GLfloat coord);
-            public delegate void FogCoordfvEXT([MarshalAs(UnmanagedType.LPArray)] GLfloat[] coord);
+            public delegate void FogCoordfvEXT_(IntPtr coord);
             public delegate void FogCoorddEXT(GLdouble coord);
-            public delegate void FogCoorddvEXT([MarshalAs(UnmanagedType.LPArray)] GLdouble[] coord);
+            public delegate void FogCoorddvEXT_(IntPtr coord);
             public delegate void FogCoordPointerEXT_(GLenum type, GLsizei stride, IntPtr pointer);
             public delegate void Tangent3bEXT(GLbyte tx, GLbyte ty, GLbyte tz);
-            public delegate void Tangent3bvEXT([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public delegate void Tangent3bvEXT_(IntPtr v);
             public delegate void Tangent3dEXT(GLdouble tx, GLdouble ty, GLdouble tz);
-            public delegate void Tangent3dvEXT([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void Tangent3dvEXT_(IntPtr v);
             public delegate void Tangent3fEXT(GLfloat tx, GLfloat ty, GLfloat tz);
-            public delegate void Tangent3fvEXT([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Tangent3fvEXT_(IntPtr v);
             public delegate void Tangent3iEXT(GLint tx, GLint ty, GLint tz);
-            public delegate void Tangent3ivEXT([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void Tangent3ivEXT_(IntPtr v);
             public delegate void Tangent3sEXT(GLshort tx, GLshort ty, GLshort tz);
-            public delegate void Tangent3svEXT([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void Tangent3svEXT_(IntPtr v);
             public delegate void Binormal3bEXT(GLbyte bx, GLbyte by, GLbyte bz);
-            public delegate void Binormal3bvEXT([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public delegate void Binormal3bvEXT_(IntPtr v);
             public delegate void Binormal3dEXT(GLdouble bx, GLdouble by, GLdouble bz);
-            public delegate void Binormal3dvEXT([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void Binormal3dvEXT_(IntPtr v);
             public delegate void Binormal3fEXT(GLfloat bx, GLfloat by, GLfloat bz);
-            public delegate void Binormal3fvEXT([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Binormal3fvEXT_(IntPtr v);
             public delegate void Binormal3iEXT(GLint bx, GLint by, GLint bz);
-            public delegate void Binormal3ivEXT([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void Binormal3ivEXT_(IntPtr v);
             public delegate void Binormal3sEXT(GLshort bx, GLshort by, GLshort bz);
-            public delegate void Binormal3svEXT([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void Binormal3svEXT_(IntPtr v);
             public delegate void TangentPointerEXT_(GLenum type, GLsizei stride, IntPtr pointer);
             public delegate void BinormalPointerEXT_(GLenum type, GLsizei stride, IntPtr pointer);
             public delegate void FinishTextureSUNX();
@@ -6145,60 +6145,60 @@ namespace OpenTK.OpenGL
             public delegate void ReplacementCodeuiSUN(GLuint code);
             public delegate void ReplacementCodeusSUN(GLushort code);
             public delegate void ReplacementCodeubSUN(GLubyte code);
-            public delegate void ReplacementCodeuivSUN([MarshalAs(UnmanagedType.LPArray)] GLuint[] code);
-            public delegate void ReplacementCodeusvSUN([MarshalAs(UnmanagedType.LPArray)] GLushort[] code);
-            public delegate void ReplacementCodeubvSUN([MarshalAs(UnmanagedType.LPArray)] GLubyte[] code);
-            public delegate void ReplacementCodePointerSUN(GLenum type, GLsizei stride, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer);
+            public delegate void ReplacementCodeuivSUN_(IntPtr code);
+            public delegate void ReplacementCodeusvSUN_(IntPtr code);
+            public delegate void ReplacementCodeubvSUN_(IntPtr code);
+            public delegate void ReplacementCodePointerSUN_(GLenum type, GLsizei stride, IntPtr pointer);
             public delegate void Color4ubVertex2fSUN(GLubyte r, GLubyte g, GLubyte b, GLubyte a, GLfloat x, GLfloat y);
-            public delegate void Color4ubVertex2fvSUN([MarshalAs(UnmanagedType.LPArray)] GLubyte[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Color4ubVertex2fvSUN_(IntPtr c, IntPtr v);
             public delegate void Color4ubVertex3fSUN(GLubyte r, GLubyte g, GLubyte b, GLubyte a, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void Color4ubVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLubyte[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Color4ubVertex3fvSUN_(IntPtr c, IntPtr v);
             public delegate void Color3fVertex3fSUN(GLfloat r, GLfloat g, GLfloat b, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void Color3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Color3fVertex3fvSUN_(IntPtr c, IntPtr v);
             public delegate void Normal3fVertex3fSUN(GLfloat nx, GLfloat ny, GLfloat nz, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void Normal3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Normal3fVertex3fvSUN_(IntPtr n, IntPtr v);
             public delegate void Color4fNormal3fVertex3fSUN(GLfloat r, GLfloat g, GLfloat b, GLfloat a, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void Color4fNormal3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void Color4fNormal3fVertex3fvSUN_(IntPtr c, IntPtr n, IntPtr v);
             public delegate void TexCoord2fVertex3fSUN(GLfloat s, GLfloat t, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void TexCoord2fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord2fVertex3fvSUN_(IntPtr tc, IntPtr v);
             public delegate void TexCoord4fVertex4fSUN(GLfloat s, GLfloat t, GLfloat p, GLfloat q, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void TexCoord4fVertex4fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord4fVertex4fvSUN_(IntPtr tc, IntPtr v);
             public delegate void TexCoord2fColor4ubVertex3fSUN(GLfloat s, GLfloat t, GLubyte r, GLubyte g, GLubyte b, GLubyte a, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void TexCoord2fColor4ubVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord2fColor4ubVertex3fvSUN_(IntPtr tc, IntPtr c, IntPtr v);
             public delegate void TexCoord2fColor3fVertex3fSUN(GLfloat s, GLfloat t, GLfloat r, GLfloat g, GLfloat b, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void TexCoord2fColor3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord2fColor3fVertex3fvSUN_(IntPtr tc, IntPtr c, IntPtr v);
             public delegate void TexCoord2fNormal3fVertex3fSUN(GLfloat s, GLfloat t, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void TexCoord2fNormal3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord2fNormal3fVertex3fvSUN_(IntPtr tc, IntPtr n, IntPtr v);
             public delegate void TexCoord2fColor4fNormal3fVertex3fSUN(GLfloat s, GLfloat t, GLfloat r, GLfloat g, GLfloat b, GLfloat a, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void TexCoord2fColor4fNormal3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord2fColor4fNormal3fVertex3fvSUN_(IntPtr tc, IntPtr c, IntPtr n, IntPtr v);
             public delegate void TexCoord4fColor4fNormal3fVertex4fSUN(GLfloat s, GLfloat t, GLfloat p, GLfloat q, GLfloat r, GLfloat g, GLfloat b, GLfloat a, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void TexCoord4fColor4fNormal3fVertex4fvSUN([MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void TexCoord4fColor4fNormal3fVertex4fvSUN_(IntPtr tc, IntPtr c, IntPtr n, IntPtr v);
             public delegate void ReplacementCodeuiVertex3fSUN(GLuint rc, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void ReplacementCodeuiVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLuint[] rc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void ReplacementCodeuiVertex3fvSUN_(IntPtr rc, IntPtr v);
             public delegate void ReplacementCodeuiColor4ubVertex3fSUN(GLuint rc, GLubyte r, GLubyte g, GLubyte b, GLubyte a, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void ReplacementCodeuiColor4ubVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLuint[] rc, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void ReplacementCodeuiColor4ubVertex3fvSUN_(IntPtr rc, IntPtr c, IntPtr v);
             public delegate void ReplacementCodeuiColor3fVertex3fSUN(GLuint rc, GLfloat r, GLfloat g, GLfloat b, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void ReplacementCodeuiColor3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLuint[] rc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void ReplacementCodeuiColor3fVertex3fvSUN_(IntPtr rc, IntPtr c, IntPtr v);
             public delegate void ReplacementCodeuiNormal3fVertex3fSUN(GLuint rc, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void ReplacementCodeuiNormal3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLuint[] rc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void ReplacementCodeuiNormal3fVertex3fvSUN_(IntPtr rc, IntPtr n, IntPtr v);
             public delegate void ReplacementCodeuiColor4fNormal3fVertex3fSUN(GLuint rc, GLfloat r, GLfloat g, GLfloat b, GLfloat a, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void ReplacementCodeuiColor4fNormal3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLuint[] rc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void ReplacementCodeuiColor4fNormal3fVertex3fvSUN_(IntPtr rc, IntPtr c, IntPtr n, IntPtr v);
             public delegate void ReplacementCodeuiTexCoord2fVertex3fSUN(GLuint rc, GLfloat s, GLfloat t, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void ReplacementCodeuiTexCoord2fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLuint[] rc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void ReplacementCodeuiTexCoord2fVertex3fvSUN_(IntPtr rc, IntPtr tc, IntPtr v);
             public delegate void ReplacementCodeuiTexCoord2fNormal3fVertex3fSUN(GLuint rc, GLfloat s, GLfloat t, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLuint[] rc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN_(IntPtr rc, IntPtr tc, IntPtr n, IntPtr v);
             public delegate void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN(GLuint rc, GLfloat s, GLfloat t, GLfloat r, GLfloat g, GLfloat b, GLfloat a, GLfloat nx, GLfloat ny, GLfloat nz, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN([MarshalAs(UnmanagedType.LPArray)] GLuint[] rc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] tc, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] c, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] n, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN_(IntPtr rc, IntPtr tc, IntPtr c, IntPtr n, IntPtr v);
             public delegate void BlendFuncSeparateEXT(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
             public delegate void BlendFuncSeparateINGR(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
             public delegate void VertexWeightfEXT(GLfloat weight);
-            public delegate void VertexWeightfvEXT([MarshalAs(UnmanagedType.LPArray)] GLfloat[] weight);
+            public delegate void VertexWeightfvEXT_(IntPtr weight);
             public delegate void VertexWeightPointerEXT_(GLsizei size, GLenum type, GLsizei stride, IntPtr pointer);
             public delegate void FlushVertexArrayRangeNV();
             public delegate void VertexArrayRangeNV_(GLsizei length, IntPtr pointer);
-            public delegate void CombinerParameterfvNV(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void CombinerParameterfvNV_(GLenum pname, IntPtr parameters);
             public delegate void CombinerParameterfNV(GLenum pname, GLfloat param);
-            public delegate void CombinerParameterivNV(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void CombinerParameterivNV_(GLenum pname, IntPtr parameters);
             public delegate void CombinerParameteriNV(GLenum pname, GLint param);
             public delegate void CombinerInputNV(GLenum stage, GLenum portion, GLenum variable, GLenum input, GLenum mapping, GLenum componentUsage);
             public delegate void CombinerOutputNV(GLenum stage, GLenum portion, GLenum abOutput, GLenum cdOutput, GLenum sumOutput, GLenum scale, GLenum bias, Enums.Boolean abDotProduct, Enums.Boolean cdDotProduct, Enums.Boolean muxSum);
@@ -6211,45 +6211,45 @@ namespace OpenTK.OpenGL
             public delegate void GetFinalCombinerInputParameterivNV(GLenum variable, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void ResizeBuffersMESA();
             public delegate void WindowPos2dMESA(GLdouble x, GLdouble y);
-            public delegate void WindowPos2dvMESA([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void WindowPos2dvMESA_(IntPtr v);
             public delegate void WindowPos2fMESA(GLfloat x, GLfloat y);
-            public delegate void WindowPos2fvMESA([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void WindowPos2fvMESA_(IntPtr v);
             public delegate void WindowPos2iMESA(GLint x, GLint y);
-            public delegate void WindowPos2ivMESA([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void WindowPos2ivMESA_(IntPtr v);
             public delegate void WindowPos2sMESA(GLshort x, GLshort y);
-            public delegate void WindowPos2svMESA([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void WindowPos2svMESA_(IntPtr v);
             public delegate void WindowPos3dMESA(GLdouble x, GLdouble y, GLdouble z);
-            public delegate void WindowPos3dvMESA([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void WindowPos3dvMESA_(IntPtr v);
             public delegate void WindowPos3fMESA(GLfloat x, GLfloat y, GLfloat z);
-            public delegate void WindowPos3fvMESA([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void WindowPos3fvMESA_(IntPtr v);
             public delegate void WindowPos3iMESA(GLint x, GLint y, GLint z);
-            public delegate void WindowPos3ivMESA([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void WindowPos3ivMESA_(IntPtr v);
             public delegate void WindowPos3sMESA(GLshort x, GLshort y, GLshort z);
-            public delegate void WindowPos3svMESA([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void WindowPos3svMESA_(IntPtr v);
             public delegate void WindowPos4dMESA(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void WindowPos4dvMESA([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void WindowPos4dvMESA_(IntPtr v);
             public delegate void WindowPos4fMESA(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void WindowPos4fvMESA([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void WindowPos4fvMESA_(IntPtr v);
             public delegate void WindowPos4iMESA(GLint x, GLint y, GLint z, GLint w);
-            public delegate void WindowPos4ivMESA([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public delegate void WindowPos4ivMESA_(IntPtr v);
             public delegate void WindowPos4sMESA(GLshort x, GLshort y, GLshort z, GLshort w);
-            public delegate void WindowPos4svMESA([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void MultiModeDrawArraysIBM(Enums.BeginMode[] mode, [MarshalAs(UnmanagedType.LPArray)] GLint[] first, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLsizei primcount, GLint modestride);
-            public delegate void MultiModeDrawElementsIBM_(Enums.BeginMode[] mode, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLenum type, IntPtr indices, GLsizei primcount, GLint modestride);
-            public delegate void ColorPointerListIBM(GLint size, Enums.ColorPointerType type, GLint stride, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer, GLint ptrstride);
-            public delegate void SecondaryColorPointerListIBM(GLint size, GLenum type, GLint stride, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer, GLint ptrstride);
-            public delegate void EdgeFlagPointerListIBM(GLint stride, [MarshalAs(UnmanagedType.LPArray)] GLboolean[] pointer, GLint ptrstride);
-            public delegate void FogCoordPointerListIBM(GLenum type, GLint stride, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer, GLint ptrstride);
-            public delegate void IndexPointerListIBM(Enums.IndexPointerType type, GLint stride, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer, GLint ptrstride);
-            public delegate void NormalPointerListIBM(Enums.NormalPointerType type, GLint stride, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer, GLint ptrstride);
-            public delegate void TexCoordPointerListIBM(GLint size, Enums.TexCoordPointerType type, GLint stride, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer, GLint ptrstride);
-            public delegate void VertexPointerListIBM(GLint size, Enums.VertexPointerType type, GLint stride, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer, GLint ptrstride);
+            public delegate void WindowPos4svMESA_(IntPtr v);
+            public delegate void MultiModeDrawArraysIBM_(Enums.BeginMode[] mode, IntPtr first, IntPtr count, GLsizei primcount, GLint modestride);
+            public delegate void MultiModeDrawElementsIBM_(Enums.BeginMode[] mode, IntPtr count, GLenum type, IntPtr indices, GLsizei primcount, GLint modestride);
+            public delegate void ColorPointerListIBM_(GLint size, Enums.ColorPointerType type, GLint stride, IntPtr pointer, GLint ptrstride);
+            public delegate void SecondaryColorPointerListIBM_(GLint size, GLenum type, GLint stride, IntPtr pointer, GLint ptrstride);
+            public delegate void EdgeFlagPointerListIBM_(GLint stride, IntPtr pointer, GLint ptrstride);
+            public delegate void FogCoordPointerListIBM_(GLenum type, GLint stride, IntPtr pointer, GLint ptrstride);
+            public delegate void IndexPointerListIBM_(Enums.IndexPointerType type, GLint stride, IntPtr pointer, GLint ptrstride);
+            public delegate void NormalPointerListIBM_(Enums.NormalPointerType type, GLint stride, IntPtr pointer, GLint ptrstride);
+            public delegate void TexCoordPointerListIBM_(GLint size, Enums.TexCoordPointerType type, GLint stride, IntPtr pointer, GLint ptrstride);
+            public delegate void VertexPointerListIBM_(GLint size, Enums.VertexPointerType type, GLint stride, IntPtr pointer, GLint ptrstride);
             public delegate void TbufferMask3DFX(GLuint mask);
             public delegate void SampleMaskEXT(GLclampf value, Enums.Boolean invert);
             public delegate void SamplePatternEXT(GLenum pattern);
             public delegate void TextureColorMaskSGIS(Enums.Boolean red, Enums.Boolean green, Enums.Boolean blue, Enums.Boolean alpha);
             public delegate void IglooInterfaceSGIX_(GLenum pname, IntPtr parameters);
-            public delegate void DeleteFencesNV(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] fences);
+            public delegate void DeleteFencesNV_(GLsizei n, IntPtr fences);
             public delegate void GenFencesNV(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] fences);
             public delegate GLboolean IsFenceNV(GLuint fence);
             public delegate GLboolean TestFenceNV(GLuint fence);
@@ -6257,20 +6257,20 @@ namespace OpenTK.OpenGL
             public delegate void FinishFenceNV(GLuint fence);
             public delegate void SetFenceNV(GLuint fence, GLenum condition);
             public delegate void MapControlPointsNV_(GLenum target, GLuint index, GLenum type, GLsizei ustride, GLsizei vstride, GLint uorder, GLint vorder, Enums.Boolean packed, IntPtr points);
-            public delegate void MapParameterivNV(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            public delegate void MapParameterfvNV(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            public delegate void GetMapControlPointsNV_(GLenum target, GLuint index, GLenum type, GLsizei ustride, GLsizei vstride, Enums.Boolean packed, out IntPtr points);
+            public delegate void MapParameterivNV_(GLenum target, GLenum pname, IntPtr parameters);
+            public delegate void MapParameterfvNV_(GLenum target, GLenum pname, IntPtr parameters);
+            public delegate void GetMapControlPointsNV_(GLenum target, GLuint index, GLenum type, GLsizei ustride, GLsizei vstride, Enums.Boolean packed, IntPtr points);
             public delegate void GetMapParameterivNV(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetMapParameterfvNV(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void GetMapAttribParameterivNV(GLenum target, GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetMapAttribParameterfvNV(GLenum target, GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             public delegate void EvalMapsNV(GLenum target, GLenum mode);
-            public delegate void CombinerStageParameterfvNV(GLenum stage, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void CombinerStageParameterfvNV_(GLenum stage, GLenum pname, IntPtr parameters);
             public delegate void GetCombinerStageParameterfvNV(GLenum stage, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            public delegate GLboolean AreProgramsResidentNV(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] programs, Enums.Boolean[] residences);
+            public delegate GLboolean AreProgramsResidentNV_(GLsizei n, IntPtr programs, Enums.Boolean[] residences);
             public delegate void BindProgramNV(GLenum target, GLuint id);
-            public delegate void DeleteProgramsNV(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] programs);
-            public delegate void ExecuteProgramNV(GLenum target, GLuint id, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void DeleteProgramsNV_(GLsizei n, IntPtr programs);
+            public delegate void ExecuteProgramNV_(GLenum target, GLuint id, IntPtr parameters);
             public delegate void GenProgramsNV(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] programs);
             public delegate void GetProgramParameterdvNV(GLenum target, GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
             public delegate void GetProgramParameterfvNV(GLenum target, GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
@@ -6282,57 +6282,57 @@ namespace OpenTK.OpenGL
             public delegate void GetVertexAttribivNV(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetVertexAttribPointervNV(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer);
             public delegate GLboolean IsProgramNV(GLuint id);
-            public delegate void LoadProgramNV(GLenum target, GLuint id, GLsizei len, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] program);
+            public delegate void LoadProgramNV_(GLenum target, GLuint id, GLsizei len, IntPtr program);
             public delegate void ProgramParameter4dNV(GLenum target, GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void ProgramParameter4dvNV(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void ProgramParameter4dvNV_(GLenum target, GLuint index, IntPtr v);
             public delegate void ProgramParameter4fNV(GLenum target, GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void ProgramParameter4fvNV(GLenum target, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            public delegate void ProgramParameters4dvNV(GLenum target, GLuint index, GLuint count, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
-            public delegate void ProgramParameters4fvNV(GLenum target, GLuint index, GLuint count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            public delegate void RequestResidentProgramsNV(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] programs);
+            public delegate void ProgramParameter4fvNV_(GLenum target, GLuint index, IntPtr v);
+            public delegate void ProgramParameters4dvNV_(GLenum target, GLuint index, GLuint count, IntPtr v);
+            public delegate void ProgramParameters4fvNV_(GLenum target, GLuint index, GLuint count, IntPtr v);
+            public delegate void RequestResidentProgramsNV_(GLsizei n, IntPtr programs);
             public delegate void TrackMatrixNV(GLenum target, GLuint address, GLenum matrix, GLenum transform);
             public delegate void VertexAttribPointerNV_(GLuint index, GLint fsize, GLenum type, GLsizei stride, IntPtr pointer);
             public delegate void VertexAttrib1dNV(GLuint index, GLdouble x);
-            public delegate void VertexAttrib1dvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib1dvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib1fNV(GLuint index, GLfloat x);
-            public delegate void VertexAttrib1fvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib1fvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib1sNV(GLuint index, GLshort x);
-            public delegate void VertexAttrib1svNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib1svNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2dNV(GLuint index, GLdouble x, GLdouble y);
-            public delegate void VertexAttrib2dvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib2dvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2fNV(GLuint index, GLfloat x, GLfloat y);
-            public delegate void VertexAttrib2fvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib2fvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2sNV(GLuint index, GLshort x, GLshort y);
-            public delegate void VertexAttrib2svNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib2svNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3dNV(GLuint index, GLdouble x, GLdouble y, GLdouble z);
-            public delegate void VertexAttrib3dvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib3dvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3fNV(GLuint index, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void VertexAttrib3fvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib3fvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3sNV(GLuint index, GLshort x, GLshort y, GLshort z);
-            public delegate void VertexAttrib3svNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib3svNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4dNV(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void VertexAttrib4dvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public delegate void VertexAttrib4dvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4fNV(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void VertexAttrib4fvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public delegate void VertexAttrib4fvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4sNV(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w);
-            public delegate void VertexAttrib4svNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public delegate void VertexAttrib4svNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4ubNV(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w);
-            public delegate void VertexAttrib4ubvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
-            public delegate void VertexAttribs1dvNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
-            public delegate void VertexAttribs1fvNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            public delegate void VertexAttribs1svNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void VertexAttribs2dvNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
-            public delegate void VertexAttribs2fvNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            public delegate void VertexAttribs2svNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void VertexAttribs3dvNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
-            public delegate void VertexAttribs3fvNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            public delegate void VertexAttribs3svNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void VertexAttribs4dvNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
-            public delegate void VertexAttribs4fvNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            public delegate void VertexAttribs4svNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
-            public delegate void VertexAttribs4ubvNV(GLuint index, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
-            public delegate void TexBumpParameterivATI(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] param);
-            public delegate void TexBumpParameterfvATI(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] param);
+            public delegate void VertexAttrib4ubvNV_(GLuint index, IntPtr v);
+            public delegate void VertexAttribs1dvNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs1fvNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs1svNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs2dvNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs2fvNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs2svNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs3dvNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs3fvNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs3svNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs4dvNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs4fvNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs4svNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void VertexAttribs4ubvNV_(GLuint index, GLsizei count, IntPtr v);
+            public delegate void TexBumpParameterivATI_(GLenum pname, IntPtr param);
+            public delegate void TexBumpParameterfvATI_(GLenum pname, IntPtr param);
             public delegate void GetTexBumpParameterivATI(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] param);
             public delegate void GetTexBumpParameterfvATI(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] param);
             public delegate GLuint GenFragmentShadersATI(GLuint range);
@@ -6348,7 +6348,7 @@ namespace OpenTK.OpenGL
             public delegate void AlphaFragmentOp1ATI(GLenum op, GLuint dst, GLuint dstMod, GLuint arg1, GLuint arg1Rep, GLuint arg1Mod);
             public delegate void AlphaFragmentOp2ATI(GLenum op, GLuint dst, GLuint dstMod, GLuint arg1, GLuint arg1Rep, GLuint arg1Mod, GLuint arg2, GLuint arg2Rep, GLuint arg2Mod);
             public delegate void AlphaFragmentOp3ATI(GLenum op, GLuint dst, GLuint dstMod, GLuint arg1, GLuint arg1Rep, GLuint arg1Mod, GLuint arg2, GLuint arg2Rep, GLuint arg2Mod, GLuint arg3, GLuint arg3Rep, GLuint arg3Mod);
-            public delegate void SetFragmentShaderConstantATI(GLuint dst, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public delegate void SetFragmentShaderConstantATI_(GLuint dst, IntPtr value);
             public delegate void PNTrianglesiATI(GLenum pname, GLint param);
             public delegate void PNTrianglesfATI(GLenum pname, GLfloat param);
             public delegate GLuint NewObjectBufferATI_(GLsizei size, IntPtr pointer, GLenum usage);
@@ -6378,14 +6378,14 @@ namespace OpenTK.OpenGL
             public delegate GLuint GenSymbolsEXT(GLenum datatype, GLenum storagetype, GLenum range, GLuint components);
             public delegate void SetInvariantEXT_(GLuint id, GLenum type, IntPtr addr);
             public delegate void SetLocalConstantEXT_(GLuint id, GLenum type, IntPtr addr);
-            public delegate void VariantbvEXT(GLuint id, [MarshalAs(UnmanagedType.LPArray)] GLbyte[] addr);
-            public delegate void VariantsvEXT(GLuint id, [MarshalAs(UnmanagedType.LPArray)] GLshort[] addr);
-            public delegate void VariantivEXT(GLuint id, [MarshalAs(UnmanagedType.LPArray)] GLint[] addr);
-            public delegate void VariantfvEXT(GLuint id, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] addr);
-            public delegate void VariantdvEXT(GLuint id, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] addr);
-            public delegate void VariantubvEXT(GLuint id, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] addr);
-            public delegate void VariantusvEXT(GLuint id, [MarshalAs(UnmanagedType.LPArray)] GLushort[] addr);
-            public delegate void VariantuivEXT(GLuint id, [MarshalAs(UnmanagedType.LPArray)] GLuint[] addr);
+            public delegate void VariantbvEXT_(GLuint id, IntPtr addr);
+            public delegate void VariantsvEXT_(GLuint id, IntPtr addr);
+            public delegate void VariantivEXT_(GLuint id, IntPtr addr);
+            public delegate void VariantfvEXT_(GLuint id, IntPtr addr);
+            public delegate void VariantdvEXT_(GLuint id, IntPtr addr);
+            public delegate void VariantubvEXT_(GLuint id, IntPtr addr);
+            public delegate void VariantusvEXT_(GLuint id, IntPtr addr);
+            public delegate void VariantuivEXT_(GLuint id, IntPtr addr);
             public delegate void VariantPointerEXT_(GLuint id, GLenum type, GLuint stride, IntPtr addr);
             public delegate void EnableVariantClientStateEXT(GLuint id);
             public delegate void DisableVariantClientStateEXT(GLuint id);
@@ -6406,47 +6406,47 @@ namespace OpenTK.OpenGL
             public delegate void GetLocalConstantIntegervEXT(GLuint id, GLenum value, [MarshalAs(UnmanagedType.LPArray)] GLint[] data);
             public delegate void GetLocalConstantFloatvEXT(GLuint id, GLenum value, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] data);
             public delegate void VertexStream1sATI(GLenum stream, GLshort x);
-            public delegate void VertexStream1svATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLshort[] coords);
+            public delegate void VertexStream1svATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream1iATI(GLenum stream, GLint x);
-            public delegate void VertexStream1ivATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLint[] coords);
+            public delegate void VertexStream1ivATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream1fATI(GLenum stream, GLfloat x);
-            public delegate void VertexStream1fvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] coords);
+            public delegate void VertexStream1fvATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream1dATI(GLenum stream, GLdouble x);
-            public delegate void VertexStream1dvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] coords);
+            public delegate void VertexStream1dvATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream2sATI(GLenum stream, GLshort x, GLshort y);
-            public delegate void VertexStream2svATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLshort[] coords);
+            public delegate void VertexStream2svATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream2iATI(GLenum stream, GLint x, GLint y);
-            public delegate void VertexStream2ivATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLint[] coords);
+            public delegate void VertexStream2ivATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream2fATI(GLenum stream, GLfloat x, GLfloat y);
-            public delegate void VertexStream2fvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] coords);
+            public delegate void VertexStream2fvATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream2dATI(GLenum stream, GLdouble x, GLdouble y);
-            public delegate void VertexStream2dvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] coords);
+            public delegate void VertexStream2dvATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream3sATI(GLenum stream, GLshort x, GLshort y, GLshort z);
-            public delegate void VertexStream3svATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLshort[] coords);
+            public delegate void VertexStream3svATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream3iATI(GLenum stream, GLint x, GLint y, GLint z);
-            public delegate void VertexStream3ivATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLint[] coords);
+            public delegate void VertexStream3ivATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream3fATI(GLenum stream, GLfloat x, GLfloat y, GLfloat z);
-            public delegate void VertexStream3fvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] coords);
+            public delegate void VertexStream3fvATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream3dATI(GLenum stream, GLdouble x, GLdouble y, GLdouble z);
-            public delegate void VertexStream3dvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] coords);
+            public delegate void VertexStream3dvATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream4sATI(GLenum stream, GLshort x, GLshort y, GLshort z, GLshort w);
-            public delegate void VertexStream4svATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLshort[] coords);
+            public delegate void VertexStream4svATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream4iATI(GLenum stream, GLint x, GLint y, GLint z, GLint w);
-            public delegate void VertexStream4ivATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLint[] coords);
+            public delegate void VertexStream4ivATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream4fATI(GLenum stream, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void VertexStream4fvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] coords);
+            public delegate void VertexStream4fvATI_(GLenum stream, IntPtr coords);
             public delegate void VertexStream4dATI(GLenum stream, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void VertexStream4dvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] coords);
+            public delegate void VertexStream4dvATI_(GLenum stream, IntPtr coords);
             public delegate void NormalStream3bATI(GLenum stream, GLbyte nx, GLbyte ny, GLbyte nz);
-            public delegate void NormalStream3bvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLbyte[] coords);
+            public delegate void NormalStream3bvATI_(GLenum stream, IntPtr coords);
             public delegate void NormalStream3sATI(GLenum stream, GLshort nx, GLshort ny, GLshort nz);
-            public delegate void NormalStream3svATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLshort[] coords);
+            public delegate void NormalStream3svATI_(GLenum stream, IntPtr coords);
             public delegate void NormalStream3iATI(GLenum stream, GLint nx, GLint ny, GLint nz);
-            public delegate void NormalStream3ivATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLint[] coords);
+            public delegate void NormalStream3ivATI_(GLenum stream, IntPtr coords);
             public delegate void NormalStream3fATI(GLenum stream, GLfloat nx, GLfloat ny, GLfloat nz);
-            public delegate void NormalStream3fvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] coords);
+            public delegate void NormalStream3fvATI_(GLenum stream, IntPtr coords);
             public delegate void NormalStream3dATI(GLenum stream, GLdouble nx, GLdouble ny, GLdouble nz);
-            public delegate void NormalStream3dvATI(GLenum stream, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] coords);
+            public delegate void NormalStream3dvATI_(GLenum stream, IntPtr coords);
             public delegate void ClientActiveVertexStreamATI(GLenum stream);
             public delegate void VertexBlendEnviATI(GLenum pname, GLint param);
             public delegate void VertexBlendEnvfATI(GLenum pname, GLfloat param);
@@ -6455,22 +6455,22 @@ namespace OpenTK.OpenGL
             public delegate void DrawRangeElementArrayATI(Enums.BeginMode mode, GLuint start, GLuint end, GLsizei count);
             public delegate void DrawMeshArraysSUN(Enums.BeginMode mode, GLint first, GLsizei count, GLsizei width);
             public delegate void GenOcclusionQueriesNV(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
-            public delegate void DeleteOcclusionQueriesNV(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
+            public delegate void DeleteOcclusionQueriesNV_(GLsizei n, IntPtr ids);
             public delegate GLboolean IsOcclusionQueryNV(GLuint id);
             public delegate void BeginOcclusionQueryNV(GLuint id);
             public delegate void EndOcclusionQueryNV();
             public delegate void GetOcclusionQueryivNV(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate void GetOcclusionQueryuivNV(GLuint id, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLuint[] parameters);
             public delegate void PointParameteriNV(GLenum pname, GLint param);
-            public delegate void PointParameterivNV(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public delegate void PointParameterivNV_(GLenum pname, IntPtr parameters);
             public delegate void ActiveStencilFaceEXT(GLenum face);
             public delegate void ElementPointerAPPLE_(GLenum type, IntPtr pointer);
             public delegate void DrawElementArrayAPPLE(Enums.BeginMode mode, GLint first, GLsizei count);
             public delegate void DrawRangeElementArrayAPPLE(Enums.BeginMode mode, GLuint start, GLuint end, GLint first, GLsizei count);
-            public delegate void MultiDrawElementArrayAPPLE(Enums.BeginMode mode, [MarshalAs(UnmanagedType.LPArray)] GLint[] first, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLsizei primcount);
-            public delegate void MultiDrawRangeElementArrayAPPLE(Enums.BeginMode mode, GLuint start, GLuint end, [MarshalAs(UnmanagedType.LPArray)] GLint[] first, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLsizei primcount);
+            public delegate void MultiDrawElementArrayAPPLE_(Enums.BeginMode mode, IntPtr first, IntPtr count, GLsizei primcount);
+            public delegate void MultiDrawRangeElementArrayAPPLE_(Enums.BeginMode mode, GLuint start, GLuint end, IntPtr first, IntPtr count, GLsizei primcount);
             public delegate void GenFencesAPPLE(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] fences);
-            public delegate void DeleteFencesAPPLE(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] fences);
+            public delegate void DeleteFencesAPPLE_(GLsizei n, IntPtr fences);
             public delegate void SetFenceAPPLE(GLuint fence);
             public delegate GLboolean IsFenceAPPLE(GLuint fence);
             public delegate GLboolean TestFenceAPPLE(GLuint fence);
@@ -6478,70 +6478,70 @@ namespace OpenTK.OpenGL
             public delegate GLboolean TestObjectAPPLE(GLenum @object, GLuint name);
             public delegate void FinishObjectAPPLE(GLenum @object, GLint name);
             public delegate void BindVertexArrayAPPLE(GLuint array);
-            public delegate void DeleteVertexArraysAPPLE(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] arrays);
-            public delegate void GenVertexArraysAPPLE(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] arrays);
+            public delegate void DeleteVertexArraysAPPLE_(GLsizei n, IntPtr arrays);
+            public delegate void GenVertexArraysAPPLE_(GLsizei n, IntPtr arrays);
             public delegate GLboolean IsVertexArrayAPPLE(GLuint array);
-            public delegate void VertexArrayRangeAPPLE_(GLsizei length, out IntPtr pointer);
-            public delegate void FlushVertexArrayRangeAPPLE_(GLsizei length, out IntPtr pointer);
+            public delegate void VertexArrayRangeAPPLE_(GLsizei length, IntPtr pointer);
+            public delegate void FlushVertexArrayRangeAPPLE_(GLsizei length, IntPtr pointer);
             public delegate void VertexArrayParameteriAPPLE(GLenum pname, GLint param);
-            public delegate void DrawBuffersATI(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLenum[] bufs);
-            public delegate void ProgramNamedParameter4fNV(GLuint id, GLsizei len, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] name, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            public delegate void ProgramNamedParameter4dNV(GLuint id, GLsizei len, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] name, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            public delegate void ProgramNamedParameter4fvNV(GLuint id, GLsizei len, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] name, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            public delegate void ProgramNamedParameter4dvNV(GLuint id, GLsizei len, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] name, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
-            public delegate void GetProgramNamedParameterfvNV(GLuint id, GLsizei len, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] name, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            public delegate void GetProgramNamedParameterdvNV(GLuint id, GLsizei len, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] name, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
+            public delegate void DrawBuffersATI_(GLsizei n, IntPtr bufs);
+            public delegate void ProgramNamedParameter4fNV_(GLuint id, GLsizei len, IntPtr name, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+            public delegate void ProgramNamedParameter4dNV_(GLuint id, GLsizei len, IntPtr name, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
+            public delegate void ProgramNamedParameter4fvNV_(GLuint id, GLsizei len, IntPtr name, IntPtr v);
+            public delegate void ProgramNamedParameter4dvNV_(GLuint id, GLsizei len, IntPtr name, IntPtr v);
+            public delegate void GetProgramNamedParameterfvNV_(GLuint id, GLsizei len, IntPtr name, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public delegate void GetProgramNamedParameterdvNV_(GLuint id, GLsizei len, IntPtr name, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
             public delegate void Vertex2hNV(GLhalfNV x, GLhalfNV y);
-            public delegate void Vertex2hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void Vertex2hvNV_(IntPtr v);
             public delegate void Vertex3hNV(GLhalfNV x, GLhalfNV y, GLhalfNV z);
-            public delegate void Vertex3hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void Vertex3hvNV_(IntPtr v);
             public delegate void Vertex4hNV(GLhalfNV x, GLhalfNV y, GLhalfNV z, GLhalfNV w);
-            public delegate void Vertex4hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void Vertex4hvNV_(IntPtr v);
             public delegate void Normal3hNV(GLhalfNV nx, GLhalfNV ny, GLhalfNV nz);
-            public delegate void Normal3hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void Normal3hvNV_(IntPtr v);
             public delegate void Color3hNV(GLhalfNV red, GLhalfNV green, GLhalfNV blue);
-            public delegate void Color3hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void Color3hvNV_(IntPtr v);
             public delegate void Color4hNV(GLhalfNV red, GLhalfNV green, GLhalfNV blue, GLhalfNV alpha);
-            public delegate void Color4hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void Color4hvNV_(IntPtr v);
             public delegate void TexCoord1hNV(GLhalfNV s);
-            public delegate void TexCoord1hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void TexCoord1hvNV_(IntPtr v);
             public delegate void TexCoord2hNV(GLhalfNV s, GLhalfNV t);
-            public delegate void TexCoord2hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void TexCoord2hvNV_(IntPtr v);
             public delegate void TexCoord3hNV(GLhalfNV s, GLhalfNV t, GLhalfNV r);
-            public delegate void TexCoord3hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void TexCoord3hvNV_(IntPtr v);
             public delegate void TexCoord4hNV(GLhalfNV s, GLhalfNV t, GLhalfNV r, GLhalfNV q);
-            public delegate void TexCoord4hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void TexCoord4hvNV_(IntPtr v);
             public delegate void MultiTexCoord1hNV(GLenum target, GLhalfNV s);
-            public delegate void MultiTexCoord1hvNV(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void MultiTexCoord1hvNV_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord2hNV(GLenum target, GLhalfNV s, GLhalfNV t);
-            public delegate void MultiTexCoord2hvNV(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void MultiTexCoord2hvNV_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord3hNV(GLenum target, GLhalfNV s, GLhalfNV t, GLhalfNV r);
-            public delegate void MultiTexCoord3hvNV(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void MultiTexCoord3hvNV_(GLenum target, IntPtr v);
             public delegate void MultiTexCoord4hNV(GLenum target, GLhalfNV s, GLhalfNV t, GLhalfNV r, GLhalfNV q);
-            public delegate void MultiTexCoord4hvNV(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void MultiTexCoord4hvNV_(GLenum target, IntPtr v);
             public delegate void FogCoordhNV(GLhalfNV fog);
-            public delegate void FogCoordhvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] fog);
+            public delegate void FogCoordhvNV_(IntPtr fog);
             public delegate void SecondaryColor3hNV(GLhalfNV red, GLhalfNV green, GLhalfNV blue);
-            public delegate void SecondaryColor3hvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void SecondaryColor3hvNV_(IntPtr v);
             public delegate void VertexWeighthNV(GLhalfNV weight);
-            public delegate void VertexWeighthvNV([MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] weight);
+            public delegate void VertexWeighthvNV_(IntPtr weight);
             public delegate void VertexAttrib1hNV(GLuint index, GLhalfNV x);
-            public delegate void VertexAttrib1hvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void VertexAttrib1hvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib2hNV(GLuint index, GLhalfNV x, GLhalfNV y);
-            public delegate void VertexAttrib2hvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void VertexAttrib2hvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib3hNV(GLuint index, GLhalfNV x, GLhalfNV y, GLhalfNV z);
-            public delegate void VertexAttrib3hvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
+            public delegate void VertexAttrib3hvNV_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4hNV(GLuint index, GLhalfNV x, GLhalfNV y, GLhalfNV z, GLhalfNV w);
-            public delegate void VertexAttrib4hvNV(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
-            public delegate void VertexAttribs1hvNV(GLuint index, GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
-            public delegate void VertexAttribs2hvNV(GLuint index, GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
-            public delegate void VertexAttribs3hvNV(GLuint index, GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
-            public delegate void VertexAttribs4hvNV(GLuint index, GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLhalfNV[] v);
-            public delegate void PixelDataRangeNV_(GLenum target, GLsizei length, out IntPtr pointer);
+            public delegate void VertexAttrib4hvNV_(GLuint index, IntPtr v);
+            public delegate void VertexAttribs1hvNV_(GLuint index, GLsizei n, IntPtr v);
+            public delegate void VertexAttribs2hvNV_(GLuint index, GLsizei n, IntPtr v);
+            public delegate void VertexAttribs3hvNV_(GLuint index, GLsizei n, IntPtr v);
+            public delegate void VertexAttribs4hvNV_(GLuint index, GLsizei n, IntPtr v);
+            public delegate void PixelDataRangeNV_(GLenum target, GLsizei length, IntPtr pointer);
             public delegate void FlushPixelDataRangeNV(GLenum target);
             public delegate void PrimitiveRestartNV();
             public delegate void PrimitiveRestartIndexNV(GLuint index);
-            public delegate IntPtr MapObjectBufferATI_(GLuint buffer);
+            public delegate IntPtr MapObjectBufferATI(GLuint buffer);
             public delegate void UnmapObjectBufferATI(GLuint buffer);
             public delegate void StencilOpSeparateATI(GLenum face, Enums.StencilOp sfail, Enums.StencilOp dpfail, Enums.StencilOp dppass);
             public delegate void StencilFuncSeparateATI(Enums.StencilFunction frontfunc, Enums.StencilFunction backfunc, GLint reference, GLuint mask);
@@ -6552,13 +6552,13 @@ namespace OpenTK.OpenGL
             public delegate void BlendEquationSeparateEXT(Enums.BlendEquationModeEXT modeRGB, Enums.BlendEquationModeEXT modeAlpha);
             public delegate GLboolean IsRenderbufferEXT(GLuint renderbuffer);
             public delegate void BindRenderbufferEXT(GLenum target, GLuint renderbuffer);
-            public delegate void DeleteRenderbuffersEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] renderbuffers);
+            public delegate void DeleteRenderbuffersEXT_(GLsizei n, IntPtr renderbuffers);
             public delegate void GenRenderbuffersEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] renderbuffers);
             public delegate void RenderbufferStorageEXT(GLenum target, GLenum internalformat, GLsizei width, GLsizei height);
             public delegate void GetRenderbufferParameterivEXT(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             public delegate GLboolean IsFramebufferEXT(GLuint framebuffer);
             public delegate void BindFramebufferEXT(GLenum target, GLuint framebuffer);
-            public delegate void DeleteFramebuffersEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] framebuffers);
+            public delegate void DeleteFramebuffersEXT_(GLsizei n, IntPtr framebuffers);
             public delegate void GenFramebuffersEXT(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] framebuffers);
             public delegate GLenum CheckFramebufferStatusEXT(GLenum target);
             public delegate void FramebufferTexture1DEXT(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level);
@@ -6592,71 +6592,71 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glBegin")]
             public static extern void Begin(Enums.BeginMode mode);
             [DllImport("opengl32", EntryPoint = "glBitmap")]
-            public static extern void Bitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] bitmap);
+            public static extern void Bitmap_(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, IntPtr bitmap);
             [DllImport("opengl32", EntryPoint = "glColor3b")]
             public static extern void Color3b(GLbyte red, GLbyte green, GLbyte blue);
             [DllImport("opengl32", EntryPoint = "glColor3bv")]
-            public static extern void Color3bv([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public static extern void Color3bv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor3d")]
             public static extern void Color3d(GLdouble red, GLdouble green, GLdouble blue);
             [DllImport("opengl32", EntryPoint = "glColor3dv")]
-            public static extern void Color3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void Color3dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor3f")]
             public static extern void Color3f(GLfloat red, GLfloat green, GLfloat blue);
             [DllImport("opengl32", EntryPoint = "glColor3fv")]
-            public static extern void Color3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void Color3fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor3i")]
             public static extern void Color3i(GLint red, GLint green, GLint blue);
             [DllImport("opengl32", EntryPoint = "glColor3iv")]
-            public static extern void Color3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void Color3iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor3s")]
             public static extern void Color3s(GLshort red, GLshort green, GLshort blue);
             [DllImport("opengl32", EntryPoint = "glColor3sv")]
-            public static extern void Color3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void Color3sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor3ub")]
             public static extern void Color3ub(GLubyte red, GLubyte green, GLubyte blue);
             [DllImport("opengl32", EntryPoint = "glColor3ubv")]
-            public static extern void Color3ubv([MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
+            public static extern void Color3ubv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor3ui")]
             public static extern void Color3ui(GLuint red, GLuint green, GLuint blue);
             [DllImport("opengl32", EntryPoint = "glColor3uiv")]
-            public static extern void Color3uiv([MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
+            public static extern void Color3uiv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor3us")]
             public static extern void Color3us(GLushort red, GLushort green, GLushort blue);
             [DllImport("opengl32", EntryPoint = "glColor3usv")]
-            public static extern void Color3usv([MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public static extern void Color3usv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor4b")]
             public static extern void Color4b(GLbyte red, GLbyte green, GLbyte blue, GLbyte alpha);
             [DllImport("opengl32", EntryPoint = "glColor4bv")]
-            public static extern void Color4bv([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public static extern void Color4bv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor4d")]
             public static extern void Color4d(GLdouble red, GLdouble green, GLdouble blue, GLdouble alpha);
             [DllImport("opengl32", EntryPoint = "glColor4dv")]
-            public static extern void Color4dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void Color4dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor4f")]
             public static extern void Color4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
             [DllImport("opengl32", EntryPoint = "glColor4fv")]
-            public static extern void Color4fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void Color4fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor4i")]
             public static extern void Color4i(GLint red, GLint green, GLint blue, GLint alpha);
             [DllImport("opengl32", EntryPoint = "glColor4iv")]
-            public static extern void Color4iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void Color4iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor4s")]
             public static extern void Color4s(GLshort red, GLshort green, GLshort blue, GLshort alpha);
             [DllImport("opengl32", EntryPoint = "glColor4sv")]
-            public static extern void Color4sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void Color4sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor4ub")]
             public static extern void Color4ub(GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha);
             [DllImport("opengl32", EntryPoint = "glColor4ubv")]
-            public static extern void Color4ubv([MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
+            public static extern void Color4ubv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor4ui")]
             public static extern void Color4ui(GLuint red, GLuint green, GLuint blue, GLuint alpha);
             [DllImport("opengl32", EntryPoint = "glColor4uiv")]
-            public static extern void Color4uiv([MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
+            public static extern void Color4uiv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glColor4us")]
             public static extern void Color4us(GLushort red, GLushort green, GLushort blue, GLushort alpha);
             [DllImport("opengl32", EntryPoint = "glColor4usv")]
-            public static extern void Color4usv([MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public static extern void Color4usv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glEdgeFlag")]
             public static extern void EdgeFlag(Enums.Boolean flag);
             [DllImport("opengl32", EntryPoint = "glEdgeFlagv")]
@@ -6666,217 +6666,217 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glIndexd")]
             public static extern void Indexd(GLdouble c);
             [DllImport("opengl32", EntryPoint = "glIndexdv")]
-            public static extern void Indexdv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] c);
+            public static extern void Indexdv_(IntPtr c);
             [DllImport("opengl32", EntryPoint = "glIndexf")]
             public static extern void Indexf(GLfloat c);
             [DllImport("opengl32", EntryPoint = "glIndexfv")]
-            public static extern void Indexfv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] c);
+            public static extern void Indexfv_(IntPtr c);
             [DllImport("opengl32", EntryPoint = "glIndexi")]
             public static extern void Indexi(GLint c);
             [DllImport("opengl32", EntryPoint = "glIndexiv")]
-            public static extern void Indexiv([MarshalAs(UnmanagedType.LPArray)] GLint[] c);
+            public static extern void Indexiv_(IntPtr c);
             [DllImport("opengl32", EntryPoint = "glIndexs")]
             public static extern void Indexs(GLshort c);
             [DllImport("opengl32", EntryPoint = "glIndexsv")]
-            public static extern void Indexsv([MarshalAs(UnmanagedType.LPArray)] GLshort[] c);
+            public static extern void Indexsv_(IntPtr c);
             [DllImport("opengl32", EntryPoint = "glNormal3b")]
             public static extern void Normal3b(GLbyte nx, GLbyte ny, GLbyte nz);
             [DllImport("opengl32", EntryPoint = "glNormal3bv")]
-            public static extern void Normal3bv([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public static extern void Normal3bv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glNormal3d")]
             public static extern void Normal3d(GLdouble nx, GLdouble ny, GLdouble nz);
             [DllImport("opengl32", EntryPoint = "glNormal3dv")]
-            public static extern void Normal3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void Normal3dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glNormal3f")]
             public static extern void Normal3f(GLfloat nx, GLfloat ny, GLfloat nz);
             [DllImport("opengl32", EntryPoint = "glNormal3fv")]
-            public static extern void Normal3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void Normal3fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glNormal3i")]
             public static extern void Normal3i(GLint nx, GLint ny, GLint nz);
             [DllImport("opengl32", EntryPoint = "glNormal3iv")]
-            public static extern void Normal3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void Normal3iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glNormal3s")]
             public static extern void Normal3s(GLshort nx, GLshort ny, GLshort nz);
             [DllImport("opengl32", EntryPoint = "glNormal3sv")]
-            public static extern void Normal3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void Normal3sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos2d")]
             public static extern void RasterPos2d(GLdouble x, GLdouble y);
             [DllImport("opengl32", EntryPoint = "glRasterPos2dv")]
-            public static extern void RasterPos2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void RasterPos2dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos2f")]
             public static extern void RasterPos2f(GLfloat x, GLfloat y);
             [DllImport("opengl32", EntryPoint = "glRasterPos2fv")]
-            public static extern void RasterPos2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void RasterPos2fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos2i")]
             public static extern void RasterPos2i(GLint x, GLint y);
             [DllImport("opengl32", EntryPoint = "glRasterPos2iv")]
-            public static extern void RasterPos2iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void RasterPos2iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos2s")]
             public static extern void RasterPos2s(GLshort x, GLshort y);
             [DllImport("opengl32", EntryPoint = "glRasterPos2sv")]
-            public static extern void RasterPos2sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void RasterPos2sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos3d")]
             public static extern void RasterPos3d(GLdouble x, GLdouble y, GLdouble z);
             [DllImport("opengl32", EntryPoint = "glRasterPos3dv")]
-            public static extern void RasterPos3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void RasterPos3dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos3f")]
             public static extern void RasterPos3f(GLfloat x, GLfloat y, GLfloat z);
             [DllImport("opengl32", EntryPoint = "glRasterPos3fv")]
-            public static extern void RasterPos3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void RasterPos3fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos3i")]
             public static extern void RasterPos3i(GLint x, GLint y, GLint z);
             [DllImport("opengl32", EntryPoint = "glRasterPos3iv")]
-            public static extern void RasterPos3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void RasterPos3iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos3s")]
             public static extern void RasterPos3s(GLshort x, GLshort y, GLshort z);
             [DllImport("opengl32", EntryPoint = "glRasterPos3sv")]
-            public static extern void RasterPos3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void RasterPos3sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos4d")]
             public static extern void RasterPos4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
             [DllImport("opengl32", EntryPoint = "glRasterPos4dv")]
-            public static extern void RasterPos4dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void RasterPos4dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos4f")]
             public static extern void RasterPos4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
             [DllImport("opengl32", EntryPoint = "glRasterPos4fv")]
-            public static extern void RasterPos4fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void RasterPos4fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos4i")]
             public static extern void RasterPos4i(GLint x, GLint y, GLint z, GLint w);
             [DllImport("opengl32", EntryPoint = "glRasterPos4iv")]
-            public static extern void RasterPos4iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void RasterPos4iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRasterPos4s")]
             public static extern void RasterPos4s(GLshort x, GLshort y, GLshort z, GLshort w);
             [DllImport("opengl32", EntryPoint = "glRasterPos4sv")]
-            public static extern void RasterPos4sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void RasterPos4sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glRectd")]
             public static extern void Rectd(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2);
             [DllImport("opengl32", EntryPoint = "glRectdv")]
-            public static extern void Rectdv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v1, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v2);
+            public static extern void Rectdv_(IntPtr v1, IntPtr v2);
             [DllImport("opengl32", EntryPoint = "glRectf")]
             public static extern void Rectf(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2);
             [DllImport("opengl32", EntryPoint = "glRectfv")]
-            public static extern void Rectfv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v1, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v2);
+            public static extern void Rectfv_(IntPtr v1, IntPtr v2);
             [DllImport("opengl32", EntryPoint = "glRecti")]
             public static extern void Recti(GLint x1, GLint y1, GLint x2, GLint y2);
             [DllImport("opengl32", EntryPoint = "glRectiv")]
-            public static extern void Rectiv([MarshalAs(UnmanagedType.LPArray)] GLint[] v1, [MarshalAs(UnmanagedType.LPArray)] GLint[] v2);
+            public static extern void Rectiv_(IntPtr v1, IntPtr v2);
             [DllImport("opengl32", EntryPoint = "glRects")]
             public static extern void Rects(GLshort x1, GLshort y1, GLshort x2, GLshort y2);
             [DllImport("opengl32", EntryPoint = "glRectsv")]
-            public static extern void Rectsv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v1, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v2);
+            public static extern void Rectsv_(IntPtr v1, IntPtr v2);
             [DllImport("opengl32", EntryPoint = "glTexCoord1d")]
             public static extern void TexCoord1d(GLdouble s);
             [DllImport("opengl32", EntryPoint = "glTexCoord1dv")]
-            public static extern void TexCoord1dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void TexCoord1dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord1f")]
             public static extern void TexCoord1f(GLfloat s);
             [DllImport("opengl32", EntryPoint = "glTexCoord1fv")]
-            public static extern void TexCoord1fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void TexCoord1fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord1i")]
             public static extern void TexCoord1i(GLint s);
             [DllImport("opengl32", EntryPoint = "glTexCoord1iv")]
-            public static extern void TexCoord1iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void TexCoord1iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord1s")]
             public static extern void TexCoord1s(GLshort s);
             [DllImport("opengl32", EntryPoint = "glTexCoord1sv")]
-            public static extern void TexCoord1sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void TexCoord1sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord2d")]
             public static extern void TexCoord2d(GLdouble s, GLdouble t);
             [DllImport("opengl32", EntryPoint = "glTexCoord2dv")]
-            public static extern void TexCoord2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void TexCoord2dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord2f")]
             public static extern void TexCoord2f(GLfloat s, GLfloat t);
             [DllImport("opengl32", EntryPoint = "glTexCoord2fv")]
-            public static extern void TexCoord2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void TexCoord2fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord2i")]
             public static extern void TexCoord2i(GLint s, GLint t);
             [DllImport("opengl32", EntryPoint = "glTexCoord2iv")]
-            public static extern void TexCoord2iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void TexCoord2iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord2s")]
             public static extern void TexCoord2s(GLshort s, GLshort t);
             [DllImport("opengl32", EntryPoint = "glTexCoord2sv")]
-            public static extern void TexCoord2sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void TexCoord2sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord3d")]
             public static extern void TexCoord3d(GLdouble s, GLdouble t, GLdouble r);
             [DllImport("opengl32", EntryPoint = "glTexCoord3dv")]
-            public static extern void TexCoord3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void TexCoord3dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord3f")]
             public static extern void TexCoord3f(GLfloat s, GLfloat t, GLfloat r);
             [DllImport("opengl32", EntryPoint = "glTexCoord3fv")]
-            public static extern void TexCoord3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void TexCoord3fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord3i")]
             public static extern void TexCoord3i(GLint s, GLint t, GLint r);
             [DllImport("opengl32", EntryPoint = "glTexCoord3iv")]
-            public static extern void TexCoord3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void TexCoord3iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord3s")]
             public static extern void TexCoord3s(GLshort s, GLshort t, GLshort r);
             [DllImport("opengl32", EntryPoint = "glTexCoord3sv")]
-            public static extern void TexCoord3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void TexCoord3sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord4d")]
             public static extern void TexCoord4d(GLdouble s, GLdouble t, GLdouble r, GLdouble q);
             [DllImport("opengl32", EntryPoint = "glTexCoord4dv")]
-            public static extern void TexCoord4dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void TexCoord4dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord4f")]
             public static extern void TexCoord4f(GLfloat s, GLfloat t, GLfloat r, GLfloat q);
             [DllImport("opengl32", EntryPoint = "glTexCoord4fv")]
-            public static extern void TexCoord4fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void TexCoord4fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord4i")]
             public static extern void TexCoord4i(GLint s, GLint t, GLint r, GLint q);
             [DllImport("opengl32", EntryPoint = "glTexCoord4iv")]
-            public static extern void TexCoord4iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void TexCoord4iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glTexCoord4s")]
             public static extern void TexCoord4s(GLshort s, GLshort t, GLshort r, GLshort q);
             [DllImport("opengl32", EntryPoint = "glTexCoord4sv")]
-            public static extern void TexCoord4sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void TexCoord4sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex2d")]
             public static extern void Vertex2d(GLdouble x, GLdouble y);
             [DllImport("opengl32", EntryPoint = "glVertex2dv")]
-            public static extern void Vertex2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void Vertex2dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex2f")]
             public static extern void Vertex2f(GLfloat x, GLfloat y);
             [DllImport("opengl32", EntryPoint = "glVertex2fv")]
-            public static extern void Vertex2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void Vertex2fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex2i")]
             public static extern void Vertex2i(GLint x, GLint y);
             [DllImport("opengl32", EntryPoint = "glVertex2iv")]
-            public static extern void Vertex2iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void Vertex2iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex2s")]
             public static extern void Vertex2s(GLshort x, GLshort y);
             [DllImport("opengl32", EntryPoint = "glVertex2sv")]
-            public static extern void Vertex2sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void Vertex2sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex3d")]
             public static extern void Vertex3d(GLdouble x, GLdouble y, GLdouble z);
             [DllImport("opengl32", EntryPoint = "glVertex3dv")]
-            public static extern void Vertex3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void Vertex3dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex3f")]
             public static extern void Vertex3f(GLfloat x, GLfloat y, GLfloat z);
             [DllImport("opengl32", EntryPoint = "glVertex3fv")]
-            public static extern void Vertex3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void Vertex3fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex3i")]
             public static extern void Vertex3i(GLint x, GLint y, GLint z);
             [DllImport("opengl32", EntryPoint = "glVertex3iv")]
-            public static extern void Vertex3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void Vertex3iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex3s")]
             public static extern void Vertex3s(GLshort x, GLshort y, GLshort z);
             [DllImport("opengl32", EntryPoint = "glVertex3sv")]
-            public static extern void Vertex3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void Vertex3sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex4d")]
             public static extern void Vertex4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
             [DllImport("opengl32", EntryPoint = "glVertex4dv")]
-            public static extern void Vertex4dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void Vertex4dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex4f")]
             public static extern void Vertex4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
             [DllImport("opengl32", EntryPoint = "glVertex4fv")]
-            public static extern void Vertex4fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void Vertex4fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex4i")]
             public static extern void Vertex4i(GLint x, GLint y, GLint z, GLint w);
             [DllImport("opengl32", EntryPoint = "glVertex4iv")]
-            public static extern void Vertex4iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void Vertex4iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertex4s")]
             public static extern void Vertex4s(GLshort x, GLshort y, GLshort z, GLshort w);
             [DllImport("opengl32", EntryPoint = "glVertex4sv")]
-            public static extern void Vertex4sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void Vertex4sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glClipPlane")]
-            public static extern void ClipPlane(Enums.ClipPlaneName plane, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] equation);
+            public static extern void ClipPlane_(Enums.ClipPlaneName plane, IntPtr equation);
             [DllImport("opengl32", EntryPoint = "glColorMaterial")]
             public static extern void ColorMaterial(Enums.MaterialFace face, Enums.ColorMaterialParameter mode);
             [DllImport("opengl32", EntryPoint = "glCullFace")]
@@ -6884,11 +6884,11 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glFogf")]
             public static extern void Fogf(Enums.FogParameter pname, GLfloat param);
             [DllImport("opengl32", EntryPoint = "glFogfv")]
-            public static extern void Fogfv(Enums.FogParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void Fogfv_(Enums.FogParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glFogi")]
             public static extern void Fogi(Enums.FogParameter pname, GLint param);
             [DllImport("opengl32", EntryPoint = "glFogiv")]
-            public static extern void Fogiv(Enums.FogParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void Fogiv_(Enums.FogParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glFrontFace")]
             public static extern void FrontFace(Enums.FrontFaceDirection mode);
             [DllImport("opengl32", EntryPoint = "glHint")]
@@ -6896,19 +6896,19 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glLightf")]
             public static extern void Lightf(Enums.LightName light, Enums.LightParameter pname, GLfloat param);
             [DllImport("opengl32", EntryPoint = "glLightfv")]
-            public static extern void Lightfv(Enums.LightName light, Enums.LightParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void Lightfv_(Enums.LightName light, Enums.LightParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glLighti")]
             public static extern void Lighti(Enums.LightName light, Enums.LightParameter pname, GLint param);
             [DllImport("opengl32", EntryPoint = "glLightiv")]
-            public static extern void Lightiv(Enums.LightName light, Enums.LightParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void Lightiv_(Enums.LightName light, Enums.LightParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glLightModelf")]
             public static extern void LightModelf(Enums.LightModelParameter pname, GLfloat param);
             [DllImport("opengl32", EntryPoint = "glLightModelfv")]
-            public static extern void LightModelfv(Enums.LightModelParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void LightModelfv_(Enums.LightModelParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glLightModeli")]
             public static extern void LightModeli(Enums.LightModelParameter pname, GLint param);
             [DllImport("opengl32", EntryPoint = "glLightModeliv")]
-            public static extern void LightModeliv(Enums.LightModelParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void LightModeliv_(Enums.LightModelParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glLineStipple")]
             public static extern void LineStipple(GLint factor, GLushort pattern);
             [DllImport("opengl32", EntryPoint = "glLineWidth")]
@@ -6916,17 +6916,17 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glMaterialf")]
             public static extern void Materialf(Enums.MaterialFace face, Enums.MaterialParameter pname, GLfloat param);
             [DllImport("opengl32", EntryPoint = "glMaterialfv")]
-            public static extern void Materialfv(Enums.MaterialFace face, Enums.MaterialParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void Materialfv_(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glMateriali")]
             public static extern void Materiali(Enums.MaterialFace face, Enums.MaterialParameter pname, GLint param);
             [DllImport("opengl32", EntryPoint = "glMaterialiv")]
-            public static extern void Materialiv(Enums.MaterialFace face, Enums.MaterialParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void Materialiv_(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glPointSize")]
             public static extern void PointSize(GLfloat size);
             [DllImport("opengl32", EntryPoint = "glPolygonMode")]
             public static extern void PolygonMode(Enums.MaterialFace face, Enums.PolygonMode mode);
             [DllImport("opengl32", EntryPoint = "glPolygonStipple")]
-            public static extern void PolygonStipple([MarshalAs(UnmanagedType.LPArray)] GLubyte[] mask);
+            public static extern void PolygonStipple_(IntPtr mask);
             [DllImport("opengl32", EntryPoint = "glScissor")]
             public static extern void Scissor(GLint x, GLint y, GLsizei width, GLsizei height);
             [DllImport("opengl32", EntryPoint = "glShadeModel")]
@@ -6934,11 +6934,11 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glTexParameterf")]
             public static extern void TexParameterf(Enums.TextureTarget target, Enums.TextureParameterName pname, GLfloat param);
             [DllImport("opengl32", EntryPoint = "glTexParameterfv")]
-            public static extern void TexParameterfv(Enums.TextureTarget target, Enums.TextureParameterName pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void TexParameterfv_(Enums.TextureTarget target, Enums.TextureParameterName pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glTexParameteri")]
             public static extern void TexParameteri(Enums.TextureTarget target, Enums.TextureParameterName pname, GLint param);
             [DllImport("opengl32", EntryPoint = "glTexParameteriv")]
-            public static extern void TexParameteriv(Enums.TextureTarget target, Enums.TextureParameterName pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void TexParameteriv_(Enums.TextureTarget target, Enums.TextureParameterName pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glTexImage1D")]
             public static extern void TexImage1D(Enums.TextureTarget target, GLint level, GLint internalformat, GLsizei width, GLint border, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             [DllImport("opengl32", EntryPoint = "glTexImage2D")]
@@ -6946,23 +6946,23 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glTexEnvf")]
             public static extern void TexEnvf(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, GLfloat param);
             [DllImport("opengl32", EntryPoint = "glTexEnvfv")]
-            public static extern void TexEnvfv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void TexEnvfv_(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glTexEnvi")]
             public static extern void TexEnvi(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, GLint param);
             [DllImport("opengl32", EntryPoint = "glTexEnviv")]
-            public static extern void TexEnviv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void TexEnviv_(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glTexGend")]
             public static extern void TexGend(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLdouble param);
             [DllImport("opengl32", EntryPoint = "glTexGendv")]
-            public static extern void TexGendv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
+            public static extern void TexGendv_(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glTexGenf")]
             public static extern void TexGenf(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLfloat param);
             [DllImport("opengl32", EntryPoint = "glTexGenfv")]
-            public static extern void TexGenfv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void TexGenfv_(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glTexGeni")]
             public static extern void TexGeni(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLint param);
             [DllImport("opengl32", EntryPoint = "glTexGeniv")]
-            public static extern void TexGeniv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void TexGeniv_(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glFeedbackBuffer")]
             public static extern void FeedbackBuffer(GLsizei size, Enums.FeedbackType type, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] buffer);
             [DllImport("opengl32", EntryPoint = "glSelectBuffer")]
@@ -7016,13 +7016,13 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glPushAttrib")]
             public static extern void PushAttrib(Enums.AttribMask mask);
             [DllImport("opengl32", EntryPoint = "glMap1d")]
-            public static extern void Map1d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint stride, GLint order, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] points);
+            public static extern void Map1d_(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint stride, GLint order, IntPtr points);
             [DllImport("opengl32", EntryPoint = "glMap1f")]
-            public static extern void Map1f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint stride, GLint order, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
+            public static extern void Map1f_(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint stride, GLint order, IntPtr points);
             [DllImport("opengl32", EntryPoint = "glMap2d")]
-            public static extern void Map2d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] points);
+            public static extern void Map2d_(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, IntPtr points);
             [DllImport("opengl32", EntryPoint = "glMap2f")]
-            public static extern void Map2f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] points);
+            public static extern void Map2f_(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, IntPtr points);
             [DllImport("opengl32", EntryPoint = "glMapGrid1d")]
             public static extern void MapGrid1d(GLint un, GLdouble u1, GLdouble u2);
             [DllImport("opengl32", EntryPoint = "glMapGrid1f")]
@@ -7034,19 +7034,19 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glEvalCoord1d")]
             public static extern void EvalCoord1d(GLdouble u);
             [DllImport("opengl32", EntryPoint = "glEvalCoord1dv")]
-            public static extern void EvalCoord1dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] u);
+            public static extern void EvalCoord1dv_(IntPtr u);
             [DllImport("opengl32", EntryPoint = "glEvalCoord1f")]
             public static extern void EvalCoord1f(GLfloat u);
             [DllImport("opengl32", EntryPoint = "glEvalCoord1fv")]
-            public static extern void EvalCoord1fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] u);
+            public static extern void EvalCoord1fv_(IntPtr u);
             [DllImport("opengl32", EntryPoint = "glEvalCoord2d")]
             public static extern void EvalCoord2d(GLdouble u, GLdouble v);
             [DllImport("opengl32", EntryPoint = "glEvalCoord2dv")]
-            public static extern void EvalCoord2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] u);
+            public static extern void EvalCoord2dv_(IntPtr u);
             [DllImport("opengl32", EntryPoint = "glEvalCoord2f")]
             public static extern void EvalCoord2f(GLfloat u, GLfloat v);
             [DllImport("opengl32", EntryPoint = "glEvalCoord2fv")]
-            public static extern void EvalCoord2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] u);
+            public static extern void EvalCoord2fv_(IntPtr u);
             [DllImport("opengl32", EntryPoint = "glEvalMesh1")]
             public static extern void EvalMesh1(Enums.MeshMode1 mode, GLint i1, GLint i2);
             [DllImport("opengl32", EntryPoint = "glEvalPoint1")]
@@ -7078,17 +7078,17 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glPixelStorei")]
             public static extern void PixelStorei(Enums.PixelStoreParameter pname, GLint param);
             [DllImport("opengl32", EntryPoint = "glPixelMapfv")]
-            public static extern void PixelMapfv(Enums.PixelMap map, GLint mapsize, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] values);
+            public static extern void PixelMapfv_(Enums.PixelMap map, GLint mapsize, IntPtr values);
             [DllImport("opengl32", EntryPoint = "glPixelMapuiv")]
-            public static extern void PixelMapuiv(Enums.PixelMap map, GLint mapsize, [MarshalAs(UnmanagedType.LPArray)] GLuint[] values);
+            public static extern void PixelMapuiv_(Enums.PixelMap map, GLint mapsize, IntPtr values);
             [DllImport("opengl32", EntryPoint = "glPixelMapusv")]
-            public static extern void PixelMapusv(Enums.PixelMap map, GLint mapsize, [MarshalAs(UnmanagedType.LPArray)] GLushort[] values);
+            public static extern void PixelMapusv_(Enums.PixelMap map, GLint mapsize, IntPtr values);
             [DllImport("opengl32", EntryPoint = "glReadBuffer")]
             public static extern void ReadBuffer(Enums.ReadBufferMode mode);
             [DllImport("opengl32", EntryPoint = "glCopyPixels")]
             public static extern void CopyPixels(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelCopyType type);
             [DllImport("opengl32", EntryPoint = "glReadPixels")]
-            public static extern void ReadPixels_(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, out IntPtr pixels);
+            public static extern void ReadPixels_(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             [DllImport("opengl32", EntryPoint = "glDrawPixels")]
             public static extern void DrawPixels_(GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             [DllImport("opengl32", EntryPoint = "glGetBooleanv")]
@@ -7126,7 +7126,7 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glGetPolygonStipple")]
             public static extern void GetPolygonStipple([MarshalAs(UnmanagedType.LPArray)] GLubyte[] mask);
             [DllImport("opengl32", EntryPoint = "glGetString")]
-            public static extern GLstring GetString(Enums.StringName name);
+            public static extern IntPtr GetString_(Enums.StringName name);
             [DllImport("opengl32", EntryPoint = "glGetTexEnvfv")]
             public static extern void GetTexEnvfv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetTexEnviv")]
@@ -7138,7 +7138,7 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glGetTexGeniv")]
             public static extern void GetTexGeniv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetTexImage")]
-            public static extern void GetTexImage(Enums.TextureTarget target, GLint level, Enums.PixelFormat format, Enums.PixelType type, out IntPtr pixels);
+            public static extern void GetTexImage(Enums.TextureTarget target, GLint level, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             [DllImport("opengl32", EntryPoint = "glGetTexParameterfv")]
             public static extern void GetTexParameterfv(Enums.TextureTarget target, Enums.GetTextureParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetTexParameteriv")]
@@ -7158,15 +7158,15 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glLoadIdentity")]
             public static extern void LoadIdentity();
             [DllImport("opengl32", EntryPoint = "glLoadMatrixf")]
-            public static extern void LoadMatrixf([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
+            public static extern void LoadMatrixf_(IntPtr m);
             [DllImport("opengl32", EntryPoint = "glLoadMatrixd")]
-            public static extern void LoadMatrixd([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
+            public static extern void LoadMatrixd_(IntPtr m);
             [DllImport("opengl32", EntryPoint = "glMatrixMode")]
             public static extern void MatrixMode(Enums.MatrixMode mode);
             [DllImport("opengl32", EntryPoint = "glMultMatrixf")]
-            public static extern void MultMatrixf([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
+            public static extern void MultMatrixf_(IntPtr m);
             [DllImport("opengl32", EntryPoint = "glMultMatrixd")]
-            public static extern void MultMatrixd([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
+            public static extern void MultMatrixd_(IntPtr m);
             [DllImport("opengl32", EntryPoint = "glOrtho")]
             public static extern void Ortho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
             [DllImport("opengl32", EntryPoint = "glPopMatrix")]
@@ -7228,21 +7228,21 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glTexSubImage2D")]
             public static extern void TexSubImage2D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
             [DllImport("opengl32", EntryPoint = "glAreTexturesResident")]
-            public static extern GLboolean AreTexturesResident(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures, Enums.Boolean[] residences);
+            public static extern GLboolean AreTexturesResident_(GLsizei n, IntPtr textures, Enums.Boolean[] residences);
             [DllImport("opengl32", EntryPoint = "glBindTexture")]
             public static extern void BindTexture(Enums.TextureTarget target, GLuint texture);
             [DllImport("opengl32", EntryPoint = "glDeleteTextures")]
-            public static extern void DeleteTextures(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures);
+            public static extern void DeleteTextures_(GLsizei n, IntPtr textures);
             [DllImport("opengl32", EntryPoint = "glGenTextures")]
             public static extern void GenTextures(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures);
             [DllImport("opengl32", EntryPoint = "glIsTexture")]
             public static extern GLboolean IsTexture(GLuint texture);
             [DllImport("opengl32", EntryPoint = "glPrioritizeTextures")]
-            public static extern void PrioritizeTextures(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures, [MarshalAs(UnmanagedType.LPArray)] GLclampf[] priorities);
+            public static extern void PrioritizeTextures_(GLsizei n, IntPtr textures, IntPtr priorities);
             [DllImport("opengl32", EntryPoint = "glIndexub")]
             public static extern void Indexub(GLubyte c);
             [DllImport("opengl32", EntryPoint = "glIndexubv")]
-            public static extern void Indexubv([MarshalAs(UnmanagedType.LPArray)] GLubyte[] c);
+            public static extern void Indexubv_(IntPtr c);
             [DllImport("opengl32", EntryPoint = "glPopClientAttrib")]
             public static extern void PopClientAttrib();
             [DllImport("opengl32", EntryPoint = "glPushClientAttrib")]
@@ -7256,13 +7256,13 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glColorTable")]
             public static extern void ColorTable_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr table);
             [DllImport("opengl32", EntryPoint = "glColorTableParameterfv")]
-            public static extern void ColorTableParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void ColorTableParameterfv_(GLenum target, GLenum pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glColorTableParameteriv")]
-            public static extern void ColorTableParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void ColorTableParameteriv_(GLenum target, GLenum pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glCopyColorTable")]
             public static extern void CopyColorTable(GLenum target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width);
             [DllImport("opengl32", EntryPoint = "glGetColorTable")]
-            public static extern void GetColorTable_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr table);
+            public static extern void GetColorTable_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr table);
             [DllImport("opengl32", EntryPoint = "glGetColorTableParameterfv")]
             public static extern void GetColorTableParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetColorTableParameteriv")]
@@ -7278,33 +7278,33 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glConvolutionParameterf")]
             public static extern void ConvolutionParameterf(GLenum target, GLenum pname, GLfloat parameters);
             [DllImport("opengl32", EntryPoint = "glConvolutionParameterfv")]
-            public static extern void ConvolutionParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void ConvolutionParameterfv_(GLenum target, GLenum pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glConvolutionParameteri")]
             public static extern void ConvolutionParameteri(GLenum target, GLenum pname, GLint parameters);
             [DllImport("opengl32", EntryPoint = "glConvolutionParameteriv")]
-            public static extern void ConvolutionParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void ConvolutionParameteriv_(GLenum target, GLenum pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glCopyConvolutionFilter1D")]
             public static extern void CopyConvolutionFilter1D(GLenum target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width);
             [DllImport("opengl32", EntryPoint = "glCopyConvolutionFilter2D")]
             public static extern void CopyConvolutionFilter2D(GLenum target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width, GLsizei height);
             [DllImport("opengl32", EntryPoint = "glGetConvolutionFilter")]
-            public static extern void GetConvolutionFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr image);
+            public static extern void GetConvolutionFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
             [DllImport("opengl32", EntryPoint = "glGetConvolutionParameterfv")]
             public static extern void GetConvolutionParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetConvolutionParameteriv")]
             public static extern void GetConvolutionParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetSeparableFilter")]
-            public static extern void GetSeparableFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, out IntPtr row, out IntPtr column, out IntPtr span);
+            public static extern void GetSeparableFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column, IntPtr span);
             [DllImport("opengl32", EntryPoint = "glSeparableFilter2D")]
             public static extern void SeparableFilter2D_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column);
             [DllImport("opengl32", EntryPoint = "glGetHistogram")]
-            public static extern void GetHistogram_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, out IntPtr values);
+            public static extern void GetHistogram_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values);
             [DllImport("opengl32", EntryPoint = "glGetHistogramParameterfv")]
             public static extern void GetHistogramParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetHistogramParameteriv")]
             public static extern void GetHistogramParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetMinmax")]
-            public static extern void GetMinmax_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, out IntPtr values);
+            public static extern void GetMinmax_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values);
             [DllImport("opengl32", EntryPoint = "glGetMinmaxParameterfv")]
             public static extern void GetMinmaxParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetMinmaxParameteriv")]
@@ -7330,75 +7330,75 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord1d")]
             public static extern void MultiTexCoord1d(GLenum target, GLdouble s);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord1dv")]
-            public static extern void MultiTexCoord1dv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void MultiTexCoord1dv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord1f")]
             public static extern void MultiTexCoord1f(GLenum target, GLfloat s);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord1fv")]
-            public static extern void MultiTexCoord1fv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void MultiTexCoord1fv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord1i")]
             public static extern void MultiTexCoord1i(GLenum target, GLint s);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord1iv")]
-            public static extern void MultiTexCoord1iv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void MultiTexCoord1iv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord1s")]
             public static extern void MultiTexCoord1s(GLenum target, GLshort s);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord1sv")]
-            public static extern void MultiTexCoord1sv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void MultiTexCoord1sv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord2d")]
             public static extern void MultiTexCoord2d(GLenum target, GLdouble s, GLdouble t);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord2dv")]
-            public static extern void MultiTexCoord2dv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void MultiTexCoord2dv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord2f")]
             public static extern void MultiTexCoord2f(GLenum target, GLfloat s, GLfloat t);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord2fv")]
-            public static extern void MultiTexCoord2fv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void MultiTexCoord2fv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord2i")]
             public static extern void MultiTexCoord2i(GLenum target, GLint s, GLint t);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord2iv")]
-            public static extern void MultiTexCoord2iv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void MultiTexCoord2iv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord2s")]
             public static extern void MultiTexCoord2s(GLenum target, GLshort s, GLshort t);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord2sv")]
-            public static extern void MultiTexCoord2sv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void MultiTexCoord2sv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord3d")]
             public static extern void MultiTexCoord3d(GLenum target, GLdouble s, GLdouble t, GLdouble r);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord3dv")]
-            public static extern void MultiTexCoord3dv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void MultiTexCoord3dv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord3f")]
             public static extern void MultiTexCoord3f(GLenum target, GLfloat s, GLfloat t, GLfloat r);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord3fv")]
-            public static extern void MultiTexCoord3fv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void MultiTexCoord3fv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord3i")]
             public static extern void MultiTexCoord3i(GLenum target, GLint s, GLint t, GLint r);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord3iv")]
-            public static extern void MultiTexCoord3iv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void MultiTexCoord3iv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord3s")]
             public static extern void MultiTexCoord3s(GLenum target, GLshort s, GLshort t, GLshort r);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord3sv")]
-            public static extern void MultiTexCoord3sv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void MultiTexCoord3sv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord4d")]
             public static extern void MultiTexCoord4d(GLenum target, GLdouble s, GLdouble t, GLdouble r, GLdouble q);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord4dv")]
-            public static extern void MultiTexCoord4dv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void MultiTexCoord4dv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord4f")]
             public static extern void MultiTexCoord4f(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord4fv")]
-            public static extern void MultiTexCoord4fv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void MultiTexCoord4fv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord4i")]
             public static extern void MultiTexCoord4i(GLenum target, GLint s, GLint t, GLint r, GLint q);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord4iv")]
-            public static extern void MultiTexCoord4iv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void MultiTexCoord4iv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord4s")]
             public static extern void MultiTexCoord4s(GLenum target, GLshort s, GLshort t, GLshort r, GLshort q);
             [DllImport("opengl32", EntryPoint = "glMultiTexCoord4sv")]
-            public static extern void MultiTexCoord4sv(GLenum target, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void MultiTexCoord4sv_(GLenum target, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glLoadTransposeMatrixf")]
-            public static extern void LoadTransposeMatrixf([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
+            public static extern void LoadTransposeMatrixf_(IntPtr m);
             [DllImport("opengl32", EntryPoint = "glLoadTransposeMatrixd")]
-            public static extern void LoadTransposeMatrixd([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
+            public static extern void LoadTransposeMatrixd_(IntPtr m);
             [DllImport("opengl32", EntryPoint = "glMultTransposeMatrixf")]
-            public static extern void MultTransposeMatrixf([MarshalAs(UnmanagedType.LPArray)] GLfloat[] m);
+            public static extern void MultTransposeMatrixf_(IntPtr m);
             [DllImport("opengl32", EntryPoint = "glMultTransposeMatrixd")]
-            public static extern void MultTransposeMatrixd([MarshalAs(UnmanagedType.LPArray)] GLdouble[] m);
+            public static extern void MultTransposeMatrixd_(IntPtr m);
             [DllImport("opengl32", EntryPoint = "glSampleCoverage")]
             public static extern void SampleCoverage(GLclampf value, Enums.Boolean invert);
             [DllImport("opengl32", EntryPoint = "glCompressedTexImage3D")]
@@ -7414,101 +7414,101 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glCompressedTexSubImage1D")]
             public static extern void CompressedTexSubImage1D(Enums.TextureTarget target, GLint level, GLint xoffset, GLsizei width, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
             [DllImport("opengl32", EntryPoint = "glGetCompressedTexImage")]
-            public static extern void GetCompressedTexImage(Enums.TextureTarget target, GLint level, out IntPtr img);
+            public static extern void GetCompressedTexImage(Enums.TextureTarget target, GLint level, IntPtr img);
             [DllImport("opengl32", EntryPoint = "glBlendFuncSeparate")]
             public static extern void BlendFuncSeparate(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
             [DllImport("opengl32", EntryPoint = "glFogCoordf")]
             public static extern void FogCoordf(GLfloat coord);
             [DllImport("opengl32", EntryPoint = "glFogCoordfv")]
-            public static extern void FogCoordfv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] coord);
+            public static extern void FogCoordfv_(IntPtr coord);
             [DllImport("opengl32", EntryPoint = "glFogCoordd")]
             public static extern void FogCoordd(GLdouble coord);
             [DllImport("opengl32", EntryPoint = "glFogCoorddv")]
-            public static extern void FogCoorddv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] coord);
+            public static extern void FogCoorddv_(IntPtr coord);
             [DllImport("opengl32", EntryPoint = "glFogCoordPointer")]
             public static extern void FogCoordPointer_(GLenum type, GLsizei stride, IntPtr pointer);
             [DllImport("opengl32", EntryPoint = "glMultiDrawArrays")]
             public static extern void MultiDrawArrays(Enums.BeginMode mode, [MarshalAs(UnmanagedType.LPArray)] GLint[] first, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLsizei primcount);
             [DllImport("opengl32", EntryPoint = "glMultiDrawElements")]
-            public static extern void MultiDrawElements(Enums.BeginMode mode, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLenum type, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] indices, GLsizei primcount);
+            public static extern void MultiDrawElements_(Enums.BeginMode mode, IntPtr count, GLenum type, IntPtr indices, GLsizei primcount);
             [DllImport("opengl32", EntryPoint = "glPointParameterf")]
             public static extern void PointParameterf(GLenum pname, GLfloat param);
             [DllImport("opengl32", EntryPoint = "glPointParameterfv")]
-            public static extern void PointParameterfv(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
+            public static extern void PointParameterfv_(GLenum pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glPointParameteri")]
             public static extern void PointParameteri(GLenum pname, GLint param);
             [DllImport("opengl32", EntryPoint = "glPointParameteriv")]
-            public static extern void PointParameteriv(GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
+            public static extern void PointParameteriv_(GLenum pname, IntPtr parameters);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3b")]
             public static extern void SecondaryColor3b(GLbyte red, GLbyte green, GLbyte blue);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3bv")]
-            public static extern void SecondaryColor3bv([MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public static extern void SecondaryColor3bv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3d")]
             public static extern void SecondaryColor3d(GLdouble red, GLdouble green, GLdouble blue);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3dv")]
-            public static extern void SecondaryColor3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void SecondaryColor3dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3f")]
             public static extern void SecondaryColor3f(GLfloat red, GLfloat green, GLfloat blue);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3fv")]
-            public static extern void SecondaryColor3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void SecondaryColor3fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3i")]
             public static extern void SecondaryColor3i(GLint red, GLint green, GLint blue);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3iv")]
-            public static extern void SecondaryColor3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void SecondaryColor3iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3s")]
             public static extern void SecondaryColor3s(GLshort red, GLshort green, GLshort blue);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3sv")]
-            public static extern void SecondaryColor3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void SecondaryColor3sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3ub")]
             public static extern void SecondaryColor3ub(GLubyte red, GLubyte green, GLubyte blue);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3ubv")]
-            public static extern void SecondaryColor3ubv([MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
+            public static extern void SecondaryColor3ubv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3ui")]
             public static extern void SecondaryColor3ui(GLuint red, GLuint green, GLuint blue);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3uiv")]
-            public static extern void SecondaryColor3uiv([MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
+            public static extern void SecondaryColor3uiv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3us")]
             public static extern void SecondaryColor3us(GLushort red, GLushort green, GLushort blue);
             [DllImport("opengl32", EntryPoint = "glSecondaryColor3usv")]
-            public static extern void SecondaryColor3usv([MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public static extern void SecondaryColor3usv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glSecondaryColorPointer")]
             public static extern void SecondaryColorPointer_(GLint size, Enums.ColorPointerType type, GLsizei stride, IntPtr pointer);
             [DllImport("opengl32", EntryPoint = "glWindowPos2d")]
             public static extern void WindowPos2d(GLdouble x, GLdouble y);
             [DllImport("opengl32", EntryPoint = "glWindowPos2dv")]
-            public static extern void WindowPos2dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void WindowPos2dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glWindowPos2f")]
             public static extern void WindowPos2f(GLfloat x, GLfloat y);
             [DllImport("opengl32", EntryPoint = "glWindowPos2fv")]
-            public static extern void WindowPos2fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void WindowPos2fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glWindowPos2i")]
             public static extern void WindowPos2i(GLint x, GLint y);
             [DllImport("opengl32", EntryPoint = "glWindowPos2iv")]
-            public static extern void WindowPos2iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void WindowPos2iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glWindowPos2s")]
             public static extern void WindowPos2s(GLshort x, GLshort y);
             [DllImport("opengl32", EntryPoint = "glWindowPos2sv")]
-            public static extern void WindowPos2sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void WindowPos2sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glWindowPos3d")]
             public static extern void WindowPos3d(GLdouble x, GLdouble y, GLdouble z);
             [DllImport("opengl32", EntryPoint = "glWindowPos3dv")]
-            public static extern void WindowPos3dv([MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void WindowPos3dv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glWindowPos3f")]
             public static extern void WindowPos3f(GLfloat x, GLfloat y, GLfloat z);
             [DllImport("opengl32", EntryPoint = "glWindowPos3fv")]
-            public static extern void WindowPos3fv([MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void WindowPos3fv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glWindowPos3i")]
             public static extern void WindowPos3i(GLint x, GLint y, GLint z);
             [DllImport("opengl32", EntryPoint = "glWindowPos3iv")]
-            public static extern void WindowPos3iv([MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void WindowPos3iv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glWindowPos3s")]
             public static extern void WindowPos3s(GLshort x, GLshort y, GLshort z);
             [DllImport("opengl32", EntryPoint = "glWindowPos3sv")]
-            public static extern void WindowPos3sv([MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void WindowPos3sv_(IntPtr v);
             [DllImport("opengl32", EntryPoint = "glGenQueries")]
             public static extern void GenQueries(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
             [DllImport("opengl32", EntryPoint = "glDeleteQueries")]
-            public static extern void DeleteQueries(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
+            public static extern void DeleteQueries_(GLsizei n, IntPtr ids);
             [DllImport("opengl32", EntryPoint = "glIsQuery")]
             public static extern GLboolean IsQuery(GLuint id);
             [DllImport("opengl32", EntryPoint = "glBeginQuery")]
@@ -7524,7 +7524,7 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glBindBuffer")]
             public static extern void BindBuffer(GLenum target, GLuint buffer);
             [DllImport("opengl32", EntryPoint = "glDeleteBuffers")]
-            public static extern void DeleteBuffers(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffers);
+            public static extern void DeleteBuffers_(GLsizei n, IntPtr buffers);
             [DllImport("opengl32", EntryPoint = "glGenBuffers")]
             public static extern void GenBuffers(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffers);
             [DllImport("opengl32", EntryPoint = "glIsBuffer")]
@@ -7534,9 +7534,9 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glBufferSubData")]
             public static extern void BufferSubData_(GLenum target, GLintptr offset, GLsizeiptr size, IntPtr data);
             [DllImport("opengl32", EntryPoint = "glGetBufferSubData")]
-            public static extern void GetBufferSubData_(GLenum target, GLintptr offset, GLsizeiptr size, out IntPtr data);
+            public static extern void GetBufferSubData_(GLenum target, GLintptr offset, GLsizeiptr size, IntPtr data);
             [DllImport("opengl32", EntryPoint = "glMapBuffer")]
-            public static extern IntPtr MapBuffer_(GLenum target, GLenum access);
+            public static extern IntPtr MapBuffer(GLenum target, GLenum access);
             [DllImport("opengl32", EntryPoint = "glUnmapBuffer")]
             public static extern GLboolean UnmapBuffer(GLenum target);
             [DllImport("opengl32", EntryPoint = "glGetBufferParameteriv")]
@@ -7546,7 +7546,7 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glBlendEquationSeparate")]
             public static extern void BlendEquationSeparate(Enums.BlendEquationModeEXT modeRGB, Enums.BlendEquationModeEXT modeAlpha);
             [DllImport("opengl32", EntryPoint = "glDrawBuffers")]
-            public static extern void DrawBuffers(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLenum[] bufs);
+            public static extern void DrawBuffers_(GLsizei n, IntPtr bufs);
             [DllImport("opengl32", EntryPoint = "glStencilOpSeparate")]
             public static extern void StencilOpSeparate(GLenum face, Enums.StencilOp sfail, Enums.StencilOp dpfail, Enums.StencilOp dppass);
             [DllImport("opengl32", EntryPoint = "glStencilFuncSeparate")]
@@ -7556,7 +7556,7 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glAttachShader")]
             public static extern void AttachShader(GLuint program, GLuint shader);
             [DllImport("opengl32", EntryPoint = "glBindAttribLocation")]
-            public static extern void BindAttribLocation(GLuint program, GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public static extern void BindAttribLocation_(GLuint program, GLuint index, IntPtr name);
             [DllImport("opengl32", EntryPoint = "glCompileShader")]
             public static extern void CompileShader(GLuint shader);
             [DllImport("opengl32", EntryPoint = "glCreateProgram")]
@@ -7580,7 +7580,7 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glGetAttachedShaders")]
             public static extern void GetAttachedShaders(GLuint program, GLsizei maxCount, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, [MarshalAs(UnmanagedType.LPArray)] GLuint[] obj);
             [DllImport("opengl32", EntryPoint = "glGetAttribLocation")]
-            public static extern GLint GetAttribLocation(GLuint program, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public static extern GLint GetAttribLocation_(GLuint program, IntPtr name);
             [DllImport("opengl32", EntryPoint = "glGetProgramiv")]
             public static extern void GetProgramiv(GLuint program, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetProgramInfoLog")]
@@ -7592,7 +7592,7 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glGetShaderSource")]
             public static extern void GetShaderSource(GLuint shader, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] source);
             [DllImport("opengl32", EntryPoint = "glGetUniformLocation")]
-            public static extern GLint GetUniformLocation(GLuint program, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
+            public static extern GLint GetUniformLocation_(GLuint program, IntPtr name);
             [DllImport("opengl32", EntryPoint = "glGetUniformfv")]
             public static extern void GetUniformfv(GLuint program, GLint location, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
             [DllImport("opengl32", EntryPoint = "glGetUniformiv")]
@@ -7612,7 +7612,7 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glLinkProgram")]
             public static extern void LinkProgram(GLuint program);
             [DllImport("opengl32", EntryPoint = "glShaderSource")]
-            public static extern void ShaderSource(GLuint shader, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] string[] @string, [MarshalAs(UnmanagedType.LPArray)] GLint[] length);
+            public static extern void ShaderSource_(GLuint shader, GLsizei count, string[] @string, IntPtr length);
             [DllImport("opengl32", EntryPoint = "glUseProgram")]
             public static extern void UseProgram(GLuint program);
             [DllImport("opengl32", EntryPoint = "glUniform1f")]
@@ -7632,101 +7632,101 @@ namespace OpenTK.OpenGL
             [DllImport("opengl32", EntryPoint = "glUniform4i")]
             public static extern void Uniform4i(GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
             [DllImport("opengl32", EntryPoint = "glUniform1fv")]
-            public static extern void Uniform1fv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public static extern void Uniform1fv_(GLint location, GLsizei count, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniform2fv")]
-            public static extern void Uniform2fv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public static extern void Uniform2fv_(GLint location, GLsizei count, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniform3fv")]
-            public static extern void Uniform3fv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public static extern void Uniform3fv_(GLint location, GLsizei count, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniform4fv")]
-            public static extern void Uniform4fv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public static extern void Uniform4fv_(GLint location, GLsizei count, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniform1iv")]
-            public static extern void Uniform1iv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
+            public static extern void Uniform1iv_(GLint location, GLsizei count, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniform2iv")]
-            public static extern void Uniform2iv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
+            public static extern void Uniform2iv_(GLint location, GLsizei count, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniform3iv")]
-            public static extern void Uniform3iv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
+            public static extern void Uniform3iv_(GLint location, GLsizei count, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniform4iv")]
-            public static extern void Uniform4iv(GLint location, GLsizei count, [MarshalAs(UnmanagedType.LPArray)] GLint[] value);
+            public static extern void Uniform4iv_(GLint location, GLsizei count, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniformMatrix2fv")]
-            public static extern void UniformMatrix2fv(GLint location, GLsizei count, Enums.Boolean transpose, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public static extern void UniformMatrix2fv_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniformMatrix3fv")]
-            public static extern void UniformMatrix3fv(GLint location, GLsizei count, Enums.Boolean transpose, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public static extern void UniformMatrix3fv_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glUniformMatrix4fv")]
-            public static extern void UniformMatrix4fv(GLint location, GLsizei count, Enums.Boolean transpose, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] value);
+            public static extern void UniformMatrix4fv_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
             [DllImport("opengl32", EntryPoint = "glValidateProgram")]
             public static extern void ValidateProgram(GLuint program);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib1d")]
             public static extern void VertexAttrib1d(GLuint index, GLdouble x);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib1dv")]
-            public static extern void VertexAttrib1dv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void VertexAttrib1dv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib1f")]
             public static extern void VertexAttrib1f(GLuint index, GLfloat x);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib1fv")]
-            public static extern void VertexAttrib1fv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void VertexAttrib1fv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib1s")]
             public static extern void VertexAttrib1s(GLuint index, GLshort x);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib1sv")]
-            public static extern void VertexAttrib1sv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void VertexAttrib1sv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib2d")]
             public static extern void VertexAttrib2d(GLuint index, GLdouble x, GLdouble y);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib2dv")]
-            public static extern void VertexAttrib2dv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void VertexAttrib2dv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib2f")]
             public static extern void VertexAttrib2f(GLuint index, GLfloat x, GLfloat y);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib2fv")]
-            public static extern void VertexAttrib2fv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void VertexAttrib2fv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib2s")]
             public static extern void VertexAttrib2s(GLuint index, GLshort x, GLshort y);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib2sv")]
-            public static extern void VertexAttrib2sv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void VertexAttrib2sv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib3d")]
             public static extern void VertexAttrib3d(GLuint index, GLdouble x, GLdouble y, GLdouble z);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib3dv")]
-            public static extern void VertexAttrib3dv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void VertexAttrib3dv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib3f")]
             public static extern void VertexAttrib3f(GLuint index, GLfloat x, GLfloat y, GLfloat z);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib3fv")]
-            public static extern void VertexAttrib3fv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void VertexAttrib3fv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib3s")]
             public static extern void VertexAttrib3s(GLuint index, GLshort x, GLshort y, GLshort z);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib3sv")]
-            public static extern void VertexAttrib3sv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void VertexAttrib3sv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nbv")]
-            public static extern void VertexAttrib4Nbv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public static extern void VertexAttrib4Nbv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4Niv")]
-            public static extern void VertexAttrib4Niv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void VertexAttrib4Niv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nsv")]
-            public static extern void VertexAttrib4Nsv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void VertexAttrib4Nsv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nub")]
             public static extern void VertexAttrib4Nub(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nubv")]
-            public static extern void VertexAttrib4Nubv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
+            public static extern void VertexAttrib4Nubv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nuiv")]
-            public static extern void VertexAttrib4Nuiv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
+            public static extern void VertexAttrib4Nuiv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nusv")]
-            public static extern void VertexAttrib4Nusv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public static extern void VertexAttrib4Nusv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4bv")]
-            public static extern void VertexAttrib4bv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLbyte[] v);
+            public static extern void VertexAttrib4bv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4d")]
             public static extern void VertexAttrib4d(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4dv")]
-            public static extern void VertexAttrib4dv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
+            public static extern void VertexAttrib4dv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4f")]
             public static extern void VertexAttrib4f(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4fv")]
-            public static extern void VertexAttrib4fv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
+            public static extern void VertexAttrib4fv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4iv")]
-            public static extern void VertexAttrib4iv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
+            public static extern void VertexAttrib4iv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4s")]
             public static extern void VertexAttrib4s(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4sv")]
-            public static extern void VertexAttrib4sv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLshort[] v);
+            public static extern void VertexAttrib4sv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4ubv")]
-            public static extern void VertexAttrib4ubv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLubyte[] v);
+            public static extern void VertexAttrib4ubv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4uiv")]
-            public static extern void VertexAttrib4uiv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLuint[] v);
+            public static extern void VertexAttrib4uiv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttrib4usv")]
-            public static extern void VertexAttrib4usv(GLuint index, [MarshalAs(UnmanagedType.LPArray)] GLushort[] v);
+            public static extern void VertexAttrib4usv_(GLuint index, IntPtr v);
             [DllImport("opengl32", EntryPoint = "glVertexAttribPointer")]
             public static extern void VertexAttribPointer_(GLuint index, GLint size, GLenum type, Enums.Boolean normalized, GLsizei stride, IntPtr pointer);
         }
@@ -7742,192 +7742,192 @@ namespace OpenTK.OpenGL
         public static Delegates.GenLists GenLists;
         public static Delegates.ListBase ListBase;
         public static Delegates.Begin Begin;
-        public static Delegates.Bitmap Bitmap;
+        public static Delegates.Bitmap_ Bitmap_;
         public static Delegates.Color3b Color3b;
-        public static Delegates.Color3bv Color3bv;
+        public static Delegates.Color3bv_ Color3bv_;
         public static Delegates.Color3d Color3d;
-        public static Delegates.Color3dv Color3dv;
+        public static Delegates.Color3dv_ Color3dv_;
         public static Delegates.Color3f Color3f;
-        public static Delegates.Color3fv Color3fv;
+        public static Delegates.Color3fv_ Color3fv_;
         public static Delegates.Color3i Color3i;
-        public static Delegates.Color3iv Color3iv;
+        public static Delegates.Color3iv_ Color3iv_;
         public static Delegates.Color3s Color3s;
-        public static Delegates.Color3sv Color3sv;
+        public static Delegates.Color3sv_ Color3sv_;
         public static Delegates.Color3ub Color3ub;
-        public static Delegates.Color3ubv Color3ubv;
+        public static Delegates.Color3ubv_ Color3ubv_;
         public static Delegates.Color3ui Color3ui;
-        public static Delegates.Color3uiv Color3uiv;
+        public static Delegates.Color3uiv_ Color3uiv_;
         public static Delegates.Color3us Color3us;
-        public static Delegates.Color3usv Color3usv;
+        public static Delegates.Color3usv_ Color3usv_;
         public static Delegates.Color4b Color4b;
-        public static Delegates.Color4bv Color4bv;
+        public static Delegates.Color4bv_ Color4bv_;
         public static Delegates.Color4d Color4d;
-        public static Delegates.Color4dv Color4dv;
+        public static Delegates.Color4dv_ Color4dv_;
         public static Delegates.Color4f Color4f;
-        public static Delegates.Color4fv Color4fv;
+        public static Delegates.Color4fv_ Color4fv_;
         public static Delegates.Color4i Color4i;
-        public static Delegates.Color4iv Color4iv;
+        public static Delegates.Color4iv_ Color4iv_;
         public static Delegates.Color4s Color4s;
-        public static Delegates.Color4sv Color4sv;
+        public static Delegates.Color4sv_ Color4sv_;
         public static Delegates.Color4ub Color4ub;
-        public static Delegates.Color4ubv Color4ubv;
+        public static Delegates.Color4ubv_ Color4ubv_;
         public static Delegates.Color4ui Color4ui;
-        public static Delegates.Color4uiv Color4uiv;
+        public static Delegates.Color4uiv_ Color4uiv_;
         public static Delegates.Color4us Color4us;
-        public static Delegates.Color4usv Color4usv;
+        public static Delegates.Color4usv_ Color4usv_;
         public static Delegates.EdgeFlag EdgeFlag;
         public static Delegates.EdgeFlagv EdgeFlagv;
         public static Delegates.End End;
         public static Delegates.Indexd Indexd;
-        public static Delegates.Indexdv Indexdv;
+        public static Delegates.Indexdv_ Indexdv_;
         public static Delegates.Indexf Indexf;
-        public static Delegates.Indexfv Indexfv;
+        public static Delegates.Indexfv_ Indexfv_;
         public static Delegates.Indexi Indexi;
-        public static Delegates.Indexiv Indexiv;
+        public static Delegates.Indexiv_ Indexiv_;
         public static Delegates.Indexs Indexs;
-        public static Delegates.Indexsv Indexsv;
+        public static Delegates.Indexsv_ Indexsv_;
         public static Delegates.Normal3b Normal3b;
-        public static Delegates.Normal3bv Normal3bv;
+        public static Delegates.Normal3bv_ Normal3bv_;
         public static Delegates.Normal3d Normal3d;
-        public static Delegates.Normal3dv Normal3dv;
+        public static Delegates.Normal3dv_ Normal3dv_;
         public static Delegates.Normal3f Normal3f;
-        public static Delegates.Normal3fv Normal3fv;
+        public static Delegates.Normal3fv_ Normal3fv_;
         public static Delegates.Normal3i Normal3i;
-        public static Delegates.Normal3iv Normal3iv;
+        public static Delegates.Normal3iv_ Normal3iv_;
         public static Delegates.Normal3s Normal3s;
-        public static Delegates.Normal3sv Normal3sv;
+        public static Delegates.Normal3sv_ Normal3sv_;
         public static Delegates.RasterPos2d RasterPos2d;
-        public static Delegates.RasterPos2dv RasterPos2dv;
+        public static Delegates.RasterPos2dv_ RasterPos2dv_;
         public static Delegates.RasterPos2f RasterPos2f;
-        public static Delegates.RasterPos2fv RasterPos2fv;
+        public static Delegates.RasterPos2fv_ RasterPos2fv_;
         public static Delegates.RasterPos2i RasterPos2i;
-        public static Delegates.RasterPos2iv RasterPos2iv;
+        public static Delegates.RasterPos2iv_ RasterPos2iv_;
         public static Delegates.RasterPos2s RasterPos2s;
-        public static Delegates.RasterPos2sv RasterPos2sv;
+        public static Delegates.RasterPos2sv_ RasterPos2sv_;
         public static Delegates.RasterPos3d RasterPos3d;
-        public static Delegates.RasterPos3dv RasterPos3dv;
+        public static Delegates.RasterPos3dv_ RasterPos3dv_;
         public static Delegates.RasterPos3f RasterPos3f;
-        public static Delegates.RasterPos3fv RasterPos3fv;
+        public static Delegates.RasterPos3fv_ RasterPos3fv_;
         public static Delegates.RasterPos3i RasterPos3i;
-        public static Delegates.RasterPos3iv RasterPos3iv;
+        public static Delegates.RasterPos3iv_ RasterPos3iv_;
         public static Delegates.RasterPos3s RasterPos3s;
-        public static Delegates.RasterPos3sv RasterPos3sv;
+        public static Delegates.RasterPos3sv_ RasterPos3sv_;
         public static Delegates.RasterPos4d RasterPos4d;
-        public static Delegates.RasterPos4dv RasterPos4dv;
+        public static Delegates.RasterPos4dv_ RasterPos4dv_;
         public static Delegates.RasterPos4f RasterPos4f;
-        public static Delegates.RasterPos4fv RasterPos4fv;
+        public static Delegates.RasterPos4fv_ RasterPos4fv_;
         public static Delegates.RasterPos4i RasterPos4i;
-        public static Delegates.RasterPos4iv RasterPos4iv;
+        public static Delegates.RasterPos4iv_ RasterPos4iv_;
         public static Delegates.RasterPos4s RasterPos4s;
-        public static Delegates.RasterPos4sv RasterPos4sv;
+        public static Delegates.RasterPos4sv_ RasterPos4sv_;
         public static Delegates.Rectd Rectd;
-        public static Delegates.Rectdv Rectdv;
+        public static Delegates.Rectdv_ Rectdv_;
         public static Delegates.Rectf Rectf;
-        public static Delegates.Rectfv Rectfv;
+        public static Delegates.Rectfv_ Rectfv_;
         public static Delegates.Recti Recti;
-        public static Delegates.Rectiv Rectiv;
+        public static Delegates.Rectiv_ Rectiv_;
         public static Delegates.Rects Rects;
-        public static Delegates.Rectsv Rectsv;
+        public static Delegates.Rectsv_ Rectsv_;
         public static Delegates.TexCoord1d TexCoord1d;
-        public static Delegates.TexCoord1dv TexCoord1dv;
+        public static Delegates.TexCoord1dv_ TexCoord1dv_;
         public static Delegates.TexCoord1f TexCoord1f;
-        public static Delegates.TexCoord1fv TexCoord1fv;
+        public static Delegates.TexCoord1fv_ TexCoord1fv_;
         public static Delegates.TexCoord1i TexCoord1i;
-        public static Delegates.TexCoord1iv TexCoord1iv;
+        public static Delegates.TexCoord1iv_ TexCoord1iv_;
         public static Delegates.TexCoord1s TexCoord1s;
-        public static Delegates.TexCoord1sv TexCoord1sv;
+        public static Delegates.TexCoord1sv_ TexCoord1sv_;
         public static Delegates.TexCoord2d TexCoord2d;
-        public static Delegates.TexCoord2dv TexCoord2dv;
+        public static Delegates.TexCoord2dv_ TexCoord2dv_;
         public static Delegates.TexCoord2f TexCoord2f;
-        public static Delegates.TexCoord2fv TexCoord2fv;
+        public static Delegates.TexCoord2fv_ TexCoord2fv_;
         public static Delegates.TexCoord2i TexCoord2i;
-        public static Delegates.TexCoord2iv TexCoord2iv;
+        public static Delegates.TexCoord2iv_ TexCoord2iv_;
         public static Delegates.TexCoord2s TexCoord2s;
-        public static Delegates.TexCoord2sv TexCoord2sv;
+        public static Delegates.TexCoord2sv_ TexCoord2sv_;
         public static Delegates.TexCoord3d TexCoord3d;
-        public static Delegates.TexCoord3dv TexCoord3dv;
+        public static Delegates.TexCoord3dv_ TexCoord3dv_;
         public static Delegates.TexCoord3f TexCoord3f;
-        public static Delegates.TexCoord3fv TexCoord3fv;
+        public static Delegates.TexCoord3fv_ TexCoord3fv_;
         public static Delegates.TexCoord3i TexCoord3i;
-        public static Delegates.TexCoord3iv TexCoord3iv;
+        public static Delegates.TexCoord3iv_ TexCoord3iv_;
         public static Delegates.TexCoord3s TexCoord3s;
-        public static Delegates.TexCoord3sv TexCoord3sv;
+        public static Delegates.TexCoord3sv_ TexCoord3sv_;
         public static Delegates.TexCoord4d TexCoord4d;
-        public static Delegates.TexCoord4dv TexCoord4dv;
+        public static Delegates.TexCoord4dv_ TexCoord4dv_;
         public static Delegates.TexCoord4f TexCoord4f;
-        public static Delegates.TexCoord4fv TexCoord4fv;
+        public static Delegates.TexCoord4fv_ TexCoord4fv_;
         public static Delegates.TexCoord4i TexCoord4i;
-        public static Delegates.TexCoord4iv TexCoord4iv;
+        public static Delegates.TexCoord4iv_ TexCoord4iv_;
         public static Delegates.TexCoord4s TexCoord4s;
-        public static Delegates.TexCoord4sv TexCoord4sv;
+        public static Delegates.TexCoord4sv_ TexCoord4sv_;
         public static Delegates.Vertex2d Vertex2d;
-        public static Delegates.Vertex2dv Vertex2dv;
+        public static Delegates.Vertex2dv_ Vertex2dv_;
         public static Delegates.Vertex2f Vertex2f;
-        public static Delegates.Vertex2fv Vertex2fv;
+        public static Delegates.Vertex2fv_ Vertex2fv_;
         public static Delegates.Vertex2i Vertex2i;
-        public static Delegates.Vertex2iv Vertex2iv;
+        public static Delegates.Vertex2iv_ Vertex2iv_;
         public static Delegates.Vertex2s Vertex2s;
-        public static Delegates.Vertex2sv Vertex2sv;
+        public static Delegates.Vertex2sv_ Vertex2sv_;
         public static Delegates.Vertex3d Vertex3d;
-        public static Delegates.Vertex3dv Vertex3dv;
+        public static Delegates.Vertex3dv_ Vertex3dv_;
         public static Delegates.Vertex3f Vertex3f;
-        public static Delegates.Vertex3fv Vertex3fv;
+        public static Delegates.Vertex3fv_ Vertex3fv_;
         public static Delegates.Vertex3i Vertex3i;
-        public static Delegates.Vertex3iv Vertex3iv;
+        public static Delegates.Vertex3iv_ Vertex3iv_;
         public static Delegates.Vertex3s Vertex3s;
-        public static Delegates.Vertex3sv Vertex3sv;
+        public static Delegates.Vertex3sv_ Vertex3sv_;
         public static Delegates.Vertex4d Vertex4d;
-        public static Delegates.Vertex4dv Vertex4dv;
+        public static Delegates.Vertex4dv_ Vertex4dv_;
         public static Delegates.Vertex4f Vertex4f;
-        public static Delegates.Vertex4fv Vertex4fv;
+        public static Delegates.Vertex4fv_ Vertex4fv_;
         public static Delegates.Vertex4i Vertex4i;
-        public static Delegates.Vertex4iv Vertex4iv;
+        public static Delegates.Vertex4iv_ Vertex4iv_;
         public static Delegates.Vertex4s Vertex4s;
-        public static Delegates.Vertex4sv Vertex4sv;
-        public static Delegates.ClipPlane ClipPlane;
+        public static Delegates.Vertex4sv_ Vertex4sv_;
+        public static Delegates.ClipPlane_ ClipPlane_;
         public static Delegates.ColorMaterial ColorMaterial;
         public static Delegates.CullFace CullFace;
         public static Delegates.Fogf Fogf;
-        public static Delegates.Fogfv Fogfv;
+        public static Delegates.Fogfv_ Fogfv_;
         public static Delegates.Fogi Fogi;
-        public static Delegates.Fogiv Fogiv;
+        public static Delegates.Fogiv_ Fogiv_;
         public static Delegates.FrontFace FrontFace;
         public static Delegates.Hint Hint;
         public static Delegates.Lightf Lightf;
-        public static Delegates.Lightfv Lightfv;
+        public static Delegates.Lightfv_ Lightfv_;
         public static Delegates.Lighti Lighti;
-        public static Delegates.Lightiv Lightiv;
+        public static Delegates.Lightiv_ Lightiv_;
         public static Delegates.LightModelf LightModelf;
-        public static Delegates.LightModelfv LightModelfv;
+        public static Delegates.LightModelfv_ LightModelfv_;
         public static Delegates.LightModeli LightModeli;
-        public static Delegates.LightModeliv LightModeliv;
+        public static Delegates.LightModeliv_ LightModeliv_;
         public static Delegates.LineStipple LineStipple;
         public static Delegates.LineWidth LineWidth;
         public static Delegates.Materialf Materialf;
-        public static Delegates.Materialfv Materialfv;
+        public static Delegates.Materialfv_ Materialfv_;
         public static Delegates.Materiali Materiali;
-        public static Delegates.Materialiv Materialiv;
+        public static Delegates.Materialiv_ Materialiv_;
         public static Delegates.PointSize PointSize;
         public static Delegates.PolygonMode PolygonMode;
-        public static Delegates.PolygonStipple PolygonStipple;
+        public static Delegates.PolygonStipple_ PolygonStipple_;
         public static Delegates.Scissor Scissor;
         public static Delegates.ShadeModel ShadeModel;
         public static Delegates.TexParameterf TexParameterf;
-        public static Delegates.TexParameterfv TexParameterfv;
+        public static Delegates.TexParameterfv_ TexParameterfv_;
         public static Delegates.TexParameteri TexParameteri;
-        public static Delegates.TexParameteriv TexParameteriv;
+        public static Delegates.TexParameteriv_ TexParameteriv_;
         public static Delegates.TexImage1D TexImage1D;
         public static Delegates.TexImage2D TexImage2D;
         public static Delegates.TexEnvf TexEnvf;
-        public static Delegates.TexEnvfv TexEnvfv;
+        public static Delegates.TexEnvfv_ TexEnvfv_;
         public static Delegates.TexEnvi TexEnvi;
-        public static Delegates.TexEnviv TexEnviv;
+        public static Delegates.TexEnviv_ TexEnviv_;
         public static Delegates.TexGend TexGend;
-        public static Delegates.TexGendv TexGendv;
+        public static Delegates.TexGendv_ TexGendv_;
         public static Delegates.TexGenf TexGenf;
-        public static Delegates.TexGenfv TexGenfv;
+        public static Delegates.TexGenfv_ TexGenfv_;
         public static Delegates.TexGeni TexGeni;
-        public static Delegates.TexGeniv TexGeniv;
+        public static Delegates.TexGeniv_ TexGeniv_;
         public static Delegates.FeedbackBuffer FeedbackBuffer;
         public static Delegates.SelectBuffer SelectBuffer;
         public static Delegates.RenderMode RenderMode;
@@ -7954,22 +7954,22 @@ namespace OpenTK.OpenGL
         public static Delegates.Flush Flush;
         public static Delegates.PopAttrib PopAttrib;
         public static Delegates.PushAttrib PushAttrib;
-        public static Delegates.Map1d Map1d;
-        public static Delegates.Map1f Map1f;
-        public static Delegates.Map2d Map2d;
-        public static Delegates.Map2f Map2f;
+        public static Delegates.Map1d_ Map1d_;
+        public static Delegates.Map1f_ Map1f_;
+        public static Delegates.Map2d_ Map2d_;
+        public static Delegates.Map2f_ Map2f_;
         public static Delegates.MapGrid1d MapGrid1d;
         public static Delegates.MapGrid1f MapGrid1f;
         public static Delegates.MapGrid2d MapGrid2d;
         public static Delegates.MapGrid2f MapGrid2f;
         public static Delegates.EvalCoord1d EvalCoord1d;
-        public static Delegates.EvalCoord1dv EvalCoord1dv;
+        public static Delegates.EvalCoord1dv_ EvalCoord1dv_;
         public static Delegates.EvalCoord1f EvalCoord1f;
-        public static Delegates.EvalCoord1fv EvalCoord1fv;
+        public static Delegates.EvalCoord1fv_ EvalCoord1fv_;
         public static Delegates.EvalCoord2d EvalCoord2d;
-        public static Delegates.EvalCoord2dv EvalCoord2dv;
+        public static Delegates.EvalCoord2dv_ EvalCoord2dv_;
         public static Delegates.EvalCoord2f EvalCoord2f;
-        public static Delegates.EvalCoord2fv EvalCoord2fv;
+        public static Delegates.EvalCoord2fv_ EvalCoord2fv_;
         public static Delegates.EvalMesh1 EvalMesh1;
         public static Delegates.EvalPoint1 EvalPoint1;
         public static Delegates.EvalMesh2 EvalMesh2;
@@ -7985,9 +7985,9 @@ namespace OpenTK.OpenGL
         public static Delegates.PixelTransferi PixelTransferi;
         public static Delegates.PixelStoref PixelStoref;
         public static Delegates.PixelStorei PixelStorei;
-        public static Delegates.PixelMapfv PixelMapfv;
-        public static Delegates.PixelMapuiv PixelMapuiv;
-        public static Delegates.PixelMapusv PixelMapusv;
+        public static Delegates.PixelMapfv_ PixelMapfv_;
+        public static Delegates.PixelMapuiv_ PixelMapuiv_;
+        public static Delegates.PixelMapusv_ PixelMapusv_;
         public static Delegates.ReadBuffer ReadBuffer;
         public static Delegates.CopyPixels CopyPixels;
         public static Delegates.ReadPixels_ ReadPixels_;
@@ -8009,7 +8009,7 @@ namespace OpenTK.OpenGL
         public static Delegates.GetPixelMapuiv GetPixelMapuiv;
         public static Delegates.GetPixelMapusv GetPixelMapusv;
         public static Delegates.GetPolygonStipple GetPolygonStipple;
-        public static Delegates.GetString GetString;
+        public static Delegates.GetString_ GetString_;
         public static Delegates.GetTexEnvfv GetTexEnvfv;
         public static Delegates.GetTexEnviv GetTexEnviv;
         public static Delegates.GetTexGendv GetTexGendv;
@@ -8025,11 +8025,11 @@ namespace OpenTK.OpenGL
         public static Delegates.DepthRange DepthRange;
         public static Delegates.Frustum Frustum;
         public static Delegates.LoadIdentity LoadIdentity;
-        public static Delegates.LoadMatrixf LoadMatrixf;
-        public static Delegates.LoadMatrixd LoadMatrixd;
+        public static Delegates.LoadMatrixf_ LoadMatrixf_;
+        public static Delegates.LoadMatrixd_ LoadMatrixd_;
         public static Delegates.MatrixMode MatrixMode;
-        public static Delegates.MultMatrixf MultMatrixf;
-        public static Delegates.MultMatrixd MultMatrixd;
+        public static Delegates.MultMatrixf_ MultMatrixf_;
+        public static Delegates.MultMatrixd_ MultMatrixd_;
         public static Delegates.Ortho Ortho;
         public static Delegates.PopMatrix PopMatrix;
         public static Delegates.PushMatrix PushMatrix;
@@ -8060,22 +8060,22 @@ namespace OpenTK.OpenGL
         public static Delegates.CopyTexSubImage2D CopyTexSubImage2D;
         public static Delegates.TexSubImage1D TexSubImage1D;
         public static Delegates.TexSubImage2D TexSubImage2D;
-        public static Delegates.AreTexturesResident AreTexturesResident;
+        public static Delegates.AreTexturesResident_ AreTexturesResident_;
         public static Delegates.BindTexture BindTexture;
-        public static Delegates.DeleteTextures DeleteTextures;
+        public static Delegates.DeleteTextures_ DeleteTextures_;
         public static Delegates.GenTextures GenTextures;
         public static Delegates.IsTexture IsTexture;
-        public static Delegates.PrioritizeTextures PrioritizeTextures;
+        public static Delegates.PrioritizeTextures_ PrioritizeTextures_;
         public static Delegates.Indexub Indexub;
-        public static Delegates.Indexubv Indexubv;
+        public static Delegates.Indexubv_ Indexubv_;
         public static Delegates.PopClientAttrib PopClientAttrib;
         public static Delegates.PushClientAttrib PushClientAttrib;
         public static Delegates.BlendColor BlendColor;
         public static Delegates.BlendEquation BlendEquation;
         public static Delegates.DrawRangeElements_ DrawRangeElements_;
         public static Delegates.ColorTable_ ColorTable_;
-        public static Delegates.ColorTableParameterfv ColorTableParameterfv;
-        public static Delegates.ColorTableParameteriv ColorTableParameteriv;
+        public static Delegates.ColorTableParameterfv_ ColorTableParameterfv_;
+        public static Delegates.ColorTableParameteriv_ ColorTableParameteriv_;
         public static Delegates.CopyColorTable CopyColorTable;
         public static Delegates.GetColorTable_ GetColorTable_;
         public static Delegates.GetColorTableParameterfv GetColorTableParameterfv;
@@ -8085,9 +8085,9 @@ namespace OpenTK.OpenGL
         public static Delegates.ConvolutionFilter1D_ ConvolutionFilter1D_;
         public static Delegates.ConvolutionFilter2D_ ConvolutionFilter2D_;
         public static Delegates.ConvolutionParameterf ConvolutionParameterf;
-        public static Delegates.ConvolutionParameterfv ConvolutionParameterfv;
+        public static Delegates.ConvolutionParameterfv_ ConvolutionParameterfv_;
         public static Delegates.ConvolutionParameteri ConvolutionParameteri;
-        public static Delegates.ConvolutionParameteriv ConvolutionParameteriv;
+        public static Delegates.ConvolutionParameteriv_ ConvolutionParameteriv_;
         public static Delegates.CopyConvolutionFilter1D CopyConvolutionFilter1D;
         public static Delegates.CopyConvolutionFilter2D CopyConvolutionFilter2D;
         public static Delegates.GetConvolutionFilter_ GetConvolutionFilter_;
@@ -8111,41 +8111,41 @@ namespace OpenTK.OpenGL
         public static Delegates.ActiveTexture ActiveTexture;
         public static Delegates.ClientActiveTexture ClientActiveTexture;
         public static Delegates.MultiTexCoord1d MultiTexCoord1d;
-        public static Delegates.MultiTexCoord1dv MultiTexCoord1dv;
+        public static Delegates.MultiTexCoord1dv_ MultiTexCoord1dv_;
         public static Delegates.MultiTexCoord1f MultiTexCoord1f;
-        public static Delegates.MultiTexCoord1fv MultiTexCoord1fv;
+        public static Delegates.MultiTexCoord1fv_ MultiTexCoord1fv_;
         public static Delegates.MultiTexCoord1i MultiTexCoord1i;
-        public static Delegates.MultiTexCoord1iv MultiTexCoord1iv;
+        public static Delegates.MultiTexCoord1iv_ MultiTexCoord1iv_;
         public static Delegates.MultiTexCoord1s MultiTexCoord1s;
-        public static Delegates.MultiTexCoord1sv MultiTexCoord1sv;
+        public static Delegates.MultiTexCoord1sv_ MultiTexCoord1sv_;
         public static Delegates.MultiTexCoord2d MultiTexCoord2d;
-        public static Delegates.MultiTexCoord2dv MultiTexCoord2dv;
+        public static Delegates.MultiTexCoord2dv_ MultiTexCoord2dv_;
         public static Delegates.MultiTexCoord2f MultiTexCoord2f;
-        public static Delegates.MultiTexCoord2fv MultiTexCoord2fv;
+        public static Delegates.MultiTexCoord2fv_ MultiTexCoord2fv_;
         public static Delegates.MultiTexCoord2i MultiTexCoord2i;
-        public static Delegates.MultiTexCoord2iv MultiTexCoord2iv;
+        public static Delegates.MultiTexCoord2iv_ MultiTexCoord2iv_;
         public static Delegates.MultiTexCoord2s MultiTexCoord2s;
-        public static Delegates.MultiTexCoord2sv MultiTexCoord2sv;
+        public static Delegates.MultiTexCoord2sv_ MultiTexCoord2sv_;
         public static Delegates.MultiTexCoord3d MultiTexCoord3d;
-        public static Delegates.MultiTexCoord3dv MultiTexCoord3dv;
+        public static Delegates.MultiTexCoord3dv_ MultiTexCoord3dv_;
         public static Delegates.MultiTexCoord3f MultiTexCoord3f;
-        public static Delegates.MultiTexCoord3fv MultiTexCoord3fv;
+        public static Delegates.MultiTexCoord3fv_ MultiTexCoord3fv_;
         public static Delegates.MultiTexCoord3i MultiTexCoord3i;
-        public static Delegates.MultiTexCoord3iv MultiTexCoord3iv;
+        public static Delegates.MultiTexCoord3iv_ MultiTexCoord3iv_;
         public static Delegates.MultiTexCoord3s MultiTexCoord3s;
-        public static Delegates.MultiTexCoord3sv MultiTexCoord3sv;
+        public static Delegates.MultiTexCoord3sv_ MultiTexCoord3sv_;
         public static Delegates.MultiTexCoord4d MultiTexCoord4d;
-        public static Delegates.MultiTexCoord4dv MultiTexCoord4dv;
+        public static Delegates.MultiTexCoord4dv_ MultiTexCoord4dv_;
         public static Delegates.MultiTexCoord4f MultiTexCoord4f;
-        public static Delegates.MultiTexCoord4fv MultiTexCoord4fv;
+        public static Delegates.MultiTexCoord4fv_ MultiTexCoord4fv_;
         public static Delegates.MultiTexCoord4i MultiTexCoord4i;
-        public static Delegates.MultiTexCoord4iv MultiTexCoord4iv;
+        public static Delegates.MultiTexCoord4iv_ MultiTexCoord4iv_;
         public static Delegates.MultiTexCoord4s MultiTexCoord4s;
-        public static Delegates.MultiTexCoord4sv MultiTexCoord4sv;
-        public static Delegates.LoadTransposeMatrixf LoadTransposeMatrixf;
-        public static Delegates.LoadTransposeMatrixd LoadTransposeMatrixd;
-        public static Delegates.MultTransposeMatrixf MultTransposeMatrixf;
-        public static Delegates.MultTransposeMatrixd MultTransposeMatrixd;
+        public static Delegates.MultiTexCoord4sv_ MultiTexCoord4sv_;
+        public static Delegates.LoadTransposeMatrixf_ LoadTransposeMatrixf_;
+        public static Delegates.LoadTransposeMatrixd_ LoadTransposeMatrixd_;
+        public static Delegates.MultTransposeMatrixf_ MultTransposeMatrixf_;
+        public static Delegates.MultTransposeMatrixd_ MultTransposeMatrixd_;
         public static Delegates.SampleCoverage SampleCoverage;
         public static Delegates.CompressedTexImage3D CompressedTexImage3D;
         public static Delegates.CompressedTexImage2D CompressedTexImage2D;
@@ -8156,51 +8156,51 @@ namespace OpenTK.OpenGL
         public static Delegates.GetCompressedTexImage GetCompressedTexImage;
         public static Delegates.BlendFuncSeparate BlendFuncSeparate;
         public static Delegates.FogCoordf FogCoordf;
-        public static Delegates.FogCoordfv FogCoordfv;
+        public static Delegates.FogCoordfv_ FogCoordfv_;
         public static Delegates.FogCoordd FogCoordd;
-        public static Delegates.FogCoorddv FogCoorddv;
+        public static Delegates.FogCoorddv_ FogCoorddv_;
         public static Delegates.FogCoordPointer_ FogCoordPointer_;
         public static Delegates.MultiDrawArrays MultiDrawArrays;
-        public static Delegates.MultiDrawElements MultiDrawElements;
+        public static Delegates.MultiDrawElements_ MultiDrawElements_;
         public static Delegates.PointParameterf PointParameterf;
-        public static Delegates.PointParameterfv PointParameterfv;
+        public static Delegates.PointParameterfv_ PointParameterfv_;
         public static Delegates.PointParameteri PointParameteri;
-        public static Delegates.PointParameteriv PointParameteriv;
+        public static Delegates.PointParameteriv_ PointParameteriv_;
         public static Delegates.SecondaryColor3b SecondaryColor3b;
-        public static Delegates.SecondaryColor3bv SecondaryColor3bv;
+        public static Delegates.SecondaryColor3bv_ SecondaryColor3bv_;
         public static Delegates.SecondaryColor3d SecondaryColor3d;
-        public static Delegates.SecondaryColor3dv SecondaryColor3dv;
+        public static Delegates.SecondaryColor3dv_ SecondaryColor3dv_;
         public static Delegates.SecondaryColor3f SecondaryColor3f;
-        public static Delegates.SecondaryColor3fv SecondaryColor3fv;
+        public static Delegates.SecondaryColor3fv_ SecondaryColor3fv_;
         public static Delegates.SecondaryColor3i SecondaryColor3i;
-        public static Delegates.SecondaryColor3iv SecondaryColor3iv;
+        public static Delegates.SecondaryColor3iv_ SecondaryColor3iv_;
         public static Delegates.SecondaryColor3s SecondaryColor3s;
-        public static Delegates.SecondaryColor3sv SecondaryColor3sv;
+        public static Delegates.SecondaryColor3sv_ SecondaryColor3sv_;
         public static Delegates.SecondaryColor3ub SecondaryColor3ub;
-        public static Delegates.SecondaryColor3ubv SecondaryColor3ubv;
+        public static Delegates.SecondaryColor3ubv_ SecondaryColor3ubv_;
         public static Delegates.SecondaryColor3ui SecondaryColor3ui;
-        public static Delegates.SecondaryColor3uiv SecondaryColor3uiv;
+        public static Delegates.SecondaryColor3uiv_ SecondaryColor3uiv_;
         public static Delegates.SecondaryColor3us SecondaryColor3us;
-        public static Delegates.SecondaryColor3usv SecondaryColor3usv;
+        public static Delegates.SecondaryColor3usv_ SecondaryColor3usv_;
         public static Delegates.SecondaryColorPointer_ SecondaryColorPointer_;
         public static Delegates.WindowPos2d WindowPos2d;
-        public static Delegates.WindowPos2dv WindowPos2dv;
+        public static Delegates.WindowPos2dv_ WindowPos2dv_;
         public static Delegates.WindowPos2f WindowPos2f;
-        public static Delegates.WindowPos2fv WindowPos2fv;
+        public static Delegates.WindowPos2fv_ WindowPos2fv_;
         public static Delegates.WindowPos2i WindowPos2i;
-        public static Delegates.WindowPos2iv WindowPos2iv;
+        public static Delegates.WindowPos2iv_ WindowPos2iv_;
         public static Delegates.WindowPos2s WindowPos2s;
-        public static Delegates.WindowPos2sv WindowPos2sv;
+        public static Delegates.WindowPos2sv_ WindowPos2sv_;
         public static Delegates.WindowPos3d WindowPos3d;
-        public static Delegates.WindowPos3dv WindowPos3dv;
+        public static Delegates.WindowPos3dv_ WindowPos3dv_;
         public static Delegates.WindowPos3f WindowPos3f;
-        public static Delegates.WindowPos3fv WindowPos3fv;
+        public static Delegates.WindowPos3fv_ WindowPos3fv_;
         public static Delegates.WindowPos3i WindowPos3i;
-        public static Delegates.WindowPos3iv WindowPos3iv;
+        public static Delegates.WindowPos3iv_ WindowPos3iv_;
         public static Delegates.WindowPos3s WindowPos3s;
-        public static Delegates.WindowPos3sv WindowPos3sv;
+        public static Delegates.WindowPos3sv_ WindowPos3sv_;
         public static Delegates.GenQueries GenQueries;
-        public static Delegates.DeleteQueries DeleteQueries;
+        public static Delegates.DeleteQueries_ DeleteQueries_;
         public static Delegates.IsQuery IsQuery;
         public static Delegates.BeginQuery BeginQuery;
         public static Delegates.EndQuery EndQuery;
@@ -8208,23 +8208,23 @@ namespace OpenTK.OpenGL
         public static Delegates.GetQueryObjectiv GetQueryObjectiv;
         public static Delegates.GetQueryObjectuiv GetQueryObjectuiv;
         public static Delegates.BindBuffer BindBuffer;
-        public static Delegates.DeleteBuffers DeleteBuffers;
+        public static Delegates.DeleteBuffers_ DeleteBuffers_;
         public static Delegates.GenBuffers GenBuffers;
         public static Delegates.IsBuffer IsBuffer;
         public static Delegates.BufferData_ BufferData_;
         public static Delegates.BufferSubData_ BufferSubData_;
         public static Delegates.GetBufferSubData_ GetBufferSubData_;
-        public static Delegates.MapBuffer_ MapBuffer_;
+        public static Delegates.MapBuffer MapBuffer;
         public static Delegates.UnmapBuffer UnmapBuffer;
         public static Delegates.GetBufferParameteriv GetBufferParameteriv;
         public static Delegates.GetBufferPointerv GetBufferPointerv;
         public static Delegates.BlendEquationSeparate BlendEquationSeparate;
-        public static Delegates.DrawBuffers DrawBuffers;
+        public static Delegates.DrawBuffers_ DrawBuffers_;
         public static Delegates.StencilOpSeparate StencilOpSeparate;
         public static Delegates.StencilFuncSeparate StencilFuncSeparate;
         public static Delegates.StencilMaskSeparate StencilMaskSeparate;
         public static Delegates.AttachShader AttachShader;
-        public static Delegates.BindAttribLocation BindAttribLocation;
+        public static Delegates.BindAttribLocation_ BindAttribLocation_;
         public static Delegates.CompileShader CompileShader;
         public static Delegates.CreateProgram CreateProgram;
         public static Delegates.CreateShader CreateShader;
@@ -8236,13 +8236,13 @@ namespace OpenTK.OpenGL
         public static Delegates.GetActiveAttrib GetActiveAttrib;
         public static Delegates.GetActiveUniform GetActiveUniform;
         public static Delegates.GetAttachedShaders GetAttachedShaders;
-        public static Delegates.GetAttribLocation GetAttribLocation;
+        public static Delegates.GetAttribLocation_ GetAttribLocation_;
         public static Delegates.GetProgramiv GetProgramiv;
         public static Delegates.GetProgramInfoLog GetProgramInfoLog;
         public static Delegates.GetShaderiv GetShaderiv;
         public static Delegates.GetShaderInfoLog GetShaderInfoLog;
         public static Delegates.GetShaderSource GetShaderSource;
-        public static Delegates.GetUniformLocation GetUniformLocation;
+        public static Delegates.GetUniformLocation_ GetUniformLocation_;
         public static Delegates.GetUniformfv GetUniformfv;
         public static Delegates.GetUniformiv GetUniformiv;
         public static Delegates.GetVertexAttribdv GetVertexAttribdv;
@@ -8252,7 +8252,7 @@ namespace OpenTK.OpenGL
         public static Delegates.IsProgram IsProgram;
         public static Delegates.IsShader IsShader;
         public static Delegates.LinkProgram LinkProgram;
-        public static Delegates.ShaderSource ShaderSource;
+        public static Delegates.ShaderSource_ ShaderSource_;
         public static Delegates.UseProgram UseProgram;
         public static Delegates.Uniform1f Uniform1f;
         public static Delegates.Uniform2f Uniform2f;
@@ -8262,93 +8262,93 @@ namespace OpenTK.OpenGL
         public static Delegates.Uniform2i Uniform2i;
         public static Delegates.Uniform3i Uniform3i;
         public static Delegates.Uniform4i Uniform4i;
-        public static Delegates.Uniform1fv Uniform1fv;
-        public static Delegates.Uniform2fv Uniform2fv;
-        public static Delegates.Uniform3fv Uniform3fv;
-        public static Delegates.Uniform4fv Uniform4fv;
-        public static Delegates.Uniform1iv Uniform1iv;
-        public static Delegates.Uniform2iv Uniform2iv;
-        public static Delegates.Uniform3iv Uniform3iv;
-        public static Delegates.Uniform4iv Uniform4iv;
-        public static Delegates.UniformMatrix2fv UniformMatrix2fv;
-        public static Delegates.UniformMatrix3fv UniformMatrix3fv;
-        public static Delegates.UniformMatrix4fv UniformMatrix4fv;
+        public static Delegates.Uniform1fv_ Uniform1fv_;
+        public static Delegates.Uniform2fv_ Uniform2fv_;
+        public static Delegates.Uniform3fv_ Uniform3fv_;
+        public static Delegates.Uniform4fv_ Uniform4fv_;
+        public static Delegates.Uniform1iv_ Uniform1iv_;
+        public static Delegates.Uniform2iv_ Uniform2iv_;
+        public static Delegates.Uniform3iv_ Uniform3iv_;
+        public static Delegates.Uniform4iv_ Uniform4iv_;
+        public static Delegates.UniformMatrix2fv_ UniformMatrix2fv_;
+        public static Delegates.UniformMatrix3fv_ UniformMatrix3fv_;
+        public static Delegates.UniformMatrix4fv_ UniformMatrix4fv_;
         public static Delegates.ValidateProgram ValidateProgram;
         public static Delegates.VertexAttrib1d VertexAttrib1d;
-        public static Delegates.VertexAttrib1dv VertexAttrib1dv;
+        public static Delegates.VertexAttrib1dv_ VertexAttrib1dv_;
         public static Delegates.VertexAttrib1f VertexAttrib1f;
-        public static Delegates.VertexAttrib1fv VertexAttrib1fv;
+        public static Delegates.VertexAttrib1fv_ VertexAttrib1fv_;
         public static Delegates.VertexAttrib1s VertexAttrib1s;
-        public static Delegates.VertexAttrib1sv VertexAttrib1sv;
+        public static Delegates.VertexAttrib1sv_ VertexAttrib1sv_;
         public static Delegates.VertexAttrib2d VertexAttrib2d;
-        public static Delegates.VertexAttrib2dv VertexAttrib2dv;
+        public static Delegates.VertexAttrib2dv_ VertexAttrib2dv_;
         public static Delegates.VertexAttrib2f VertexAttrib2f;
-        public static Delegates.VertexAttrib2fv VertexAttrib2fv;
+        public static Delegates.VertexAttrib2fv_ VertexAttrib2fv_;
         public static Delegates.VertexAttrib2s VertexAttrib2s;
-        public static Delegates.VertexAttrib2sv VertexAttrib2sv;
+        public static Delegates.VertexAttrib2sv_ VertexAttrib2sv_;
         public static Delegates.VertexAttrib3d VertexAttrib3d;
-        public static Delegates.VertexAttrib3dv VertexAttrib3dv;
+        public static Delegates.VertexAttrib3dv_ VertexAttrib3dv_;
         public static Delegates.VertexAttrib3f VertexAttrib3f;
-        public static Delegates.VertexAttrib3fv VertexAttrib3fv;
+        public static Delegates.VertexAttrib3fv_ VertexAttrib3fv_;
         public static Delegates.VertexAttrib3s VertexAttrib3s;
-        public static Delegates.VertexAttrib3sv VertexAttrib3sv;
-        public static Delegates.VertexAttrib4Nbv VertexAttrib4Nbv;
-        public static Delegates.VertexAttrib4Niv VertexAttrib4Niv;
-        public static Delegates.VertexAttrib4Nsv VertexAttrib4Nsv;
+        public static Delegates.VertexAttrib3sv_ VertexAttrib3sv_;
+        public static Delegates.VertexAttrib4Nbv_ VertexAttrib4Nbv_;
+        public static Delegates.VertexAttrib4Niv_ VertexAttrib4Niv_;
+        public static Delegates.VertexAttrib4Nsv_ VertexAttrib4Nsv_;
         public static Delegates.VertexAttrib4Nub VertexAttrib4Nub;
-        public static Delegates.VertexAttrib4Nubv VertexAttrib4Nubv;
-        public static Delegates.VertexAttrib4Nuiv VertexAttrib4Nuiv;
-        public static Delegates.VertexAttrib4Nusv VertexAttrib4Nusv;
-        public static Delegates.VertexAttrib4bv VertexAttrib4bv;
+        public static Delegates.VertexAttrib4Nubv_ VertexAttrib4Nubv_;
+        public static Delegates.VertexAttrib4Nuiv_ VertexAttrib4Nuiv_;
+        public static Delegates.VertexAttrib4Nusv_ VertexAttrib4Nusv_;
+        public static Delegates.VertexAttrib4bv_ VertexAttrib4bv_;
         public static Delegates.VertexAttrib4d VertexAttrib4d;
-        public static Delegates.VertexAttrib4dv VertexAttrib4dv;
+        public static Delegates.VertexAttrib4dv_ VertexAttrib4dv_;
         public static Delegates.VertexAttrib4f VertexAttrib4f;
-        public static Delegates.VertexAttrib4fv VertexAttrib4fv;
-        public static Delegates.VertexAttrib4iv VertexAttrib4iv;
+        public static Delegates.VertexAttrib4fv_ VertexAttrib4fv_;
+        public static Delegates.VertexAttrib4iv_ VertexAttrib4iv_;
         public static Delegates.VertexAttrib4s VertexAttrib4s;
-        public static Delegates.VertexAttrib4sv VertexAttrib4sv;
-        public static Delegates.VertexAttrib4ubv VertexAttrib4ubv;
-        public static Delegates.VertexAttrib4uiv VertexAttrib4uiv;
-        public static Delegates.VertexAttrib4usv VertexAttrib4usv;
+        public static Delegates.VertexAttrib4sv_ VertexAttrib4sv_;
+        public static Delegates.VertexAttrib4ubv_ VertexAttrib4ubv_;
+        public static Delegates.VertexAttrib4uiv_ VertexAttrib4uiv_;
+        public static Delegates.VertexAttrib4usv_ VertexAttrib4usv_;
         public static Delegates.VertexAttribPointer_ VertexAttribPointer_;
         public static Delegates.ActiveTextureARB ActiveTextureARB;
         public static Delegates.ClientActiveTextureARB ClientActiveTextureARB;
         public static Delegates.MultiTexCoord1dARB MultiTexCoord1dARB;
-        public static Delegates.MultiTexCoord1dvARB MultiTexCoord1dvARB;
+        public static Delegates.MultiTexCoord1dvARB_ MultiTexCoord1dvARB_;
         public static Delegates.MultiTexCoord1fARB MultiTexCoord1fARB;
-        public static Delegates.MultiTexCoord1fvARB MultiTexCoord1fvARB;
+        public static Delegates.MultiTexCoord1fvARB_ MultiTexCoord1fvARB_;
         public static Delegates.MultiTexCoord1iARB MultiTexCoord1iARB;
-        public static Delegates.MultiTexCoord1ivARB MultiTexCoord1ivARB;
+        public static Delegates.MultiTexCoord1ivARB_ MultiTexCoord1ivARB_;
         public static Delegates.MultiTexCoord1sARB MultiTexCoord1sARB;
-        public static Delegates.MultiTexCoord1svARB MultiTexCoord1svARB;
+        public static Delegates.MultiTexCoord1svARB_ MultiTexCoord1svARB_;
         public static Delegates.MultiTexCoord2dARB MultiTexCoord2dARB;
-        public static Delegates.MultiTexCoord2dvARB MultiTexCoord2dvARB;
+        public static Delegates.MultiTexCoord2dvARB_ MultiTexCoord2dvARB_;
         public static Delegates.MultiTexCoord2fARB MultiTexCoord2fARB;
-        public static Delegates.MultiTexCoord2fvARB MultiTexCoord2fvARB;
+        public static Delegates.MultiTexCoord2fvARB_ MultiTexCoord2fvARB_;
         public static Delegates.MultiTexCoord2iARB MultiTexCoord2iARB;
-        public static Delegates.MultiTexCoord2ivARB MultiTexCoord2ivARB;
+        public static Delegates.MultiTexCoord2ivARB_ MultiTexCoord2ivARB_;
         public static Delegates.MultiTexCoord2sARB MultiTexCoord2sARB;
-        public static Delegates.MultiTexCoord2svARB MultiTexCoord2svARB;
+        public static Delegates.MultiTexCoord2svARB_ MultiTexCoord2svARB_;
         public static Delegates.MultiTexCoord3dARB MultiTexCoord3dARB;
-        public static Delegates.MultiTexCoord3dvARB MultiTexCoord3dvARB;
+        public static Delegates.MultiTexCoord3dvARB_ MultiTexCoord3dvARB_;
         public static Delegates.MultiTexCoord3fARB MultiTexCoord3fARB;
-        public static Delegates.MultiTexCoord3fvARB MultiTexCoord3fvARB;
+        public static Delegates.MultiTexCoord3fvARB_ MultiTexCoord3fvARB_;
         public static Delegates.MultiTexCoord3iARB MultiTexCoord3iARB;
-        public static Delegates.MultiTexCoord3ivARB MultiTexCoord3ivARB;
+        public static Delegates.MultiTexCoord3ivARB_ MultiTexCoord3ivARB_;
         public static Delegates.MultiTexCoord3sARB MultiTexCoord3sARB;
-        public static Delegates.MultiTexCoord3svARB MultiTexCoord3svARB;
+        public static Delegates.MultiTexCoord3svARB_ MultiTexCoord3svARB_;
         public static Delegates.MultiTexCoord4dARB MultiTexCoord4dARB;
-        public static Delegates.MultiTexCoord4dvARB MultiTexCoord4dvARB;
+        public static Delegates.MultiTexCoord4dvARB_ MultiTexCoord4dvARB_;
         public static Delegates.MultiTexCoord4fARB MultiTexCoord4fARB;
-        public static Delegates.MultiTexCoord4fvARB MultiTexCoord4fvARB;
+        public static Delegates.MultiTexCoord4fvARB_ MultiTexCoord4fvARB_;
         public static Delegates.MultiTexCoord4iARB MultiTexCoord4iARB;
-        public static Delegates.MultiTexCoord4ivARB MultiTexCoord4ivARB;
+        public static Delegates.MultiTexCoord4ivARB_ MultiTexCoord4ivARB_;
         public static Delegates.MultiTexCoord4sARB MultiTexCoord4sARB;
-        public static Delegates.MultiTexCoord4svARB MultiTexCoord4svARB;
-        public static Delegates.LoadTransposeMatrixfARB LoadTransposeMatrixfARB;
-        public static Delegates.LoadTransposeMatrixdARB LoadTransposeMatrixdARB;
-        public static Delegates.MultTransposeMatrixfARB MultTransposeMatrixfARB;
-        public static Delegates.MultTransposeMatrixdARB MultTransposeMatrixdARB;
+        public static Delegates.MultiTexCoord4svARB_ MultiTexCoord4svARB_;
+        public static Delegates.LoadTransposeMatrixfARB_ LoadTransposeMatrixfARB_;
+        public static Delegates.LoadTransposeMatrixdARB_ LoadTransposeMatrixdARB_;
+        public static Delegates.MultTransposeMatrixfARB_ MultTransposeMatrixfARB_;
+        public static Delegates.MultTransposeMatrixdARB_ MultTransposeMatrixdARB_;
         public static Delegates.SampleCoverageARB SampleCoverageARB;
         public static Delegates.CompressedTexImage3DARB CompressedTexImage3DARB;
         public static Delegates.CompressedTexImage2DARB CompressedTexImage2DARB;
@@ -8358,89 +8358,89 @@ namespace OpenTK.OpenGL
         public static Delegates.CompressedTexSubImage1DARB CompressedTexSubImage1DARB;
         public static Delegates.GetCompressedTexImageARB GetCompressedTexImageARB;
         public static Delegates.PointParameterfARB PointParameterfARB;
-        public static Delegates.PointParameterfvARB PointParameterfvARB;
-        public static Delegates.WeightbvARB WeightbvARB;
-        public static Delegates.WeightsvARB WeightsvARB;
-        public static Delegates.WeightivARB WeightivARB;
-        public static Delegates.WeightfvARB WeightfvARB;
-        public static Delegates.WeightdvARB WeightdvARB;
-        public static Delegates.WeightubvARB WeightubvARB;
-        public static Delegates.WeightusvARB WeightusvARB;
-        public static Delegates.WeightuivARB WeightuivARB;
+        public static Delegates.PointParameterfvARB_ PointParameterfvARB_;
+        public static Delegates.WeightbvARB_ WeightbvARB_;
+        public static Delegates.WeightsvARB_ WeightsvARB_;
+        public static Delegates.WeightivARB_ WeightivARB_;
+        public static Delegates.WeightfvARB_ WeightfvARB_;
+        public static Delegates.WeightdvARB_ WeightdvARB_;
+        public static Delegates.WeightubvARB_ WeightubvARB_;
+        public static Delegates.WeightusvARB_ WeightusvARB_;
+        public static Delegates.WeightuivARB_ WeightuivARB_;
         public static Delegates.WeightPointerARB_ WeightPointerARB_;
         public static Delegates.VertexBlendARB VertexBlendARB;
         public static Delegates.CurrentPaletteMatrixARB CurrentPaletteMatrixARB;
-        public static Delegates.MatrixIndexubvARB MatrixIndexubvARB;
-        public static Delegates.MatrixIndexusvARB MatrixIndexusvARB;
-        public static Delegates.MatrixIndexuivARB MatrixIndexuivARB;
+        public static Delegates.MatrixIndexubvARB_ MatrixIndexubvARB_;
+        public static Delegates.MatrixIndexusvARB_ MatrixIndexusvARB_;
+        public static Delegates.MatrixIndexuivARB_ MatrixIndexuivARB_;
         public static Delegates.MatrixIndexPointerARB_ MatrixIndexPointerARB_;
         public static Delegates.WindowPos2dARB WindowPos2dARB;
-        public static Delegates.WindowPos2dvARB WindowPos2dvARB;
+        public static Delegates.WindowPos2dvARB_ WindowPos2dvARB_;
         public static Delegates.WindowPos2fARB WindowPos2fARB;
-        public static Delegates.WindowPos2fvARB WindowPos2fvARB;
+        public static Delegates.WindowPos2fvARB_ WindowPos2fvARB_;
         public static Delegates.WindowPos2iARB WindowPos2iARB;
-        public static Delegates.WindowPos2ivARB WindowPos2ivARB;
+        public static Delegates.WindowPos2ivARB_ WindowPos2ivARB_;
         public static Delegates.WindowPos2sARB WindowPos2sARB;
-        public static Delegates.WindowPos2svARB WindowPos2svARB;
+        public static Delegates.WindowPos2svARB_ WindowPos2svARB_;
         public static Delegates.WindowPos3dARB WindowPos3dARB;
-        public static Delegates.WindowPos3dvARB WindowPos3dvARB;
+        public static Delegates.WindowPos3dvARB_ WindowPos3dvARB_;
         public static Delegates.WindowPos3fARB WindowPos3fARB;
-        public static Delegates.WindowPos3fvARB WindowPos3fvARB;
+        public static Delegates.WindowPos3fvARB_ WindowPos3fvARB_;
         public static Delegates.WindowPos3iARB WindowPos3iARB;
-        public static Delegates.WindowPos3ivARB WindowPos3ivARB;
+        public static Delegates.WindowPos3ivARB_ WindowPos3ivARB_;
         public static Delegates.WindowPos3sARB WindowPos3sARB;
-        public static Delegates.WindowPos3svARB WindowPos3svARB;
+        public static Delegates.WindowPos3svARB_ WindowPos3svARB_;
         public static Delegates.VertexAttrib1dARB VertexAttrib1dARB;
-        public static Delegates.VertexAttrib1dvARB VertexAttrib1dvARB;
+        public static Delegates.VertexAttrib1dvARB_ VertexAttrib1dvARB_;
         public static Delegates.VertexAttrib1fARB VertexAttrib1fARB;
-        public static Delegates.VertexAttrib1fvARB VertexAttrib1fvARB;
+        public static Delegates.VertexAttrib1fvARB_ VertexAttrib1fvARB_;
         public static Delegates.VertexAttrib1sARB VertexAttrib1sARB;
-        public static Delegates.VertexAttrib1svARB VertexAttrib1svARB;
+        public static Delegates.VertexAttrib1svARB_ VertexAttrib1svARB_;
         public static Delegates.VertexAttrib2dARB VertexAttrib2dARB;
-        public static Delegates.VertexAttrib2dvARB VertexAttrib2dvARB;
+        public static Delegates.VertexAttrib2dvARB_ VertexAttrib2dvARB_;
         public static Delegates.VertexAttrib2fARB VertexAttrib2fARB;
-        public static Delegates.VertexAttrib2fvARB VertexAttrib2fvARB;
+        public static Delegates.VertexAttrib2fvARB_ VertexAttrib2fvARB_;
         public static Delegates.VertexAttrib2sARB VertexAttrib2sARB;
-        public static Delegates.VertexAttrib2svARB VertexAttrib2svARB;
+        public static Delegates.VertexAttrib2svARB_ VertexAttrib2svARB_;
         public static Delegates.VertexAttrib3dARB VertexAttrib3dARB;
-        public static Delegates.VertexAttrib3dvARB VertexAttrib3dvARB;
+        public static Delegates.VertexAttrib3dvARB_ VertexAttrib3dvARB_;
         public static Delegates.VertexAttrib3fARB VertexAttrib3fARB;
-        public static Delegates.VertexAttrib3fvARB VertexAttrib3fvARB;
+        public static Delegates.VertexAttrib3fvARB_ VertexAttrib3fvARB_;
         public static Delegates.VertexAttrib3sARB VertexAttrib3sARB;
-        public static Delegates.VertexAttrib3svARB VertexAttrib3svARB;
-        public static Delegates.VertexAttrib4NbvARB VertexAttrib4NbvARB;
-        public static Delegates.VertexAttrib4NivARB VertexAttrib4NivARB;
-        public static Delegates.VertexAttrib4NsvARB VertexAttrib4NsvARB;
+        public static Delegates.VertexAttrib3svARB_ VertexAttrib3svARB_;
+        public static Delegates.VertexAttrib4NbvARB_ VertexAttrib4NbvARB_;
+        public static Delegates.VertexAttrib4NivARB_ VertexAttrib4NivARB_;
+        public static Delegates.VertexAttrib4NsvARB_ VertexAttrib4NsvARB_;
         public static Delegates.VertexAttrib4NubARB VertexAttrib4NubARB;
-        public static Delegates.VertexAttrib4NubvARB VertexAttrib4NubvARB;
-        public static Delegates.VertexAttrib4NuivARB VertexAttrib4NuivARB;
-        public static Delegates.VertexAttrib4NusvARB VertexAttrib4NusvARB;
-        public static Delegates.VertexAttrib4bvARB VertexAttrib4bvARB;
+        public static Delegates.VertexAttrib4NubvARB_ VertexAttrib4NubvARB_;
+        public static Delegates.VertexAttrib4NuivARB_ VertexAttrib4NuivARB_;
+        public static Delegates.VertexAttrib4NusvARB_ VertexAttrib4NusvARB_;
+        public static Delegates.VertexAttrib4bvARB_ VertexAttrib4bvARB_;
         public static Delegates.VertexAttrib4dARB VertexAttrib4dARB;
-        public static Delegates.VertexAttrib4dvARB VertexAttrib4dvARB;
+        public static Delegates.VertexAttrib4dvARB_ VertexAttrib4dvARB_;
         public static Delegates.VertexAttrib4fARB VertexAttrib4fARB;
-        public static Delegates.VertexAttrib4fvARB VertexAttrib4fvARB;
-        public static Delegates.VertexAttrib4ivARB VertexAttrib4ivARB;
+        public static Delegates.VertexAttrib4fvARB_ VertexAttrib4fvARB_;
+        public static Delegates.VertexAttrib4ivARB_ VertexAttrib4ivARB_;
         public static Delegates.VertexAttrib4sARB VertexAttrib4sARB;
-        public static Delegates.VertexAttrib4svARB VertexAttrib4svARB;
-        public static Delegates.VertexAttrib4ubvARB VertexAttrib4ubvARB;
-        public static Delegates.VertexAttrib4uivARB VertexAttrib4uivARB;
-        public static Delegates.VertexAttrib4usvARB VertexAttrib4usvARB;
+        public static Delegates.VertexAttrib4svARB_ VertexAttrib4svARB_;
+        public static Delegates.VertexAttrib4ubvARB_ VertexAttrib4ubvARB_;
+        public static Delegates.VertexAttrib4uivARB_ VertexAttrib4uivARB_;
+        public static Delegates.VertexAttrib4usvARB_ VertexAttrib4usvARB_;
         public static Delegates.VertexAttribPointerARB_ VertexAttribPointerARB_;
         public static Delegates.EnableVertexAttribArrayARB EnableVertexAttribArrayARB;
         public static Delegates.DisableVertexAttribArrayARB DisableVertexAttribArrayARB;
         public static Delegates.ProgramStringARB_ ProgramStringARB_;
         public static Delegates.BindProgramARB BindProgramARB;
-        public static Delegates.DeleteProgramsARB DeleteProgramsARB;
+        public static Delegates.DeleteProgramsARB_ DeleteProgramsARB_;
         public static Delegates.GenProgramsARB GenProgramsARB;
         public static Delegates.ProgramEnvParameter4dARB ProgramEnvParameter4dARB;
-        public static Delegates.ProgramEnvParameter4dvARB ProgramEnvParameter4dvARB;
+        public static Delegates.ProgramEnvParameter4dvARB_ ProgramEnvParameter4dvARB_;
         public static Delegates.ProgramEnvParameter4fARB ProgramEnvParameter4fARB;
-        public static Delegates.ProgramEnvParameter4fvARB ProgramEnvParameter4fvARB;
+        public static Delegates.ProgramEnvParameter4fvARB_ ProgramEnvParameter4fvARB_;
         public static Delegates.ProgramLocalParameter4dARB ProgramLocalParameter4dARB;
-        public static Delegates.ProgramLocalParameter4dvARB ProgramLocalParameter4dvARB;
+        public static Delegates.ProgramLocalParameter4dvARB_ ProgramLocalParameter4dvARB_;
         public static Delegates.ProgramLocalParameter4fARB ProgramLocalParameter4fARB;
-        public static Delegates.ProgramLocalParameter4fvARB ProgramLocalParameter4fvARB;
+        public static Delegates.ProgramLocalParameter4fvARB_ ProgramLocalParameter4fvARB_;
         public static Delegates.GetProgramEnvParameterdvARB GetProgramEnvParameterdvARB;
         public static Delegates.GetProgramEnvParameterfvARB GetProgramEnvParameterfvARB;
         public static Delegates.GetProgramLocalParameterdvARB GetProgramLocalParameterdvARB;
@@ -8453,18 +8453,18 @@ namespace OpenTK.OpenGL
         public static Delegates.GetVertexAttribPointervARB GetVertexAttribPointervARB;
         public static Delegates.IsProgramARB IsProgramARB;
         public static Delegates.BindBufferARB BindBufferARB;
-        public static Delegates.DeleteBuffersARB DeleteBuffersARB;
+        public static Delegates.DeleteBuffersARB_ DeleteBuffersARB_;
         public static Delegates.GenBuffersARB GenBuffersARB;
         public static Delegates.IsBufferARB IsBufferARB;
         public static Delegates.BufferDataARB_ BufferDataARB_;
         public static Delegates.BufferSubDataARB_ BufferSubDataARB_;
         public static Delegates.GetBufferSubDataARB_ GetBufferSubDataARB_;
-        public static Delegates.MapBufferARB_ MapBufferARB_;
+        public static Delegates.MapBufferARB MapBufferARB;
         public static Delegates.UnmapBufferARB UnmapBufferARB;
         public static Delegates.GetBufferParameterivARB GetBufferParameterivARB;
         public static Delegates.GetBufferPointervARB GetBufferPointervARB;
         public static Delegates.GenQueriesARB GenQueriesARB;
-        public static Delegates.DeleteQueriesARB DeleteQueriesARB;
+        public static Delegates.DeleteQueriesARB_ DeleteQueriesARB_;
         public static Delegates.IsQueryARB IsQueryARB;
         public static Delegates.BeginQueryARB BeginQueryARB;
         public static Delegates.EndQueryARB EndQueryARB;
@@ -8475,7 +8475,7 @@ namespace OpenTK.OpenGL
         public static Delegates.GetHandleARB GetHandleARB;
         public static Delegates.DetachObjectARB DetachObjectARB;
         public static Delegates.CreateShaderObjectARB CreateShaderObjectARB;
-        public static Delegates.ShaderSourceARB ShaderSourceARB;
+        public static Delegates.ShaderSourceARB_ ShaderSourceARB_;
         public static Delegates.CompileShaderARB CompileShaderARB;
         public static Delegates.CreateProgramObjectARB CreateProgramObjectARB;
         public static Delegates.AttachObjectARB AttachObjectARB;
@@ -8490,37 +8490,37 @@ namespace OpenTK.OpenGL
         public static Delegates.Uniform2iARB Uniform2iARB;
         public static Delegates.Uniform3iARB Uniform3iARB;
         public static Delegates.Uniform4iARB Uniform4iARB;
-        public static Delegates.Uniform1fvARB Uniform1fvARB;
-        public static Delegates.Uniform2fvARB Uniform2fvARB;
-        public static Delegates.Uniform3fvARB Uniform3fvARB;
-        public static Delegates.Uniform4fvARB Uniform4fvARB;
-        public static Delegates.Uniform1ivARB Uniform1ivARB;
-        public static Delegates.Uniform2ivARB Uniform2ivARB;
-        public static Delegates.Uniform3ivARB Uniform3ivARB;
-        public static Delegates.Uniform4ivARB Uniform4ivARB;
-        public static Delegates.UniformMatrix2fvARB UniformMatrix2fvARB;
-        public static Delegates.UniformMatrix3fvARB UniformMatrix3fvARB;
-        public static Delegates.UniformMatrix4fvARB UniformMatrix4fvARB;
+        public static Delegates.Uniform1fvARB_ Uniform1fvARB_;
+        public static Delegates.Uniform2fvARB_ Uniform2fvARB_;
+        public static Delegates.Uniform3fvARB_ Uniform3fvARB_;
+        public static Delegates.Uniform4fvARB_ Uniform4fvARB_;
+        public static Delegates.Uniform1ivARB_ Uniform1ivARB_;
+        public static Delegates.Uniform2ivARB_ Uniform2ivARB_;
+        public static Delegates.Uniform3ivARB_ Uniform3ivARB_;
+        public static Delegates.Uniform4ivARB_ Uniform4ivARB_;
+        public static Delegates.UniformMatrix2fvARB_ UniformMatrix2fvARB_;
+        public static Delegates.UniformMatrix3fvARB_ UniformMatrix3fvARB_;
+        public static Delegates.UniformMatrix4fvARB_ UniformMatrix4fvARB_;
         public static Delegates.GetObjectParameterfvARB GetObjectParameterfvARB;
         public static Delegates.GetObjectParameterivARB GetObjectParameterivARB;
         public static Delegates.GetInfoLogARB GetInfoLogARB;
         public static Delegates.GetAttachedObjectsARB GetAttachedObjectsARB;
-        public static Delegates.GetUniformLocationARB GetUniformLocationARB;
+        public static Delegates.GetUniformLocationARB_ GetUniformLocationARB_;
         public static Delegates.GetActiveUniformARB GetActiveUniformARB;
         public static Delegates.GetUniformfvARB GetUniformfvARB;
         public static Delegates.GetUniformivARB GetUniformivARB;
         public static Delegates.GetShaderSourceARB GetShaderSourceARB;
-        public static Delegates.BindAttribLocationARB BindAttribLocationARB;
+        public static Delegates.BindAttribLocationARB_ BindAttribLocationARB_;
         public static Delegates.GetActiveAttribARB GetActiveAttribARB;
-        public static Delegates.GetAttribLocationARB GetAttribLocationARB;
-        public static Delegates.DrawBuffersARB DrawBuffersARB;
+        public static Delegates.GetAttribLocationARB_ GetAttribLocationARB_;
+        public static Delegates.DrawBuffersARB_ DrawBuffersARB_;
         public static Delegates.ClampColorARB ClampColorARB;
         public static Delegates.BlendColorEXT BlendColorEXT;
         public static Delegates.PolygonOffsetEXT PolygonOffsetEXT;
         public static Delegates.TexImage3DEXT TexImage3DEXT;
         public static Delegates.TexSubImage3DEXT TexSubImage3DEXT;
         public static Delegates.GetTexFilterFuncSGIS GetTexFilterFuncSGIS;
-        public static Delegates.TexFilterFuncSGIS TexFilterFuncSGIS;
+        public static Delegates.TexFilterFuncSGIS_ TexFilterFuncSGIS_;
         public static Delegates.TexSubImage1DEXT TexSubImage1DEXT;
         public static Delegates.TexSubImage2DEXT TexSubImage2DEXT;
         public static Delegates.CopyTexImage1DEXT CopyTexImage1DEXT;
@@ -8541,9 +8541,9 @@ namespace OpenTK.OpenGL
         public static Delegates.ConvolutionFilter1DEXT_ ConvolutionFilter1DEXT_;
         public static Delegates.ConvolutionFilter2DEXT_ ConvolutionFilter2DEXT_;
         public static Delegates.ConvolutionParameterfEXT ConvolutionParameterfEXT;
-        public static Delegates.ConvolutionParameterfvEXT ConvolutionParameterfvEXT;
+        public static Delegates.ConvolutionParameterfvEXT_ ConvolutionParameterfvEXT_;
         public static Delegates.ConvolutionParameteriEXT ConvolutionParameteriEXT;
-        public static Delegates.ConvolutionParameterivEXT ConvolutionParameterivEXT;
+        public static Delegates.ConvolutionParameterivEXT_ ConvolutionParameterivEXT_;
         public static Delegates.CopyConvolutionFilter1DEXT CopyConvolutionFilter1DEXT;
         public static Delegates.CopyConvolutionFilter2DEXT CopyConvolutionFilter2DEXT;
         public static Delegates.GetConvolutionFilterEXT_ GetConvolutionFilterEXT_;
@@ -8552,30 +8552,30 @@ namespace OpenTK.OpenGL
         public static Delegates.GetSeparableFilterEXT_ GetSeparableFilterEXT_;
         public static Delegates.SeparableFilter2DEXT_ SeparableFilter2DEXT_;
         public static Delegates.ColorTableSGI_ ColorTableSGI_;
-        public static Delegates.ColorTableParameterfvSGI ColorTableParameterfvSGI;
-        public static Delegates.ColorTableParameterivSGI ColorTableParameterivSGI;
+        public static Delegates.ColorTableParameterfvSGI_ ColorTableParameterfvSGI_;
+        public static Delegates.ColorTableParameterivSGI_ ColorTableParameterivSGI_;
         public static Delegates.CopyColorTableSGI CopyColorTableSGI;
         public static Delegates.GetColorTableSGI_ GetColorTableSGI_;
         public static Delegates.GetColorTableParameterfvSGI GetColorTableParameterfvSGI;
         public static Delegates.GetColorTableParameterivSGI GetColorTableParameterivSGI;
         public static Delegates.PixelTexGenSGIX PixelTexGenSGIX;
         public static Delegates.PixelTexGenParameteriSGIS PixelTexGenParameteriSGIS;
-        public static Delegates.PixelTexGenParameterivSGIS PixelTexGenParameterivSGIS;
+        public static Delegates.PixelTexGenParameterivSGIS_ PixelTexGenParameterivSGIS_;
         public static Delegates.PixelTexGenParameterfSGIS PixelTexGenParameterfSGIS;
-        public static Delegates.PixelTexGenParameterfvSGIS PixelTexGenParameterfvSGIS;
+        public static Delegates.PixelTexGenParameterfvSGIS_ PixelTexGenParameterfvSGIS_;
         public static Delegates.GetPixelTexGenParameterivSGIS GetPixelTexGenParameterivSGIS;
         public static Delegates.GetPixelTexGenParameterfvSGIS GetPixelTexGenParameterfvSGIS;
         public static Delegates.TexImage4DSGIS TexImage4DSGIS;
         public static Delegates.TexSubImage4DSGIS TexSubImage4DSGIS;
-        public static Delegates.AreTexturesResidentEXT AreTexturesResidentEXT;
+        public static Delegates.AreTexturesResidentEXT_ AreTexturesResidentEXT_;
         public static Delegates.BindTextureEXT BindTextureEXT;
-        public static Delegates.DeleteTexturesEXT DeleteTexturesEXT;
+        public static Delegates.DeleteTexturesEXT_ DeleteTexturesEXT_;
         public static Delegates.GenTexturesEXT GenTexturesEXT;
         public static Delegates.IsTextureEXT IsTextureEXT;
-        public static Delegates.PrioritizeTexturesEXT PrioritizeTexturesEXT;
-        public static Delegates.DetailTexFuncSGIS DetailTexFuncSGIS;
+        public static Delegates.PrioritizeTexturesEXT_ PrioritizeTexturesEXT_;
+        public static Delegates.DetailTexFuncSGIS_ DetailTexFuncSGIS_;
         public static Delegates.GetDetailTexFuncSGIS GetDetailTexFuncSGIS;
-        public static Delegates.SharpenTexFuncSGIS SharpenTexFuncSGIS;
+        public static Delegates.SharpenTexFuncSGIS_ SharpenTexFuncSGIS_;
         public static Delegates.GetSharpenTexFuncSGIS GetSharpenTexFuncSGIS;
         public static Delegates.SampleMaskSGIS SampleMaskSGIS;
         public static Delegates.SamplePatternSGIS SamplePatternSGIS;
@@ -8590,13 +8590,13 @@ namespace OpenTK.OpenGL
         public static Delegates.VertexPointerEXT_ VertexPointerEXT_;
         public static Delegates.BlendEquationEXT BlendEquationEXT;
         public static Delegates.SpriteParameterfSGIX SpriteParameterfSGIX;
-        public static Delegates.SpriteParameterfvSGIX SpriteParameterfvSGIX;
+        public static Delegates.SpriteParameterfvSGIX_ SpriteParameterfvSGIX_;
         public static Delegates.SpriteParameteriSGIX SpriteParameteriSGIX;
-        public static Delegates.SpriteParameterivSGIX SpriteParameterivSGIX;
+        public static Delegates.SpriteParameterivSGIX_ SpriteParameterivSGIX_;
         public static Delegates.PointParameterfEXT PointParameterfEXT;
-        public static Delegates.PointParameterfvEXT PointParameterfvEXT;
+        public static Delegates.PointParameterfvEXT_ PointParameterfvEXT_;
         public static Delegates.PointParameterfSGIS PointParameterfSGIS;
-        public static Delegates.PointParameterfvSGIS PointParameterfvSGIS;
+        public static Delegates.PointParameterfvSGIS_ PointParameterfvSGIS_;
         public static Delegates.GetInstrumentsSGIX GetInstrumentsSGIX;
         public static Delegates.InstrumentsBufferSGIX InstrumentsBufferSGIX;
         public static Delegates.PollInstrumentsSGIX PollInstrumentsSGIX;
@@ -8605,18 +8605,18 @@ namespace OpenTK.OpenGL
         public static Delegates.StopInstrumentsSGIX StopInstrumentsSGIX;
         public static Delegates.FrameZoomSGIX FrameZoomSGIX;
         public static Delegates.TagSampleBufferSGIX TagSampleBufferSGIX;
-        public static Delegates.DeformationMap3dSGIX DeformationMap3dSGIX;
-        public static Delegates.DeformationMap3fSGIX DeformationMap3fSGIX;
+        public static Delegates.DeformationMap3dSGIX_ DeformationMap3dSGIX_;
+        public static Delegates.DeformationMap3fSGIX_ DeformationMap3fSGIX_;
         public static Delegates.DeformSGIX DeformSGIX;
         public static Delegates.LoadIdentityDeformationMapSGIX LoadIdentityDeformationMapSGIX;
-        public static Delegates.ReferencePlaneSGIX ReferencePlaneSGIX;
+        public static Delegates.ReferencePlaneSGIX_ ReferencePlaneSGIX_;
         public static Delegates.FlushRasterSGIX FlushRasterSGIX;
-        public static Delegates.FogFuncSGIS FogFuncSGIS;
+        public static Delegates.FogFuncSGIS_ FogFuncSGIS_;
         public static Delegates.GetFogFuncSGIS GetFogFuncSGIS;
         public static Delegates.ImageTransformParameteriHP ImageTransformParameteriHP;
         public static Delegates.ImageTransformParameterfHP ImageTransformParameterfHP;
-        public static Delegates.ImageTransformParameterivHP ImageTransformParameterivHP;
-        public static Delegates.ImageTransformParameterfvHP ImageTransformParameterfvHP;
+        public static Delegates.ImageTransformParameterivHP_ ImageTransformParameterivHP_;
+        public static Delegates.ImageTransformParameterfvHP_ ImageTransformParameterfvHP_;
         public static Delegates.GetImageTransformParameterivHP GetImageTransformParameterivHP;
         public static Delegates.GetImageTransformParameterfvHP GetImageTransformParameterfvHP;
         public static Delegates.ColorSubTableEXT_ ColorSubTableEXT_;
@@ -8629,9 +8629,9 @@ namespace OpenTK.OpenGL
         public static Delegates.GetListParameterfvSGIX GetListParameterfvSGIX;
         public static Delegates.GetListParameterivSGIX GetListParameterivSGIX;
         public static Delegates.ListParameterfSGIX ListParameterfSGIX;
-        public static Delegates.ListParameterfvSGIX ListParameterfvSGIX;
+        public static Delegates.ListParameterfvSGIX_ ListParameterfvSGIX_;
         public static Delegates.ListParameteriSGIX ListParameteriSGIX;
-        public static Delegates.ListParameterivSGIX ListParameterivSGIX;
+        public static Delegates.ListParameterivSGIX_ ListParameterivSGIX_;
         public static Delegates.IndexMaterialEXT IndexMaterialEXT;
         public static Delegates.IndexFuncEXT IndexFuncEXT;
         public static Delegates.LockArraysEXT LockArraysEXT;
@@ -8640,17 +8640,17 @@ namespace OpenTK.OpenGL
         public static Delegates.CullParameterfvEXT CullParameterfvEXT;
         public static Delegates.FragmentColorMaterialSGIX FragmentColorMaterialSGIX;
         public static Delegates.FragmentLightfSGIX FragmentLightfSGIX;
-        public static Delegates.FragmentLightfvSGIX FragmentLightfvSGIX;
+        public static Delegates.FragmentLightfvSGIX_ FragmentLightfvSGIX_;
         public static Delegates.FragmentLightiSGIX FragmentLightiSGIX;
-        public static Delegates.FragmentLightivSGIX FragmentLightivSGIX;
+        public static Delegates.FragmentLightivSGIX_ FragmentLightivSGIX_;
         public static Delegates.FragmentLightModelfSGIX FragmentLightModelfSGIX;
-        public static Delegates.FragmentLightModelfvSGIX FragmentLightModelfvSGIX;
+        public static Delegates.FragmentLightModelfvSGIX_ FragmentLightModelfvSGIX_;
         public static Delegates.FragmentLightModeliSGIX FragmentLightModeliSGIX;
-        public static Delegates.FragmentLightModelivSGIX FragmentLightModelivSGIX;
+        public static Delegates.FragmentLightModelivSGIX_ FragmentLightModelivSGIX_;
         public static Delegates.FragmentMaterialfSGIX FragmentMaterialfSGIX;
-        public static Delegates.FragmentMaterialfvSGIX FragmentMaterialfvSGIX;
+        public static Delegates.FragmentMaterialfvSGIX_ FragmentMaterialfvSGIX_;
         public static Delegates.FragmentMaterialiSGIX FragmentMaterialiSGIX;
-        public static Delegates.FragmentMaterialivSGIX FragmentMaterialivSGIX;
+        public static Delegates.FragmentMaterialivSGIX_ FragmentMaterialivSGIX_;
         public static Delegates.GetFragmentLightfvSGIX GetFragmentLightfvSGIX;
         public static Delegates.GetFragmentLightivSGIX GetFragmentLightivSGIX;
         public static Delegates.GetFragmentMaterialfvSGIX GetFragmentMaterialfvSGIX;
@@ -8666,59 +8666,59 @@ namespace OpenTK.OpenGL
         public static Delegates.GenAsyncMarkersSGIX GenAsyncMarkersSGIX;
         public static Delegates.DeleteAsyncMarkersSGIX DeleteAsyncMarkersSGIX;
         public static Delegates.IsAsyncMarkerSGIX IsAsyncMarkerSGIX;
-        public static Delegates.VertexPointervINTEL VertexPointervINTEL;
-        public static Delegates.NormalPointervINTEL NormalPointervINTEL;
-        public static Delegates.ColorPointervINTEL ColorPointervINTEL;
-        public static Delegates.TexCoordPointervINTEL TexCoordPointervINTEL;
+        public static Delegates.VertexPointervINTEL_ VertexPointervINTEL_;
+        public static Delegates.NormalPointervINTEL_ NormalPointervINTEL_;
+        public static Delegates.ColorPointervINTEL_ ColorPointervINTEL_;
+        public static Delegates.TexCoordPointervINTEL_ TexCoordPointervINTEL_;
         public static Delegates.PixelTransformParameteriEXT PixelTransformParameteriEXT;
         public static Delegates.PixelTransformParameterfEXT PixelTransformParameterfEXT;
-        public static Delegates.PixelTransformParameterivEXT PixelTransformParameterivEXT;
-        public static Delegates.PixelTransformParameterfvEXT PixelTransformParameterfvEXT;
+        public static Delegates.PixelTransformParameterivEXT_ PixelTransformParameterivEXT_;
+        public static Delegates.PixelTransformParameterfvEXT_ PixelTransformParameterfvEXT_;
         public static Delegates.SecondaryColor3bEXT SecondaryColor3bEXT;
-        public static Delegates.SecondaryColor3bvEXT SecondaryColor3bvEXT;
+        public static Delegates.SecondaryColor3bvEXT_ SecondaryColor3bvEXT_;
         public static Delegates.SecondaryColor3dEXT SecondaryColor3dEXT;
-        public static Delegates.SecondaryColor3dvEXT SecondaryColor3dvEXT;
+        public static Delegates.SecondaryColor3dvEXT_ SecondaryColor3dvEXT_;
         public static Delegates.SecondaryColor3fEXT SecondaryColor3fEXT;
-        public static Delegates.SecondaryColor3fvEXT SecondaryColor3fvEXT;
+        public static Delegates.SecondaryColor3fvEXT_ SecondaryColor3fvEXT_;
         public static Delegates.SecondaryColor3iEXT SecondaryColor3iEXT;
-        public static Delegates.SecondaryColor3ivEXT SecondaryColor3ivEXT;
+        public static Delegates.SecondaryColor3ivEXT_ SecondaryColor3ivEXT_;
         public static Delegates.SecondaryColor3sEXT SecondaryColor3sEXT;
-        public static Delegates.SecondaryColor3svEXT SecondaryColor3svEXT;
+        public static Delegates.SecondaryColor3svEXT_ SecondaryColor3svEXT_;
         public static Delegates.SecondaryColor3ubEXT SecondaryColor3ubEXT;
-        public static Delegates.SecondaryColor3ubvEXT SecondaryColor3ubvEXT;
+        public static Delegates.SecondaryColor3ubvEXT_ SecondaryColor3ubvEXT_;
         public static Delegates.SecondaryColor3uiEXT SecondaryColor3uiEXT;
-        public static Delegates.SecondaryColor3uivEXT SecondaryColor3uivEXT;
+        public static Delegates.SecondaryColor3uivEXT_ SecondaryColor3uivEXT_;
         public static Delegates.SecondaryColor3usEXT SecondaryColor3usEXT;
-        public static Delegates.SecondaryColor3usvEXT SecondaryColor3usvEXT;
+        public static Delegates.SecondaryColor3usvEXT_ SecondaryColor3usvEXT_;
         public static Delegates.SecondaryColorPointerEXT_ SecondaryColorPointerEXT_;
         public static Delegates.TextureNormalEXT TextureNormalEXT;
         public static Delegates.MultiDrawArraysEXT MultiDrawArraysEXT;
-        public static Delegates.MultiDrawElementsEXT MultiDrawElementsEXT;
+        public static Delegates.MultiDrawElementsEXT_ MultiDrawElementsEXT_;
         public static Delegates.FogCoordfEXT FogCoordfEXT;
-        public static Delegates.FogCoordfvEXT FogCoordfvEXT;
+        public static Delegates.FogCoordfvEXT_ FogCoordfvEXT_;
         public static Delegates.FogCoorddEXT FogCoorddEXT;
-        public static Delegates.FogCoorddvEXT FogCoorddvEXT;
+        public static Delegates.FogCoorddvEXT_ FogCoorddvEXT_;
         public static Delegates.FogCoordPointerEXT_ FogCoordPointerEXT_;
         public static Delegates.Tangent3bEXT Tangent3bEXT;
-        public static Delegates.Tangent3bvEXT Tangent3bvEXT;
+        public static Delegates.Tangent3bvEXT_ Tangent3bvEXT_;
         public static Delegates.Tangent3dEXT Tangent3dEXT;
-        public static Delegates.Tangent3dvEXT Tangent3dvEXT;
+        public static Delegates.Tangent3dvEXT_ Tangent3dvEXT_;
         public static Delegates.Tangent3fEXT Tangent3fEXT;
-        public static Delegates.Tangent3fvEXT Tangent3fvEXT;
+        public static Delegates.Tangent3fvEXT_ Tangent3fvEXT_;
         public static Delegates.Tangent3iEXT Tangent3iEXT;
-        public static Delegates.Tangent3ivEXT Tangent3ivEXT;
+        public static Delegates.Tangent3ivEXT_ Tangent3ivEXT_;
         public static Delegates.Tangent3sEXT Tangent3sEXT;
-        public static Delegates.Tangent3svEXT Tangent3svEXT;
+        public static Delegates.Tangent3svEXT_ Tangent3svEXT_;
         public static Delegates.Binormal3bEXT Binormal3bEXT;
-        public static Delegates.Binormal3bvEXT Binormal3bvEXT;
+        public static Delegates.Binormal3bvEXT_ Binormal3bvEXT_;
         public static Delegates.Binormal3dEXT Binormal3dEXT;
-        public static Delegates.Binormal3dvEXT Binormal3dvEXT;
+        public static Delegates.Binormal3dvEXT_ Binormal3dvEXT_;
         public static Delegates.Binormal3fEXT Binormal3fEXT;
-        public static Delegates.Binormal3fvEXT Binormal3fvEXT;
+        public static Delegates.Binormal3fvEXT_ Binormal3fvEXT_;
         public static Delegates.Binormal3iEXT Binormal3iEXT;
-        public static Delegates.Binormal3ivEXT Binormal3ivEXT;
+        public static Delegates.Binormal3ivEXT_ Binormal3ivEXT_;
         public static Delegates.Binormal3sEXT Binormal3sEXT;
-        public static Delegates.Binormal3svEXT Binormal3svEXT;
+        public static Delegates.Binormal3svEXT_ Binormal3svEXT_;
         public static Delegates.TangentPointerEXT_ TangentPointerEXT_;
         public static Delegates.BinormalPointerEXT_ BinormalPointerEXT_;
         public static Delegates.FinishTextureSUNX FinishTextureSUNX;
@@ -8733,60 +8733,60 @@ namespace OpenTK.OpenGL
         public static Delegates.ReplacementCodeuiSUN ReplacementCodeuiSUN;
         public static Delegates.ReplacementCodeusSUN ReplacementCodeusSUN;
         public static Delegates.ReplacementCodeubSUN ReplacementCodeubSUN;
-        public static Delegates.ReplacementCodeuivSUN ReplacementCodeuivSUN;
-        public static Delegates.ReplacementCodeusvSUN ReplacementCodeusvSUN;
-        public static Delegates.ReplacementCodeubvSUN ReplacementCodeubvSUN;
-        public static Delegates.ReplacementCodePointerSUN ReplacementCodePointerSUN;
+        public static Delegates.ReplacementCodeuivSUN_ ReplacementCodeuivSUN_;
+        public static Delegates.ReplacementCodeusvSUN_ ReplacementCodeusvSUN_;
+        public static Delegates.ReplacementCodeubvSUN_ ReplacementCodeubvSUN_;
+        public static Delegates.ReplacementCodePointerSUN_ ReplacementCodePointerSUN_;
         public static Delegates.Color4ubVertex2fSUN Color4ubVertex2fSUN;
-        public static Delegates.Color4ubVertex2fvSUN Color4ubVertex2fvSUN;
+        public static Delegates.Color4ubVertex2fvSUN_ Color4ubVertex2fvSUN_;
         public static Delegates.Color4ubVertex3fSUN Color4ubVertex3fSUN;
-        public static Delegates.Color4ubVertex3fvSUN Color4ubVertex3fvSUN;
+        public static Delegates.Color4ubVertex3fvSUN_ Color4ubVertex3fvSUN_;
         public static Delegates.Color3fVertex3fSUN Color3fVertex3fSUN;
-        public static Delegates.Color3fVertex3fvSUN Color3fVertex3fvSUN;
+        public static Delegates.Color3fVertex3fvSUN_ Color3fVertex3fvSUN_;
         public static Delegates.Normal3fVertex3fSUN Normal3fVertex3fSUN;
-        public static Delegates.Normal3fVertex3fvSUN Normal3fVertex3fvSUN;
+        public static Delegates.Normal3fVertex3fvSUN_ Normal3fVertex3fvSUN_;
         public static Delegates.Color4fNormal3fVertex3fSUN Color4fNormal3fVertex3fSUN;
-        public static Delegates.Color4fNormal3fVertex3fvSUN Color4fNormal3fVertex3fvSUN;
+        public static Delegates.Color4fNormal3fVertex3fvSUN_ Color4fNormal3fVertex3fvSUN_;
         public static Delegates.TexCoord2fVertex3fSUN TexCoord2fVertex3fSUN;
-        public static Delegates.TexCoord2fVertex3fvSUN TexCoord2fVertex3fvSUN;
+        public static Delegates.TexCoord2fVertex3fvSUN_ TexCoord2fVertex3fvSUN_;
         public static Delegates.TexCoord4fVertex4fSUN TexCoord4fVertex4fSUN;
-        public static Delegates.TexCoord4fVertex4fvSUN TexCoord4fVertex4fvSUN;
+        public static Delegates.TexCoord4fVertex4fvSUN_ TexCoord4fVertex4fvSUN_;
         public static Delegates.TexCoord2fColor4ubVertex3fSUN TexCoord2fColor4ubVertex3fSUN;
-        public static Delegates.TexCoord2fColor4ubVertex3fvSUN TexCoord2fColor4ubVertex3fvSUN;
+        public static Delegates.TexCoord2fColor4ubVertex3fvSUN_ TexCoord2fColor4ubVertex3fvSUN_;
         public static Delegates.TexCoord2fColor3fVertex3fSUN TexCoord2fColor3fVertex3fSUN;
-        public static Delegates.TexCoord2fColor3fVertex3fvSUN TexCoord2fColor3fVertex3fvSUN;
+        public static Delegates.TexCoord2fColor3fVertex3fvSUN_ TexCoord2fColor3fVertex3fvSUN_;
         public static Delegates.TexCoord2fNormal3fVertex3fSUN TexCoord2fNormal3fVertex3fSUN;
-        public static Delegates.TexCoord2fNormal3fVertex3fvSUN TexCoord2fNormal3fVertex3fvSUN;
+        public static Delegates.TexCoord2fNormal3fVertex3fvSUN_ TexCoord2fNormal3fVertex3fvSUN_;
         public static Delegates.TexCoord2fColor4fNormal3fVertex3fSUN TexCoord2fColor4fNormal3fVertex3fSUN;
-        public static Delegates.TexCoord2fColor4fNormal3fVertex3fvSUN TexCoord2fColor4fNormal3fVertex3fvSUN;
+        public static Delegates.TexCoord2fColor4fNormal3fVertex3fvSUN_ TexCoord2fColor4fNormal3fVertex3fvSUN_;
         public static Delegates.TexCoord4fColor4fNormal3fVertex4fSUN TexCoord4fColor4fNormal3fVertex4fSUN;
-        public static Delegates.TexCoord4fColor4fNormal3fVertex4fvSUN TexCoord4fColor4fNormal3fVertex4fvSUN;
+        public static Delegates.TexCoord4fColor4fNormal3fVertex4fvSUN_ TexCoord4fColor4fNormal3fVertex4fvSUN_;
         public static Delegates.ReplacementCodeuiVertex3fSUN ReplacementCodeuiVertex3fSUN;
-        public static Delegates.ReplacementCodeuiVertex3fvSUN ReplacementCodeuiVertex3fvSUN;
+        public static Delegates.ReplacementCodeuiVertex3fvSUN_ ReplacementCodeuiVertex3fvSUN_;
         public static Delegates.ReplacementCodeuiColor4ubVertex3fSUN ReplacementCodeuiColor4ubVertex3fSUN;
-        public static Delegates.ReplacementCodeuiColor4ubVertex3fvSUN ReplacementCodeuiColor4ubVertex3fvSUN;
+        public static Delegates.ReplacementCodeuiColor4ubVertex3fvSUN_ ReplacementCodeuiColor4ubVertex3fvSUN_;
         public static Delegates.ReplacementCodeuiColor3fVertex3fSUN ReplacementCodeuiColor3fVertex3fSUN;
-        public static Delegates.ReplacementCodeuiColor3fVertex3fvSUN ReplacementCodeuiColor3fVertex3fvSUN;
+        public static Delegates.ReplacementCodeuiColor3fVertex3fvSUN_ ReplacementCodeuiColor3fVertex3fvSUN_;
         public static Delegates.ReplacementCodeuiNormal3fVertex3fSUN ReplacementCodeuiNormal3fVertex3fSUN;
-        public static Delegates.ReplacementCodeuiNormal3fVertex3fvSUN ReplacementCodeuiNormal3fVertex3fvSUN;
+        public static Delegates.ReplacementCodeuiNormal3fVertex3fvSUN_ ReplacementCodeuiNormal3fVertex3fvSUN_;
         public static Delegates.ReplacementCodeuiColor4fNormal3fVertex3fSUN ReplacementCodeuiColor4fNormal3fVertex3fSUN;
-        public static Delegates.ReplacementCodeuiColor4fNormal3fVertex3fvSUN ReplacementCodeuiColor4fNormal3fVertex3fvSUN;
+        public static Delegates.ReplacementCodeuiColor4fNormal3fVertex3fvSUN_ ReplacementCodeuiColor4fNormal3fVertex3fvSUN_;
         public static Delegates.ReplacementCodeuiTexCoord2fVertex3fSUN ReplacementCodeuiTexCoord2fVertex3fSUN;
-        public static Delegates.ReplacementCodeuiTexCoord2fVertex3fvSUN ReplacementCodeuiTexCoord2fVertex3fvSUN;
+        public static Delegates.ReplacementCodeuiTexCoord2fVertex3fvSUN_ ReplacementCodeuiTexCoord2fVertex3fvSUN_;
         public static Delegates.ReplacementCodeuiTexCoord2fNormal3fVertex3fSUN ReplacementCodeuiTexCoord2fNormal3fVertex3fSUN;
-        public static Delegates.ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN;
+        public static Delegates.ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN_ ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN_;
         public static Delegates.ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN;
-        public static Delegates.ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN;
+        public static Delegates.ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN_ ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN_;
         public static Delegates.BlendFuncSeparateEXT BlendFuncSeparateEXT;
         public static Delegates.BlendFuncSeparateINGR BlendFuncSeparateINGR;
         public static Delegates.VertexWeightfEXT VertexWeightfEXT;
-        public static Delegates.VertexWeightfvEXT VertexWeightfvEXT;
+        public static Delegates.VertexWeightfvEXT_ VertexWeightfvEXT_;
         public static Delegates.VertexWeightPointerEXT_ VertexWeightPointerEXT_;
         public static Delegates.FlushVertexArrayRangeNV FlushVertexArrayRangeNV;
         public static Delegates.VertexArrayRangeNV_ VertexArrayRangeNV_;
-        public static Delegates.CombinerParameterfvNV CombinerParameterfvNV;
+        public static Delegates.CombinerParameterfvNV_ CombinerParameterfvNV_;
         public static Delegates.CombinerParameterfNV CombinerParameterfNV;
-        public static Delegates.CombinerParameterivNV CombinerParameterivNV;
+        public static Delegates.CombinerParameterivNV_ CombinerParameterivNV_;
         public static Delegates.CombinerParameteriNV CombinerParameteriNV;
         public static Delegates.CombinerInputNV CombinerInputNV;
         public static Delegates.CombinerOutputNV CombinerOutputNV;
@@ -8799,45 +8799,45 @@ namespace OpenTK.OpenGL
         public static Delegates.GetFinalCombinerInputParameterivNV GetFinalCombinerInputParameterivNV;
         public static Delegates.ResizeBuffersMESA ResizeBuffersMESA;
         public static Delegates.WindowPos2dMESA WindowPos2dMESA;
-        public static Delegates.WindowPos2dvMESA WindowPos2dvMESA;
+        public static Delegates.WindowPos2dvMESA_ WindowPos2dvMESA_;
         public static Delegates.WindowPos2fMESA WindowPos2fMESA;
-        public static Delegates.WindowPos2fvMESA WindowPos2fvMESA;
+        public static Delegates.WindowPos2fvMESA_ WindowPos2fvMESA_;
         public static Delegates.WindowPos2iMESA WindowPos2iMESA;
-        public static Delegates.WindowPos2ivMESA WindowPos2ivMESA;
+        public static Delegates.WindowPos2ivMESA_ WindowPos2ivMESA_;
         public static Delegates.WindowPos2sMESA WindowPos2sMESA;
-        public static Delegates.WindowPos2svMESA WindowPos2svMESA;
+        public static Delegates.WindowPos2svMESA_ WindowPos2svMESA_;
         public static Delegates.WindowPos3dMESA WindowPos3dMESA;
-        public static Delegates.WindowPos3dvMESA WindowPos3dvMESA;
+        public static Delegates.WindowPos3dvMESA_ WindowPos3dvMESA_;
         public static Delegates.WindowPos3fMESA WindowPos3fMESA;
-        public static Delegates.WindowPos3fvMESA WindowPos3fvMESA;
+        public static Delegates.WindowPos3fvMESA_ WindowPos3fvMESA_;
         public static Delegates.WindowPos3iMESA WindowPos3iMESA;
-        public static Delegates.WindowPos3ivMESA WindowPos3ivMESA;
+        public static Delegates.WindowPos3ivMESA_ WindowPos3ivMESA_;
         public static Delegates.WindowPos3sMESA WindowPos3sMESA;
-        public static Delegates.WindowPos3svMESA WindowPos3svMESA;
+        public static Delegates.WindowPos3svMESA_ WindowPos3svMESA_;
         public static Delegates.WindowPos4dMESA WindowPos4dMESA;
-        public static Delegates.WindowPos4dvMESA WindowPos4dvMESA;
+        public static Delegates.WindowPos4dvMESA_ WindowPos4dvMESA_;
         public static Delegates.WindowPos4fMESA WindowPos4fMESA;
-        public static Delegates.WindowPos4fvMESA WindowPos4fvMESA;
+        public static Delegates.WindowPos4fvMESA_ WindowPos4fvMESA_;
         public static Delegates.WindowPos4iMESA WindowPos4iMESA;
-        public static Delegates.WindowPos4ivMESA WindowPos4ivMESA;
+        public static Delegates.WindowPos4ivMESA_ WindowPos4ivMESA_;
         public static Delegates.WindowPos4sMESA WindowPos4sMESA;
-        public static Delegates.WindowPos4svMESA WindowPos4svMESA;
-        public static Delegates.MultiModeDrawArraysIBM MultiModeDrawArraysIBM;
+        public static Delegates.WindowPos4svMESA_ WindowPos4svMESA_;
+        public static Delegates.MultiModeDrawArraysIBM_ MultiModeDrawArraysIBM_;
         public static Delegates.MultiModeDrawElementsIBM_ MultiModeDrawElementsIBM_;
-        public static Delegates.ColorPointerListIBM ColorPointerListIBM;
-        public static Delegates.SecondaryColorPointerListIBM SecondaryColorPointerListIBM;
-        public static Delegates.EdgeFlagPointerListIBM EdgeFlagPointerListIBM;
-        public static Delegates.FogCoordPointerListIBM FogCoordPointerListIBM;
-        public static Delegates.IndexPointerListIBM IndexPointerListIBM;
-        public static Delegates.NormalPointerListIBM NormalPointerListIBM;
-        public static Delegates.TexCoordPointerListIBM TexCoordPointerListIBM;
-        public static Delegates.VertexPointerListIBM VertexPointerListIBM;
+        public static Delegates.ColorPointerListIBM_ ColorPointerListIBM_;
+        public static Delegates.SecondaryColorPointerListIBM_ SecondaryColorPointerListIBM_;
+        public static Delegates.EdgeFlagPointerListIBM_ EdgeFlagPointerListIBM_;
+        public static Delegates.FogCoordPointerListIBM_ FogCoordPointerListIBM_;
+        public static Delegates.IndexPointerListIBM_ IndexPointerListIBM_;
+        public static Delegates.NormalPointerListIBM_ NormalPointerListIBM_;
+        public static Delegates.TexCoordPointerListIBM_ TexCoordPointerListIBM_;
+        public static Delegates.VertexPointerListIBM_ VertexPointerListIBM_;
         public static Delegates.TbufferMask3DFX TbufferMask3DFX;
         public static Delegates.SampleMaskEXT SampleMaskEXT;
         public static Delegates.SamplePatternEXT SamplePatternEXT;
         public static Delegates.TextureColorMaskSGIS TextureColorMaskSGIS;
         public static Delegates.IglooInterfaceSGIX_ IglooInterfaceSGIX_;
-        public static Delegates.DeleteFencesNV DeleteFencesNV;
+        public static Delegates.DeleteFencesNV_ DeleteFencesNV_;
         public static Delegates.GenFencesNV GenFencesNV;
         public static Delegates.IsFenceNV IsFenceNV;
         public static Delegates.TestFenceNV TestFenceNV;
@@ -8845,20 +8845,20 @@ namespace OpenTK.OpenGL
         public static Delegates.FinishFenceNV FinishFenceNV;
         public static Delegates.SetFenceNV SetFenceNV;
         public static Delegates.MapControlPointsNV_ MapControlPointsNV_;
-        public static Delegates.MapParameterivNV MapParameterivNV;
-        public static Delegates.MapParameterfvNV MapParameterfvNV;
+        public static Delegates.MapParameterivNV_ MapParameterivNV_;
+        public static Delegates.MapParameterfvNV_ MapParameterfvNV_;
         public static Delegates.GetMapControlPointsNV_ GetMapControlPointsNV_;
         public static Delegates.GetMapParameterivNV GetMapParameterivNV;
         public static Delegates.GetMapParameterfvNV GetMapParameterfvNV;
         public static Delegates.GetMapAttribParameterivNV GetMapAttribParameterivNV;
         public static Delegates.GetMapAttribParameterfvNV GetMapAttribParameterfvNV;
         public static Delegates.EvalMapsNV EvalMapsNV;
-        public static Delegates.CombinerStageParameterfvNV CombinerStageParameterfvNV;
+        public static Delegates.CombinerStageParameterfvNV_ CombinerStageParameterfvNV_;
         public static Delegates.GetCombinerStageParameterfvNV GetCombinerStageParameterfvNV;
-        public static Delegates.AreProgramsResidentNV AreProgramsResidentNV;
+        public static Delegates.AreProgramsResidentNV_ AreProgramsResidentNV_;
         public static Delegates.BindProgramNV BindProgramNV;
-        public static Delegates.DeleteProgramsNV DeleteProgramsNV;
-        public static Delegates.ExecuteProgramNV ExecuteProgramNV;
+        public static Delegates.DeleteProgramsNV_ DeleteProgramsNV_;
+        public static Delegates.ExecuteProgramNV_ ExecuteProgramNV_;
         public static Delegates.GenProgramsNV GenProgramsNV;
         public static Delegates.GetProgramParameterdvNV GetProgramParameterdvNV;
         public static Delegates.GetProgramParameterfvNV GetProgramParameterfvNV;
@@ -8870,57 +8870,57 @@ namespace OpenTK.OpenGL
         public static Delegates.GetVertexAttribivNV GetVertexAttribivNV;
         public static Delegates.GetVertexAttribPointervNV GetVertexAttribPointervNV;
         public static Delegates.IsProgramNV IsProgramNV;
-        public static Delegates.LoadProgramNV LoadProgramNV;
+        public static Delegates.LoadProgramNV_ LoadProgramNV_;
         public static Delegates.ProgramParameter4dNV ProgramParameter4dNV;
-        public static Delegates.ProgramParameter4dvNV ProgramParameter4dvNV;
+        public static Delegates.ProgramParameter4dvNV_ ProgramParameter4dvNV_;
         public static Delegates.ProgramParameter4fNV ProgramParameter4fNV;
-        public static Delegates.ProgramParameter4fvNV ProgramParameter4fvNV;
-        public static Delegates.ProgramParameters4dvNV ProgramParameters4dvNV;
-        public static Delegates.ProgramParameters4fvNV ProgramParameters4fvNV;
-        public static Delegates.RequestResidentProgramsNV RequestResidentProgramsNV;
+        public static Delegates.ProgramParameter4fvNV_ ProgramParameter4fvNV_;
+        public static Delegates.ProgramParameters4dvNV_ ProgramParameters4dvNV_;
+        public static Delegates.ProgramParameters4fvNV_ ProgramParameters4fvNV_;
+        public static Delegates.RequestResidentProgramsNV_ RequestResidentProgramsNV_;
         public static Delegates.TrackMatrixNV TrackMatrixNV;
         public static Delegates.VertexAttribPointerNV_ VertexAttribPointerNV_;
         public static Delegates.VertexAttrib1dNV VertexAttrib1dNV;
-        public static Delegates.VertexAttrib1dvNV VertexAttrib1dvNV;
+        public static Delegates.VertexAttrib1dvNV_ VertexAttrib1dvNV_;
         public static Delegates.VertexAttrib1fNV VertexAttrib1fNV;
-        public static Delegates.VertexAttrib1fvNV VertexAttrib1fvNV;
+        public static Delegates.VertexAttrib1fvNV_ VertexAttrib1fvNV_;
         public static Delegates.VertexAttrib1sNV VertexAttrib1sNV;
-        public static Delegates.VertexAttrib1svNV VertexAttrib1svNV;
+        public static Delegates.VertexAttrib1svNV_ VertexAttrib1svNV_;
         public static Delegates.VertexAttrib2dNV VertexAttrib2dNV;
-        public static Delegates.VertexAttrib2dvNV VertexAttrib2dvNV;
+        public static Delegates.VertexAttrib2dvNV_ VertexAttrib2dvNV_;
         public static Delegates.VertexAttrib2fNV VertexAttrib2fNV;
-        public static Delegates.VertexAttrib2fvNV VertexAttrib2fvNV;
+        public static Delegates.VertexAttrib2fvNV_ VertexAttrib2fvNV_;
         public static Delegates.VertexAttrib2sNV VertexAttrib2sNV;
-        public static Delegates.VertexAttrib2svNV VertexAttrib2svNV;
+        public static Delegates.VertexAttrib2svNV_ VertexAttrib2svNV_;
         public static Delegates.VertexAttrib3dNV VertexAttrib3dNV;
-        public static Delegates.VertexAttrib3dvNV VertexAttrib3dvNV;
+        public static Delegates.VertexAttrib3dvNV_ VertexAttrib3dvNV_;
         public static Delegates.VertexAttrib3fNV VertexAttrib3fNV;
-        public static Delegates.VertexAttrib3fvNV VertexAttrib3fvNV;
+        public static Delegates.VertexAttrib3fvNV_ VertexAttrib3fvNV_;
         public static Delegates.VertexAttrib3sNV VertexAttrib3sNV;
-        public static Delegates.VertexAttrib3svNV VertexAttrib3svNV;
+        public static Delegates.VertexAttrib3svNV_ VertexAttrib3svNV_;
         public static Delegates.VertexAttrib4dNV VertexAttrib4dNV;
-        public static Delegates.VertexAttrib4dvNV VertexAttrib4dvNV;
+        public static Delegates.VertexAttrib4dvNV_ VertexAttrib4dvNV_;
         public static Delegates.VertexAttrib4fNV VertexAttrib4fNV;
-        public static Delegates.VertexAttrib4fvNV VertexAttrib4fvNV;
+        public static Delegates.VertexAttrib4fvNV_ VertexAttrib4fvNV_;
         public static Delegates.VertexAttrib4sNV VertexAttrib4sNV;
-        public static Delegates.VertexAttrib4svNV VertexAttrib4svNV;
+        public static Delegates.VertexAttrib4svNV_ VertexAttrib4svNV_;
         public static Delegates.VertexAttrib4ubNV VertexAttrib4ubNV;
-        public static Delegates.VertexAttrib4ubvNV VertexAttrib4ubvNV;
-        public static Delegates.VertexAttribs1dvNV VertexAttribs1dvNV;
-        public static Delegates.VertexAttribs1fvNV VertexAttribs1fvNV;
-        public static Delegates.VertexAttribs1svNV VertexAttribs1svNV;
-        public static Delegates.VertexAttribs2dvNV VertexAttribs2dvNV;
-        public static Delegates.VertexAttribs2fvNV VertexAttribs2fvNV;
-        public static Delegates.VertexAttribs2svNV VertexAttribs2svNV;
-        public static Delegates.VertexAttribs3dvNV VertexAttribs3dvNV;
-        public static Delegates.VertexAttribs3fvNV VertexAttribs3fvNV;
-        public static Delegates.VertexAttribs3svNV VertexAttribs3svNV;
-        public static Delegates.VertexAttribs4dvNV VertexAttribs4dvNV;
-        public static Delegates.VertexAttribs4fvNV VertexAttribs4fvNV;
-        public static Delegates.VertexAttribs4svNV VertexAttribs4svNV;
-        public static Delegates.VertexAttribs4ubvNV VertexAttribs4ubvNV;
-        public static Delegates.TexBumpParameterivATI TexBumpParameterivATI;
-        public static Delegates.TexBumpParameterfvATI TexBumpParameterfvATI;
+        public static Delegates.VertexAttrib4ubvNV_ VertexAttrib4ubvNV_;
+        public static Delegates.VertexAttribs1dvNV_ VertexAttribs1dvNV_;
+        public static Delegates.VertexAttribs1fvNV_ VertexAttribs1fvNV_;
+        public static Delegates.VertexAttribs1svNV_ VertexAttribs1svNV_;
+        public static Delegates.VertexAttribs2dvNV_ VertexAttribs2dvNV_;
+        public static Delegates.VertexAttribs2fvNV_ VertexAttribs2fvNV_;
+        public static Delegates.VertexAttribs2svNV_ VertexAttribs2svNV_;
+        public static Delegates.VertexAttribs3dvNV_ VertexAttribs3dvNV_;
+        public static Delegates.VertexAttribs3fvNV_ VertexAttribs3fvNV_;
+        public static Delegates.VertexAttribs3svNV_ VertexAttribs3svNV_;
+        public static Delegates.VertexAttribs4dvNV_ VertexAttribs4dvNV_;
+        public static Delegates.VertexAttribs4fvNV_ VertexAttribs4fvNV_;
+        public static Delegates.VertexAttribs4svNV_ VertexAttribs4svNV_;
+        public static Delegates.VertexAttribs4ubvNV_ VertexAttribs4ubvNV_;
+        public static Delegates.TexBumpParameterivATI_ TexBumpParameterivATI_;
+        public static Delegates.TexBumpParameterfvATI_ TexBumpParameterfvATI_;
         public static Delegates.GetTexBumpParameterivATI GetTexBumpParameterivATI;
         public static Delegates.GetTexBumpParameterfvATI GetTexBumpParameterfvATI;
         public static Delegates.GenFragmentShadersATI GenFragmentShadersATI;
@@ -8936,7 +8936,7 @@ namespace OpenTK.OpenGL
         public static Delegates.AlphaFragmentOp1ATI AlphaFragmentOp1ATI;
         public static Delegates.AlphaFragmentOp2ATI AlphaFragmentOp2ATI;
         public static Delegates.AlphaFragmentOp3ATI AlphaFragmentOp3ATI;
-        public static Delegates.SetFragmentShaderConstantATI SetFragmentShaderConstantATI;
+        public static Delegates.SetFragmentShaderConstantATI_ SetFragmentShaderConstantATI_;
         public static Delegates.PNTrianglesiATI PNTrianglesiATI;
         public static Delegates.PNTrianglesfATI PNTrianglesfATI;
         public static Delegates.NewObjectBufferATI_ NewObjectBufferATI_;
@@ -8966,14 +8966,14 @@ namespace OpenTK.OpenGL
         public static Delegates.GenSymbolsEXT GenSymbolsEXT;
         public static Delegates.SetInvariantEXT_ SetInvariantEXT_;
         public static Delegates.SetLocalConstantEXT_ SetLocalConstantEXT_;
-        public static Delegates.VariantbvEXT VariantbvEXT;
-        public static Delegates.VariantsvEXT VariantsvEXT;
-        public static Delegates.VariantivEXT VariantivEXT;
-        public static Delegates.VariantfvEXT VariantfvEXT;
-        public static Delegates.VariantdvEXT VariantdvEXT;
-        public static Delegates.VariantubvEXT VariantubvEXT;
-        public static Delegates.VariantusvEXT VariantusvEXT;
-        public static Delegates.VariantuivEXT VariantuivEXT;
+        public static Delegates.VariantbvEXT_ VariantbvEXT_;
+        public static Delegates.VariantsvEXT_ VariantsvEXT_;
+        public static Delegates.VariantivEXT_ VariantivEXT_;
+        public static Delegates.VariantfvEXT_ VariantfvEXT_;
+        public static Delegates.VariantdvEXT_ VariantdvEXT_;
+        public static Delegates.VariantubvEXT_ VariantubvEXT_;
+        public static Delegates.VariantusvEXT_ VariantusvEXT_;
+        public static Delegates.VariantuivEXT_ VariantuivEXT_;
         public static Delegates.VariantPointerEXT_ VariantPointerEXT_;
         public static Delegates.EnableVariantClientStateEXT EnableVariantClientStateEXT;
         public static Delegates.DisableVariantClientStateEXT DisableVariantClientStateEXT;
@@ -8994,47 +8994,47 @@ namespace OpenTK.OpenGL
         public static Delegates.GetLocalConstantIntegervEXT GetLocalConstantIntegervEXT;
         public static Delegates.GetLocalConstantFloatvEXT GetLocalConstantFloatvEXT;
         public static Delegates.VertexStream1sATI VertexStream1sATI;
-        public static Delegates.VertexStream1svATI VertexStream1svATI;
+        public static Delegates.VertexStream1svATI_ VertexStream1svATI_;
         public static Delegates.VertexStream1iATI VertexStream1iATI;
-        public static Delegates.VertexStream1ivATI VertexStream1ivATI;
+        public static Delegates.VertexStream1ivATI_ VertexStream1ivATI_;
         public static Delegates.VertexStream1fATI VertexStream1fATI;
-        public static Delegates.VertexStream1fvATI VertexStream1fvATI;
+        public static Delegates.VertexStream1fvATI_ VertexStream1fvATI_;
         public static Delegates.VertexStream1dATI VertexStream1dATI;
-        public static Delegates.VertexStream1dvATI VertexStream1dvATI;
+        public static Delegates.VertexStream1dvATI_ VertexStream1dvATI_;
         public static Delegates.VertexStream2sATI VertexStream2sATI;
-        public static Delegates.VertexStream2svATI VertexStream2svATI;
+        public static Delegates.VertexStream2svATI_ VertexStream2svATI_;
         public static Delegates.VertexStream2iATI VertexStream2iATI;
-        public static Delegates.VertexStream2ivATI VertexStream2ivATI;
+        public static Delegates.VertexStream2ivATI_ VertexStream2ivATI_;
         public static Delegates.VertexStream2fATI VertexStream2fATI;
-        public static Delegates.VertexStream2fvATI VertexStream2fvATI;
+        public static Delegates.VertexStream2fvATI_ VertexStream2fvATI_;
         public static Delegates.VertexStream2dATI VertexStream2dATI;
-        public static Delegates.VertexStream2dvATI VertexStream2dvATI;
+        public static Delegates.VertexStream2dvATI_ VertexStream2dvATI_;
         public static Delegates.VertexStream3sATI VertexStream3sATI;
-        public static Delegates.VertexStream3svATI VertexStream3svATI;
+        public static Delegates.VertexStream3svATI_ VertexStream3svATI_;
         public static Delegates.VertexStream3iATI VertexStream3iATI;
-        public static Delegates.VertexStream3ivATI VertexStream3ivATI;
+        public static Delegates.VertexStream3ivATI_ VertexStream3ivATI_;
         public static Delegates.VertexStream3fATI VertexStream3fATI;
-        public static Delegates.VertexStream3fvATI VertexStream3fvATI;
+        public static Delegates.VertexStream3fvATI_ VertexStream3fvATI_;
         public static Delegates.VertexStream3dATI VertexStream3dATI;
-        public static Delegates.VertexStream3dvATI VertexStream3dvATI;
+        public static Delegates.VertexStream3dvATI_ VertexStream3dvATI_;
         public static Delegates.VertexStream4sATI VertexStream4sATI;
-        public static Delegates.VertexStream4svATI VertexStream4svATI;
+        public static Delegates.VertexStream4svATI_ VertexStream4svATI_;
         public static Delegates.VertexStream4iATI VertexStream4iATI;
-        public static Delegates.VertexStream4ivATI VertexStream4ivATI;
+        public static Delegates.VertexStream4ivATI_ VertexStream4ivATI_;
         public static Delegates.VertexStream4fATI VertexStream4fATI;
-        public static Delegates.VertexStream4fvATI VertexStream4fvATI;
+        public static Delegates.VertexStream4fvATI_ VertexStream4fvATI_;
         public static Delegates.VertexStream4dATI VertexStream4dATI;
-        public static Delegates.VertexStream4dvATI VertexStream4dvATI;
+        public static Delegates.VertexStream4dvATI_ VertexStream4dvATI_;
         public static Delegates.NormalStream3bATI NormalStream3bATI;
-        public static Delegates.NormalStream3bvATI NormalStream3bvATI;
+        public static Delegates.NormalStream3bvATI_ NormalStream3bvATI_;
         public static Delegates.NormalStream3sATI NormalStream3sATI;
-        public static Delegates.NormalStream3svATI NormalStream3svATI;
+        public static Delegates.NormalStream3svATI_ NormalStream3svATI_;
         public static Delegates.NormalStream3iATI NormalStream3iATI;
-        public static Delegates.NormalStream3ivATI NormalStream3ivATI;
+        public static Delegates.NormalStream3ivATI_ NormalStream3ivATI_;
         public static Delegates.NormalStream3fATI NormalStream3fATI;
-        public static Delegates.NormalStream3fvATI NormalStream3fvATI;
+        public static Delegates.NormalStream3fvATI_ NormalStream3fvATI_;
         public static Delegates.NormalStream3dATI NormalStream3dATI;
-        public static Delegates.NormalStream3dvATI NormalStream3dvATI;
+        public static Delegates.NormalStream3dvATI_ NormalStream3dvATI_;
         public static Delegates.ClientActiveVertexStreamATI ClientActiveVertexStreamATI;
         public static Delegates.VertexBlendEnviATI VertexBlendEnviATI;
         public static Delegates.VertexBlendEnvfATI VertexBlendEnvfATI;
@@ -9043,22 +9043,22 @@ namespace OpenTK.OpenGL
         public static Delegates.DrawRangeElementArrayATI DrawRangeElementArrayATI;
         public static Delegates.DrawMeshArraysSUN DrawMeshArraysSUN;
         public static Delegates.GenOcclusionQueriesNV GenOcclusionQueriesNV;
-        public static Delegates.DeleteOcclusionQueriesNV DeleteOcclusionQueriesNV;
+        public static Delegates.DeleteOcclusionQueriesNV_ DeleteOcclusionQueriesNV_;
         public static Delegates.IsOcclusionQueryNV IsOcclusionQueryNV;
         public static Delegates.BeginOcclusionQueryNV BeginOcclusionQueryNV;
         public static Delegates.EndOcclusionQueryNV EndOcclusionQueryNV;
         public static Delegates.GetOcclusionQueryivNV GetOcclusionQueryivNV;
         public static Delegates.GetOcclusionQueryuivNV GetOcclusionQueryuivNV;
         public static Delegates.PointParameteriNV PointParameteriNV;
-        public static Delegates.PointParameterivNV PointParameterivNV;
+        public static Delegates.PointParameterivNV_ PointParameterivNV_;
         public static Delegates.ActiveStencilFaceEXT ActiveStencilFaceEXT;
         public static Delegates.ElementPointerAPPLE_ ElementPointerAPPLE_;
         public static Delegates.DrawElementArrayAPPLE DrawElementArrayAPPLE;
         public static Delegates.DrawRangeElementArrayAPPLE DrawRangeElementArrayAPPLE;
-        public static Delegates.MultiDrawElementArrayAPPLE MultiDrawElementArrayAPPLE;
-        public static Delegates.MultiDrawRangeElementArrayAPPLE MultiDrawRangeElementArrayAPPLE;
+        public static Delegates.MultiDrawElementArrayAPPLE_ MultiDrawElementArrayAPPLE_;
+        public static Delegates.MultiDrawRangeElementArrayAPPLE_ MultiDrawRangeElementArrayAPPLE_;
         public static Delegates.GenFencesAPPLE GenFencesAPPLE;
-        public static Delegates.DeleteFencesAPPLE DeleteFencesAPPLE;
+        public static Delegates.DeleteFencesAPPLE_ DeleteFencesAPPLE_;
         public static Delegates.SetFenceAPPLE SetFenceAPPLE;
         public static Delegates.IsFenceAPPLE IsFenceAPPLE;
         public static Delegates.TestFenceAPPLE TestFenceAPPLE;
@@ -9066,70 +9066,70 @@ namespace OpenTK.OpenGL
         public static Delegates.TestObjectAPPLE TestObjectAPPLE;
         public static Delegates.FinishObjectAPPLE FinishObjectAPPLE;
         public static Delegates.BindVertexArrayAPPLE BindVertexArrayAPPLE;
-        public static Delegates.DeleteVertexArraysAPPLE DeleteVertexArraysAPPLE;
-        public static Delegates.GenVertexArraysAPPLE GenVertexArraysAPPLE;
+        public static Delegates.DeleteVertexArraysAPPLE_ DeleteVertexArraysAPPLE_;
+        public static Delegates.GenVertexArraysAPPLE_ GenVertexArraysAPPLE_;
         public static Delegates.IsVertexArrayAPPLE IsVertexArrayAPPLE;
         public static Delegates.VertexArrayRangeAPPLE_ VertexArrayRangeAPPLE_;
         public static Delegates.FlushVertexArrayRangeAPPLE_ FlushVertexArrayRangeAPPLE_;
         public static Delegates.VertexArrayParameteriAPPLE VertexArrayParameteriAPPLE;
-        public static Delegates.DrawBuffersATI DrawBuffersATI;
-        public static Delegates.ProgramNamedParameter4fNV ProgramNamedParameter4fNV;
-        public static Delegates.ProgramNamedParameter4dNV ProgramNamedParameter4dNV;
-        public static Delegates.ProgramNamedParameter4fvNV ProgramNamedParameter4fvNV;
-        public static Delegates.ProgramNamedParameter4dvNV ProgramNamedParameter4dvNV;
-        public static Delegates.GetProgramNamedParameterfvNV GetProgramNamedParameterfvNV;
-        public static Delegates.GetProgramNamedParameterdvNV GetProgramNamedParameterdvNV;
+        public static Delegates.DrawBuffersATI_ DrawBuffersATI_;
+        public static Delegates.ProgramNamedParameter4fNV_ ProgramNamedParameter4fNV_;
+        public static Delegates.ProgramNamedParameter4dNV_ ProgramNamedParameter4dNV_;
+        public static Delegates.ProgramNamedParameter4fvNV_ ProgramNamedParameter4fvNV_;
+        public static Delegates.ProgramNamedParameter4dvNV_ ProgramNamedParameter4dvNV_;
+        public static Delegates.GetProgramNamedParameterfvNV_ GetProgramNamedParameterfvNV_;
+        public static Delegates.GetProgramNamedParameterdvNV_ GetProgramNamedParameterdvNV_;
         public static Delegates.Vertex2hNV Vertex2hNV;
-        public static Delegates.Vertex2hvNV Vertex2hvNV;
+        public static Delegates.Vertex2hvNV_ Vertex2hvNV_;
         public static Delegates.Vertex3hNV Vertex3hNV;
-        public static Delegates.Vertex3hvNV Vertex3hvNV;
+        public static Delegates.Vertex3hvNV_ Vertex3hvNV_;
         public static Delegates.Vertex4hNV Vertex4hNV;
-        public static Delegates.Vertex4hvNV Vertex4hvNV;
+        public static Delegates.Vertex4hvNV_ Vertex4hvNV_;
         public static Delegates.Normal3hNV Normal3hNV;
-        public static Delegates.Normal3hvNV Normal3hvNV;
+        public static Delegates.Normal3hvNV_ Normal3hvNV_;
         public static Delegates.Color3hNV Color3hNV;
-        public static Delegates.Color3hvNV Color3hvNV;
+        public static Delegates.Color3hvNV_ Color3hvNV_;
         public static Delegates.Color4hNV Color4hNV;
-        public static Delegates.Color4hvNV Color4hvNV;
+        public static Delegates.Color4hvNV_ Color4hvNV_;
         public static Delegates.TexCoord1hNV TexCoord1hNV;
-        public static Delegates.TexCoord1hvNV TexCoord1hvNV;
+        public static Delegates.TexCoord1hvNV_ TexCoord1hvNV_;
         public static Delegates.TexCoord2hNV TexCoord2hNV;
-        public static Delegates.TexCoord2hvNV TexCoord2hvNV;
+        public static Delegates.TexCoord2hvNV_ TexCoord2hvNV_;
         public static Delegates.TexCoord3hNV TexCoord3hNV;
-        public static Delegates.TexCoord3hvNV TexCoord3hvNV;
+        public static Delegates.TexCoord3hvNV_ TexCoord3hvNV_;
         public static Delegates.TexCoord4hNV TexCoord4hNV;
-        public static Delegates.TexCoord4hvNV TexCoord4hvNV;
+        public static Delegates.TexCoord4hvNV_ TexCoord4hvNV_;
         public static Delegates.MultiTexCoord1hNV MultiTexCoord1hNV;
-        public static Delegates.MultiTexCoord1hvNV MultiTexCoord1hvNV;
+        public static Delegates.MultiTexCoord1hvNV_ MultiTexCoord1hvNV_;
         public static Delegates.MultiTexCoord2hNV MultiTexCoord2hNV;
-        public static Delegates.MultiTexCoord2hvNV MultiTexCoord2hvNV;
+        public static Delegates.MultiTexCoord2hvNV_ MultiTexCoord2hvNV_;
         public static Delegates.MultiTexCoord3hNV MultiTexCoord3hNV;
-        public static Delegates.MultiTexCoord3hvNV MultiTexCoord3hvNV;
+        public static Delegates.MultiTexCoord3hvNV_ MultiTexCoord3hvNV_;
         public static Delegates.MultiTexCoord4hNV MultiTexCoord4hNV;
-        public static Delegates.MultiTexCoord4hvNV MultiTexCoord4hvNV;
+        public static Delegates.MultiTexCoord4hvNV_ MultiTexCoord4hvNV_;
         public static Delegates.FogCoordhNV FogCoordhNV;
-        public static Delegates.FogCoordhvNV FogCoordhvNV;
+        public static Delegates.FogCoordhvNV_ FogCoordhvNV_;
         public static Delegates.SecondaryColor3hNV SecondaryColor3hNV;
-        public static Delegates.SecondaryColor3hvNV SecondaryColor3hvNV;
+        public static Delegates.SecondaryColor3hvNV_ SecondaryColor3hvNV_;
         public static Delegates.VertexWeighthNV VertexWeighthNV;
-        public static Delegates.VertexWeighthvNV VertexWeighthvNV;
+        public static Delegates.VertexWeighthvNV_ VertexWeighthvNV_;
         public static Delegates.VertexAttrib1hNV VertexAttrib1hNV;
-        public static Delegates.VertexAttrib1hvNV VertexAttrib1hvNV;
+        public static Delegates.VertexAttrib1hvNV_ VertexAttrib1hvNV_;
         public static Delegates.VertexAttrib2hNV VertexAttrib2hNV;
-        public static Delegates.VertexAttrib2hvNV VertexAttrib2hvNV;
+        public static Delegates.VertexAttrib2hvNV_ VertexAttrib2hvNV_;
         public static Delegates.VertexAttrib3hNV VertexAttrib3hNV;
-        public static Delegates.VertexAttrib3hvNV VertexAttrib3hvNV;
+        public static Delegates.VertexAttrib3hvNV_ VertexAttrib3hvNV_;
         public static Delegates.VertexAttrib4hNV VertexAttrib4hNV;
-        public static Delegates.VertexAttrib4hvNV VertexAttrib4hvNV;
-        public static Delegates.VertexAttribs1hvNV VertexAttribs1hvNV;
-        public static Delegates.VertexAttribs2hvNV VertexAttribs2hvNV;
-        public static Delegates.VertexAttribs3hvNV VertexAttribs3hvNV;
-        public static Delegates.VertexAttribs4hvNV VertexAttribs4hvNV;
+        public static Delegates.VertexAttrib4hvNV_ VertexAttrib4hvNV_;
+        public static Delegates.VertexAttribs1hvNV_ VertexAttribs1hvNV_;
+        public static Delegates.VertexAttribs2hvNV_ VertexAttribs2hvNV_;
+        public static Delegates.VertexAttribs3hvNV_ VertexAttribs3hvNV_;
+        public static Delegates.VertexAttribs4hvNV_ VertexAttribs4hvNV_;
         public static Delegates.PixelDataRangeNV_ PixelDataRangeNV_;
         public static Delegates.FlushPixelDataRangeNV FlushPixelDataRangeNV;
         public static Delegates.PrimitiveRestartNV PrimitiveRestartNV;
         public static Delegates.PrimitiveRestartIndexNV PrimitiveRestartIndexNV;
-        public static Delegates.MapObjectBufferATI_ MapObjectBufferATI_;
+        public static Delegates.MapObjectBufferATI MapObjectBufferATI;
         public static Delegates.UnmapObjectBufferATI UnmapObjectBufferATI;
         public static Delegates.StencilOpSeparateATI StencilOpSeparateATI;
         public static Delegates.StencilFuncSeparateATI StencilFuncSeparateATI;
@@ -9140,13 +9140,13 @@ namespace OpenTK.OpenGL
         public static Delegates.BlendEquationSeparateEXT BlendEquationSeparateEXT;
         public static Delegates.IsRenderbufferEXT IsRenderbufferEXT;
         public static Delegates.BindRenderbufferEXT BindRenderbufferEXT;
-        public static Delegates.DeleteRenderbuffersEXT DeleteRenderbuffersEXT;
+        public static Delegates.DeleteRenderbuffersEXT_ DeleteRenderbuffersEXT_;
         public static Delegates.GenRenderbuffersEXT GenRenderbuffersEXT;
         public static Delegates.RenderbufferStorageEXT RenderbufferStorageEXT;
         public static Delegates.GetRenderbufferParameterivEXT GetRenderbufferParameterivEXT;
         public static Delegates.IsFramebufferEXT IsFramebufferEXT;
         public static Delegates.BindFramebufferEXT BindFramebufferEXT;
-        public static Delegates.DeleteFramebuffersEXT DeleteFramebuffersEXT;
+        public static Delegates.DeleteFramebuffersEXT_ DeleteFramebuffersEXT_;
         public static Delegates.GenFramebuffersEXT GenFramebuffersEXT;
         public static Delegates.CheckFramebufferStatusEXT CheckFramebufferStatusEXT;
         public static Delegates.FramebufferTexture1DEXT FramebufferTexture1DEXT;
@@ -9173,6 +9173,3083 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void CallLists(GLsizei n, Enums.ListNameType type, IntPtr lists)
+        {
+            CallLists_(n, type, lists);
+        }
+        #endregion
+
+        #region Bitmap
+        public static void Bitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, object bitmap)
+        {
+            GCHandle h0 = GCHandle.Alloc(bitmap, GCHandleType.Pinned);
+            try
+            {
+                Bitmap_(width, height, xorig, yorig, xmove, ymove, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Bitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, IntPtr bitmap)
+        {
+            Bitmap_(width, height, xorig, yorig, xmove, ymove, bitmap);
+        }
+        public static void Bitmap(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, GLubyte[] bitmap)
+        {
+            GCHandle h0 = GCHandle.Alloc(bitmap, GCHandleType.Pinned);
+            try
+            {
+                Bitmap_(width, height, xorig, yorig, xmove, ymove, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color3bv
+        public static void Color3bv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3bv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color3bv(IntPtr v)
+        {
+            Color3bv_(v);
+        }
+        public static void Color3bv(GLbyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3bv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color3dv
+        public static void Color3dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color3dv(IntPtr v)
+        {
+            Color3dv_(v);
+        }
+        public static void Color3dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color3fv
+        public static void Color3fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color3fv(IntPtr v)
+        {
+            Color3fv_(v);
+        }
+        public static void Color3fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color3iv
+        public static void Color3iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color3iv(IntPtr v)
+        {
+            Color3iv_(v);
+        }
+        public static void Color3iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color3sv
+        public static void Color3sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color3sv(IntPtr v)
+        {
+            Color3sv_(v);
+        }
+        public static void Color3sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color3ubv
+        public static void Color3ubv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3ubv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color3ubv(IntPtr v)
+        {
+            Color3ubv_(v);
+        }
+        public static void Color3ubv(GLubyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3ubv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color3uiv
+        public static void Color3uiv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3uiv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color3uiv(IntPtr v)
+        {
+            Color3uiv_(v);
+        }
+        public static void Color3uiv(GLuint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3uiv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color3usv
+        public static void Color3usv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3usv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color3usv(IntPtr v)
+        {
+            Color3usv_(v);
+        }
+        public static void Color3usv(GLushort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color3usv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color4bv
+        public static void Color4bv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4bv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color4bv(IntPtr v)
+        {
+            Color4bv_(v);
+        }
+        public static void Color4bv(GLbyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4bv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color4dv
+        public static void Color4dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color4dv(IntPtr v)
+        {
+            Color4dv_(v);
+        }
+        public static void Color4dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color4fv
+        public static void Color4fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color4fv(IntPtr v)
+        {
+            Color4fv_(v);
+        }
+        public static void Color4fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color4iv
+        public static void Color4iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color4iv(IntPtr v)
+        {
+            Color4iv_(v);
+        }
+        public static void Color4iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color4sv
+        public static void Color4sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color4sv(IntPtr v)
+        {
+            Color4sv_(v);
+        }
+        public static void Color4sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color4ubv
+        public static void Color4ubv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4ubv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color4ubv(IntPtr v)
+        {
+            Color4ubv_(v);
+        }
+        public static void Color4ubv(GLubyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4ubv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color4uiv
+        public static void Color4uiv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4uiv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color4uiv(IntPtr v)
+        {
+            Color4uiv_(v);
+        }
+        public static void Color4uiv(GLuint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4uiv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Color4usv
+        public static void Color4usv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4usv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Color4usv(IntPtr v)
+        {
+            Color4usv_(v);
+        }
+        public static void Color4usv(GLushort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Color4usv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Indexdv
+        public static void Indexdv(object c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexdv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Indexdv(IntPtr c)
+        {
+            Indexdv_(c);
+        }
+        public static void Indexdv(GLdouble[] c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexdv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Indexfv
+        public static void Indexfv(object c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexfv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Indexfv(IntPtr c)
+        {
+            Indexfv_(c);
+        }
+        public static void Indexfv(GLfloat[] c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexfv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Indexiv
+        public static void Indexiv(object c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexiv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Indexiv(IntPtr c)
+        {
+            Indexiv_(c);
+        }
+        public static void Indexiv(GLint[] c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexiv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Indexsv
+        public static void Indexsv(object c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexsv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Indexsv(IntPtr c)
+        {
+            Indexsv_(c);
+        }
+        public static void Indexsv(GLshort[] c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexsv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Normal3bv
+        public static void Normal3bv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3bv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Normal3bv(IntPtr v)
+        {
+            Normal3bv_(v);
+        }
+        public static void Normal3bv(GLbyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3bv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Normal3dv
+        public static void Normal3dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Normal3dv(IntPtr v)
+        {
+            Normal3dv_(v);
+        }
+        public static void Normal3dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Normal3fv
+        public static void Normal3fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Normal3fv(IntPtr v)
+        {
+            Normal3fv_(v);
+        }
+        public static void Normal3fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Normal3iv
+        public static void Normal3iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Normal3iv(IntPtr v)
+        {
+            Normal3iv_(v);
+        }
+        public static void Normal3iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Normal3sv
+        public static void Normal3sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Normal3sv(IntPtr v)
+        {
+            Normal3sv_(v);
+        }
+        public static void Normal3sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Normal3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos2dv
+        public static void RasterPos2dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos2dv(IntPtr v)
+        {
+            RasterPos2dv_(v);
+        }
+        public static void RasterPos2dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos2fv
+        public static void RasterPos2fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos2fv(IntPtr v)
+        {
+            RasterPos2fv_(v);
+        }
+        public static void RasterPos2fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos2iv
+        public static void RasterPos2iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos2iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos2iv(IntPtr v)
+        {
+            RasterPos2iv_(v);
+        }
+        public static void RasterPos2iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos2iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos2sv
+        public static void RasterPos2sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos2sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos2sv(IntPtr v)
+        {
+            RasterPos2sv_(v);
+        }
+        public static void RasterPos2sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos2sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos3dv
+        public static void RasterPos3dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos3dv(IntPtr v)
+        {
+            RasterPos3dv_(v);
+        }
+        public static void RasterPos3dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos3fv
+        public static void RasterPos3fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos3fv(IntPtr v)
+        {
+            RasterPos3fv_(v);
+        }
+        public static void RasterPos3fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos3iv
+        public static void RasterPos3iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos3iv(IntPtr v)
+        {
+            RasterPos3iv_(v);
+        }
+        public static void RasterPos3iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos3sv
+        public static void RasterPos3sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos3sv(IntPtr v)
+        {
+            RasterPos3sv_(v);
+        }
+        public static void RasterPos3sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos4dv
+        public static void RasterPos4dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos4dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos4dv(IntPtr v)
+        {
+            RasterPos4dv_(v);
+        }
+        public static void RasterPos4dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos4dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos4fv
+        public static void RasterPos4fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos4fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos4fv(IntPtr v)
+        {
+            RasterPos4fv_(v);
+        }
+        public static void RasterPos4fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos4fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos4iv
+        public static void RasterPos4iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos4iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos4iv(IntPtr v)
+        {
+            RasterPos4iv_(v);
+        }
+        public static void RasterPos4iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos4iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region RasterPos4sv
+        public static void RasterPos4sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos4sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void RasterPos4sv(IntPtr v)
+        {
+            RasterPos4sv_(v);
+        }
+        public static void RasterPos4sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                RasterPos4sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Rectdv
+        public static void Rectdv(object v1, object v2)
+        {
+            GCHandle h0 = GCHandle.Alloc(v1, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(v2, GCHandleType.Pinned);
+            try
+            {
+                Rectdv_(h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        public static void Rectdv(IntPtr v1, IntPtr v2)
+        {
+            Rectdv_(v1, v2);
+        }
+        public static void Rectdv(GLdouble[] v1, GLdouble[] v2)
+        {
+            GCHandle h0 = GCHandle.Alloc(v1, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(v2, GCHandleType.Pinned);
+            try
+            {
+                Rectdv_(h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Rectfv
+        public static void Rectfv(object v1, object v2)
+        {
+            GCHandle h0 = GCHandle.Alloc(v1, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(v2, GCHandleType.Pinned);
+            try
+            {
+                Rectfv_(h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        public static void Rectfv(IntPtr v1, IntPtr v2)
+        {
+            Rectfv_(v1, v2);
+        }
+        public static void Rectfv(GLfloat[] v1, GLfloat[] v2)
+        {
+            GCHandle h0 = GCHandle.Alloc(v1, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(v2, GCHandleType.Pinned);
+            try
+            {
+                Rectfv_(h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Rectiv
+        public static void Rectiv(object v1, object v2)
+        {
+            GCHandle h0 = GCHandle.Alloc(v1, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(v2, GCHandleType.Pinned);
+            try
+            {
+                Rectiv_(h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        public static void Rectiv(IntPtr v1, IntPtr v2)
+        {
+            Rectiv_(v1, v2);
+        }
+        public static void Rectiv(GLint[] v1, GLint[] v2)
+        {
+            GCHandle h0 = GCHandle.Alloc(v1, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(v2, GCHandleType.Pinned);
+            try
+            {
+                Rectiv_(h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Rectsv
+        public static void Rectsv(object v1, object v2)
+        {
+            GCHandle h0 = GCHandle.Alloc(v1, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(v2, GCHandleType.Pinned);
+            try
+            {
+                Rectsv_(h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        public static void Rectsv(IntPtr v1, IntPtr v2)
+        {
+            Rectsv_(v1, v2);
+        }
+        public static void Rectsv(GLshort[] v1, GLshort[] v2)
+        {
+            GCHandle h0 = GCHandle.Alloc(v1, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(v2, GCHandleType.Pinned);
+            try
+            {
+                Rectsv_(h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord1dv
+        public static void TexCoord1dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord1dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord1dv(IntPtr v)
+        {
+            TexCoord1dv_(v);
+        }
+        public static void TexCoord1dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord1dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord1fv
+        public static void TexCoord1fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord1fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord1fv(IntPtr v)
+        {
+            TexCoord1fv_(v);
+        }
+        public static void TexCoord1fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord1fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord1iv
+        public static void TexCoord1iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord1iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord1iv(IntPtr v)
+        {
+            TexCoord1iv_(v);
+        }
+        public static void TexCoord1iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord1iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord1sv
+        public static void TexCoord1sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord1sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord1sv(IntPtr v)
+        {
+            TexCoord1sv_(v);
+        }
+        public static void TexCoord1sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord1sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord2dv
+        public static void TexCoord2dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord2dv(IntPtr v)
+        {
+            TexCoord2dv_(v);
+        }
+        public static void TexCoord2dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord2fv
+        public static void TexCoord2fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord2fv(IntPtr v)
+        {
+            TexCoord2fv_(v);
+        }
+        public static void TexCoord2fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord2iv
+        public static void TexCoord2iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord2iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord2iv(IntPtr v)
+        {
+            TexCoord2iv_(v);
+        }
+        public static void TexCoord2iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord2iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord2sv
+        public static void TexCoord2sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord2sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord2sv(IntPtr v)
+        {
+            TexCoord2sv_(v);
+        }
+        public static void TexCoord2sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord2sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord3dv
+        public static void TexCoord3dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord3dv(IntPtr v)
+        {
+            TexCoord3dv_(v);
+        }
+        public static void TexCoord3dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord3fv
+        public static void TexCoord3fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord3fv(IntPtr v)
+        {
+            TexCoord3fv_(v);
+        }
+        public static void TexCoord3fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord3iv
+        public static void TexCoord3iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord3iv(IntPtr v)
+        {
+            TexCoord3iv_(v);
+        }
+        public static void TexCoord3iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord3sv
+        public static void TexCoord3sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord3sv(IntPtr v)
+        {
+            TexCoord3sv_(v);
+        }
+        public static void TexCoord3sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord4dv
+        public static void TexCoord4dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord4dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord4dv(IntPtr v)
+        {
+            TexCoord4dv_(v);
+        }
+        public static void TexCoord4dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord4dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord4fv
+        public static void TexCoord4fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord4fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord4fv(IntPtr v)
+        {
+            TexCoord4fv_(v);
+        }
+        public static void TexCoord4fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord4fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord4iv
+        public static void TexCoord4iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord4iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord4iv(IntPtr v)
+        {
+            TexCoord4iv_(v);
+        }
+        public static void TexCoord4iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord4iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexCoord4sv
+        public static void TexCoord4sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord4sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexCoord4sv(IntPtr v)
+        {
+            TexCoord4sv_(v);
+        }
+        public static void TexCoord4sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                TexCoord4sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex2dv
+        public static void Vertex2dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex2dv(IntPtr v)
+        {
+            Vertex2dv_(v);
+        }
+        public static void Vertex2dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex2fv
+        public static void Vertex2fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex2fv(IntPtr v)
+        {
+            Vertex2fv_(v);
+        }
+        public static void Vertex2fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex2iv
+        public static void Vertex2iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex2iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex2iv(IntPtr v)
+        {
+            Vertex2iv_(v);
+        }
+        public static void Vertex2iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex2iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex2sv
+        public static void Vertex2sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex2sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex2sv(IntPtr v)
+        {
+            Vertex2sv_(v);
+        }
+        public static void Vertex2sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex2sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex3dv
+        public static void Vertex3dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex3dv(IntPtr v)
+        {
+            Vertex3dv_(v);
+        }
+        public static void Vertex3dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex3fv
+        public static void Vertex3fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex3fv(IntPtr v)
+        {
+            Vertex3fv_(v);
+        }
+        public static void Vertex3fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex3iv
+        public static void Vertex3iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex3iv(IntPtr v)
+        {
+            Vertex3iv_(v);
+        }
+        public static void Vertex3iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex3sv
+        public static void Vertex3sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex3sv(IntPtr v)
+        {
+            Vertex3sv_(v);
+        }
+        public static void Vertex3sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex4dv
+        public static void Vertex4dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex4dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex4dv(IntPtr v)
+        {
+            Vertex4dv_(v);
+        }
+        public static void Vertex4dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex4dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex4fv
+        public static void Vertex4fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex4fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex4fv(IntPtr v)
+        {
+            Vertex4fv_(v);
+        }
+        public static void Vertex4fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex4fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex4iv
+        public static void Vertex4iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex4iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex4iv(IntPtr v)
+        {
+            Vertex4iv_(v);
+        }
+        public static void Vertex4iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex4iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Vertex4sv
+        public static void Vertex4sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex4sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Vertex4sv(IntPtr v)
+        {
+            Vertex4sv_(v);
+        }
+        public static void Vertex4sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                Vertex4sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region ClipPlane
+        public static void ClipPlane(Enums.ClipPlaneName plane, object equation)
+        {
+            GCHandle h0 = GCHandle.Alloc(equation, GCHandleType.Pinned);
+            try
+            {
+                ClipPlane_(plane, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void ClipPlane(Enums.ClipPlaneName plane, IntPtr equation)
+        {
+            ClipPlane_(plane, equation);
+        }
+        public static void ClipPlane(Enums.ClipPlaneName plane, GLdouble[] equation)
+        {
+            GCHandle h0 = GCHandle.Alloc(equation, GCHandleType.Pinned);
+            try
+            {
+                ClipPlane_(plane, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Fogfv
+        public static void Fogfv(Enums.FogParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Fogfv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Fogfv(Enums.FogParameter pname, IntPtr parameters)
+        {
+            Fogfv_(pname, parameters);
+        }
+        public static void Fogfv(Enums.FogParameter pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Fogfv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Fogiv
+        public static void Fogiv(Enums.FogParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Fogiv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Fogiv(Enums.FogParameter pname, IntPtr parameters)
+        {
+            Fogiv_(pname, parameters);
+        }
+        public static void Fogiv(Enums.FogParameter pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Fogiv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Lightfv
+        public static void Lightfv(Enums.LightName light, Enums.LightParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Lightfv_(light, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Lightfv(Enums.LightName light, Enums.LightParameter pname, IntPtr parameters)
+        {
+            Lightfv_(light, pname, parameters);
+        }
+        public static void Lightfv(Enums.LightName light, Enums.LightParameter pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Lightfv_(light, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Lightiv
+        public static void Lightiv(Enums.LightName light, Enums.LightParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Lightiv_(light, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Lightiv(Enums.LightName light, Enums.LightParameter pname, IntPtr parameters)
+        {
+            Lightiv_(light, pname, parameters);
+        }
+        public static void Lightiv(Enums.LightName light, Enums.LightParameter pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Lightiv_(light, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region LightModelfv
+        public static void LightModelfv(Enums.LightModelParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                LightModelfv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void LightModelfv(Enums.LightModelParameter pname, IntPtr parameters)
+        {
+            LightModelfv_(pname, parameters);
+        }
+        public static void LightModelfv(Enums.LightModelParameter pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                LightModelfv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region LightModeliv
+        public static void LightModeliv(Enums.LightModelParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                LightModeliv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void LightModeliv(Enums.LightModelParameter pname, IntPtr parameters)
+        {
+            LightModeliv_(pname, parameters);
+        }
+        public static void LightModeliv(Enums.LightModelParameter pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                LightModeliv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Materialfv
+        public static void Materialfv(Enums.MaterialFace face, Enums.MaterialParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Materialfv_(face, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Materialfv(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters)
+        {
+            Materialfv_(face, pname, parameters);
+        }
+        public static void Materialfv(Enums.MaterialFace face, Enums.MaterialParameter pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Materialfv_(face, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Materialiv
+        public static void Materialiv(Enums.MaterialFace face, Enums.MaterialParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Materialiv_(face, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Materialiv(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters)
+        {
+            Materialiv_(face, pname, parameters);
+        }
+        public static void Materialiv(Enums.MaterialFace face, Enums.MaterialParameter pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                Materialiv_(face, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region PolygonStipple
+        public static void PolygonStipple(object mask)
+        {
+            GCHandle h0 = GCHandle.Alloc(mask, GCHandleType.Pinned);
+            try
+            {
+                PolygonStipple_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void PolygonStipple(IntPtr mask)
+        {
+            PolygonStipple_(mask);
+        }
+        public static void PolygonStipple(GLubyte[] mask)
+        {
+            GCHandle h0 = GCHandle.Alloc(mask, GCHandleType.Pinned);
+            try
+            {
+                PolygonStipple_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexParameterfv
+        public static void TexParameterfv(Enums.TextureTarget target, Enums.TextureParameterName pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexParameterfv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexParameterfv(Enums.TextureTarget target, Enums.TextureParameterName pname, IntPtr parameters)
+        {
+            TexParameterfv_(target, pname, parameters);
+        }
+        public static void TexParameterfv(Enums.TextureTarget target, Enums.TextureParameterName pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexParameterfv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexParameteriv
+        public static void TexParameteriv(Enums.TextureTarget target, Enums.TextureParameterName pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexParameteriv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexParameteriv(Enums.TextureTarget target, Enums.TextureParameterName pname, IntPtr parameters)
+        {
+            TexParameteriv_(target, pname, parameters);
+        }
+        public static void TexParameteriv(Enums.TextureTarget target, Enums.TextureParameterName pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexParameteriv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexEnvfv
+        public static void TexEnvfv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexEnvfv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexEnvfv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, IntPtr parameters)
+        {
+            TexEnvfv_(target, pname, parameters);
+        }
+        public static void TexEnvfv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexEnvfv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexEnviv
+        public static void TexEnviv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexEnviv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexEnviv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, IntPtr parameters)
+        {
+            TexEnviv_(target, pname, parameters);
+        }
+        public static void TexEnviv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexEnviv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexGendv
+        public static void TexGendv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexGendv_(coord, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexGendv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters)
+        {
+            TexGendv_(coord, pname, parameters);
+        }
+        public static void TexGendv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLdouble[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexGendv_(coord, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexGenfv
+        public static void TexGenfv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexGenfv_(coord, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexGenfv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters)
+        {
+            TexGenfv_(coord, pname, parameters);
+        }
+        public static void TexGenfv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexGenfv_(coord, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region TexGeniv
+        public static void TexGeniv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexGeniv_(coord, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void TexGeniv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters)
+        {
+            TexGeniv_(coord, pname, parameters);
+        }
+        public static void TexGeniv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                TexGeniv_(coord, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Map1d
+        public static void Map1d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint stride, GLint order, object points)
+        {
+            GCHandle h0 = GCHandle.Alloc(points, GCHandleType.Pinned);
+            try
+            {
+                Map1d_(target, u1, u2, stride, order, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Map1d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint stride, GLint order, IntPtr points)
+        {
+            Map1d_(target, u1, u2, stride, order, points);
+        }
+        public static void Map1d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint stride, GLint order, GLdouble[] points)
+        {
+            GCHandle h0 = GCHandle.Alloc(points, GCHandleType.Pinned);
+            try
+            {
+                Map1d_(target, u1, u2, stride, order, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Map1f
+        public static void Map1f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint stride, GLint order, object points)
+        {
+            GCHandle h0 = GCHandle.Alloc(points, GCHandleType.Pinned);
+            try
+            {
+                Map1f_(target, u1, u2, stride, order, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Map1f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint stride, GLint order, IntPtr points)
+        {
+            Map1f_(target, u1, u2, stride, order, points);
+        }
+        public static void Map1f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint stride, GLint order, GLfloat[] points)
+        {
+            GCHandle h0 = GCHandle.Alloc(points, GCHandleType.Pinned);
+            try
+            {
+                Map1f_(target, u1, u2, stride, order, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Map2d
+        public static void Map2d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, object points)
+        {
+            GCHandle h0 = GCHandle.Alloc(points, GCHandleType.Pinned);
+            try
+            {
+                Map2d_(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Map2d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, IntPtr points)
+        {
+            Map2d_(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
+        }
+        public static void Map2d(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, GLdouble[] points)
+        {
+            GCHandle h0 = GCHandle.Alloc(points, GCHandleType.Pinned);
+            try
+            {
+                Map2d_(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Map2f
+        public static void Map2f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, object points)
+        {
+            GCHandle h0 = GCHandle.Alloc(points, GCHandleType.Pinned);
+            try
+            {
+                Map2f_(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Map2f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, IntPtr points)
+        {
+            Map2f_(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
+        }
+        public static void Map2f(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, GLfloat[] points)
+        {
+            GCHandle h0 = GCHandle.Alloc(points, GCHandleType.Pinned);
+            try
+            {
+                Map2f_(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region EvalCoord1dv
+        public static void EvalCoord1dv(object u)
+        {
+            GCHandle h0 = GCHandle.Alloc(u, GCHandleType.Pinned);
+            try
+            {
+                EvalCoord1dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void EvalCoord1dv(IntPtr u)
+        {
+            EvalCoord1dv_(u);
+        }
+        public static void EvalCoord1dv(GLdouble[] u)
+        {
+            GCHandle h0 = GCHandle.Alloc(u, GCHandleType.Pinned);
+            try
+            {
+                EvalCoord1dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region EvalCoord1fv
+        public static void EvalCoord1fv(object u)
+        {
+            GCHandle h0 = GCHandle.Alloc(u, GCHandleType.Pinned);
+            try
+            {
+                EvalCoord1fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void EvalCoord1fv(IntPtr u)
+        {
+            EvalCoord1fv_(u);
+        }
+        public static void EvalCoord1fv(GLfloat[] u)
+        {
+            GCHandle h0 = GCHandle.Alloc(u, GCHandleType.Pinned);
+            try
+            {
+                EvalCoord1fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region EvalCoord2dv
+        public static void EvalCoord2dv(object u)
+        {
+            GCHandle h0 = GCHandle.Alloc(u, GCHandleType.Pinned);
+            try
+            {
+                EvalCoord2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void EvalCoord2dv(IntPtr u)
+        {
+            EvalCoord2dv_(u);
+        }
+        public static void EvalCoord2dv(GLdouble[] u)
+        {
+            GCHandle h0 = GCHandle.Alloc(u, GCHandleType.Pinned);
+            try
+            {
+                EvalCoord2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region EvalCoord2fv
+        public static void EvalCoord2fv(object u)
+        {
+            GCHandle h0 = GCHandle.Alloc(u, GCHandleType.Pinned);
+            try
+            {
+                EvalCoord2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void EvalCoord2fv(IntPtr u)
+        {
+            EvalCoord2fv_(u);
+        }
+        public static void EvalCoord2fv(GLfloat[] u)
+        {
+            GCHandle h0 = GCHandle.Alloc(u, GCHandleType.Pinned);
+            try
+            {
+                EvalCoord2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region PixelMapfv
+        public static void PixelMapfv(Enums.PixelMap map, GLint mapsize, object values)
+        {
+            GCHandle h0 = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                PixelMapfv_(map, mapsize, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void PixelMapfv(Enums.PixelMap map, GLint mapsize, IntPtr values)
+        {
+            PixelMapfv_(map, mapsize, values);
+        }
+        public static void PixelMapfv(Enums.PixelMap map, GLint mapsize, GLfloat[] values)
+        {
+            GCHandle h0 = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                PixelMapfv_(map, mapsize, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region PixelMapuiv
+        public static void PixelMapuiv(Enums.PixelMap map, GLint mapsize, object values)
+        {
+            GCHandle h0 = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                PixelMapuiv_(map, mapsize, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void PixelMapuiv(Enums.PixelMap map, GLint mapsize, IntPtr values)
+        {
+            PixelMapuiv_(map, mapsize, values);
+        }
+        public static void PixelMapuiv(Enums.PixelMap map, GLint mapsize, GLuint[] values)
+        {
+            GCHandle h0 = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                PixelMapuiv_(map, mapsize, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region PixelMapusv
+        public static void PixelMapusv(Enums.PixelMap map, GLint mapsize, object values)
+        {
+            GCHandle h0 = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                PixelMapusv_(map, mapsize, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void PixelMapusv(Enums.PixelMap map, GLint mapsize, IntPtr values)
+        {
+            PixelMapusv_(map, mapsize, values);
+        }
+        public static void PixelMapusv(Enums.PixelMap map, GLint mapsize, GLushort[] values)
+        {
+            GCHandle h0 = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                PixelMapusv_(map, mapsize, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region ReadPixels
+        public static void ReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, object pixels)
+        {
+            GCHandle h0 = GCHandle.Alloc(pixels, GCHandleType.Pinned);
+            try
+            {
+                ReadPixels_(x, y, width, height, format, type, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void ReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels)
+        {
+            ReadPixels_(x, y, width, height, format, type, pixels);
+        }
         #endregion
 
         #region DrawPixels
@@ -9182,6 +12259,141 @@ namespace OpenTK.OpenGL
             try
             {
                 DrawPixels_(width, height, format, type, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void DrawPixels(GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels)
+        {
+            DrawPixels_(width, height, format, type, pixels);
+        }
+        #endregion
+
+        #region GetString
+        public static string GetString(Enums.StringName name)
+        {
+             return Marshal.PtrToStringAnsi(GetString_(name));
+        }
+        #endregion
+
+        #region LoadMatrixf
+        public static void LoadMatrixf(object m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                LoadMatrixf_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void LoadMatrixf(IntPtr m)
+        {
+            LoadMatrixf_(m);
+        }
+        public static void LoadMatrixf(GLfloat[] m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                LoadMatrixf_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region LoadMatrixd
+        public static void LoadMatrixd(object m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                LoadMatrixd_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void LoadMatrixd(IntPtr m)
+        {
+            LoadMatrixd_(m);
+        }
+        public static void LoadMatrixd(GLdouble[] m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                LoadMatrixd_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultMatrixf
+        public static void MultMatrixf(object m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                MultMatrixf_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultMatrixf(IntPtr m)
+        {
+            MultMatrixf_(m);
+        }
+        public static void MultMatrixf(GLfloat[] m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                MultMatrixf_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultMatrixd
+        public static void MultMatrixd(object m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                MultMatrixd_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultMatrixd(IntPtr m)
+        {
+            MultMatrixd_(m);
+        }
+        public static void MultMatrixd(GLdouble[] m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                MultMatrixd_(h0.AddrOfPinnedObject());
             }
             finally
             {
@@ -9203,6 +12415,10 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void ColorPointer(GLint size, Enums.ColorPointerType type, GLsizei stride, IntPtr pointer)
+        {
+            ColorPointer_(size, type, stride, pointer);
+        }
         #endregion
 
         #region DrawElements
@@ -9217,6 +12433,10 @@ namespace OpenTK.OpenGL
             {
                 h0.Free();
             }
+        }
+        public static void DrawElements(Enums.BeginMode mode, GLsizei count, GLenum type, IntPtr indices)
+        {
+            DrawElements_(mode, count, type, indices);
         }
         #endregion
 
@@ -9233,6 +12453,10 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void EdgeFlagPointer(GLsizei stride, IntPtr pointer)
+        {
+            EdgeFlagPointer_(stride, pointer);
+        }
         #endregion
 
         #region IndexPointer
@@ -9247,6 +12471,10 @@ namespace OpenTK.OpenGL
             {
                 h0.Free();
             }
+        }
+        public static void IndexPointer(Enums.IndexPointerType type, GLsizei stride, IntPtr pointer)
+        {
+            IndexPointer_(type, stride, pointer);
         }
         #endregion
 
@@ -9263,6 +12491,10 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void InterleavedArrays(Enums.InterleavedArrayFormat format, GLsizei stride, IntPtr pointer)
+        {
+            InterleavedArrays_(format, stride, pointer);
+        }
         #endregion
 
         #region NormalPointer
@@ -9277,6 +12509,10 @@ namespace OpenTK.OpenGL
             {
                 h0.Free();
             }
+        }
+        public static void NormalPointer(Enums.NormalPointerType type, GLsizei stride, IntPtr pointer)
+        {
+            NormalPointer_(type, stride, pointer);
         }
         #endregion
 
@@ -9293,6 +12529,10 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void TexCoordPointer(GLint size, Enums.TexCoordPointerType type, GLsizei stride, IntPtr pointer)
+        {
+            TexCoordPointer_(size, type, stride, pointer);
+        }
         #endregion
 
         #region VertexPointer
@@ -9302,6 +12542,138 @@ namespace OpenTK.OpenGL
             try
             {
                 VertexPointer_(size, type, stride, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexPointer(GLint size, Enums.VertexPointerType type, GLsizei stride, IntPtr pointer)
+        {
+            VertexPointer_(size, type, stride, pointer);
+        }
+        #endregion
+
+        #region AreTexturesResident
+        public static GLboolean AreTexturesResident(GLsizei n, object textures, Enums.Boolean[] residences)
+        {
+            GCHandle h0 = GCHandle.Alloc(textures, GCHandleType.Pinned);
+            try
+            {
+                return AreTexturesResident_(n, h0.AddrOfPinnedObject(), residences);
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static GLboolean AreTexturesResident(GLsizei n, IntPtr textures, Enums.Boolean[] residences)
+        {
+            return AreTexturesResident_(n, textures, residences);
+        }
+        public static GLboolean AreTexturesResident(GLsizei n, GLuint[] textures, Enums.Boolean[] residences)
+        {
+            GCHandle h0 = GCHandle.Alloc(textures, GCHandleType.Pinned);
+            try
+            {
+                return AreTexturesResident_(n, h0.AddrOfPinnedObject(), residences);
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region DeleteTextures
+        public static void DeleteTextures(GLsizei n, object textures)
+        {
+            GCHandle h0 = GCHandle.Alloc(textures, GCHandleType.Pinned);
+            try
+            {
+                DeleteTextures_(n, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void DeleteTextures(GLsizei n, IntPtr textures)
+        {
+            DeleteTextures_(n, textures);
+        }
+        public static void DeleteTextures(GLsizei n, GLuint[] textures)
+        {
+            GCHandle h0 = GCHandle.Alloc(textures, GCHandleType.Pinned);
+            try
+            {
+                DeleteTextures_(n, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region PrioritizeTextures
+        public static void PrioritizeTextures(GLsizei n, object textures, object priorities)
+        {
+            GCHandle h0 = GCHandle.Alloc(textures, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(priorities, GCHandleType.Pinned);
+            try
+            {
+                PrioritizeTextures_(n, h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        public static void PrioritizeTextures(GLsizei n, IntPtr textures, IntPtr priorities)
+        {
+            PrioritizeTextures_(n, textures, priorities);
+        }
+        public static void PrioritizeTextures(GLsizei n, GLuint[] textures, GLclampf[] priorities)
+        {
+            GCHandle h0 = GCHandle.Alloc(textures, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(priorities, GCHandleType.Pinned);
+            try
+            {
+                PrioritizeTextures_(n, h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Indexubv
+        public static void Indexubv(object c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexubv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Indexubv(IntPtr c)
+        {
+            Indexubv_(c);
+        }
+        public static void Indexubv(GLubyte[] c)
+        {
+            GCHandle h0 = GCHandle.Alloc(c, GCHandleType.Pinned);
+            try
+            {
+                Indexubv_(h0.AddrOfPinnedObject());
             }
             finally
             {
@@ -9323,6 +12695,10 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void DrawRangeElements(Enums.BeginMode mode, GLuint start, GLuint end, GLsizei count, GLenum type, IntPtr indices)
+        {
+            DrawRangeElements_(mode, start, end, count, type, indices);
+        }
         #endregion
 
         #region ColorTable
@@ -9337,6 +12713,91 @@ namespace OpenTK.OpenGL
             {
                 h0.Free();
             }
+        }
+        public static void ColorTable(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr table)
+        {
+            ColorTable_(target, internalformat, width, format, type, table);
+        }
+        #endregion
+
+        #region ColorTableParameterfv
+        public static void ColorTableParameterfv(GLenum target, GLenum pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ColorTableParameterfv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void ColorTableParameterfv(GLenum target, GLenum pname, IntPtr parameters)
+        {
+            ColorTableParameterfv_(target, pname, parameters);
+        }
+        public static void ColorTableParameterfv(GLenum target, GLenum pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ColorTableParameterfv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region ColorTableParameteriv
+        public static void ColorTableParameteriv(GLenum target, GLenum pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ColorTableParameteriv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void ColorTableParameteriv(GLenum target, GLenum pname, IntPtr parameters)
+        {
+            ColorTableParameteriv_(target, pname, parameters);
+        }
+        public static void ColorTableParameteriv(GLenum target, GLenum pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ColorTableParameteriv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region GetColorTable
+        public static void GetColorTable(GLenum target, Enums.PixelFormat format, Enums.PixelType type, object table)
+        {
+            GCHandle h0 = GCHandle.Alloc(table, GCHandleType.Pinned);
+            try
+            {
+                GetColorTable_(target, format, type, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void GetColorTable(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr table)
+        {
+            GetColorTable_(target, format, type, table);
         }
         #endregion
 
@@ -9353,6 +12814,10 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void ColorSubTable(GLenum target, GLsizei start, GLsizei count, Enums.PixelFormat format, Enums.PixelType type, IntPtr data)
+        {
+            ColorSubTable_(target, start, count, format, type, data);
+        }
         #endregion
 
         #region ConvolutionFilter1D
@@ -9368,6 +12833,10 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void ConvolutionFilter1D(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr image)
+        {
+            ConvolutionFilter1D_(target, internalformat, width, format, type, image);
+        }
         #endregion
 
         #region ConvolutionFilter2D
@@ -9382,6 +12851,114 @@ namespace OpenTK.OpenGL
             {
                 h0.Free();
             }
+        }
+        public static void ConvolutionFilter2D(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr image)
+        {
+            ConvolutionFilter2D_(target, internalformat, width, height, format, type, image);
+        }
+        #endregion
+
+        #region ConvolutionParameterfv
+        public static void ConvolutionParameterfv(GLenum target, GLenum pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ConvolutionParameterfv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void ConvolutionParameterfv(GLenum target, GLenum pname, IntPtr parameters)
+        {
+            ConvolutionParameterfv_(target, pname, parameters);
+        }
+        public static void ConvolutionParameterfv(GLenum target, GLenum pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ConvolutionParameterfv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region ConvolutionParameteriv
+        public static void ConvolutionParameteriv(GLenum target, GLenum pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ConvolutionParameteriv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void ConvolutionParameteriv(GLenum target, GLenum pname, IntPtr parameters)
+        {
+            ConvolutionParameteriv_(target, pname, parameters);
+        }
+        public static void ConvolutionParameteriv(GLenum target, GLenum pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ConvolutionParameteriv_(target, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region GetConvolutionFilter
+        public static void GetConvolutionFilter(GLenum target, Enums.PixelFormat format, Enums.PixelType type, object image)
+        {
+            GCHandle h0 = GCHandle.Alloc(image, GCHandleType.Pinned);
+            try
+            {
+                GetConvolutionFilter_(target, format, type, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void GetConvolutionFilter(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr image)
+        {
+            GetConvolutionFilter_(target, format, type, image);
+        }
+        #endregion
+
+        #region GetSeparableFilter
+        public static void GetSeparableFilter(GLenum target, Enums.PixelFormat format, Enums.PixelType type, object row, object column, object span)
+        {
+            GCHandle h0 = GCHandle.Alloc(row, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(column, GCHandleType.Pinned);
+            GCHandle h2 = GCHandle.Alloc(span, GCHandleType.Pinned);
+            try
+            {
+                GetSeparableFilter_(target, format, type, h0.AddrOfPinnedObject(), h1.AddrOfPinnedObject(), h2.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h2.Free();
+                h1.Free();
+                h0.Free();
+            }
+        }
+        public static void GetSeparableFilter(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column, IntPtr span)
+        {
+            GetSeparableFilter_(target, format, type, row, column, span);
         }
         #endregion
 
@@ -9400,6 +12977,730 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void SeparableFilter2D(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column)
+        {
+            SeparableFilter2D_(target, internalformat, width, height, format, type, row, column);
+        }
+        #endregion
+
+        #region GetHistogram
+        public static void GetHistogram(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, object values)
+        {
+            GCHandle h0 = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                GetHistogram_(target, reset, format, type, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void GetHistogram(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values)
+        {
+            GetHistogram_(target, reset, format, type, values);
+        }
+        #endregion
+
+        #region GetMinmax
+        public static void GetMinmax(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, object values)
+        {
+            GCHandle h0 = GCHandle.Alloc(values, GCHandleType.Pinned);
+            try
+            {
+                GetMinmax_(target, reset, format, type, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void GetMinmax(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values)
+        {
+            GetMinmax_(target, reset, format, type, values);
+        }
+        #endregion
+
+        #region MultiTexCoord1dv
+        public static void MultiTexCoord1dv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord1dv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord1dv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord1dv_(target, v);
+        }
+        public static void MultiTexCoord1dv(GLenum target, GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord1dv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord1fv
+        public static void MultiTexCoord1fv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord1fv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord1fv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord1fv_(target, v);
+        }
+        public static void MultiTexCoord1fv(GLenum target, GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord1fv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord1iv
+        public static void MultiTexCoord1iv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord1iv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord1iv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord1iv_(target, v);
+        }
+        public static void MultiTexCoord1iv(GLenum target, GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord1iv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord1sv
+        public static void MultiTexCoord1sv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord1sv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord1sv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord1sv_(target, v);
+        }
+        public static void MultiTexCoord1sv(GLenum target, GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord1sv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord2dv
+        public static void MultiTexCoord2dv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord2dv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord2dv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord2dv_(target, v);
+        }
+        public static void MultiTexCoord2dv(GLenum target, GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord2dv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord2fv
+        public static void MultiTexCoord2fv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord2fv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord2fv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord2fv_(target, v);
+        }
+        public static void MultiTexCoord2fv(GLenum target, GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord2fv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord2iv
+        public static void MultiTexCoord2iv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord2iv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord2iv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord2iv_(target, v);
+        }
+        public static void MultiTexCoord2iv(GLenum target, GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord2iv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord2sv
+        public static void MultiTexCoord2sv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord2sv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord2sv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord2sv_(target, v);
+        }
+        public static void MultiTexCoord2sv(GLenum target, GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord2sv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord3dv
+        public static void MultiTexCoord3dv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord3dv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord3dv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord3dv_(target, v);
+        }
+        public static void MultiTexCoord3dv(GLenum target, GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord3dv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord3fv
+        public static void MultiTexCoord3fv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord3fv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord3fv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord3fv_(target, v);
+        }
+        public static void MultiTexCoord3fv(GLenum target, GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord3fv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord3iv
+        public static void MultiTexCoord3iv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord3iv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord3iv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord3iv_(target, v);
+        }
+        public static void MultiTexCoord3iv(GLenum target, GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord3iv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord3sv
+        public static void MultiTexCoord3sv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord3sv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord3sv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord3sv_(target, v);
+        }
+        public static void MultiTexCoord3sv(GLenum target, GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord3sv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord4dv
+        public static void MultiTexCoord4dv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord4dv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord4dv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord4dv_(target, v);
+        }
+        public static void MultiTexCoord4dv(GLenum target, GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord4dv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord4fv
+        public static void MultiTexCoord4fv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord4fv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord4fv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord4fv_(target, v);
+        }
+        public static void MultiTexCoord4fv(GLenum target, GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord4fv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord4iv
+        public static void MultiTexCoord4iv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord4iv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord4iv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord4iv_(target, v);
+        }
+        public static void MultiTexCoord4iv(GLenum target, GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord4iv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultiTexCoord4sv
+        public static void MultiTexCoord4sv(GLenum target, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord4sv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultiTexCoord4sv(GLenum target, IntPtr v)
+        {
+            MultiTexCoord4sv_(target, v);
+        }
+        public static void MultiTexCoord4sv(GLenum target, GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                MultiTexCoord4sv_(target, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region LoadTransposeMatrixf
+        public static void LoadTransposeMatrixf(object m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                LoadTransposeMatrixf_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void LoadTransposeMatrixf(IntPtr m)
+        {
+            LoadTransposeMatrixf_(m);
+        }
+        public static void LoadTransposeMatrixf(GLfloat[] m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                LoadTransposeMatrixf_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region LoadTransposeMatrixd
+        public static void LoadTransposeMatrixd(object m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                LoadTransposeMatrixd_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void LoadTransposeMatrixd(IntPtr m)
+        {
+            LoadTransposeMatrixd_(m);
+        }
+        public static void LoadTransposeMatrixd(GLdouble[] m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                LoadTransposeMatrixd_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultTransposeMatrixf
+        public static void MultTransposeMatrixf(object m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                MultTransposeMatrixf_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultTransposeMatrixf(IntPtr m)
+        {
+            MultTransposeMatrixf_(m);
+        }
+        public static void MultTransposeMatrixf(GLfloat[] m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                MultTransposeMatrixf_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region MultTransposeMatrixd
+        public static void MultTransposeMatrixd(object m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                MultTransposeMatrixd_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void MultTransposeMatrixd(IntPtr m)
+        {
+            MultTransposeMatrixd_(m);
+        }
+        public static void MultTransposeMatrixd(GLdouble[] m)
+        {
+            GCHandle h0 = GCHandle.Alloc(m, GCHandleType.Pinned);
+            try
+            {
+                MultTransposeMatrixd_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region FogCoordfv
+        public static void FogCoordfv(object coord)
+        {
+            GCHandle h0 = GCHandle.Alloc(coord, GCHandleType.Pinned);
+            try
+            {
+                FogCoordfv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void FogCoordfv(IntPtr coord)
+        {
+            FogCoordfv_(coord);
+        }
+        public static void FogCoordfv(GLfloat[] coord)
+        {
+            GCHandle h0 = GCHandle.Alloc(coord, GCHandleType.Pinned);
+            try
+            {
+                FogCoordfv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region FogCoorddv
+        public static void FogCoorddv(object coord)
+        {
+            GCHandle h0 = GCHandle.Alloc(coord, GCHandleType.Pinned);
+            try
+            {
+                FogCoorddv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void FogCoorddv(IntPtr coord)
+        {
+            FogCoorddv_(coord);
+        }
+        public static void FogCoorddv(GLdouble[] coord)
+        {
+            GCHandle h0 = GCHandle.Alloc(coord, GCHandleType.Pinned);
+            try
+            {
+                FogCoorddv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
         #endregion
 
         #region FogCoordPointer
@@ -9409,6 +13710,355 @@ namespace OpenTK.OpenGL
             try
             {
                 FogCoordPointer_(type, stride, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void FogCoordPointer(GLenum type, GLsizei stride, IntPtr pointer)
+        {
+            FogCoordPointer_(type, stride, pointer);
+        }
+        #endregion
+
+        #region MultiDrawElements
+        public static void MultiDrawElements(Enums.BeginMode mode, object count, GLenum type, object indices, GLsizei primcount)
+        {
+            GCHandle h0 = GCHandle.Alloc(count, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(indices, GCHandleType.Pinned);
+            try
+            {
+                MultiDrawElements_(mode, h0.AddrOfPinnedObject(), type, h1.AddrOfPinnedObject(), primcount);
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        public static void MultiDrawElements(Enums.BeginMode mode, IntPtr count, GLenum type, IntPtr indices, GLsizei primcount)
+        {
+            MultiDrawElements_(mode, count, type, indices, primcount);
+        }
+        public static void MultiDrawElements(Enums.BeginMode mode, GLsizei[] count, GLenum type, IntPtr[] indices, GLsizei primcount)
+        {
+            GCHandle h0 = GCHandle.Alloc(count, GCHandleType.Pinned);
+            GCHandle h1 = GCHandle.Alloc(indices, GCHandleType.Pinned);
+            try
+            {
+                MultiDrawElements_(mode, h0.AddrOfPinnedObject(), type, h1.AddrOfPinnedObject(), primcount);
+            }
+            finally
+            {
+                h1.Free();
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region PointParameterfv
+        public static void PointParameterfv(GLenum pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                PointParameterfv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void PointParameterfv(GLenum pname, IntPtr parameters)
+        {
+            PointParameterfv_(pname, parameters);
+        }
+        public static void PointParameterfv(GLenum pname, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                PointParameterfv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region PointParameteriv
+        public static void PointParameteriv(GLenum pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                PointParameteriv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void PointParameteriv(GLenum pname, IntPtr parameters)
+        {
+            PointParameteriv_(pname, parameters);
+        }
+        public static void PointParameteriv(GLenum pname, GLint[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                PointParameteriv_(pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region SecondaryColor3bv
+        public static void SecondaryColor3bv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3bv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void SecondaryColor3bv(IntPtr v)
+        {
+            SecondaryColor3bv_(v);
+        }
+        public static void SecondaryColor3bv(GLbyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3bv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region SecondaryColor3dv
+        public static void SecondaryColor3dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void SecondaryColor3dv(IntPtr v)
+        {
+            SecondaryColor3dv_(v);
+        }
+        public static void SecondaryColor3dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region SecondaryColor3fv
+        public static void SecondaryColor3fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void SecondaryColor3fv(IntPtr v)
+        {
+            SecondaryColor3fv_(v);
+        }
+        public static void SecondaryColor3fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region SecondaryColor3iv
+        public static void SecondaryColor3iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void SecondaryColor3iv(IntPtr v)
+        {
+            SecondaryColor3iv_(v);
+        }
+        public static void SecondaryColor3iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region SecondaryColor3sv
+        public static void SecondaryColor3sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void SecondaryColor3sv(IntPtr v)
+        {
+            SecondaryColor3sv_(v);
+        }
+        public static void SecondaryColor3sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region SecondaryColor3ubv
+        public static void SecondaryColor3ubv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3ubv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void SecondaryColor3ubv(IntPtr v)
+        {
+            SecondaryColor3ubv_(v);
+        }
+        public static void SecondaryColor3ubv(GLubyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3ubv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region SecondaryColor3uiv
+        public static void SecondaryColor3uiv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3uiv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void SecondaryColor3uiv(IntPtr v)
+        {
+            SecondaryColor3uiv_(v);
+        }
+        public static void SecondaryColor3uiv(GLuint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3uiv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region SecondaryColor3usv
+        public static void SecondaryColor3usv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3usv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void SecondaryColor3usv(IntPtr v)
+        {
+            SecondaryColor3usv_(v);
+        }
+        public static void SecondaryColor3usv(GLushort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                SecondaryColor3usv_(h0.AddrOfPinnedObject());
             }
             finally
             {
@@ -9430,6 +14080,320 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void SecondaryColorPointer(GLint size, Enums.ColorPointerType type, GLsizei stride, IntPtr pointer)
+        {
+            SecondaryColorPointer_(size, type, stride, pointer);
+        }
+        #endregion
+
+        #region WindowPos2dv
+        public static void WindowPos2dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void WindowPos2dv(IntPtr v)
+        {
+            WindowPos2dv_(v);
+        }
+        public static void WindowPos2dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos2dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region WindowPos2fv
+        public static void WindowPos2fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void WindowPos2fv(IntPtr v)
+        {
+            WindowPos2fv_(v);
+        }
+        public static void WindowPos2fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos2fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region WindowPos2iv
+        public static void WindowPos2iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos2iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void WindowPos2iv(IntPtr v)
+        {
+            WindowPos2iv_(v);
+        }
+        public static void WindowPos2iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos2iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region WindowPos2sv
+        public static void WindowPos2sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos2sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void WindowPos2sv(IntPtr v)
+        {
+            WindowPos2sv_(v);
+        }
+        public static void WindowPos2sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos2sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region WindowPos3dv
+        public static void WindowPos3dv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void WindowPos3dv(IntPtr v)
+        {
+            WindowPos3dv_(v);
+        }
+        public static void WindowPos3dv(GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos3dv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region WindowPos3fv
+        public static void WindowPos3fv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void WindowPos3fv(IntPtr v)
+        {
+            WindowPos3fv_(v);
+        }
+        public static void WindowPos3fv(GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos3fv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region WindowPos3iv
+        public static void WindowPos3iv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void WindowPos3iv(IntPtr v)
+        {
+            WindowPos3iv_(v);
+        }
+        public static void WindowPos3iv(GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos3iv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region WindowPos3sv
+        public static void WindowPos3sv(object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void WindowPos3sv(IntPtr v)
+        {
+            WindowPos3sv_(v);
+        }
+        public static void WindowPos3sv(GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                WindowPos3sv_(h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region DeleteQueries
+        public static void DeleteQueries(GLsizei n, object ids)
+        {
+            GCHandle h0 = GCHandle.Alloc(ids, GCHandleType.Pinned);
+            try
+            {
+                DeleteQueries_(n, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void DeleteQueries(GLsizei n, IntPtr ids)
+        {
+            DeleteQueries_(n, ids);
+        }
+        public static void DeleteQueries(GLsizei n, GLuint[] ids)
+        {
+            GCHandle h0 = GCHandle.Alloc(ids, GCHandleType.Pinned);
+            try
+            {
+                DeleteQueries_(n, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region DeleteBuffers
+        public static void DeleteBuffers(GLsizei n, object buffers)
+        {
+            GCHandle h0 = GCHandle.Alloc(buffers, GCHandleType.Pinned);
+            try
+            {
+                DeleteBuffers_(n, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void DeleteBuffers(GLsizei n, IntPtr buffers)
+        {
+            DeleteBuffers_(n, buffers);
+        }
+        public static void DeleteBuffers(GLsizei n, GLuint[] buffers)
+        {
+            GCHandle h0 = GCHandle.Alloc(buffers, GCHandleType.Pinned);
+            try
+            {
+                DeleteBuffers_(n, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
         #endregion
 
         #region BufferData
@@ -9444,6 +14408,10 @@ namespace OpenTK.OpenGL
             {
                 h0.Free();
             }
+        }
+        public static void BufferData(GLenum target, GLsizeiptr size, IntPtr data, GLenum usage)
+        {
+            BufferData_(target, size, data, usage);
         }
         #endregion
 
@@ -9460,9 +14428,1238 @@ namespace OpenTK.OpenGL
                 h0.Free();
             }
         }
+        public static void BufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, IntPtr data)
+        {
+            BufferSubData_(target, offset, size, data);
+        }
         #endregion
 
-        #region MapBuffer
+        #region GetBufferSubData
+        public static void GetBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, object data)
+        {
+            GCHandle h0 = GCHandle.Alloc(data, GCHandleType.Pinned);
+            try
+            {
+                GetBufferSubData_(target, offset, size, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void GetBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, IntPtr data)
+        {
+            GetBufferSubData_(target, offset, size, data);
+        }
+        #endregion
+
+        #region DrawBuffers
+        public static void DrawBuffers(GLsizei n, object bufs)
+        {
+            GCHandle h0 = GCHandle.Alloc(bufs, GCHandleType.Pinned);
+            try
+            {
+                DrawBuffers_(n, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void DrawBuffers(GLsizei n, IntPtr bufs)
+        {
+            DrawBuffers_(n, bufs);
+        }
+        public static void DrawBuffers(GLsizei n, GLenum[] bufs)
+        {
+            GCHandle h0 = GCHandle.Alloc(bufs, GCHandleType.Pinned);
+            try
+            {
+                DrawBuffers_(n, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region BindAttribLocation
+        public static void BindAttribLocation(GLuint program, GLuint index, object name)
+        {
+            GCHandle h0 = GCHandle.Alloc(name, GCHandleType.Pinned);
+            try
+            {
+                BindAttribLocation_(program, index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void BindAttribLocation(GLuint program, GLuint index, IntPtr name)
+        {
+            BindAttribLocation_(program, index, name);
+        }
+        public static void BindAttribLocation(GLuint program, GLuint index, GLchar[] name)
+        {
+            GCHandle h0 = GCHandle.Alloc(name, GCHandleType.Pinned);
+            try
+            {
+                BindAttribLocation_(program, index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region GetAttribLocation
+        public static GLint GetAttribLocation(GLuint program, object name)
+        {
+            GCHandle h0 = GCHandle.Alloc(name, GCHandleType.Pinned);
+            try
+            {
+                return GetAttribLocation_(program, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static GLint GetAttribLocation(GLuint program, IntPtr name)
+        {
+            return GetAttribLocation_(program, name);
+        }
+        public static GLint GetAttribLocation(GLuint program, GLchar[] name)
+        {
+            GCHandle h0 = GCHandle.Alloc(name, GCHandleType.Pinned);
+            try
+            {
+                return GetAttribLocation_(program, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region GetUniformLocation
+        public static GLint GetUniformLocation(GLuint program, object name)
+        {
+            GCHandle h0 = GCHandle.Alloc(name, GCHandleType.Pinned);
+            try
+            {
+                return GetUniformLocation_(program, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static GLint GetUniformLocation(GLuint program, IntPtr name)
+        {
+            return GetUniformLocation_(program, name);
+        }
+        public static GLint GetUniformLocation(GLuint program, GLchar[] name)
+        {
+            GCHandle h0 = GCHandle.Alloc(name, GCHandleType.Pinned);
+            try
+            {
+                return GetUniformLocation_(program, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region ShaderSource
+        public static void ShaderSource(GLuint shader, GLsizei count, string[] @string, object length)
+        {
+            GCHandle h0 = GCHandle.Alloc(length, GCHandleType.Pinned);
+            try
+            {
+                ShaderSource_(shader, count, @string, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void ShaderSource(GLuint shader, GLsizei count, string[] @string, IntPtr length)
+        {
+            ShaderSource_(shader, count, @string, length);
+        }
+        public static void ShaderSource(GLuint shader, GLsizei count, string[] @string, GLint[] length)
+        {
+            GCHandle h0 = GCHandle.Alloc(length, GCHandleType.Pinned);
+            try
+            {
+                ShaderSource_(shader, count, @string, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Uniform1fv
+        public static void Uniform1fv(GLint location, GLsizei count, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform1fv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Uniform1fv(GLint location, GLsizei count, IntPtr value)
+        {
+            Uniform1fv_(location, count, value);
+        }
+        public static void Uniform1fv(GLint location, GLsizei count, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform1fv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Uniform2fv
+        public static void Uniform2fv(GLint location, GLsizei count, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform2fv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Uniform2fv(GLint location, GLsizei count, IntPtr value)
+        {
+            Uniform2fv_(location, count, value);
+        }
+        public static void Uniform2fv(GLint location, GLsizei count, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform2fv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Uniform3fv
+        public static void Uniform3fv(GLint location, GLsizei count, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform3fv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Uniform3fv(GLint location, GLsizei count, IntPtr value)
+        {
+            Uniform3fv_(location, count, value);
+        }
+        public static void Uniform3fv(GLint location, GLsizei count, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform3fv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Uniform4fv
+        public static void Uniform4fv(GLint location, GLsizei count, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform4fv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Uniform4fv(GLint location, GLsizei count, IntPtr value)
+        {
+            Uniform4fv_(location, count, value);
+        }
+        public static void Uniform4fv(GLint location, GLsizei count, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform4fv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Uniform1iv
+        public static void Uniform1iv(GLint location, GLsizei count, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform1iv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Uniform1iv(GLint location, GLsizei count, IntPtr value)
+        {
+            Uniform1iv_(location, count, value);
+        }
+        public static void Uniform1iv(GLint location, GLsizei count, GLint[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform1iv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Uniform2iv
+        public static void Uniform2iv(GLint location, GLsizei count, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform2iv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Uniform2iv(GLint location, GLsizei count, IntPtr value)
+        {
+            Uniform2iv_(location, count, value);
+        }
+        public static void Uniform2iv(GLint location, GLsizei count, GLint[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform2iv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Uniform3iv
+        public static void Uniform3iv(GLint location, GLsizei count, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform3iv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Uniform3iv(GLint location, GLsizei count, IntPtr value)
+        {
+            Uniform3iv_(location, count, value);
+        }
+        public static void Uniform3iv(GLint location, GLsizei count, GLint[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform3iv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region Uniform4iv
+        public static void Uniform4iv(GLint location, GLsizei count, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform4iv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void Uniform4iv(GLint location, GLsizei count, IntPtr value)
+        {
+            Uniform4iv_(location, count, value);
+        }
+        public static void Uniform4iv(GLint location, GLsizei count, GLint[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                Uniform4iv_(location, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region UniformMatrix2fv
+        public static void UniformMatrix2fv(GLint location, GLsizei count, Enums.Boolean transpose, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix2fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void UniformMatrix2fv(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value)
+        {
+            UniformMatrix2fv_(location, count, transpose, value);
+        }
+        public static void UniformMatrix2fv(GLint location, GLsizei count, Enums.Boolean transpose, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix2fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region UniformMatrix3fv
+        public static void UniformMatrix3fv(GLint location, GLsizei count, Enums.Boolean transpose, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix3fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void UniformMatrix3fv(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value)
+        {
+            UniformMatrix3fv_(location, count, transpose, value);
+        }
+        public static void UniformMatrix3fv(GLint location, GLsizei count, Enums.Boolean transpose, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix3fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region UniformMatrix4fv
+        public static void UniformMatrix4fv(GLint location, GLsizei count, Enums.Boolean transpose, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix4fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void UniformMatrix4fv(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value)
+        {
+            UniformMatrix4fv_(location, count, transpose, value);
+        }
+        public static void UniformMatrix4fv(GLint location, GLsizei count, Enums.Boolean transpose, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix4fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib1dv
+        public static void VertexAttrib1dv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib1dv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib1dv(GLuint index, IntPtr v)
+        {
+            VertexAttrib1dv_(index, v);
+        }
+        public static void VertexAttrib1dv(GLuint index, GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib1dv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib1fv
+        public static void VertexAttrib1fv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib1fv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib1fv(GLuint index, IntPtr v)
+        {
+            VertexAttrib1fv_(index, v);
+        }
+        public static void VertexAttrib1fv(GLuint index, GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib1fv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib1sv
+        public static void VertexAttrib1sv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib1sv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib1sv(GLuint index, IntPtr v)
+        {
+            VertexAttrib1sv_(index, v);
+        }
+        public static void VertexAttrib1sv(GLuint index, GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib1sv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib2dv
+        public static void VertexAttrib2dv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib2dv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib2dv(GLuint index, IntPtr v)
+        {
+            VertexAttrib2dv_(index, v);
+        }
+        public static void VertexAttrib2dv(GLuint index, GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib2dv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib2fv
+        public static void VertexAttrib2fv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib2fv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib2fv(GLuint index, IntPtr v)
+        {
+            VertexAttrib2fv_(index, v);
+        }
+        public static void VertexAttrib2fv(GLuint index, GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib2fv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib2sv
+        public static void VertexAttrib2sv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib2sv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib2sv(GLuint index, IntPtr v)
+        {
+            VertexAttrib2sv_(index, v);
+        }
+        public static void VertexAttrib2sv(GLuint index, GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib2sv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib3dv
+        public static void VertexAttrib3dv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib3dv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib3dv(GLuint index, IntPtr v)
+        {
+            VertexAttrib3dv_(index, v);
+        }
+        public static void VertexAttrib3dv(GLuint index, GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib3dv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib3fv
+        public static void VertexAttrib3fv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib3fv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib3fv(GLuint index, IntPtr v)
+        {
+            VertexAttrib3fv_(index, v);
+        }
+        public static void VertexAttrib3fv(GLuint index, GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib3fv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib3sv
+        public static void VertexAttrib3sv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib3sv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib3sv(GLuint index, IntPtr v)
+        {
+            VertexAttrib3sv_(index, v);
+        }
+        public static void VertexAttrib3sv(GLuint index, GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib3sv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4Nbv
+        public static void VertexAttrib4Nbv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nbv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4Nbv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4Nbv_(index, v);
+        }
+        public static void VertexAttrib4Nbv(GLuint index, GLbyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nbv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4Niv
+        public static void VertexAttrib4Niv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Niv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4Niv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4Niv_(index, v);
+        }
+        public static void VertexAttrib4Niv(GLuint index, GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Niv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4Nsv
+        public static void VertexAttrib4Nsv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nsv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4Nsv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4Nsv_(index, v);
+        }
+        public static void VertexAttrib4Nsv(GLuint index, GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nsv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4Nubv
+        public static void VertexAttrib4Nubv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nubv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4Nubv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4Nubv_(index, v);
+        }
+        public static void VertexAttrib4Nubv(GLuint index, GLubyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nubv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4Nuiv
+        public static void VertexAttrib4Nuiv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nuiv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4Nuiv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4Nuiv_(index, v);
+        }
+        public static void VertexAttrib4Nuiv(GLuint index, GLuint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nuiv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4Nusv
+        public static void VertexAttrib4Nusv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nusv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4Nusv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4Nusv_(index, v);
+        }
+        public static void VertexAttrib4Nusv(GLuint index, GLushort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4Nusv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4bv
+        public static void VertexAttrib4bv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4bv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4bv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4bv_(index, v);
+        }
+        public static void VertexAttrib4bv(GLuint index, GLbyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4bv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4dv
+        public static void VertexAttrib4dv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4dv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4dv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4dv_(index, v);
+        }
+        public static void VertexAttrib4dv(GLuint index, GLdouble[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4dv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4fv
+        public static void VertexAttrib4fv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4fv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4fv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4fv_(index, v);
+        }
+        public static void VertexAttrib4fv(GLuint index, GLfloat[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4fv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4iv
+        public static void VertexAttrib4iv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4iv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4iv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4iv_(index, v);
+        }
+        public static void VertexAttrib4iv(GLuint index, GLint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4iv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4sv
+        public static void VertexAttrib4sv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4sv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4sv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4sv_(index, v);
+        }
+        public static void VertexAttrib4sv(GLuint index, GLshort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4sv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4ubv
+        public static void VertexAttrib4ubv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4ubv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4ubv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4ubv_(index, v);
+        }
+        public static void VertexAttrib4ubv(GLuint index, GLubyte[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4ubv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4uiv
+        public static void VertexAttrib4uiv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4uiv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4uiv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4uiv_(index, v);
+        }
+        public static void VertexAttrib4uiv(GLuint index, GLuint[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4uiv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        #endregion
+
+        #region VertexAttrib4usv
+        public static void VertexAttrib4usv(GLuint index, object v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4usv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+        public static void VertexAttrib4usv(GLuint index, IntPtr v)
+        {
+            VertexAttrib4usv_(index, v);
+        }
+        public static void VertexAttrib4usv(GLuint index, GLushort[] v)
+        {
+            GCHandle h0 = GCHandle.Alloc(v, GCHandleType.Pinned);
+            try
+            {
+                VertexAttrib4usv_(index, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
         #endregion
 
         #region VertexAttribPointer
@@ -9477,6 +15674,10 @@ namespace OpenTK.OpenGL
             {
                 h0.Free();
             }
+        }
+        public static void VertexAttribPointer(GLuint index, GLint size, GLenum type, Enums.Boolean normalized, GLsizei stride, IntPtr pointer)
+        {
+            VertexAttribPointer_(index, size, type, normalized, stride, pointer);
         }
         #endregion
 

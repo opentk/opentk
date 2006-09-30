@@ -7,6 +7,8 @@ namespace OpenTK.OpenGL.Bind
 {
     static class ContextWriter
     {
+        #region Write main context
+
         public static void WriteMainContext(string output_path, List<Function> functions)
         {
             string filename = Path.Combine(output_path, "ContextLoad.cs");
@@ -47,6 +49,8 @@ namespace OpenTK.OpenGL.Bind
             sw.Flush();
             sw.Close();
         }
+
+        #endregion
 
         public static void WriteDerivedContext(string output_path, string class_name, List<Function> functions, params string[] import_list)
         {
