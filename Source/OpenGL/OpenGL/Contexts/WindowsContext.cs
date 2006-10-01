@@ -33,11 +33,11 @@ namespace OpenTK.OpenGL.Platform
                 error_code = Marshal.GetLastWin32Error();
                 if (error_code != 0)
                 {
-                    Console.WriteLine("LoadLibrary({0}) set error code: {1}. Will not load extensions.", _dll_name, error_code);
+                    System.Diagnostics.Debug.WriteLine("LoadLibrary({0}) set error code: {1}. Will not load extensions.", _dll_name, error_code);
                 }
                 else
                 {
-                    Console.WriteLine("Loaded dll: {0}", _dll_name);
+                    System.Diagnostics.Debug.WriteLine("Loaded dll: {0}", _dll_name);
                     load_extensions = true;
                 }
             }
