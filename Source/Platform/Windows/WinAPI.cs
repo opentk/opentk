@@ -18,7 +18,6 @@ namespace OpenTK.Platform.Windows
     public static class Api
     {
         #region Constants
-
         public struct Constants
         {
             // Keyboard events (found in WinUSER.h)
@@ -37,12 +36,30 @@ namespace OpenTK.Platform.Windows
             public const sbyte PFD_MAIN_PLANE       = 0;
             public const sbyte PFD_OVERLAY_PLANE    = 1;
             public const sbyte PFD_UNDERLAY_PLANE   = -1;
-        }
 
+            // Device mode types (found in WinGDI.h)
+            public const int DM_BITSPERPEL          = 0x00040000;
+            public const int DM_PELSWIDTH           = 0x00080000;
+            public const int DM_PELSHEIGHT          = 0x00100000;
+            public const int DM_DISPLAYFLAGS        = 0x00200000;
+            public const int DM_DISPLAYFREQUENCY    = 0x00400000;
+
+            // ChangeDisplaySettings types (found in WinUSER.h)
+            public const int CDS_UPDATEREGISTRY = 0x00000001;
+            public const int CDS_TEST = 0x00000002;
+            public const int CDS_FULLSCREEN = 0x00000004;
+
+            // ChangeDisplaySettings results (found in WinUSER.h)
+            public const int DISP_CHANGE_SUCCESSFUL = 0;
+            public const int DISP_CHANGE_RESTART = 1;
+            public const int DISP_CHANGE_FAILED = -1;
+
+            // (found in WinUSER.h)
+            public const int ENUM_CURRENT_SETTINGS = -1;
+        }
         #endregion
 
         #region WINAPI methods
-
         #region PeekMessage
 
         /// <summary>
@@ -362,6 +379,17 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region int ChangeDisplaySettings(ref Gdi.DEVMODE devMode, int flags)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="device_mode"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int ChangeDisplaySettings(ref DeviceMode device_mode, int flags);
+        #endregion int ChangeDisplaySettings(ref Gdi.DEVMODE devMode, int flags)
+
         
         // *********** Never use GetLastError! ************
 
@@ -384,13 +412,11 @@ namespace OpenTK.Platform.Windows
         //#endregion
 
         // ************************************************
-
         #endregion
 
         #region WINAPI structs
 
-        #region PixelFormatDescriptor
-
+        #region PixelFormatDescriptor struct
         /// <summary>
         /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
         /// Found in WinGDI.h
@@ -428,7 +454,9 @@ namespace OpenTK.Platform.Windows
             public uint VisibleMask = 0;
             public uint DamageMask = 0;
         }
+        #endregion
 
+        #region PixelFormatDescriptorFlags enum
         [Flags]
         public enum PixelFormatDescriptorFlags : uint
         {
@@ -453,11 +481,9 @@ namespace OpenTK.Platform.Windows
             DOUBLEBUFFER_DONTCARE = 0x40000000,
             STEREO_DONTCARE       = 0x80000000
         }
-
         #endregion
 
-        #region SetWindowPosFlags
-
+        #region SetWindowPosFlags enum
         [Flags]
         public enum SetWindowPosFlags
         {
@@ -482,10 +508,9 @@ namespace OpenTK.Platform.Windows
             //public const int SWP_ASYNCWINDOWPOS = 0x4000;
             //#endif
         }
-
         #endregion
 
-        #region WindowPlacementOptions
+        #region WindowPlacementOptions enum
 
         public enum WindowPlacementOptions
         {
@@ -498,7 +523,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region WindowClass
-
         [StructLayout(LayoutKind.Sequential)]
         public class WindowClass
         {
@@ -517,11 +541,9 @@ namespace OpenTK.Platform.Windows
             //[MarshalAs(UnmanagedType.LPStr)]
             public IntPtr ClassName;
         }
-
         #endregion
 
-        #region Class styles
-
+        #region WindowClassStyle enum
         public enum WindowClassStyle
         {
             VRedraw         = 0x0001,
@@ -542,7 +564,49 @@ namespace OpenTK.Platform.Windows
             DropShadow      = 0x00020000
             // #endif /* _WIN32_WINNT >= 0x0501 */
         }
+        #endregion
 
+        #region DeviceMode struct
+        [StructLayout(LayoutKind.Sequential)]
+        public struct DeviceMode
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst=32)]
+            public string DeviceName;
+            public short SpecVersion;
+            public short DriverVersion;
+            public short Size;
+            public short DriverExtra;
+            public int Fields;
+            public short Orientation;
+            public short PaperSize;
+            public short PaperLength;
+            public short PaperWidth;
+            public short Scale;
+            public short Copies;
+            public short DefaultSource;
+            public short PrintQuality;
+            public short Color;
+            public short Duplex;
+            public short YResolution;
+            public short TTOption;
+            public short Collate;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst=32)]
+            public string FormName;
+            public short LogPixels;
+            public int BitsPerPel;
+            public int PelsWidth;
+            public int PelsHeight;
+            public int DisplayFlags;
+            public int DisplayFrequency;
+            public int ICMMethod;
+            public int ICMIntent;
+            public int MediaType;
+            public int DitherType;
+            public int Reserved1;
+            public int Reserved2;
+            public int PanningWidth;
+            public int PanningHeight;
+        }
         #endregion
 
         #endregion

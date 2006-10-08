@@ -5,10 +5,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	ProjectSection(SolutionItems) = preProject
 		changelog.txt = changelog.txt
 		license.txt = license.txt
-		Todo.txt = Todo.txt
+		todo.txt = todo.txt
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{84C34705-D460-4028-AE58-C32CF210F9BF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specifications", "Specifications", "{B23A6DCD-9FE9-4523-95FB-01C8D4631555}"
 	ProjectSection(SolutionItems) = preProject
@@ -75,7 +73,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{84C34705-D460-4028-AE58-C32CF210F9BF} = {80BD2C66-A90B-42E7-BED8-CBF7BB8C2E3F}
 		{7E640424-E2CD-4DD5-9392-7A706D73930E} = {E9FF51BB-295E-4891-AA30-D1374F26DCE0}
 		{C6E60A87-12B4-444A-BE03-7E980EAC0172} = {E9FF51BB-295E-4891-AA30-D1374F26DCE0}
 		{50DCE788-72FC-47E0-A6BD-50BCCE3FCE5B} = {7E640424-E2CD-4DD5-9392-7A706D73930E}

@@ -1,6 +1,8 @@
+#region License
 /* Copyright (c) 2006 Stephen Apostolopoulos
  * See license.txt for license info
  */
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,7 @@ namespace OpenTK.OpenGL.Platform
         int _render_context;
         IntPtr _window_handle;
 
-        public WindowsContext(Control c, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
+        public WindowsContext(Control c, int red, int green, int blue, int alpha, int depth, int stencil)
         {
             bool load_extensions = false;
             int error_code = 0;
