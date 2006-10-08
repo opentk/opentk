@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -11,6 +10,7 @@
     <RootNamespace>OpenTK.OpenGL.Bind</RootNamespace>
     <AssemblyName>OpenTK.OpenGL.Bind</AssemblyName>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <PostBuildEvent>$(TargetName)</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,8 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,33 +28,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
-  </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <ItemGroup>
-    <Compile Include="Main.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadSpecs.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Structures\Constant.cs" />
-    <Compile Include="Structures\Enum.cs" />
-    <Compile Include="Structures\Function.cs" />
-    <Compile Include="Structures\Parameter.cs" />
-    <Compile Include="Structures\ParameterCollection.cs" />
-    <Compile Include="TranslateSpecs.cs" />
-    <Compile Include="WriteContexts.cs" />
-    <Compile Include="WriteSpecs.cs" />
-  </ItemGroup>
-  <PropertyGroup>
-    <PostBuildEvent>$(TargetName)</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -73,4 +44,22 @@
       <HintPath>H:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.XML.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadSpecs.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Structures\Constant.cs" />
+    <Compile Include="Structures\Enum.cs" />
+    <Compile Include="Structures\Function.cs" />
+    <Compile Include="Structures\Parameter.cs" />
+    <Compile Include="Structures\ParameterCollection.cs" />
+    <Compile Include="TranslateSpecs.cs" />
+    <Compile Include="WriteContexts.cs" />
+    <Compile Include="WriteSpecs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="changelog.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

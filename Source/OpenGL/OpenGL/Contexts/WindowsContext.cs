@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.OpenGL.Platform
 {
-    public partial class WindowsContext : OpenTK.OpenGL.Context
+    public partial class WindowsContext : OpenTK.OpenGL.GLContext
     {
         const string _dll_name = "OPENGL32.DLL";
         int _dll_handle;
@@ -33,11 +33,11 @@ namespace OpenTK.OpenGL.Platform
                 error_code = Marshal.GetLastWin32Error();
                 if (error_code != 0)
                 {
-                    System.Diagnostics.Debug.WriteLine("LoadLibrary({0}) set error code: {1}. Will not load extensions.", _dll_name, error_code);
+                    //System.Diagnostics.Debug.WriteLine("LoadLibrary({0}) set error code: {1}. Will not load extensions.", _dll_name, error_code);
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("Loaded dll: {0}", _dll_name);
+                    //System.Diagnostics.Debug.WriteLine("Loaded dll: {0}", _dll_name);
                     load_extensions = true;
                 }
             }

@@ -8,9 +8,9 @@ using System.Windows.Forms;
 using System.Threading;
 using OpenTK.OpenGL;
 
-namespace Lesson01
+namespace OpenTK.Examples.OpenGL.GLSL
 {
-    public partial class Cube : Form
+    public partial class Cube : GLForm
     {
         #region Shaders
         string[] vertex_shader =
@@ -27,15 +27,13 @@ namespace Lesson01
         };
         #endregion
 
-        Context context;
+        GLContext context;
         static float angle;
 
         #region Constructor
         public Cube()
         {
             InitializeComponent();
-
-            Application.Idle += new EventHandler(OnApplicationIdle);
         }
         #endregion
 
@@ -44,7 +42,7 @@ namespace Lesson01
         {
             base.OnLoad(e);
 
-            context = Context.Create(this, 8, 8, 8, 8, 16, 0, false);
+            context = GLContext.Create(this, 8, 8, 8, 8, 16, 0, false);
 
             Text =
                 GL.GetString(Enums.StringName.VENDOR) + " " +
@@ -133,40 +131,6 @@ namespace Lesson01
 
             //Thread.Sleep(1);
             //this.Invalidate();
-        }
-        #endregion
-
-        #region Application main loop
-        /// <summary>
-        /// Called when all pending messages have been processed, this is where the application 'Main Loop' resides.
-        /// </summary>
-        /// <param name="sender">Not used.</param>
-        /// <param name="e">Not used.</param>
-        void OnApplicationIdle(object sender, EventArgs e)
-        {
-            // Check if any new messages have popped up. If not, then run the logic at full speed.
-            while (IsApplicationIdle())
-            {
-                // We'd like to play nice with the scheduler. If the window is not in focus,
-                // we give back some thread-time to the OS, to allow other apps to function full-speed.
-                // However, if the window _is_ in focus we grab all processor resources.
-                if (ActiveForm != this)
-                    Thread.Sleep(100);
-                OnPaint(null);
-            }
-        }
-        #endregion
-
-        #region IsApplicationIdle
-        /// <summary>
-        /// Checks if there all pending messages have been processed.
-        /// </summary>
-        /// <returns>Returns true if there are no messages left, false otherwise.</returns>
-        static public bool IsApplicationIdle()
-        {
-            //OpenTK.Platform.Windows.Api.MessageStruct msg;
-            Message msg;
-            return !OpenTK.Platform.Windows.Api.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
         }
         #endregion
 

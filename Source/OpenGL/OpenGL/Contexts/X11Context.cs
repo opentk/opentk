@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace OpenTK.OpenGL.Platform
 {
-    public partial class X11Context : OpenTK.OpenGL.Context
+    public partial class X11Context : OpenTK.OpenGL.GLContext
     {
         public X11Context(Control c, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
         {

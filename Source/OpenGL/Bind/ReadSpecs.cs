@@ -1,6 +1,7 @@
-/* Copyright (c) 2006 Stephen Apostolopoulos
- * See license.txt for license info
- */
+#region License
+//Copyright (c) 2006 Stephen Apostolopoulos
+//See license.txt for license info
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,6 @@ namespace OpenTK.OpenGL.Bind
     static class SpecReader
     {
         #region Read function specs
-
         public static List<Function> ReadFunctionSpecs(string file)
         {
             List<Function> functions = new List<Function>();
@@ -125,89 +125,9 @@ namespace OpenTK.OpenGL.Bind
 
             return functions;
         }
-
-        #endregion
-
-        #region Read constant specs
-        [Obsolete]
-        public static List<Constant> ReadConstantSpecs(string file)
-        {
-            List<Constant> constants = new List<Constant>();
-
-            string path = Path.Combine(Settings.InputPath, file);
-            StreamReader sr;
-
-            try
-            {
-                sr = new StreamReader(path);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Error opening spec file: {0}", path);
-                return null;
-            }
-            Console.WriteLine("Reading constant specs from file: {0}", file);
-
-            do
-            {
-                string line = sr.ReadLine().Trim();
-
-                if (String.IsNullOrEmpty(line) ||
-                    line.StartsWith("#") ||  // Disregard comments.
-                    line.StartsWith("passthru") ||  // Disregard passthru statements.
-                    line.StartsWith("required-props:") ||
-                    line.StartsWith("param:") ||
-                    line.StartsWith("dlflags:") ||
-                    line.StartsWith("glxflags:") ||
-                    line.StartsWith("vectorequiv:") ||
-                    line.StartsWith("category:") ||
-                    line.StartsWith("version:") ||
-                    line.StartsWith("glxsingle:") ||
-                    line.StartsWith("glxropcode:") ||
-                    line.StartsWith("glxvendorpriv:") ||
-                    line.StartsWith("glsflags:") ||
-                    line.StartsWith("glsopcode:") ||
-                    line.StartsWith("glsalias:") ||
-                    line.StartsWith("wglflags:") ||
-                    line.StartsWith("extension:") ||
-                    line.StartsWith("alias:") ||
-                    line.StartsWith("offset:") ||
-                    line.Contains("enum:"))
-                    continue;
-
-                line = line.Replace('\t', ' ');
-
-                string[] words = line.Split(Translation.Separators, StringSplitOptions.RemoveEmptyEntries);
-                if (words.Length == 0)
-                    continue;
-
-                Constant c = new Constant();
-                if (line.Contains("="))
-                {
-                    c.Name = words[0];
-                    c.Value = words[2];
-                }
-
-                if (!String.IsNullOrEmpty(c.Name) && !ListContainsConstant(constants, c))
-                    constants.Add(c);
-            }
-            while (!sr.EndOfStream);
-
-            return constants;
-        }
-
-        public static bool ListContainsConstant(List<Constant> constants, Constant c)
-        {
-            foreach (Constant d in constants)
-                if (d.Name == c.Name)
-                    return true;
-            return false;
-        }
-
         #endregion
 
         #region Read enum specs
-
         public static Hashtable ReadEnumSpecs(string file)
         {
             Hashtable enums = new Hashtable();
@@ -315,11 +235,9 @@ namespace OpenTK.OpenGL.Bind
 
             return enums;
         }
-
         #endregion
 
         #region Read type map
-
         public static Dictionary<string, string> ReadTypeMap(string file)
         {
             Dictionary<string, string> map = new Dictionary<string, string>();
@@ -360,7 +278,6 @@ namespace OpenTK.OpenGL.Bind
 
             return map;
         }
-
         #endregion
     }
 }

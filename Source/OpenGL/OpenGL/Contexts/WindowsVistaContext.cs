@@ -11,7 +11,7 @@ using OpenTK.OpenGL;
 
 namespace OpenTK.OpenGL.Platform
 {
-    public partial class WindowsVistaContext : OpenTK.OpenGL.Context
+    public partial class WindowsVistaContext : OpenTK.OpenGL.GLContext
     {
         const string _dll_name = "OPENGL32.DLL";
         int _dll_handle;
