@@ -19,7 +19,7 @@ namespace OpenTK.OpenGL.Platform
         int _render_context;
         IntPtr _window_handle;
 
-        public WindowsVistaContext(Control c, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
+        public WindowsVistaContext(Control c, int red, int green, int blue, int alpha, int depth, int stencil)
         {
             bool load_extensions = false;
             int error_code = 0;

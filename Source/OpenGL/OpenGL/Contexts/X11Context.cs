@@ -11,7 +11,7 @@ namespace OpenTK.OpenGL.Platform
 {
     public partial class X11Context : OpenTK.OpenGL.GLContext
     {
-        public X11Context(Control c, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
+        public X11Context(Control c, int red, int green, int blue, int alpha, int depth, int stencil)
         {
             throw new Exception("The method or operation is not implemented.");
         }

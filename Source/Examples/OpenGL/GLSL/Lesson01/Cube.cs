@@ -27,13 +27,11 @@ namespace OpenTK.Examples.OpenGL.GLSL
         };
         #endregion
 
-        GLContext context;
         static float angle;
 
         #region Constructor
         public Cube()
         {
-            InitializeComponent();
         }
         #endregion
 
@@ -41,8 +39,6 @@ namespace OpenTK.Examples.OpenGL.GLSL
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
-            context = GLContext.Create(this, 8, 8, 8, 8, 16, 0, false);
 
             Text =
                 GL.GetString(Enums.StringName.VENDOR) + " " +
@@ -78,7 +74,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
             GL.LinkProgram(shader_program);
             GL.UseProgram(shader_program);
 
-            OnResize(e);
+            //OnResize(e);
         }
         #endregion
 
@@ -89,15 +85,13 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
             if (ClientSize.Height == 0)
                 ClientSize = new System.Drawing.Size(ClientSize.Width, 1);
-
-            if (context == null)
-                return;
             
             GL.Viewport(0, 0, ClientSize.Width, ClientSize.Height);
 
             double ratio = 0.0;
-            if (ClientSize.Width > ClientSize.Height)
-                ratio = ClientSize.Width / (double)ClientSize.Height;
+            ratio = ClientSize.Width / (double)ClientSize.Height;
+            //if (ClientSize.Width > ClientSize.Height)
+            //    ratio = ClientSize.Width / (double)ClientSize.Height;
             //else
             //    ratio = ClientSize.Height / (double)ClientSize.Width;
 
@@ -127,10 +121,17 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
             DrawCube();
 
-            context.SwapBuffers();
+            Context.SwapBuffers();
+        }
+        #endregion
 
-            //Thread.Sleep(1);
-            //this.Invalidate();
+        #region KeyDown event handler
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.KeyData == Keys.Escape)
+                Application.Exit();
         }
         #endregion
 
@@ -179,6 +180,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
         }
         #endregion
 
+        #region Entry point
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -189,5 +191,6 @@ namespace OpenTK.Examples.OpenGL.GLSL
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Cube());
         }
+        #endregion
     }
 }
