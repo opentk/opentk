@@ -1,0 +1,14 @@
+OpenTK.OpenGL.Bind 0.7.5 -> 0.7.5.1
++ Added license information to the generated bindings.
++ Changed the name of the main Context class to GLContext (Context is used in the BCL).
+
+OpenTK.OpenGL.Bind 0.7.4 -> 0.7.5
++ Added wrappers for all functions that accept arrays. Permitted parameters for these are: an array of the original type (e.g. float[]), an IntPtr (if you manage memory yourself), or any blittable type (e.g. float[,,]). No type checking is done in the last case, so be careful!
++ Updated the wrappers for all functions that accept or return void pointers. Permitted parameters for these are: an IntPtr or any blittable type (type checking is turned off, so be extra careful!)
++ Aliased the GLbool type to int. It is hacky, but the examples bundled with Tao rely on this...
++ Added a wrapper for glLineStipple. Now you can pass an int to it, but only the last 16 bits will be used for the stipple (as per the function specification). This was the only way to avoid aliasing the parameter to ushort (non-CLS compatible) or having the user write unchecked((short)0x....) every time he used the function.
++ Added the WrapperType enum. Every function has a Property that indicates the wrapper it will need. This cleans up the WriteWrappers function somewhat.
++ Added the PreviousType property to the Function class. This is used when generating wrappers for functions with type-checked arrays (e.g. float[] arrays etc).
++ Corrected some type aliases in cs_types.txt
++ Added the missing wrappers for glReadPixels! (this falls in the out void array).
++ A missing enum now defaults to Enum.[Function category] (a new property was added to the Function class and the SpecReader.ReadFunctions function was modified). I should test this to see if it works ok.

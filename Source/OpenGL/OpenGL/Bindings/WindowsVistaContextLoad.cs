@@ -1,3 +1,8 @@
+#region License
+//Copyright (c) 2006 Stephen Apostolopoulos
+//See license.txt for license info
+#endregion
+
 using System;
 using System.Runtime.InteropServices;
 

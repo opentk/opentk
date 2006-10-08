@@ -1,3 +1,8 @@
+#region License
+//Copyright (c) 2006 Stephen Apostolopoulos
+//See license.txt for license info
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +13,9 @@ namespace OpenTK.OpenGL.Bind
     static class ContextWriter
     {
         #region Write main context
-
         public static void WriteMainContext(string output_path, List<Function> functions)
         {
-            string filename = Path.Combine(output_path, "ContextLoad.cs");
+            string filename = Path.Combine(output_path, "GLContextLoad.cs");
 
             if (!Directory.Exists(Settings.OutputPath))
                 Directory.CreateDirectory(Settings.OutputPath);
@@ -27,7 +31,7 @@ namespace OpenTK.OpenGL.Bind
             sw.WriteLine();
             sw.WriteLine("namespace {0}", Settings.OutputNamespace);
             sw.WriteLine("{");
-            sw.WriteLine("    public abstract partial class Context");
+            sw.WriteLine("    public abstract partial class GLContext");
             sw.WriteLine("    {");
 
             sw.WriteLine("        #region OpenGL function loading");
@@ -49,9 +53,9 @@ namespace OpenTK.OpenGL.Bind
             sw.Flush();
             sw.Close();
         }
-
         #endregion
 
+        #region WriteDerivedContext
         public static void WriteDerivedContext(string output_path, string class_name, List<Function> functions, params string[] import_list)
         {
             string filename = Path.Combine(output_path, class_name + "Load.cs");
@@ -94,6 +98,7 @@ namespace OpenTK.OpenGL.Bind
             sw.Flush();
             sw.Close();
         }
+        #endregion
 
         #region IsImport
         private static bool IsImportFunction(Function f, string[] import_list)

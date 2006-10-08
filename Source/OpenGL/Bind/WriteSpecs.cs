@@ -1,10 +1,11 @@
+#region License
+//Copyright (c) 2006 Stephen Apostolopoulos
+//See license.txt for license info
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Text;
-/* Copyright (c) 2006 Stephen Apostolopoulos
- * See license.txt for license info
- */
-
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Collections;
@@ -14,7 +15,6 @@ namespace OpenTK.OpenGL.Bind
     static partial class SpecWriter
     {
         #region WriteSpecs
-
         public static void WriteSpecs(string output_path, List<Function> functions, List<Function> wrappers, Hashtable enums)
         {
             string filename = Path.Combine(output_path, Settings.OutputClass + ".cs");
@@ -53,12 +53,18 @@ namespace OpenTK.OpenGL.Bind
             sw.Flush();
             sw.Close();
         }
-
         #endregion
 
+        #region WriteLicense
         public static void WriteLicense(StreamWriter sw)
         {
+            sw.WriteLine("#region License");
+            sw.WriteLine("//Copyright (c) 2006 Stephen Apostolopoulos");
+            sw.WriteLine("//See license.txt for license info");
+            sw.WriteLine("#endregion");
+            sw.WriteLine();
         }
+        #endregion
 
         #region WriteTypes
         private static void WriteTypes(StreamWriter sw)
@@ -167,7 +173,7 @@ namespace OpenTK.OpenGL.Bind
             {
                 if (!f.Extension)
                 {
-                    sw.WriteLine("            [DllImport(\"opengl32\", EntryPoint = \"gl{0}\")]", f.Name.TrimEnd('_'));
+                    sw.WriteLine("            [DllImport(\"opengl32.dll\", EntryPoint = \"gl{0}\")]", f.Name.TrimEnd('_'));
                     sw.WriteLine("            public static extern {0};", f.ToString());
                 }
             }
@@ -195,7 +201,6 @@ namespace OpenTK.OpenGL.Bind
         #endregion
 
         #region Write wrappers
-
         public static void WriteWrappers(StreamWriter sw, List<Function> wrappers)
         {
             sw.WriteLine("        #region Wrappers");

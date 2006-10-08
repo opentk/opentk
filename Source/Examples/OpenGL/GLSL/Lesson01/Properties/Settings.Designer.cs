@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GLSL.Lesson01.Properties {
+namespace OpenTK.Examples.OpenGL.GLSL.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

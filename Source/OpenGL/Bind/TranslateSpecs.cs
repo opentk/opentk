@@ -1,6 +1,7 @@
-/* Copyright (c) 2006 Stephen Apostolopoulos
- * See license.txt for license info
- */
+#region License
+//Copyright (c) 2006 Stephen Apostolopoulos
+//See license.txt for license info
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Collections;
 
 namespace OpenTK.OpenGL.Bind
 {
+    #region WrapperTypes enum
     public enum WrapperTypes
     {
         None,
@@ -20,6 +22,7 @@ namespace OpenTK.OpenGL.Bind
         ReturnsString,
         ReturnsVoidPointer,
     }
+    #endregion
 
     static class Translation
     {
@@ -230,7 +233,6 @@ namespace OpenTK.OpenGL.Bind
         #endregion
 
         #region Translate parameters
-
         private static void TranslateParameters(Function f, Hashtable enums)
         {
             string s;
@@ -248,7 +250,8 @@ namespace OpenTK.OpenGL.Bind
                 }
                 else if (p.Type == "GLenum")
                 {
-                    p.Type = "Enums." + f.Category;
+                    if (enums.ContainsKey(f.Category))
+                        p.Type = "Enums." + f.Category;
                 }
                 else if (GLtypes.TryGetValue(p.Type, out s))
                     p.Type = s;
@@ -299,7 +302,6 @@ namespace OpenTK.OpenGL.Bind
                 //}
             }
         }
-
         #endregion
 
         #region Generate wrappers
@@ -320,7 +322,6 @@ namespace OpenTK.OpenGL.Bind
         #endregion
 
         #region Translate enums
-
         public static void TranslateEnums(System.Collections.Hashtable enums)
         {
             foreach (Enum e in enums.Values)
@@ -341,7 +342,6 @@ namespace OpenTK.OpenGL.Bind
                 }
             }
         }
-
         #endregion
     }
 }

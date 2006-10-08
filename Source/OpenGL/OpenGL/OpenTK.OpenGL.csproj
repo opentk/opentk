@@ -34,6 +34,7 @@
     <Reference Include="System.Data">
       <HintPath>H:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.Data.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms">
       <HintPath>H:\WINDOWS\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll</HintPath>
     </Reference>
@@ -42,17 +43,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bindings\ContextLoad.cs" />
+    <Compile Include="Bindings\GLContextLoad.cs" />
     <Compile Include="Bindings\GL.cs" />
     <Compile Include="Bindings\WindowsContextLoad.cs" />
     <Compile Include="Bindings\WindowsVistaContextLoad.cs" />
     <Compile Include="Bindings\X11ContextLoad.cs" />
+    <Compile Include="Forms\GLForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Glu.cs" />
-    <Compile Include="Contexts\Context.cs" />
+    <Compile Include="Contexts\GLContext.cs" />
     <Compile Include="Contexts\WindowsContext.cs" />
     <Compile Include="Contexts\WindowsVistaContext.cs" />
     <Compile Include="Contexts\X11Context.cs" />
-    <Compile Include="MissingEnums.cs" />
     <Compile Include="Wgl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,15 +66,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
 </Project>

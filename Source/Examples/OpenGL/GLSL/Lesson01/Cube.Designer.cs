@@ -1,4 +1,4 @@
-﻿namespace Lesson01
+﻿namespace OpenTK.Examples.OpenGL.GLSL
 {
     partial class Cube
     {

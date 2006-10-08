@@ -1,3 +1,8 @@
+#region License
+//Copyright (c) 2006 Stephen Apostolopoulos
+//See license.txt for license info
+#endregion
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -6575,1159 +6580,1159 @@ namespace OpenTK.OpenGL
 
         internal class Imports
         {
-            [DllImport("opengl32", EntryPoint = "glNewList")]
+            [DllImport("opengl32.dll", EntryPoint = "glNewList")]
             public static extern void NewList(GLuint list, Enums.ListMode mode);
-            [DllImport("opengl32", EntryPoint = "glEndList")]
+            [DllImport("opengl32.dll", EntryPoint = "glEndList")]
             public static extern void EndList();
-            [DllImport("opengl32", EntryPoint = "glCallList")]
+            [DllImport("opengl32.dll", EntryPoint = "glCallList")]
             public static extern void CallList(GLuint list);
-            [DllImport("opengl32", EntryPoint = "glCallLists")]
+            [DllImport("opengl32.dll", EntryPoint = "glCallLists")]
             public static extern void CallLists_(GLsizei n, Enums.ListNameType type, IntPtr lists);
-            [DllImport("opengl32", EntryPoint = "glDeleteLists")]
+            [DllImport("opengl32.dll", EntryPoint = "glDeleteLists")]
             public static extern void DeleteLists(GLuint list, GLsizei range);
-            [DllImport("opengl32", EntryPoint = "glGenLists")]
+            [DllImport("opengl32.dll", EntryPoint = "glGenLists")]
             public static extern GLuint GenLists(GLsizei range);
-            [DllImport("opengl32", EntryPoint = "glListBase")]
+            [DllImport("opengl32.dll", EntryPoint = "glListBase")]
             public static extern void ListBase(GLuint @base);
-            [DllImport("opengl32", EntryPoint = "glBegin")]
+            [DllImport("opengl32.dll", EntryPoint = "glBegin")]
             public static extern void Begin(Enums.BeginMode mode);
-            [DllImport("opengl32", EntryPoint = "glBitmap")]
+            [DllImport("opengl32.dll", EntryPoint = "glBitmap")]
             public static extern void Bitmap_(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, IntPtr bitmap);
-            [DllImport("opengl32", EntryPoint = "glColor3b")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3b")]
             public static extern void Color3b(GLbyte red, GLbyte green, GLbyte blue);
-            [DllImport("opengl32", EntryPoint = "glColor3bv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3bv")]
             public static extern void Color3bv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor3d")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3d")]
             public static extern void Color3d(GLdouble red, GLdouble green, GLdouble blue);
-            [DllImport("opengl32", EntryPoint = "glColor3dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3dv")]
             public static extern void Color3dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3f")]
             public static extern void Color3f(GLfloat red, GLfloat green, GLfloat blue);
-            [DllImport("opengl32", EntryPoint = "glColor3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3fv")]
             public static extern void Color3fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor3i")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3i")]
             public static extern void Color3i(GLint red, GLint green, GLint blue);
-            [DllImport("opengl32", EntryPoint = "glColor3iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3iv")]
             public static extern void Color3iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor3s")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3s")]
             public static extern void Color3s(GLshort red, GLshort green, GLshort blue);
-            [DllImport("opengl32", EntryPoint = "glColor3sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3sv")]
             public static extern void Color3sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor3ub")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3ub")]
             public static extern void Color3ub(GLubyte red, GLubyte green, GLubyte blue);
-            [DllImport("opengl32", EntryPoint = "glColor3ubv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3ubv")]
             public static extern void Color3ubv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor3ui")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3ui")]
             public static extern void Color3ui(GLuint red, GLuint green, GLuint blue);
-            [DllImport("opengl32", EntryPoint = "glColor3uiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3uiv")]
             public static extern void Color3uiv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor3us")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3us")]
             public static extern void Color3us(GLushort red, GLushort green, GLushort blue);
-            [DllImport("opengl32", EntryPoint = "glColor3usv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor3usv")]
             public static extern void Color3usv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor4b")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4b")]
             public static extern void Color4b(GLbyte red, GLbyte green, GLbyte blue, GLbyte alpha);
-            [DllImport("opengl32", EntryPoint = "glColor4bv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4bv")]
             public static extern void Color4bv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor4d")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4d")]
             public static extern void Color4d(GLdouble red, GLdouble green, GLdouble blue, GLdouble alpha);
-            [DllImport("opengl32", EntryPoint = "glColor4dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4dv")]
             public static extern void Color4dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor4f")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4f")]
             public static extern void Color4f(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
-            [DllImport("opengl32", EntryPoint = "glColor4fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4fv")]
             public static extern void Color4fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor4i")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4i")]
             public static extern void Color4i(GLint red, GLint green, GLint blue, GLint alpha);
-            [DllImport("opengl32", EntryPoint = "glColor4iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4iv")]
             public static extern void Color4iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor4s")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4s")]
             public static extern void Color4s(GLshort red, GLshort green, GLshort blue, GLshort alpha);
-            [DllImport("opengl32", EntryPoint = "glColor4sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4sv")]
             public static extern void Color4sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor4ub")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4ub")]
             public static extern void Color4ub(GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha);
-            [DllImport("opengl32", EntryPoint = "glColor4ubv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4ubv")]
             public static extern void Color4ubv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor4ui")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4ui")]
             public static extern void Color4ui(GLuint red, GLuint green, GLuint blue, GLuint alpha);
-            [DllImport("opengl32", EntryPoint = "glColor4uiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4uiv")]
             public static extern void Color4uiv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glColor4us")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4us")]
             public static extern void Color4us(GLushort red, GLushort green, GLushort blue, GLushort alpha);
-            [DllImport("opengl32", EntryPoint = "glColor4usv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColor4usv")]
             public static extern void Color4usv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glEdgeFlag")]
+            [DllImport("opengl32.dll", EntryPoint = "glEdgeFlag")]
             public static extern void EdgeFlag(Enums.Boolean flag);
-            [DllImport("opengl32", EntryPoint = "glEdgeFlagv")]
+            [DllImport("opengl32.dll", EntryPoint = "glEdgeFlagv")]
             public static extern void EdgeFlagv(Enums.Boolean[] flag);
-            [DllImport("opengl32", EntryPoint = "glEnd")]
+            [DllImport("opengl32.dll", EntryPoint = "glEnd")]
             public static extern void End();
-            [DllImport("opengl32", EntryPoint = "glIndexd")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexd")]
             public static extern void Indexd(GLdouble c);
-            [DllImport("opengl32", EntryPoint = "glIndexdv")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexdv")]
             public static extern void Indexdv_(IntPtr c);
-            [DllImport("opengl32", EntryPoint = "glIndexf")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexf")]
             public static extern void Indexf(GLfloat c);
-            [DllImport("opengl32", EntryPoint = "glIndexfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexfv")]
             public static extern void Indexfv_(IntPtr c);
-            [DllImport("opengl32", EntryPoint = "glIndexi")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexi")]
             public static extern void Indexi(GLint c);
-            [DllImport("opengl32", EntryPoint = "glIndexiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexiv")]
             public static extern void Indexiv_(IntPtr c);
-            [DllImport("opengl32", EntryPoint = "glIndexs")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexs")]
             public static extern void Indexs(GLshort c);
-            [DllImport("opengl32", EntryPoint = "glIndexsv")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexsv")]
             public static extern void Indexsv_(IntPtr c);
-            [DllImport("opengl32", EntryPoint = "glNormal3b")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3b")]
             public static extern void Normal3b(GLbyte nx, GLbyte ny, GLbyte nz);
-            [DllImport("opengl32", EntryPoint = "glNormal3bv")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3bv")]
             public static extern void Normal3bv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glNormal3d")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3d")]
             public static extern void Normal3d(GLdouble nx, GLdouble ny, GLdouble nz);
-            [DllImport("opengl32", EntryPoint = "glNormal3dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3dv")]
             public static extern void Normal3dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glNormal3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3f")]
             public static extern void Normal3f(GLfloat nx, GLfloat ny, GLfloat nz);
-            [DllImport("opengl32", EntryPoint = "glNormal3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3fv")]
             public static extern void Normal3fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glNormal3i")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3i")]
             public static extern void Normal3i(GLint nx, GLint ny, GLint nz);
-            [DllImport("opengl32", EntryPoint = "glNormal3iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3iv")]
             public static extern void Normal3iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glNormal3s")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3s")]
             public static extern void Normal3s(GLshort nx, GLshort ny, GLshort nz);
-            [DllImport("opengl32", EntryPoint = "glNormal3sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormal3sv")]
             public static extern void Normal3sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos2d")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos2d")]
             public static extern void RasterPos2d(GLdouble x, GLdouble y);
-            [DllImport("opengl32", EntryPoint = "glRasterPos2dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos2dv")]
             public static extern void RasterPos2dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos2f")]
             public static extern void RasterPos2f(GLfloat x, GLfloat y);
-            [DllImport("opengl32", EntryPoint = "glRasterPos2fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos2fv")]
             public static extern void RasterPos2fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos2i")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos2i")]
             public static extern void RasterPos2i(GLint x, GLint y);
-            [DllImport("opengl32", EntryPoint = "glRasterPos2iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos2iv")]
             public static extern void RasterPos2iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos2s")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos2s")]
             public static extern void RasterPos2s(GLshort x, GLshort y);
-            [DllImport("opengl32", EntryPoint = "glRasterPos2sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos2sv")]
             public static extern void RasterPos2sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos3d")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos3d")]
             public static extern void RasterPos3d(GLdouble x, GLdouble y, GLdouble z);
-            [DllImport("opengl32", EntryPoint = "glRasterPos3dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos3dv")]
             public static extern void RasterPos3dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos3f")]
             public static extern void RasterPos3f(GLfloat x, GLfloat y, GLfloat z);
-            [DllImport("opengl32", EntryPoint = "glRasterPos3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos3fv")]
             public static extern void RasterPos3fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos3i")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos3i")]
             public static extern void RasterPos3i(GLint x, GLint y, GLint z);
-            [DllImport("opengl32", EntryPoint = "glRasterPos3iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos3iv")]
             public static extern void RasterPos3iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos3s")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos3s")]
             public static extern void RasterPos3s(GLshort x, GLshort y, GLshort z);
-            [DllImport("opengl32", EntryPoint = "glRasterPos3sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos3sv")]
             public static extern void RasterPos3sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos4d")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos4d")]
             public static extern void RasterPos4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            [DllImport("opengl32", EntryPoint = "glRasterPos4dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos4dv")]
             public static extern void RasterPos4dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos4f")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos4f")]
             public static extern void RasterPos4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            [DllImport("opengl32", EntryPoint = "glRasterPos4fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos4fv")]
             public static extern void RasterPos4fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos4i")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos4i")]
             public static extern void RasterPos4i(GLint x, GLint y, GLint z, GLint w);
-            [DllImport("opengl32", EntryPoint = "glRasterPos4iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos4iv")]
             public static extern void RasterPos4iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRasterPos4s")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos4s")]
             public static extern void RasterPos4s(GLshort x, GLshort y, GLshort z, GLshort w);
-            [DllImport("opengl32", EntryPoint = "glRasterPos4sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRasterPos4sv")]
             public static extern void RasterPos4sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glRectd")]
+            [DllImport("opengl32.dll", EntryPoint = "glRectd")]
             public static extern void Rectd(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2);
-            [DllImport("opengl32", EntryPoint = "glRectdv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRectdv")]
             public static extern void Rectdv_(IntPtr v1, IntPtr v2);
-            [DllImport("opengl32", EntryPoint = "glRectf")]
+            [DllImport("opengl32.dll", EntryPoint = "glRectf")]
             public static extern void Rectf(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2);
-            [DllImport("opengl32", EntryPoint = "glRectfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRectfv")]
             public static extern void Rectfv_(IntPtr v1, IntPtr v2);
-            [DllImport("opengl32", EntryPoint = "glRecti")]
+            [DllImport("opengl32.dll", EntryPoint = "glRecti")]
             public static extern void Recti(GLint x1, GLint y1, GLint x2, GLint y2);
-            [DllImport("opengl32", EntryPoint = "glRectiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRectiv")]
             public static extern void Rectiv_(IntPtr v1, IntPtr v2);
-            [DllImport("opengl32", EntryPoint = "glRects")]
+            [DllImport("opengl32.dll", EntryPoint = "glRects")]
             public static extern void Rects(GLshort x1, GLshort y1, GLshort x2, GLshort y2);
-            [DllImport("opengl32", EntryPoint = "glRectsv")]
+            [DllImport("opengl32.dll", EntryPoint = "glRectsv")]
             public static extern void Rectsv_(IntPtr v1, IntPtr v2);
-            [DllImport("opengl32", EntryPoint = "glTexCoord1d")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord1d")]
             public static extern void TexCoord1d(GLdouble s);
-            [DllImport("opengl32", EntryPoint = "glTexCoord1dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord1dv")]
             public static extern void TexCoord1dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord1f")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord1f")]
             public static extern void TexCoord1f(GLfloat s);
-            [DllImport("opengl32", EntryPoint = "glTexCoord1fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord1fv")]
             public static extern void TexCoord1fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord1i")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord1i")]
             public static extern void TexCoord1i(GLint s);
-            [DllImport("opengl32", EntryPoint = "glTexCoord1iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord1iv")]
             public static extern void TexCoord1iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord1s")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord1s")]
             public static extern void TexCoord1s(GLshort s);
-            [DllImport("opengl32", EntryPoint = "glTexCoord1sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord1sv")]
             public static extern void TexCoord1sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord2d")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord2d")]
             public static extern void TexCoord2d(GLdouble s, GLdouble t);
-            [DllImport("opengl32", EntryPoint = "glTexCoord2dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord2dv")]
             public static extern void TexCoord2dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord2f")]
             public static extern void TexCoord2f(GLfloat s, GLfloat t);
-            [DllImport("opengl32", EntryPoint = "glTexCoord2fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord2fv")]
             public static extern void TexCoord2fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord2i")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord2i")]
             public static extern void TexCoord2i(GLint s, GLint t);
-            [DllImport("opengl32", EntryPoint = "glTexCoord2iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord2iv")]
             public static extern void TexCoord2iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord2s")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord2s")]
             public static extern void TexCoord2s(GLshort s, GLshort t);
-            [DllImport("opengl32", EntryPoint = "glTexCoord2sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord2sv")]
             public static extern void TexCoord2sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord3d")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord3d")]
             public static extern void TexCoord3d(GLdouble s, GLdouble t, GLdouble r);
-            [DllImport("opengl32", EntryPoint = "glTexCoord3dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord3dv")]
             public static extern void TexCoord3dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord3f")]
             public static extern void TexCoord3f(GLfloat s, GLfloat t, GLfloat r);
-            [DllImport("opengl32", EntryPoint = "glTexCoord3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord3fv")]
             public static extern void TexCoord3fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord3i")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord3i")]
             public static extern void TexCoord3i(GLint s, GLint t, GLint r);
-            [DllImport("opengl32", EntryPoint = "glTexCoord3iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord3iv")]
             public static extern void TexCoord3iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord3s")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord3s")]
             public static extern void TexCoord3s(GLshort s, GLshort t, GLshort r);
-            [DllImport("opengl32", EntryPoint = "glTexCoord3sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord3sv")]
             public static extern void TexCoord3sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord4d")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord4d")]
             public static extern void TexCoord4d(GLdouble s, GLdouble t, GLdouble r, GLdouble q);
-            [DllImport("opengl32", EntryPoint = "glTexCoord4dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord4dv")]
             public static extern void TexCoord4dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord4f")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord4f")]
             public static extern void TexCoord4f(GLfloat s, GLfloat t, GLfloat r, GLfloat q);
-            [DllImport("opengl32", EntryPoint = "glTexCoord4fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord4fv")]
             public static extern void TexCoord4fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord4i")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord4i")]
             public static extern void TexCoord4i(GLint s, GLint t, GLint r, GLint q);
-            [DllImport("opengl32", EntryPoint = "glTexCoord4iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord4iv")]
             public static extern void TexCoord4iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glTexCoord4s")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord4s")]
             public static extern void TexCoord4s(GLshort s, GLshort t, GLshort r, GLshort q);
-            [DllImport("opengl32", EntryPoint = "glTexCoord4sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoord4sv")]
             public static extern void TexCoord4sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex2d")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex2d")]
             public static extern void Vertex2d(GLdouble x, GLdouble y);
-            [DllImport("opengl32", EntryPoint = "glVertex2dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex2dv")]
             public static extern void Vertex2dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex2f")]
             public static extern void Vertex2f(GLfloat x, GLfloat y);
-            [DllImport("opengl32", EntryPoint = "glVertex2fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex2fv")]
             public static extern void Vertex2fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex2i")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex2i")]
             public static extern void Vertex2i(GLint x, GLint y);
-            [DllImport("opengl32", EntryPoint = "glVertex2iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex2iv")]
             public static extern void Vertex2iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex2s")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex2s")]
             public static extern void Vertex2s(GLshort x, GLshort y);
-            [DllImport("opengl32", EntryPoint = "glVertex2sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex2sv")]
             public static extern void Vertex2sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex3d")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex3d")]
             public static extern void Vertex3d(GLdouble x, GLdouble y, GLdouble z);
-            [DllImport("opengl32", EntryPoint = "glVertex3dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex3dv")]
             public static extern void Vertex3dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex3f")]
             public static extern void Vertex3f(GLfloat x, GLfloat y, GLfloat z);
-            [DllImport("opengl32", EntryPoint = "glVertex3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex3fv")]
             public static extern void Vertex3fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex3i")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex3i")]
             public static extern void Vertex3i(GLint x, GLint y, GLint z);
-            [DllImport("opengl32", EntryPoint = "glVertex3iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex3iv")]
             public static extern void Vertex3iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex3s")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex3s")]
             public static extern void Vertex3s(GLshort x, GLshort y, GLshort z);
-            [DllImport("opengl32", EntryPoint = "glVertex3sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex3sv")]
             public static extern void Vertex3sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex4d")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex4d")]
             public static extern void Vertex4d(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            [DllImport("opengl32", EntryPoint = "glVertex4dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex4dv")]
             public static extern void Vertex4dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex4f")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex4f")]
             public static extern void Vertex4f(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            [DllImport("opengl32", EntryPoint = "glVertex4fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex4fv")]
             public static extern void Vertex4fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex4i")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex4i")]
             public static extern void Vertex4i(GLint x, GLint y, GLint z, GLint w);
-            [DllImport("opengl32", EntryPoint = "glVertex4iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex4iv")]
             public static extern void Vertex4iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertex4s")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex4s")]
             public static extern void Vertex4s(GLshort x, GLshort y, GLshort z, GLshort w);
-            [DllImport("opengl32", EntryPoint = "glVertex4sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertex4sv")]
             public static extern void Vertex4sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glClipPlane")]
+            [DllImport("opengl32.dll", EntryPoint = "glClipPlane")]
             public static extern void ClipPlane_(Enums.ClipPlaneName plane, IntPtr equation);
-            [DllImport("opengl32", EntryPoint = "glColorMaterial")]
+            [DllImport("opengl32.dll", EntryPoint = "glColorMaterial")]
             public static extern void ColorMaterial(Enums.MaterialFace face, Enums.ColorMaterialParameter mode);
-            [DllImport("opengl32", EntryPoint = "glCullFace")]
+            [DllImport("opengl32.dll", EntryPoint = "glCullFace")]
             public static extern void CullFace(Enums.CullFaceMode mode);
-            [DllImport("opengl32", EntryPoint = "glFogf")]
+            [DllImport("opengl32.dll", EntryPoint = "glFogf")]
             public static extern void Fogf(Enums.FogParameter pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glFogfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glFogfv")]
             public static extern void Fogfv_(Enums.FogParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glFogi")]
+            [DllImport("opengl32.dll", EntryPoint = "glFogi")]
             public static extern void Fogi(Enums.FogParameter pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glFogiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glFogiv")]
             public static extern void Fogiv_(Enums.FogParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glFrontFace")]
+            [DllImport("opengl32.dll", EntryPoint = "glFrontFace")]
             public static extern void FrontFace(Enums.FrontFaceDirection mode);
-            [DllImport("opengl32", EntryPoint = "glHint")]
+            [DllImport("opengl32.dll", EntryPoint = "glHint")]
             public static extern void Hint(Enums.HintTarget target, Enums.HintMode mode);
-            [DllImport("opengl32", EntryPoint = "glLightf")]
+            [DllImport("opengl32.dll", EntryPoint = "glLightf")]
             public static extern void Lightf(Enums.LightName light, Enums.LightParameter pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glLightfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glLightfv")]
             public static extern void Lightfv_(Enums.LightName light, Enums.LightParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glLighti")]
+            [DllImport("opengl32.dll", EntryPoint = "glLighti")]
             public static extern void Lighti(Enums.LightName light, Enums.LightParameter pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glLightiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glLightiv")]
             public static extern void Lightiv_(Enums.LightName light, Enums.LightParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glLightModelf")]
+            [DllImport("opengl32.dll", EntryPoint = "glLightModelf")]
             public static extern void LightModelf(Enums.LightModelParameter pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glLightModelfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glLightModelfv")]
             public static extern void LightModelfv_(Enums.LightModelParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glLightModeli")]
+            [DllImport("opengl32.dll", EntryPoint = "glLightModeli")]
             public static extern void LightModeli(Enums.LightModelParameter pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glLightModeliv")]
+            [DllImport("opengl32.dll", EntryPoint = "glLightModeliv")]
             public static extern void LightModeliv_(Enums.LightModelParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glLineStipple")]
+            [DllImport("opengl32.dll", EntryPoint = "glLineStipple")]
             public static extern void LineStipple(GLint factor, GLushort pattern);
-            [DllImport("opengl32", EntryPoint = "glLineWidth")]
+            [DllImport("opengl32.dll", EntryPoint = "glLineWidth")]
             public static extern void LineWidth(GLfloat width);
-            [DllImport("opengl32", EntryPoint = "glMaterialf")]
+            [DllImport("opengl32.dll", EntryPoint = "glMaterialf")]
             public static extern void Materialf(Enums.MaterialFace face, Enums.MaterialParameter pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glMaterialfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMaterialfv")]
             public static extern void Materialfv_(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glMateriali")]
+            [DllImport("opengl32.dll", EntryPoint = "glMateriali")]
             public static extern void Materiali(Enums.MaterialFace face, Enums.MaterialParameter pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glMaterialiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMaterialiv")]
             public static extern void Materialiv_(Enums.MaterialFace face, Enums.MaterialParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glPointSize")]
+            [DllImport("opengl32.dll", EntryPoint = "glPointSize")]
             public static extern void PointSize(GLfloat size);
-            [DllImport("opengl32", EntryPoint = "glPolygonMode")]
+            [DllImport("opengl32.dll", EntryPoint = "glPolygonMode")]
             public static extern void PolygonMode(Enums.MaterialFace face, Enums.PolygonMode mode);
-            [DllImport("opengl32", EntryPoint = "glPolygonStipple")]
+            [DllImport("opengl32.dll", EntryPoint = "glPolygonStipple")]
             public static extern void PolygonStipple_(IntPtr mask);
-            [DllImport("opengl32", EntryPoint = "glScissor")]
+            [DllImport("opengl32.dll", EntryPoint = "glScissor")]
             public static extern void Scissor(GLint x, GLint y, GLsizei width, GLsizei height);
-            [DllImport("opengl32", EntryPoint = "glShadeModel")]
+            [DllImport("opengl32.dll", EntryPoint = "glShadeModel")]
             public static extern void ShadeModel(Enums.ShadingModel mode);
-            [DllImport("opengl32", EntryPoint = "glTexParameterf")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexParameterf")]
             public static extern void TexParameterf(Enums.TextureTarget target, Enums.TextureParameterName pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glTexParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexParameterfv")]
             public static extern void TexParameterfv_(Enums.TextureTarget target, Enums.TextureParameterName pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glTexParameteri")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexParameteri")]
             public static extern void TexParameteri(Enums.TextureTarget target, Enums.TextureParameterName pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glTexParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexParameteriv")]
             public static extern void TexParameteriv_(Enums.TextureTarget target, Enums.TextureParameterName pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glTexImage1D")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexImage1D")]
             public static extern void TexImage1D(Enums.TextureTarget target, GLint level, GLint internalformat, GLsizei width, GLint border, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            [DllImport("opengl32", EntryPoint = "glTexImage2D")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexImage2D")]
             public static extern void TexImage2D(Enums.TextureTarget target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            [DllImport("opengl32", EntryPoint = "glTexEnvf")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexEnvf")]
             public static extern void TexEnvf(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glTexEnvfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexEnvfv")]
             public static extern void TexEnvfv_(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glTexEnvi")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexEnvi")]
             public static extern void TexEnvi(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glTexEnviv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexEnviv")]
             public static extern void TexEnviv_(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glTexGend")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexGend")]
             public static extern void TexGend(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLdouble param);
-            [DllImport("opengl32", EntryPoint = "glTexGendv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexGendv")]
             public static extern void TexGendv_(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glTexGenf")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexGenf")]
             public static extern void TexGenf(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glTexGenfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexGenfv")]
             public static extern void TexGenfv_(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glTexGeni")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexGeni")]
             public static extern void TexGeni(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glTexGeniv")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexGeniv")]
             public static extern void TexGeniv_(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glFeedbackBuffer")]
+            [DllImport("opengl32.dll", EntryPoint = "glFeedbackBuffer")]
             public static extern void FeedbackBuffer(GLsizei size, Enums.FeedbackType type, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] buffer);
-            [DllImport("opengl32", EntryPoint = "glSelectBuffer")]
+            [DllImport("opengl32.dll", EntryPoint = "glSelectBuffer")]
             public static extern void SelectBuffer(GLsizei size, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffer);
-            [DllImport("opengl32", EntryPoint = "glRenderMode")]
+            [DllImport("opengl32.dll", EntryPoint = "glRenderMode")]
             public static extern GLint RenderMode(Enums.RenderingMode mode);
-            [DllImport("opengl32", EntryPoint = "glInitNames")]
+            [DllImport("opengl32.dll", EntryPoint = "glInitNames")]
             public static extern void InitNames();
-            [DllImport("opengl32", EntryPoint = "glLoadName")]
+            [DllImport("opengl32.dll", EntryPoint = "glLoadName")]
             public static extern void LoadName(GLuint name);
-            [DllImport("opengl32", EntryPoint = "glPassThrough")]
+            [DllImport("opengl32.dll", EntryPoint = "glPassThrough")]
             public static extern void PassThrough(GLfloat token);
-            [DllImport("opengl32", EntryPoint = "glPopName")]
+            [DllImport("opengl32.dll", EntryPoint = "glPopName")]
             public static extern void PopName();
-            [DllImport("opengl32", EntryPoint = "glPushName")]
+            [DllImport("opengl32.dll", EntryPoint = "glPushName")]
             public static extern void PushName(GLuint name);
-            [DllImport("opengl32", EntryPoint = "glDrawBuffer")]
+            [DllImport("opengl32.dll", EntryPoint = "glDrawBuffer")]
             public static extern void DrawBuffer(Enums.DrawBufferMode mode);
-            [DllImport("opengl32", EntryPoint = "glClear")]
+            [DllImport("opengl32.dll", EntryPoint = "glClear")]
             public static extern void Clear(Enums.ClearBufferMask mask);
-            [DllImport("opengl32", EntryPoint = "glClearAccum")]
+            [DllImport("opengl32.dll", EntryPoint = "glClearAccum")]
             public static extern void ClearAccum(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
-            [DllImport("opengl32", EntryPoint = "glClearIndex")]
+            [DllImport("opengl32.dll", EntryPoint = "glClearIndex")]
             public static extern void ClearIndex(GLfloat c);
-            [DllImport("opengl32", EntryPoint = "glClearColor")]
+            [DllImport("opengl32.dll", EntryPoint = "glClearColor")]
             public static extern void ClearColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
-            [DllImport("opengl32", EntryPoint = "glClearStencil")]
+            [DllImport("opengl32.dll", EntryPoint = "glClearStencil")]
             public static extern void ClearStencil(GLint s);
-            [DllImport("opengl32", EntryPoint = "glClearDepth")]
+            [DllImport("opengl32.dll", EntryPoint = "glClearDepth")]
             public static extern void ClearDepth(GLclampd depth);
-            [DllImport("opengl32", EntryPoint = "glStencilMask")]
+            [DllImport("opengl32.dll", EntryPoint = "glStencilMask")]
             public static extern void StencilMask(GLuint mask);
-            [DllImport("opengl32", EntryPoint = "glColorMask")]
+            [DllImport("opengl32.dll", EntryPoint = "glColorMask")]
             public static extern void ColorMask(Enums.Boolean red, Enums.Boolean green, Enums.Boolean blue, Enums.Boolean alpha);
-            [DllImport("opengl32", EntryPoint = "glDepthMask")]
+            [DllImport("opengl32.dll", EntryPoint = "glDepthMask")]
             public static extern void DepthMask(Enums.Boolean flag);
-            [DllImport("opengl32", EntryPoint = "glIndexMask")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexMask")]
             public static extern void IndexMask(GLuint mask);
-            [DllImport("opengl32", EntryPoint = "glAccum")]
+            [DllImport("opengl32.dll", EntryPoint = "glAccum")]
             public static extern void Accum(Enums.AccumOp op, GLfloat value);
-            [DllImport("opengl32", EntryPoint = "glDisable")]
+            [DllImport("opengl32.dll", EntryPoint = "glDisable")]
             public static extern void Disable(Enums.EnableCap cap);
-            [DllImport("opengl32", EntryPoint = "glEnable")]
+            [DllImport("opengl32.dll", EntryPoint = "glEnable")]
             public static extern void Enable(Enums.EnableCap cap);
-            [DllImport("opengl32", EntryPoint = "glFinish")]
+            [DllImport("opengl32.dll", EntryPoint = "glFinish")]
             public static extern void Finish();
-            [DllImport("opengl32", EntryPoint = "glFlush")]
+            [DllImport("opengl32.dll", EntryPoint = "glFlush")]
             public static extern void Flush();
-            [DllImport("opengl32", EntryPoint = "glPopAttrib")]
+            [DllImport("opengl32.dll", EntryPoint = "glPopAttrib")]
             public static extern void PopAttrib();
-            [DllImport("opengl32", EntryPoint = "glPushAttrib")]
+            [DllImport("opengl32.dll", EntryPoint = "glPushAttrib")]
             public static extern void PushAttrib(Enums.AttribMask mask);
-            [DllImport("opengl32", EntryPoint = "glMap1d")]
+            [DllImport("opengl32.dll", EntryPoint = "glMap1d")]
             public static extern void Map1d_(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint stride, GLint order, IntPtr points);
-            [DllImport("opengl32", EntryPoint = "glMap1f")]
+            [DllImport("opengl32.dll", EntryPoint = "glMap1f")]
             public static extern void Map1f_(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint stride, GLint order, IntPtr points);
-            [DllImport("opengl32", EntryPoint = "glMap2d")]
+            [DllImport("opengl32.dll", EntryPoint = "glMap2d")]
             public static extern void Map2d_(Enums.MapTarget target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, IntPtr points);
-            [DllImport("opengl32", EntryPoint = "glMap2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glMap2f")]
             public static extern void Map2f_(Enums.MapTarget target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, IntPtr points);
-            [DllImport("opengl32", EntryPoint = "glMapGrid1d")]
+            [DllImport("opengl32.dll", EntryPoint = "glMapGrid1d")]
             public static extern void MapGrid1d(GLint un, GLdouble u1, GLdouble u2);
-            [DllImport("opengl32", EntryPoint = "glMapGrid1f")]
+            [DllImport("opengl32.dll", EntryPoint = "glMapGrid1f")]
             public static extern void MapGrid1f(GLint un, GLfloat u1, GLfloat u2);
-            [DllImport("opengl32", EntryPoint = "glMapGrid2d")]
+            [DllImport("opengl32.dll", EntryPoint = "glMapGrid2d")]
             public static extern void MapGrid2d(GLint un, GLdouble u1, GLdouble u2, GLint vn, GLdouble v1, GLdouble v2);
-            [DllImport("opengl32", EntryPoint = "glMapGrid2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glMapGrid2f")]
             public static extern void MapGrid2f(GLint un, GLfloat u1, GLfloat u2, GLint vn, GLfloat v1, GLfloat v2);
-            [DllImport("opengl32", EntryPoint = "glEvalCoord1d")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalCoord1d")]
             public static extern void EvalCoord1d(GLdouble u);
-            [DllImport("opengl32", EntryPoint = "glEvalCoord1dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalCoord1dv")]
             public static extern void EvalCoord1dv_(IntPtr u);
-            [DllImport("opengl32", EntryPoint = "glEvalCoord1f")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalCoord1f")]
             public static extern void EvalCoord1f(GLfloat u);
-            [DllImport("opengl32", EntryPoint = "glEvalCoord1fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalCoord1fv")]
             public static extern void EvalCoord1fv_(IntPtr u);
-            [DllImport("opengl32", EntryPoint = "glEvalCoord2d")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalCoord2d")]
             public static extern void EvalCoord2d(GLdouble u, GLdouble v);
-            [DllImport("opengl32", EntryPoint = "glEvalCoord2dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalCoord2dv")]
             public static extern void EvalCoord2dv_(IntPtr u);
-            [DllImport("opengl32", EntryPoint = "glEvalCoord2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalCoord2f")]
             public static extern void EvalCoord2f(GLfloat u, GLfloat v);
-            [DllImport("opengl32", EntryPoint = "glEvalCoord2fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalCoord2fv")]
             public static extern void EvalCoord2fv_(IntPtr u);
-            [DllImport("opengl32", EntryPoint = "glEvalMesh1")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalMesh1")]
             public static extern void EvalMesh1(Enums.MeshMode1 mode, GLint i1, GLint i2);
-            [DllImport("opengl32", EntryPoint = "glEvalPoint1")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalPoint1")]
             public static extern void EvalPoint1(GLint i);
-            [DllImport("opengl32", EntryPoint = "glEvalMesh2")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalMesh2")]
             public static extern void EvalMesh2(Enums.MeshMode2 mode, GLint i1, GLint i2, GLint j1, GLint j2);
-            [DllImport("opengl32", EntryPoint = "glEvalPoint2")]
+            [DllImport("opengl32.dll", EntryPoint = "glEvalPoint2")]
             public static extern void EvalPoint2(GLint i, GLint j);
-            [DllImport("opengl32", EntryPoint = "glAlphaFunc")]
+            [DllImport("opengl32.dll", EntryPoint = "glAlphaFunc")]
             public static extern void AlphaFunc(Enums.AlphaFunction func, GLclampf reference);
-            [DllImport("opengl32", EntryPoint = "glBlendFunc")]
+            [DllImport("opengl32.dll", EntryPoint = "glBlendFunc")]
             public static extern void BlendFunc(Enums.BlendingFactorSrc sfactor, Enums.BlendingFactorDest dfactor);
-            [DllImport("opengl32", EntryPoint = "glLogicOp")]
+            [DllImport("opengl32.dll", EntryPoint = "glLogicOp")]
             public static extern void LogicOp(Enums.LogicOp opcode);
-            [DllImport("opengl32", EntryPoint = "glStencilFunc")]
+            [DllImport("opengl32.dll", EntryPoint = "glStencilFunc")]
             public static extern void StencilFunc(Enums.StencilFunction func, GLint reference, GLuint mask);
-            [DllImport("opengl32", EntryPoint = "glStencilOp")]
+            [DllImport("opengl32.dll", EntryPoint = "glStencilOp")]
             public static extern void StencilOp(Enums.StencilOp fail, Enums.StencilOp zfail, Enums.StencilOp zpass);
-            [DllImport("opengl32", EntryPoint = "glDepthFunc")]
+            [DllImport("opengl32.dll", EntryPoint = "glDepthFunc")]
             public static extern void DepthFunc(Enums.DepthFunction func);
-            [DllImport("opengl32", EntryPoint = "glPixelZoom")]
+            [DllImport("opengl32.dll", EntryPoint = "glPixelZoom")]
             public static extern void PixelZoom(GLfloat xfactor, GLfloat yfactor);
-            [DllImport("opengl32", EntryPoint = "glPixelTransferf")]
+            [DllImport("opengl32.dll", EntryPoint = "glPixelTransferf")]
             public static extern void PixelTransferf(Enums.PixelTransferParameter pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glPixelTransferi")]
+            [DllImport("opengl32.dll", EntryPoint = "glPixelTransferi")]
             public static extern void PixelTransferi(Enums.PixelTransferParameter pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glPixelStoref")]
+            [DllImport("opengl32.dll", EntryPoint = "glPixelStoref")]
             public static extern void PixelStoref(Enums.PixelStoreParameter pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glPixelStorei")]
+            [DllImport("opengl32.dll", EntryPoint = "glPixelStorei")]
             public static extern void PixelStorei(Enums.PixelStoreParameter pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glPixelMapfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glPixelMapfv")]
             public static extern void PixelMapfv_(Enums.PixelMap map, GLint mapsize, IntPtr values);
-            [DllImport("opengl32", EntryPoint = "glPixelMapuiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glPixelMapuiv")]
             public static extern void PixelMapuiv_(Enums.PixelMap map, GLint mapsize, IntPtr values);
-            [DllImport("opengl32", EntryPoint = "glPixelMapusv")]
+            [DllImport("opengl32.dll", EntryPoint = "glPixelMapusv")]
             public static extern void PixelMapusv_(Enums.PixelMap map, GLint mapsize, IntPtr values);
-            [DllImport("opengl32", EntryPoint = "glReadBuffer")]
+            [DllImport("opengl32.dll", EntryPoint = "glReadBuffer")]
             public static extern void ReadBuffer(Enums.ReadBufferMode mode);
-            [DllImport("opengl32", EntryPoint = "glCopyPixels")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyPixels")]
             public static extern void CopyPixels(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelCopyType type);
-            [DllImport("opengl32", EntryPoint = "glReadPixels")]
+            [DllImport("opengl32.dll", EntryPoint = "glReadPixels")]
             public static extern void ReadPixels_(GLint x, GLint y, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            [DllImport("opengl32", EntryPoint = "glDrawPixels")]
+            [DllImport("opengl32.dll", EntryPoint = "glDrawPixels")]
             public static extern void DrawPixels_(GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            [DllImport("opengl32", EntryPoint = "glGetBooleanv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetBooleanv")]
             public static extern void GetBooleanv(Enums.GetPName pname, Enums.Boolean[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetClipPlane")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetClipPlane")]
             public static extern void GetClipPlane(Enums.ClipPlaneName plane, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] equation);
-            [DllImport("opengl32", EntryPoint = "glGetDoublev")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetDoublev")]
             public static extern void GetDoublev(Enums.GetPName pname, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetError")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetError")]
             public static extern GLenum GetError();
-            [DllImport("opengl32", EntryPoint = "glGetFloatv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetFloatv")]
             public static extern void GetFloatv(Enums.GetPName pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetIntegerv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetIntegerv")]
             public static extern void GetIntegerv(Enums.GetPName pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetLightfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetLightfv")]
             public static extern void GetLightfv(Enums.LightName light, Enums.LightParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetLightiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetLightiv")]
             public static extern void GetLightiv(Enums.LightName light, Enums.LightParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetMapdv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetMapdv")]
             public static extern void GetMapdv(Enums.MapTarget target, Enums.GetMapQuery query, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] v);
-            [DllImport("opengl32", EntryPoint = "glGetMapfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetMapfv")]
             public static extern void GetMapfv(Enums.MapTarget target, Enums.GetMapQuery query, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] v);
-            [DllImport("opengl32", EntryPoint = "glGetMapiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetMapiv")]
             public static extern void GetMapiv(Enums.MapTarget target, Enums.GetMapQuery query, [MarshalAs(UnmanagedType.LPArray)] GLint[] v);
-            [DllImport("opengl32", EntryPoint = "glGetMaterialfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetMaterialfv")]
             public static extern void GetMaterialfv(Enums.MaterialFace face, Enums.MaterialParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetMaterialiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetMaterialiv")]
             public static extern void GetMaterialiv(Enums.MaterialFace face, Enums.MaterialParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetPixelMapfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetPixelMapfv")]
             public static extern void GetPixelMapfv(Enums.PixelMap map, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] values);
-            [DllImport("opengl32", EntryPoint = "glGetPixelMapuiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetPixelMapuiv")]
             public static extern void GetPixelMapuiv(Enums.PixelMap map, [MarshalAs(UnmanagedType.LPArray)] GLuint[] values);
-            [DllImport("opengl32", EntryPoint = "glGetPixelMapusv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetPixelMapusv")]
             public static extern void GetPixelMapusv(Enums.PixelMap map, [MarshalAs(UnmanagedType.LPArray)] GLushort[] values);
-            [DllImport("opengl32", EntryPoint = "glGetPolygonStipple")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetPolygonStipple")]
             public static extern void GetPolygonStipple([MarshalAs(UnmanagedType.LPArray)] GLubyte[] mask);
-            [DllImport("opengl32", EntryPoint = "glGetString")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetString")]
             public static extern IntPtr GetString_(Enums.StringName name);
-            [DllImport("opengl32", EntryPoint = "glGetTexEnvfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexEnvfv")]
             public static extern void GetTexEnvfv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetTexEnviv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexEnviv")]
             public static extern void GetTexEnviv(Enums.TextureEnvTarget target, Enums.TextureEnvParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetTexGendv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexGendv")]
             public static extern void GetTexGendv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetTexGenfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexGenfv")]
             public static extern void GetTexGenfv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetTexGeniv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexGeniv")]
             public static extern void GetTexGeniv(Enums.TextureCoordName coord, Enums.TextureGenParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetTexImage")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexImage")]
             public static extern void GetTexImage(Enums.TextureTarget target, GLint level, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            [DllImport("opengl32", EntryPoint = "glGetTexParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexParameterfv")]
             public static extern void GetTexParameterfv(Enums.TextureTarget target, Enums.GetTextureParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetTexParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexParameteriv")]
             public static extern void GetTexParameteriv(Enums.TextureTarget target, Enums.GetTextureParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetTexLevelParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexLevelParameterfv")]
             public static extern void GetTexLevelParameterfv(Enums.TextureTarget target, GLint level, Enums.GetTextureParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetTexLevelParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetTexLevelParameteriv")]
             public static extern void GetTexLevelParameteriv(Enums.TextureTarget target, GLint level, Enums.GetTextureParameter pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glIsEnabled")]
+            [DllImport("opengl32.dll", EntryPoint = "glIsEnabled")]
             public static extern GLboolean IsEnabled(Enums.EnableCap cap);
-            [DllImport("opengl32", EntryPoint = "glIsList")]
+            [DllImport("opengl32.dll", EntryPoint = "glIsList")]
             public static extern GLboolean IsList(GLuint list);
-            [DllImport("opengl32", EntryPoint = "glDepthRange")]
+            [DllImport("opengl32.dll", EntryPoint = "glDepthRange")]
             public static extern void DepthRange(GLclampd near, GLclampd far);
-            [DllImport("opengl32", EntryPoint = "glFrustum")]
+            [DllImport("opengl32.dll", EntryPoint = "glFrustum")]
             public static extern void Frustum(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
-            [DllImport("opengl32", EntryPoint = "glLoadIdentity")]
+            [DllImport("opengl32.dll", EntryPoint = "glLoadIdentity")]
             public static extern void LoadIdentity();
-            [DllImport("opengl32", EntryPoint = "glLoadMatrixf")]
+            [DllImport("opengl32.dll", EntryPoint = "glLoadMatrixf")]
             public static extern void LoadMatrixf_(IntPtr m);
-            [DllImport("opengl32", EntryPoint = "glLoadMatrixd")]
+            [DllImport("opengl32.dll", EntryPoint = "glLoadMatrixd")]
             public static extern void LoadMatrixd_(IntPtr m);
-            [DllImport("opengl32", EntryPoint = "glMatrixMode")]
+            [DllImport("opengl32.dll", EntryPoint = "glMatrixMode")]
             public static extern void MatrixMode(Enums.MatrixMode mode);
-            [DllImport("opengl32", EntryPoint = "glMultMatrixf")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultMatrixf")]
             public static extern void MultMatrixf_(IntPtr m);
-            [DllImport("opengl32", EntryPoint = "glMultMatrixd")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultMatrixd")]
             public static extern void MultMatrixd_(IntPtr m);
-            [DllImport("opengl32", EntryPoint = "glOrtho")]
+            [DllImport("opengl32.dll", EntryPoint = "glOrtho")]
             public static extern void Ortho(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
-            [DllImport("opengl32", EntryPoint = "glPopMatrix")]
+            [DllImport("opengl32.dll", EntryPoint = "glPopMatrix")]
             public static extern void PopMatrix();
-            [DllImport("opengl32", EntryPoint = "glPushMatrix")]
+            [DllImport("opengl32.dll", EntryPoint = "glPushMatrix")]
             public static extern void PushMatrix();
-            [DllImport("opengl32", EntryPoint = "glRotated")]
+            [DllImport("opengl32.dll", EntryPoint = "glRotated")]
             public static extern void Rotated(GLdouble angle, GLdouble x, GLdouble y, GLdouble z);
-            [DllImport("opengl32", EntryPoint = "glRotatef")]
+            [DllImport("opengl32.dll", EntryPoint = "glRotatef")]
             public static extern void Rotatef(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
-            [DllImport("opengl32", EntryPoint = "glScaled")]
+            [DllImport("opengl32.dll", EntryPoint = "glScaled")]
             public static extern void Scaled(GLdouble x, GLdouble y, GLdouble z);
-            [DllImport("opengl32", EntryPoint = "glScalef")]
+            [DllImport("opengl32.dll", EntryPoint = "glScalef")]
             public static extern void Scalef(GLfloat x, GLfloat y, GLfloat z);
-            [DllImport("opengl32", EntryPoint = "glTranslated")]
+            [DllImport("opengl32.dll", EntryPoint = "glTranslated")]
             public static extern void Translated(GLdouble x, GLdouble y, GLdouble z);
-            [DllImport("opengl32", EntryPoint = "glTranslatef")]
+            [DllImport("opengl32.dll", EntryPoint = "glTranslatef")]
             public static extern void Translatef(GLfloat x, GLfloat y, GLfloat z);
-            [DllImport("opengl32", EntryPoint = "glViewport")]
+            [DllImport("opengl32.dll", EntryPoint = "glViewport")]
             public static extern void Viewport(GLint x, GLint y, GLsizei width, GLsizei height);
-            [DllImport("opengl32", EntryPoint = "glArrayElement")]
+            [DllImport("opengl32.dll", EntryPoint = "glArrayElement")]
             public static extern void ArrayElement(GLint i);
-            [DllImport("opengl32", EntryPoint = "glColorPointer")]
+            [DllImport("opengl32.dll", EntryPoint = "glColorPointer")]
             public static extern void ColorPointer_(GLint size, Enums.ColorPointerType type, GLsizei stride, IntPtr pointer);
-            [DllImport("opengl32", EntryPoint = "glDisableClientState")]
+            [DllImport("opengl32.dll", EntryPoint = "glDisableClientState")]
             public static extern void DisableClientState(Enums.EnableCap array);
-            [DllImport("opengl32", EntryPoint = "glDrawArrays")]
+            [DllImport("opengl32.dll", EntryPoint = "glDrawArrays")]
             public static extern void DrawArrays(Enums.BeginMode mode, GLint first, GLsizei count);
-            [DllImport("opengl32", EntryPoint = "glDrawElements")]
+            [DllImport("opengl32.dll", EntryPoint = "glDrawElements")]
             public static extern void DrawElements_(Enums.BeginMode mode, GLsizei count, GLenum type, IntPtr indices);
-            [DllImport("opengl32", EntryPoint = "glEdgeFlagPointer")]
+            [DllImport("opengl32.dll", EntryPoint = "glEdgeFlagPointer")]
             public static extern void EdgeFlagPointer_(GLsizei stride, IntPtr pointer);
-            [DllImport("opengl32", EntryPoint = "glEnableClientState")]
+            [DllImport("opengl32.dll", EntryPoint = "glEnableClientState")]
             public static extern void EnableClientState(Enums.EnableCap array);
-            [DllImport("opengl32", EntryPoint = "glGetPointerv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetPointerv")]
             public static extern void GetPointerv(Enums.GetPointervPName pname, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] parameters);
-            [DllImport("opengl32", EntryPoint = "glIndexPointer")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexPointer")]
             public static extern void IndexPointer_(Enums.IndexPointerType type, GLsizei stride, IntPtr pointer);
-            [DllImport("opengl32", EntryPoint = "glInterleavedArrays")]
+            [DllImport("opengl32.dll", EntryPoint = "glInterleavedArrays")]
             public static extern void InterleavedArrays_(Enums.InterleavedArrayFormat format, GLsizei stride, IntPtr pointer);
-            [DllImport("opengl32", EntryPoint = "glNormalPointer")]
+            [DllImport("opengl32.dll", EntryPoint = "glNormalPointer")]
             public static extern void NormalPointer_(Enums.NormalPointerType type, GLsizei stride, IntPtr pointer);
-            [DllImport("opengl32", EntryPoint = "glTexCoordPointer")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexCoordPointer")]
             public static extern void TexCoordPointer_(GLint size, Enums.TexCoordPointerType type, GLsizei stride, IntPtr pointer);
-            [DllImport("opengl32", EntryPoint = "glVertexPointer")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexPointer")]
             public static extern void VertexPointer_(GLint size, Enums.VertexPointerType type, GLsizei stride, IntPtr pointer);
-            [DllImport("opengl32", EntryPoint = "glPolygonOffset")]
+            [DllImport("opengl32.dll", EntryPoint = "glPolygonOffset")]
             public static extern void PolygonOffset(GLfloat factor, GLfloat units);
-            [DllImport("opengl32", EntryPoint = "glCopyTexImage1D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyTexImage1D")]
             public static extern void CopyTexImage1D(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width, GLint border);
-            [DllImport("opengl32", EntryPoint = "glCopyTexImage2D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyTexImage2D")]
             public static extern void CopyTexImage2D(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border);
-            [DllImport("opengl32", EntryPoint = "glCopyTexSubImage1D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyTexSubImage1D")]
             public static extern void CopyTexSubImage1D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width);
-            [DllImport("opengl32", EntryPoint = "glCopyTexSubImage2D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyTexSubImage2D")]
             public static extern void CopyTexSubImage2D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height);
-            [DllImport("opengl32", EntryPoint = "glTexSubImage1D")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexSubImage1D")]
             public static extern void TexSubImage1D(Enums.TextureTarget target, GLint level, GLint xoffset, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            [DllImport("opengl32", EntryPoint = "glTexSubImage2D")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexSubImage2D")]
             public static extern void TexSubImage2D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            [DllImport("opengl32", EntryPoint = "glAreTexturesResident")]
+            [DllImport("opengl32.dll", EntryPoint = "glAreTexturesResident")]
             public static extern GLboolean AreTexturesResident_(GLsizei n, IntPtr textures, Enums.Boolean[] residences);
-            [DllImport("opengl32", EntryPoint = "glBindTexture")]
+            [DllImport("opengl32.dll", EntryPoint = "glBindTexture")]
             public static extern void BindTexture(Enums.TextureTarget target, GLuint texture);
-            [DllImport("opengl32", EntryPoint = "glDeleteTextures")]
+            [DllImport("opengl32.dll", EntryPoint = "glDeleteTextures")]
             public static extern void DeleteTextures_(GLsizei n, IntPtr textures);
-            [DllImport("opengl32", EntryPoint = "glGenTextures")]
+            [DllImport("opengl32.dll", EntryPoint = "glGenTextures")]
             public static extern void GenTextures(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] textures);
-            [DllImport("opengl32", EntryPoint = "glIsTexture")]
+            [DllImport("opengl32.dll", EntryPoint = "glIsTexture")]
             public static extern GLboolean IsTexture(GLuint texture);
-            [DllImport("opengl32", EntryPoint = "glPrioritizeTextures")]
+            [DllImport("opengl32.dll", EntryPoint = "glPrioritizeTextures")]
             public static extern void PrioritizeTextures_(GLsizei n, IntPtr textures, IntPtr priorities);
-            [DllImport("opengl32", EntryPoint = "glIndexub")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexub")]
             public static extern void Indexub(GLubyte c);
-            [DllImport("opengl32", EntryPoint = "glIndexubv")]
+            [DllImport("opengl32.dll", EntryPoint = "glIndexubv")]
             public static extern void Indexubv_(IntPtr c);
-            [DllImport("opengl32", EntryPoint = "glPopClientAttrib")]
+            [DllImport("opengl32.dll", EntryPoint = "glPopClientAttrib")]
             public static extern void PopClientAttrib();
-            [DllImport("opengl32", EntryPoint = "glPushClientAttrib")]
+            [DllImport("opengl32.dll", EntryPoint = "glPushClientAttrib")]
             public static extern void PushClientAttrib(Enums.ClientAttribMask mask);
-            [DllImport("opengl32", EntryPoint = "glBlendColor")]
+            [DllImport("opengl32.dll", EntryPoint = "glBlendColor")]
             public static extern void BlendColor(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
-            [DllImport("opengl32", EntryPoint = "glBlendEquation")]
+            [DllImport("opengl32.dll", EntryPoint = "glBlendEquation")]
             public static extern void BlendEquation(GLenum mode);
-            [DllImport("opengl32", EntryPoint = "glDrawRangeElements")]
+            [DllImport("opengl32.dll", EntryPoint = "glDrawRangeElements")]
             public static extern void DrawRangeElements_(Enums.BeginMode mode, GLuint start, GLuint end, GLsizei count, GLenum type, IntPtr indices);
-            [DllImport("opengl32", EntryPoint = "glColorTable")]
+            [DllImport("opengl32.dll", EntryPoint = "glColorTable")]
             public static extern void ColorTable_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr table);
-            [DllImport("opengl32", EntryPoint = "glColorTableParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColorTableParameterfv")]
             public static extern void ColorTableParameterfv_(GLenum target, GLenum pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glColorTableParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glColorTableParameteriv")]
             public static extern void ColorTableParameteriv_(GLenum target, GLenum pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glCopyColorTable")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyColorTable")]
             public static extern void CopyColorTable(GLenum target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width);
-            [DllImport("opengl32", EntryPoint = "glGetColorTable")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetColorTable")]
             public static extern void GetColorTable_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr table);
-            [DllImport("opengl32", EntryPoint = "glGetColorTableParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetColorTableParameterfv")]
             public static extern void GetColorTableParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetColorTableParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetColorTableParameteriv")]
             public static extern void GetColorTableParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glColorSubTable")]
+            [DllImport("opengl32.dll", EntryPoint = "glColorSubTable")]
             public static extern void ColorSubTable_(GLenum target, GLsizei start, GLsizei count, Enums.PixelFormat format, Enums.PixelType type, IntPtr data);
-            [DllImport("opengl32", EntryPoint = "glCopyColorSubTable")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyColorSubTable")]
             public static extern void CopyColorSubTable(GLenum target, GLsizei start, GLint x, GLint y, GLsizei width);
-            [DllImport("opengl32", EntryPoint = "glConvolutionFilter1D")]
+            [DllImport("opengl32.dll", EntryPoint = "glConvolutionFilter1D")]
             public static extern void ConvolutionFilter1D_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
-            [DllImport("opengl32", EntryPoint = "glConvolutionFilter2D")]
+            [DllImport("opengl32.dll", EntryPoint = "glConvolutionFilter2D")]
             public static extern void ConvolutionFilter2D_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
-            [DllImport("opengl32", EntryPoint = "glConvolutionParameterf")]
+            [DllImport("opengl32.dll", EntryPoint = "glConvolutionParameterf")]
             public static extern void ConvolutionParameterf(GLenum target, GLenum pname, GLfloat parameters);
-            [DllImport("opengl32", EntryPoint = "glConvolutionParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glConvolutionParameterfv")]
             public static extern void ConvolutionParameterfv_(GLenum target, GLenum pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glConvolutionParameteri")]
+            [DllImport("opengl32.dll", EntryPoint = "glConvolutionParameteri")]
             public static extern void ConvolutionParameteri(GLenum target, GLenum pname, GLint parameters);
-            [DllImport("opengl32", EntryPoint = "glConvolutionParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glConvolutionParameteriv")]
             public static extern void ConvolutionParameteriv_(GLenum target, GLenum pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glCopyConvolutionFilter1D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyConvolutionFilter1D")]
             public static extern void CopyConvolutionFilter1D(GLenum target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width);
-            [DllImport("opengl32", EntryPoint = "glCopyConvolutionFilter2D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyConvolutionFilter2D")]
             public static extern void CopyConvolutionFilter2D(GLenum target, Enums.PixelInternalFormat internalformat, GLint x, GLint y, GLsizei width, GLsizei height);
-            [DllImport("opengl32", EntryPoint = "glGetConvolutionFilter")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetConvolutionFilter")]
             public static extern void GetConvolutionFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr image);
-            [DllImport("opengl32", EntryPoint = "glGetConvolutionParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetConvolutionParameterfv")]
             public static extern void GetConvolutionParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetConvolutionParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetConvolutionParameteriv")]
             public static extern void GetConvolutionParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetSeparableFilter")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetSeparableFilter")]
             public static extern void GetSeparableFilter_(GLenum target, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column, IntPtr span);
-            [DllImport("opengl32", EntryPoint = "glSeparableFilter2D")]
+            [DllImport("opengl32.dll", EntryPoint = "glSeparableFilter2D")]
             public static extern void SeparableFilter2D_(GLenum target, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, Enums.PixelFormat format, Enums.PixelType type, IntPtr row, IntPtr column);
-            [DllImport("opengl32", EntryPoint = "glGetHistogram")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetHistogram")]
             public static extern void GetHistogram_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values);
-            [DllImport("opengl32", EntryPoint = "glGetHistogramParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetHistogramParameterfv")]
             public static extern void GetHistogramParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetHistogramParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetHistogramParameteriv")]
             public static extern void GetHistogramParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetMinmax")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetMinmax")]
             public static extern void GetMinmax_(GLenum target, Enums.Boolean reset, Enums.PixelFormat format, Enums.PixelType type, IntPtr values);
-            [DllImport("opengl32", EntryPoint = "glGetMinmaxParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetMinmaxParameterfv")]
             public static extern void GetMinmaxParameterfv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetMinmaxParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetMinmaxParameteriv")]
             public static extern void GetMinmaxParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glHistogram")]
+            [DllImport("opengl32.dll", EntryPoint = "glHistogram")]
             public static extern void Histogram(GLenum target, GLsizei width, Enums.PixelInternalFormat internalformat, Enums.Boolean sink);
-            [DllImport("opengl32", EntryPoint = "glMinmax")]
+            [DllImport("opengl32.dll", EntryPoint = "glMinmax")]
             public static extern void Minmax(GLenum target, Enums.PixelInternalFormat internalformat, Enums.Boolean sink);
-            [DllImport("opengl32", EntryPoint = "glResetHistogram")]
+            [DllImport("opengl32.dll", EntryPoint = "glResetHistogram")]
             public static extern void ResetHistogram(GLenum target);
-            [DllImport("opengl32", EntryPoint = "glResetMinmax")]
+            [DllImport("opengl32.dll", EntryPoint = "glResetMinmax")]
             public static extern void ResetMinmax(GLenum target);
-            [DllImport("opengl32", EntryPoint = "glTexImage3D")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexImage3D")]
             public static extern void TexImage3D(Enums.TextureTarget target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            [DllImport("opengl32", EntryPoint = "glTexSubImage3D")]
+            [DllImport("opengl32.dll", EntryPoint = "glTexSubImage3D")]
             public static extern void TexSubImage3D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, Enums.PixelFormat format, Enums.PixelType type, IntPtr pixels);
-            [DllImport("opengl32", EntryPoint = "glCopyTexSubImage3D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCopyTexSubImage3D")]
             public static extern void CopyTexSubImage3D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height);
-            [DllImport("opengl32", EntryPoint = "glActiveTexture")]
+            [DllImport("opengl32.dll", EntryPoint = "glActiveTexture")]
             public static extern void ActiveTexture(GLenum texture);
-            [DllImport("opengl32", EntryPoint = "glClientActiveTexture")]
+            [DllImport("opengl32.dll", EntryPoint = "glClientActiveTexture")]
             public static extern void ClientActiveTexture(GLenum texture);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord1d")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord1d")]
             public static extern void MultiTexCoord1d(GLenum target, GLdouble s);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord1dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord1dv")]
             public static extern void MultiTexCoord1dv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord1f")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord1f")]
             public static extern void MultiTexCoord1f(GLenum target, GLfloat s);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord1fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord1fv")]
             public static extern void MultiTexCoord1fv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord1i")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord1i")]
             public static extern void MultiTexCoord1i(GLenum target, GLint s);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord1iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord1iv")]
             public static extern void MultiTexCoord1iv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord1s")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord1s")]
             public static extern void MultiTexCoord1s(GLenum target, GLshort s);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord1sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord1sv")]
             public static extern void MultiTexCoord1sv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord2d")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord2d")]
             public static extern void MultiTexCoord2d(GLenum target, GLdouble s, GLdouble t);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord2dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord2dv")]
             public static extern void MultiTexCoord2dv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord2f")]
             public static extern void MultiTexCoord2f(GLenum target, GLfloat s, GLfloat t);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord2fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord2fv")]
             public static extern void MultiTexCoord2fv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord2i")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord2i")]
             public static extern void MultiTexCoord2i(GLenum target, GLint s, GLint t);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord2iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord2iv")]
             public static extern void MultiTexCoord2iv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord2s")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord2s")]
             public static extern void MultiTexCoord2s(GLenum target, GLshort s, GLshort t);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord2sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord2sv")]
             public static extern void MultiTexCoord2sv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord3d")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord3d")]
             public static extern void MultiTexCoord3d(GLenum target, GLdouble s, GLdouble t, GLdouble r);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord3dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord3dv")]
             public static extern void MultiTexCoord3dv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord3f")]
             public static extern void MultiTexCoord3f(GLenum target, GLfloat s, GLfloat t, GLfloat r);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord3fv")]
             public static extern void MultiTexCoord3fv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord3i")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord3i")]
             public static extern void MultiTexCoord3i(GLenum target, GLint s, GLint t, GLint r);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord3iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord3iv")]
             public static extern void MultiTexCoord3iv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord3s")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord3s")]
             public static extern void MultiTexCoord3s(GLenum target, GLshort s, GLshort t, GLshort r);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord3sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord3sv")]
             public static extern void MultiTexCoord3sv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord4d")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord4d")]
             public static extern void MultiTexCoord4d(GLenum target, GLdouble s, GLdouble t, GLdouble r, GLdouble q);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord4dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord4dv")]
             public static extern void MultiTexCoord4dv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord4f")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord4f")]
             public static extern void MultiTexCoord4f(GLenum target, GLfloat s, GLfloat t, GLfloat r, GLfloat q);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord4fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord4fv")]
             public static extern void MultiTexCoord4fv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord4i")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord4i")]
             public static extern void MultiTexCoord4i(GLenum target, GLint s, GLint t, GLint r, GLint q);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord4iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord4iv")]
             public static extern void MultiTexCoord4iv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord4s")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord4s")]
             public static extern void MultiTexCoord4s(GLenum target, GLshort s, GLshort t, GLshort r, GLshort q);
-            [DllImport("opengl32", EntryPoint = "glMultiTexCoord4sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiTexCoord4sv")]
             public static extern void MultiTexCoord4sv_(GLenum target, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glLoadTransposeMatrixf")]
+            [DllImport("opengl32.dll", EntryPoint = "glLoadTransposeMatrixf")]
             public static extern void LoadTransposeMatrixf_(IntPtr m);
-            [DllImport("opengl32", EntryPoint = "glLoadTransposeMatrixd")]
+            [DllImport("opengl32.dll", EntryPoint = "glLoadTransposeMatrixd")]
             public static extern void LoadTransposeMatrixd_(IntPtr m);
-            [DllImport("opengl32", EntryPoint = "glMultTransposeMatrixf")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultTransposeMatrixf")]
             public static extern void MultTransposeMatrixf_(IntPtr m);
-            [DllImport("opengl32", EntryPoint = "glMultTransposeMatrixd")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultTransposeMatrixd")]
             public static extern void MultTransposeMatrixd_(IntPtr m);
-            [DllImport("opengl32", EntryPoint = "glSampleCoverage")]
+            [DllImport("opengl32.dll", EntryPoint = "glSampleCoverage")]
             public static extern void SampleCoverage(GLclampf value, Enums.Boolean invert);
-            [DllImport("opengl32", EntryPoint = "glCompressedTexImage3D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCompressedTexImage3D")]
             public static extern void CompressedTexImage3D(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLsizei imageSize, IntPtr data);
-            [DllImport("opengl32", EntryPoint = "glCompressedTexImage2D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCompressedTexImage2D")]
             public static extern void CompressedTexImage2D(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, IntPtr data);
-            [DllImport("opengl32", EntryPoint = "glCompressedTexImage1D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCompressedTexImage1D")]
             public static extern void CompressedTexImage1D(Enums.TextureTarget target, GLint level, Enums.PixelInternalFormat internalformat, GLsizei width, GLint border, GLsizei imageSize, IntPtr data);
-            [DllImport("opengl32", EntryPoint = "glCompressedTexSubImage3D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCompressedTexSubImage3D")]
             public static extern void CompressedTexSubImage3D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
-            [DllImport("opengl32", EntryPoint = "glCompressedTexSubImage2D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCompressedTexSubImage2D")]
             public static extern void CompressedTexSubImage2D(Enums.TextureTarget target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
-            [DllImport("opengl32", EntryPoint = "glCompressedTexSubImage1D")]
+            [DllImport("opengl32.dll", EntryPoint = "glCompressedTexSubImage1D")]
             public static extern void CompressedTexSubImage1D(Enums.TextureTarget target, GLint level, GLint xoffset, GLsizei width, Enums.PixelFormat format, GLsizei imageSize, IntPtr data);
-            [DllImport("opengl32", EntryPoint = "glGetCompressedTexImage")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetCompressedTexImage")]
             public static extern void GetCompressedTexImage(Enums.TextureTarget target, GLint level, IntPtr img);
-            [DllImport("opengl32", EntryPoint = "glBlendFuncSeparate")]
+            [DllImport("opengl32.dll", EntryPoint = "glBlendFuncSeparate")]
             public static extern void BlendFuncSeparate(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha);
-            [DllImport("opengl32", EntryPoint = "glFogCoordf")]
+            [DllImport("opengl32.dll", EntryPoint = "glFogCoordf")]
             public static extern void FogCoordf(GLfloat coord);
-            [DllImport("opengl32", EntryPoint = "glFogCoordfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glFogCoordfv")]
             public static extern void FogCoordfv_(IntPtr coord);
-            [DllImport("opengl32", EntryPoint = "glFogCoordd")]
+            [DllImport("opengl32.dll", EntryPoint = "glFogCoordd")]
             public static extern void FogCoordd(GLdouble coord);
-            [DllImport("opengl32", EntryPoint = "glFogCoorddv")]
+            [DllImport("opengl32.dll", EntryPoint = "glFogCoorddv")]
             public static extern void FogCoorddv_(IntPtr coord);
-            [DllImport("opengl32", EntryPoint = "glFogCoordPointer")]
+            [DllImport("opengl32.dll", EntryPoint = "glFogCoordPointer")]
             public static extern void FogCoordPointer_(GLenum type, GLsizei stride, IntPtr pointer);
-            [DllImport("opengl32", EntryPoint = "glMultiDrawArrays")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiDrawArrays")]
             public static extern void MultiDrawArrays(Enums.BeginMode mode, [MarshalAs(UnmanagedType.LPArray)] GLint[] first, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, GLsizei primcount);
-            [DllImport("opengl32", EntryPoint = "glMultiDrawElements")]
+            [DllImport("opengl32.dll", EntryPoint = "glMultiDrawElements")]
             public static extern void MultiDrawElements_(Enums.BeginMode mode, IntPtr count, GLenum type, IntPtr indices, GLsizei primcount);
-            [DllImport("opengl32", EntryPoint = "glPointParameterf")]
+            [DllImport("opengl32.dll", EntryPoint = "glPointParameterf")]
             public static extern void PointParameterf(GLenum pname, GLfloat param);
-            [DllImport("opengl32", EntryPoint = "glPointParameterfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glPointParameterfv")]
             public static extern void PointParameterfv_(GLenum pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glPointParameteri")]
+            [DllImport("opengl32.dll", EntryPoint = "glPointParameteri")]
             public static extern void PointParameteri(GLenum pname, GLint param);
-            [DllImport("opengl32", EntryPoint = "glPointParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glPointParameteriv")]
             public static extern void PointParameteriv_(GLenum pname, IntPtr parameters);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3b")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3b")]
             public static extern void SecondaryColor3b(GLbyte red, GLbyte green, GLbyte blue);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3bv")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3bv")]
             public static extern void SecondaryColor3bv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3d")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3d")]
             public static extern void SecondaryColor3d(GLdouble red, GLdouble green, GLdouble blue);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3dv")]
             public static extern void SecondaryColor3dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3f")]
             public static extern void SecondaryColor3f(GLfloat red, GLfloat green, GLfloat blue);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3fv")]
             public static extern void SecondaryColor3fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3i")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3i")]
             public static extern void SecondaryColor3i(GLint red, GLint green, GLint blue);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3iv")]
             public static extern void SecondaryColor3iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3s")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3s")]
             public static extern void SecondaryColor3s(GLshort red, GLshort green, GLshort blue);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3sv")]
             public static extern void SecondaryColor3sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3ub")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3ub")]
             public static extern void SecondaryColor3ub(GLubyte red, GLubyte green, GLubyte blue);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3ubv")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3ubv")]
             public static extern void SecondaryColor3ubv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3ui")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3ui")]
             public static extern void SecondaryColor3ui(GLuint red, GLuint green, GLuint blue);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3uiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3uiv")]
             public static extern void SecondaryColor3uiv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3us")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3us")]
             public static extern void SecondaryColor3us(GLushort red, GLushort green, GLushort blue);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColor3usv")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColor3usv")]
             public static extern void SecondaryColor3usv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glSecondaryColorPointer")]
+            [DllImport("opengl32.dll", EntryPoint = "glSecondaryColorPointer")]
             public static extern void SecondaryColorPointer_(GLint size, Enums.ColorPointerType type, GLsizei stride, IntPtr pointer);
-            [DllImport("opengl32", EntryPoint = "glWindowPos2d")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos2d")]
             public static extern void WindowPos2d(GLdouble x, GLdouble y);
-            [DllImport("opengl32", EntryPoint = "glWindowPos2dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos2dv")]
             public static extern void WindowPos2dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glWindowPos2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos2f")]
             public static extern void WindowPos2f(GLfloat x, GLfloat y);
-            [DllImport("opengl32", EntryPoint = "glWindowPos2fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos2fv")]
             public static extern void WindowPos2fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glWindowPos2i")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos2i")]
             public static extern void WindowPos2i(GLint x, GLint y);
-            [DllImport("opengl32", EntryPoint = "glWindowPos2iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos2iv")]
             public static extern void WindowPos2iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glWindowPos2s")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos2s")]
             public static extern void WindowPos2s(GLshort x, GLshort y);
-            [DllImport("opengl32", EntryPoint = "glWindowPos2sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos2sv")]
             public static extern void WindowPos2sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glWindowPos3d")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos3d")]
             public static extern void WindowPos3d(GLdouble x, GLdouble y, GLdouble z);
-            [DllImport("opengl32", EntryPoint = "glWindowPos3dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos3dv")]
             public static extern void WindowPos3dv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glWindowPos3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos3f")]
             public static extern void WindowPos3f(GLfloat x, GLfloat y, GLfloat z);
-            [DllImport("opengl32", EntryPoint = "glWindowPos3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos3fv")]
             public static extern void WindowPos3fv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glWindowPos3i")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos3i")]
             public static extern void WindowPos3i(GLint x, GLint y, GLint z);
-            [DllImport("opengl32", EntryPoint = "glWindowPos3iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos3iv")]
             public static extern void WindowPos3iv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glWindowPos3s")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos3s")]
             public static extern void WindowPos3s(GLshort x, GLshort y, GLshort z);
-            [DllImport("opengl32", EntryPoint = "glWindowPos3sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glWindowPos3sv")]
             public static extern void WindowPos3sv_(IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glGenQueries")]
+            [DllImport("opengl32.dll", EntryPoint = "glGenQueries")]
             public static extern void GenQueries(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] ids);
-            [DllImport("opengl32", EntryPoint = "glDeleteQueries")]
+            [DllImport("opengl32.dll", EntryPoint = "glDeleteQueries")]
             public static extern void DeleteQueries_(GLsizei n, IntPtr ids);
-            [DllImport("opengl32", EntryPoint = "glIsQuery")]
+            [DllImport("opengl32.dll", EntryPoint = "glIsQuery")]
             public static extern GLboolean IsQuery(GLuint id);
-            [DllImport("opengl32", EntryPoint = "glBeginQuery")]
+            [DllImport("opengl32.dll", EntryPoint = "glBeginQuery")]
             public static extern void BeginQuery(Enums.VERSION_1_5 target, GLuint id);
-            [DllImport("opengl32", EntryPoint = "glEndQuery")]
+            [DllImport("opengl32.dll", EntryPoint = "glEndQuery")]
             public static extern void EndQuery(Enums.VERSION_1_5 target);
-            [DllImport("opengl32", EntryPoint = "glGetQueryiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetQueryiv")]
             public static extern void GetQueryiv(Enums.VERSION_1_5 target, Enums.VERSION_1_5 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetQueryObjectiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetQueryObjectiv")]
             public static extern void GetQueryObjectiv(GLuint id, Enums.VERSION_1_5 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetQueryObjectuiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetQueryObjectuiv")]
             public static extern void GetQueryObjectuiv(GLuint id, Enums.VERSION_1_5 pname, [MarshalAs(UnmanagedType.LPArray)] GLuint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glBindBuffer")]
+            [DllImport("opengl32.dll", EntryPoint = "glBindBuffer")]
             public static extern void BindBuffer(GLenum target, GLuint buffer);
-            [DllImport("opengl32", EntryPoint = "glDeleteBuffers")]
+            [DllImport("opengl32.dll", EntryPoint = "glDeleteBuffers")]
             public static extern void DeleteBuffers_(GLsizei n, IntPtr buffers);
-            [DllImport("opengl32", EntryPoint = "glGenBuffers")]
+            [DllImport("opengl32.dll", EntryPoint = "glGenBuffers")]
             public static extern void GenBuffers(GLsizei n, [MarshalAs(UnmanagedType.LPArray)] GLuint[] buffers);
-            [DllImport("opengl32", EntryPoint = "glIsBuffer")]
+            [DllImport("opengl32.dll", EntryPoint = "glIsBuffer")]
             public static extern GLboolean IsBuffer(GLuint buffer);
-            [DllImport("opengl32", EntryPoint = "glBufferData")]
+            [DllImport("opengl32.dll", EntryPoint = "glBufferData")]
             public static extern void BufferData_(GLenum target, GLsizeiptr size, IntPtr data, GLenum usage);
-            [DllImport("opengl32", EntryPoint = "glBufferSubData")]
+            [DllImport("opengl32.dll", EntryPoint = "glBufferSubData")]
             public static extern void BufferSubData_(GLenum target, GLintptr offset, GLsizeiptr size, IntPtr data);
-            [DllImport("opengl32", EntryPoint = "glGetBufferSubData")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetBufferSubData")]
             public static extern void GetBufferSubData_(GLenum target, GLintptr offset, GLsizeiptr size, IntPtr data);
-            [DllImport("opengl32", EntryPoint = "glMapBuffer")]
+            [DllImport("opengl32.dll", EntryPoint = "glMapBuffer")]
             public static extern IntPtr MapBuffer(GLenum target, GLenum access);
-            [DllImport("opengl32", EntryPoint = "glUnmapBuffer")]
+            [DllImport("opengl32.dll", EntryPoint = "glUnmapBuffer")]
             public static extern GLboolean UnmapBuffer(GLenum target);
-            [DllImport("opengl32", EntryPoint = "glGetBufferParameteriv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetBufferParameteriv")]
             public static extern void GetBufferParameteriv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetBufferPointerv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetBufferPointerv")]
             public static extern void GetBufferPointerv(GLenum target, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] parameters);
-            [DllImport("opengl32", EntryPoint = "glBlendEquationSeparate")]
+            [DllImport("opengl32.dll", EntryPoint = "glBlendEquationSeparate")]
             public static extern void BlendEquationSeparate(Enums.BlendEquationModeEXT modeRGB, Enums.BlendEquationModeEXT modeAlpha);
-            [DllImport("opengl32", EntryPoint = "glDrawBuffers")]
+            [DllImport("opengl32.dll", EntryPoint = "glDrawBuffers")]
             public static extern void DrawBuffers_(GLsizei n, IntPtr bufs);
-            [DllImport("opengl32", EntryPoint = "glStencilOpSeparate")]
+            [DllImport("opengl32.dll", EntryPoint = "glStencilOpSeparate")]
             public static extern void StencilOpSeparate(GLenum face, Enums.StencilOp sfail, Enums.StencilOp dpfail, Enums.StencilOp dppass);
-            [DllImport("opengl32", EntryPoint = "glStencilFuncSeparate")]
+            [DllImport("opengl32.dll", EntryPoint = "glStencilFuncSeparate")]
             public static extern void StencilFuncSeparate(Enums.StencilFunction frontfunc, Enums.StencilFunction backfunc, GLint reference, GLuint mask);
-            [DllImport("opengl32", EntryPoint = "glStencilMaskSeparate")]
+            [DllImport("opengl32.dll", EntryPoint = "glStencilMaskSeparate")]
             public static extern void StencilMaskSeparate(GLenum face, GLuint mask);
-            [DllImport("opengl32", EntryPoint = "glAttachShader")]
+            [DllImport("opengl32.dll", EntryPoint = "glAttachShader")]
             public static extern void AttachShader(GLuint program, GLuint shader);
-            [DllImport("opengl32", EntryPoint = "glBindAttribLocation")]
+            [DllImport("opengl32.dll", EntryPoint = "glBindAttribLocation")]
             public static extern void BindAttribLocation_(GLuint program, GLuint index, IntPtr name);
-            [DllImport("opengl32", EntryPoint = "glCompileShader")]
+            [DllImport("opengl32.dll", EntryPoint = "glCompileShader")]
             public static extern void CompileShader(GLuint shader);
-            [DllImport("opengl32", EntryPoint = "glCreateProgram")]
+            [DllImport("opengl32.dll", EntryPoint = "glCreateProgram")]
             public static extern GLuint CreateProgram();
-            [DllImport("opengl32", EntryPoint = "glCreateShader")]
+            [DllImport("opengl32.dll", EntryPoint = "glCreateShader")]
             public static extern GLuint CreateShader(Enums.VERSION_2_0 type);
-            [DllImport("opengl32", EntryPoint = "glDeleteProgram")]
+            [DllImport("opengl32.dll", EntryPoint = "glDeleteProgram")]
             public static extern void DeleteProgram(GLuint program);
-            [DllImport("opengl32", EntryPoint = "glDeleteShader")]
+            [DllImport("opengl32.dll", EntryPoint = "glDeleteShader")]
             public static extern void DeleteShader(GLuint shader);
-            [DllImport("opengl32", EntryPoint = "glDetachShader")]
+            [DllImport("opengl32.dll", EntryPoint = "glDetachShader")]
             public static extern void DetachShader(GLuint program, GLuint shader);
-            [DllImport("opengl32", EntryPoint = "glDisableVertexAttribArray")]
+            [DllImport("opengl32.dll", EntryPoint = "glDisableVertexAttribArray")]
             public static extern void DisableVertexAttribArray(GLuint index);
-            [DllImport("opengl32", EntryPoint = "glEnableVertexAttribArray")]
+            [DllImport("opengl32.dll", EntryPoint = "glEnableVertexAttribArray")]
             public static extern void EnableVertexAttribArray(GLuint index);
-            [DllImport("opengl32", EntryPoint = "glGetActiveAttrib")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetActiveAttrib")]
             public static extern void GetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] Enums.VERSION_2_0[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
-            [DllImport("opengl32", EntryPoint = "glGetActiveUniform")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetActiveUniform")]
             public static extern void GetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLint[] size, [MarshalAs(UnmanagedType.LPArray)] Enums.VERSION_2_0[] type, [MarshalAs(UnmanagedType.LPArray)] GLchar[] name);
-            [DllImport("opengl32", EntryPoint = "glGetAttachedShaders")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetAttachedShaders")]
             public static extern void GetAttachedShaders(GLuint program, GLsizei maxCount, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] count, [MarshalAs(UnmanagedType.LPArray)] GLuint[] obj);
-            [DllImport("opengl32", EntryPoint = "glGetAttribLocation")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetAttribLocation")]
             public static extern GLint GetAttribLocation_(GLuint program, IntPtr name);
-            [DllImport("opengl32", EntryPoint = "glGetProgramiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetProgramiv")]
             public static extern void GetProgramiv(GLuint program, Enums.VERSION_2_0 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetProgramInfoLog")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetProgramInfoLog")]
             public static extern void GetProgramInfoLog(GLuint program, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] infoLog);
-            [DllImport("opengl32", EntryPoint = "glGetShaderiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetShaderiv")]
             public static extern void GetShaderiv(GLuint shader, Enums.VERSION_2_0 pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetShaderInfoLog")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetShaderInfoLog")]
             public static extern void GetShaderInfoLog(GLuint shader, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] infoLog);
-            [DllImport("opengl32", EntryPoint = "glGetShaderSource")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetShaderSource")]
             public static extern void GetShaderSource(GLuint shader, GLsizei bufSize, [MarshalAs(UnmanagedType.LPArray)] GLsizei[] length, [MarshalAs(UnmanagedType.LPArray)] GLchar[] source);
-            [DllImport("opengl32", EntryPoint = "glGetUniformLocation")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetUniformLocation")]
             public static extern GLint GetUniformLocation_(GLuint program, IntPtr name);
-            [DllImport("opengl32", EntryPoint = "glGetUniformfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetUniformfv")]
             public static extern void GetUniformfv(GLuint program, GLint location, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetUniformiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetUniformiv")]
             public static extern void GetUniformiv(GLuint program, GLint location, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetVertexAttribdv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetVertexAttribdv")]
             public static extern void GetVertexAttribdv(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLdouble[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetVertexAttribfv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetVertexAttribfv")]
             public static extern void GetVertexAttribfv(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLfloat[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetVertexAttribiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetVertexAttribiv")]
             public static extern void GetVertexAttribiv(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] GLint[] parameters);
-            [DllImport("opengl32", EntryPoint = "glGetVertexAttribPointerv")]
+            [DllImport("opengl32.dll", EntryPoint = "glGetVertexAttribPointerv")]
             public static extern void GetVertexAttribPointerv(GLuint index, GLenum pname, [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pointer);
-            [DllImport("opengl32", EntryPoint = "glIsProgram")]
+            [DllImport("opengl32.dll", EntryPoint = "glIsProgram")]
             public static extern GLboolean IsProgram(GLuint program);
-            [DllImport("opengl32", EntryPoint = "glIsShader")]
+            [DllImport("opengl32.dll", EntryPoint = "glIsShader")]
             public static extern GLboolean IsShader(GLuint shader);
-            [DllImport("opengl32", EntryPoint = "glLinkProgram")]
+            [DllImport("opengl32.dll", EntryPoint = "glLinkProgram")]
             public static extern void LinkProgram(GLuint program);
-            [DllImport("opengl32", EntryPoint = "glShaderSource")]
+            [DllImport("opengl32.dll", EntryPoint = "glShaderSource")]
             public static extern void ShaderSource_(GLuint shader, GLsizei count, string[] @string, IntPtr length);
-            [DllImport("opengl32", EntryPoint = "glUseProgram")]
+            [DllImport("opengl32.dll", EntryPoint = "glUseProgram")]
             public static extern void UseProgram(GLuint program);
-            [DllImport("opengl32", EntryPoint = "glUniform1f")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform1f")]
             public static extern void Uniform1f(GLint location, GLfloat v0);
-            [DllImport("opengl32", EntryPoint = "glUniform2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform2f")]
             public static extern void Uniform2f(GLint location, GLfloat v0, GLfloat v1);
-            [DllImport("opengl32", EntryPoint = "glUniform3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform3f")]
             public static extern void Uniform3f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
-            [DllImport("opengl32", EntryPoint = "glUniform4f")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform4f")]
             public static extern void Uniform4f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2, GLfloat v3);
-            [DllImport("opengl32", EntryPoint = "glUniform1i")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform1i")]
             public static extern void Uniform1i(GLint location, GLint v0);
-            [DllImport("opengl32", EntryPoint = "glUniform2i")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform2i")]
             public static extern void Uniform2i(GLint location, GLint v0, GLint v1);
-            [DllImport("opengl32", EntryPoint = "glUniform3i")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform3i")]
             public static extern void Uniform3i(GLint location, GLint v0, GLint v1, GLint v2);
-            [DllImport("opengl32", EntryPoint = "glUniform4i")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform4i")]
             public static extern void Uniform4i(GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
-            [DllImport("opengl32", EntryPoint = "glUniform1fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform1fv")]
             public static extern void Uniform1fv_(GLint location, GLsizei count, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniform2fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform2fv")]
             public static extern void Uniform2fv_(GLint location, GLsizei count, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniform3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform3fv")]
             public static extern void Uniform3fv_(GLint location, GLsizei count, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniform4fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform4fv")]
             public static extern void Uniform4fv_(GLint location, GLsizei count, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniform1iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform1iv")]
             public static extern void Uniform1iv_(GLint location, GLsizei count, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniform2iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform2iv")]
             public static extern void Uniform2iv_(GLint location, GLsizei count, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniform3iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform3iv")]
             public static extern void Uniform3iv_(GLint location, GLsizei count, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniform4iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniform4iv")]
             public static extern void Uniform4iv_(GLint location, GLsizei count, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniformMatrix2fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniformMatrix2fv")]
             public static extern void UniformMatrix2fv_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniformMatrix3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniformMatrix3fv")]
             public static extern void UniformMatrix3fv_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glUniformMatrix4fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glUniformMatrix4fv")]
             public static extern void UniformMatrix4fv_(GLint location, GLsizei count, Enums.Boolean transpose, IntPtr value);
-            [DllImport("opengl32", EntryPoint = "glValidateProgram")]
+            [DllImport("opengl32.dll", EntryPoint = "glValidateProgram")]
             public static extern void ValidateProgram(GLuint program);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib1d")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib1d")]
             public static extern void VertexAttrib1d(GLuint index, GLdouble x);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib1dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib1dv")]
             public static extern void VertexAttrib1dv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib1f")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib1f")]
             public static extern void VertexAttrib1f(GLuint index, GLfloat x);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib1fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib1fv")]
             public static extern void VertexAttrib1fv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib1s")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib1s")]
             public static extern void VertexAttrib1s(GLuint index, GLshort x);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib1sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib1sv")]
             public static extern void VertexAttrib1sv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib2d")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib2d")]
             public static extern void VertexAttrib2d(GLuint index, GLdouble x, GLdouble y);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib2dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib2dv")]
             public static extern void VertexAttrib2dv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib2f")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib2f")]
             public static extern void VertexAttrib2f(GLuint index, GLfloat x, GLfloat y);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib2fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib2fv")]
             public static extern void VertexAttrib2fv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib2s")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib2s")]
             public static extern void VertexAttrib2s(GLuint index, GLshort x, GLshort y);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib2sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib2sv")]
             public static extern void VertexAttrib2sv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib3d")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib3d")]
             public static extern void VertexAttrib3d(GLuint index, GLdouble x, GLdouble y, GLdouble z);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib3dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib3dv")]
             public static extern void VertexAttrib3dv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib3f")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib3f")]
             public static extern void VertexAttrib3f(GLuint index, GLfloat x, GLfloat y, GLfloat z);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib3fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib3fv")]
             public static extern void VertexAttrib3fv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib3s")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib3s")]
             public static extern void VertexAttrib3s(GLuint index, GLshort x, GLshort y, GLshort z);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib3sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib3sv")]
             public static extern void VertexAttrib3sv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nbv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4Nbv")]
             public static extern void VertexAttrib4Nbv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4Niv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4Niv")]
             public static extern void VertexAttrib4Niv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nsv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4Nsv")]
             public static extern void VertexAttrib4Nsv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nub")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4Nub")]
             public static extern void VertexAttrib4Nub(GLuint index, GLubyte x, GLubyte y, GLubyte z, GLubyte w);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nubv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4Nubv")]
             public static extern void VertexAttrib4Nubv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nuiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4Nuiv")]
             public static extern void VertexAttrib4Nuiv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4Nusv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4Nusv")]
             public static extern void VertexAttrib4Nusv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4bv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4bv")]
             public static extern void VertexAttrib4bv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4d")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4d")]
             public static extern void VertexAttrib4d(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4dv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4dv")]
             public static extern void VertexAttrib4dv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4f")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4f")]
             public static extern void VertexAttrib4f(GLuint index, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4fv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4fv")]
             public static extern void VertexAttrib4fv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4iv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4iv")]
             public static extern void VertexAttrib4iv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4s")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4s")]
             public static extern void VertexAttrib4s(GLuint index, GLshort x, GLshort y, GLshort z, GLshort w);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4sv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4sv")]
             public static extern void VertexAttrib4sv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4ubv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4ubv")]
             public static extern void VertexAttrib4ubv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4uiv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4uiv")]
             public static extern void VertexAttrib4uiv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttrib4usv")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttrib4usv")]
             public static extern void VertexAttrib4usv_(GLuint index, IntPtr v);
-            [DllImport("opengl32", EntryPoint = "glVertexAttribPointer")]
+            [DllImport("opengl32.dll", EntryPoint = "glVertexAttribPointer")]
             public static extern void VertexAttribPointer_(GLuint index, GLint size, GLenum type, Enums.Boolean normalized, GLsizei stride, IntPtr pointer);
         }
         #endregion
