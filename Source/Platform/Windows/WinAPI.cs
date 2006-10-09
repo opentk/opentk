@@ -27,6 +27,7 @@ namespace OpenTK.Platform.Windows
             public const int WM_SYSKEYUP = 0x0105;
             public const int WM_COMMAND = 0x0111;
             public const int WM_SYSCOMMAND = 0x0112;
+            public const int WM_ENTERIDLE = 0x121;
 
             // Pixel types (found in WinGDI.h)
             public const byte PFD_TYPE_RGBA         = 0;
@@ -62,6 +63,18 @@ namespace OpenTK.Platform.Windows
         #region WINAPI methods
         #region PeekMessage
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Message
+        {
+            public IntPtr hWnd;
+            public int msg;
+            public IntPtr wParam;
+            public IntPtr lParam;
+            public uint time;
+            public System.Drawing.Point p;
+            //System.Drawing.
+        }
+
         /// <summary>
         /// Low-level WINAPI function that checks the next message in the queue.
         /// </summary>
@@ -73,8 +86,8 @@ namespace OpenTK.Platform.Windows
         /// <returns>True if there is a message pending.</returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern bool PeekMessage(out System.Windows.Forms.Message msg, IntPtr hWnd, uint messageFilterMin,
-            uint messageFilterMax, uint flags);
+        //public static extern bool PeekMessage(out System.Windows.Forms.Message msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags);
+        public static extern bool PeekMessage(out Message msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags);
 
         #endregion
 
