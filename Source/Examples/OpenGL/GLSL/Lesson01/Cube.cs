@@ -13,17 +13,17 @@ namespace OpenTK.Examples.OpenGL.GLSL
     public partial class Cube : GLForm
     {
         #region Shaders
-        string[] vertex_shader =
+        string[] vertex_shader_source =
         {
-            "void main() { ",
+            "void main() {",
             "gl_FrontColor = gl_Color;",
             "gl_Position = ftransform();",
-            "}"
+            "}",
         };
 
-        string[] fragment_shader =
+        string[] fragment_shader_source =
         {
-            "void main() { gl_FragColor = gl_Color; }"
+            "void main() { gl_FragColor = gl_Color; }\0"
         };
         #endregion
 
@@ -49,17 +49,27 @@ namespace OpenTK.Examples.OpenGL.GLSL
             vertex_shader_object = GL.CreateShader(Enums.VERSION_2_0.VERTEX_SHADER);
             fragment_shader_object = GL.CreateShader(Enums.VERSION_2_0.FRAGMENT_SHADER);
 
-            GL.ShaderSource(vertex_shader_object, 1, vertex_shader, null);
+            GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, IntPtr.Zero);
             GL.CompileShader(vertex_shader_object);
             GL.GetShaderiv(vertex_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, status);
-            //if (status[0] != GL._TRUE)
-            //    throw new Exception("Could not compile vertex shader");
+            if (status[0] != (int)Enums.Boolean.TRUE)
+            {
+                StringBuilder info = new StringBuilder(1024);
+                GL.GetShaderInfoLog(vertex_shader_object, 1024, null, info);
 
-            GL.ShaderSource(fragment_shader_object, 1, fragment_shader, null);
+                throw new Exception(info.ToString());
+            }
+
+            GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, IntPtr.Zero);
             GL.CompileShader(fragment_shader_object);
             GL.GetShaderiv(fragment_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, status);
-            //if (status[0] != GL._TRUE)
-            //    throw new Exception("Could not compile fragment shader");
+            if (status[0] != (int)Enums.Boolean.TRUE)
+            {
+                StringBuilder info = new StringBuilder(1024);
+                GL.GetShaderInfoLog(fragment_shader_object, 1024, null, info);
+
+                throw new Exception(info.ToString());
+            }
 
             shader_program = GL.CreateProgram();
             GL.AttachShader(shader_program, fragment_shader_object);
@@ -183,14 +193,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            try
-            {
-                Application.Run(new Cube());
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
+            Application.Run(new Cube());
         }
         #endregion
     }

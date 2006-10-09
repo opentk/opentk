@@ -1,5 +1,4 @@
 Todo:
-+ + + Find out why many examples crash when compiled in release mode, but only when run outside the editor.
 + + Add cross-platform way for overriding the Application.Idle handler.
 + Add more examples.
 + + Change the hierarchy of the WindowsContext and WindowsVistaContext classes. The should have a common ancestor who manages the windows creation (it should be the same for both).

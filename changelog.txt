@@ -1,3 +1,10 @@
+OpenTK 0.3.3 -> 0.3.4
++ Corrected the crash error in Release mode (it was caused by trying to Marshal the System.Windows.Forms.Message struct to PeekMessage - adding my own Message struct corrected the issue).
++ Corrected the call to glShaderSource GLSL.Lesson01. Now the correct number is passed to the count parameter, while the null parameter was changed to IntPtr.Zero (Mono now no longers fails in this call).
++ Updated the GLSL.Lesson01 example to use GetShaderInfoLog on compilation failure.
++ OpenTK.OpenGL.Bind 0.7.5.1 -> 0.7.5.2 (see Bind changelog for more information)
++ Full Mono support under windows.
+
 OpenTK 0.3.2 -> 0.3.3
 + OpenTK.OpenGL.Bind 0.7.5 -> 0.7.5.1 (see Bind changelog for more information)
 + Added the GLForm class which sets the base for cross-platform screen, context and keyboard handling.
