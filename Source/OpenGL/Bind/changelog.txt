@@ -1,3 +1,7 @@
+OpenTK.OpenGL.Bind 0.7.5.1 -> 0.7.5.2
++ Added translation for out char[] parameters (they are treated as StringBuilders, as specified in MSDN).
++ Added System.Text using directive.
+
 OpenTK.OpenGL.Bind 0.7.5 -> 0.7.5.1
 + Added license information to the generated bindings.
 + Changed the name of the main Context class to GLContext (Context is used in the BCL).

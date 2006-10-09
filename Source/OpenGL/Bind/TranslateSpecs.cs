@@ -267,13 +267,22 @@ namespace OpenTK.OpenGL.Bind
                     p.Array = false;
                     //p.UnmanagedType = System.Runtime.InteropServices.UnmanagedType.LPArray;
                 }
-                if (p.Array &&
+                if ( p.Array &&
                     !p.Type.Contains("void") &&
+                    !p.Type.Contains("char") &&
                     (p.Flow == Parameter.FlowDirection.Out))
                 {
                     p.UnmanagedType = System.Runtime.InteropServices.UnmanagedType.LPArray;
                     //f.NeedsWrapper = true;
                     //f.WrapperType = WrapperTypes.ArrayOut;
+                }
+                else if (p.Array &&
+                    p.Type.Contains("char") &&
+                    (p.Flow == Parameter.FlowDirection.Out))
+                {
+                    p.Type = "StringBuilder";
+                    p.Array = false;
+                    p.Flow = Parameter.FlowDirection.Undefined;
                 }
                 else if (p.Array &&
                     p.Type.Contains("void") &&

@@ -30,6 +30,7 @@ namespace OpenTK.OpenGL.Bind
 
             sw.WriteLine("using System;");
             sw.WriteLine("using System.Runtime.InteropServices;");
+            sw.WriteLine("using System.Text;");
             sw.WriteLine();
             sw.WriteLine("namespace {0}", Settings.OutputNamespace);
             sw.WriteLine("{");
@@ -66,7 +67,7 @@ namespace OpenTK.OpenGL.Bind
         }
         #endregion
 
-        #region WriteTypes
+        #region Write types
         private static void WriteTypes(StreamWriter sw)
         {
             sw.WriteLine("    #region Types");
