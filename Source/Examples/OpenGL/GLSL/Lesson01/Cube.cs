@@ -29,12 +29,6 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
         static float angle;
 
-        #region Constructor
-        public Cube()
-        {
-        }
-        #endregion
-
         #region Load event handler
         protected override void OnLoad(EventArgs e)
         {
@@ -74,7 +68,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
             GL.LinkProgram(shader_program);
             GL.UseProgram(shader_program);
 
-            //OnResize(e);
+            OnResize(e);
         }
         #endregion
 
@@ -85,7 +79,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
             if (ClientSize.Height == 0)
                 ClientSize = new System.Drawing.Size(ClientSize.Width, 1);
-            
+
             GL.Viewport(0, 0, ClientSize.Width, ClientSize.Height);
 
             double ratio = 0.0;
@@ -97,7 +91,6 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
             GL.MatrixMode(Enums.MatrixMode.PROJECTION);
             GL.LoadIdentity();
-
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
         #endregion
@@ -122,6 +115,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
             DrawCube();
 
             Context.SwapBuffers();
+            this.Invalidate();
         }
         #endregion
 
@@ -189,7 +183,14 @@ namespace OpenTK.Examples.OpenGL.GLSL
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Cube());
+            try
+            {
+                Application.Run(new Cube());
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
         #endregion
     }

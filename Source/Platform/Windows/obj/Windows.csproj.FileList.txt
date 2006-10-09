@@ -1,2 +1,0 @@
-..\..\..\..\..\Binaries\Debug\Libraries\OpenTK.Platform.Windows.dll
-..\..\..\..\..\Binaries\Debug\Libraries\OpenTK.Platform.Windows.pdb
