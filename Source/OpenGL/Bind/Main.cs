@@ -87,7 +87,7 @@ namespace OpenTK.OpenGL.Bind
                                 ((Enum)enums[e.Name]).ConstantCollection.Add(c.Name, c);
                     }
 
-                Translation.GLtypes = SpecReader.ReadTypeMap("gl_types.txt");
+                Translation.GLtypes = SpecReader.ReadTypeMap("gl.tm");
                 Translation.CStypes = SpecReader.ReadTypeMap("cs_types.txt");
 
                 Translation.TranslateFunctions(functions, enums, out wrappers);
