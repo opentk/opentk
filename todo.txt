@@ -1,4 +1,5 @@
 Todo:
++ + + Add basic GLX bindings.
 + + Add cross-platform way for overriding the Application.Idle handler.
 + Add more examples.
 + + Change the hierarchy of the WindowsContext and WindowsVistaContext classes. The should have a common ancestor who manages the windows creation (it should be the same for both).
