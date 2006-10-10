@@ -1,5 +1,10 @@
 OpenTK 0.3.4 -> 0.3.5
 + Major update to OpenTK.OpenGL.Bind (cleaner code, new functions, comments and many new wrappers).
++ Laid the foundation for X (Linux, Unix, MacOS) support.
+	+ Added bindings to some glx functions.
+	+ Added the OpenTK.Platform.X class.
++ Minor updates to the wgl bindings (int -> IntPtr).
++ Tested the binding generator with the glx specs (the reader and the enum writer work ok, the trnaslator and the other writers need updating).
 
 OpenTK 0.3.3 -> 0.3.4
 + Corrected the crash error in Release mode (it was caused by trying to Marshal the System.Windows.Forms.Message struct to PeekMessage - adding my own Message struct corrected the issue).

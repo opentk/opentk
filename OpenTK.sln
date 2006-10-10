@@ -10,12 +10,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specifications", "Specifications", "{B23A6DCD-9FE9-4523-95FB-01C8D4631555}"
 	ProjectSection(SolutionItems) = preProject
-		Specifications\cs_types.txt = Specifications\cs_types.txt
+		Specifications\csharp.tm = Specifications\csharp.tm
 		Specifications\enum.spec = Specifications\enum.spec
 		Specifications\enumext.spec = Specifications\enumext.spec
+		Specifications\enumglu.spec = Specifications\enumglu.spec
 		Specifications\gl.spec = Specifications\gl.spec
-		Specifications\gl_types.txt = Specifications\gl_types.txt
+		Specifications\gl.tm = Specifications\gl.tm
+		Specifications\glu.spec = Specifications\glu.spec
+		Specifications\glx.spec = Specifications\glx.spec
+		Specifications\glx.tm = Specifications\glx.tm
+		Specifications\glxenum.spec = Specifications\glxenum.spec
+		Specifications\glxenumext.spec = Specifications\glxenumext.spec
+		Specifications\glxext.spec = Specifications\glxext.spec
 		Specifications\try.spec = Specifications\try.spec
+		Specifications\TypeMap.txt = Specifications\TypeMap.txt
+		Specifications\wgl.spec = Specifications\wgl.spec
+		Specifications\wgl.tm = Specifications\wgl.tm
+		Specifications\wglenum.spec = Specifications\wglenum.spec
+		Specifications\wglenumext.spec = Specifications\wglenumext.spec
+		Specifications\wglext.spec = Specifications\wglext.spec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{E9FF51BB-295E-4891-AA30-D1374F26DCE0}"
@@ -47,6 +60,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{70FA6E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GLSL.Lesson01", "Source\Examples\OpenGL\GLSL\Lesson01\GLSL.Lesson01.csproj", "{46980D11-67FA-4B33-903F-BC9D8A4FE60F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Platform.X", "Source\Platform\X\OpenTK.Platform.X.csproj", "{E3F35BD6-67CE-4AD5-AB98-043CF072A75A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +84,10 @@ Global
 		{46980D11-67FA-4B33-903F-BC9D8A4FE60F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46980D11-67FA-4B33-903F-BC9D8A4FE60F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46980D11-67FA-4B33-903F-BC9D8A4FE60F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3F35BD6-67CE-4AD5-AB98-043CF072A75A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3F35BD6-67CE-4AD5-AB98-043CF072A75A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3F35BD6-67CE-4AD5-AB98-043CF072A75A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3F35BD6-67CE-4AD5-AB98-043CF072A75A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +101,7 @@ Global
 		{30996477-EDDE-4E45-AB3D-5E466314C755} = {7E640424-E2CD-4DD5-9392-7A706D73930E}
 		{2F3FEAD4-0FBD-48CC-AFA0-29FFF28284C2} = {7E640424-E2CD-4DD5-9392-7A706D73930E}
 		{FDFA00B6-FA81-4658-86E1-F312EFB42E1C} = {50DCE788-72FC-47E0-A6BD-50BCCE3FCE5B}
+		{E3F35BD6-67CE-4AD5-AB98-043CF072A75A} = {50DCE788-72FC-47E0-A6BD-50BCCE3FCE5B}
 		{836876D1-0C8D-4240-BEE4-859D9D3D46CB} = {2F3FEAD4-0FBD-48CC-AFA0-29FFF28284C2}
 		{1EDDE592-3923-4898-9006-3D69579E1745} = {2F3FEAD4-0FBD-48CC-AFA0-29FFF28284C2}
 		{70FA6EE8-62C6-437F-AD82-117F2D9CDE68} = {C6E60A87-12B4-444A-BE03-7E980EAC0172}

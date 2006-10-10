@@ -13,7 +13,7 @@ namespace OpenTK.OpenGL.Bind
     static class ContextWriter
     {
         #region Write main context
-        public static void WriteMainContext(string output_path, List<Function> functions)
+        public static void WriteMainContext(string output_path, string class_name, string gl_class_name, List<Function> functions)
         {
             string filename = Path.Combine(output_path, "GLContextLoad.cs");
 
@@ -22,7 +22,7 @@ namespace OpenTK.OpenGL.Bind
 
             StreamWriter sw = new StreamWriter(filename, false);
 
-            Console.WriteLine("Writing Context.Load() function to {1}", Settings.OutputClass, filename);
+            Console.WriteLine("Writing Context.Load() function to {1}", class_name, filename);
 
             SpecWriter.WriteLicense(sw);
 
@@ -41,7 +41,7 @@ namespace OpenTK.OpenGL.Bind
 
             foreach (Function f in functions)
             {
-                sw.WriteLine("            {2}.{0} = ({2}.Delegates.{0})GetAddress(\"gl{1}\", typeof({2}.Delegates.{0}));", f.Name, f.Name.TrimEnd('_'), Settings.OutputClass);
+                sw.WriteLine("            {2}.{0} = ({2}.Delegates.{0})GetAddress(\"gl{1}\", typeof({2}.Delegates.{0}));", f.Name, f.Name.TrimEnd('_'), gl_class_name);
             }
 
             sw.WriteLine("        }");
@@ -56,7 +56,7 @@ namespace OpenTK.OpenGL.Bind
         #endregion
 
         #region Write derived context
-        public static void WriteDerivedContext(string output_path, string class_name, List<Function> functions, params string[] import_list)
+        public static void WriteDerivedContext(string output_path, string class_name, string gl_class_name, List<Function> functions, params string[] import_list)
         {
             string filename = Path.Combine(output_path, class_name + "Load.cs");
 
@@ -86,7 +86,7 @@ namespace OpenTK.OpenGL.Bind
             foreach (Function f in functions)
             {
                 if (IsImportFunction(f, import_list))
-                    sw.WriteLine("            {0}.{1} = new {0}.Delegates.{1}({0}.Imports.{1});", Settings.OutputClass, f.Name);
+                    sw.WriteLine("            {0}.{1} = new {0}.Delegates.{1}({0}.Imports.{1});", gl_class_name, f.Name);
             }
 
             sw.WriteLine("        }");

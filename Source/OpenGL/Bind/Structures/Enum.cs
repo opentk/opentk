@@ -37,7 +37,7 @@ namespace OpenTK.OpenGL.Bind
             {
                 sb.AppendLine("            " + c.Name + " = " + c.Value + ",");
             }
-            sb.AppendLine("         }");
+            sb.AppendLine("        }");
 
             return sb.ToString();
         }
