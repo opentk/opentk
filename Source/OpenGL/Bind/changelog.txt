@@ -1,12 +1,28 @@
-OpenTK.OpenGL.Bind 0.7.5.1 -> 0.7.5.2
+OpenTK.OpenGL.Bind 0.7.6
+
+
+0.7.5.2 -> 0.7.6
++ Added NeedWrapper and WrapperType properties to each parameter (needed for more fince grained control on wrapper generation).
++ Added Function, Parameter, ParameterCollection (deep) copy constructors. This allows simpler code in many places (since we can now create new Functions without fear of affecting the old ones, for example).
++ Merged the ParameterCollection.cs with Parameter.cs
++ Added the FunctionBody class which contains the contents of a function as a list of strings. It is mainly intended for wrappers (allows cleaner code, too).
++ The wrapper generation now happens in TranlateSpecs.cs instead of WriteSpecs.cs. (Translations and generations should only happen during the translation phase, not while reading or writing. Allow for cleaner code).
++ Revamped the wrapper generator code. Now it handles correctly the cases where a function has more than one parameter that needs wrapping (i.e. it generates all permutations correctly). This is handled by recursively generating the needed permutations (it was a hell to implement).
++ Added some comments (many more to follow).
++ Removed some commented-out regions and some obsolete functions.
+
+
+0.7.5.1 -> 0.7.5.2
 + Added translation for out char[] parameters (they are treated as StringBuilders, as specified in MSDN).
 + Added System.Text using directive.
 
-OpenTK.OpenGL.Bind 0.7.5 -> 0.7.5.1
+
+0.7.5 -> 0.7.5.1
 + Added license information to the generated bindings.
 + Changed the name of the main Context class to GLContext (Context is used in the BCL).
 
-OpenTK.OpenGL.Bind 0.7.4 -> 0.7.5
+
+0.7.4 -> 0.7.5
 + Added wrappers for all functions that accept arrays. Permitted parameters for these are: an array of the original type (e.g. float[]), an IntPtr (if you manage memory yourself), or any blittable type (e.g. float[,,]). No type checking is done in the last case, so be careful!
 + Updated the wrappers for all functions that accept or return void pointers. Permitted parameters for these are: an IntPtr or any blittable type (type checking is turned off, so be extra careful!)
 + Aliased the GLbool type to int. It is hacky, but the examples bundled with Tao rely on this...

@@ -15,6 +15,41 @@ namespace OpenTK.OpenGL.Bind
     /// </summary>
     public class Function
     {
+        #region Constructors
+
+        public Function()
+        {
+            Parameters = new ParameterCollection();
+            Body = new FunctionBody();
+        }
+
+        public Function(Function f)
+        {
+            this.Body = new FunctionBody(f.Body);
+            this.Category = new string(f.Category.ToCharArray());
+            this.Extension = f.Extension;
+            this.Name = new string(f.Name.ToCharArray());
+            this.NeedsWrapper = f.NeedsWrapper;
+            this.Parameters = new ParameterCollection(f.Parameters);
+            this.ReturnValue = new string(f.ReturnValue.ToCharArray());
+            this.Version = new string(f.Version.ToCharArray());
+            this.WrapperType = f.WrapperType;
+        }
+
+        #endregion
+
+        #region Function body
+
+        FunctionBody _body;
+
+        public FunctionBody Body
+        {
+            get { return _body; }
+            set { _body = value; }
+        }
+        
+        #endregion
+
         #region Category property
 
         private string _category;
@@ -92,7 +127,7 @@ namespace OpenTK.OpenGL.Bind
 
         #region Parameter collection property
 
-        ParameterCollection _parameters = new ParameterCollection();
+        ParameterCollection _parameters;
 
         public ParameterCollection Parameters
         {
@@ -129,10 +164,28 @@ namespace OpenTK.OpenGL.Bind
 
         #endregion
 
-        #region Constructor
+        #region Call function string
 
-        public Function()
+        public string CallString()
         {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(Name);
+            sb.Append("(");
+            foreach (Parameter p in Parameters)
+            {
+                if (p.Unchecked)
+                    sb.Append("unchecked((" + p.Type + ")");
+
+                sb.Append(p.Name);
+
+                if (p.Unchecked)
+                    sb.Append(")");
+
+                sb.Append(", ");
+            }
+            sb.Replace(", ", ")", sb.Length - 2, 2);
+
+            return sb.ToString();
         }
 
         #endregion
@@ -145,30 +198,61 @@ namespace OpenTK.OpenGL.Bind
         /// </summary>
         override public string ToString()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(ReturnValue + " " + Name + Parameters.ToString());
-            return sb.ToString();
+            return ToString("");
         }
 
-        #endregion
-
-        #region Call function string
-
-        public string CallString()
+        public string ToString(string indentation)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(Name);
-            sb.Append("(");
-            foreach (Parameter p in Parameters)
+
+            sb.Append(indentation + ReturnValue + " " + Name + Parameters.ToString());
+            if (Body.Count > 0)
             {
-                sb.Append(p.Name);
-                sb.Append(", ");
+                sb.AppendLine();
+                sb.Append(Body.ToString(indentation));
             }
-            sb.Replace(", ", ")", sb.Length - 2, 2);
 
             return sb.ToString();
         }
 
         #endregion
+
+    }
+
+    public class FunctionBody : List<string>
+    {
+        public FunctionBody()
+        {
+        }
+
+        public FunctionBody(FunctionBody fb)
+        {
+            foreach (string s in fb)
+            {
+                this.Add(s);
+            }
+        }
+
+        public override string ToString()
+        {
+            return ToString("");
+        }
+
+        public string ToString(string indentation)
+        {
+            if (this.Count == 0)
+                return String.Empty;
+
+            StringBuilder sb = new StringBuilder(this.Count);
+            
+            sb.AppendLine(indentation + "{");
+            foreach (string s in this)
+            {
+                sb.AppendLine(indentation + "    " + s);
+            }
+            sb.AppendLine(indentation + "}");
+
+            return sb.ToString();
+        }
     }
 }

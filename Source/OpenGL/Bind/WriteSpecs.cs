@@ -45,7 +45,6 @@ namespace OpenTK.OpenGL.Bind
             WriteDllImports(sw, functions);
             WriteFunctions(sw, functions);
             WriteWrappers(sw, wrappers);
-            //WriteConstructor(sw, functions);
 
             sw.WriteLine("    }");
             sw.WriteLine("}");
@@ -196,6 +195,7 @@ namespace OpenTK.OpenGL.Bind
                 sw.WriteLine("        public static Delegates.{0} {0};", f.Name);
             }
 
+            sw.WriteLine();
             sw.WriteLine("        #endregion");
             sw.WriteLine();
         }
@@ -207,197 +207,18 @@ namespace OpenTK.OpenGL.Bind
             sw.WriteLine("        #region Wrappers");
             sw.WriteLine();
 
-            foreach (Function f in wrappers)
+            foreach (Function w in wrappers)
             {
-                // Hack! Should implement these in the future.
-                if (f.Extension)
-                    continue;
+                sw.WriteLine("        #region {0}{1}", w.Name, w.Parameters.ToString());
+                sw.WriteLine();
 
-                if (f.Parameters.ToString().Contains("out IntPtr"))
-                    continue;
-
-                if (f.Parameters.ToString().Contains("IntPtr[]"))
-                    continue;
-
-                sw.WriteLine("        #region {0}", f.Name.TrimEnd('_'));
+                sw.WriteLine("        public static");
+                sw.WriteLine(w.ToString("        "));
                 
-                if (f.WrapperType == WrapperTypes.ReturnsString)
-                {
-                    sw.WriteLine("        public static {0} {1}{2}", "string", f.Name.TrimEnd('_'), f.Parameters.ToString());
-                    sw.WriteLine("        {");
-                    sw.WriteLine("             return Marshal.PtrToStringAnsi({0});", f.CallString());
-                    sw.WriteLine("        }");
-
-                }
-                else if (f.Name.Contains("glLineStipple"))
-                {
-                    sw.WriteLine("        public static {0} {1}{2}", f.ReturnValue, f.Name.TrimEnd('_'), f.Parameters.ToString().Replace("GLushort", "GLint"));
-                    sw.WriteLine("        {");
-                    sw.WriteLine("             glLineStipple_({0}, unchecked((GLushort){1}));", f.Parameters[0].Name, f.Parameters[1].Name);
-                    sw.WriteLine("        }");
-                }
-                else if (f.WrapperType == WrapperTypes.VoidPointerIn || f.WrapperType == WrapperTypes.VoidPointerOut || f.WrapperType == WrapperTypes.ArrayIn)
-                {
-                    // Add object overload (i.e. turn off type checking).
-                    sw.WriteLine("        public static {0} {1}{2}", f.ReturnValue, f.Name.TrimEnd('_'), f.Parameters.ToString().Replace("IntPtr", "object"));
-                    sw.WriteLine("        {");
-                    int i = 0;
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("(");
-                    foreach (Parameter p in f.Parameters)
-                    {
-                        if (p.Type == "IntPtr")
-                        {
-                            sw.WriteLine("            GCHandle h{0} = GCHandle.Alloc({1}, GCHandleType.Pinned);", i, p.Name);
-                            sb.Append("h" + i + ".AddrOfPinnedObject()" + ", ");
-                            i++;
-                        }
-                        else
-                        {
-                            sb.Append(p.Name + ", ");
-                        }
-                    }
-                    sb.Replace(", ", ")", sb.Length - 2, 2);
-
-                    sw.WriteLine("            try");
-                    sw.WriteLine("            {");
-                    if (f.ReturnValue == "void")
-                        sw.WriteLine("                {0}{1};", f.Name, sb.ToString());
-                    else
-                        sw.WriteLine("                return {0}{1};", f.Name, sb.ToString());
-                    sw.WriteLine("            }");
-                    sw.WriteLine("            finally");
-                    sw.WriteLine("            {");
-                    while (i > 0)
-                    {
-                        sw.WriteLine("                h{0}.Free();", --i);
-                    }
-                    sw.WriteLine("            }");
-                    sw.WriteLine("        }");
-
-                    // Add IntPtr overload.
-                    sw.WriteLine("        public static {0} {1}{2}", f.ReturnValue, f.Name.TrimEnd('_'), f.Parameters.ToString());
-                    sw.WriteLine("        {");
-                    sb.Replace(", ", ")", sb.Length - 2, 2);
-                    if (f.ReturnValue == "void")
-                        sw.WriteLine("            {0};", f.CallString());
-                    else
-                        sw.WriteLine("            return {0};", f.CallString());
-                    sw.WriteLine("        }");
-                }
-
-                if (f.WrapperType == WrapperTypes.ArrayIn)
-                {
-                    // Add overload for the case the normal type is used (e.g. float[], bool[] etc).
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("(");
-                    foreach (Parameter p in f.Parameters)
-                    {
-                        if (p.Type == "IntPtr")
-                        {
-                            //sb.Append("[MarshalAs(UnmanagedType.LPArray)] ");
-                            sb.Append(p.PreviousType);
-                            sb.Append("[] ");
-                            sb.Append(p.Name);
-                        }
-                        else
-                            sb.Append(p.ToString());
-
-                        sb.Append(", ");
-                    }
-                    sb.Replace(", ", ")", sb.Length - 2, 2);
-                    sw.WriteLine("        public static {0} {1}{2}", f.ReturnValue, f.Name.TrimEnd('_'), sb.ToString());
-                    sw.WriteLine("        {");
-                    int i = 0;
-                    sb = new StringBuilder();
-                    sb.Append("(");
-                    foreach (Parameter p in f.Parameters)
-                    {
-                        if (p.Type == "IntPtr")
-                        {
-                            sw.WriteLine("            GCHandle h{0} = GCHandle.Alloc({1}, GCHandleType.Pinned);", i, p.Name);
-                            sb.Append("h" + i + ".AddrOfPinnedObject()" + ", ");
-                            i++;
-                        }
-                        else
-                        {
-                            sb.Append(p.Name + ", ");
-                        }
-                    }
-                    sb.Replace(", ", ")", sb.Length - 2, 2);
-
-                    sw.WriteLine("            try");
-                    sw.WriteLine("            {");
-                    if (f.ReturnValue == "void")
-                        sw.WriteLine("                {0}{1};", f.Name, sb.ToString());
-                    else
-                        sw.WriteLine("                return {0}{1};", f.Name, sb.ToString());
-                    sw.WriteLine("            }");
-                    sw.WriteLine("            finally");
-                    sw.WriteLine("            {");
-                    while (i > 0)
-                    {
-                        sw.WriteLine("                h{0}.Free();", --i);
-                    }
-                    sw.WriteLine("            }");
-                    sw.WriteLine("        }");
-                }
-
                 sw.WriteLine("        #endregion");
                 sw.WriteLine();
             }
-            sw.WriteLine("    #endregion");
-            sw.WriteLine();
-
-            //    if (fw.Parameters.ContainsType("object"))
-            //    {
-            //        Function f = WeakNameLookup(fw.Name, FunctionCollection);
-
-            //        sw.WriteLine("        public {0} {1}{2}", fw.ReturnValue, fw.Name, fw.Parameters.ToString());
-            //        sw.WriteLine("        {");
-
-            //        int i = 0;
-            //        StringBuilder sb = new StringBuilder();
-            //        sb.Append("(");
-            //        foreach (Parameter p in fw.Parameters)
-            //        {
-            //            if (p.Type == "object")
-            //            {
-            //                sw.WriteLine("            GCHandle h{0} = GCHandle.Alloc({1}, GCHandleType.Pinned);", i, p.Name);
-            //                sb.Append("h" + i + ".AddrOfPinnedObject()" + ", ");
-            //                i++;
-            //            }
-            //            else
-            //            {
-            //                sb.Append(p.Name + ", ");
-            //            }
-            //        }
-            //        sb.Replace(", ", ")", sb.Length - 2, 2);
-
-            //        sw.WriteLine("            try");
-            //        sw.WriteLine("            {");
-            //        if (fw.ReturnValue == "void")
-            //            sw.WriteLine("                {0}{1};", f.Name, sb.ToString());
-            //        else
-            //            sw.WriteLine("                return {0}{1};", f.Name, sb.ToString());
-            //        sw.WriteLine("            }");
-            //        sw.WriteLine("            finally");
-            //        sw.WriteLine("            {");
-            //        while (i > 0)
-            //        {
-            //            sw.WriteLine("                h{0}.Free();", --i);
-            //        }
-            //        sw.WriteLine("            }");
-            //        sw.WriteLine("        }");
-            //        sw.WriteLine();
-            //    }
-
-            //sw.WriteLine("        #endregion");
-            //sw.WriteLine("    }");
-            //sw.WriteLine("}");
-
-            //sw.Flush();
-            //sw.Close();
+            sw.WriteLine("        #endregion");
         }
         #endregion
     }

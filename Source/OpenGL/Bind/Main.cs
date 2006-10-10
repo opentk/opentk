@@ -94,7 +94,6 @@ namespace OpenTK.OpenGL.Bind
                 Translation.TranslateEnums(enums);
 
                 SpecWriter.WriteSpecs(Settings.OutputPath, functions, wrappers, enums);
-                //SpecWriter.WriteWrappers(Properties.Bind.Default.OutputPath, wrappers);
 
                 ContextWriter.WriteMainContext(Settings.OutputPath, functions);
                 ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsContext", functions, "1.0", "1.1");
