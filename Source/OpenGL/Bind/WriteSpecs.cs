@@ -15,16 +15,16 @@ namespace OpenTK.OpenGL.Bind
     static partial class SpecWriter
     {
         #region WriteSpecs
-        public static void WriteSpecs(string output_path, List<Function> functions, List<Function> wrappers, Hashtable enums)
+        public static void WriteSpecs(string output_path, string class_name, List<Function> functions, List<Function> wrappers, Hashtable enums)
         {
-            string filename = Path.Combine(output_path, Settings.OutputClass + ".cs");
+            string filename = Path.Combine(output_path, class_name + ".cs");
 
             if (!Directory.Exists(Settings.OutputPath))
                 Directory.CreateDirectory(Settings.OutputPath);
 
             StreamWriter sw = new StreamWriter(filename, false);
 
-            Console.WriteLine("Writing {0} class to {1}", Settings.OutputClass, filename);
+            Console.WriteLine("Writing {0} class to {1}", class_name, filename);
 
             WriteLicense(sw);
 
@@ -38,7 +38,7 @@ namespace OpenTK.OpenGL.Bind
             WriteTypes(sw);
             WriteEnums(sw, enums);
 
-            sw.WriteLine("    public static partial class {0}", Settings.OutputClass);
+            sw.WriteLine("    public static partial class {0}", class_name);
             sw.WriteLine("    {");
 
             WriteFunctionSignatures(sw, functions);
@@ -71,9 +71,9 @@ namespace OpenTK.OpenGL.Bind
         {
             sw.WriteLine("    #region Types");
             //foreach ( c in constants)
-            foreach (string key in Translation.CStypes.Keys)
+            foreach (string key in Translation.CSTypes.Keys)
             {
-                sw.WriteLine("    using {0} = System.{1};", key, Translation.CStypes[key]);
+                sw.WriteLine("    using {0} = System.{1};", key, Translation.CSTypes[key]);
                 //sw.WriteLine("        public const {0};", c.ToString());
             }
             sw.WriteLine("    #endregion");
@@ -185,6 +185,7 @@ namespace OpenTK.OpenGL.Bind
         #endregion
 
         #region Write functions
+
         private static void WriteFunctions(StreamWriter sw, List<Function> functions)
         {
             sw.WriteLine("        #region Function initialisation");
@@ -199,27 +200,34 @@ namespace OpenTK.OpenGL.Bind
             sw.WriteLine("        #endregion");
             sw.WriteLine();
         }
+
         #endregion
 
         #region Write wrappers
+
         public static void WriteWrappers(StreamWriter sw, List<Function> wrappers)
         {
             sw.WriteLine("        #region Wrappers");
             sw.WriteLine();
 
-            foreach (Function w in wrappers)
+            if (wrappers != null)
             {
-                sw.WriteLine("        #region {0}{1}", w.Name, w.Parameters.ToString());
-                sw.WriteLine();
+                foreach (Function w in wrappers)
+                {
+                    sw.WriteLine("        #region {0}{1}", w.Name, w.Parameters.ToString());
+                    sw.WriteLine();
 
-                sw.WriteLine("        public static");
-                sw.WriteLine(w.ToString("        "));
-                
-                sw.WriteLine("        #endregion");
-                sw.WriteLine();
+                    sw.WriteLine("        public static");
+                    sw.WriteLine(w.ToString("        "));
+
+                    sw.WriteLine("        #endregion");
+                    sw.WriteLine();
+                }
             }
+
             sw.WriteLine("        #endregion");
         }
+
         #endregion
     }
 }

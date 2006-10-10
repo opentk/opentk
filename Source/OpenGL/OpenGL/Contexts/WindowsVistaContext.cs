@@ -21,7 +21,6 @@ namespace OpenTK.OpenGL.Platform
 
         public WindowsVistaContext(Control c, int red, int green, int blue, int alpha, int depth, int stencil)
         {
-            bool load_extensions = false;
             int error_code = 0;
             _window_handle = c.Handle;
 
@@ -38,7 +37,6 @@ namespace OpenTK.OpenGL.Platform
                 else
                 {
                     Console.WriteLine("Loaded dll: {0}", _dll_name);
-                    load_extensions = true;
                 }
             }
 
@@ -108,11 +106,11 @@ namespace OpenTK.OpenGL.Platform
 
         public override Delegate GetAddress(string function_string, Type function_type)
         {
-            int address = Wgl.GetProcAddress(function_string);
-            if (address == 0)
+            IntPtr address = Wgl.GetProcAddress(function_string);
+            if (address == IntPtr.Zero)
                 return null;
             else
-                return Marshal.GetDelegateForFunctionPointer(new IntPtr(address), function_type);
+                return Marshal.GetDelegateForFunctionPointer(address, function_type);
         }
 
         public override void MakeCurrent()

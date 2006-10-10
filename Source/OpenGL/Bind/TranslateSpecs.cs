@@ -34,20 +34,53 @@ namespace OpenTK.OpenGL.Bind
 
         static Dictionary<string, string> parameter_names = new Dictionary<string, string>();
 
+        #region GL types dictionary
+
         private static Dictionary<string, string> _gl_types;
-        public static Dictionary<string, string> GLtypes
+
+        public static Dictionary<string, string> GLTypes
         {
             get { return Translation._gl_types; }
             set { Translation._gl_types = value; }
         }
 
+        #endregion
+
+        #region CS types dictionary
+
         private static Dictionary<string, string> _cs_types;
 
-        public static Dictionary<string, string> CStypes
+        public static Dictionary<string, string> CSTypes
         {
             get { return Translation._cs_types; }
             set { Translation._cs_types = value; }
         }
+
+        #endregion
+
+        #region GLX types dictionary
+
+        private static Dictionary<string, string> _glx_types;
+
+        public static Dictionary<string, string> GLXTypes
+        {
+            get { return _glx_types; }
+            set { _glx_types = value; }
+        }
+        
+        #endregion
+
+        #region WGL types dictionary
+
+        private static Dictionary<string, string> _wgl_types;
+
+        public static Dictionary<string, string> WGLTypes
+        {
+            get { return _wgl_types; }
+            set { _wgl_types = value; }
+        }
+        
+        #endregion
 
         #endregion
 
@@ -62,6 +95,7 @@ namespace OpenTK.OpenGL.Bind
             parameter_names.Add("ref", "reference");
             parameter_names.Add("params", "parameters");
             parameter_names.Add("in", "@in");
+            parameter_names.Add("class", "@class");
         }
 
         #endregion
@@ -116,7 +150,7 @@ namespace OpenTK.OpenGL.Bind
             if (f.ReturnValue == "void")
                 return;
 
-            if (GLtypes.TryGetValue(f.ReturnValue, out s))
+            if (GLTypes.TryGetValue(f.ReturnValue, out s))
                 f.ReturnValue = s;
 
             if (f.ReturnValue == "void[]")
@@ -167,7 +201,7 @@ namespace OpenTK.OpenGL.Bind
                     if (enums.ContainsKey(f.Category))
                         p.Type = "Enums." + f.Category;
                 }
-                else if (GLtypes.TryGetValue(p.Type, out s))
+                else if (GLTypes.TryGetValue(p.Type, out s))
                     p.Type = s;
 
                 #endregion

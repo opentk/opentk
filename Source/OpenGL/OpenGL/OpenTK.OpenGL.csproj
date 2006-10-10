@@ -56,6 +56,7 @@
     <Compile Include="Contexts\WindowsContext.cs" />
     <Compile Include="Contexts\WindowsVistaContext.cs" />
     <Compile Include="Contexts\X11Context.cs" />
+    <Compile Include="Glx.cs" />
     <Compile Include="Wgl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\..\Platform\Windows\OpenTK.Platform.Windows.csproj">
       <Project>{FDFA00B6-FA81-4658-86E1-F312EFB42E1C}</Project>
       <Name>OpenTK.Platform.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Platform\X\OpenTK.Platform.X.csproj">
+      <Project>{E3F35BD6-67CE-4AD5-AB98-043CF072A75A}</Project>
+      <Name>OpenTK.Platform.X</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

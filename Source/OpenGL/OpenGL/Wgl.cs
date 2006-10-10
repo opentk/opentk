@@ -1,6 +1,8 @@
+#region License
 /* Copyright (c) 2006 Stephen Apostolopoulos
  * See license.txt for license info
  */
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -239,7 +241,7 @@ namespace OpenTK.OpenGL
         public static extern int ShareLists(int r1, int r2);
 
         [DllImport(_dll_name, EntryPoint = "wglGetProcAddress")]
-        public static extern int GetProcAddress(string funcname);
+        public static extern IntPtr GetProcAddress(string funcname);
 
         #endregion
     }

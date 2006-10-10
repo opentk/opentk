@@ -8,7 +8,6 @@ using System.Text;
 using System.IO;
 using System.Security;
 using System.Security.Permissions;
-//using Settings = Tao.OpenGl.Bind.Properties.Bind;
 using System.Threading;
 using System.Collections.Generic;
 using System.Collections;
@@ -48,7 +47,7 @@ namespace OpenTK.OpenGL.Bind
                                 Settings.OutputPath = b[1];
                                 break;
                             case "class":
-                                Settings.OutputClass = b[1];
+                                Settings.GLClass = b[1];
                                 break;
                             default:
                                 throw new ArgumentException("Argument " + a + " not recognized. Use the '/?' switch for help.");
@@ -73,10 +72,11 @@ namespace OpenTK.OpenGL.Bind
             {
                 long ticks = System.DateTime.Now.Ticks;
 
+                // GL binding generation.
                 List<Function> wrappers;
                 List<Function> functions = SpecReader.ReadFunctionSpecs("gl.spec");
                 Hashtable enums = SpecReader.ReadEnumSpecs("enum.spec");
-                Hashtable enums2= SpecReader.ReadEnumSpecs("enumext.spec");
+                Hashtable enums2 = SpecReader.ReadEnumSpecs("enumext.spec");
                 foreach (Enum e in enums2.Values)
                     if (!enums.ContainsKey(e.Name))
                         enums.Add(e.Name, e);
@@ -87,18 +87,24 @@ namespace OpenTK.OpenGL.Bind
                                 ((Enum)enums[e.Name]).ConstantCollection.Add(c.Name, c);
                     }
 
-                Translation.GLtypes = SpecReader.ReadTypeMap("gl.tm");
-                Translation.CStypes = SpecReader.ReadTypeMap("cs_types.txt");
+                Translation.GLTypes = SpecReader.ReadTypeMap("gl.tm");
+                Translation.CSTypes = SpecReader.ReadTypeMap("csharp.tm");
 
                 Translation.TranslateFunctions(functions, enums, out wrappers);
                 Translation.TranslateEnums(enums);
 
-                SpecWriter.WriteSpecs(Settings.OutputPath, functions, wrappers, enums);
+                SpecWriter.WriteSpecs(Settings.OutputPath, Settings.GLClass, functions, wrappers, enums);
 
-                ContextWriter.WriteMainContext(Settings.OutputPath, functions);
-                ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsContext", functions, "1.0", "1.1");
-                ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsVistaContext", functions, "1.0", "1.1", "1.2", "1.3", "1.4");
-                ContextWriter.WriteDerivedContext(Settings.OutputPath, "X11Context", functions, "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "2.0");
+                ContextWriter.WriteMainContext(Settings.OutputPath, "GLContext", Settings.GLClass, functions);
+                ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsContext", Settings.GLClass, functions, "1.0", "1.1");
+                ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsVistaContext", Settings.GLClass, functions, "1.0", "1.1", "1.2", "1.3", "1.4");
+                ContextWriter.WriteDerivedContext(Settings.OutputPath, "X11Context", Settings.GLClass, functions, "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "2.0");
+
+                // GLX binding generation.
+                //Translation.GLXTypes = SpecReader.ReadTypeMap("glx.tm"); // Works semi-ok.
+                //functions = SpecReader.ReadFunctionSpecs("glx.spec"); // Works ok!
+                //Hashtable enums = SpecReader.ReadEnumSpecs("glxenum.spec"); // Works ok!
+                //SpecWriter.WriteSpecs(Settings.OutputPath, "Glx", functions, null, enums); // Needs updating.
 
                 ticks = System.DateTime.Now.Ticks - ticks;
 
@@ -109,11 +115,6 @@ namespace OpenTK.OpenGL.Bind
                 Console.WriteLine("Security violation \"{0}\" in method \"{1}\".", e.Message, e.Method);
                 Console.WriteLine("This application does not have permission to take the requested actions.");
             }
-            //finally
-            //{
-            //    Console.WriteLine("Press any key to continue...");
-            //    Console.ReadKey(false);
-            //}
         }
     }
 }
