@@ -1,0 +1,5 @@
+OpenTK.OpenGL.Bind 0.7.6 todos:
+
++ Clean up the reader.
++ Add more settings to Settings.cs (the name of the files to read).
++ Comment the code.

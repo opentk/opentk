@@ -53,13 +53,13 @@
     <Compile Include="Structures\Enum.cs" />
     <Compile Include="Structures\Function.cs" />
     <Compile Include="Structures\Parameter.cs" />
-    <Compile Include="Structures\ParameterCollection.cs" />
     <Compile Include="TranslateSpecs.cs" />
     <Compile Include="WriteContexts.cs" />
     <Compile Include="WriteSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="changelog.txt" />
+    <Content Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

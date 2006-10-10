@@ -16,8 +16,10 @@ namespace OpenTK.OpenGL.Bind
         None,
         VoidPointerIn,
         VoidPointerOut,
+        VoidPointer,
         ArrayOut,
         ArrayIn,
+        Array,
         UShortMaskParameter,
         ReturnsString,
         ReturnsVoidPointer,
@@ -31,7 +33,6 @@ namespace OpenTK.OpenGL.Bind
         #region Dictionaries
 
         static Dictionary<string, string> parameter_names = new Dictionary<string, string>();
-        //static Dictionary<string, string> parameter_types = new Dictionary<string, string>();
 
         private static Dictionary<string, string> _gl_types;
         public static Dictionary<string, string> GLtypes
@@ -61,147 +62,50 @@ namespace OpenTK.OpenGL.Bind
             parameter_names.Add("ref", "reference");
             parameter_names.Add("params", "parameters");
             parameter_names.Add("in", "@in");
-
-            #region Commented out
-            
-            //// Types
-            //parameter_types.Add("Boolean", "bool");
-            //parameter_types.Add("BooleanPointer", "bool[]");
-            //parameter_types.Add("Char", "char");
-            //parameter_types.Add("CharPointer", "string");
-
-            //parameter_types.Add("CheckedFloat32", "float");
-            //parameter_types.Add("CheckedInt32", "int");
-
-            //parameter_types.Add("ClampedColorF", "float");
-            //parameter_types.Add("ClampedFloat32", "float");
-            //parameter_types.Add("ClampedFloat64", "double");
-            //parameter_types.Add("ClampedStencilValue", "int");
-
-            //parameter_types.Add("ColorB", "byte");
-            //parameter_types.Add("ColorS", "short");
-            //parameter_types.Add("ColorI", "int");
-            //parameter_types.Add("ColorUB", "byte");
-            //parameter_types.Add("ColorUS", "ushort");
-            //parameter_types.Add("ColorUI", "uint");
-            //parameter_types.Add("ColorF", "float");
-            //parameter_types.Add("ColorD", "double");
-
-            //parameter_types.Add("ColorIndexValueD", "double");
-            //parameter_types.Add("ColorIndexValueF", "float");
-            //parameter_types.Add("ColorIndexValueI", "int");
-            //parameter_types.Add("ColorIndexValueS", "short");
-            //parameter_types.Add("ColorIndexValueUB", "byte");
-
-            //parameter_types.Add("CompressedTextureARB", "void");
-            //parameter_types.Add("ControlPointNV", "void");
-
-            //parameter_types.Add("CoordF", "float");
-            //parameter_types.Add("CoordD", "double");
-            //parameter_types.Add("CoordI", "int");
-            //parameter_types.Add("CoordS", "short");
-
-            //parameter_types.Add("FeedbackElement", "float");
-            //parameter_types.Add("FenceNV", "uint");
-
-            ///////////////////////////////////////
-            //parameter_types.Add("Int8", "byte");
-            //parameter_types.Add("Int16", "short");
-            //parameter_types.Add("Int32", "int");
-            //parameter_types.Add("UInt8", "byte");
-            //parameter_types.Add("UInt16", "ushort");
-            //parameter_types.Add("UInt32", "uint");
-            //parameter_types.Add("Float32", "float");
-            //parameter_types.Add("Float64", "double");
-
-            //parameter_types.Add("ConstFloat32", "float");
-            //parameter_types.Add("ConstInt32", "double");
-            //parameter_types.Add("ConstUInt32", "uint");
-            //parameter_types.Add("ConstVoid", "void");
-            //parameter_types.Add("ConstVoidPointer", "void[]");
-            
-            //parameter_types.Add("String", "string");
-            //parameter_types.Add("Void", "void");
-            //parameter_types.Add("VoidPointer", "void[]");
-            //parameter_types.Add("void", "void");
-            
-            //parameter_types.Add("Float32Pointer", "float");
-            //parameter_types.Add("Float32Double", "double");
-            /////////////////////////////////////////
-
-            //parameter_types.Add("List", "uint");
-            //parameter_types.Add("SizeI", "int");
-            //parameter_types.Add("LineStipple", "ushort");
-            //parameter_types.Add("WinCoord", "int");
-
-            //parameter_types.Add("Texture", "uint");
-            //parameter_types.Add("TextureComponentCount", "int");
-            
-            //parameter_types.Add("SelectName", "uint");
-            
-            //parameter_types.Add("MaskedColorIndexValueF", "float");
-            //parameter_types.Add("MaskedColorIndexValueI", "uint");
-            //parameter_types.Add("MaskedStencilValue", "uint");
-            //parameter_types.Add("StencilValue", "int");
-
-            //parameter_types.Add("handleARB", "uint");
-            //parameter_types.Add("charARB", "char"); // Maybe this should be byte?
-            //parameter_types.Add("charPointerARB", "string");
-
-            //parameter_types.Add("GLenum", "uint");
-            
-            //parameter_types.Add("VertexBufferSize", "IntPtr");
-            //parameter_types.Add("VertexBufferOffset", "IntPtr");
-            //parameter_types.Add("VertexBufferSizeARB", "IntPtr");
-            //parameter_types.Add("VertexBufferOffsetARB", "IntPtr");
-
-            //parameter_types.Add("IglooParameterSGIX", "IntPtr");
-                        
-            //parameter_types.Add("Half16NV", "ushort");
-            //parameter_types.Add("PixelDataRangeTargetNV", "uint");
-
-            #endregion
         }
 
         #endregion
 
-        #region Translate constants
-        public static List<Constant> TranslateConstants(List<Constant> constants)
-        {
-            uint value;
+        #region Translate enums
 
-            foreach (Constant c in constants)
+        public static void TranslateEnums(System.Collections.Hashtable enums)
+        {
+            foreach (Enum e in enums.Values)
             {
-                c.Name = "GL_" + c.Name;
-                if (!Char.IsDigit(c.Value[0]) && !c.Value.StartsWith("GL_"))
-                    c.Value = "GL_" + c.Value;
-                //if (String.CompareOrdinal(c.Value, "0x7FFFFFFF") > 0)
-                if (UInt32.TryParse(c.Value.Replace("0x", String.Empty), System.Globalization.NumberStyles.AllowHexSpecifier, null, out value))
-                    if (value > 0x7FFFFFFF)
-                        c.Value = "unchecked((int)" + c.Value + ")";
+                if (Char.IsDigit(e.Name[0]))
+                    e.Name = e.Name.Insert(0, "_");
+
+                if (e.Name == "Boolean")
+                    continue;
+
+                foreach (Constant c in e.ConstantCollection.Values)
+                {
+                    if (Char.IsDigit(c.Name[0]))
+                        c.Name = c.Name.Insert(0, "_");
+
+                    if (c.Value.Contains(".") && Char.IsDigit(c.Value[c.Value.IndexOf('.') + 1]))
+                        c.Value = c.Value.Insert(c.Value.IndexOf('.') + 1, "_");
+                }
             }
-            return constants;
         }
+
         #endregion
 
         #region Translate functions
+
         public static void TranslateFunctions(List<Function> functions, Hashtable enums, out List<Function> wrappers)
         {
-            wrappers = new List<Function>();
-
             foreach (Function f in functions)
             {
                 TranslateReturnValue(f, enums);
                 TranslateParameters(f, enums);
-                Function wrapper = GenerateWrapper(f);
-                if (wrapper != null)
-                    wrappers.Add(wrapper);
 
                 if (f.NeedsWrapper)
                     f.Name = f.Name + "_";
             }
+
+            wrappers = GenerateWrappers(functions);
         }
-        #endregion
 
         #region Translate return value
 
@@ -233,6 +137,7 @@ namespace OpenTK.OpenGL.Bind
         #endregion
 
         #region Translate parameters
+
         private static void TranslateParameters(Function f, Hashtable enums)
         {
             string s;
@@ -240,13 +145,22 @@ namespace OpenTK.OpenGL.Bind
             // Map parameters.
             foreach (Parameter p in f.Parameters)
             {
+                #region Default name translation
+
                 if (parameter_names.TryGetValue(p.Name, out s))
                     p.Name = s;
 
-                if (enums.ContainsKey(p.Type))
+                #endregion
+
+                #region Default type translation
+
+                if (p.Type.Contains("Boolean"))
+                {
+                    p.Type = "GLboolean";
+                }
+                else if (enums.ContainsKey(p.Type))
                 {
                     p.Type = "Enums." + p.Type;
-                    continue;
                 }
                 else if (p.Type == "GLenum")
                 {
@@ -256,101 +170,254 @@ namespace OpenTK.OpenGL.Bind
                 else if (GLtypes.TryGetValue(p.Type, out s))
                     p.Type = s;
 
-                if (p.Array &&
-                    !p.Type.Contains("void") &&
-                    !p.Type.Contains("string") &&
-                    (p.Flow == Parameter.FlowDirection.In || p.Flow == Parameter.FlowDirection.Undefined))
+                #endregion
+
+                #region Wrapper translations
+
+                if (p.Type.Contains("ushort") && f.Name.Contains("LineStipple"))
                 {
-                    f.NeedsWrapper = true;
-                    f.WrapperType = WrapperTypes.ArrayIn;
-                    p.Type = "IntPtr";
-                    p.Array = false;
-                    //p.UnmanagedType = System.Runtime.InteropServices.UnmanagedType.LPArray;
-                }
-                if ( p.Array &&
-                    !p.Type.Contains("void") &&
-                    !p.Type.Contains("char") &&
-                    (p.Flow == Parameter.FlowDirection.Out))
-                {
-                    p.UnmanagedType = System.Runtime.InteropServices.UnmanagedType.LPArray;
                     //f.NeedsWrapper = true;
-                    //f.WrapperType = WrapperTypes.ArrayOut;
+                    //f.WrapperType = WrapperTypes.UShortMaskParameter;
+                    p.NeedsWrapper = true;
+                    p.WrapperType = WrapperTypes.UShortMaskParameter;
+                    p.Unchecked = true;
                 }
-                else if (p.Array &&
-                    p.Type.Contains("char") &&
-                    (p.Flow == Parameter.FlowDirection.Out))
+                else if (p.Array && p.Type.Contains("string"))
                 {
-                    p.Type = "StringBuilder";
+                    p.NeedsWrapper = false;
+                    p.WrapperType = WrapperTypes.None;
+                }
+                else if (p.Array && p.Type.Contains("char"))
+                {
+                    if (p.Flow == Parameter.FlowDirection.Out)
+                        p.Type = "StringBuilder";
+                    else 
+                        p.Type = "string";
+                    p.Array = false;
+                    //f.Nee
+                }
+                else if (p.Array)
+                {
+                    //f.NeedsWrapper = true;
+                    p.NeedsWrapper = true;
+
+                    if (p.Type.Contains("void"))
+                        p.WrapperType = WrapperTypes.VoidPointer;
+                    else
+                        p.WrapperType = WrapperTypes.Array;
+
+                    p.Type = "IntPtr";
                     p.Array = false;
                     p.Flow = Parameter.FlowDirection.Undefined;
                 }
-                else if (p.Array &&
-                    p.Type.Contains("void") &&
-                    (p.Flow == Parameter.FlowDirection.In || p.Flow == Parameter.FlowDirection.Undefined))
-                {
-                    f.NeedsWrapper = true;
-                    f.WrapperType = WrapperTypes.VoidPointerIn;
-                    p.Array = false;
-                    p.Type = "IntPtr";
-                }
-                else if (p.Array && p.Type.Contains("void") &&
-                    (p.Flow == Parameter.FlowDirection.Out))
-                {
-                    f.NeedsWrapper = true;
-                    f.WrapperType = WrapperTypes.VoidPointerOut;
-                    p.Array = false;
-                    p.Type = "IntPtr";
-                }
-               
-                //if (p.Flow == Parameter.FlowDirection.Out && p.Type.Contains("string"))
-                //    p.Type.Replace("string", "StringBuilder");
 
-                //if (p.Type.Contains("[][]"))
-                //{
-                //    p.Type = "ref " + p.Type.Replace("[][]", "[]");
-                //}
+                if (p.NeedsWrapper)
+                {
+                    f.NeedsWrapper = true;
+                    //f.WrapperType = WrapperTypes.Array;
+                    f.WrapperType = p.WrapperType;
+                }
+
+                #endregion
             }
         }
+
         #endregion
 
         #region Generate wrappers
-        private static Function GenerateWrapper(Function f)
-        {
-            if (!f.NeedsWrapper)
-                return null;
 
-            // These do not need wrapping!
-            if (f.Name.Contains("TexImage") || f.Name.Contains("TexSubImage"))
+        private static List<Function> GenerateWrappers(List<Function> functions)
+        {
+            List<Function> wrappers = new List<Function>();
+            Function w;
+
+            foreach (Function f in functions)
             {
-                f.NeedsWrapper = false;
-                return null;
+                if (f.NeedsWrapper)
+                {
+                    if (f.WrapperType == WrapperTypes.UShortMaskParameter)
+                    {
+                        w = new Function(f);
+                        w.Name = w.Name.TrimEnd('_');
+
+                        // Search and replace ushort parameters with ints.
+                        Predicate<Parameter> is_ushort_parameter = new Predicate<Parameter>(delegate(Parameter p) { return p.Type == "GLushort"; });
+                        Parameter oldp = w.Parameters.Find(is_ushort_parameter);
+                        Parameter newp = new Parameter(oldp);
+                        newp.Type = "GLint";
+                        w.Parameters = w.Parameters.ReplaceAll(oldp, newp);
+
+                        // Call the low-level function wrapping (all parameters marked with Unchecked will automatically
+                        // be decorated with the unchecked keyword).
+                        w.Body.Add((f.ReturnValue.Contains("void") ? "" : "return ") + f.CallString() + ";");
+
+                        // Add the wrapper.
+                        wrappers.Add(w);
+
+                        continue;
+                    }
+
+                    if (f.WrapperType == WrapperTypes.ReturnsString)
+                    {
+                        w = new Function(f);
+                        w.Name = w.Name.TrimEnd('_');
+
+                        // Replace the IntPtr return value with string.
+                        w.ReturnValue = "string";
+
+                        // Wrap the call to the low-level function (marshal the IntPtr to string).
+                        w.Body.Add("return Marshal.PtrToStringAnsi(" + f.CallString() + ");");
+
+                        // Add the wrapper.
+                        wrappers.Add(w);
+
+                        continue;
+                    }
+
+                    //if (
+                    WrapPointers(f, wrappers);
+                    count = 0;
+                }
             }
 
-            return f;
+            return wrappers;
         }
-        #endregion
 
-        #region Translate enums
-        public static void TranslateEnums(System.Collections.Hashtable enums)
+        static int count = 0;
+        private static void WrapPointers(Function f, List<Function> wrappers)
         {
-            foreach (Enum e in enums.Values)
+            if (count == 0)
             {
-                if (Char.IsDigit(e.Name[0]))
-                    e.Name = e.Name.Insert(0, "_");
+                wrappers.Add(IntPtrToIntPtr(f));
+            }
 
-                if (e.Name == "Boolean")
-                    continue;
-
-                foreach (Constant c in e.ConstantCollection.Values)
+            if (count >= 0 && count < f.Parameters.Count)
+            {
+                if (f.Parameters[count].NeedsWrapper)
                 {
-                    if (Char.IsDigit(c.Name[0]))
-                        c.Name = c.Name.Insert(0, "_");
+                    ++count;
+                    WrapPointers(f, wrappers);
+                    --count;
 
-                    if (c.Value.Contains(".") && Char.IsDigit(c.Value[c.Value.IndexOf('.') + 1]))
-                        c.Value = c.Value.Insert(c.Value.IndexOf('.') + 1, "_");
+                    Function w = IntPtrToObject(f, count);
+                    wrappers.Add(w);
+
+                    ++count;
+                    WrapPointers(w, wrappers);
+                    --count;
+
+                    if (f.Parameters[count].WrapperType == WrapperTypes.Array)
+                    {
+                        w = IntPtrToArray(f, count);
+                        wrappers.Add(w);
+
+                        ++count;
+                        WrapPointers(w, wrappers);
+                        --count;
+                    }
+                }
+                else
+                {
+                    ++count;
+                    WrapPointers(f, wrappers);
+                    --count;
                 }
             }
         }
+
+        // IntPtr -> IntPtr wrapper.
+        private static Function IntPtrToIntPtr(Function f)
+        {
+            Function w = new Function(f);
+            w.Name = w.Name.TrimEnd('_');
+
+            w.Body.Add((f.ReturnValue.Contains("void") ? "" : "return ") + f.CallString() + ";");
+            return w;
+        }
+
+        // IntPtr -> object wrapper.
+        private static Function IntPtrToObject(Function f, int index)
+        {
+            Function w = new Function(f);
+            w.Name = w.Name.TrimEnd('_');
+
+            Parameter newp = new Parameter(f.Parameters[index]);
+            newp.Type = "object";
+            if (newp.Flow == Parameter.FlowDirection.Out)
+                newp.Flow = Parameter.FlowDirection.Undefined;
+            w.Parameters = w.Parameters.Replace(f.Parameters[index], newp);
+
+            // In the function body we should pin all objects in memory before calling the
+            // low-level function.
+            w.Body = GenerateBodyForPins(w);
+
+            return w;
+        }
+        
+        // IntPtr -> GL[...] wrapper.
+        private static Function IntPtrToArray(Function f, int index)
+        {
+            Function w = new Function(f);
+            w.Name = w.Name.TrimEnd('_');
+            
+            // Search and replace IntPtr parameters with the know parameter types:
+            Parameter newp = new Parameter(f.Parameters[index]);
+            newp.Type = f.Parameters[index].PreviousType;
+            newp.Array = true;
+            w.Parameters = w.Parameters.Replace(f.Parameters[index], newp);
+
+            // In the function body we should pin all objects in memory before calling the
+            // low-level function.
+            w.Body = GenerateBodyForPins(w);
+
+            return w;
+        }
+
+        private static FunctionBody GenerateBodyForPins(Function w)
+        {
+
+            FunctionBody body = new FunctionBody();
+
+            int i = 0;
+            StringBuilder sb = new StringBuilder();
+            sb.Append("(");
+            foreach (Parameter p in w.Parameters)
+            {
+                if (p.Type == "object" || p.Array && !p.Type.Contains("string")) // we should allow the default marshalling behavior for strings.
+                {
+                    body.Add("GCHandle h" + i + " = GCHandle.Alloc(" + p.Name + ", GCHandleType.Pinned);");
+                    sb.Append("h" + i + ".AddrOfPinnedObject()" + ", ");
+                    i++;
+                }
+                else
+                {
+                    sb.Append(p.Name + ", ");
+                }
+            }
+            sb.Replace(", ", ")", sb.Length - 2, 2);
+
+            body.Add("try");
+            body.Add("{");
+            body.Add(
+                "    " +
+                (w.ReturnValue.Contains("void") ? "" : "return ") +
+                w.Name + "_" +
+                sb.ToString() +
+                ";");
+            body.Add("}");
+            body.Add("finally");
+            body.Add("{");
+            while (i > 0)
+            {
+                body.Add("    h" + --i + ".Free();");
+            }
+            body.Add("}");
+
+            return body;
+        }
+
+        #endregion
+
         #endregion
     }
 }

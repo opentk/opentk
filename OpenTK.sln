@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specifications", "Specifica
 		Specifications\enumext.spec = Specifications\enumext.spec
 		Specifications\gl.spec = Specifications\gl.spec
 		Specifications\gl_types.txt = Specifications\gl_types.txt
+		Specifications\try.spec = Specifications\try.spec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{E9FF51BB-295E-4891-AA30-D1374F26DCE0}"

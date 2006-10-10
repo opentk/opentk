@@ -55,7 +55,7 @@ namespace OpenTK.OpenGL.Bind
         }
         #endregion
 
-        #region WriteDerivedContext
+        #region Write derived context
         public static void WriteDerivedContext(string output_path, string class_name, List<Function> functions, params string[] import_list)
         {
             string filename = Path.Combine(output_path, class_name + "Load.cs");
