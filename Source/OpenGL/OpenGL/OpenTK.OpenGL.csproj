@@ -48,9 +48,6 @@
     <Compile Include="Bindings\WindowsContextLoad.cs" />
     <Compile Include="Bindings\WindowsVistaContextLoad.cs" />
     <Compile Include="Bindings\X11ContextLoad.cs" />
-    <Compile Include="Forms\GLForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Glu.cs" />
     <Compile Include="Contexts\GLContext.cs" />
     <Compile Include="Contexts\WindowsContext.cs" />

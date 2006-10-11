@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 /* Copyright (c) 2006 Stephen Apostolopoulos
  * See license.txt for license info
  */
@@ -13,8 +13,9 @@ using System.Threading;
 using OpenTK.Platform.Windows;
 using System.Runtime.InteropServices;
 using OpenTK.OpenGL.Platform;
+using OpenTK.OpenGL;
 
-namespace OpenTK.OpenGL
+namespace OpenTK
 {
     public class Framework : Form, IDisposable
     {
@@ -42,7 +43,7 @@ namespace OpenTK.OpenGL
         {
             Open(title, width, height, red, green, blue, alpha, depth, stencil, fullscreen);
         }
-        
+
         #endregion
 
         public void Open(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)

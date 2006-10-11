@@ -4,19 +4,17 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{46980D11-67FA-4B33-903F-BC9D8A4FE60F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{26B55626-4EAB-4CAE-82FE-93CD6564D9EA}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenTK.Examples.OpenGL.GLSL</RootNamespace>
-    <AssemblyName>GLSL.Lesson01</AssemblyName>
-    <StartupObject>
-    </StartupObject>
+    <RootNamespace>Framework</RootNamespace>
+    <AssemblyName>Framework</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\Binaries\Debug\Examples\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -24,7 +22,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\Binaries\Release\Examples\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,49 +30,36 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cube.cs">
+    <Compile Include="Framework.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Framework\Framework.csproj">
-      <Project>{26B55626-4EAB-4CAE-82FE-93CD6564D9EA}</Project>
-      <Name>Framework %28Projects\OpenTK\Framework\Framework%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\OpenGL\OpenGL\OpenTK.OpenGL.csproj">
+    <ProjectReference Include="..\OpenGL\OpenGL\OpenTK.OpenGL.csproj">
       <Project>{836876D1-0C8D-4240-BEE4-859D9D3D46CB}</Project>
       <Name>OpenTK.OpenGL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Platform\Windows\OpenTK.Platform.Windows.csproj">
+    <ProjectReference Include="..\Platform\Windows\OpenTK.Platform.Windows.csproj">
       <Project>{FDFA00B6-FA81-4658-86E1-F312EFB42E1C}</Project>
       <Name>OpenTK.Platform.Windows</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Platform\X\OpenTK.Platform.X.csproj">
+      <Project>{E3F35BD6-67CE-4AD5-AB98-043CF072A75A}</Project>
+      <Name>OpenTK.Platform.X</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>
