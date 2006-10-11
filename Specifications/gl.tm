@@ -280,3 +280,7 @@ GLenum,*,*,			    GLenum,*,*
 handleARB,*,*,			    GLhandleARB,*,*
 charARB,*,*,			    GLcharARB,*,*
 charPointerARB,*,*,		    GLcharARB*,*,*
+
+# 64 bit types (introduced in 2.1)
+Int64EXT,					GLint64
+UInt64EXT,					GLuint64

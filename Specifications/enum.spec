@@ -1,33 +1,3 @@
-# License Applicability. Except to the extent portions of this file are
-# made subject to an alternative license as permitted in the SGI Free
-# Software License B, Version 1.1 (the "License"), the contents of this
-# file are subject only to the provisions of the License. You may not use
-# this file except in compliance with the License. You may obtain a copy
-# of the License at Silicon Graphics, Inc., attn: Legal Services, 1600
-# Amphitheatre Parkway, Mountain View, CA 94043-1351, or at:
-#
-# http://oss.sgi.com/projects/FreeB
-#
-# Note that, as provided in the License, the Software is distributed on an
-# "AS IS" basis, with ALL EXPRESS AND IMPLIED WARRANTIES AND CONDITIONS
-# DISCLAIMED, INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES AND
-# CONDITIONS OF MERCHANTABILITY, SATISFACTORY QUALITY, FITNESS FOR A
-# PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
-#
-# Original Code. The Original Code is: OpenGL Sample Implementation,
-# Version 1.2.1, released January 26, 2000, developed by Silicon Graphics,
-# Inc. The Original Code is Copyright (c) 1991-2005 Silicon Graphics, Inc.
-# Copyright in any portions created by third parties is as indicated
-# elsewhere herein. All Rights Reserved.
-#
-# Additional Notice Provisions: This software was created using the
-# OpenGL(R) version 1.2.1 Sample Implementation published by SGI, but has
-# not been independently verified as being compliant with the OpenGL(R)
-# version 1.2.1 Specification.
-#
-# $Date: 2005/03/18 01:32:38 $ $Revision: 1.17 $
-# $Header: /oss/CVS/cvs/projects/ogl-sample/main/doc/registry/specs/enum.spec,v 1.17 2005/03/18 01:32:38 ljp Exp $
-
 # This is the OpenGL enumerant registry.
 #
 # It is an extremely important file. Do not mess with it unless
@@ -37,20 +7,20 @@
 #
 # Before modifying this file, read the following:
 #
-#   ONLY SGI's ARB representative (currently Jon Leech, ljp@sgi.com) may
-#   allocate new enumerants outside the 'experimental' range described
-#   below. Any modifications to this file not performed by SGI are
-#   incompatible with the OpenGL API. The master copy of the registry,
+#   ONLY the Khronos API Registrar (Jon Leech, jon 'at' alumni.caltech.edu)
+#   may allocate new enumerants outside the 'experimental' range described
+#   below. Any modifications to this file not performed by the Registrar
+#   are incompatible with the OpenGL API. The master copy of the registry,
 #   showing up-to-date enumerant allocations, is maintained in the
 #   OpenGL registry at
 #
-#	http://oss.sgi.com/projects/ogl-sample/registry
+#	http://www.opengl.org/registry/
 #
 #   The following guidelines are thus only for reference purposes
-#   (unless you're SGI's ARB representative :-)
+#   (unless you're the Registrar)
 #
 #   Enumerant values for extensions CANNOT be chosen arbitrarily, since
-#   the enumerant value space is shared by all GL licensees. It is
+#   the enumerant value space is shared by all GL implementations. It is
 #   therefore imperative that the procedures described in this file be
 #   followed carefully when allocating extension enum values.
 #
@@ -60,20 +30,15 @@
 #   as a guide.
 #
 # - When a vendor has committed to releasing a new extension and needs to
-#   allocate enum values for that extension, the vendor may request that SGI
-#   allocate a previously unallocated block of 16 enum values, in the range
-#   0x8000-0xFFFF, for the vendor's exclusive use.
-#
-#   New enumerants MUST be allocated by request to Jon Leech in the OpenGL
-#   engineering group. For reference, the registry is being maintained in
-#   the OpenGL group's Perforce repository as of this writing, and mirrored
-#   to the CVS repository on oss.sgi.com for public viewing.
+#   allocate enum values for that extension, the vendor may request that the
+#   ARB allocate a previously unallocated block of 16 enum values, in the
+#   range 0x8000-0xFFFF, for the vendor's exclusive use.
 #
 # - The vendor that introduces an extension will allocate enum values for
 #   it as if it is a single-vendor extension, even if it is a multi-vendor
 #   (EXT) extension.
 #
-# - The file enum.spec is principally a reference. The file enumext.spec
+# - The file enum.spec is primarily a reference. The file enumext.spec
 #   contains enumerants for all OpenGL 1.2 and OpenGL extensions in a form
 #   used to generate <GL/glext.h>.
 #
@@ -278,6 +243,7 @@ BeginMode enum:
 	QUADS						= 0x0007
 	QUAD_STRIP					= 0x0008
 	POLYGON						= 0x0009
+# 0x0010-0x0013 - Reserved for anticipated future use (Pat Brown)
 
 ###############################################################################
 
@@ -1436,9 +1402,9 @@ MaterialParameter enum:
 	SHININESS					= 0x1601
 	AMBIENT_AND_DIFFUSE				= 0x1602
 	COLOR_INDEXES					= 0x1603
-	use LightParameter AMBIENT
-	use LightParameter DIFFUSE
-	use LightParameter SPECULAR
+	use LightProperty AMBIENT
+	use LightProperty DIFFUSE
+	use LightProperty SPECULAR
 
 ###############################################################################
 
@@ -3088,7 +3054,7 @@ SGIX_blend_alpha_minmax enum:
 ###############################################################################
 
 # SGIX_async enum:
-#	ASYNC_MARKER_SGIX				= 0x8329
+	ASYNC_MARKER_SGIX				= 0x8329
 
 ###############################################################################
 
@@ -3446,24 +3412,25 @@ SGIX_resample enum:
 #	SECONDARY_COLOR_ARRAY				= 0x845E # 1 I
 #	SECONDARY_COLOR_ARRAY_EXT			= 0x845E # 1 I
 
-# SGI_future_use (actually Id Software, see above): 0x845F
+# VERSION_2_1 enum:
+#	CURRENT_RASTER_SECONDARY_COLOR			= 0x845F
 
 ###############################################################################
 
 # Incomplete extension, not in enumext.spec
-SGIX_icc_texture enum:
-	RGB_ICC_SGIX					= 0x8460
-	RGBA_ICC_SGIX					= 0x8461
-	ALPHA_ICC_SGIX					= 0x8462
-	LUMINANCE_ICC_SGIX				= 0x8463
-	INTENSITY_ICC_SGIX				= 0x8464
-	LUMINANCE_ALPHA_ICC_SGIX			= 0x8465
-	R5_G6_B5_ICC_SGIX				= 0x8466
-	R5_G6_B5_A8_ICC_SGIX				= 0x8467
-	ALPHA16_ICC_SGIX				= 0x8468
-	LUMINANCE16_ICC_SGIX				= 0x8469
-	INTENSITY16_ICC_SGIX				= 0x846A
-	LUMINANCE16_ALPHA8_ICC_SGIX			= 0x846B
+# SGIX_icc_texture enum:
+#	RGB_ICC_SGIX					= 0x8460
+#	RGBA_ICC_SGIX					= 0x8461
+#	ALPHA_ICC_SGIX					= 0x8462
+#	LUMINANCE_ICC_SGIX				= 0x8463
+#	INTENSITY_ICC_SGIX				= 0x8464
+#	LUMINANCE_ALPHA_ICC_SGIX		= 0x8465
+#	R5_G6_B5_ICC_SGIX				= 0x8466
+#	R5_G6_B5_A8_ICC_SGIX			= 0x8467
+#	ALPHA16_ICC_SGIX				= 0x8468
+#	LUMINANCE16_ICC_SGIX			= 0x8469
+#	INTENSITY16_ICC_SGIX			= 0x846A
+#	LUMINANCE16_ALPHA8_ICC_SGIX		= 0x846B
 
 ###############################################################################
 
@@ -3648,8 +3615,11 @@ VERSION_1_2 enum:
 #	MAX_RECTANGLE_TEXTURE_SIZE_ARB			= 0x84F8
 #	MAX_RECTANGLE_TEXTURE_SIZE_NV			= 0x84F8
 
+# EXT_packed_depth_stencil enum:
 # NV_packed_depth_stencil enum:
+#	DEPTH_STENCIL_EXT				= 0x84F9
 #	DEPTH_STENCIL_NV				= 0x84F9
+#	UNSIGNED_INT_24_8_EXT				= 0x84FA
 #	UNSIGNED_INT_24_8_NV				= 0x84FA
 
 # NV_future_use: 0x84FB-0x84FC
@@ -4392,10 +4362,22 @@ SGIX_subsample enum:
 
 ###############################################################################
 
-# Mesa: 0x8750-0x875F
+# MESA: 0x8750-0x875F
+
+# MESA_future_use: 0x8750-0x8757
 
 # MESA_pack_invert enum:
 #	PACK_INVERT_MESA				= 0x8758
+
+# MESAX_texture_stack enum:
+#	TEXTURE_1D_STACK_MESAX				= 0x8759
+#	TEXTURE_2D_STACK_MESAX				= 0x875A
+#	PROXY_TEXTURE_1D_STACK_MESAX			= 0x875B
+#	PROXY_TEXTURE_2D_STACK_MESAX			= 0x875C
+#	TEXTURE_1D_STACK_BINDING_MESAX			= 0x875D
+#	TEXTURE_2D_STACK_BINDING_MESAX			= 0x875E
+
+# MESA_future_use: 0x875F
 
 ###############################################################################
 
@@ -4934,7 +4916,10 @@ SGIX_subsample enum:
 #	BUFFER_MAP_POINTER				= 0x88BD
 #	BUFFER_MAP_POINTER_ARB				= 0x88BD
 
-# NV_future_use: 0x88BE-0x88BF
+# NV_future_use: 0x88BE
+
+# EXT_timer_query enum:
+#	TIME_ELAPSED_EXT				= 0x88BF
 
 # ARB_vertex_program enum: (additional; see above)
 # ARB_fragment_program enum: (additional; see above)
@@ -4992,21 +4977,32 @@ SGIX_subsample enum:
 #	DYNAMIC_COPY					= 0x88EA
 #	DYNAMIC_COPY_ARB				= 0x88EA
 
+# VERSION_2_1 enum:
 # ARB_pixel_buffer_object enum:
 # EXT_pixel_buffer_object enum:
-#	PIXEL_PACK_BUFFER_ARB				= 0x88EB
-#	PIXEL_PACK_BUFFER_EXT				= 0x88EB
-#	PIXEL_UNPACK_BUFFER_ARB				= 0x88EC
-#	PIXEL_UNPACK_BUFFER_EXT				= 0x88EC
-#	PIXEL_PACK_BUFFER_BINDING_ARB			= 0x88ED
-#	PIXEL_PACK_BUFFER_BINDING_EXT			= 0x88ED
-#	PIXEL_UNPACK_BUFFER_BINDING_ARB			= 0x88EF
-#	PIXEL_UNPACK_BUFFER_BINDING_EXT			= 0x88EF
+#	PIXEL_PACK_BUFFER				= 0x88EB    # VERSION_2_1
+#	PIXEL_PACK_BUFFER_ARB				= 0x88EB    # ARB_pixel_buffer_object
+#	PIXEL_PACK_BUFFER_EXT				= 0x88EB    # EXT_pixel_buffer_object
+#	PIXEL_UNPACK_BUFFER				= 0x88EC    # VERSION_2_1
+#	PIXEL_UNPACK_BUFFER_ARB				= 0x88EC    # ARB_pixel_buffer_object
+#	PIXEL_UNPACK_BUFFER_EXT				= 0x88EC    # EXT_pixel_buffer_object
+#	PIXEL_PACK_BUFFER_BINDING			= 0x88ED    # VERSION_2_1
+#	PIXEL_PACK_BUFFER_BINDING_ARB			= 0x88ED    # ARB_pixel_buffer_object
+#	PIXEL_PACK_BUFFER_BINDING_EXT			= 0x88ED    # EXT_pixel_buffer_object
+#	PIXEL_UNPACK_BUFFER_BINDING			= 0x88EF    # VERSION_2_1
+#	PIXEL_UNPACK_BUFFER_BINDING_ARB			= 0x88EF    # ARB_pixel_buffer_object
+#	PIXEL_UNPACK_BUFFER_BINDING_EXT			= 0x88EF    # EXT_pixel_buffer_object
 
 # ARB_future_use: 0x88E3, 0x88E7, 0x88EE
 # (for extending ARB_vertex_buffer_object):
 
-# NV_future_use: 0x88F0-0x88F3
+# EXT_packed_depth_stencil enum: (additional; see above)
+#	DEPTH24_STENCIL8_EXT				= 0x88F0
+#	TEXTURE_STENCIL_SIZE_EXT			= 0x88F1
+
+# EXT_stencil_clear_tag enum:
+#	STENCIL_TAG_BITS_EXT				= 0x88F2
+#	STENCIL_CLEAR_TAG_VALUE_EXT			= 0x88F3
 
 # NV_vertex_program2_option enum: (duplicated in NV_fragment_prgoram2 below)
 #	MAX_PROGRAM_EXEC_INSTRUCTIONS_NV		= 0x88F4
@@ -5025,7 +5021,7 @@ SGIX_subsample enum:
 #	STENCIL_TEST_TWO_SIDE_EXT			= 0x8910
 #	ACTIVE_STENCIL_FACE_EXT				= 0x8911
 
-# EXT_texture_mirror_clamp enum: (additional; see above): 0x8912
+# EXT_texture_mirror_clamp enum: (additional; see above):
 #	MIRROR_CLAMP_TO_BORDER_EXT			= 0x8912
 
 # NV_future_use: 0x8913
@@ -5281,7 +5277,13 @@ SGIX_subsample enum:
 #	SAMPLER_2D_SHADOW_ARB				= 0x8B62    # ARB_shader_objects
 #	SAMPLER_2D_RECT_ARB				= 0x8B63    # ARB_shader_objects
 #	SAMPLER_2D_RECT_SHADOW_ARB			= 0x8B64    # ARB_shader_objects
-# ARB_future_use: 0x8B65-0x8B7F (for attribute types)
+#	FLOAT_MAT2x3					= 0x8B65    # VERSION_2_1
+#	FLOAT_MAT2x4					= 0x8B66    # VERSION_2_1
+#	FLOAT_MAT3x2					= 0x8B67    # VERSION_2_1
+#	FLOAT_MAT3x4					= 0x8B68    # VERSION_2_1
+#	FLOAT_MAT4x2					= 0x8B69    # VERSION_2_1
+#	FLOAT_MAT4x3					= 0x8B6A    # VERSION_2_1
+# ARB_future_use: 0x8B6B-0x8B7F (for attribute types)
 #	DELETE_STATUS					= 0x8B80    # VERSION_2_0 (renamed)
 #	OBJECT_DELETE_STATUS_ARB			= 0x8B80    # ARB_shader_objects
 #	COMPILE_STATUS					= 0x8B81    # VERSION_2_0 (renamed)
@@ -5363,16 +5365,49 @@ SGIX_subsample enum:
 # NVIDIA: 0x8C10-0x8C8F (Pat Brown)
 
 # ARB_texture_float enum: (additional; see above)
-#	TEXTURE_RED_TYPE_ARB		 0x8C10
-#	TEXTURE_GREEN_TYPE_ARB		 0x8C11
-#	TEXTURE_BLUE_TYPE_ARB		 0x8C12
-#	TEXTURE_ALPHA_TYPE_ARB		 0x8C13
-#	TEXTURE_LUMINANCE_TYPE_ARB	 0x8C14
-#	TEXTURE_INTENSITY_TYPE_ARB	 0x8C15
-#	TEXTURE_DEPTH_TYPE_ARB		 0x8C16
-#	UNSIGNED_NORMALIZED_ARB		 0x8C17
+#	TEXTURE_RED_TYPE_ARB				= 0x8C10
+#	TEXTURE_GREEN_TYPE_ARB				= 0x8C11
+#	TEXTURE_BLUE_TYPE_ARB				= 0x8C12
+#	TEXTURE_ALPHA_TYPE_ARB				= 0x8C13
+#	TEXTURE_LUMINANCE_TYPE_ARB			= 0x8C14
+#	TEXTURE_INTENSITY_TYPE_ARB			= 0x8C15
+#	TEXTURE_DEPTH_TYPE_ARB				= 0x8C16
+#	UNSIGNED_NORMALIZED_ARB				= 0x8C17
 
-# NVIDIA_future_use: 0x8C18-0x8C8F
+# NV_future_use: 0x8C18-0x8C3F
+
+# VERSION_2_1 enum: (Generic formats promoted for OpenGL 2.1)
+# EXT_texture_sRGB enum:
+#	SRGB						= 0x8C40    # VERSION_2_1
+#	SRGB_EXT					= 0x8C40    # EXT_texture_sRGB
+#	SRGB8						= 0x8C41    # VERSION_2_1
+#	SRGB8_EXT					= 0x8C41    # EXT_texture_sRGB
+#	SRGB_ALPHA					= 0x8C42    # VERSION_2_1
+#	SRGB_ALPHA_EXT					= 0x8C42    # EXT_texture_sRGB
+#	SRGB8_ALPHA8					= 0x8C43    # VERSION_2_1
+#	SRGB8_ALPHA8_EXT				= 0x8C43    # EXT_texture_sRGB
+#	SLUMINANCE_ALPHA				= 0x8C44    # VERSION_2_1
+#	SLUMINANCE_ALPHA_EXT				= 0x8C44    # EXT_texture_sRGB
+#	SLUMINANCE8_ALPHA8				= 0x8C45    # VERSION_2_1
+#	SLUMINANCE8_ALPHA8_EXT				= 0x8C45    # EXT_texture_sRGB
+#	SLUMINANCE					= 0x8C46    # VERSION_2_1
+#	SLUMINANCE_EXT					= 0x8C46    # EXT_texture_sRGB
+#	SLUMINANCE8					= 0x8C47    # VERSION_2_1
+#	SLUMINANCE8_EXT					= 0x8C47    # EXT_texture_sRGB
+#	COMPRESSED_SRGB					= 0x8C48    # VERSION_2_1
+#	COMPRESSED_SRGB_EXT				= 0x8C48    # EXT_texture_sRGB
+#	COMPRESSED_SRGB_ALPHA				= 0x8C49    # VERSION_2_1
+#	COMPRESSED_SRGB_ALPHA_EXT			= 0x8C49    # EXT_texture_sRGB
+#	COMPRESSED_SLUMINANCE				= 0x8C4A    # VERSION_2_1
+#	COMPRESSED_SLUMINANCE_EXT			= 0x8C4A    # EXT_texture_sRGB
+#	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # VERSION_2_1
+#	COMPRESSED_SLUMINANCE_ALPHA_EXT			= 0x8C4B    # EXT_texture_sRGB
+#	COMPRESSED_SRGB_S3TC_DXT1_EXT			= 0x8C4C
+#	COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT		= 0x8C4D
+#	COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT		= 0x8C4E
+#	COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT		= 0x8C4F
+
+# NV_future_use: 0x8C50-0x8C8F
 
 ###############################################################################
 
@@ -5392,8 +5427,15 @@ SGIX_subsample enum:
 # EXT_framebuffer_object enum: (additional; see below)
 #	FRAMEBUFFER_BINDING_EXT				= 0x8CA6
 #	RENDERBUFFER_BINDING_EXT			= 0x8CA7
+# EXT_framebuffer_blit
+#	READ_FRAMEBUFFER_EXT				= 0x8CA8
+#	DRAW_FRAMEBUFFER_EXT				= 0x8CA9
+#	READ_FRAMEBUFFER_BINDING_EXT			= GL_FRAMEBUFFER_BINDING_EXT
+#	DRAW_FRAMEBUFFER_BINDING_EXT			= 0x8CAA
+# EXT_framebuffer_multisample
+#	RENDERBUFFER_SAMPLES_EXT			= 0x8CAB
 
-# ARB_future_use: 0x8CA8-08CAF
+# ARB_future_use: 0x8CAC-08CAF
 
 ###############################################################################
 
@@ -5416,7 +5458,8 @@ SGIX_subsample enum:
 #	FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT		= 0x8CDB
 #	FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT		= 0x8CDC
 #	FRAMEBUFFER_UNSUPPORTED_EXT			= 0x8CDD
-#	FRAMEBUFFER_STATUS_ERROR_EXT			= 0x8CDE
+## Removed 2005/05/31 in revision #113 of the extension:
+## FRAMEBUFFER_STATUS_ERROR_EXT			   = 0x8CDE
 #	MAX_COLOR_ATTACHMENTS_EXT			= 0x8CDF
 #	COLOR_ATTACHMENT0_EXT				= 0x8CE0
 #	COLOR_ATTACHMENT1_EXT				= 0x8CE1
@@ -5444,19 +5487,54 @@ SGIX_subsample enum:
 #	RENDERBUFFER_WIDTH_EXT				= 0x8D42
 #	RENDERBUFFER_HEIGHT_EXT				= 0x8D43
 #	RENDERBUFFER_INTERNAL_FORMAT_EXT		= 0x8D44
-#	STENCIL_INDEX_EXT				= 0x8D45
+# 0x8D45 unused (reserved for STENCIL_INDEX_EXT, but now use core STENCIL_INDEX instead)
 #	STENCIL_INDEX1_EXT				= 0x8D46
 #	STENCIL_INDEX4_EXT				= 0x8D47
 #	STENCIL_INDEX8_EXT				= 0x8D48
 #	STENCIL_INDEX16_EXT				= 0x8D49
 # 0x8D4A-0x8D4D reserved for additional stencil formats
+# Added 2005/05/31 in revision #113 of the extension:
+#	RENDERBUFFER_RED_SIZE_EXT			= 0x8D50
+#	RENDERBUFFER_GREEN_SIZE_EXT			= 0x8D51
+#	RENDERBUFFER_BLUE_SIZE_EXT			= 0x8D52
+#	RENDERBUFFER_ALPHA_SIZE_EXT			= 0x8D53
+#	RENDERBUFFER_DEPTH_SIZE_EXT			= 0x8D54
+#	RENDERBUFFER_STENCIL_SIZE_EXT			= 0x8D55
+# 0x8D56-0x8D5F reserved for additional FBO enums
 
 ###############################################################################
-### PLEASE REMEMBER THAT NEW ENUMERANT ALLOCATIONS MUST BE OBTAINED BY
-### REQUEST TO SGI'S ARB REPRESENTATIVE (see comments at the top of this file)
+
+# Khronos OpenGL ES WG: 0x8D60-0x8D6F
+
+# Khronos_future_use: 0x8D60-0x8D6F
+
 ###############################################################################
 
-# Any_vendor_future_use: 0x8D50-0xFFFF
+# NVIDIA: 0x8D70-0x8DEF
+# Reserved per email from Pat Brown 2005/10/13
+
+# NV_future_use: 0x8D70-0x8DEF
+
+###############################################################################
+
+# Khronos OpenGL ES WG: 0x8DF0-0x8E0F
+
+# Khronos_future_use: 0x8DF0-0x8E0F
+
+###############################################################################
+
+# NVIDIA: 0x8E10-0x8E8F
+# Reserved per email from Michael Gold 2006/8/7
+
+# NV_future_use: 0x8E10-0x8E8F
+
+###############################################################################
+### Please remember that new enumerant allocations must be obtained by request
+### to the Khronos API registrar (see comments at the top of this file)
+### File requests in the Khronos Bugzilla, OpenGL project, Registry component.
+###############################################################################
+
+# Any_vendor_future_use: 0x8E90-0xFFFF
 #
 #   This range must be the last range in the file.  To generate a new
 #   range, allocate multiples of 16 from the beginning of the
