@@ -49,6 +49,16 @@ namespace OpenTK
         public void Open(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
         {
             Application.Idle += new EventHandler(OnIdle);
+            
+            Context = GLContext.Create(this, red, green, blue, alpha, depth, stencil);
+            
+            // Code taken from NeHe tutorials
+            this.CreateParams.Style |= (int)Api.WindowClassStyle.HRedraw | (int)Api.WindowClassStyle.VRedraw | (int)Api.WindowClassStyle.OwnDC;
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);            // No Need To Erase Form Background
+            this.SetStyle(ControlStyles.Opaque, true);                          // No Need To Draw Form Background
+            //this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);           // Buffer Control
+            //this.SetStyle(ControlStyles.ResizeRedraw, true);                  // Redraw On Resize
+            this.SetStyle(ControlStyles.UserPaint, true);                       // We'll Handle Painting Ourselves
 
             try
             {
@@ -73,23 +83,13 @@ namespace OpenTK
             }
         }
 
+        #region Open functions
+
         public void WindowsOpen(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
         {
-            // Hack! Should add more constructors to the GLContext class.
-            Context = GLContext.Create(this, 8, 8, 8, 8, 16, 0);
-
-            // Todo: Why doesn't this work?
             if (title == null)
-                title = "OpenTK application";
+                title = "OpenTK Windows application";
             this.Text = title;
-
-            // Code taken from NeHe tutorials
-            this.CreateParams.Style |= (int)Api.WindowClassStyle.HRedraw | (int)Api.WindowClassStyle.VRedraw | (int)Api.WindowClassStyle.OwnDC;
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);            // No Need To Erase Form Background
-            this.SetStyle(ControlStyles.Opaque, true);                          // No Need To Draw Form Background
-            //this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);           // Buffer Control
-            //this.SetStyle(ControlStyles.ResizeRedraw, true);                  // Redraw On Resize
-            this.SetStyle(ControlStyles.UserPaint, true);                       // We'll Handle Painting Ourselves
 
             if (fullscreen)
             {
@@ -118,26 +118,26 @@ namespace OpenTK
             }
 
             this.Size = new Size(width, height);
-
-            // Cross-platformness?
-
         }
+
+        public void XOpen(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
+        {
+            Context = GLContext.Create(this, red, green, blue, alpha, depth, stencil);
+
+            if (title == null)
+                title = "OpenTK X application";
+            this.Text = title;
+
+            this.Size = new Size(width, height);
+        }
+
+        #endregion
 
         //override protected void WndProc(ref Message m)
         //{
         //    base.WndProc(ref m);
         //    //OnPaint(null);
         //}
-
-        #region IDisposable Members
-
-        void IDisposable.Dispose()
-        {
-            Application.Idle -= OnIdle;
-        }
-
-        #endregion
-
 
         #region Event Handlers
 
@@ -169,6 +169,16 @@ namespace OpenTK
         private bool XIsIdle()
         {
             throw new NotImplementedException("IsIdle handler not implemented yet!");
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        void IDisposable.Dispose()
+        {
+            //GC.SuppressFinalize(true);
+            Application.Idle -= OnIdle;
         }
 
         #endregion

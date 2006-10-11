@@ -34,8 +34,7 @@ namespace OpenTK.OpenGL
         {
             try
             {
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major < 6 ||
-                    Environment.OSVersion.Platform == PlatformID.Win32Windows)
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT || Environment.OSVersion.Platform == PlatformID.Win32Windows)
                 {
                     return new WindowsContext(c, red, green, blue, alpha, depth, stencil);
                 }
