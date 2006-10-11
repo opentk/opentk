@@ -15,37 +15,56 @@ namespace OpenTK.Platform.X
     {
         private const string _dll_name = "libX11";
 
+        public struct Constants
+        {
+            public const int QueuedAlready = 0;
+            public const int QueuedAfterReading = 1;
+            public const int QueuedAfterFlush = 2;
+        }
+
+
         [StructLayout(LayoutKind.Sequential)]
         public struct VisualInfo
         {
             IntPtr visual;
-	        int visualid;
-	        int screen;
-	        uint depth;
-	        int @class;
-	        ulong red_mask;
-	        ulong green_mask;
-	        ulong blue_mask;
-	        int colormap_size;
-	        int bits_per_rgb;
+            int visualid;
+            int screen;
+            uint depth;
+            int @class;
+            ulong red_mask;
+            ulong green_mask;
+            ulong blue_mask;
+            int colormap_size;
+            int bits_per_rgb;
         }
 
         #region Functions
 
+        // Display management
         [DllImport(_dll_name, EntryPoint = "XOpenDisplay")]
-        public static extern IntPtr OpenDisplay([MarshalAs(UnmanagedType.LPTStr)] string display_name);
+        extern public static IntPtr OpenDisplay([MarshalAs(UnmanagedType.LPTStr)] string display_name);
 
         [DllImport(_dll_name, EntryPoint = "XCloseDisplay")]
-        public static extern void CloseDisplay(IntPtr display);
+        extern public static void CloseDisplay(IntPtr display);
+
 
         [DllImport(_dll_name, EntryPoint = "XDefaultScreen")]
-        public static extern int DefaultScreen(IntPtr display);
+        extern public static int DefaultScreen(IntPtr display);
 
         [DllImport(_dll_name, EntryPoint = "XDefaultVisual")]
-        public static extern IntPtr DefaultVisual(IntPtr display, int screen_number);
+        extern public static IntPtr DefaultVisual(IntPtr display, int screen_number);
 
         [DllImport(_dll_name, EntryPoint = "XFree")]
-        public static extern void Free(IntPtr data);
+        extern public static void Free(IntPtr data);
+
+
+        // Queue management
+        [DllImport(_dll_name, EntryPoint = "XEventsQueued")]
+        extern public static int EventsQueued(IntPtr Display, int mode);
+
+        [DllImport(_dll_name, EntryPoint = "XPending")]
+        extern public static int Pending(IntPtr Display);
+
 
         #endregion
     }
