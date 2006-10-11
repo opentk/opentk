@@ -12,10 +12,11 @@ using System.Drawing;
 using System.Threading;
 using OpenTK.Platform.Windows;
 using System.Runtime.InteropServices;
+using OpenTK.OpenGL.Platform;
 
 namespace OpenTK.OpenGL
 {
-    public class GLForm : Form, IDisposable
+    public class Framework : Form, IDisposable
     {
         #region Context
         private GLContext _context;
@@ -27,14 +28,51 @@ namespace OpenTK.OpenGL
         }
         #endregion
 
+        delegate bool IsIdleDelegate();
+        IsIdleDelegate IsIdle;
+
         #region Constructors
-        public GLForm()
+
+        public Framework()
         {
             Open(null, 640, 480, 8, 8, 8, 8, 16, 0, false);
         }
+
+        public Framework(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
+        {
+            Open(title, width, height, red, green, blue, alpha, depth, stencil, fullscreen);
+        }
+        
         #endregion
 
         public void Open(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
+        {
+            Application.Idle += new EventHandler(OnIdle);
+
+            try
+            {
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
+                    Environment.OSVersion.Platform == PlatformID.Win32Windows)
+                {
+                    IsIdle = new IsIdleDelegate(WindowsIsIdle);
+                    WindowsOpen(title, width, height, red, green, blue, alpha, depth, stencil, fullscreen);
+                }
+                else if (Environment.OSVersion.Platform == PlatformID.Unix)
+                {
+                    IsIdle = new IsIdleDelegate(XIsIdle);
+                }
+                else
+                {
+                    throw new PlatformNotSupportedException("The platform on which you are trying to run this program is not currently supported. Sorry for the inconvenience.");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+        }
+
+        public void WindowsOpen(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
         {
             // Hack! Should add more constructors to the GLContext class.
             Context = GLContext.Create(this, 8, 8, 8, 8, 16, 0);
@@ -81,74 +119,55 @@ namespace OpenTK.OpenGL
             this.Size = new Size(width, height);
 
             // Cross-platformness?
-            Application.Idle += new EventHandler(OnApplicationIdle);
+
         }
 
-        #region Application main loop
+        //override protected void WndProc(ref Message m)
+        //{
+        //    base.WndProc(ref m);
+        //    //OnPaint(null);
+        //}
+
+        #region IDisposable Members
+
+        void IDisposable.Dispose()
+        {
+            Application.Idle -= OnIdle;
+        }
+
+        #endregion
+
+
+        #region Event Handlers
+
         /// <summary>
         /// Called when all pending messages have been processed, this is where the application 'Main Loop' resides.
         /// </summary>
         /// <param name="sender">Not used.</param>
         /// <param name="e">Not used.</param>
-        void OnApplicationIdle(object sender, EventArgs e)
+        private void OnIdle(object sender, EventArgs e)
         {
-            // Check if any new messages have popped up. If not, then run the logic at full speed.
-            //while (IsApplicationIdle())
-            ////while (idle)
-            //{
-            //    // We'd like to play nice with the scheduler. If the window is not in focus,
-            //    // we give back some thread-time to the OS, to allow other apps to function full-speed.
-            //    // However, if the window _is_ in focus we grab all processor resources.
-            //    // Hack! Should allow the user to set a sleep interval.
-            //    if (ActiveForm != this)
-            //        Thread.Sleep(100);
-            //    OnPaint(null);
-            //}
+            while (IsIdle())
+            {
+                if (ActiveForm != this)
+                    Thread.Sleep(100);
+                OnPaint(null);
+            }
         }
 
         /// <summary>
         /// Checks if there all pending messages have been processed.
         /// </summary>
         /// <returns>Returns true if there are no messages left, false otherwise.</returns>
-        static public bool IsApplicationIdle()
+        private bool WindowsIsIdle()
         {
-            //Message msg = Message.Create(this.Handle, A
-            
-            //try
-            //{
-                //Message msg;
-                Api.Message msg;
-                return !OpenTK.Platform.Windows.Api.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
-            //}
-            //catch (Exception e)
-            //{
-            //    //MessageBox.Show(e.ToString());
-            //    return false;
-            //}
-            //WndProc(ref msg);
-
-            //if (msg.
-            //return false;
-
-            //Message msg = Message.Create(IntPtr.Zero, Api.Constants.WM_ENTERIDLE, IntPtr.Zero, IntPtr.Zero);
-
-            //return !Api.PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
-        }
-        #endregion
-
-        bool idle;
-
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-            //OnPaint(null);
+            Api.Message msg;
+            return !OpenTK.Platform.Windows.Api.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
         }
 
-        #region IDisposable Members
-
-        void IDisposable.Dispose()
+        private bool XIsIdle()
         {
-            Application.Idle -= OnApplicationIdle;
+            throw new NotImplementedException("IsIdle handler not implemented yet!");
         }
 
         #endregion

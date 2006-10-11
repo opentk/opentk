@@ -11,7 +11,8 @@ namespace OpenTK.OpenGL.Bind
 {
     /// <summary>
     /// Represents an opengl constant in C# format. Both the constant name and value
-    /// can be retrieved or set. All opengl constants are translated to 'const uint'.
+    /// can be retrieved or set. The value can be either a number, another constant
+    /// or an alias to a constant 
     /// </summary>
     public class Constant
     {

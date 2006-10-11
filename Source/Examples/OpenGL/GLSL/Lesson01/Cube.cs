@@ -10,7 +10,7 @@ using OpenTK.OpenGL;
 
 namespace OpenTK.Examples.OpenGL.GLSL
 {
-    public partial class Cube : GLForm
+    public partial class Cube : Framework
     {
         #region Shaders
         string[] vertex_shader_source =
@@ -125,7 +125,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
             DrawCube();
 
             Context.SwapBuffers();
-            this.Invalidate();
+            //this.Invalidate();
         }
         #endregion
 

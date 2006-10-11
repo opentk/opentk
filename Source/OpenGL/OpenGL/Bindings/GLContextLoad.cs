@@ -591,6 +591,12 @@ namespace OpenTK.OpenGL
             GL.VertexAttrib4uiv_ = (GL.Delegates.VertexAttrib4uiv_)GetAddress("glVertexAttrib4uiv", typeof(GL.Delegates.VertexAttrib4uiv_));
             GL.VertexAttrib4usv_ = (GL.Delegates.VertexAttrib4usv_)GetAddress("glVertexAttrib4usv", typeof(GL.Delegates.VertexAttrib4usv_));
             GL.VertexAttribPointer_ = (GL.Delegates.VertexAttribPointer_)GetAddress("glVertexAttribPointer", typeof(GL.Delegates.VertexAttribPointer_));
+            GL.UniformMatrix2x3fv_ = (GL.Delegates.UniformMatrix2x3fv_)GetAddress("glUniformMatrix2x3fv", typeof(GL.Delegates.UniformMatrix2x3fv_));
+            GL.UniformMatrix3x2fv_ = (GL.Delegates.UniformMatrix3x2fv_)GetAddress("glUniformMatrix3x2fv", typeof(GL.Delegates.UniformMatrix3x2fv_));
+            GL.UniformMatrix2x4fv_ = (GL.Delegates.UniformMatrix2x4fv_)GetAddress("glUniformMatrix2x4fv", typeof(GL.Delegates.UniformMatrix2x4fv_));
+            GL.UniformMatrix4x2fv_ = (GL.Delegates.UniformMatrix4x2fv_)GetAddress("glUniformMatrix4x2fv", typeof(GL.Delegates.UniformMatrix4x2fv_));
+            GL.UniformMatrix3x4fv_ = (GL.Delegates.UniformMatrix3x4fv_)GetAddress("glUniformMatrix3x4fv", typeof(GL.Delegates.UniformMatrix3x4fv_));
+            GL.UniformMatrix4x3fv_ = (GL.Delegates.UniformMatrix4x3fv_)GetAddress("glUniformMatrix4x3fv", typeof(GL.Delegates.UniformMatrix4x3fv_));
             GL.ActiveTextureARB = (GL.Delegates.ActiveTextureARB)GetAddress("glActiveTextureARB", typeof(GL.Delegates.ActiveTextureARB));
             GL.ClientActiveTextureARB = (GL.Delegates.ClientActiveTextureARB)GetAddress("glClientActiveTextureARB", typeof(GL.Delegates.ClientActiveTextureARB));
             GL.MultiTexCoord1dARB = (GL.Delegates.MultiTexCoord1dARB)GetAddress("glMultiTexCoord1dARB", typeof(GL.Delegates.MultiTexCoord1dARB));
@@ -1436,6 +1442,13 @@ namespace OpenTK.OpenGL
             GL.GetFramebufferAttachmentParameterivEXT_ = (GL.Delegates.GetFramebufferAttachmentParameterivEXT_)GetAddress("glGetFramebufferAttachmentParameterivEXT", typeof(GL.Delegates.GetFramebufferAttachmentParameterivEXT_));
             GL.GenerateMipmapEXT = (GL.Delegates.GenerateMipmapEXT)GetAddress("glGenerateMipmapEXT", typeof(GL.Delegates.GenerateMipmapEXT));
             GL.StringMarkerGREMEDY_ = (GL.Delegates.StringMarkerGREMEDY_)GetAddress("glStringMarkerGREMEDY", typeof(GL.Delegates.StringMarkerGREMEDY_));
+            GL.StencilClearTagEXT = (GL.Delegates.StencilClearTagEXT)GetAddress("glStencilClearTagEXT", typeof(GL.Delegates.StencilClearTagEXT));
+            GL.BlitFramebufferEXT = (GL.Delegates.BlitFramebufferEXT)GetAddress("glBlitFramebufferEXT", typeof(GL.Delegates.BlitFramebufferEXT));
+            GL.RenderbufferStorageMultisampleEXT = (GL.Delegates.RenderbufferStorageMultisampleEXT)GetAddress("glRenderbufferStorageMultisampleEXT", typeof(GL.Delegates.RenderbufferStorageMultisampleEXT));
+            GL.GetQueryObjecti64vEXT_ = (GL.Delegates.GetQueryObjecti64vEXT_)GetAddress("glGetQueryObjecti64vEXT", typeof(GL.Delegates.GetQueryObjecti64vEXT_));
+            GL.GetQueryObjectui64vEXT_ = (GL.Delegates.GetQueryObjectui64vEXT_)GetAddress("glGetQueryObjectui64vEXT", typeof(GL.Delegates.GetQueryObjectui64vEXT_));
+            GL.ProgramEnvParameters4fvEXT_ = (GL.Delegates.ProgramEnvParameters4fvEXT_)GetAddress("glProgramEnvParameters4fvEXT", typeof(GL.Delegates.ProgramEnvParameters4fvEXT_));
+            GL.ProgramLocalParameters4fvEXT_ = (GL.Delegates.ProgramLocalParameters4fvEXT_)GetAddress("glProgramLocalParameters4fvEXT", typeof(GL.Delegates.ProgramLocalParameters4fvEXT_));
         }
         #endregion
     }
