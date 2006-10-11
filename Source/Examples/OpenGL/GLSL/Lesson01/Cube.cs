@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using OpenTK;
 using OpenTK.OpenGL;
 
 namespace OpenTK.Examples.OpenGL.GLSL
