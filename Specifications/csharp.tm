@@ -27,3 +27,9 @@ GLclampf,		Single
 GLdouble,		Double
 GLclampd,		Double
 GLstring,		String
+
+# 64 bit types (introduced in 2.1)
+GLint64EXT,		Int64
+GLuint64EXT,	Int64
+GLint64,		Int64
+GLuint64,		Int64

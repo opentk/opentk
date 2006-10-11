@@ -1,33 +1,3 @@
-# License Applicability. Except to the extent portions of this file are
-# made subject to an alternative license as permitted in the SGI Free
-# Software License B, Version 1.1 (the "License"), the contents of this
-# file are subject only to the provisions of the License. You may not use
-# this file except in compliance with the License. You may obtain a copy
-# of the License at Silicon Graphics, Inc., attn: Legal Services, 1600
-# Amphitheatre Parkway, Mountain View, CA 94043-1351, or at:
-#
-# http://oss.sgi.com/projects/FreeB
-#
-# Note that, as provided in the License, the Software is distributed on an
-# "AS IS" basis, with ALL EXPRESS AND IMPLIED WARRANTIES AND CONDITIONS
-# DISCLAIMED, INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES AND
-# CONDITIONS OF MERCHANTABILITY, SATISFACTORY QUALITY, FITNESS FOR A
-# PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
-#
-# Original Code. The Original Code is: OpenGL Sample Implementation,
-# Version 1.2.1, released January 26, 2000, developed by Silicon Graphics,
-# Inc. The Original Code is Copyright (c) 1991-2005 Silicon Graphics, Inc.
-# Copyright in any portions created by third parties is as indicated
-# elsewhere herein. All Rights Reserved.
-#
-# Additional Notice Provisions: This software was created using the
-# OpenGL(R) version 1.2.1 Sample Implementation published by SGI, but has
-# not been independently verified as being compliant with the OpenGL(R)
-# version 1.2.1 Specification.
-#
-# $Date: 2005/03/18 01:32:38 $ $Revision: 1.18 $
-# $Header: /oss/CVS/cvs/projects/ogl-sample/main/doc/registry/specs/enumext.spec,v 1.18 2005/03/18 01:32:38 ljp Exp $
-
 # List of GL enumerants for glext.h header
 #
 # This is NOT the master GL enumerant registry (enum.spec).
@@ -47,9 +17,9 @@
 
 passthru:
 passthru: /* Header file version number, required by OpenGL ABI for Linux */
-passthru: /* glext.h last updated 2005/03/17 */
-passthru: /* Current version at http://oss.sgi.com/projects/ogl-sample/registry/ */
-passthru: #define GL_GLEXT_VERSION 27
+passthru: /* glext.h last updated 2006/08/30 */
+passthru: /* Current version at http://www.opengl.org/registry/ */
+passthru: #define GL_GLEXT_VERSION 34
 
 ###############################################################################
 #
@@ -482,6 +452,38 @@ VERSION_2_0 enum:
 	STENCIL_BACK_REF				= 0x8CA3    # ARB_stencil_two_side
 	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
 	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
+
+###############################################################################
+#
+# OpenGL 2.1 enums
+#
+###############################################################################
+
+VERSION_2_1 enum:
+	CURRENT_RASTER_SECONDARY_COLOR			= 0x845F    # New for 2.1
+	PIXEL_PACK_BUFFER				= 0x88EB    # ARB_pixel_buffer_object
+	PIXEL_UNPACK_BUFFER				= 0x88EC    # ARB_pixel_buffer_object
+	PIXEL_PACK_BUFFER_BINDING			= 0x88ED    # ARB_pixel_buffer_object
+	PIXEL_UNPACK_BUFFER_BINDING			= 0x88EF    # ARB_pixel_buffer_object
+	FLOAT_MAT2x3					= 0x8B65    # New for 2.1
+	FLOAT_MAT2x4					= 0x8B66    # New for 2.1
+	FLOAT_MAT3x2					= 0x8B67    # New for 2.1
+	FLOAT_MAT3x4					= 0x8B68    # New for 2.1
+	FLOAT_MAT4x2					= 0x8B69    # New for 2.1
+	FLOAT_MAT4x3					= 0x8B6A    # New for 2.1
+	SRGB						= 0x8C40    # EXT_texture_sRGB
+	SRGB8						= 0x8C41    # EXT_texture_sRGB
+	SRGB_ALPHA					= 0x8C42    # EXT_texture_sRGB
+	SRGB8_ALPHA8					= 0x8C43    # EXT_texture_sRGB
+	SLUMINANCE_ALPHA				= 0x8C44    # EXT_texture_sRGB
+	SLUMINANCE8_ALPHA8				= 0x8C45    # EXT_texture_sRGB
+	SLUMINANCE					= 0x8C46    # EXT_texture_sRGB
+	SLUMINANCE8					= 0x8C47    # EXT_texture_sRGB
+	COMPRESSED_SRGB					= 0x8C48    # EXT_texture_sRGB
+	COMPRESSED_SRGB_ALPHA				= 0x8C49    # EXT_texture_sRGB
+	COMPRESSED_SLUMINANCE				= 0x8C4A    # EXT_texture_sRGB
+	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # EXT_texture_sRGB
+
 
 ###############################################################################
 #
@@ -3963,7 +3965,7 @@ EXT_framebuffer_object enum:
 	FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_EXT = 0x8CD3
 	FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_EXT	= 0x8CD4
 	FRAMEBUFFER_COMPLETE_EXT			= 0x8CD5
-	FRAMEBUFFER_INCOMPLETE_ATTACHMENTS_EXT		= 0x8CD6
+	FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT		= 0x8CD6
 	FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT	= 0x8CD7
 	FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT = 0x8CD8
 	FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT		= 0x8CD9
@@ -3971,7 +3973,8 @@ EXT_framebuffer_object enum:
 	FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT		= 0x8CDB
 	FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT		= 0x8CDC
 	FRAMEBUFFER_UNSUPPORTED_EXT			= 0x8CDD
-	FRAMEBUFFER_STATUS_ERROR_EXT			= 0x8CDE
+## Removed 2005/05/31 in revision #113 of the extension:
+##	  FRAMEBUFFER_STATUS_ERROR_EXT			  = 0x8CDE
 	MAX_COLOR_ATTACHMENTS_EXT			= 0x8CDF
 	COLOR_ATTACHMENT0_EXT				= 0x8CE0
 	COLOR_ATTACHMENT1_EXT				= 0x8CE1
@@ -3996,14 +3999,100 @@ EXT_framebuffer_object enum:
 	RENDERBUFFER_WIDTH_EXT				= 0x8D42
 	RENDERBUFFER_HEIGHT_EXT				= 0x8D43
 	RENDERBUFFER_INTERNAL_FORMAT_EXT		= 0x8D44
-	STENCIL_INDEX_EXT				= 0x8D45
+# removed STENCIL_INDEX_EXT = 0x8D45 in rev. #114 of the spec
 	STENCIL_INDEX1_EXT				= 0x8D46
 	STENCIL_INDEX4_EXT				= 0x8D47
 	STENCIL_INDEX8_EXT				= 0x8D48
 	STENCIL_INDEX16_EXT				= 0x8D49
+	RENDERBUFFER_RED_SIZE_EXT			= 0x8D50
+	RENDERBUFFER_GREEN_SIZE_EXT			= 0x8D51
+	RENDERBUFFER_BLUE_SIZE_EXT			= 0x8D52
+	RENDERBUFFER_ALPHA_SIZE_EXT			= 0x8D53
+	RENDERBUFFER_DEPTH_SIZE_EXT			= 0x8D54
+	RENDERBUFFER_STENCIL_SIZE_EXT			= 0x8D55
 
 ###############################################################################
 
 # No new tokens
 # Extension #311
 GREMEDY_string_marker enum:
+
+###############################################################################
+
+# Extension #312
+EXT_packed_depth_stencil enum:
+	DEPTH_STENCIL_EXT				= 0x84F9
+	UNSIGNED_INT_24_8_EXT				= 0x84FA
+	DEPTH24_STENCIL8_EXT				= 0x88F0
+	TEXTURE_STENCIL_SIZE_EXT			= 0x88F1
+
+###############################################################################
+
+# Extension #313 - WGL_3DL_stereo_control
+
+###############################################################################
+
+# Extension #314
+EXT_stencil_clear_tag enum:
+	STENCIL_TAG_BITS_EXT				= 0x88F2
+	STENCIL_CLEAR_TAG_VALUE_EXT			= 0x88F3
+
+###############################################################################
+
+# Extension #315
+EXT_texture_sRGB enum:
+	SRGB_EXT					= 0x8C40
+	SRGB8_EXT					= 0x8C41
+	SRGB_ALPHA_EXT					= 0x8C42
+	SRGB8_ALPHA8_EXT				= 0x8C43
+	SLUMINANCE_ALPHA_EXT				= 0x8C44
+	SLUMINANCE8_ALPHA8_EXT				= 0x8C45
+	SLUMINANCE_EXT					= 0x8C46
+	SLUMINANCE8_EXT					= 0x8C47
+	COMPRESSED_SRGB_EXT				= 0x8C48
+	COMPRESSED_SRGB_ALPHA_EXT			= 0x8C49
+	COMPRESSED_SLUMINANCE_EXT			= 0x8C4A
+	COMPRESSED_SLUMINANCE_ALPHA_EXT			= 0x8C4B
+	COMPRESSED_SRGB_S3TC_DXT1_EXT			= 0x8C4C
+	COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT		= 0x8C4D
+	COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT		= 0x8C4E
+	COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT		= 0x8C4F
+
+###############################################################################
+
+# Extension #316
+EXT_framebuffer_blit enum:
+	READ_FRAMEBUFFER_EXT				= 0x8CA8
+	DRAW_FRAMEBUFFER_EXT				= 0x8CA9
+	READ_FRAMEBUFFER_BINDING_EXT			= GL_FRAMEBUFFER_BINDING_EXT
+	DRAW_FRAMEBUFFER_BINDING_EXT			= 0x8CAA
+
+###############################################################################
+
+# Extension #317
+EXT_framebuffer_multisample enum:
+	RENDERBUFFER_SAMPLES_EXT			= 0x8CAB
+
+###############################################################################
+
+# Extension #318
+MESAX_texture_stack enum:
+	TEXTURE_1D_STACK_MESAX				= 0x8759
+	TEXTURE_2D_STACK_MESAX				= 0x875A
+	PROXY_TEXTURE_1D_STACK_MESAX			= 0x875B
+	PROXY_TEXTURE_2D_STACK_MESAX			= 0x875C
+	TEXTURE_1D_STACK_BINDING_MESAX			= 0x875D
+	TEXTURE_2D_STACK_BINDING_MESAX			= 0x875E
+
+###############################################################################
+
+# Extension #319
+EXT_timer_query enum:
+	TIME_ELAPSED_EXT				= 0x88BF
+
+###############################################################################
+
+# No new tokens
+# Extension #320
+EXT_gpu_program_parameters enum:
+
