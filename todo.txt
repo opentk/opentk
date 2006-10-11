@@ -1,13 +1,13 @@
 Todo:
-+ + + Add basic GLX bindings.
-+ + + Add basic X bindings.
-+ + + Add context creation support for X.
++ + + Correct the Dispose methods to correctly clean resources (they should also call GC.SupressFinalize(true))
++ + + Add basic GLX bindings	(in progress)
++ + + Add basic X bindings		(in progress)
++ + + Add context creation support for X	(needs testing)
 + + + Test X support.
 + + + Add the CLS compliant attribute to the GL class.
-+ + Add cross-platform way for overriding the Application.Idle handler.
-+ + Change the hierarchy of the WindowsContext and WindowsVistaContext classes. The should have a common ancestor who manages the windows creation (it should be the same for both).
++ + Add cross-platform way for defining the Application.Idle handler	(needs testing)
 + + Add more constructors to the Context classes.
-+ + Add more GLForm constructors.
++ + Add more Framework constructors.
 + + Add comments and documentation (faqs, pitfalls, best practices).
 + + Add a cross-platform build system (probably NAnt?)
 + Add more examples.

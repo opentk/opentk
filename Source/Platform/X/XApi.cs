@@ -47,6 +47,7 @@ namespace OpenTK.Platform.X
         [DllImport(_dll_name, EntryPoint = "XCloseDisplay")]
         extern public static void CloseDisplay(IntPtr display);
 
+        //
 
         [DllImport(_dll_name, EntryPoint = "XDefaultScreen")]
         extern public static int DefaultScreen(IntPtr display);
@@ -56,7 +57,6 @@ namespace OpenTK.Platform.X
 
         [DllImport(_dll_name, EntryPoint = "XFree")]
         extern public static void Free(IntPtr data);
-
 
         // Queue management
         [DllImport(_dll_name, EntryPoint = "XEventsQueued")]

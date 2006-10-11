@@ -11,14 +11,8 @@ using OpenTK.OpenGL;
 
 namespace OpenTK.OpenGL.Platform
 {
-    public partial class WindowsVistaContext : OpenTK.OpenGL.GLContext
+    public partial class WindowsVistaContext : WindowsBaseContext
     {
-        const string _dll_name = "OPENGL32.DLL";
-        int _dll_handle;
-        int _device_context;
-        int _render_context;
-        IntPtr _window_handle;
-
         public WindowsVistaContext(Control c, int red, int green, int blue, int alpha, int depth, int stencil)
         {
             int error_code = 0;
@@ -97,41 +91,6 @@ namespace OpenTK.OpenGL.Platform
 
             //if (load_extensions)
             //    LoadExtensions();
-        }
-
-        public override void SwapBuffers()
-        {
-            OpenTK.Platform.Windows.Api.SwapBuffers(_device_context);
-        }
-
-        public override Delegate GetAddress(string function_string, Type function_type)
-        {
-            IntPtr address = Wgl.GetProcAddress(function_string);
-            if (address == IntPtr.Zero)
-                return null;
-            else
-                return Marshal.GetDelegateForFunctionPointer(address, function_type);
-        }
-
-        public override void MakeCurrent()
-        {
-            Wgl.MakeCurrent(_device_context, _render_context);
-        }
-
-        public override void Dispose()
-        {
-            if (_render_context != 0)
-                Wgl.DeleteContext(_render_context);
-
-            if (_device_context != 0)
-                OpenTK.Platform.Windows.Api.ReleaseDC(_window_handle.ToInt32(), _device_context);
-
-            if (_dll_handle != 0)
-                OpenTK.Platform.Windows.Api.FreeLibrary(_dll_handle);
-
-            _render_context = 0;
-            _device_context = 0;
-            _dll_handle = 0;
         }
     }
 }

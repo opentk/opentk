@@ -11,7 +11,10 @@ OpenTK 0.3.4 -> 0.3.5
 	+ Added bindings to some glx functions.
 	+ Added the OpenTK.Platform.X class.
 + Minor updates to the wgl bindings (int -> IntPtr).
-+ Tested the binding generator with the glx specs (the reader and the enum writer work ok, the trnaslator and the other writers need updating).
++ Tested the binding generator with the glx specs (the reader and the enum writer work ok, the trnaslator and the other writers will need updating).
++ Renamed the GLForm to Framework.
+	+ The Framework now resides in its own project directory.
++ Revamped the GLContext class hierarchy. WindowsContext and WindowsVistaContext now both inherit from WindowsBaseContext. This allows for less code-duplication (and thus less bugs).
 
 OpenTK 0.3.3 -> 0.3.4
 + Corrected the crash error in Release mode (it was caused by trying to Marshal the System.Windows.Forms.Message struct to PeekMessage - adding my own Message struct corrected the issue).
