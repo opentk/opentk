@@ -104,6 +104,28 @@ namespace OpenTK.OpenGL.Bind
 
         public static void TranslateEnums(System.Collections.Hashtable enums)
         {
+            // Add missing enums.
+            {
+                Enum e = new Enum();
+                Constant c;
+                e.Name = "SGIX_icc_texture";
+                c = new Constant("RGB_ICC_SGIX", "0x8460"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("RGBA_ICC_SGIX", "0x8461"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("ALPHA_ICC_SGIX", "0x8462"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("LUMINANCE_ICC_SGIX", "0x8463"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("INTENSITY_ICC_SGIX", "0x8464"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("LUMINANCE_ALPHA_ICC_SGIX", "0x8465"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("R5_G6_B5_ICC_SGIX", "0x8466"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("R5_G6_B5_A8_ICC_SGIX", "0x8467"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("ALPHA16_ICC_SGIX", "0x8468"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("LUMINANCE16_ICC_SGIX", "0x8469"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("INTENSITY16_ICC_SGIX", "0x846A"); e.ConstantCollection.Add(c.Name, c);
+                c = new Constant("LUMINANCE16_ALPHA8_ICC_SGIX", "0x846B"); e.ConstantCollection.Add(c.Name, c);
+
+                enums.Add(e.Name, e);
+            }
+
+            // Translate enums.
             foreach (Enum e in enums.Values)
             {
                 if (Char.IsDigit(e.Name[0]))
@@ -114,13 +136,37 @@ namespace OpenTK.OpenGL.Bind
 
                 foreach (Constant c in e.ConstantCollection.Values)
                 {
+                    // Prepend an '_' if the first letter is a number (e.g. 4_BYTES -> _4_BYTES)
                     if (Char.IsDigit(c.Name[0]))
                         c.Name = c.Name.Insert(0, "_");
 
+                    // Prepend an '_' to the aliased value, if it starts with a number (e.g. DataType.4_BYTES -> DataType._4_BYTES)
                     if (c.Value.Contains(".") && Char.IsDigit(c.Value[c.Value.IndexOf('.') + 1]))
                         c.Value = c.Value.Insert(c.Value.IndexOf('.') + 1, "_");
+
+                    // There are cases when a value is not a number but an aliased constant, with no enum specified.
+                    // In this case try searching all enums for the correct constant to alias (stupid opengl group).
+                    if (!c.Value.Contains(".") && !c.Value.StartsWith("0x") && !Char.IsDigit(c.Value[0]))
+                    {
+                        if (c.Value.StartsWith("GL_"))
+                            c.Value = c.Value.TrimStart('G', 'L', '_');
+
+                        if (Char.IsDigit(c.Value[0]))
+                            c.Value = c.Value.Insert(0, "_");
+
+                        foreach (Enum search_enum in enums.Values)
+                            foreach (Constant search_constant in search_enum.ConstantCollection.Values)
+                                if (search_constant.Name == c.Value || search_constant.Name == c.Value.TrimStart('_'))
+                                    c.Value = c.Value.Insert(0, search_enum.Name + ".");
+                    }
+
+                    // Handle enum.spec bugs:
+                    if (c.Value.Contains("LightProperty"))
+                        c.Value = c.Value.Replace("LightProperty", "LightParameter");
                 }
             }
+
+
         }
 
         #endregion

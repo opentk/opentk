@@ -73,6 +73,10 @@ namespace OpenTK.OpenGL.Bind
                 long ticks = System.DateTime.Now.Ticks;
 
                 // GL binding generation.
+
+                Translation.GLTypes = SpecReader.ReadTypeMap("gl.tm");
+                Translation.CSTypes = SpecReader.ReadTypeMap("csharp.tm");
+
                 List<Function> wrappers;
                 List<Function> functions = SpecReader.ReadFunctionSpecs("gl.spec");
                 Hashtable enums = SpecReader.ReadEnumSpecs("enum.spec");
@@ -87,9 +91,6 @@ namespace OpenTK.OpenGL.Bind
                                 ((Enum)enums[e.Name]).ConstantCollection.Add(c.Name, c);
                     }
 
-                Translation.GLTypes = SpecReader.ReadTypeMap("gl.tm");
-                Translation.CSTypes = SpecReader.ReadTypeMap("csharp.tm");
-
                 Translation.TranslateFunctions(functions, enums, out wrappers);
                 Translation.TranslateEnums(enums);
 
@@ -102,7 +103,7 @@ namespace OpenTK.OpenGL.Bind
 
                 // GLX binding generation.
                 //Translation.GLXTypes = SpecReader.ReadTypeMap("glx.tm"); // Works semi-ok.
-                //functions = SpecReader.ReadFunctionSpecs("glx.spec"); // Works ok!
+                //List<Function> functions = SpecReader.ReadFunctionSpecs("glx.spec"); // Works ok!
                 //Hashtable enums = SpecReader.ReadEnumSpecs("glxenum.spec"); // Works ok!
                 //SpecWriter.WriteSpecs(Settings.OutputPath, "Glx", functions, null, enums); // Needs updating.
 

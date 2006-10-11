@@ -34,6 +34,10 @@ namespace OpenTK.OpenGL
     using GLdouble = System.Double;
     using GLclampd = System.Double;
     using GLstring = System.String;
+    using GLint64EXT = System.Int64;
+    using GLuint64EXT = System.Int64;
+    using GLint64 = System.Int64;
+    using GLuint64 = System.Int64;
     #endregion
 
     #region Enums
@@ -41,27 +45,6 @@ namespace OpenTK.OpenGL
     {
         #region Missing Constants
 
-        const uint GL_FOG_COORDINATE_SOURCE = 0x8450;
-        const uint GL_FOG_COORDINATE = 0x8451;
-        const uint GL_CURRENT_FOG_COORDINATE = 0x8453;
-        const uint GL_FOG_COORDINATE_ARRAY_TYPE = 0x8454;
-        const uint GL_FOG_COORDINATE_ARRAY_STRIDE = 0x8455;
-        const uint GL_FOG_COORDINATE_ARRAY_POINTER = 0x8456;
-        const uint GL_FOG_COORDINATE_ARRAY = 0x8457;
-        const uint GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING = 0x889D;
-        const uint GL_SOURCE0_RGB = 0x8580;
-        const uint GL_SOURCE1_RGB = 0x8581;
-        const uint GL_SOURCE2_RGB = 0x8582;
-        const uint GL_SOURCE0_ALPHA = 0x8588;
-        const uint GL_SOURCE1_ALPHA = 0x8589;
-        const uint GL_SOURCE2_ALPHA = 0x858A;
-        const uint GL_BLEND_EQUATION = 0x8009;
-        const uint GL_MODELVIEW_MATRIX = 0x0BA6;
-        const uint GL_MODELVIEW = 0x1700;
-        const uint GL_MODELVIEW_STACK_DEPTH = 0x0BA3;
-        const uint GL_OFFSET_TEXTURE_MATRIX_NV = 0x86E1;
-        const uint GL_OFFSET_TEXTURE_SCALE_NV = 0x86E2;
-        const uint GL_OFFSET_TEXTURE_BIAS_NV = 0x86E3;
 
         #endregion
 
@@ -192,6 +175,10 @@ namespace OpenTK.OpenGL
             ASYNC_READ_PIXELS_SGIX = 0x835E,
             MAX_ASYNC_DRAW_PIXELS_SGIX = 0x8360,
             MAX_ASYNC_READ_PIXELS_SGIX = 0x8361,
+        }
+
+        public enum ARB_texture_env_add : uint
+        {
         }
 
         public enum BeginMode : uint
@@ -418,6 +405,7 @@ namespace OpenTK.OpenGL
         public enum SGIX_blend_alpha_minmax : uint
         {
             ALPHA_MAX_SGIX = 0x8321,
+            ASYNC_MARKER_SGIX = 0x8329,
             ALPHA_MIN_SGIX = 0x8320,
         }
 
@@ -609,8 +597,83 @@ namespace OpenTK.OpenGL
             MINMAX_FORMAT_EXT = EXT_histogram.MINMAX_FORMAT_EXT,
         }
 
-        public enum IBM_multimode_draw_arrays : uint
+        public enum ARB_imaging : uint
         {
+            CONVOLUTION_WIDTH = 0x8018,
+            COLOR_MATRIX_STACK_DEPTH = 0x80B2,
+            BLEND_EQUATION = 0x8009,
+            COLOR_TABLE_BIAS = 0x80D7,
+            CONSTANT_BORDER = 0x8151,
+            HISTOGRAM = 0x8024,
+            COLOR_TABLE_GREEN_SIZE = 0x80DB,
+            HISTOGRAM_RED_SIZE = 0x8028,
+            CONSTANT_ALPHA = 0x8003,
+            TABLE_TOO_LARGE = 0x8031,
+            POST_CONVOLUTION_GREEN_SCALE = 0x801D,
+            MINMAX_SINK = 0x8030,
+            PROXY_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D5,
+            COLOR_TABLE_SCALE = 0x80D6,
+            COLOR_MATRIX = 0x80B1,
+            CONVOLUTION_FILTER_SCALE = 0x8014,
+            BLEND_COLOR = 0x8005,
+            MIN = 0x8007,
+            HISTOGRAM_SINK = 0x802D,
+            POST_COLOR_MATRIX_GREEN_SCALE = 0x80B5,
+            SEPARABLE_2D = 0x8012,
+            FUNC_REVERSE_SUBTRACT = 0x800B,
+            CONVOLUTION_FORMAT = 0x8017,
+            REPLICATE_BORDER = 0x8153,
+            CONSTANT_COLOR = 0x8001,
+            COLOR_TABLE = 0x80D0,
+            POST_CONVOLUTION_BLUE_SCALE = 0x801E,
+            FUNC_ADD = 0x8006,
+            CONVOLUTION_2D = 0x8011,
+            POST_COLOR_MATRIX_ALPHA_BIAS = 0x80BB,
+            POST_COLOR_MATRIX_ALPHA_SCALE = 0x80B7,
+            MINMAX = 0x802E,
+            POST_CONVOLUTION_ALPHA_BIAS = 0x8023,
+            POST_COLOR_MATRIX_BLUE_SCALE = 0x80B6,
+            POST_COLOR_MATRIX_RED_BIAS = 0x80B8,
+            HISTOGRAM_BLUE_SIZE = 0x802A,
+            POST_CONVOLUTION_BLUE_BIAS = 0x8022,
+            COLOR_TABLE_FORMAT = 0x80D8,
+            POST_COLOR_MATRIX_COLOR_TABLE = 0x80D2,
+            CONVOLUTION_HEIGHT = 0x8019,
+            POST_CONVOLUTION_COLOR_TABLE = 0x80D1,
+            MINMAX_FORMAT = 0x802F,
+            COLOR_TABLE_ALPHA_SIZE = 0x80DD,
+            POST_COLOR_MATRIX_BLUE_BIAS = 0x80BA,
+            PROXY_POST_CONVOLUTION_COLOR_TABLE = 0x80D4,
+            PROXY_COLOR_TABLE = 0x80D3,
+            HISTOGRAM_ALPHA_SIZE = 0x802B,
+            MAX_CONVOLUTION_WIDTH = 0x801A,
+            POST_COLOR_MATRIX_RED_SCALE = 0x80B4,
+            POST_CONVOLUTION_ALPHA_SCALE = 0x801F,
+            CONVOLUTION_BORDER_COLOR = 0x8154,
+            COLOR_TABLE_BLUE_SIZE = 0x80DC,
+            ONE_MINUS_CONSTANT_COLOR = 0x8002,
+            COLOR_TABLE_LUMINANCE_SIZE = 0x80DE,
+            POST_COLOR_MATRIX_GREEN_BIAS = 0x80B9,
+            ONE_MINUS_CONSTANT_ALPHA = 0x8004,
+            FUNC_SUBTRACT = 0x800A,
+            COLOR_TABLE_INTENSITY_SIZE = 0x80DF,
+            REDUCE = 0x8016,
+            COLOR_TABLE_RED_SIZE = 0x80DA,
+            CONVOLUTION_BORDER_MODE = 0x8013,
+            HISTOGRAM_GREEN_SIZE = 0x8029,
+            POST_CONVOLUTION_GREEN_BIAS = 0x8021,
+            HISTOGRAM_FORMAT = 0x8027,
+            CONVOLUTION_1D = 0x8010,
+            POST_CONVOLUTION_RED_BIAS = 0x8020,
+            MAX_COLOR_MATRIX_STACK_DEPTH = 0x80B3,
+            COLOR_TABLE_WIDTH = 0x80D9,
+            POST_CONVOLUTION_RED_SCALE = 0x801C,
+            MAX = 0x8008,
+            PROXY_HISTOGRAM = 0x8025,
+            MAX_CONVOLUTION_HEIGHT = 0x801B,
+            CONVOLUTION_FILTER_BIAS = 0x8015,
+            HISTOGRAM_WIDTH = 0x8026,
+            HISTOGRAM_LUMINANCE_SIZE = 0x802C,
         }
 
         public enum NV_vertex_program2_option : uint
@@ -748,6 +811,14 @@ namespace OpenTK.OpenGL
         {
             GEOMETRY_DEFORMATION_SGIX = SGIX_polynomial_ffd.GEOMETRY_DEFORMATION_SGIX,
             TEXTURE_DEFORMATION_SGIX = SGIX_polynomial_ffd.TEXTURE_DEFORMATION_SGIX,
+        }
+
+        public enum EXT_framebuffer_blit : uint
+        {
+            DRAW_FRAMEBUFFER_BINDING_EXT = 0x8CAA,
+            READ_FRAMEBUFFER_BINDING_EXT = EXT_framebuffer_object.FRAMEBUFFER_BINDING_EXT,
+            READ_FRAMEBUFFER_EXT = 0x8CA8,
+            DRAW_FRAMEBUFFER_EXT = 0x8CA9,
         }
 
         public enum EnableCap : uint
@@ -1065,12 +1136,6 @@ namespace OpenTK.OpenGL
             POST_CONVOLUTION_GREEN_BIAS = 0x8021,
         }
 
-        public enum EXT_depth_bounds_test : uint
-        {
-            DEPTH_BOUNDS_EXT = 0x8891,
-            DEPTH_BOUNDS_TEST_EXT = 0x8890,
-        }
-
         public enum MaterialParameter : uint
         {
             EMISSION = 0x1600,
@@ -1102,14 +1167,9 @@ namespace OpenTK.OpenGL
             REPLICATE_BORDER = 0x8153,
         }
 
-        public enum APPLE_vertex_array_range : uint
+        public enum NV_vertex_program3 : uint
         {
-            STORAGE_SHARED_APPLE = 0x85BF,
-            VERTEX_ARRAY_RANGE_APPLE = 0x851D,
-            VERTEX_ARRAY_STORAGE_HINT_APPLE = 0x851F,
-            VERTEX_ARRAY_RANGE_LENGTH_APPLE = 0x851E,
-            VERTEX_ARRAY_RANGE_POINTER_APPLE = 0x8521,
-            STORAGE_CACHED_APPLE = 0x85BE,
+            MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB = ARB_vertex_shader.MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB,
         }
 
         public enum NV_blend_square : uint
@@ -1367,43 +1427,43 @@ namespace OpenTK.OpenGL
             DYNAMIC_READ = 0x88E9,
             VERTEX_ARRAY_BUFFER_BINDING = 0x8896,
             STREAM_COPY = 0x88E2,
-            FOG_COORD_ARRAY_STRIDE = GL_FOG_COORDINATE_ARRAY_STRIDE,
+            FOG_COORD_ARRAY_STRIDE = VERSION_1_4.FOG_COORDINATE_ARRAY_STRIDE,
             FOG_COORDINATE_ARRAY_BUFFER_BINDING = 0x889D,
             READ_WRITE = 0x88BA,
-            SRC1_ALPHA = GL_SOURCE1_ALPHA,
+            SRC1_ALPHA = VERSION_1_3.SOURCE1_ALPHA,
             TEXTURE_COORD_ARRAY_BUFFER_BINDING = 0x889A,
             BUFFER_MAP_POINTER = 0x88BD,
             QUERY_COUNTER_BITS = 0x8864,
             STATIC_COPY = 0x88E6,
             STATIC_DRAW = 0x88E4,
-            SRC2_RGB = GL_SOURCE2_RGB,
-            SRC2_ALPHA = GL_SOURCE2_ALPHA,
-            FOG_COORD_ARRAY = GL_FOG_COORDINATE_ARRAY,
-            FOG_COORD_SRC = GL_FOG_COORDINATE_SOURCE,
+            SRC2_RGB = VERSION_1_3.SOURCE2_RGB,
+            SRC2_ALPHA = VERSION_1_3.SOURCE2_ALPHA,
+            FOG_COORD_ARRAY = VERSION_1_4.FOG_COORDINATE_ARRAY,
+            FOG_COORD_SRC = VERSION_1_4.FOG_COORDINATE_SOURCE,
             DYNAMIC_COPY = 0x88EA,
             STATIC_READ = 0x88E5,
-            FOG_COORD_ARRAY_BUFFER_BINDING = GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING,
-            FOG_COORD_ARRAY_POINTER = GL_FOG_COORDINATE_ARRAY_POINTER,
+            FOG_COORD_ARRAY_BUFFER_BINDING = VERSION_1_5.FOG_COORDINATE_ARRAY_BUFFER_BINDING,
+            FOG_COORD_ARRAY_POINTER = VERSION_1_4.FOG_COORDINATE_ARRAY_POINTER,
             EDGE_FLAG_ARRAY_BUFFER_BINDING = 0x889B,
-            CURRENT_FOG_COORD = GL_CURRENT_FOG_COORDINATE,
+            CURRENT_FOG_COORD = VERSION_1_4.CURRENT_FOG_COORDINATE,
             VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889F,
             READ_ONLY = 0x88B8,
-            SRC0_ALPHA = GL_SOURCE0_ALPHA,
+            SRC0_ALPHA = VERSION_1_3.SOURCE0_ALPHA,
             ELEMENT_ARRAY_BUFFER = 0x8893,
             CURRENT_QUERY = 0x8865,
-            FOG_COORD = GL_FOG_COORDINATE,
+            FOG_COORD = VERSION_1_4.FOG_COORDINATE,
             QUERY_RESULT = 0x8866,
             BUFFER_USAGE = 0x8765,
             BUFFER_ACCESS = 0x88BB,
             STREAM_DRAW = 0x88E0,
             SECONDARY_COLOR_ARRAY_BUFFER_BINDING = 0x889C,
-            SRC0_RGB = GL_SOURCE0_RGB,
+            SRC0_RGB = VERSION_1_3.SOURCE0_RGB,
             ARRAY_BUFFER_BINDING = 0x8894,
             QUERY_RESULT_AVAILABLE = 0x8867,
             WRITE_ONLY = 0x88B9,
             BUFFER_SIZE = 0x8764,
             WEIGHT_ARRAY_BUFFER_BINDING = 0x889E,
-            SRC1_RGB = GL_SOURCE1_RGB,
+            SRC1_RGB = VERSION_1_3.SOURCE1_RGB,
             SAMPLES_PASSED = 0x8914,
             DYNAMIC_DRAW = 0x88E8,
             ARRAY_BUFFER = 0x8892,
@@ -1413,7 +1473,7 @@ namespace OpenTK.OpenGL
             BUFFER_MAPPED = 0x88BC,
             ELEMENT_ARRAY_BUFFER_BINDING = 0x8895,
             STREAM_READ = 0x88E1,
-            FOG_COORD_ARRAY_TYPE = GL_FOG_COORDINATE_ARRAY_TYPE,
+            FOG_COORD_ARRAY_TYPE = VERSION_1_4.FOG_COORDINATE_ARRAY_TYPE,
         }
 
         public enum ErrorCode : uint
@@ -1586,6 +1646,10 @@ namespace OpenTK.OpenGL
             _3D = 0x0601,
         }
 
+        public enum GREMEDY_string_marker : uint
+        {
+        }
+
         public enum ARB_point_sprite : uint
         {
             POINT_SPRITE_ARB = 0x8861,
@@ -1636,10 +1700,31 @@ namespace OpenTK.OpenGL
             PIXEL_FRAGMENT_ALPHA_SOURCE_SGIS = 0x8355,
         }
 
-        public enum SUNX_constant_data : uint
+        public enum VERSION_2_1 : uint
         {
-            TEXTURE_CONSTANT_DATA_SUNX = 0x81D6,
-            UNPACK_CONSTANT_DATA_SUNX = 0x81D5,
+            FLOAT_MAT3x2 = 0x8B67,
+            SRGB8 = 0x8C41,
+            FLOAT_MAT3x4 = 0x8B68,
+            COMPRESSED_SRGB_ALPHA = 0x8C49,
+            FLOAT_MAT4x3 = 0x8B6A,
+            SLUMINANCE_ALPHA = 0x8C44,
+            PIXEL_UNPACK_BUFFER = 0x88EC,
+            SRGB_ALPHA = 0x8C42,
+            COMPRESSED_SLUMINANCE = 0x8C4A,
+            FLOAT_MAT4x2 = 0x8B69,
+            SRGB8_ALPHA8 = 0x8C43,
+            COMPRESSED_SLUMINANCE_ALPHA = 0x8C4B,
+            PIXEL_UNPACK_BUFFER_BINDING = 0x88EF,
+            PIXEL_PACK_BUFFER = 0x88EB,
+            FLOAT_MAT2x3 = 0x8B65,
+            COMPRESSED_SRGB = 0x8C48,
+            PIXEL_PACK_BUFFER_BINDING = 0x88ED,
+            SRGB = 0x8C40,
+            SLUMINANCE8 = 0x8C47,
+            SLUMINANCE = 0x8C46,
+            FLOAT_MAT2x4 = 0x8B66,
+            SLUMINANCE8_ALPHA8 = 0x8C45,
+            CURRENT_RASTER_SECONDARY_COLOR = 0x845F,
         }
 
         public enum APPLE_ycbcr_422 : uint
@@ -1772,6 +1857,13 @@ namespace OpenTK.OpenGL
             TEXTURE_POST_SPECULAR_HP = 0x8168,
         }
 
+        public enum ARB_shadow : uint
+        {
+            TEXTURE_COMPARE_MODE_ARB = 0x884C,
+            TEXTURE_COMPARE_FUNC_ARB = 0x884D,
+            COMPARE_R_TO_TEXTURE_ARB = 0x884E,
+        }
+
         public enum SGIS_texture4D : uint
         {
             TEXTURE_4D_BINDING_SGIS = 0x814F,
@@ -1831,7 +1923,7 @@ namespace OpenTK.OpenGL
 
         public enum EXT_blend_equation_separate : uint
         {
-            BLEND_EQUATION_RGB_EXT = GL_BLEND_EQUATION,
+            BLEND_EQUATION_RGB_EXT = ARB_imaging.BLEND_EQUATION,
             BLEND_EQUATION_ALPHA_EXT = 0x883D,
         }
 
@@ -2513,6 +2605,10 @@ namespace OpenTK.OpenGL
             TEXTURE_COLOR_WRITEMASK_SGIS = 0x81EF,
         }
 
+        public enum SGIX_flush_raster : uint
+        {
+        }
+
         public enum SGIX_ycrcb_subsample : uint
         {
             PIXEL_SUBSAMPLE_2424_SGIX = 0x85A3,
@@ -2619,6 +2715,10 @@ namespace OpenTK.OpenGL
         {
         }
 
+        public enum IBM_multimode_draw_arrays : uint
+        {
+        }
+
         public enum SGI_color_matrix : uint
         {
             POST_COLOR_MATRIX_RED_BIAS_SGI = 0x80B8,
@@ -2695,11 +2795,8 @@ namespace OpenTK.OpenGL
             ASYNC_HISTOGRAM_SGIX = 0x832C,
         }
 
-        public enum ARB_shadow : uint
+        public enum EXT_gpu_program_parameters : uint
         {
-            TEXTURE_COMPARE_MODE_ARB = 0x884C,
-            TEXTURE_COMPARE_FUNC_ARB = 0x884D,
-            COMPARE_R_TO_TEXTURE_ARB = 0x884E,
         }
 
         public enum EXT_clip_volume_hint : uint
@@ -3071,6 +3168,12 @@ namespace OpenTK.OpenGL
             INDEX_MATERIAL_PARAMETER_EXT = 0x81B9,
         }
 
+        public enum EXT_stencil_clear_tag : uint
+        {
+            STENCIL_CLEAR_TAG_VALUE_EXT = 0x88F3,
+            STENCIL_TAG_BITS_EXT = 0x88F2,
+        }
+
         public enum EXT_framebuffer_object : uint
         {
             FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT = 0x8CDC,
@@ -3083,24 +3186,25 @@ namespace OpenTK.OpenGL
             COLOR_ATTACHMENT13_EXT = 0x8CED,
             RENDERBUFFER_HEIGHT_EXT = 0x8D43,
             COLOR_ATTACHMENT14_EXT = 0x8CEE,
-            FRAMEBUFFER_COMPLETE_EXT = 0x8CD5,
+            COLOR_ATTACHMENT12_EXT = 0x8CEC,
             RENDERBUFFER_INTERNAL_FORMAT_EXT = 0x8D44,
+            RENDERBUFFER_ALPHA_SIZE_EXT = 0x8D53,
             FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT = 0x8CD9,
-            FRAMEBUFFER_STATUS_ERROR_EXT = 0x8CDE,
             STENCIL_INDEX4_EXT = 0x8D47,
             FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_EXT = 0x8CD2,
             COLOR_ATTACHMENT6_EXT = 0x8CE6,
-            STENCIL_INDEX_EXT = 0x8D45,
             FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT = 0x8CD7,
             FRAMEBUFFER_INCOMPLETE_FORMATS_EXT = 0x8CDA,
+            RENDERBUFFER_DEPTH_SIZE_EXT = 0x8D54,
             FRAMEBUFFER_BINDING_EXT = 0x8CA6,
             COLOR_ATTACHMENT8_EXT = 0x8CE8,
+            FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT = 0x8CD6,
             COLOR_ATTACHMENT2_EXT = 0x8CE2,
             COLOR_ATTACHMENT9_EXT = 0x8CE9,
             FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_EXT = 0x8CD3,
             FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT = 0x8CDB,
-            COLOR_ATTACHMENT12_EXT = 0x8CEC,
             MAX_COLOR_ATTACHMENTS_EXT = 0x8CDF,
+            RENDERBUFFER_GREEN_SIZE_EXT = 0x8D51,
             STENCIL_INDEX8_EXT = 0x8D48,
             COLOR_ATTACHMENT7_EXT = 0x8CE7,
             MAX_RENDERBUFFER_SIZE_EXT = 0x84E8,
@@ -3108,17 +3212,20 @@ namespace OpenTK.OpenGL
             DEPTH_ATTACHMENT_EXT = 0x8D00,
             COLOR_ATTACHMENT0_EXT = 0x8CE0,
             INVALID_FRAMEBUFFER_OPERATION_EXT = 0x0506,
+            RENDERBUFFER_BLUE_SIZE_EXT = 0x8D52,
             FRAMEBUFFER_EXT = 0x8D40,
             RENDERBUFFER_WIDTH_EXT = 0x8D42,
+            STENCIL_INDEX16_EXT = 0x8D49,
             FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT = 0x8CD8,
-            FRAMEBUFFER_INCOMPLETE_ATTACHMENTS_EXT = 0x8CD6,
             COLOR_ATTACHMENT5_EXT = 0x8CE5,
             FRAMEBUFFER_UNSUPPORTED_EXT = 0x8CDD,
+            RENDERBUFFER_RED_SIZE_EXT = 0x8D50,
             COLOR_ATTACHMENT11_EXT = 0x8CEB,
-            STENCIL_INDEX16_EXT = 0x8D49,
+            FRAMEBUFFER_COMPLETE_EXT = 0x8CD5,
             COLOR_ATTACHMENT4_EXT = 0x8CE4,
             COLOR_ATTACHMENT10_EXT = 0x8CEA,
             RENDERBUFFER_BINDING_EXT = 0x8CA7,
+            RENDERBUFFER_STENCIL_SIZE_EXT = 0x8D55,
             FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_EXT = 0x8CD1,
             STENCIL_ATTACHMENT_EXT = 0x8D20,
         }
@@ -3349,7 +3456,7 @@ namespace OpenTK.OpenGL
             SAMPLER_2D_SHADOW = 0x8B62,
             VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A,
             FRAGMENT_SHADER_DERIVATIVE_HINT = 0x8B8B,
-            BLEND_EQUATION_RGB = GL_BLEND_EQUATION,
+            BLEND_EQUATION_RGB = ARB_imaging.BLEND_EQUATION,
             DRAW_BUFFER2 = 0x8827,
             SHADER_SOURCE_LENGTH = 0x8B88,
             DRAW_BUFFER7 = 0x882C,
@@ -3611,83 +3718,14 @@ namespace OpenTK.OpenGL
             HALF_FLOAT_NV = 0x140B,
         }
 
-        public enum ARB_imaging : uint
+        public enum APPLE_vertex_array_range : uint
         {
-            CONVOLUTION_WIDTH = 0x8018,
-            COLOR_MATRIX_STACK_DEPTH = 0x80B2,
-            BLEND_EQUATION = 0x8009,
-            COLOR_TABLE_BIAS = 0x80D7,
-            CONSTANT_BORDER = 0x8151,
-            HISTOGRAM = 0x8024,
-            COLOR_TABLE_GREEN_SIZE = 0x80DB,
-            HISTOGRAM_RED_SIZE = 0x8028,
-            CONSTANT_ALPHA = 0x8003,
-            TABLE_TOO_LARGE = 0x8031,
-            POST_CONVOLUTION_GREEN_SCALE = 0x801D,
-            MINMAX_SINK = 0x8030,
-            PROXY_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D5,
-            COLOR_TABLE_SCALE = 0x80D6,
-            COLOR_MATRIX = 0x80B1,
-            CONVOLUTION_FILTER_SCALE = 0x8014,
-            BLEND_COLOR = 0x8005,
-            MIN = 0x8007,
-            HISTOGRAM_SINK = 0x802D,
-            POST_COLOR_MATRIX_GREEN_SCALE = 0x80B5,
-            SEPARABLE_2D = 0x8012,
-            FUNC_REVERSE_SUBTRACT = 0x800B,
-            CONVOLUTION_FORMAT = 0x8017,
-            REPLICATE_BORDER = 0x8153,
-            CONSTANT_COLOR = 0x8001,
-            COLOR_TABLE = 0x80D0,
-            POST_CONVOLUTION_BLUE_SCALE = 0x801E,
-            FUNC_ADD = 0x8006,
-            CONVOLUTION_2D = 0x8011,
-            POST_COLOR_MATRIX_ALPHA_BIAS = 0x80BB,
-            POST_COLOR_MATRIX_ALPHA_SCALE = 0x80B7,
-            MINMAX = 0x802E,
-            POST_CONVOLUTION_ALPHA_BIAS = 0x8023,
-            POST_COLOR_MATRIX_BLUE_SCALE = 0x80B6,
-            POST_COLOR_MATRIX_RED_BIAS = 0x80B8,
-            HISTOGRAM_BLUE_SIZE = 0x802A,
-            POST_CONVOLUTION_BLUE_BIAS = 0x8022,
-            COLOR_TABLE_FORMAT = 0x80D8,
-            POST_COLOR_MATRIX_COLOR_TABLE = 0x80D2,
-            CONVOLUTION_HEIGHT = 0x8019,
-            POST_CONVOLUTION_COLOR_TABLE = 0x80D1,
-            MINMAX_FORMAT = 0x802F,
-            COLOR_TABLE_ALPHA_SIZE = 0x80DD,
-            POST_COLOR_MATRIX_BLUE_BIAS = 0x80BA,
-            PROXY_POST_CONVOLUTION_COLOR_TABLE = 0x80D4,
-            PROXY_COLOR_TABLE = 0x80D3,
-            HISTOGRAM_ALPHA_SIZE = 0x802B,
-            MAX_CONVOLUTION_WIDTH = 0x801A,
-            POST_COLOR_MATRIX_RED_SCALE = 0x80B4,
-            POST_CONVOLUTION_ALPHA_SCALE = 0x801F,
-            CONVOLUTION_BORDER_COLOR = 0x8154,
-            COLOR_TABLE_BLUE_SIZE = 0x80DC,
-            ONE_MINUS_CONSTANT_COLOR = 0x8002,
-            COLOR_TABLE_LUMINANCE_SIZE = 0x80DE,
-            POST_COLOR_MATRIX_GREEN_BIAS = 0x80B9,
-            ONE_MINUS_CONSTANT_ALPHA = 0x8004,
-            FUNC_SUBTRACT = 0x800A,
-            COLOR_TABLE_INTENSITY_SIZE = 0x80DF,
-            REDUCE = 0x8016,
-            COLOR_TABLE_RED_SIZE = 0x80DA,
-            CONVOLUTION_BORDER_MODE = 0x8013,
-            HISTOGRAM_GREEN_SIZE = 0x8029,
-            POST_CONVOLUTION_GREEN_BIAS = 0x8021,
-            HISTOGRAM_FORMAT = 0x8027,
-            CONVOLUTION_1D = 0x8010,
-            POST_CONVOLUTION_RED_BIAS = 0x8020,
-            MAX_COLOR_MATRIX_STACK_DEPTH = 0x80B3,
-            COLOR_TABLE_WIDTH = 0x80D9,
-            POST_CONVOLUTION_RED_SCALE = 0x801C,
-            MAX = 0x8008,
-            PROXY_HISTOGRAM = 0x8025,
-            MAX_CONVOLUTION_HEIGHT = 0x801B,
-            CONVOLUTION_FILTER_BIAS = 0x8015,
-            HISTOGRAM_WIDTH = 0x8026,
-            HISTOGRAM_LUMINANCE_SIZE = 0x802C,
+            STORAGE_SHARED_APPLE = 0x85BF,
+            VERTEX_ARRAY_RANGE_APPLE = 0x851D,
+            VERTEX_ARRAY_STORAGE_HINT_APPLE = 0x851F,
+            VERTEX_ARRAY_RANGE_LENGTH_APPLE = 0x851E,
+            VERTEX_ARRAY_RANGE_POINTER_APPLE = 0x8521,
+            STORAGE_CACHED_APPLE = 0x85BE,
         }
 
         public enum NV_texture_compression_vtc : uint
@@ -3785,9 +3823,10 @@ namespace OpenTK.OpenGL
             SHADOW_AMBIENT_SGIX = 0x80BF,
         }
 
-        public enum NV_vertex_program3 : uint
+        public enum SUNX_constant_data : uint
         {
-            MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB = ARB_vertex_shader.MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB,
+            TEXTURE_CONSTANT_DATA_SUNX = 0x81D6,
+            UNPACK_CONSTANT_DATA_SUNX = 0x81D5,
         }
 
         public enum EXT_blend_minmax : uint
@@ -3876,20 +3915,10 @@ namespace OpenTK.OpenGL
             MAX_SHININESS_NV = 0x8504,
         }
 
-        public enum SGIX_icc_texture : uint
+        public enum EXT_depth_bounds_test : uint
         {
-            RGBA_ICC_SGIX = 0x8461,
-            INTENSITY_ICC_SGIX = 0x8464,
-            ALPHA_ICC_SGIX = 0x8462,
-            LUMINANCE_ICC_SGIX = 0x8463,
-            LUMINANCE16_ICC_SGIX = 0x8469,
-            R5_G6_B5_ICC_SGIX = 0x8466,
-            ALPHA16_ICC_SGIX = 0x8468,
-            INTENSITY16_ICC_SGIX = 0x846A,
-            RGB_ICC_SGIX = 0x8460,
-            LUMINANCE_ALPHA_ICC_SGIX = 0x8465,
-            R5_G6_B5_A8_ICC_SGIX = 0x8467,
-            LUMINANCE16_ALPHA8_ICC_SGIX = 0x846B,
+            DEPTH_BOUNDS_EXT = 0x8891,
+            DEPTH_BOUNDS_TEST_EXT = 0x8890,
         }
 
         public enum ARB_texture_float : uint
@@ -4058,8 +4087,12 @@ namespace OpenTK.OpenGL
             POINT_SIZE_MIN_ARB = 0x8126,
         }
 
-        public enum ARB_texture_env_add : uint
+        public enum EXT_packed_depth_stencil : uint
         {
+            DEPTH_STENCIL_EXT = 0x84F9,
+            TEXTURE_STENCIL_SIZE_EXT = 0x88F1,
+            UNSIGNED_INT_24_8_EXT = 0x84FA,
+            DEPTH24_STENCIL8_EXT = 0x88F0,
         }
 
         public enum EXT_color_subtable : uint
@@ -4409,7 +4442,7 @@ namespace OpenTK.OpenGL
             OFFSET_TEXTURE_SCALE_NV = 0x86E2,
             MAGNITUDE_SCALE_NV = 0x8712,
             CULL_FRAGMENT_NV = 0x86E7,
-            OFFSET_TEXTURE_2D_SCALE_NV = GL_OFFSET_TEXTURE_SCALE_NV,
+            OFFSET_TEXTURE_2D_SCALE_NV = NV_texture_shader.OFFSET_TEXTURE_SCALE_NV,
             TEXTURE_DT_SIZE_NV = 0x871E,
             OFFSET_TEXTURE_2D_NV = 0x86E8,
             UNSIGNED_INT_S8_S8_8_8_NV = 0x86DA,
@@ -4431,7 +4464,7 @@ namespace OpenTK.OpenGL
             DT_BIAS_NV = 0x8717,
             SIGNED_LUMINANCE_ALPHA_NV = 0x8703,
             OFFSET_TEXTURE_BIAS_NV = 0x86E3,
-            OFFSET_TEXTURE_2D_MATRIX_NV = GL_OFFSET_TEXTURE_MATRIX_NV,
+            OFFSET_TEXTURE_2D_MATRIX_NV = NV_texture_shader.OFFSET_TEXTURE_MATRIX_NV,
             HILO16_NV = 0x86F8,
             TEXTURE_BORDER_VALUES_NV = 0x871A,
             SIGNED_ALPHA_NV = 0x8705,
@@ -4459,7 +4492,7 @@ namespace OpenTK.OpenGL
             PASS_THROUGH_NV = 0x86E6,
             DSDT_NV = 0x86F5,
             SIGNED_RGB_UNSIGNED_ALPHA_NV = 0x870C,
-            OFFSET_TEXTURE_2D_BIAS_NV = GL_OFFSET_TEXTURE_BIAS_NV,
+            OFFSET_TEXTURE_2D_BIAS_NV = NV_texture_shader.OFFSET_TEXTURE_BIAS_NV,
             TEXTURE_MAG_SIZE_NV = 0x871F,
             SIGNED_LUMINANCE8_ALPHA8_NV = 0x8704,
             SIGNED_HILO16_NV = 0x86FA,
@@ -4660,18 +4693,18 @@ namespace OpenTK.OpenGL
         public enum EXT_vertex_weighting : uint
         {
             CURRENT_VERTEX_WEIGHT_EXT = 0x850B,
-            MODELVIEW0_MATRIX_EXT = GL_MODELVIEW_MATRIX,
+            MODELVIEW0_MATRIX_EXT = GetPName.MODELVIEW_MATRIX,
             VERTEX_WEIGHT_ARRAY_EXT = 0x850C,
             MODELVIEW1_MATRIX_EXT = 0x8506,
             VERTEX_WEIGHT_ARRAY_TYPE_EXT = 0x850E,
             VERTEX_WEIGHT_ARRAY_STRIDE_EXT = 0x850F,
             MODELVIEW1_EXT = 0x850A,
             VERTEX_WEIGHTING_EXT = 0x8509,
-            MODELVIEW0_EXT = GL_MODELVIEW,
+            MODELVIEW0_EXT = MatrixMode.MODELVIEW,
             MODELVIEW1_STACK_DEPTH_EXT = 0x8502,
             VERTEX_WEIGHT_ARRAY_POINTER_EXT = 0x8510,
             VERTEX_WEIGHT_ARRAY_SIZE_EXT = 0x850D,
-            MODELVIEW0_STACK_DEPTH_EXT = GL_MODELVIEW_STACK_DEPTH,
+            MODELVIEW0_STACK_DEPTH_EXT = GetPName.MODELVIEW_STACK_DEPTH,
         }
 
         public enum ATI_pn_triangles : uint
@@ -4817,6 +4850,11 @@ namespace OpenTK.OpenGL
             PIXEL_PACK_BUFFER_EXT = 0x88EB,
             PIXEL_UNPACK_BUFFER_BINDING_EXT = 0x88EF,
             PIXEL_PACK_BUFFER_BINDING_EXT = 0x88ED,
+        }
+
+        public enum EXT_framebuffer_multisample : uint
+        {
+            RENDERBUFFER_SAMPLES_EXT = 0x8CAB,
         }
 
         public enum ATI_texture_mirror_once : uint
@@ -5018,6 +5056,26 @@ namespace OpenTK.OpenGL
             FULL_RANGE_EXT = 0x87E1,
         }
 
+        public enum EXT_texture_sRGB : uint
+        {
+            COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT = 0x8C4F,
+            SRGB8_EXT = 0x8C41,
+            SLUMINANCE8_ALPHA8_EXT = 0x8C45,
+            COMPRESSED_SRGB_ALPHA_EXT = 0x8C49,
+            SLUMINANCE_EXT = 0x8C46,
+            COMPRESSED_SRGB_S3TC_DXT1_EXT = 0x8C4C,
+            SLUMINANCE_ALPHA_EXT = 0x8C44,
+            COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT = 0x8C4D,
+            SRGB8_ALPHA8_EXT = 0x8C43,
+            SRGB_ALPHA_EXT = 0x8C42,
+            SRGB_EXT = 0x8C40,
+            COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT = 0x8C4E,
+            SLUMINANCE8_EXT = 0x8C47,
+            COMPRESSED_SLUMINANCE_ALPHA_EXT = 0x8C4B,
+            COMPRESSED_SRGB_EXT = 0x8C48,
+            COMPRESSED_SLUMINANCE_EXT = 0x8C4A,
+        }
+
         public enum ClipPlaneName : uint
         {
             CLIP_PLANE3 = 0x3003,
@@ -5084,6 +5142,22 @@ namespace OpenTK.OpenGL
             LESS = AlphaFunction.LESS,
         }
 
+        public enum SGIX_icc_texture : uint
+        {
+            RGBA_ICC_SGIX = 0x8461,
+            INTENSITY_ICC_SGIX = 0x8464,
+            ALPHA_ICC_SGIX = 0x8462,
+            LUMINANCE_ICC_SGIX = 0x8463,
+            LUMINANCE16_ICC_SGIX = 0x8469,
+            R5_G6_B5_ICC_SGIX = 0x8466,
+            ALPHA16_ICC_SGIX = 0x8468,
+            INTENSITY16_ICC_SGIX = 0x846A,
+            RGB_ICC_SGIX = 0x8460,
+            LUMINANCE_ALPHA_ICC_SGIX = 0x8465,
+            R5_G6_B5_A8_ICC_SGIX = 0x8467,
+            LUMINANCE16_ALPHA8_ICC_SGIX = 0x846B,
+        }
+
         public enum VERSION_1_2 : uint
         {
             TEXTURE_BASE_LEVEL = 0x813C,
@@ -5139,8 +5213,19 @@ namespace OpenTK.OpenGL
             ARRAY_ELEMENT_LOCK_FIRST_EXT = 0x81A8,
         }
 
-        public enum SGIX_flush_raster : uint
+        public enum MESAX_texture_stack : uint
         {
+            TEXTURE_1D_STACK_MESAX = 0x8759,
+            PROXY_TEXTURE_2D_STACK_MESAX = 0x875C,
+            TEXTURE_2D_STACK_MESAX = 0x875A,
+            TEXTURE_1D_STACK_BINDING_MESAX = 0x875D,
+            PROXY_TEXTURE_1D_STACK_MESAX = 0x875B,
+            TEXTURE_2D_STACK_BINDING_MESAX = 0x875E,
+        }
+
+        public enum EXT_timer_query : uint
+        {
+            TIME_ELAPSED_EXT = 0x88BF,
         }
 
     }
@@ -5729,6 +5814,12 @@ namespace OpenTK.OpenGL
             public delegate void VertexAttrib4uiv_(GLuint index, IntPtr v);
             public delegate void VertexAttrib4usv_(GLuint index, IntPtr v);
             public delegate void VertexAttribPointer_(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, IntPtr pointer);
+            public delegate void UniformMatrix2x3fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            public delegate void UniformMatrix3x2fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            public delegate void UniformMatrix2x4fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            public delegate void UniformMatrix4x2fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            public delegate void UniformMatrix3x4fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            public delegate void UniformMatrix4x3fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
             public delegate void ActiveTextureARB(GLenum texture);
             public delegate void ClientActiveTextureARB(GLenum texture);
             public delegate void MultiTexCoord1dARB(GLenum target, GLdouble s);
@@ -6574,6 +6665,13 @@ namespace OpenTK.OpenGL
             public delegate void GetFramebufferAttachmentParameterivEXT_(Enums.EXT_framebuffer_object target, Enums.EXT_framebuffer_object attachment, Enums.EXT_framebuffer_object pname, IntPtr parameters);
             public delegate void GenerateMipmapEXT(Enums.EXT_framebuffer_object target);
             public delegate void StringMarkerGREMEDY_(GLsizei len, IntPtr @string);
+            public delegate void StencilClearTagEXT(GLsizei stencilTagBits, GLuint stencilClearTag);
+            public delegate void BlitFramebufferEXT(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, Enums.ClearBufferMask mask, Enums.EXT_framebuffer_blit filter);
+            public delegate void RenderbufferStorageMultisampleEXT(Enums.EXT_framebuffer_multisample target, GLsizei samples, Enums.EXT_framebuffer_multisample internalformat, GLsizei width, GLsizei height);
+            public delegate void GetQueryObjecti64vEXT_(GLuint id, Enums.EXT_timer_query pname, IntPtr parameters);
+            public delegate void GetQueryObjectui64vEXT_(GLuint id, Enums.EXT_timer_query pname, IntPtr parameters);
+            public delegate void ProgramEnvParameters4fvEXT_(GLenum target, GLuint index, GLsizei count, IntPtr parameters);
+            public delegate void ProgramLocalParameters4fvEXT_(GLenum target, GLuint index, GLsizei count, IntPtr parameters);
         }
         #endregion
 
@@ -7735,6 +7833,18 @@ namespace OpenTK.OpenGL
             public static extern void VertexAttrib4usv_(GLuint index, IntPtr v);
             [DllImport("opengl32.dll", EntryPoint = "glVertexAttribPointer")]
             public static extern void VertexAttribPointer_(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, IntPtr pointer);
+            [DllImport("opengl32.dll", EntryPoint = "glUniformMatrix2x3fv")]
+            public static extern void UniformMatrix2x3fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            [DllImport("opengl32.dll", EntryPoint = "glUniformMatrix3x2fv")]
+            public static extern void UniformMatrix3x2fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            [DllImport("opengl32.dll", EntryPoint = "glUniformMatrix2x4fv")]
+            public static extern void UniformMatrix2x4fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            [DllImport("opengl32.dll", EntryPoint = "glUniformMatrix4x2fv")]
+            public static extern void UniformMatrix4x2fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            [DllImport("opengl32.dll", EntryPoint = "glUniformMatrix3x4fv")]
+            public static extern void UniformMatrix3x4fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
+            [DllImport("opengl32.dll", EntryPoint = "glUniformMatrix4x3fv")]
+            public static extern void UniformMatrix4x3fv_(GLint location, GLsizei count, GLboolean transpose, IntPtr value);
         }
         #endregion
 
@@ -8317,6 +8427,12 @@ namespace OpenTK.OpenGL
         public static Delegates.VertexAttrib4uiv_ VertexAttrib4uiv_;
         public static Delegates.VertexAttrib4usv_ VertexAttrib4usv_;
         public static Delegates.VertexAttribPointer_ VertexAttribPointer_;
+        public static Delegates.UniformMatrix2x3fv_ UniformMatrix2x3fv_;
+        public static Delegates.UniformMatrix3x2fv_ UniformMatrix3x2fv_;
+        public static Delegates.UniformMatrix2x4fv_ UniformMatrix2x4fv_;
+        public static Delegates.UniformMatrix4x2fv_ UniformMatrix4x2fv_;
+        public static Delegates.UniformMatrix3x4fv_ UniformMatrix3x4fv_;
+        public static Delegates.UniformMatrix4x3fv_ UniformMatrix4x3fv_;
         public static Delegates.ActiveTextureARB ActiveTextureARB;
         public static Delegates.ClientActiveTextureARB ClientActiveTextureARB;
         public static Delegates.MultiTexCoord1dARB MultiTexCoord1dARB;
@@ -9162,6 +9278,13 @@ namespace OpenTK.OpenGL
         public static Delegates.GetFramebufferAttachmentParameterivEXT_ GetFramebufferAttachmentParameterivEXT_;
         public static Delegates.GenerateMipmapEXT GenerateMipmapEXT;
         public static Delegates.StringMarkerGREMEDY_ StringMarkerGREMEDY_;
+        public static Delegates.StencilClearTagEXT StencilClearTagEXT;
+        public static Delegates.BlitFramebufferEXT BlitFramebufferEXT;
+        public static Delegates.RenderbufferStorageMultisampleEXT RenderbufferStorageMultisampleEXT;
+        public static Delegates.GetQueryObjecti64vEXT_ GetQueryObjecti64vEXT_;
+        public static Delegates.GetQueryObjectui64vEXT_ GetQueryObjectui64vEXT_;
+        public static Delegates.ProgramEnvParameters4fvEXT_ ProgramEnvParameters4fvEXT_;
+        public static Delegates.ProgramLocalParameters4fvEXT_ ProgramLocalParameters4fvEXT_;
 
         #endregion
 
@@ -23984,6 +24107,282 @@ namespace OpenTK.OpenGL
             try
             {
                 VertexAttribPointer_(index, size, type, normalized, stride, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix2x3fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+
+        public static
+        void UniformMatrix2x3fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+        {
+            UniformMatrix2x3fv_(location, count, transpose, value);
+        }
+
+        #endregion
+
+        #region UniformMatrix2x3fv(GLint location, GLsizei count, GLboolean transpose, object value)
+
+        public static
+        void UniformMatrix2x3fv(GLint location, GLsizei count, GLboolean transpose, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix2x3fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix2x3fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+
+        public static
+        void UniformMatrix2x3fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix2x3fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix3x2fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+
+        public static
+        void UniformMatrix3x2fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+        {
+            UniformMatrix3x2fv_(location, count, transpose, value);
+        }
+
+        #endregion
+
+        #region UniformMatrix3x2fv(GLint location, GLsizei count, GLboolean transpose, object value)
+
+        public static
+        void UniformMatrix3x2fv(GLint location, GLsizei count, GLboolean transpose, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix3x2fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix3x2fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+
+        public static
+        void UniformMatrix3x2fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix3x2fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix2x4fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+
+        public static
+        void UniformMatrix2x4fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+        {
+            UniformMatrix2x4fv_(location, count, transpose, value);
+        }
+
+        #endregion
+
+        #region UniformMatrix2x4fv(GLint location, GLsizei count, GLboolean transpose, object value)
+
+        public static
+        void UniformMatrix2x4fv(GLint location, GLsizei count, GLboolean transpose, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix2x4fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix2x4fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+
+        public static
+        void UniformMatrix2x4fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix2x4fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix4x2fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+
+        public static
+        void UniformMatrix4x2fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+        {
+            UniformMatrix4x2fv_(location, count, transpose, value);
+        }
+
+        #endregion
+
+        #region UniformMatrix4x2fv(GLint location, GLsizei count, GLboolean transpose, object value)
+
+        public static
+        void UniformMatrix4x2fv(GLint location, GLsizei count, GLboolean transpose, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix4x2fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix4x2fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+
+        public static
+        void UniformMatrix4x2fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix4x2fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix3x4fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+
+        public static
+        void UniformMatrix3x4fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+        {
+            UniformMatrix3x4fv_(location, count, transpose, value);
+        }
+
+        #endregion
+
+        #region UniformMatrix3x4fv(GLint location, GLsizei count, GLboolean transpose, object value)
+
+        public static
+        void UniformMatrix3x4fv(GLint location, GLsizei count, GLboolean transpose, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix3x4fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix3x4fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+
+        public static
+        void UniformMatrix3x4fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix3x4fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix4x3fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+
+        public static
+        void UniformMatrix4x3fv(GLint location, GLsizei count, GLboolean transpose, IntPtr value)
+        {
+            UniformMatrix4x3fv_(location, count, transpose, value);
+        }
+
+        #endregion
+
+        #region UniformMatrix4x3fv(GLint location, GLsizei count, GLboolean transpose, object value)
+
+        public static
+        void UniformMatrix4x3fv(GLint location, GLsizei count, GLboolean transpose, object value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix4x3fv_(location, count, transpose, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region UniformMatrix4x3fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+
+        public static
+        void UniformMatrix4x3fv(GLint location, GLsizei count, GLboolean transpose, GLfloat[] value)
+        {
+            GCHandle h0 = GCHandle.Alloc(value, GCHandleType.Pinned);
+            try
+            {
+                UniformMatrix4x3fv_(location, count, transpose, h0.AddrOfPinnedObject());
             }
             finally
             {
@@ -64806,6 +65205,190 @@ namespace OpenTK.OpenGL
             try
             {
                 StringMarkerGREMEDY_(len, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region GetQueryObjecti64vEXT(GLuint id, Enums.EXT_timer_query pname, IntPtr parameters)
+
+        public static
+        void GetQueryObjecti64vEXT(GLuint id, Enums.EXT_timer_query pname, IntPtr parameters)
+        {
+            GetQueryObjecti64vEXT_(id, pname, parameters);
+        }
+
+        #endregion
+
+        #region GetQueryObjecti64vEXT(GLuint id, Enums.EXT_timer_query pname, object parameters)
+
+        public static
+        void GetQueryObjecti64vEXT(GLuint id, Enums.EXT_timer_query pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                GetQueryObjecti64vEXT_(id, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region GetQueryObjecti64vEXT(GLuint id, Enums.EXT_timer_query pname, GLint64[] parameters)
+
+        public static
+        void GetQueryObjecti64vEXT(GLuint id, Enums.EXT_timer_query pname, GLint64[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                GetQueryObjecti64vEXT_(id, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region GetQueryObjectui64vEXT(GLuint id, Enums.EXT_timer_query pname, IntPtr parameters)
+
+        public static
+        void GetQueryObjectui64vEXT(GLuint id, Enums.EXT_timer_query pname, IntPtr parameters)
+        {
+            GetQueryObjectui64vEXT_(id, pname, parameters);
+        }
+
+        #endregion
+
+        #region GetQueryObjectui64vEXT(GLuint id, Enums.EXT_timer_query pname, object parameters)
+
+        public static
+        void GetQueryObjectui64vEXT(GLuint id, Enums.EXT_timer_query pname, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                GetQueryObjectui64vEXT_(id, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region GetQueryObjectui64vEXT(GLuint id, Enums.EXT_timer_query pname, GLuint64[] parameters)
+
+        public static
+        void GetQueryObjectui64vEXT(GLuint id, Enums.EXT_timer_query pname, GLuint64[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                GetQueryObjectui64vEXT_(id, pname, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region ProgramEnvParameters4fvEXT(GLenum target, GLuint index, GLsizei count, IntPtr parameters)
+
+        public static
+        void ProgramEnvParameters4fvEXT(GLenum target, GLuint index, GLsizei count, IntPtr parameters)
+        {
+            ProgramEnvParameters4fvEXT_(target, index, count, parameters);
+        }
+
+        #endregion
+
+        #region ProgramEnvParameters4fvEXT(GLenum target, GLuint index, GLsizei count, object parameters)
+
+        public static
+        void ProgramEnvParameters4fvEXT(GLenum target, GLuint index, GLsizei count, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ProgramEnvParameters4fvEXT_(target, index, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region ProgramEnvParameters4fvEXT(GLenum target, GLuint index, GLsizei count, GLfloat[] parameters)
+
+        public static
+        void ProgramEnvParameters4fvEXT(GLenum target, GLuint index, GLsizei count, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ProgramEnvParameters4fvEXT_(target, index, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region ProgramLocalParameters4fvEXT(GLenum target, GLuint index, GLsizei count, IntPtr parameters)
+
+        public static
+        void ProgramLocalParameters4fvEXT(GLenum target, GLuint index, GLsizei count, IntPtr parameters)
+        {
+            ProgramLocalParameters4fvEXT_(target, index, count, parameters);
+        }
+
+        #endregion
+
+        #region ProgramLocalParameters4fvEXT(GLenum target, GLuint index, GLsizei count, object parameters)
+
+        public static
+        void ProgramLocalParameters4fvEXT(GLenum target, GLuint index, GLsizei count, object parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ProgramLocalParameters4fvEXT_(target, index, count, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
+
+        #endregion
+
+        #region ProgramLocalParameters4fvEXT(GLenum target, GLuint index, GLsizei count, GLfloat[] parameters)
+
+        public static
+        void ProgramLocalParameters4fvEXT(GLenum target, GLuint index, GLsizei count, GLfloat[] parameters)
+        {
+            GCHandle h0 = GCHandle.Alloc(parameters, GCHandleType.Pinned);
+            try
+            {
+                ProgramLocalParameters4fvEXT_(target, index, count, h0.AddrOfPinnedObject());
             }
             finally
             {

@@ -1,5 +1,12 @@
 OpenTK 0.3.4 -> 0.3.5
 + Major update to OpenTK.OpenGL.Bind (cleaner code, new functions, comments and many new wrappers).
++ Updated the spec files for opengl 2.1.
+	+ Added the new 64 bit types to the typemaps (gl.tm and csharp.tm)
++ The bugs in the specs are still there:
+	+ SGIX_icc_texture is still commented out, while enums use it.
+	+ LightProperty is still used by constants (the correct enum is LightParameter).
+		+ I think I should contact someone at the Khronos group about these. For the time being I worked around them, by adding a special case for LightProperty in the translator, and adding the SGIX enum to the missing parameters.
+		+ See also: http://www.haskell.org/HOpenGL/spec_bugs.html (lots of useful information on that site).
 + Laid the foundation for X (Linux, Unix, MacOS) support.
 	+ Added bindings to some glx functions.
 	+ Added the OpenTK.Platform.X class.
