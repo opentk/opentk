@@ -54,16 +54,13 @@
   <ItemGroup>
     <Compile Include="Bindings\GL.cs" />
     <Compile Include="Bindings\GLEnums.cs" />
-    <Compile Include="Contexts\WindowsBaseContext.cs" />
-    <Compile Include="Contexts\WindowsVistaContext.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Contexts\WindowsContext.cs" />
     <Compile Include="GL.cs" />
     <Compile Include="Glu.cs" />
     <Compile Include="Contexts\GLContext.cs" />
-    <Compile Include="Contexts\WindowsContext.cs" />
     <Compile Include="Contexts\X11Context.cs" />
     <Compile Include="Glx.cs" />
+    <Compile Include="Structures.cs" />
     <Compile Include="Wgl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

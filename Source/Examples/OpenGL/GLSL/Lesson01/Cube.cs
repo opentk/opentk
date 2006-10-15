@@ -1,4 +1,10 @@
-﻿using System;
+﻿#region License
+/* Copyright (c) 2006 Stephen Apostolopoulos
+ * See license.txt for license info
+ */
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -110,6 +116,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
         #endregion
 
         #region Paint event handler
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -129,18 +136,28 @@ namespace OpenTK.Examples.OpenGL.GLSL
             DrawCube();
 
             Context.SwapBuffers();
-            this.Invalidate();
         }
+
         #endregion
 
         #region KeyDown event handler
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
 
-            if (e.KeyData == Keys.Escape)
-                Application.Exit();
+            switch (e.KeyData)
+            {
+                case Keys.Escape:
+                    Application.Exit();
+                    break;
+
+                case Keys.F1:
+                    //this.Fullscreen = !this.Fullscreen;
+                    break;
+            }
         }
+
         #endregion
 
         #region DrawCube

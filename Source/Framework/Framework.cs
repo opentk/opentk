@@ -40,7 +40,43 @@ namespace OpenTK.Frameworks
         public bool Fullscreen
         {
             get { return _fullscreen; }
-            set { _fullscreen = Implementation.ToggleFullscreen(_fullscreen); }
+            private set { _fullscreen = value; }
+        }
+
+        #endregion
+
+        #region ColorDepth property
+
+        private OpenTK.OpenGL.ColorDepth _color_depth;
+
+        public OpenTK.OpenGL.ColorDepth ColorDepth
+        {
+            get { return _color_depth; }
+            set { _color_depth = value; }
+        }
+
+        #endregion
+
+        #region ZDepth property
+
+        private int _z_depth;
+
+        public int ZDepth
+        {
+            get { return _z_depth; }
+            set { _z_depth = value; }
+        }
+
+        #endregion
+
+        #region StencilDepth property
+
+        private int _stencil_depth;
+
+        public int StencilDepth
+        {
+            get { return _stencil_depth; }
+            set { _stencil_depth = value; }
         }
 
         #endregion
@@ -77,18 +113,24 @@ namespace OpenTK.Frameworks
 
         public Framework()
         {
-            Setup(null, 640, 480, 8, 8, 8, 8, 16, 0, false);
+            Setup(null, 640, 480, new OpenTK.OpenGL.ColorDepth(8, 8, 8, 8), 16, 0, true);
         }
 
-        public Framework(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
+
+        public Framework(string title, int width, int height, OpenTK.OpenGL.ColorDepth color, int depth, int stencil, bool fullscreen)
         {
-            Setup(title, width, height, red, green, blue, alpha, depth, stencil, fullscreen);
+            Setup(title, width, height, color, depth, stencil, fullscreen);
         }
 
         #endregion
 
-        public void Setup(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
+        public void Setup(string title, int width, int height, OpenTK.OpenGL.ColorDepth color, int depth, int stencil, bool fullscreen)
         {
+            // Initialise components.
+            ColorDepth = color;
+            ZDepth = depth;
+            StencilDepth = stencil;
+            
             // Set platform.
             try
             {
@@ -111,7 +153,6 @@ namespace OpenTK.Frameworks
                 throw e;
             }
 
-            Implementation.Setup();
             this.HandleCreated += new EventHandler(Implementation.OnHandleCreated);
             
             //Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
@@ -120,22 +161,25 @@ namespace OpenTK.Frameworks
             //    Context = GLContext.Create(this, 8, 8, 8, 8, 16, 0);
             //    //Context.MakeCurrent();
             //}
-            
-            Context = GLContext.Create(this, red, green, blue, alpha, depth, stencil);
+
+            Context = GLContext.Create(this, color, depth, stencil);
             
             // Code taken from NeHe tutorials
             this.CreateParams.Style |= (int)Api.WindowClassStyle.HRedraw | (int)Api.WindowClassStyle.VRedraw | (int)Api.WindowClassStyle.OwnDC;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);            // No Need To Erase Form Background
             this.SetStyle(ControlStyles.Opaque, true);                          // No Need To Draw Form Background
             //this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);           // Buffer Control
-            //this.SetStyle(ControlStyles.ResizeRedraw, true);                  // Redraw On Resize
+            //this.SetStyle(ControlStyles.ResizeRedraw, true);                    // Redraw On Resize
             this.SetStyle(ControlStyles.UserPaint, true);                       // We'll Handle Painting Ourselves
+
+            this.Width = width;
+            this.Height = height;
+
+            Fullscreen = Implementation.ToggleFullscreen(fullscreen);
 
             if (title == null)
                 title = "OpenTK Windows application";
             this.Text = title;
-
-            this.Size = new Size(width, height);
 
             Application.Idle += new EventHandler(OnIdle);
         }

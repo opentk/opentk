@@ -26,6 +26,8 @@ namespace OpenTK.Frameworks
             public WindowsImplementation(Framework f)
             {
                 framework = f;
+
+                Setup();
                 // Set desktop resolution, refresh rate, pixel depth
             }
 
@@ -52,12 +54,21 @@ namespace OpenTK.Frameworks
             {
                 if (fullscreen)
                 {
-                    Api.DeviceMode ScreenSettings = new Api.DeviceMode();       // Device Mode
+                    Application.Idle -= framework.OnIdle;
+                    //framework.Context.Dispose();
+
+                    Api.DeviceMode ScreenSettings = new Api.DeviceMode();           // Device Mode
                     ScreenSettings.Size = (short)Marshal.SizeOf(ScreenSettings);    // Size Of The Devmode Structure
-                    ScreenSettings.PelsWidth = 640;// width;                           // Selected Screen Width
-                    ScreenSettings.PelsHeight = 480;// height;                         // Selected Screen Height
-                    ScreenSettings.BitsPerPel = 32;// red + green + blue + alpha;     // Selected Bits Per Pixel
+                    ScreenSettings.PelsWidth = framework.Width;                     // Selected Screen Width
+                    ScreenSettings.PelsHeight = framework.Height;                   // Selected Screen Height
+                    ScreenSettings.BitsPerPel = framework.ColorDepth.Alpha +        // Selected Bits Per Pixel
+                                                framework.ColorDepth.Red +
+                                                framework.ColorDepth.Green +
+                                                framework.ColorDepth.Blue;
                     ScreenSettings.Fields = Api.Constants.DM_BITSPERPEL | Api.Constants.DM_PELSWIDTH | Api.Constants.DM_PELSHEIGHT;
+
+                    //framework.Context = GLContext.Create(framework, framework.ColorDepth, 16, 0);
+                    Application.Idle += framework.OnIdle;
 
                     // Try To Set Selected Mode And Get Results.  NOTE: CDS_FULLSCREEN Gets Rid Of Start Bar.
                     if (Api.ChangeDisplaySettings(ref ScreenSettings, Api.Constants.CDS_FULLSCREEN) == Api.Constants.DISP_CHANGE_SUCCESSFUL)
@@ -70,15 +81,15 @@ namespace OpenTK.Frameworks
                         framework.SetTopLevel(true);
                         Cursor.Hide();
 
-                        return !fullscreen;
+                        return true;
                     }
                     else
                     {
-                        // Handle failure.
+                        return false;
                     }
                 }
 
-                return fullscreen;
+                return false;
             }
         }
     }
