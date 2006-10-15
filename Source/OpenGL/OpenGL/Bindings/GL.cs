@@ -43,9 +43,6 @@ namespace OpenTK.OpenGL
 {
     static public partial class GL
     {
-        static public void Init()
-        {
-        }
         #region Function signatures
 
         public static class Delegates

@@ -89,10 +89,6 @@ namespace OpenTK.OpenGL.Bind
             sw.WriteLine("    static public partial class {0}", class_name);
             sw.WriteLine("    {");
 
-            sw.WriteLine("        static public void Init()");
-            sw.WriteLine("        {");
-            sw.WriteLine("        }");
-
             WriteCoreFunctionSignatures(sw, functions);
             WriteDllImports(sw, functions);
             WriteCoreFunctions(sw, functions);

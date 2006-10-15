@@ -30,13 +30,13 @@ namespace OpenTK.OpenGL
 
         public abstract void Dispose();
 
-        public static GLContext Create(Control c, int red, int green, int blue, int alpha, int depth, int stencil)
+        public static GLContext Create(Control c, ColorDepth color, int depth, int stencil)
         {
             try
             {
                 if (Environment.OSVersion.Platform == PlatformID.Win32NT || Environment.OSVersion.Platform == PlatformID.Win32Windows)
                 {
-                    return new WindowsContext(c, red, green, blue, alpha, depth, stencil);
+                    return new WindowsContext(c, color, depth, stencil);
                 }
                 //else if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major >= 6)
                 //{
@@ -44,7 +44,7 @@ namespace OpenTK.OpenGL
                 //}
                 else if (Environment.OSVersion.Platform == PlatformID.Unix)
                 {
-                    return new X11Context(c, red, green, blue, alpha, depth, stencil);
+                    return new X11Context(c, color, depth, stencil);
                 }
                 else
                 {

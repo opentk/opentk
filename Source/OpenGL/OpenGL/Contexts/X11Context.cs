@@ -22,7 +22,7 @@ namespace OpenTK.OpenGL.Platform
         private IntPtr display;
         const string _dll_name = "libGL.so.1";
 
-        public X11Context(Control c, int red, int green, int blue, int alpha, int depth, int stencil)
+        public X11Context(Control c, ColorDepth color, int depth, int stencil)
         {
             Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
             if (xplatui != null)
