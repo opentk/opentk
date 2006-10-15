@@ -96,10 +96,10 @@ namespace OpenTK.OpenGL.Bind
 
                 SpecWriter.WriteSpecs(Settings.OutputPath, Settings.GLClass, functions, wrappers, enums);
 
-                ContextWriter.WriteMainContext(Settings.OutputPath, "GLContext", Settings.GLClass, functions);
-                ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsContext", Settings.GLClass, functions, "1.0", "1.1");
-                ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsVistaContext", Settings.GLClass, functions, "1.0", "1.1", "1.2", "1.3", "1.4");
-                ContextWriter.WriteDerivedContext(Settings.OutputPath, "X11Context", Settings.GLClass, functions, "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "2.0");
+                //ContextWriter.WriteMainContext(Settings.OutputPath, "GLContext", Settings.GLClass, functions);
+                //ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsContext", Settings.GLClass, functions, "1.0", "1.1");
+                //ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsVistaContext", Settings.GLClass, functions, "1.0", "1.1", "1.2", "1.3", "1.4");
+                //ContextWriter.WriteDerivedContext(Settings.OutputPath, "X11Context", Settings.GLClass, functions, "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "2.0");
 
                 // GLX binding generation.
                 //Translation.GLXTypes = SpecReader.ReadTypeMap("glx.tm"); // Works semi-ok.

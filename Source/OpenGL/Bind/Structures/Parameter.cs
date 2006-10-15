@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.OpenGL.Bind
 {
+    #region Parameter class
+
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
@@ -24,6 +26,10 @@ namespace OpenTK.OpenGL.Bind
         {
         }
 
+        /// <summary>
+        /// Creates a new parameter from the parameters passed (deep copy).
+        /// </summary>
+        /// <param name="p">The parameter to copy from.</param>
         public Parameter(Parameter p)
         {
             if (p == null)
@@ -190,14 +196,7 @@ namespace OpenTK.OpenGL.Bind
             //if (Flow == FlowDirection.Out && !Array && !(Type == "IntPtr"))
             //    sb.Append("out ");
 
-            //if (Unchecked)
-            //    sb.Append("unchecked(");
-
             sb.Append(Type);
-
-            //if (Unchecked)
-            //    sb.Append(")");
-
             if (Array)
                 sb.Append("[]");
 
@@ -209,8 +208,13 @@ namespace OpenTK.OpenGL.Bind
         #endregion
     }
 
+    #endregion
+
     #region ParameterCollection class
 
+    /// <summary>
+    /// Holds the parameter list of an opengl function.
+    /// </summary>
     public class ParameterCollection : List<Parameter>
     {
         #region Constructors
@@ -229,6 +233,12 @@ namespace OpenTK.OpenGL.Bind
 
         #endregion
 
+        #region override public string ToString()
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
         override public string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -255,6 +265,10 @@ namespace OpenTK.OpenGL.Bind
                     return true;
             return false;
         }
+
+        #endregion
+
+        #region public ParameterCollection ReplaceAll(Parameter, Parameter)
 
         /// <summary>
         /// Replaces all parameters that match the old_param with the new_param.
@@ -291,6 +305,10 @@ namespace OpenTK.OpenGL.Bind
             return pc;
         }
 
+        #endregion
+
+        #region public ParameterCollection Replace(Parameter, Parameter)
+
         /// <summary>
         /// Replaces the first parameter that matches old_param with new_param.
         /// </summary>
@@ -326,6 +344,8 @@ namespace OpenTK.OpenGL.Bind
 
             return pc;
         }
+
+        #endregion
     }
 
     #endregion

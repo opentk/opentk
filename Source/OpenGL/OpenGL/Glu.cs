@@ -16,7 +16,7 @@ namespace OpenTK.OpenGL
     {
         #region GLU functions
 
-        private const string GLUDLLName = "GLU32.DLL";
+        private const string GLUDLLName = "glu32.dll";
 
         [DllImport(GLUDLLName, EntryPoint = "gluOrtho2D")]
         private static extern IntPtr ErrorString_(int errCode);

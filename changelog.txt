@@ -1,3 +1,14 @@
+OpenTK 0.3.6
+
+
+OpenTK 0.3.5 -> 0.3.6
++ Updates to OpenTK.OpenGL.Bind (see that changelog for more info).
+	+ Revamped GL class (is self contained)
+	+ Revamped GLContext class (it is no longer bound to the GL class initialisation).
++ Directory structure updates (Documentation folder for each project, plus main Documentation folder)
++ Framework updates (cleaner implementation, new namespace).
+
+
 OpenTK 0.3.4 -> 0.3.5
 + Major update to OpenTK.OpenGL.Bind (cleaner code, new functions, comments and many new wrappers).
 + Updated the spec files for opengl 2.1.
@@ -16,6 +27,7 @@ OpenTK 0.3.4 -> 0.3.5
 	+ The Framework now resides in its own project directory.
 + Revamped the GLContext class hierarchy. WindowsContext and WindowsVistaContext now both inherit from WindowsBaseContext. This allows for less code-duplication (and thus less bugs).
 
+
 OpenTK 0.3.3 -> 0.3.4
 + Corrected the crash error in Release mode (it was caused by trying to Marshal the System.Windows.Forms.Message struct to PeekMessage - adding my own Message struct corrected the issue).
 + Corrected the call to glShaderSource GLSL.Lesson01. Now the correct number is passed to the count parameter, while the null parameter was changed to IntPtr.Zero (Mono now no longers fails in this call).
@@ -23,17 +35,20 @@ OpenTK 0.3.3 -> 0.3.4
 + OpenTK.OpenGL.Bind 0.7.5.1 -> 0.7.5.2 (see Bind changelog for more information)
 + Full Mono support under windows.
 
+
 OpenTK 0.3.2 -> 0.3.3
 + OpenTK.OpenGL.Bind 0.7.5 -> 0.7.5.1 (see Bind changelog for more information)
 + Added the GLForm class which sets the base for cross-platform screen, context and keyboard handling.
 + Can now change between fullscreen and windowed modes.
 + Temporarily removed all examples except for GLSL.Lesson01, which has been updated to use the new GLForm class.
 
+
 OpenTK 0.3.1 -> 0.3.2
 + OpenTK.OpenGL.Glu: Eliminated the temporary IntPtr variable in the GetString and ErrorString functions.
 + Specifications.cs_types.txt: Changed types in order to be CLS compliant.
 + OpenTK.OpenGL.Bind 0.7.4 -> 0.7.5
 + Added the GLSL.Lesson01 example.
+
 
 OpenTK 0.3.0 -> 0.3.1
 + Updated the binding generator to version 0.7.4, based on the work done for Tao.

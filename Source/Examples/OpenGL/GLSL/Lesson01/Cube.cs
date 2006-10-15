@@ -11,7 +11,7 @@ using OpenTK.OpenGL;
 
 namespace OpenTK.Examples.OpenGL.GLSL
 {
-    public partial class Cube : Framework
+    public partial class Cube : OpenTK.Frameworks.Framework
     {
         #region Shaders
         string[] vertex_shader_source =
@@ -88,6 +88,9 @@ namespace OpenTK.Examples.OpenGL.GLSL
         {
             base.OnResize(e);
 
+//            if (this.Context == null)
+//                return;
+            
             if (ClientSize.Height == 0)
                 ClientSize = new System.Drawing.Size(ClientSize.Width, 1);
 
@@ -126,7 +129,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
             DrawCube();
 
             Context.SwapBuffers();
-            //this.Invalidate();
+            this.Invalidate();
         }
         #endregion
 

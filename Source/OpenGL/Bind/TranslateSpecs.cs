@@ -11,19 +11,17 @@ using System.Collections;
 namespace OpenTK.OpenGL.Bind
 {
     #region WrapperTypes enum
+
     public enum WrapperTypes
     {
         None,
-        VoidPointerIn,
-        VoidPointerOut,
-        VoidPointer,
-        ArrayOut,
-        ArrayIn,
+        VoidArray,
         Array,
-        UShortMaskParameter,
+        UncheckedParameter,
         ReturnsString,
         ReturnsVoidPointer,
     }
+
     #endregion
 
     static class Translation
@@ -222,23 +220,22 @@ namespace OpenTK.OpenGL.Bind
         {
             string s;
 
-            // Map parameters.
-            foreach (Parameter p in f.Parameters)
+            foreach (Parameter p in f.Parameters)   // Translate each parameter of the function, and check for needed wrappers.
             {
-                #region Default name translation
+                #region Translate parameter name
 
                 if (parameter_names.TryGetValue(p.Name, out s))
                     p.Name = s;
 
                 #endregion
 
-                #region Default type translation
+                #region Translate parameter type
 
-                if (p.Type.Contains("Boolean"))
-                {
-                    p.Type = "GLboolean";
-                }
-                else if (enums.ContainsKey(p.Type))
+                //if (p.Type.Contains("Boolean"))
+                //{
+                //    p.Type = "GLboolean";
+                //}
+                if (enums.ContainsKey(p.Type))
                 {
                     p.Type = "Enums." + p.Type;
                 }
@@ -250,51 +247,47 @@ namespace OpenTK.OpenGL.Bind
                 else if (GLTypes.TryGetValue(p.Type, out s))
                     p.Type = s;
 
+
                 #endregion
 
-                #region Wrapper translations
+                #region Check for needed wrappers
 
-                if (p.Type.Contains("ushort") && f.Name.Contains("LineStipple"))
+                if (p.Type.Contains("ushort") && f.Name.Contains("LineStipple"))    // glLineStipple needs wrapper to allow for unchecked mask values.
                 {
-                    //f.NeedsWrapper = true;
-                    //f.WrapperType = WrapperTypes.UShortMaskParameter;
                     p.NeedsWrapper = true;
-                    p.WrapperType = WrapperTypes.UShortMaskParameter;
+                    p.WrapperType = WrapperTypes.UncheckedParameter;
                     p.Unchecked = true;
                 }
-                else if (p.Array && p.Type.Contains("string"))
+                else if (p.Array && p.Type.Contains("string"))  // string parameters do not need special wrappers.
                 {
                     p.NeedsWrapper = false;
                     p.WrapperType = WrapperTypes.None;
                 }
-                else if (p.Array && p.Type.Contains("char"))
+                else if (p.Array && p.Type.Contains("char"))    // GLchar[] parameters should become (in) string or (out) StringBuilder
                 {
                     if (p.Flow == Parameter.FlowDirection.Out)
                         p.Type = "StringBuilder";
-                    else 
+                    else
                         p.Type = "string";
                     p.Array = false;
-                    //f.Nee
                 }
-                else if (p.Array)
+                else if (p.Array)                               // All other array parameters need wrappers (around IntPtr).
                 {
-                    //f.NeedsWrapper = true;
                     p.NeedsWrapper = true;
 
                     if (p.Type.Contains("void"))
-                        p.WrapperType = WrapperTypes.VoidPointer;
+                        p.WrapperType = WrapperTypes.VoidArray;
                     else
                         p.WrapperType = WrapperTypes.Array;
 
                     p.Type = "IntPtr";
-                    p.Array = false;
-                    p.Flow = Parameter.FlowDirection.Undefined;
+                    p.Array = false;    // We do not want an array of IntPtrs (IntPtr[]) - it is the IntPtr that points to the array.
+                    p.Flow = Parameter.FlowDirection.Undefined; // The same wrapper works for either in or out parameters.
                 }
 
-                if (p.NeedsWrapper)
+                if (p.NeedsWrapper)     // If there is at least 1 parameter that needs wrappers, mark the funcction for wrapping.
                 {
                     f.NeedsWrapper = true;
-                    //f.WrapperType = WrapperTypes.Array;
                     f.WrapperType = p.WrapperType;
                 }
 
@@ -315,7 +308,7 @@ namespace OpenTK.OpenGL.Bind
             {
                 if (f.NeedsWrapper)
                 {
-                    if (f.WrapperType == WrapperTypes.UShortMaskParameter)
+                    if (f.WrapperType == WrapperTypes.UncheckedParameter)
                     {
                         w = new Function(f);
                         w.Name = w.Name.TrimEnd('_');

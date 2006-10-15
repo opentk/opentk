@@ -7,8 +7,10 @@
     <ProjectGuid>{26B55626-4EAB-4CAE-82FE-93CD6564D9EA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Framework</RootNamespace>
-    <AssemblyName>Framework</AssemblyName>
+    <RootNamespace>OpenTK</RootNamespace>
+    <AssemblyName>OpenTK.Framework</AssemblyName>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,7 +40,16 @@
     <Compile Include="Framework.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FrameworkImplementation.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowsImplementation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="X11Implementation.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenGL\OpenGL\OpenTK.OpenGL.csproj">
@@ -53,6 +64,9 @@
       <Project>{E3F35BD6-67CE-4AD5-AB98-043CF072A75A}</Project>
       <Name>OpenTK.Platform.X</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Documentation\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

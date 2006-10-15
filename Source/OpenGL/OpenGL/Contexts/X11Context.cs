@@ -15,30 +15,55 @@ namespace OpenTK.OpenGL.Platform
 {
     public partial class X11Context : OpenTK.OpenGL.GLContext
     {
-        int drawable;
-        IntPtr context;
-        IntPtr display;
-        const string _dll_name = "opengl.so";
+        //private IntPtr drawable;
+        private IntPtr Handle;
+        private IntPtr GLXVisualInfo;
+        private IntPtr context;
+        private IntPtr display;
+        const string _dll_name = "libGL.so.1";
 
         public X11Context(Control c, int red, int green, int blue, int alpha, int depth, int stencil)
         {
-            //drawable = c.Handle.ToInt32();
-            display = Api.OpenDisplay("OpenTK X11 trial");
-            Api.VisualInfo visual = Glx.ChooseVisual(display, 0, new int[] { });
-            context = Glx.CreateContext(display, visual, IntPtr.Zero, true);
-            //Api.Free(new IntPtr(visual));
-            drawable = c.Handle.ToInt32();
-            Glx.MakeCurrent(drawable, context);
-            
-            //context = Glx.CreateContext(
-                //X11Context
+            Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+            if (xplatui != null)
+            {
+                IntPtr display = (IntPtr)xplatui.GetField("DisplayHandle", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                IntPtr RootWindow = (IntPtr)xplatui.GetField("RootWindow", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                int ScreenNo = (int)xplatui.GetField("ScreenNo", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                
+                Handle = c.Handle;
+                
+                int[] dblBuf = new int[]
+                { 
+                    5, 
+                    (int)Glx.Enums.GLXAttribute.RGBA,
+                    (int)Glx.Enums.GLXAttribute.RED_SIZE, 1,
+                    (int)Glx.Enums.GLXAttribute.GREEN_SIZE, 1,
+                    (int)Glx.Enums.GLXAttribute.BLUE_SIZE, 1,
+                    (int)Glx.Enums.GLXAttribute.DEPTH_SIZE, 1,
+                    0
+                };
+                GLXVisualInfo = Glx.ChooseVisual(display, ScreenNo, dblBuf);
 
-            //throw new Exception("The method or operation is not implemented.");
+                Api.VisualInfo xVisualInfo = (Api.VisualInfo)Marshal.PtrToStructure(GLXVisualInfo, typeof(Api.VisualInfo));
+                IntPtr visual = xVisualInfo.visual;
+                IntPtr colormap = Api.CreateColormap(display, RootWindow, visual, 0/*AllocNone*/);
+
+                xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).SetValue(null, visual);
+                xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).SetValue(null, colormap);
+                
+                context = Glx.CreateContext(display, GLXVisualInfo, IntPtr.Zero, true);
+                
+                MakeCurrent();
+
+                //GL.Init();
+                //new GL();
+            }
         }
 
         public override void SwapBuffers()
         {
-            Glx.SwapBuffers(drawable);
+            Glx.SwapBuffers(display, Handle);
         }
 
         public override Delegate GetAddress(string function_string, Type function_type)
@@ -52,7 +77,7 @@ namespace OpenTK.OpenGL.Platform
 
         public override void MakeCurrent()
         {
-            Glx.MakeCurrent(drawable, context);
+            Glx.MakeCurrent(display, Handle, context);
         }
 
         public override void Dispose()
