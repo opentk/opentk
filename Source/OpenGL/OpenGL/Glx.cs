@@ -44,7 +44,7 @@ namespace OpenTK.OpenGL
     /// </summary>
     public class Glx
     {
-        const string _dll_name = "libgl";
+        const string _dll_name = "libGL.so.1";
 
         #region Enums
 
@@ -267,45 +267,42 @@ namespace OpenTK.OpenGL
         #region GLX functions
 
         [DllImport(_dll_name, EntryPoint = "glXCreateContext")]
-        public static extern IntPtr CreateContext(IntPtr dpy, Api.VisualInfo vis, IntPtr shareList, bool direct);
+        public static extern IntPtr CreateContext(IntPtr dpy, IntPtr vis, IntPtr shareList, bool direct);
+        //public static extern IntPtr CreateContext(IntPtr dpy, Api.VisualInfo vis, IntPtr shareList, bool direct);
         //public static extern IntPtr CreateContext(IntPtr gc_id, Int32 screen, Int32 visual, IntPtr share_list);
         
         [DllImport(_dll_name, EntryPoint = "glXDestroyContext")]
         public static extern void DestroyContext(IntPtr context);
 
         [DllImport(_dll_name, EntryPoint = "glXMakeCurrent")]
-        public static extern void MakeCurrent(Int32 drawable, IntPtr context);
+        public static extern void MakeCurrent(IntPtr display, IntPtr drawable, IntPtr context);
         
         [DllImport(_dll_name, EntryPoint = "glXSwapBuffers")]
-        public static extern void SwapBuffers(Int32 drawable);
+        public static extern void SwapBuffers(IntPtr display, IntPtr drawable);
 
         [DllImport(_dll_name, EntryPoint = "glXGetProcAddress")]
         public static extern IntPtr GetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
 
         [DllImport(_dll_name, EntryPoint = "glXChooseVisual")]
-        public static extern OpenTK.Platform.X.Api.VisualInfo ChooseVisual(IntPtr dpy, int screen, [MarshalAs(UnmanagedType.LPArray)]int[] attriblist);
+        extern public static IntPtr ChooseVisual_(IntPtr dpy, int screen, IntPtr attriblist);
 
-        //public static ChooseVisual()
+        #endregion
 
+        #region Wrappers
 
-        //[DllImport("opengl32.dll", EntryPoint = "glCreateWindow")]
-        //public static extern void CreateWindow(Int32 config, Int32 window, Int32 glxwindow);
-        //[DllImport("opengl32.dll", EntryPoint = "glDestroyWindow")]
-        //public static extern void DestroyWindow(Int32 glxwindow);
-        //[DllImport("opengl32.dll", EntryPoint = "glCreatePixmap")]
-        //public static extern void CreatePixmap(Int32 config, Int32 pixmap, Int32 glxpixmap);
-        //[DllImport("opengl32.dll", EntryPoint = "glDestroyPixmap")]
-        //public static extern void DestroyPixmap(Int32 glxpixmap);
-        //[DllImport("opengl32.dll", EntryPoint = "glCreateNewContext")]
-        //public static extern void CreateNewContext(Int32 config, Int32 render_type, Int32 share_list, Int32 direct);
-        //[DllImport("opengl32.dll", EntryPoint = "glQueryContext")]
-        //public static extern void QueryContext();
-        //[DllImport("opengl32.dll", EntryPoint = "glMakeContextCurrent")]
-        //public static extern void MakeContextCurrent(Int32 drawable, Int32 readdrawable, Int32 context);
-        //[DllImport("opengl32.dll", EntryPoint = "glCreatePbuffer")]
-        //public static extern void CreatePbuffer(Int32 config, Int32 pbuffer);
-        //[DllImport("opengl32.dll", EntryPoint = "glDestroyPbuffer")]
-        //public static extern void DestroyPbuffer(Int32 pbuffer);
+        public static IntPtr ChooseVisual(IntPtr dpy, int screen, int[] attriblist)
+        {
+            GCHandle h0 = GCHandle.Alloc(attriblist, GCHandleType.Pinned);
+
+            try
+            {
+                return ChooseVisual_(dpy, screen, h0.AddrOfPinnedObject());
+            }
+            finally
+            {
+                h0.Free();
+            }
+        }
 
         #endregion
     }

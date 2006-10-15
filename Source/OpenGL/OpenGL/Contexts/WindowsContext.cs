@@ -89,7 +89,8 @@ namespace OpenTK.OpenGL.Platform
 
             MakeCurrent();
 
-            Load();
+            //GL.Init();
+            //new GL();
 
             //if (load_extensions)
             //    LoadExtensions();

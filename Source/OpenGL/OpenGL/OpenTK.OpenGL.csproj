@@ -9,10 +9,19 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OpenTK.OpenGL</RootNamespace>
     <AssemblyName>OpenTK.OpenGL</AssemblyName>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <NoStdLib>False</NoStdLib>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>Full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\Binaries\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -43,15 +52,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bindings\GLContextLoad.cs" />
     <Compile Include="Bindings\GL.cs" />
-    <Compile Include="Bindings\WindowsContextLoad.cs" />
-    <Compile Include="Bindings\WindowsVistaContextLoad.cs" />
-    <Compile Include="Bindings\X11ContextLoad.cs" />
+    <Compile Include="Bindings\GLEnums.cs" />
     <Compile Include="Contexts\WindowsBaseContext.cs" />
     <Compile Include="Contexts\WindowsVistaContext.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GL.cs" />
     <Compile Include="Glu.cs" />
     <Compile Include="Contexts\GLContext.cs" />
     <Compile Include="Contexts\WindowsContext.cs" />
@@ -70,5 +77,8 @@
       <Name>OpenTK.Platform.X</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Documentation\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

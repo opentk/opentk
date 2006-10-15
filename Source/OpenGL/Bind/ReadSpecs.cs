@@ -128,6 +128,7 @@ namespace OpenTK.OpenGL.Bind
         #endregion
 
         #region Read enum specs
+
         public static Hashtable ReadEnumSpecs(string file)
         {
             Hashtable enums = new Hashtable();
@@ -235,6 +236,7 @@ namespace OpenTK.OpenGL.Bind
 
             return enums;
         }
+
         #endregion
 
         #region Read type map

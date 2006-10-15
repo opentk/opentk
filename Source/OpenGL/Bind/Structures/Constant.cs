@@ -9,6 +9,8 @@ using System.Text;
 
 namespace OpenTK.OpenGL.Bind
 {
+    #region Constant class
+
     /// <summary>
     /// Represents an opengl constant in C# format. Both the constant name and value
     /// can be retrieved or set. The value can be either a number, another constant
@@ -76,18 +78,20 @@ namespace OpenTK.OpenGL.Bind
 
         #endregion
 
-        #region Helper functions
+        #region public string ToString()
 
         /// <summary>
         /// Returns a string that represents the full constant declaration without decorations
         /// (eg const uint GL_XXX_YYY = 0xDEADBEEF).
         /// </summary>
         /// <returns></returns>
-        new public string ToString()
+        override public string ToString()
         {
             return Name + " = " + Value;
         }
 
         #endregion
     }
+
+    #endregion
 }

@@ -15,40 +15,111 @@ using System.Runtime.InteropServices;
 using OpenTK.OpenGL.Platform;
 using OpenTK.OpenGL;
 
-namespace OpenTK
+namespace OpenTK.Frameworks
 {
-    public class Framework : Form, IDisposable
+    public partial class Framework : Form, IDisposable
     {
+        #region Public properties
+
         #region Context
+
         private GLContext _context;
 
         public GLContext Context
         {
             get { return _context; }
-            set { _context = value; }
+            protected set { _context = value; }
         }
+
         #endregion
 
-        delegate bool IsIdleDelegate();
-        IsIdleDelegate IsIdle;
+        #region Fullscreen property
+
+        private bool _fullscreen;
+
+        public bool Fullscreen
+        {
+            get { return _fullscreen; }
+            set { _fullscreen = Implementation.ToggleFullscreen(_fullscreen); }
+        }
+
+        #endregion
+
+        #region DesktopResolution property
+
+        private Size _desktop_resolution;
+
+        public Size DesktopResolution
+        {
+            get { return _desktop_resolution; }
+            protected set { _desktop_resolution = value; }
+        }
+
+        #endregion
+
+        #region DesktopRefreshRate property
+
+        private float _desktop_refresh_rate;
+
+        public float DesktopRefreshRate
+        {
+            get { return _desktop_refresh_rate; }
+            protected set { _desktop_refresh_rate = value; }
+        }
+
+        #endregion
+
+        #endregion
+
+        FrameworkImplementation Implementation;
 
         #region Constructors
 
         public Framework()
         {
-            Open(null, 640, 480, 8, 8, 8, 8, 16, 0, false);
+            Setup(null, 640, 480, 8, 8, 8, 8, 16, 0, false);
         }
 
         public Framework(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
         {
-            Open(title, width, height, red, green, blue, alpha, depth, stencil, fullscreen);
+            Setup(title, width, height, red, green, blue, alpha, depth, stencil, fullscreen);
         }
 
         #endregion
 
-        public void Open(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
+        public void Setup(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
         {
-            Application.Idle += new EventHandler(OnIdle);
+            // Set platform.
+            try
+            {
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT || Environment.OSVersion.Platform == PlatformID.Win32Windows)
+                {
+                    Implementation = new WindowsImplementation(this);
+                }
+                else if (Environment.OSVersion.Platform == PlatformID.Unix)
+                {
+                    Implementation = new X11Implementation();
+                }
+                else
+                {
+                    throw new PlatformNotSupportedException("The platform on which you are trying to run this program is not currently supported. Sorry for the inconvenience.");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                throw e;
+            }
+
+            Implementation.Setup();
+            this.HandleCreated += new EventHandler(Implementation.OnHandleCreated);
+            
+            //Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+            //if (xplatui != null)
+            //{
+            //    Context = GLContext.Create(this, 8, 8, 8, 8, 16, 0);
+            //    //Context.MakeCurrent();
+            //}
             
             Context = GLContext.Create(this, red, green, blue, alpha, depth, stencil);
             
@@ -60,84 +131,14 @@ namespace OpenTK
             //this.SetStyle(ControlStyles.ResizeRedraw, true);                  // Redraw On Resize
             this.SetStyle(ControlStyles.UserPaint, true);                       // We'll Handle Painting Ourselves
 
-            try
-            {
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                    Environment.OSVersion.Platform == PlatformID.Win32Windows)
-                {
-                    IsIdle = new IsIdleDelegate(WindowsIsIdle);
-                    WindowsOpen(title, width, height, red, green, blue, alpha, depth, stencil, fullscreen);
-                }
-                else if (Environment.OSVersion.Platform == PlatformID.Unix)
-                {
-                    IsIdle = new IsIdleDelegate(XIsIdle);
-                }
-                else
-                {
-                    throw new PlatformNotSupportedException("The platform on which you are trying to run this program is not currently supported. Sorry for the inconvenience.");
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-        }
-
-        #region Open functions
-
-        public void WindowsOpen(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
-        {
             if (title == null)
                 title = "OpenTK Windows application";
             this.Text = title;
 
-            if (fullscreen)
-            {
-                Api.DeviceMode ScreenSettings = new Api.DeviceMode();       // Device Mode
-                ScreenSettings.Size = (short)Marshal.SizeOf(ScreenSettings);    // Size Of The Devmode Structure
-                ScreenSettings.PelsWidth = width;                           // Selected Screen Width
-                ScreenSettings.PelsHeight = height;                         // Selected Screen Height
-                ScreenSettings.BitsPerPel = red + green + blue + alpha;     // Selected Bits Per Pixel
-                ScreenSettings.Fields = Api.Constants.DM_BITSPERPEL | Api.Constants.DM_PELSWIDTH | Api.Constants.DM_PELSHEIGHT;
-
-                // Try To Set Selected Mode And Get Results.  NOTE: CDS_FULLSCREEN Gets Rid Of Start Bar.
-                if (Api.ChangeDisplaySettings(ref ScreenSettings, Api.Constants.CDS_FULLSCREEN) == Api.Constants.DISP_CHANGE_SUCCESSFUL)
-                {
-                    this.FormBorderStyle = FormBorderStyle.None;
-                    this.StartPosition = FormStartPosition.Manual;
-                    this.Location = new System.Drawing.Point(0, 0);
-                    this.Region = new Region(new Rectangle(0, 0, width, height));
-                    this.Capture = true;
-                    this.SetTopLevel(true);
-                    Cursor.Hide();
-                }
-                else
-                {
-                    // Handle failure.
-                }
-            }
-
             this.Size = new Size(width, height);
+
+            Application.Idle += new EventHandler(OnIdle);
         }
-
-        public void XOpen(string title, int width, int height, int red, int green, int blue, int alpha, int depth, int stencil, bool fullscreen)
-        {
-            Context = GLContext.Create(this, red, green, blue, alpha, depth, stencil);
-
-            if (title == null)
-                title = "OpenTK X application";
-            this.Text = title;
-
-            this.Size = new Size(width, height);
-        }
-
-        #endregion
-
-        //override protected void WndProc(ref Message m)
-        //{
-        //    base.WndProc(ref m);
-        //    //OnPaint(null);
-        //}
 
         #region Event Handlers
 
@@ -146,29 +147,14 @@ namespace OpenTK
         /// </summary>
         /// <param name="sender">Not used.</param>
         /// <param name="e">Not used.</param>
-        private void OnIdle(object sender, EventArgs e)
+        protected void OnIdle(object sender, EventArgs args)
         {
-            while (IsIdle())
+            while (Implementation.IsIdle())
             {
                 if (ActiveForm != this)
                     Thread.Sleep(100);
                 OnPaint(null);
             }
-        }
-
-        /// <summary>
-        /// Checks if there all pending messages have been processed.
-        /// </summary>
-        /// <returns>Returns true if there are no messages left, false otherwise.</returns>
-        private bool WindowsIsIdle()
-        {
-            Api.Message msg;
-            return !OpenTK.Platform.Windows.Api.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
-        }
-
-        private bool XIsIdle()
-        {
-            throw new NotImplementedException("IsIdle handler not implemented yet!");
         }
 
         #endregion

@@ -1,13 +1,16 @@
 Todo:
++ + + Update directory structure (specs shouldn't reside in the top directory)
++ + + Fully implement Framework class.
 + + + Correct the Dispose methods to correctly clean resources (they should also call GC.SupressFinalize(true))
 + + + Add basic GLX bindings	(in progress)
 + + + Add basic X bindings		(in progress)
-+ + + Add context creation support for X	(needs testing)
++ + + Add context creation support for X	(needs fixing)
 + + + Test X support.
 + + + Add the CLS compliant attribute to the GL class.
++ + + Clean up the build system for windows .Net, and add build system for linux Mono and windows Mono.
++ + Add docs to each project.
 + + Add cross-platform way for defining the Application.Idle handler	(needs testing)
 + + Add more constructors to the Context classes.
-+ + Add more Framework constructors.
 + + Add comments and documentation (faqs, pitfalls, best practices).
 + + Add a cross-platform build system (probably NAnt?)
 + Add more examples.

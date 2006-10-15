@@ -5,16 +5,23 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{46980D11-67FA-4B33-903F-BC9D8A4FE60F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OpenTK.Examples.OpenGL.GLSL</RootNamespace>
     <AssemblyName>GLSL.Lesson01</AssemblyName>
-    <StartupObject>
-    </StartupObject>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <NoStdLib>False</NoStdLib>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>Full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\..\..\Binaries\Debug\Examples\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -63,9 +70,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Framework\Framework.csproj">
+    <ProjectReference Include="..\..\..\..\Framework\OpenTK.Framework.csproj">
       <Project>{26B55626-4EAB-4CAE-82FE-93CD6564D9EA}</Project>
-      <Name>Framework %28Projects\OpenTK\Framework\Framework%29</Name>
+      <Name>OpenTK.Framework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\OpenGL\OpenGL\OpenTK.OpenGL.csproj">
       <Project>{836876D1-0C8D-4240-BEE4-859D9D3D46CB}</Project>
@@ -76,5 +83,5 @@
       <Name>OpenTK.Platform.Windows</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

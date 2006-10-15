@@ -1,8 +1,18 @@
-OpenTK.OpenGL.Bind 0.7.6
+OpenTK.OpenGL.Bind 0.7.7
+
+0.7.6 -> 0.7.7
++ Several bugfixes regarding bugs from the latest (0.7.6) code synchronisation between Tao.GlBindGen and OpenTK.OpenGL.Bind
++ Split the Enums, Core OpenGL and Extension OpenGL functions into different files. This speeds up the Visual Studio IDE a lot.
++ The Extension functions have been removed from the OpenTK.OpenGL.GL class. They will be added back on a later version, probably as OpenTK.OpenGL.GL.Extensions. No need to clatter up the code API with thousands of mostly useless extensions.
+	+ Applications load much faster now.
++ Killed the Context class generation. It added a lot of complexity for little gain (what, cleaner OOP internal structure? Oh, please!) This move frees up the Context classes which can now be updated without dragging around several thousand function initialisations.
+	+ OpenTK.OpenGL.GL is self-contained now. Delegates are initialised statically, calling the platform specific *GetAddress functions where needed (they are contained in the GL class, too - but not auto-generated).
++ Revamped the WriteSpecs class. Its methods are now completely modular (enum, core and extension writers have been split).
+	+ This still needs some refactoring to reduce code copy-paste and allow for future wgl / glx binding generation.
 
 
 0.7.5.2 -> 0.7.6
-+ Added NeedWrapper and WrapperType properties to each parameter (needed for more fince grained control on wrapper generation).
++ Added NeedWrapper and WrapperType properties to each parameter (needed for more fine grained control on wrapper generation).
 + Added Function, Parameter, ParameterCollection (deep) copy constructors. This allows simpler code in many places (since we can now create new Functions without fear of affecting the old ones, for example).
 + Merged the ParameterCollection.cs with Parameter.cs
 + Added the FunctionBody class which contains the contents of a function as a list of strings. It is mainly intended for wrappers (allows cleaner code, too).

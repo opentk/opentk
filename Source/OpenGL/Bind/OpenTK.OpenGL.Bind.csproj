@@ -54,12 +54,11 @@
     <Compile Include="Structures\Function.cs" />
     <Compile Include="Structures\Parameter.cs" />
     <Compile Include="TranslateSpecs.cs" />
-    <Compile Include="WriteContexts.cs" />
     <Compile Include="WriteSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="changelog.txt" />
-    <Content Include="todo.txt" />
+    <Content Include="Documentation\changelog.txt" />
+    <Content Include="Documentation\todo.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

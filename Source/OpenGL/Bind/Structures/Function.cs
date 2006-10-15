@@ -9,6 +9,8 @@ using System.Text;
 
 namespace OpenTK.OpenGL.Bind
 {
+    #region class Function
+
     /// <summary>
     /// Represents an opengl function.
     /// The return value, function name, function parameters and opengl version can be retrieved or set.
@@ -219,6 +221,10 @@ namespace OpenTK.OpenGL.Bind
 
     }
 
+    #endregion
+
+    #region class FunctionBody : List<string>
+
     public class FunctionBody : List<string>
     {
         public FunctionBody()
@@ -255,4 +261,6 @@ namespace OpenTK.OpenGL.Bind
             return sb.ToString();
         }
     }
+
+    #endregion
 }

@@ -22,20 +22,19 @@ namespace OpenTK.Platform.X
             public const int QueuedAfterFlush = 2;
         }
 
-
         [StructLayout(LayoutKind.Sequential)]
         public struct VisualInfo
         {
-            IntPtr visual;
-            int visualid;
-            int screen;
-            uint depth;
-            int @class;
-            ulong red_mask;
-            ulong green_mask;
-            ulong blue_mask;
-            int colormap_size;
-            int bits_per_rgb;
+            public IntPtr visual;
+            public int visualid;
+            public int screen;
+            public uint depth;
+            public int @class;
+            public ulong red_mask;
+            public ulong green_mask;
+            public ulong blue_mask;
+            public int colormap_size;
+            public int bits_per_rgb;
         }
 
         #region Functions
@@ -48,6 +47,9 @@ namespace OpenTK.Platform.X
         extern public static void CloseDisplay(IntPtr display);
 
         //
+
+        [DllImport("libX11", EntryPoint = "XCreateColormap")]
+        extern public static IntPtr CreateColormap(IntPtr display, IntPtr window, IntPtr visual, int alloc);
 
         [DllImport(_dll_name, EntryPoint = "XDefaultScreen")]
         extern public static int DefaultScreen(IntPtr display);

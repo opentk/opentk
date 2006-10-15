@@ -38,10 +38,10 @@ namespace OpenTK.OpenGL
                 {
                     return new WindowsContext(c, red, green, blue, alpha, depth, stencil);
                 }
-                else if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major >= 6)
-                {
-                    return new WindowsVistaContext(c, red, green, blue, alpha, depth, stencil);
-                }
+                //else if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.Major >= 6)
+                //{
+                //    return new WindowsVistaContext(c, red, green, blue, alpha, depth, stencil);
+                //}
                 else if (Environment.OSVersion.Platform == PlatformID.Unix)
                 {
                     return new X11Context(c, red, green, blue, alpha, depth, stencil);

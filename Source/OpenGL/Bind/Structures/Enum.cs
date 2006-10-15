@@ -9,6 +9,8 @@ using System.Text;
 
 namespace OpenTK.OpenGL.Bind
 {
+    #region class Enum
+
     public class Enum
     {
         string _name;
@@ -42,4 +44,6 @@ namespace OpenTK.OpenGL.Bind
             return sb.ToString();
         }
     }
+
+    #endregion
 }
