@@ -15,11 +15,12 @@ namespace OpenTK.Frameworks
     {
         internal abstract class FrameworkImplementation
         {
-            abstract public void OnHandleCreated(object sender, EventArgs args);
-            abstract public bool IsIdle();
-            abstract public void Setup();
+            public abstract void OnHandleCreated(object sender, EventArgs args);
+            public abstract bool IsIdle();
+            public abstract void Setup();
             //abstract public void CloseWindow();
-            abstract public bool ToggleFullscreen(bool fullscreen);
+            public abstract bool SetResolution(int width, int height, OpenTK.OpenGL.ColorDepth color, bool fullscreen);
+            public abstract bool SetResolution(bool fullscreen);
         }
     }
 }
