@@ -113,7 +113,7 @@ namespace OpenTK.Frameworks
 
         public Framework()
         {
-            Setup(null, 640, 480, new OpenTK.OpenGL.ColorDepth(8, 8, 8, 8), 16, 0, true);
+            Setup(null, 640, 480, new OpenTK.OpenGL.ColorDepth(8, 8, 8, 8), 16, 0, false);
         }
 
 
@@ -172,10 +172,9 @@ namespace OpenTK.Frameworks
             //this.SetStyle(ControlStyles.ResizeRedraw, true);                    // Redraw On Resize
             this.SetStyle(ControlStyles.UserPaint, true);                       // We'll Handle Painting Ourselves
 
-            this.Width = width;
-            this.Height = height;
-
-            Fullscreen = Implementation.ToggleFullscreen(fullscreen);
+            this.Size = new Size(width, height);
+            Fullscreen = Implementation.SetResolution(fullscreen);
+            this.Size = new Size(width, height);    // Force the window to change to the requested resolution.
 
             if (title == null)
                 title = "OpenTK Windows application";

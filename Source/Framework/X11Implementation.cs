@@ -44,7 +44,12 @@ namespace OpenTK.Frameworks
                 //              }
             }
 
-            public override bool ToggleFullscreen(bool fullscreen)
+            public override bool SetResolution(int width, int height, OpenTK.OpenGL.ColorDepth color, bool fullscreen)
+            {
+                throw new Exception("The method or operation is not implemented.");
+            }
+
+            public override bool SetResolution(bool fullscreen)
             {
                 throw new Exception("The method or operation is not implemented.");
             }
