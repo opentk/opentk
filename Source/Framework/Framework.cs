@@ -28,7 +28,7 @@ namespace OpenTK.Frameworks
         public GLContext Context
         {
             get { return _context; }
-            protected set { _context = value; }
+            private set { _context = value; }
         }
 
         #endregion
@@ -52,7 +52,7 @@ namespace OpenTK.Frameworks
         public OpenTK.OpenGL.ColorDepth ColorDepth
         {
             get { return _color_depth; }
-            set { _color_depth = value; }
+            private set { _color_depth = value; }
         }
 
         #endregion
@@ -64,7 +64,7 @@ namespace OpenTK.Frameworks
         public int ZDepth
         {
             get { return _z_depth; }
-            set { _z_depth = value; }
+            private set { _z_depth = value; }
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace OpenTK.Frameworks
         public int StencilDepth
         {
             get { return _stencil_depth; }
-            set { _stencil_depth = value; }
+            private set { _stencil_depth = value; }
         }
 
         #endregion
@@ -88,7 +88,7 @@ namespace OpenTK.Frameworks
         public Size DesktopResolution
         {
             get { return _desktop_resolution; }
-            protected set { _desktop_resolution = value; }
+            private set { _desktop_resolution = value; }
         }
 
         #endregion
@@ -100,7 +100,19 @@ namespace OpenTK.Frameworks
         public float DesktopRefreshRate
         {
             get { return _desktop_refresh_rate; }
-            protected set { _desktop_refresh_rate = value; }
+            private set { _desktop_refresh_rate = value; }
+        }
+
+        #endregion
+
+        #region DesktopColorDepth property
+
+        private OpenTK.OpenGL.ColorDepth _desktop_color_depth;
+
+        public OpenTK.OpenGL.ColorDepth DesktopColorDepth
+        {
+            get { return _desktop_color_depth; }
+            private set { _desktop_color_depth = value; }
         }
 
         #endregion
@@ -113,7 +125,7 @@ namespace OpenTK.Frameworks
 
         public Framework()
         {
-            Setup(null, 640, 480, new OpenTK.OpenGL.ColorDepth(8, 8, 8, 8), 16, 0, false);
+            Setup(null, 800, 600, new OpenTK.OpenGL.ColorDepth(8, 8, 8, 8), 16, 0, false);
         }
 
 
@@ -124,13 +136,10 @@ namespace OpenTK.Frameworks
 
         #endregion
 
-        public void Setup(string title, int width, int height, OpenTK.OpenGL.ColorDepth color, int depth, int stencil, bool fullscreen)
+        #region Setup(string title, int width, int height, OpenTK.OpenGL.ColorDepth color, int depth, int stencil, bool fullscreen)
+
+        private void Setup(string title, int width, int height, OpenTK.OpenGL.ColorDepth color, int depth, int stencil, bool fullscreen)
         {
-            // Initialise components.
-            ColorDepth = color;
-            ZDepth = depth;
-            StencilDepth = stencil;
-            
             // Set platform.
             try
             {
@@ -140,7 +149,8 @@ namespace OpenTK.Frameworks
                 }
                 else if (Environment.OSVersion.Platform == PlatformID.Unix)
                 {
-                    Implementation = new X11Implementation();
+                    //Implementation = new X11Implementation();
+                    throw new PlatformNotSupportedException("The platform on which you are trying to run this program is not currently supported. Sorry for the inconvenience.");
                 }
                 else
                 {
@@ -162,6 +172,11 @@ namespace OpenTK.Frameworks
             //    //Context.MakeCurrent();
             //}
 
+            // Initialise components.
+            ColorDepth = color;
+            ZDepth = depth;
+            StencilDepth = stencil;
+
             Context = GLContext.Create(this, color, depth, stencil);
             
             // Code taken from NeHe tutorials
@@ -172,9 +187,7 @@ namespace OpenTK.Frameworks
             //this.SetStyle(ControlStyles.ResizeRedraw, true);                    // Redraw On Resize
             this.SetStyle(ControlStyles.UserPaint, true);                       // We'll Handle Painting Ourselves
 
-            this.Size = new Size(width, height);
-            Fullscreen = Implementation.SetResolution(fullscreen);
-            this.Size = new Size(width, height);    // Force the window to change to the requested resolution.
+            Implementation.SetResolution(width, height, color, fullscreen);
 
             if (title == null)
                 title = "OpenTK Windows application";
@@ -182,6 +195,8 @@ namespace OpenTK.Frameworks
 
             Application.Idle += new EventHandler(OnIdle);
         }
+
+        #endregion
 
         #region Event Handlers
 
@@ -194,10 +209,28 @@ namespace OpenTK.Frameworks
         {
             while (Implementation.IsIdle())
             {
-                if (ActiveForm != this)
-                    Thread.Sleep(100);
+                //if (ActiveForm != this)
+                //    Thread.Sleep(100);
                 OnPaint(null);
             }
+        }
+
+        #endregion
+
+        #region Public member functions
+
+        /// <summary>
+        /// Requests mode change. The parameters are hints for the mode, which may or may not be
+        /// possible according to the hardware.
+        /// </summary>
+        /// <param name="width">The horizontal resolution in pixels.</param>
+        /// <param name="height">The vertical resolution in pixels.</param>
+        /// <param name="color">The color depth.</param>
+        /// <param name="fullscreen">Set to true to set a fullscreen mode or false to set a windowed mode.</param>
+        /// <returns>True if the mode set was fullscreen, false otherwise.</returns></returns>
+        public void SetResolution(int width, int height, OpenTK.OpenGL.ColorDepth color, bool fullscreen)
+        {
+            Implementation.SetResolution(width, height, color, fullscreen);
         }
 
         #endregion

@@ -56,6 +56,7 @@ namespace OpenTK.Platform.Windows
             public const int DISP_CHANGE_FAILED = -1;
 
             // (found in WinUSER.h)
+            public const int ENUM_REGISTRY_SETTINGS = -2;
             public const int ENUM_CURRENT_SETTINGS = -1;
         }
         #endregion
@@ -400,10 +401,17 @@ namespace OpenTK.Platform.Windows
         /// <param name="flags"></param>
         /// <returns></returns>
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern int ChangeDisplaySettings(ref DeviceMode device_mode, int flags);
+        public static extern int ChangeDisplaySettings(DeviceMode device_mode, int flags);
         #endregion int ChangeDisplaySettings(ref Gdi.DEVMODE devMode, int flags)
 
-        
+        #region EnumDisplaySettings
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int EnumDisplaySettings([MarshalAs(UnmanagedType.LPTStr)] string device_name, int graphics_mode, DeviceMode device_mode);
+
+        #endregion
+
+
         // *********** Never use GetLastError! ************
 
         //#region GetLastError
@@ -579,15 +587,21 @@ namespace OpenTK.Platform.Windows
         }
         #endregion
 
-        #region DeviceMode struct
+        #region DeviceMode class
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct DeviceMode
+        public class DeviceMode
         {
+            public DeviceMode()
+            {
+                Size = (short)Marshal.SizeOf(this);
+            }
+
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst=32)]
             public string DeviceName;
             public short SpecVersion;
             public short DriverVersion;
-            public short Size;
+            private short Size;
             public short DriverExtra;
             public int Fields;
             public short Orientation;
@@ -620,16 +634,21 @@ namespace OpenTK.Platform.Windows
             public int PanningWidth;
             public int PanningHeight;
         }
-        #endregion
+
+        #endregion DeviceMode class
 
         #endregion
-        
+
+        #region Callbacks
+
         [UnmanagedFunctionPointerAttribute(CallingConvention.Winapi)]
         public delegate void WindowProcedureEventHandler(object sender, WindowProcedureEventArgs e);
 
         public class WindowProcedureEventArgs : EventArgs
         {
-            public System.Windows.Forms.Message Msg;
+            public Message Msg;
         }
+
+        #endregion
     }    
 }
