@@ -17888,4 +17888,3 @@ namespace OpenTK.OpenGL
         #endregion static Constructor
     }
 }
-

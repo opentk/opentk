@@ -19,8 +19,7 @@ namespace OpenTK.Frameworks
             public abstract bool IsIdle();
             public abstract void Setup();
             //abstract public void CloseWindow();
-            public abstract bool SetResolution(int width, int height, OpenTK.OpenGL.ColorDepth color, bool fullscreen);
-            public abstract bool SetResolution(bool fullscreen);
+            public abstract void SetResolution(int width, int height, OpenTK.OpenGL.ColorDepth color, bool fullscreen);
         }
     }
 }

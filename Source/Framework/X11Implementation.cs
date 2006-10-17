@@ -48,11 +48,6 @@ namespace OpenTK.Frameworks
             {
                 throw new Exception("The method or operation is not implemented.");
             }
-
-            public override bool SetResolution(bool fullscreen)
-            {
-                throw new Exception("The method or operation is not implemented.");
-            }
         }
     }
 }

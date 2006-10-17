@@ -47,9 +47,6 @@
     <Compile Include="WindowsImplementation.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="X11Implementation.cs">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenGL\OpenGL\OpenTK.OpenGL.csproj">

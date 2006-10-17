@@ -3,10 +3,16 @@ OpenTK 0.3.6
 
 OpenTK 0.3.5 -> 0.3.6
 + Updates to OpenTK.OpenGL.Bind (see that changelog for more info).
-	+ Revamped GL class (is self contained)
+	+ Revamped GL class (it is self contained now).
 	+ Revamped GLContext class (it is no longer bound to the GL class initialisation).
-+ Directory structure updates (Documentation folder for each project, plus main Documentation folder)
-+ Framework updates (cleaner implementation, new namespace).
++ Directory structure updates.
+	+ Now every project has its own documentation.
+	+ The spec files for OpenGL now reside in the Source/OpenTK/OpenGL directory.
++ Framework updates:
+	+ Cleaner implementation.
+	+ New namespace.
+	+ Supports basic mode sswitching under windows (the code is not robust enough, yet).
++ Added very basic GLX and X bindings, just enough to create a basic OpenGL window.
 
 
 OpenTK 0.3.4 -> 0.3.5

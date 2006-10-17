@@ -17,9 +17,10 @@ using OpenTK.OpenGL;
 
 namespace OpenTK.Examples.OpenGL.GLSL
 {
-    public partial class Cube : OpenTK.Frameworks.Framework
+    public class Cube : OpenTK.Frameworks.Framework
     {
         #region Shaders
+
         string[] vertex_shader_source =
         {
             "void main() {",
@@ -32,6 +33,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
         {
             "void main() { gl_FragColor = gl_Color; }\0"
         };
+
         #endregion
 
         static float angle;
@@ -153,7 +155,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
                     break;
 
                 case Keys.F1:
-                    //this.Fullscreen = !this.Fullscreen;
+                    this.SetResolution(this.Width, this.Height, this.ColorDepth, !this.Fullscreen);
                     break;
             }
         }

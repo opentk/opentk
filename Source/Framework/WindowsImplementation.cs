@@ -48,20 +48,41 @@ namespace OpenTK.Frameworks
 
             override public void Setup()
             {
+                Api.DeviceMode device_mode = new Api.DeviceMode();
+                Api.EnumDisplaySettings(null, Api.Constants.ENUM_REGISTRY_SETTINGS, device_mode);
+
+                framework.DesktopResolution = new Size(device_mode.PelsWidth, device_mode.PelsHeight);
+                framework.DesktopRefreshRate = device_mode.DisplayFrequency;
+                framework.DesktopColorDepth = new OpenTK.OpenGL.ColorDepth(device_mode.BitsPerPel);
             }
 
-            public override bool SetResolution(int width, int height, OpenTK.OpenGL.ColorDepth color, bool fullscreen)
+            public override void SetResolution(int width, int height, OpenTK.OpenGL.ColorDepth color, bool fullscreen)
             {
+                if (framework.Size == new Size(width, height) && framework.ColorDepth == color && framework.Fullscreen == fullscreen)
+                    return;
+
+                // If we want to change to a fullscreen mode
                 if (fullscreen)
                 {
                     Application.Idle -= framework.OnIdle;
-                    //framework.Context.Dispose();
 
-                    Api.DeviceMode ScreenSettings = new Api.DeviceMode();           // Device Mode
-                    ScreenSettings.Size = (short)Marshal.SizeOf(ScreenSettings);    // Size Of The Devmode Structure
-                    ScreenSettings.PelsWidth = width;                     // Selected Screen Width
-                    ScreenSettings.PelsHeight = height;                   // Selected Screen Height
-                    ScreenSettings.BitsPerPel = color.Alpha +           // Selected Bits Per Pixel
+                    if (framework.WindowState == FormWindowState.Maximized)
+                    {
+                        Rectangle bounds = framework.RestoreBounds;
+                        framework.WindowState = FormWindowState.Normal;
+                        width = bounds.Width;
+                        height = bounds.Height;
+                        //framework.Size = new Size(bounds.Width, bounds.Height);
+                        //framework.Bounds = new Rectangle(0, 0, bounds.Width, bounds.Height);
+                    }
+
+                    //if (color != framework.ColorDepth)
+                    //    framework.Context.Dispose();
+
+                    Api.DeviceMode ScreenSettings = new Api.DeviceMode();
+                    ScreenSettings.PelsWidth = width;                       // Selected Screen Width
+                    ScreenSettings.PelsHeight = height;                     // Selected Screen Height
+                    ScreenSettings.BitsPerPel = color.Alpha +               // Selected Bits Per Pixel
                                                 color.Red +
                                                 color.Green +
                                                 color.Blue;
@@ -71,8 +92,10 @@ namespace OpenTK.Frameworks
                     Application.Idle += framework.OnIdle;
 
                     // Try To Set Selected Mode And Get Results.  NOTE: CDS_FULLSCREEN Gets Rid Of Start Bar.
-                    if (Api.ChangeDisplaySettings(ref ScreenSettings, Api.Constants.CDS_FULLSCREEN) == Api.Constants.DISP_CHANGE_SUCCESSFUL)
+                    if (Api.ChangeDisplaySettings(ScreenSettings, Api.Constants.CDS_FULLSCREEN) == Api.Constants.DISP_CHANGE_SUCCESSFUL)
                     {
+                        framework.Fullscreen = true;
+
                         framework.FormBorderStyle = FormBorderStyle.None;
                         framework.StartPosition = FormStartPosition.Manual;
                         framework.Location = new System.Drawing.Point(0, 0);
@@ -82,60 +105,36 @@ namespace OpenTK.Frameworks
                         Cursor.Hide();
 
                         framework.Size = new Size(width, height);
-
-                        return true;
                     }
                     else
                     {
-                        return false;
+                        // If mode change wasn't possible.
+                        framework.Fullscreen = false;
+                        framework.Size = new Size(width, height);
                     }
                 }
-
-                framework.Size = new Size(width, height);
-
-                return false;
-            }
-
-            public override bool SetResolution(bool fullscreen)
-            {
-                if (fullscreen)
+                else
                 {
-                    Application.Idle -= framework.OnIdle;
-                    //framework.Context.Dispose();
+                    // If we already are in fullscreen mode and we want to change to windowed mode.
 
-                    Api.DeviceMode ScreenSettings = new Api.DeviceMode();           // Device Mode
-                    ScreenSettings.Size = (short)Marshal.SizeOf(ScreenSettings);    // Size Of The Devmode Structure
-                    ScreenSettings.PelsWidth = framework.Width;                     // Selected Screen Width
-                    ScreenSettings.PelsHeight = framework.Height;                   // Selected Screen Height
-                    ScreenSettings.BitsPerPel = framework.ColorDepth.Alpha +           // Selected Bits Per Pixel
-                                                framework.ColorDepth.Red +
-                                                framework.ColorDepth.Green +
-                                                framework.ColorDepth.Blue;
-                    ScreenSettings.Fields = Api.Constants.DM_BITSPERPEL | Api.Constants.DM_PELSWIDTH | Api.Constants.DM_PELSHEIGHT;
-
-                    //framework.Context = GLContext.Create(framework, framework.ColorDepth, 16, 0);
-                    Application.Idle += framework.OnIdle;
-
-                    // Try To Set Selected Mode And Get Results.  NOTE: CDS_FULLSCREEN Gets Rid Of Start Bar.
-                    if (Api.ChangeDisplaySettings(ref ScreenSettings, Api.Constants.CDS_FULLSCREEN) == Api.Constants.DISP_CHANGE_SUCCESSFUL)
+                    if (framework.Fullscreen)
                     {
-                        framework.FormBorderStyle = FormBorderStyle.None;
-                        framework.StartPosition = FormStartPosition.Manual;
-                        framework.Location = new System.Drawing.Point(0, 0);
-                        //framework.Region = new Region(new Rectangle(0, 0, width, height));
-                        framework.Capture = true;
+                        Application.Idle -= framework.OnIdle;
+
+                        // Restore display settings
+                        Api.ChangeDisplaySettings(null, 0);
+                        framework.FormBorderStyle = FormBorderStyle.Sizable;
+                        framework.StartPosition = FormStartPosition.WindowsDefaultLocation;
+                        framework.Capture = false;
                         framework.SetTopLevel(true);
-                        Cursor.Hide();
+                        Cursor.Show();
 
-                        return true;
+                        Application.Idle += framework.OnIdle;
                     }
-                    else
-                    {
-                        return false;
-                    }
+
+                    framework.Fullscreen = false;
+                    framework.Size = new Size(width, height); 
                 }
-
-                return false;
             }
         }
     }
