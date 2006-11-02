@@ -5,16 +5,21 @@
 #endregion
 
 using System;
+using System.Drawing;
+using System.Globalization;
 
 namespace OpenTK.OpenGL
 {
-    #region ColorDepth struct
-
-    public struct ColorDepth
+    public class ColorDepth
     {
+        public byte Red, Green, Blue, Alpha;
+        public bool IsIndexed = false;
+        public int BitsPerPixel;
+        
         public ColorDepth(int bpp)
         {
             Red = Green = Blue = Alpha = 0;
+            BitsPerPixel = bpp;
 
             switch (bpp)
             {
@@ -31,18 +36,30 @@ namespace OpenTK.OpenGL
                 case 15:
                     Red = Green = Blue = 5;
                     break;
+                case 8:
+                    IsIndexed = true;
+                    break;
+                case 4:
+                    IsIndexed = true;
+                    break;
+                default:
+                    break;
             }
         }
 
-        public ColorDepth(byte red, byte green, byte blue, byte alpha)
+        public ColorDepth(int red, int green, int blue, int alpha)
         {
-            Red = red;
-            Green = green;
-            Blue = blue;
-            Alpha = alpha;
+            Red = (byte)red;
+            Green = (byte)green;
+            Blue = (byte)blue;
+            Alpha = (byte)alpha;
+            BitsPerPixel = red + green + blue + alpha;
         }
 
-        public byte Red, Green, Blue, Alpha;
+        public override bool Equals(object obj)
+        {
+            return (obj is ColorDepth) ? (this == (ColorDepth)obj) : false;
+        }
 
         public static bool operator ==(ColorDepth left, ColorDepth right)
         {
@@ -56,7 +73,15 @@ namespace OpenTK.OpenGL
         {
             return !(left == right);
         }
-    }
 
-    #endregion
+        public override int GetHashCode()
+        {
+            return Red ^ Green ^ Blue ^ Alpha;
+        }
+
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.CurrentCulture, "{0}", BitsPerPixel + (IsIndexed ? " indexed" : String.Empty) + " bpp");
+        }
+    }
 }

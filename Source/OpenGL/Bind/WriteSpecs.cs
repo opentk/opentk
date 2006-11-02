@@ -29,39 +29,39 @@ namespace OpenTK.OpenGL.Bind
 
         private static void WriteExtensionFunctionSpecs(string output_path, string class_name, List<Function> functions, List<Function> wrappers)
         {
-            string filename = Path.Combine(output_path, class_name + "Extensions.cs");
+            //string filename = Path.Combine(output_path, class_name + "Extensions.cs");
 
-            if (!Directory.Exists(output_path))
-                Directory.CreateDirectory(output_path);
+            //if (!Directory.Exists(output_path))
+            //    Directory.CreateDirectory(output_path);
 
-            StreamWriter sw = new StreamWriter(filename, false);
+            //StreamWriter sw = new StreamWriter(filename, false);
 
-            Console.WriteLine("Writing {0} class to {1}", class_name, filename);
+            //Console.WriteLine("Writing {0} class to {1}", class_name, filename);
 
-            WriteLicense(sw);
-            WriteUsingDirectives(sw);
+            //WriteLicense(sw);
+            //WriteUsingDirectives(sw);
 
-            sw.WriteLine("namespace {0}", Settings.OutputNamespace);
-            sw.WriteLine("{");
+            //sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+            //sw.WriteLine("{");
 
-            WriteTypes(sw);
+            //WriteTypes(sw);
 
-            sw.WriteLine("    static public partial class {0}", class_name);
-            sw.WriteLine("    {");
-            sw.WriteLine("        static public class Extensions");
-            sw.WriteLine("        {");
+            //sw.WriteLine("    static public partial class {0}", class_name);
+            //sw.WriteLine("    {");
+            //sw.WriteLine("        static public class Extensions");
+            //sw.WriteLine("        {");
 
-            WriteExtensionFunctionSignatures(sw, functions);
-            WriteExtensionFunctions(sw, functions);
-            WriteExtensionWrappers(sw, wrappers);
+            //WriteExtensionFunctionSignatures(sw, functions);
+            //WriteExtensionFunctions(sw, functions);
+            //WriteExtensionWrappers(sw, wrappers);
 
-            sw.WriteLine("        }");
-            sw.WriteLine("    }");
-            sw.WriteLine("}");
-            sw.WriteLine();
+            //sw.WriteLine("        }");
+            //sw.WriteLine("    }");
+            //sw.WriteLine("}");
+            //sw.WriteLine();
 
-            sw.Flush();
-            sw.Close();
+            //sw.Flush();
+            //sw.Close();
         }
 
         #endregion

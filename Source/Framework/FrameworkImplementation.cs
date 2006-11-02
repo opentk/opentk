@@ -11,15 +11,12 @@ using System.Drawing;
 
 namespace OpenTK.Frameworks
 {
-    public partial class Framework
+    internal abstract class FrameworkImplementation
     {
-        internal abstract class FrameworkImplementation
-        {
-            public abstract void OnHandleCreated(object sender, EventArgs args);
-            public abstract bool IsIdle();
-            public abstract void Setup();
-            //abstract public void CloseWindow();
-            public abstract void SetResolution(int width, int height, OpenTK.OpenGL.ColorDepth color, bool fullscreen);
-        }
+        public abstract void OnHandleCreated(object sender, EventArgs args);
+        public abstract bool IsIdle();
+        public abstract void Setup();
+        //abstract public void CloseWindow();
+        public abstract void SetResolution(int width, int height, OpenTK.OpenGL.ColorDepth color, bool fullscreen);
     }
 }

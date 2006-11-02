@@ -1,8 +1,9 @@
 #region License
 /* Copyright (c) 2006 Stephen Apostolopoulos
+ * Contributions from Erik Ylvisaker
  * See license.txt for license info
  */
-#endregion 
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -272,10 +273,10 @@ namespace OpenTK.OpenGL
         //public static extern IntPtr CreateContext(IntPtr gc_id, Int32 screen, Int32 visual, IntPtr share_list);
         
         [DllImport(_dll_name, EntryPoint = "glXDestroyContext")]
-        public static extern void DestroyContext(IntPtr context);
+        public static extern void DestroyContext(IntPtr dpy, IntPtr context);
 
         [DllImport(_dll_name, EntryPoint = "glXMakeCurrent")]
-        public static extern void MakeCurrent(IntPtr display, IntPtr drawable, IntPtr context);
+        public static extern bool MakeCurrent(IntPtr display, IntPtr drawable, IntPtr context);
         
         [DllImport(_dll_name, EntryPoint = "glXSwapBuffers")]
         public static extern void SwapBuffers(IntPtr display, IntPtr drawable);

@@ -11,8 +11,8 @@ namespace OpenTK.OpenGL.Bind
 {
     static class Settings
     {
-        public static string InputPath = "..\\..\\Source\\OpenGL\\Specifications";
-        public static string OutputPath = "..\\..\\Source\\OpenGL\\OpenGL\\Bindings";
+        public static string InputPath = "..\\..\\..\\Source\\OpenGL\\Specifications";
+        public static string OutputPath = "..\\..\\..\\Source\\OpenGL\\OpenGL\\Bindings";
         public static string GLClass = "GL";
         public static string OutputNamespace = "OpenTK.OpenGL";
     }
