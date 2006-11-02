@@ -1,11 +1,11 @@
 /* Copyright (c) 2006 Stephen Apostolopoulos
+ * Contributions from Erik Ylvisaker
  * See license.txt for license info
  */
 
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-//using System.Windows.Forms;
 
 /* TODO: Update the description of TimeBeginPeriod and other native methods. Update Timer. */
 
@@ -15,7 +15,7 @@ namespace OpenTK.Platform.Windows
     /// For internal use by OpenTK only!
     /// Exposes useful native WINAPI methods and structures.
     /// </summary>
-    public static class Api
+    public static class WinApi
     {
         #region Constants
         public struct Constants
@@ -407,7 +407,8 @@ namespace OpenTK.Platform.Windows
         #region EnumDisplaySettings
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern int EnumDisplaySettings([MarshalAs(UnmanagedType.LPTStr)] string device_name, int graphics_mode, DeviceMode device_mode);
+        public static extern int EnumDisplaySettings([MarshalAs(UnmanagedType.LPTStr)] string device_name,
+            int graphics_mode, IntPtr device_mode);
 
         #endregion
 
@@ -588,8 +589,60 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region DeviceMode class
+        /*
+        typedef struct _devicemode { 
+          BCHAR  dmDeviceName[CCHDEVICENAME]; 
+          WORD   dmSpecVersion; 
+          WORD   dmDriverVersion; 
+          WORD   dmSize; 
+          WORD   dmDriverExtra; 
+          DWORD  dmFields; 
+          union {
+            struct {
+              short dmOrientation;
+              short dmPaperSize;
+              short dmPaperLength;
+              short dmPaperWidth;
+              short dmScale; 
+              short dmCopies; 
+              short dmDefaultSource; 
+              short dmPrintQuality; 
+            };
+            POINTL dmPosition;
+            DWORD  dmDisplayOrientation;
+            DWORD  dmDisplayFixedOutput;
+          };
 
-        [StructLayout(LayoutKind.Sequential)]
+          short  dmColor; 
+          short  dmDuplex; 
+          short  dmYResolution; 
+          short  dmTTOption; 
+          short  dmCollate; 
+          BYTE  dmFormName[CCHFORMNAME]; 
+          WORD  dmLogPixels; 
+          DWORD  dmBitsPerPel; 
+          DWORD  dmPelsWidth; 
+          DWORD  dmPelsHeight; 
+          union {
+            DWORD  dmDisplayFlags; 
+            DWORD  dmNup;
+          }
+          DWORD  dmDisplayFrequency; 
+        #if(WINVER >= 0x0400) 
+          DWORD  dmICMMethod;
+          DWORD  dmICMIntent;
+          DWORD  dmMediaType;
+          DWORD  dmDitherType;
+          DWORD  dmReserved1;
+          DWORD  dmReserved2;
+        #if (WINVER >= 0x0500) || (_WIN32_WINNT >= 0x0400)
+          DWORD  dmPanningWidth;
+          DWORD  dmPanningHeight;
+        #endif
+        #endif 
+        } DEVMODE; 
+        */
+        [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Ansi)]
         public class DeviceMode
         {
             public DeviceMode()
@@ -604,6 +657,7 @@ namespace OpenTK.Platform.Windows
             private short Size;
             public short DriverExtra;
             public int Fields;
+
             public short Orientation;
             public short PaperSize;
             public short PaperLength;
@@ -612,6 +666,7 @@ namespace OpenTK.Platform.Windows
             public short Copies;
             public short DefaultSource;
             public short PrintQuality;
+
             public short Color;
             public short Duplex;
             public short YResolution;

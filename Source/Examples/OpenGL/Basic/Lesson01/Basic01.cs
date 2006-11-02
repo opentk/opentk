@@ -1,40 +1,13 @@
-﻿#region License
-/* Copyright (c) 2006 Stephen Apostolopoulos
- * See license.txt for license info
- */
-#endregion
-
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Threading;
-using OpenTK;
 using OpenTK.OpenGL;
 
-namespace OpenTK.Examples.OpenGL.GLSL
+namespace Lesson01
 {
+
     public class Cube : OpenTK.Frameworks.Framework
     {
-        #region Shaders
-
-        string[] vertex_shader_source =
-        {
-            "void main() {",
-            "gl_FrontColor = gl_Color;",
-            "gl_Position = ftransform();",
-            "}",
-        };
-
-        string[] fragment_shader_source =
-        {
-            "void main() { gl_FragColor = gl_Color; }\0"
-        };
-
-        #endregion
-
         static float angle;
 
         #region Load event handler
@@ -50,43 +23,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
             GL.Enable(Enums.EnableCap.DEPTH_TEST);
 
-            int vertex_shader_object, fragment_shader_object;
-            int[] status = new int[1];
-            int shader_program;
-
-            vertex_shader_object = GL.CreateShader(Enums.VERSION_2_0.VERTEX_SHADER);
-            fragment_shader_object = GL.CreateShader(Enums.VERSION_2_0.FRAGMENT_SHADER);
-
-            GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, IntPtr.Zero);
-            GL.CompileShader(vertex_shader_object);
-            GL.GetShaderiv(vertex_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, status);
-            if (status[0] != (int)Enums.Boolean.TRUE)
-            {
-                StringBuilder info = new StringBuilder(1024);
-                GL.GetShaderInfoLog(vertex_shader_object, 1024, null, info);
-
-                throw new Exception(info.ToString());
-            }
-
-            GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, IntPtr.Zero);
-            GL.CompileShader(fragment_shader_object);
-            GL.GetShaderiv(fragment_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, status);
-            if (status[0] != (int)Enums.Boolean.TRUE)
-            {
-                StringBuilder info = new StringBuilder(1024);
-                GL.GetShaderInfoLog(fragment_shader_object, 1024, null, info);
-
-                throw new Exception(info.ToString());
-            }
-
-            shader_program = GL.CreateProgram();
-            GL.AttachShader(shader_program, fragment_shader_object);
-            GL.AttachShader(shader_program, vertex_shader_object);
-
-            GL.LinkProgram(shader_program);
-            GL.UseProgram(shader_program);
-
-            OnResize(sender, e);
+            OnResize(this, e);
         }
         #endregion
 
@@ -95,9 +32,9 @@ namespace OpenTK.Examples.OpenGL.GLSL
         {
             base.OnResize(sender, e);
 
-//            if (this.Context == null)
-//                return;
-            
+            //            if (this.Context == null)
+            //                return;
+
             if (ClientSize.Height == 0)
                 ClientSize = new System.Drawing.Size(ClientSize.Width, 1);
 
@@ -120,8 +57,6 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
         protected override void OnPaint()
         {
-            base.OnPaint();
-
             GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
             Glu.LookAt(
@@ -130,7 +65,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
                 0.0, 1.0, 0.0
             );
             GL.Rotatef(angle, 0.0f, 1.0f, 0.0f);
-            angle += 0.05f;
+            angle += 0.5f;
 
             GL.Clear(Enums.ClearBufferMask.COLOR_BUFFER_BIT | Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 
