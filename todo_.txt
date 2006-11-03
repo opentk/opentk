@@ -1,0 +1,16 @@
+Todo:
++ + + [In progress] Restore the Extensions.
++ + + Fully implement Framework class.
++ + + [In progress] Correct the Dispose methods to correctly clean resources (they should also call GC.SupressFinalize(true))
++ + + Add the CLS compliant attribute to the GL class.
++ + Document projects (source and manuals).
++ + [In progress] Add more constructors to the Context classes.
++ [In progress] Add more examples.
++ Find out what is needed for the MacOS platform (how to do function loading and window management without X11).
++ Add full bindings for glu, wgl, glx and agl (probably generated automatically).
++ Add the Math module.
++ Research and add the Input module.
++ Review and add the Timer module.
++ Review and add the OpenAL module.
++ [In progress] Clean up the code.
++ Add more platform bindings.
