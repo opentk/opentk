@@ -1,37 +1,30 @@
-OpenTK 0.3.6
-
-
-OpenTK 0.3.5 -> 0.3.6
-+ Updates to OpenTK.OpenGL.Bind (see that changelog for more info).
+OpenTK 0.3.4 -> 0.3.5
++ Thanks to Erik Ylvisaker's hard work, OpenTK now works under both Windows and X11.
+	+ The GLContext class now contains all needed code for mode switching.
+	+ The Framework class structure has been updated. Less code is duplicated between GLContext and Framework now.
+	+ Three new examples have been added: OpenGL.Basic.Lesson01 (equivalent to OpenGL.GLSL.Lesson01 without the shaders), OpenGL.Basic.QueryDisplayModes which shows a list of all available display modes, and OpenGL.Basic.NoFramework which shows how to use OpenGL Contexts directly (without relying on the framework).
+	+ New bindings for X and the XF86 extension.
++ New build system based on Prebuild and NAnt (similar to the one used in Tao or Mono.XNA).
++ Updates to the OpenTK.OpenGL.DisplayMode and ColorDepth classes.
++ More XML documentation blocks added to functions and classes.
++ Major update to OpenTK.OpenGL.Bind (see that changelog for more info).
 	+ Revamped GL class (it is self contained now).
 	+ Revamped GLContext class (it is no longer bound to the GL class initialisation).
-+ Directory structure updates.
-	+ Now every project has its own documentation.
-	+ The spec files for OpenGL now reside in the Source/OpenTK/OpenGL directory.
-+ Framework updates:
-	+ Cleaner implementation.
-	+ New namespace.
-	+ Supports basic mode sswitching under windows (the code is not robust enough, yet).
-+ Added very basic GLX and X bindings, just enough to create a basic OpenGL window.
-
-
-OpenTK 0.3.4 -> 0.3.5
-+ Major update to OpenTK.OpenGL.Bind (cleaner code, new functions, comments and many new wrappers).
-+ Updated the spec files for opengl 2.1.
+	+ Cleaner code, new functions, comments and many new wrappers.
+	+ Updated the spec files for opengl 2.1.
 	+ Added the new 64 bit types to the typemaps (gl.tm and csharp.tm)
 + The bugs in the specs are still there:
 	+ SGIX_icc_texture is still commented out, while enums use it.
 	+ LightProperty is still used by constants (the correct enum is LightParameter).
 		+ I think I should contact someone at the Khronos group about these. For the time being I worked around them, by adding a special case for LightProperty in the translator, and adding the SGIX enum to the missing parameters.
 		+ See also: http://www.haskell.org/HOpenGL/spec_bugs.html (lots of useful information on that site).
-+ Laid the foundation for X (Linux, Unix, MacOS) support.
-	+ Added bindings to some glx functions.
-	+ Added the OpenTK.Platform.X class.
++ Directory structure updates.
+	+ Now every project has its own documentation.
+	+ The spec files for OpenGL now reside in the Source/OpenTK/OpenGL directory.
 + Minor updates to the wgl bindings (int -> IntPtr).
 + Tested the binding generator with the glx specs (the reader and the enum writer work ok, the trnaslator and the other writers will need updating).
 + Renamed the GLForm to Framework.
 	+ The Framework now resides in its own project directory.
-+ Revamped the GLContext class hierarchy. WindowsContext and WindowsVistaContext now both inherit from WindowsBaseContext. This allows for less code-duplication (and thus less bugs).
 
 
 OpenTK 0.3.3 -> 0.3.4

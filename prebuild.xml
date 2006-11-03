@@ -94,12 +94,14 @@
       <Configuration name="Debug">
         <Options>
           <OutputPath>..\..\..\Binaries\Debug\Exe</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
 
       <Configuration name="Release">
         <Options>
           <OutputPath>..\..\..\Binaries\Release\Exe</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
 

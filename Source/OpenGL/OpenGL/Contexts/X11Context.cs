@@ -333,14 +333,14 @@ namespace OpenTK.OpenGL.Platform
             // structures pointed to.
             IntPtr[] modesInfo = new IntPtr[modeCount];
 
-            // have to use unsafe here, because apparently Mono is missing the Marshal.Copy function??
-            Marshal.Copy(modesInfoPtr, modesInfo, 0, modeCount);
-            //unsafe
-            //{
-            //    IntPtr* ptr = (IntPtr*)modesInfoPtr;
-            //    for (int i = 0; i < modeCount; i++)
-            //        modesInfo[i] = ptr[i];
-            //}
+            // Marshal.Copy does not work correctly with Mono 1.1.18.
+            //Marshal.Copy(modesInfoPtr, (IntPtr[])modesInfo, 0, modeCount);
+            unsafe
+            {
+                IntPtr* ptr = (IntPtr*)modesInfoPtr;
+                for (int i = 0; i < modeCount; i++)
+                    modesInfo[i] = ptr[i];
+            }
 
             X11Api.XF86VidModeModeInfo[] modeList = new X11Api.XF86VidModeModeInfo[modeCount];
 

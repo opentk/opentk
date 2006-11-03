@@ -1,16 +1,14 @@
 ================================================================================
 
-OpenTK 0.3.4 alpha Release notes
+OpenTK 0.3.5 alpha Release notes
 
 IMPORTANT: This release is not only intended for testing and experimentation, NOT for development. Use at your own risk! (see below for the reasons)
 
 --------------------------------------------------------------------------------
 
-This release introduces full Mono support under Windows. Now everything can be compiled and ran with the gmcs Mono compiler. This sets the foundation for Linux support, which will be gradually introduced over the next versions.
+This release introduces Linux support. Thanks to Erik's code you can now write a project under Linux/Mono and run it under Windows/.Net without changing a single line of code!
 
-This release also corrects some rather evil bugs that caused crashes under Release mode with .Net, as well as resource leaking on program shutdown.
-
-The GLSL.Lesson01 exapmle may crash on exit under Mono - this is a known issue, caused by incorrect disposing of resources. Hopefully this will be corrected in the next version.
+Moreover, the structure of the OpenTK.OpenGL.GL class has been changed. Only the OpenGL core functions (versions 1.0-2.1) are directly exposed now in the GL class - the extension functions will reside in new structures named after the extension categories (for example GL.Arb, GL.Ext, GL.NV, GL.Ati etc). This change will make extension functions more discoverable. Extensions are currently disabled, until some internal changes are complete in OpenTK.OpenGL.Bind to allow for this change.
 
 --------------------------------------------------------------------------------
 
@@ -25,7 +23,7 @@ For the bleeding edge code, do a svn checkout at https://svn.sourceforge.net/svn
 The version number for this release is
 Major:		0
 Minor:		3
-Release:	4
+Release:	5
 Revision:	0
 
 The odd minor version number denotes that this is a WIP (Work In Progress). This means that the source and the public API (APplication Interface) changes rapidly from release to release.
@@ -37,12 +35,13 @@ Missing features include Linux support and more fine-grained window and context 
 ================================================================================
 
 This package contains the source for:
-OpenTK.OpenGL			(0.3.4)
-OpenTK.OpenGL.Bind		(0.7.5.2)
-OpenTK.Platform.Windows		(0.1.0.2)
+OpenTK.OpenGL			(0.3.5)
+OpenTK.OpenGL.Bind		(0.7.7.0)
+OpenTK.Framework		(0.3.2.0)
+OpenTK.Platform.Windows		(0.1.1.0)
+OpenTK.Platform.X11		(0.1.1.0)
 
---------------------------------------------------------------------------------
-
+OpenTK.OpenGL.Examples.Basic	(Lesson01, NoFramework, QueryDisplayModes)
 OpenTK.OpenGL.Examples.GLSL	(Lesson01)
 
 ================================================================================
