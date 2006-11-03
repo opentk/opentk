@@ -1,20 +1,16 @@
 Todo:
-+ + + Restore the Extensions.
++ + + [In progress] Restore the Extensions.
 + + + Fully implement Framework class.
-+ + + Correct the Dispose methods to correctly clean resources (they should also call GC.SupressFinalize(true))
-+ + + Fix X support in the framework.
++ + + [In progress] Correct the Dispose methods to correctly clean resources (they should also call GC.SupressFinalize(true))
 + + + Add the CLS compliant attribute to the GL class.
-+ + + Clean up the build system for windows .Net, and add build system for linux Mono and windows Mono.
-		+ Probably something like Nant?
 + + Document projects (source and manuals).
-+ + Add more constructors to the Context classes.
-+ Add more examples.
++ + [In progress] Add more constructors to the Context classes.
++ [In progress] Add more examples.
 + Find out what is needed for the MacOS platform (how to do function loading and window management without X11).
 + Add full bindings for glu, wgl, glx and agl (probably generated automatically).
 + Add the Math module.
 + Research and add the Input module.
 + Review and add the Timer module.
 + Review and add the OpenAL module.
-+ Add projects for MonoDevelop.
-+ Clean up the code.
++ [In progress] Clean up the code.
 + Add more platform bindings.
