@@ -1,3 +1,9 @@
+#region --- License ---
+/* This source file is released under the MIT license. See License.txt for more information.
+ * Coded by Stephen Apostolopoulos.
+ */
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,7 +33,7 @@ namespace OpenTK.OpenGL
 
         private static Delegate MacOSGetAddress(string function_string, Type function_type)
         {
-            throw new NotImplementedException("THis platform is not supported yet. Sorry for the inconvenience.");
+            throw new NotImplementedException("This platform is not supported yet. Sorry for the inconvenience.");
         }
     }
 }

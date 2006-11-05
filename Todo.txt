@@ -1,16 +1,44 @@
-Todo:
-+ + + [In progress] Restore the Extensions.
-+ + + Fully implement Framework class.
-+ + + [In progress] Correct the Dispose methods to correctly clean resources (they should also call GC.SupressFinalize(true))
-+ + + Add the CLS compliant attribute to the GL class.
-+ + Document projects (source and manuals).
-+ + [In progress] Add more constructors to the Context classes.
-+ [In progress] Add more examples.
-+ Find out what is needed for the MacOS platform (how to do function loading and window management without X11).
-+ Add full bindings for glu, wgl, glx and agl (probably generated automatically).
-+ Add the Math module.
-+ Research and add the Input module.
-+ Review and add the Timer module.
-+ Review and add the OpenAL module.
-+ [In progress] Clean up the code.
-+ Add more platform bindings.
+Generic Todos:
+
++ Check if resources are correctly cleaned.
+
+
+OpenTK.OpenGL todos:
+
+(High level)
++ VertexBufferObject class.
++ Error class.
++ Device class.
++ OpenGL function overloads.
+
+(Low level)
++ Restore the Extensions.
++ Mark the GL class as CLS compliant.
++ Inline XML documentation.
++ Add support for the MacOS X platform.
++ Add complete Wgl, Glx, Agl and Glu bindings.
+
+Context class:
++ Add more constructors.
++ Add support for the MacOS X platform.
+
+Examples:
++ Homogenize the example layout.
++ Add comments were needed.
+
+
+OpenTK.Math todos:
++ Start implementing the Math module.
+
+
+OpenTK.Input todos:
++ Start researching the Input module.
+
+
+OpenTK.Timer todos:
++ Start researching the Timer module.
+
+
+OpenTK.OpenAL todos:
++ Start researching the OpenAL module.
++ Take a look at the OpenALDotNet wrapper.

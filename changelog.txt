@@ -1,3 +1,10 @@
+OpenTK 0.3.5 -> 0.3.6
++ OpenTK.OpenGL (High level)
+	+ Added the DisplayList class.
++ OpenTK.Examples.OpenGL
+	+ Added the Basic.DisplayLists example.
+
+
 OpenTK 0.3.4 -> 0.3.5
 + Thanks to Erik Ylvisaker's hard work, OpenTK now works under both Windows and X11.
 	+ The GLContext class now contains all needed code for mode switching.

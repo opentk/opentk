@@ -1,8 +1,10 @@
-﻿#region License
-/* Copyright (c) 2006 Stephen Apostolopoulos
- * See license.txt for license info
+﻿#region --- License ---
+/* This source file is released under the MIT license. See License.txt for more information.
+ * Coded by Stephen Apostolopoulos.
  */
 #endregion
+
+#region --- Using Directives ---
 
 using System;
 using System.Collections.Generic;
@@ -11,13 +13,17 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
-using OpenTK;
+
 using OpenTK.OpenGL;
+
+#endregion --- Using Directives ---
 
 namespace OpenTK.Examples.OpenGL.GLSL
 {
-    public class Cube : OpenTK.Frameworks.Framework
+    public class Cube : Framework
     {
+        #region --- Variables ---
+
         #region Shaders
 
         string[] vertex_shader_source =
@@ -37,7 +43,73 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
         static float angle;
 
-        #region Load event handler
+        #endregion --- Variables ---
+
+        #region --- Methods ---
+
+        #region Entry point
+
+        [STAThread]
+        static void Main()
+        {
+            new Cube().Run();
+        }
+
+        #endregion
+
+        #region DrawCube
+
+        public void DrawCube()
+        {
+            GL.Begin(Enums.BeginMode.QUADS);
+
+            GL.Color3f(1, 0, 0);
+            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3f(1.0f, 1.0f, -1.0f);
+            GL.Vertex3f(1.0f, -1.0f, -1.0f);
+
+            GL.Color3f(1, 1, 0);
+            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3f(1.0f, -1.0f, -1.0f);
+            GL.Vertex3f(1.0f, -1.0f, 1.0f);
+            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
+
+            GL.Color3f(1, 0, 1);
+            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
+
+            GL.Color3f(0, 1, 0);
+            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3f(1.0f, -1.0f, 1.0f);
+            GL.Vertex3f(1.0f, 1.0f, 1.0f);
+            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
+
+            GL.Color3f(0, 0, 1);
+            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3f(1.0f, 1.0f, 1.0f);
+            GL.Vertex3f(1.0f, 1.0f, -1.0f);
+
+            GL.Color3f(0, 1, 1);
+            GL.Vertex3f(1.0f, -1.0f, -1.0f);
+            GL.Vertex3f(1.0f, 1.0f, -1.0f);
+            GL.Vertex3f(1.0f, 1.0f, 1.0f);
+            GL.Vertex3f(1.0f, -1.0f, 1.0f);
+
+            GL.End();
+        }
+
+        #endregion
+
+        #endregion --- Methods ---
+
+        #region --- Event Handlers ---
+
+        #region OnLoad
+
         protected override void OnLoad(object sender, EventArgs e)
         {
             base.OnLoad(sender, e);
@@ -88,16 +160,15 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
             OnResize(sender, e);
         }
+
         #endregion
 
-        #region Resize event handler
+        #region OnResize
+
         protected override void OnResize(object sender, EventArgs e)
         {
             base.OnResize(sender, e);
 
-//            if (this.Context == null)
-//                return;
-            
             if (ClientSize.Height == 0)
                 ClientSize = new System.Drawing.Size(ClientSize.Width, 1);
 
@@ -105,18 +176,15 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
             double ratio = 0.0;
             ratio = ClientSize.Width / (double)ClientSize.Height;
-            //if (ClientSize.Width > ClientSize.Height)
-            //    ratio = ClientSize.Width / (double)ClientSize.Height;
-            //else
-            //    ratio = ClientSize.Height / (double)ClientSize.Width;
 
             GL.MatrixMode(Enums.MatrixMode.PROJECTION);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
+
         #endregion
 
-        #region Paint event handler
+        #region OnPaint
 
         protected override void OnPaint()
         {
@@ -141,7 +209,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
         #endregion
 
-        #region KeyDown event handler
+        #region OnKeyDown
 
         protected override void OnKeyDown(object sender, KeyEventArgs e)
         {
@@ -161,62 +229,6 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
         #endregion
 
-        #region DrawCube
-        public void DrawCube()
-        {
-            GL.Begin(Enums.BeginMode.QUADS);
-
-            GL.Color3f(1, 0, 0);
-            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, -1.0f, -1.0f);
-
-            GL.Color3f(1, 1, 0);
-            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
-
-            GL.Color3f(1, 0, 1);
-            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
-
-            GL.Color3f(0, 1, 0);
-            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
-
-            GL.Color3f(0, 0, 1);
-            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(1.0f, 1.0f, -1.0f);
-
-            GL.Color3f(0, 1, 1);
-            GL.Vertex3f(1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(1.0f, -1.0f, 1.0f);
-
-            GL.End();
-        }
-        #endregion
-
-        #region Entry point
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            new Cube().Run();
-        }
-        #endregion
+        #endregion --- Event Handlers ---
     }
 }

@@ -1,7 +1,6 @@
-#region License
-/* Copyright (c) 2006 Stephen Apostolopoulos
- * Contributions from Erik Ylvisaker
- * See license.txt for license info
+#region --- License ---
+/* This source file is released under the MIT license. See License.txt for more information.
+ * Coded by Stephen Apostolopoulos and Erik Ylvisaker.
  */
 #endregion
 
