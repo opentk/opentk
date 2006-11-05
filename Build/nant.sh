@@ -1,2 +1,2 @@
 #!/bin/sh
-./prebuild /target nant /file ../prebuild.xml /pause
+./prebuild /target nant /file ../Prebuild.xml /pause

@@ -1,2 +1,2 @@
 #!/bin/sh
-./prebuild /target monodev /file ../prebuild.xml /pause
+./prebuild /target monodev /file ../Prebuild.xml /pause
