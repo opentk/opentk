@@ -437,7 +437,6 @@ namespace OpenTK
         #endregion
     }
 
-
     #region Old Code
 
     /*

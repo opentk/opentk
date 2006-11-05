@@ -21,6 +21,18 @@ namespace OpenTK.OpenGL
 
         #endregion
 
+        #region --- Constructors ---
+
+        /// <summary>
+        /// Allocates a new DisplayList.
+        /// </summary>
+        public DisplayList()
+        {
+            Id = GL.GenLists(1);
+        }
+
+        #endregion
+
         #region --- Public properties ---
 
         /// <summary>
@@ -34,19 +46,7 @@ namespace OpenTK.OpenGL
 
         #endregion
 
-        #region --- Constructors ---
-
-        /// <summary>
-        /// Allocates a new DisplayList.
-        /// </summary>
-        public DisplayList()
-        {
-            Id = GL.GenLists(1);
-        }
-
-        #endregion
-
-        #region --- Public functions ---
+        #region --- Public methods ---
 
         /// <summary>
         /// Starts recording elements into the display list.
