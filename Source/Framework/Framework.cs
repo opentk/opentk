@@ -1,7 +1,6 @@
-﻿#region License
-/* Copyright (c) 2006 Stephen Apostolopoulos
- * Contributions from Erik Ylvisaker
- * See license.txt for license info
+﻿#region --- License ---
+/* This source file is released under the MIT license. See License.txt for more information.
+ * Coded by Stephen Apostolopoulos and Erik Ylvisaker.
  */
 #endregion
 
@@ -13,22 +12,29 @@ using System.Drawing;
 using System.Threading;
 using OpenTK.Platform.Windows;
 using System.Runtime.InteropServices;
+
 using OpenTK.OpenGL.Platform;
 using OpenTK.OpenGL;
 
-namespace OpenTK.Frameworks
+namespace OpenTK
 {
     public class Framework : IDisposable
     {
+        #region --- Private variables ---
+
         private Form activeForm;
         private GLContext activeContext;
         private PlatformSpecific platform;
 
-        private OpenGL.ColorDepth _color_depth;
-        private int _z_depth;
-        private int _stencil_depth;
+        private OpenGL.ColorDepth colorDepth;
+        private int zDepth;
+        private int stencilDepth;
 
-        private string text = "OpenTK Windows application";
+        private string text = "OpenTK application";
+
+        #endregion
+
+        Application.MessageLoopCallback MessageLoop;
 
         #region --- Public Properties ---
 
@@ -37,11 +43,13 @@ namespace OpenTK.Frameworks
             get { return activeForm; }
 
         }
+
         public GLContext ActiveContext
         {
             get { return activeContext; }
             private set { activeContext = value; }
         }
+
         public string Text
         {
             get { return text; }
@@ -53,21 +61,25 @@ namespace OpenTK.Frameworks
                     activeForm.Text = value;
             }
         }
+
         public Size ClientSize
         {
             get { return ActiveForm.ClientSize; }
             set { activeForm.ClientSize = value; }
         }
+
         public int Width
         {
             get { return ClientSize.Width; }
             set { ClientSize = new Size(value, ClientSize.Height); }
         }
+
         public int Height
         {
             get { return ClientSize.Height; }
             set { ClientSize = new Size(ClientSize.Width, value); }
         }
+
         public bool IsFullscreen
         {
             get
@@ -78,18 +90,20 @@ namespace OpenTK.Frameworks
 
         public OpenGL.ColorDepth ColorDepth
         {
-            get { return _color_depth; }
-            private set { _color_depth = value; }
+            get { return colorDepth; }
+            private set { colorDepth = value; }
         }
+
         public int ZDepth
         {
-            get { return _z_depth; }
-            set { _z_depth = value; }
+            get { return zDepth; }
+            set { zDepth = value; }
         }
+
         public int StencilDepth
         {
-            get { return _stencil_depth; }
-            set { _stencil_depth = value; }
+            get { return stencilDepth; }
+            set { stencilDepth = value; }
         }
 
         #endregion
@@ -97,11 +111,22 @@ namespace OpenTK.Frameworks
         #region --- Creation and Destruction ---
 
         /// <summary>
-        /// Constructs a Framework object.
+        /// Constructs a Framework object with default (safe) parameters.
         /// </summary>
         public Framework()
-            : this(null, 800, 600, new OpenTK.OpenGL.ColorDepth(8, 8, 8, 8), 16, 0, false)
+            : this(null, 640, 480, new OpenTK.OpenGL.ColorDepth(8, 8, 8, 8), 16, 0, false)
         { }
+
+        /// <summary>
+        /// Construcs a Framework object with the given parameters.
+        /// </summary>
+        /// <param name="title">The Title of the Form.</param>
+        /// <param name="width">The Width of the Form.</param>
+        /// <param name="height">The Height of the Form.</param>
+        /// <param name="color">The ColorDepth of the OpenGL Context.</param>
+        /// <param name="depth">The ZDepth of the OpenGL Context.</param>
+        /// <param name="stencil">The StencilDepth of the OpenGL Context.</param>
+        /// <param name="fullscreen">The Fullscreen property of the Form.</param>
         public Framework(string title, int width, int height, OpenTK.OpenGL.ColorDepth color, 
             int depth, int stencil, bool fullscreen)
         {
@@ -132,6 +157,7 @@ namespace OpenTK.Frameworks
                 activeContext.Dispose();
                 activeContext = null;
             }
+
             if (activeForm != null)
             {
                 activeForm.Dispose();
@@ -161,6 +187,10 @@ namespace OpenTK.Frameworks
             else
                 CreateWindowedDisplay(width, height);
 
+            //Application.Idle += this.OnIdle;
+            
+            //MessageLoop = new Application.MessageLoopCallback(MainLoop);
+            //Application.RegisterMessageLoop(MessageLoop);
 
             System.Console.WriteLine("Done Initializing.");
         }
@@ -177,9 +207,12 @@ namespace OpenTK.Frameworks
 
             AttachEvents(activeForm);
 
-            activeForm.Show();
-
             activeForm.ClientSize = new Size(width, height);
+
+            activeForm.TopMost = true;
+            activeForm.Enabled = true;
+
+            activeForm.Show();
         }
 
         private void CreateFullScreenDisplay(int width, int height)
@@ -194,93 +227,119 @@ namespace OpenTK.Frameworks
 
             AttachEvents(activeForm);
 
-            activeForm.Show();
-
+            activeForm.FormBorderStyle = FormBorderStyle.None;
             activeForm.ClientSize = new Size(width, height);
             activeForm.Location = Point.Empty;
 
-            activeContext.SetFullScreen(width, height, ColorDepth);
+            activeForm.TopMost = true;
+            activeForm.Enabled = true;
 
-            
+            activeForm.Show();
+
+            activeContext.SetFullScreen(width, height, ColorDepth);
         }
 
         private void AttachEvents(Form frm)
         {
-            frm.Load += new EventHandler(OnLoad);
-            frm.Resize += new EventHandler(OnResize);
-            frm.Paint += new PaintEventHandler(OnPaint);
-            frm.KeyDown += new KeyEventHandler(OnKeyDown);
-            frm.KeyUp += new KeyEventHandler(OnKeyUp);
-            frm.KeyPress += new KeyPressEventHandler(OnKeyPress);
-            frm.Click += new EventHandler(OnClick);
-            frm.MouseDown += new MouseEventHandler(OnMouseDown);
-            frm.MouseEnter += new EventHandler(OnMouseEnter);
-            frm.MouseHover += new EventHandler(OnMouseHover);
-            frm.MouseLeave += new EventHandler(OnMouseLeave);
-            frm.MouseMove += new MouseEventHandler(OnMouseMove);
-            frm.MouseUp += new MouseEventHandler(OnMouseUp);
-            frm.MouseWheel += new MouseEventHandler(OnMouseWheel);
+            frm.Load += this.OnLoad;
+            frm.Resize += this.OnResize;
+            frm.Paint += this.OnPaint;
+            frm.KeyDown += this.OnKeyDown;
+            frm.KeyUp += this.OnKeyUp;
+            frm.KeyPress += this.OnKeyPress;
+            frm.Click += this.OnClick;
+            frm.MouseDown += this.OnMouseDown;
+            frm.MouseEnter += this.OnMouseEnter;
+            frm.MouseHover += this.OnMouseHover;
+            frm.MouseLeave += this.OnMouseLeave;
+            frm.MouseMove += this.OnMouseMove;
+            frm.MouseUp += this.OnMouseUp;
+            frm.MouseWheel += this.OnMouseWheel;
         }
 
         #endregion
 
-        #region Events
-        
+        #region --- Events ---
+
+        virtual protected void OnIdle(object sender, EventArgs e)
+        {
+            while (ActiveForm != null && platform.IsIdle())
+            {
+                if (!ActiveForm.Focused)
+                {
+                    Thread.Sleep(100);
+                }
+
+                this.OnPaint();
+            }
+        }
+
         virtual protected void OnMouseWheel(object sender, MouseEventArgs e)
         {
             if (MouseWheel != null)
                 MouseWheel(sender, e);
         }
+
         virtual protected void OnMouseUp(object sender, MouseEventArgs e)
         {
             if (MouseUp != null)
                 MouseUp(sender, e);
         }
+
         virtual protected void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (MouseMove != null)
                 MouseMove(sender, e);
         }
+
         virtual protected void OnMouseLeave(object sender, EventArgs e)
         {
             if (MouseLeave != null)
                 MouseLeave(sender, e);
         }
+
         virtual protected void OnMouseHover(object sender, EventArgs e)
         {
             if (MouseHover != null)
                 MouseHover(sender, e);
         }
+
         virtual protected void OnMouseEnter(object sender, EventArgs e)
         {
             if (MouseEnter != null)
                 MouseEnter(sender, e);
         }
+
         virtual protected void OnMouseDown(object sender, MouseEventArgs e)
         {
             if (MouseDown != null)
                 MouseDown(sender, e);
         }
+
         virtual protected void OnClick(object sender, EventArgs e)
         {
             if (Click != null)
                 Click(sender, e);
         }
+
         virtual protected void OnKeyPress(object sender, KeyPressEventArgs e)
         {
             if (KeyPress != null)
                 KeyPress(sender, e);
         }
+
         virtual protected void OnKeyUp(object sender, KeyEventArgs e)
         {
             if (KeyUp != null)
                 KeyUp(sender, e);
         }
+
         virtual protected void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (KeyDown != null)
                 KeyDown(sender, e);
         }
+
         private void OnPaint(object sender, PaintEventArgs e)
         {
             OnPaint();
@@ -288,6 +347,7 @@ namespace OpenTK.Frameworks
             if (Paint != null)
                 Paint(sender, e);
         }
+
         virtual protected void OnPaint()
         {            
         }
@@ -297,6 +357,7 @@ namespace OpenTK.Frameworks
             if (Resize != null)
                 Resize(sender, e);
         }
+
         virtual protected void OnLoad(object sender, EventArgs e)
         {
             if (Load != null)
@@ -322,7 +383,7 @@ namespace OpenTK.Frameworks
 
         #endregion
 
-        #region Window Management
+        #region --- Window Management ---
 
         private void DisposeForm()
         {
@@ -330,7 +391,7 @@ namespace OpenTK.Frameworks
                 activeContext.Dispose();
             if (activeForm != null)
                 activeForm.Dispose();
-
+            
             activeContext = null;
             activeForm = null;
         }
@@ -356,21 +417,28 @@ namespace OpenTK.Frameworks
 
         #endregion
 
-        #region Render Loop
+        #region --- Main Loop ---
 
+        /// <summary>
+        /// Enters the Framework's main loop, updating state and rendering.
+        /// </summary>
         public void Run()
         {
+            // TODO: Find a better main loop. This is evil! (Probably a custom main loop or something based on the Idle event).
             while (ActiveForm != null && ActiveForm.IsDisposed == false)
             {
                 OnPaint(this, null);
-                
+
                 if (platform.IsIdle() == false)
                     Application.DoEvents();
             }
         }
-        
+
         #endregion
     }
+
+
+    #region Old Code
 
     /*
     public partial class Framework : Form, IDisposable
@@ -621,4 +689,6 @@ namespace OpenTK.Frameworks
         #endregion
     }
      * */
+
+    #endregion
 }

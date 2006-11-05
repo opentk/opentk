@@ -1,14 +1,15 @@
 ================================================================================
 
-OpenTK 0.3.5 alpha Release notes
+OpenTK 0.3.6 WIP alpha Release notes
 
 IMPORTANT: This release is not only intended for testing and experimentation, NOT for development. Use at your own risk! (see below for the reasons)
 
 --------------------------------------------------------------------------------
 
-This release introduces Linux support. Thanks to Erik's code you can now write a project under Linux/Mono and run it under Windows/.Net without changing a single line of code!
+This is the first release to implement High-level OpenGL bindings. Highlights:
 
-Moreover, the structure of the OpenTK.OpenGL.GL class has been changed. Only the OpenGL core functions (versions 1.0-2.1) are directly exposed now in the GL class - the extension functions will reside in new structures named after the extension categories (for example GL.Arb, GL.Ext, GL.NV, GL.Ati etc). This change will make extension functions more discoverable. Extensions are currently disabled, until some internal changes are complete in OpenTK.OpenGL.Bind to allow for this change.
+OpenTK.OpenGL (High level): DisplayList.
+OpenTK.Examples: OpenGL.Basic.DisplayLists
 
 --------------------------------------------------------------------------------
 
@@ -23,25 +24,25 @@ For the bleeding edge code, do a svn checkout at https://svn.sourceforge.net/svn
 The version number for this release is
 Major:		0
 Minor:		3
-Release:	5
-Revision:	0
+Release:	6
+Revision:	1
 
 The odd minor version number denotes that this is a WIP (Work In Progress). This means that the source and the public API (APplication Interface) changes rapidly from release to release.
 
 This is an alpha release. This means it is not feature complete - more features are planned or are in currently in development. When all planned features are ready for testing, this package will move to the beta phase, were the focus will change to testing and bug-fixing.
 
-Missing features include Linux support and more fine-grained window and context management. Also expect the naming scheme to change over the next few versions.
+Missing features include more fine-grained window and context management, several High-level OpenGL bindings and several other things. Also expect the naming scheme to change over the next few versions.
 
 ================================================================================
 
 This package contains the source for:
-OpenTK.OpenGL			(0.3.5)
+OpenTK.OpenGL			(0.3.6.1)
 OpenTK.OpenGL.Bind		(0.7.7.0)
-OpenTK.Framework		(0.3.2.0)
+OpenTK.Framework		(0.3.3.1)
 OpenTK.Platform.Windows		(0.1.1.0)
 OpenTK.Platform.X11		(0.1.1.0)
 
-OpenTK.OpenGL.Examples.Basic	(Lesson01, NoFramework, QueryDisplayModes)
+OpenTK.OpenGL.Examples.Basic	(Lesson01, DisplayLists, NoFramework, QueryDisplayModes)
 OpenTK.OpenGL.Examples.GLSL	(Lesson01)
 
 ================================================================================

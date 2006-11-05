@@ -164,6 +164,34 @@
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Examples.OpenGL.Basic.DisplayLists" path=".\Source\Examples\OpenGL\Basic\DisplayLists" language="C#" type="WinExe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Debug\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Release\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK.Framework"/>
+      <Reference name="OpenTK.OpenGL"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
@@ -190,6 +218,7 @@
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
@@ -216,6 +245,7 @@
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
@@ -242,6 +272,7 @@
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>

@@ -13,5 +13,12 @@ namespace OpenTK
             WinApi.Message msg;
             return !WinApi.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
         }
+
+        public override bool ProcessEvents()
+        {
+
+            
+            return base.ProcessEvents();
+        }
     }
 }

@@ -17,8 +17,6 @@ namespace OpenTK
             //this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);           // Buffer Control
             //this.SetStyle(ControlStyles.ResizeRedraw, true);                    // Redraw On Resize
             this.SetStyle(ControlStyles.UserPaint, true);                       // We'll Handle Painting Ourselves
-
-            InitializeComponent();
         }
     }
 }

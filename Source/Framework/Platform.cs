@@ -35,5 +35,10 @@ namespace OpenTK
         {
             return false;
         }
+
+        public virtual bool ProcessEvents()
+        {
+            return false;
+        }
     }
 }

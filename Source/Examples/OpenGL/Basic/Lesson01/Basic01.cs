@@ -1,3 +1,9 @@
+#region --- License ---
+/* This source file is released under the MIT license. See License.txt for more information.
+ * Coded by Erik Ylvisaker and Stephen Apostolopoulos.
+ */
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -5,10 +11,24 @@ using OpenTK.OpenGL;
 
 namespace Lesson01
 {
-
-    public class Cube : OpenTK.Frameworks.Framework
+    public class Cube : OpenTK.Framework
     {
         static float angle;
+
+        #region Entry point
+
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            new Cube().Run();
+        }
+
+        #endregion
 
         #region Load event handler
         protected override void OnLoad(object sender, EventArgs e)
@@ -134,23 +154,10 @@ namespace Lesson01
             GL.Color3f(0, 1, 1);
             GL.Vertex3f(1.0f, -1.0f, -1.0f);
             GL.Vertex3f(1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
+        GL.Vertex3f(1.0f, 1.0f, 1.0f);
             GL.Vertex3f(1.0f, -1.0f, 1.0f);
 
             GL.End();
-        }
-        #endregion
-
-        #region Entry point
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            new Cube().Run();
         }
         #endregion
     }
