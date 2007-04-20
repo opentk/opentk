@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.Threading;
 
 using OpenTK.OpenGL;
+using Enums = OpenTK.OpenGL.Enums;
 
 #endregion --- Using Directives ---
 
@@ -129,18 +130,18 @@ namespace OpenTK.Examples.OpenGL.GLSL
             vertex_shader_object = GL.CreateShader(Enums.VERSION_2_0.VERTEX_SHADER);
             fragment_shader_object = GL.CreateShader(Enums.VERSION_2_0.FRAGMENT_SHADER);
 
-            GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, IntPtr.Zero);
+            GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, null);
             GL.CompileShader(vertex_shader_object);
             GL.GetShaderiv(vertex_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, status);
             if (status[0] != (int)Enums.Boolean.TRUE)
             {
                 StringBuilder info = new StringBuilder(1024);
-                GL.GetShaderInfoLog(vertex_shader_object, 1024, null, info);
+                GL.GetShaderInfoLog(vertex_shader_object, info.MaxCapacity, null, info);
 
                 throw new Exception(info.ToString());
             }
 
-            GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, IntPtr.Zero);
+            GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, null);
             GL.CompileShader(fragment_shader_object);
             GL.GetShaderiv(fragment_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, status);
             if (status[0] != (int)Enums.Boolean.TRUE)

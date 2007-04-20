@@ -4,10 +4,16 @@
  */
 #endregion
 
+#region --- Using Directives ---
+
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+
 using OpenTK.OpenGL;
+using Enums = OpenTK.OpenGL.Enums;
+
+#endregion
 
 namespace Lesson01
 {
