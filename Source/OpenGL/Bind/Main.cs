@@ -1,7 +1,29 @@
 #region License
-//Copyright (c) 2006 Stephen Apostolopoulos
-//See license.txt for license info
-#endregion
+/*
+MIT License
+Copyright ©2003-2006 Tao Framework Team
+http://www.taoframework.com
+All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+#endregion License
 
 using System;
 using System.Text;
@@ -10,18 +32,19 @@ using System.Security;
 using System.Security.Permissions;
 using System.Threading;
 using System.Collections.Generic;
-using System.Collections;
+using System.CodeDom;
 
-[assembly:CLSCompliant(true), FileIOPermission(SecurityAction.RequestMinimum, Unrestricted = true)]
 namespace OpenTK.OpenGL.Bind
 {
     static class MainClass
     {
         static void Main(string[] arguments)
         {
-            Console.WriteLine("{0} {1} by Stephen Apostolopoulos (stapostol@gmail.com)",
-                System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
+            Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
                 System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
+            //Console.WriteLine(" - the OpenTK team ;-)");
+            Console.WriteLine();
 
             #region Handle Arguments
 
@@ -72,44 +95,28 @@ namespace OpenTK.OpenGL.Bind
             {
                 long ticks = System.DateTime.Now.Ticks;
 
-                // GL binding generation.
+                List<CodeMemberMethod> functions;
+                List<CodeTypeDelegate> delegates;
+                CodeTypeDeclarationCollection enums;
+                CodeTypeDeclarationCollection enums2;
 
-                Translation.GLTypes = SpecReader.ReadTypeMap("gl.tm");
-                Translation.CSTypes = SpecReader.ReadTypeMap("csharp.tm");
+                delegates = SpecReader.ReadFunctionSpecs("gl.spec");
+                SpecReader.ReadEnumSpecs("enum.spec", out enums);
+                SpecReader.ReadEnumSpecs("enumext.spec", out enums2);
+                enums = SpecTranslator.Merge(enums, enums2);
+                enums = SpecTranslator.TranslateEnums(enums);
 
-                List<Function> wrappers;
-                List<Function> functions = SpecReader.ReadFunctionSpecs("gl.spec");
-                Hashtable enums = SpecReader.ReadEnumSpecs("enum.spec");
-                Hashtable enums2 = SpecReader.ReadEnumSpecs("enumext.spec");
-                foreach (Enum e in enums2.Values)
-                    if (!enums.ContainsKey(e.Name))
-                        enums.Add(e.Name, e);
-                    else
-                    {
-                        foreach (Constant c in e.ConstantCollection.Values)
-                            if (!((Enum)enums[e.Name]).ConstantCollection.ContainsKey(c.Name))
-                                ((Enum)enums[e.Name]).ConstantCollection.Add(c.Name, c);
-                    }
+                functions = SpecTranslator.TranslateDelegates(delegates, enums);
 
-                Translation.TranslateFunctions(functions, enums, out wrappers);
-                Translation.TranslateEnums(enums);
-
-                SpecWriter.WriteSpecs(Settings.OutputPath, Settings.GLClass, functions, wrappers, enums);
-
-                //ContextWriter.WriteMainContext(Settings.OutputPath, "GLContext", Settings.GLClass, functions);
-                //ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsContext", Settings.GLClass, functions, "1.0", "1.1");
-                //ContextWriter.WriteDerivedContext(Settings.OutputPath, "WindowsVistaContext", Settings.GLClass, functions, "1.0", "1.1", "1.2", "1.3", "1.4");
-                //ContextWriter.WriteDerivedContext(Settings.OutputPath, "X11Context", Settings.GLClass, functions, "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "2.0");
-
-                // GLX binding generation.
-                //Translation.GLXTypes = SpecReader.ReadTypeMap("glx.tm"); // Works semi-ok.
-                //List<Function> functions = SpecReader.ReadFunctionSpecs("glx.spec"); // Works ok!
-                //Hashtable enums = SpecReader.ReadEnumSpecs("glxenum.spec"); // Works ok!
-                //SpecWriter.WriteSpecs(Settings.OutputPath, "Glx", functions, null, enums); // Needs updating.
+                // Generate the code
+                SpecWriter.Generate(delegates, functions, enums);
 
                 ticks = System.DateTime.Now.Ticks - ticks;
 
                 Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
+                Console.WriteLine();
+                Console.WriteLine("Press enter to continue...");
+                Console.ReadLine();
             }
             catch (SecurityException e)
             {

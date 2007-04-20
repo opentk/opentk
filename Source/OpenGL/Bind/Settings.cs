@@ -13,7 +13,12 @@ namespace OpenTK.OpenGL.Bind
     {
         public static string InputPath = "..\\..\\..\\Source\\OpenGL\\Specifications";
         public static string OutputPath = "..\\..\\..\\Source\\OpenGL\\OpenGL\\Bindings";
-        public static string GLClass = "GL";
         public static string OutputNamespace = "OpenTK.OpenGL";
+        public static string GLClass = "GL";
+        public static string WglClass = "Wgl";
+        public static string GlxClass = "Glx";
+        public static string GluClass = "Glu";
+
+        public static string GLFunctionPrepend = String.Empty;
     }
 }
