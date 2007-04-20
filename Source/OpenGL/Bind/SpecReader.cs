@@ -1,8 +1,11 @@
-#region License
+#region --- License ---
 /*
 MIT License
-Copyright ©2003-2006 Tao Framework Team
+Copyright ©2006-2007 Tao Framework Team
 http://www.taoframework.com
+Copyright ©2005-2007 OpenTK
+http://sourceforge.net/projects/opentk
+
 All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,11 +28,15 @@ SOFTWARE.
 */
 #endregion License
 
+#region --- Using Directives ---
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.CodeDom;
+
+#endregion
 
 namespace OpenTK.OpenGL.Bind
 {
