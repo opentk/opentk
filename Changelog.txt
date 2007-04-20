@@ -1,9 +1,24 @@
 OpenTK 0.3.5 -> 0.3.6
-+ Updated the build system to include txt files in the project generation.
+
++ OpenTK.OpenGL.Bind
+	+ Synced with Tao.GlBindGen codebase.
+	+ Uses CodeDOM internally for code generation.
+	+ Updated to latest specs (which include shader model 4).
+
++ OpenTK.OpenGL (Low level)
+	+ All OpenGL extensions are now generated (up to shader model 4).
+	+ Decorated imports and delegates with the SuppressUnmanagedCodeSecurity attribute. Major speed improvements in CPU-bound applications.
+	+ More robust and faster static initialisation for the GL class.
+	+ Updated GLHelper.cs, with methods to obtain or reload OpenGL entry points, as well as query for supported extensions.
+	+ Got rid of "object" overloads for typed arrays.
+	+ All known bugs are now fixed.
+
 + OpenTK.OpenGL (High level)
 	+ Added the DisplayList class.
+
 + OpenTK.Examples.OpenGL
 	+ Added the Basic.DisplayLists example.
+
 
 
 OpenTK 0.3.4 -> 0.3.5
