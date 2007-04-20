@@ -12,18 +12,17 @@ OpenTK.OpenGL todos:
 + OpenGL function overloads.
 
 (Low level)
-+ Restore the Extensions.
 + Mark the GL class as CLS compliant.
 + Inline XML documentation.
-+ Add support for the MacOS X platform.
 + Add complete Wgl, Glx, Agl and Glu bindings.
++ Get rid of the "object" overloads in favour of generics.
 
 Context class:
 + Add more constructors.
-+ Add support for the MacOS X platform.
++ Add native support for the MacOS X platform (now goes through X).
 
 Examples:
-+ Homogenize the example layout.
++ Reorganize the example layout.
 + Add comments were needed.
 
 
