@@ -15,6 +15,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using OpenTK.OpenGL;
+using Enums = OpenTK.OpenGL.Enums;
 
 #endregion --- Using Directives ---
 

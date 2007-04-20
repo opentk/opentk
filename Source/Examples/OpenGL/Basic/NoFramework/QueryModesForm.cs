@@ -1,10 +1,16 @@
+#region --- Using Directives ---
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+
 using OpenTK.OpenGL;
+using Enums = OpenTK.OpenGL.Enums;
+
+#endregion
 
 namespace NoFramework
 {
