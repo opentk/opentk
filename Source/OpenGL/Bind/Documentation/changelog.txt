@@ -1,4 +1,13 @@
-OpenTK.OpenGL.Bind 0.7.7
+OpenTK.OpenGL.Bind 0.9.3
+
+0.7.7 -> 0.9.3
++ Synced code with Tao.GlBindGen
++ Re-enabled extensions
++ Updated specs
++ Now uses CodeDOM for code generation
++ Imports and delegates are decorated with the SupressUnmanagedCodeSecurity attribute for call overhead reduction
++ Several bugs have been fixed
+
 
 0.7.6 -> 0.7.7
 + Several bugfixes regarding bugs from the latest (0.7.6) code synchronisation between Tao.GlBindGen and OpenTK.OpenGL.Bind
