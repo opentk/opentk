@@ -1,4 +1,4 @@
-# This is the OpenGL enumerant registry.
+# This is the OpenGL and OpenGL ES enumerant registry.
 #
 # It is an extremely important file. Do not mess with it unless
 # you know what you're doing and have permission to do so.
@@ -243,7 +243,11 @@ BeginMode enum:
 	QUADS						= 0x0007
 	QUAD_STRIP					= 0x0008
 	POLYGON						= 0x0009
-# 0x0010-0x0013 - Reserved for anticipated future use (Pat Brown)
+# NV_geometry_program4 enum: (additional; see below)
+#	LINES_ADJACENCY_EXT				= 0x000A
+#	LINE_STRIP_ADJACENCY_EXT			= 0x000B
+#	TRIANGLES_ADJACENCY_EXT				= 0x000C
+#	TRIANGLE_STRIP_ADJACENCY_EXT			= 0x000D
 
 ###############################################################################
 
@@ -3424,13 +3428,13 @@ SGIX_resample enum:
 #	ALPHA_ICC_SGIX					= 0x8462
 #	LUMINANCE_ICC_SGIX				= 0x8463
 #	INTENSITY_ICC_SGIX				= 0x8464
-#	LUMINANCE_ALPHA_ICC_SGIX		= 0x8465
+#	LUMINANCE_ALPHA_ICC_SGIX			= 0x8465
 #	R5_G6_B5_ICC_SGIX				= 0x8466
-#	R5_G6_B5_A8_ICC_SGIX			= 0x8467
+#	R5_G6_B5_A8_ICC_SGIX				= 0x8467
 #	ALPHA16_ICC_SGIX				= 0x8468
-#	LUMINANCE16_ICC_SGIX			= 0x8469
-#	INTENSITY16_ICC_SGIX			= 0x846A
-#	LUMINANCE16_ALPHA8_ICC_SGIX		= 0x846B
+#	LUMINANCE16_ICC_SGIX				= 0x8469
+#	INTENSITY16_ICC_SGIX				= 0x846A
+#	LUMINANCE16_ALPHA8_ICC_SGIX			= 0x846B
 
 ###############################################################################
 
@@ -3924,11 +3928,18 @@ SGIX_subsample enum:
 #	UNPACK_CLIENT_STORAGE_APPLE			= 0x85B2
 
 # APPLE_future_use: 0x85B3-0x85B4
+## From Jeremy 2006/10/18 (Bugzilla bug 632) - unknown extension name
+#	BUFFER_OBJECT_APPLE				= 0x85B3
+#	STORAGE_CLIENT_APPLE				= 0x85B4
 
 # APPLE_vertex_array_object enum:
 #	VERTEX_ARRAY_BINDING_APPLE			= 0x85B5
 
 # APPLE_future_use: 0x85B6-0x85B8
+## From Jeremy 2006/10/18 (Bugzilla bug 632) - unknown extension name
+#	TEXTURE_MINIMIZE_STORAGE_APPLE			= 0x85B6
+#	TEXTURE_RANGE_LENGTH_APPLE			= 0x85B7
+#	TEXTURE_RANGE_POINTER_APPLE			= 0x85B8
 
 # APPLE_ycbcr_422 enum:
 #	YCBCR_422_APPLE					= 0x85B9
@@ -3939,7 +3950,10 @@ SGIX_subsample enum:
 #	UNSIGNED_SHORT_8_8_MESA				= 0x85BA
 #	UNSIGNED_SHORT_8_8_REV_MESA			= 0x85BB
 
-# APPLE_future_use: 0x85BA-0x85BD
+# APPLE_future_use: 0x85BC-0x85BD
+## From Jeremy 2006/10/18 (Bugzilla bug 632) - unknown extension name
+#	TEXTURE_STORAGE_HINT_APPLE			= 0x85BC
+#	STORAGE_PRIVATE_APPLE				= 0x85BD
 
 # APPLE_vertex_array_range (additional; see above): 0x85BE-0x85BF
 
@@ -4108,6 +4122,9 @@ SGIX_subsample enum:
 #	MAP2_VERTEX_ATTRIB15_4_NV			= 0x867F
 
 # NV_texture_shader (additional; see below): 0x864C-0x864E
+
+# NV_geometry_program4 enum: (additional; see below)
+#	PROGRAM_POINT_SIZE_EXT				= 0x8642
 
 # NV_depth_clamp enum:
 #	DEPTH_CLAMP_NV					= 0x864F
@@ -4712,12 +4729,14 @@ SGIX_subsample enum:
 
 # VERSION_1_4 enum: (Promoted for OpenGL 1.4)
 # ARB_shadow enum:
+# EXT_texture_array enum: (additional; see below)
 #	TEXTURE_COMPARE_MODE				= 0x884C
 #	TEXTURE_COMPARE_MODE_ARB			= 0x884C
 #	TEXTURE_COMPARE_FUNC				= 0x884D
 #	TEXTURE_COMPARE_FUNC_ARB			= 0x884D
 #	COMPARE_R_TO_TEXTURE				= 0x884E
 #	COMPARE_R_TO_TEXTURE_ARB			= 0x884E
+#	COMPARE_REF_DEPTH_TO_TEXTURE_EXT		= 0x884E
 
 # ARB_future_use: 0x884F
 
@@ -5015,7 +5034,23 @@ SGIX_subsample enum:
 #	MAX_PROGRAM_LOOP_DEPTH_NV			= 0x88F7
 #	MAX_PROGRAM_LOOP_COUNT_NV			= 0x88F8
 
-# NV_future_use: 0x88F9-0x890F
+# NV_future_use: 0x88F9-0x88FC
+
+# NV_vertex_program4 enum:
+#	VERTEX_ATTRIB_ARRAY_INTEGER_NV			= 0x88FD
+
+# NV_future_use: 0x88FE
+
+# EXT_texture_array enum: (additional; see below)
+#	MAX_ARRAY_TEXTURE_LAYERS_EXT			= 0x88FF
+
+# NV_gpu_program4 enum:
+#	MIN_PROGRAM_TEXEL_OFFSET_NV			= 0x8904
+#	MAX_PROGRAM_TEXEL_OFFSET_NV			= 0x8905
+#	PROGRAM_ATTRIB_COMPONENTS_NV			= 0x8906
+#	PROGRAM_RESULT_COMPONENTS_NV			= 0x8907
+#	MAX_PROGRAM_ATTRIB_COMPONENTS_NV		= 0x8908
+#	MAX_PROGRAM_RESULT_COMPONENTS_NV		= 0x8909
 
 # EXT_stencil_two_side enum:
 #	STENCIL_TEST_TWO_SIDE_EXT			= 0x8910
@@ -5195,7 +5230,20 @@ SGIX_subsample enum:
 #	DRAW_PIXELS_APPLE				= 0x8A0A
 #	FENCE_APPLE					= 0x8A0B
 
-# APPLE_future_use: 0x8A10-0x8A7F
+# APPLE_future_use: 0x8A0C-0x8A11
+## From Jeremy 2006/10/18 (Bugzilla bug 632) - unknown extension name
+#	ELEMENT_ARRAY_APPLE				= 0x8A0C
+#	ELEMENT_ARRAY_TYPE_APPLE			= 0x8A0D
+#	ELEMENT_ARRAY_POINTER_APPLE			= 0x8A0E
+#	COLOR_FLOAT_APPLE				= 0x8A0F
+#	MIN_PBUFFER_VIEWPORT_DIMS_APPLE			= 0x8A10
+#	ELEMENT_BUFFER_BINDING_APPLE			= 0x8A11
+
+# APPLE_flush_buffer_range enum:
+#	BUFFER_SERIALIZED_MODIFY_APPLE			= 0x8A12
+#	BUFFER_FLUSHING_UNMAP_APPLE			= 0x8A13
+
+# APPLE_future_use: 0x8A14-0x8A7F
 
 ###############################################################################
 
@@ -5311,6 +5359,9 @@ SGIX_subsample enum:
 #	SHADING_LANGUAGE_VERSION			= 0x8B8C    # VERSION_2_0
 #	SHADING_LANGUAGE_VERSION_ARB			= 0x8B8C    # ARB_shading_language_100
 
+# EXT_geometry_shader4 enum: (additional; see below)
+#	MAX_VARYING_COMPONENTS_EXT			= 0x8B4B
+
 # VERSION_2_0 enum:
 #	CURRENT_PROGRAM					= 0x8B8D
 # ARB_future_use: 0x8B8E-0x8B8F
@@ -5374,7 +5425,42 @@ SGIX_subsample enum:
 #	TEXTURE_DEPTH_TYPE_ARB				= 0x8C16
 #	UNSIGNED_NORMALIZED_ARB				= 0x8C17
 
-# NV_future_use: 0x8C18-0x8C3F
+# EXT_texture_array enum:
+#	TEXTURE_1D_ARRAY_EXT				= 0x8C18
+#	PROXY_TEXTURE_1D_ARRAY_EXT			= 0x8C19
+#	TEXTURE_2D_ARRAY_EXT				= 0x8C1A
+#	PROXY_TEXTURE_2D_ARRAY_EXT			= 0x8C1B
+#	TEXTURE_BINDING_1D_ARRAY_EXT			= 0x8C1C
+#	TEXTURE_BINDING_2D_ARRAY_EXT			= 0x8C1D
+
+# NV_future_use: 0x8C1E-0x8C25
+
+# NV_geometry_program4 enum:
+#	GEOMETRY_PROGRAM_NV				= 0x8C26
+#	MAX_PROGRAM_OUTPUT_VERTICES_NV			= 0x8C27
+#	MAX_PROGRAM_TOTAL_OUTPUT_COMPONENTS_NV		= 0x8C28
+#	MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT		= 0x8C29
+
+# NV_future_use: 0x8C2A-0x8C29
+
+# EXT_texture_buffer_object enum:
+#	TEXTURE_BUFFER_EXT				= 0x8C2A
+#	MAX_TEXTURE_BUFFER_SIZE_EXT			= 0x8C2B
+#	TEXTURE_BINDING_BUFFER_EXT			= 0x8C2C
+#	TEXTURE_BUFFER_DATA_STORE_BINDING_EXT		= 0x8C2D
+#	TEXTURE_BUFFER_FORMAT_EXT			= 0x8C2E
+
+# NV_future_use: 0x8C2F-0x8C39
+
+# EXT_packed_float enum:
+#	R11F_G11F_B10F_EXT				= 0x8C3A
+#	UNSIGNED_INT_10F_11F_11F_REV_EXT		= 0x8C3B
+#	RGBA_SIGNED_COMPONENTS_EXT			= 0x8C3C
+
+# EXT_texture_shared_exponent enum:
+#	RGB9_E5_EXT					= 0x8C3D
+#	UNSIGNED_INT_5_9_9_9_REV_EXT			= 0x8C3E
+#	TEXTURE_SHARED_SIZE_EXT				= 0x8C3F
 
 # VERSION_2_1 enum: (Generic formats promoted for OpenGL 2.1)
 # EXT_texture_sRGB enum:
@@ -5407,7 +5493,42 @@ SGIX_subsample enum:
 #	COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT		= 0x8C4E
 #	COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT		= 0x8C4F
 
-# NV_future_use: 0x8C50-0x8C8F
+# NV_future_use: 0x8C50-0x8C6F
+
+# EXT_texture_compression_latc enum:
+#	COMPRESSED_LUMINANCE_LATC1_EXT			= 0x8C70
+#	COMPRESSED_SIGNED_LUMINANCE_LATC1_EXT		= 0x8C71
+#	COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT		= 0x8C72
+#	COMPRESSED_SIGNED_LUMINANCE_ALPHA_LATC2_EXT	= 0x8C73
+
+# NV_future_use: 0x8C74-0x8C76
+
+# NV_transform_feedback enum:
+#	BACK_PRIMARY_COLOR_NV				= 0x8C77
+#	BACK_SECONDARY_COLOR_NV				= 0x8C78
+#	TEXTURE_COORD_NV				= 0x8C79
+#	CLIP_DISTANCE_NV				= 0x8C7A
+#	VERTEX_ID_NV					= 0x8C7B
+#	PRIMITIVE_ID_NV					= 0x8C7C
+#	GENERIC_ATTRIB_NV				= 0x8C7D
+#	TRANSFORM_FEEDBACK_ATTRIBS_NV			= 0x8C7E
+#	TRANSFORM_FEEDBACK_BUFFER_MODE_NV		= 0x8C7F
+#	MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS_NV	= 0x8C80
+#	ACTIVE_VARYINGS_NV				= 0x8C81
+#	ACTIVE_VARYING_MAX_LENGTH_NV			= 0x8C82
+#	TRANSFORM_FEEDBACK_VARYINGS_NV			= 0x8C83
+#	TRANSFORM_FEEDBACK_BUFFER_START_NV		= 0x8C84
+#	TRANSFORM_FEEDBACK_BUFFER_SIZE_NV		= 0x8C85
+#	TRANSFORM_FEEDBACK_RECORD_NV			= 0x8C86
+#	PRIMITIVES_GENERATED_NV				= 0x8C87
+#	TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN_NV	= 0x8C88
+#	RASTERIZER_DISCARD_NV				= 0x8C89
+#	MAX_TRANSFORM_FEEDBACK_INTERLEAVED_ATTRIBS_NV	= 0x8C8A
+#	MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS_NV	= 0x8C8B
+#	INTERLEAVED_ATTRIBS_NV				= 0x8C8C
+#	SEPARATE_ATTRIBS_NV				= 0x8C8D
+#	TRANSFORM_FEEDBACK_BUFFER_NV			= 0x8C8E
+#	TRANSFORM_FEEDBACK_BUFFER_BINDING_NV		= 0x8C8F
 
 ###############################################################################
 
@@ -5427,13 +5548,15 @@ SGIX_subsample enum:
 # EXT_framebuffer_object enum: (additional; see below)
 #	FRAMEBUFFER_BINDING_EXT				= 0x8CA6
 #	RENDERBUFFER_BINDING_EXT			= 0x8CA7
-# EXT_framebuffer_blit
+# EXT_framebuffer_blit enum:
 #	READ_FRAMEBUFFER_EXT				= 0x8CA8
 #	DRAW_FRAMEBUFFER_EXT				= 0x8CA9
 #	READ_FRAMEBUFFER_BINDING_EXT			= GL_FRAMEBUFFER_BINDING_EXT
 #	DRAW_FRAMEBUFFER_BINDING_EXT			= 0x8CAA
-# EXT_framebuffer_multisample
+# EXT_framebuffer_multisample enum:
+# NV_framebuffer_multisample_coverage enum: (additional; see below)
 #	RENDERBUFFER_SAMPLES_EXT			= 0x8CAB
+#	RENDERBUFFER_COVERAGE_SAMPLES_NV		= 0x8CAB
 
 # ARB_future_use: 0x8CAC-08CAF
 
@@ -5442,6 +5565,8 @@ SGIX_subsample enum:
 # 3Dlabs: 0x8CB0-0x8CCF (Barthold Lichtenbelt, 2004/12/1)
 
 ###############################################################################
+
+# OpenGL ARB: 0x8CD0-0x8D5F (Framebuffer object specification + headroom)
 
 # EXT_framebuffer_object enum: (additional; see above)
 #	FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_EXT		= 0x8CD0
@@ -5452,7 +5577,8 @@ SGIX_subsample enum:
 #	FRAMEBUFFER_COMPLETE_EXT			= 0x8CD5
 #	FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT		= 0x8CD6
 #	FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT	= 0x8CD7
-#	FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT = 0x8CD8
+## Removed 2005/09/26 in revision #117 of the extension:
+##	  FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT = 0x8CD8
 #	FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT		= 0x8CD9
 #	FRAMEBUFFER_INCOMPLETE_FORMATS_EXT		= 0x8CDA
 #	FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT		= 0x8CDB
@@ -5500,7 +5626,14 @@ SGIX_subsample enum:
 #	RENDERBUFFER_ALPHA_SIZE_EXT			= 0x8D53
 #	RENDERBUFFER_DEPTH_SIZE_EXT			= 0x8D54
 #	RENDERBUFFER_STENCIL_SIZE_EXT			= 0x8D55
-# 0x8D56-0x8D5F reserved for additional FBO enums
+# EXT_framebuffer_multisample enum: (additional; see above)
+# Added 2006/10/10 in revision #6b of the extension.
+#	FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT		= 0x8D56
+#	MAX_SAMPLES_EXT					= 0x8D57
+# 0x8D58-0x8D5F reserved for additional FBO enums
+
+# NV_geometry_program4 enum: (additional; see above)
+#	FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER_EXT	= 0x8CD4
 
 ###############################################################################
 
@@ -5513,7 +5646,148 @@ SGIX_subsample enum:
 # NVIDIA: 0x8D70-0x8DEF
 # Reserved per email from Pat Brown 2005/10/13
 
-# NV_future_use: 0x8D70-0x8DEF
+# EXT_texture_integer enum:
+#	RGBA32UI_EXT					= 0x8D70
+#	RGB32UI_EXT					= 0x8D71
+#	ALPHA32UI_EXT					= 0x8D72
+#	INTENSITY32UI_EXT				= 0x8D73
+#	LUMINANCE32UI_EXT				= 0x8D74
+#	LUMINANCE_ALPHA32UI_EXT				= 0x8D75
+#	RGBA16UI_EXT					= 0x8D76
+#	RGB16UI_EXT					= 0x8D77
+#	ALPHA16UI_EXT					= 0x8D78
+#	INTENSITY16UI_EXT				= 0x8D79
+#	LUMINANCE16UI_EXT				= 0x8D7A
+#	LUMINANCE_ALPHA16UI_EXT				= 0x8D7B
+#	RGBA8UI_EXT					= 0x8D7C
+#	RGB8UI_EXT					= 0x8D7D
+#	ALPHA8UI_EXT					= 0x8D7E
+#	INTENSITY8UI_EXT				= 0x8D7F
+#	LUMINANCE8UI_EXT				= 0x8D80
+#	LUMINANCE_ALPHA8UI_EXT				= 0x8D81
+#	RGBA32I_EXT					= 0x8D82
+#	RGB32I_EXT					= 0x8D83
+#	ALPHA32I_EXT					= 0x8D84
+#	INTENSITY32I_EXT				= 0x8D85
+#	LUMINANCE32I_EXT				= 0x8D86
+#	LUMINANCE_ALPHA32I_EXT				= 0x8D87
+#	RGBA16I_EXT					= 0x8D88
+#	RGB16I_EXT					= 0x8D89
+#	ALPHA16I_EXT					= 0x8D8A
+#	INTENSITY16I_EXT				= 0x8D8B
+#	LUMINANCE16I_EXT				= 0x8D8C
+#	LUMINANCE_ALPHA16I_EXT				= 0x8D8D
+#	RGBA8I_EXT					= 0x8D8E
+#	RGB8I_EXT					= 0x8D8F
+#	ALPHA8I_EXT					= 0x8D90
+#	INTENSITY8I_EXT					= 0x8D91
+#	LUMINANCE8I_EXT					= 0x8D92
+#	LUMINANCE_ALPHA8I_EXT				= 0x8D93
+#	RED_INTEGER_EXT					= 0x8D94
+#	GREEN_INTEGER_EXT				= 0x8D95
+#	BLUE_INTEGER_EXT				= 0x8D96
+#	ALPHA_INTEGER_EXT				= 0x8D97
+#	RGB_INTEGER_EXT					= 0x8D98
+#	RGBA_INTEGER_EXT				= 0x8D99
+#	BGR_INTEGER_EXT					= 0x8D9A
+#	BGRA_INTEGER_EXT				= 0x8D9B
+#	LUMINANCE_INTEGER_EXT				= 0x8D9C
+#	LUMINANCE_ALPHA_INTEGER_EXT			= 0x8D9D
+#	RGBA_INTEGER_MODE_EXT				= 0x8D9E
+
+# NV_future_use: 0x8D9F
+
+# NV_parameter_buffer_object enum:
+#	MAX_PROGRAM_PARAMETER_BUFFER_BINDINGS_NV	= 0x8DA0
+#	MAX_PROGRAM_PARAMETER_BUFFER_SIZE_NV		= 0x8DA1
+#	VERTEX_PROGRAM_PARAMETER_BUFFER_NV		= 0x8DA2
+#	GEOMETRY_PROGRAM_PARAMETER_BUFFER_NV		= 0x8DA3
+#	FRAGMENT_PROGRAM_PARAMETER_BUFFER_NV		= 0x8DA4
+
+# NV_gpu_program4 enum: (additional; see above)
+#	MAX_PROGRAM_GENERIC_ATTRIBS_NV			= 0x8DA5
+#	MAX_PROGRAM_GENERIC_RESULTS_NV			= 0x8DA6
+
+# NV_geometry_program4 enum: (additional; see above)
+#	FRAMEBUFFER_ATTACHMENT_LAYERED_EXT		= 0x8DA7
+#	FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS_EXT	= 0x8DA8
+#	FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_EXT		= 0x8DA9
+
+# NV_future_use: 0x8DAA
+
+# NV_depth_buffer_float enum:
+#	DEPTH_COMPONENT32F_NV				= 0x8DAB
+#	DEPTH32F_STENCIL8_NV				= 0x8DAC
+#	FLOAT_32_UNSIGNED_INT_24_8_REV_NV		= 0x8DAD
+#	DEPTH_BUFFER_FLOAT_MODE_NV			= 0x8DAF
+
+# NV_future_use: 0x8DB0-0x8DB8
+
+# EXT_framebuffer_sRGB enum:
+#	FRAMEBUFFER_SRGB_EXT				= 0x8DB9
+#	FRAMEBUFFER_SRGB_CAPABLE_EXT			= 0x8DBA
+
+# EXT_texture_compression_rgtc enum:
+#	COMPRESSED_RED_RGTC1_EXT			= 0x8DBB
+#	COMPRESSED_SIGNED_RED_RGTC1_EXT			= 0x8DBC
+#	COMPRESSED_RED_GREEN_RGTC2_EXT			= 0x8DBD
+#	COMPRESSED_SIGNED_RED_GREEN_RGTC2_EXT		= 0x8DBE
+
+# NV_future_use: 0x8DBF
+
+# EXT_gpu_shader4 enum:
+#	SAMPLER_1D_ARRAY_EXT				= 0x8DC0
+#	SAMPLER_2D_ARRAY_EXT				= 0x8DC1
+#	SAMPLER_BUFFER_EXT				= 0x8DC2
+#	SAMPLER_1D_ARRAY_SHADOW_EXT			= 0x8DC3
+#	SAMPLER_2D_ARRAY_SHADOW_EXT			= 0x8DC4
+#	SAMPLER_CUBE_SHADOW_EXT				= 0x8DC5
+#	UNSIGNED_INT_VEC2_EXT				= 0x8DC6
+#	UNSIGNED_INT_VEC3_EXT				= 0x8DC7
+#	UNSIGNED_INT_VEC4_EXT				= 0x8DC8
+#	INT_SAMPLER_1D_EXT				= 0x8DC9
+#	INT_SAMPLER_2D_EXT				= 0x8DCA
+#	INT_SAMPLER_3D_EXT				= 0x8DCB
+#	INT_SAMPLER_CUBE_EXT				= 0x8DCC
+#	INT_SAMPLER_2D_RECT_EXT				= 0x8DCD
+#	INT_SAMPLER_1D_ARRAY_EXT			= 0x8DCE
+#	INT_SAMPLER_2D_ARRAY_EXT			= 0x8DCF
+#	INT_SAMPLER_BUFFER_EXT				= 0x8DD0
+#	UNSIGNED_INT_SAMPLER_1D_EXT			= 0x8DD1
+#	UNSIGNED_INT_SAMPLER_2D_EXT			= 0x8DD2
+#	UNSIGNED_INT_SAMPLER_3D_EXT			= 0x8DD3
+#	UNSIGNED_INT_SAMPLER_CUBE_EXT			= 0x8DD4
+#	UNSIGNED_INT_SAMPLER_2D_RECT_EXT		= 0x8DD5
+#	UNSIGNED_INT_SAMPLER_1D_ARRAY_EXT		= 0x8DD6
+#	UNSIGNED_INT_SAMPLER_2D_ARRAY_EXT		= 0x8DD7
+#	UNSIGNED_INT_SAMPLER_BUFFER_EXT			= 0x8DD8
+
+# EXT_geometry_shader4 enum:
+#	GEOMETRY_SHADER_EXT				= 0x8DD9
+
+# NV_geometry_program4 enum: (additional; see above)
+#	GEOMETRY_VERTICES_OUT_EXT			= 0x8DDA
+#	GEOMETRY_INPUT_TYPE_EXT				= 0x8DDB
+#	GEOMETRY_OUTPUT_TYPE_EXT			= 0x8DDC
+
+# EXT_geometry_shader4 enum: (additional; see above)
+#	MAX_GEOMETRY_VARYING_COMPONENTS_EXT		= 0x8DDD
+#	MAX_VERTEX_VARYING_COMPONENTS_EXT		= 0x8DDE
+#	MAX_GEOMETRY_UNIFORM_COMPONENTS_EXT		= 0x8DDF
+#	MAX_GEOMETRY_OUTPUT_VERTICES_EXT		= 0x8DE0
+#	MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS_EXT	= 0x8DE1
+
+# EXT_bindable_uniform enum:
+#	MAX_VERTEX_BINDABLE_UNIFORMS_EXT		= 0x8DE2
+#	MAX_FRAGMENT_BINDABLE_UNIFORMS_EXT		= 0x8DE3
+#	MAX_GEOMETRY_BINDABLE_UNIFORMS_EXT		= 0x8DE4
+
+# NV_future_use: 0x8DE5-0x8DEC
+
+# EXT_bindable_uniform enum: (additional; see above)
+#	MAX_BINDABLE_UNIFORM_SIZE_EXT			= 0x8DED
+#	UNIFORM_BUFFER_EXT				= 0x8DEE
+#	UNIFORM_BUFFER_BINDING_EXT			= 0x8DEF
 
 ###############################################################################
 
@@ -5526,7 +5800,24 @@ SGIX_subsample enum:
 # NVIDIA: 0x8E10-0x8E8F
 # Reserved per email from Michael Gold 2006/8/7
 
-# NV_future_use: 0x8E10-0x8E8F
+# NV_framebuffer_multisample_coverage enum:
+#	RENDERBUFFER_COLOR_SAMPLES_NV			= 0x8E10
+#	MAX_MULTISAMPLE_COVERAGE_MODES_NV		= 0x8E11
+#	MULTISAMPLE_COVERAGE_MODES_NV			= 0x8E12
+
+# NV_future_use: 0x8E13-0x8E8F
+
+###############################################################################
+
+# QNX: 0x8E90-0x8E9F
+# https://cvs.khronos.org/bugzilla/show_bug.cgi?id=696
+# For GL_QNX_texture_tiling, GL_QNX_complex_polygon, GL_QNX_stippled_lines
+
+# QNX_future_use: 0x8E90-0x8E9F
+
+###############################################################################
+
+# Imagination Tech.: 0x8EA0-0x8EAF
 
 ###############################################################################
 ### Please remember that new enumerant allocations must be obtained by request
@@ -5534,7 +5825,7 @@ SGIX_subsample enum:
 ### File requests in the Khronos Bugzilla, OpenGL project, Registry component.
 ###############################################################################
 
-# Any_vendor_future_use: 0x8E90-0xFFFF
+# Any_vendor_future_use: 0x8EB0-0xFFFF
 #
 #   This range must be the last range in the file.  To generate a new
 #   range, allocate multiples of 16 from the beginning of the

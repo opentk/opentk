@@ -17,9 +17,9 @@
 
 passthru:
 passthru: /* Header file version number, required by OpenGL ABI for Linux */
-passthru: /* glext.h last updated 2006/08/30 */
+passthru: /* glext.h last updated 2007/02/12 */
 passthru: /* Current version at http://www.opengl.org/registry/ */
-passthru: #define GL_GLEXT_VERSION 34
+passthru: #define GL_GLEXT_VERSION 39
 
 ###############################################################################
 #
@@ -3967,7 +3967,8 @@ EXT_framebuffer_object enum:
 	FRAMEBUFFER_COMPLETE_EXT			= 0x8CD5
 	FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT		= 0x8CD6
 	FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT	= 0x8CD7
-	FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT = 0x8CD8
+## Removed 2005/09/26 in revision #117 of the extension:
+##	  FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT = 0x8CD8
 	FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT		= 0x8CD9
 	FRAMEBUFFER_INCOMPLETE_FORMATS_EXT		= 0x8CDA
 	FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT		= 0x8CDB
@@ -4072,6 +4073,8 @@ EXT_framebuffer_blit enum:
 # Extension #317
 EXT_framebuffer_multisample enum:
 	RENDERBUFFER_SAMPLES_EXT			= 0x8CAB
+	FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT		= 0x8D56
+	MAX_SAMPLES_EXT					= 0x8D57
 
 ###############################################################################
 
@@ -4095,4 +4098,321 @@ EXT_timer_query enum:
 # No new tokens
 # Extension #320
 EXT_gpu_program_parameters enum:
+
+###############################################################################
+
+# Extension #321
+APPLE_flush_buffer_range enum:
+	BUFFER_SERIALIZED_MODIFY_APPLE			= 0x8A12
+	BUFFER_FLUSHING_UNMAP_APPLE			= 0x8A13
+
+###############################################################################
+
+# Extension #322
+NV_gpu_program4 enum:
+	MIN_PROGRAM_TEXEL_OFFSET_NV			= 0x8904
+	MAX_PROGRAM_TEXEL_OFFSET_NV			= 0x8905
+	PROGRAM_ATTRIB_COMPONENTS_NV			= 0x8906
+	PROGRAM_RESULT_COMPONENTS_NV			= 0x8907
+	MAX_PROGRAM_ATTRIB_COMPONENTS_NV		= 0x8908
+	MAX_PROGRAM_RESULT_COMPONENTS_NV		= 0x8909
+	MAX_PROGRAM_GENERIC_ATTRIBS_NV			= 0x8DA5
+	MAX_PROGRAM_GENERIC_RESULTS_NV			= 0x8DA6
+
+###############################################################################
+
+# Extension #323
+NV_geometry_program4 enum:
+	LINES_ADJACENCY_EXT				= 0x000A
+	LINE_STRIP_ADJACENCY_EXT			= 0x000B
+	TRIANGLES_ADJACENCY_EXT				= 0x000C
+	TRIANGLE_STRIP_ADJACENCY_EXT			= 0x000D
+	GEOMETRY_PROGRAM_NV				= 0x8C26
+	MAX_PROGRAM_OUTPUT_VERTICES_NV			= 0x8C27
+	MAX_PROGRAM_TOTAL_OUTPUT_COMPONENTS_NV		= 0x8C28
+	GEOMETRY_VERTICES_OUT_EXT			= 0x8DDA
+	GEOMETRY_INPUT_TYPE_EXT				= 0x8DDB
+	GEOMETRY_OUTPUT_TYPE_EXT			= 0x8DDC
+	MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT		= 0x8C29
+	FRAMEBUFFER_ATTACHMENT_LAYERED_EXT		= 0x8DA7
+	FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS_EXT	= 0x8DA8
+	FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_EXT		= 0x8DA9
+	FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER_EXT	= 0x8CD4
+	PROGRAM_POINT_SIZE_EXT				= 0x8642
+
+###############################################################################
+
+# Extension #324
+EXT_geometry_shader4 enum:
+	GEOMETRY_SHADER_EXT				= 0x8DD9
+	use NV_geometry_program4 GEOMETRY_VERTICES_OUT_EXT
+	use NV_geometry_program4 GEOMETRY_INPUT_TYPE_EXT
+	use NV_geometry_program4 GEOMETRY_OUTPUT_TYPE_EXT
+	use NV_geometry_program4 MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT
+	MAX_GEOMETRY_VARYING_COMPONENTS_EXT		= 0x8DDD
+	MAX_VERTEX_VARYING_COMPONENTS_EXT		= 0x8DDE
+	MAX_VARYING_COMPONENTS_EXT			= 0x8B4B
+	MAX_GEOMETRY_UNIFORM_COMPONENTS_EXT		= 0x8DDF
+	MAX_GEOMETRY_OUTPUT_VERTICES_EXT		= 0x8DE0
+	MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS_EXT	= 0x8DE1
+	use NV_geometry_program4 LINES_ADJACENCY_EXT
+	use NV_geometry_program4 LINE_STRIP_ADJACENCY_EXT
+	use NV_geometry_program4 TRIANGLES_ADJACENCY_EXT
+	use NV_geometry_program4 TRIANGLE_STRIP_ADJACENCY_EXT
+	use NV_geometry_program4 FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS_EXT
+	use NV_geometry_program4 FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_EXT
+	use NV_geometry_program4 FRAMEBUFFER_ATTACHMENT_LAYERED_EXT
+	use NV_geometry_program4 FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER_EXT
+	use NV_geometry_program4 PROGRAM_POINT_SIZE_EXT
+
+###############################################################################
+
+# Extension #325
+NV_vertex_program4 enum:
+	VERTEX_ATTRIB_ARRAY_INTEGER_NV			= 0x88FD
+
+###############################################################################
+
+# Extension #326
+EXT_gpu_shader4 enum:
+	SAMPLER_1D_ARRAY_EXT				= 0x8DC0
+	SAMPLER_2D_ARRAY_EXT				= 0x8DC1
+	SAMPLER_BUFFER_EXT				= 0x8DC2
+	SAMPLER_1D_ARRAY_SHADOW_EXT			= 0x8DC3
+	SAMPLER_2D_ARRAY_SHADOW_EXT			= 0x8DC4
+	SAMPLER_CUBE_SHADOW_EXT				= 0x8DC5
+	UNSIGNED_INT_VEC2_EXT				= 0x8DC6
+	UNSIGNED_INT_VEC3_EXT				= 0x8DC7
+	UNSIGNED_INT_VEC4_EXT				= 0x8DC8
+	INT_SAMPLER_1D_EXT				= 0x8DC9
+	INT_SAMPLER_2D_EXT				= 0x8DCA
+	INT_SAMPLER_3D_EXT				= 0x8DCB
+	INT_SAMPLER_CUBE_EXT				= 0x8DCC
+	INT_SAMPLER_2D_RECT_EXT				= 0x8DCD
+	INT_SAMPLER_1D_ARRAY_EXT			= 0x8DCE
+	INT_SAMPLER_2D_ARRAY_EXT			= 0x8DCF
+	INT_SAMPLER_BUFFER_EXT				= 0x8DD0
+	UNSIGNED_INT_SAMPLER_1D_EXT			= 0x8DD1
+	UNSIGNED_INT_SAMPLER_2D_EXT			= 0x8DD2
+	UNSIGNED_INT_SAMPLER_3D_EXT			= 0x8DD3
+	UNSIGNED_INT_SAMPLER_CUBE_EXT			= 0x8DD4
+	UNSIGNED_INT_SAMPLER_2D_RECT_EXT		= 0x8DD5
+	UNSIGNED_INT_SAMPLER_1D_ARRAY_EXT		= 0x8DD6
+	UNSIGNED_INT_SAMPLER_2D_ARRAY_EXT		= 0x8DD7
+	UNSIGNED_INT_SAMPLER_BUFFER_EXT			= 0x8DD8
+
+###############################################################################
+
+# No new tokens
+# Extension #327
+EXT_draw_instanced enum:
+
+###############################################################################
+
+# Extension #328
+EXT_packed_float enum:
+	R11F_G11F_B10F_EXT				= 0x8C3A
+	UNSIGNED_INT_10F_11F_11F_REV_EXT		= 0x8C3B
+	RGBA_SIGNED_COMPONENTS_EXT			= 0x8C3C
+
+###############################################################################
+
+# Extension #329
+EXT_texture_array enum:
+	TEXTURE_1D_ARRAY_EXT				= 0x8C18
+	PROXY_TEXTURE_1D_ARRAY_EXT			= 0x8C19
+	TEXTURE_2D_ARRAY_EXT				= 0x8C1A
+	PROXY_TEXTURE_2D_ARRAY_EXT			= 0x8C1B
+	TEXTURE_BINDING_1D_ARRAY_EXT			= 0x8C1C
+	TEXTURE_BINDING_2D_ARRAY_EXT			= 0x8C1D
+	MAX_ARRAY_TEXTURE_LAYERS_EXT			= 0x88FF
+	COMPARE_REF_DEPTH_TO_TEXTURE_EXT		= 0x884E
+	use NV_geometry_program4 FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER_EXT
+
+###############################################################################
+
+# Extension #330
+EXT_texture_buffer_object enum:
+	TEXTURE_BUFFER_EXT				= 0x8C2A
+	MAX_TEXTURE_BUFFER_SIZE_EXT			= 0x8C2B
+	TEXTURE_BINDING_BUFFER_EXT			= 0x8C2C
+	TEXTURE_BUFFER_DATA_STORE_BINDING_EXT		= 0x8C2D
+	TEXTURE_BUFFER_FORMAT_EXT			= 0x8C2E
+
+###############################################################################
+
+# Extension #331
+EXT_texture_compression_latc enum:
+	COMPRESSED_LUMINANCE_LATC1_EXT			= 0x8C70
+	COMPRESSED_SIGNED_LUMINANCE_LATC1_EXT		= 0x8C71
+	COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT		= 0x8C72
+	COMPRESSED_SIGNED_LUMINANCE_ALPHA_LATC2_EXT	= 0x8C73
+
+###############################################################################
+
+# Extension #332
+EXT_texture_compression_rgtc enum:
+	COMPRESSED_RED_RGTC1_EXT			= 0x8DBB
+	COMPRESSED_SIGNED_RED_RGTC1_EXT			= 0x8DBC
+	COMPRESSED_RED_GREEN_RGTC2_EXT			= 0x8DBD
+	COMPRESSED_SIGNED_RED_GREEN_RGTC2_EXT		= 0x8DBE
+
+###############################################################################
+
+# Extension #333
+EXT_texture_shared_exponent enum:
+	RGB9_E5_EXT					= 0x8C3D
+	UNSIGNED_INT_5_9_9_9_REV_EXT			= 0x8C3E
+	TEXTURE_SHARED_SIZE_EXT				= 0x8C3F
+
+###############################################################################
+
+# Extension #334
+NV_depth_buffer_float enum:
+	DEPTH_COMPONENT32F_NV				= 0x8DAB
+	DEPTH32F_STENCIL8_NV				= 0x8DAC
+	FLOAT_32_UNSIGNED_INT_24_8_REV_NV		= 0x8DAD
+	DEPTH_BUFFER_FLOAT_MODE_NV			= 0x8DAF
+
+###############################################################################
+
+# No new tokens
+# Extension #335
+NV_fragment_program4 enum:
+
+###############################################################################
+
+# Extension #336
+NV_framebuffer_multisample_coverage enum:
+	RENDERBUFFER_COVERAGE_SAMPLES_NV		= 0x8CAB
+	RENDERBUFFER_COLOR_SAMPLES_NV			= 0x8E10
+	MAX_MULTISAMPLE_COVERAGE_MODES_NV		= 0x8E11
+	MULTISAMPLE_COVERAGE_MODES_NV			= 0x8E12
+
+###############################################################################
+
+# Extension #337
+# ??? Also WGL/GLX extensions ???
+EXT_framebuffer_sRGB enum:
+	FRAMEBUFFER_SRGB_EXT				= 0x8DB9
+	FRAMEBUFFER_SRGB_CAPABLE_EXT			= 0x8DBA
+
+###############################################################################
+
+# No new tokens
+# Extension #338
+NV_geometry_shader4 enum:
+
+###############################################################################
+
+# Extension #339
+NV_parameter_buffer_object enum:
+	MAX_PROGRAM_PARAMETER_BUFFER_BINDINGS_NV	= 0x8DA0
+	MAX_PROGRAM_PARAMETER_BUFFER_SIZE_NV		= 0x8DA1
+	VERTEX_PROGRAM_PARAMETER_BUFFER_NV		= 0x8DA2
+	GEOMETRY_PROGRAM_PARAMETER_BUFFER_NV		= 0x8DA3
+	FRAGMENT_PROGRAM_PARAMETER_BUFFER_NV		= 0x8DA4
+
+###############################################################################
+
+# No new tokens
+# Extension #340
+EXT_draw_buffers2 enum:
+
+###############################################################################
+
+# Extension #341
+NV_transform_feedback enum:
+	BACK_PRIMARY_COLOR_NV				= 0x8C77
+	BACK_SECONDARY_COLOR_NV				= 0x8C78
+	TEXTURE_COORD_NV				= 0x8C79
+	CLIP_DISTANCE_NV				= 0x8C7A
+	VERTEX_ID_NV					= 0x8C7B
+	PRIMITIVE_ID_NV					= 0x8C7C
+	GENERIC_ATTRIB_NV				= 0x8C7D
+	TRANSFORM_FEEDBACK_ATTRIBS_NV			= 0x8C7E
+	TRANSFORM_FEEDBACK_BUFFER_MODE_NV		= 0x8C7F
+	MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS_NV	= 0x8C80
+	ACTIVE_VARYINGS_NV				= 0x8C81
+	ACTIVE_VARYING_MAX_LENGTH_NV			= 0x8C82
+	TRANSFORM_FEEDBACK_VARYINGS_NV			= 0x8C83
+	TRANSFORM_FEEDBACK_BUFFER_START_NV		= 0x8C84
+	TRANSFORM_FEEDBACK_BUFFER_SIZE_NV		= 0x8C85
+	TRANSFORM_FEEDBACK_RECORD_NV			= 0x8C86
+	PRIMITIVES_GENERATED_NV				= 0x8C87
+	TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN_NV	= 0x8C88
+	RASTERIZER_DISCARD_NV				= 0x8C89
+	MAX_TRANSFORM_FEEDBACK_INTERLEAVED_ATTRIBS_NV	= 0x8C8A
+	MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS_NV	= 0x8C8B
+	INTERLEAVED_ATTRIBS_NV				= 0x8C8C
+	SEPARATE_ATTRIBS_NV				= 0x8C8D
+	TRANSFORM_FEEDBACK_BUFFER_NV			= 0x8C8E
+	TRANSFORM_FEEDBACK_BUFFER_BINDING_NV		= 0x8C8F
+
+###############################################################################
+
+# Extension #342
+EXT_bindable_uniform enum:
+	MAX_VERTEX_BINDABLE_UNIFORMS_EXT		= 0x8DE2
+	MAX_FRAGMENT_BINDABLE_UNIFORMS_EXT		= 0x8DE3
+	MAX_GEOMETRY_BINDABLE_UNIFORMS_EXT		= 0x8DE4
+	MAX_BINDABLE_UNIFORM_SIZE_EXT			= 0x8DED
+	UNIFORM_BUFFER_EXT				= 0x8DEE
+	UNIFORM_BUFFER_BINDING_EXT			= 0x8DEF
+
+###############################################################################
+
+# Extension #343
+EXT_texture_integer enum:
+	RGBA32UI_EXT					= 0x8D70
+	RGB32UI_EXT					= 0x8D71
+	ALPHA32UI_EXT					= 0x8D72
+	INTENSITY32UI_EXT				= 0x8D73
+	LUMINANCE32UI_EXT				= 0x8D74
+	LUMINANCE_ALPHA32UI_EXT				= 0x8D75
+	RGBA16UI_EXT					= 0x8D76
+	RGB16UI_EXT					= 0x8D77
+	ALPHA16UI_EXT					= 0x8D78
+	INTENSITY16UI_EXT				= 0x8D79
+	LUMINANCE16UI_EXT				= 0x8D7A
+	LUMINANCE_ALPHA16UI_EXT				= 0x8D7B
+	RGBA8UI_EXT					= 0x8D7C
+	RGB8UI_EXT					= 0x8D7D
+	ALPHA8UI_EXT					= 0x8D7E
+	INTENSITY8UI_EXT				= 0x8D7F
+	LUMINANCE8UI_EXT				= 0x8D80
+	LUMINANCE_ALPHA8UI_EXT				= 0x8D81
+	RGBA32I_EXT					= 0x8D82
+	RGB32I_EXT					= 0x8D83
+	ALPHA32I_EXT					= 0x8D84
+	INTENSITY32I_EXT				= 0x8D85
+	LUMINANCE32I_EXT				= 0x8D86
+	LUMINANCE_ALPHA32I_EXT				= 0x8D87
+	RGBA16I_EXT					= 0x8D88
+	RGB16I_EXT					= 0x8D89
+	ALPHA16I_EXT					= 0x8D8A
+	INTENSITY16I_EXT				= 0x8D8B
+	LUMINANCE16I_EXT				= 0x8D8C
+	LUMINANCE_ALPHA16I_EXT				= 0x8D8D
+	RGBA8I_EXT					= 0x8D8E
+	RGB8I_EXT					= 0x8D8F
+	ALPHA8I_EXT					= 0x8D90
+	INTENSITY8I_EXT					= 0x8D91
+	LUMINANCE8I_EXT					= 0x8D92
+	LUMINANCE_ALPHA8I_EXT				= 0x8D93
+	RED_INTEGER_EXT					= 0x8D94
+	GREEN_INTEGER_EXT				= 0x8D95
+	BLUE_INTEGER_EXT				= 0x8D96
+	ALPHA_INTEGER_EXT				= 0x8D97
+	RGB_INTEGER_EXT					= 0x8D98
+	RGBA_INTEGER_EXT				= 0x8D99
+	BGR_INTEGER_EXT					= 0x8D9A
+	BGRA_INTEGER_EXT				= 0x8D9B
+	LUMINANCE_INTEGER_EXT				= 0x8D9C
+	LUMINANCE_ALPHA_INTEGER_EXT			= 0x8D9D
+	RGBA_INTEGER_MODE_EXT				= 0x8D9E
+
+###############################################################################
+
+# Extension #344 - GLX_EXT_texture_from_pixmap
 

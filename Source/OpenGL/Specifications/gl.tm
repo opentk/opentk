@@ -89,6 +89,8 @@ FogPointerTypeIBM,*,*,		    GLenum,*,*
 FragmentLightModelParameterSGIX,*,*,GLenum,*,*
 FragmentLightNameSGIX,*,*,	    GLenum,*,*
 FragmentLightParameterSGIX,*,*,     GLenum,*,*
+FramebufferAttachment,*,*,	    GLenum,*,*
+FramebufferTarget,*,*,		    GLenum,*,*
 FrontFaceDirection,*,*,		    GLenum,*,*
 FunctionPointer,*,*,		    _GLfuncptr,*,*
 GetColorTableParameterPName,*,*,    GLenum,*,*
@@ -169,12 +171,14 @@ PolygonMode,*,*,		    GLenum,*,*
 ProgramNV,*,*,			    GLuint,*,*
 ProgramCharacterNV,*,*,		    GLubyte,*,*
 ProgramParameterNV,*,*,		    GLenum,*,*
+ProgramParameterPName,*,*,	    GLenum,*,*
 QuadricCallback,*,*,		    GLenum,*,*
 QuadricDrawStyle,*,*,		    GLenum,*,*
 QuadricNormal,*,*,		    GLenum,*,*
 QuadricObj,*,*,			    GLUquadric*,*,*
 QuadricOrientation,*,*,		    GLenum,*,*
 ReadBufferMode,*,*,		    GLenum,*,*
+RenderbufferTarget,*,*,		    GLenum,*,*
 RenderingMode,*,*,		    GLenum,*,*
 ReplacementCodeSUN,*,*,		    GLuint,*,*
 ReplacementCodeTypeSUN,*,*,	    GLenum,*,*
@@ -214,6 +218,7 @@ TextureUnit,*,*,		    GLenum,*,*
 UInt16,*,*,			    GLushort,*,*
 UInt32,*,*,			    GLuint,*,*
 UInt8,*,*,			    GLubyte,*,*
+VertexAttribEnum,*,*,		    GLenum,*,*
 VertexAttribEnumNV,*,*,		    GLenum,*,*
 VertexAttribPointerTypeNV,*,*,	    GLenum,*,*
 VertexPointerType,*,*,		    GLenum,*,*
@@ -238,6 +243,7 @@ ParameterRangeEXT,*,*,		    GLenum,*,*
 PreserveModeATI,*,*,		    GLenum,*,*
 ProgramFormatARB,*,*,		    GLenum,*,*
 ProgramTargetARB,*,*,		    GLenum,*,*
+ProgramTarget,*,*,		    GLenum,*,*
 ProgramPropertyARB,*,*,		    GLenum,*,*
 ProgramStringPropertyARB,*,*,	    GLenum,*,*
 ScalarType,*,*,			    GLenum,*,*
@@ -256,15 +262,15 @@ VertexShaderWriteMaskEXT,*,*,	    GLenum,*,*
 VertexStreamATI,*,*,		    GLenum,*,*
 PNTrianglesPNameATI,*,*,	    GLenum,*,*
 # ARB_vertex_buffer_object types and core equivalents for new types
-VertexBufferOffset,*,*,		    GLintptr,*,*
-VertexBufferSize,*,*,		    GLsizeiptr,*,*
-VertexBufferAccessARB,*,*,	    GLenum,*,*
-VertexBufferOffsetARB,*,*,	    GLintptrARB,*,*
-VertexBufferPNameARB,*,*,	    GLenum,*,*
-VertexBufferPointerNameARB,*,*,     GLenum,*,*
-VertexBufferSizeARB,*,*,	    GLsizeiptrARB,*,*
-VertexBufferTargetARB,*,*,	    GLenum,*,*
-VertexBufferUsageARB,*,*,	    GLenum,*,*
+BufferOffset,*,*,		    GLintptr,*,*
+BufferSize,*,*,			    GLsizeiptr,*,*
+BufferAccessARB,*,*,		    GLenum,*,*
+BufferOffsetARB,*,*,		    GLintptrARB,*,*
+BufferPNameARB,*,*,		    GLenum,*,*
+BufferPointerNameARB,*,*,	    GLenum,*,*
+BufferSizeARB,*,*,		    GLsizeiptrARB,*,*
+BufferTargetARB,*,*,		    GLenum,*,*
+BufferUsageARB,*,*,		    GLenum,*,*
 # APPLE_fence
 ObjectTypeAPPLE,*,*,		    GLenum,*,*
 # APPLE_vertex_array_range
@@ -280,7 +286,6 @@ GLenum,*,*,			    GLenum,*,*
 handleARB,*,*,			    GLhandleARB,*,*
 charARB,*,*,			    GLcharARB,*,*
 charPointerARB,*,*,		    GLcharARB*,*,*
-
-# 64 bit types (introduced in 2.1)
-Int64EXT,					GLint64
-UInt64EXT,					GLuint64
+# EXT_timer_query
+Int64EXT,*,*,			    GLint64EXT,*,*
+UInt64EXT,*,*,			    GLuint64EXT,*,*
