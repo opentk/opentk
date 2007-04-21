@@ -154,7 +154,7 @@
 
     </Project>
    
-    <Project name="OpenTK.Examples.OpenGL.Basic.Lesson01" path=".\Source\Examples\OpenGL\Basic\Lesson01" language="C#" type="WinExe">
+    <Project name="OpenTK.Examples.OpenGL.Basic.001-Cube" path=".\Source\Examples\OpenGL\Basic\001 - Cube" language="C#" type="WinExe">
 
       <Configuration name="Debug">
         <Options>
