@@ -26,6 +26,7 @@
       <File>.\Release.txt</File>
       <File>.\Changelog.txt</File>
       <File>.\License.txt</File>
+      <File>.\Instructions.txt</File>
     </Files>
     
     <Project name="OpenTK.Platform.Windows" path=".\Source\Platform\Windows" language="C#" type="Library">
