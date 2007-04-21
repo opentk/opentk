@@ -90,6 +90,8 @@
         </Options>
       </Configuration>
 
+      <Reference name="System"/>
+
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
       </Files>
