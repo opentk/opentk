@@ -6,9 +6,15 @@ Generic Todos:
 OpenTK.OpenGL todos:
 
 (High level)
++ Texture class.
++ Control class.
++ Device class.
+* Context class:
+	+ Add more constructors.
+	+ Add native support for the MacOS X platform (now goes through X).
+	* Clean up Context class (many things should be moved to the control class).
 + VertexBufferObject class.
 + Error class.
-+ Device class.
 + OpenGL function overloads.
 
 (Low level)
@@ -17,9 +23,6 @@ OpenTK.OpenGL todos:
 + Add complete Wgl, Glx, Agl and Glu bindings.
 + Get rid of the "object" overloads in favour of generics.
 
-Context class:
-+ Add more constructors.
-+ Add native support for the MacOS X platform (now goes through X).
 
 Examples:
 + Reorganize the example layout.
