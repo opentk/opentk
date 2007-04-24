@@ -21,14 +21,14 @@ namespace OpenTK.OpenGL
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Tao.OpenGl.Gl contains all OpenGL enums and functions defined in the 2.1 specification.
+    /// OpenTK.OpenGL.GL contains all OpenGL enums and functions defined in the 2.1 specification.
     /// The official .spec files can be found at: http://opengl.org/registry/.
     /// </para>
     /// <para>
-    /// Tao.OpenGl.Gl relies on static initialization to obtain the entry points for OpenGL functions.
+    /// OpenTK.OpenGL.GL relies on static initialization to obtain the entry points for OpenGL functions.
     /// Please ensure that a valid OpenGL context has been made current in the pertinent thread <b>before</b>
     /// any OpenGL functions are called (toolkits like GLUT, SDL or GLFW will automatically take care of
-    /// the context initialization process). Without a valid OpenGL context, Tao.OpenGl.Gl will only be able
+    /// the context initialization process). Without a valid OpenGL context, OpenTK.OpenGL.GL will only be able
     /// to retrieve statically exported entry points (typically corresponding to OpenGL version 1.1 under Windows,
     /// 1.3 under Linux and 1.4 under Windows Vista), and extension methods will need to be loaded manually.
     /// </para>
@@ -67,7 +67,7 @@ namespace OpenTK.OpenGL
         #region private enum Platform
 
         /// <summary>
-        /// Enumerates the platforms Tao can run on.
+        /// Enumerates the platforms OpenTK can run on.
         /// </summary>
         private enum Platform
         {
@@ -239,7 +239,7 @@ namespace OpenTK.OpenGL
         {
             Delegate d;
 
-            if (Assembly.Load("Tao.OpenGl").GetType("Tao.OpenGl.Imports").GetMethod(name.Substring(2)) != null)
+            if (Assembly.Load("OpenTK.OpenGL").GetType("OpenTK.OpenGL.Imports").GetMethod(name.Substring(2)) != null)
             {
                 d = GetDelegateForExtensionMethod(name, signature) ??
                     Delegate.CreateDelegate(signature, typeof(Imports), name.Substring(2));
@@ -402,9 +402,9 @@ namespace OpenTK.OpenGL
         /// </remarks>
         public static void ReloadFunctions()
         {
-            Assembly asm = Assembly.Load("Tao.OpenGl");
-            Type delegates_class = asm.GetType("Tao.OpenGl.Delegates");
-            Type imports_class = asm.GetType("Tao.OpenGl.Imports");
+            Assembly asm = Assembly.Load("OpenTK.OpenGL");
+            Type delegates_class = asm.GetType("OpenTK.OpenGL.Delegates");
+            Type imports_class = asm.GetType("OpenTK.OpenGL.Imports");
 
             FieldInfo[] v = delegates_class.GetFields();
             foreach (FieldInfo f in v)
@@ -443,9 +443,9 @@ namespace OpenTK.OpenGL
         /// </remarks>
         public static bool ReloadFunction(string name)
         {
-            Assembly asm = Assembly.Load("Tao.OpenGl");
-            Type delegates_class = asm.GetType("Tao.OpenGl.Delegates");
-            Type imports_class = asm.GetType("Tao.OpenGl.Imports");
+            Assembly asm = Assembly.Load("OpenTK.OpenGL");
+            Type delegates_class = asm.GetType("OpenTK.OpenGL.Delegates");
+            Type imports_class = asm.GetType("OpenTK.OpenGL.Imports");
 
             FieldInfo f = delegates_class.GetField(name);
             if (f == null)
