@@ -104,9 +104,16 @@ namespace OpenTK.Platform.X
         extern public static int Pending(IntPtr Display);
 
         [DllImport(_dll_name, EntryPoint = "XGrabPointer")]
-        extern public static ErrorCodes XGrabPointer(IntPtr display, IntPtr grab_window,
-            bool owner_events, uint event_mask, GrabMode pointer_mode,
-               GrabMode keyboard_mode, IntPtr confine_to, IntPtr cursor, int time);
+        extern public static ErrorCodes XGrabPointer(
+            IntPtr display,
+            IntPtr grab_window,
+            bool owner_events, uint event_mask,
+            GrabMode pointer_mode,
+            GrabMode keyboard_mode,
+            IntPtr confine_to,
+            IntPtr cursor,
+            int time
+        );
 
         [DllImport(_dll_name, EntryPoint = "XUngrabPointer")]
         extern public static ErrorCodes XUngrabPointer(IntPtr display, int time);
