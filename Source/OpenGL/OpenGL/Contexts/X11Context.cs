@@ -97,9 +97,9 @@ namespace OpenTK.OpenGL.Platform
                 X11Api.Free(glxVisualInfo);
             }
 
-            c.MouseDown += new MouseEventHandler(c_MouseDown);
-            c.MouseLeave += new EventHandler(c_MouseLeave);
-            c.MouseUp += new MouseEventHandler(c_MouseUp);
+            //c.MouseDown += new MouseEventHandler(c_MouseDown);
+            //c.MouseLeave += new EventHandler(c_MouseLeave);
+            //c.MouseUp += new MouseEventHandler(c_MouseUp);
         }
 
         void c_MouseDown(object sender, MouseEventArgs e)
