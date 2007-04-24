@@ -4,6 +4,8 @@
  */
 #endregion
 
+#region --- Using Directives ---
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,8 +13,10 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Text;
 
-using OpenTK.OpenGL;
+//using OpenTK.OpenGL;
 using OpenTK.Platform.Windows;
+
+#endregion
 
 namespace OpenTK.OpenGL.Platform
 {
@@ -98,14 +102,11 @@ namespace OpenTK.OpenGL.Platform
 
             MakeCurrent();
 
-            c.TopLevelControl.Move += new EventHandler(c_Move);
-            c.Move += new EventHandler(c_Move);
-            c.Resize += new EventHandler(c_Resize);
-            //GL.Init();
-            //new GL();
+            //c.TopLevelControl.Move += new EventHandler(c_Move);
+            //c.Move += new EventHandler(c_Move);
+            //c.Resize += new EventHandler(c_Resize);
 
-            //if (load_extensions)
-            //    LoadExtensions();
+            //GL.ReloadFunctions();
         }
 
         void c_Resize(object sender, EventArgs e)
@@ -233,7 +234,7 @@ namespace OpenTK.OpenGL.Platform
                     currentMode.PelsHeight,
                     currentMode.BitsPerPel,
                     currentMode.DisplayFrequency
-                    );
+                );
 
                 modes.Add(mode);
             }
