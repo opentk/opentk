@@ -1,0 +1,79 @@
+OpenTK 0.3.5 -> 0.3.6
+
++ OpenTK.OpenGL.Bind
+	+ Synced with Tao.GlBindGen codebase.
+	+ Uses CodeDOM internally for code generation.
+	+ Updated to latest specs (which include shader model 4).
+
++ OpenTK.OpenGL (Low level)
+	+ All OpenGL extensions are now generated (up to shader model 4).
+	+ Decorated imports and delegates with the SuppressUnmanagedCodeSecurity attribute. Major speed improvements in CPU-bound applications.
+	+ More robust and faster static initialisation for the GL class.
+	+ Updated GLHelper.cs, with methods to obtain or reload OpenGL entry points, as well as query for supported extensions.
+	+ Got rid of "object" overloads for typed arrays.
+	+ All known bugs are now fixed.
+
++ OpenTK.OpenGL (High level)
+	+ Added the DisplayList class.
+
++ OpenTK.Examples.OpenGL
+	+ Added the Basic.DisplayLists example.
+
+
+
+OpenTK 0.3.4 -> 0.3.5
++ Thanks to Erik Ylvisaker's hard work, OpenTK now works under both Windows and X11.
+	+ The GLContext class now contains all needed code for mode switching.
+	+ The Framework class structure has been updated. Less code is duplicated between GLContext and Framework now.
+	+ Three new examples have been added: OpenGL.Basic.Lesson01 (equivalent to OpenGL.GLSL.Lesson01 without the shaders), OpenGL.Basic.QueryDisplayModes which shows a list of all available display modes, and OpenGL.Basic.NoFramework which shows how to use OpenGL Contexts directly (without relying on the framework).
+	+ New bindings for X and the XF86 extension.
++ New build system based on Prebuild and NAnt (similar to the one used in Tao or Mono.XNA).
++ Updates to the OpenTK.OpenGL.DisplayMode and ColorDepth classes.
++ More XML documentation blocks added to functions and classes.
++ Major update to OpenTK.OpenGL.Bind (see that changelog for more info).
+	+ Revamped GL class (it is self contained now).
+	+ Revamped GLContext class (it is no longer bound to the GL class initialisation).
+	+ Cleaner code, new functions, comments and many new wrappers.
+	+ Updated the spec files for opengl 2.1.
+	+ Added the new 64 bit types to the typemaps (gl.tm and csharp.tm)
++ The bugs in the specs are still there:
+	+ SGIX_icc_texture is still commented out, while enums use it.
+	+ LightProperty is still used by constants (the correct enum is LightParameter).
+		+ I think I should contact someone at the Khronos group about these. For the time being I worked around them, by adding a special case for LightProperty in the translator, and adding the SGIX enum to the missing parameters.
+		+ See also: http://www.haskell.org/HOpenGL/spec_bugs.html (lots of useful information on that site).
++ Directory structure updates.
+	+ Now every project has its own documentation.
+	+ The spec files for OpenGL now reside in the Source/OpenTK/OpenGL directory.
++ Minor updates to the wgl bindings (int -> IntPtr).
++ Tested the binding generator with the glx specs (the reader and the enum writer work ok, the trnaslator and the other writers will need updating).
++ Renamed the GLForm to Framework.
+	+ The Framework now resides in its own project directory.
+
+
+OpenTK 0.3.3 -> 0.3.4
++ Corrected the crash error in Release mode (it was caused by trying to Marshal the System.Windows.Forms.Message struct to PeekMessage - adding my own Message struct corrected the issue).
++ Corrected the call to glShaderSource GLSL.Lesson01. Now the correct number is passed to the count parameter, while the null parameter was changed to IntPtr.Zero (Mono now no longers fails in this call).
++ Updated the GLSL.Lesson01 example to use GetShaderInfoLog on compilation failure.
++ OpenTK.OpenGL.Bind 0.7.5.1 -> 0.7.5.2 (see Bind changelog for more information)
++ Full Mono support under windows.
+
+
+OpenTK 0.3.2 -> 0.3.3
++ OpenTK.OpenGL.Bind 0.7.5 -> 0.7.5.1 (see Bind changelog for more information)
++ Added the GLForm class which sets the base for cross-platform screen, context and keyboard handling.
++ Can now change between fullscreen and windowed modes.
++ Temporarily removed all examples except for GLSL.Lesson01, which has been updated to use the new GLForm class.
+
+
+OpenTK 0.3.1 -> 0.3.2
++ OpenTK.OpenGL.Glu: Eliminated the temporary IntPtr variable in the GetString and ErrorString functions.
++ Specifications.cs_types.txt: Changed types in order to be CLS compliant.
++ OpenTK.OpenGL.Bind 0.7.4 -> 0.7.5
++ Added the GLSL.Lesson01 example.
+
+
+OpenTK 0.3.0 -> 0.3.1
++ Updated the binding generator to version 0.7.4, based on the work done for Tao.
++ Updated the Context load functions. Now Context loads all functions are extensions, and the derived classes override this behavior as needed.
++ Changed the uint array used in the DisplayLists example to an int array.
++ Added the changelog! :)
