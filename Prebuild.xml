@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Prebuild xmlns="http://dnpb.sourceforge.net/schemas/prebuild-1.7.xsd">
+
+  <Solution name="OpenTK">
+
+    <Configuration name="Debug">
+      <Options>
+        <CompilerDefines>DEBUG;TRACE;</CompilerDefines>
+        <OptimizeCode>false</OptimizeCode>
+        <OutputPath>..\..\Binaries\Debug\Libraries</OutputPath>
+        <DebugInformation>true</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Configuration name="Release">
+      <Options>
+        <CompilerDefines>TRACE;</CompilerDefines>
+        <OptimizeCode>true</OptimizeCode>
+        <OutputPath>..\..\Binaries\Release\Libraries</OutputPath>
+        <DebugInformation>false</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Files>
+      <File>.\Todo.txt</File>
+      <File>.\Release.txt</File>
+      <File>.\Changelog.txt</File>
+      <File>.\License.txt</File>
+      <File>.\Instructions.txt</File>
+    </Files>
+    
+    <Project name="OpenTK.Platform.Windows" path=".\Source\Platform\Windows" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\Binaries\Debug\Libraries</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\Binaries\Release\Libraries</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Platform.X11" path=".\Source\Platform\X11" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\Binaries\Debug\Libraries</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\Binaries\Release\Libraries</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.OpenGL.Bind" path=".\Source\OpenGL\Bind" language="C#" type="Exe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\Binaries\Debug\Exe</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\Binaries\Release\Exe</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.OpenGL" path=".\Source\OpenGL\OpenGL" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\Binaries\Debug\Exe</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\Binaries\Release\Exe</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK.Platform.Windows"/>
+      <Reference name="OpenTK.Platform.X11"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Framework" path=".\Source\Framework\" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\Binaries\Debug\Libraries</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\Binaries\Release\Libraries</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK.Platform.Windows"/>
+      <Reference name="OpenTK.Platform.X11"/>
+      <Reference name="OpenTK.OpenGL"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+   
+    <Project name="OpenTK.Examples.OpenGL.Basic.001-Cube" path=".\Source\Examples\OpenGL\Basic\001 - Cube" language="C#" type="WinExe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Debug\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Release\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK.Framework"/>
+      <Reference name="OpenTK.OpenGL"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Examples.OpenGL.Basic.DisplayLists" path=".\Source\Examples\OpenGL\Basic\DisplayLists" language="C#" type="WinExe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Debug\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Release\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK.Framework"/>
+      <Reference name="OpenTK.OpenGL"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Examples.OpenGL.Basic.NoFramework" path=".\Source\Examples\OpenGL\Basic\NoFramework" language="C#" type="WinExe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Debug\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Release\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK.Framework"/>
+      <Reference name="OpenTK.OpenGL"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Examples.OpenGL.Basic.QueryDisplayModes" path=".\Source\Examples\OpenGL\Basic\QueryDisplayModes" language="C#" type="WinExe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Debug\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Release\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK.Framework"/>
+      <Reference name="OpenTK.OpenGL"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK.Examples.OpenGL.GLSL.Lesson01" path=".\Source\Examples\OpenGL\GLSL\Lesson01" language="C#" type="WinExe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Debug\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\..\..\..\Binaries\Release\Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK.Framework"/>
+      <Reference name="OpenTK.OpenGL"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+  </Solution>
+
+</Prebuild>
