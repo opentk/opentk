@@ -1,3 +1,13 @@
+OpenTK 0.3.6 -> 0.3.7
+
++ OpenTK.Build
+	+ Added new, (more) cross-platform build system, written on C#. This takes the place of the scripts and batch files used to compile OpenTK up till now.
+	+ Removed all build scripts.
+
++ OpenTK.Framework
+	+ Now builds under Linux.
+
+
 OpenTK 0.3.5 -> 0.3.6
 
 + OpenTK.OpenGL.Bind
