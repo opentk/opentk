@@ -22,11 +22,11 @@
     </Configuration>
 
     <Files>
-      <File>.\Todo.txt</File>
-      <File>.\Release.txt</File>
-      <File>.\Changelog.txt</File>
-      <File>.\License.txt</File>
-      <File>.\Instructions.txt</File>
+      <File>Todo.txt</File>
+      <File>Release.txt</File>
+      <File>Changelog.txt</File>
+      <File>License.txt</File>
+      <File>Instructions.txt</File>
     </Files>
 
     <Project name="Build" path=".\Source\Build" language="C#" type="Exe">
