@@ -34,7 +34,7 @@ namespace OpenTK
 
         #endregion
 
-        Application.MessageLoopCallback MessageLoop;
+        // Application.MessageLoopCallback MessageLoop;
 
         #region --- Public Properties ---
 
