@@ -9,12 +9,15 @@ namespace OpenTK.Build
     class Project
     {
         static string RootPath;
+        static string SourcePath;
         static string ToolPath = "Build\\";
         static string PrebuildPath = Path.Combine(ToolPath, "Prebuild.exe");
         static string BinPath = "Binaries\\";
-        //string ObjPath 
-
-        static string PrebuildXml = RootPath + "Prebuild.xml";
+        static string ExePath = Path.Combine(BinPath, "Exe");
+        static string LibPath = Path.Combine(BinPath, "Libraries");
+        static string ExamplePath = Path.Combine(BinPath, "Examples");
+ 
+        static string PrebuildXml = "Prebuild.xml";
 
         enum BuildMode
         {
@@ -46,6 +49,7 @@ namespace OpenTK.Build
                 0,
                 Directory.GetCurrentDirectory().LastIndexOf("Build"));
             Directory.SetCurrentDirectory(RootPath);
+            SourcePath = Path.Combine(RootPath, "Source");
 
             // Workaroung for nant on x64 windows (safe for other platforms too, as this affects
             // only the current process).
@@ -118,18 +122,30 @@ namespace OpenTK.Build
                     }
                 }
 
+                ExePath = Path.Combine(
+                    BinPath,
+                    Path.Combine(mode == BuildMode.Debug ? "Debug" : "Release", "Exe"));
+                LibPath = Path.Combine(
+                    BinPath,
+                    Path.Combine(mode == BuildMode.Debug ? "Debug" : "Release", "Libraries"));
+                ExamplePath = Path.Combine(
+                    BinPath,
+                    Path.Combine(mode == BuildMode.Debug ? "Debug" : "Release", "Examples"));
+
                 switch (target)
                 {
                     case BuildTarget.Mono:
                         Console.WriteLine("Building OpenTK using Mono.");
                         ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
                         ExecuteProcess("nant", "-t:mono-2.0");
+
                         break;
 
                     case BuildTarget.Net:
                         Console.WriteLine("Building OpenTK using .Net");
                         ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
                         ExecuteProcess("nant", "-t:net-2.0");
+                        CopyBinaries();
                         break;
 
                     case BuildTarget.MonoDevelop:
@@ -172,8 +188,8 @@ namespace OpenTK.Build
                         break;
                 }
 
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey(true);
+                //Console.WriteLine("Press any key to continue...");
+                //Console.ReadKey(true);
             }
         }
 
@@ -181,14 +197,62 @@ namespace OpenTK.Build
         {
             Console.WriteLine("Deleting {0} directories", search);
             List<string> matches = new List<string>();
-            DirectorySearch(root_path, search, matches);
+            FindDirectories(root_path, search, matches);
             foreach (string m in matches)
             {
                 Directory.Delete(m, true);
             }
         }
 
-        static void DirectorySearch(string directory, string search, List<string> matches) 
+        static void CopyBinaries()
+        {
+            List<string> example_matches = new List<string>();
+            List<string> exe_matches = new List<string>();
+            List<string> dll_matches = new List<string>();
+            List<string> dll_config_matches = new List<string>();
+            
+            Directory.CreateDirectory(BinPath);
+            Directory.CreateDirectory(ExePath);
+            Directory.CreateDirectory(LibPath);
+            Directory.CreateDirectory(ExamplePath);
+
+            // Move the libraries and the config files.
+            FindFiles(SourcePath, "*.dll", dll_matches);
+            foreach (string m in dll_matches)
+            {
+                File.Delete(Path.Combine(LibPath, Path.GetFileName(m)));
+                File.Copy(m, Path.Combine(LibPath, Path.GetFileName(m)));
+                File.Delete(Path.Combine(ExamplePath, Path.GetFileName(m)));
+                File.Copy(m, Path.Combine(ExamplePath, Path.GetFileName(m)));
+            }
+
+            FindFiles(SourcePath, "*.config", dll_config_matches);
+            foreach (string m in dll_config_matches)
+            {
+                File.Delete(Path.Combine(LibPath, Path.GetFileName(m)));
+                File.Copy(m, Path.Combine(LibPath, Path.GetFileName(m)));
+                File.Delete(Path.Combine(ExamplePath, Path.GetFileName(m)));
+                File.Copy(m, Path.Combine(ExamplePath, Path.GetFileName(m)));
+            }
+
+            // Then the examples.
+            FindFiles(Path.Combine(SourcePath, "Examples"), "*.exe", example_matches);
+            foreach (string m in example_matches)
+            {
+                File.Delete(Path.Combine(ExamplePath, Path.GetFileName(m)));
+                File.Move(m, Path.Combine(ExamplePath, Path.GetFileName(m)));
+            }
+
+            // Then the rest of the exes.
+            FindFiles(SourcePath, "*.exe", exe_matches);
+            foreach (string m in exe_matches)
+            {
+                File.Delete(Path.Combine(ExePath, Path.GetFileName(m)));
+                File.Move(m, Path.Combine(ExePath, Path.GetFileName(m)));
+            }
+        }
+
+        static void FindDirectories(string directory, string search, List<string> matches) 
         {
 	        try	
 	        {
@@ -198,7 +262,7 @@ namespace OpenTK.Build
                     {
                         matches.Add(f);
                     }
-                    DirectorySearch(d, search, matches);
+                    FindDirectories(d, search, matches);
                 }
 	        }
 	        catch (System.Exception e) 
@@ -207,6 +271,22 @@ namespace OpenTK.Build
 	        }
         }
 
+        static void FindFiles(string directory, string search, List<string> matches)
+        {
+            try
+            {
+                foreach (string f in Directory.GetFiles(directory, search, SearchOption.AllDirectories))
+                {
+                    matches.Add(f);
+                }
+                //FindFiles(d, search, matches);
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        
         static void ExecuteProcess(string path, string args)
         {
             Process p = new Process();
