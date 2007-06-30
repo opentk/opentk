@@ -158,7 +158,8 @@ namespace OpenTK.Build
                         ExecuteProcess(PrebuildPath, "/clean /yes /file " + PrebuildXml);
                         DeleteDirectories(RootPath, "obj");
                         DeleteDirectories(RootPath, "bin");
-                        Directory.Delete(RootPath + "Binaries", true);
+                        if (Directory.Exists(RootPath + "Binaries"))
+                            Directory.Delete(RootPath + "Binaries", true);
                         break;
 
                     case BuildTarget.SVNClean:
@@ -209,8 +210,17 @@ namespace OpenTK.Build
         static void ExecuteProcess(string path, string args)
         {
             Process p = new Process();
-            p.StartInfo.FileName = path;
-            p.StartInfo.Arguments = args;
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                p.StartInfo.FileName = "mono";
+                p.StartInfo.Arguments = path + " " + args;
+            }
+            else
+            {
+                p.StartInfo.FileName = path;
+                p.StartInfo.Arguments = args;
+            }
+
             p.StartInfo.WorkingDirectory = RootPath;
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.RedirectStandardOutput = true;

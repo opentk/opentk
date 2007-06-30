@@ -29,7 +29,7 @@
       <File>.\Instructions.txt</File>
     </Files>
 
-    <Project name="OpenTK.Build" path=".\Source\Build" language="C#" type="Exe">
+    <Project name="Build" path=".\Source\Build" language="C#" type="Exe">
 
       <Configuration name="Debug">
         <Options>
