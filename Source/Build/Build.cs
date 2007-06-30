@@ -10,7 +10,7 @@ namespace OpenTK.Build
     {
         static string RootPath;
         static string ToolPath = "Build\\";
-        static string PrebuildPath = ToolPath + "Prebuild.exe";
+        static string PrebuildPath = Path.Combine(ToolPath, "Prebuild.exe");
         static string BinPath = "Binaries\\";
         //string ObjPath 
 
