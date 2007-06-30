@@ -290,7 +290,7 @@ namespace OpenTK.Build
         static void ExecuteProcess(string path, string args)
         {
             Process p = new Process();
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            if (Environment.OSVersion.Platform == PlatformID.Unix && !path.ToLower().Contains("nant"))
             {
                 p.StartInfo.FileName = "mono";
                 p.StartInfo.Arguments = path + " " + args;
