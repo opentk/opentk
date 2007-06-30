@@ -28,6 +28,28 @@
       <File>.\License.txt</File>
       <File>.\Instructions.txt</File>
     </Files>
+
+    <Project name="OpenTK.Build" path=".\Source\Build" language="C#" type="Exe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>..\..\Build</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>..\..\Build</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+      
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
     
     <Project name="OpenTK.Platform.Windows" path=".\Source\Platform\Windows" language="C#" type="Library">
 
