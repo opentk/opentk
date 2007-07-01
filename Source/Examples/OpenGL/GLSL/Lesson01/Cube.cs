@@ -124,7 +124,7 @@ namespace OpenTK.Examples.OpenGL.GLSL
             GL.Enable(Enums.EnableCap.DEPTH_TEST);
 
             int vertex_shader_object, fragment_shader_object;
-            int[] status = new int[1];
+            int status;
             int shader_program;
 
             vertex_shader_object = GL.CreateShader(Enums.VERSION_2_0.VERTEX_SHADER);
@@ -132,8 +132,8 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
             GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, null);
             GL.CompileShader(vertex_shader_object);
-            GL.GetShaderiv(vertex_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, status);
-            if (status[0] != (int)Enums.Boolean.TRUE)
+            GL.GetShaderiv(vertex_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
+            if (status != (int)Enums.Boolean.TRUE)
             {
                 StringBuilder info = new StringBuilder(1024);
                 GL.GetShaderInfoLog(vertex_shader_object, info.MaxCapacity, null, info);
@@ -143,8 +143,8 @@ namespace OpenTK.Examples.OpenGL.GLSL
 
             GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, null);
             GL.CompileShader(fragment_shader_object);
-            GL.GetShaderiv(fragment_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, status);
-            if (status[0] != (int)Enums.Boolean.TRUE)
+            GL.GetShaderiv(fragment_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
+            if (status != (int)Enums.Boolean.TRUE)
             {
                 StringBuilder info = new StringBuilder(1024);
                 GL.GetShaderInfoLog(fragment_shader_object, 1024, null, info);

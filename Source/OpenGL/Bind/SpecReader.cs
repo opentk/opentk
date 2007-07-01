@@ -106,7 +106,9 @@ namespace OpenTK.OpenGL.Bind
                     function_name.EndsWith("INTEL") ||
                     function_name.EndsWith("PGI") ||
                     function_name.EndsWith("INGR") ||
-                    function_name.EndsWith("APPLE"));
+                    function_name.EndsWith("APPLE") ||
+                    function_name.EndsWith("OML") ||
+                    function_name.EndsWith("I3D"));
         }
         #endregion
 
@@ -249,6 +251,10 @@ namespace OpenTK.OpenGL.Bind
         public static void ReadEnumSpecs(string file, out CodeTypeDeclarationCollection enums)
         {
             enums = new CodeTypeDeclarationCollection();
+            // comple_enum contains all opengl enumerants.
+            CodeTypeDeclaration complete_enum = new CodeTypeDeclaration();
+            complete_enum.IsEnum = true;
+            complete_enum.Name = "GLenum";
 
             StreamReader sr = OpenSpecFile(file);
             Console.WriteLine("Reading constant specs from file: {0}", file);
@@ -327,6 +333,9 @@ namespace OpenTK.OpenGL.Bind
 
                         //if (!String.IsNullOrEmpty(c.Name) && !e.Members.Contains.Contains(c))
                         SpecTranslator.Merge(e.Members, c);
+
+                        // Insert the current constant in the list of all constants.
+                        SpecTranslator.Merge(complete_enum.Members, c);
                     }
                     while (!sr.EndOfStream);
 
@@ -335,10 +344,11 @@ namespace OpenTK.OpenGL.Bind
                     e.StartDirectives.Add(new CodeRegionDirective(CodeRegionMode.Start, "public enum " + e.Name));
                     e.EndDirectives.Add(new CodeRegionDirective(CodeRegionMode.End, "public enum " + e.Name));
                     
-                    // Hack - discard Boolean enum, it fsucks up the fragile translation code ahead.
+                    // (disabled) Hack - discard Boolean enum, it fsucks up the fragile translation code ahead.
                     //if (!e.Name.Contains("Bool"))
                     SpecTranslator.Merge(enums, e);
                 }
+                SpecTranslator.Merge(enums, complete_enum);
             }
             while (!sr.EndOfStream);
         }
