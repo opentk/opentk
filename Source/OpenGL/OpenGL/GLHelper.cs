@@ -91,11 +91,11 @@ namespace OpenTK.OpenGL
 
         #region internal static IntPtr aglGetProcAddress(string s)
         // osx gets complicated
-        [DllImport(GL_NATIVE_LIBRARY, EntryPoint = "NSIsSymbolNameDefined")]
+        [DllImport("libdl.dylib", EntryPoint = "NSIsSymbolNameDefined")]
         internal static extern bool NSIsSymbolNameDefined(string s);
-        [DllImport(GL_NATIVE_LIBRARY, EntryPoint = "NSLookupAndBindSymbol")]
+        [DllImport("libdl.dylib", EntryPoint = "NSLookupAndBindSymbol")]
         internal static extern IntPtr NSLookupAndBindSymbol(string s);
-        [DllImport(GL_NATIVE_LIBRARY, EntryPoint = "NSAddressOfSymbol")]
+        [DllImport("libdl.dylib", EntryPoint = "NSAddressOfSymbol")]
         internal static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
 
         internal static IntPtr aglGetProcAddress(string s)
@@ -181,7 +181,10 @@ namespace OpenTK.OpenGL
                     { }
 
                     // Ack!
-                    throw new NotSupportedException("Unknown platform - cannot get function pointer.");
+                    throw new NotSupportedException(
+@"Could not find out how to retrive function pointers for this platform.
+Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
+");
 
                 case Platform.Windows:
                     return Wgl.GetProcAddress(name);
@@ -214,7 +217,9 @@ namespace OpenTK.OpenGL
         {
             IntPtr address = GetFunctionPointerForExtensionMethod(name);
 
-            if (address == IntPtr.Zero)
+            if (address == IntPtr.Zero ||
+                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
+                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
             {
                 return null;
             }
