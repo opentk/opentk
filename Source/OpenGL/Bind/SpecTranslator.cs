@@ -67,6 +67,10 @@ namespace OpenTK.OpenGL.Bind
         /// </summary>
         UncheckedParameter,
         /// <summary>
+        /// Function that takes (in/ref/out) a naked pointer as a parameter - we pass an IntPtr.
+        /// </summary>
+        PointerParameter,
+        /// <summary>
         /// Function returns string - needs manual marshalling through IntPtr to prevent the managed GC
         /// from freeing memory allocated on the unmanaged side (e.g. glGetString).
         /// </summary>
@@ -183,6 +187,11 @@ namespace OpenTK.OpenGL.Bind
                 d.ReturnType.ArrayRank = 0;
             }
 
+            if (d.ReturnType.BaseType == "GLenum")
+            {
+                d.ReturnType.BaseType = "Enums.GLenum";
+            }
+
             if (d.ReturnType.UserData.Contains("Wrapper"))
             {
                 d.UserData.Add("Wrapper", null);
@@ -195,25 +204,25 @@ namespace OpenTK.OpenGL.Bind
         {
             CodeTypeReference s;
 
-            if (d.Name == "BufferDataARB")
+            if (d.Name == "CreateShader")
             {
             }
 
             // Translate each parameter of the function while checking for needed wrappers:
             foreach (CodeParameterDeclarationExpression p in d.Parameters)   
             {
-                // Translate parameter type
-                if (Search(enums, p.Type.BaseType))
+                if (Search(enums, p.Type.BaseType) && p.Type.BaseType != "GLenum")
                 {
+                    // If there is a specific enumerant entry for this parameter, then take this.
                     p.Type.BaseType = "Enums." + p.Type.BaseType;
                 }
                 else if (GLTypes.TryGetValue(p.Type.BaseType, out s))
                 {
                     if (s.BaseType == "GLenum" && d.UserData.Contains("Category"))
                     {
-                        bool found = false;
-                        // There is no enumerant with the needed name. Try to see if any of the generic enumerants
+                        // If there isn't, try to see if any of the generic enumerants
                         // (category: VERSION_1_1 etc) match the needed name.
+                        bool found = false;
                         foreach (CodeTypeDeclaration enumerant in enums)
                         {
                             if (enumerant.Name == (string)d.UserData["Category"])
@@ -224,9 +233,10 @@ namespace OpenTK.OpenGL.Bind
                             }
                         }
 
-                        if (!found || p.Type.BaseType.ToLower().Contains("bool"))
+                        // If none match, then fall back to the global enum list.
+                        if (!found)
                         {
-                            p.Type.BaseType = s.BaseType;
+                            p.Type.BaseType = "Enums.GLenum";
                         }
                     }
                     else
@@ -261,6 +271,10 @@ namespace OpenTK.OpenGL.Bind
                     {
                         p.UserData.Add("Wrapper", WrapperTypes.GenericParameter);
                     }
+                    else if (p.Type.BaseType.Contains("IntPtr"))
+                    {
+                        //p.UserData.Add("Wrapper", WrapperTypes.PointerParameter);
+                    }
                     else
                     {
                         p.UserData.Add("Wrapper", WrapperTypes.ArrayParameter);
@@ -271,6 +285,7 @@ namespace OpenTK.OpenGL.Bind
                     p.Type = new CodeTypeReference();
                     p.Type.BaseType = "System.IntPtr";
                     p.Type.ArrayRank = 0;
+                    p.UserData.Add("Flow", p.Direction);
                     // The same wrapper works for either in or out parameters.
                     //p.CustomAttributes.Add(new CodeAttributeDeclaration("In, Out"));
                 }
@@ -299,7 +314,7 @@ namespace OpenTK.OpenGL.Bind
                     d.UserData.Add("Wrapper", null);
                 }
 
-                p.Direction = FieldDirection.In;
+                //p.Direction = FieldDirection.In;
             }
         }
         #endregion
@@ -458,12 +473,12 @@ namespace OpenTK.OpenGL.Bind
                         WrapPointersMonsterFunctionMK2(w, wrappers);
                         --count;
 
-                        /*w = IntPtrToReference(f, count);
+                        w = IntPtrToReference(f, count);
                         wrappers.Add(w);
 
                         ++count;
                         WrapPointersMonsterFunctionMK2(w, wrappers);
-                        --count;*/
+                        --count;
                     }
                     else if ((WrapperTypes)f.Parameters[count].UserData["Wrapper"] == WrapperTypes.GenericParameter)
                     {
@@ -549,8 +564,7 @@ namespace OpenTK.OpenGL.Bind
 
         #region private static CodeMemberMethod IntPtrToReference(CodeMemberMethod f, int index)
         /// <summary>
-        /// This function is not working yet! How can we obtain a pinned IntPtr from a ref
-        /// without resorting to unsafe code?
+        /// Obtain an IntPtr to the reference passed by the user.
         /// </summary>
         /// <param name="f"></param>
         /// <param name="index"></param>
@@ -563,7 +577,11 @@ namespace OpenTK.OpenGL.Bind
             CodeParameterDeclarationExpression newp = new CodeParameterDeclarationExpression();
             newp.Name = f.Parameters[index].Name;
             newp.Type.BaseType = (string)f.Parameters[index].UserData["OriginalType"];
-            newp.Direction = FieldDirection.Ref;
+            if (f.Parameters[index].UserData.Contains("Flow") &&
+                (FieldDirection)f.Parameters[index].UserData["Flow"] == FieldDirection.Out)
+                newp.Direction = FieldDirection.Out;
+            else
+                newp.Direction = FieldDirection.Ref;
             w.Parameters[index] = newp;
 
             // In the function body we should pin all objects in memory before calling the
@@ -651,9 +669,21 @@ namespace OpenTK.OpenGL.Bind
             foreach (CodeParameterDeclarationExpression p in f.Parameters)
             {
                 // Do manual marshalling for objects and arrays, but not strings.
-                if (p.Type.BaseType.ToLower().Contains("object") && !p.Type.BaseType.ToLower().Contains("enums.") ||
-                    (p.Type.ArrayRank > 0 && !p.Type.BaseType.ToLower().Contains("string")))
+                if (p.Type.BaseType == "object" || p.Type.BaseType == "System.Object" ||
+                   (p.Type.ArrayRank > 0 && !p.Type.BaseType.ToLower().Contains("string")) ||
+                   ((p.Direction == FieldDirection.Ref || p.Direction == FieldDirection.Out) &&
+                    !p.Type.BaseType.ToLower().Contains("string")))
                 {
+                    if (p.Direction == FieldDirection.Out)
+                    {
+                        statements.Add(
+                            new CodeAssignStatement(
+                                new CodeVariableReferenceExpression(p.Name),
+                                new CodeSnippetExpression("default(" + p.Type.BaseType + ")")
+                            )
+                        );
+                    }
+
                     // Pin the object and store the resulting GCHandle to h0, h1, ...
                     CodeVariableDeclarationStatement s = new CodeVariableDeclarationStatement();
                     s.Type = new CodeTypeReference("GCHandle");
@@ -679,6 +709,18 @@ namespace OpenTK.OpenGL.Bind
 
                     // Add the h(n) variable to the list of parameters
                     parameters[i] = new CodeVariableReferenceExpression("h" + h + ".AddrOfPinnedObject()");
+
+                    // Add an assignment statement: "variable_name = (variable_type)h(n).Target" for out parameters.
+                    if (p.Direction == FieldDirection.Out)
+                    {
+                        m.TryStatements.Add(
+                            new CodeAssignStatement(
+                                new CodeVariableReferenceExpression(p.Name),
+                                new CodeSnippetExpression("(" + p.Type.BaseType + ")h" + h + ".Target")
+                            )
+                        );
+                    }
+
                     h++;
                 }
                 else
@@ -689,10 +731,10 @@ namespace OpenTK.OpenGL.Bind
                 i++;
             }
 
-            if (!f.ReturnType.BaseType.Contains("Void"))
+            if (f.ReturnType.BaseType.Contains("Void"))
             {
-                m.TryStatements.Add(
-                    new CodeMethodReturnStatement(
+                m.TryStatements.Insert(0,
+                    new CodeExpressionStatement(
                         new CodeMethodInvokeExpression(
                             new CodeTypeReferenceExpression("Delegates"),
                             "gl" + f.Name,
@@ -703,15 +745,22 @@ namespace OpenTK.OpenGL.Bind
             }
             else
             {
-                m.TryStatements.Add(
-                    new CodeMethodInvokeExpression(
-                        new CodeTypeReferenceExpression("Delegates"),
-                        "gl" + f.Name,
-                        parameters
+                m.TryStatements.Insert(0, new CodeVariableDeclarationStatement(f.ReturnType, "retval"));
+                m.TryStatements.Insert(1,
+                    new CodeAssignStatement(
+                        new CodeVariableReferenceExpression("retval"),
+                        new CodeMethodInvokeExpression(
+                            new CodeTypeReferenceExpression("Delegates"),
+                            "gl" + f.Name,
+                            parameters
+                        )
                     )
                 );
-            }
 
+                m.TryStatements.Add(
+                    new CodeMethodReturnStatement(new CodeVariableReferenceExpression("retval"))
+                );
+            }
 
             statements.Add(m);
 
