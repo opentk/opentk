@@ -1,6 +1,6 @@
 ================================================================================
 
-OpenTK 0.3.6 WIP alpha Release notes
+OpenTK 0.3.7 WIP alpha Release notes
 
 IMPORTANT: This release is intended for testing and experimentation only. Use at your own risk!
 
@@ -8,40 +8,17 @@ IMPORTANT: This release is intended for testing and experimentation only. Use at
 
 Highlights:
 
- * Supports the latest OpenGL extensions according to the released specs.
- * Implements preliminary high-level support for display lists (DisplayList class)
- * New example: OpenTK.Basic.DisplayLists
+ * New cross-platform build system written in C#.
+ * Added ref/out overloads for OpenTK.OpenGL.
+ * GLenum contains all opengl constants. No more casting to/from integers.
+ * Improved 64bit compatibility. Fixed extensions under Mac OS X.
 
 --------------------------------------------------------------------------------
 
-For support, bug reports, feature requests and flames, please visit the OpenTK site: http://opentk.sourceforge.net/
+For support, bug reports, feature requests and flames, visit the OpenTK site: http://opentk.sourceforge.net/
 
 The latest version is always available at http://sourceforge.net/projects/opentk
 
-For the bleeding edge code, checkout https://svn.sourceforge.net/svnroot/opentk
-
-================================================================================
-
-The version number for this release is:
-      0.      3.        6.         2
-(major) (minor) (release) (revision)
-
-The odd minor version number denotes that this is a WIP (Work In Progress). This means that the source and the public API (APplication Interface) may change rapidly from release to release.
-
-This is an alpha release. This means it is not feature complete - more features are planned or are in currently in development. When all planned features are ready for testing, this package will move to the beta phase, were the focus will change to testing and bug-fixing.
-
-Missing features include more fine-grained window and context management, High-level OpenGL bindings and several other things. Also expect the naming scheme to change over the next few versions.
-
-================================================================================
-
-This package contains the source for:
-OpenTK.OpenGL			(0.3.6.2)
-OpenTK.OpenGL.Bind		(0.9.0.3)
-OpenTK.Framework			(0.3.3.1)
-OpenTK.Platform.Windows		(0.1.1.0)
-OpenTK.Platform.X11		(0.1.1.0)
-
-OpenTK.OpenGL.Examples.Basic	(Lesson01, DisplayLists, NoFramework, QueryDisplayModes)
-OpenTK.OpenGL.Examples.GLSL	(Lesson01)
+Living on the edge? 'svn co https://opentk.svn.sourceforge.net/svnroot/opentk/trunk opentk'
 
 ================================================================================

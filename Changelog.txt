@@ -7,6 +7,16 @@ OpenTK 0.3.6 -> 0.3.7
 + OpenTK.Framework
 	+ Now builds under Linux.
 
++ OpenTK.OpenGL.Bind
+	+ Synced with Tao.GlBindGen beta 2.1.3.6
+	+ Enabled ref/out overloads.
+	+ Added GLenum, which contains all opengl enumerants (useful for 'polymorphic' opengl functions).
+
++ OpenTK.OpenGL
+	+ ref/out overloads and GLenum (see above).
+	+ Fixed extension loading under Mac OS X.
+	+ Improved compatibility with 64bit platforms.
+
 
 OpenTK 0.3.5 -> 0.3.6
 
