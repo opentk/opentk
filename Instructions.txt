@@ -1,5 +1,21 @@
-This is a source distribution. There are two ways to build a release:
+How to build OpenTK:
 
-1) Install nant from (http://nant.sourceforge.net/) and execute Build-Mono.bat or Build-Net.bat (Windows) or build.sh (Unix).
+1) Install nant from (http://nant.sourceforge.net/)
+2) Navigate to the Build folder and execute Build.exe (type 'mono Build.exe' under Linux/Mac OS X).
+	2a) To build the .Net version, type 'Build.exe net' (or 'mono Build.exe net').
+	2b) To build the Mono version, type 'Build.exe mono' (or 'mono Build.exe mono').
+3) The binaries (library, examples) are placed in the Binaries/Release folder.
 
-2) Execute VS2005.bat or SharpDevelop2.bat (Windows) or MonoDevelop.sh (Unix) to create project files that can be opened and built with the corresponding IDE.
+
+There are other parameters you can pass to Build.exe. A brief list:
+
+net - build using the .Net framework.
+mono - build using Mono.
+
+clean - delete intermediate object files (reclaim some space, the binaries are not touched).
+distclean - delete intermediate and final object files (reclaim all space used during compilation).
+svnclean - delete '.svn' folders. Useful if you checked out from svn, useless if you downloaded a file release.
+
+vs2005 - create project files for Visual Studio 2005.
+monodev - create project files for MonoDevelop.
+sharpdev - as above, for SharpDevelop.

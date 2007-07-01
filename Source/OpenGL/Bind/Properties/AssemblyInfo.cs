@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Generates OpenGL bindings for C# from the C OpenGL headers")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("Copyright ©  2006 Stefanos Apostolopoulos")]
+[assembly: AssemblyProduct("OpenTK.OpenGL.Bind")]
+[assembly: AssemblyCopyright("Copyright ©  2006-2007 Stefanos Apostolopoulos")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.9.0.3")]
-[assembly: AssemblyFileVersion("0.9.0.3")]
+[assembly: AssemblyVersion("0.9.1.0")]
+[assembly: AssemblyFileVersion("0.9.1.0")]
