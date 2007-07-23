@@ -3,6 +3,11 @@ Generic Todos:
 + Investigate startup lag.
 
 
+Bind:
+* Get ready for OpenGL 3.0 (Long Peaks).
+* Fix problems reported on the Tao Framework forums.
+
+
 OpenTK.OpenGL todos:
 * Change the GCHandle method of pinning to 'fixed'. The behaviour is different: fixed guarantees pinning of the whole object.
 * Different classes for each extension category (ARB.Foo, instead of FooARB).
