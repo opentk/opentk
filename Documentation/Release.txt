@@ -8,10 +8,14 @@ IMPORTANT: This release is intended for testing and experimentation only. Use at
 
 Highlights:
 
- * Improved interface for GLContext, GLControl. Unfortunately, projects using 0.3.7 (or previous version of OpenTK) will not compile without changes.
- * GLControls can be added in the VS designer.
- * GameWindow class, a simple, no-nonsense windowing toolkit for games (incomplete).
- * Numerous bugfixes and additions in OpenTK.Platform.Windows and OpenTK.Platform.X11
+ * MAJOR (breaking) changes:
+	* GLContext, GLControl. Unfortunately, projects using 0.3.7 (or previous version of OpenTK) will not compile without changes.
+	* GameWindow class, a simple, no-nonsense windowing toolkit for games (incomplete).
+	* Removed the OpenTK.Framework. Use the GameWindow instead.
+ * Minor changes:
+	* GLControls can be edited through in the Visual Studio designer.
+	* Numerous bugfixes and additions in OpenTK.Platform.Windows and OpenTK.Platform.X11
+	* Resource cleanup fixed (disposable pattern used on all classes with unmanaged resources).
  
 --------------------------------------------------------------------------------
 

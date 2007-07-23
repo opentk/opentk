@@ -1,27 +1,43 @@
 OpenTK 0.3.7 -> 0.3.8
 
-+ OpenTK.Build
++ New project layout. Only four projects remain under the 'Source' directory: Bind, Build, Examples, OpenTK
+	+ The whole library (Platform, Windowing, OpenGL, etc.) is now contained in the OpenTK.dll.
+	+ Build contains the new build system.
+	+ Bind contains the opengl binding generator.
+	+ Examples contains examples showcasing OpenTK and OpenGL.
+
++ Build
 	+ Improved console output.
 	+ Added support for debug target.
 	+ Better handling of wrong targets.
+	+ Moved Prebuild.xml to the Build folder.
 	
-- Removed OpenTK.Framework
++ OpenTK
+	- Removed OpenTK.Framework (superseded by GameWindow)
+	+ GameWindow (new, incomplete)
+		+ Creates render window through system calls.
+		+ Interface suited for games.
+		+ Resize event support.
+		+ Error handling.
+		- No keyboard input yet.
+	+ Platform
+		+ Numerous additions, bugfixes in OpenTK.Platform.Windows, OpenTK.Platform.X11.
+		+ Changed the class and namespace names.
+		+ Added IGLContext, IGLControl, IGameWindow, INativeWindow, IResizable interfaces.
+		+ Added class GLContext : IGLContext. Platform specific implementations in WinGLContext and X11GLContext.
+		+ Added class GLControl : IGLControl. Platform specific implementations in WinGLControl and X11GLControl.
+		+ Added classes WinGLNative, X11GLNative : INativeWindow.
+		+ Added visual studio design support for GLControl.
+	+ Input
+		* Do not use yet, it is not ready.
 
-+ OpenTK.GameWindow (new)
-	+ Creates render window through system calls.
-	+ Interface suited for games.
-	+ Resize event support.
-	+ Error handling.
-	- No keyboard input yet.
-	
-+ OpenTK.Platform
-	+ Numerous additions, bugfixes in OpenTK.Platform.Windows, OpenTK.Platform.X11.
-	+ Changed the class and namespace names.
-	+ Added IGLContext, IGLControl, IGameWindow, INativeWindow, IResizable interfaces.
-	+ Added class GLContext : IGLContext. Platform specific implementations in WinGLContext and X11GLContext.
-	+ Added class GLControl : IGLControl. Platform specific implementations in WinGLControl and X11GLControl.
-	+ Added classes WinGLNative, X11GLNative : INativeWindow.
-	+ Added visual studio design support for GLControl.
++ Examples
+	+ Added an example launcher
+	+ Two example categories for now: Tutorials (showcasing GameWindow) and WinForms (showcasing GLControl)
+	+ Added Tutorials.VBO example (incomplete)
+	+ Added WinForms.FirstWindow example.
+	+ Ported some of the old examples over.
+	* More work on examples and tutorials on the next version.
 	
 
 OpenTK 0.3.6 -> 0.3.7
