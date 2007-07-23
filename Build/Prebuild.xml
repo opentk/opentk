@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Prebuild xmlns="http://dnpb.sourceforge.net/schemas/prebuild-1.7.xsd">
+
+  <Solution name="OpenTK">
+
+    <Configuration name="Debug">
+      <Options>
+        <CompilerDefines>DEBUG;TRACE;</CompilerDefines>
+        <OptimizeCode>false</OptimizeCode>
+        <!--<OutputPath>../../Binaries/Debug/Libraries</OutputPath>-->
+        <DebugInformation>true</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Configuration name="Release">
+      <Options>
+        <CompilerDefines>TRACE;</CompilerDefines>
+        <OptimizeCode>true</OptimizeCode>
+        <!--<OutputPath>../../Binaries/Release/Libraries</OutputPath>-->
+        <DebugInformation>false</DebugInformation>
+      </Options>
+    </Configuration>
+
+    <Files>
+      <File>../Documentation/Todo.txt</File>
+      <File>../Documentation/Release.txt</File>
+      <File>../Documentation/Changelog.txt</File>
+      <File>../Documentation/License.txt</File>
+      <File>./Instructions.txt</File>
+      <File>Prebuild.xml</File>
+    </Files>
+
+    <Project name="Build" path="../Source/Build" language="C#" type="Exe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Debug/Exe</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Release/Exe</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+      
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="Bind" path="../Source/Bind" language="C#" type="Exe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Debug/Exe</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Release/Exe</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
+    <Project name="OpenTK" path="../Source/OpenTK" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Debug/Libraries</OutputPath>
+          <!--<AllowUnsafe>true</AllowUnsafe>-->
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Release/Libraries</OutputPath>
+          <!--<AllowUnsafe>true</AllowUnsafe>-->
+        </Options>
+      </Configuration>
+
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <!--<Match path="." pattern="*.dll.config" recurse="true"/>-->
+      </Files>
+
+    </Project>
+
+    <Project name="Examples" path="../Source/Examples" language="C#" type="WinExe">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Debug/Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Release/Examples</OutputPath>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+    
+  </Solution>
+
+</Prebuild>

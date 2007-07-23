@@ -1,0 +1,24 @@
+================================================================================
+
+OpenTK 0.3.8 WIP alpha Release notes
+
+IMPORTANT: This release is intended for testing and experimentation only. Use at your own risk!
+
+--------------------------------------------------------------------------------
+
+Highlights:
+
+ * Improved interface for GLContext, GLControl. Unfortunately, projects using 0.3.7 (or previous version of OpenTK) will not compile without changes.
+ * GLControls can be added in the VS designer.
+ * GameWindow class, a simple, no-nonsense windowing toolkit for games (incomplete).
+ * Numerous bugfixes and additions in OpenTK.Platform.Windows and OpenTK.Platform.X11
+ 
+--------------------------------------------------------------------------------
+
+For support, bug reports, feature requests and flames, visit the OpenTK site: http://opentk.sourceforge.net/
+
+The latest version is always available at http://sourceforge.net/projects/opentk
+
+Living on the edge? 'svn co https://opentk.svn.sourceforge.net/svnroot/opentk/trunk opentk'
+
+================================================================================
