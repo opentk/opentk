@@ -1,0 +1,46 @@
+Generic Todos:
++ Correctly implement disposable pattern in all relevant classes (WIP as of 0.3.8).
++ Investigate startup lag.
+
+
+OpenTK.OpenGL todos:
+* Change the GCHandle method of pinning to 'fixed'. The behaviour is different: fixed guarantees pinning of the whole object.
+* Different classes for each extension category (ARB.Foo, instead of FooARB).
++ Inline XML documentation.
++ Add complete Wgl, Glx, Agl and Glu bindings.
++ Get rid of the "object" overloads in favour of generics.
+
+
+OpenTK.Platform:
+* GLContext class:
+	+ Add more constructors.
+	+ Add native support for the MacOS X platform (now goes through X).
+* GLControl class:
+	+ Improve the interface. Add more constructors.
+* GameWindow class:
+	+ Add input support.
+
+
+OpenTK.Input todos:
+* Make Key class non-static. Static means all GameWindows share the same input!
+* Complete the Key class.
+* Implement mouse input.
++ Implement other input devices.
+
+
+OpenTK.Timing todos:
++ Start implementing the Timer module.
+
+
+Examples:
++ Add comments were needed.
++ Add more Tutorials and WinForms examples.
+
+
+OpenTK.Math todos:
++ Start implementing the Math module.
+
+
+OpenTK.OpenAL todos:
++ Start researching the OpenAL module.
++ Take a look at the OpenALDotNet wrapper.
