@@ -80,7 +80,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public override void UpdateFrame()
         {
-            if (Key.Escape)
+            if (Key[OpenTK.Input.Keys.Escape])
             {
                 Quit = true;
                 return;

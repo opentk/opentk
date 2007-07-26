@@ -191,7 +191,7 @@ namespace OpenTK.Platform.Windows
             switch ((int)m.WParam)
             {
                 case API.Constants.VK_ESCAPE:
-                    Key.Escape = (m.Msg == API.Constants.WM_KEYDOWN) ? true : false;
+                     //= (m.Msg == API.Constants.WM_KEYDOWN) ? true : false;
                     return true;
             }
 
