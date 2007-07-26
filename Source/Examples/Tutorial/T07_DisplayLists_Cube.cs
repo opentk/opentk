@@ -157,7 +157,7 @@ namespace Examples.Tutorial
         {
 	        base.UpdateFrame();
 
-            if (Key.Escape)
+            if (Key[OpenTK.Input.Keys.Escape])
             {
                 this.Quit = true;
             }
