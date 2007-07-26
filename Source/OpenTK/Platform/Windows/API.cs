@@ -22,14 +22,26 @@ namespace OpenTK.Platform.Windows
     using HWND = System.IntPtr;
     using HINSTANCE = System.IntPtr;
     using HMENU = System.IntPtr;
+
+    using LRESULT = System.IntPtr;
     using LPVOID = System.IntPtr;
-    using LONG = System.Int32;
     using LPCTSTR = System.String;
-    using DWORD = System.Int32;
-    using BOOL = System.Boolean;
-    using UINT = System.UInt32;
+
     using WPARAM = System.IntPtr;
     using LPARAM = System.IntPtr;
+    using HANDLE = System.IntPtr;
+    using HRAWINPUT = System.IntPtr;
+
+    using BYTE = System.Byte;
+    using SHORT = System.Int16;
+    using USHORT = System.UInt16;
+    using LONG = System.Int32;
+    using ULONG = System.UInt32;
+    using DWORD = System.Int32;
+    using BOOL = System.Boolean;
+    using INT = System.Int32;
+    using UINT = System.UInt32;
+
 
     #endregion
 
@@ -140,6 +152,8 @@ namespace OpenTK.Platform.Windows
 
         #region WINAPI methods
 
+        #region Message handling
+
         #region PeekMessage
 
         [StructLayout(LayoutKind.Sequential)]
@@ -245,6 +259,10 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #endregion
+
+        #region Timing
+
         #region TimeBeginPeriod
 
         /// <summary>
@@ -285,6 +303,10 @@ namespace OpenTK.Platform.Windows
         internal static extern bool QueryPerformanceCounter(ref long PerformanceCount);
 
         #endregion
+
+        #endregion
+
+        #region Rendering
 
         #region GetDC
 
@@ -345,22 +367,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region SetWindowPos
-
-        // WINUSERAPI BOOL WINAPI SetWindowPos(__in HWND hWnd, __in_opt HWND hWndInsertAfter,
-        //                                     __in int X, __in int Y, __in int cx, __in int cy, __in UINT uFlags);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool SetWindowPos(
-            IntPtr handle,
-            WindowPlacementOptions placement,
-            int x, int y, int cx, int cy,
-            SetWindowPosFlags flags
-        );
-
-        #endregion
-
         #region SwapBuffers
 
         /// <summary>
@@ -386,6 +392,17 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #endregion
+
+        #region DLL handling
+
+        #region GetModuleHandle
+
+        [DllImport("kernel32.dll")]
+        internal static extern IntPtr GetModuleHandle([MarshalAs(UnmanagedType.LPTStr)]string module_name);
+
+        #endregion
+
         #region LoadLibrary
 
         /// <summary>
@@ -408,6 +425,26 @@ namespace OpenTK.Platform.Windows
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool FreeLibrary(IntPtr handle);
+
+        #endregion
+
+        #endregion
+
+        #region Window Creation
+
+        #region SetWindowPos
+
+        // WINUSERAPI BOOL WINAPI SetWindowPos(__in HWND hWnd, __in_opt HWND hWndInsertAfter,
+        //                                     __in int X, __in int Y, __in int cx, __in int cy, __in UINT uFlags);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool SetWindowPos(
+            IntPtr handle,
+            WindowPlacementOptions placement,
+            int x, int y, int cx, int cy,
+            SetWindowPosFlags flags
+        );
 
         #endregion
 
@@ -548,13 +585,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region GetModuleHandle
-
-        [DllImport("kernel32.dll")]
-        internal static extern IntPtr GetModuleHandle([MarshalAs(UnmanagedType.LPTStr)]string module_name);
-
-        #endregion
-
         #region RegisterClass
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -562,7 +592,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region
+        #region UnregisterClass
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern short UnregisterClass(string className, IntPtr instance);
@@ -571,6 +601,10 @@ namespace OpenTK.Platform.Windows
         internal static extern short UnregisterClass(IntPtr className, IntPtr instance);
 
         #endregion
+
+        #endregion
+
+        #region Display settings
 
         #region int ChangeDisplaySettings(ref Gdi.DEVMODE devMode, int flags)
         /// <summary>
@@ -591,28 +625,249 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #endregion
 
-        // *********** Never use GetLastError! ************
+        #region GetASsyncKeyState
 
-        //#region GetLastError
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern SHORT GetAsyncKeyState(int vKey);
 
-        //[DllImport("kernel32.dll")]
-        //internal static extern int GetLastError();
+        #endregion
 
-        //#endregion
+        #region Raw Input
 
-        //#region SetLastError
+        #region DefRawInputProc
 
-        //[DllImport("kernel32.dll")]
-        //internal static extern void SetLastError(int error_code);
+        /// <summary>
+        /// calls the default raw input procedure to provide default processing for
+        /// any raw input messages that an application does not process.
+        /// This function ensures that every message is processed.
+        /// DefRawInputProc is called with the same parameters received by the window procedure.
+        /// </summary>
+        /// <param name="RawInput">Pointer to an array of RawInput structures.</param>
+        /// <param name="Input">Number of RawInput structures pointed to by paRawInput.</param>
+        /// <param name="SizeHeader">Size, in bytes, of the RawInputHeader structure.</param>
+        /// <returns>If successful, the function returns S_OK. Otherwise it returns an error value.</returns>
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern LRESULT DefRawInputProc(
+            RawInput[] RawInput,
+            INT Input,
+            UINT SizeHeader
+        );
 
-        //#endregion
+        #endregion
 
-        //#region FormatMessage
+        #region RegisterRawInputDevices
 
-        //#endregion
+        /// <summary>
+        /// Registers the devices that supply the raw input data.
+        /// </summary>
+        /// <param name="RawInputDevices">
+        /// Pointer to an array of RawInputDevice structures that represent the devices that supply the raw input.
+        /// </param>
+        /// <param name="NumDevices">
+        /// Number of RawInputDevice structures pointed to by RawInputDevices.
+        /// </param>
+        /// <param name="Size">
+        /// Size, in bytes, of a RAWINPUTDEVICE structure.
+        /// </param>
+        /// <returns>
+        /// TRUE if the function succeeds; otherwise, FALSE. If the function fails, call GetLastError for more information.
+        /// </returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern BOOL RegisterRawInputDevices(
+            RawInputDevice[] RawInputDevices,
+            UINT NumDevices,
+            UINT Size
+        );
 
-        // ************************************************
+        #endregion
+
+        #region GetRawInputBuffer
+
+        /// <summary>
+        /// Does a buffered read of the raw input data.
+        /// </summary>
+        /// <param name="Data">
+        /// Pointer to a buffer of RawInput structures that contain the raw input data.
+        /// If NULL, the minimum required buffer, in bytes, is returned in Size.
+        /// </param>
+        /// <param name="Size">Pointer to a variable that specifies the size, in bytes, of a RawInput structure.</param>
+        /// <param name="SizeHeader">Size, in bytes, of RawInputHeader.</param>
+        /// <returns>
+        /// If Data is NULL and the function is successful, the return value is zero.
+        /// If Data is not NULL and the function is successful, the return value is the number
+        /// of RawInput structures written to Data.
+        /// If an error occurs, the return value is (UINT)-1. Call GetLastError for the error code.
+        /// </returns>
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern UINT GetRawInputBuffer(
+            [Out] RawInput[] Data,
+            [In, Out] ref UINT Size,
+            [In] UINT SizeHeader
+        );
+
+        #endregion
+
+        #region GetRegisteredRawInputDevices
+
+        /// <summary>
+        /// Gets the information about the raw input devices for the current application.
+        /// </summary>
+        /// <param name="RawInputDevices">
+        /// Pointer to an array of RawInputDevice structures for the application.
+        /// </param>
+        /// <param name="NumDevices">
+        /// Number of RawInputDevice structures in RawInputDevices.
+        /// </param>
+        /// <param name="cbSize">
+        /// Size, in bytes, of a RawInputDevice structure.
+        /// </param>
+        /// <returns>
+        /// <para>
+        /// If successful, the function returns a non-negative number that is
+        /// the number of RawInputDevice structures written to the buffer. 
+        /// </para>
+        /// <para>
+        /// If the pRawInputDevices buffer is too small or NULL, the function sets
+        /// the last error as ERROR_INSUFFICIENT_BUFFER, returns -1,
+        /// and sets NumDevices to the required number of devices.
+        /// </para>
+        /// <para>
+        /// If the function fails for any other reason, it returns -1. For more details, call GetLastError.
+        /// </para>
+        /// </returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern UINT GetRegisteredRawInputDevices(
+            [Out] RawInput[] RawInputDevices,
+            [In, Out] ref UINT NumDevices,
+            UINT cbSize
+        );
+
+        #endregion
+
+        #region GetRawInputDeviceList
+
+        /// <summary>
+        /// Enumerates the raw input devices attached to the system.
+        /// </summary>
+        /// <param name="RawInputDeviceList">
+        /// ointer to buffer that holds an array of RawInputDeviceList structures
+        /// for the devices attached to the system.
+        /// If NULL, the number of devices are returned in NumDevices.
+        /// </param>
+        /// <param name="NumDevices">
+        /// Pointer to a variable. If RawInputDeviceList is NULL, it specifies the number
+        /// of devices attached to the system. Otherwise, it contains the size, in bytes,
+        /// of the preallocated buffer pointed to by pRawInputDeviceList.
+        /// However, if NumDevices is smaller than needed to contain RawInputDeviceList structures,
+        /// the required buffer size is returned here.
+        /// </param>
+        /// <param name="Size">
+        /// Size of a RawInputDeviceList structure.
+        /// </param>
+        /// <returns>
+        /// If the function is successful, the return value is the number of devices stored in the buffer
+        /// pointed to by RawInputDeviceList.
+        /// If RawInputDeviceList is NULL, the return value is zero. 
+        /// If NumDevices is smaller than needed to contain all the RawInputDeviceList structures,
+        /// the return value is (UINT) -1 and the required buffer is returned in NumDevices.
+        /// Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
+        /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
+        /// </returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern UINT GetRawInputDeviceList(
+            [Out] RawInputDeviceList[] RawInputDeviceList,
+            [In, Out] ref UINT NumDevices,
+            UINT Size
+        );
+
+        #endregion
+
+        #region GetRawInputDeviceInfo
+
+        /// <summary>
+        /// Gets information about the raw input device.
+        /// </summary>
+        /// <param name="Device">
+        /// Handle to the raw input device. This comes from the lParam of the WM_INPUT message,
+        /// from RawInputHeader.Device, or from GetRawInputDeviceList.
+        /// It can also be NULL if an application inserts input data, for example, by using SendInput.
+        /// </param>
+        /// <param name="Command">
+        /// Specifies what data will be returned in pData. It can be one of the following values. 
+        /// RIDI_PREPARSEDDATA
+        /// Data points to the previously parsed data.
+        /// RIDI_DEVICENAME
+        /// Data points to a string that contains the device name. 
+        /// For this Command only, the value in Size is the character count (not the byte count).
+        /// RIDI_DEVICEINFO
+        /// Data points to an RID_DEVICE_INFO structure.
+        /// </param>
+        /// <param name="Data">
+        /// ointer to a buffer that contains the information specified by Command.
+        /// If Command is RIDI_DEVICEINFO, set RawInputDeviceInfo.Size to sizeof(RawInputDeviceInfo)
+        /// before calling GetRawInputDeviceInfo. (This is done automatically in OpenTK)
+        /// </param>
+        /// <param name="Size">
+        /// Pointer to a variable that contains the size, in bytes, of the data in Data.
+        /// </param>
+        /// <returns>
+        /// <para>If successful, this function returns a non-negative number indicating the number of bytes copied to Data.</para>
+        /// <para>If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.</para>
+        /// <para>Call GetLastError to identify any other errors.</para>
+        /// </returns>
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern UINT GetRawInputDeviceInfo(
+            HANDLE Device,
+            UINT Command,
+            [In, Out] LPVOID Data,
+            [In, Out] ref UINT Size
+        );
+
+        #endregion
+
+        #region GetRawInputData
+
+        /// <summary>
+        /// Gets the raw input from the specified device.
+        /// </summary>
+        /// <param name="RawInput">Handle to the RawInput structure. This comes from the lParam in WM_INPUT.</param>
+        /// <param name="Command">
+        /// Command flag. This parameter can be one of the following values. 
+        /// RID_INPUT
+        /// Get the raw data from the RAWINPUT structure.
+        /// RID_HEADER
+        /// Get the header information from the RAWINPUT structure.
+        /// </param>
+        /// <param name="Data">Pointer to the data that comes from the RawInput structure. This depends on the value of uiCommand. If Data is NULL, the required size of the buffer is returned in Size.</param>
+        /// <param name="Size">Pointer to a variable that specifies the size, in bytes, of the data in Data.</param>
+        /// <param name="SizeHeader">Size, in bytes, of RawInputHeader.</param>
+        /// <returns>
+        /// <para>If Data is NULL and the function is successful, the return value is 0. If Data is not NULL and the function is successful, the return value is the number of bytes copied into Data.</para>
+        /// <para>If there is an error, the return value is (UINT)-1.</para>
+        /// </returns>
+        /// <remarks>
+        /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array of RawInput structures.
+        /// </remarks>
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern UINT GetRawInputData(
+            HRAWINPUT RawInput,
+            UINT Command,
+            [Out] LPVOID Data,
+            [In, Out] ref UINT Size,
+            UINT SizeHeader
+        );
+
+        #endregion
+
+        #endregion
+
         #endregion
 
         #region WINAPI structs
@@ -1065,6 +1320,455 @@ namespace OpenTK.Platform.Windows
 
             DEFERERASE      = 0x2000,
             ASYNCWINDOWPOS  = 0x4000
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Raw Input structures
+
+        #region RawInputDevice
+
+        /// <summary>
+        /// Defines information for the raw input devices.
+        /// </summary>
+        /// <remarks>
+        /// If RIDEV_NOLEGACY is set for a mouse or a keyboard, the system does not generate any legacy message for that device for the application. For example, if the mouse TLC is set with RIDEV_NOLEGACY, WM_LBUTTONDOWN and related legacy mouse messages are not generated. Likewise, if the keyboard TLC is set with RIDEV_NOLEGACY, WM_KEYDOWN and related legacy keyboard messages are not generated.
+        /// </remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public class RawInputDevice
+        {
+            /// <summary>
+            /// Top level collection Usage page for the raw input device.
+            /// </summary>
+            public USHORT UsagePage;
+            /// <summary>
+            /// Top level collection Usage for the raw input device.
+            /// </summary>
+            public USHORT Usage;
+            /// <summary>
+            /// Mode flag that specifies how to interpret the information provided by usUsagePage and usUsage. It can be zero (the default) or one of the following values. By default, the operating system sends raw input from devices with the specified top level collection (TLC) to the registered application as long as it has the window focus. 
+            /// RIDEV_APPKEYS
+            /// Microsoft Windows XP Service Pack 1 (SP1): If set, the application command keys are handled. RIDEV_APPKEYS can be specified only if RIDEV_NOLEGACY is specified for a keyboard device.
+            /// RIDEV_CAPTUREMOUSE
+            /// If set, the mouse button click does not activate the other window.
+            /// RIDEV_EXCLUDE
+            /// If set, this specifies the top level collections to exclude when reading a complete usage page. This flag only affects a TLC whose usage page is already specified with RIDEV_PAGEONLY. 
+            /// RIDEV_EXINPUTSINK
+            /// If set, this enables the caller to receive input in the background only if the foreground application does not process it. In other words, if the foreground application is not registered for raw input, then the background application that is registered will receive the input.
+            /// RIDEV_INPUTSINK
+            /// If set, this enables the caller to receive the input even when the caller is not in the foreground. Note that hwndTarget must be specified.
+            /// RIDEV_NOHOTKEYS
+            /// If set, the application-defined keyboard device hotkeys are not handled. However, the system hotkeys; for example, ALT+TAB and CTRL+ALT+DEL, are still handled. By default, all keyboard hotkeys are handled. RIDEV_NOHOTKEYS can be specified even if RIDEV_NOLEGACY is not specified and hwndTarget is NULL.
+            /// RIDEV_NOLEGACY
+            /// If set, this prevents any devices specified by usUsagePage or usUsage from generating legacy messages. This is only for the mouse and keyboard. See Remarks.
+            /// RIDEV_PAGEONLY
+            /// If set, this specifies all devices whose top level collection is from the specified usUsagePage. Note that usUsage must be zero. To exclude a particular top level collection, use RIDEV_EXCLUDE.
+            /// RIDEV_REMOVE
+            /// If set, this removes the top level collection from the inclusion list. This tells the operating system to stop reading from a device which matches the top level collection.
+            /// </summary>
+            public INT Flags;
+            /// <summary>
+            /// Handle to the target window. If NULL it follows the keyboard focus.
+            /// </summary>
+            public HWND Target;
+        }
+
+        #endregion
+
+        #region RawInputDeviceList
+
+        /// <summary>
+        /// Contains information about a raw input device.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public class RawInputDeviceList
+        {
+            /// <summary>
+            /// Handle to the raw input device.
+            /// </summary>
+            public HANDLE Device;
+            /// <summary>
+            /// Type of device. This can be one of the following values. 
+            /// RIM_TYPEHID
+            /// The device is an Human Interface Device (HID) that is not a keyboard and not a mouse.
+            /// RIM_TYPEKEYBOARD
+            /// The device is a keyboard.
+            /// RIM_TYPEMOUSE
+            /// The device is a mouse.
+            /// </summary>
+            public DWORD Type;
+        }
+
+        #endregion
+
+        #region RawInput
+
+        /// <summary>
+        /// Contains the raw input from a device.
+        /// </summary>
+        /// <remarks>
+        /// <para>The handle to this structure is passed in the lParam parameter of WM_INPUT.</para>
+        /// <para>To get detailed information -- such as the header and the content of the raw input -- call GetRawInputData.</para>
+        /// <para>To get device specific information, call GetRawInputDeviceInfo with the hDevice from RAWINPUTHEADER.</para>
+        /// <para>Raw input is available only when the application calls RegisterRawInputDevices with valid device specifications.</para>
+        /// </remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public class RawInput
+        {
+            public RawInputHeader Header; 
+            [StructLayout(LayoutKind.Explicit)]
+            public struct Data
+            {
+                [FieldOffset(0)]
+                public RawMouse Mouse;
+                [FieldOffset(0)]
+                public RawKeyboard Keyboard;
+                [FieldOffset(0)]
+                public RawHID HID; 
+            }
+        }
+
+        #endregion
+
+        #region RawInputHeader
+
+        /// <summary>
+        /// Contains the header information that is part of the raw input data.
+        /// </summary>
+        /// <remarks>
+        /// To get more information on the device, use hDevice in a call to GetRawInputDeviceInfo.
+        /// </remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RawInputHeader
+        {
+            /// <summary>
+            /// Type of raw input. It can be one of the following values. 
+            /// RIM_TYPEHID
+            /// Raw input comes from some device that is not a keyboard or a mouse.
+            /// RIM_TYPEKEYBOARD
+            /// Raw input comes from the keyboard.
+            /// RIM_TYPEMOUSE
+            /// Raw input comes from the mouse.
+            /// </summary>
+            public DWORD Type;
+            /// <summary>
+            /// Size, in bytes, of the entire input packet of data. This includesRAWINPUT plus possible extra input reports in the RAWHID variable length array.
+            /// </summary>
+            public DWORD Size;
+            /// <summary>
+            /// Handle to the device generating the raw input data.
+            /// </summary>
+            public HANDLE Device;
+            /// <summary>
+            /// Value passed in the wParam parameter of the WM_INPUT message.
+            /// </summary>
+            public WPARAM Param;
+        }
+
+        #endregion
+
+        #region RawKeyboard
+
+        /// <summary>
+        /// Contains information about the state of the keyboard.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RawKeyboard
+        {
+            /// <summary>
+            /// Scan code from the key depression. The scan code for keyboard overrun is KEYBOARD_OVERRUN_MAKE_CODE.
+            /// </summary>
+            public USHORT MakeCode;
+            /// <summary>
+            /// Flags for scan code information. It can be one or more of the following.
+            /// RI_KEY_MAKE
+            /// RI_KEY_BREAK
+            /// RI_KEY_E0
+            /// RI_KEY_E1
+            /// RI_KEY_TERMSRV_SET_LED
+            /// RI_KEY_TERMSRV_SHADOW
+            /// </summary>
+            public USHORT Flags;
+            /// <summary>
+            /// Reserved; must be zero.
+            /// </summary>
+            USHORT Reserved;
+            /// <summary>
+            /// Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
+            /// </summary>
+            public USHORT VKey;
+            /// <summary>
+            /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.
+            /// </summary>
+            public UINT Message;
+            /// <summary>
+            /// Device-specific additional information for the event.
+            /// </summary>
+            public ULONG ExtraInformation;
+        }
+
+        #endregion
+
+        #region RawMouse
+
+        /// <summary>
+        /// Contains information about the state of the mouse.
+        /// </summary>
+        [StructLayout(LayoutKind.Explicit)]
+        public struct RawMouse
+        {
+            /// <summary>
+            /// Mouse state. This member can be any reasonable combination of the following. 
+            /// MOUSE_ATTRIBUTES_CHANGED
+            /// Mouse attributes changed; application needs to query the mouse attributes.
+            /// MOUSE_MOVE_RELATIVE
+            /// Mouse movement data is relative to the last mouse position.
+            /// MOUSE_MOVE_ABSOLUTE
+            /// Mouse movement data is based on absolute position.
+            /// MOUSE_VIRTUAL_DESKTOP
+            /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
+            /// </summary>
+            [FieldOffset(0)]
+            public USHORT Flags;
+            /// <summary>
+            /// Reserved.
+            /// </summary>
+            [FieldOffset(2)]
+            ULONG Buttons;
+            /// <summary>
+            /// Transition state of the mouse buttons. This member can be one or more of the following values. 
+            /// RI_MOUSE_LEFT_BUTTON_DOWN
+            /// Left button changed to down.
+            /// RI_MOUSE_LEFT_BUTTON_UP
+            /// Left button changed to up.
+            /// RI_MOUSE_MIDDLE_BUTTON_DOWN
+            /// Middle button changed to down.
+            /// RI_MOUSE_MIDDLE_BUTTON_UP
+            /// Middle button changed to up.
+            /// RI_MOUSE_RIGHT_BUTTON_DOWN
+            /// Right button changed to down.
+            /// RI_MOUSE_RIGHT_BUTTON_UP
+            /// Right button changed to up.
+            /// RI_MOUSE_BUTTON_1_DOWN
+            /// RI_MOUSE_LEFT_BUTTON_DOWN
+            /// RI_MOUSE_BUTTON_1_UP
+            /// RI_MOUSE_LEFT_BUTTON_UP
+            /// RI_MOUSE_BUTTON_2_DOWN
+            /// RI_MOUSE_RIGHT_BUTTON_DOWN
+            /// RI_MOUSE_BUTTON_2_UP
+            /// RI_MOUSE_RIGHT_BUTTON_UP
+            /// RI_MOUSE_BUTTON_3_DOWN
+            /// RI_MOUSE_MIDDLE_BUTTON_DOWN
+            /// RI_MOUSE_BUTTON_3_UP
+            /// RI_MOUSE_MIDDLE_BUTTON_UP
+            /// RI_MOUSE_BUTTON_4_DOWN
+            /// XBUTTON1 changed to down.
+            /// RI_MOUSE_BUTTON_4_UP
+            /// XBUTTON1 changed to up.
+            /// RI_MOUSE_BUTTON_5_DOWN
+            /// XBUTTON2 changed to down.
+            /// RI_MOUSE_BUTTON_5_UP
+            /// XBUTTON2 changed to up.
+            /// RI_MOUSE_WHEEL
+            /// Raw input comes from a mouse wheel. The wheel delta is stored in usButtonData.
+            /// </summary>
+            [FieldOffset(2)]
+            public USHORT ButtonFlags;
+            /// <summary>
+            /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
+            /// </summary>
+            [FieldOffset(4)]
+            public USHORT ButtonData;
+            /// <summary>
+            /// Raw state of the mouse buttons.
+            /// </summary>
+            [FieldOffset(6)]
+            public ULONG RawButtons;
+            /// <summary>
+            /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+            /// </summary>
+            [FieldOffset(10)]
+            public LONG LastX;
+            /// <summary>
+            /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+            /// </summary>
+            [FieldOffset(14)]
+            public LONG LastY;
+            /// <summary>
+            /// Device-specific additional information for the event.
+            /// </summary>
+            [FieldOffset(18)]
+            public ULONG ExtraInformation;
+        }
+
+        #endregion
+
+        #region RawHID
+
+        /// <summary>
+        /// The RawHID structure describes the format of the raw input
+        /// from a Human Interface Device (HID).
+        /// </summary>
+        /// <remarks>
+        /// Each WM_INPUT can indicate several inputs, but all of the inputs
+        /// come from the same HID. The size of the bRawData array is
+        /// dwSizeHid * dwCount.
+        /// </remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RawHID
+        {
+            /// <summary>
+            /// Size, in bytes, of each HID input in bRawData.
+            /// </summary>
+            public DWORD SizeHid;
+            /// <summary>
+            /// Number of HID inputs in bRawData.
+            /// </summary>
+            public DWORD Count;
+            /// <summary>
+            /// Raw input data as an array of bytes.
+            /// </summary>
+            public BYTE RawData;
+        }
+
+        #endregion
+
+        #region RawInputDeviceInfo
+
+        /// <summary>
+        /// Defines the raw input data coming from any device.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public class RawInputDeviceInfo
+        {
+            /// <summary>
+            /// Size, in bytes, of the RawInputDeviceInfo structure.
+            /// </summary>
+            DWORD Size = Marshal.SizeOf(typeof(RawInputDeviceInfo)); 
+            /// <summary>
+            /// Type of raw input data. This member can be one of the following values. 
+            /// RIM_TYPEHID
+            /// Data comes from an HID that is not a keyboard or a mouse.
+            /// RIM_TYPEKEYBOARD
+            /// Data comes from a keyboard.
+            /// RIM_TYPEMOUSE
+            /// Data comes from a mouse.
+            /// </summary>
+            public DWORD Type;
+            [StructLayout(LayoutKind.Explicit)]
+            public struct Device
+            { 
+                [FieldOffset(0)]RawInputMouseDeviceInfo Mouse;
+                [FieldOffset(0)]RawInputKeyboardDeviceInfo Keyboard;
+                [FieldOffset(0)]RawInputHIDDeviceInfo HID; 
+            };
+        }
+
+        #endregion
+
+        #region RawInputHIDDeviceInfo
+
+        /// <summary>
+        /// Defines the raw input data coming from the specified Human Interface Device (HID).
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RawInputHIDDeviceInfo
+        {
+            /// <summary>
+            /// Vendor ID for the HID.
+            /// </summary>
+            public DWORD VendorId;
+            /// <summary>
+            /// Product ID for the HID.
+            /// </summary>
+            public DWORD ProductId;
+            /// <summary>
+            /// Version number for the HID.
+            /// </summary>
+            public DWORD VersionNumber;
+            /// <summary>
+            /// Top-level collection Usage Page for the device.
+            /// </summary>
+            public USHORT UsagePage;
+            /// <summary>
+            /// Top-level collection Usage for the device.
+            /// </summary>
+            public USHORT Usage;
+        }
+
+        #endregion
+
+        #region RawInputKeyboardDeviceInfo
+
+        /// <summary>
+        /// Defines the raw input data coming from the specified keyboard.
+        /// </summary>
+        /// <remarks>
+        /// For the keyboard, the Usage Page is 1 and the Usage is 6.
+        /// </remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RawInputKeyboardDeviceInfo
+        {
+            /// <summary>
+            /// Type of the keyboard.
+            /// </summary>
+            public DWORD Type;
+            /// <summary>
+            /// Subtype of the keyboard.
+            /// </summary>
+            public DWORD SubType;
+            /// <summary>
+            /// Scan code mode.
+            /// </summary>
+            public DWORD KeyboardMode;
+            /// <summary>
+            /// Number of function keys on the keyboard.
+            /// </summary>
+            public DWORD NumberOfFunctionKeys;
+            /// <summary>
+            /// Number of LED indicators on the keyboard.
+            /// </summary>
+            public DWORD NumberOfIndicators;
+            /// <summary>
+            /// Total number of keys on the keyboard.
+            /// </summary>
+            public DWORD NumberOfKeysTotal;
+        }
+
+        #endregion
+
+        #region RawInputMouseDeviceInfo
+
+        /// <summary>
+        /// Defines the raw input data coming from the specified mouse.
+        /// </summary>
+        /// <remarks>
+        /// For the keyboard, the Usage Page is 1 and the Usage is 2.
+        /// </remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RawInputMouseDeviceInfo
+        {
+            /// <summary>
+            /// ID for the mouse device.
+            /// </summary>
+            public DWORD Id;
+            /// <summary>
+            /// Number of buttons for the mouse.
+            /// </summary>
+            public DWORD NumberOfButtons;
+            /// <summary>
+            /// Number of data points per second. This information may not be applicable for every mouse device.
+            /// </summary>
+            public DWORD SampleRate;
+            /// <summary>
+            /// TRUE if the mouse has a wheel for horizontal scrolling; otherwise, FALSE.
+            /// </summary>
+            /// <remarks>
+            /// This member is only supported under Microsoft Windows Vista and later versions.
+            /// </remarks>
+            public BOOL HasHorizontalWheel;
         }
 
         #endregion

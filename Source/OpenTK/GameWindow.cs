@@ -7,17 +7,19 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
-using OpenTK.Platform;
 using System.Diagnostics;
+
+using OpenTK.Input;
+using OpenTK.Platform;
 
 namespace OpenTK
 {
     public class GameWindow : OpenTK.Platform.IGLControl, OpenTK.Platform.IGameWindow
     {
-        INativeWindow glWindow;
-
+        private INativeWindow glWindow;
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
+
+        public Keyboard Key = new Keyboard();
 
         #region --- Contructors ---
 
