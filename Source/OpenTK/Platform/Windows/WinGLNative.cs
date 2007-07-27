@@ -24,6 +24,8 @@ namespace OpenTK.Platform.Windows
         
         private bool disposed;
 
+        private WinRawKeyboard key;
+
         #region --- Contructors ---
 
         /// <summary>
@@ -72,6 +74,12 @@ namespace OpenTK.Platform.Windows
                     0.0f
                 )
             );
+
+            if (Environment.OSVersion.Version.Major > 5 ||
+                (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
+                key = new WinRawKeyboard(this.Handle); // WinXP and higher support raw input.
+            else
+                throw new PlatformNotSupportedException("Input is not implemented for platforms prior to Windows XP, yet.");
         }
 
         /*
@@ -167,12 +175,21 @@ namespace OpenTK.Platform.Windows
                     //this.OnResize(resizeEventArgs);
                     return;
 
-                case API.Constants.WM_KEYDOWN:
+                case API.Constants.WM_KEYDOWN:          // Legacy input events
                 case API.Constants.WM_KEYUP:
-                    if (this.ProcessKey(ref m))
-                        return;
-                    else
+                    break;
+
+                case API.Constants.WM_INPUT:            // Raw input
+                    API.RawInput rin = WinRawInput.ProcessEvent(ref msg);
+                    if (rin.Header.Type == API.RawInputDeviceType.KEYBOARD)
+                    {
+                        if (this.key.ProcessEvent(rin))
+                            return;
+                        else
+                            break;
                         break;
+                    }
+                    break;
                 
                 case API.Constants.WM_CLOSE:
                     API.PostQuitMessage(0);
@@ -200,7 +217,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- IGLWindow Members ---
+        #region --- INativeWindow Members ---
 
         #region public void ProcessEvents()
 
@@ -226,6 +243,15 @@ namespace OpenTK.Platform.Windows
             {
                 this.Create(this, e);
             }
+        }
+
+        #endregion
+
+        #region public IKeyboard Key
+
+        public IKeyboard Key
+        {
+            get { return this.key; }
         }
 
         #endregion
