@@ -13,7 +13,7 @@ namespace OpenTK.Input
             if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
                 Environment.OSVersion.Platform == PlatformID.Win32Windows)
             {
-                keyboard = new OpenTK.Platform.Windows.WinKeyboard();
+                keyboard = new OpenTK.Platform.Windows.WinRawKeyboard();
             }
             else if (Environment.OSVersion.Platform == PlatformID.Unix ||
                 Environment.OSVersion.Platform == (PlatformID)128) // some older versions of Mono reported 128.
@@ -28,16 +28,15 @@ namespace OpenTK.Input
             }
         }
 
+        #region --- IKeyboard members ---
+
         public bool this[Keys k]
         {
             get { return keyboard[k]; }
             set { keyboard[k] = value; }
         }
 
-        public void Poll()
-        {
-            keyboard.Poll();
-        }
+        #endregion
     }
 
     public enum Keys : int

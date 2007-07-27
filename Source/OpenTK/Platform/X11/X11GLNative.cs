@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using OpenTK.Input;
 
 //using OpenTK.OpenGL;
 
@@ -26,6 +27,8 @@ namespace OpenTK.Platform.X11
         private IntPtr window;
 
         private DisplayMode mode = new DisplayMode();
+
+        //private X11Keyboard key;
 
         // Number of pending events.
         private int pending = 0;
@@ -170,7 +173,7 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region --- IGLWindow Members ---
+        #region --- INativeWindow Members ---
 
         #region public void ProcessEvents()
 
@@ -264,6 +267,15 @@ namespace OpenTK.Platform.X11
             {
                 this.Create(this, e);
             }
+        }
+
+        #endregion
+
+        #region public Keyboard Key
+
+        public IKeyboard Key
+        {
+            get { throw new NotImplementedException(); }
         }
 
         #endregion

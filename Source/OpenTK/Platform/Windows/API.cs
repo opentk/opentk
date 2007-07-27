@@ -51,13 +51,26 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal static class API
     {
-        // Prevent BeforeFieldInit optimization.
-        static API() { }
+        // Prevent BeforeFieldInit optimization, and initialize 'size' fields.
+        static API()
+        {
+            RawInputHeaderSize = (uint)Marshal.SizeOf(typeof(RawInputHeader));
+            RawInputSize = (uint)Marshal.SizeOf(typeof(RawInput));
+        }
 
         #region Constants
 
         internal struct Constants
         {
+            // Mouse indicator flags (found in winuser.h)
+            internal const int MOUSE_MOVE_RELATIVE = 0;
+            internal const int MOUSE_MOVE_ABSOLUTE = 1;
+            internal const int MOUSE_VIRTUAL_DESKTOP = 0x02;  // the coordinates are mapped to the virtual desktop
+            internal const int MOUSE_ATTRIBUTES_CHANGED = 0x04;  // requery for mouse attributes
+
+            // Found in winuser.h
+            internal const int KEYBOARD_OVERRUN_MAKE_CODE = 0xFF;
+
             // WM_ACTIVATE state values (found in winuser.h)
             internal const int WA_INACTIVE    = 0;
             internal const int WA_ACTIVE      = 1;
@@ -107,6 +120,7 @@ namespace OpenTK.Platform.Windows
             internal const int WM_WINDOWPOSCHANGED = 0x0047;
 
             // Keyboard events (found in winuser.h)
+            internal const int WM_INPUT = 0x00FF;       // Raw input. XP and higher only.
             internal const int WM_KEYDOWN = 0x0100;
             internal const int WM_KEYUP = 0x101;
             internal const int WM_SYSKEYDOWN = 0x0104;
@@ -150,7 +164,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region WINAPI methods
+        #region --- Functions ---
 
         #region Message handling
 
@@ -677,6 +691,7 @@ namespace OpenTK.Platform.Windows
         /// TRUE if the function succeeds; otherwise, FALSE. If the function fails, call GetLastError for more information.
         /// </returns>
         [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern BOOL RegisterRawInputDevices(
             RawInputDevice[] RawInputDevices,
             UINT NumDevices,
@@ -799,17 +814,17 @@ namespace OpenTK.Platform.Windows
         /// </param>
         /// <param name="Command">
         /// Specifies what data will be returned in pData. It can be one of the following values. 
-        /// RIDI_PREPARSEDDATA
+        /// RawInputDeviceInfoEnum.PREPARSEDDATA
         /// Data points to the previously parsed data.
-        /// RIDI_DEVICENAME
+        /// RawInputDeviceInfoEnum.DEVICENAME
         /// Data points to a string that contains the device name. 
         /// For this Command only, the value in Size is the character count (not the byte count).
-        /// RIDI_DEVICEINFO
-        /// Data points to an RID_DEVICE_INFO structure.
+        /// RawInputDeviceInfoEnum.DEVICEINFO
+        /// Data points to an RawInputDeviceInfo structure.
         /// </param>
         /// <param name="Data">
         /// ointer to a buffer that contains the information specified by Command.
-        /// If Command is RIDI_DEVICEINFO, set RawInputDeviceInfo.Size to sizeof(RawInputDeviceInfo)
+        /// If Command is RawInputDeviceInfoEnum.DEVICEINFO, set RawInputDeviceInfo.Size to sizeof(RawInputDeviceInfo)
         /// before calling GetRawInputDeviceInfo. (This is done automatically in OpenTK)
         /// </param>
         /// <param name="Size">
@@ -839,10 +854,10 @@ namespace OpenTK.Platform.Windows
         /// <param name="RawInput">Handle to the RawInput structure. This comes from the lParam in WM_INPUT.</param>
         /// <param name="Command">
         /// Command flag. This parameter can be one of the following values. 
-        /// RID_INPUT
-        /// Get the raw data from the RAWINPUT structure.
-        /// RID_HEADER
-        /// Get the header information from the RAWINPUT structure.
+        /// RawInputDateEnum.INPUT
+        /// Get the raw data from the RawInput structure.
+        /// RawInputDateEnum.HEADER
+        /// Get the header information from the RawInput structure.
         /// </param>
         /// <param name="Data">Pointer to the data that comes from the RawInput structure. This depends on the value of uiCommand. If Data is NULL, the required size of the buffer is returned in Size.</param>
         /// <param name="Size">Pointer to a variable that specifies the size, in bytes, of the data in Data.</param>
@@ -858,8 +873,39 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRawInputData(
             HRAWINPUT RawInput,
-            UINT Command,
+            GetRawInputDataEnum Command,
             [Out] LPVOID Data,
+            [In, Out] ref UINT Size,
+            UINT SizeHeader
+        );
+
+        /// <summary>
+        /// Gets the raw input from the specified device.
+        /// </summary>
+        /// <param name="RawInput">Handle to the RawInput structure. This comes from the lParam in WM_INPUT.</param>
+        /// <param name="Command">
+        /// Command flag. This parameter can be one of the following values. 
+        /// RawInputDateEnum.INPUT
+        /// Get the raw data from the RawInput structure.
+        /// RawInputDateEnum.HEADER
+        /// Get the header information from the RawInput structure.
+        /// </param>
+        /// <param name="Data">Pointer to the data that comes from the RawInput structure. This depends on the value of uiCommand. If Data is NULL, the required size of the buffer is returned in Size.</param>
+        /// <param name="Size">Pointer to a variable that specifies the size, in bytes, of the data in Data.</param>
+        /// <param name="SizeHeader">Size, in bytes, of RawInputHeader.</param>
+        /// <returns>
+        /// <para>If Data is NULL and the function is successful, the return value is 0. If Data is not NULL and the function is successful, the return value is the number of bytes copied into Data.</para>
+        /// <para>If there is an error, the return value is (UINT)-1.</para>
+        /// </returns>
+        /// <remarks>
+        /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array of RawInput structures.
+        /// </remarks>
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern UINT GetRawInputData(
+            HRAWINPUT RawInput,
+            GetRawInputDataEnum Command,
+            [MarshalAs(UnmanagedType.Struct)] [Out] RawInput Data,
             [In, Out] ref UINT Size,
             UINT SizeHeader
         );
@@ -870,9 +916,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region WINAPI structs
+        #region --- Structures ---
 
-        #region internal struct CreateStruct
+        #region CreateStruct
 
         internal struct CreateStruct
         {
@@ -962,7 +1008,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region PixelFormatDescriptor struct
+        #region PixelFormatDescriptor
         /// <summary>
         /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
         /// Found in WinGDI.h
@@ -1002,93 +1048,7 @@ namespace OpenTK.Platform.Windows
         }
         #endregion
 
-        #region PixelFormatDescriptorFlags enum
-        [Flags]
-        internal enum PixelFormatDescriptorFlags : int
-        {
-            // PixelFormatDescriptor flags
-            DOUBLEBUFFER,
-            STEREO,
-            DRAW_TO_WINDOW,
-            DRAW_TO_BITMAP,
-            SUPPORT_GDI,
-            SUPPORT_OPENGL,
-            GENERIC_FORMAT,
-            NEED_PALETTE,
-            NEED_SYSTEM_PALETTE,
-            SWAP_EXCHANGE,
-            SWAP_COPY,
-            SWAP_LAYER_BUFFERS,
-            GENERIC_ACCELERATED,
-            SUPPORT_DIRECTDRAW,
-
-            // PixelFormatDescriptor flags for use in ChoosePixelFormat only
-            DEPTH_DONTCARE = unchecked((int)0x20000000),
-            DOUBLEBUFFER_DONTCARE = unchecked((int)0x40000000),
-            STEREO_DONTCARE = unchecked((int)0x80000000)
-        }
-        #endregion
-
-        #region WindowPlacementOptions enum
-
-        internal enum WindowPlacementOptions
-        {
-            TOP = 0,
-            BOTTOM = 1,
-            TOPMOST = -1,
-            NOTOPMOST = -2
-        }
-
-        #endregion
-
-        #region WindowClass
-        [StructLayout(LayoutKind.Sequential)]
-        internal class WindowClass
-        {
-            internal WindowClassStyle style = WindowClassStyle.VRedraw | WindowClassStyle.HRedraw | WindowClassStyle.OwnDC;
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            internal WindowProcedureEventHandler WindowProcedure;
-            internal int ClassExtraBytes;
-            internal int WindowExtraBytes;
-            //[MarshalAs(UnmanagedType.
-            internal IntPtr Instance;
-            internal IntPtr Icon;
-            internal IntPtr Cursor;
-            internal IntPtr BackgroundBrush;
-            //[MarshalAs(UnmanagedType.LPStr)]
-            internal IntPtr MenuName;
-            //[MarshalAs(UnmanagedType.LPStr)]
-            internal IntPtr ClassName;
-            //internal string ClassName;
-        }
-        #endregion
-
-        #region WindowClassStyle enum
-        [Flags]
-        internal enum WindowClassStyle
-        {
-            //None            = 0x0000,
-            VRedraw = 0x0001,
-            HRedraw = 0x0002,
-            DoubleClicks = 0x0008,
-            OwnDC = 0x0020,
-            ClassDC = 0x0040,
-            ParentDC = 0x0080,
-            NoClose = 0x0200,
-            SaveBits = 0x0800,
-            ByteAlignClient = 0x1000,
-            ByteAlignWindow = 0x2000,
-            GlobalClass = 0x4000,
-
-            Ime = 0x00010000,
-
-            // #if(_WIN32_WINNT >= 0x0501)
-            DropShadow = 0x00020000
-            // #endif /* _WIN32_WINNT >= 0x0501 */
-        }
-        #endregion
-
-        #region DeviceMode class
+        #region DeviceMode
         /*
         typedef struct _devicemode { 
           BCHAR  dmDeviceName[CCHDEVICENAME]; 
@@ -1191,6 +1151,30 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion DeviceMode class
+
+        #region Window Handling
+
+        #region WindowClass
+        [StructLayout(LayoutKind.Sequential)]
+        internal class WindowClass
+        {
+            internal WindowClassStyle style = WindowClassStyle.VRedraw | WindowClassStyle.HRedraw | WindowClassStyle.OwnDC;
+            [MarshalAs(UnmanagedType.FunctionPtr)]
+            internal WindowProcedureEventHandler WindowProcedure;
+            internal int ClassExtraBytes;
+            internal int WindowExtraBytes;
+            //[MarshalAs(UnmanagedType.
+            internal IntPtr Instance;
+            internal IntPtr Icon;
+            internal IntPtr Cursor;
+            internal IntPtr BackgroundBrush;
+            //[MarshalAs(UnmanagedType.LPStr)]
+            internal IntPtr MenuName;
+            //[MarshalAs(UnmanagedType.LPStr)]
+            internal IntPtr ClassName;
+            //internal string ClassName;
+        }
+        #endregion
 
         #region public struct MinMaxInfo
 
@@ -1326,6 +1310,8 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #endregion
+
         #region Raw Input structures
 
         #region RawInputDevice
@@ -1348,27 +1334,12 @@ namespace OpenTK.Platform.Windows
             /// </summary>
             public USHORT Usage;
             /// <summary>
-            /// Mode flag that specifies how to interpret the information provided by usUsagePage and usUsage. It can be zero (the default) or one of the following values. By default, the operating system sends raw input from devices with the specified top level collection (TLC) to the registered application as long as it has the window focus. 
-            /// RIDEV_APPKEYS
-            /// Microsoft Windows XP Service Pack 1 (SP1): If set, the application command keys are handled. RIDEV_APPKEYS can be specified only if RIDEV_NOLEGACY is specified for a keyboard device.
-            /// RIDEV_CAPTUREMOUSE
-            /// If set, the mouse button click does not activate the other window.
-            /// RIDEV_EXCLUDE
-            /// If set, this specifies the top level collections to exclude when reading a complete usage page. This flag only affects a TLC whose usage page is already specified with RIDEV_PAGEONLY. 
-            /// RIDEV_EXINPUTSINK
-            /// If set, this enables the caller to receive input in the background only if the foreground application does not process it. In other words, if the foreground application is not registered for raw input, then the background application that is registered will receive the input.
-            /// RIDEV_INPUTSINK
-            /// If set, this enables the caller to receive the input even when the caller is not in the foreground. Note that hwndTarget must be specified.
-            /// RIDEV_NOHOTKEYS
-            /// If set, the application-defined keyboard device hotkeys are not handled. However, the system hotkeys; for example, ALT+TAB and CTRL+ALT+DEL, are still handled. By default, all keyboard hotkeys are handled. RIDEV_NOHOTKEYS can be specified even if RIDEV_NOLEGACY is not specified and hwndTarget is NULL.
-            /// RIDEV_NOLEGACY
-            /// If set, this prevents any devices specified by usUsagePage or usUsage from generating legacy messages. This is only for the mouse and keyboard. See Remarks.
-            /// RIDEV_PAGEONLY
-            /// If set, this specifies all devices whose top level collection is from the specified usUsagePage. Note that usUsage must be zero. To exclude a particular top level collection, use RIDEV_EXCLUDE.
-            /// RIDEV_REMOVE
-            /// If set, this removes the top level collection from the inclusion list. This tells the operating system to stop reading from a device which matches the top level collection.
+            /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
+            /// It can be zero (the default) or one of the following values.
+            /// By default, the operating system sends raw input from devices with the specified top level collection (TLC)
+            /// to the registered application as long as it has the window focus. 
             /// </summary>
-            public INT Flags;
+            public RawInputDeviceFlags Flags;
             /// <summary>
             /// Handle to the target window. If NULL it follows the keyboard focus.
             /// </summary>
@@ -1390,20 +1361,16 @@ namespace OpenTK.Platform.Windows
             /// </summary>
             public HANDLE Device;
             /// <summary>
-            /// Type of device. This can be one of the following values. 
-            /// RIM_TYPEHID
-            /// The device is an Human Interface Device (HID) that is not a keyboard and not a mouse.
-            /// RIM_TYPEKEYBOARD
-            /// The device is a keyboard.
-            /// RIM_TYPEMOUSE
-            /// The device is a mouse.
+            /// Type of device.
             /// </summary>
-            public DWORD Type;
+            public RawInputDeviceType Type;
         }
 
         #endregion
 
         #region RawInput
+
+        public static uint RawInputSize;
 
         /// <summary>
         /// Contains the raw input from a device.
@@ -1417,9 +1384,11 @@ namespace OpenTK.Platform.Windows
         [StructLayout(LayoutKind.Sequential)]
         public class RawInput
         {
-            public RawInputHeader Header; 
+            public RawInputHeader Header;
+            public RawInputData Data;
+
             [StructLayout(LayoutKind.Explicit)]
-            public struct Data
+            public struct RawInputData
             {
                 [FieldOffset(0)]
                 public RawMouse Mouse;
@@ -1434,6 +1403,8 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputHeader
 
+        public static readonly uint RawInputHeaderSize;
+
         /// <summary>
         /// Contains the header information that is part of the raw input data.
         /// </summary>
@@ -1444,15 +1415,9 @@ namespace OpenTK.Platform.Windows
         public struct RawInputHeader
         {
             /// <summary>
-            /// Type of raw input. It can be one of the following values. 
-            /// RIM_TYPEHID
-            /// Raw input comes from some device that is not a keyboard or a mouse.
-            /// RIM_TYPEKEYBOARD
-            /// Raw input comes from the keyboard.
-            /// RIM_TYPEMOUSE
-            /// Raw input comes from the mouse.
+            /// Type of raw input.
             /// </summary>
-            public DWORD Type;
+            public RawInputDeviceType Type;
             /// <summary>
             /// Size, in bytes, of the entire input packet of data. This includesRAWINPUT plus possible extra input reports in the RAWHID variable length array.
             /// </summary>
@@ -1490,7 +1455,7 @@ namespace OpenTK.Platform.Windows
             /// RI_KEY_TERMSRV_SET_LED
             /// RI_KEY_TERMSRV_SHADOW
             /// </summary>
-            public USHORT Flags;
+            public RawInputKeyboardDataFlags Flags;
             /// <summary>
             /// Reserved; must be zero.
             /// </summary>
@@ -1538,44 +1503,10 @@ namespace OpenTK.Platform.Windows
             [FieldOffset(2)]
             ULONG Buttons;
             /// <summary>
-            /// Transition state of the mouse buttons. This member can be one or more of the following values. 
-            /// RI_MOUSE_LEFT_BUTTON_DOWN
-            /// Left button changed to down.
-            /// RI_MOUSE_LEFT_BUTTON_UP
-            /// Left button changed to up.
-            /// RI_MOUSE_MIDDLE_BUTTON_DOWN
-            /// Middle button changed to down.
-            /// RI_MOUSE_MIDDLE_BUTTON_UP
-            /// Middle button changed to up.
-            /// RI_MOUSE_RIGHT_BUTTON_DOWN
-            /// Right button changed to down.
-            /// RI_MOUSE_RIGHT_BUTTON_UP
-            /// Right button changed to up.
-            /// RI_MOUSE_BUTTON_1_DOWN
-            /// RI_MOUSE_LEFT_BUTTON_DOWN
-            /// RI_MOUSE_BUTTON_1_UP
-            /// RI_MOUSE_LEFT_BUTTON_UP
-            /// RI_MOUSE_BUTTON_2_DOWN
-            /// RI_MOUSE_RIGHT_BUTTON_DOWN
-            /// RI_MOUSE_BUTTON_2_UP
-            /// RI_MOUSE_RIGHT_BUTTON_UP
-            /// RI_MOUSE_BUTTON_3_DOWN
-            /// RI_MOUSE_MIDDLE_BUTTON_DOWN
-            /// RI_MOUSE_BUTTON_3_UP
-            /// RI_MOUSE_MIDDLE_BUTTON_UP
-            /// RI_MOUSE_BUTTON_4_DOWN
-            /// XBUTTON1 changed to down.
-            /// RI_MOUSE_BUTTON_4_UP
-            /// XBUTTON1 changed to up.
-            /// RI_MOUSE_BUTTON_5_DOWN
-            /// XBUTTON2 changed to down.
-            /// RI_MOUSE_BUTTON_5_UP
-            /// XBUTTON2 changed to up.
-            /// RI_MOUSE_WHEEL
-            /// Raw input comes from a mouse wheel. The wheel delta is stored in usButtonData.
+            /// Transition state of the mouse buttons.
             /// </summary>
             [FieldOffset(2)]
-            public USHORT ButtonFlags;
+            public RawInputMouseState ButtonFlags;
             /// <summary>
             /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
             /// </summary>
@@ -1648,15 +1579,8 @@ namespace OpenTK.Platform.Windows
             /// </summary>
             DWORD Size = Marshal.SizeOf(typeof(RawInputDeviceInfo)); 
             /// <summary>
-            /// Type of raw input data. This member can be one of the following values. 
-            /// RIM_TYPEHID
-            /// Data comes from an HID that is not a keyboard or a mouse.
-            /// RIM_TYPEKEYBOARD
-            /// Data comes from a keyboard.
-            /// RIM_TYPEMOUSE
-            /// Data comes from a mouse.
-            /// </summary>
-            public DWORD Type;
+            /// Type of raw input data.
+            public RawInputDeviceType Type;
             [StructLayout(LayoutKind.Explicit)]
             public struct Device
             { 
@@ -1777,7 +1701,205 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region Callbacks
+        #region --- Enums ---
+        
+        #region PixelFormatDescriptorFlags enum
+        [Flags]
+        internal enum PixelFormatDescriptorFlags : int
+        {
+            // PixelFormatDescriptor flags
+            DOUBLEBUFFER,
+            STEREO,
+            DRAW_TO_WINDOW,
+            DRAW_TO_BITMAP,
+            SUPPORT_GDI,
+            SUPPORT_OPENGL,
+            GENERIC_FORMAT,
+            NEED_PALETTE,
+            NEED_SYSTEM_PALETTE,
+            SWAP_EXCHANGE,
+            SWAP_COPY,
+            SWAP_LAYER_BUFFERS,
+            GENERIC_ACCELERATED,
+            SUPPORT_DIRECTDRAW,
+
+            // PixelFormatDescriptor flags for use in ChoosePixelFormat only
+            DEPTH_DONTCARE = unchecked((int)0x20000000),
+            DOUBLEBUFFER_DONTCARE = unchecked((int)0x40000000),
+            STEREO_DONTCARE = unchecked((int)0x80000000)
+        }
+        #endregion
+
+        #region WindowPlacementOptions enum
+
+        internal enum WindowPlacementOptions
+        {
+            TOP = 0,
+            BOTTOM = 1,
+            TOPMOST = -1,
+            NOTOPMOST = -2
+        }
+
+        #endregion
+
+        #region WindowClassStyle enum
+        [Flags]
+        internal enum WindowClassStyle
+        {
+            //None            = 0x0000,
+            VRedraw = 0x0001,
+            HRedraw = 0x0002,
+            DoubleClicks = 0x0008,
+            OwnDC = 0x0020,
+            ClassDC = 0x0040,
+            ParentDC = 0x0080,
+            NoClose = 0x0200,
+            SaveBits = 0x0800,
+            ByteAlignClient = 0x1000,
+            ByteAlignWindow = 0x2000,
+            GlobalClass = 0x4000,
+
+            Ime = 0x00010000,
+
+            // #if(_WIN32_WINNT >= 0x0501)
+            DropShadow = 0x00020000
+            // #endif /* _WIN32_WINNT >= 0x0501 */
+        }
+        #endregion
+
+        #region RawInputDeviceFlags enum
+
+        public enum RawInputDeviceFlags : int
+        {
+            /// <summary>
+            /// If set, this removes the top level collection from the inclusion list.
+            /// This tells the operating system to stop reading from a device which matches the top level collection.
+            /// </summary>
+            REMOVE          = 0x00000001,
+            /// <summary>
+            /// If set, this specifies the top level collections to exclude when reading a complete usage page.
+            /// This flag only affects a TLC whose usage page is already specified with RawInputDeviceEnum.PAGEONLY. 
+            /// </summary>
+            EXCLUDE         = 0x00000010,
+            /// <summary>
+            /// If set, this specifies all devices whose top level collection is from the specified UsagePage.
+            /// Note that usUsage must be zero. To exclude a particular top level collection, use EXCLUDE.
+            /// </summary>
+            PAGEONLY        = 0x00000020,
+            /// <summary>
+            /// If set, this prevents any devices specified by UsagePage or Usage from generating legacy messages.
+            /// This is only for the mouse and keyboard. See RawInputDevice Remarks.
+            /// </summary>
+            NOLEGACY        = 0x00000030,
+            /// <summary>
+            /// If set, this enables the caller to receive the input even when the caller is not in the foreground.
+            /// Note that Target must be specified in RawInputDevice.
+            /// </summary>
+            INPUTSINK       = 0x00000100,
+            /// <summary>
+            /// If set, the mouse button click does not activate the other window.
+            /// </summary>
+            CAPTUREMOUSE    = 0x00000200, // effective when mouse nolegacy is specified, otherwise it would be an error
+            /// <summary>
+            /// If set, the application-defined keyboard device hotkeys are not handled.
+            /// However, the system hotkeys; for example, ALT+TAB and CTRL+ALT+DEL, are still handled.
+            /// By default, all keyboard hotkeys are handled.
+            /// NOHOTKEYS can be specified even if NOLEGACY is not specified and Target is NULL in RawInputDevice.
+            /// </summary>
+            NOHOTKEYS       = 0x00000200, // effective for keyboard.
+            /// <summary>
+            /// Microsoft Windows XP Service Pack 1 (SP1): If set, the application command keys are handled. APPKEYS can be specified only if NOLEGACY is specified for a keyboard device.
+            /// </summary>
+            APPKEYS         = 0x00000400, // effective for keyboard.
+            /// <summary>
+            /// If set, this enables the caller to receive input in the background only if the foreground application
+            /// does not process it. In other words, if the foreground application is not registered for raw input,
+            /// then the background application that is registered will receive the input.
+            /// </summary>
+            EXINPUTSINK     = 0x00001000,
+            DEVNOTIFY       = 0x00002000,
+            //EXMODEMASK      = 0x000000F0
+        }
+
+        #endregion
+
+        #region GetRawInputDataEnum
+
+        public enum GetRawInputDataEnum
+        {
+            INPUT             = 0x10000003,
+            HEADER            = 0x10000005
+        }
+
+        #endregion
+
+        #region RawInputDeviceInfoEnum
+
+        public enum RawInputDeviceInfoEnum
+        {
+            PREPARSEDDATA    = 0x20000005,
+            DEVICENAME       = 0x20000007,  // the return valus is the character length, not the byte size
+            DEVICEINFO       = 0x2000000b
+        }
+
+        #endregion
+
+        #region RawInputMouseState
+
+        public enum RawInputMouseState : ushort
+        {
+            LEFT_BUTTON_DOWN = 0x0001,  // Left Button changed to down.
+            LEFT_BUTTON_UP   = 0x0002,  // Left Button changed to up.
+            RIGHT_BUTTON_DOWN   = 0x0004,  // Right Button changed to down.
+            RIGHT_BUTTON_UP  = 0x0008,  // Right Button changed to up.
+            MIDDLE_BUTTON_DOWN  = 0x0010,  // Middle Button changed to down.
+            MIDDLE_BUTTON_UP = 0x0020,  // Middle Button changed to up.
+
+            BUTTON_1_DOWN    = LEFT_BUTTON_DOWN,
+            BUTTON_1_UP      = LEFT_BUTTON_UP,
+            BUTTON_2_DOWN    = RIGHT_BUTTON_DOWN,
+            BUTTON_2_UP      = RIGHT_BUTTON_UP,
+            BUTTON_3_DOWN    = MIDDLE_BUTTON_DOWN,
+            BUTTON_3_UP      = MIDDLE_BUTTON_UP,
+
+            BUTTON_4_DOWN    = 0x0040,
+            BUTTON_4_UP      = 0x0080,
+            BUTTON_5_DOWN    = 0x0100,
+            BUTTON_5_UP      = 0x0200,
+
+            WHEEL            = 0x0400
+        }
+
+        #endregion
+
+        #region RawInputKeyboardDataFlags
+
+        public enum RawInputKeyboardDataFlags : ushort
+        {
+            MAKE            = 0,
+            BREAK           = 1,
+            E0              = 2,
+            E1              = 4,
+            TERMSRV_SET_LED = 8,
+            TERMSRV_SHADOW  = 0x10
+        }
+
+        #endregion
+
+        #region RawInputDeviceType
+
+        public enum RawInputDeviceType : int
+        {
+            MOUSE    = 0,
+            KEYBOARD = 1,
+            HID      = 2
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- Callbacks ---
 
         [UnmanagedFunctionPointerAttribute(CallingConvention.Winapi)]
         internal delegate void WindowProcedureEventHandler(object sender, WindowProcedureEventArgs e);

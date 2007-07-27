@@ -4,9 +4,9 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    interface IKeyboard
+    public interface IKeyboard
     {
         bool this[Keys k] { get; set; }
-        void Poll();
+        //void Poll();
     }
 }
