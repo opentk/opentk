@@ -56,6 +56,7 @@ namespace OpenTK.Platform.Windows
         {
             RawInputHeaderSize = (uint)Marshal.SizeOf(typeof(RawInputHeader));
             RawInputSize = (uint)Marshal.SizeOf(typeof(RawInput));
+            RawInputDeviceSize = (uint)Marshal.SizeOf(typeof(RawInputDevice));
         }
 
         #region Constants
@@ -905,7 +906,7 @@ namespace OpenTK.Platform.Windows
         public static extern UINT GetRawInputData(
             HRAWINPUT RawInput,
             GetRawInputDataEnum Command,
-            [MarshalAs(UnmanagedType.Struct)] [Out] RawInput Data,
+            [MarshalAs(UnmanagedType.LPStruct)] [Out] RawInput Data,
             [In, Out] ref UINT Size,
             UINT SizeHeader
         );
@@ -1316,6 +1317,8 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputDevice
 
+        public static readonly uint RawInputDeviceSize;
+
         /// <summary>
         /// Defines information for the raw input devices.
         /// </summary>
@@ -1323,7 +1326,7 @@ namespace OpenTK.Platform.Windows
         /// If RIDEV_NOLEGACY is set for a mouse or a keyboard, the system does not generate any legacy message for that device for the application. For example, if the mouse TLC is set with RIDEV_NOLEGACY, WM_LBUTTONDOWN and related legacy mouse messages are not generated. Likewise, if the keyboard TLC is set with RIDEV_NOLEGACY, WM_KEYDOWN and related legacy keyboard messages are not generated.
         /// </remarks>
         [StructLayout(LayoutKind.Sequential)]
-        public class RawInputDevice
+        public struct RawInputDevice
         {
             /// <summary>
             /// Top level collection Usage page for the raw input device.
@@ -1344,6 +1347,11 @@ namespace OpenTK.Platform.Windows
             /// Handle to the target window. If NULL it follows the keyboard focus.
             /// </summary>
             public HWND Target;
+
+            public override string ToString()
+            {
+                return String.Format("{0}/{1}, flags: {2}, window: {3}", UsagePage, Usage, Flags, Target);
+            }
         }
 
         #endregion
@@ -1769,6 +1777,7 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputDeviceFlags enum
 
+        [Flags]
         public enum RawInputDeviceFlags : int
         {
             /// <summary>

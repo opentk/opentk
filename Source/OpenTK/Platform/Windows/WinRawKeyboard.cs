@@ -1,9 +1,19 @@
-﻿using System;
+﻿#region --- License ---
+/* Copyright (c) 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
+#endregion
+
+#region --- Using directives ---
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
 using OpenTK.Input;
+
+#endregion
 
 namespace OpenTK.Platform.Windows
 {
@@ -24,17 +34,18 @@ namespace OpenTK.Platform.Windows
             rid[0].UsagePage = 1;
             rid[0].Usage = 6;
 
-            rid[0].Flags =
-                API.RawInputDeviceFlags.APPKEYS |
-                API.RawInputDeviceFlags.NOLEGACY;
+            rid[0].Flags = API.RawInputDeviceFlags.INPUTSINK;
 
             rid[0].Target = windowHandle;
 
-            if (!API.RegisterRawInputDevices(rid, 1, API.RawInputHeaderSize))
+            if (!API.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
             {
-                /*throw new ApplicationException(
-                    String.Format("Raw input registration failed for keyboard. Error {0}", Marshal.GetLastWin32Error())
-                );*/
+                throw new ApplicationException(
+                    String.Format(
+                        "Raw input registration failed with error: {0}. Device: {1}",
+                        Marshal.GetLastWin32Error(),
+                        rid[0].ToString())
+                );
             }
         }
 
