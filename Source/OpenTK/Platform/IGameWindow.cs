@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using OpenTK.Input;
+
 namespace OpenTK.Platform
 {
     interface IGameWindow : IDisposable
@@ -13,6 +15,8 @@ namespace OpenTK.Platform
 
         event UpdateFrameEvent UpdateFrameNotify;
         event RenderFrameEvent RenderFrameNotify;
+
+        IKeyboard Key { get; }
     }
 
     public delegate void UpdateFrameEvent(EventArgs e);

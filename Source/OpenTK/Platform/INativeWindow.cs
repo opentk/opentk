@@ -13,6 +13,7 @@ namespace OpenTK.Platform
         bool IsIdle { get; }
         bool Quit { get; set; }
         bool Fullscreen { get; set; }
+        OpenTK.Input.IKeyboard Key { get; }
         IGLContext Context { get; }
     }
 }

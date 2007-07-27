@@ -19,8 +19,6 @@ namespace OpenTK
         private INativeWindow glWindow;
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
-        public Keyboard Key = new Keyboard();
-
         #region --- Contructors ---
 
         /// <summary>
@@ -75,7 +73,7 @@ namespace OpenTK
 
         #endregion
 
-        #region --- IGLWindow Members ---
+        #region --- IGLControl Members ---
 
         #region public bool IsIdle
 
@@ -177,6 +175,11 @@ namespace OpenTK
 
         public event UpdateFrameEvent UpdateFrameNotify;
         public event RenderFrameEvent RenderFrameNotify;
+
+        public IKeyboard Key
+        {
+            get { return glWindow.Key; }
+        }
 
         #endregion
 
