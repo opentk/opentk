@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Threading;
 using OpenTK;
+using System.Diagnostics;
 
 namespace Examples
 {
@@ -29,6 +30,14 @@ namespace Examples
         public ExampleLauncher()
         {
             InitializeComponent();
+
+            System.Diagnostics.Debug.Listeners.Clear();
+            System.Diagnostics.Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            System.Diagnostics.Debug.AutoFlush = true;
+            System.Diagnostics.Trace.Listeners.Clear();
+            System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            System.Diagnostics.Trace.AutoFlush = true;
+            Trace.AutoFlush = true;
         }
 
         private void listBox1_DoubleClick(object sender, EventArgs e)
@@ -80,6 +89,15 @@ namespace Examples
             }
             catch (Exception expt)
             {
+                System.Diagnostics.Debug.WriteLine(
+                    String.Format(
+                        "Exception: {3}{0}Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
+                        System.Environment.NewLine,
+                        expt.StackTrace,
+                        expt.InnerException,
+                        expt.Message
+                    )
+                );
                 MessageBox.Show(
                     String.Format(
                         "Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
