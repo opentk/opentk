@@ -1,6 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿#region --- License ---
+/* Copyright (c) 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
+#endregion
+
+#region --- Using directives ---
+
+using System;
+
+#endregion
 
 namespace OpenTK.Input
 {
