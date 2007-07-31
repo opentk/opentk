@@ -8,7 +8,7 @@ namespace OpenTK.Input
 {
     public interface IKeyboard
     {
-        bool this[Keys k] { get; set; }
+        bool this[Keys k] { get; }
         //void Poll();
     }
 }
