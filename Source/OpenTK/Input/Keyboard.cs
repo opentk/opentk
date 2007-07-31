@@ -41,7 +41,7 @@ namespace OpenTK.Input
         public bool this[Keys k]
         {
             get { return keyboard[k]; }
-            set { keyboard[k] = value; }
+            //set { keyboard[k] = value; }
         }
 
         #endregion
