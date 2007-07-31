@@ -47,32 +47,63 @@ namespace OpenTK.Platform.Windows
                         rid[0].ToString())
                 );
             }
+
+            // Set the VirtualKey -> OpenTK.Key map
+            keyMap.Add(API.VirtualKeys.ESCAPE, Keys.Escape);
+            keyMap.Add(API.VirtualKeys.F1, Keys.F1);
+            keyMap.Add(API.VirtualKeys.F2, Keys.F2);
+            keyMap.Add(API.VirtualKeys.F3, Keys.F3);
+            keyMap.Add(API.VirtualKeys.F4, Keys.F4);
+            keyMap.Add(API.VirtualKeys.F5, Keys.F5);
+            keyMap.Add(API.VirtualKeys.F6, Keys.F6);
+            keyMap.Add(API.VirtualKeys.F7, Keys.F7);
+            keyMap.Add(API.VirtualKeys.F8, Keys.F8);
+            keyMap.Add(API.VirtualKeys.F9, Keys.F9);
+            keyMap.Add(API.VirtualKeys.F10, Keys.F10);
+            keyMap.Add(API.VirtualKeys.F11, Keys.F11);
+            keyMap.Add(API.VirtualKeys.F12, Keys.F12);
         }
 
         internal bool ProcessEvent(API.RawInput rin)
         {
-            if (rin.Data.Keyboard.VKey == API.Constants.VK_ESCAPE)
+            switch (rin.Header.Type)
             {
-                if (rin.Data.Keyboard.Message == API.Constants.WM_KEYDOWN)
-                    keys[(int)Keys.Escape] = true;
-                else
-                    keys[(int)Keys.Escape] = false;
-
-                return true;
+                case API.RawInputDeviceType.KEYBOARD:
+                    this[keyMap[rin.Data.Keyboard.VKey]] =
+                        rin.Data.Keyboard.Message == API.Constants.WM_KEYDOWN ||
+                        rin.Data.Keyboard.Message == API.Constants.WM_SYSKEYDOWN;
+                break;
             }
 
             return false;
         }
+
+        #region KeyMap
+
+        internal static Dictionary<API.VirtualKeys, Keys> keyMap =
+            new Dictionary<API.VirtualKeys, Keys>((int)API.VirtualKeys.Last);
+
+        /*
+        internal static List<KeyValuePair<API.VirtualKeys, Keys>> keyMap =
+            new List<KeyValuePair<API.VirtualKeys, Keys>>(
+                new KeyValuePair<API.VirtualKeys, Keys>[]
+                {
+                    new KeyValuePair<API.VirtualKeys, Keys>(API.VirtualKeys.ESCAPE, Keys.Escape),
+                    new KeyValuePair<API.VirtualKeys, Keys>(API.VirtualKeys.F1, Keys.F1)
+                }
+            );
+        */
+        #endregion
 
         #region --- IKeyboard members ---
 
         public bool this[Keys k]
         {
             get { return keys[(int)k]; }
-            set
+            internal set
             {
-                /*keys[(int)k] = value;*/
-                throw new NotImplementedException();
+                keys[(int)k] = value;
+                //throw new NotImplementedException();
             }
         }
 

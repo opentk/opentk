@@ -86,6 +86,12 @@ namespace Examples.Tutorial
                 return;
             }
 
+            if ((Key[OpenTK.Input.Keys.LeftAlt] || Key[OpenTK.Input.Keys.RightAlt]) &&
+                Key[OpenTK.Input.Keys.Enter])
+            {
+                Fullscreen = true;
+            }
+
             GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
             Glu.LookAt(
