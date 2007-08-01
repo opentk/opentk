@@ -50,7 +50,7 @@ namespace Examples.WinForms
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
-            GL.Clear(OpenTK.OpenGL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
+            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
             glControl1.Context.SwapBuffers();
         }
 
