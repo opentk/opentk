@@ -867,41 +867,26 @@ namespace Bind.Structures
             // to avoid redefinitions.
             foreach (Function f in wrappers)
             {
-                if (this.Name.Contains("Weightub"))
+                Bind.Structures.Function.Wrappers.AddChecked(f);
+
+                if (this.Name.Contains("Bitmap"))
                 {
                 }
 
                 bool createCLS = !f.CLSCompliant;
-                //createCLS &= String.IsNullOrEmpty(f.TrimmedName);
-                string nameWithoutExtension = Utilities.StripGL2Extension(f.Name).TrimEnd('v');
+
+                /*string nameWithoutExtension = Utilities.StripGL2Extension(f.Name).TrimEnd('v');
                 createCLS &=
                     String.IsNullOrEmpty(f.TrimmedName) ||
-                    nameWithoutExtension.EndsWith("u") &&
-                    !nameWithoutExtension.EndsWith("b");
+                    nameWithoutExtension.Substring(nameWithoutExtension.Length - 3).Contains("u") &&
+                    !nameWithoutExtension.Substring(nameWithoutExtension.Length - 3).Contains("b");*/
 
                 if (createCLS)
                 {
-                    Function clsFunction = f.GetCLSCompliantFunction(Bind.Structures.Type.CSTypes);
-                    // avoid redefinitions
-                    if (clsFunction.Parameters.ToString(true) != f.Parameters.ToString(true))
-                    {
-                        bool defined = false;
-                        if (Bind.Structures.Function.Wrappers.ContainsKey(f.Extension))
-                        {
-                            foreach (Function fun in Bind.Structures.Function.Wrappers[clsFunction.Extension])
-                            {
-                                if (clsFunction.Name == fun.Name &&
-                                    clsFunction.Parameters.ToString() == fun.Parameters.ToString())
-                                    defined = true;
-                            }
-                        }
-
-                        if (!defined)
-                            Bind.Structures.Function.Wrappers.Add(clsFunction);
-                        //wrappers.Add(f);
-                    }
+                    Function clsFunction = f.GetCLSCompliantFunction();
+                    if (clsFunction != null)
+                        Bind.Structures.Function.Wrappers.AddChecked(clsFunction);
                 }
-                Bind.Structures.Function.Wrappers.Add(f);
             }
         }
     }
