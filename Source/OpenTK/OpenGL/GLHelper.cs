@@ -15,7 +15,7 @@ using System.Reflection;
 
 #endregion
 
-//[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(true)]
 
 namespace OpenTK.OpenGL
 {
@@ -67,6 +67,12 @@ namespace OpenTK.OpenGL
     /// </remarks>
     public static partial class GL
     {
+        #region internal string Library
+
+        internal const string Library = "opengl32.dll";
+        
+        #endregion
+
         #region private enum Platform
 
         /// <summary>
@@ -88,7 +94,7 @@ namespace OpenTK.OpenGL
 
         #region internal static extern IntPtr glxGetProcAddressARB(string s);
         // also linux, for our ARB-y friends
-        [DllImport(GL_NATIVE_LIBRARY, EntryPoint = "glXGetProcAddressARB")]
+        [DllImport(Library, EntryPoint = "glXGetProcAddressARB")]
         internal static extern IntPtr glxGetProcAddressARB(string s);
         #endregion
 
@@ -247,7 +253,9 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
         {
             Delegate d;
 
-            if (Assembly.Load("OpenTK.OpenGL").GetType("OpenTK.OpenGL.Imports").GetMethod(name.Substring(2)) != null)
+            if (Assembly.GetExecutingAssembly()
+                .GetType("OpenTK.OpenGL.Imports")
+                .GetMethod(name.Substring(2), BindingFlags.NonPublic | BindingFlags.Static) != null)
             {
                 d = GetDelegateForExtensionMethod(name, signature) ??
                     Delegate.CreateDelegate(signature, typeof(Imports), name.Substring(2));
@@ -302,14 +310,14 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
             }
 
             // Do not use cached results
-            string extension_string = GL.GetString(Enums.StringName.EXTENSIONS);
+            string extension_string = GL.GetString(GL.Enums.StringName.EXTENSIONS);
             if (String.IsNullOrEmpty(extension_string))
                 return false;               // no extensions are available
 
             // Check if the user searches for GL_VERSION_X_X and search glGetString(GL_VERSION) instead.
             if (name.Contains("GL_VERSION_"))
             {
-                return GL.GetString(OpenTK.OpenGL.Enums.StringName.VERSION).Trim().StartsWith(name.Replace("GL_VERSION_", String.Empty).Replace('_', '.'));
+                return GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.VERSION).Trim().StartsWith(name.Replace("GL_VERSION_", String.Empty).Replace('_', '.'));
             }
 
             // Search for the string given.
@@ -334,7 +342,7 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
 
             AvailableExtensions = new Dictionary<string, bool>();
 
-            string version_string = GL.GetString(OpenTK.OpenGL.Enums.StringName.VERSION);
+            string version_string = GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.VERSION);
             if (String.IsNullOrEmpty(version_string))
                 return;               // this shoudn't happen
 
@@ -380,7 +388,7 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
                 AvailableExtensions.Add("GL_VERSION_2_1", true);
             }
 
-            string extension_string = GL.GetString(OpenTK.OpenGL.Enums.StringName.EXTENSIONS);
+            string extension_string = GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.EXTENSIONS);
             if (String.IsNullOrEmpty(extension_string))
                 return;               // no extensions are available
 
@@ -410,11 +418,11 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
         /// </remarks>
         public static void ReloadFunctions()
         {
-            Assembly asm = Assembly.Load("OpenTK.OpenGL");
+            Assembly asm = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.OpenGL");
             Type delegates_class = asm.GetType("OpenTK.OpenGL.Delegates");
             Type imports_class = asm.GetType("OpenTK.OpenGL.Imports");
 
-            FieldInfo[] v = delegates_class.GetFields();
+            FieldInfo[] v = delegates_class.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
             foreach (FieldInfo f in v)
             {
                 f.SetValue(null, GetDelegateForMethod(f.Name, f.FieldType));
