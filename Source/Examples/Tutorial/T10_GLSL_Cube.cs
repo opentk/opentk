@@ -71,7 +71,7 @@ namespace Examples.Tutorial
 
             GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, (int[])null);
             GL.CompileShader(vertex_shader_object);
-            GL.GetShaderiv(vertex_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
+            GL.GetShader(vertex_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
             if (status != (int)Enums.Boolean.TRUE)
             {
                 StringBuilder info = new StringBuilder(1024);
@@ -82,7 +82,7 @@ namespace Examples.Tutorial
 
             GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, (int[])null);
             GL.CompileShader(fragment_shader_object);
-            GL.GetShaderiv(fragment_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
+            GL.GetShader(fragment_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
             if (status != (int)Enums.Boolean.TRUE)
             {
                 StringBuilder info = new StringBuilder(1024);
@@ -184,41 +184,41 @@ namespace Examples.Tutorial
         {
             GL.Begin(Enums.BeginMode.QUADS);
 
-            GL.Color3f(1, 0, 0);
-            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, -1.0f, -1.0f);
+            GL.Color3(1, 0, 0);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
 
-            GL.Color3f(1, 1, 0);
-            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
+            GL.Color3(1, 1, 0);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3f(1, 0, 1);
-            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
+            GL.Color3(1, 0, 1);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
 
-            GL.Color3f(0, 1, 0);
-            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
+            GL.Color3(0, 1, 0);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
-            GL.Color3f(0, 0, 1);
-            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(1.0f, 1.0f, -1.0f);
+            GL.Color3(0, 0, 1);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
 
-            GL.Color3f(0, 1, 1);
-            GL.Vertex3f(1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(1.0f, -1.0f, 1.0f);
+            GL.Color3(0, 1, 1);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
 
             GL.End();
         }

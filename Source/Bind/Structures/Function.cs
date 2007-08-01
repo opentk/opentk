@@ -1,11 +1,51 @@
-﻿using System;
+﻿#region --- License ---
+/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Bind.Structures
 {
     public class Function : Delegate
     {
+        internal static FunctionCollection Wrappers;
+
+        private static bool loaded;
+        internal static void Initialize()
+        {
+            if (!loaded)
+            {
+                Wrappers = new FunctionCollection();
+                loaded = true;
+            }
+        }
+
+        private static List<string> endings = new List<string>(
+            new string[]
+            {
+                "fv",
+                "f",
+                "dv",
+                "d",
+                "i",
+                "iv",
+                "s",
+                "sv",
+                "b",
+                "bv",
+                "ui",
+                "uiv",
+                "us",
+                "usv",
+                "ub",
+                "ubv"
+            });
+
         #region --- Constructors ---
 
         public Function()
@@ -13,20 +53,27 @@ namespace Bind.Structures
         {
             Body = new FunctionBody();
         }
-
+        /*
         public Function(Function f)
             : base(f)
         {
             this.Body = new FunctionBody(f.Body);
+            this.Name = f.Name;
         }
-
+        */
         public Function(Delegate d)
             : base(d)
         {
-            this.Body = new FunctionBody();
+            if (d is Function)
+                this.Body = new FunctionBody((d as Function).Body);
+            else
+                this.Body = new FunctionBody();
+            this.Name = d.Name;
         }
 
         #endregion
+
+        #region public override bool Unsafe
 
         public override bool Unsafe
         {
@@ -39,7 +86,9 @@ namespace Bind.Structures
             }
         }
 
-        #region Function body
+        #endregion
+
+        #region public FunctionBody Body
 
         FunctionBody _body;
 
@@ -47,6 +96,82 @@ namespace Bind.Structures
         {
             get { return _body; }
             set { _body = value; }
+        }
+
+        #endregion
+
+        #region public string TrimmedName
+
+        string trimmedName;
+        /// <summary>
+        /// Gets or sets the name of the opengl function, trimming the excess 234dfubsiv endings..
+        /// </summary>
+        public string TrimmedName
+        {
+            get { return trimmedName; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                    trimmedName = value.Trim();
+            }
+        }
+
+        #endregion
+
+        #region public override string Name
+
+        /// <summary>
+        /// Gets or sets the name of the opengl function.
+        /// If no Tao compatibility is set, set TrimmedName to Name, after removing
+        /// [u][bsifd][v].
+        /// </summary>
+        public override string Name
+        {
+            get { return base.Name; }
+            set
+            {
+                base.Name = value;
+
+                // If we don't need compatibility with Tao,
+                // remove the Extension and the overload information from the name
+                // (Extension == "ARB", "EXT", etc, overload == [u][bsidf][v])
+                // TODO: Use some regex's here, to reduce clutter.
+                if (Settings.Compatibility != Settings.Legacy.Tao)
+                {
+                    string ext = Utilities.GetGL2Extension(value);
+                    string trimmedName = value;
+
+                    // Remove extension
+                    if (!String.IsNullOrEmpty(ext))
+                    {
+                        trimmedName = trimmedName.Substring(0, trimmedName.Length - ext.Length);
+                    }
+
+                    // Remove overload
+                    if (endings.Contains(trimmedName.Substring(trimmedName.Length - 3)))
+                    {
+                        TrimmedName = trimmedName.Substring(0, trimmedName.Length - 3);
+                        return;
+                    }
+
+                    if (endings.Contains(trimmedName.Substring(trimmedName.Length - 2)))
+                    {
+                        TrimmedName = trimmedName.Substring(0, trimmedName.Length - 2);
+                        return;
+                    }
+
+                    if (endings.Contains(trimmedName.Substring(trimmedName.Length - 1)))
+                    {
+                        // An ending 's' may be either a plural form (glCallLists), which we
+                        // do not want to change, or an actual overload (glColor3s). We assume
+                        // (perhaps incorrectly), that an 's' preceeded be a digit indicates an
+                        // overload. If there is no digit, we assume a plural form (no change).
+                        if (Char.IsDigit(trimmedName[trimmedName.Length - 2]))
+                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 1);
+                        return;
+                    }
+                }
+            }
         }
 
         #endregion
@@ -64,7 +189,7 @@ namespace Bind.Structures
             {
                 sb.Append("gl");
             }
-            sb.Append(Name);
+            sb.Append(!String.IsNullOrEmpty(TrimmedName) ? TrimmedName : Name);
             sb.Append(Parameters.ToString(true));
             if (Body.Count > 0)
             {
@@ -85,17 +210,17 @@ namespace Bind.Structures
 
             for (int i = 0; i < f.Parameters.Count; i++)
             {
-                f.Parameters[i].Type = f.Parameters[i].GetCLSCompliantType(CSTypes);
+                f.Parameters[i].CurrentType = f.Parameters[i].GetCLSCompliantType();
             }
 
             f.Body.Clear();
             if (!f.NeedsWrapper)
             {
-                f.Body.Add((f.ReturnType.Type != "void" ? "return " + this.CallString() : this.CallString()) + ";");
+                f.Body.Add((f.ReturnType.CurrentType != "void" ? "return " + this.CallString() : this.CallString()) + ";");
             }
             else
             {
-                f.Body.AddRange(Function.GetBodyWithPins(this, CSTypes, true));
+                f.Body.AddRange(this.GetBodyWithPins(true));
             }
 
             // The type system cannot differentiate between functions with the same parameters
@@ -144,6 +269,8 @@ namespace Bind.Structures
 
     #endregion
 
+    #region class FunctionCollection : Dictionary<string, List<Function>>
+
     class FunctionCollection : Dictionary<string, List<Function>>
     {
         public void Add(Function f)
@@ -167,4 +294,6 @@ namespace Bind.Structures
             }
         }
     }
+
+    #endregion
 }

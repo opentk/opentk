@@ -34,7 +34,7 @@ namespace Bind.GL2
                     // Get function name:
                     d.Name = line.Split(Utilities.Separators, StringSplitOptions.RemoveEmptyEntries)[0];
 
-                    if (d.Name == "CallLists")
+                    if (d.Name.Contains("MultiTexCoord1"))
                     {
                     }
 
@@ -54,19 +54,17 @@ namespace Bind.GL2
                         switch (words[0])
                         {
                             case "return":  // Line denotes return value
-                                d.ReturnType.Type = words[1];
+                                d.ReturnType.CurrentType = words[1];
                                 break;
 
                             case "param":   // Line denotes parameter
                                 Parameter p = new Parameter();
-                                WrapperTypes wrapper;
-                                string type;
 
                                 p.Name = Utilities.Keywords.Contains(words[1]) ? "@" + words[1] : words[1];
-                                p.Type = words[2];
+                                p.CurrentType = words[2];
                                 p.Pointer = words[4] == "array" ? true : false;
                                 p.Flow = words[3] == "in" ? Parameter.FlowDirection.In : Parameter.FlowDirection.Out;
-
+ 
                                 d.Parameters.Add(p);
                                 break;
 
@@ -81,6 +79,8 @@ namespace Bind.GL2
                         }
                     }
                     while (!specFile.EndOfStream);
+
+                    d.Translate();
 
                     delegates.Add(d);
                 }

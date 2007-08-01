@@ -81,8 +81,8 @@ namespace Examples.Tests
 
                 while (!stop)
                 {
-                    GL.Vertex2f(0.0f, 0.0f);
-                    //GL.Vertex2fv(v);
+                    GL.Vertex2(0.0f, 0.0f);
+                    GL.Vertex2(v);
                     //GL.ARB.ActiveTexture(GL.Enums.ARB_multitexture.TEXTURE0_ARB);
                     //dummy();
                     GL.ColorPointer(2, GL.Enums.ColorPointerType.FLOAT, 0, v);

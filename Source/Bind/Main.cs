@@ -50,6 +50,8 @@ namespace Bind
     {
         static GeneratorMode mode;
 
+        static internal IBind Generator;
+
         static void Main(string[] arguments)
         {
             Debug.Listeners.Clear();
@@ -64,8 +66,6 @@ namespace Bind
             Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
             //Console.WriteLine(" - the OpenTK team ;-)");
             Console.WriteLine();
-
-            IBind bind;
 
             #region Handle Arguments
 
@@ -141,14 +141,14 @@ namespace Bind
                 switch (mode)
                 {
                     case GeneratorMode.GL2:
-                        bind = new Bind.GL2.Generator(Settings.InputPath);
+                        Generator = new Bind.GL2.Generator(Settings.InputPath);
                         break;
 
                     default:
                         throw new NotImplementedException(String.Format("Mode {0} not implemented.", mode));
                 }
 
-                bind.Process();
+                Generator.Process();
 
                 ticks = System.DateTime.Now.Ticks - ticks;
 

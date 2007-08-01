@@ -1,3 +1,21 @@
+OpenTK 0.3.8 -> 0.3.9
+
++ Bind
+	+ Rewrote almost everything. Does not rely on CodeDOM anymore (wasn't flexible enough).
+		+ Initial work for gl3, wgl, glx, glu compatibility.
+	+ Implemented almost all pending features:
+		+ Extensions in different classes (e.g. GL.ARB.ActiveTexture)
+		+ Fixed statement instead of GCHandle for improved performance
+		+ Real pointers instead of IntPtrs
+		+ CLS-Compliant and non CLS-Compliant overloads (e.g. functions with unsigned parameters).
+		+ Overloads over the 'basic' function (e.g. GL.Vertex3fv -> GL.Vertex3)
+		+ Enums now in the GL class.
+	+ New commandline options
+		+ 'legacy':	defines compatibility with Tao ('-legacy:tao')
+		+ 'mode':	defines translation mode (e.g. gl2, gl3, wgl etc)
+	+ 4 files are now generated: GL.cs, GLCore.cs, GLDelegates.cs, GLEnums.cs
+
+
 OpenTK 0.3.7 -> 0.3.8
 
 + New project layout. Only four projects remain under the 'Source' directory: Bind, Build, Examples, OpenTK

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Bind
 {
-    interface IBind
+    interface IBind : ISpecReader, ISpecWriter
     {
         //ISpecReader SpecReader { get; }
         void Process();
