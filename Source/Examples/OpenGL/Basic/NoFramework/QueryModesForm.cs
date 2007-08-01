@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using OpenTK.OpenGL;
-using Enums = OpenTK.OpenGL.Enums;
+using Enums = OpenTK.OpenGL.GL.Enums;
 using OpenTK;
 using OpenTK.Platform;
 

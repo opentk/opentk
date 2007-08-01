@@ -76,11 +76,9 @@ namespace Examples.Tutorial
             this.Context.MakeCurrent();
 
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
-            GL.Enable(OpenTK.OpenGL.Enums.EnableCap.DEPTH_TEST);
-            GL.EnableClientState(OpenTK.OpenGL.Enums.EnableCap.VERTEX_ARRAY);
-            GL.EnableClientState(OpenTK.OpenGL.Enums.EnableCap.INDEX_ARRAY);
-            //GL.Enable(OpenTK.OpenGL.Enums.EnableCap.VERTEX_ARRAY);
-            //GL.Enable(OpenTK.OpenGL.Enums.EnableCap.INDEX_ARRAY);
+            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+            GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
+            GL.EnableClientState(GL.Enums.EnableCap.INDEX_ARRAY);
 
             LoadCube();
 
@@ -96,24 +94,24 @@ namespace Examples.Tutorial
             base.RenderFrame();
 
             GL.Clear(
-                OpenTK.OpenGL.Enums.ClearBufferMask.COLOR_BUFFER_BIT |
-                OpenTK.OpenGL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+                GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT |
+                GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 
-            GL.BindBuffer(OpenTK.OpenGL.Enums.VERSION_1_5.ARRAY_BUFFER, vbo);
-            GL.VertexPointer(3, OpenTK.OpenGL.Enums.VertexPointerType.FLOAT, 0, 0);
+            GL.BindBuffer(GL.Enums.VERSION_1_5.ARRAY_BUFFER, vbo);
+            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, 0);
 
-            GL.BindBuffer(OpenTK.OpenGL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER, ibo);
-            GL.IndexPointer(OpenTK.OpenGL.Enums.IndexPointerType.FLOAT, 0, 0);
+            GL.BindBuffer(GL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER, ibo);
+            GL.IndexPointer(GL.Enums.IndexPointerType.FLOAT, 0, 0);
 
             GL.Color3f(1.0f, 1.0f, 1.0f);
             GL.DrawElements(
-                OpenTK.OpenGL.Enums.BeginMode.QUADS,
+                GL.Enums.BeginMode.QUADS,
                 idata.Length,
-                OpenTK.OpenGL.Enums.GLenum.UNSIGNED_SHORT,
+                GL.Enums.GLenum.UNSIGNED_SHORT,
                 idata);
 
-            GL.BindBuffer(OpenTK.OpenGL.Enums.VERSION_1_5.ARRAY_BUFFER, 0);
-            GL.BindBuffer(OpenTK.OpenGL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER, 0);
+            GL.BindBuffer(GL.Enums.VERSION_1_5.ARRAY_BUFFER, 0);
+            GL.BindBuffer(GL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER, 0);
 
             Context.SwapBuffers();
         }
@@ -137,7 +135,7 @@ namespace Examples.Tutorial
                 return;
             }
 
-            GL.MatrixMode(OpenTK.OpenGL.Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
             Glu.LookAt(
                 0.0, 5.0, 5.0,
@@ -161,7 +159,7 @@ namespace Examples.Tutorial
 
             double ratio = e.Width / (double)e.Height;
 
-            GL.MatrixMode(OpenTK.OpenGL.Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -179,15 +177,15 @@ namespace Examples.Tutorial
             GL.GenBuffers(1, out ibo);
 
             // Upload the vertex data
-            GL.BindBuffer(OpenTK.OpenGL.Enums.VERSION_1_5.ARRAY_BUFFER, vbo);
+            GL.BindBuffer(GL.Enums.VERSION_1_5.ARRAY_BUFFER, vbo);
             GL.BufferData(
-                OpenTK.OpenGL.Enums.VERSION_1_5.ARRAY_BUFFER,
+                GL.Enums.VERSION_1_5.ARRAY_BUFFER,
                 (IntPtr)(vdata.Length * 4),
                 vdata,
-                OpenTK.OpenGL.Enums.VERSION_1_5.STATIC_DRAW);
+                GL.Enums.VERSION_1_5.STATIC_DRAW);
             GL.GetBufferParameteriv(
-                OpenTK.OpenGL.Enums.VERSION_1_5.ARRAY_BUFFER,
-                OpenTK.OpenGL.Enums.VERSION_1_5.BUFFER_SIZE,
+                GL.Enums.VERSION_1_5.ARRAY_BUFFER,
+                GL.Enums.VERSION_1_5.BUFFER_SIZE,
                 out size);
             if (vdata.Length * 4 != size)
             {
@@ -195,16 +193,16 @@ namespace Examples.Tutorial
             }
 
             // Upload the index data
-            GL.BindBuffer(OpenTK.OpenGL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER, ibo);
+            GL.BindBuffer(GL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER, ibo);
             GL.BufferData(
-                OpenTK.OpenGL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER,
+                GL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER,
                 (IntPtr)(idata.Length * 2),
                 idata,
-                OpenTK.OpenGL.Enums.VERSION_1_5.STATIC_DRAW
+                GL.Enums.VERSION_1_5.STATIC_DRAW
             );
             GL.GetBufferParameteriv(
-                OpenTK.OpenGL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER,
-                OpenTK.OpenGL.Enums.VERSION_1_5.BUFFER_SIZE,
+                GL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER,
+                GL.Enums.VERSION_1_5.BUFFER_SIZE,
                 out size);
             if (idata.Length * 2 != size)
             {
