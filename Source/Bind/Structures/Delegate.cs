@@ -1,6 +1,7 @@
-#region License
-//Copyright (c) 2006 Stefanos Apostolopoulos
-//See license.txt for license info
+#region --- License ---
+/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
 #endregion
 
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.IO;
 
 namespace Bind.Structures
 {
@@ -17,6 +19,22 @@ namespace Bind.Structures
     /// </summary>
     public class Delegate
     {
+        internal static DelegateCollection Delegates;
+
+        private static bool delegatesLoaded;
+        internal static void Initialize()
+        {
+            if (!delegatesLoaded)
+            {
+                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, "gl2\\gl.spec"))
+                {
+                    Delegates = Bind.MainClass.Generator.ReadDelegates(sr);
+                }
+
+                delegatesLoaded = true;
+            }
+        }
+
         #region --- Constructors ---
 
         public Delegate()
@@ -29,9 +47,9 @@ namespace Bind.Structures
             this.Category = new string(d.Category.ToCharArray());
             //this.Extension = !String.IsNullOrEmpty(d.Extension) ? new string(d.Extension.ToCharArray()) : "";
             this.Name = new string(d.Name.ToCharArray());
-            this.NeedsWrapper = d.NeedsWrapper;
+            //this.NeedsWrapper = d.NeedsWrapper;
             this.Parameters = new ParameterCollection(d.Parameters);
-            this.ReturnType = new Parameter(d.ReturnType);
+            this.ReturnType = new Type(d.ReturnType);
             this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
             //this.Unsafe = d.Unsafe;
         }
@@ -89,8 +107,24 @@ namespace Bind.Structures
         /// </summary>
         public bool NeedsWrapper
         {
-            get { return _needs_wrapper; }
-            set { _needs_wrapper = value; }
+            //get { return _needs_wrapper; }
+            //set { _needs_wrapper = value; }
+
+            get
+            {
+                // TODO: Add special cases for (Get)ShaderSource.
+
+                if (ReturnType.WrapperType != WrapperTypes.None)
+                    return true;
+
+                foreach (Parameter p in Parameters)
+                {
+                    if (p.WrapperType != WrapperTypes.None)
+                        return true;
+                }
+
+                return false;
+            }
         }
 
         #endregion
@@ -125,28 +159,28 @@ namespace Bind.Structures
 
         #region public Parameter ReturnType
 
-        Parameter _return_type = new Parameter();
+        Type _return_type = new Type();
         /// <summary>
         /// Gets or sets the return value of the opengl function.
         /// </summary>
-        public Parameter ReturnType
+        public Type ReturnType
         {
             get { return _return_type; }
             set
             {
-                _return_type = value;
+                _return_type = Type.Translate(value);
             }
         }
 
         #endregion
 
-        #region public string Name
+        #region public virtual string Name
 
         string _name;
         /// <summary>
         /// Gets or sets the name of the opengl function.
         /// </summary>
-        public string Name
+        public virtual string Name
         {
             get { return _name; }
             set
@@ -165,7 +199,7 @@ namespace Bind.Structures
         public ParameterCollection Parameters
         {
             get { return _parameters; }
-            set { _parameters = value; }
+            protected set { _parameters = value; }
         }
 
         #endregion
@@ -222,51 +256,7 @@ namespace Bind.Structures
             sb.Append(Settings.DelegatesClass);
             sb.Append(".gl");
             sb.Append(Name);
-            sb.Append("(");
-            if (this.Name == "CallLists")
-            {
-            }
-            if (Parameters.Count > 0)
-            {
-                foreach (Parameter p in Parameters)
-                {
-                    if (p.Unchecked)
-                        sb.Append("unchecked((" + p.Type + ")");
-
-                    if (p.Type != "object")
-                    {
-                        if (p.Type.ToLower().Contains("string"))
-                        {
-                            sb.Append(String.Format(
-                                "({0}{1})",
-                                p.Type,
-                                (p.Array > 0) ? "[]" : ""));
-
-                        }
-                        else
-                        {
-                            sb.Append(String.Format(
-                                "({0}{1})",
-                                p.Type,
-                                (p.Pointer || p.Array > 0 || p.Reference) ? "*" : ""));
-                        }
-                    }
-
-                    sb.Append(
-                        Utilities.Keywords.Contains(p.Name) ? "@" + p.Name : p.Name
-                    );
-
-                    if (p.Unchecked)
-                        sb.Append(")");
-
-                    sb.Append(", ");
-                }
-                sb.Replace(", ", ")", sb.Length - 2, 2);
-            }
-            else
-            {
-                sb.Append(")");
-            }
+            sb.Append(Parameters.CallString());
 
             return sb.ToString();
         }
@@ -312,16 +302,16 @@ namespace Bind.Structures
 
         #endregion
 
-        public Delegate GetCLSCompliantDelegate(Dictionary<string, string> CSTypes)
+        public Delegate GetCLSCompliantDelegate()
         {
             Delegate f = new Delegate(this);
 
             for (int i = 0; i < f.Parameters.Count; i++)
             {
-                f.Parameters[i].Type = f.Parameters[i].GetCLSCompliantType(CSTypes);
+                f.Parameters[i].CurrentType = f.Parameters[i].GetCLSCompliantType();
             }
 
-            f.ReturnType.Type = f.ReturnType.GetCLSCompliantType(CSTypes);
+            f.ReturnType.CurrentType = f.ReturnType.GetCLSCompliantType();
 
             return f;
         }
@@ -330,11 +320,11 @@ namespace Bind.Structures
 
         #region --- Wrapper Creation ---
 
-        #region public List<Function> CreateWrappers(Dictionary<string, string> CSTypes)
+        #region public IEnumerable<Function> CreateWrappers()
 
-        public List<Function> CreateWrappers(Dictionary<string, string> CSTypes)
+        public IEnumerable<Function> CreateWrappers()
         {
-            if (this.Name == "MapBuffer")
+            if (this.Name.Contains("GetString"))
             {
             }
 
@@ -344,7 +334,7 @@ namespace Bind.Structures
                 // No special wrapper needed - just call this delegate:
                 Function f = new Function(this);
 
-                if (f.ReturnType.Type.ToLower().Contains("void"))
+                if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                     f.Body.Add(String.Format("{0};", f.CallString()));
                 else
                     f.Body.Add(String.Format("return {0};", f.CallString()));
@@ -353,62 +343,61 @@ namespace Bind.Structures
             }
             else
             {
-                // We have to add wrappers for all possible WrapperTypes.
-                Function f;
+                Function f = WrapReturnType();
 
-                // First, check if the return type needs wrapping:
-                switch (this.ReturnType.WrapperType)
-                {
-                    // If the function returns a string (glGetString) we must manually marshal it
-                    // using Marshal.PtrToStringXXX. Otherwise, the GC will try to free the memory
-                    // used by the string, resulting in corruption (the memory belongs to the
-                    // unmanaged boundary).
-                    case WrapperTypes.StringReturnType:
-                        f = new Function(this);
-                        f.ReturnType.Type = "System.String";
 
-                        f.Body.Add(
-                            String.Format(
-                                "return System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0});",
-                                this.CallString()
-                            )
-                        );
-
-                        wrappers.Add(f);
-                        return wrappers;         // Only occurs in glGetString, there's no need to check parameters.
-
-                    // If the function returns a void* (GenericReturnValue), we'll have to return an IntPtr.
-                    // The user will unfortunately need to marshal this IntPtr to a data type manually.
-                    case WrapperTypes.GenericReturnType:
-                        ReturnType.Type = "IntPtr";
-                        ReturnType.Pointer = false;
-                        /*
-                        f = new Function(this);
-                        f.ReturnType.Type = "IntPtr";
-                        f.ReturnType.Pointer = false;
-
-                        if (f.ReturnType.Type.ToLower().Contains("void"))
-                            f.Body.Add(String.Format("{0};", f.CallString()));
-                        else
-                            f.Body.Add(String.Format("return {0};", f.CallString()));
-
-                        wrappers.Add(f);
-                        */
-                        break;
-
-                    case WrapperTypes.None:
-                    default:
-                        // No return wrapper needed
-                        break;
-                }
-
-                // Then, create wrappers for each parameter:
-                WrapParameters(new Function(this), wrappers, CSTypes);
+                WrapParameters(new Function((Function)f ?? this), wrappers);
             }
 
             return wrappers;
         }
 
+        #endregion
+
+        #region protected Function WrapReturnType()
+
+        protected Function WrapReturnType()
+        {
+            // We have to add wrappers for all possible WrapperTypes.
+            Function f;
+
+            // First, check if the return type needs wrapping:
+            switch (this.ReturnType.WrapperType)
+            {
+                // If the function returns a string (glGetString) we must manually marshal it
+                // using Marshal.PtrToStringXXX. Otherwise, the GC will try to free the memory
+                // used by the string, resulting in corruption (the memory belongs to the
+                // unmanaged boundary).
+                case WrapperTypes.StringReturnType:
+                    f = new Function(this);
+                    f.ReturnType.CurrentType = "System.String";
+
+                    f.Body.Add(
+                        String.Format(
+                            "return System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0});",
+                            this.CallString()
+                        )
+                    );
+
+                    return f;         // Only occurs in glGetString, there's no need to check parameters.
+
+                // If the function returns a void* (GenericReturnValue), we'll have to return an IntPtr.
+                // The user will unfortunately need to marshal this IntPtr to a data type manually.
+                case WrapperTypes.GenericReturnType:
+                    ReturnType.CurrentType = "IntPtr";
+                    ReturnType.Pointer = false;
+
+                    break;
+
+                case WrapperTypes.None:
+                default:
+                    // No return wrapper needed
+                    break;
+            }
+
+            return null;
+        }
+        
         #endregion
 
         #region protected void WrapParameters(Function function, List<Function> wrappers)
@@ -425,9 +414,9 @@ namespace Bind.Structures
         /// "void f(object p, IntPtr q)"
         /// "void f(object p, object q)"
         /// </summary>
-        protected void WrapParameters(Function function, List<Function> wrappers, Dictionary<string, string> CSTypes)
+        protected void WrapParameters(Function function, List<Function> wrappers)
         {
-            if (function.Name == "LineStipple")
+            if (function.Name == "GetString")
             {
             }
 
@@ -451,7 +440,10 @@ namespace Bind.Structures
                 }
                 else
                 {
-                    wrappers.Add(DefaultWrapper(function));
+                    if (function.Body.Count == 0)
+                        wrappers.Add(DefaultWrapper(function));
+                    else
+                        wrappers.Add(function);
                     return;
                 }
             }
@@ -464,7 +456,7 @@ namespace Bind.Structures
                 {
                     // No wrapper needed, visit the next parameter
                     ++index;
-                    WrapParameters(function, wrappers, CSTypes);
+                    WrapParameters(function, wrappers);
                     --index;
                 }
                 else
@@ -474,25 +466,25 @@ namespace Bind.Structures
                         case WrapperTypes.ArrayParameter:
                             // Recurse to the last parameter
                             ++index;
-                            WrapParameters(function, wrappers, CSTypes);
+                            WrapParameters(function, wrappers);
                             --index;
 
                             // On stack rewind, create array wrappers
-                            f = ArrayWrapper(new Function(function), index, CSTypes);
+                            f = ArrayWrapper(new Function(function), index);
                             wrappers.Add(f);
 
                             // Recurse to the last parameter again, keeping the Array wrappers
                             ++index;
-                            WrapParameters(f, wrappers, CSTypes);
+                            WrapParameters(f, wrappers);
                             --index;
 
                             // On stack rewind, create Ref wrappers.
-                            f = ReferenceWrapper(new Function(function), index, CSTypes);
+                            f = ReferenceWrapper(new Function(function), index);
                             wrappers.Add(f);
 
                             // Keeping the current Ref wrapper, visit all other parameters once more
                             ++index;
-                            WrapParameters(f, wrappers, CSTypes);
+                            WrapParameters(f, wrappers);
                             --index;
 
                             break;
@@ -500,16 +492,16 @@ namespace Bind.Structures
                         case WrapperTypes.GenericParameter:
                             // Recurse to the last parameter
                             ++index;
-                            WrapParameters(function, wrappers, CSTypes);
+                            WrapParameters(function, wrappers);
                             --index;
 
                             // On stack rewind, create array wrappers
-                            f = GenericWrapper(new Function(function), index, CSTypes);
+                            f = GenericWrapper(new Function(function), index);
                             wrappers.Add(f);
 
                             // Keeping the current Object wrapper, visit all other parameters once more
                             ++index;
-                            WrapParameters(f, wrappers, CSTypes);
+                            WrapParameters(f, wrappers);
                             --index;
 
                             break;
@@ -520,31 +512,31 @@ namespace Bind.Structures
 
         #endregion
 
-        #region protected Function GenericWrapper(Function function, int index, Dictionary<string, string> CSTypes)
+        #region protected Function GenericWrapper(Function function, int index)
 
-        protected Function GenericWrapper(Function function, int index, Dictionary<string, string> CSTypes)
+        protected Function GenericWrapper(Function function, int index)
         {
             // Search and replace IntPtr parameters with the known parameter types:
             function.Parameters[index].Reference = false;
             function.Parameters[index].Array = 0;
             function.Parameters[index].Pointer = false;
-            function.Parameters[index].Type = "object";
+            function.Parameters[index].CurrentType = "object";
             function.Parameters[index].Flow = Parameter.FlowDirection.Undefined;
 
             // In the function body we should pin all objects in memory before calling the
             // low-level function.
             function.Body.Clear();
             //function.Body.AddRange(GetBodyWithFixedPins(function));
-            function.Body.AddRange(GetBodyWithPins(function, CSTypes, false));
+            function.Body.AddRange(function.GetBodyWithPins(false));
 
             return function;
         }
 
         #endregion
 
-        #region protected Function ReferenceWrapper(Function function, int index, Dictionary<string, string> CSTypes)
+        #region protected Function ReferenceWrapper(Function function, int index)
 
-        protected Function ReferenceWrapper(Function function, int index, Dictionary<string, string> CSTypes)
+        protected Function ReferenceWrapper(Function function, int index)
         {
             // Search and replace IntPtr parameters with the known parameter types:
             function.Parameters[index].Reference = true;
@@ -554,16 +546,16 @@ namespace Bind.Structures
             // In the function body we should pin all objects in memory before calling the
             // low-level function.
             function.Body.Clear();
-            function.Body.AddRange(GetBodyWithPins(function, CSTypes, false));
+            function.Body.AddRange(function.GetBodyWithPins(false));
 
             return function;
         }
 
         #endregion
 
-        #region protected Function ArrayWrapper(Function function, int index, Dictionary<string, string> CSTypes)
+        #region protected Function ArrayWrapper(Function function, int index)
 
-        protected Function ArrayWrapper(Function function, int index, Dictionary<string, string> CSTypes)
+        protected Function ArrayWrapper(Function function, int index)
         {
             // Search and replace IntPtr parameters with the known parameter types:
             function.Parameters[index].Array = 1;
@@ -573,7 +565,7 @@ namespace Bind.Structures
             // In the function body we should pin all objects in memory before calling the
             // low-level function.
             function.Body.Clear();
-            function.Body.AddRange(GetBodyWithPins(function, CSTypes, false));
+            function.Body.AddRange(function.GetBodyWithPins(false));
 
             return function;
         }
@@ -584,12 +576,12 @@ namespace Bind.Structures
 
         protected Function DefaultWrapper(Function f)
         {
-            bool returns = f.ReturnType.Type.ToLower().Contains("void") && !f.ReturnType.Pointer;
+            bool returns = f.ReturnType.CurrentType.ToLower().Contains("void") && !f.ReturnType.Pointer;
             string callString = String.Format(
                 "{0} {1}{2}; {3}",
                 Unsafe ? "unsafe {" : "",
                 returns ? "" : "return ",
-                f.CallString(), 
+                this.CallString(),
                 Unsafe ? "}" : "");
 
             f.Body.Add(callString);
@@ -599,22 +591,24 @@ namespace Bind.Structures
 
         #endregion
 
-        #region protected static FunctionBody GetBodyWithPins(Function function, Dictionary<string, string> CSTypes, bool wantCLSCompliance)
+        #region protected FunctionBody GetBodyWithPins(bool wantCLSCompliance)
 
         /// <summary>
         /// Generates a body which calls the specified function, pinning all needed parameters.
         /// </summary>
         /// <param name="function"></param>
-        protected static FunctionBody GetBodyWithPins(Function function, Dictionary<string, string> CSTypes, bool wantCLSCompliance)
+        protected FunctionBody GetBodyWithPins(bool wantCLSCompliance)
         {
             // We'll make changes, but we want the original intact.
-            Function f = new Function(function);
+            //Function function = this as Function ?? new Function(this);
+            //Function f = new Function(function);
+            Function f = new Function(this);
             f.Body.Clear();
             // Unsafe only if 
             //function.Unsafe = false;
 
             // Add default initliazers for out parameters:
-            foreach (Parameter p in function.Parameters)
+            foreach (Parameter p in this.Parameters)
             {
                 if (p.Flow == Parameter.FlowDirection.Out)
                 {
@@ -622,7 +616,7 @@ namespace Bind.Structures
                         String.Format(
                             "{0} = default({1});",
                             p.Name,
-                            p.GetFullType(CSTypes, wantCLSCompliance)
+                            p.GetFullType(Bind.Structures.Type.CSTypes, wantCLSCompliance)
                         )
                     );
                 }
@@ -673,7 +667,9 @@ namespace Bind.Structures
                         f.Body.Add(
                             String.Format(
                                 "    fixed ({0}* {1} = {2})",
-                                wantCLSCompliance && !p.CLSCompliant ? p.GetCLSCompliantType(CSTypes) : p.Type,
+                                wantCLSCompliance && !p.CLSCompliant ?
+                                    p.GetCLSCompliantType() :
+                                    p.CurrentType,
                                 p.Name + "_ptr",
                                 p.Array > 0 ? p.Name : "&" + p.Name
                             )
@@ -685,7 +681,7 @@ namespace Bind.Structures
                 }
             }
 
-            if (!function.Unsafe)
+            if (!this.Unsafe)
             {
                 f.Body.Insert(handleEnd, "unsafe");
                 f.Body.Insert(handleEnd + 1, "{");
@@ -698,13 +694,13 @@ namespace Bind.Structures
 
             f.Body.Add("    {");
             // Add delegate call:
-            if (f.ReturnType.Type.ToLower().Contains("void"))
+            if (f.ReturnType.CurrentType.ToLower().Contains("void"))
                 f.Body.Add(String.Format("        {0};", f.CallString()));
             else
-                f.Body.Add(String.Format("        {0} {1} = {2};", f.ReturnType.Type, "retval", f.CallString()));
+                f.Body.Add(String.Format("        {0} {1} = {2};", f.ReturnType.CurrentType, "retval", f.CallString()));
 
             // Assign out parameters:
-            foreach (Parameter p in function.Parameters)
+            foreach (Parameter p in this.Parameters)
             {
                 if (p.Flow == Parameter.FlowDirection.Out)
                 {
@@ -718,7 +714,7 @@ namespace Bind.Structures
                                 String.Format(
                                     "        {0} = ({1}){2}.Target;",
                                     p.Name,
-                                    p.Type,
+                                    p.CurrentType,
                                     p.Name + "_ptr"
                                 )
                             );
@@ -737,7 +733,7 @@ namespace Bind.Structures
             }
 
             // Return:
-            if (!f.ReturnType.Type.ToLower().Contains("void"))
+            if (!f.ReturnType.CurrentType.ToLower().Contains("void"))
             {
                 f.Body.Add("        return retval;");
             }
@@ -747,7 +743,7 @@ namespace Bind.Structures
                 f.Body.Add("    }");
                 f.Body.Add("    finally");
                 f.Body.Add("    {");
-                foreach (Parameter p in function.Parameters)
+                foreach (Parameter p in this.Parameters)
                 {
                     // Free all allocated GCHandles
                     if (p.NeedsPin)
@@ -761,7 +757,7 @@ namespace Bind.Structures
             }
             f.Body.Add("    }");
 
-            if (!function.Unsafe)
+            if (!this.Unsafe)
             {
                 f.Body.Add("}");
             }
@@ -772,7 +768,145 @@ namespace Bind.Structures
         #endregion
 
         #endregion
+
+        /// <summary>
+        /// Translates the opengl return type to the equivalent C# type.
+        /// </summary>
+        /// <param name="d">The opengl function to translate.</param>
+        /// <remarks>
+        /// First, we use the official typemap (gl.tm) to get the correct type.
+        /// Then we override this, when it is:
+        /// 1) A string (we have to use Marshal.PtrToStringAnsi, to avoid heap corruption)
+        /// 2) An array (translates to IntPtr)
+        /// 3) A generic object or void* (translates to IntPtr)
+        /// 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
+        /// Return types must always be CLS-compliant, because .Net does not support overloading on return types.
+        /// </remarks>
+        protected virtual void TranslateReturnType()
+        {
+            if (Bind.Structures.Type.GLTypes.ContainsKey(ReturnType.CurrentType))
+                ReturnType.CurrentType = Bind.Structures.Type.GLTypes[ReturnType.CurrentType];
+
+            if (Bind.Structures.Type.CSTypes.ContainsKey(ReturnType.CurrentType))
+                ReturnType.CurrentType = Bind.Structures.Type.CSTypes[ReturnType.CurrentType];
+
+            if (ReturnType.CurrentType.ToLower().Contains("void") && ReturnType.Pointer)
+            {
+                ReturnType.WrapperType = WrapperTypes.GenericReturnType;
+            }
+
+            if (ReturnType.CurrentType.ToLower().Contains("string"))
+            {
+                ReturnType.CurrentType = "IntPtr";
+                ReturnType.WrapperType = WrapperTypes.StringReturnType;
+            }
+
+            if (ReturnType.CurrentType.ToLower().Contains("object"))
+            {
+                ReturnType.CurrentType = "IntPtr";
+                ReturnType.WrapperType |= WrapperTypes.GenericReturnType;
+            }
+
+            if (ReturnType.CurrentType.Contains("GLenum"))
+            {
+                if (Settings.Compatibility == Settings.Legacy.None)
+                    ReturnType.CurrentType = ReturnType.CurrentType.Insert(0, Settings.GLEnumsClass + ".");
+                else
+                    ReturnType.CurrentType = "int";
+            }
+
+            if (ReturnType.CurrentType.ToLower().Contains("bool"))
+            {
+                if (Settings.Compatibility == Settings.Legacy.Tao)
+                    ReturnType.CurrentType = "int";
+                else
+                {
+                }
+
+                //ReturnType.WrapperType = WrapperTypes.ReturnsBool;
+            }
+
+            ReturnType.CurrentType = ReturnType.GetCLSCompliantType();
+        }
+
+        protected virtual void TranslateParameters()
+        {
+            if (this.Name.Contains("MultiTexCoord1"))
+            {
+            }
+            for (int i = 0; i < Parameters.Count; i++)
+            {
+                Parameters[i] = Parameter.Translate(Parameters[i], this.Category);
+
+                // Special cases: glLineStipple and gl(Get)ShaderSource:
+                // Check for LineStipple (should be unchecked)
+                if (Parameters[i].CurrentType == "UInt16" && Name.Contains("LineStipple"))
+                {
+                    Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
+                }
+
+                if (Name.Contains("ShaderSource") && Parameters[i].CurrentType.ToLower().Contains("string"))
+                {
+                    // Special case: these functions take a string[]
+                    //IsPointer = true;
+                    Parameters[i].Array = 1;
+                }
+            }
+        }
+
+        internal void Translate()
+        {
+            TranslateReturnType();
+            TranslateParameters();
+
+            List<Function> wrappers = (List<Function>)CreateWrappers();
+
+            // If the function is not CLS-compliant (e.g. it contains unsigned parameters)
+            // we need to create a CLS-Compliant overload. However, we should only do this
+            // iff the opengl function does not contain unsigned/signed overloads itself
+            // to avoid redefinitions.
+            foreach (Function f in wrappers)
+            {
+                if (this.Name.Contains("Weightub"))
+                {
+                }
+
+                bool createCLS = !f.CLSCompliant;
+                //createCLS &= String.IsNullOrEmpty(f.TrimmedName);
+                string nameWithoutExtension = Utilities.StripGL2Extension(f.Name).TrimEnd('v');
+                createCLS &=
+                    String.IsNullOrEmpty(f.TrimmedName) ||
+                    nameWithoutExtension.EndsWith("u") &&
+                    !nameWithoutExtension.EndsWith("b");
+
+                if (createCLS)
+                {
+                    Function clsFunction = f.GetCLSCompliantFunction(Bind.Structures.Type.CSTypes);
+                    // avoid redefinitions
+                    if (clsFunction.Parameters.ToString(true) != f.Parameters.ToString(true))
+                    {
+                        bool defined = false;
+                        if (Bind.Structures.Function.Wrappers.ContainsKey(f.Extension))
+                        {
+                            foreach (Function fun in Bind.Structures.Function.Wrappers[clsFunction.Extension])
+                            {
+                                if (clsFunction.Name == fun.Name &&
+                                    clsFunction.Parameters.ToString() == fun.Parameters.ToString())
+                                    defined = true;
+                            }
+                        }
+
+                        if (!defined)
+                            Bind.Structures.Function.Wrappers.Add(clsFunction);
+                        //wrappers.Add(f);
+                    }
+                }
+                Bind.Structures.Function.Wrappers.Add(f);
+            }
+        }
     }
+
+    #region class DelegateCollection : Dictionary<string, Delegate>
 
     class DelegateCollection : Dictionary<string, Delegate>
     {
@@ -790,4 +924,6 @@ namespace Bind.Structures
             }
         }
     }
+
+    #endregion
 }

@@ -15,6 +15,13 @@ namespace Bind
         public static string OutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
         public static string OutputNamespace = "OpenTK.OpenGL";
         public static string GLClass = "GL";
+        private static string enumsClass = "Enums";
+        public static string GLEnumsClass
+        {
+            get { return GLClass + "." + enumsClass; }
+            set { enumsClass = value; }
+
+        }
         public static string DelegatesClass = "Delegates";
         public static string ImportsClass = "Imports";
         public static string WglClass = "Wgl";

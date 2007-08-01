@@ -157,20 +157,6 @@ namespace Bind
 
         #endregion
 
-        #region internal static string StripGL2Extension(Function f)
-
-        internal static string StripGL2Extension(Function f)
-        {
-            string ext = GetGL2Extension(f.Name);
-            if (String.IsNullOrEmpty(ext))
-                return null;
-
-            f.Name = f.Name.Substring(0, f.Name.Length - ext.Length);
-            return ext;
-        }
-
-        #endregion
-
         #region internal static string GetGL2Extension(string name)
 
         internal static string GetGL2Extension(string name)
@@ -195,7 +181,7 @@ namespace Bind
             if (name.EndsWith("APPLE")) { return "APPLE"; }
             if (name.EndsWith("OML")) { return "OML"; }
             if (name.EndsWith("I3D")) { return "I3D"; }
-            return null;
+            return "";
         }
 
         #endregion
@@ -227,5 +213,10 @@ namespace Bind
         }
 
         #endregion
+
+        internal static string StripGL2Extension(string p)
+        {
+            return p.Substring(0, p.Length - GetGL2Extension(p).Length);
+        }
     }
 }
