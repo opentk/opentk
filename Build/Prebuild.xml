@@ -79,14 +79,14 @@
       <Configuration name="Debug">
         <Options>
           <OutputPath>../../Binaries/Debug/Libraries</OutputPath>
-          <!--<AllowUnsafe>true</AllowUnsafe>-->
+          <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
 
       <Configuration name="Release">
         <Options>
           <OutputPath>../../Binaries/Release/Libraries</OutputPath>
-          <!--<AllowUnsafe>true</AllowUnsafe>-->
+          <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
 
@@ -107,12 +107,14 @@
       <Configuration name="Debug">
         <Options>
           <OutputPath>../../Binaries/Debug/Examples</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
 
       <Configuration name="Release">
         <Options>
           <OutputPath>../../Binaries/Release/Examples</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
 
