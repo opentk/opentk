@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace Bind.Structures
 {
@@ -13,6 +14,33 @@ namespace Bind.Structures
 
     public class Enum
     {
+        internal static EnumCollection GLEnums;
+
+        private static bool enumsLoaded;
+
+        internal static void Initialize()
+        {
+            if (!enumsLoaded)
+            {
+                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, "gl2\\enum.spec"))
+                {
+                    GLEnums = Bind.MainClass.Generator.ReadEnums(sr);
+                }
+
+                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, "gl2\\enumext.spec"))
+                {
+                    foreach (Bind.Structures.Enum e in Bind.MainClass.Generator.ReadEnums(sr).Values)
+                    {
+                        //enums.Add(e.Name, e);
+                        Utilities.Merge(GLEnums, e);
+                    }
+                }
+
+                enumsLoaded = true;
+            }
+        }
+          
+
         public Enum()
         { }
 
@@ -61,19 +89,40 @@ namespace Bind.Structures
 
     class EnumCollection : Dictionary<string, Enum>
     {
-        /*
-        public override string ToString()
+        internal void AddRange(EnumCollection enums)
         {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (Bind.Structures.Enum e in this.Values)
+            foreach (Enum e in enums.Values)
             {
-                sb.AppendLine(e.ToString());
+                Utilities.Merge(this, e);
             }
-
-            return sb.ToString();
         }
-        */
+
+        internal void Translate()
+        {
+            foreach (Enum e in this.Values)
+            {
+                foreach (Constant c in e.ConstantCollection.Values)
+                {
+                    // There are cases when a value is an aliased constant, with no enum specified.
+                    // (e.g. FOG_COORD_ARRAY_TYPE = GL_FOG_COORDINATE_ARRAY_TYPE)
+                    // In this case try searching all enums for the correct constant to alias (stupid opengl specs).
+                    if (String.IsNullOrEmpty(c.Reference) && !Char.IsDigit(c.Value[0]))
+                    {
+                        foreach (Enum @enum in this.Values)
+                        {
+                            // Skip generic GLenum
+                            if (@enum.Name == "GLenum")
+                                continue;
+
+                            if (@enum.ConstantCollection.ContainsKey(c.Value))
+                            {
+                                c.Reference = @enum.Name;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     #endregion

@@ -167,41 +167,41 @@ namespace Examples.WinForms
         {
             GL.Begin(Enums.BeginMode.QUADS);
 
-            GL.Color3f(1, 0, 0);
-            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, -1.0f, -1.0f);
+            GL.Color3(1, 0, 0);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
 
-            GL.Color3f(1, 1, 0);
-            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
+            GL.Color3(1, 1, 0);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3f(1, 0, 1);
-            GL.Vertex3f(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
+            GL.Color3(1, 0, 1);
+            GL.Vertex3(-1.0f, -1.0f, -1.0f);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
 
-            GL.Color3f(0, 1, 0);
-            GL.Vertex3f(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(1.0f, -1.0f, 1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
+            GL.Color3(0, 1, 0);
+            GL.Vertex3(-1.0f, -1.0f, 1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
-            GL.Color3f(0, 0, 1);
-            GL.Vertex3f(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(1.0f, 1.0f, -1.0f);
+            GL.Color3(0, 0, 1);
+            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
 
-            GL.Color3f(0, 1, 1);
-            GL.Vertex3f(1.0f, -1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, -1.0f);
-            GL.Vertex3f(1.0f, 1.0f, 1.0f);
-            GL.Vertex3f(1.0f, -1.0f, 1.0f);
+            GL.Color3(0, 1, 1);
+            GL.Vertex3(1.0f, -1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, -1.0f);
+            GL.Vertex3(1.0f, 1.0f, 1.0f);
+            GL.Vertex3(1.0f, -1.0f, 1.0f);
 
             GL.End();
         }

@@ -114,13 +114,6 @@ namespace Bind.GL2
 
                 foreach (Function f in wrappers[key])
                 {
-                    if (Settings.Compatibility != Settings.Legacy.Tao)
-                        Utilities.StripGL2Extension(f);
-
-                    if (f.Name == "ActiveTexture")
-                    {
-                    }
-
                     if (!f.CLSCompliant)
                     {
                         sw.WriteLine("[System.CLSCompliant(false)]");

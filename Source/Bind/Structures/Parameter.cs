@@ -15,7 +15,7 @@ namespace Bind.Structures
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
-    public class Parameter
+    public class Parameter : Type
     {
         #region Constructors
 
@@ -23,6 +23,7 @@ namespace Bind.Structures
         /// Creates a new Parameter without type and name.
         /// </summary>
         public Parameter()
+            :base()
         {
         }
 
@@ -31,28 +32,20 @@ namespace Bind.Structures
         /// </summary>
         /// <param name="p">The parameter to copy from.</param>
         public Parameter(Parameter p)
+            : base(p)
         {
             if (p == null)
                 return;
 
             this.Name = !String.IsNullOrEmpty(p.Name) ? new string(p.Name.ToCharArray()) : "";
-            //this.NeedsWrapper = p.NeedsWrapper;
-            this.PreviousType = !String.IsNullOrEmpty(p.PreviousType) ? new string(p.PreviousType.ToCharArray()) : "";
             this.Unchecked = p.Unchecked;
             this.UnmanagedType = p.UnmanagedType;
-            this.WrapperType = p.WrapperType;
-
-            this.Type = new string(p.Type.ToCharArray());
             this.Flow = p.Flow;
-            this.Array = p.Array;
-            this.Pointer = p.Pointer;
-            this.Reference = p.Reference;
-            
         }
 
         #endregion
 
-        #region Name property
+        #region public string Name
 
         string _name;
         /// <summary>
@@ -72,7 +65,7 @@ namespace Bind.Structures
         /// <summary>
         /// Gets or sets the name of the parameter.
         /// </summary>
-        public UnmanagedType UnmanagedType
+        private UnmanagedType UnmanagedType
         {
             get { return _unmanaged_type; }
             set { _unmanaged_type = value; }
@@ -80,61 +73,7 @@ namespace Bind.Structures
 
         #endregion
 
-        #region Type property
-
-        string _type;
-        /// <summary>
-        /// Gets the type of the parameter.
-        /// </summary>
-        public string Type
-        {
-            //get { return _type; }
-            get
-            {
-                //if (Pointer && Settings.Compatibility == Settings.Legacy.Tao)
-                //    return "IntPtr";
-                
-                return _type;
-            }
-            set
-            {
-                if (!String.IsNullOrEmpty(_type))
-                    PreviousType = _type;
-                if (!String.IsNullOrEmpty(value))
-                    _type = value.Trim();
-                if (_type.EndsWith("*"))
-                {
-                    _type = _type.TrimEnd('*');
-                    Pointer = true;
-                }
-
-                clsCompliant =
-                    !(
-                    (Pointer && (Settings.Compatibility != Settings.Legacy.Tao)) ||
-                    (Type.Contains("GLu") && !Type.Contains("GLubyte")) ||
-                    Type == "GLbitfield" ||
-                    Type.Contains("GLhandle") ||
-                    Type.Contains("GLhalf") ||
-                    Type == "GLbyte");
-            }
-        }
-
-        #endregion
-
-        #region Previous type property
-
-        private string _previous_type;
-
-        public string PreviousType
-        {
-            get { return _previous_type; }
-            set { _previous_type = value; }
-        }
-
-
-        #endregion
-
-        #region Flow property
+        #region public FlowDirection Flow
 
         /// <summary>
         /// Enumarates the possible flows of a parameter (ie. is this parameter
@@ -160,49 +99,14 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public bool Reference
-
-        bool reference;
-
-        public bool Reference
-        {
-            get { return reference; }
-            set { reference = value; }
-        }
-
-        #endregion
-
-        #region public bool Array
-
-        int array;
-
-        public int Array
-        {
-            get { return array; }
-            set { array = value > 0 ? value : 0; }
-        }
-
-        #endregion
-
-        #region public bool Pointer
-
-        bool pointer = false;
-
-        public bool Pointer
-        {
-            get { return pointer; }
-            set { pointer = value; }
-        }
-
-        #endregion
-
         #region public bool NeedsPin
 
         public bool NeedsPin
         {
             get { return
-                (Array > 0 || Reference || Type == "object") &&
-                !Type.ToLower().Contains("string"); }
+              (Array > 0 || Reference || CurrentType == "object") &&
+              !CurrentType.ToLower().Contains("string");
+        }
         }
 
         #endregion
@@ -219,33 +123,6 @@ namespace Bind.Structures
 
         #endregion
 
-        #region WrapperType property
-
-        private WrapperTypes _wrapper_type = WrapperTypes.None;
-
-        public WrapperTypes WrapperType
-        {
-            get { return _wrapper_type; }
-            set { _wrapper_type = value; }
-        }
-        
-        #endregion
-
-        #region public bool CLSCompliant
-
-        private bool clsCompliant;
-
-        public bool CLSCompliant
-        {
-            get
-            {
-                // Checked when setting the Type property.
-                return clsCompliant || (Pointer && Settings.Compatibility == Settings.Legacy.Tao);
-            }
-        }
-
-        #endregion
-
         #region public string GetFullType()
 
         public string GetFullType(Dictionary<string, string> CSTypes, bool compliant)
@@ -256,46 +133,16 @@ namespace Bind.Structures
             if (!compliant)
             {
                 return
-                    Type +
+                    CurrentType +
                     (Pointer ? "*" : "") +
                     (Array > 0 ? "[]" : "");
             }
 
             return 
-                GetCLSCompliantType(CSTypes) +
+                GetCLSCompliantType() +
                 (Pointer ? "*" : "") +
                 (Array > 0 ? "[]" : "");
 
-        }
-
-        #endregion
-
-        #region public string GetCLSCompliantType(Dictionary<string, string> CSTypes)
-
-        public string GetCLSCompliantType(Dictionary<string, string> CSTypes)
-        {
-            if (!CLSCompliant)
-            {
-                if (Pointer && Settings.Compatibility == Settings.Legacy.Tao)
-                    return "IntPtr";
-                    
-                if (CSTypes.ContainsKey(Type))
-                {
-                    switch (CSTypes[Type])
-                    {
-                        case "UInt16":
-                            return "Int16";
-                        case "UInt32":
-                            return "Int32";
-                        case "UInt64":
-                            return "Int64";
-                        case "SByte":
-                            return "Byte";
-                    }
-                }
-            }
-            
-            return Type;
         }
 
         #endregion
@@ -324,6 +171,11 @@ namespace Bind.Structures
             //if (Flow == FlowDirection.Out && !Array && !(Type == "IntPtr"))
             //    sb.Append("out ");
 
+            if (Flow == FlowDirection.Out)
+                sb.Append("[Out] ");
+            else if (Flow == FlowDirection.Undefined)
+                sb.Append("[In, Out] ");
+
             if (Reference)
             {
                 if (Flow == FlowDirection.Out)
@@ -340,14 +192,14 @@ namespace Bind.Structures
                 }
                 else
                 {
-                    sb.Append(Type);
+                    sb.Append(CurrentType);
                     if (Array > 0)
                         sb.Append("[]");
                 }
             }
             else
             {
-                sb.Append(Type);
+                sb.Append(CurrentType);
                 if (Pointer)
                     sb.Append("*");
                 if (Array > 0)
@@ -363,6 +215,87 @@ namespace Bind.Structures
         }
 
         #endregion
+
+        internal static Parameter Translate(Parameter par, string Category)
+        {
+            Enum @enum;
+            string s;
+            Parameter p = new Parameter(par);
+
+            // Translate enum types
+            if (Enum.GLEnums.TryGetValue(p.CurrentType, out @enum) && @enum.Name != "GLenum")
+            {
+                if (Settings.Compatibility == Settings.Legacy.Tao)
+                    p.CurrentType = "int";
+                else
+                    p.CurrentType = p.CurrentType.Insert(0, String.Format("{0}.", Settings.GLEnumsClass));
+            }
+            else if (Bind.Structures.Type.GLTypes.TryGetValue(p.CurrentType, out s))
+            {
+                // Check if the parameter is a generic GLenum. If yes,
+                // check if a better match exists:
+                if (s.Contains("GLenum") && !String.IsNullOrEmpty(Category))
+                {
+                    if (Settings.Compatibility == Settings.Legacy.None)
+                    {
+                        // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
+                        if (Enum.GLEnums.ContainsKey(Category))
+                        {
+                            p.CurrentType = String.Format("{0}.{1}", Settings.GLEnumsClass, Category);
+                        }
+                        else
+                        {
+                            p.CurrentType = String.Format("{0}.GLenum", Settings.GLEnumsClass);
+                        }
+                    }
+                    else
+                    {
+                        p.CurrentType = "int";
+                    }
+                }
+                else
+                {
+                    // This is not enum, default translation:
+                    p.CurrentType = s;
+                    p.CurrentType =
+                        Bind.Structures.Type.CSTypes.ContainsKey(p.CurrentType) ?
+                        Bind.Structures.Type.CSTypes[p.CurrentType] : p.CurrentType;
+                }
+            }
+
+            //if (CSTypes.ContainsKey(p.CurrentType))
+            //    p.CurrentType = CSTypes[p.CurrentType];
+
+            // Translate pointer parameters
+            if (p.Pointer)
+            {
+                p.WrapperType = WrapperTypes.ArrayParameter;
+
+                if (p.CurrentType.ToLower().Contains("char") || p.CurrentType.ToLower().Contains("string"))
+                {
+                    // char* or string -> [In] String or [Out] StringBuilder
+                    p.CurrentType =
+                        p.Flow == Parameter.FlowDirection.Out ?
+                        "System.Text.StringBuilder" :
+                        "System.String";
+
+                    p.Pointer = false;
+                    p.WrapperType = WrapperTypes.None;
+                }
+                else if (p.CurrentType.ToLower().Contains("void"))
+                {
+                    p.WrapperType = WrapperTypes.GenericParameter;
+                }
+            }
+
+            if (p.CurrentType.ToLower().Contains("bool"))
+            {
+                // Is this actually used anywhere?
+                p.WrapperType = WrapperTypes.BoolParameter;
+            }
+
+            return p;
+        }
     }
 
     #endregion
@@ -398,17 +331,12 @@ namespace Bind.Structures
         /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
         override public string ToString()
         {
-            return ToString(false, null);
+            return ToString(false);
         }
 
         #endregion
 
-        public string ToString(bool taoCompatible)
-        {
-            return ToString(true, null);
-        }
-
-        #region public string ToString(bool taoCompatible, Dictionary<string, string> CSTypes)
+        #region public string ToString(bool taoCompatible)
 
         /// <summary>
         /// Gets the parameter declaration string.
@@ -416,7 +344,7 @@ namespace Bind.Structures
         /// <param name="getCLSCompliant">If true, all types will be replaced by their CLSCompliant C# equivalents</param>
         /// <param name="CSTypes">The list of C# types equivalent to the OpenGL types.</param>
         /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
-        public string ToString(bool taoCompatible, Dictionary<string, string> CSTypes)
+        public string ToString(bool taoCompatible)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("(");
@@ -444,10 +372,66 @@ namespace Bind.Structures
 
         #endregion
 
+        public string CallString()
+        {
+            return CallString(false);
+        }
+
+        public string CallString(bool taoCompatible)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("(");
+
+            if (this.Count > 0)
+            {
+                foreach (Parameter p in this)
+                {
+                    if (p.Unchecked)
+                        sb.Append("unchecked((" + p.CurrentType + ")");
+
+                    if (p.CurrentType != "object")
+                    {
+                        if (p.CurrentType.ToLower().Contains("string"))
+                        {
+                            sb.Append(String.Format(
+                                "({0}{1})",
+                                p.CurrentType,
+                                (p.Array > 0) ? "[]" : ""));
+
+                        }
+                        else
+                        {
+                            sb.Append(String.Format(
+                                "({0}{1})",
+                                p.CurrentType,
+                                (p.Pointer || p.Array > 0 || p.Reference) ? "*" : ""));
+                        }
+                    }
+
+                    sb.Append(
+                        Utilities.Keywords.Contains(p.Name) ? "@" + p.Name : p.Name
+                    );
+
+                    if (p.Unchecked)
+                        sb.Append(")");
+
+                    sb.Append(", ");
+                }
+                sb.Replace(", ", ")", sb.Length - 2, 2);
+            }
+            else
+            {
+                sb.Append(")");
+            }
+
+            return sb.ToString();
+        }
+
         public bool ContainsType(string type)
         {
             foreach (Parameter p in this)
-                if (p.Type == type)
+                if (p.CurrentType == type)
                     return true;
             return false;
         }

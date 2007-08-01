@@ -53,7 +53,7 @@ namespace Examples.Tutorial
 
                 d.Begin();
 
-                GL.Color3d(
+                GL.Color3(
                     1.0,
                     c,
                     1 - c
@@ -61,10 +61,10 @@ namespace Examples.Tutorial
 
                 GL.Begin(Enums.BeginMode.QUADS);
 
-                GL.Vertex3f(-1.0f, -1.0f, 1.0f);
-                GL.Vertex3f( 1.0f, -1.0f, 1.0f);
-                GL.Vertex3f( 1.0f,  1.0f, 1.0f);
-                GL.Vertex3f(-1.0f,  1.0f, 1.0f);
+                GL.Vertex3(-1.0f, -1.0f, 1.0f);
+                GL.Vertex3( 1.0f, -1.0f, 1.0f);
+                GL.Vertex3( 1.0f,  1.0f, 1.0f);
+                GL.Vertex3(-1.0f,  1.0f, 1.0f);
 
                 GL.End();
 
