@@ -4,7 +4,6 @@
  */
 #endregion
 
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -54,14 +53,14 @@ namespace OpenTK.OpenGL
         /// </summary>
         public void Begin()
         {
-            GL.NewList(Id, Enums.ListMode.COMPILE);
+            GL.NewList(Id, GL.Enums.ListMode.COMPILE);
         }
 
         /// <summary>
         /// Starts recording elements into the display list.
         /// </summary>
         /// <param name="listMode">Sets if the list is to be compiled or compiled and executed immediately.</param>
-        public void Begin(Enums.ListMode listMode)
+        public void Begin(GL.Enums.ListMode listMode)
         {
             GL.NewList(Id, listMode);
         }
