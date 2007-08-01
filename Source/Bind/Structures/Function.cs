@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace Bind.Structures
 {
@@ -104,7 +105,7 @@ namespace Bind.Structures
 
         string trimmedName;
         /// <summary>
-        /// Gets or sets the name of the opengl function, trimming the excess 234dfubsiv endings..
+        /// Gets or sets the name of the opengl function, trimming the excess 234dfubsiv endings.
         /// </summary>
         public string TrimmedName
         {
@@ -204,14 +205,20 @@ namespace Bind.Structures
 
         #region public Function GetCLSCompliantFunction(Dictionary<string, string> CSTypes)
 
-        public Function GetCLSCompliantFunction(Dictionary<string, string> CSTypes)
+        public Function GetCLSCompliantFunction()
         {
             Function f = new Function(this);
 
+            bool somethingChanged = false;
             for (int i = 0; i < f.Parameters.Count; i++)
             {
                 f.Parameters[i].CurrentType = f.Parameters[i].GetCLSCompliantType();
+                if (f.Parameters[i].CurrentType != this.Parameters[i].CurrentType)
+                    somethingChanged = true;
             }
+
+            if (!somethingChanged)
+                return null;
 
             f.Body.Clear();
             if (!f.NeedsWrapper)
@@ -292,6 +299,37 @@ namespace Bind.Structures
             {
                 this.Add(f);
             }
+        }
+
+        /// <summary>
+        /// Adds the function to the collection, if a function with the same
+        /// name and parameters doesn't already exist.
+        /// </summary>
+        /// <param name="f">The Function to add.</param>
+        public void AddChecked(Function f)
+        {
+            bool exists = false;
+            if (Bind.Structures.Function.Wrappers.ContainsKey(f.Extension))
+            {
+                Function fun = Bind.Structures.Function.Wrappers[f.Extension]
+                    .Find(delegate(Function target)
+                        {
+                            return
+                                !String.IsNullOrEmpty(target.TrimmedName) &&
+                                target.TrimmedName == f.TrimmedName &&
+                                target.Parameters.ToString(true) == f.Parameters.ToString(true);
+                        });
+                if (fun != null)
+                {
+                    exists = true;
+                    /*Debug.WriteLine("Function redefinition:");
+                    Debug.WriteLine(fun.ToString());
+                    Debug.WriteLine(f.ToString());*/
+                }
+            }
+
+            if (!exists)
+                Bind.Structures.Function.Wrappers.Add(f);
         }
     }
 
