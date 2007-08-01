@@ -15,7 +15,7 @@ using System.Windows.Forms;
 using System.Threading;
 
 using OpenTK.OpenGL;
-using Enums = OpenTK.OpenGL.Enums;
+using Enums = OpenTK.OpenGL.GL.Enums;
 using OpenTK;
 using OpenTK.Input;
 
@@ -69,24 +69,24 @@ namespace Examples.Tutorial
             vertex_shader_object = GL.CreateShader(Enums.VERSION_2_0.VERTEX_SHADER);
             fragment_shader_object = GL.CreateShader(Enums.VERSION_2_0.FRAGMENT_SHADER);
 
-            GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, null);
+            GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, (int[])null);
             GL.CompileShader(vertex_shader_object);
             GL.GetShaderiv(vertex_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
             if (status != (int)Enums.Boolean.TRUE)
             {
                 StringBuilder info = new StringBuilder(1024);
-                GL.GetShaderInfoLog(vertex_shader_object, info.MaxCapacity, null, info);
+                GL.GetShaderInfoLog(vertex_shader_object, info.MaxCapacity, (int[])null, info);
 
                 throw new Exception(info.ToString());
             }
 
-            GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, null);
+            GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, (int[])null);
             GL.CompileShader(fragment_shader_object);
             GL.GetShaderiv(fragment_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
             if (status != (int)Enums.Boolean.TRUE)
             {
                 StringBuilder info = new StringBuilder(1024);
-                GL.GetShaderInfoLog(fragment_shader_object, 1024, null, info);
+                GL.GetShaderInfoLog(fragment_shader_object, 1024, (int[])null, info);
 
                 throw new Exception(info.ToString());
             }

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using OpenTK;
 using OpenTK.OpenGL;
 using OpenTK.Platform;
-using Enums = OpenTK.OpenGL.Enums;
+using Enums = OpenTK.OpenGL.GL.Enums;
 using OpenTK.Input;
 
 #endregion
