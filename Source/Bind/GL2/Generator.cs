@@ -33,6 +33,7 @@ namespace Bind.GL2
             Bind.Structures.Delegate.Initialize();
 
             // Process enums and delegates - create wrappers.
+            Trace.WriteLine("Processing specs, please wait...");
             this.Translate();
 
             // Write
