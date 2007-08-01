@@ -7,10 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.OpenGL.Bind
+namespace Bind.Structures
 {
-    #region Constant class
-
     /// <summary>
     /// Represents an opengl constant in C# format. Both the constant name and value
     /// can be retrieved or set. The value can be either a number, another constant
@@ -18,7 +16,7 @@ namespace OpenTK.OpenGL.Bind
     /// </summary>
     public class Constant
     {
-        #region Name
+        #region public string Name
 
         string _name;
 
@@ -37,7 +35,7 @@ namespace OpenTK.OpenGL.Bind
 
         #endregion
 
-        #region Value
+        #region public string Value
 
         string _value;
 
@@ -52,6 +50,37 @@ namespace OpenTK.OpenGL.Bind
                 if (!String.IsNullOrEmpty(value))
                     _value = value.Trim();
             }
+        }
+
+        #endregion
+
+        #region public string Reference
+
+        string _reference;
+
+        /// <summary>
+        /// Gets or sets the value of the opengl constant (eg. 0x00000001).
+        /// </summary>
+        public string Reference
+        {
+            get { return _reference; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value))
+                    _reference = value.Trim();
+            }
+        }
+
+        #endregion
+
+        #region public bool Unchecked
+
+        private bool @unchecked = false;
+
+        public bool Unchecked
+        {
+            get { return @unchecked; }
+            set { @unchecked = value; }
         }
 
         #endregion
@@ -78,20 +107,24 @@ namespace OpenTK.OpenGL.Bind
 
         #endregion
 
-        #region public string ToString()
+        #region public override string ToString()
 
         /// <summary>
         /// Returns a string that represents the full constant declaration without decorations
-        /// (eg const uint GL_XXX_YYY = 0xDEADBEEF).
+        /// (eg GL_XXX_YYY = (int)0xDEADBEEF or GL_XXX_YYY = GL_ZZZ.FOOBAR).
         /// </summary>
         /// <returns></returns>
-        override public string ToString()
+        public override string ToString()
         {
-            return Name + " = " + Value;
+            return String.Format(
+                "{0} = {1}((int){2}{3})",
+                Name,
+                Unchecked ? "unchecked" : "",
+                !String.IsNullOrEmpty(Reference) ? Reference + "." : "",
+                Value
+            );
         }
 
         #endregion
     }
-
-    #endregion
 }

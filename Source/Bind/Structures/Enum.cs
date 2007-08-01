@@ -7,12 +7,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.OpenGL.Bind
+namespace Bind.Structures
 {
     #region class Enum
 
     public class Enum
     {
+        public Enum()
+        { }
+
+        public Enum(string name)
+        {
+            Name = name;
+        }
+
         string _name;
 
         public string Name
@@ -33,16 +41,39 @@ namespace OpenTK.OpenGL.Bind
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine("        public enum " + Name + " : uint");
-            sb.AppendLine("        {");
+            sb.AppendLine("public enum " + Name);
+            sb.AppendLine("{");
             foreach (Constant c in ConstantCollection.Values)
             {
-                sb.AppendLine("            " + c.Name + " = " + c.Value + ",");
+                sb.Append("    ");
+                sb.Append(c.ToString());
+                sb.AppendLine(",");
             }
-            sb.AppendLine("        }");
+            sb.AppendLine("}");
 
             return sb.ToString();
         }
+    }
+
+    #endregion
+
+    #region class EnumCollection
+
+    class EnumCollection : Dictionary<string, Enum>
+    {
+        /*
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Bind.Structures.Enum e in this.Values)
+            {
+                sb.AppendLine(e.ToString());
+            }
+
+            return sb.ToString();
+        }
+        */
     }
 
     #endregion
