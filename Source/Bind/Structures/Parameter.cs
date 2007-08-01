@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.OpenGL.Bind
+namespace Bind.Structures
 {
     #region Parameter class
 
@@ -35,15 +35,19 @@ namespace OpenTK.OpenGL.Bind
             if (p == null)
                 return;
 
-            this.Array = p.Array;
-            this.Flow = p.Flow;
-            this.Name = new string(p.Name.ToCharArray());
-            this.NeedsWrapper = p.NeedsWrapper;
-            this.PreviousType = new string(p.PreviousType.ToCharArray());
-            this.Type = new string(p.Type.ToCharArray());
+            this.Name = !String.IsNullOrEmpty(p.Name) ? new string(p.Name.ToCharArray()) : "";
+            //this.NeedsWrapper = p.NeedsWrapper;
+            this.PreviousType = !String.IsNullOrEmpty(p.PreviousType) ? new string(p.PreviousType.ToCharArray()) : "";
             this.Unchecked = p.Unchecked;
             this.UnmanagedType = p.UnmanagedType;
             this.WrapperType = p.WrapperType;
+
+            this.Type = new string(p.Type.ToCharArray());
+            this.Flow = p.Flow;
+            this.Array = p.Array;
+            this.Pointer = p.Pointer;
+            this.Reference = p.Reference;
+            
         }
 
         #endregion
@@ -84,12 +88,34 @@ namespace OpenTK.OpenGL.Bind
         /// </summary>
         public string Type
         {
-            get { return _type; }
+            //get { return _type; }
+            get
+            {
+                //if (Pointer && Settings.Compatibility == Settings.Legacy.Tao)
+                //    return "IntPtr";
+                
+                return _type;
+            }
             set
             {
-                if (_type != null)
+                if (!String.IsNullOrEmpty(_type))
                     PreviousType = _type;
-                _type = value;
+                if (!String.IsNullOrEmpty(value))
+                    _type = value.Trim();
+                if (_type.EndsWith("*"))
+                {
+                    _type = _type.TrimEnd('*');
+                    Pointer = true;
+                }
+
+                clsCompliant =
+                    !(
+                    (Pointer && (Settings.Compatibility != Settings.Legacy.Tao)) ||
+                    (Type.Contains("GLu") && !Type.Contains("GLubyte")) ||
+                    Type == "GLbitfield" ||
+                    Type.Contains("GLhandle") ||
+                    Type.Contains("GLhalf") ||
+                    Type == "GLbyte");
             }
         }
 
@@ -134,19 +160,54 @@ namespace OpenTK.OpenGL.Bind
 
         #endregion
 
-        #region Array property
+        #region public bool Reference
 
-        bool _array = false;
+        bool reference;
 
-        public bool Array
+        public bool Reference
         {
-            get { return _array; }
-            set { _array = value; }
+            get { return reference; }
+            set { reference = value; }
         }
 
         #endregion
 
-        #region Unchecked property
+        #region public bool Array
+
+        int array;
+
+        public int Array
+        {
+            get { return array; }
+            set { array = value > 0 ? value : 0; }
+        }
+
+        #endregion
+
+        #region public bool Pointer
+
+        bool pointer = false;
+
+        public bool Pointer
+        {
+            get { return pointer; }
+            set { pointer = value; }
+        }
+
+        #endregion
+
+        #region public bool NeedsPin
+
+        public bool NeedsPin
+        {
+            get { return
+                (Array > 0 || Reference || Type == "object") &&
+                !Type.ToLower().Contains("string"); }
+        }
+
+        #endregion
+
+        #region public bool Unchecked
 
         private bool _unchecked;
 
@@ -156,18 +217,6 @@ namespace OpenTK.OpenGL.Bind
             set { _unchecked = value; }
         }
 
-        #endregion
-
-        #region NeedsWrapper property
-
-        private bool _needs_wrapper;
-
-        public bool NeedsWrapper
-        {
-            get { return _needs_wrapper; }
-            set { _needs_wrapper = value; }
-        }
-        
         #endregion
 
         #region WrapperType property
@@ -182,29 +231,137 @@ namespace OpenTK.OpenGL.Bind
         
         #endregion
 
-        #region ToString function
+        #region public bool CLSCompliant
+
+        private bool clsCompliant;
+
+        public bool CLSCompliant
+        {
+            get
+            {
+                // Checked when setting the Type property.
+                return clsCompliant || (Pointer && Settings.Compatibility == Settings.Legacy.Tao);
+            }
+        }
+
+        #endregion
+
+        #region public string GetFullType()
+
+        public string GetFullType(Dictionary<string, string> CSTypes, bool compliant)
+        {
+            if (Pointer && Settings.Compatibility == Settings.Legacy.Tao)
+                return "IntPtr";
+
+            if (!compliant)
+            {
+                return
+                    Type +
+                    (Pointer ? "*" : "") +
+                    (Array > 0 ? "[]" : "");
+            }
+
+            return 
+                GetCLSCompliantType(CSTypes) +
+                (Pointer ? "*" : "") +
+                (Array > 0 ? "[]" : "");
+
+        }
+
+        #endregion
+
+        #region public string GetCLSCompliantType(Dictionary<string, string> CSTypes)
+
+        public string GetCLSCompliantType(Dictionary<string, string> CSTypes)
+        {
+            if (!CLSCompliant)
+            {
+                if (Pointer && Settings.Compatibility == Settings.Legacy.Tao)
+                    return "IntPtr";
+                    
+                if (CSTypes.ContainsKey(Type))
+                {
+                    switch (CSTypes[Type])
+                    {
+                        case "UInt16":
+                            return "Int16";
+                        case "UInt32":
+                            return "Int32";
+                        case "UInt64":
+                            return "Int64";
+                        case "SByte":
+                            return "Byte";
+                    }
+                }
+            }
+            
+            return Type;
+        }
+
+        #endregion
+
+        #region override public string ToString()
+
         override public string ToString()
+        {
+            return ToString(false);
+        }
+
+        #endregion
+
+        #region public string ToString(bool taoCompatible)
+
+        public string ToString(bool taoCompatible)
         {
             StringBuilder sb = new StringBuilder();
 
-            if (UnmanagedType == UnmanagedType.AsAny && Flow == FlowDirection.In)
-                sb.Append("[MarshalAs(UnmanagedType.AsAny)] ");
+            //if (UnmanagedType == UnmanagedType.AsAny && Flow == FlowDirection.In)
+            //    sb.Append("[MarshalAs(UnmanagedType.AsAny)] ");
 
-            if (UnmanagedType == UnmanagedType.LPArray)
-                sb.Append("[MarshalAs(UnmanagedType.LPArray)] ");
+            //if (UnmanagedType == UnmanagedType.LPArray)
+            //    sb.Append("[MarshalAs(UnmanagedType.LPArray)] ");
 
             //if (Flow == FlowDirection.Out && !Array && !(Type == "IntPtr"))
             //    sb.Append("out ");
 
-            sb.Append(Type);
-            if (Array)
-                sb.Append("[]");
+            if (Reference)
+            {
+                if (Flow == FlowDirection.Out)
+                    sb.Append("out ");
+                else
+                    sb.Append("ref ");
+            }
 
-            sb.Append(" ");
-            sb.Append(Name);
+            if (taoCompatible && Settings.Compatibility == Settings.Legacy.Tao)
+            {
+                if (Pointer)
+                {
+                    sb.Append("IntPtr");
+                }
+                else
+                {
+                    sb.Append(Type);
+                    if (Array > 0)
+                        sb.Append("[]");
+                }
+            }
+            else
+            {
+                sb.Append(Type);
+                if (Pointer)
+                    sb.Append("*");
+                if (Array > 0)
+                    sb.Append("[]");
+            }
 
+            if (!String.IsNullOrEmpty(Name))
+            {
+                sb.Append(" ");
+                sb.Append(Utilities.Keywords.Contains(Name) ? "@" + Name : Name);
+            }
             return sb.ToString();
         }
+
         #endregion
     }
 
@@ -236,10 +393,30 @@ namespace OpenTK.OpenGL.Bind
         #region override public string ToString()
 
         /// <summary>
-        /// 
+        /// Gets the parameter declaration string.
         /// </summary>
         /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
         override public string ToString()
+        {
+            return ToString(false, null);
+        }
+
+        #endregion
+
+        public string ToString(bool taoCompatible)
+        {
+            return ToString(true, null);
+        }
+
+        #region public string ToString(bool taoCompatible, Dictionary<string, string> CSTypes)
+
+        /// <summary>
+        /// Gets the parameter declaration string.
+        /// </summary>
+        /// <param name="getCLSCompliant">If true, all types will be replaced by their CLSCompliant C# equivalents</param>
+        /// <param name="CSTypes">The list of C# types equivalent to the OpenGL types.</param>
+        /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
+        public string ToString(bool taoCompatible, Dictionary<string, string> CSTypes)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("(");
@@ -247,7 +424,14 @@ namespace OpenTK.OpenGL.Bind
             {
                 foreach (Parameter p in this)
                 {
-                    sb.Append(p.ToString());
+                    if (taoCompatible)
+                    {
+                        sb.Append(p.ToString(true));
+                    }
+                    else
+                    {
+                        sb.Append(p.ToString());
+                    }
                     sb.Append(", ");
                 }
                 sb.Replace(", ", ")", sb.Length - 2, 2);
@@ -258,6 +442,8 @@ namespace OpenTK.OpenGL.Bind
             return sb.ToString();
         }
 
+        #endregion
+
         public bool ContainsType(string type)
         {
             foreach (Parameter p in this)
@@ -265,87 +451,6 @@ namespace OpenTK.OpenGL.Bind
                     return true;
             return false;
         }
-
-        #endregion
-
-        #region public ParameterCollection ReplaceAll(Parameter, Parameter)
-
-        /// <summary>
-        /// Replaces all parameters that match the old_param with the new_param.
-        /// </summary>
-        /// <param name="old_param"></param>
-        /// <param name="new_param"></param>
-        /// <returns></returns>
-        /// <remarks>The PreviousType property is ignored in parameter matching, and is set to the previous type in case of replacement.</remarks>
-        public ParameterCollection ReplaceAll(Parameter old_param, Parameter new_param)
-        {
-            if (old_param == null || new_param == null)
-                return null;
-
-            ParameterCollection pc = new ParameterCollection(this);
-
-            foreach (Parameter p in pc)
-            {
-                if (p.Array == old_param.Array &&
-                    p.Flow == old_param.Flow &&
-                    p.Name == old_param.Name &&
-                    //p.PreviousType == old_param.PreviousType &&
-                    p.Type == old_param.Type &&
-                    p.UnmanagedType == old_param.UnmanagedType)
-                {
-                    p.Array = new_param.Array;
-                    p.Flow = new_param.Flow;
-                    p.Name = new_param.Name;
-                    p.PreviousType = p.Type;
-                    p.Type = new_param.Type;
-                    p.UnmanagedType = new_param.UnmanagedType;
-                }
-            }
-
-            return pc;
-        }
-
-        #endregion
-
-        #region public ParameterCollection Replace(Parameter, Parameter)
-
-        /// <summary>
-        /// Replaces the first parameter that matches old_param with new_param.
-        /// </summary>
-        /// <param name="old_param"></param>
-        /// <param name="new_param"></param>
-        /// <returns></returns>
-        /// <remarks>The PreviousType property is ignored in parameter matching, and is set to the previous type in case of replacement.</remarks>
-        public ParameterCollection Replace(Parameter old_param, Parameter new_param)
-        {
-            if (old_param == null || new_param == null)
-                return null;
-
-            ParameterCollection pc = new ParameterCollection(this);
-
-            foreach (Parameter p in pc)
-            {
-                if (p.Array == old_param.Array &&
-                    p.Flow == old_param.Flow &&
-                    p.Name == old_param.Name &&
-                    //p.PreviousType == old_param.PreviousType &&
-                    p.Type == old_param.Type &&
-                    p.UnmanagedType == old_param.UnmanagedType)
-                {
-                    p.Array = new_param.Array;
-                    p.Flow = new_param.Flow;
-                    p.Name = new_param.Name;
-                    p.PreviousType = p.Type;
-                    p.Type = new_param.Type;
-                    p.UnmanagedType = new_param.UnmanagedType;
-                    return pc;
-                }
-            }
-
-            return pc;
-        }
-
-        #endregion
     }
 
     #endregion

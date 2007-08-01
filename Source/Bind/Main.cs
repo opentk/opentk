@@ -33,18 +33,39 @@ using System.Security.Permissions;
 using System.Threading;
 using System.Collections.Generic;
 using System.CodeDom;
+using System.Diagnostics;
 
-namespace OpenTK.OpenGL.Bind
+namespace Bind
 {
+    enum GeneratorMode
+    {
+        GL2,
+        GL3,
+        Wgl,
+        Glx,
+        Glu
+    }
+
     static class MainClass
     {
+        static GeneratorMode mode;
+
         static void Main(string[] arguments)
         {
+            Debug.Listeners.Clear();
+            Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Debug.AutoFlush = true;
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            Trace.AutoFlush = true;
+
             Console.WriteLine("OpenGL binding generator {0} for OpenTK.",
                 System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
             Console.WriteLine("For comments, bugs and suggestions visit http://opentk.sourceforge.net");
             //Console.WriteLine(" - the OpenTK team ;-)");
             Console.WriteLine();
+
+            IBind bind;
 
             #region Handle Arguments
 
@@ -66,14 +87,36 @@ namespace OpenTK.OpenGL.Bind
                                 Settings.InputPath = b[1];
                                 break;
                             case "out":
-                            case "Properties.Bind.Default.OutputPath":
+                            case "output":
                                 Settings.OutputPath = b[1];
+                                break;
+                            case "mode":
+                                mode = 
+                                    b[1].ToLower() == "gl2" ? GeneratorMode.GL2 : 
+                                    b[1].ToLower() == "gl3" ? GeneratorMode.GL3 : GeneratorMode.GL2;
+                                break;
+                            case "namespace":
+                            case "ns":
+                                Settings.OutputNamespace = b[1];
+                                break;
+                            case "gl":
+                                Settings.GLClass = b[1];
+                                break;
+                            case "glu":
+                                Settings.GluClass = b[1];
+                                break;
+                            case "legacy":
+                                Settings.Compatibility = b[1].ToLower() == "tao" ? Settings.Legacy.Tao : Settings.Legacy.None;
+                                Settings.OutputNamespace = "Tao.OpenGl";
+                                Settings.GLClass = "Gl";
                                 break;
                             case "class":
                                 Settings.GLClass = b[1];
                                 break;
                             default:
-                                throw new ArgumentException("Argument " + a + " not recognized. Use the '/?' switch for help.");
+                                throw new ArgumentException(
+                                    String.Format("Argument {0} not recognized. Use the '/?' switch for help.", a)
+                                );
                         }
                     }
                 }
@@ -95,33 +138,35 @@ namespace OpenTK.OpenGL.Bind
             {
                 long ticks = System.DateTime.Now.Ticks;
 
-                List<CodeMemberMethod> functions;
-                List<CodeTypeDelegate> delegates;
-                CodeTypeDeclarationCollection enums;
-                CodeTypeDeclarationCollection enums2;
+                switch (mode)
+                {
+                    case GeneratorMode.GL2:
+                        bind = new Bind.GL2.Generator(Settings.InputPath);
+                        break;
 
-                delegates = SpecReader.ReadFunctionSpecs("gl.spec");
-                SpecReader.ReadEnumSpecs("enum.spec", out enums);
-                SpecReader.ReadEnumSpecs("enumext.spec", out enums2);
-                enums = SpecTranslator.Merge(enums, enums2);
-                enums = SpecTranslator.TranslateEnums(enums);
+                    default:
+                        throw new NotImplementedException(String.Format("Mode {0} not implemented.", mode));
+                }
 
-                functions = SpecTranslator.TranslateDelegates(delegates, enums);
-
-                // Generate the code
-                SpecWriter.Generate(delegates, functions, enums);
+                bind.Process();
 
                 ticks = System.DateTime.Now.Ticks - ticks;
 
+                Console.WriteLine();
                 Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
                 Console.WriteLine();
-                Console.WriteLine("Press enter to continue...");
-                Console.ReadLine();
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey(true);
             }
             catch (SecurityException e)
             {
                 Console.WriteLine("Security violation \"{0}\" in method \"{1}\".", e.Message, e.Method);
                 Console.WriteLine("This application does not have permission to take the requested actions.");
+            }
+            catch (NotImplementedException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("The requested functionality is not implemented yet.");
             }
         }
     }
