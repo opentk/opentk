@@ -1528,7 +1528,7 @@ namespace OpenTK.OpenGL
         internal unsafe delegate void GetShaderiv(UInt32 shader, GL.Enums.VERSION_2_0 pname, [Out] Int32* @params);
         internal unsafe static GetShaderiv glGetShaderiv = (GetShaderiv)GL.GetDelegateForExtensionMethod("glGetShaderiv", typeof(GetShaderiv)) ?? new GetShaderiv(Imports.GetShaderiv);
         [System.Security.SuppressUnmanagedCodeSecurity()]
-        internal unsafe delegate void GetShaderInfoLog(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog);
+        internal unsafe delegate void GetShaderInfoLog(UInt32 shader, Int32 bufSize, [Out] Int32* length, [In, Out] System.Text.StringBuilder infoLog);
         internal unsafe static GetShaderInfoLog glGetShaderInfoLog = (GetShaderInfoLog)GL.GetDelegateForExtensionMethod("glGetShaderInfoLog", typeof(GetShaderInfoLog)) ?? new GetShaderInfoLog(Imports.GetShaderInfoLog);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetShaderSource(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder[] source);
