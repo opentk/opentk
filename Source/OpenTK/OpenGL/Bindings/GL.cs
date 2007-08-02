@@ -12435,7 +12435,7 @@ namespace OpenTK.OpenGL
         }
         
         public static 
-        void GetShaderInfoLog(Int32 shader, Int32 bufSize, [Out] out Int32 length, [Out] System.Text.StringBuilder infoLog)
+        void GetShaderInfoLog(Int32 shader, Int32 bufSize, [Out] out Int32 length, [In, Out] System.Text.StringBuilder infoLog)
         {
             length = default(Int32);
             infoLog = default(System.Text.StringBuilder);
