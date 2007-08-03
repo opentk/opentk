@@ -810,7 +810,10 @@ namespace Bind.Structures
             if (ReturnType.CurrentType.Contains("GLenum"))
             {
                 if (Settings.Compatibility == Settings.Legacy.None)
-                    ReturnType.CurrentType = ReturnType.CurrentType.Insert(0, Settings.GLEnumsClass + ".");
+                    ReturnType.CurrentType =
+                        String.Format("{0}.{1}",
+                            Settings.GLEnumsClass,
+                            Settings.CompleteEnumName);
                 else
                     ReturnType.CurrentType = "int";
             }

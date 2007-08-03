@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OpenTK")]
-[assembly: AssemblyDescription("An open-source game development toolkit for .Net/Mono")]
+[assembly: AssemblyTitle("OpenTK Examples")]
+[assembly: AssemblyDescription("Examples showcasing OpenTK and OpenGL")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OpenTK")]
 [assembly: AssemblyCopyright("Copyright ©  2006-2007 Stefanos Apostolopoulos")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("OpenTK")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7652241e-158d-4eb1-85f4-ed40ee356791")]
+[assembly: Guid("f236c767-678f-4c20-9282-d051a3c39657")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -29,7 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-[assembly: AssemblyVersion("0.3.9.4")]
-[assembly: AssemblyFileVersion("0.3.9.4")]
+[assembly: AssemblyVersion("0.3.9.0")]
+[assembly: AssemblyFileVersion("0.3.9.0")]

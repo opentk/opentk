@@ -57,6 +57,7 @@ namespace OpenTK.Platform.Windows
             RawInputHeaderSize = (uint)Marshal.SizeOf(typeof(RawInputHeader));
             RawInputSize = (uint)Marshal.SizeOf(typeof(RawInput));
             RawInputDeviceSize = (uint)Marshal.SizeOf(typeof(RawInputDevice));
+            RawInputDeviceListSize = (uint)Marshal.SizeOf(typeof(RawInputDeviceList));
         }
 
         #region Constants
@@ -159,8 +160,6 @@ namespace OpenTK.Platform.Windows
             // (found in winuser.h)
             internal const int ENUM_REGISTRY_SETTINGS = -2;
             internal const int ENUM_CURRENT_SETTINGS = -1;
-
-            public const int VK_ESCAPE = 0x1B;
         }
 
         #endregion
@@ -170,18 +169,6 @@ namespace OpenTK.Platform.Windows
         #region Message handling
 
         #region PeekMessage
-
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Message
-        {
-            internal IntPtr hWnd;
-            internal int msg;
-            internal IntPtr wParam;
-            internal IntPtr lParam;
-            internal int time;
-            internal System.Drawing.Point p;
-            //System.Drawing.
-        }
 
         /// <summary>
         /// Low-level WINAPI function that checks the next message in the queue.
@@ -796,7 +783,41 @@ namespace OpenTK.Platform.Windows
         /// </returns>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRawInputDeviceList(
-            [Out] RawInputDeviceList[] RawInputDeviceList,
+            [In, Out] RawInputDeviceList[] RawInputDeviceList,
+            [In, Out] ref UINT NumDevices,
+            UINT Size
+        );
+
+        /// <summary>
+        /// Enumerates the raw input devices attached to the system.
+        /// </summary>
+        /// <param name="RawInputDeviceList">
+        /// ointer to buffer that holds an array of RawInputDeviceList structures
+        /// for the devices attached to the system.
+        /// If NULL, the number of devices are returned in NumDevices.
+        /// </param>
+        /// <param name="NumDevices">
+        /// Pointer to a variable. If RawInputDeviceList is NULL, it specifies the number
+        /// of devices attached to the system. Otherwise, it contains the size, in bytes,
+        /// of the preallocated buffer pointed to by pRawInputDeviceList.
+        /// However, if NumDevices is smaller than needed to contain RawInputDeviceList structures,
+        /// the required buffer size is returned here.
+        /// </param>
+        /// <param name="Size">
+        /// Size of a RawInputDeviceList structure.
+        /// </param>
+        /// <returns>
+        /// If the function is successful, the return value is the number of devices stored in the buffer
+        /// pointed to by RawInputDeviceList.
+        /// If RawInputDeviceList is NULL, the return value is zero. 
+        /// If NumDevices is smaller than needed to contain all the RawInputDeviceList structures,
+        /// the return value is (UINT) -1 and the required buffer is returned in NumDevices.
+        /// Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
+        /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
+        /// </returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern UINT GetRawInputDeviceList(
+            [In, Out] IntPtr RawInputDeviceList,
             [In, Out] ref UINT NumDevices,
             UINT Size
         );
@@ -918,6 +939,24 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region --- Structures ---
+
+        #region Message
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Message
+        {
+            internal IntPtr HWnd;
+            internal int Msg;
+            internal IntPtr WParam;
+            internal IntPtr LParam;
+            internal IntPtr Result;
+
+            //internal int Time;
+            //internal System.Drawing.Point p;
+            //System.Drawing.
+        }
+
+        #endregion
 
         #region CreateStruct
 
@@ -1358,11 +1397,13 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputDeviceList
 
+        public static readonly uint RawInputDeviceListSize;
+
         /// <summary>
         /// Contains information about a raw input device.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        public class RawInputDeviceList
+        public struct RawInputDeviceList
         {
             /// <summary>
             /// Handle to the raw input device.
@@ -1372,6 +1413,11 @@ namespace OpenTK.Platform.Windows
             /// Type of device.
             /// </summary>
             public RawInputDeviceType Type;
+
+            public override string ToString()
+            {
+                return String.Format("{0}, Handle: {1}", Type, Device);
+            }
         }
 
         #endregion

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using OpenTK.Input;
 
 #endregion
 
@@ -21,10 +20,10 @@ namespace OpenTK.Platform.Windows
     {
         private WinGLContext glContext;
         private DisplayMode mode = new DisplayMode();
+
+        private Input.IInputDriver inputDriver;
         
         private bool disposed;
-
-        private WinRawKeyboard key;
 
         #region --- Contructors ---
 
@@ -46,7 +45,6 @@ namespace OpenTK.Platform.Windows
 
         private void CreateWindow(DisplayMode mode)
         {
-
             CreateParams cp = new CreateParams();
             cp.ClassStyle =
                 (int)API.WindowClassStyle.OwnDC |
@@ -74,12 +72,6 @@ namespace OpenTK.Platform.Windows
                     0.0f
                 )
             );
-
-            if (Environment.OSVersion.Version.Major > 5 ||
-                (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
-                key = new WinRawKeyboard(this.Handle); // WinXP and higher support raw input.
-            else
-                throw new PlatformNotSupportedException("Input is not implemented for platforms prior to Windows XP, yet.");
         }
 
         /*
@@ -179,17 +171,9 @@ namespace OpenTK.Platform.Windows
                 case API.Constants.WM_KEYUP:
                     break;
 
-                case API.Constants.WM_INPUT:            // Raw input
-                    API.RawInput rin = WinRawInput.ProcessEvent(ref msg);
-                    if (rin.Header.Type == API.RawInputDeviceType.KEYBOARD)
-                    {
-                        if (this.key.ProcessEvent(rin))
-                            return;
-                        else
-                            break;
-                        break;
-                    }
-                    break;
+                //case API.Constants.WM_INPUT:            // Raw input
+                //    WinRawInput.ProcessEvent(ref msg, key);
+                //    break;
                 
                 case API.Constants.WM_CLOSE:
                     API.PostQuitMessage(0);
@@ -201,18 +185,6 @@ namespace OpenTK.Platform.Windows
             }
 
  	        base.WndProc(ref m);
-        }
-
-        private bool ProcessKey(ref Message m)
-        {
-            switch ((int)m.WParam)
-            {
-                case API.Constants.VK_ESCAPE:
-                     //= (m.Msg == API.Constants.WM_KEYDOWN) ? true : false;
-                    return true;
-            }
-
-            return false;
         }
 
         #endregion
@@ -243,15 +215,6 @@ namespace OpenTK.Platform.Windows
             {
                 this.Create(this, e);
             }
-        }
-
-        #endregion
-
-        #region public IKeyboard Key
-
-        public IKeyboard Key
-        {
-            get { return this.key; }
         }
 
         #endregion

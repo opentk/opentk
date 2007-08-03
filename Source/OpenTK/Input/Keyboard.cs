@@ -16,6 +16,8 @@ namespace OpenTK.Input
     {
         private IKeyboard keyboard;
 
+        #region --- Constructors ---
+
         public Keyboard()
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
@@ -36,6 +38,8 @@ namespace OpenTK.Input
             }
         }
 
+        #endregion
+
         #region --- IKeyboard members ---
 
         public bool this[Keys k]
@@ -45,8 +49,27 @@ namespace OpenTK.Input
         }
 
         #endregion
+
+        #region --- IInputDevice Members ---
+
+        public string Description
+        {
+            get { return keyboard.Description; }
+        }
+
+        public InputDeviceType DeviceType
+        {
+            get { return keyboard.DeviceType; }
+        }
+
+        #endregion
     }
 
+    #region public enum Keys : int
+
+    /// <summary>
+    /// The available keyboard keys.
+    /// </summary>
     public enum Keys : int
     {
         // Modifiers
@@ -56,6 +79,9 @@ namespace OpenTK.Input
         RightControl,
         LeftAlt,
         RightAlt,
+        LeftApp,
+        RightApp,
+        Menu,
 
         // Function keys (hopefully enough for most keyboards - mine has 26)
         F1, F2, F3, F4,
@@ -73,7 +99,6 @@ namespace OpenTK.Input
         Left,
         Right,
 
-        // Special keys
         Enter,
         Escape,
         Space,
@@ -86,6 +111,43 @@ namespace OpenTK.Input
         Home,
         End,
         CapsLock,
+        PrintScreen,
+        Pause,
+        NumLock,
+
+        // Special keys
+        Sleep,
+        /*LogOff,
+        Help,
+        Undo,
+        Redo,
+        New,
+        Open,
+        Close,
+        Reply,
+        Forward,
+        Send,
+        Spell,
+        Save,
+        Calculator,
+        
+        // Folders and applications
+        Documents,
+        Pictures,
+        Music,
+        MediaPlayer,
+        Mail,
+        Browser,
+        Messenger,
+        
+        // Multimedia keys
+        Mute,
+        PlayPause,
+        Stop,
+        VolumeUp,
+        VOlumeDown,
+        PreviousTrack,
+        NextTrack,*/
 
         // Keypad keys
         Keypad0,
@@ -103,8 +165,7 @@ namespace OpenTK.Input
         KeypadSubtract,
         KeypadAdd,
         KeypadDecimal,
-        KeypadEqual,
-        KeypadEnter,
+        //KeypadEnter,
 
         // Letters
         A, B, C, D, E, F, G,
@@ -125,17 +186,21 @@ namespace OpenTK.Input
         Number9,
 
         // Symbols
+        Tilde,
         Minus,
-        Equal,
+        //Equal,
+        Plus,
         LeftBracket,
         RightBracket,
         Semicolon,
-        QuotationMark,
+        Quote,
         Comma,
-        FullStop,
+        Period,
         Slash,
         BackSlash,
 
         MaxKeys
     }
+
+    #endregion
 }

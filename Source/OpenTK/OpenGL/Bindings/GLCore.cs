@@ -792,7 +792,7 @@ namespace OpenTK.OpenGL
         internal extern static unsafe void GetDoublev(GL.Enums.GetPName pname, [Out] Double* @params);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetError", ExactSpelling = true)]
-        internal extern static GL.Enums.GLenum GetError();
+        internal extern static GL.Enums.All GetError();
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFloatv", ExactSpelling = true)]
         internal extern static unsafe void GetFloatv(GL.Enums.GetPName pname, [Out] Single* @params);
@@ -939,7 +939,7 @@ namespace OpenTK.OpenGL
         internal extern static void DrawArrays(GL.Enums.BeginMode mode, Int32 first, Int32 count);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
-        internal extern static unsafe void DrawElements(GL.Enums.BeginMode mode, Int32 count, GL.Enums.GLenum type, void* indices);
+        internal extern static unsafe void DrawElements(GL.Enums.BeginMode mode, Int32 count, GL.Enums.All type, void* indices);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEdgeFlagPointer", ExactSpelling = true)]
         internal extern static unsafe void EdgeFlagPointer(Int32 stride, void* pointer);
@@ -3159,7 +3159,7 @@ namespace OpenTK.OpenGL
         internal extern static void BlendFuncSeparateEXT(GL.Enums.EXT_blend_func_separate sfactorRGB, GL.Enums.EXT_blend_func_separate dfactorRGB, GL.Enums.EXT_blend_func_separate sfactorAlpha, GL.Enums.EXT_blend_func_separate dfactorAlpha);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendFuncSeparateINGR", ExactSpelling = true)]
-        internal extern static void BlendFuncSeparateINGR(GL.Enums.GLenum sfactorRGB, GL.Enums.GLenum dfactorRGB, GL.Enums.GLenum sfactorAlpha, GL.Enums.GLenum dfactorAlpha);
+        internal extern static void BlendFuncSeparateINGR(GL.Enums.All sfactorRGB, GL.Enums.All dfactorRGB, GL.Enums.All sfactorAlpha, GL.Enums.All dfactorAlpha);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexWeightfEXT", ExactSpelling = true)]
         internal extern static void VertexWeightfEXT(Single weight);
@@ -3333,7 +3333,7 @@ namespace OpenTK.OpenGL
         internal extern static void TextureColorMaskSGIS(GL.Enums.Boolean red, GL.Enums.Boolean green, GL.Enums.Boolean blue, GL.Enums.Boolean alpha);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIglooInterfaceSGIX", ExactSpelling = true)]
-        internal extern static unsafe void IglooInterfaceSGIX(GL.Enums.GLenum pname, void* @params);
+        internal extern static unsafe void IglooInterfaceSGIX(GL.Enums.All pname, void* @params);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDeleteFencesNV", ExactSpelling = true)]
         internal extern static unsafe void DeleteFencesNV(Int32 n, UInt32* fences);
@@ -4269,7 +4269,7 @@ namespace OpenTK.OpenGL
         internal extern static unsafe void GenFramebuffersEXT(Int32 n, [Out] UInt32* framebuffers);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCheckFramebufferStatusEXT", ExactSpelling = true)]
-        internal extern static GL.Enums.GLenum CheckFramebufferStatusEXT(GL.Enums.EXT_framebuffer_object target);
+        internal extern static GL.Enums.All CheckFramebufferStatusEXT(GL.Enums.EXT_framebuffer_object target);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFramebufferTexture1DEXT", ExactSpelling = true)]
         internal extern static void FramebufferTexture1DEXT(GL.Enums.EXT_framebuffer_object target, GL.Enums.EXT_framebuffer_object attachment, GL.Enums.EXT_framebuffer_object textarget, UInt32 texture, Int32 level);

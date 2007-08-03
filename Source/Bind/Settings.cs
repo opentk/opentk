@@ -29,6 +29,11 @@ namespace Bind
         public static string GluClass = "Glu";
         public static Legacy Compatibility = Legacy.None;
 
+        /// <summary>
+        /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
+        /// </summary>
+        public static string CompleteEnumName = "All";
+
         public enum Legacy
         {
             None,
