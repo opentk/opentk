@@ -12,7 +12,6 @@ using System.Text;
 
 using OpenTK;
 using OpenTK.OpenGL;
-using OpenTK.Input;
 using OpenTK.Platform;
 
 #endregion
@@ -107,7 +106,7 @@ namespace Examples.Tutorial
             GL.DrawElements(
                 GL.Enums.BeginMode.QUADS,
                 idata.Length,
-                GL.Enums.GLenum.UNSIGNED_SHORT,
+                GL.Enums.All.UNSIGNED_SHORT,
                 idata);
 
             GL.BindBuffer(GL.Enums.VERSION_1_5.ARRAY_BUFFER, 0);
@@ -212,7 +211,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region static public void Launch()
+        #region public void Launch()
 
         /// <summary>
         /// Launches this example.
@@ -220,11 +219,12 @@ namespace Examples.Tutorial
         /// <remarks>
         /// Provides a simple way for the example launcher to launch the examples.
         /// </remarks>
-        static public void Launch()
+        public void Launch()
         {
-            using (T08_VBO ex = new T08_VBO())
+            //using (T08_VBO ex = new T08_VBO())
             {
-                ex.Run();
+                //ex.Run();
+                Run();
             }
         }
 

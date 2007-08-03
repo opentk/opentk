@@ -4743,7 +4743,7 @@ namespace OpenTK.OpenGL
         }
         
         public static 
-        GL.Enums.GLenum GetError()
+        GL.Enums.All GetError()
         {
             return Delegates.glGetError();
         }
@@ -5851,20 +5851,20 @@ namespace OpenTK.OpenGL
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe void DrawElements(GL.Enums.BeginMode mode, Int32 count, GL.Enums.GLenum type, void* indices)
+        unsafe void DrawElements(GL.Enums.BeginMode mode, Int32 count, GL.Enums.All type, void* indices)
         {
-            unsafe { Delegates.glDrawElements((GL.Enums.BeginMode)mode, (Int32)count, (GL.Enums.GLenum)type, (void*)indices); }
+            unsafe { Delegates.glDrawElements((GL.Enums.BeginMode)mode, (Int32)count, (GL.Enums.All)type, (void*)indices); }
         }
         
         public static 
-        void DrawElements(GL.Enums.BeginMode mode, Int32 count, GL.Enums.GLenum type, [In, Out] object indices)
+        void DrawElements(GL.Enums.BeginMode mode, Int32 count, GL.Enums.All type, [In, Out] object indices)
         {
             System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
             unsafe
             {
                 try
                 {
-                    Delegates.glDrawElements((GL.Enums.BeginMode)mode, (Int32)count, (GL.Enums.GLenum)type, (void*)indices_ptr.AddrOfPinnedObject());
+                    Delegates.glDrawElements((GL.Enums.BeginMode)mode, (Int32)count, (GL.Enums.All)type, (void*)indices_ptr.AddrOfPinnedObject());
                 }
                 finally
                 {
@@ -27616,7 +27616,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            GL.Enums.GLenum CheckFramebufferStat(GL.Enums.EXT_framebuffer_object target)
+            GL.Enums.All CheckFramebufferStat(GL.Enums.EXT_framebuffer_object target)
             {
                 return Delegates.glCheckFramebufferStatusEXT((GL.Enums.EXT_framebuffer_object)target);
             }
@@ -31538,20 +31538,20 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void IglooInterfaceSGIX(GL.Enums.GLenum pname, void* @params)
+            unsafe void IglooInterfaceSGIX(GL.Enums.All pname, void* @params)
             {
-                unsafe { Delegates.glIglooInterfaceSGIX((GL.Enums.GLenum)pname, (void*)@params); }
+                unsafe { Delegates.glIglooInterfaceSGIX((GL.Enums.All)pname, (void*)@params); }
             }
             
             public static 
-            void IglooInterfaceSGIX(GL.Enums.GLenum pname, [In, Out] object @params)
+            void IglooInterfaceSGIX(GL.Enums.All pname, [In, Out] object @params)
             {
                 System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
                 unsafe
                 {
                     try
                     {
-                        Delegates.glIglooInterfaceSGIX((GL.Enums.GLenum)pname, (void*)@params_ptr.AddrOfPinnedObject());
+                        Delegates.glIglooInterfaceSGIX((GL.Enums.All)pname, (void*)@params_ptr.AddrOfPinnedObject());
                     }
                     finally
                     {
@@ -48811,9 +48811,9 @@ namespace OpenTK.OpenGL
         public static class INGR
         {
             public static 
-            void BlendFuncSeparateINGR(GL.Enums.GLenum sfactorRGB, GL.Enums.GLenum dfactorRGB, GL.Enums.GLenum sfactorAlpha, GL.Enums.GLenum dfactorAlpha)
+            void BlendFuncSeparateINGR(GL.Enums.All sfactorRGB, GL.Enums.All dfactorRGB, GL.Enums.All sfactorAlpha, GL.Enums.All dfactorAlpha)
             {
-                Delegates.glBlendFuncSeparateINGR((GL.Enums.GLenum)sfactorRGB, (GL.Enums.GLenum)dfactorRGB, (GL.Enums.GLenum)sfactorAlpha, (GL.Enums.GLenum)dfactorAlpha);
+                Delegates.glBlendFuncSeparateINGR((GL.Enums.All)sfactorRGB, (GL.Enums.All)dfactorRGB, (GL.Enums.All)sfactorAlpha, (GL.Enums.All)dfactorAlpha);
             }
             
         }

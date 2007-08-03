@@ -15,7 +15,9 @@ using System.Windows.Forms;
 using System.Threading;
 
 using OpenTK.OpenGL;
+using Enums = OpenTK.OpenGL.GL.Enums;
 using OpenTK;
+using OpenTK.Input;
 
 #endregion --- Using Directives ---
 
@@ -58,19 +60,19 @@ namespace Examples.Tutorial
             //    GL.GetString(Enums.StringName.VERSION);
 
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
-            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(Enums.EnableCap.DEPTH_TEST);
 
-            uint vertex_shader_object, fragment_shader_object;
+            int vertex_shader_object, fragment_shader_object;
             int status;
-            uint shader_program;
+            int shader_program;
 
-            vertex_shader_object = (uint)GL.CreateShader(GL.Enums.VERSION_2_0.VERTEX_SHADER);
-            fragment_shader_object = (uint)GL.CreateShader(GL.Enums.VERSION_2_0.FRAGMENT_SHADER);
+            vertex_shader_object = GL.CreateShader(Enums.VERSION_2_0.VERTEX_SHADER);
+            fragment_shader_object = GL.CreateShader(Enums.VERSION_2_0.FRAGMENT_SHADER);
 
             GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, (int[])null);
             GL.CompileShader(vertex_shader_object);
-            GL.GetShader(vertex_shader_object, GL.Enums.VERSION_2_0.COMPILE_STATUS, out status);
-            if (status != (int)GL.Enums.Boolean.TRUE)
+            GL.GetShader(vertex_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
+            if (status != (int)Enums.Boolean.TRUE)
             {
                 StringBuilder info = new StringBuilder(1024);
                 GL.GetShaderInfoLog(vertex_shader_object, info.MaxCapacity, (int[])null, info);
@@ -80,8 +82,8 @@ namespace Examples.Tutorial
 
             GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, (int[])null);
             GL.CompileShader(fragment_shader_object);
-            GL.GetShader(fragment_shader_object, GL.Enums.VERSION_2_0.COMPILE_STATUS, out status);
-            if (status != (int)GL.Enums.Boolean.TRUE)
+            GL.GetShader(fragment_shader_object, Enums.VERSION_2_0.COMPILE_STATUS, out status);
+            if (status != (int)Enums.Boolean.TRUE)
             {
                 StringBuilder info = new StringBuilder(1024);
                 GL.GetShaderInfoLog(fragment_shader_object, 1024, (int[])null, info);
@@ -89,7 +91,7 @@ namespace Examples.Tutorial
                 throw new Exception(info.ToString());
             }
 
-            shader_program = (uint)GL.CreateProgram();
+            shader_program = GL.CreateProgram();
             GL.AttachShader(shader_program, fragment_shader_object);
             GL.AttachShader(shader_program, vertex_shader_object);
 
@@ -101,7 +103,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region public void Launch()
+        #region static public void Launch()
 
         /// <summary>
         /// Launches this example.
@@ -109,12 +111,11 @@ namespace Examples.Tutorial
         /// <remarks>
         /// Provides a simple way for the example launcher to launch the examples.
         /// </remarks>
-        public void Launch()
+        static public void Launch()
         {
-            //using (T10_GLSL_Cube ex = new T10_GLSL_Cube())
+            using (T10_GLSL_Cube ex = new T10_GLSL_Cube())
             {
-                //ex.Run();
-                Run();
+                ex.Run();
             }
         }
 
@@ -131,7 +132,7 @@ namespace Examples.Tutorial
             double ratio = 0.0;
             ratio = this.Width / (double)this.Height;
 
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(Enums.MatrixMode.PROJECTION);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -149,7 +150,7 @@ namespace Examples.Tutorial
                 this.Quit = true;
             }
 
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
             Glu.LookAt(
                 0.0, 5.0, 5.0,
@@ -168,7 +169,7 @@ namespace Examples.Tutorial
         {
  	        base.RenderFrame();
 
-            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+            GL.Clear(Enums.ClearBufferMask.COLOR_BUFFER_BIT | Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 
             DrawCube();
 
@@ -177,43 +178,43 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region private void DrawCube()
+        #region DrawCube
 
-        private void DrawCube()
+        public void DrawCube()
         {
-            GL.Begin(GL.Enums.BeginMode.QUADS);
+            GL.Begin(Enums.BeginMode.QUADS);
 
-            GL.Color3(1.0f, 0.0f, 0.0f);
+            GL.Color3(1, 0, 0);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
 
-            GL.Color3(1.0f, 1.0f, 0.0f);
+            GL.Color3(1, 1, 0);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3(1.0f, 0.0f, 1.0f);
+            GL.Color3(1, 0, 1);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0.0f, 1.0f, 0.0f);
+            GL.Color3(0, 1, 0);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
-            GL.Color3(0.0f, 0.0f, 1.0f);
+            GL.Color3(0, 0, 1);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0.0f, 1.0f, 1.0f);
+            GL.Color3(0, 1, 1);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);

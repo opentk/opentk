@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using OpenTK.Input;
 
 //using OpenTK.OpenGL;
 
@@ -273,7 +272,7 @@ namespace OpenTK.Platform.X11
 
         #region public Keyboard Key
 
-        public IKeyboard Key
+        public Input.IKeyboard Key
         {
             get { throw new NotImplementedException(); }
         }

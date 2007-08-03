@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 
-using OpenTK.Input;
 using OpenTK.Platform;
 
 namespace OpenTK
@@ -18,6 +17,10 @@ namespace OpenTK
     {
         private INativeWindow glWindow;
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
+
+        public Input.IKeyboard Keyboard { get { return inputDevices.Keyboards[0]; } }
+
+        private InputDevices inputDevices = new InputDevices();
 
         #region --- Contructors ---
 
@@ -175,11 +178,6 @@ namespace OpenTK
 
         public event UpdateFrameEvent UpdateFrameNotify;
         public event RenderFrameEvent RenderFrameNotify;
-
-        public IKeyboard Key
-        {
-            get { return glWindow.Key; }
-        }
 
         #endregion
 

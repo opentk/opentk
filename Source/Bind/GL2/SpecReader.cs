@@ -100,7 +100,7 @@ namespace Bind.GL2
 
             // complete_enum contains all opengl enumerants.
             Bind.Structures.Enum complete_enum = new Bind.Structures.Enum();
-            complete_enum.Name = "GLenum";
+            complete_enum.Name = Settings.CompleteEnumName;
 
             Trace.WriteLine(String.Format("Reading opengl enumerant specs"));
             Trace.Indent();
