@@ -245,7 +245,7 @@ namespace Bind.Structures
                         }
                         else
                         {
-                            p.CurrentType = String.Format("{0}.GLenum", Settings.GLEnumsClass);
+                            p.CurrentType = String.Format("{0}.{1}", Settings.GLEnumsClass, Settings.CompleteEnumName);
                         }
                     }
                     else

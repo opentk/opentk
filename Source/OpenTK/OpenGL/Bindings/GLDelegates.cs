@@ -793,7 +793,7 @@ namespace OpenTK.OpenGL
         internal unsafe delegate void GetDoublev(GL.Enums.GetPName pname, [Out] Double* @params);
         internal unsafe static GetDoublev glGetDoublev = (GetDoublev)GL.GetDelegateForExtensionMethod("glGetDoublev", typeof(GetDoublev)) ?? new GetDoublev(Imports.GetDoublev);
         [System.Security.SuppressUnmanagedCodeSecurity()]
-        internal delegate GL.Enums.GLenum GetError();
+        internal delegate GL.Enums.All GetError();
         internal static GetError glGetError = (GetError)GL.GetDelegateForExtensionMethod("glGetError", typeof(GetError)) ?? new GetError(Imports.GetError);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetFloatv(GL.Enums.GetPName pname, [Out] Single* @params);
@@ -940,7 +940,7 @@ namespace OpenTK.OpenGL
         internal delegate void DrawArrays(GL.Enums.BeginMode mode, Int32 first, Int32 count);
         internal static DrawArrays glDrawArrays = (DrawArrays)GL.GetDelegateForExtensionMethod("glDrawArrays", typeof(DrawArrays)) ?? new DrawArrays(Imports.DrawArrays);
         [System.Security.SuppressUnmanagedCodeSecurity()]
-        internal unsafe delegate void DrawElements(GL.Enums.BeginMode mode, Int32 count, GL.Enums.GLenum type, void* indices);
+        internal unsafe delegate void DrawElements(GL.Enums.BeginMode mode, Int32 count, GL.Enums.All type, void* indices);
         internal unsafe static DrawElements glDrawElements = (DrawElements)GL.GetDelegateForExtensionMethod("glDrawElements", typeof(DrawElements)) ?? new DrawElements(Imports.DrawElements);
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void EdgeFlagPointer(Int32 stride, void* pointer);
@@ -3160,7 +3160,7 @@ namespace OpenTK.OpenGL
         internal delegate void BlendFuncSeparateEXT(GL.Enums.EXT_blend_func_separate sfactorRGB, GL.Enums.EXT_blend_func_separate dfactorRGB, GL.Enums.EXT_blend_func_separate sfactorAlpha, GL.Enums.EXT_blend_func_separate dfactorAlpha);
         internal static BlendFuncSeparateEXT glBlendFuncSeparateEXT = (BlendFuncSeparateEXT)GL.GetDelegateForExtensionMethod("glBlendFuncSeparateEXT", typeof(BlendFuncSeparateEXT));
         [System.Security.SuppressUnmanagedCodeSecurity()]
-        internal delegate void BlendFuncSeparateINGR(GL.Enums.GLenum sfactorRGB, GL.Enums.GLenum dfactorRGB, GL.Enums.GLenum sfactorAlpha, GL.Enums.GLenum dfactorAlpha);
+        internal delegate void BlendFuncSeparateINGR(GL.Enums.All sfactorRGB, GL.Enums.All dfactorRGB, GL.Enums.All sfactorAlpha, GL.Enums.All dfactorAlpha);
         internal static BlendFuncSeparateINGR glBlendFuncSeparateINGR = (BlendFuncSeparateINGR)GL.GetDelegateForExtensionMethod("glBlendFuncSeparateINGR", typeof(BlendFuncSeparateINGR));
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexWeightfEXT(Single weight);
@@ -3334,7 +3334,7 @@ namespace OpenTK.OpenGL
         internal delegate void TextureColorMaskSGIS(GL.Enums.Boolean red, GL.Enums.Boolean green, GL.Enums.Boolean blue, GL.Enums.Boolean alpha);
         internal static TextureColorMaskSGIS glTextureColorMaskSGIS = (TextureColorMaskSGIS)GL.GetDelegateForExtensionMethod("glTextureColorMaskSGIS", typeof(TextureColorMaskSGIS));
         [System.Security.SuppressUnmanagedCodeSecurity()]
-        internal unsafe delegate void IglooInterfaceSGIX(GL.Enums.GLenum pname, void* @params);
+        internal unsafe delegate void IglooInterfaceSGIX(GL.Enums.All pname, void* @params);
         internal unsafe static IglooInterfaceSGIX glIglooInterfaceSGIX = (IglooInterfaceSGIX)GL.GetDelegateForExtensionMethod("glIglooInterfaceSGIX", typeof(IglooInterfaceSGIX));
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void DeleteFencesNV(Int32 n, UInt32* fences);
@@ -4270,7 +4270,7 @@ namespace OpenTK.OpenGL
         internal unsafe delegate void GenFramebuffersEXT(Int32 n, [Out] UInt32* framebuffers);
         internal unsafe static GenFramebuffersEXT glGenFramebuffersEXT = (GenFramebuffersEXT)GL.GetDelegateForExtensionMethod("glGenFramebuffersEXT", typeof(GenFramebuffersEXT));
         [System.Security.SuppressUnmanagedCodeSecurity()]
-        internal delegate GL.Enums.GLenum CheckFramebufferStatusEXT(GL.Enums.EXT_framebuffer_object target);
+        internal delegate GL.Enums.All CheckFramebufferStatusEXT(GL.Enums.EXT_framebuffer_object target);
         internal static CheckFramebufferStatusEXT glCheckFramebufferStatusEXT = (CheckFramebufferStatusEXT)GL.GetDelegateForExtensionMethod("glCheckFramebufferStatusEXT", typeof(CheckFramebufferStatusEXT));
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void FramebufferTexture1DEXT(GL.Enums.EXT_framebuffer_object target, GL.Enums.EXT_framebuffer_object attachment, GL.Enums.EXT_framebuffer_object textarget, UInt32 texture, Int32 level);

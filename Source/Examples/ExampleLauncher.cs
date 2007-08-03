@@ -9,6 +9,9 @@ using System.Reflection;
 using System.Threading;
 using OpenTK;
 using System.Diagnostics;
+using System.Security;
+using System.Security.Permissions;
+using System.Security.Policy;
 
 namespace Examples
 {
@@ -83,31 +86,27 @@ namespace Examples
 
         void Launch(object example)
         {
+            Type ex = example as Type;
+            (ex.GetConstructor(Type.EmptyTypes).Invoke(null) as IExample).Launch();
+            //(example as Type).InvokeMember("Launch", BindingFlags.InvokeMethod, null, example, null);
+            /*
+            AppDomain app = AppDomain.CreateDomain((example as Type).Name);
+
+            Type exType = example as Type;
             try
             {
-                (example as Type).InvokeMember("Launch", BindingFlags.InvokeMethod, null, null, null);
+                IExample ex = app.CreateInstanceAndUnwrap(
+                    exType.Assembly.GetName().Name,
+                    "Examples.Tests.Shim") as IExample;
+                ex.Launch();
+                //ex.InvokeMember("Launch", BindingFlags.InvokeMethod, null, null, null);
+                //
             }
-            catch (Exception expt)
+            finally
             {
-                System.Diagnostics.Debug.WriteLine(
-                    String.Format(
-                        "Exception: {3}{0}Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
-                        System.Environment.NewLine,
-                        expt.StackTrace,
-                        expt.InnerException,
-                        expt.Message
-                    )
-                );
-                MessageBox.Show(
-                    String.Format(
-                        "Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
-                        System.Environment.NewLine,
-                        expt.StackTrace,
-                        expt.InnerException
-                    ),
-                    expt.Message
-                );
+                AppDomain.Unload(app);
             }
+            */
         }
 
         public void ExampleLauncher_Load(object sender, EventArgs e)

@@ -17,7 +17,6 @@ using System.Windows.Forms;
 using OpenTK.OpenGL;
 using Enums = OpenTK.OpenGL.GL.Enums;
 using OpenTK;
-using OpenTK.Input;
 
 #endregion --- Using Directives ---
 
@@ -80,7 +79,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region static public void Launch()
+        #region public void Launch()
 
         /// <summary>
         /// Launches this example.
@@ -88,11 +87,12 @@ namespace Examples.Tutorial
         /// <remarks>
         /// Provides a simple way for the example launcher to launch the examples.
         /// </remarks>
-        static public void Launch()
+        public void Launch()
         {
-            using (T03_RotatingCube ex = new T03_RotatingCube())
+            //using (T03_RotatingCube ex = new T03_RotatingCube())
             {
-                ex.Run();
+                //ex.Run();
+                Run();
             }
         }
 

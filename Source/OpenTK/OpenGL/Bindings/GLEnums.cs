@@ -2580,7 +2580,7 @@ namespace OpenTK.OpenGL
                 UNPACK_SUBSAMPLE_RATE_SGIX = ((int)0x85A1),
             }
             
-            public enum GLenum
+            public enum All
             {
                 MAX_GEOMETRY_BINDABLE_UNIFORMS_EXT = ((int)0x8DE4),
                 T4F_V4F = ((int)0x2A28),
@@ -2820,7 +2820,7 @@ namespace OpenTK.OpenGL
                 DONT_CARE = ((int)0x1100),
                 ALPHA_FLOAT16_ATI = ((int)0x881C),
                 LINEAR_MIPMAP_LINEAR = ((int)0x2703),
-                MODELVIEW0_STACK_DEPTH_EXT = ((int)GetPName.MODELVIEW_STACK_DEPTH),
+                MODELVIEW0_STACK_DEPTH_EXT = ((int)All.MODELVIEW_STACK_DEPTH),
                 POINT_TOKEN = ((int)0x0701),
                 COMPRESSED_SRGB_EXT = ((int)0x8C48),
                 EVAL_VERTEX_ATTRIB0_NV = ((int)0x86C6),
@@ -5227,7 +5227,7 @@ namespace OpenTK.OpenGL
                 VERTEX4_BIT_PGI = ((int)0x00000008),
                 TEXTURE_INDEX_SIZE_EXT = ((int)0x80ED),
                 MAP2_TEXTURE_COORD_3 = ((int)0x0DB5),
-                MODELVIEW0_MATRIX_EXT = ((int)GetPName.MODELVIEW_MATRIX),
+                MODELVIEW0_MATRIX_EXT = ((int)All.MODELVIEW_MATRIX),
                 TEXTURE_DEPTH = ((int)0x8071),
                 POLYGON_OFFSET_BIAS_EXT = ((int)0x8039),
                 OFFSET_TEXTURE_SCALE_NV = ((int)0x86E2),
@@ -5462,7 +5462,7 @@ namespace OpenTK.OpenGL
                 FLOAT_RG16_NV = ((int)0x8886),
                 INTENSITY8 = ((int)0x804B),
                 PIXEL_COUNT_NV = ((int)0x8866),
-                MODELVIEW0_EXT = ((int)MatrixMode.MODELVIEW),
+                MODELVIEW0_EXT = ((int)All.MODELVIEW),
                 MAX_ELEMENTS_VERTICES = ((int)0x80E8),
                 VERTEX_ARRAY_SIZE = ((int)0x807A),
                 BGRA_EXT = ((int)0x80E1),
@@ -6959,13 +6959,13 @@ namespace OpenTK.OpenGL
                 MODELVIEW1_MATRIX_EXT = ((int)0x8506),
                 VERTEX_WEIGHT_ARRAY_EXT = ((int)0x850C),
                 VERTEX_WEIGHT_ARRAY_POINTER_EXT = ((int)0x8510),
-                MODELVIEW0_STACK_DEPTH_EXT = ((int)GetPName.MODELVIEW_STACK_DEPTH),
+                MODELVIEW0_STACK_DEPTH_EXT = ((int)All.MODELVIEW_STACK_DEPTH),
                 VERTEX_WEIGHT_ARRAY_TYPE_EXT = ((int)0x850E),
                 CURRENT_VERTEX_WEIGHT_EXT = ((int)0x850B),
                 VERTEX_WEIGHT_ARRAY_SIZE_EXT = ((int)0x850D),
-                MODELVIEW0_MATRIX_EXT = ((int)GetPName.MODELVIEW_MATRIX),
+                MODELVIEW0_MATRIX_EXT = ((int)All.MODELVIEW_MATRIX),
                 VERTEX_WEIGHT_ARRAY_STRIDE_EXT = ((int)0x850F),
-                MODELVIEW0_EXT = ((int)MatrixMode.MODELVIEW),
+                MODELVIEW0_EXT = ((int)All.MODELVIEW),
             }
             
             public enum NV_light_max_exponent

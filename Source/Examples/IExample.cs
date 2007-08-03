@@ -10,5 +10,6 @@ namespace Examples
     /// </summary>
     interface IExample
     {
+        void Launch();
     }
 }

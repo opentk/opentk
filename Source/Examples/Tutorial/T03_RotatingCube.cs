@@ -14,7 +14,6 @@ using OpenTK;
 using OpenTK.OpenGL;
 using OpenTK.Platform;
 using Enums = OpenTK.OpenGL.GL.Enums;
-using OpenTK.Input;
 
 #endregion
 
@@ -122,46 +121,43 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region DrawCube function
+        #region private void DrawCube()
 
-        /// <summary>
-        /// Draws simple, colored cube.
-        /// </summary>
-        protected void DrawCube()
+        private void DrawCube()
         {
-            GL.Begin(Enums.BeginMode.QUADS);
+            GL.Begin(GL.Enums.BeginMode.QUADS);
 
-            GL.Color3(1, 0, 0);
+            GL.Color3(1.0f, 0.0f, 0.0f);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
 
-            GL.Color3(1, 1, 0);
+            GL.Color3(1.0f, 1.0f, 0.0f);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3(1, 0, 1);
+            GL.Color3(1.0f, 0.0f, 1.0f);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0, 1, 0);
+            GL.Color3(0.0f, 1.0f, 0.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
-            GL.Color3(0, 0, 1);
+            GL.Color3(0.0f, 0.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0, 1, 1);
+            GL.Color3(0.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
@@ -172,7 +168,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region static public void Launch()
+        #region public void Launch()
 
         /// <summary>
         /// Launches this example.
@@ -180,11 +176,12 @@ namespace Examples.Tutorial
         /// <remarks>
         /// Provides a simple way for the example launcher to launch the examples.
         /// </remarks>
-        static public void Launch()
+        public void Launch()
         {
-            using (T03_RotatingCube ex = new T03_RotatingCube())
+            //using (T03_RotatingCube ex = new T03_RotatingCube())
             {
-                ex.Run();
+                //ex.Run();
+                Run();
             }
         }
 
