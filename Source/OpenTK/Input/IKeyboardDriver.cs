@@ -6,6 +6,6 @@ namespace OpenTK.Input
 {
     public interface IKeyboardDriver
     {
-        IList<Keyboard> Keyboards { get; }
+        IList<Keyboard> Keyboard { get; }
     }
 }
