@@ -50,6 +50,7 @@ namespace Examples.Tutorial
 
         public T10_GLSL_Cube()
         {
+            this.CreateWindow(new OpenTK.Platform.DisplayMode(800, 600));
             Context.MakeCurrent();
 
             //Text =

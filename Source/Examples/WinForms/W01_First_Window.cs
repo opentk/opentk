@@ -23,11 +23,19 @@ namespace Examples.WinForms
 {
     public partial class W01_First_Window : Form, IExample
     {
+        OpenTK.InputDevices input;
         public W01_First_Window()
         {
             InitializeComponent();
 
             this.ShowDialog();
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            input = new OpenTK.InputDevices(this.Handle);
         }
 
         private void redButton_Click(object sender, EventArgs e)
