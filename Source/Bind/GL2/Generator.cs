@@ -12,7 +12,14 @@ namespace Bind.GL2
         internal static SpecReader specReader;
         internal static SpecWriter specWriter;
 
-        string specFolder;
+        protected static string glTypemap = "gl.tm";
+        protected static string csTypemap = "csharp.tm";
+        protected static string enumSpec = "enum.spec";
+        protected static string enumSpecExt = "enumext.spec";
+        protected static string glSpec = "gl.spec";
+        protected static string glSpecExt = "";
+
+        protected string specFolder;
 
         public Generator(string folder)
         {
@@ -25,12 +32,12 @@ namespace Bind.GL2
 
         #region public void Process()
 
-        public void Process()
+        public virtual void Process()
         {
-            Bind.Structures.Type.Initialize();
-            Bind.Structures.Enum.Initialize();
+            Bind.Structures.Type.Initialize(glTypemap, csTypemap);
+            Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt);
             Bind.Structures.Function.Initialize();
-            Bind.Structures.Delegate.Initialize();
+            Bind.Structures.Delegate.Initialize(glSpec, glSpecExt);
 
             // Process enums and delegates - create wrappers.
             Trace.WriteLine("Processing specs, please wait...");

@@ -91,9 +91,11 @@ namespace Bind
                                 Settings.OutputPath = b[1];
                                 break;
                             case "mode":
+                                string arg = b[1].ToLower();
                                 mode = 
-                                    b[1].ToLower() == "gl2" ? GeneratorMode.GL2 : 
-                                    b[1].ToLower() == "gl3" ? GeneratorMode.GL3 : GeneratorMode.GL2;
+                                    arg == "gl2" ? GeneratorMode.GL2 : 
+                                    arg == "gl3" ? GeneratorMode.GL3 :
+                                    arg == "wgl" ? GeneratorMode.Wgl : GeneratorMode.GL2;
                                 break;
                             case "namespace":
                             case "ns":
@@ -142,6 +144,10 @@ namespace Bind
                 {
                     case GeneratorMode.GL2:
                         Generator = new Bind.GL2.Generator(Settings.InputPath);
+                        break;
+
+                    case GeneratorMode.Wgl:
+                        Generator = new Bind.Wgl.Generator(Settings.InputPath);
                         break;
 
                     default:

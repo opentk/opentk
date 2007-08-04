@@ -151,13 +151,19 @@ namespace Bind.Structures
                     // Remove overload
                     if (endings.Contains(trimmedName.Substring(trimmedName.Length - 3)))
                     {
-                        TrimmedName = trimmedName.Substring(0, trimmedName.Length - 3);
+                        if (!trimmedName.EndsWith("v"))
+                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 3);
+                        else
+                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 3) + "v";
                         return;
                     }
 
                     if (endings.Contains(trimmedName.Substring(trimmedName.Length - 2)))
                     {
-                        TrimmedName = trimmedName.Substring(0, trimmedName.Length - 2);
+                        if (!trimmedName.EndsWith("v"))
+                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 2);
+                        else
+                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 2) + "v";
                         return;
                     }
 
@@ -167,8 +173,10 @@ namespace Bind.Structures
                         // do not want to change, or an actual overload (glColor3s). We assume
                         // (perhaps incorrectly), that an 's' preceeded be a digit indicates an
                         // overload. If there is no digit, we assume a plural form (no change).
-                        if (Char.IsDigit(trimmedName[trimmedName.Length - 2]))
-                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 1);
+                        if (!trimmedName.EndsWith("v"))
+                            if (Char.IsDigit(trimmedName[trimmedName.Length - 2]))
+                                TrimmedName = trimmedName.Substring(0, trimmedName.Length - 1);
+
                         return;
                     }
                 }

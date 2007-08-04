@@ -157,6 +157,24 @@ namespace Bind
 
         #endregion
 
+        #region internal static void Merge(EnumCollection enums, Bind.Structures.Enum t)
+
+        /// <summary>
+        /// Merges the given enum into the enum list. If an enum of the same name exists,
+        /// it merges their respective constants.
+        /// </summary>
+        /// <param name="enums"></param>
+        /// <param name="t"></param>
+        internal static void Merge(DelegateCollection delegates, Bind.Structures.Delegate t)
+        {
+            if (!delegates.ContainsKey(t.Name))
+            {
+                delegates.Add(t.Name, t);
+            }
+        }
+
+        #endregion
+
         #region internal static string GetGL2Extension(string name)
 
         internal static string GetGL2Extension(string name)
