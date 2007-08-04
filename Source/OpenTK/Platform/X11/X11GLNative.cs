@@ -26,6 +26,8 @@ namespace OpenTK.Platform.X11
         private IntPtr window;
 
         private DisplayMode mode = new DisplayMode();
+        
+        private bool created;
 
         //private X11Keyboard key;
 
@@ -73,7 +75,18 @@ namespace OpenTK.Platform.X11
             mode.Buffers = 2;
 
             Trace.WriteLine(String.Format("Display mode: {0}", mode));
-        
+
+            this.CreateWindow(mode);
+        }
+
+        #endregion
+
+        #region --- INativeWindow Members ---
+
+        #region public void CreateWindow(DisplayMode mode)
+
+        public void CreateWindow(DisplayMode mode)
+        {
             windowInfo.Display = display = API.OpenDisplay(null); // null == default display
             if (display == IntPtr.Zero)
             {
@@ -101,7 +114,7 @@ namespace OpenTK.Platform.X11
             wnd_attributes.background_pixel = 0;
             wnd_attributes.border_pixel = 0;
             wnd_attributes.colormap = glContext.XColormap;
-                //API.CreateColormap(display, rootWindow, glxVisualInfo.visual, 0/*AllocNone*/);
+            //API.CreateColormap(display, rootWindow, glxVisualInfo.visual, 0/*AllocNone*/);
             wnd_attributes.event_mask =
                 EventMask.StructureNotifyMask |
                 EventMask.ExposureMask |
@@ -134,7 +147,7 @@ namespace OpenTK.Platform.X11
             }
 
             Trace.WriteLine("done! (id: " + window + ")");
-            
+
             // Set the window hints
             /*
             SizeHints hints = new SizeHints();
@@ -157,6 +170,8 @@ namespace OpenTK.Platform.X11
             */
 
             //glContext.ContainingWindow = windowInfo.Window;
+
+
             glContext.windowInfo.Window = window;
             glContext.CreateContext(null, true);
 
@@ -172,7 +187,20 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region --- INativeWindow Members ---
+        #region public void Exit()
+
+        public void Exit()
+        {
+            /*Event e = new Event();
+            X11Api.SendEvent(
+                display,
+                window,
+                false,
+                0,*/
+            //quit = true;
+        }
+
+        #endregion
 
         #region public void ProcessEvents()
 
@@ -270,11 +298,14 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public Keyboard Key
+        #region public bool Created
 
-        public Input.IKeyboard Key
+        /// <summary>
+        /// Returns true if a render window/context exists.
+        /// </summary>
+        public bool Created
         {
-            get { throw new NotImplementedException(); }
+            get { return created; }
         }
 
         #endregion
@@ -285,19 +316,6 @@ namespace OpenTK.Platform.X11
         public bool Quit
         {
             get { return quit; }
-            set
-            {
-                if (value)
-                {
-                    /*Event e = new Event();
-                    X11Api.SendEvent(
-                        display,
-                        window,
-                        false,
-                        0,*/
-                    //quit = true;
-                }
-            }
         }
 
         #endregion
@@ -332,6 +350,18 @@ namespace OpenTK.Platform.X11
         public OpenTK.Platform.IGLContext Context
         {
             get { return glContext; }
+        }
+
+        #endregion
+
+        #region public IntPtr Handle
+
+        /// <summary>
+        /// Gets the current window handle.
+        /// </summary>
+        public IntPtr Handle
+        {
+            get { return this.window; }
         }
 
         #endregion

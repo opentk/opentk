@@ -4,15 +4,16 @@ using System.Text;
 
 namespace OpenTK.Platform
 {
-    interface INativeWindow : IResizable, IDisposable
+    interface INativeWindow : IGLControl, IResizable
     {
+        void CreateWindow(DisplayMode mode);
         void ProcessEvents();
+        void Exit();
 
         event CreateEvent Create;
 
-        bool IsIdle { get; }
-        bool Quit { get; set; }
-        bool Fullscreen { get; set; }
-        IGLContext Context { get; }
+        bool Created { get; }
+        bool Quit { get; }
+        IntPtr Handle { get; }
     }
 }

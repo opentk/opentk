@@ -9,5 +9,9 @@ namespace OpenTK.Input
     public interface IKeyboard : IInputDevice
     {
         bool this[Keys k] { get; }
+        int NumberOfKeys { get; }
+        int NumberOfFunctionKeys { get; }
+        int NumberOfLeds { get; }
+        long DeviceID { get; }
     }
 }

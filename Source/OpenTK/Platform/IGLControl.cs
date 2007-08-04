@@ -14,12 +14,9 @@ namespace OpenTK.Platform
 {
     public interface IGLControl : IDisposable
     {
-        void ProcessEvents();
-
         event CreateEvent Create;
 
         bool IsIdle { get; }
-        //bool Quit { get; set; }
         bool Fullscreen { get; set; }
         IGLContext Context { get; }
     }

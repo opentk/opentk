@@ -34,6 +34,7 @@ namespace Examples.Tutorial
 
         public T07_DisplayLists_Cube()
         {
+            this.CreateWindow(new OpenTK.Platform.DisplayMode(800, 600));
             //Text =
             //    "DisplayLists example (" +
             //    GL.GetString(Enums.StringName.RENDERER) + " " +
@@ -77,7 +78,7 @@ namespace Examples.Tutorial
             OnResize(new OpenTK.Platform.ResizeEventArgs(this.Width, this.Height));
         }
 
-        #endregion
+        #endregion         
 
         #region public void Launch()
 
@@ -89,11 +90,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public void Launch()
         {
-            //using (T03_RotatingCube ex = new T03_RotatingCube())
-            {
-                //ex.Run();
-                Run();
-            }
+            Run();
         }
 
         #endregion
@@ -123,11 +120,11 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region RenderFrame
+        #region OnRenderFrame
 
-        public override void RenderFrame()
+        public override void OnRenderFrame()
         {
-            base.RenderFrame();
+            base.OnRenderFrame();
 
             GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
@@ -151,15 +148,15 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region UpdateFrame
+        #region OnUpdateFrame
 
-        public override void UpdateFrame()
+        public override void OnUpdateFrame()
         {
-	        base.UpdateFrame();
+	        base.OnUpdateFrame();
 
-            if (Key[OpenTK.Input.Keys.Escape])
+            if (Keyboard[0][OpenTK.Input.Keys.Escape])
             {
-                this.Quit = true;
+                this.Exit();
             }
         }
 
