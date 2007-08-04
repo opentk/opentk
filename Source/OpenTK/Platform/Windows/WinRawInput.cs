@@ -153,9 +153,14 @@ namespace OpenTK.Platform.Windows
             get { throw new Exception("The method or operation is not implemented."); }
         }
 
-        public IList<Keyboard> Keyboards
+        public IList<Keyboard> Keyboard
         {
-            get { return keyboardDriver.Keyboards; }
+            get { return keyboardDriver.Keyboard; }
+        }
+
+        public IList<Keyboard> Mouse
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
         }
 
         #endregion

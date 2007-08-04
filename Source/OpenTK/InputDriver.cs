@@ -6,11 +6,11 @@ using OpenTK.Input;
 
 namespace OpenTK
 {
-    public class InputDevices : IInputDriver
+    public class InputDriver : IInputDriver
     {
         IInputDriver inputDriver;
 
-        public InputDevices(IntPtr parentHandle)
+        public InputDriver(IntPtr parentHandle)
         {
             if (Environment.OSVersion.Version.Major > 5 ||
                 (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
@@ -30,9 +30,14 @@ namespace OpenTK
             get { return inputDriver.InputDevices; }
         }
 
-        public IList<Keyboard> Keyboards
+        public IList<Keyboard> Keyboard
         {
-            get { return inputDriver.Keyboards; }
+            get { return inputDriver.Keyboard; }
+        }
+
+        public IList<Keyboard> Mouse
+        {
+            get { throw new NotImplementedException(); }
         }
 
         #endregion
