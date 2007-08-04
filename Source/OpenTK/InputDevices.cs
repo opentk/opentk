@@ -10,12 +10,12 @@ namespace OpenTK
     {
         IInputDriver inputDriver;
 
-        public InputDevices()
+        public InputDevices(IntPtr parentHandle)
         {
             if (Environment.OSVersion.Version.Major > 5 ||
                 (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
             {
-                inputDriver = new OpenTK.Platform.Windows.WinRawInput();
+                inputDriver = new OpenTK.Platform.Windows.WinRawInput(parentHandle);
             }
             else
             {
@@ -25,12 +25,12 @@ namespace OpenTK
 
         #region --- IInputDriver Members ---
 
-        IList<OpenTK.Input.IInputDevice> OpenTK.Input.IInputDriver.InputDevices
+        IList<IInputDevice> IInputDriver.InputDevices
         {
             get { return inputDriver.InputDevices; }
         }
 
-        public IList<OpenTK.Input.IKeyboard> Keyboards
+        public IList<Keyboard> Keyboards
         {
             get { return inputDriver.Keyboards; }
         }

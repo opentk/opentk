@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
+using System.IO;
 
 namespace Examples
 {
@@ -29,18 +30,23 @@ namespace Examples
                 Application.Run(exampleLauncher);
             }
         }
-
+        StreamWriter sw = new StreamWriter(Path.Combine(System.Environment.CurrentDirectory, "keymap.log"));
         public ExampleLauncher()
         {
             InitializeComponent();
-
             System.Diagnostics.Debug.Listeners.Clear();
-            System.Diagnostics.Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            System.Diagnostics.Debug.Listeners.Add(new TextWriterTraceListener(sw));
             System.Diagnostics.Debug.AutoFlush = true;
             System.Diagnostics.Trace.Listeners.Clear();
             System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
             System.Diagnostics.Trace.AutoFlush = true;
             Trace.AutoFlush = true;
+        }
+
+        ~ExampleLauncher()
+        {
+            sw.Flush();
+            sw.Close();
         }
 
         private void listBox1_DoubleClick(object sender, EventArgs e)
@@ -87,7 +93,15 @@ namespace Examples
         void Launch(object example)
         {
             Type ex = example as Type;
-            (ex.GetConstructor(Type.EmptyTypes).Invoke(null) as IExample).Launch();
+            try
+            {
+                (ex.GetConstructor(Type.EmptyTypes).Invoke(null) as IExample).Launch();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                //throw;
+            }
             //(example as Type).InvokeMember("Launch", BindingFlags.InvokeMethod, null, example, null);
             /*
             AppDomain app = AppDomain.CreateDomain((example as Type).Name);

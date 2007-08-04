@@ -5,15 +5,15 @@ using System.Text;
 
 namespace OpenTK.Platform
 {
-    interface IGameWindow : IDisposable
+    interface IGameWindow : INativeWindow
     {
         void Run();
 
-        void RenderFrame();
-        void UpdateFrame();
+        void OnRenderFrame();
+        void OnUpdateFrame();
 
-        event UpdateFrameEvent UpdateFrameNotify;
-        event RenderFrameEvent RenderFrameNotify;
+        event UpdateFrameEvent UpdateFrame;
+        event RenderFrameEvent RenderFrame;
     }
 
     public delegate void UpdateFrameEvent(EventArgs e);

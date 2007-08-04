@@ -20,8 +20,8 @@ namespace OpenTK.Platform.X11
         X11GLContext glContext;
 
         private bool quit;
-
         private bool disposed;
+        private bool fullscreen;
 
         #region --- Contructors ---
 
@@ -136,19 +136,7 @@ namespace OpenTK.Platform.X11
                 this.Create(sender, e);
         }
 
-        #region public bool Quit
-
-        public bool Quit
-        {
-            get { return quit; }
-            set
-            {
-                throw new NotImplementedException();
-                quit = value;
-            }
-        }
-
-        #endregion
+        #region public bool IsIdle
 
         public bool IsIdle
         {
@@ -158,11 +146,15 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        #endregion
+
+        #region public bool Fullscreen
+
         public bool Fullscreen
         {
             get
             {
-                throw new Exception("The method or operation is not implemented.");
+                return fullscreen;
             }
             set
             {
@@ -170,7 +162,11 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public OpenTK.Platform.IGLContext Context
+        #endregion
+
+        #region public IGLContext Context
+
+        public IGLContext Context
         {
             get
             {
@@ -178,10 +174,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public void ProcessEvents()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
+        #endregion
 
         #endregion
 
@@ -198,7 +191,7 @@ namespace OpenTK.Platform.X11
             if (!disposed)
             {
                 // Clean unmanaged resources:
-
+                // Nothing
 
                 if (manuallyCalled)
                 {

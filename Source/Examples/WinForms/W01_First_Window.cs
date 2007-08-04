@@ -71,5 +71,14 @@ namespace Examples.WinForms
                     break;
             }
         }
+
+        #region IExample Members
+
+        public void Launch()
+        {
+            
+        }
+
+        #endregion
     }
 }

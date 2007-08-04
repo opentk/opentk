@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 #endregion
 
@@ -18,12 +19,16 @@ namespace OpenTK.Platform.Windows
 {
     sealed class WinGLNative : NativeWindow, OpenTK.Platform.INativeWindow, IDisposable
     {
+        #region --- Fields ---
+
         private WinGLContext glContext;
         private DisplayMode mode = new DisplayMode();
-
-        private Input.IInputDriver inputDriver;
         
         private bool disposed;
+        private bool quit;
+        private bool created;
+
+        #endregion
 
         #region --- Contructors ---
 
@@ -32,24 +37,94 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         public WinGLNative()
         {
-            mode = new DisplayMode();
-            mode.Width = 640;
-            mode.Height = 480;
-
-            this.CreateWindow(mode);
         }
 
         #endregion
 
-        #region private void CreateWindow()
+        #region protected override void WndProc(ref Message m)
 
-        private void CreateWindow(DisplayMode mode)
+        /// <summary>
+        /// For use in WndProc only.
+        /// </summary>
+        private int width, height;
+
+        /// <summary>
+        /// Processes incoming WM_* messages.
+        /// </summary>
+        /// <param name="m">Reference to the incoming Windows Message.</param>
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case API.Constants.WM_WINDOWPOSCHANGED:
+                    // Get window size
+                    width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.WindowPosition), "cx"));
+                    height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.WindowPosition), "cy"));
+                    //if (resizeEventArgs.Width != width || resizeEventArgs.Height != height)
+                    if (mode.Width != width || mode.Height != height)
+                    {
+                        // If the size has changed, raise the ResizeEvent.
+                        resizeEventArgs.Width = width;
+                        resizeEventArgs.Height = height;
+                        this.OnResize(resizeEventArgs);
+                        // The message was processed.
+                        return;
+                    }
+                    // If the message was not a resize notification, send it to the default WndProc.
+                    break;
+
+                case API.Constants.WM_CREATE:
+                    // Set the window width and height:
+                    mode.Width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cx"));
+                    mode.Height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cy"));
+                    
+                    // Raise the Create event
+                    this.OnCreate(EventArgs.Empty);
+
+                    // Raise the resize event:
+                    //resizeEventArgs.Width = width;
+                    //resizeEventArgs.Height = height;
+                    //this.OnResize(resizeEventArgs);
+                    return;
+
+                //case API.Constants.WM_KEYDOWN:          // Legacy input events
+                //case API.Constants.WM_KEYUP:
+                //    break;
+
+                //case API.Constants.WM_INPUT:            // Raw input
+                //    WinRawInput.ProcessEvent(ref msg, key);
+                //    break;
+                
+                case API.Constants.WM_CLOSE:
+                case API.Constants.WM_DESTROY:
+                    Debug.Print("Window handle {0} destroyed.", this.Handle);
+                    this.DestroyHandle();
+                    API.PostQuitMessage(0);
+                    return;
+
+                case API.Constants.WM_QUIT:
+                    quit = true;
+                    Debug.WriteLine("Window quit.");
+                    return;
+            }
+
+ 	        //base.WndProc(ref m);
+            DefWndProc(ref m);
+        }
+
+        #endregion
+
+        #region --- INativeWindow Members ---
+
+        #region private void CreateWindow(DisplayMode mode)
+
+        public void CreateWindow(DisplayMode mode)
         {
             CreateParams cp = new CreateParams();
             cp.ClassStyle =
                 (int)API.WindowClassStyle.OwnDC |
                 (int)API.WindowClassStyle.VRedraw |
-                (int)API.WindowClassStyle.HRedraw;
+                (int)API.WindowClassStyle.HRedraw | (int)API.WindowClassStyle.Ime;
             cp.Style =
                 (int)API.WindowStyle.Visible |
                 (int)API.WindowStyle.ClipChildren |
@@ -72,6 +147,17 @@ namespace OpenTK.Platform.Windows
                     0.0f
                 )
             );
+
+            if (this.Handle != IntPtr.Zero && glContext != null)
+            {
+                created = true;
+            }
+            else
+            {
+                throw new ApplicationException(String.Format(
+                    "Could not create native window and/or context. Handle: {0}, Context {1}",
+                    this.Handle, this.Context.ToString()));
+            }
         }
 
         /*
@@ -121,84 +207,34 @@ namespace OpenTK.Platform.Windows
         */
         #endregion
 
-        #region protected override void WndProc(ref Message m)
+        #region public void Exit()
 
         /// <summary>
-        /// For use in WndProc only.
+        /// Starts the teardown sequence for the current window.
         /// </summary>
-        private int width, height;
-
-        /// <summary>
-        /// Processes incoming WM_* messages.
-        /// </summary>
-        /// <param name="m">Reference to the incoming Windows Message.</param>
-        protected override void WndProc(ref Message m)
+        public void Exit()
         {
-            switch (m.Msg)
-            {
-                case API.Constants.WM_WINDOWPOSCHANGED:
-                    // Get window size
-                    width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.WindowPosition), "cx"));
-                    height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.WindowPosition), "cy"));
-                    //if (resizeEventArgs.Width != width || resizeEventArgs.Height != height)
-                    if (mode.Width != width || mode.Height != height)
-                    {
-                        // If the size has changed, raise the ResizeEvent.
-                        resizeEventArgs.Width = width;
-                        resizeEventArgs.Height = height;
-                        this.OnResize(resizeEventArgs);
-                        // The message was processed.
-                        return;
-                    }
-                    // If the message was not a resize notification, send it to the default WndProc.
-                    break;
-
-                case API.Constants.WM_CREATE:
-                    // Set the window width and height:
-                    mode.Width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cx"));
-                    mode.Height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cy"));
-                    
-                    // Raise the Create event
-                    this.OnCreate(EventArgs.Empty);
-
-                    // Raise the resize event:
-                    //resizeEventArgs.Width = width;
-                    //resizeEventArgs.Height = height;
-                    //this.OnResize(resizeEventArgs);
-                    return;
-
-                case API.Constants.WM_KEYDOWN:          // Legacy input events
-                case API.Constants.WM_KEYUP:
-                    break;
-
-                //case API.Constants.WM_INPUT:            // Raw input
-                //    WinRawInput.ProcessEvent(ref msg, key);
-                //    break;
-                
-                case API.Constants.WM_CLOSE:
-                    API.PostQuitMessage(0);
-                    return;
-
-                case API.Constants.WM_QUIT:
-                    quit = true;
-                    break;
-            }
-
- 	        base.WndProc(ref m);
+            API.PostMessage(this.Handle, (uint)API.Constants.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
         }
 
         #endregion
 
-        #region --- INativeWindow Members ---
-
         #region public void ProcessEvents()
 
-        private System.Windows.Forms.Message msg;
+        private int ret;
+        System.Windows.Forms.Message msg;
         public void ProcessEvents()
         {
-            while (API.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0))
+            while (!IsIdle)
             {
-                API.GetMessage(out msg, IntPtr.Zero, 0, 0);
+                ret = API.GetMessage(out msg, Handle, 0, 0);
+                if (ret == -1)
+                {
+                    throw new ApplicationException(String.Format(
+                        "An error happened while processing the message queue. Windows error: {0}",
+                        Marshal.GetLastWin32Error()));
+                }
+                API.DispatchMessage(ref msg);
                 WndProc(ref msg);
             }
         }
@@ -219,20 +255,23 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region public bool Created
+
+        /// <summary>
+        /// Returns true if a render window/context exists.
+        /// </summary>
+        public bool Created
+        {
+            get { return created; }
+        }
+
+        #endregion
+
         #region public bool Quit
 
-        private bool quit;
         public bool Quit
         {
             get { return quit; }
-            set
-            {
-                if (value)
-                {
-                    API.PostQuitMessage(0);
-                    //quit = true;
-                }
-            }
         }
 
         #endregion
@@ -269,7 +308,9 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return !API.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
+                //return !API.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
+                return !API.PeekMessage(out msg, this.Handle, 0, 0, 0);
+                //return API.GetQueueStatus(API.QueueStatusFlags.ALLEVENTS) == 0;
             }
         }
 

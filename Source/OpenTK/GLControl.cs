@@ -249,11 +249,6 @@ namespace OpenTK
 
         #endregion
 
-        public void ProcessEvents()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
         #endregion
 
         #region --- IResizable Members ---
