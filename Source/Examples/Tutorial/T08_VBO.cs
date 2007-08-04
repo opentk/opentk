@@ -72,6 +72,8 @@ namespace Examples.Tutorial
 
         public T08_VBO()
         {
+            this.CreateWindow(new DisplayMode(800, 600));
+
             this.Context.MakeCurrent();
 
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
@@ -86,11 +88,11 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region RenderFrame
+        #region OnRenderFrame
 
-        public override void RenderFrame()
+        public override void OnRenderFrame()
         {
-            base.RenderFrame();
+            base.OnRenderFrame();
 
             GL.Clear(
                 GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT |
@@ -117,7 +119,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region UpdateFrame
+        #region OnUpdateFrame
 
         /// <summary>
         /// Prepares the next frame for rendering.
@@ -126,11 +128,11 @@ namespace Examples.Tutorial
         /// Place your control logic here. This is the place to respond to user input,
         /// update object positions etc.
         /// </remarks>
-        public override void UpdateFrame()
+        public override void OnUpdateFrame()
         {
-            if (Key[OpenTK.Input.Keys.Escape])
+            if (Keyboard[0][OpenTK.Input.Keys.Escape])
             {
-                Quit = true;
+                this.Exit();
                 return;
             }
 

@@ -28,42 +28,33 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// The list of keyboards connected to this system.
         /// </summary>
-        private List<WinRawKeyboard> keyboards = new List<WinRawKeyboard>();
-        
-        WinRawKeyboard key;
+        //internal List<WinRawKeyboard> keyboards = new List<WinRawKeyboard>();
 
-        internal IEnumerable<Input.IInputDevice> InputDevices
+        private WinRawKeyboard keyboardDriver;
+
+        internal WinRawInput(IntPtr parentHandle)
         {
-            get
-            {
-                return (IEnumerable<Input.IInputDevice>)key;
-            }
+            Debug.WriteLine("Initalizing raw input driver.");
+            Debug.Indent();
+            
+            AssignHandle(parentHandle);
+            Debug.Print("Input window attached to parent {0}", this.Handle);
+            keyboardDriver = new WinRawKeyboard(this.Handle);
+            
+            Debug.Unindent();
         }
-
-        internal WinRawInput()
-        {
-            CreateParams cp = new CreateParams();
-            /*cp.ClassStyle =
-                (int)API.WindowClassStyle.ParentDC;
-            cp.Style =
-                (int)API.WindowStyle.Disabled |
-                (int)API.WindowStyle.ChildWindow;*/
-
-            cp.Caption = "OpenTK hidden input handler window";
-            base.CreateHandle(cp);
-            //key = new WinRawKeyboard(this.Handle);
-
-            uint numKeyboards = WinRawKeyboard.Count;
-        }
-
 
         private static uint deviceCount;
 
         internal static uint DeviceCount
         {
-            get { return DeviceListChanged ? deviceCount : deviceCount; }
+            get
+            {
+                API.GetRawInputDeviceList(null, ref deviceCount, API.RawInputDeviceListSize);
+                return deviceCount;
+            }
         }
-
+        /*
         /// <summary>
         /// Gets a value indicating whether the Device list has changed, for example
         /// by removing or adding a device.
@@ -89,8 +80,10 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
-
+        */
         #region protected override void WndProc(ref Message msg)
+
+        uint size = 0;
 
         /// <summary>
         /// Processes the input Windows Message, routing the data to the correct Keyboard, Mouse or HID.
@@ -98,101 +91,57 @@ namespace OpenTK.Platform.Windows
         /// <param name="msg">The WM_INPUT message, containing the data on the input event.</param>
         protected override void WndProc(ref Message msg)
         {
-            if (msg.Msg == API.Constants.WM_INPUT)
+            switch (msg.Msg)
             {
-                uint size = 0;
-                // Get the size of the input data
-                API.GetRawInputData(msg.LParam, API.GetRawInputDataEnum.INPUT,
-                    IntPtr.Zero, ref size, API.RawInputHeaderSize);
+                case API.Constants.WM_INPUT:
+                    size = 0;
+                    // Get the size of the input data
+                    API.GetRawInputData(msg.LParam, API.GetRawInputDataEnum.INPUT,
+                        IntPtr.Zero, ref size, API.RawInputHeaderSize);
 
-                if (data == null || API.RawInputSize < size)
-                {
-                    throw new ApplicationException("Critical error when processing raw windows input.");
-                }
+                    //if (data == null || API.RawInputSize < size)
+                    //{
+                    //    throw new ApplicationException("Critical error when processing raw windows input.");
+                    //}
 
-                if (size == API.GetRawInputData(msg.LParam, API.GetRawInputDataEnum.INPUT,
-                        data, ref size, API.RawInputHeaderSize))
-                {
-                    switch (data.Header.Type)
+                    if (size == API.GetRawInputData(msg.LParam, API.GetRawInputDataEnum.INPUT,
+                            data, ref size, API.RawInputHeaderSize))
                     {
-                        case API.RawInputDeviceType.KEYBOARD:
-                            ProcessKeyboardEvent(data);
-                            break;
+                        switch (data.Header.Type)
+                        {
+                            case API.RawInputDeviceType.KEYBOARD:
+                                keyboardDriver.ProcessKeyboardEvent(data);
+                                break;
 
-                        case API.RawInputDeviceType.MOUSE:
-                            throw new NotImplementedException();
+                            case API.RawInputDeviceType.MOUSE:
+                                //throw new NotImplementedException();
+                                break;
 
-                        case API.RawInputDeviceType.HID:
-                            throw new NotImplementedException();
+                            case API.RawInputDeviceType.HID:
+                                //throw new NotImplementedException();
+                                break;
+                        }
                     }
-                }
-                else
-                {
-                    throw new ApplicationException(
-                        "GetRawInputData returned invalid data. Please file a bug at http://opentk.sourceforge.net"
-                    );
-                }
+                    else
+                    {
+                        throw new ApplicationException(String.Format(
+                            "GetRawInputData returned invalid data. Windows error {0}. Please file a bug at http://opentk.sourceforge.net",
+                            Marshal.GetLastWin32Error()));
+                    }
+                    break;
+
+                case API.Constants.WM_CLOSE:
+                case API.Constants.WM_DESTROY:
+                    Debug.Print("Input window detached from parent {0}.", Handle);
+                    ReleaseHandle();
+                    break;
+
+                case API.Constants.WM_QUIT:
+                    Debug.WriteLine("Input window quit.");
+                    break;
             }
 
             base.WndProc(ref msg);
-        }
-
-        #endregion
-
-        #region internal bool ProcessKeyboardEvent(API.RawInput rin)
-
-        /// <summary>
-        /// Processes raw input events.
-        /// </summary>
-        /// <param name="rin"></param>
-        /// <returns></returns>
-        internal bool ProcessKeyboardEvent(API.RawInput rin)
-        {
-            switch (rin.Header.Type)
-            {
-                case API.RawInputDeviceType.KEYBOARD:
-                    bool pressed =
-                        rin.Data.Keyboard.Message == API.Constants.WM_KEYDOWN ||
-                        rin.Data.Keyboard.Message == API.Constants.WM_SYSKEYDOWN;
-
-                    // Generic control, shift, alt keys may be sent instead of left/right.
-                    // It seems you have to explicitly register left/right events.
-                    switch (rin.Data.Keyboard.VKey)
-                    {
-                        case API.VirtualKeys.SHIFT:
-                            key[Input.Keys.LeftShift] = key[Input.Keys.RightShift] = pressed;
-                            return false;
-
-                        case API.VirtualKeys.CONTROL:
-                            key[Input.Keys.LeftControl] = key[Input.Keys.RightControl] = pressed;
-                            return false;
-
-                        case API.VirtualKeys.MENU:
-                            key[Input.Keys.LeftAlt] = key[Input.Keys.RightAlt] = pressed;
-                            return false;
-
-                        default:
-                            if (!WinRawKeyboard.KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
-                            {
-                                Debug.Print("Virtual key {0} not mapped.", rin.Data.Keyboard.VKey);
-                                OpenTK.OpenGL.GL.ClearColor(1.0f, 0.3f, 0.3f, 0.0f);
-                            }
-                            else
-                            {
-                                key[WinRawKeyboard.KeyMap[rin.Data.Keyboard.VKey]] = pressed;
-                                OpenTK.OpenGL.GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-                            }
-                            break;
-                    }
-                    break;
-
-                case API.RawInputDeviceType.MOUSE:
-                    break;
-
-                case API.RawInputDeviceType.HID:
-                    break;
-            }
-            return false;
         }
 
         #endregion
@@ -204,9 +153,9 @@ namespace OpenTK.Platform.Windows
             get { throw new Exception("The method or operation is not implemented."); }
         }
 
-        public IList<IKeyboard> Keyboards
+        public IList<Keyboard> Keyboards
         {
-            get { return (IList<IKeyboard>)keyboards; }
+            get { return keyboardDriver.Keyboards; }
         }
 
         #endregion

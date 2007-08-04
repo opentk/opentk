@@ -8,13 +8,20 @@
 
 using System;
 
+using OpenTK.Input;
+using System.Diagnostics;
+
 #endregion
 
 namespace OpenTK.Input
 {
     public class Keyboard : IKeyboard
     {
-        private IKeyboard keyboard;
+        //private IKeyboard keyboard;
+        private bool[] keys = new bool[(int)Keys.MaxKeys];
+        private string description;
+        private int numKeys, numFKeys, numLeds;
+        private long devID;
 
         #region --- Constructors ---
 
@@ -23,7 +30,7 @@ namespace OpenTK.Input
             if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
                 Environment.OSVersion.Platform == PlatformID.Win32Windows)
             {
-                keyboard = new OpenTK.Platform.Windows.WinRawKeyboard();
+                //keyboard = new OpenTK.Platform.Windows.WinRawKeyboard();
             }
             else if (Environment.OSVersion.Platform == PlatformID.Unix ||
                 Environment.OSVersion.Platform == (PlatformID)128) // some older versions of Mono reported 128.
@@ -44,8 +51,39 @@ namespace OpenTK.Input
 
         public bool this[Keys k]
         {
-            get { return keyboard[k]; }
-            //set { keyboard[k] = value; }
+            get { return keys[(int)k]; }
+            internal set
+            {
+                Debug.Print("OpenTK key {0} {1}.", k, value ? "pressed" : "released");
+                keys[(int)k] = value;
+            }
+        }
+
+        public int NumberOfKeys
+        {
+            get { return numKeys; }
+            internal set { numKeys = value; }
+        }
+
+        public int NumberOfFunctionKeys
+        {
+            get { return numFKeys; }
+            internal set { numFKeys = value; }
+        }
+
+        public int NumberOfLeds
+        {
+            get { return numLeds; }
+            internal set { numLeds = value; }
+        }
+
+        /// <summary>
+        /// Device dependent ID.
+        /// </summary>
+        public long DeviceID
+        {
+            get { return devID; }
+            internal set { devID = value; }
         }
 
         #endregion
@@ -54,15 +92,29 @@ namespace OpenTK.Input
 
         public string Description
         {
-            get { return keyboard.Description; }
+            get { return description; }
+            internal set { description = value; }
         }
 
         public InputDeviceType DeviceType
         {
-            get { return keyboard.DeviceType; }
+            get { return InputDeviceType.Keyboard; }
         }
 
         #endregion
+
+        public override int GetHashCode()
+        {
+            //return base.GetHashCode();
+            return (int)(numKeys ^ numFKeys ^ numLeds ^ devID.GetHashCode() ^ description.GetHashCode());
+        }
+
+        public override string ToString()
+        {
+            //return base.ToString();
+            return String.Format("Keyboard: '{0}', {1} keys, {2} function keys, {3} leds. Device ID: {4}",
+                description, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds, DeviceID);
+        }
     }
 
     #region public enum Keys : int

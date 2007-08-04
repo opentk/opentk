@@ -23,6 +23,7 @@ namespace OpenTK.Platform.Windows
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
         private bool disposed;
+        private Message msg;        // Used only by the IsIdle event.
 
         #region --- Constructors ---
 
@@ -48,16 +49,6 @@ namespace OpenTK.Platform.Windows
 
         public event CreateEvent Create;
 
-        #region public void ProcessEvents()
-
-        private API.Message msg;
-        public void ProcessEvents()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
-        #endregion
-        
         #region public bool IsIdle
 
         public bool IsIdle
@@ -66,15 +57,6 @@ namespace OpenTK.Platform.Windows
             {
                 return !API.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
             }
-        }
-
-        #endregion
-
-        #region public OpenTK.Platform.IGLContext Context
-
-        public OpenTK.Platform.IGLContext Context
-        {
-            get { return glContext; }
         }
 
         #endregion
@@ -90,8 +72,16 @@ namespace OpenTK.Platform.Windows
             set
             {
                 throw new NotImplementedException();
-                fullscreen = true;
             }
+        }
+
+        #endregion
+
+        #region public IGLContext Context
+
+        public IGLContext Context
+        {
+            get { return glContext; }
         }
 
         #endregion

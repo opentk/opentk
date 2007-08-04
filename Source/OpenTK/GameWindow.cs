@@ -13,14 +13,23 @@ using OpenTK.Platform;
 
 namespace OpenTK
 {
-    public class GameWindow : OpenTK.Platform.IGLControl, OpenTK.Platform.IGameWindow
+    public class GameWindow : OpenTK.Platform.IGameWindow
     {
         private INativeWindow glWindow;
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
+        private DisplayMode mode;
 
-        public Input.IKeyboard Keyboard { get { return inputDevices.Keyboards[0]; } }
-
-        private InputDevices inputDevices = new InputDevices();
+        private InputDevices inputDevices;
+        public IList<Input.Keyboard> Keyboard { get { return Input.Keyboards; } }
+        public InputDevices Input
+        { 
+            get
+            {
+                if (inputDevices == null)
+                    inputDevices = new InputDevices(this.Handle);
+                return inputDevices;
+            }
+        }
 
         #region --- Contructors ---
 
@@ -29,13 +38,6 @@ namespace OpenTK
         /// </summary>
         public GameWindow()
         {
-            System.Diagnostics.Debug.Listeners.Clear();
-            System.Diagnostics.Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            System.Diagnostics.Debug.AutoFlush = true;
-            System.Diagnostics.Trace.Listeners.Clear();
-            System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            System.Diagnostics.Trace.AutoFlush = true;
-
             if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
                 Environment.OSVersion.Platform == PlatformID.Win32Windows)
             {
@@ -55,17 +57,15 @@ namespace OpenTK
                 );
             }
 
-            glWindow.Context.MakeCurrent();
-
-            // When the glWindow construction is complete, hook the resize events.
-            resizeEventArgs.Width = this.Width;
-            resizeEventArgs.Height = this.Height;
             glWindow.Resize += new ResizeEvent(glWindow_Resize);
             glWindow.Create += new CreateEvent(glWindow_Create);
         }
 
         void glWindow_Create(object sender, EventArgs e)
         {
+            //glWindow.Context.MakeCurrent();
+            inputDevices = new InputDevices(this.Handle); 
+
             this.OnCreate(e);
         }
 
@@ -76,13 +76,79 @@ namespace OpenTK
 
         #endregion
 
-        #region --- IGLControl Members ---
+        #region --- INativeWindow Members ---
+
+        #region public void CreateWindow(DisplayMode mode)
+
+        /// <summary>
+        /// Creates a new render window.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the render window.</param>
+        /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
+        public void CreateWindow(DisplayMode mode)
+        {
+            if (!Created)
+            {
+                glWindow.CreateWindow(mode);
+            }
+            else
+            {
+                throw new ApplicationException("A render window already exists");
+            }
+        }
+
+        #endregion
+
+        #region public IntPtr Handle
+
+        /// <summary>
+        /// Gets the handle of the current GameWindow.
+        /// </summary>
+        public IntPtr Handle
+        {
+            get { return glWindow.Handle; }
+        }
+
+        #endregion
+
+        #region public void Exit()
+
+        /// <summary>
+        /// Gracefully exits the current GameWindow.
+        /// </summary>
+        public void Exit()
+        {
+            glWindow.Exit();
+        }
+
+        #endregion
 
         #region public bool IsIdle
 
+        /// <summary>
+        /// Gets a value indicating whether the current GameWindow is idle.
+        /// If true, the OnUpdateFrame and OnRenderFrame functions should be called.
+        /// </summary>
         public bool IsIdle
         {
             get { return glWindow.IsIdle; }
+        }
+
+        #endregion
+
+        #region public bool Quit
+
+        /// <summary>
+        /// Gets a value indicating whether the current GameWindow is quitting.
+        /// </summary>
+        /// <remarks>
+        /// You should not call OnRenderFrame, Resize, and other GameWindow related function
+        /// when the quit sequence has been initiated, as indicated by the Quitting property.
+        /// NullReference- or ApplicationExceptions may occur otherwise.
+        /// </remarks>
+        public bool Quit
+        {
+            get { return glWindow.Quit; }
         }
 
         #endregion
@@ -97,21 +163,35 @@ namespace OpenTK
 
         #endregion
 
-        #region public OpenTK.Platform.IGLContext Context
+        #region public IGLContext Context
 
-        public OpenTK.Platform.IGLContext Context
+        /// <summary>
+        /// Returns the opengl IGLontext associated with the current GameWindow.
+        /// Forces window creation.
+        /// </summary>
+        public IGLContext Context
         {
-            get { return glWindow.Context; }
+            get
+            {
+                if (!glWindow.Created)
+                {
+                    mode = new DisplayMode(640, 480);
+                    this.CreateWindow(mode);
+                }
+                return glWindow.Context;
+            }
         }
 
         #endregion
 
-        #region public bool Quit
+        #region public bool Created
 
-        public bool Quit
+        /// <summary>
+        /// Gets a value indicating whether a render window has been created.
+        /// </summary>
+        public bool Created
         {
-            get { return glWindow.Quit; }
-            set { glWindow.Quit = value; }
+            get { return glWindow.Created; }
         }
 
         #endregion
@@ -120,8 +200,10 @@ namespace OpenTK
 
         #region --- IGameWindow Members ---
 
+        #region public virtual void Run()
+
         /// <summary>
-        /// Runs a default game loop on the GameWindow.
+        /// Runs the default game loop on GameWindow (process event->update frame->render frame).
         /// </summary>
         /// <remarks>
         /// <para>
@@ -131,7 +213,7 @@ namespace OpenTK
         /// <para>
         /// Override this function if you want to change the behaviour of the
         /// default game loop. If you override this function, you must place
-        /// a call to the ProcessEvents function, so that your window will respond
+        /// a call to the ProcessEvents function, to ensure window will respond
         /// to Operating System events.
         /// </para>
         /// </remarks>
@@ -140,15 +222,32 @@ namespace OpenTK
             while (!this.Quit)
             {
                 this.ProcessEvents();
-                this.UpdateFrame();
-                this.RenderFrame();
+                this.OnUpdateFrame();
+                this.OnRenderFrame();
             }
         }
 
+        #endregion
+
+        #region public void ProcessEvents()
+
+        /// <summary>
+        /// Processes operating system events until the GameWindow becomes idle.
+        /// </summary>
+        /// <remarks>
+        /// When overriding the default GameWindow game loop (provided by the Run() function)
+        /// you should call ProcessEvents() to ensure that your GameWindow responds to
+        /// operating system events.
+        /// <para>
+        /// Once ProcessEvents() returns, it is time to call update and render the next frame.
+        /// </para>
+        /// </remarks>
         public void ProcessEvents()
         {
             glWindow.ProcessEvents();
         }
+
+        #endregion
 
         #region public event CreateEvent Create;
 
@@ -164,20 +263,61 @@ namespace OpenTK
 
         #endregion
 
-        public virtual void RenderFrame()
+        #region public virtual void OnRenderFrame()
+
+        /// <summary>
+        /// Raises the RenderFrame event. Override in derived classes to render a frame.
+        /// </summary>
+        /// <remarks>
+        /// If overriden, the base.OnRenderFrame() function should be called, to ensure
+        /// listeners are notified of RenderFrame events.
+        /// </remarks>
+        public virtual void OnRenderFrame()
         {
-            if (RenderFrameNotify != null)
-                RenderFrameNotify(EventArgs.Empty);
+            if (!this.Created)
+            {
+                Debug.Print("WARNING: RenderFrame event raised, without a valid render window. This may indicate a programming error. Creating render window.");
+                mode = new DisplayMode(640, 480);
+                this.CreateWindow(mode);
+            }
+            if (RenderFrame != null)
+                RenderFrame(EventArgs.Empty);
         }
 
-        public virtual void UpdateFrame()
+        #endregion
+
+        #region public virtual void OnUpdateFrame()
+
+        /// <summary>
+        /// Raises the UpdateFrame event. Override in derived classes to update a frame.
+        /// </summary>
+        /// <remarks>
+        /// If overriden, the base.OnUpdateFrame() function should be called, to ensure
+        /// listeners are notified of UpdateFrame events.
+        /// </remarks>
+        public virtual void OnUpdateFrame()
         {
-            if (UpdateFrameNotify != null)
-                UpdateFrameNotify(EventArgs.Empty);
+            if (!this.Created)
+            {
+                Debug.Print("WARNING: UpdateFrame event raised, without a valid render window. This may indicate a programming error. Creating render window.");
+                mode = new DisplayMode(640, 480);
+                this.CreateWindow(mode);
+            }
+            if (UpdateFrame != null)
+                UpdateFrame(EventArgs.Empty);
         }
 
-        public event UpdateFrameEvent UpdateFrameNotify;
-        public event RenderFrameEvent RenderFrameNotify;
+        #endregion
+
+        /// <summary>
+        /// Occurs when it is time to update the next frame.
+        /// </summary>
+        public event UpdateFrameEvent UpdateFrame;
+
+        /// <summary>
+        /// Occurs when it is time to render the next frame.
+        /// </summary>
+        public event RenderFrameEvent RenderFrame;
 
         #endregion
 

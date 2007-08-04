@@ -34,6 +34,8 @@ namespace Examples.Tutorial
 
         public T03_RotatingCube()
         {
+            CreateWindow(new DisplayMode(800, 600));
+
             Context.MakeCurrent();
         
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
@@ -68,7 +70,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region UpdateFrame function
+        #region OnUpdateFrame function
 
         /// <summary>
         /// Prepares the next frame for rendering.
@@ -77,16 +79,16 @@ namespace Examples.Tutorial
         /// Place your control logic here. This is the place to respond to user input,
         /// update object positions etc.
         /// </remarks>
-        public override void UpdateFrame()
+        public override void OnUpdateFrame()
         {
-            if (Key[OpenTK.Input.Keys.Escape])
+            if (Keyboard[0][OpenTK.Input.Keys.Escape])
             {
-                Quit = true;
+                this.Exit();
                 return;
             }
 
-            if ((Key[OpenTK.Input.Keys.LeftAlt] || Key[OpenTK.Input.Keys.RightAlt]) &&
-                Key[OpenTK.Input.Keys.Enter])
+            if ((Keyboard[0][OpenTK.Input.Keys.LeftAlt] || Keyboard[0][OpenTK.Input.Keys.RightAlt]) &&
+                Keyboard[0][OpenTK.Input.Keys.Enter])
             {
                 Fullscreen = true;
             }
@@ -105,12 +107,12 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region RenderFrame function
+        #region OnRenderFrame function
 
         /// <summary>
         /// Place your rendering code here.
         /// </summary>
-        public override void RenderFrame()
+        public override void OnRenderFrame()
         {
             GL.Clear(Enums.ClearBufferMask.COLOR_BUFFER_BIT | Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 
@@ -178,11 +180,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public void Launch()
         {
-            //using (T03_RotatingCube ex = new T03_RotatingCube())
-            {
-                //ex.Run();
-                Run();
-            }
+            Run();
         }
 
         #endregion

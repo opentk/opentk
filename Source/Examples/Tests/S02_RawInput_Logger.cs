@@ -18,46 +18,39 @@ namespace Examples.Tests
 
         public void Launch()
         {
-            using (StreamWriter sw = new StreamWriter(Path.Combine(System.Environment.CurrentDirectory, "keymap.log")))
+            //using (S02_RawInput_Logger ex = new S02_RawInput_Logger())
             {
-                //Debug.Listeners.Clear();
-                Debug.Listeners.Add(new TextWriterTraceListener(sw));
-                Debug.AutoFlush = true;
-                Debug.WriteLine("Starting key dump");
-
-                //using (S02_RawInput_Logger ex = new S02_RawInput_Logger())
+                try
                 {
-                    try
-                    {
-                        //ex.Run();
-                        Run();
-                    }
-                    catch (Exception expt)
-                    {
-                        System.Diagnostics.Debug.WriteLine(
-                            String.Format(
-                                "Exception: {3}{0}Stacktrace:{0}{1}{0}{0}{2}",
-                                System.Environment.NewLine,
-                                expt.TargetSite,
-                                expt.StackTrace,
-                                expt.Message
-                            )
-                        );
-                        /*MessageBox.Show(
-                            String.Format(
-                                "Stacktrace:{0}{1}{0}{0}{2}",
-                                System.Environment.NewLine,
-                                expt.TargetSite,
-                                expt.StackTrace
-                            ),
-                            expt.Message
-                        );*/
-                        throw;
-                    }
+                    //ex.Run();
+                    Run();
                 }
-                Debug.Flush();
-                Debug.Close();
+                catch (Exception expt)
+                {
+                    System.Diagnostics.Debug.WriteLine(
+                        String.Format(
+                            "Exception: {3}{0}Stacktrace:{0}{1}{0}{0}{2}",
+                            System.Environment.NewLine,
+                            expt.TargetSite,
+                            expt.StackTrace,
+                            expt.Message
+                        )
+                    );
+                    /*MessageBox.Show(
+                        String.Format(
+                            "Stacktrace:{0}{1}{0}{0}{2}",
+                            System.Environment.NewLine,
+                            expt.TargetSite,
+                            expt.StackTrace
+                        ),
+                        expt.Message
+                    );*/
+                    throw;
+                }
             }
+            Debug.Flush();
+            Debug.Close();
+
         }
 
         #endregion
@@ -67,12 +60,23 @@ namespace Examples.Tests
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         }
 
-        public override void RenderFrame()
+        public override void OnRenderFrame()
         {
-            base.RenderFrame();
+            base.OnRenderFrame();
 
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
             Context.SwapBuffers();
+        }
+
+        public override void Run()
+        {
+            while (!Quit)
+            {
+                ProcessEvents();
+                OnUpdateFrame();
+                OnRenderFrame();
+                Thread.Sleep(10);
+            }
         }
     }
 }

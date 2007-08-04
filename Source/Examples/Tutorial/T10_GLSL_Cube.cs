@@ -138,15 +138,15 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region UpdateFrame
+        #region OnUpdateFrame
 
-        public override void UpdateFrame()
+        public override void OnUpdateFrame()
         {
-            base.UpdateFrame();
+            base.OnUpdateFrame();
 
-            if (Key[OpenTK.Input.Keys.Escape])
+            if (Keyboard[0][OpenTK.Input.Keys.Escape])
             {
-                this.Quit = true;
+                this.Exit();
             }
 
             GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
@@ -162,11 +162,11 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region RenderFrame
+        #region OnRenderFrame
 
-        public override void RenderFrame()
+        public override void OnRenderFrame()
         {
- 	        base.RenderFrame();
+ 	        base.OnRenderFrame();
 
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 

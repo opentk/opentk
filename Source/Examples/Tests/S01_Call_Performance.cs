@@ -103,5 +103,14 @@ namespace Examples.Tests
                 this.Close();
             }
         }
+
+        #region IExample Members
+
+        public void Launch()
+        {
+            
+        }
+
+        #endregion
     }
 }

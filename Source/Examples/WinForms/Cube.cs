@@ -206,5 +206,14 @@ namespace Examples.WinForms
             GL.End();
         }
         #endregion
+
+        #region IExample Members
+
+        public void Launch()
+        {
+            
+        }
+
+        #endregion
     }
 }
