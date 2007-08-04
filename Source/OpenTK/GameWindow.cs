@@ -175,6 +175,7 @@ namespace OpenTK
             {
                 if (!glWindow.Created)
                 {
+                    Debug.WriteLine("WARNING: OpenGL Context accessed before creating a render window. This may indicate a programming error. Force-creating a render window.");
                     mode = new DisplayMode(640, 480);
                     this.CreateWindow(mode);
                 }
