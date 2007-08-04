@@ -22,15 +22,25 @@ namespace Bind.Structures
         internal static DelegateCollection Delegates;
 
         private static bool delegatesLoaded;
-        internal static void Initialize()
+        internal static void Initialize(string glSpec, string glSpecExt)
         {
             if (!delegatesLoaded)
             {
-                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, "gl2\\gl.spec"))
+                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glSpec))
                 {
                     Delegates = Bind.MainClass.Generator.ReadDelegates(sr);
                 }
 
+                if (!String.IsNullOrEmpty(glSpecExt))
+                {
+                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glSpecExt))
+                    {
+                        foreach (Delegate d in Bind.MainClass.Generator.ReadDelegates(sr).Values)
+                        {
+                            Utilities.Merge(Delegates, d);
+                        }
+                    }
+                }
                 delegatesLoaded = true;
             }
         }
@@ -44,7 +54,7 @@ namespace Bind.Structures
 
         public Delegate(Delegate d)
         {
-            this.Category = new string(d.Category.ToCharArray());
+            this.Category = !String.IsNullOrEmpty(d.Category) ? new string(d.Category.ToCharArray()) : "";
             //this.Extension = !String.IsNullOrEmpty(d.Extension) ? new string(d.Extension.ToCharArray()) : "";
             this.Name = new string(d.Name.ToCharArray());
             //this.NeedsWrapper = d.NeedsWrapper;

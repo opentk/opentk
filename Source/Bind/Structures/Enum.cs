@@ -18,16 +18,16 @@ namespace Bind.Structures
 
         private static bool enumsLoaded;
 
-        internal static void Initialize()
+        internal static void Initialize(string enumFile, string enumextFile)
         {
             if (!enumsLoaded)
             {
-                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, "gl2\\enum.spec"))
+                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, enumFile))
                 {
                     GLEnums = Bind.MainClass.Generator.ReadEnums(sr);
                 }
 
-                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, "gl2\\enumext.spec"))
+                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, enumextFile))
                 {
                     foreach (Bind.Structures.Enum e in Bind.MainClass.Generator.ReadEnums(sr).Values)
                     {

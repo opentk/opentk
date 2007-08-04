@@ -24,9 +24,11 @@ namespace Bind.GL2
             // Disable BeforeFieldInit
             sw.WriteLine("static {0}()", Settings.DelegatesClass);
             sw.WriteLine("{");
-            //sw.Indent();
-            //sw.WriteLine("{0}.ReloadFunctions();", Settings.GLClass);
-            //sw.Unindent();
+            // --- Workaround for mono gmcs 1.2.4 issue, where static initalization fails. ---
+            sw.Indent();
+            sw.WriteLine("{0}.ReloadFunctions();", Settings.GLClass);
+            sw.Unindent();
+            // --- End workaround ---
             sw.WriteLine("}");
             sw.WriteLine();
             foreach (Bind.Structures.Delegate d in delegates.Values)
@@ -35,13 +37,19 @@ namespace Bind.GL2
                 sw.WriteLine("internal {0};", d.ToString());
                 if (d.Extension == "Core")
                 {
-                    sw.WriteLine(
+                    /*sw.WriteLine(
                         "internal {0}static {1} gl{1} = ({1}){2}.{3}(\"gl{1}\", typeof({1})) ?? new {1}({4}.{1});",
                         d.Unsafe ? "unsafe " : "",
                         d.Name,
                         Settings.GLClass,
                         "GetDelegateForExtensionMethod",
-                        Settings.ImportsClass);
+                        Settings.ImportsClass);*/
+                    // --- Workaround for mono gmcs 1.2.4 issue, where static initalization fails. ---
+                    sw.WriteLine(
+                        "internal {0}static {1} gl{1} = null;",
+                        d.Unsafe ? "unsafe " : "",
+                        d.Name);
+                    // --- End workaround ---
                 }
                 else
                 {
@@ -174,7 +182,7 @@ namespace Bind.GL2
             else if (Settings.Compatibility == Settings.Legacy.Tao)
             {
                 // Tao legacy mode: dump all enums as constants in GLClass.
-                foreach (Bind.Structures.Constant c in enums["GLenum"].ConstantCollection.Values)
+                foreach (Bind.Structures.Constant c in enums[Settings.CompleteEnumName].ConstantCollection.Values)
                 {
                     // Print constants avoiding circular definitions
                     if (c.Name != c.Value)
