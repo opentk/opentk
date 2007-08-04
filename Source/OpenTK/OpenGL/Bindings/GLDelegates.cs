@@ -7,1757 +7,1758 @@ namespace OpenTK.OpenGL
     {
         static Delegates()
         {
+            GL.ReloadFunctions();
         }
 
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void NewList(UInt32 list, GL.Enums.ListMode mode);
-        internal static NewList glNewList = (NewList)GL.GetDelegateForExtensionMethod("glNewList", typeof(NewList)) ?? new NewList(Imports.NewList);
+        internal static NewList glNewList = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EndList();
-        internal static EndList glEndList = (EndList)GL.GetDelegateForExtensionMethod("glEndList", typeof(EndList)) ?? new EndList(Imports.EndList);
+        internal static EndList glEndList = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CallList(UInt32 list);
-        internal static CallList glCallList = (CallList)GL.GetDelegateForExtensionMethod("glCallList", typeof(CallList)) ?? new CallList(Imports.CallList);
+        internal static CallList glCallList = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void CallLists(Int32 n, GL.Enums.ListNameType type, void* lists);
-        internal unsafe static CallLists glCallLists = (CallLists)GL.GetDelegateForExtensionMethod("glCallLists", typeof(CallLists)) ?? new CallLists(Imports.CallLists);
+        internal unsafe static CallLists glCallLists = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DeleteLists(UInt32 list, Int32 range);
-        internal static DeleteLists glDeleteLists = (DeleteLists)GL.GetDelegateForExtensionMethod("glDeleteLists", typeof(DeleteLists)) ?? new DeleteLists(Imports.DeleteLists);
+        internal static DeleteLists glDeleteLists = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Int32 GenLists(Int32 range);
-        internal static GenLists glGenLists = (GenLists)GL.GetDelegateForExtensionMethod("glGenLists", typeof(GenLists)) ?? new GenLists(Imports.GenLists);
+        internal static GenLists glGenLists = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ListBase(UInt32 @base);
-        internal static ListBase glListBase = (ListBase)GL.GetDelegateForExtensionMethod("glListBase", typeof(ListBase)) ?? new ListBase(Imports.ListBase);
+        internal static ListBase glListBase = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Begin(GL.Enums.BeginMode mode);
-        internal static Begin glBegin = (Begin)GL.GetDelegateForExtensionMethod("glBegin", typeof(Begin)) ?? new Begin(Imports.Begin);
+        internal static Begin glBegin = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Bitmap(Int32 width, Int32 height, Single xorig, Single yorig, Single xmove, Single ymove, Byte* bitmap);
-        internal unsafe static Bitmap glBitmap = (Bitmap)GL.GetDelegateForExtensionMethod("glBitmap", typeof(Bitmap)) ?? new Bitmap(Imports.Bitmap);
+        internal unsafe static Bitmap glBitmap = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color3b(SByte red, SByte green, SByte blue);
-        internal static Color3b glColor3b = (Color3b)GL.GetDelegateForExtensionMethod("glColor3b", typeof(Color3b)) ?? new Color3b(Imports.Color3b);
+        internal static Color3b glColor3b = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color3bv(SByte* v);
-        internal unsafe static Color3bv glColor3bv = (Color3bv)GL.GetDelegateForExtensionMethod("glColor3bv", typeof(Color3bv)) ?? new Color3bv(Imports.Color3bv);
+        internal unsafe static Color3bv glColor3bv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color3d(Double red, Double green, Double blue);
-        internal static Color3d glColor3d = (Color3d)GL.GetDelegateForExtensionMethod("glColor3d", typeof(Color3d)) ?? new Color3d(Imports.Color3d);
+        internal static Color3d glColor3d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color3dv(Double* v);
-        internal unsafe static Color3dv glColor3dv = (Color3dv)GL.GetDelegateForExtensionMethod("glColor3dv", typeof(Color3dv)) ?? new Color3dv(Imports.Color3dv);
+        internal unsafe static Color3dv glColor3dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color3f(Single red, Single green, Single blue);
-        internal static Color3f glColor3f = (Color3f)GL.GetDelegateForExtensionMethod("glColor3f", typeof(Color3f)) ?? new Color3f(Imports.Color3f);
+        internal static Color3f glColor3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color3fv(Single* v);
-        internal unsafe static Color3fv glColor3fv = (Color3fv)GL.GetDelegateForExtensionMethod("glColor3fv", typeof(Color3fv)) ?? new Color3fv(Imports.Color3fv);
+        internal unsafe static Color3fv glColor3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color3i(Int32 red, Int32 green, Int32 blue);
-        internal static Color3i glColor3i = (Color3i)GL.GetDelegateForExtensionMethod("glColor3i", typeof(Color3i)) ?? new Color3i(Imports.Color3i);
+        internal static Color3i glColor3i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color3iv(Int32* v);
-        internal unsafe static Color3iv glColor3iv = (Color3iv)GL.GetDelegateForExtensionMethod("glColor3iv", typeof(Color3iv)) ?? new Color3iv(Imports.Color3iv);
+        internal unsafe static Color3iv glColor3iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color3s(Int16 red, Int16 green, Int16 blue);
-        internal static Color3s glColor3s = (Color3s)GL.GetDelegateForExtensionMethod("glColor3s", typeof(Color3s)) ?? new Color3s(Imports.Color3s);
+        internal static Color3s glColor3s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color3sv(Int16* v);
-        internal unsafe static Color3sv glColor3sv = (Color3sv)GL.GetDelegateForExtensionMethod("glColor3sv", typeof(Color3sv)) ?? new Color3sv(Imports.Color3sv);
+        internal unsafe static Color3sv glColor3sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color3ub(Byte red, Byte green, Byte blue);
-        internal static Color3ub glColor3ub = (Color3ub)GL.GetDelegateForExtensionMethod("glColor3ub", typeof(Color3ub)) ?? new Color3ub(Imports.Color3ub);
+        internal static Color3ub glColor3ub = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color3ubv(Byte* v);
-        internal unsafe static Color3ubv glColor3ubv = (Color3ubv)GL.GetDelegateForExtensionMethod("glColor3ubv", typeof(Color3ubv)) ?? new Color3ubv(Imports.Color3ubv);
+        internal unsafe static Color3ubv glColor3ubv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color3ui(UInt32 red, UInt32 green, UInt32 blue);
-        internal static Color3ui glColor3ui = (Color3ui)GL.GetDelegateForExtensionMethod("glColor3ui", typeof(Color3ui)) ?? new Color3ui(Imports.Color3ui);
+        internal static Color3ui glColor3ui = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color3uiv(UInt32* v);
-        internal unsafe static Color3uiv glColor3uiv = (Color3uiv)GL.GetDelegateForExtensionMethod("glColor3uiv", typeof(Color3uiv)) ?? new Color3uiv(Imports.Color3uiv);
+        internal unsafe static Color3uiv glColor3uiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color3us(UInt16 red, UInt16 green, UInt16 blue);
-        internal static Color3us glColor3us = (Color3us)GL.GetDelegateForExtensionMethod("glColor3us", typeof(Color3us)) ?? new Color3us(Imports.Color3us);
+        internal static Color3us glColor3us = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color3usv(UInt16* v);
-        internal unsafe static Color3usv glColor3usv = (Color3usv)GL.GetDelegateForExtensionMethod("glColor3usv", typeof(Color3usv)) ?? new Color3usv(Imports.Color3usv);
+        internal unsafe static Color3usv glColor3usv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color4b(SByte red, SByte green, SByte blue, SByte alpha);
-        internal static Color4b glColor4b = (Color4b)GL.GetDelegateForExtensionMethod("glColor4b", typeof(Color4b)) ?? new Color4b(Imports.Color4b);
+        internal static Color4b glColor4b = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color4bv(SByte* v);
-        internal unsafe static Color4bv glColor4bv = (Color4bv)GL.GetDelegateForExtensionMethod("glColor4bv", typeof(Color4bv)) ?? new Color4bv(Imports.Color4bv);
+        internal unsafe static Color4bv glColor4bv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color4d(Double red, Double green, Double blue, Double alpha);
-        internal static Color4d glColor4d = (Color4d)GL.GetDelegateForExtensionMethod("glColor4d", typeof(Color4d)) ?? new Color4d(Imports.Color4d);
+        internal static Color4d glColor4d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color4dv(Double* v);
-        internal unsafe static Color4dv glColor4dv = (Color4dv)GL.GetDelegateForExtensionMethod("glColor4dv", typeof(Color4dv)) ?? new Color4dv(Imports.Color4dv);
+        internal unsafe static Color4dv glColor4dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color4f(Single red, Single green, Single blue, Single alpha);
-        internal static Color4f glColor4f = (Color4f)GL.GetDelegateForExtensionMethod("glColor4f", typeof(Color4f)) ?? new Color4f(Imports.Color4f);
+        internal static Color4f glColor4f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color4fv(Single* v);
-        internal unsafe static Color4fv glColor4fv = (Color4fv)GL.GetDelegateForExtensionMethod("glColor4fv", typeof(Color4fv)) ?? new Color4fv(Imports.Color4fv);
+        internal unsafe static Color4fv glColor4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color4i(Int32 red, Int32 green, Int32 blue, Int32 alpha);
-        internal static Color4i glColor4i = (Color4i)GL.GetDelegateForExtensionMethod("glColor4i", typeof(Color4i)) ?? new Color4i(Imports.Color4i);
+        internal static Color4i glColor4i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color4iv(Int32* v);
-        internal unsafe static Color4iv glColor4iv = (Color4iv)GL.GetDelegateForExtensionMethod("glColor4iv", typeof(Color4iv)) ?? new Color4iv(Imports.Color4iv);
+        internal unsafe static Color4iv glColor4iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color4s(Int16 red, Int16 green, Int16 blue, Int16 alpha);
-        internal static Color4s glColor4s = (Color4s)GL.GetDelegateForExtensionMethod("glColor4s", typeof(Color4s)) ?? new Color4s(Imports.Color4s);
+        internal static Color4s glColor4s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color4sv(Int16* v);
-        internal unsafe static Color4sv glColor4sv = (Color4sv)GL.GetDelegateForExtensionMethod("glColor4sv", typeof(Color4sv)) ?? new Color4sv(Imports.Color4sv);
+        internal unsafe static Color4sv glColor4sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color4ub(Byte red, Byte green, Byte blue, Byte alpha);
-        internal static Color4ub glColor4ub = (Color4ub)GL.GetDelegateForExtensionMethod("glColor4ub", typeof(Color4ub)) ?? new Color4ub(Imports.Color4ub);
+        internal static Color4ub glColor4ub = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color4ubv(Byte* v);
-        internal unsafe static Color4ubv glColor4ubv = (Color4ubv)GL.GetDelegateForExtensionMethod("glColor4ubv", typeof(Color4ubv)) ?? new Color4ubv(Imports.Color4ubv);
+        internal unsafe static Color4ubv glColor4ubv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color4ui(UInt32 red, UInt32 green, UInt32 blue, UInt32 alpha);
-        internal static Color4ui glColor4ui = (Color4ui)GL.GetDelegateForExtensionMethod("glColor4ui", typeof(Color4ui)) ?? new Color4ui(Imports.Color4ui);
+        internal static Color4ui glColor4ui = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color4uiv(UInt32* v);
-        internal unsafe static Color4uiv glColor4uiv = (Color4uiv)GL.GetDelegateForExtensionMethod("glColor4uiv", typeof(Color4uiv)) ?? new Color4uiv(Imports.Color4uiv);
+        internal unsafe static Color4uiv glColor4uiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Color4us(UInt16 red, UInt16 green, UInt16 blue, UInt16 alpha);
-        internal static Color4us glColor4us = (Color4us)GL.GetDelegateForExtensionMethod("glColor4us", typeof(Color4us)) ?? new Color4us(Imports.Color4us);
+        internal static Color4us glColor4us = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Color4usv(UInt16* v);
-        internal unsafe static Color4usv glColor4usv = (Color4usv)GL.GetDelegateForExtensionMethod("glColor4usv", typeof(Color4usv)) ?? new Color4usv(Imports.Color4usv);
+        internal unsafe static Color4usv glColor4usv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EdgeFlag(GL.Enums.Boolean flag);
-        internal static EdgeFlag glEdgeFlag = (EdgeFlag)GL.GetDelegateForExtensionMethod("glEdgeFlag", typeof(EdgeFlag)) ?? new EdgeFlag(Imports.EdgeFlag);
+        internal static EdgeFlag glEdgeFlag = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void EdgeFlagv(GL.Enums.Boolean* flag);
-        internal unsafe static EdgeFlagv glEdgeFlagv = (EdgeFlagv)GL.GetDelegateForExtensionMethod("glEdgeFlagv", typeof(EdgeFlagv)) ?? new EdgeFlagv(Imports.EdgeFlagv);
+        internal unsafe static EdgeFlagv glEdgeFlagv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void End();
-        internal static End glEnd = (End)GL.GetDelegateForExtensionMethod("glEnd", typeof(End)) ?? new End(Imports.End);
+        internal static End glEnd = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Indexd(Double c);
-        internal static Indexd glIndexd = (Indexd)GL.GetDelegateForExtensionMethod("glIndexd", typeof(Indexd)) ?? new Indexd(Imports.Indexd);
+        internal static Indexd glIndexd = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Indexdv(Double* c);
-        internal unsafe static Indexdv glIndexdv = (Indexdv)GL.GetDelegateForExtensionMethod("glIndexdv", typeof(Indexdv)) ?? new Indexdv(Imports.Indexdv);
+        internal unsafe static Indexdv glIndexdv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Indexf(Single c);
-        internal static Indexf glIndexf = (Indexf)GL.GetDelegateForExtensionMethod("glIndexf", typeof(Indexf)) ?? new Indexf(Imports.Indexf);
+        internal static Indexf glIndexf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Indexfv(Single* c);
-        internal unsafe static Indexfv glIndexfv = (Indexfv)GL.GetDelegateForExtensionMethod("glIndexfv", typeof(Indexfv)) ?? new Indexfv(Imports.Indexfv);
+        internal unsafe static Indexfv glIndexfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Indexi(Int32 c);
-        internal static Indexi glIndexi = (Indexi)GL.GetDelegateForExtensionMethod("glIndexi", typeof(Indexi)) ?? new Indexi(Imports.Indexi);
+        internal static Indexi glIndexi = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Indexiv(Int32* c);
-        internal unsafe static Indexiv glIndexiv = (Indexiv)GL.GetDelegateForExtensionMethod("glIndexiv", typeof(Indexiv)) ?? new Indexiv(Imports.Indexiv);
+        internal unsafe static Indexiv glIndexiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Indexs(Int16 c);
-        internal static Indexs glIndexs = (Indexs)GL.GetDelegateForExtensionMethod("glIndexs", typeof(Indexs)) ?? new Indexs(Imports.Indexs);
+        internal static Indexs glIndexs = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Indexsv(Int16* c);
-        internal unsafe static Indexsv glIndexsv = (Indexsv)GL.GetDelegateForExtensionMethod("glIndexsv", typeof(Indexsv)) ?? new Indexsv(Imports.Indexsv);
+        internal unsafe static Indexsv glIndexsv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Normal3b(SByte nx, SByte ny, SByte nz);
-        internal static Normal3b glNormal3b = (Normal3b)GL.GetDelegateForExtensionMethod("glNormal3b", typeof(Normal3b)) ?? new Normal3b(Imports.Normal3b);
+        internal static Normal3b glNormal3b = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Normal3bv(SByte* v);
-        internal unsafe static Normal3bv glNormal3bv = (Normal3bv)GL.GetDelegateForExtensionMethod("glNormal3bv", typeof(Normal3bv)) ?? new Normal3bv(Imports.Normal3bv);
+        internal unsafe static Normal3bv glNormal3bv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Normal3d(Double nx, Double ny, Double nz);
-        internal static Normal3d glNormal3d = (Normal3d)GL.GetDelegateForExtensionMethod("glNormal3d", typeof(Normal3d)) ?? new Normal3d(Imports.Normal3d);
+        internal static Normal3d glNormal3d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Normal3dv(Double* v);
-        internal unsafe static Normal3dv glNormal3dv = (Normal3dv)GL.GetDelegateForExtensionMethod("glNormal3dv", typeof(Normal3dv)) ?? new Normal3dv(Imports.Normal3dv);
+        internal unsafe static Normal3dv glNormal3dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Normal3f(Single nx, Single ny, Single nz);
-        internal static Normal3f glNormal3f = (Normal3f)GL.GetDelegateForExtensionMethod("glNormal3f", typeof(Normal3f)) ?? new Normal3f(Imports.Normal3f);
+        internal static Normal3f glNormal3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Normal3fv(Single* v);
-        internal unsafe static Normal3fv glNormal3fv = (Normal3fv)GL.GetDelegateForExtensionMethod("glNormal3fv", typeof(Normal3fv)) ?? new Normal3fv(Imports.Normal3fv);
+        internal unsafe static Normal3fv glNormal3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Normal3i(Int32 nx, Int32 ny, Int32 nz);
-        internal static Normal3i glNormal3i = (Normal3i)GL.GetDelegateForExtensionMethod("glNormal3i", typeof(Normal3i)) ?? new Normal3i(Imports.Normal3i);
+        internal static Normal3i glNormal3i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Normal3iv(Int32* v);
-        internal unsafe static Normal3iv glNormal3iv = (Normal3iv)GL.GetDelegateForExtensionMethod("glNormal3iv", typeof(Normal3iv)) ?? new Normal3iv(Imports.Normal3iv);
+        internal unsafe static Normal3iv glNormal3iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Normal3s(Int16 nx, Int16 ny, Int16 nz);
-        internal static Normal3s glNormal3s = (Normal3s)GL.GetDelegateForExtensionMethod("glNormal3s", typeof(Normal3s)) ?? new Normal3s(Imports.Normal3s);
+        internal static Normal3s glNormal3s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Normal3sv(Int16* v);
-        internal unsafe static Normal3sv glNormal3sv = (Normal3sv)GL.GetDelegateForExtensionMethod("glNormal3sv", typeof(Normal3sv)) ?? new Normal3sv(Imports.Normal3sv);
+        internal unsafe static Normal3sv glNormal3sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos2d(Double x, Double y);
-        internal static RasterPos2d glRasterPos2d = (RasterPos2d)GL.GetDelegateForExtensionMethod("glRasterPos2d", typeof(RasterPos2d)) ?? new RasterPos2d(Imports.RasterPos2d);
+        internal static RasterPos2d glRasterPos2d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos2dv(Double* v);
-        internal unsafe static RasterPos2dv glRasterPos2dv = (RasterPos2dv)GL.GetDelegateForExtensionMethod("glRasterPos2dv", typeof(RasterPos2dv)) ?? new RasterPos2dv(Imports.RasterPos2dv);
+        internal unsafe static RasterPos2dv glRasterPos2dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos2f(Single x, Single y);
-        internal static RasterPos2f glRasterPos2f = (RasterPos2f)GL.GetDelegateForExtensionMethod("glRasterPos2f", typeof(RasterPos2f)) ?? new RasterPos2f(Imports.RasterPos2f);
+        internal static RasterPos2f glRasterPos2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos2fv(Single* v);
-        internal unsafe static RasterPos2fv glRasterPos2fv = (RasterPos2fv)GL.GetDelegateForExtensionMethod("glRasterPos2fv", typeof(RasterPos2fv)) ?? new RasterPos2fv(Imports.RasterPos2fv);
+        internal unsafe static RasterPos2fv glRasterPos2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos2i(Int32 x, Int32 y);
-        internal static RasterPos2i glRasterPos2i = (RasterPos2i)GL.GetDelegateForExtensionMethod("glRasterPos2i", typeof(RasterPos2i)) ?? new RasterPos2i(Imports.RasterPos2i);
+        internal static RasterPos2i glRasterPos2i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos2iv(Int32* v);
-        internal unsafe static RasterPos2iv glRasterPos2iv = (RasterPos2iv)GL.GetDelegateForExtensionMethod("glRasterPos2iv", typeof(RasterPos2iv)) ?? new RasterPos2iv(Imports.RasterPos2iv);
+        internal unsafe static RasterPos2iv glRasterPos2iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos2s(Int16 x, Int16 y);
-        internal static RasterPos2s glRasterPos2s = (RasterPos2s)GL.GetDelegateForExtensionMethod("glRasterPos2s", typeof(RasterPos2s)) ?? new RasterPos2s(Imports.RasterPos2s);
+        internal static RasterPos2s glRasterPos2s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos2sv(Int16* v);
-        internal unsafe static RasterPos2sv glRasterPos2sv = (RasterPos2sv)GL.GetDelegateForExtensionMethod("glRasterPos2sv", typeof(RasterPos2sv)) ?? new RasterPos2sv(Imports.RasterPos2sv);
+        internal unsafe static RasterPos2sv glRasterPos2sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos3d(Double x, Double y, Double z);
-        internal static RasterPos3d glRasterPos3d = (RasterPos3d)GL.GetDelegateForExtensionMethod("glRasterPos3d", typeof(RasterPos3d)) ?? new RasterPos3d(Imports.RasterPos3d);
+        internal static RasterPos3d glRasterPos3d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos3dv(Double* v);
-        internal unsafe static RasterPos3dv glRasterPos3dv = (RasterPos3dv)GL.GetDelegateForExtensionMethod("glRasterPos3dv", typeof(RasterPos3dv)) ?? new RasterPos3dv(Imports.RasterPos3dv);
+        internal unsafe static RasterPos3dv glRasterPos3dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos3f(Single x, Single y, Single z);
-        internal static RasterPos3f glRasterPos3f = (RasterPos3f)GL.GetDelegateForExtensionMethod("glRasterPos3f", typeof(RasterPos3f)) ?? new RasterPos3f(Imports.RasterPos3f);
+        internal static RasterPos3f glRasterPos3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos3fv(Single* v);
-        internal unsafe static RasterPos3fv glRasterPos3fv = (RasterPos3fv)GL.GetDelegateForExtensionMethod("glRasterPos3fv", typeof(RasterPos3fv)) ?? new RasterPos3fv(Imports.RasterPos3fv);
+        internal unsafe static RasterPos3fv glRasterPos3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos3i(Int32 x, Int32 y, Int32 z);
-        internal static RasterPos3i glRasterPos3i = (RasterPos3i)GL.GetDelegateForExtensionMethod("glRasterPos3i", typeof(RasterPos3i)) ?? new RasterPos3i(Imports.RasterPos3i);
+        internal static RasterPos3i glRasterPos3i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos3iv(Int32* v);
-        internal unsafe static RasterPos3iv glRasterPos3iv = (RasterPos3iv)GL.GetDelegateForExtensionMethod("glRasterPos3iv", typeof(RasterPos3iv)) ?? new RasterPos3iv(Imports.RasterPos3iv);
+        internal unsafe static RasterPos3iv glRasterPos3iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos3s(Int16 x, Int16 y, Int16 z);
-        internal static RasterPos3s glRasterPos3s = (RasterPos3s)GL.GetDelegateForExtensionMethod("glRasterPos3s", typeof(RasterPos3s)) ?? new RasterPos3s(Imports.RasterPos3s);
+        internal static RasterPos3s glRasterPos3s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos3sv(Int16* v);
-        internal unsafe static RasterPos3sv glRasterPos3sv = (RasterPos3sv)GL.GetDelegateForExtensionMethod("glRasterPos3sv", typeof(RasterPos3sv)) ?? new RasterPos3sv(Imports.RasterPos3sv);
+        internal unsafe static RasterPos3sv glRasterPos3sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos4d(Double x, Double y, Double z, Double w);
-        internal static RasterPos4d glRasterPos4d = (RasterPos4d)GL.GetDelegateForExtensionMethod("glRasterPos4d", typeof(RasterPos4d)) ?? new RasterPos4d(Imports.RasterPos4d);
+        internal static RasterPos4d glRasterPos4d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos4dv(Double* v);
-        internal unsafe static RasterPos4dv glRasterPos4dv = (RasterPos4dv)GL.GetDelegateForExtensionMethod("glRasterPos4dv", typeof(RasterPos4dv)) ?? new RasterPos4dv(Imports.RasterPos4dv);
+        internal unsafe static RasterPos4dv glRasterPos4dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos4f(Single x, Single y, Single z, Single w);
-        internal static RasterPos4f glRasterPos4f = (RasterPos4f)GL.GetDelegateForExtensionMethod("glRasterPos4f", typeof(RasterPos4f)) ?? new RasterPos4f(Imports.RasterPos4f);
+        internal static RasterPos4f glRasterPos4f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos4fv(Single* v);
-        internal unsafe static RasterPos4fv glRasterPos4fv = (RasterPos4fv)GL.GetDelegateForExtensionMethod("glRasterPos4fv", typeof(RasterPos4fv)) ?? new RasterPos4fv(Imports.RasterPos4fv);
+        internal unsafe static RasterPos4fv glRasterPos4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos4i(Int32 x, Int32 y, Int32 z, Int32 w);
-        internal static RasterPos4i glRasterPos4i = (RasterPos4i)GL.GetDelegateForExtensionMethod("glRasterPos4i", typeof(RasterPos4i)) ?? new RasterPos4i(Imports.RasterPos4i);
+        internal static RasterPos4i glRasterPos4i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos4iv(Int32* v);
-        internal unsafe static RasterPos4iv glRasterPos4iv = (RasterPos4iv)GL.GetDelegateForExtensionMethod("glRasterPos4iv", typeof(RasterPos4iv)) ?? new RasterPos4iv(Imports.RasterPos4iv);
+        internal unsafe static RasterPos4iv glRasterPos4iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void RasterPos4s(Int16 x, Int16 y, Int16 z, Int16 w);
-        internal static RasterPos4s glRasterPos4s = (RasterPos4s)GL.GetDelegateForExtensionMethod("glRasterPos4s", typeof(RasterPos4s)) ?? new RasterPos4s(Imports.RasterPos4s);
+        internal static RasterPos4s glRasterPos4s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void RasterPos4sv(Int16* v);
-        internal unsafe static RasterPos4sv glRasterPos4sv = (RasterPos4sv)GL.GetDelegateForExtensionMethod("glRasterPos4sv", typeof(RasterPos4sv)) ?? new RasterPos4sv(Imports.RasterPos4sv);
+        internal unsafe static RasterPos4sv glRasterPos4sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Rectd(Double x1, Double y1, Double x2, Double y2);
-        internal static Rectd glRectd = (Rectd)GL.GetDelegateForExtensionMethod("glRectd", typeof(Rectd)) ?? new Rectd(Imports.Rectd);
+        internal static Rectd glRectd = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Rectdv(Double* v1, Double* v2);
-        internal unsafe static Rectdv glRectdv = (Rectdv)GL.GetDelegateForExtensionMethod("glRectdv", typeof(Rectdv)) ?? new Rectdv(Imports.Rectdv);
+        internal unsafe static Rectdv glRectdv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Rectf(Single x1, Single y1, Single x2, Single y2);
-        internal static Rectf glRectf = (Rectf)GL.GetDelegateForExtensionMethod("glRectf", typeof(Rectf)) ?? new Rectf(Imports.Rectf);
+        internal static Rectf glRectf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Rectfv(Single* v1, Single* v2);
-        internal unsafe static Rectfv glRectfv = (Rectfv)GL.GetDelegateForExtensionMethod("glRectfv", typeof(Rectfv)) ?? new Rectfv(Imports.Rectfv);
+        internal unsafe static Rectfv glRectfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Recti(Int32 x1, Int32 y1, Int32 x2, Int32 y2);
-        internal static Recti glRecti = (Recti)GL.GetDelegateForExtensionMethod("glRecti", typeof(Recti)) ?? new Recti(Imports.Recti);
+        internal static Recti glRecti = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Rectiv(Int32* v1, Int32* v2);
-        internal unsafe static Rectiv glRectiv = (Rectiv)GL.GetDelegateForExtensionMethod("glRectiv", typeof(Rectiv)) ?? new Rectiv(Imports.Rectiv);
+        internal unsafe static Rectiv glRectiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Rects(Int16 x1, Int16 y1, Int16 x2, Int16 y2);
-        internal static Rects glRects = (Rects)GL.GetDelegateForExtensionMethod("glRects", typeof(Rects)) ?? new Rects(Imports.Rects);
+        internal static Rects glRects = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Rectsv(Int16* v1, Int16* v2);
-        internal unsafe static Rectsv glRectsv = (Rectsv)GL.GetDelegateForExtensionMethod("glRectsv", typeof(Rectsv)) ?? new Rectsv(Imports.Rectsv);
+        internal unsafe static Rectsv glRectsv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord1d(Double s);
-        internal static TexCoord1d glTexCoord1d = (TexCoord1d)GL.GetDelegateForExtensionMethod("glTexCoord1d", typeof(TexCoord1d)) ?? new TexCoord1d(Imports.TexCoord1d);
+        internal static TexCoord1d glTexCoord1d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord1dv(Double* v);
-        internal unsafe static TexCoord1dv glTexCoord1dv = (TexCoord1dv)GL.GetDelegateForExtensionMethod("glTexCoord1dv", typeof(TexCoord1dv)) ?? new TexCoord1dv(Imports.TexCoord1dv);
+        internal unsafe static TexCoord1dv glTexCoord1dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord1f(Single s);
-        internal static TexCoord1f glTexCoord1f = (TexCoord1f)GL.GetDelegateForExtensionMethod("glTexCoord1f", typeof(TexCoord1f)) ?? new TexCoord1f(Imports.TexCoord1f);
+        internal static TexCoord1f glTexCoord1f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord1fv(Single* v);
-        internal unsafe static TexCoord1fv glTexCoord1fv = (TexCoord1fv)GL.GetDelegateForExtensionMethod("glTexCoord1fv", typeof(TexCoord1fv)) ?? new TexCoord1fv(Imports.TexCoord1fv);
+        internal unsafe static TexCoord1fv glTexCoord1fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord1i(Int32 s);
-        internal static TexCoord1i glTexCoord1i = (TexCoord1i)GL.GetDelegateForExtensionMethod("glTexCoord1i", typeof(TexCoord1i)) ?? new TexCoord1i(Imports.TexCoord1i);
+        internal static TexCoord1i glTexCoord1i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord1iv(Int32* v);
-        internal unsafe static TexCoord1iv glTexCoord1iv = (TexCoord1iv)GL.GetDelegateForExtensionMethod("glTexCoord1iv", typeof(TexCoord1iv)) ?? new TexCoord1iv(Imports.TexCoord1iv);
+        internal unsafe static TexCoord1iv glTexCoord1iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord1s(Int16 s);
-        internal static TexCoord1s glTexCoord1s = (TexCoord1s)GL.GetDelegateForExtensionMethod("glTexCoord1s", typeof(TexCoord1s)) ?? new TexCoord1s(Imports.TexCoord1s);
+        internal static TexCoord1s glTexCoord1s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord1sv(Int16* v);
-        internal unsafe static TexCoord1sv glTexCoord1sv = (TexCoord1sv)GL.GetDelegateForExtensionMethod("glTexCoord1sv", typeof(TexCoord1sv)) ?? new TexCoord1sv(Imports.TexCoord1sv);
+        internal unsafe static TexCoord1sv glTexCoord1sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord2d(Double s, Double t);
-        internal static TexCoord2d glTexCoord2d = (TexCoord2d)GL.GetDelegateForExtensionMethod("glTexCoord2d", typeof(TexCoord2d)) ?? new TexCoord2d(Imports.TexCoord2d);
+        internal static TexCoord2d glTexCoord2d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord2dv(Double* v);
-        internal unsafe static TexCoord2dv glTexCoord2dv = (TexCoord2dv)GL.GetDelegateForExtensionMethod("glTexCoord2dv", typeof(TexCoord2dv)) ?? new TexCoord2dv(Imports.TexCoord2dv);
+        internal unsafe static TexCoord2dv glTexCoord2dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord2f(Single s, Single t);
-        internal static TexCoord2f glTexCoord2f = (TexCoord2f)GL.GetDelegateForExtensionMethod("glTexCoord2f", typeof(TexCoord2f)) ?? new TexCoord2f(Imports.TexCoord2f);
+        internal static TexCoord2f glTexCoord2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord2fv(Single* v);
-        internal unsafe static TexCoord2fv glTexCoord2fv = (TexCoord2fv)GL.GetDelegateForExtensionMethod("glTexCoord2fv", typeof(TexCoord2fv)) ?? new TexCoord2fv(Imports.TexCoord2fv);
+        internal unsafe static TexCoord2fv glTexCoord2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord2i(Int32 s, Int32 t);
-        internal static TexCoord2i glTexCoord2i = (TexCoord2i)GL.GetDelegateForExtensionMethod("glTexCoord2i", typeof(TexCoord2i)) ?? new TexCoord2i(Imports.TexCoord2i);
+        internal static TexCoord2i glTexCoord2i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord2iv(Int32* v);
-        internal unsafe static TexCoord2iv glTexCoord2iv = (TexCoord2iv)GL.GetDelegateForExtensionMethod("glTexCoord2iv", typeof(TexCoord2iv)) ?? new TexCoord2iv(Imports.TexCoord2iv);
+        internal unsafe static TexCoord2iv glTexCoord2iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord2s(Int16 s, Int16 t);
-        internal static TexCoord2s glTexCoord2s = (TexCoord2s)GL.GetDelegateForExtensionMethod("glTexCoord2s", typeof(TexCoord2s)) ?? new TexCoord2s(Imports.TexCoord2s);
+        internal static TexCoord2s glTexCoord2s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord2sv(Int16* v);
-        internal unsafe static TexCoord2sv glTexCoord2sv = (TexCoord2sv)GL.GetDelegateForExtensionMethod("glTexCoord2sv", typeof(TexCoord2sv)) ?? new TexCoord2sv(Imports.TexCoord2sv);
+        internal unsafe static TexCoord2sv glTexCoord2sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord3d(Double s, Double t, Double r);
-        internal static TexCoord3d glTexCoord3d = (TexCoord3d)GL.GetDelegateForExtensionMethod("glTexCoord3d", typeof(TexCoord3d)) ?? new TexCoord3d(Imports.TexCoord3d);
+        internal static TexCoord3d glTexCoord3d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord3dv(Double* v);
-        internal unsafe static TexCoord3dv glTexCoord3dv = (TexCoord3dv)GL.GetDelegateForExtensionMethod("glTexCoord3dv", typeof(TexCoord3dv)) ?? new TexCoord3dv(Imports.TexCoord3dv);
+        internal unsafe static TexCoord3dv glTexCoord3dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord3f(Single s, Single t, Single r);
-        internal static TexCoord3f glTexCoord3f = (TexCoord3f)GL.GetDelegateForExtensionMethod("glTexCoord3f", typeof(TexCoord3f)) ?? new TexCoord3f(Imports.TexCoord3f);
+        internal static TexCoord3f glTexCoord3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord3fv(Single* v);
-        internal unsafe static TexCoord3fv glTexCoord3fv = (TexCoord3fv)GL.GetDelegateForExtensionMethod("glTexCoord3fv", typeof(TexCoord3fv)) ?? new TexCoord3fv(Imports.TexCoord3fv);
+        internal unsafe static TexCoord3fv glTexCoord3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord3i(Int32 s, Int32 t, Int32 r);
-        internal static TexCoord3i glTexCoord3i = (TexCoord3i)GL.GetDelegateForExtensionMethod("glTexCoord3i", typeof(TexCoord3i)) ?? new TexCoord3i(Imports.TexCoord3i);
+        internal static TexCoord3i glTexCoord3i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord3iv(Int32* v);
-        internal unsafe static TexCoord3iv glTexCoord3iv = (TexCoord3iv)GL.GetDelegateForExtensionMethod("glTexCoord3iv", typeof(TexCoord3iv)) ?? new TexCoord3iv(Imports.TexCoord3iv);
+        internal unsafe static TexCoord3iv glTexCoord3iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord3s(Int16 s, Int16 t, Int16 r);
-        internal static TexCoord3s glTexCoord3s = (TexCoord3s)GL.GetDelegateForExtensionMethod("glTexCoord3s", typeof(TexCoord3s)) ?? new TexCoord3s(Imports.TexCoord3s);
+        internal static TexCoord3s glTexCoord3s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord3sv(Int16* v);
-        internal unsafe static TexCoord3sv glTexCoord3sv = (TexCoord3sv)GL.GetDelegateForExtensionMethod("glTexCoord3sv", typeof(TexCoord3sv)) ?? new TexCoord3sv(Imports.TexCoord3sv);
+        internal unsafe static TexCoord3sv glTexCoord3sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord4d(Double s, Double t, Double r, Double q);
-        internal static TexCoord4d glTexCoord4d = (TexCoord4d)GL.GetDelegateForExtensionMethod("glTexCoord4d", typeof(TexCoord4d)) ?? new TexCoord4d(Imports.TexCoord4d);
+        internal static TexCoord4d glTexCoord4d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord4dv(Double* v);
-        internal unsafe static TexCoord4dv glTexCoord4dv = (TexCoord4dv)GL.GetDelegateForExtensionMethod("glTexCoord4dv", typeof(TexCoord4dv)) ?? new TexCoord4dv(Imports.TexCoord4dv);
+        internal unsafe static TexCoord4dv glTexCoord4dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord4f(Single s, Single t, Single r, Single q);
-        internal static TexCoord4f glTexCoord4f = (TexCoord4f)GL.GetDelegateForExtensionMethod("glTexCoord4f", typeof(TexCoord4f)) ?? new TexCoord4f(Imports.TexCoord4f);
+        internal static TexCoord4f glTexCoord4f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord4fv(Single* v);
-        internal unsafe static TexCoord4fv glTexCoord4fv = (TexCoord4fv)GL.GetDelegateForExtensionMethod("glTexCoord4fv", typeof(TexCoord4fv)) ?? new TexCoord4fv(Imports.TexCoord4fv);
+        internal unsafe static TexCoord4fv glTexCoord4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord4i(Int32 s, Int32 t, Int32 r, Int32 q);
-        internal static TexCoord4i glTexCoord4i = (TexCoord4i)GL.GetDelegateForExtensionMethod("glTexCoord4i", typeof(TexCoord4i)) ?? new TexCoord4i(Imports.TexCoord4i);
+        internal static TexCoord4i glTexCoord4i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord4iv(Int32* v);
-        internal unsafe static TexCoord4iv glTexCoord4iv = (TexCoord4iv)GL.GetDelegateForExtensionMethod("glTexCoord4iv", typeof(TexCoord4iv)) ?? new TexCoord4iv(Imports.TexCoord4iv);
+        internal unsafe static TexCoord4iv glTexCoord4iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexCoord4s(Int16 s, Int16 t, Int16 r, Int16 q);
-        internal static TexCoord4s glTexCoord4s = (TexCoord4s)GL.GetDelegateForExtensionMethod("glTexCoord4s", typeof(TexCoord4s)) ?? new TexCoord4s(Imports.TexCoord4s);
+        internal static TexCoord4s glTexCoord4s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoord4sv(Int16* v);
-        internal unsafe static TexCoord4sv glTexCoord4sv = (TexCoord4sv)GL.GetDelegateForExtensionMethod("glTexCoord4sv", typeof(TexCoord4sv)) ?? new TexCoord4sv(Imports.TexCoord4sv);
+        internal unsafe static TexCoord4sv glTexCoord4sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex2d(Double x, Double y);
-        internal static Vertex2d glVertex2d = (Vertex2d)GL.GetDelegateForExtensionMethod("glVertex2d", typeof(Vertex2d)) ?? new Vertex2d(Imports.Vertex2d);
+        internal static Vertex2d glVertex2d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex2dv(Double* v);
-        internal unsafe static Vertex2dv glVertex2dv = (Vertex2dv)GL.GetDelegateForExtensionMethod("glVertex2dv", typeof(Vertex2dv)) ?? new Vertex2dv(Imports.Vertex2dv);
+        internal unsafe static Vertex2dv glVertex2dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex2f(Single x, Single y);
-        internal static Vertex2f glVertex2f = (Vertex2f)GL.GetDelegateForExtensionMethod("glVertex2f", typeof(Vertex2f)) ?? new Vertex2f(Imports.Vertex2f);
+        internal static Vertex2f glVertex2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex2fv(Single* v);
-        internal unsafe static Vertex2fv glVertex2fv = (Vertex2fv)GL.GetDelegateForExtensionMethod("glVertex2fv", typeof(Vertex2fv)) ?? new Vertex2fv(Imports.Vertex2fv);
+        internal unsafe static Vertex2fv glVertex2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex2i(Int32 x, Int32 y);
-        internal static Vertex2i glVertex2i = (Vertex2i)GL.GetDelegateForExtensionMethod("glVertex2i", typeof(Vertex2i)) ?? new Vertex2i(Imports.Vertex2i);
+        internal static Vertex2i glVertex2i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex2iv(Int32* v);
-        internal unsafe static Vertex2iv glVertex2iv = (Vertex2iv)GL.GetDelegateForExtensionMethod("glVertex2iv", typeof(Vertex2iv)) ?? new Vertex2iv(Imports.Vertex2iv);
+        internal unsafe static Vertex2iv glVertex2iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex2s(Int16 x, Int16 y);
-        internal static Vertex2s glVertex2s = (Vertex2s)GL.GetDelegateForExtensionMethod("glVertex2s", typeof(Vertex2s)) ?? new Vertex2s(Imports.Vertex2s);
+        internal static Vertex2s glVertex2s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex2sv(Int16* v);
-        internal unsafe static Vertex2sv glVertex2sv = (Vertex2sv)GL.GetDelegateForExtensionMethod("glVertex2sv", typeof(Vertex2sv)) ?? new Vertex2sv(Imports.Vertex2sv);
+        internal unsafe static Vertex2sv glVertex2sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex3d(Double x, Double y, Double z);
-        internal static Vertex3d glVertex3d = (Vertex3d)GL.GetDelegateForExtensionMethod("glVertex3d", typeof(Vertex3d)) ?? new Vertex3d(Imports.Vertex3d);
+        internal static Vertex3d glVertex3d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex3dv(Double* v);
-        internal unsafe static Vertex3dv glVertex3dv = (Vertex3dv)GL.GetDelegateForExtensionMethod("glVertex3dv", typeof(Vertex3dv)) ?? new Vertex3dv(Imports.Vertex3dv);
+        internal unsafe static Vertex3dv glVertex3dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex3f(Single x, Single y, Single z);
-        internal static Vertex3f glVertex3f = (Vertex3f)GL.GetDelegateForExtensionMethod("glVertex3f", typeof(Vertex3f)) ?? new Vertex3f(Imports.Vertex3f);
+        internal static Vertex3f glVertex3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex3fv(Single* v);
-        internal unsafe static Vertex3fv glVertex3fv = (Vertex3fv)GL.GetDelegateForExtensionMethod("glVertex3fv", typeof(Vertex3fv)) ?? new Vertex3fv(Imports.Vertex3fv);
+        internal unsafe static Vertex3fv glVertex3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex3i(Int32 x, Int32 y, Int32 z);
-        internal static Vertex3i glVertex3i = (Vertex3i)GL.GetDelegateForExtensionMethod("glVertex3i", typeof(Vertex3i)) ?? new Vertex3i(Imports.Vertex3i);
+        internal static Vertex3i glVertex3i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex3iv(Int32* v);
-        internal unsafe static Vertex3iv glVertex3iv = (Vertex3iv)GL.GetDelegateForExtensionMethod("glVertex3iv", typeof(Vertex3iv)) ?? new Vertex3iv(Imports.Vertex3iv);
+        internal unsafe static Vertex3iv glVertex3iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex3s(Int16 x, Int16 y, Int16 z);
-        internal static Vertex3s glVertex3s = (Vertex3s)GL.GetDelegateForExtensionMethod("glVertex3s", typeof(Vertex3s)) ?? new Vertex3s(Imports.Vertex3s);
+        internal static Vertex3s glVertex3s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex3sv(Int16* v);
-        internal unsafe static Vertex3sv glVertex3sv = (Vertex3sv)GL.GetDelegateForExtensionMethod("glVertex3sv", typeof(Vertex3sv)) ?? new Vertex3sv(Imports.Vertex3sv);
+        internal unsafe static Vertex3sv glVertex3sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex4d(Double x, Double y, Double z, Double w);
-        internal static Vertex4d glVertex4d = (Vertex4d)GL.GetDelegateForExtensionMethod("glVertex4d", typeof(Vertex4d)) ?? new Vertex4d(Imports.Vertex4d);
+        internal static Vertex4d glVertex4d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex4dv(Double* v);
-        internal unsafe static Vertex4dv glVertex4dv = (Vertex4dv)GL.GetDelegateForExtensionMethod("glVertex4dv", typeof(Vertex4dv)) ?? new Vertex4dv(Imports.Vertex4dv);
+        internal unsafe static Vertex4dv glVertex4dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex4f(Single x, Single y, Single z, Single w);
-        internal static Vertex4f glVertex4f = (Vertex4f)GL.GetDelegateForExtensionMethod("glVertex4f", typeof(Vertex4f)) ?? new Vertex4f(Imports.Vertex4f);
+        internal static Vertex4f glVertex4f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex4fv(Single* v);
-        internal unsafe static Vertex4fv glVertex4fv = (Vertex4fv)GL.GetDelegateForExtensionMethod("glVertex4fv", typeof(Vertex4fv)) ?? new Vertex4fv(Imports.Vertex4fv);
+        internal unsafe static Vertex4fv glVertex4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex4i(Int32 x, Int32 y, Int32 z, Int32 w);
-        internal static Vertex4i glVertex4i = (Vertex4i)GL.GetDelegateForExtensionMethod("glVertex4i", typeof(Vertex4i)) ?? new Vertex4i(Imports.Vertex4i);
+        internal static Vertex4i glVertex4i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex4iv(Int32* v);
-        internal unsafe static Vertex4iv glVertex4iv = (Vertex4iv)GL.GetDelegateForExtensionMethod("glVertex4iv", typeof(Vertex4iv)) ?? new Vertex4iv(Imports.Vertex4iv);
+        internal unsafe static Vertex4iv glVertex4iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Vertex4s(Int16 x, Int16 y, Int16 z, Int16 w);
-        internal static Vertex4s glVertex4s = (Vertex4s)GL.GetDelegateForExtensionMethod("glVertex4s", typeof(Vertex4s)) ?? new Vertex4s(Imports.Vertex4s);
+        internal static Vertex4s glVertex4s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Vertex4sv(Int16* v);
-        internal unsafe static Vertex4sv glVertex4sv = (Vertex4sv)GL.GetDelegateForExtensionMethod("glVertex4sv", typeof(Vertex4sv)) ?? new Vertex4sv(Imports.Vertex4sv);
+        internal unsafe static Vertex4sv glVertex4sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ClipPlane(GL.Enums.ClipPlaneName plane, Double* equation);
-        internal unsafe static ClipPlane glClipPlane = (ClipPlane)GL.GetDelegateForExtensionMethod("glClipPlane", typeof(ClipPlane)) ?? new ClipPlane(Imports.ClipPlane);
+        internal unsafe static ClipPlane glClipPlane = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ColorMaterial(GL.Enums.MaterialFace face, GL.Enums.ColorMaterialParameter mode);
-        internal static ColorMaterial glColorMaterial = (ColorMaterial)GL.GetDelegateForExtensionMethod("glColorMaterial", typeof(ColorMaterial)) ?? new ColorMaterial(Imports.ColorMaterial);
+        internal static ColorMaterial glColorMaterial = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CullFace(GL.Enums.CullFaceMode mode);
-        internal static CullFace glCullFace = (CullFace)GL.GetDelegateForExtensionMethod("glCullFace", typeof(CullFace)) ?? new CullFace(Imports.CullFace);
+        internal static CullFace glCullFace = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Fogf(GL.Enums.FogParameter pname, Single param);
-        internal static Fogf glFogf = (Fogf)GL.GetDelegateForExtensionMethod("glFogf", typeof(Fogf)) ?? new Fogf(Imports.Fogf);
+        internal static Fogf glFogf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Fogfv(GL.Enums.FogParameter pname, Single* @params);
-        internal unsafe static Fogfv glFogfv = (Fogfv)GL.GetDelegateForExtensionMethod("glFogfv", typeof(Fogfv)) ?? new Fogfv(Imports.Fogfv);
+        internal unsafe static Fogfv glFogfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Fogi(GL.Enums.FogParameter pname, Int32 param);
-        internal static Fogi glFogi = (Fogi)GL.GetDelegateForExtensionMethod("glFogi", typeof(Fogi)) ?? new Fogi(Imports.Fogi);
+        internal static Fogi glFogi = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Fogiv(GL.Enums.FogParameter pname, Int32* @params);
-        internal unsafe static Fogiv glFogiv = (Fogiv)GL.GetDelegateForExtensionMethod("glFogiv", typeof(Fogiv)) ?? new Fogiv(Imports.Fogiv);
+        internal unsafe static Fogiv glFogiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void FrontFace(GL.Enums.FrontFaceDirection mode);
-        internal static FrontFace glFrontFace = (FrontFace)GL.GetDelegateForExtensionMethod("glFrontFace", typeof(FrontFace)) ?? new FrontFace(Imports.FrontFace);
+        internal static FrontFace glFrontFace = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Hint(GL.Enums.HintTarget target, GL.Enums.HintMode mode);
-        internal static Hint glHint = (Hint)GL.GetDelegateForExtensionMethod("glHint", typeof(Hint)) ?? new Hint(Imports.Hint);
+        internal static Hint glHint = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Lightf(GL.Enums.LightName light, GL.Enums.LightParameter pname, Single param);
-        internal static Lightf glLightf = (Lightf)GL.GetDelegateForExtensionMethod("glLightf", typeof(Lightf)) ?? new Lightf(Imports.Lightf);
+        internal static Lightf glLightf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Lightfv(GL.Enums.LightName light, GL.Enums.LightParameter pname, Single* @params);
-        internal unsafe static Lightfv glLightfv = (Lightfv)GL.GetDelegateForExtensionMethod("glLightfv", typeof(Lightfv)) ?? new Lightfv(Imports.Lightfv);
+        internal unsafe static Lightfv glLightfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Lighti(GL.Enums.LightName light, GL.Enums.LightParameter pname, Int32 param);
-        internal static Lighti glLighti = (Lighti)GL.GetDelegateForExtensionMethod("glLighti", typeof(Lighti)) ?? new Lighti(Imports.Lighti);
+        internal static Lighti glLighti = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Lightiv(GL.Enums.LightName light, GL.Enums.LightParameter pname, Int32* @params);
-        internal unsafe static Lightiv glLightiv = (Lightiv)GL.GetDelegateForExtensionMethod("glLightiv", typeof(Lightiv)) ?? new Lightiv(Imports.Lightiv);
+        internal unsafe static Lightiv glLightiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void LightModelf(GL.Enums.LightModelParameter pname, Single param);
-        internal static LightModelf glLightModelf = (LightModelf)GL.GetDelegateForExtensionMethod("glLightModelf", typeof(LightModelf)) ?? new LightModelf(Imports.LightModelf);
+        internal static LightModelf glLightModelf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void LightModelfv(GL.Enums.LightModelParameter pname, Single* @params);
-        internal unsafe static LightModelfv glLightModelfv = (LightModelfv)GL.GetDelegateForExtensionMethod("glLightModelfv", typeof(LightModelfv)) ?? new LightModelfv(Imports.LightModelfv);
+        internal unsafe static LightModelfv glLightModelfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void LightModeli(GL.Enums.LightModelParameter pname, Int32 param);
-        internal static LightModeli glLightModeli = (LightModeli)GL.GetDelegateForExtensionMethod("glLightModeli", typeof(LightModeli)) ?? new LightModeli(Imports.LightModeli);
+        internal static LightModeli glLightModeli = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void LightModeliv(GL.Enums.LightModelParameter pname, Int32* @params);
-        internal unsafe static LightModeliv glLightModeliv = (LightModeliv)GL.GetDelegateForExtensionMethod("glLightModeliv", typeof(LightModeliv)) ?? new LightModeliv(Imports.LightModeliv);
+        internal unsafe static LightModeliv glLightModeliv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void LineStipple(Int32 factor, UInt16 pattern);
-        internal static LineStipple glLineStipple = (LineStipple)GL.GetDelegateForExtensionMethod("glLineStipple", typeof(LineStipple)) ?? new LineStipple(Imports.LineStipple);
+        internal static LineStipple glLineStipple = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void LineWidth(Single width);
-        internal static LineWidth glLineWidth = (LineWidth)GL.GetDelegateForExtensionMethod("glLineWidth", typeof(LineWidth)) ?? new LineWidth(Imports.LineWidth);
+        internal static LineWidth glLineWidth = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Materialf(GL.Enums.MaterialFace face, GL.Enums.MaterialParameter pname, Single param);
-        internal static Materialf glMaterialf = (Materialf)GL.GetDelegateForExtensionMethod("glMaterialf", typeof(Materialf)) ?? new Materialf(Imports.Materialf);
+        internal static Materialf glMaterialf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Materialfv(GL.Enums.MaterialFace face, GL.Enums.MaterialParameter pname, Single* @params);
-        internal unsafe static Materialfv glMaterialfv = (Materialfv)GL.GetDelegateForExtensionMethod("glMaterialfv", typeof(Materialfv)) ?? new Materialfv(Imports.Materialfv);
+        internal unsafe static Materialfv glMaterialfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Materiali(GL.Enums.MaterialFace face, GL.Enums.MaterialParameter pname, Int32 param);
-        internal static Materiali glMateriali = (Materiali)GL.GetDelegateForExtensionMethod("glMateriali", typeof(Materiali)) ?? new Materiali(Imports.Materiali);
+        internal static Materiali glMateriali = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Materialiv(GL.Enums.MaterialFace face, GL.Enums.MaterialParameter pname, Int32* @params);
-        internal unsafe static Materialiv glMaterialiv = (Materialiv)GL.GetDelegateForExtensionMethod("glMaterialiv", typeof(Materialiv)) ?? new Materialiv(Imports.Materialiv);
+        internal unsafe static Materialiv glMaterialiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PointSize(Single size);
-        internal static PointSize glPointSize = (PointSize)GL.GetDelegateForExtensionMethod("glPointSize", typeof(PointSize)) ?? new PointSize(Imports.PointSize);
+        internal static PointSize glPointSize = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PolygonMode(GL.Enums.MaterialFace face, GL.Enums.PolygonMode mode);
-        internal static PolygonMode glPolygonMode = (PolygonMode)GL.GetDelegateForExtensionMethod("glPolygonMode", typeof(PolygonMode)) ?? new PolygonMode(Imports.PolygonMode);
+        internal static PolygonMode glPolygonMode = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void PolygonStipple(Byte* mask);
-        internal unsafe static PolygonStipple glPolygonStipple = (PolygonStipple)GL.GetDelegateForExtensionMethod("glPolygonStipple", typeof(PolygonStipple)) ?? new PolygonStipple(Imports.PolygonStipple);
+        internal unsafe static PolygonStipple glPolygonStipple = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Scissor(Int32 x, Int32 y, Int32 width, Int32 height);
-        internal static Scissor glScissor = (Scissor)GL.GetDelegateForExtensionMethod("glScissor", typeof(Scissor)) ?? new Scissor(Imports.Scissor);
+        internal static Scissor glScissor = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ShadeModel(GL.Enums.ShadingModel mode);
-        internal static ShadeModel glShadeModel = (ShadeModel)GL.GetDelegateForExtensionMethod("glShadeModel", typeof(ShadeModel)) ?? new ShadeModel(Imports.ShadeModel);
+        internal static ShadeModel glShadeModel = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexParameterf(GL.Enums.TextureTarget target, GL.Enums.TextureParameterName pname, Single param);
-        internal static TexParameterf glTexParameterf = (TexParameterf)GL.GetDelegateForExtensionMethod("glTexParameterf", typeof(TexParameterf)) ?? new TexParameterf(Imports.TexParameterf);
+        internal static TexParameterf glTexParameterf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexParameterfv(GL.Enums.TextureTarget target, GL.Enums.TextureParameterName pname, Single* @params);
-        internal unsafe static TexParameterfv glTexParameterfv = (TexParameterfv)GL.GetDelegateForExtensionMethod("glTexParameterfv", typeof(TexParameterfv)) ?? new TexParameterfv(Imports.TexParameterfv);
+        internal unsafe static TexParameterfv glTexParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexParameteri(GL.Enums.TextureTarget target, GL.Enums.TextureParameterName pname, Int32 param);
-        internal static TexParameteri glTexParameteri = (TexParameteri)GL.GetDelegateForExtensionMethod("glTexParameteri", typeof(TexParameteri)) ?? new TexParameteri(Imports.TexParameteri);
+        internal static TexParameteri glTexParameteri = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexParameteriv(GL.Enums.TextureTarget target, GL.Enums.TextureParameterName pname, Int32* @params);
-        internal unsafe static TexParameteriv glTexParameteriv = (TexParameteriv)GL.GetDelegateForExtensionMethod("glTexParameteriv", typeof(TexParameteriv)) ?? new TexParameteriv(Imports.TexParameteriv);
+        internal unsafe static TexParameteriv glTexParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexImage1D(GL.Enums.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* pixels);
-        internal unsafe static TexImage1D glTexImage1D = (TexImage1D)GL.GetDelegateForExtensionMethod("glTexImage1D", typeof(TexImage1D)) ?? new TexImage1D(Imports.TexImage1D);
+        internal unsafe static TexImage1D glTexImage1D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexImage2D(GL.Enums.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* pixels);
-        internal unsafe static TexImage2D glTexImage2D = (TexImage2D)GL.GetDelegateForExtensionMethod("glTexImage2D", typeof(TexImage2D)) ?? new TexImage2D(Imports.TexImage2D);
+        internal unsafe static TexImage2D glTexImage2D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexEnvf(GL.Enums.TextureEnvTarget target, GL.Enums.TextureEnvParameter pname, Single param);
-        internal static TexEnvf glTexEnvf = (TexEnvf)GL.GetDelegateForExtensionMethod("glTexEnvf", typeof(TexEnvf)) ?? new TexEnvf(Imports.TexEnvf);
+        internal static TexEnvf glTexEnvf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexEnvfv(GL.Enums.TextureEnvTarget target, GL.Enums.TextureEnvParameter pname, Single* @params);
-        internal unsafe static TexEnvfv glTexEnvfv = (TexEnvfv)GL.GetDelegateForExtensionMethod("glTexEnvfv", typeof(TexEnvfv)) ?? new TexEnvfv(Imports.TexEnvfv);
+        internal unsafe static TexEnvfv glTexEnvfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexEnvi(GL.Enums.TextureEnvTarget target, GL.Enums.TextureEnvParameter pname, Int32 param);
-        internal static TexEnvi glTexEnvi = (TexEnvi)GL.GetDelegateForExtensionMethod("glTexEnvi", typeof(TexEnvi)) ?? new TexEnvi(Imports.TexEnvi);
+        internal static TexEnvi glTexEnvi = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexEnviv(GL.Enums.TextureEnvTarget target, GL.Enums.TextureEnvParameter pname, Int32* @params);
-        internal unsafe static TexEnviv glTexEnviv = (TexEnviv)GL.GetDelegateForExtensionMethod("glTexEnviv", typeof(TexEnviv)) ?? new TexEnviv(Imports.TexEnviv);
+        internal unsafe static TexEnviv glTexEnviv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexGend(GL.Enums.TextureCoordName coord, GL.Enums.TextureGenParameter pname, Double param);
-        internal static TexGend glTexGend = (TexGend)GL.GetDelegateForExtensionMethod("glTexGend", typeof(TexGend)) ?? new TexGend(Imports.TexGend);
+        internal static TexGend glTexGend = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexGendv(GL.Enums.TextureCoordName coord, GL.Enums.TextureGenParameter pname, Double* @params);
-        internal unsafe static TexGendv glTexGendv = (TexGendv)GL.GetDelegateForExtensionMethod("glTexGendv", typeof(TexGendv)) ?? new TexGendv(Imports.TexGendv);
+        internal unsafe static TexGendv glTexGendv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexGenf(GL.Enums.TextureCoordName coord, GL.Enums.TextureGenParameter pname, Single param);
-        internal static TexGenf glTexGenf = (TexGenf)GL.GetDelegateForExtensionMethod("glTexGenf", typeof(TexGenf)) ?? new TexGenf(Imports.TexGenf);
+        internal static TexGenf glTexGenf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexGenfv(GL.Enums.TextureCoordName coord, GL.Enums.TextureGenParameter pname, Single* @params);
-        internal unsafe static TexGenfv glTexGenfv = (TexGenfv)GL.GetDelegateForExtensionMethod("glTexGenfv", typeof(TexGenfv)) ?? new TexGenfv(Imports.TexGenfv);
+        internal unsafe static TexGenfv glTexGenfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TexGeni(GL.Enums.TextureCoordName coord, GL.Enums.TextureGenParameter pname, Int32 param);
-        internal static TexGeni glTexGeni = (TexGeni)GL.GetDelegateForExtensionMethod("glTexGeni", typeof(TexGeni)) ?? new TexGeni(Imports.TexGeni);
+        internal static TexGeni glTexGeni = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexGeniv(GL.Enums.TextureCoordName coord, GL.Enums.TextureGenParameter pname, Int32* @params);
-        internal unsafe static TexGeniv glTexGeniv = (TexGeniv)GL.GetDelegateForExtensionMethod("glTexGeniv", typeof(TexGeniv)) ?? new TexGeniv(Imports.TexGeniv);
+        internal unsafe static TexGeniv glTexGeniv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void FeedbackBuffer(Int32 size, GL.Enums.FeedbackType type, [Out] Single* buffer);
-        internal unsafe static FeedbackBuffer glFeedbackBuffer = (FeedbackBuffer)GL.GetDelegateForExtensionMethod("glFeedbackBuffer", typeof(FeedbackBuffer)) ?? new FeedbackBuffer(Imports.FeedbackBuffer);
+        internal unsafe static FeedbackBuffer glFeedbackBuffer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SelectBuffer(Int32 size, [Out] UInt32* buffer);
-        internal unsafe static SelectBuffer glSelectBuffer = (SelectBuffer)GL.GetDelegateForExtensionMethod("glSelectBuffer", typeof(SelectBuffer)) ?? new SelectBuffer(Imports.SelectBuffer);
+        internal unsafe static SelectBuffer glSelectBuffer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Int32 RenderMode(GL.Enums.RenderingMode mode);
-        internal static RenderMode glRenderMode = (RenderMode)GL.GetDelegateForExtensionMethod("glRenderMode", typeof(RenderMode)) ?? new RenderMode(Imports.RenderMode);
+        internal static RenderMode glRenderMode = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void InitNames();
-        internal static InitNames glInitNames = (InitNames)GL.GetDelegateForExtensionMethod("glInitNames", typeof(InitNames)) ?? new InitNames(Imports.InitNames);
+        internal static InitNames glInitNames = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void LoadName(UInt32 name);
-        internal static LoadName glLoadName = (LoadName)GL.GetDelegateForExtensionMethod("glLoadName", typeof(LoadName)) ?? new LoadName(Imports.LoadName);
+        internal static LoadName glLoadName = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PassThrough(Single token);
-        internal static PassThrough glPassThrough = (PassThrough)GL.GetDelegateForExtensionMethod("glPassThrough", typeof(PassThrough)) ?? new PassThrough(Imports.PassThrough);
+        internal static PassThrough glPassThrough = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PopName();
-        internal static PopName glPopName = (PopName)GL.GetDelegateForExtensionMethod("glPopName", typeof(PopName)) ?? new PopName(Imports.PopName);
+        internal static PopName glPopName = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PushName(UInt32 name);
-        internal static PushName glPushName = (PushName)GL.GetDelegateForExtensionMethod("glPushName", typeof(PushName)) ?? new PushName(Imports.PushName);
+        internal static PushName glPushName = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DrawBuffer(GL.Enums.DrawBufferMode mode);
-        internal static DrawBuffer glDrawBuffer = (DrawBuffer)GL.GetDelegateForExtensionMethod("glDrawBuffer", typeof(DrawBuffer)) ?? new DrawBuffer(Imports.DrawBuffer);
+        internal static DrawBuffer glDrawBuffer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Clear(GL.Enums.ClearBufferMask mask);
-        internal static Clear glClear = (Clear)GL.GetDelegateForExtensionMethod("glClear", typeof(Clear)) ?? new Clear(Imports.Clear);
+        internal static Clear glClear = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ClearAccum(Single red, Single green, Single blue, Single alpha);
-        internal static ClearAccum glClearAccum = (ClearAccum)GL.GetDelegateForExtensionMethod("glClearAccum", typeof(ClearAccum)) ?? new ClearAccum(Imports.ClearAccum);
+        internal static ClearAccum glClearAccum = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ClearIndex(Single c);
-        internal static ClearIndex glClearIndex = (ClearIndex)GL.GetDelegateForExtensionMethod("glClearIndex", typeof(ClearIndex)) ?? new ClearIndex(Imports.ClearIndex);
+        internal static ClearIndex glClearIndex = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ClearColor(Single red, Single green, Single blue, Single alpha);
-        internal static ClearColor glClearColor = (ClearColor)GL.GetDelegateForExtensionMethod("glClearColor", typeof(ClearColor)) ?? new ClearColor(Imports.ClearColor);
+        internal static ClearColor glClearColor = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ClearStencil(Int32 s);
-        internal static ClearStencil glClearStencil = (ClearStencil)GL.GetDelegateForExtensionMethod("glClearStencil", typeof(ClearStencil)) ?? new ClearStencil(Imports.ClearStencil);
+        internal static ClearStencil glClearStencil = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ClearDepth(Double depth);
-        internal static ClearDepth glClearDepth = (ClearDepth)GL.GetDelegateForExtensionMethod("glClearDepth", typeof(ClearDepth)) ?? new ClearDepth(Imports.ClearDepth);
+        internal static ClearDepth glClearDepth = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void StencilMask(UInt32 mask);
-        internal static StencilMask glStencilMask = (StencilMask)GL.GetDelegateForExtensionMethod("glStencilMask", typeof(StencilMask)) ?? new StencilMask(Imports.StencilMask);
+        internal static StencilMask glStencilMask = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ColorMask(GL.Enums.Boolean red, GL.Enums.Boolean green, GL.Enums.Boolean blue, GL.Enums.Boolean alpha);
-        internal static ColorMask glColorMask = (ColorMask)GL.GetDelegateForExtensionMethod("glColorMask", typeof(ColorMask)) ?? new ColorMask(Imports.ColorMask);
+        internal static ColorMask glColorMask = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DepthMask(GL.Enums.Boolean flag);
-        internal static DepthMask glDepthMask = (DepthMask)GL.GetDelegateForExtensionMethod("glDepthMask", typeof(DepthMask)) ?? new DepthMask(Imports.DepthMask);
+        internal static DepthMask glDepthMask = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void IndexMask(UInt32 mask);
-        internal static IndexMask glIndexMask = (IndexMask)GL.GetDelegateForExtensionMethod("glIndexMask", typeof(IndexMask)) ?? new IndexMask(Imports.IndexMask);
+        internal static IndexMask glIndexMask = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Accum(GL.Enums.AccumOp op, Single value);
-        internal static Accum glAccum = (Accum)GL.GetDelegateForExtensionMethod("glAccum", typeof(Accum)) ?? new Accum(Imports.Accum);
+        internal static Accum glAccum = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Disable(GL.Enums.EnableCap cap);
-        internal static Disable glDisable = (Disable)GL.GetDelegateForExtensionMethod("glDisable", typeof(Disable)) ?? new Disable(Imports.Disable);
+        internal static Disable glDisable = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Enable(GL.Enums.EnableCap cap);
-        internal static Enable glEnable = (Enable)GL.GetDelegateForExtensionMethod("glEnable", typeof(Enable)) ?? new Enable(Imports.Enable);
+        internal static Enable glEnable = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Finish();
-        internal static Finish glFinish = (Finish)GL.GetDelegateForExtensionMethod("glFinish", typeof(Finish)) ?? new Finish(Imports.Finish);
+        internal static Finish glFinish = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Flush();
-        internal static Flush glFlush = (Flush)GL.GetDelegateForExtensionMethod("glFlush", typeof(Flush)) ?? new Flush(Imports.Flush);
+        internal static Flush glFlush = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PopAttrib();
-        internal static PopAttrib glPopAttrib = (PopAttrib)GL.GetDelegateForExtensionMethod("glPopAttrib", typeof(PopAttrib)) ?? new PopAttrib(Imports.PopAttrib);
+        internal static PopAttrib glPopAttrib = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PushAttrib(GL.Enums.AttribMask mask);
-        internal static PushAttrib glPushAttrib = (PushAttrib)GL.GetDelegateForExtensionMethod("glPushAttrib", typeof(PushAttrib)) ?? new PushAttrib(Imports.PushAttrib);
+        internal static PushAttrib glPushAttrib = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Map1d(GL.Enums.MapTarget target, Double u1, Double u2, Int32 stride, Int32 order, Double* points);
-        internal unsafe static Map1d glMap1d = (Map1d)GL.GetDelegateForExtensionMethod("glMap1d", typeof(Map1d)) ?? new Map1d(Imports.Map1d);
+        internal unsafe static Map1d glMap1d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Map1f(GL.Enums.MapTarget target, Single u1, Single u2, Int32 stride, Int32 order, Single* points);
-        internal unsafe static Map1f glMap1f = (Map1f)GL.GetDelegateForExtensionMethod("glMap1f", typeof(Map1f)) ?? new Map1f(Imports.Map1f);
+        internal unsafe static Map1f glMap1f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Map2d(GL.Enums.MapTarget target, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double* points);
-        internal unsafe static Map2d glMap2d = (Map2d)GL.GetDelegateForExtensionMethod("glMap2d", typeof(Map2d)) ?? new Map2d(Imports.Map2d);
+        internal unsafe static Map2d glMap2d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Map2f(GL.Enums.MapTarget target, Single u1, Single u2, Int32 ustride, Int32 uorder, Single v1, Single v2, Int32 vstride, Int32 vorder, Single* points);
-        internal unsafe static Map2f glMap2f = (Map2f)GL.GetDelegateForExtensionMethod("glMap2f", typeof(Map2f)) ?? new Map2f(Imports.Map2f);
+        internal unsafe static Map2f glMap2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MapGrid1d(Int32 un, Double u1, Double u2);
-        internal static MapGrid1d glMapGrid1d = (MapGrid1d)GL.GetDelegateForExtensionMethod("glMapGrid1d", typeof(MapGrid1d)) ?? new MapGrid1d(Imports.MapGrid1d);
+        internal static MapGrid1d glMapGrid1d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MapGrid1f(Int32 un, Single u1, Single u2);
-        internal static MapGrid1f glMapGrid1f = (MapGrid1f)GL.GetDelegateForExtensionMethod("glMapGrid1f", typeof(MapGrid1f)) ?? new MapGrid1f(Imports.MapGrid1f);
+        internal static MapGrid1f glMapGrid1f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MapGrid2d(Int32 un, Double u1, Double u2, Int32 vn, Double v1, Double v2);
-        internal static MapGrid2d glMapGrid2d = (MapGrid2d)GL.GetDelegateForExtensionMethod("glMapGrid2d", typeof(MapGrid2d)) ?? new MapGrid2d(Imports.MapGrid2d);
+        internal static MapGrid2d glMapGrid2d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MapGrid2f(Int32 un, Single u1, Single u2, Int32 vn, Single v1, Single v2);
-        internal static MapGrid2f glMapGrid2f = (MapGrid2f)GL.GetDelegateForExtensionMethod("glMapGrid2f", typeof(MapGrid2f)) ?? new MapGrid2f(Imports.MapGrid2f);
+        internal static MapGrid2f glMapGrid2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EvalCoord1d(Double u);
-        internal static EvalCoord1d glEvalCoord1d = (EvalCoord1d)GL.GetDelegateForExtensionMethod("glEvalCoord1d", typeof(EvalCoord1d)) ?? new EvalCoord1d(Imports.EvalCoord1d);
+        internal static EvalCoord1d glEvalCoord1d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void EvalCoord1dv(Double* u);
-        internal unsafe static EvalCoord1dv glEvalCoord1dv = (EvalCoord1dv)GL.GetDelegateForExtensionMethod("glEvalCoord1dv", typeof(EvalCoord1dv)) ?? new EvalCoord1dv(Imports.EvalCoord1dv);
+        internal unsafe static EvalCoord1dv glEvalCoord1dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EvalCoord1f(Single u);
-        internal static EvalCoord1f glEvalCoord1f = (EvalCoord1f)GL.GetDelegateForExtensionMethod("glEvalCoord1f", typeof(EvalCoord1f)) ?? new EvalCoord1f(Imports.EvalCoord1f);
+        internal static EvalCoord1f glEvalCoord1f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void EvalCoord1fv(Single* u);
-        internal unsafe static EvalCoord1fv glEvalCoord1fv = (EvalCoord1fv)GL.GetDelegateForExtensionMethod("glEvalCoord1fv", typeof(EvalCoord1fv)) ?? new EvalCoord1fv(Imports.EvalCoord1fv);
+        internal unsafe static EvalCoord1fv glEvalCoord1fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EvalCoord2d(Double u, Double v);
-        internal static EvalCoord2d glEvalCoord2d = (EvalCoord2d)GL.GetDelegateForExtensionMethod("glEvalCoord2d", typeof(EvalCoord2d)) ?? new EvalCoord2d(Imports.EvalCoord2d);
+        internal static EvalCoord2d glEvalCoord2d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void EvalCoord2dv(Double* u);
-        internal unsafe static EvalCoord2dv glEvalCoord2dv = (EvalCoord2dv)GL.GetDelegateForExtensionMethod("glEvalCoord2dv", typeof(EvalCoord2dv)) ?? new EvalCoord2dv(Imports.EvalCoord2dv);
+        internal unsafe static EvalCoord2dv glEvalCoord2dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EvalCoord2f(Single u, Single v);
-        internal static EvalCoord2f glEvalCoord2f = (EvalCoord2f)GL.GetDelegateForExtensionMethod("glEvalCoord2f", typeof(EvalCoord2f)) ?? new EvalCoord2f(Imports.EvalCoord2f);
+        internal static EvalCoord2f glEvalCoord2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void EvalCoord2fv(Single* u);
-        internal unsafe static EvalCoord2fv glEvalCoord2fv = (EvalCoord2fv)GL.GetDelegateForExtensionMethod("glEvalCoord2fv", typeof(EvalCoord2fv)) ?? new EvalCoord2fv(Imports.EvalCoord2fv);
+        internal unsafe static EvalCoord2fv glEvalCoord2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EvalMesh1(GL.Enums.MeshMode1 mode, Int32 i1, Int32 i2);
-        internal static EvalMesh1 glEvalMesh1 = (EvalMesh1)GL.GetDelegateForExtensionMethod("glEvalMesh1", typeof(EvalMesh1)) ?? new EvalMesh1(Imports.EvalMesh1);
+        internal static EvalMesh1 glEvalMesh1 = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EvalPoint1(Int32 i);
-        internal static EvalPoint1 glEvalPoint1 = (EvalPoint1)GL.GetDelegateForExtensionMethod("glEvalPoint1", typeof(EvalPoint1)) ?? new EvalPoint1(Imports.EvalPoint1);
+        internal static EvalPoint1 glEvalPoint1 = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EvalMesh2(GL.Enums.MeshMode2 mode, Int32 i1, Int32 i2, Int32 j1, Int32 j2);
-        internal static EvalMesh2 glEvalMesh2 = (EvalMesh2)GL.GetDelegateForExtensionMethod("glEvalMesh2", typeof(EvalMesh2)) ?? new EvalMesh2(Imports.EvalMesh2);
+        internal static EvalMesh2 glEvalMesh2 = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EvalPoint2(Int32 i, Int32 j);
-        internal static EvalPoint2 glEvalPoint2 = (EvalPoint2)GL.GetDelegateForExtensionMethod("glEvalPoint2", typeof(EvalPoint2)) ?? new EvalPoint2(Imports.EvalPoint2);
+        internal static EvalPoint2 glEvalPoint2 = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void AlphaFunc(GL.Enums.AlphaFunction func, Single @ref);
-        internal static AlphaFunc glAlphaFunc = (AlphaFunc)GL.GetDelegateForExtensionMethod("glAlphaFunc", typeof(AlphaFunc)) ?? new AlphaFunc(Imports.AlphaFunc);
+        internal static AlphaFunc glAlphaFunc = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void BlendFunc(GL.Enums.BlendingFactorSrc sfactor, GL.Enums.BlendingFactorDest dfactor);
-        internal static BlendFunc glBlendFunc = (BlendFunc)GL.GetDelegateForExtensionMethod("glBlendFunc", typeof(BlendFunc)) ?? new BlendFunc(Imports.BlendFunc);
+        internal static BlendFunc glBlendFunc = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void LogicOp(GL.Enums.LogicOp opcode);
-        internal static LogicOp glLogicOp = (LogicOp)GL.GetDelegateForExtensionMethod("glLogicOp", typeof(LogicOp)) ?? new LogicOp(Imports.LogicOp);
+        internal static LogicOp glLogicOp = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void StencilFunc(GL.Enums.StencilFunction func, Int32 @ref, UInt32 mask);
-        internal static StencilFunc glStencilFunc = (StencilFunc)GL.GetDelegateForExtensionMethod("glStencilFunc", typeof(StencilFunc)) ?? new StencilFunc(Imports.StencilFunc);
+        internal static StencilFunc glStencilFunc = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void StencilOp(GL.Enums.StencilOp fail, GL.Enums.StencilOp zfail, GL.Enums.StencilOp zpass);
-        internal static StencilOp glStencilOp = (StencilOp)GL.GetDelegateForExtensionMethod("glStencilOp", typeof(StencilOp)) ?? new StencilOp(Imports.StencilOp);
+        internal static StencilOp glStencilOp = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DepthFunc(GL.Enums.DepthFunction func);
-        internal static DepthFunc glDepthFunc = (DepthFunc)GL.GetDelegateForExtensionMethod("glDepthFunc", typeof(DepthFunc)) ?? new DepthFunc(Imports.DepthFunc);
+        internal static DepthFunc glDepthFunc = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PixelZoom(Single xfactor, Single yfactor);
-        internal static PixelZoom glPixelZoom = (PixelZoom)GL.GetDelegateForExtensionMethod("glPixelZoom", typeof(PixelZoom)) ?? new PixelZoom(Imports.PixelZoom);
+        internal static PixelZoom glPixelZoom = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PixelTransferf(GL.Enums.PixelTransferParameter pname, Single param);
-        internal static PixelTransferf glPixelTransferf = (PixelTransferf)GL.GetDelegateForExtensionMethod("glPixelTransferf", typeof(PixelTransferf)) ?? new PixelTransferf(Imports.PixelTransferf);
+        internal static PixelTransferf glPixelTransferf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PixelTransferi(GL.Enums.PixelTransferParameter pname, Int32 param);
-        internal static PixelTransferi glPixelTransferi = (PixelTransferi)GL.GetDelegateForExtensionMethod("glPixelTransferi", typeof(PixelTransferi)) ?? new PixelTransferi(Imports.PixelTransferi);
+        internal static PixelTransferi glPixelTransferi = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PixelStoref(GL.Enums.PixelStoreParameter pname, Single param);
-        internal static PixelStoref glPixelStoref = (PixelStoref)GL.GetDelegateForExtensionMethod("glPixelStoref", typeof(PixelStoref)) ?? new PixelStoref(Imports.PixelStoref);
+        internal static PixelStoref glPixelStoref = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PixelStorei(GL.Enums.PixelStoreParameter pname, Int32 param);
-        internal static PixelStorei glPixelStorei = (PixelStorei)GL.GetDelegateForExtensionMethod("glPixelStorei", typeof(PixelStorei)) ?? new PixelStorei(Imports.PixelStorei);
+        internal static PixelStorei glPixelStorei = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void PixelMapfv(GL.Enums.PixelMap map, Int32 mapsize, Single* values);
-        internal unsafe static PixelMapfv glPixelMapfv = (PixelMapfv)GL.GetDelegateForExtensionMethod("glPixelMapfv", typeof(PixelMapfv)) ?? new PixelMapfv(Imports.PixelMapfv);
+        internal unsafe static PixelMapfv glPixelMapfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void PixelMapuiv(GL.Enums.PixelMap map, Int32 mapsize, UInt32* values);
-        internal unsafe static PixelMapuiv glPixelMapuiv = (PixelMapuiv)GL.GetDelegateForExtensionMethod("glPixelMapuiv", typeof(PixelMapuiv)) ?? new PixelMapuiv(Imports.PixelMapuiv);
+        internal unsafe static PixelMapuiv glPixelMapuiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void PixelMapusv(GL.Enums.PixelMap map, Int32 mapsize, UInt16* values);
-        internal unsafe static PixelMapusv glPixelMapusv = (PixelMapusv)GL.GetDelegateForExtensionMethod("glPixelMapusv", typeof(PixelMapusv)) ?? new PixelMapusv(Imports.PixelMapusv);
+        internal unsafe static PixelMapusv glPixelMapusv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ReadBuffer(GL.Enums.ReadBufferMode mode);
-        internal static ReadBuffer glReadBuffer = (ReadBuffer)GL.GetDelegateForExtensionMethod("glReadBuffer", typeof(ReadBuffer)) ?? new ReadBuffer(Imports.ReadBuffer);
+        internal static ReadBuffer glReadBuffer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyPixels(Int32 x, Int32 y, Int32 width, Int32 height, GL.Enums.PixelCopyType type);
-        internal static CopyPixels glCopyPixels = (CopyPixels)GL.GetDelegateForExtensionMethod("glCopyPixels", typeof(CopyPixels)) ?? new CopyPixels(Imports.CopyPixels);
+        internal static CopyPixels glCopyPixels = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [Out] void* pixels);
-        internal unsafe static ReadPixels glReadPixels = (ReadPixels)GL.GetDelegateForExtensionMethod("glReadPixels", typeof(ReadPixels)) ?? new ReadPixels(Imports.ReadPixels);
+        internal unsafe static ReadPixels glReadPixels = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void DrawPixels(Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* pixels);
-        internal unsafe static DrawPixels glDrawPixels = (DrawPixels)GL.GetDelegateForExtensionMethod("glDrawPixels", typeof(DrawPixels)) ?? new DrawPixels(Imports.DrawPixels);
+        internal unsafe static DrawPixels glDrawPixels = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetBooleanv(GL.Enums.GetPName pname, [Out] GL.Enums.Boolean* @params);
-        internal unsafe static GetBooleanv glGetBooleanv = (GetBooleanv)GL.GetDelegateForExtensionMethod("glGetBooleanv", typeof(GetBooleanv)) ?? new GetBooleanv(Imports.GetBooleanv);
+        internal unsafe static GetBooleanv glGetBooleanv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetClipPlane(GL.Enums.ClipPlaneName plane, [Out] Double* equation);
-        internal unsafe static GetClipPlane glGetClipPlane = (GetClipPlane)GL.GetDelegateForExtensionMethod("glGetClipPlane", typeof(GetClipPlane)) ?? new GetClipPlane(Imports.GetClipPlane);
+        internal unsafe static GetClipPlane glGetClipPlane = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetDoublev(GL.Enums.GetPName pname, [Out] Double* @params);
-        internal unsafe static GetDoublev glGetDoublev = (GetDoublev)GL.GetDelegateForExtensionMethod("glGetDoublev", typeof(GetDoublev)) ?? new GetDoublev(Imports.GetDoublev);
+        internal unsafe static GetDoublev glGetDoublev = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate GL.Enums.All GetError();
-        internal static GetError glGetError = (GetError)GL.GetDelegateForExtensionMethod("glGetError", typeof(GetError)) ?? new GetError(Imports.GetError);
+        internal static GetError glGetError = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetFloatv(GL.Enums.GetPName pname, [Out] Single* @params);
-        internal unsafe static GetFloatv glGetFloatv = (GetFloatv)GL.GetDelegateForExtensionMethod("glGetFloatv", typeof(GetFloatv)) ?? new GetFloatv(Imports.GetFloatv);
+        internal unsafe static GetFloatv glGetFloatv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetIntegerv(GL.Enums.GetPName pname, [Out] Int32* @params);
-        internal unsafe static GetIntegerv glGetIntegerv = (GetIntegerv)GL.GetDelegateForExtensionMethod("glGetIntegerv", typeof(GetIntegerv)) ?? new GetIntegerv(Imports.GetIntegerv);
+        internal unsafe static GetIntegerv glGetIntegerv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetLightfv(GL.Enums.LightName light, GL.Enums.LightParameter pname, [Out] Single* @params);
-        internal unsafe static GetLightfv glGetLightfv = (GetLightfv)GL.GetDelegateForExtensionMethod("glGetLightfv", typeof(GetLightfv)) ?? new GetLightfv(Imports.GetLightfv);
+        internal unsafe static GetLightfv glGetLightfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetLightiv(GL.Enums.LightName light, GL.Enums.LightParameter pname, [Out] Int32* @params);
-        internal unsafe static GetLightiv glGetLightiv = (GetLightiv)GL.GetDelegateForExtensionMethod("glGetLightiv", typeof(GetLightiv)) ?? new GetLightiv(Imports.GetLightiv);
+        internal unsafe static GetLightiv glGetLightiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetMapdv(GL.Enums.MapTarget target, GL.Enums.GetMapQuery query, [Out] Double* v);
-        internal unsafe static GetMapdv glGetMapdv = (GetMapdv)GL.GetDelegateForExtensionMethod("glGetMapdv", typeof(GetMapdv)) ?? new GetMapdv(Imports.GetMapdv);
+        internal unsafe static GetMapdv glGetMapdv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetMapfv(GL.Enums.MapTarget target, GL.Enums.GetMapQuery query, [Out] Single* v);
-        internal unsafe static GetMapfv glGetMapfv = (GetMapfv)GL.GetDelegateForExtensionMethod("glGetMapfv", typeof(GetMapfv)) ?? new GetMapfv(Imports.GetMapfv);
+        internal unsafe static GetMapfv glGetMapfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetMapiv(GL.Enums.MapTarget target, GL.Enums.GetMapQuery query, [Out] Int32* v);
-        internal unsafe static GetMapiv glGetMapiv = (GetMapiv)GL.GetDelegateForExtensionMethod("glGetMapiv", typeof(GetMapiv)) ?? new GetMapiv(Imports.GetMapiv);
+        internal unsafe static GetMapiv glGetMapiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetMaterialfv(GL.Enums.MaterialFace face, GL.Enums.MaterialParameter pname, [Out] Single* @params);
-        internal unsafe static GetMaterialfv glGetMaterialfv = (GetMaterialfv)GL.GetDelegateForExtensionMethod("glGetMaterialfv", typeof(GetMaterialfv)) ?? new GetMaterialfv(Imports.GetMaterialfv);
+        internal unsafe static GetMaterialfv glGetMaterialfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetMaterialiv(GL.Enums.MaterialFace face, GL.Enums.MaterialParameter pname, [Out] Int32* @params);
-        internal unsafe static GetMaterialiv glGetMaterialiv = (GetMaterialiv)GL.GetDelegateForExtensionMethod("glGetMaterialiv", typeof(GetMaterialiv)) ?? new GetMaterialiv(Imports.GetMaterialiv);
+        internal unsafe static GetMaterialiv glGetMaterialiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetPixelMapfv(GL.Enums.PixelMap map, [Out] Single* values);
-        internal unsafe static GetPixelMapfv glGetPixelMapfv = (GetPixelMapfv)GL.GetDelegateForExtensionMethod("glGetPixelMapfv", typeof(GetPixelMapfv)) ?? new GetPixelMapfv(Imports.GetPixelMapfv);
+        internal unsafe static GetPixelMapfv glGetPixelMapfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetPixelMapuiv(GL.Enums.PixelMap map, [Out] UInt32* values);
-        internal unsafe static GetPixelMapuiv glGetPixelMapuiv = (GetPixelMapuiv)GL.GetDelegateForExtensionMethod("glGetPixelMapuiv", typeof(GetPixelMapuiv)) ?? new GetPixelMapuiv(Imports.GetPixelMapuiv);
+        internal unsafe static GetPixelMapuiv glGetPixelMapuiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetPixelMapusv(GL.Enums.PixelMap map, [Out] UInt16* values);
-        internal unsafe static GetPixelMapusv glGetPixelMapusv = (GetPixelMapusv)GL.GetDelegateForExtensionMethod("glGetPixelMapusv", typeof(GetPixelMapusv)) ?? new GetPixelMapusv(Imports.GetPixelMapusv);
+        internal unsafe static GetPixelMapusv glGetPixelMapusv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetPolygonStipple([Out] Byte* mask);
-        internal unsafe static GetPolygonStipple glGetPolygonStipple = (GetPolygonStipple)GL.GetDelegateForExtensionMethod("glGetPolygonStipple", typeof(GetPolygonStipple)) ?? new GetPolygonStipple(Imports.GetPolygonStipple);
+        internal unsafe static GetPolygonStipple glGetPolygonStipple = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate IntPtr GetString(GL.Enums.StringName name);
-        internal static GetString glGetString = (GetString)GL.GetDelegateForExtensionMethod("glGetString", typeof(GetString)) ?? new GetString(Imports.GetString);
+        internal static GetString glGetString = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexEnvfv(GL.Enums.TextureEnvTarget target, GL.Enums.TextureEnvParameter pname, [Out] Single* @params);
-        internal unsafe static GetTexEnvfv glGetTexEnvfv = (GetTexEnvfv)GL.GetDelegateForExtensionMethod("glGetTexEnvfv", typeof(GetTexEnvfv)) ?? new GetTexEnvfv(Imports.GetTexEnvfv);
+        internal unsafe static GetTexEnvfv glGetTexEnvfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexEnviv(GL.Enums.TextureEnvTarget target, GL.Enums.TextureEnvParameter pname, [Out] Int32* @params);
-        internal unsafe static GetTexEnviv glGetTexEnviv = (GetTexEnviv)GL.GetDelegateForExtensionMethod("glGetTexEnviv", typeof(GetTexEnviv)) ?? new GetTexEnviv(Imports.GetTexEnviv);
+        internal unsafe static GetTexEnviv glGetTexEnviv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexGendv(GL.Enums.TextureCoordName coord, GL.Enums.TextureGenParameter pname, [Out] Double* @params);
-        internal unsafe static GetTexGendv glGetTexGendv = (GetTexGendv)GL.GetDelegateForExtensionMethod("glGetTexGendv", typeof(GetTexGendv)) ?? new GetTexGendv(Imports.GetTexGendv);
+        internal unsafe static GetTexGendv glGetTexGendv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexGenfv(GL.Enums.TextureCoordName coord, GL.Enums.TextureGenParameter pname, [Out] Single* @params);
-        internal unsafe static GetTexGenfv glGetTexGenfv = (GetTexGenfv)GL.GetDelegateForExtensionMethod("glGetTexGenfv", typeof(GetTexGenfv)) ?? new GetTexGenfv(Imports.GetTexGenfv);
+        internal unsafe static GetTexGenfv glGetTexGenfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexGeniv(GL.Enums.TextureCoordName coord, GL.Enums.TextureGenParameter pname, [Out] Int32* @params);
-        internal unsafe static GetTexGeniv glGetTexGeniv = (GetTexGeniv)GL.GetDelegateForExtensionMethod("glGetTexGeniv", typeof(GetTexGeniv)) ?? new GetTexGeniv(Imports.GetTexGeniv);
+        internal unsafe static GetTexGeniv glGetTexGeniv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexImage(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [Out] void* pixels);
-        internal unsafe static GetTexImage glGetTexImage = (GetTexImage)GL.GetDelegateForExtensionMethod("glGetTexImage", typeof(GetTexImage)) ?? new GetTexImage(Imports.GetTexImage);
+        internal unsafe static GetTexImage glGetTexImage = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexParameterfv(GL.Enums.TextureTarget target, GL.Enums.GetTextureParameter pname, [Out] Single* @params);
-        internal unsafe static GetTexParameterfv glGetTexParameterfv = (GetTexParameterfv)GL.GetDelegateForExtensionMethod("glGetTexParameterfv", typeof(GetTexParameterfv)) ?? new GetTexParameterfv(Imports.GetTexParameterfv);
+        internal unsafe static GetTexParameterfv glGetTexParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexParameteriv(GL.Enums.TextureTarget target, GL.Enums.GetTextureParameter pname, [Out] Int32* @params);
-        internal unsafe static GetTexParameteriv glGetTexParameteriv = (GetTexParameteriv)GL.GetDelegateForExtensionMethod("glGetTexParameteriv", typeof(GetTexParameteriv)) ?? new GetTexParameteriv(Imports.GetTexParameteriv);
+        internal unsafe static GetTexParameteriv glGetTexParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexLevelParameterfv(GL.Enums.TextureTarget target, Int32 level, GL.Enums.GetTextureParameter pname, [Out] Single* @params);
-        internal unsafe static GetTexLevelParameterfv glGetTexLevelParameterfv = (GetTexLevelParameterfv)GL.GetDelegateForExtensionMethod("glGetTexLevelParameterfv", typeof(GetTexLevelParameterfv)) ?? new GetTexLevelParameterfv(Imports.GetTexLevelParameterfv);
+        internal unsafe static GetTexLevelParameterfv glGetTexLevelParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetTexLevelParameteriv(GL.Enums.TextureTarget target, Int32 level, GL.Enums.GetTextureParameter pname, [Out] Int32* @params);
-        internal unsafe static GetTexLevelParameteriv glGetTexLevelParameteriv = (GetTexLevelParameteriv)GL.GetDelegateForExtensionMethod("glGetTexLevelParameteriv", typeof(GetTexLevelParameteriv)) ?? new GetTexLevelParameteriv(Imports.GetTexLevelParameteriv);
+        internal unsafe static GetTexLevelParameteriv glGetTexLevelParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Boolean IsEnabled(GL.Enums.EnableCap cap);
-        internal static IsEnabled glIsEnabled = (IsEnabled)GL.GetDelegateForExtensionMethod("glIsEnabled", typeof(IsEnabled)) ?? new IsEnabled(Imports.IsEnabled);
+        internal static IsEnabled glIsEnabled = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Boolean IsList(UInt32 list);
-        internal static IsList glIsList = (IsList)GL.GetDelegateForExtensionMethod("glIsList", typeof(IsList)) ?? new IsList(Imports.IsList);
+        internal static IsList glIsList = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DepthRange(Double near, Double far);
-        internal static DepthRange glDepthRange = (DepthRange)GL.GetDelegateForExtensionMethod("glDepthRange", typeof(DepthRange)) ?? new DepthRange(Imports.DepthRange);
+        internal static DepthRange glDepthRange = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Frustum(Double left, Double right, Double bottom, Double top, Double zNear, Double zFar);
-        internal static Frustum glFrustum = (Frustum)GL.GetDelegateForExtensionMethod("glFrustum", typeof(Frustum)) ?? new Frustum(Imports.Frustum);
+        internal static Frustum glFrustum = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void LoadIdentity();
-        internal static LoadIdentity glLoadIdentity = (LoadIdentity)GL.GetDelegateForExtensionMethod("glLoadIdentity", typeof(LoadIdentity)) ?? new LoadIdentity(Imports.LoadIdentity);
+        internal static LoadIdentity glLoadIdentity = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void LoadMatrixf(Single* m);
-        internal unsafe static LoadMatrixf glLoadMatrixf = (LoadMatrixf)GL.GetDelegateForExtensionMethod("glLoadMatrixf", typeof(LoadMatrixf)) ?? new LoadMatrixf(Imports.LoadMatrixf);
+        internal unsafe static LoadMatrixf glLoadMatrixf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void LoadMatrixd(Double* m);
-        internal unsafe static LoadMatrixd glLoadMatrixd = (LoadMatrixd)GL.GetDelegateForExtensionMethod("glLoadMatrixd", typeof(LoadMatrixd)) ?? new LoadMatrixd(Imports.LoadMatrixd);
+        internal unsafe static LoadMatrixd glLoadMatrixd = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MatrixMode(GL.Enums.MatrixMode mode);
-        internal static MatrixMode glMatrixMode = (MatrixMode)GL.GetDelegateForExtensionMethod("glMatrixMode", typeof(MatrixMode)) ?? new MatrixMode(Imports.MatrixMode);
+        internal static MatrixMode glMatrixMode = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultMatrixf(Single* m);
-        internal unsafe static MultMatrixf glMultMatrixf = (MultMatrixf)GL.GetDelegateForExtensionMethod("glMultMatrixf", typeof(MultMatrixf)) ?? new MultMatrixf(Imports.MultMatrixf);
+        internal unsafe static MultMatrixf glMultMatrixf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultMatrixd(Double* m);
-        internal unsafe static MultMatrixd glMultMatrixd = (MultMatrixd)GL.GetDelegateForExtensionMethod("glMultMatrixd", typeof(MultMatrixd)) ?? new MultMatrixd(Imports.MultMatrixd);
+        internal unsafe static MultMatrixd glMultMatrixd = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Ortho(Double left, Double right, Double bottom, Double top, Double zNear, Double zFar);
-        internal static Ortho glOrtho = (Ortho)GL.GetDelegateForExtensionMethod("glOrtho", typeof(Ortho)) ?? new Ortho(Imports.Ortho);
+        internal static Ortho glOrtho = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PopMatrix();
-        internal static PopMatrix glPopMatrix = (PopMatrix)GL.GetDelegateForExtensionMethod("glPopMatrix", typeof(PopMatrix)) ?? new PopMatrix(Imports.PopMatrix);
+        internal static PopMatrix glPopMatrix = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PushMatrix();
-        internal static PushMatrix glPushMatrix = (PushMatrix)GL.GetDelegateForExtensionMethod("glPushMatrix", typeof(PushMatrix)) ?? new PushMatrix(Imports.PushMatrix);
+        internal static PushMatrix glPushMatrix = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Rotated(Double angle, Double x, Double y, Double z);
-        internal static Rotated glRotated = (Rotated)GL.GetDelegateForExtensionMethod("glRotated", typeof(Rotated)) ?? new Rotated(Imports.Rotated);
+        internal static Rotated glRotated = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Rotatef(Single angle, Single x, Single y, Single z);
-        internal static Rotatef glRotatef = (Rotatef)GL.GetDelegateForExtensionMethod("glRotatef", typeof(Rotatef)) ?? new Rotatef(Imports.Rotatef);
+        internal static Rotatef glRotatef = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Scaled(Double x, Double y, Double z);
-        internal static Scaled glScaled = (Scaled)GL.GetDelegateForExtensionMethod("glScaled", typeof(Scaled)) ?? new Scaled(Imports.Scaled);
+        internal static Scaled glScaled = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Scalef(Single x, Single y, Single z);
-        internal static Scalef glScalef = (Scalef)GL.GetDelegateForExtensionMethod("glScalef", typeof(Scalef)) ?? new Scalef(Imports.Scalef);
+        internal static Scalef glScalef = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Translated(Double x, Double y, Double z);
-        internal static Translated glTranslated = (Translated)GL.GetDelegateForExtensionMethod("glTranslated", typeof(Translated)) ?? new Translated(Imports.Translated);
+        internal static Translated glTranslated = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Translatef(Single x, Single y, Single z);
-        internal static Translatef glTranslatef = (Translatef)GL.GetDelegateForExtensionMethod("glTranslatef", typeof(Translatef)) ?? new Translatef(Imports.Translatef);
+        internal static Translatef glTranslatef = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Viewport(Int32 x, Int32 y, Int32 width, Int32 height);
-        internal static Viewport glViewport = (Viewport)GL.GetDelegateForExtensionMethod("glViewport", typeof(Viewport)) ?? new Viewport(Imports.Viewport);
+        internal static Viewport glViewport = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ArrayElement(Int32 i);
-        internal static ArrayElement glArrayElement = (ArrayElement)GL.GetDelegateForExtensionMethod("glArrayElement", typeof(ArrayElement)) ?? new ArrayElement(Imports.ArrayElement);
+        internal static ArrayElement glArrayElement = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ColorPointer(Int32 size, GL.Enums.ColorPointerType type, Int32 stride, void* pointer);
-        internal unsafe static ColorPointer glColorPointer = (ColorPointer)GL.GetDelegateForExtensionMethod("glColorPointer", typeof(ColorPointer)) ?? new ColorPointer(Imports.ColorPointer);
+        internal unsafe static ColorPointer glColorPointer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DisableClientState(GL.Enums.EnableCap array);
-        internal static DisableClientState glDisableClientState = (DisableClientState)GL.GetDelegateForExtensionMethod("glDisableClientState", typeof(DisableClientState)) ?? new DisableClientState(Imports.DisableClientState);
+        internal static DisableClientState glDisableClientState = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DrawArrays(GL.Enums.BeginMode mode, Int32 first, Int32 count);
-        internal static DrawArrays glDrawArrays = (DrawArrays)GL.GetDelegateForExtensionMethod("glDrawArrays", typeof(DrawArrays)) ?? new DrawArrays(Imports.DrawArrays);
+        internal static DrawArrays glDrawArrays = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void DrawElements(GL.Enums.BeginMode mode, Int32 count, GL.Enums.All type, void* indices);
-        internal unsafe static DrawElements glDrawElements = (DrawElements)GL.GetDelegateForExtensionMethod("glDrawElements", typeof(DrawElements)) ?? new DrawElements(Imports.DrawElements);
+        internal unsafe static DrawElements glDrawElements = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void EdgeFlagPointer(Int32 stride, void* pointer);
-        internal unsafe static EdgeFlagPointer glEdgeFlagPointer = (EdgeFlagPointer)GL.GetDelegateForExtensionMethod("glEdgeFlagPointer", typeof(EdgeFlagPointer)) ?? new EdgeFlagPointer(Imports.EdgeFlagPointer);
+        internal unsafe static EdgeFlagPointer glEdgeFlagPointer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EnableClientState(GL.Enums.EnableCap array);
-        internal static EnableClientState glEnableClientState = (EnableClientState)GL.GetDelegateForExtensionMethod("glEnableClientState", typeof(EnableClientState)) ?? new EnableClientState(Imports.EnableClientState);
+        internal static EnableClientState glEnableClientState = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetPointerv(GL.Enums.GetPointervPName pname, [Out] void* @params);
-        internal unsafe static GetPointerv glGetPointerv = (GetPointerv)GL.GetDelegateForExtensionMethod("glGetPointerv", typeof(GetPointerv)) ?? new GetPointerv(Imports.GetPointerv);
+        internal unsafe static GetPointerv glGetPointerv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void IndexPointer(GL.Enums.IndexPointerType type, Int32 stride, void* pointer);
-        internal unsafe static IndexPointer glIndexPointer = (IndexPointer)GL.GetDelegateForExtensionMethod("glIndexPointer", typeof(IndexPointer)) ?? new IndexPointer(Imports.IndexPointer);
+        internal unsafe static IndexPointer glIndexPointer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void InterleavedArrays(GL.Enums.InterleavedArrayFormat format, Int32 stride, void* pointer);
-        internal unsafe static InterleavedArrays glInterleavedArrays = (InterleavedArrays)GL.GetDelegateForExtensionMethod("glInterleavedArrays", typeof(InterleavedArrays)) ?? new InterleavedArrays(Imports.InterleavedArrays);
+        internal unsafe static InterleavedArrays glInterleavedArrays = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void NormalPointer(GL.Enums.NormalPointerType type, Int32 stride, void* pointer);
-        internal unsafe static NormalPointer glNormalPointer = (NormalPointer)GL.GetDelegateForExtensionMethod("glNormalPointer", typeof(NormalPointer)) ?? new NormalPointer(Imports.NormalPointer);
+        internal unsafe static NormalPointer glNormalPointer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoordPointer(Int32 size, GL.Enums.TexCoordPointerType type, Int32 stride, void* pointer);
-        internal unsafe static TexCoordPointer glTexCoordPointer = (TexCoordPointer)GL.GetDelegateForExtensionMethod("glTexCoordPointer", typeof(TexCoordPointer)) ?? new TexCoordPointer(Imports.TexCoordPointer);
+        internal unsafe static TexCoordPointer glTexCoordPointer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexPointer(Int32 size, GL.Enums.VertexPointerType type, Int32 stride, void* pointer);
-        internal unsafe static VertexPointer glVertexPointer = (VertexPointer)GL.GetDelegateForExtensionMethod("glVertexPointer", typeof(VertexPointer)) ?? new VertexPointer(Imports.VertexPointer);
+        internal unsafe static VertexPointer glVertexPointer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PolygonOffset(Single factor, Single units);
-        internal static PolygonOffset glPolygonOffset = (PolygonOffset)GL.GetDelegateForExtensionMethod("glPolygonOffset", typeof(PolygonOffset)) ?? new PolygonOffset(Imports.PolygonOffset);
+        internal static PolygonOffset glPolygonOffset = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyTexImage1D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 border);
-        internal static CopyTexImage1D glCopyTexImage1D = (CopyTexImage1D)GL.GetDelegateForExtensionMethod("glCopyTexImage1D", typeof(CopyTexImage1D)) ?? new CopyTexImage1D(Imports.CopyTexImage1D);
+        internal static CopyTexImage1D glCopyTexImage1D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyTexImage2D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height, Int32 border);
-        internal static CopyTexImage2D glCopyTexImage2D = (CopyTexImage2D)GL.GetDelegateForExtensionMethod("glCopyTexImage2D", typeof(CopyTexImage2D)) ?? new CopyTexImage2D(Imports.CopyTexImage2D);
+        internal static CopyTexImage2D glCopyTexImage2D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyTexSubImage1D(GL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 x, Int32 y, Int32 width);
-        internal static CopyTexSubImage1D glCopyTexSubImage1D = (CopyTexSubImage1D)GL.GetDelegateForExtensionMethod("glCopyTexSubImage1D", typeof(CopyTexSubImage1D)) ?? new CopyTexSubImage1D(Imports.CopyTexSubImage1D);
+        internal static CopyTexSubImage1D glCopyTexSubImage1D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyTexSubImage2D(GL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 x, Int32 y, Int32 width, Int32 height);
-        internal static CopyTexSubImage2D glCopyTexSubImage2D = (CopyTexSubImage2D)GL.GetDelegateForExtensionMethod("glCopyTexSubImage2D", typeof(CopyTexSubImage2D)) ?? new CopyTexSubImage2D(Imports.CopyTexSubImage2D);
+        internal static CopyTexSubImage2D glCopyTexSubImage2D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexSubImage1D(GL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* pixels);
-        internal unsafe static TexSubImage1D glTexSubImage1D = (TexSubImage1D)GL.GetDelegateForExtensionMethod("glTexSubImage1D", typeof(TexSubImage1D)) ?? new TexSubImage1D(Imports.TexSubImage1D);
+        internal unsafe static TexSubImage1D glTexSubImage1D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexSubImage2D(GL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* pixels);
-        internal unsafe static TexSubImage2D glTexSubImage2D = (TexSubImage2D)GL.GetDelegateForExtensionMethod("glTexSubImage2D", typeof(TexSubImage2D)) ?? new TexSubImage2D(Imports.TexSubImage2D);
+        internal unsafe static TexSubImage2D glTexSubImage2D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate Boolean AreTexturesResident(Int32 n, UInt32* textures, [Out] GL.Enums.Boolean* residences);
-        internal unsafe static AreTexturesResident glAreTexturesResident = (AreTexturesResident)GL.GetDelegateForExtensionMethod("glAreTexturesResident", typeof(AreTexturesResident)) ?? new AreTexturesResident(Imports.AreTexturesResident);
+        internal unsafe static AreTexturesResident glAreTexturesResident = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void BindTexture(GL.Enums.TextureTarget target, UInt32 texture);
-        internal static BindTexture glBindTexture = (BindTexture)GL.GetDelegateForExtensionMethod("glBindTexture", typeof(BindTexture)) ?? new BindTexture(Imports.BindTexture);
+        internal static BindTexture glBindTexture = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void DeleteTextures(Int32 n, UInt32* textures);
-        internal unsafe static DeleteTextures glDeleteTextures = (DeleteTextures)GL.GetDelegateForExtensionMethod("glDeleteTextures", typeof(DeleteTextures)) ?? new DeleteTextures(Imports.DeleteTextures);
+        internal unsafe static DeleteTextures glDeleteTextures = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GenTextures(Int32 n, [Out] UInt32* textures);
-        internal unsafe static GenTextures glGenTextures = (GenTextures)GL.GetDelegateForExtensionMethod("glGenTextures", typeof(GenTextures)) ?? new GenTextures(Imports.GenTextures);
+        internal unsafe static GenTextures glGenTextures = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Boolean IsTexture(UInt32 texture);
-        internal static IsTexture glIsTexture = (IsTexture)GL.GetDelegateForExtensionMethod("glIsTexture", typeof(IsTexture)) ?? new IsTexture(Imports.IsTexture);
+        internal static IsTexture glIsTexture = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void PrioritizeTextures(Int32 n, UInt32* textures, Single* priorities);
-        internal unsafe static PrioritizeTextures glPrioritizeTextures = (PrioritizeTextures)GL.GetDelegateForExtensionMethod("glPrioritizeTextures", typeof(PrioritizeTextures)) ?? new PrioritizeTextures(Imports.PrioritizeTextures);
+        internal unsafe static PrioritizeTextures glPrioritizeTextures = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Indexub(Byte c);
-        internal static Indexub glIndexub = (Indexub)GL.GetDelegateForExtensionMethod("glIndexub", typeof(Indexub)) ?? new Indexub(Imports.Indexub);
+        internal static Indexub glIndexub = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Indexubv(Byte* c);
-        internal unsafe static Indexubv glIndexubv = (Indexubv)GL.GetDelegateForExtensionMethod("glIndexubv", typeof(Indexubv)) ?? new Indexubv(Imports.Indexubv);
+        internal unsafe static Indexubv glIndexubv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PopClientAttrib();
-        internal static PopClientAttrib glPopClientAttrib = (PopClientAttrib)GL.GetDelegateForExtensionMethod("glPopClientAttrib", typeof(PopClientAttrib)) ?? new PopClientAttrib(Imports.PopClientAttrib);
+        internal static PopClientAttrib glPopClientAttrib = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PushClientAttrib(GL.Enums.ClientAttribMask mask);
-        internal static PushClientAttrib glPushClientAttrib = (PushClientAttrib)GL.GetDelegateForExtensionMethod("glPushClientAttrib", typeof(PushClientAttrib)) ?? new PushClientAttrib(Imports.PushClientAttrib);
+        internal static PushClientAttrib glPushClientAttrib = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void BlendColor(Single red, Single green, Single blue, Single alpha);
-        internal static BlendColor glBlendColor = (BlendColor)GL.GetDelegateForExtensionMethod("glBlendColor", typeof(BlendColor)) ?? new BlendColor(Imports.BlendColor);
+        internal static BlendColor glBlendColor = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void BlendEquation(GL.Enums.VERSION_1_2 mode);
-        internal static BlendEquation glBlendEquation = (BlendEquation)GL.GetDelegateForExtensionMethod("glBlendEquation", typeof(BlendEquation)) ?? new BlendEquation(Imports.BlendEquation);
+        internal static BlendEquation glBlendEquation = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void DrawRangeElements(GL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, GL.Enums.VERSION_1_2 type, void* indices);
-        internal unsafe static DrawRangeElements glDrawRangeElements = (DrawRangeElements)GL.GetDelegateForExtensionMethod("glDrawRangeElements", typeof(DrawRangeElements)) ?? new DrawRangeElements(Imports.DrawRangeElements);
+        internal unsafe static DrawRangeElements glDrawRangeElements = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ColorTable(GL.Enums.VERSION_1_2 target, GL.Enums.PixelInternalFormat internalformat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* table);
-        internal unsafe static ColorTable glColorTable = (ColorTable)GL.GetDelegateForExtensionMethod("glColorTable", typeof(ColorTable)) ?? new ColorTable(Imports.ColorTable);
+        internal unsafe static ColorTable glColorTable = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ColorTableParameterfv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, Single* @params);
-        internal unsafe static ColorTableParameterfv glColorTableParameterfv = (ColorTableParameterfv)GL.GetDelegateForExtensionMethod("glColorTableParameterfv", typeof(ColorTableParameterfv)) ?? new ColorTableParameterfv(Imports.ColorTableParameterfv);
+        internal unsafe static ColorTableParameterfv glColorTableParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ColorTableParameteriv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, Int32* @params);
-        internal unsafe static ColorTableParameteriv glColorTableParameteriv = (ColorTableParameteriv)GL.GetDelegateForExtensionMethod("glColorTableParameteriv", typeof(ColorTableParameteriv)) ?? new ColorTableParameteriv(Imports.ColorTableParameteriv);
+        internal unsafe static ColorTableParameteriv glColorTableParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyColorTable(GL.Enums.VERSION_1_2 target, GL.Enums.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
-        internal static CopyColorTable glCopyColorTable = (CopyColorTable)GL.GetDelegateForExtensionMethod("glCopyColorTable", typeof(CopyColorTable)) ?? new CopyColorTable(Imports.CopyColorTable);
+        internal static CopyColorTable glCopyColorTable = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetColorTable(GL.Enums.VERSION_1_2 target, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [Out] void* table);
-        internal unsafe static GetColorTable glGetColorTable = (GetColorTable)GL.GetDelegateForExtensionMethod("glGetColorTable", typeof(GetColorTable)) ?? new GetColorTable(Imports.GetColorTable);
+        internal unsafe static GetColorTable glGetColorTable = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetColorTableParameterfv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, [Out] Single* @params);
-        internal unsafe static GetColorTableParameterfv glGetColorTableParameterfv = (GetColorTableParameterfv)GL.GetDelegateForExtensionMethod("glGetColorTableParameterfv", typeof(GetColorTableParameterfv)) ?? new GetColorTableParameterfv(Imports.GetColorTableParameterfv);
+        internal unsafe static GetColorTableParameterfv glGetColorTableParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetColorTableParameteriv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, [Out] Int32* @params);
-        internal unsafe static GetColorTableParameteriv glGetColorTableParameteriv = (GetColorTableParameteriv)GL.GetDelegateForExtensionMethod("glGetColorTableParameteriv", typeof(GetColorTableParameteriv)) ?? new GetColorTableParameteriv(Imports.GetColorTableParameteriv);
+        internal unsafe static GetColorTableParameteriv glGetColorTableParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ColorSubTable(GL.Enums.VERSION_1_2 target, Int32 start, Int32 count, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* data);
-        internal unsafe static ColorSubTable glColorSubTable = (ColorSubTable)GL.GetDelegateForExtensionMethod("glColorSubTable", typeof(ColorSubTable)) ?? new ColorSubTable(Imports.ColorSubTable);
+        internal unsafe static ColorSubTable glColorSubTable = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyColorSubTable(GL.Enums.VERSION_1_2 target, Int32 start, Int32 x, Int32 y, Int32 width);
-        internal static CopyColorSubTable glCopyColorSubTable = (CopyColorSubTable)GL.GetDelegateForExtensionMethod("glCopyColorSubTable", typeof(CopyColorSubTable)) ?? new CopyColorSubTable(Imports.CopyColorSubTable);
+        internal static CopyColorSubTable glCopyColorSubTable = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ConvolutionFilter1D(GL.Enums.VERSION_1_2 target, GL.Enums.PixelInternalFormat internalformat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* image);
-        internal unsafe static ConvolutionFilter1D glConvolutionFilter1D = (ConvolutionFilter1D)GL.GetDelegateForExtensionMethod("glConvolutionFilter1D", typeof(ConvolutionFilter1D)) ?? new ConvolutionFilter1D(Imports.ConvolutionFilter1D);
+        internal unsafe static ConvolutionFilter1D glConvolutionFilter1D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ConvolutionFilter2D(GL.Enums.VERSION_1_2 target, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* image);
-        internal unsafe static ConvolutionFilter2D glConvolutionFilter2D = (ConvolutionFilter2D)GL.GetDelegateForExtensionMethod("glConvolutionFilter2D", typeof(ConvolutionFilter2D)) ?? new ConvolutionFilter2D(Imports.ConvolutionFilter2D);
+        internal unsafe static ConvolutionFilter2D glConvolutionFilter2D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ConvolutionParameterf(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, Single @params);
-        internal static ConvolutionParameterf glConvolutionParameterf = (ConvolutionParameterf)GL.GetDelegateForExtensionMethod("glConvolutionParameterf", typeof(ConvolutionParameterf)) ?? new ConvolutionParameterf(Imports.ConvolutionParameterf);
+        internal static ConvolutionParameterf glConvolutionParameterf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ConvolutionParameterfv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, Single* @params);
-        internal unsafe static ConvolutionParameterfv glConvolutionParameterfv = (ConvolutionParameterfv)GL.GetDelegateForExtensionMethod("glConvolutionParameterfv", typeof(ConvolutionParameterfv)) ?? new ConvolutionParameterfv(Imports.ConvolutionParameterfv);
+        internal unsafe static ConvolutionParameterfv glConvolutionParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ConvolutionParameteri(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, Int32 @params);
-        internal static ConvolutionParameteri glConvolutionParameteri = (ConvolutionParameteri)GL.GetDelegateForExtensionMethod("glConvolutionParameteri", typeof(ConvolutionParameteri)) ?? new ConvolutionParameteri(Imports.ConvolutionParameteri);
+        internal static ConvolutionParameteri glConvolutionParameteri = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ConvolutionParameteriv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, Int32* @params);
-        internal unsafe static ConvolutionParameteriv glConvolutionParameteriv = (ConvolutionParameteriv)GL.GetDelegateForExtensionMethod("glConvolutionParameteriv", typeof(ConvolutionParameteriv)) ?? new ConvolutionParameteriv(Imports.ConvolutionParameteriv);
+        internal unsafe static ConvolutionParameteriv glConvolutionParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyConvolutionFilter1D(GL.Enums.VERSION_1_2 target, GL.Enums.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
-        internal static CopyConvolutionFilter1D glCopyConvolutionFilter1D = (CopyConvolutionFilter1D)GL.GetDelegateForExtensionMethod("glCopyConvolutionFilter1D", typeof(CopyConvolutionFilter1D)) ?? new CopyConvolutionFilter1D(Imports.CopyConvolutionFilter1D);
+        internal static CopyConvolutionFilter1D glCopyConvolutionFilter1D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyConvolutionFilter2D(GL.Enums.VERSION_1_2 target, GL.Enums.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
-        internal static CopyConvolutionFilter2D glCopyConvolutionFilter2D = (CopyConvolutionFilter2D)GL.GetDelegateForExtensionMethod("glCopyConvolutionFilter2D", typeof(CopyConvolutionFilter2D)) ?? new CopyConvolutionFilter2D(Imports.CopyConvolutionFilter2D);
+        internal static CopyConvolutionFilter2D glCopyConvolutionFilter2D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetConvolutionFilter(GL.Enums.VERSION_1_2 target, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [Out] void* image);
-        internal unsafe static GetConvolutionFilter glGetConvolutionFilter = (GetConvolutionFilter)GL.GetDelegateForExtensionMethod("glGetConvolutionFilter", typeof(GetConvolutionFilter)) ?? new GetConvolutionFilter(Imports.GetConvolutionFilter);
+        internal unsafe static GetConvolutionFilter glGetConvolutionFilter = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetConvolutionParameterfv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, [Out] Single* @params);
-        internal unsafe static GetConvolutionParameterfv glGetConvolutionParameterfv = (GetConvolutionParameterfv)GL.GetDelegateForExtensionMethod("glGetConvolutionParameterfv", typeof(GetConvolutionParameterfv)) ?? new GetConvolutionParameterfv(Imports.GetConvolutionParameterfv);
+        internal unsafe static GetConvolutionParameterfv glGetConvolutionParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetConvolutionParameteriv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, [Out] Int32* @params);
-        internal unsafe static GetConvolutionParameteriv glGetConvolutionParameteriv = (GetConvolutionParameteriv)GL.GetDelegateForExtensionMethod("glGetConvolutionParameteriv", typeof(GetConvolutionParameteriv)) ?? new GetConvolutionParameteriv(Imports.GetConvolutionParameteriv);
+        internal unsafe static GetConvolutionParameteriv glGetConvolutionParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetSeparableFilter(GL.Enums.VERSION_1_2 target, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [Out] void* row, [Out] void* column, [Out] void* span);
-        internal unsafe static GetSeparableFilter glGetSeparableFilter = (GetSeparableFilter)GL.GetDelegateForExtensionMethod("glGetSeparableFilter", typeof(GetSeparableFilter)) ?? new GetSeparableFilter(Imports.GetSeparableFilter);
+        internal unsafe static GetSeparableFilter glGetSeparableFilter = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SeparableFilter2D(GL.Enums.VERSION_1_2 target, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* row, void* column);
-        internal unsafe static SeparableFilter2D glSeparableFilter2D = (SeparableFilter2D)GL.GetDelegateForExtensionMethod("glSeparableFilter2D", typeof(SeparableFilter2D)) ?? new SeparableFilter2D(Imports.SeparableFilter2D);
+        internal unsafe static SeparableFilter2D glSeparableFilter2D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetHistogram(GL.Enums.VERSION_1_2 target, GL.Enums.Boolean reset, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [Out] void* values);
-        internal unsafe static GetHistogram glGetHistogram = (GetHistogram)GL.GetDelegateForExtensionMethod("glGetHistogram", typeof(GetHistogram)) ?? new GetHistogram(Imports.GetHistogram);
+        internal unsafe static GetHistogram glGetHistogram = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetHistogramParameterfv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, [Out] Single* @params);
-        internal unsafe static GetHistogramParameterfv glGetHistogramParameterfv = (GetHistogramParameterfv)GL.GetDelegateForExtensionMethod("glGetHistogramParameterfv", typeof(GetHistogramParameterfv)) ?? new GetHistogramParameterfv(Imports.GetHistogramParameterfv);
+        internal unsafe static GetHistogramParameterfv glGetHistogramParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetHistogramParameteriv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, [Out] Int32* @params);
-        internal unsafe static GetHistogramParameteriv glGetHistogramParameteriv = (GetHistogramParameteriv)GL.GetDelegateForExtensionMethod("glGetHistogramParameteriv", typeof(GetHistogramParameteriv)) ?? new GetHistogramParameteriv(Imports.GetHistogramParameteriv);
+        internal unsafe static GetHistogramParameteriv glGetHistogramParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetMinmax(GL.Enums.VERSION_1_2 target, GL.Enums.Boolean reset, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [Out] void* values);
-        internal unsafe static GetMinmax glGetMinmax = (GetMinmax)GL.GetDelegateForExtensionMethod("glGetMinmax", typeof(GetMinmax)) ?? new GetMinmax(Imports.GetMinmax);
+        internal unsafe static GetMinmax glGetMinmax = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetMinmaxParameterfv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, [Out] Single* @params);
-        internal unsafe static GetMinmaxParameterfv glGetMinmaxParameterfv = (GetMinmaxParameterfv)GL.GetDelegateForExtensionMethod("glGetMinmaxParameterfv", typeof(GetMinmaxParameterfv)) ?? new GetMinmaxParameterfv(Imports.GetMinmaxParameterfv);
+        internal unsafe static GetMinmaxParameterfv glGetMinmaxParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetMinmaxParameteriv(GL.Enums.VERSION_1_2 target, GL.Enums.VERSION_1_2 pname, [Out] Int32* @params);
-        internal unsafe static GetMinmaxParameteriv glGetMinmaxParameteriv = (GetMinmaxParameteriv)GL.GetDelegateForExtensionMethod("glGetMinmaxParameteriv", typeof(GetMinmaxParameteriv)) ?? new GetMinmaxParameteriv(Imports.GetMinmaxParameteriv);
+        internal unsafe static GetMinmaxParameteriv glGetMinmaxParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Histogram(GL.Enums.VERSION_1_2 target, Int32 width, GL.Enums.PixelInternalFormat internalformat, GL.Enums.Boolean sink);
-        internal static Histogram glHistogram = (Histogram)GL.GetDelegateForExtensionMethod("glHistogram", typeof(Histogram)) ?? new Histogram(Imports.Histogram);
+        internal static Histogram glHistogram = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Minmax(GL.Enums.VERSION_1_2 target, GL.Enums.PixelInternalFormat internalformat, GL.Enums.Boolean sink);
-        internal static Minmax glMinmax = (Minmax)GL.GetDelegateForExtensionMethod("glMinmax", typeof(Minmax)) ?? new Minmax(Imports.Minmax);
+        internal static Minmax glMinmax = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ResetHistogram(GL.Enums.VERSION_1_2 target);
-        internal static ResetHistogram glResetHistogram = (ResetHistogram)GL.GetDelegateForExtensionMethod("glResetHistogram", typeof(ResetHistogram)) ?? new ResetHistogram(Imports.ResetHistogram);
+        internal static ResetHistogram glResetHistogram = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ResetMinmax(GL.Enums.VERSION_1_2 target);
-        internal static ResetMinmax glResetMinmax = (ResetMinmax)GL.GetDelegateForExtensionMethod("glResetMinmax", typeof(ResetMinmax)) ?? new ResetMinmax(Imports.ResetMinmax);
+        internal static ResetMinmax glResetMinmax = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexImage3D(GL.Enums.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* pixels);
-        internal unsafe static TexImage3D glTexImage3D = (TexImage3D)GL.GetDelegateForExtensionMethod("glTexImage3D", typeof(TexImage3D)) ?? new TexImage3D(Imports.TexImage3D);
+        internal unsafe static TexImage3D glTexImage3D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexSubImage3D(GL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* pixels);
-        internal unsafe static TexSubImage3D glTexSubImage3D = (TexSubImage3D)GL.GetDelegateForExtensionMethod("glTexSubImage3D", typeof(TexSubImage3D)) ?? new TexSubImage3D(Imports.TexSubImage3D);
+        internal unsafe static TexSubImage3D glTexSubImage3D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CopyTexSubImage3D(GL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 x, Int32 y, Int32 width, Int32 height);
-        internal static CopyTexSubImage3D glCopyTexSubImage3D = (CopyTexSubImage3D)GL.GetDelegateForExtensionMethod("glCopyTexSubImage3D", typeof(CopyTexSubImage3D)) ?? new CopyTexSubImage3D(Imports.CopyTexSubImage3D);
+        internal static CopyTexSubImage3D glCopyTexSubImage3D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ActiveTexture(GL.Enums.VERSION_1_3 texture);
-        internal static ActiveTexture glActiveTexture = (ActiveTexture)GL.GetDelegateForExtensionMethod("glActiveTexture", typeof(ActiveTexture)) ?? new ActiveTexture(Imports.ActiveTexture);
+        internal static ActiveTexture glActiveTexture = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ClientActiveTexture(GL.Enums.VERSION_1_3 texture);
-        internal static ClientActiveTexture glClientActiveTexture = (ClientActiveTexture)GL.GetDelegateForExtensionMethod("glClientActiveTexture", typeof(ClientActiveTexture)) ?? new ClientActiveTexture(Imports.ClientActiveTexture);
+        internal static ClientActiveTexture glClientActiveTexture = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord1d(GL.Enums.VERSION_1_3 target, Double s);
-        internal static MultiTexCoord1d glMultiTexCoord1d = (MultiTexCoord1d)GL.GetDelegateForExtensionMethod("glMultiTexCoord1d", typeof(MultiTexCoord1d)) ?? new MultiTexCoord1d(Imports.MultiTexCoord1d);
+        internal static MultiTexCoord1d glMultiTexCoord1d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord1dv(GL.Enums.VERSION_1_3 target, Double* v);
-        internal unsafe static MultiTexCoord1dv glMultiTexCoord1dv = (MultiTexCoord1dv)GL.GetDelegateForExtensionMethod("glMultiTexCoord1dv", typeof(MultiTexCoord1dv)) ?? new MultiTexCoord1dv(Imports.MultiTexCoord1dv);
+        internal unsafe static MultiTexCoord1dv glMultiTexCoord1dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord1f(GL.Enums.VERSION_1_3 target, Single s);
-        internal static MultiTexCoord1f glMultiTexCoord1f = (MultiTexCoord1f)GL.GetDelegateForExtensionMethod("glMultiTexCoord1f", typeof(MultiTexCoord1f)) ?? new MultiTexCoord1f(Imports.MultiTexCoord1f);
+        internal static MultiTexCoord1f glMultiTexCoord1f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord1fv(GL.Enums.VERSION_1_3 target, Single* v);
-        internal unsafe static MultiTexCoord1fv glMultiTexCoord1fv = (MultiTexCoord1fv)GL.GetDelegateForExtensionMethod("glMultiTexCoord1fv", typeof(MultiTexCoord1fv)) ?? new MultiTexCoord1fv(Imports.MultiTexCoord1fv);
+        internal unsafe static MultiTexCoord1fv glMultiTexCoord1fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord1i(GL.Enums.VERSION_1_3 target, Int32 s);
-        internal static MultiTexCoord1i glMultiTexCoord1i = (MultiTexCoord1i)GL.GetDelegateForExtensionMethod("glMultiTexCoord1i", typeof(MultiTexCoord1i)) ?? new MultiTexCoord1i(Imports.MultiTexCoord1i);
+        internal static MultiTexCoord1i glMultiTexCoord1i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord1iv(GL.Enums.VERSION_1_3 target, Int32* v);
-        internal unsafe static MultiTexCoord1iv glMultiTexCoord1iv = (MultiTexCoord1iv)GL.GetDelegateForExtensionMethod("glMultiTexCoord1iv", typeof(MultiTexCoord1iv)) ?? new MultiTexCoord1iv(Imports.MultiTexCoord1iv);
+        internal unsafe static MultiTexCoord1iv glMultiTexCoord1iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord1s(GL.Enums.VERSION_1_3 target, Int16 s);
-        internal static MultiTexCoord1s glMultiTexCoord1s = (MultiTexCoord1s)GL.GetDelegateForExtensionMethod("glMultiTexCoord1s", typeof(MultiTexCoord1s)) ?? new MultiTexCoord1s(Imports.MultiTexCoord1s);
+        internal static MultiTexCoord1s glMultiTexCoord1s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord1sv(GL.Enums.VERSION_1_3 target, Int16* v);
-        internal unsafe static MultiTexCoord1sv glMultiTexCoord1sv = (MultiTexCoord1sv)GL.GetDelegateForExtensionMethod("glMultiTexCoord1sv", typeof(MultiTexCoord1sv)) ?? new MultiTexCoord1sv(Imports.MultiTexCoord1sv);
+        internal unsafe static MultiTexCoord1sv glMultiTexCoord1sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord2d(GL.Enums.VERSION_1_3 target, Double s, Double t);
-        internal static MultiTexCoord2d glMultiTexCoord2d = (MultiTexCoord2d)GL.GetDelegateForExtensionMethod("glMultiTexCoord2d", typeof(MultiTexCoord2d)) ?? new MultiTexCoord2d(Imports.MultiTexCoord2d);
+        internal static MultiTexCoord2d glMultiTexCoord2d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord2dv(GL.Enums.VERSION_1_3 target, Double* v);
-        internal unsafe static MultiTexCoord2dv glMultiTexCoord2dv = (MultiTexCoord2dv)GL.GetDelegateForExtensionMethod("glMultiTexCoord2dv", typeof(MultiTexCoord2dv)) ?? new MultiTexCoord2dv(Imports.MultiTexCoord2dv);
+        internal unsafe static MultiTexCoord2dv glMultiTexCoord2dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord2f(GL.Enums.VERSION_1_3 target, Single s, Single t);
-        internal static MultiTexCoord2f glMultiTexCoord2f = (MultiTexCoord2f)GL.GetDelegateForExtensionMethod("glMultiTexCoord2f", typeof(MultiTexCoord2f)) ?? new MultiTexCoord2f(Imports.MultiTexCoord2f);
+        internal static MultiTexCoord2f glMultiTexCoord2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord2fv(GL.Enums.VERSION_1_3 target, Single* v);
-        internal unsafe static MultiTexCoord2fv glMultiTexCoord2fv = (MultiTexCoord2fv)GL.GetDelegateForExtensionMethod("glMultiTexCoord2fv", typeof(MultiTexCoord2fv)) ?? new MultiTexCoord2fv(Imports.MultiTexCoord2fv);
+        internal unsafe static MultiTexCoord2fv glMultiTexCoord2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord2i(GL.Enums.VERSION_1_3 target, Int32 s, Int32 t);
-        internal static MultiTexCoord2i glMultiTexCoord2i = (MultiTexCoord2i)GL.GetDelegateForExtensionMethod("glMultiTexCoord2i", typeof(MultiTexCoord2i)) ?? new MultiTexCoord2i(Imports.MultiTexCoord2i);
+        internal static MultiTexCoord2i glMultiTexCoord2i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord2iv(GL.Enums.VERSION_1_3 target, Int32* v);
-        internal unsafe static MultiTexCoord2iv glMultiTexCoord2iv = (MultiTexCoord2iv)GL.GetDelegateForExtensionMethod("glMultiTexCoord2iv", typeof(MultiTexCoord2iv)) ?? new MultiTexCoord2iv(Imports.MultiTexCoord2iv);
+        internal unsafe static MultiTexCoord2iv glMultiTexCoord2iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord2s(GL.Enums.VERSION_1_3 target, Int16 s, Int16 t);
-        internal static MultiTexCoord2s glMultiTexCoord2s = (MultiTexCoord2s)GL.GetDelegateForExtensionMethod("glMultiTexCoord2s", typeof(MultiTexCoord2s)) ?? new MultiTexCoord2s(Imports.MultiTexCoord2s);
+        internal static MultiTexCoord2s glMultiTexCoord2s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord2sv(GL.Enums.VERSION_1_3 target, Int16* v);
-        internal unsafe static MultiTexCoord2sv glMultiTexCoord2sv = (MultiTexCoord2sv)GL.GetDelegateForExtensionMethod("glMultiTexCoord2sv", typeof(MultiTexCoord2sv)) ?? new MultiTexCoord2sv(Imports.MultiTexCoord2sv);
+        internal unsafe static MultiTexCoord2sv glMultiTexCoord2sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord3d(GL.Enums.VERSION_1_3 target, Double s, Double t, Double r);
-        internal static MultiTexCoord3d glMultiTexCoord3d = (MultiTexCoord3d)GL.GetDelegateForExtensionMethod("glMultiTexCoord3d", typeof(MultiTexCoord3d)) ?? new MultiTexCoord3d(Imports.MultiTexCoord3d);
+        internal static MultiTexCoord3d glMultiTexCoord3d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord3dv(GL.Enums.VERSION_1_3 target, Double* v);
-        internal unsafe static MultiTexCoord3dv glMultiTexCoord3dv = (MultiTexCoord3dv)GL.GetDelegateForExtensionMethod("glMultiTexCoord3dv", typeof(MultiTexCoord3dv)) ?? new MultiTexCoord3dv(Imports.MultiTexCoord3dv);
+        internal unsafe static MultiTexCoord3dv glMultiTexCoord3dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord3f(GL.Enums.VERSION_1_3 target, Single s, Single t, Single r);
-        internal static MultiTexCoord3f glMultiTexCoord3f = (MultiTexCoord3f)GL.GetDelegateForExtensionMethod("glMultiTexCoord3f", typeof(MultiTexCoord3f)) ?? new MultiTexCoord3f(Imports.MultiTexCoord3f);
+        internal static MultiTexCoord3f glMultiTexCoord3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord3fv(GL.Enums.VERSION_1_3 target, Single* v);
-        internal unsafe static MultiTexCoord3fv glMultiTexCoord3fv = (MultiTexCoord3fv)GL.GetDelegateForExtensionMethod("glMultiTexCoord3fv", typeof(MultiTexCoord3fv)) ?? new MultiTexCoord3fv(Imports.MultiTexCoord3fv);
+        internal unsafe static MultiTexCoord3fv glMultiTexCoord3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord3i(GL.Enums.VERSION_1_3 target, Int32 s, Int32 t, Int32 r);
-        internal static MultiTexCoord3i glMultiTexCoord3i = (MultiTexCoord3i)GL.GetDelegateForExtensionMethod("glMultiTexCoord3i", typeof(MultiTexCoord3i)) ?? new MultiTexCoord3i(Imports.MultiTexCoord3i);
+        internal static MultiTexCoord3i glMultiTexCoord3i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord3iv(GL.Enums.VERSION_1_3 target, Int32* v);
-        internal unsafe static MultiTexCoord3iv glMultiTexCoord3iv = (MultiTexCoord3iv)GL.GetDelegateForExtensionMethod("glMultiTexCoord3iv", typeof(MultiTexCoord3iv)) ?? new MultiTexCoord3iv(Imports.MultiTexCoord3iv);
+        internal unsafe static MultiTexCoord3iv glMultiTexCoord3iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord3s(GL.Enums.VERSION_1_3 target, Int16 s, Int16 t, Int16 r);
-        internal static MultiTexCoord3s glMultiTexCoord3s = (MultiTexCoord3s)GL.GetDelegateForExtensionMethod("glMultiTexCoord3s", typeof(MultiTexCoord3s)) ?? new MultiTexCoord3s(Imports.MultiTexCoord3s);
+        internal static MultiTexCoord3s glMultiTexCoord3s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord3sv(GL.Enums.VERSION_1_3 target, Int16* v);
-        internal unsafe static MultiTexCoord3sv glMultiTexCoord3sv = (MultiTexCoord3sv)GL.GetDelegateForExtensionMethod("glMultiTexCoord3sv", typeof(MultiTexCoord3sv)) ?? new MultiTexCoord3sv(Imports.MultiTexCoord3sv);
+        internal unsafe static MultiTexCoord3sv glMultiTexCoord3sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord4d(GL.Enums.VERSION_1_3 target, Double s, Double t, Double r, Double q);
-        internal static MultiTexCoord4d glMultiTexCoord4d = (MultiTexCoord4d)GL.GetDelegateForExtensionMethod("glMultiTexCoord4d", typeof(MultiTexCoord4d)) ?? new MultiTexCoord4d(Imports.MultiTexCoord4d);
+        internal static MultiTexCoord4d glMultiTexCoord4d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord4dv(GL.Enums.VERSION_1_3 target, Double* v);
-        internal unsafe static MultiTexCoord4dv glMultiTexCoord4dv = (MultiTexCoord4dv)GL.GetDelegateForExtensionMethod("glMultiTexCoord4dv", typeof(MultiTexCoord4dv)) ?? new MultiTexCoord4dv(Imports.MultiTexCoord4dv);
+        internal unsafe static MultiTexCoord4dv glMultiTexCoord4dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord4f(GL.Enums.VERSION_1_3 target, Single s, Single t, Single r, Single q);
-        internal static MultiTexCoord4f glMultiTexCoord4f = (MultiTexCoord4f)GL.GetDelegateForExtensionMethod("glMultiTexCoord4f", typeof(MultiTexCoord4f)) ?? new MultiTexCoord4f(Imports.MultiTexCoord4f);
+        internal static MultiTexCoord4f glMultiTexCoord4f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord4fv(GL.Enums.VERSION_1_3 target, Single* v);
-        internal unsafe static MultiTexCoord4fv glMultiTexCoord4fv = (MultiTexCoord4fv)GL.GetDelegateForExtensionMethod("glMultiTexCoord4fv", typeof(MultiTexCoord4fv)) ?? new MultiTexCoord4fv(Imports.MultiTexCoord4fv);
+        internal unsafe static MultiTexCoord4fv glMultiTexCoord4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord4i(GL.Enums.VERSION_1_3 target, Int32 s, Int32 t, Int32 r, Int32 q);
-        internal static MultiTexCoord4i glMultiTexCoord4i = (MultiTexCoord4i)GL.GetDelegateForExtensionMethod("glMultiTexCoord4i", typeof(MultiTexCoord4i)) ?? new MultiTexCoord4i(Imports.MultiTexCoord4i);
+        internal static MultiTexCoord4i glMultiTexCoord4i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord4iv(GL.Enums.VERSION_1_3 target, Int32* v);
-        internal unsafe static MultiTexCoord4iv glMultiTexCoord4iv = (MultiTexCoord4iv)GL.GetDelegateForExtensionMethod("glMultiTexCoord4iv", typeof(MultiTexCoord4iv)) ?? new MultiTexCoord4iv(Imports.MultiTexCoord4iv);
+        internal unsafe static MultiTexCoord4iv glMultiTexCoord4iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void MultiTexCoord4s(GL.Enums.VERSION_1_3 target, Int16 s, Int16 t, Int16 r, Int16 q);
-        internal static MultiTexCoord4s glMultiTexCoord4s = (MultiTexCoord4s)GL.GetDelegateForExtensionMethod("glMultiTexCoord4s", typeof(MultiTexCoord4s)) ?? new MultiTexCoord4s(Imports.MultiTexCoord4s);
+        internal static MultiTexCoord4s glMultiTexCoord4s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiTexCoord4sv(GL.Enums.VERSION_1_3 target, Int16* v);
-        internal unsafe static MultiTexCoord4sv glMultiTexCoord4sv = (MultiTexCoord4sv)GL.GetDelegateForExtensionMethod("glMultiTexCoord4sv", typeof(MultiTexCoord4sv)) ?? new MultiTexCoord4sv(Imports.MultiTexCoord4sv);
+        internal unsafe static MultiTexCoord4sv glMultiTexCoord4sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void LoadTransposeMatrixf(Single* m);
-        internal unsafe static LoadTransposeMatrixf glLoadTransposeMatrixf = (LoadTransposeMatrixf)GL.GetDelegateForExtensionMethod("glLoadTransposeMatrixf", typeof(LoadTransposeMatrixf)) ?? new LoadTransposeMatrixf(Imports.LoadTransposeMatrixf);
+        internal unsafe static LoadTransposeMatrixf glLoadTransposeMatrixf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void LoadTransposeMatrixd(Double* m);
-        internal unsafe static LoadTransposeMatrixd glLoadTransposeMatrixd = (LoadTransposeMatrixd)GL.GetDelegateForExtensionMethod("glLoadTransposeMatrixd", typeof(LoadTransposeMatrixd)) ?? new LoadTransposeMatrixd(Imports.LoadTransposeMatrixd);
+        internal unsafe static LoadTransposeMatrixd glLoadTransposeMatrixd = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultTransposeMatrixf(Single* m);
-        internal unsafe static MultTransposeMatrixf glMultTransposeMatrixf = (MultTransposeMatrixf)GL.GetDelegateForExtensionMethod("glMultTransposeMatrixf", typeof(MultTransposeMatrixf)) ?? new MultTransposeMatrixf(Imports.MultTransposeMatrixf);
+        internal unsafe static MultTransposeMatrixf glMultTransposeMatrixf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultTransposeMatrixd(Double* m);
-        internal unsafe static MultTransposeMatrixd glMultTransposeMatrixd = (MultTransposeMatrixd)GL.GetDelegateForExtensionMethod("glMultTransposeMatrixd", typeof(MultTransposeMatrixd)) ?? new MultTransposeMatrixd(Imports.MultTransposeMatrixd);
+        internal unsafe static MultTransposeMatrixd glMultTransposeMatrixd = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SampleCoverage(Single value, GL.Enums.Boolean invert);
-        internal static SampleCoverage glSampleCoverage = (SampleCoverage)GL.GetDelegateForExtensionMethod("glSampleCoverage", typeof(SampleCoverage)) ?? new SampleCoverage(Imports.SampleCoverage);
+        internal static SampleCoverage glSampleCoverage = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void CompressedTexImage3D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, void* data);
-        internal unsafe static CompressedTexImage3D glCompressedTexImage3D = (CompressedTexImage3D)GL.GetDelegateForExtensionMethod("glCompressedTexImage3D", typeof(CompressedTexImage3D)) ?? new CompressedTexImage3D(Imports.CompressedTexImage3D);
+        internal unsafe static CompressedTexImage3D glCompressedTexImage3D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void CompressedTexImage2D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, void* data);
-        internal unsafe static CompressedTexImage2D glCompressedTexImage2D = (CompressedTexImage2D)GL.GetDelegateForExtensionMethod("glCompressedTexImage2D", typeof(CompressedTexImage2D)) ?? new CompressedTexImage2D(Imports.CompressedTexImage2D);
+        internal unsafe static CompressedTexImage2D glCompressedTexImage2D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void CompressedTexImage1D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 border, Int32 imageSize, void* data);
-        internal unsafe static CompressedTexImage1D glCompressedTexImage1D = (CompressedTexImage1D)GL.GetDelegateForExtensionMethod("glCompressedTexImage1D", typeof(CompressedTexImage1D)) ?? new CompressedTexImage1D(Imports.CompressedTexImage1D);
+        internal unsafe static CompressedTexImage1D glCompressedTexImage1D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void CompressedTexSubImage3D(GL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, Int32 imageSize, void* data);
-        internal unsafe static CompressedTexSubImage3D glCompressedTexSubImage3D = (CompressedTexSubImage3D)GL.GetDelegateForExtensionMethod("glCompressedTexSubImage3D", typeof(CompressedTexSubImage3D)) ?? new CompressedTexSubImage3D(Imports.CompressedTexSubImage3D);
+        internal unsafe static CompressedTexSubImage3D glCompressedTexSubImage3D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void CompressedTexSubImage2D(GL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, GL.Enums.PixelFormat format, Int32 imageSize, void* data);
-        internal unsafe static CompressedTexSubImage2D glCompressedTexSubImage2D = (CompressedTexSubImage2D)GL.GetDelegateForExtensionMethod("glCompressedTexSubImage2D", typeof(CompressedTexSubImage2D)) ?? new CompressedTexSubImage2D(Imports.CompressedTexSubImage2D);
+        internal unsafe static CompressedTexSubImage2D glCompressedTexSubImage2D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void CompressedTexSubImage1D(GL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, GL.Enums.PixelFormat format, Int32 imageSize, void* data);
-        internal unsafe static CompressedTexSubImage1D glCompressedTexSubImage1D = (CompressedTexSubImage1D)GL.GetDelegateForExtensionMethod("glCompressedTexSubImage1D", typeof(CompressedTexSubImage1D)) ?? new CompressedTexSubImage1D(Imports.CompressedTexSubImage1D);
+        internal unsafe static CompressedTexSubImage1D glCompressedTexSubImage1D = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetCompressedTexImage(GL.Enums.TextureTarget target, Int32 level, [Out] void* img);
-        internal unsafe static GetCompressedTexImage glGetCompressedTexImage = (GetCompressedTexImage)GL.GetDelegateForExtensionMethod("glGetCompressedTexImage", typeof(GetCompressedTexImage)) ?? new GetCompressedTexImage(Imports.GetCompressedTexImage);
+        internal unsafe static GetCompressedTexImage glGetCompressedTexImage = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void BlendFuncSeparate(GL.Enums.VERSION_1_4 sfactorRGB, GL.Enums.VERSION_1_4 dfactorRGB, GL.Enums.VERSION_1_4 sfactorAlpha, GL.Enums.VERSION_1_4 dfactorAlpha);
-        internal static BlendFuncSeparate glBlendFuncSeparate = (BlendFuncSeparate)GL.GetDelegateForExtensionMethod("glBlendFuncSeparate", typeof(BlendFuncSeparate)) ?? new BlendFuncSeparate(Imports.BlendFuncSeparate);
+        internal static BlendFuncSeparate glBlendFuncSeparate = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void FogCoordf(Single coord);
-        internal static FogCoordf glFogCoordf = (FogCoordf)GL.GetDelegateForExtensionMethod("glFogCoordf", typeof(FogCoordf)) ?? new FogCoordf(Imports.FogCoordf);
+        internal static FogCoordf glFogCoordf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void FogCoordfv(Single* coord);
-        internal unsafe static FogCoordfv glFogCoordfv = (FogCoordfv)GL.GetDelegateForExtensionMethod("glFogCoordfv", typeof(FogCoordfv)) ?? new FogCoordfv(Imports.FogCoordfv);
+        internal unsafe static FogCoordfv glFogCoordfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void FogCoordd(Double coord);
-        internal static FogCoordd glFogCoordd = (FogCoordd)GL.GetDelegateForExtensionMethod("glFogCoordd", typeof(FogCoordd)) ?? new FogCoordd(Imports.FogCoordd);
+        internal static FogCoordd glFogCoordd = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void FogCoorddv(Double* coord);
-        internal unsafe static FogCoorddv glFogCoorddv = (FogCoorddv)GL.GetDelegateForExtensionMethod("glFogCoorddv", typeof(FogCoorddv)) ?? new FogCoorddv(Imports.FogCoorddv);
+        internal unsafe static FogCoorddv glFogCoorddv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void FogCoordPointer(GL.Enums.VERSION_1_4 type, Int32 stride, void* pointer);
-        internal unsafe static FogCoordPointer glFogCoordPointer = (FogCoordPointer)GL.GetDelegateForExtensionMethod("glFogCoordPointer", typeof(FogCoordPointer)) ?? new FogCoordPointer(Imports.FogCoordPointer);
+        internal unsafe static FogCoordPointer glFogCoordPointer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount);
-        internal unsafe static MultiDrawArrays glMultiDrawArrays = (MultiDrawArrays)GL.GetDelegateForExtensionMethod("glMultiDrawArrays", typeof(MultiDrawArrays)) ?? new MultiDrawArrays(Imports.MultiDrawArrays);
+        internal unsafe static MultiDrawArrays glMultiDrawArrays = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void MultiDrawElements(GL.Enums.BeginMode mode, Int32* count, GL.Enums.VERSION_1_4 type, void* indices, Int32 primcount);
-        internal unsafe static MultiDrawElements glMultiDrawElements = (MultiDrawElements)GL.GetDelegateForExtensionMethod("glMultiDrawElements", typeof(MultiDrawElements)) ?? new MultiDrawElements(Imports.MultiDrawElements);
+        internal unsafe static MultiDrawElements glMultiDrawElements = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PointParameterf(GL.Enums.VERSION_1_4 pname, Single param);
-        internal static PointParameterf glPointParameterf = (PointParameterf)GL.GetDelegateForExtensionMethod("glPointParameterf", typeof(PointParameterf)) ?? new PointParameterf(Imports.PointParameterf);
+        internal static PointParameterf glPointParameterf = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void PointParameterfv(GL.Enums.VERSION_1_4 pname, Single* @params);
-        internal unsafe static PointParameterfv glPointParameterfv = (PointParameterfv)GL.GetDelegateForExtensionMethod("glPointParameterfv", typeof(PointParameterfv)) ?? new PointParameterfv(Imports.PointParameterfv);
+        internal unsafe static PointParameterfv glPointParameterfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PointParameteri(GL.Enums.VERSION_1_4 pname, Int32 param);
-        internal static PointParameteri glPointParameteri = (PointParameteri)GL.GetDelegateForExtensionMethod("glPointParameteri", typeof(PointParameteri)) ?? new PointParameteri(Imports.PointParameteri);
+        internal static PointParameteri glPointParameteri = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void PointParameteriv(GL.Enums.VERSION_1_4 pname, Int32* @params);
-        internal unsafe static PointParameteriv glPointParameteriv = (PointParameteriv)GL.GetDelegateForExtensionMethod("glPointParameteriv", typeof(PointParameteriv)) ?? new PointParameteriv(Imports.PointParameteriv);
+        internal unsafe static PointParameteriv glPointParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SecondaryColor3b(SByte red, SByte green, SByte blue);
-        internal static SecondaryColor3b glSecondaryColor3b = (SecondaryColor3b)GL.GetDelegateForExtensionMethod("glSecondaryColor3b", typeof(SecondaryColor3b)) ?? new SecondaryColor3b(Imports.SecondaryColor3b);
+        internal static SecondaryColor3b glSecondaryColor3b = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SecondaryColor3bv(SByte* v);
-        internal unsafe static SecondaryColor3bv glSecondaryColor3bv = (SecondaryColor3bv)GL.GetDelegateForExtensionMethod("glSecondaryColor3bv", typeof(SecondaryColor3bv)) ?? new SecondaryColor3bv(Imports.SecondaryColor3bv);
+        internal unsafe static SecondaryColor3bv glSecondaryColor3bv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SecondaryColor3d(Double red, Double green, Double blue);
-        internal static SecondaryColor3d glSecondaryColor3d = (SecondaryColor3d)GL.GetDelegateForExtensionMethod("glSecondaryColor3d", typeof(SecondaryColor3d)) ?? new SecondaryColor3d(Imports.SecondaryColor3d);
+        internal static SecondaryColor3d glSecondaryColor3d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SecondaryColor3dv(Double* v);
-        internal unsafe static SecondaryColor3dv glSecondaryColor3dv = (SecondaryColor3dv)GL.GetDelegateForExtensionMethod("glSecondaryColor3dv", typeof(SecondaryColor3dv)) ?? new SecondaryColor3dv(Imports.SecondaryColor3dv);
+        internal unsafe static SecondaryColor3dv glSecondaryColor3dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SecondaryColor3f(Single red, Single green, Single blue);
-        internal static SecondaryColor3f glSecondaryColor3f = (SecondaryColor3f)GL.GetDelegateForExtensionMethod("glSecondaryColor3f", typeof(SecondaryColor3f)) ?? new SecondaryColor3f(Imports.SecondaryColor3f);
+        internal static SecondaryColor3f glSecondaryColor3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SecondaryColor3fv(Single* v);
-        internal unsafe static SecondaryColor3fv glSecondaryColor3fv = (SecondaryColor3fv)GL.GetDelegateForExtensionMethod("glSecondaryColor3fv", typeof(SecondaryColor3fv)) ?? new SecondaryColor3fv(Imports.SecondaryColor3fv);
+        internal unsafe static SecondaryColor3fv glSecondaryColor3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SecondaryColor3i(Int32 red, Int32 green, Int32 blue);
-        internal static SecondaryColor3i glSecondaryColor3i = (SecondaryColor3i)GL.GetDelegateForExtensionMethod("glSecondaryColor3i", typeof(SecondaryColor3i)) ?? new SecondaryColor3i(Imports.SecondaryColor3i);
+        internal static SecondaryColor3i glSecondaryColor3i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SecondaryColor3iv(Int32* v);
-        internal unsafe static SecondaryColor3iv glSecondaryColor3iv = (SecondaryColor3iv)GL.GetDelegateForExtensionMethod("glSecondaryColor3iv", typeof(SecondaryColor3iv)) ?? new SecondaryColor3iv(Imports.SecondaryColor3iv);
+        internal unsafe static SecondaryColor3iv glSecondaryColor3iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SecondaryColor3s(Int16 red, Int16 green, Int16 blue);
-        internal static SecondaryColor3s glSecondaryColor3s = (SecondaryColor3s)GL.GetDelegateForExtensionMethod("glSecondaryColor3s", typeof(SecondaryColor3s)) ?? new SecondaryColor3s(Imports.SecondaryColor3s);
+        internal static SecondaryColor3s glSecondaryColor3s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SecondaryColor3sv(Int16* v);
-        internal unsafe static SecondaryColor3sv glSecondaryColor3sv = (SecondaryColor3sv)GL.GetDelegateForExtensionMethod("glSecondaryColor3sv", typeof(SecondaryColor3sv)) ?? new SecondaryColor3sv(Imports.SecondaryColor3sv);
+        internal unsafe static SecondaryColor3sv glSecondaryColor3sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SecondaryColor3ub(Byte red, Byte green, Byte blue);
-        internal static SecondaryColor3ub glSecondaryColor3ub = (SecondaryColor3ub)GL.GetDelegateForExtensionMethod("glSecondaryColor3ub", typeof(SecondaryColor3ub)) ?? new SecondaryColor3ub(Imports.SecondaryColor3ub);
+        internal static SecondaryColor3ub glSecondaryColor3ub = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SecondaryColor3ubv(Byte* v);
-        internal unsafe static SecondaryColor3ubv glSecondaryColor3ubv = (SecondaryColor3ubv)GL.GetDelegateForExtensionMethod("glSecondaryColor3ubv", typeof(SecondaryColor3ubv)) ?? new SecondaryColor3ubv(Imports.SecondaryColor3ubv);
+        internal unsafe static SecondaryColor3ubv glSecondaryColor3ubv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SecondaryColor3ui(UInt32 red, UInt32 green, UInt32 blue);
-        internal static SecondaryColor3ui glSecondaryColor3ui = (SecondaryColor3ui)GL.GetDelegateForExtensionMethod("glSecondaryColor3ui", typeof(SecondaryColor3ui)) ?? new SecondaryColor3ui(Imports.SecondaryColor3ui);
+        internal static SecondaryColor3ui glSecondaryColor3ui = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SecondaryColor3uiv(UInt32* v);
-        internal unsafe static SecondaryColor3uiv glSecondaryColor3uiv = (SecondaryColor3uiv)GL.GetDelegateForExtensionMethod("glSecondaryColor3uiv", typeof(SecondaryColor3uiv)) ?? new SecondaryColor3uiv(Imports.SecondaryColor3uiv);
+        internal unsafe static SecondaryColor3uiv glSecondaryColor3uiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SecondaryColor3us(UInt16 red, UInt16 green, UInt16 blue);
-        internal static SecondaryColor3us glSecondaryColor3us = (SecondaryColor3us)GL.GetDelegateForExtensionMethod("glSecondaryColor3us", typeof(SecondaryColor3us)) ?? new SecondaryColor3us(Imports.SecondaryColor3us);
+        internal static SecondaryColor3us glSecondaryColor3us = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SecondaryColor3usv(UInt16* v);
-        internal unsafe static SecondaryColor3usv glSecondaryColor3usv = (SecondaryColor3usv)GL.GetDelegateForExtensionMethod("glSecondaryColor3usv", typeof(SecondaryColor3usv)) ?? new SecondaryColor3usv(Imports.SecondaryColor3usv);
+        internal unsafe static SecondaryColor3usv glSecondaryColor3usv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void SecondaryColorPointer(Int32 size, GL.Enums.ColorPointerType type, Int32 stride, void* pointer);
-        internal unsafe static SecondaryColorPointer glSecondaryColorPointer = (SecondaryColorPointer)GL.GetDelegateForExtensionMethod("glSecondaryColorPointer", typeof(SecondaryColorPointer)) ?? new SecondaryColorPointer(Imports.SecondaryColorPointer);
+        internal unsafe static SecondaryColorPointer glSecondaryColorPointer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void WindowPos2d(Double x, Double y);
-        internal static WindowPos2d glWindowPos2d = (WindowPos2d)GL.GetDelegateForExtensionMethod("glWindowPos2d", typeof(WindowPos2d)) ?? new WindowPos2d(Imports.WindowPos2d);
+        internal static WindowPos2d glWindowPos2d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void WindowPos2dv(Double* v);
-        internal unsafe static WindowPos2dv glWindowPos2dv = (WindowPos2dv)GL.GetDelegateForExtensionMethod("glWindowPos2dv", typeof(WindowPos2dv)) ?? new WindowPos2dv(Imports.WindowPos2dv);
+        internal unsafe static WindowPos2dv glWindowPos2dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void WindowPos2f(Single x, Single y);
-        internal static WindowPos2f glWindowPos2f = (WindowPos2f)GL.GetDelegateForExtensionMethod("glWindowPos2f", typeof(WindowPos2f)) ?? new WindowPos2f(Imports.WindowPos2f);
+        internal static WindowPos2f glWindowPos2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void WindowPos2fv(Single* v);
-        internal unsafe static WindowPos2fv glWindowPos2fv = (WindowPos2fv)GL.GetDelegateForExtensionMethod("glWindowPos2fv", typeof(WindowPos2fv)) ?? new WindowPos2fv(Imports.WindowPos2fv);
+        internal unsafe static WindowPos2fv glWindowPos2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void WindowPos2i(Int32 x, Int32 y);
-        internal static WindowPos2i glWindowPos2i = (WindowPos2i)GL.GetDelegateForExtensionMethod("glWindowPos2i", typeof(WindowPos2i)) ?? new WindowPos2i(Imports.WindowPos2i);
+        internal static WindowPos2i glWindowPos2i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void WindowPos2iv(Int32* v);
-        internal unsafe static WindowPos2iv glWindowPos2iv = (WindowPos2iv)GL.GetDelegateForExtensionMethod("glWindowPos2iv", typeof(WindowPos2iv)) ?? new WindowPos2iv(Imports.WindowPos2iv);
+        internal unsafe static WindowPos2iv glWindowPos2iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void WindowPos2s(Int16 x, Int16 y);
-        internal static WindowPos2s glWindowPos2s = (WindowPos2s)GL.GetDelegateForExtensionMethod("glWindowPos2s", typeof(WindowPos2s)) ?? new WindowPos2s(Imports.WindowPos2s);
+        internal static WindowPos2s glWindowPos2s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void WindowPos2sv(Int16* v);
-        internal unsafe static WindowPos2sv glWindowPos2sv = (WindowPos2sv)GL.GetDelegateForExtensionMethod("glWindowPos2sv", typeof(WindowPos2sv)) ?? new WindowPos2sv(Imports.WindowPos2sv);
+        internal unsafe static WindowPos2sv glWindowPos2sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void WindowPos3d(Double x, Double y, Double z);
-        internal static WindowPos3d glWindowPos3d = (WindowPos3d)GL.GetDelegateForExtensionMethod("glWindowPos3d", typeof(WindowPos3d)) ?? new WindowPos3d(Imports.WindowPos3d);
+        internal static WindowPos3d glWindowPos3d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void WindowPos3dv(Double* v);
-        internal unsafe static WindowPos3dv glWindowPos3dv = (WindowPos3dv)GL.GetDelegateForExtensionMethod("glWindowPos3dv", typeof(WindowPos3dv)) ?? new WindowPos3dv(Imports.WindowPos3dv);
+        internal unsafe static WindowPos3dv glWindowPos3dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void WindowPos3f(Single x, Single y, Single z);
-        internal static WindowPos3f glWindowPos3f = (WindowPos3f)GL.GetDelegateForExtensionMethod("glWindowPos3f", typeof(WindowPos3f)) ?? new WindowPos3f(Imports.WindowPos3f);
+        internal static WindowPos3f glWindowPos3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void WindowPos3fv(Single* v);
-        internal unsafe static WindowPos3fv glWindowPos3fv = (WindowPos3fv)GL.GetDelegateForExtensionMethod("glWindowPos3fv", typeof(WindowPos3fv)) ?? new WindowPos3fv(Imports.WindowPos3fv);
+        internal unsafe static WindowPos3fv glWindowPos3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void WindowPos3i(Int32 x, Int32 y, Int32 z);
-        internal static WindowPos3i glWindowPos3i = (WindowPos3i)GL.GetDelegateForExtensionMethod("glWindowPos3i", typeof(WindowPos3i)) ?? new WindowPos3i(Imports.WindowPos3i);
+        internal static WindowPos3i glWindowPos3i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void WindowPos3iv(Int32* v);
-        internal unsafe static WindowPos3iv glWindowPos3iv = (WindowPos3iv)GL.GetDelegateForExtensionMethod("glWindowPos3iv", typeof(WindowPos3iv)) ?? new WindowPos3iv(Imports.WindowPos3iv);
+        internal unsafe static WindowPos3iv glWindowPos3iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void WindowPos3s(Int16 x, Int16 y, Int16 z);
-        internal static WindowPos3s glWindowPos3s = (WindowPos3s)GL.GetDelegateForExtensionMethod("glWindowPos3s", typeof(WindowPos3s)) ?? new WindowPos3s(Imports.WindowPos3s);
+        internal static WindowPos3s glWindowPos3s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void WindowPos3sv(Int16* v);
-        internal unsafe static WindowPos3sv glWindowPos3sv = (WindowPos3sv)GL.GetDelegateForExtensionMethod("glWindowPos3sv", typeof(WindowPos3sv)) ?? new WindowPos3sv(Imports.WindowPos3sv);
+        internal unsafe static WindowPos3sv glWindowPos3sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GenQueries(Int32 n, [Out] UInt32* ids);
-        internal unsafe static GenQueries glGenQueries = (GenQueries)GL.GetDelegateForExtensionMethod("glGenQueries", typeof(GenQueries)) ?? new GenQueries(Imports.GenQueries);
+        internal unsafe static GenQueries glGenQueries = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void DeleteQueries(Int32 n, UInt32* ids);
-        internal unsafe static DeleteQueries glDeleteQueries = (DeleteQueries)GL.GetDelegateForExtensionMethod("glDeleteQueries", typeof(DeleteQueries)) ?? new DeleteQueries(Imports.DeleteQueries);
+        internal unsafe static DeleteQueries glDeleteQueries = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Boolean IsQuery(UInt32 id);
-        internal static IsQuery glIsQuery = (IsQuery)GL.GetDelegateForExtensionMethod("glIsQuery", typeof(IsQuery)) ?? new IsQuery(Imports.IsQuery);
+        internal static IsQuery glIsQuery = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void BeginQuery(GL.Enums.VERSION_1_5 target, UInt32 id);
-        internal static BeginQuery glBeginQuery = (BeginQuery)GL.GetDelegateForExtensionMethod("glBeginQuery", typeof(BeginQuery)) ?? new BeginQuery(Imports.BeginQuery);
+        internal static BeginQuery glBeginQuery = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EndQuery(GL.Enums.VERSION_1_5 target);
-        internal static EndQuery glEndQuery = (EndQuery)GL.GetDelegateForExtensionMethod("glEndQuery", typeof(EndQuery)) ?? new EndQuery(Imports.EndQuery);
+        internal static EndQuery glEndQuery = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetQueryiv(GL.Enums.VERSION_1_5 target, GL.Enums.VERSION_1_5 pname, [Out] Int32* @params);
-        internal unsafe static GetQueryiv glGetQueryiv = (GetQueryiv)GL.GetDelegateForExtensionMethod("glGetQueryiv", typeof(GetQueryiv)) ?? new GetQueryiv(Imports.GetQueryiv);
+        internal unsafe static GetQueryiv glGetQueryiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetQueryObjectiv(UInt32 id, GL.Enums.VERSION_1_5 pname, [Out] Int32* @params);
-        internal unsafe static GetQueryObjectiv glGetQueryObjectiv = (GetQueryObjectiv)GL.GetDelegateForExtensionMethod("glGetQueryObjectiv", typeof(GetQueryObjectiv)) ?? new GetQueryObjectiv(Imports.GetQueryObjectiv);
+        internal unsafe static GetQueryObjectiv glGetQueryObjectiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetQueryObjectuiv(UInt32 id, GL.Enums.VERSION_1_5 pname, [Out] UInt32* @params);
-        internal unsafe static GetQueryObjectuiv glGetQueryObjectuiv = (GetQueryObjectuiv)GL.GetDelegateForExtensionMethod("glGetQueryObjectuiv", typeof(GetQueryObjectuiv)) ?? new GetQueryObjectuiv(Imports.GetQueryObjectuiv);
+        internal unsafe static GetQueryObjectuiv glGetQueryObjectuiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void BindBuffer(GL.Enums.VERSION_1_5 target, UInt32 buffer);
-        internal static BindBuffer glBindBuffer = (BindBuffer)GL.GetDelegateForExtensionMethod("glBindBuffer", typeof(BindBuffer)) ?? new BindBuffer(Imports.BindBuffer);
+        internal static BindBuffer glBindBuffer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void DeleteBuffers(Int32 n, UInt32* buffers);
-        internal unsafe static DeleteBuffers glDeleteBuffers = (DeleteBuffers)GL.GetDelegateForExtensionMethod("glDeleteBuffers", typeof(DeleteBuffers)) ?? new DeleteBuffers(Imports.DeleteBuffers);
+        internal unsafe static DeleteBuffers glDeleteBuffers = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GenBuffers(Int32 n, [Out] UInt32* buffers);
-        internal unsafe static GenBuffers glGenBuffers = (GenBuffers)GL.GetDelegateForExtensionMethod("glGenBuffers", typeof(GenBuffers)) ?? new GenBuffers(Imports.GenBuffers);
+        internal unsafe static GenBuffers glGenBuffers = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Boolean IsBuffer(UInt32 buffer);
-        internal static IsBuffer glIsBuffer = (IsBuffer)GL.GetDelegateForExtensionMethod("glIsBuffer", typeof(IsBuffer)) ?? new IsBuffer(Imports.IsBuffer);
+        internal static IsBuffer glIsBuffer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void BufferData(GL.Enums.VERSION_1_5 target, IntPtr size, void* data, GL.Enums.VERSION_1_5 usage);
-        internal unsafe static BufferData glBufferData = (BufferData)GL.GetDelegateForExtensionMethod("glBufferData", typeof(BufferData)) ?? new BufferData(Imports.BufferData);
+        internal unsafe static BufferData glBufferData = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void BufferSubData(GL.Enums.VERSION_1_5 target, IntPtr offset, IntPtr size, void* data);
-        internal unsafe static BufferSubData glBufferSubData = (BufferSubData)GL.GetDelegateForExtensionMethod("glBufferSubData", typeof(BufferSubData)) ?? new BufferSubData(Imports.BufferSubData);
+        internal unsafe static BufferSubData glBufferSubData = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetBufferSubData(GL.Enums.VERSION_1_5 target, IntPtr offset, IntPtr size, [Out] void* data);
-        internal unsafe static GetBufferSubData glGetBufferSubData = (GetBufferSubData)GL.GetDelegateForExtensionMethod("glGetBufferSubData", typeof(GetBufferSubData)) ?? new GetBufferSubData(Imports.GetBufferSubData);
+        internal unsafe static GetBufferSubData glGetBufferSubData = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate IntPtr MapBuffer(GL.Enums.VERSION_1_5 target, GL.Enums.VERSION_1_5 access);
-        internal static MapBuffer glMapBuffer = (MapBuffer)GL.GetDelegateForExtensionMethod("glMapBuffer", typeof(MapBuffer)) ?? new MapBuffer(Imports.MapBuffer);
+        internal static MapBuffer glMapBuffer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Boolean UnmapBuffer(GL.Enums.VERSION_1_5 target);
-        internal static UnmapBuffer glUnmapBuffer = (UnmapBuffer)GL.GetDelegateForExtensionMethod("glUnmapBuffer", typeof(UnmapBuffer)) ?? new UnmapBuffer(Imports.UnmapBuffer);
+        internal static UnmapBuffer glUnmapBuffer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetBufferParameteriv(GL.Enums.VERSION_1_5 target, GL.Enums.VERSION_1_5 pname, [Out] Int32* @params);
-        internal unsafe static GetBufferParameteriv glGetBufferParameteriv = (GetBufferParameteriv)GL.GetDelegateForExtensionMethod("glGetBufferParameteriv", typeof(GetBufferParameteriv)) ?? new GetBufferParameteriv(Imports.GetBufferParameteriv);
+        internal unsafe static GetBufferParameteriv glGetBufferParameteriv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetBufferPointerv(GL.Enums.VERSION_1_5 target, GL.Enums.VERSION_1_5 pname, [Out] void* @params);
-        internal unsafe static GetBufferPointerv glGetBufferPointerv = (GetBufferPointerv)GL.GetDelegateForExtensionMethod("glGetBufferPointerv", typeof(GetBufferPointerv)) ?? new GetBufferPointerv(Imports.GetBufferPointerv);
+        internal unsafe static GetBufferPointerv glGetBufferPointerv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void BlendEquationSeparate(GL.Enums.BlendEquationModeEXT modeRGB, GL.Enums.BlendEquationModeEXT modeAlpha);
-        internal static BlendEquationSeparate glBlendEquationSeparate = (BlendEquationSeparate)GL.GetDelegateForExtensionMethod("glBlendEquationSeparate", typeof(BlendEquationSeparate)) ?? new BlendEquationSeparate(Imports.BlendEquationSeparate);
+        internal static BlendEquationSeparate glBlendEquationSeparate = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void DrawBuffers(Int32 n, GL.Enums.VERSION_2_0* bufs);
-        internal unsafe static DrawBuffers glDrawBuffers = (DrawBuffers)GL.GetDelegateForExtensionMethod("glDrawBuffers", typeof(DrawBuffers)) ?? new DrawBuffers(Imports.DrawBuffers);
+        internal unsafe static DrawBuffers glDrawBuffers = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void StencilOpSeparate(GL.Enums.VERSION_2_0 face, GL.Enums.StencilOp sfail, GL.Enums.StencilOp dpfail, GL.Enums.StencilOp dppass);
-        internal static StencilOpSeparate glStencilOpSeparate = (StencilOpSeparate)GL.GetDelegateForExtensionMethod("glStencilOpSeparate", typeof(StencilOpSeparate)) ?? new StencilOpSeparate(Imports.StencilOpSeparate);
+        internal static StencilOpSeparate glStencilOpSeparate = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void StencilFuncSeparate(GL.Enums.StencilFunction frontfunc, GL.Enums.StencilFunction backfunc, Int32 @ref, UInt32 mask);
-        internal static StencilFuncSeparate glStencilFuncSeparate = (StencilFuncSeparate)GL.GetDelegateForExtensionMethod("glStencilFuncSeparate", typeof(StencilFuncSeparate)) ?? new StencilFuncSeparate(Imports.StencilFuncSeparate);
+        internal static StencilFuncSeparate glStencilFuncSeparate = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void StencilMaskSeparate(GL.Enums.VERSION_2_0 face, UInt32 mask);
-        internal static StencilMaskSeparate glStencilMaskSeparate = (StencilMaskSeparate)GL.GetDelegateForExtensionMethod("glStencilMaskSeparate", typeof(StencilMaskSeparate)) ?? new StencilMaskSeparate(Imports.StencilMaskSeparate);
+        internal static StencilMaskSeparate glStencilMaskSeparate = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void AttachShader(UInt32 program, UInt32 shader);
-        internal static AttachShader glAttachShader = (AttachShader)GL.GetDelegateForExtensionMethod("glAttachShader", typeof(AttachShader)) ?? new AttachShader(Imports.AttachShader);
+        internal static AttachShader glAttachShader = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void BindAttribLocation(UInt32 program, UInt32 index, System.String name);
-        internal static BindAttribLocation glBindAttribLocation = (BindAttribLocation)GL.GetDelegateForExtensionMethod("glBindAttribLocation", typeof(BindAttribLocation)) ?? new BindAttribLocation(Imports.BindAttribLocation);
+        internal static BindAttribLocation glBindAttribLocation = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void CompileShader(UInt32 shader);
-        internal static CompileShader glCompileShader = (CompileShader)GL.GetDelegateForExtensionMethod("glCompileShader", typeof(CompileShader)) ?? new CompileShader(Imports.CompileShader);
+        internal static CompileShader glCompileShader = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Int32 CreateProgram();
-        internal static CreateProgram glCreateProgram = (CreateProgram)GL.GetDelegateForExtensionMethod("glCreateProgram", typeof(CreateProgram)) ?? new CreateProgram(Imports.CreateProgram);
+        internal static CreateProgram glCreateProgram = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Int32 CreateShader(GL.Enums.VERSION_2_0 type);
-        internal static CreateShader glCreateShader = (CreateShader)GL.GetDelegateForExtensionMethod("glCreateShader", typeof(CreateShader)) ?? new CreateShader(Imports.CreateShader);
+        internal static CreateShader glCreateShader = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DeleteProgram(UInt32 program);
-        internal static DeleteProgram glDeleteProgram = (DeleteProgram)GL.GetDelegateForExtensionMethod("glDeleteProgram", typeof(DeleteProgram)) ?? new DeleteProgram(Imports.DeleteProgram);
+        internal static DeleteProgram glDeleteProgram = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DeleteShader(UInt32 shader);
-        internal static DeleteShader glDeleteShader = (DeleteShader)GL.GetDelegateForExtensionMethod("glDeleteShader", typeof(DeleteShader)) ?? new DeleteShader(Imports.DeleteShader);
+        internal static DeleteShader glDeleteShader = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DetachShader(UInt32 program, UInt32 shader);
-        internal static DetachShader glDetachShader = (DetachShader)GL.GetDelegateForExtensionMethod("glDetachShader", typeof(DetachShader)) ?? new DetachShader(Imports.DetachShader);
+        internal static DetachShader glDetachShader = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void DisableVertexAttribArray(UInt32 index);
-        internal static DisableVertexAttribArray glDisableVertexAttribArray = (DisableVertexAttribArray)GL.GetDelegateForExtensionMethod("glDisableVertexAttribArray", typeof(DisableVertexAttribArray)) ?? new DisableVertexAttribArray(Imports.DisableVertexAttribArray);
+        internal static DisableVertexAttribArray glDisableVertexAttribArray = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void EnableVertexAttribArray(UInt32 index);
-        internal static EnableVertexAttribArray glEnableVertexAttribArray = (EnableVertexAttribArray)GL.GetDelegateForExtensionMethod("glEnableVertexAttribArray", typeof(EnableVertexAttribArray)) ?? new EnableVertexAttribArray(Imports.EnableVertexAttribArray);
+        internal static EnableVertexAttribArray glEnableVertexAttribArray = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] GL.Enums.VERSION_2_0* type, [Out] System.Text.StringBuilder name);
-        internal unsafe static GetActiveAttrib glGetActiveAttrib = (GetActiveAttrib)GL.GetDelegateForExtensionMethod("glGetActiveAttrib", typeof(GetActiveAttrib)) ?? new GetActiveAttrib(Imports.GetActiveAttrib);
+        internal unsafe static GetActiveAttrib glGetActiveAttrib = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] GL.Enums.VERSION_2_0* type, [Out] System.Text.StringBuilder name);
-        internal unsafe static GetActiveUniform glGetActiveUniform = (GetActiveUniform)GL.GetDelegateForExtensionMethod("glGetActiveUniform", typeof(GetActiveUniform)) ?? new GetActiveUniform(Imports.GetActiveUniform);
+        internal unsafe static GetActiveUniform glGetActiveUniform = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetAttachedShaders(UInt32 program, Int32 maxCount, [Out] Int32* count, [Out] UInt32* obj);
-        internal unsafe static GetAttachedShaders glGetAttachedShaders = (GetAttachedShaders)GL.GetDelegateForExtensionMethod("glGetAttachedShaders", typeof(GetAttachedShaders)) ?? new GetAttachedShaders(Imports.GetAttachedShaders);
+        internal unsafe static GetAttachedShaders glGetAttachedShaders = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Int32 GetAttribLocation(UInt32 program, System.String name);
-        internal static GetAttribLocation glGetAttribLocation = (GetAttribLocation)GL.GetDelegateForExtensionMethod("glGetAttribLocation", typeof(GetAttribLocation)) ?? new GetAttribLocation(Imports.GetAttribLocation);
+        internal static GetAttribLocation glGetAttribLocation = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetProgramiv(UInt32 program, GL.Enums.VERSION_2_0 pname, [Out] Int32* @params);
-        internal unsafe static GetProgramiv glGetProgramiv = (GetProgramiv)GL.GetDelegateForExtensionMethod("glGetProgramiv", typeof(GetProgramiv)) ?? new GetProgramiv(Imports.GetProgramiv);
+        internal unsafe static GetProgramiv glGetProgramiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetProgramInfoLog(UInt32 program, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog);
-        internal unsafe static GetProgramInfoLog glGetProgramInfoLog = (GetProgramInfoLog)GL.GetDelegateForExtensionMethod("glGetProgramInfoLog", typeof(GetProgramInfoLog)) ?? new GetProgramInfoLog(Imports.GetProgramInfoLog);
+        internal unsafe static GetProgramInfoLog glGetProgramInfoLog = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetShaderiv(UInt32 shader, GL.Enums.VERSION_2_0 pname, [Out] Int32* @params);
-        internal unsafe static GetShaderiv glGetShaderiv = (GetShaderiv)GL.GetDelegateForExtensionMethod("glGetShaderiv", typeof(GetShaderiv)) ?? new GetShaderiv(Imports.GetShaderiv);
+        internal unsafe static GetShaderiv glGetShaderiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetShaderInfoLog(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog);
-        internal unsafe static GetShaderInfoLog glGetShaderInfoLog = (GetShaderInfoLog)GL.GetDelegateForExtensionMethod("glGetShaderInfoLog", typeof(GetShaderInfoLog)) ?? new GetShaderInfoLog(Imports.GetShaderInfoLog);
+        internal unsafe static GetShaderInfoLog glGetShaderInfoLog = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetShaderSource(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder[] source);
-        internal unsafe static GetShaderSource glGetShaderSource = (GetShaderSource)GL.GetDelegateForExtensionMethod("glGetShaderSource", typeof(GetShaderSource)) ?? new GetShaderSource(Imports.GetShaderSource);
+        internal unsafe static GetShaderSource glGetShaderSource = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Int32 GetUniformLocation(UInt32 program, System.String name);
-        internal static GetUniformLocation glGetUniformLocation = (GetUniformLocation)GL.GetDelegateForExtensionMethod("glGetUniformLocation", typeof(GetUniformLocation)) ?? new GetUniformLocation(Imports.GetUniformLocation);
+        internal static GetUniformLocation glGetUniformLocation = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetUniformfv(UInt32 program, Int32 location, [Out] Single* @params);
-        internal unsafe static GetUniformfv glGetUniformfv = (GetUniformfv)GL.GetDelegateForExtensionMethod("glGetUniformfv", typeof(GetUniformfv)) ?? new GetUniformfv(Imports.GetUniformfv);
+        internal unsafe static GetUniformfv glGetUniformfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetUniformiv(UInt32 program, Int32 location, [Out] Int32* @params);
-        internal unsafe static GetUniformiv glGetUniformiv = (GetUniformiv)GL.GetDelegateForExtensionMethod("glGetUniformiv", typeof(GetUniformiv)) ?? new GetUniformiv(Imports.GetUniformiv);
+        internal unsafe static GetUniformiv glGetUniformiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetVertexAttribdv(UInt32 index, GL.Enums.VERSION_2_0 pname, [Out] Double* @params);
-        internal unsafe static GetVertexAttribdv glGetVertexAttribdv = (GetVertexAttribdv)GL.GetDelegateForExtensionMethod("glGetVertexAttribdv", typeof(GetVertexAttribdv)) ?? new GetVertexAttribdv(Imports.GetVertexAttribdv);
+        internal unsafe static GetVertexAttribdv glGetVertexAttribdv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetVertexAttribfv(UInt32 index, GL.Enums.VERSION_2_0 pname, [Out] Single* @params);
-        internal unsafe static GetVertexAttribfv glGetVertexAttribfv = (GetVertexAttribfv)GL.GetDelegateForExtensionMethod("glGetVertexAttribfv", typeof(GetVertexAttribfv)) ?? new GetVertexAttribfv(Imports.GetVertexAttribfv);
+        internal unsafe static GetVertexAttribfv glGetVertexAttribfv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetVertexAttribiv(UInt32 index, GL.Enums.VERSION_2_0 pname, [Out] Int32* @params);
-        internal unsafe static GetVertexAttribiv glGetVertexAttribiv = (GetVertexAttribiv)GL.GetDelegateForExtensionMethod("glGetVertexAttribiv", typeof(GetVertexAttribiv)) ?? new GetVertexAttribiv(Imports.GetVertexAttribiv);
+        internal unsafe static GetVertexAttribiv glGetVertexAttribiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void GetVertexAttribPointerv(UInt32 index, GL.Enums.VERSION_2_0 pname, [Out] void* pointer);
-        internal unsafe static GetVertexAttribPointerv glGetVertexAttribPointerv = (GetVertexAttribPointerv)GL.GetDelegateForExtensionMethod("glGetVertexAttribPointerv", typeof(GetVertexAttribPointerv)) ?? new GetVertexAttribPointerv(Imports.GetVertexAttribPointerv);
+        internal unsafe static GetVertexAttribPointerv glGetVertexAttribPointerv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Boolean IsProgram(UInt32 program);
-        internal static IsProgram glIsProgram = (IsProgram)GL.GetDelegateForExtensionMethod("glIsProgram", typeof(IsProgram)) ?? new IsProgram(Imports.IsProgram);
+        internal static IsProgram glIsProgram = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate Boolean IsShader(UInt32 shader);
-        internal static IsShader glIsShader = (IsShader)GL.GetDelegateForExtensionMethod("glIsShader", typeof(IsShader)) ?? new IsShader(Imports.IsShader);
+        internal static IsShader glIsShader = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void LinkProgram(UInt32 program);
-        internal static LinkProgram glLinkProgram = (LinkProgram)GL.GetDelegateForExtensionMethod("glLinkProgram", typeof(LinkProgram)) ?? new LinkProgram(Imports.LinkProgram);
+        internal static LinkProgram glLinkProgram = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ShaderSource(UInt32 shader, Int32 count, System.String[] @string, Int32* length);
-        internal unsafe static ShaderSource glShaderSource = (ShaderSource)GL.GetDelegateForExtensionMethod("glShaderSource", typeof(ShaderSource)) ?? new ShaderSource(Imports.ShaderSource);
+        internal unsafe static ShaderSource glShaderSource = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void UseProgram(UInt32 program);
-        internal static UseProgram glUseProgram = (UseProgram)GL.GetDelegateForExtensionMethod("glUseProgram", typeof(UseProgram)) ?? new UseProgram(Imports.UseProgram);
+        internal static UseProgram glUseProgram = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Uniform1f(Int32 location, Single v0);
-        internal static Uniform1f glUniform1f = (Uniform1f)GL.GetDelegateForExtensionMethod("glUniform1f", typeof(Uniform1f)) ?? new Uniform1f(Imports.Uniform1f);
+        internal static Uniform1f glUniform1f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Uniform2f(Int32 location, Single v0, Single v1);
-        internal static Uniform2f glUniform2f = (Uniform2f)GL.GetDelegateForExtensionMethod("glUniform2f", typeof(Uniform2f)) ?? new Uniform2f(Imports.Uniform2f);
+        internal static Uniform2f glUniform2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Uniform3f(Int32 location, Single v0, Single v1, Single v2);
-        internal static Uniform3f glUniform3f = (Uniform3f)GL.GetDelegateForExtensionMethod("glUniform3f", typeof(Uniform3f)) ?? new Uniform3f(Imports.Uniform3f);
+        internal static Uniform3f glUniform3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Uniform4f(Int32 location, Single v0, Single v1, Single v2, Single v3);
-        internal static Uniform4f glUniform4f = (Uniform4f)GL.GetDelegateForExtensionMethod("glUniform4f", typeof(Uniform4f)) ?? new Uniform4f(Imports.Uniform4f);
+        internal static Uniform4f glUniform4f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Uniform1i(Int32 location, Int32 v0);
-        internal static Uniform1i glUniform1i = (Uniform1i)GL.GetDelegateForExtensionMethod("glUniform1i", typeof(Uniform1i)) ?? new Uniform1i(Imports.Uniform1i);
+        internal static Uniform1i glUniform1i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Uniform2i(Int32 location, Int32 v0, Int32 v1);
-        internal static Uniform2i glUniform2i = (Uniform2i)GL.GetDelegateForExtensionMethod("glUniform2i", typeof(Uniform2i)) ?? new Uniform2i(Imports.Uniform2i);
+        internal static Uniform2i glUniform2i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Uniform3i(Int32 location, Int32 v0, Int32 v1, Int32 v2);
-        internal static Uniform3i glUniform3i = (Uniform3i)GL.GetDelegateForExtensionMethod("glUniform3i", typeof(Uniform3i)) ?? new Uniform3i(Imports.Uniform3i);
+        internal static Uniform3i glUniform3i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void Uniform4i(Int32 location, Int32 v0, Int32 v1, Int32 v2, Int32 v3);
-        internal static Uniform4i glUniform4i = (Uniform4i)GL.GetDelegateForExtensionMethod("glUniform4i", typeof(Uniform4i)) ?? new Uniform4i(Imports.Uniform4i);
+        internal static Uniform4i glUniform4i = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Uniform1fv(Int32 location, Int32 count, Single* value);
-        internal unsafe static Uniform1fv glUniform1fv = (Uniform1fv)GL.GetDelegateForExtensionMethod("glUniform1fv", typeof(Uniform1fv)) ?? new Uniform1fv(Imports.Uniform1fv);
+        internal unsafe static Uniform1fv glUniform1fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Uniform2fv(Int32 location, Int32 count, Single* value);
-        internal unsafe static Uniform2fv glUniform2fv = (Uniform2fv)GL.GetDelegateForExtensionMethod("glUniform2fv", typeof(Uniform2fv)) ?? new Uniform2fv(Imports.Uniform2fv);
+        internal unsafe static Uniform2fv glUniform2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Uniform3fv(Int32 location, Int32 count, Single* value);
-        internal unsafe static Uniform3fv glUniform3fv = (Uniform3fv)GL.GetDelegateForExtensionMethod("glUniform3fv", typeof(Uniform3fv)) ?? new Uniform3fv(Imports.Uniform3fv);
+        internal unsafe static Uniform3fv glUniform3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Uniform4fv(Int32 location, Int32 count, Single* value);
-        internal unsafe static Uniform4fv glUniform4fv = (Uniform4fv)GL.GetDelegateForExtensionMethod("glUniform4fv", typeof(Uniform4fv)) ?? new Uniform4fv(Imports.Uniform4fv);
+        internal unsafe static Uniform4fv glUniform4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Uniform1iv(Int32 location, Int32 count, Int32* value);
-        internal unsafe static Uniform1iv glUniform1iv = (Uniform1iv)GL.GetDelegateForExtensionMethod("glUniform1iv", typeof(Uniform1iv)) ?? new Uniform1iv(Imports.Uniform1iv);
+        internal unsafe static Uniform1iv glUniform1iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Uniform2iv(Int32 location, Int32 count, Int32* value);
-        internal unsafe static Uniform2iv glUniform2iv = (Uniform2iv)GL.GetDelegateForExtensionMethod("glUniform2iv", typeof(Uniform2iv)) ?? new Uniform2iv(Imports.Uniform2iv);
+        internal unsafe static Uniform2iv glUniform2iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Uniform3iv(Int32 location, Int32 count, Int32* value);
-        internal unsafe static Uniform3iv glUniform3iv = (Uniform3iv)GL.GetDelegateForExtensionMethod("glUniform3iv", typeof(Uniform3iv)) ?? new Uniform3iv(Imports.Uniform3iv);
+        internal unsafe static Uniform3iv glUniform3iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void Uniform4iv(Int32 location, Int32 count, Int32* value);
-        internal unsafe static Uniform4iv glUniform4iv = (Uniform4iv)GL.GetDelegateForExtensionMethod("glUniform4iv", typeof(Uniform4iv)) ?? new Uniform4iv(Imports.Uniform4iv);
+        internal unsafe static Uniform4iv glUniform4iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void UniformMatrix2fv(Int32 location, Int32 count, GL.Enums.Boolean transpose, Single* value);
-        internal unsafe static UniformMatrix2fv glUniformMatrix2fv = (UniformMatrix2fv)GL.GetDelegateForExtensionMethod("glUniformMatrix2fv", typeof(UniformMatrix2fv)) ?? new UniformMatrix2fv(Imports.UniformMatrix2fv);
+        internal unsafe static UniformMatrix2fv glUniformMatrix2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void UniformMatrix3fv(Int32 location, Int32 count, GL.Enums.Boolean transpose, Single* value);
-        internal unsafe static UniformMatrix3fv glUniformMatrix3fv = (UniformMatrix3fv)GL.GetDelegateForExtensionMethod("glUniformMatrix3fv", typeof(UniformMatrix3fv)) ?? new UniformMatrix3fv(Imports.UniformMatrix3fv);
+        internal unsafe static UniformMatrix3fv glUniformMatrix3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void UniformMatrix4fv(Int32 location, Int32 count, GL.Enums.Boolean transpose, Single* value);
-        internal unsafe static UniformMatrix4fv glUniformMatrix4fv = (UniformMatrix4fv)GL.GetDelegateForExtensionMethod("glUniformMatrix4fv", typeof(UniformMatrix4fv)) ?? new UniformMatrix4fv(Imports.UniformMatrix4fv);
+        internal unsafe static UniformMatrix4fv glUniformMatrix4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ValidateProgram(UInt32 program);
-        internal static ValidateProgram glValidateProgram = (ValidateProgram)GL.GetDelegateForExtensionMethod("glValidateProgram", typeof(ValidateProgram)) ?? new ValidateProgram(Imports.ValidateProgram);
+        internal static ValidateProgram glValidateProgram = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib1d(UInt32 index, Double x);
-        internal static VertexAttrib1d glVertexAttrib1d = (VertexAttrib1d)GL.GetDelegateForExtensionMethod("glVertexAttrib1d", typeof(VertexAttrib1d)) ?? new VertexAttrib1d(Imports.VertexAttrib1d);
+        internal static VertexAttrib1d glVertexAttrib1d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib1dv(UInt32 index, Double* v);
-        internal unsafe static VertexAttrib1dv glVertexAttrib1dv = (VertexAttrib1dv)GL.GetDelegateForExtensionMethod("glVertexAttrib1dv", typeof(VertexAttrib1dv)) ?? new VertexAttrib1dv(Imports.VertexAttrib1dv);
+        internal unsafe static VertexAttrib1dv glVertexAttrib1dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib1f(UInt32 index, Single x);
-        internal static VertexAttrib1f glVertexAttrib1f = (VertexAttrib1f)GL.GetDelegateForExtensionMethod("glVertexAttrib1f", typeof(VertexAttrib1f)) ?? new VertexAttrib1f(Imports.VertexAttrib1f);
+        internal static VertexAttrib1f glVertexAttrib1f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib1fv(UInt32 index, Single* v);
-        internal unsafe static VertexAttrib1fv glVertexAttrib1fv = (VertexAttrib1fv)GL.GetDelegateForExtensionMethod("glVertexAttrib1fv", typeof(VertexAttrib1fv)) ?? new VertexAttrib1fv(Imports.VertexAttrib1fv);
+        internal unsafe static VertexAttrib1fv glVertexAttrib1fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib1s(UInt32 index, Int16 x);
-        internal static VertexAttrib1s glVertexAttrib1s = (VertexAttrib1s)GL.GetDelegateForExtensionMethod("glVertexAttrib1s", typeof(VertexAttrib1s)) ?? new VertexAttrib1s(Imports.VertexAttrib1s);
+        internal static VertexAttrib1s glVertexAttrib1s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib1sv(UInt32 index, Int16* v);
-        internal unsafe static VertexAttrib1sv glVertexAttrib1sv = (VertexAttrib1sv)GL.GetDelegateForExtensionMethod("glVertexAttrib1sv", typeof(VertexAttrib1sv)) ?? new VertexAttrib1sv(Imports.VertexAttrib1sv);
+        internal unsafe static VertexAttrib1sv glVertexAttrib1sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib2d(UInt32 index, Double x, Double y);
-        internal static VertexAttrib2d glVertexAttrib2d = (VertexAttrib2d)GL.GetDelegateForExtensionMethod("glVertexAttrib2d", typeof(VertexAttrib2d)) ?? new VertexAttrib2d(Imports.VertexAttrib2d);
+        internal static VertexAttrib2d glVertexAttrib2d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib2dv(UInt32 index, Double* v);
-        internal unsafe static VertexAttrib2dv glVertexAttrib2dv = (VertexAttrib2dv)GL.GetDelegateForExtensionMethod("glVertexAttrib2dv", typeof(VertexAttrib2dv)) ?? new VertexAttrib2dv(Imports.VertexAttrib2dv);
+        internal unsafe static VertexAttrib2dv glVertexAttrib2dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib2f(UInt32 index, Single x, Single y);
-        internal static VertexAttrib2f glVertexAttrib2f = (VertexAttrib2f)GL.GetDelegateForExtensionMethod("glVertexAttrib2f", typeof(VertexAttrib2f)) ?? new VertexAttrib2f(Imports.VertexAttrib2f);
+        internal static VertexAttrib2f glVertexAttrib2f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib2fv(UInt32 index, Single* v);
-        internal unsafe static VertexAttrib2fv glVertexAttrib2fv = (VertexAttrib2fv)GL.GetDelegateForExtensionMethod("glVertexAttrib2fv", typeof(VertexAttrib2fv)) ?? new VertexAttrib2fv(Imports.VertexAttrib2fv);
+        internal unsafe static VertexAttrib2fv glVertexAttrib2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib2s(UInt32 index, Int16 x, Int16 y);
-        internal static VertexAttrib2s glVertexAttrib2s = (VertexAttrib2s)GL.GetDelegateForExtensionMethod("glVertexAttrib2s", typeof(VertexAttrib2s)) ?? new VertexAttrib2s(Imports.VertexAttrib2s);
+        internal static VertexAttrib2s glVertexAttrib2s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib2sv(UInt32 index, Int16* v);
-        internal unsafe static VertexAttrib2sv glVertexAttrib2sv = (VertexAttrib2sv)GL.GetDelegateForExtensionMethod("glVertexAttrib2sv", typeof(VertexAttrib2sv)) ?? new VertexAttrib2sv(Imports.VertexAttrib2sv);
+        internal unsafe static VertexAttrib2sv glVertexAttrib2sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib3d(UInt32 index, Double x, Double y, Double z);
-        internal static VertexAttrib3d glVertexAttrib3d = (VertexAttrib3d)GL.GetDelegateForExtensionMethod("glVertexAttrib3d", typeof(VertexAttrib3d)) ?? new VertexAttrib3d(Imports.VertexAttrib3d);
+        internal static VertexAttrib3d glVertexAttrib3d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib3dv(UInt32 index, Double* v);
-        internal unsafe static VertexAttrib3dv glVertexAttrib3dv = (VertexAttrib3dv)GL.GetDelegateForExtensionMethod("glVertexAttrib3dv", typeof(VertexAttrib3dv)) ?? new VertexAttrib3dv(Imports.VertexAttrib3dv);
+        internal unsafe static VertexAttrib3dv glVertexAttrib3dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib3f(UInt32 index, Single x, Single y, Single z);
-        internal static VertexAttrib3f glVertexAttrib3f = (VertexAttrib3f)GL.GetDelegateForExtensionMethod("glVertexAttrib3f", typeof(VertexAttrib3f)) ?? new VertexAttrib3f(Imports.VertexAttrib3f);
+        internal static VertexAttrib3f glVertexAttrib3f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib3fv(UInt32 index, Single* v);
-        internal unsafe static VertexAttrib3fv glVertexAttrib3fv = (VertexAttrib3fv)GL.GetDelegateForExtensionMethod("glVertexAttrib3fv", typeof(VertexAttrib3fv)) ?? new VertexAttrib3fv(Imports.VertexAttrib3fv);
+        internal unsafe static VertexAttrib3fv glVertexAttrib3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib3s(UInt32 index, Int16 x, Int16 y, Int16 z);
-        internal static VertexAttrib3s glVertexAttrib3s = (VertexAttrib3s)GL.GetDelegateForExtensionMethod("glVertexAttrib3s", typeof(VertexAttrib3s)) ?? new VertexAttrib3s(Imports.VertexAttrib3s);
+        internal static VertexAttrib3s glVertexAttrib3s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib3sv(UInt32 index, Int16* v);
-        internal unsafe static VertexAttrib3sv glVertexAttrib3sv = (VertexAttrib3sv)GL.GetDelegateForExtensionMethod("glVertexAttrib3sv", typeof(VertexAttrib3sv)) ?? new VertexAttrib3sv(Imports.VertexAttrib3sv);
+        internal unsafe static VertexAttrib3sv glVertexAttrib3sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4Nbv(UInt32 index, SByte* v);
-        internal unsafe static VertexAttrib4Nbv glVertexAttrib4Nbv = (VertexAttrib4Nbv)GL.GetDelegateForExtensionMethod("glVertexAttrib4Nbv", typeof(VertexAttrib4Nbv)) ?? new VertexAttrib4Nbv(Imports.VertexAttrib4Nbv);
+        internal unsafe static VertexAttrib4Nbv glVertexAttrib4Nbv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4Niv(UInt32 index, Int32* v);
-        internal unsafe static VertexAttrib4Niv glVertexAttrib4Niv = (VertexAttrib4Niv)GL.GetDelegateForExtensionMethod("glVertexAttrib4Niv", typeof(VertexAttrib4Niv)) ?? new VertexAttrib4Niv(Imports.VertexAttrib4Niv);
+        internal unsafe static VertexAttrib4Niv glVertexAttrib4Niv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4Nsv(UInt32 index, Int16* v);
-        internal unsafe static VertexAttrib4Nsv glVertexAttrib4Nsv = (VertexAttrib4Nsv)GL.GetDelegateForExtensionMethod("glVertexAttrib4Nsv", typeof(VertexAttrib4Nsv)) ?? new VertexAttrib4Nsv(Imports.VertexAttrib4Nsv);
+        internal unsafe static VertexAttrib4Nsv glVertexAttrib4Nsv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib4Nub(UInt32 index, Byte x, Byte y, Byte z, Byte w);
-        internal static VertexAttrib4Nub glVertexAttrib4Nub = (VertexAttrib4Nub)GL.GetDelegateForExtensionMethod("glVertexAttrib4Nub", typeof(VertexAttrib4Nub)) ?? new VertexAttrib4Nub(Imports.VertexAttrib4Nub);
+        internal static VertexAttrib4Nub glVertexAttrib4Nub = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4Nubv(UInt32 index, Byte* v);
-        internal unsafe static VertexAttrib4Nubv glVertexAttrib4Nubv = (VertexAttrib4Nubv)GL.GetDelegateForExtensionMethod("glVertexAttrib4Nubv", typeof(VertexAttrib4Nubv)) ?? new VertexAttrib4Nubv(Imports.VertexAttrib4Nubv);
+        internal unsafe static VertexAttrib4Nubv glVertexAttrib4Nubv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4Nuiv(UInt32 index, UInt32* v);
-        internal unsafe static VertexAttrib4Nuiv glVertexAttrib4Nuiv = (VertexAttrib4Nuiv)GL.GetDelegateForExtensionMethod("glVertexAttrib4Nuiv", typeof(VertexAttrib4Nuiv)) ?? new VertexAttrib4Nuiv(Imports.VertexAttrib4Nuiv);
+        internal unsafe static VertexAttrib4Nuiv glVertexAttrib4Nuiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4Nusv(UInt32 index, UInt16* v);
-        internal unsafe static VertexAttrib4Nusv glVertexAttrib4Nusv = (VertexAttrib4Nusv)GL.GetDelegateForExtensionMethod("glVertexAttrib4Nusv", typeof(VertexAttrib4Nusv)) ?? new VertexAttrib4Nusv(Imports.VertexAttrib4Nusv);
+        internal unsafe static VertexAttrib4Nusv glVertexAttrib4Nusv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4bv(UInt32 index, SByte* v);
-        internal unsafe static VertexAttrib4bv glVertexAttrib4bv = (VertexAttrib4bv)GL.GetDelegateForExtensionMethod("glVertexAttrib4bv", typeof(VertexAttrib4bv)) ?? new VertexAttrib4bv(Imports.VertexAttrib4bv);
+        internal unsafe static VertexAttrib4bv glVertexAttrib4bv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib4d(UInt32 index, Double x, Double y, Double z, Double w);
-        internal static VertexAttrib4d glVertexAttrib4d = (VertexAttrib4d)GL.GetDelegateForExtensionMethod("glVertexAttrib4d", typeof(VertexAttrib4d)) ?? new VertexAttrib4d(Imports.VertexAttrib4d);
+        internal static VertexAttrib4d glVertexAttrib4d = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4dv(UInt32 index, Double* v);
-        internal unsafe static VertexAttrib4dv glVertexAttrib4dv = (VertexAttrib4dv)GL.GetDelegateForExtensionMethod("glVertexAttrib4dv", typeof(VertexAttrib4dv)) ?? new VertexAttrib4dv(Imports.VertexAttrib4dv);
+        internal unsafe static VertexAttrib4dv glVertexAttrib4dv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib4f(UInt32 index, Single x, Single y, Single z, Single w);
-        internal static VertexAttrib4f glVertexAttrib4f = (VertexAttrib4f)GL.GetDelegateForExtensionMethod("glVertexAttrib4f", typeof(VertexAttrib4f)) ?? new VertexAttrib4f(Imports.VertexAttrib4f);
+        internal static VertexAttrib4f glVertexAttrib4f = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4fv(UInt32 index, Single* v);
-        internal unsafe static VertexAttrib4fv glVertexAttrib4fv = (VertexAttrib4fv)GL.GetDelegateForExtensionMethod("glVertexAttrib4fv", typeof(VertexAttrib4fv)) ?? new VertexAttrib4fv(Imports.VertexAttrib4fv);
+        internal unsafe static VertexAttrib4fv glVertexAttrib4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4iv(UInt32 index, Int32* v);
-        internal unsafe static VertexAttrib4iv glVertexAttrib4iv = (VertexAttrib4iv)GL.GetDelegateForExtensionMethod("glVertexAttrib4iv", typeof(VertexAttrib4iv)) ?? new VertexAttrib4iv(Imports.VertexAttrib4iv);
+        internal unsafe static VertexAttrib4iv glVertexAttrib4iv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void VertexAttrib4s(UInt32 index, Int16 x, Int16 y, Int16 z, Int16 w);
-        internal static VertexAttrib4s glVertexAttrib4s = (VertexAttrib4s)GL.GetDelegateForExtensionMethod("glVertexAttrib4s", typeof(VertexAttrib4s)) ?? new VertexAttrib4s(Imports.VertexAttrib4s);
+        internal static VertexAttrib4s glVertexAttrib4s = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4sv(UInt32 index, Int16* v);
-        internal unsafe static VertexAttrib4sv glVertexAttrib4sv = (VertexAttrib4sv)GL.GetDelegateForExtensionMethod("glVertexAttrib4sv", typeof(VertexAttrib4sv)) ?? new VertexAttrib4sv(Imports.VertexAttrib4sv);
+        internal unsafe static VertexAttrib4sv glVertexAttrib4sv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4ubv(UInt32 index, Byte* v);
-        internal unsafe static VertexAttrib4ubv glVertexAttrib4ubv = (VertexAttrib4ubv)GL.GetDelegateForExtensionMethod("glVertexAttrib4ubv", typeof(VertexAttrib4ubv)) ?? new VertexAttrib4ubv(Imports.VertexAttrib4ubv);
+        internal unsafe static VertexAttrib4ubv glVertexAttrib4ubv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4uiv(UInt32 index, UInt32* v);
-        internal unsafe static VertexAttrib4uiv glVertexAttrib4uiv = (VertexAttrib4uiv)GL.GetDelegateForExtensionMethod("glVertexAttrib4uiv", typeof(VertexAttrib4uiv)) ?? new VertexAttrib4uiv(Imports.VertexAttrib4uiv);
+        internal unsafe static VertexAttrib4uiv glVertexAttrib4uiv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttrib4usv(UInt32 index, UInt16* v);
-        internal unsafe static VertexAttrib4usv glVertexAttrib4usv = (VertexAttrib4usv)GL.GetDelegateForExtensionMethod("glVertexAttrib4usv", typeof(VertexAttrib4usv)) ?? new VertexAttrib4usv(Imports.VertexAttrib4usv);
+        internal unsafe static VertexAttrib4usv glVertexAttrib4usv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexAttribPointer(UInt32 index, Int32 size, GL.Enums.VERSION_2_0 type, GL.Enums.Boolean normalized, Int32 stride, void* pointer);
-        internal unsafe static VertexAttribPointer glVertexAttribPointer = (VertexAttribPointer)GL.GetDelegateForExtensionMethod("glVertexAttribPointer", typeof(VertexAttribPointer)) ?? new VertexAttribPointer(Imports.VertexAttribPointer);
+        internal unsafe static VertexAttribPointer glVertexAttribPointer = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void UniformMatrix2x3fv(Int32 location, Int32 count, GL.Enums.Boolean transpose, Single* value);
-        internal unsafe static UniformMatrix2x3fv glUniformMatrix2x3fv = (UniformMatrix2x3fv)GL.GetDelegateForExtensionMethod("glUniformMatrix2x3fv", typeof(UniformMatrix2x3fv)) ?? new UniformMatrix2x3fv(Imports.UniformMatrix2x3fv);
+        internal unsafe static UniformMatrix2x3fv glUniformMatrix2x3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void UniformMatrix3x2fv(Int32 location, Int32 count, GL.Enums.Boolean transpose, Single* value);
-        internal unsafe static UniformMatrix3x2fv glUniformMatrix3x2fv = (UniformMatrix3x2fv)GL.GetDelegateForExtensionMethod("glUniformMatrix3x2fv", typeof(UniformMatrix3x2fv)) ?? new UniformMatrix3x2fv(Imports.UniformMatrix3x2fv);
+        internal unsafe static UniformMatrix3x2fv glUniformMatrix3x2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void UniformMatrix2x4fv(Int32 location, Int32 count, GL.Enums.Boolean transpose, Single* value);
-        internal unsafe static UniformMatrix2x4fv glUniformMatrix2x4fv = (UniformMatrix2x4fv)GL.GetDelegateForExtensionMethod("glUniformMatrix2x4fv", typeof(UniformMatrix2x4fv)) ?? new UniformMatrix2x4fv(Imports.UniformMatrix2x4fv);
+        internal unsafe static UniformMatrix2x4fv glUniformMatrix2x4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void UniformMatrix4x2fv(Int32 location, Int32 count, GL.Enums.Boolean transpose, Single* value);
-        internal unsafe static UniformMatrix4x2fv glUniformMatrix4x2fv = (UniformMatrix4x2fv)GL.GetDelegateForExtensionMethod("glUniformMatrix4x2fv", typeof(UniformMatrix4x2fv)) ?? new UniformMatrix4x2fv(Imports.UniformMatrix4x2fv);
+        internal unsafe static UniformMatrix4x2fv glUniformMatrix4x2fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void UniformMatrix3x4fv(Int32 location, Int32 count, GL.Enums.Boolean transpose, Single* value);
-        internal unsafe static UniformMatrix3x4fv glUniformMatrix3x4fv = (UniformMatrix3x4fv)GL.GetDelegateForExtensionMethod("glUniformMatrix3x4fv", typeof(UniformMatrix3x4fv)) ?? new UniformMatrix3x4fv(Imports.UniformMatrix3x4fv);
+        internal unsafe static UniformMatrix3x4fv glUniformMatrix3x4fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void UniformMatrix4x3fv(Int32 location, Int32 count, GL.Enums.Boolean transpose, Single* value);
-        internal unsafe static UniformMatrix4x3fv glUniformMatrix4x3fv = (UniformMatrix4x3fv)GL.GetDelegateForExtensionMethod("glUniformMatrix4x3fv", typeof(UniformMatrix4x3fv)) ?? new UniformMatrix4x3fv(Imports.UniformMatrix4x3fv);
+        internal unsafe static UniformMatrix4x3fv glUniformMatrix4x3fv = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void ActiveTextureARB(GL.Enums.ARB_multitexture texture);
         internal static ActiveTextureARB glActiveTextureARB = (ActiveTextureARB)GL.GetDelegateForExtensionMethod("glActiveTextureARB", typeof(ActiveTextureARB));
@@ -2825,16 +2826,16 @@ namespace OpenTK.OpenGL
         internal static IsAsyncMarkerSGIX glIsAsyncMarkerSGIX = (IsAsyncMarkerSGIX)GL.GetDelegateForExtensionMethod("glIsAsyncMarkerSGIX", typeof(IsAsyncMarkerSGIX));
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void VertexPointervINTEL(Int32 size, GL.Enums.VertexPointerType type, void* pointer);
-        internal unsafe static VertexPointervINTEL glVertexPointervINTEL = (VertexPointervINTEL)GL.GetDelegateForExtensionMethod("glVertexPointervINTEL", typeof(VertexPointervINTEL)) ?? new VertexPointervINTEL(Imports.VertexPointervINTEL);
+        internal unsafe static VertexPointervINTEL glVertexPointervINTEL = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void NormalPointervINTEL(GL.Enums.NormalPointerType type, void* pointer);
-        internal unsafe static NormalPointervINTEL glNormalPointervINTEL = (NormalPointervINTEL)GL.GetDelegateForExtensionMethod("glNormalPointervINTEL", typeof(NormalPointervINTEL)) ?? new NormalPointervINTEL(Imports.NormalPointervINTEL);
+        internal unsafe static NormalPointervINTEL glNormalPointervINTEL = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void ColorPointervINTEL(Int32 size, GL.Enums.VertexPointerType type, void* pointer);
-        internal unsafe static ColorPointervINTEL glColorPointervINTEL = (ColorPointervINTEL)GL.GetDelegateForExtensionMethod("glColorPointervINTEL", typeof(ColorPointervINTEL)) ?? new ColorPointervINTEL(Imports.ColorPointervINTEL);
+        internal unsafe static ColorPointervINTEL glColorPointervINTEL = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal unsafe delegate void TexCoordPointervINTEL(Int32 size, GL.Enums.VertexPointerType type, void* pointer);
-        internal unsafe static TexCoordPointervINTEL glTexCoordPointervINTEL = (TexCoordPointervINTEL)GL.GetDelegateForExtensionMethod("glTexCoordPointervINTEL", typeof(TexCoordPointervINTEL)) ?? new TexCoordPointervINTEL(Imports.TexCoordPointervINTEL);
+        internal unsafe static TexCoordPointervINTEL glTexCoordPointervINTEL = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void PixelTransformParameteriEXT(GL.Enums.EXT_pixel_transform target, GL.Enums.EXT_pixel_transform pname, Int32 param);
         internal static PixelTransformParameteriEXT glPixelTransformParameteriEXT = (PixelTransformParameteriEXT)GL.GetDelegateForExtensionMethod("glPixelTransformParameteriEXT", typeof(PixelTransformParameteriEXT));
@@ -3323,7 +3324,7 @@ namespace OpenTK.OpenGL
         internal unsafe static VertexPointerListIBM glVertexPointerListIBM = (VertexPointerListIBM)GL.GetDelegateForExtensionMethod("glVertexPointerListIBM", typeof(VertexPointerListIBM));
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void TbufferMask3DFX(UInt32 mask);
-        internal static TbufferMask3DFX glTbufferMask3DFX = (TbufferMask3DFX)GL.GetDelegateForExtensionMethod("glTbufferMask3DFX", typeof(TbufferMask3DFX)) ?? new TbufferMask3DFX(Imports.TbufferMask3DFX);
+        internal static TbufferMask3DFX glTbufferMask3DFX = null;
         [System.Security.SuppressUnmanagedCodeSecurity()]
         internal delegate void SampleMaskEXT(Single value, GL.Enums.Boolean invert);
         internal static SampleMaskEXT glSampleMaskEXT = (SampleMaskEXT)GL.GetDelegateForExtensionMethod("glSampleMaskEXT", typeof(SampleMaskEXT));

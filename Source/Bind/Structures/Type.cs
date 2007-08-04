@@ -12,20 +12,20 @@ namespace Bind.Structures
 
         private static bool typesLoaded;
 
-        internal static void Initialize()
+        internal static void Initialize(string glTypes, string csTypes)
         {
             if (!typesLoaded)
             {
                 if (GLTypes == null)
                 {
-                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, "gl2\\gl.tm"))
+                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, glTypes))
                     {
                         GLTypes = Bind.MainClass.Generator.ReadTypeMap(sr);
                     }
                 }
                 if (CSTypes == null)
                 {
-                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, "gl2\\csharp.tm"))
+                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, csTypes))
                     {
                         CSTypes = Bind.MainClass.Generator.ReadCSTypeMap(sr);
                     }
