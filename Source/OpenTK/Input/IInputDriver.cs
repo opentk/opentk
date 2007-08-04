@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    public interface IInputDriver : IKeyboardDriver
+    public interface IInputDriver : IKeyboardDriver, IMouseDriver
     {
         IList<IInputDevice> InputDevices { get; }
         //void ProcessEvents

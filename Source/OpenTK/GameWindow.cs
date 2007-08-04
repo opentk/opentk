@@ -19,14 +19,14 @@ namespace OpenTK
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
         private DisplayMode mode;
 
-        private InputDevices inputDevices;
-        public IList<Input.Keyboard> Keyboard { get { return Input.Keyboards; } }
-        public InputDevices Input
+        private InputDriver inputDevices;
+        public IList<Input.Keyboard> Keyboard { get { return Input.Keyboard; } }
+        public InputDriver Input
         { 
             get
             {
                 if (inputDevices == null)
-                    inputDevices = new InputDevices(this.Handle);
+                    inputDevices = new InputDriver(this.Handle);
                 return inputDevices;
             }
         }
@@ -64,7 +64,7 @@ namespace OpenTK
         void glWindow_Create(object sender, EventArgs e)
         {
             //glWindow.Context.MakeCurrent();
-            inputDevices = new InputDevices(this.Handle); 
+            inputDevices = new InputDriver(this.Handle); 
 
             this.OnCreate(e);
         }

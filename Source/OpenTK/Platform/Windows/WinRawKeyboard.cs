@@ -332,7 +332,7 @@ namespace OpenTK.Platform.Windows
 
         #region --- IKeyboardDriver Members ---
 
-        public IList<Keyboard> Keyboards
+        public IList<Keyboard> Keyboard
         {
             get { return keyboards; }
         }
