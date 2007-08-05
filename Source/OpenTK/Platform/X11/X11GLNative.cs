@@ -334,11 +334,13 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                throw new Exception("The method or operation is not implemented.");
+                return false;
+                //throw new Exception("The method or operation is not implemented.");
             }
             set
             {
-                throw new Exception("The method or operation is not implemented.");
+                
+                //throw new Exception("The method or operation is not implemented.");
             }
         }
 

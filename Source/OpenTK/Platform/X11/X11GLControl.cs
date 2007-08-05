@@ -158,7 +158,8 @@ namespace OpenTK.Platform.X11
             }
             set
             {
-                throw new Exception("The method or operation is not implemented.");
+                //throw new Exception("The method or operation is not implemented.");
+                fullscreen = false;
             }
         }
 

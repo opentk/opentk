@@ -90,7 +90,7 @@ namespace Examples.Tutorial
             if ((Keyboard[0][OpenTK.Input.Keys.LeftAlt] || Keyboard[0][OpenTK.Input.Keys.RightAlt]) &&
                 Keyboard[0][OpenTK.Input.Keys.Enter])
             {
-                Fullscreen = true;
+                Fullscreen = !Fullscreen;
             }
 
             GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
