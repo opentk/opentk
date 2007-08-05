@@ -17,6 +17,7 @@ namespace OpenTK.Platform.X11
             this.Screen = parent.Screen;
             this.Display = parent.Display;
             this.RootWindow = parent.RootWindow;
+            this.VisualInfo = parent.VisualInfo;
             this.Parent = parent;
         }
 
