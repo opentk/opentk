@@ -23,7 +23,7 @@ namespace OpenTK.Platform.X11
         #region --- Fields ---
 
         private X11GLContext glContext;
-        private WindowInfo info = new WindowInfo();
+        private WindowInfo window = new WindowInfo();
         private DisplayMode mode = new DisplayMode();
 
         // Number of pending events.
@@ -33,17 +33,8 @@ namespace OpenTK.Platform.X11
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
         // Low level X11 resize request
-        private X11.Event xresize = new Event();
         // Event used for event loop.
-        private Event e = new Event();
-        // This is never written in the code. If at some point it gets != 0,
-        // then memory corruption is taking place from the xresize struct.
-        int memGuard = 0;
-        private ConfigureNotifyEvent configure = new ConfigureNotifyEvent();
-        private ReparentNotifyEvent reparent = new ReparentNotifyEvent();
-        private ExposeEvent expose = new ExposeEvent();
-        private CreateWindowEvent createWindow = new CreateWindowEvent();
-        private DestroyWindowEvent destroyWindow = new DestroyWindowEvent();
+        private XEvent e = new XEvent();
 
         private bool disposed;
         private bool created;
@@ -80,100 +71,90 @@ namespace OpenTK.Platform.X11
         /// </remarks>
         public void CreateWindow(DisplayMode mode)
         {
-            Debug.Print("Creating native window with mode: {0}", mode.ToString());
-            Debug.Indent();
-
-            info.Display = API.OpenDisplay(null); // null == default display
-            if (info.Display == IntPtr.Zero)
+            if (created)
             {
-                throw new Exception("Could not open connection to X");
+                throw new ApplicationException("Render window already exists!");
             }
-            info.Screen = API.DefaultScreen(info.Display);
-            info.RootWindow = API.RootWindow(info.Display, info.Screen);
-
-            Debug.Print(
-                "Display: {0}, Screen {1}, Root window: {2}",
-                info.Display,
-                info.Screen,
-                info.RootWindow
-            );
-
-            glContext = new X11GLContext(info, mode);
-            info.VisualInfo = glContext.CreateVisual();
-
-            // Create a window on this display using the visual above
-            Debug.Write("Creating output window... ");
-
-            SetWindowAttributes wnd_attributes = new SetWindowAttributes();
-            wnd_attributes.background_pixel = 0;
-            wnd_attributes.border_pixel = 0;
-            wnd_attributes.colormap = glContext.XColormap;
-            //API.CreateColormap(display, rootWindow, glxVisualInfo.visual, 0/*AllocNone*/);
-            wnd_attributes.event_mask =
-                EventMask.StructureNotifyMask;// |
-                //EventMask.SubstructureNotifyMask |
-                //EventMask.ExposureMask;
-
-            CreateWindowMask cw_mask =
-                CreateWindowMask.CWBackPixel |
-                CreateWindowMask.CWBorderPixel |
-                CreateWindowMask.CWColormap |
-                CreateWindowMask.CWEventMask;
-
-            info.Handle = API.CreateWindow(
-                info.Display,
-                info.RootWindow,
-                0, 0,
-                mode.Width, mode.Height,
-                0,
-                glContext.XVisualInfo.depth,
-                Constants.InputOutput,
-                glContext.XVisualInfo.visual,
-                cw_mask,
-                wnd_attributes
-            );
-
-            if (info.Handle == IntPtr.Zero)
+            else
             {
-                throw new Exception("Could not create window.");
+                Debug.Print("Creating native window with mode: {0}", mode.ToString());
+                Debug.Indent();
+
+                window.Display = API.OpenDisplay(null); // null == default display
+                if (window.Display == IntPtr.Zero)
+                {
+                    throw new Exception("Could not open connection to X");
+                }
+                window.Screen = API.DefaultScreen(window.Display);
+                window.RootWindow = API.RootWindow(window.Display, window.Screen);
+
+                Debug.Print(
+                    "Display: {0}, Screen {1}, Root window: {2}",
+                    window.Display,
+                    window.Screen,
+                    window.RootWindow
+                );
+
+                glContext = new X11GLContext(window, mode);
+                window.VisualInfo = glContext.CreateVisual();
+
+                // Create a window on this display using the visual above
+                Debug.Write("Creating output window... ");
+
+                XSetWindowAttributes attributes = new XSetWindowAttributes();
+                attributes.colormap = glContext.colormap;
+                attributes.event_mask = (IntPtr)(EventMask.StructureNotifyMask);
+
+                SetWindowValuemask mask = SetWindowValuemask.ColorMap | SetWindowValuemask.EventMask;
+
+                window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
+                    0, 0, mode.Width, mode.Height, 0, glContext.XVisualInfo.depth,
+                    (int)CreateWindowArgs.InputOutput, glContext.XVisualInfo.visual, (UIntPtr)mask,
+                    ref attributes);
+
+                if (window.Handle == IntPtr.Zero)
+                {
+                    throw new Exception("Could not create window.");
+                }
+                /*
+                // Set the window hints
+                XSizeHints hints = new XSizeHints();
+                hints.x = 0;
+                hints.y = 0;
+                hints.width = 640;
+                hints.height = 480;
+                hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
+                Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
+                XTextProperty text = new XTextProperty();
+                text.value = "OpenTK Game Window";
+                text.format = 8;
+                Functions.XSetWMName(window.Display, window.Handle, ref text);
+                Functions.XSetWMProperties(
+                    display,
+                    window,
+                    name,
+                    name,
+                    0,  // None
+                    null,
+                    0,
+                    hints
+                );*/
+
+                Debug.Print("done! (id: {0})", window.Handle);
+
+                glContext.windowInfo.Handle = window.Handle;
+                glContext.CreateContext(null, true);
+
+                API.MapRaised(window.Display, window.Handle);
+
+                Debug.WriteLine("Mapped window.");
+
+                //glContext.MakeCurrent();
+
+                Debug.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
+                Debug.Unindent();
+                created = true;
             }
-
-            Debug.WriteLine("done! (id: " + info.Handle + ")");
-/*
-            // Set the window hints
-            SizeHints hints = new SizeHints();
-            hints.x = 0;
-            hints.y = 0;
-            hints.width = 640;
-            hints.height = 480;
-            hints.flags = USSize | USPosition;
-            API.SetNormalHints(display, window, hints);
-            API.SetStandardProperties(
-                display,
-                window,
-                name,
-                name,
-                0,  // None
-                null,
-                0,
-                hints
-            );
-
-            //glContext.ContainingWindow = info.Window;
-*/
-
-            glContext.windowInfo.Handle = info.Handle;
-            glContext.CreateContext(null, true);
-
-            API.MapRaised(info.Display, info.Handle);
-
-            Debug.WriteLine("Mapped window.");
-
-            //glContext.MakeCurrent();
-
-            Debug.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
-            Debug.Unindent();
-            created = true;
         }
 
         #endregion
@@ -200,70 +181,60 @@ namespace OpenTK.Platform.X11
             // Process all pending events
             while (true)
             {
-                pending = API.Pending(info.Display);
+                //pending = Functions.XPending(info.Display);
+                pending = Functions.XPending(window.Display);
 
                 if (pending == 0)
                     return;
 
-                //API.NextEvent(info.Display, e);
-                API.PeekEvent(info.Display, e);
-                //API.NextEvent(info.Display, eventPtr);
+                Functions.XNextEvent(window.Display, ref e);
 
-
-                Debug.WriteLine(String.Format("Event: {0} ({1} pending)", e.Type, pending));
-                //Debug.WriteLine(String.Format("Event: {0} ({1} pending)", eventPtr, pending));
-
-                // Check whether memory was corrupted by the NextEvent call.
-                Debug.Assert(memGuard == 0, "memGuard2 tripped", String.Format("Guard: {0}", memGuard));
-                memGuard = 0;
+                Debug.WriteLine(String.Format("Event: {0} ({1} pending)", e.type, pending));
 
                 // Respond to the event e
-                switch (e.Type)
+                switch (e.type)
                 {
-                    case EventType.ReparentNotify:
-                        API.NextEvent(info.Display, reparent);
-
+                    case XEventName.ReparentNotify:
                         // TODO: Is there a more suitable place to raise the Create event?
                         // ReparentNotify seems to be the first event raised on window creation.
                         this.OnCreate(EventArgs.Empty);
                         break;
 
-                    case EventType.CreateNotify:
-                        API.NextEvent(info.Display, createWindow);
+                    case XEventName.CreateNotify:
                         // A child was created - nothing to do
                         break;
 
-                    case EventType.DestroyNotify:
-                        API.NextEvent(info.Display, destroyWindow);
+                    case XEventName.DestroyNotify:
+                        glContext.Dispose();
+                        Functions.XDestroyWindow(window.Display, window.Handle);
+                        window = null;
+                        glContext = null;
                         quit = true;
                         Debug.WriteLine("Window destroyed, shutting down.");
                         break;
 
 
-                    case EventType.ConfigureNotify:
-                        API.NextEvent(info.Display, configure);
-
+                    case XEventName.ConfigureNotify:
                         // If the window size changed, raise the C# Resize event.
-                        if (configure.width != mode.Width ||
-                            configure.height != mode.Height)
+                        if (e.ConfigureEvent.width != mode.Width ||
+                            e.ConfigureEvent.height != mode.Height)
                         {
                             Debug.WriteLine(
                                 String.Format(
                                     "New res: {0}x{1}",
-                                    configure.width,
-                                    configure.height
+                                    e.ConfigureEvent.width,
+                                    e.ConfigureEvent.height
                                 )
                             );
 
-                            resizeEventArgs.Width = configure.width;
-                            resizeEventArgs.Height = configure.height;
+                            resizeEventArgs.Width = e.ConfigureEvent.width;
+                            resizeEventArgs.Height = e.ConfigureEvent.height;
                             this.OnResize(resizeEventArgs);
                         }
                         break;
 
                     default:
-                        API.NextEvent(info.Display, e);
-                        Debug.WriteLine(String.Format("{0} event was not handled", e.Type));
+                        Debug.WriteLine(String.Format("{0} event was not handled", e.type));
                         break;
                 }
             }
@@ -279,7 +250,7 @@ namespace OpenTK.Platform.X11
         {
             if (this.Create != null)
             {
-                Debug.Print("Create event fired from window: {0}", info.ToString());
+                Debug.Print("Create event fired from window: {0}", window.ToString());
                 this.Create(this, e);
             }
         }
@@ -351,7 +322,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public IntPtr Handle
         {
-            get { return this.info.Handle; }
+            get { return this.window.Handle; }
         }
 
         #endregion
@@ -360,7 +331,7 @@ namespace OpenTK.Platform.X11
 
         public IWindowInfo WindowInfo
         {
-            get { return info; }
+            get { return window; }
         }
 
         #endregion
@@ -457,14 +428,16 @@ namespace OpenTK.Platform.X11
         {
             if (!disposed)
             {
-                API.DestroyWindow(info.Display, info.Handle);
+                if (window != null)
+                    Functions.XDestroyWindow(window.Display, window.Handle);
                 // Kills connection to the X-Server. We don't want that,
                 // 'cause it kills the ExampleLauncher too.
                 //API.CloseDisplay(display);
 
                 if (manuallyCalled)
                 {
-                    glContext.Dispose();
+                    if (glContext != null)
+                        glContext.Dispose();
                 }
                 disposed = true;
             }

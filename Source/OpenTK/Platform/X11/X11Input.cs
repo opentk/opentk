@@ -16,9 +16,7 @@ namespace OpenTK.Platform.X11
         private X11Keyboard keyboardDriver;
         private WindowInfo window;
 
-        Event e = new Event();
-        KeyEvent keyEvent = new KeyEvent();
-        int pending;
+        XEvent e = new XEvent();
 
         #region --- Constructors ---
 
@@ -37,14 +35,15 @@ namespace OpenTK.Platform.X11
             {
                 throw new ArgumentException("A valid parent window must be defined, in order to create an X11Input driver.");
             }
-
+            /*
             Debug.WriteLine("Creating hidden input window.");
 
             SetWindowAttributes wnd_attributes = new SetWindowAttributes();
             wnd_attributes.background_pixel = 0;
             wnd_attributes.border_pixel = 0;
             wnd_attributes.colormap = IntPtr.Zero;
-            wnd_attributes.event_mask = EventMask.KeyPressMask | EventMask.KeyReleaseMask;
+            wnd_attributes.event_mask = EventMask.KeyPressMask | EventMask.KeyReleaseMask |
+                EventMask.FocusChangeMask;
 
             CreateWindowMask cw_mask =
                 CreateWindowMask.CWEventMask;
@@ -55,10 +54,11 @@ namespace OpenTK.Platform.X11
                 window.Display,
                 window.Parent.Handle,
                 0, 0,
-                0, 0,
+                1, 1,
                 0, 0,
                 Constants.InputOnly,
-                window.VisualInfo.visual,
+                //window.VisualInfo.visual,
+                (IntPtr)0,
                 cw_mask,
                 wnd_attributes
             );
@@ -69,14 +69,20 @@ namespace OpenTK.Platform.X11
             }
 
             API.MapWindow(window.Display, window.Handle);
+            API.GrabKeyboard(window.Display, window.Handle, false, GrabMode.GrabModeAsync, GrabMode.GrabModeAsync, 0);
 
             Debug.WriteLine("done! (id: " + window + ")");
 
             // Select input events to be reported here.
-            //API.SelectInput(window.Display, window.Handle,
+            //API.SelectInput(window.Display, window.Parent.Handle,
             //    EventMask.KeyReleaseMask | EventMask.KeyPressMask);
-
+            
             keyboardDriver = new X11Keyboard(window);
+            */
+
+            keyboardDriver = new X11Keyboard(parent);
+            API.SelectInput(parent.Display, parent.Handle,
+                EventMask.KeyReleaseMask | EventMask.KeyPressMask);
 
             Debug.Unindent();
         }
@@ -118,28 +124,34 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public void ProcessEvents()
         {
-            pending = API.Pending(window.Display);
-
-            if (pending == 0)
-                return;
-
-            API.PeekEvent(window.Display, e);
-            Debug.Write(String.Format("Input window received {0} event... ", e.Type.ToString()));
-
-            switch (e.Type)
+            try
             {
-                case EventType.KeyPress:
-                case EventType.KeyRelease:
-                    API.NextEvent(window.Display, keyEvent);
-                    Debug.WriteLine(" consumed!");
-                    keyboardDriver.ProcessKeyboardEvent(keyEvent);
-                    break;
-
-                default:
-                    API.NextEvent(window.Display, e);
-                    Debug.WriteLine(" not consumed.");
-                    break;
+                while (API.CheckIfEvent(window.Display, ref e, check, IntPtr.Zero))
+                {
+                    Debug.Print("Input window received {0} event... ", e.type.ToString());
+                    keyboardDriver.ProcessKeyboardEvent(e.KeyEvent);
+                }
             }
+            catch (Exception e)
+            {
+                Debug.Print("DANGER: Possible callback exception: {0}", e.ToString());
+            }
+        }
+
+        API.CheckEventPredicate check = KeyEventPredicate;
+
+        private static bool KeyEventPredicate(IntPtr display, ref XEvent @event, IntPtr arg)
+        {
+            bool ret = false;
+            try
+            {
+                ret = (@event.type == XEventName.KeyRelease || @event.type == XEventName.KeyPress);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("DANGER: Exception caught during unmanaged callback: {0}", e.ToString());
+            }
+            return ret;
         }
 
         #endregion

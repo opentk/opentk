@@ -103,8 +103,11 @@ namespace OpenTK.Platform.X11
             Initialize();
 
             API.DisplayKeycodes(window.Display, ref firstKeyCode, ref lastKeyCode);
+            Debug.Print("First keycode: {0}, last {1}", firstKeyCode, lastKeyCode);
+
             IntPtr keysym_ptr = API.GetKeyboardMapping(window.Display, (byte)firstKeyCode,
                 lastKeyCode - firstKeyCode + 1, ref keysyms_per_keycode);
+            Debug.Print("{0} keysyms per keycode.", keysyms_per_keycode);
 
             keysyms = new IntPtr[(lastKeyCode - firstKeyCode + 1) * keysyms_per_keycode];
             Marshal.PtrToStructure(keysym_ptr, keysyms);
@@ -125,11 +128,11 @@ namespace OpenTK.Platform.X11
         /// </summary>
         /// <param name="e">The X11.KeyEvent to process</param>
         /// <returns>True if the event was processed, false otherwise.</returns>
-        internal bool ProcessKeyboardEvent(X11.KeyEvent e)
+        internal bool ProcessKeyboardEvent(X11.XKeyEvent e)
         {
             int keysym = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
             int keysym2 = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
-            bool pressed = e.type == EventType.KeyPress;
+            bool pressed = e.type == XEventName.KeyPress;
 
             switch (keysym)
             {
