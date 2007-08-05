@@ -14,14 +14,17 @@ using OpenTK.OpenGL;
 
 namespace OpenTK.Platform.X11
 {
-    public class X11GLContext : OpenTK.Platform.IGLContext
+    /// <summary>
+    /// Provides methods to create and control an opengl context on X11.
+    /// </summary>
+    public sealed class X11GLContext : OpenTK.Platform.IGLContext
     {
         private IntPtr x11context;
         private IntPtr display;
         private int screenNo;
 
         private DisplayMode mode;// = new DisplayMode();
-        internal X11WindowInfo windowInfo = new X11WindowInfo();
+        internal WindowInfo windowInfo = new WindowInfo();
         private VisualInfo visualInfo;
 
         //private IntPtr desktopResolution = IntPtr.Zero;
@@ -42,14 +45,13 @@ namespace OpenTK.Platform.X11
             this.mode = new DisplayMode();
         }
 
-        internal X11GLContext(IWindowInfo info, DisplayMode mode)
+        internal X11GLContext(WindowInfo info, DisplayMode mode)
         {
-            X11WindowInfo xInfo = info as X11WindowInfo;            
-            this.windowInfo.Window = xInfo.Window;
-            this.windowInfo.RootWindow = xInfo.RootWindow;
-            this.windowInfo.TopLevelWindow = xInfo.TopLevelWindow;
-            this.windowInfo.Display = xInfo.Display;
-            this.windowInfo.Screen = xInfo.Screen;
+            this.windowInfo.Handle = info.Handle;
+            this.windowInfo.RootWindow = info.RootWindow;
+            this.windowInfo.TopLevelWindow = info.TopLevelWindow;
+            this.windowInfo.Display = info.Display;
+            this.windowInfo.Screen = info.Screen;
             
             this.mode = mode;
         }
@@ -62,7 +64,7 @@ namespace OpenTK.Platform.X11
 
         public void SwapBuffers()
         {
-            Glx.SwapBuffers(windowInfo.Display, windowInfo.Window);
+            Glx.SwapBuffers(windowInfo.Display, windowInfo.Handle);
         }
 
         #endregion
@@ -77,10 +79,10 @@ namespace OpenTK.Platform.X11
                     x11context,
                     System.Threading.Thread.CurrentThread.ManagedThreadId,
                     windowInfo.Display,
-                    windowInfo.Window
+                    windowInfo.Handle
                 )
             );
-            bool result = Glx.MakeCurrent(windowInfo.Display, windowInfo.Window, x11context);
+            bool result = Glx.MakeCurrent(windowInfo.Display, windowInfo.Handle, x11context);
 
             if (!result)
             {
@@ -246,30 +248,30 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        public IntPtr XVisual
+        internal IntPtr XVisual
         {
             get { return this.visual; }
         }
 
-        public VisualInfo XVisualInfo
+        internal VisualInfo XVisualInfo
         {
             get { return this.visualInfo; }
         }
 
-        public IntPtr XColormap
+        internal IntPtr XColormap
         {
             get { return colormap; }
         }
 
-        public IntPtr Handle
+        internal IntPtr Handle
         {
             get { return this.x11context; }
         }
 /*
         public IntPtr ContainingWindow
         {
-            get { return windowInfo.Window; }
-            internal set { windowInfo.Window = value; }
+            get { return info.Window; }
+            internal set { info.Window = value; }
         }
 */
     }

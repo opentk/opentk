@@ -15,21 +15,15 @@ namespace OpenTK
 {
     public class GameWindow : OpenTK.Platform.IGameWindow
     {
-        private INativeWindow glWindow;
+        #region --- Fields ---
+
+        private INativeGLWindow glWindow;
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
         private DisplayMode mode;
 
-        private InputDriver inputDevices;
-        public IList<Input.Keyboard> Keyboard { get { return Input.Keyboard; } }
-        public InputDriver Input
-        { 
-            get
-            {
-                if (inputDevices == null)
-                    inputDevices = new InputDriver(this.Handle);
-                return inputDevices;
-            }
-        }
+        private InputDriver driver;
+
+        #endregion
 
         #region --- Contructors ---
 
@@ -41,19 +35,16 @@ namespace OpenTK
             if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
                 Environment.OSVersion.Platform == PlatformID.Win32Windows)
             {
-                // Create a new Windows native window. We want to be notified when it's ready,
-                // in order to do some preparatory work.
                 glWindow = new OpenTK.Platform.Windows.WinGLNative();
             }
-            else if (Environment.OSVersion.Platform == PlatformID.Unix ||
-                    Environment.OSVersion.Platform == (PlatformID)128) // some older versions of Mono reported 128.
+            else if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
                 glWindow = new OpenTK.Platform.X11.X11GLNative();
             }
             else
             {
                 throw new PlatformNotSupportedException(
-                    "Your operating system is not currently supported. We are sorry for the inconvenience."
+                    "Your platform is not currently supported. Refer to http://opentk.sourceforge.net for more information."
                 );
             }
 
@@ -64,7 +55,7 @@ namespace OpenTK
         void glWindow_Create(object sender, EventArgs e)
         {
             //glWindow.Context.MakeCurrent();
-            inputDevices = new InputDriver(this.Handle); 
+            driver = new InputDriver(this.WindowInfo); 
 
             this.OnCreate(e);
         }
@@ -76,7 +67,51 @@ namespace OpenTK
 
         #endregion
 
-        #region --- INativeWindow Members ---
+        #region --- Public Properties ---
+
+        #region public IList<Input.Keyboard> Keyboard
+
+        /// <summary>
+        /// Gets the list of available Keyboard devices.
+        /// </summary>
+        public IList<Input.Keyboard> Keyboard
+        {
+            get
+            {
+                if (driver == null)
+                {
+                    Debug.WriteLine("WARNING: Requested the list of Keyboard devices, without creating an InputDriver first. Continuing by creating an input driver, but this may indicate a prorgamming error.");
+                    driver = new InputDriver(this.WindowInfo);
+                }
+                return driver.Keyboard;
+            }
+        }
+
+        #endregion
+
+        #region public IList<OpenTK.Input.IInputDevice> Input
+
+        /// <summary>
+        /// Gets the list of available InputDevices.
+        /// </summary>
+        public IList<OpenTK.Input.IInputDevice> Input
+        {
+            get
+            {
+                if (driver == null)
+                {
+                    Debug.WriteLine("WARNING: Requested available InputDevices, without creating an InputDriver first. Continuing by creating an input driver, but this may indicate a prorgamming error.");
+                    driver = new InputDriver(this.WindowInfo);
+                }
+                return driver.InputDevices;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- INativeGLWindow Members ---
 
         #region public void CreateWindow(DisplayMode mode)
 
@@ -95,18 +130,6 @@ namespace OpenTK
             {
                 throw new ApplicationException("A render window already exists");
             }
-        }
-
-        #endregion
-
-        #region public IntPtr Handle
-
-        /// <summary>
-        /// Gets the handle of the current GameWindow.
-        /// </summary>
-        public IntPtr Handle
-        {
-            get { return glWindow.Handle; }
         }
 
         #endregion
@@ -193,6 +216,15 @@ namespace OpenTK
         public bool Created
         {
             get { return glWindow.Created; }
+        }
+
+        #endregion
+
+        #region public IWindowInfo WindowInfo
+
+        public IWindowInfo WindowInfo
+        {
+            get { return glWindow.WindowInfo; }
         }
 
         #endregion

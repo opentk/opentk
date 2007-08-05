@@ -29,7 +29,6 @@ namespace OpenTK
     {
         #region --- Private Fields ---
 
-        private bool fullscreen;
         private IGLControl glControl;
 
         #endregion
@@ -85,7 +84,7 @@ namespace OpenTK
             if (height > 0)
                 this.Height = height;
             */
-            if (fullscreen)
+            if (mode.Fullscreen)
                 this.Fullscreen = true;
             
             this.SetStyle(ControlStyles.UserPaint, true);
@@ -136,17 +135,11 @@ namespace OpenTK
         {
             get
             {
-                return fullscreen;
+                throw new NotImplementedException();
             }
             set
             {
-                if (!fullscreen && value)
-                {
-                    //fullscreen = this.SetFullscreenResolution(this.Width, this.Height);
-                }
-                else if (fullscreen && !value)
-                {
-                }
+                throw new NotImplementedException();
             }
         }
 

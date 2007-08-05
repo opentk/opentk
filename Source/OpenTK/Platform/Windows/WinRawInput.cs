@@ -24,17 +24,19 @@ namespace OpenTK.Platform.Windows
         /// Input event data.
         /// </summary>
         private API.RawInput data = new API.RawInput();
-
         /// <summary>
-        /// The list of keyboards connected to this system.
+        /// The total number of input devices connected to this system.
         /// </summary>
-        //internal List<WinRawKeyboard> keyboards = new List<WinRawKeyboard>();
+        private static int deviceCount;
+
 
         private WinRawKeyboard keyboardDriver;
 
+        #region --- Constructors ---
+
         internal WinRawInput(IntPtr parentHandle)
         {
-            Debug.WriteLine("Initalizing raw input driver.");
+            Debug.WriteLine("Initalizing windows raw input driver.");
             Debug.Indent();
             
             AssignHandle(parentHandle);
@@ -44,7 +46,7 @@ namespace OpenTK.Platform.Windows
             Debug.Unindent();
         }
 
-        private static int deviceCount;
+        #endregion
 
         internal static int DeviceCount
         {
@@ -54,6 +56,7 @@ namespace OpenTK.Platform.Windows
                 return deviceCount;
             }
         }
+
         /*
         /// <summary>
         /// Gets a value indicating whether the Device list has changed, for example

@@ -24,29 +24,38 @@ namespace Examples
         [STAThread]
         static void Main()
         {
-            using (Form exampleLauncher = new ExampleLauncher())
-            {
-                Application.EnableVisualStyles();
-                Application.Run(exampleLauncher);
-            }
-        }
-        StreamWriter sw = new StreamWriter(Path.Combine(System.Environment.CurrentDirectory, "keymap.log"));
-        public ExampleLauncher()
-        {
-            InitializeComponent();
+            StreamWriter sw = new StreamWriter(Path.Combine(System.Environment.CurrentDirectory, "debug.log"));
             System.Diagnostics.Debug.Listeners.Clear();
             System.Diagnostics.Debug.Listeners.Add(new TextWriterTraceListener(sw));
             System.Diagnostics.Debug.AutoFlush = true;
+            Debug.AutoFlush = true;
             System.Diagnostics.Trace.Listeners.Clear();
             System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
             System.Diagnostics.Trace.AutoFlush = true;
             Trace.AutoFlush = true;
+
+            try
+            {
+                using (Form exampleLauncher = new ExampleLauncher())
+                {
+                    Application.EnableVisualStyles();
+                    Application.Run(exampleLauncher);
+                }
+            }
+            finally
+            {
+                Debug.Flush();
+                Debug.Close();
+                Trace.Flush();
+                Trace.Close();
+                sw.Flush();
+                sw.Close();
+            }
         }
 
-        ~ExampleLauncher()
+        public ExampleLauncher()
         {
-            sw.Flush();
-            sw.Close();
+            InitializeComponent();
         }
 
         private void listBox1_DoubleClick(object sender, EventArgs e)
@@ -100,27 +109,7 @@ namespace Examples
             catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
-                //throw;
             }
-            //(example as Type).InvokeMember("Launch", BindingFlags.InvokeMethod, null, example, null);
-            /*
-            AppDomain app = AppDomain.CreateDomain((example as Type).Name);
-
-            Type exType = example as Type;
-            try
-            {
-                IExample ex = app.CreateInstanceAndUnwrap(
-                    exType.Assembly.GetName().Name,
-                    "Examples.Tests.Shim") as IExample;
-                ex.Launch();
-                //ex.InvokeMember("Launch", BindingFlags.InvokeMethod, null, null, null);
-                //
-            }
-            finally
-            {
-                AppDomain.Unload(app);
-            }
-            */
         }
 
         public void ExampleLauncher_Load(object sender, EventArgs e)
