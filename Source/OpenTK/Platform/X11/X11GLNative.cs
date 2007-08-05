@@ -24,11 +24,6 @@ namespace OpenTK.Platform.X11
 
         private X11GLContext glContext;
         private WindowInfo info = new WindowInfo();
-        private IntPtr display;
-        private int screen;
-        private IntPtr rootWindow;
-        private IntPtr window;
-
         private DisplayMode mode = new DisplayMode();
 
         // Number of pending events.
@@ -88,13 +83,13 @@ namespace OpenTK.Platform.X11
             Debug.Print("Creating native window with mode: {0}", mode.ToString());
             Debug.Indent();
 
-            info.Display = display = API.OpenDisplay(null); // null == default display
-            if (display == IntPtr.Zero)
+            info.Display = API.OpenDisplay(null); // null == default display
+            if (info.Display == IntPtr.Zero)
             {
                 throw new Exception("Could not open connection to X");
             }
-            info.Screen = screen = API.DefaultScreen(display);
-            info.RootWindow = rootWindow = API.RootWindow(display, screen);
+            info.Screen = API.DefaultScreen(info.Display);
+            info.RootWindow = API.RootWindow(info.Display, info.Screen);
 
             Debug.Print(
                 "Display: {0}, Screen {1}, Root window: {2}",
@@ -125,7 +120,7 @@ namespace OpenTK.Platform.X11
                 CreateWindowMask.CWColormap |
                 CreateWindowMask.CWEventMask;
 
-            window = API.CreateWindow(
+            info.Handle = API.CreateWindow(
                 info.Display,
                 info.RootWindow,
                 0, 0,
@@ -140,12 +135,12 @@ namespace OpenTK.Platform.X11
                 wnd_attributes
             );
 
-            if (window == IntPtr.Zero)
+            if (info.Handle == IntPtr.Zero)
             {
                 throw new Exception("Could not create window.");
             }
 
-            Debug.WriteLine("done! (id: " + window + ")");
+            Debug.WriteLine("done! (id: " + info.Handle + ")");
 
             // Set the window hints
             /*
@@ -171,10 +166,10 @@ namespace OpenTK.Platform.X11
             //glContext.ContainingWindow = info.Window;
 
 
-            glContext.windowInfo.Handle = window;
+            glContext.windowInfo.Handle = info.Handle;
             glContext.CreateContext(null, true);
 
-            API.MapRaised(display, window);
+            API.MapRaised(info.Display, info.Handle);
 
             Debug.WriteLine("Mapped window.");
 
@@ -209,14 +204,14 @@ namespace OpenTK.Platform.X11
             // Process all pending events
             while (true)
             {
-                pending = API.Pending(display);
+                pending = API.Pending(info.Display);
 
                 if (pending == 0)
                     return;
 
-                //API.NextEvent(display, e);
-                API.PeekEvent(display, e);
-                //API.NextEvent(display, eventPtr);
+                //API.NextEvent(info.Display, e);
+                API.PeekEvent(info.Display, e);
+                //API.NextEvent(info.Display, eventPtr);
 
 
                 Debug.WriteLine(String.Format("Event: {0} ({1} pending)", e.Type, pending));
@@ -230,12 +225,12 @@ namespace OpenTK.Platform.X11
                 switch (e.Type)
                 {
                     case EventType.ReparentNotify:
-                        API.NextEvent(display, reparent);
+                        API.NextEvent(info.Display, reparent);
                         // Do nothing
                         break;
 
                     case EventType.CreateNotify:
-                        API.NextEvent(display, createWindow);
+                        API.NextEvent(info.Display, createWindow);
 
                         // Set window width/height
                         mode.Width = createWindow.width;
@@ -247,14 +242,14 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case EventType.DestroyNotify:
-                        API.NextEvent(display, destroyWindow);
+                        API.NextEvent(info.Display, destroyWindow);
                         quit = true;
                         Debug.WriteLine("Window destroyed, shutting down.");
                         break;
 
 
                     case EventType.ConfigureNotify:
-                        API.NextEvent(display, configure);
+                        API.NextEvent(info.Display, configure);
 
                         // If the window size changed, raise the C# Resize event.
                         if (configure.width != mode.Width ||
@@ -275,7 +270,7 @@ namespace OpenTK.Platform.X11
                         break;
 
                     default:
-                        API.NextEvent(display, e);
+                        API.NextEvent(info.Display, e);
                         Debug.WriteLine(String.Format("{0} event was not handled", e.Type));
                         break;
                 }
@@ -363,7 +358,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public IntPtr Handle
         {
-            get { return this.window; }
+            get { return this.info.Handle; }
         }
 
         #endregion
@@ -469,7 +464,7 @@ namespace OpenTK.Platform.X11
         {
             if (!disposed)
             {
-                API.DestroyWindow(display, window);
+                API.DestroyWindow(info.Display, info.Handle);
                 // Kills connection to the X-Server. We don't want that,
                 // 'cause it kills the ExampleLauncher too.
                 //API.CloseDisplay(display);
