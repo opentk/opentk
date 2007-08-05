@@ -40,7 +40,7 @@ namespace OpenTK
             get { return inputDriver.Keyboard; }
         }
 
-        public IList<Mouse> Mouse
+        public IList<OpenTK.Input.Mouse> Mouse
         {
             get { return inputDriver.Mouse; }
         }
