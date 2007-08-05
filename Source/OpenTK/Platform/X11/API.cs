@@ -133,16 +133,16 @@ namespace OpenTK.Platform.X11
         extern internal static void NextEvent(
             Display display,
             [MarshalAs(UnmanagedType.AsAny)][In, Out]object e);
-        
+
         [DllImport(_dll_name, EntryPoint = "XNextEvent")]
         extern internal static void NextEvent(Display display, [In, Out] IntPtr e);
-        
+
         [DllImport(_dll_name, EntryPoint = "XPeekEvent")]
         extern internal static void PeekEvent(
             Display display,
             [MarshalAs(UnmanagedType.AsAny)][In, Out]object event_return
         );
-        
+
         [DllImport(_dll_name, EntryPoint = "XPeekEvent")]
         extern internal static void PeekEvent(
             Display display,
@@ -192,6 +192,7 @@ namespace OpenTK.Platform.X11
         /// <param name="predicate">Specifies the procedure that is to be called to determine if the next event in the queue matches what you want</param>
         /// <param name="arg">Specifies the user-supplied argument that will be passed to the predicate procedure.</param>
         /// <returns>true if the predicate returns true for some event, false otherwise</returns>
+        [DllImport(_dll_name, EntryPoint = "XCheckIfEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool CheckIfEvent(Display display, ref XEvent event_return,
             /*[MarshalAs(UnmanagedType.FunctionPtr)] */ CheckEventPredicate predicate, /*XPointer*/ IntPtr arg);
@@ -199,6 +200,10 @@ namespace OpenTK.Platform.X11
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal delegate bool CheckEventPredicate(Display display, ref XEvent @event, IntPtr arg);
+
+        [DllImport(_dll_name, EntryPoint = "XCheckMaskEvent")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CheckMaskEvent(Display display, EventMask event_mask, ref XEvent event_return);
 
         #endregion
 
@@ -239,7 +244,7 @@ namespace OpenTK.Platform.X11
         /// <para>Diagnostics:</para>
         /// <para>BadValue:	Some numeric value falls outside the range of values accepted by the request. Unless a specific range is specified for an argument, the full range defined by the argument's type is accepted. Any argument defined as a set of alternatives can generate this error.</para>
         /// </remarks>
-        [DllImport(_dll_name, EntryPoint="XGetKeyboardMapping")]
+        [DllImport(_dll_name, EntryPoint = "XGetKeyboardMapping")]
         internal static extern KeySym GetKeyboardMapping(Display display, KeyCode first_keycode, int keycode_count,
             ref int keysyms_per_keycode_return);
 
@@ -519,8 +524,11 @@ XF86VidModeGetGammaRampSize(
          * */
 
         #endregion
-    }
 
+        [DllImport(_dll_name, EntryPoint = "XLookupKeysym")]
+        internal static extern KeySym LookupKeysym(ref XKeyEvent key_event, int index);
+
+    }
     #endregion
 
     #region X11 Structures
