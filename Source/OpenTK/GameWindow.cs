@@ -49,13 +49,15 @@ namespace OpenTK
             }
 
             glWindow.Resize += new ResizeEvent(glWindow_Resize);
-            glWindow.Create += new CreateEvent(glWindow_Create);
+            glWindow.Create += new CreateEvent(glWindow_CreateInputDriver);
         }
 
-        void glWindow_Create(object sender, EventArgs e)
+        void glWindow_CreateInputDriver(object sender, EventArgs e)
         {
             //glWindow.Context.MakeCurrent();
-            driver = new InputDriver(this.WindowInfo); 
+
+            driver = new InputDriver(this.WindowInfo);
+            glWindow.Create -= glWindow_CreateInputDriver;
 
             this.OnCreate(e);
         }
