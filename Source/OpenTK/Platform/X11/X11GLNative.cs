@@ -283,8 +283,8 @@ namespace OpenTK.Platform.X11
         {
             if (this.Create != null)
             {
+                Debug.Print("Create event fired from window: {0}", info.ToString());
                 this.Create(this, e);
-                Debug.Print("OnCreate fired, from window: {0}", info.ToString());
             }
         }
 

@@ -18,6 +18,7 @@ namespace OpenTK.Platform.X11
 
         Event e = new Event();
         KeyEvent keyEvent = new KeyEvent();
+        int pending;
 
 
         #region --- Constructors ---
@@ -115,15 +116,30 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        /// <summary>
+        /// Consumes to keyboard, mouse, etc events, routing them to their
+        /// respective drivers.
+        /// </summary>
         public void ProcessEvents()
         {
+            pending = API.Pending(window.Display);
+
+            if (pending == 0)
+                return;
+
             API.PeekEvent(window.Display, e);
+
             switch (e.Type)
             {
                 case EventType.KeyPress:
                 case EventType.KeyRelease:
+                    Debug.WriteLine("Key event consumed");
                     API.NextEvent(window.Display, keyEvent);
                     keyboardDriver.ProcessKeyboardEvent(keyEvent);
+                    break;
+
+                default:
+                    API.NextEvent(window.Display, e);
                     break;
             }
         }
