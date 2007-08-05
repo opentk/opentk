@@ -35,7 +35,7 @@ namespace Examples.WinForms
         {
             base.OnHandleCreated(e);
 
-            input = new OpenTK.InputDriver(this.Handle);
+            input = new OpenTK.InputDriver(OpenTK.Platform.Utilities.GetWindowInfo(this));
         }
 
         private void redButton_Click(object sender, EventArgs e)

@@ -4,7 +4,10 @@ using System.Text;
 
 namespace OpenTK.Platform
 {
-    interface INativeWindow : IGLControl, IResizable
+    /// <summary>
+    /// This interface supports OpenTK, and is not intended for use by OpenTK programs.
+    /// </summary>
+    interface INativeGLWindow : IGLControl, IResizable
     {
         void CreateWindow(DisplayMode mode);
         void ProcessEvents();
@@ -12,6 +15,6 @@ namespace OpenTK.Platform
 
         bool Created { get; }
         bool Quit { get; }
-        IntPtr Handle { get; }
+        IWindowInfo WindowInfo { get; }
     }
 }

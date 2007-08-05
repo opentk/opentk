@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using OpenTK.Input;
+using OpenTK.Platform;
 
 namespace OpenTK
 {
@@ -10,16 +11,17 @@ namespace OpenTK
     {
         IInputDriver inputDriver;
 
-        public InputDriver(IntPtr parentHandle)
+        public InputDriver(IWindowInfo parent)
         {
             if (Environment.OSVersion.Version.Major > 5 ||
                 (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
             {
-                inputDriver = new OpenTK.Platform.Windows.WinRawInput(parentHandle);
+                inputDriver = new OpenTK.Platform.Windows.WinRawInput(parent.Handle);
             }
             else if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
-                inputDriver = new OpenTK.Platform.X11.X11Input(parentHandle);
+                inputDriver = 
+                    new OpenTK.Platform.X11.X11Input(parent as OpenTK.Platform.X11.WindowInfo);
             }
             else
             {

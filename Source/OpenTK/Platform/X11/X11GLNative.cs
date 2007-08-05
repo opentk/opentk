@@ -14,12 +14,16 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.X11
 {
-    sealed class X11GLNative : OpenTK.Platform.INativeWindow, IDisposable
+    /// <summary>
+    /// Drives GameWindow on X11.
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
+    /// </summary>
+    internal sealed class X11GLNative : INativeGLWindow, IDisposable
     {
-        #region --- Private Fields ---
+        #region --- Fields ---
 
         private X11GLContext glContext;
-        private X11WindowInfo windowInfo = new X11WindowInfo();
+        private WindowInfo info = new WindowInfo();
         private IntPtr display;
         private int screen;
         private IntPtr rootWindow;
@@ -59,11 +63,12 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public X11GLNative()
         {
+            Debug.Print("Native window driver: {0}", this.ToString());
         }
 
         #endregion
 
-        #region --- INativeWindow Members ---
+        #region --- INativeGLWindow Members ---
 
         #region public void CreateWindow(DisplayMode mode)
 
@@ -80,27 +85,25 @@ namespace OpenTK.Platform.X11
         /// </remarks>
         public void CreateWindow(DisplayMode mode)
         {
-            Debug.WriteLine("Creating GameWindow (X11GLNative driver)");
+            Debug.Print("Creating native window with mode: {0}", mode.ToString());
             Debug.Indent();
 
-            Debug.WriteLine(String.Format("Display mode: {0}", mode));
-
-            windowInfo.Display = display = API.OpenDisplay(null); // null == default display
+            info.Display = display = API.OpenDisplay(null); // null == default display
             if (display == IntPtr.Zero)
             {
                 throw new Exception("Could not open connection to X");
             }
-            windowInfo.Screen = screen = API.DefaultScreen(display);
-            windowInfo.RootWindow = rootWindow = API.RootWindow(display, screen);
+            info.Screen = screen = API.DefaultScreen(display);
+            info.RootWindow = rootWindow = API.RootWindow(display, screen);
 
             Debug.Print(
                 "Display: {0}, Screen {1}, Root window: {2}",
-                windowInfo.Display,
-                windowInfo.Screen,
-                windowInfo.RootWindow
+                info.Display,
+                info.Screen,
+                info.RootWindow
             );
 
-            glContext = new X11GLContext(windowInfo, mode);
+            glContext = new X11GLContext(info, mode);
             glContext.CreateVisual();
 
             // Create a window on this display using the visual above
@@ -113,8 +116,7 @@ namespace OpenTK.Platform.X11
             //API.CreateColormap(display, rootWindow, glxVisualInfo.visual, 0/*AllocNone*/);
             wnd_attributes.event_mask =
                 EventMask.StructureNotifyMask |
-                EventMask.ExposureMask |
-                EventMask.KeyPressMask;
+                EventMask.ExposureMask;
 
             CreateWindowMask cw_mask =
                 CreateWindowMask.CWBackPixel |
@@ -123,8 +125,8 @@ namespace OpenTK.Platform.X11
                 CreateWindowMask.CWEventMask;
 
             window = API.CreateWindow(
-                windowInfo.Display,
-                windowInfo.RootWindow,
+                info.Display,
+                info.RootWindow,
                 0, 0,
                 640, 480,
                 0,
@@ -165,10 +167,10 @@ namespace OpenTK.Platform.X11
             );
             */
 
-            //glContext.ContainingWindow = windowInfo.Window;
+            //glContext.ContainingWindow = info.Window;
 
 
-            glContext.windowInfo.Window = window;
+            glContext.windowInfo.Handle = window;
             glContext.CreateContext(null, true);
 
             API.MapRaised(display, window);
@@ -210,13 +212,13 @@ namespace OpenTK.Platform.X11
 
                 if (pending == 0)
                     return;
-                
+
                 //API.NextEvent(display, e);
                 API.PeekEvent(display, e);
                 //API.NextEvent(display, eventPtr);
-                                
-                              
-                 Debug.WriteLine(String.Format("Event: {0} ({1} pending)", e.Type, pending));
+
+
+                Debug.WriteLine(String.Format("Event: {0} ({1} pending)", e.Type, pending));
                 //Debug.WriteLine(String.Format("Event: {0} ({1} pending)", eventPtr, pending));
 
                 // Check whether memory was corrupted by the NextEvent call.
@@ -233,7 +235,7 @@ namespace OpenTK.Platform.X11
 
                     case EventType.CreateNotify:
                         API.NextEvent(display, createWindow);
-                        
+
                         // Set window width/height
                         mode.Width = createWindow.width;
                         mode.Height = createWindow.height;
@@ -248,11 +250,11 @@ namespace OpenTK.Platform.X11
                         quit = true;
                         Debug.WriteLine("Window destroyed, shutting down.");
                         break;
-                        
-                     
+
+
                     case EventType.ConfigureNotify:
                         API.NextEvent(display, configure);
-                        
+
                         // If the window size changed, raise the C# Resize event.
                         if (configure.width != mode.Width ||
                             configure.height != mode.Height)
@@ -363,6 +365,15 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public IWindowInfo WindowInfo
+
+        public IWindowInfo WindowInfo
+        {
+            get { return info; }
+        }
+
+        #endregion
+
         #endregion
 
         #region --- IResizable Members ---
@@ -456,7 +467,9 @@ namespace OpenTK.Platform.X11
             if (!disposed)
             {
                 API.DestroyWindow(display, window);
-                API.CloseDisplay(display);
+                // Kills connection to the X-Server. We don't want that,
+                // 'cause it kills the ExampleLauncher too.
+                //API.CloseDisplay(display);
 
                 if (manuallyCalled)
                 {

@@ -15,7 +15,7 @@ namespace OpenTK.Platform.X11
 {
     sealed class X11GLControl : IGLControl
     {
-        X11WindowInfo info = new X11WindowInfo();
+        WindowInfo info = new WindowInfo();
         private Type xplatui;
         X11GLContext glContext;
 
@@ -39,7 +39,7 @@ namespace OpenTK.Platform.X11
                 throw new Exception("Attempted to bind to non-existent control.");
             }
 
-            info.Window = c.Handle;
+            info.Handle = c.Handle;
             Trace.WriteLine(
                 String.Format(
                     "Binding to control: {0}",
@@ -70,7 +70,7 @@ namespace OpenTK.Platform.X11
                         info.Screen,
                         info.Display,
                         info.RootWindow,
-                        info.Window
+                        info.Handle
                     )
                 );
 
