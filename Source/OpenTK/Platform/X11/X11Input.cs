@@ -20,7 +20,6 @@ namespace OpenTK.Platform.X11
         KeyEvent keyEvent = new KeyEvent();
         int pending;
 
-
         #region --- Constructors ---
 
         /// <summary>
@@ -77,8 +76,8 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine("done! (id: " + window + ")");
 
             // Select input events to be reported here.
-            API.SelectInput(window.Display, window.Handle,
-                EventMask.KeyReleaseMask | EventMask.KeyPressMask);
+            //API.SelectInput(window.Display, window.Handle,
+            //    EventMask.KeyReleaseMask | EventMask.KeyPressMask);
 
             keyboardDriver = new X11Keyboard(window);
 
@@ -128,18 +127,20 @@ namespace OpenTK.Platform.X11
                 return;
 
             API.PeekEvent(window.Display, e);
+            Debug.Write(String.Format("Input window received {0} event... ", e.Type.ToString()));
 
             switch (e.Type)
             {
                 case EventType.KeyPress:
                 case EventType.KeyRelease:
-                    Debug.WriteLine("Key event consumed");
                     API.NextEvent(window.Display, keyEvent);
+                    Debug.WriteLine(" consumed!");
                     keyboardDriver.ProcessKeyboardEvent(keyEvent);
                     break;
 
                 default:
                     API.NextEvent(window.Display, e);
+                    Debug.WriteLine(" not consumed.");
                     break;
             }
         }
