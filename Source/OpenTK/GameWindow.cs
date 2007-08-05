@@ -280,6 +280,7 @@ namespace OpenTK
         public void ProcessEvents()
         {
             glWindow.ProcessEvents();
+            driver.ProcessEvents();
         }
 
         #endregion

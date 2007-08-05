@@ -14,6 +14,11 @@ namespace OpenTK.Platform.X11
     internal sealed class X11Input : IInputDriver
     {
         private X11Keyboard keyboardDriver;
+        private WindowInfo window;
+
+        Event e = new Event();
+        KeyEvent keyEvent = new KeyEvent();
+
 
         #region --- Constructors ---
 
@@ -44,7 +49,7 @@ namespace OpenTK.Platform.X11
             CreateWindowMask cw_mask =
                 CreateWindowMask.CWEventMask;
 
-            WindowInfo window = new WindowInfo(parent);
+            window = new WindowInfo(parent);
 
             window.Handle = API.CreateWindow(
                 window.Display,
@@ -109,6 +114,19 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        public void ProcessEvents()
+        {
+            API.PeekEvent(window.Display, e);
+            switch (e.Type)
+            {
+                case EventType.KeyPress:
+                case EventType.KeyRelease:
+                    API.NextEvent(window.Display, keyEvent);
+                    keyboardDriver.ProcessKeyboardEvent(keyEvent);
+                    break;
+            }
+        }
 
         #endregion
     }

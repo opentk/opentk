@@ -47,6 +47,11 @@ namespace OpenTK
             get { return inputDriver.Mouse; }
         }
 
+        public void ProcessEvents()
+        {
+            inputDriver.ProcessEvents();
+        }
+
         #endregion
     }
 }

@@ -57,33 +57,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        /*
-        /// <summary>
-        /// Gets a value indicating whether the Device list has changed, for example
-        /// by removing or adding a device.
-        /// </summary>
-        internal static bool DeviceListChanged
-        {
-            get
-            {
-                uint count = 0;
-                if (API.GetRawInputDeviceList(null, ref count, API.RawInputDeviceListSize) == 0)
-                {
-                    if (deviceCount == count)
-                        return true;
-
-                    deviceCount = count;
-                    return false;
-                }
-                else
-                {
-                    throw new ApplicationException(String.Format(
-                        "Could not retrieve the count of Keyboard devices. Windows error: {0}",
-                        Marshal.GetLastWin32Error()));
-                }
-            }
-        }
-        */
         #region protected override void WndProc(ref Message msg)
 
         int size = 0;
@@ -165,6 +138,12 @@ namespace OpenTK.Platform.Windows
         {
             get { throw new Exception("The method or operation is not implemented."); }
         }
+
+        public void ProcessEvents()
+        {
+            // Do nothing, the WndProc is automatically notified of new events.
+        }
+
 
         #endregion
 
