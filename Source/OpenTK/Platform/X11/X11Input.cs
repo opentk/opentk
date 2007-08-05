@@ -44,7 +44,7 @@ namespace OpenTK.Platform.X11
                 //glxVisualInfo.depth,
                 //glContext.XVisualInfo.depth,
                 0,
-                Constants.InputOutput,
+                Constants.InputOnly,
                 //glxVisualInfo.visual,
                 //glContext.XVisualInfo.visual,
                 IntPtr.Zero,
