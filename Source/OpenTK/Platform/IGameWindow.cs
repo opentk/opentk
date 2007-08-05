@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OpenTK.Platform
 {
-    interface IGameWindow : INativeWindow
+    interface IGameWindow : INativeGLWindow
     {
         void Run();
 

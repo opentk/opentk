@@ -17,16 +17,22 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinGLNative : NativeWindow, OpenTK.Platform.INativeWindow, IDisposable
+    /// <summary>
+    /// Drives GameWindow on Windows.
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
+    /// </summary>
+    sealed class WinGLNative : NativeWindow, OpenTK.Platform.INativeGLWindow, IDisposable
     {
         #region --- Fields ---
 
         private WinGLContext glContext;
         private DisplayMode mode = new DisplayMode();
-        
+
+        private bool fullscreen = false;
         private bool disposed;
         private bool quit;
         private bool created;
+        private WindowInfo info;
 
         #endregion
 
@@ -38,6 +44,7 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         public WinGLNative()
         {
+            Debug.Print("Native window driver: {0}", this.ToString());
         }
 
         #endregion
@@ -78,7 +85,13 @@ namespace OpenTK.Platform.Windows
                     // Set the window width and height:
                     mode.Width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cx"));
                     mode.Height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cy"));
-                    
+
+                    info = new WindowInfo();
+                    info.Handle = this.Handle;
+                    info.Parent = null;
+
+                    Debug.Print("Window handle: {0}", this.Handle);
+
                     // Raise the Create event
                     this.OnCreate(EventArgs.Empty);
 
@@ -92,20 +105,23 @@ namespace OpenTK.Platform.Windows
                 //case API.Constants.WM_KEYUP:
                 //    break;
 
-                //case API.Constants.WM_INPUT:            // Raw input
-                //    WinRawInput.ProcessEvent(ref msg, key);
-                //    break;
-                
                 case API.Constants.WM_CLOSE:
+                    //this.Exit();
+                    //return;
+                    break;
+
                 case API.Constants.WM_DESTROY:
-                    Debug.Print("Window handle {0} destroyed.", this.Handle);
-                    this.DestroyHandle();
+                    if (this.Handle != IntPtr.Zero)
+                    {
+                        Debug.Print("Window handle {0} destroyed.", this.Handle);
+                        this.DestroyHandle();
+                    }
                     API.PostQuitMessage(0);
                     return;
 
                 case API.Constants.WM_QUIT:
                     quit = true;
-                    Debug.WriteLine("Window quit.");
+                    Debug.WriteLine("Application quit.");
                     return;
             }
 
@@ -115,12 +131,15 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- INativeWindow Members ---
+        #region --- INativeGLWindow Members ---
 
         #region private void CreateWindow(DisplayMode mode)
 
         public void CreateWindow(DisplayMode mode)
         {
+            Debug.Print("Creating native window with mode: {0}", mode.ToString());
+            Debug.Indent();
+
             CreateParams cp = new CreateParams();
             cp.ClassStyle =
                 (int)API.WindowClassStyle.OwnDC |
@@ -134,7 +153,10 @@ namespace OpenTK.Platform.Windows
             cp.Width = mode.Width;
             cp.Height = mode.Height;
             cp.Caption = "OpenTK Game Window";
-            base.CreateHandle(cp);
+
+            // Keep in mind that some construction code runs in WM_CREATE,
+            // which is raised CreateHandle()
+            CreateHandle(cp);
 
             glContext = new WinGLContext(
                 this.Handle,
@@ -151,6 +173,7 @@ namespace OpenTK.Platform.Windows
 
             if (this.Handle != IntPtr.Zero && glContext != null)
             {
+                Debug.WriteLine("Window creation was succesful.");
                 created = true;
             }
             else
@@ -159,6 +182,8 @@ namespace OpenTK.Platform.Windows
                     "Could not create native window and/or context. Handle: {0}, Context {1}",
                     this.Handle, this.Context.ToString()));
             }
+
+            Debug.Unindent();
         }
 
         /*
@@ -288,7 +313,6 @@ namespace OpenTK.Platform.Windows
 
         #region public bool Fullscreen
 
-        bool fullscreen;
         public bool Fullscreen
         {
             get
@@ -313,6 +337,15 @@ namespace OpenTK.Platform.Windows
                 return !API.PeekMessage(out msg, this.Handle, 0, 0, 0);
                 //return API.GetQueueStatus(API.QueueStatusFlags.ALLEVENTS) == 0;
             }
+        }
+
+        #endregion
+
+        #region public IWindowInfo WindowInfo
+
+        public IWindowInfo WindowInfo
+        {
+            get { return info; }
         }
 
         #endregion

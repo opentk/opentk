@@ -159,9 +159,33 @@ namespace OpenTK.Platform.X11
             ref Event event_send
         );
 
+        /// <summary>
+        /// The XSelectInput() function requests that the X server report the events associated
+        /// with the specified event mask.
+        /// </summary>
+        /// <param name="display">Specifies the connection to the X server.</param>
+        /// <param name="w">Specifies the window whose events you are interested in.</param>
+        /// <param name="event_mask">Specifies the event mask.</param>
+        /// <remarks>
+        /// Initially, X will not report any of these events.
+        /// Events are reported relative to a window.
+        /// If a window is not interested in a device event,
+        /// it usually propagates to the closest ancestor that is interested,
+        /// unless the do_not_propagate mask prohibits it.
+        /// Setting the event-mask attribute of a window overrides any previous call for the same window but not for other clients. Multiple clients can select for the same events on the same window with the following restrictions: 
+        /// <para>Multiple clients can select events on the same window because their event masks are disjoint. When the X server generates an event, it reports it to all interested clients. </para>
+        /// <para>Only one client at a time can select CirculateRequest, ConfigureRequest, or MapRequest events, which are associated with the event mask SubstructureRedirectMask. </para>
+        /// <para>Only one client at a time can select a ResizeRequest event, which is associated with the event mask ResizeRedirectMask. </para>
+        /// <para>Only one client at a time can select a ButtonPress event, which is associated with the event mask ButtonPressMask. </para>
+        /// <para>The server reports the event to all interested clients. </para>
+        /// <para>XSelectInput() can generate a BadWindow error.</para>
+        /// </remarks>
+        [DllImport(_dll_name, EntryPoint = "XSelectInput")]
+        internal static extern void SelectInput(Display display, Window w, EventMask event_mask);
+
         #endregion
 
-        #region Thing grabbin'
+        #region Pointer and Keyboard grabbing
 
         [DllImport(_dll_name, EntryPoint = "XGrabPointer")]
         extern internal static ErrorCodes XGrabPointer(
@@ -873,11 +897,11 @@ XF86VidModeGetGammaRampSize(
     }
 
     [Flags]
-    internal enum EventMask : ulong
+    internal enum EventMask : long //: ulong
     {
         NoEventMask	= 0,
         KeyPressMask	= (1L<<0),
-        KeyReeaseMask	= (1L<<1),
+        KeyReleaseMask	= (1L<<1),
         Button3MotionMask	= (1L<<10),
         Button4MotionMask	= (1L<<11),
         Button5MotionMask	= (1L<<12),
