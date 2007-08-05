@@ -124,7 +124,7 @@ namespace OpenTK.Platform.X11
                 info.Display,
                 info.RootWindow,
                 0, 0,
-                640, 480,
+                mode.Width, mode.Height,
                 0,
                 //glxVisualInfo.depth,
                 glContext.XVisualInfo.depth,
@@ -226,19 +226,15 @@ namespace OpenTK.Platform.X11
                 {
                     case EventType.ReparentNotify:
                         API.NextEvent(info.Display, reparent);
-                        // Do nothing
+
+                        // TODO: Is there a more suitable place to raise the Create event?
+                        // ReparentNotify seems to be the first event raised on window creation.
+                        this.OnCreate(EventArgs.Empty);
                         break;
 
                     case EventType.CreateNotify:
                         API.NextEvent(info.Display, createWindow);
-
-                        // Set window width/height
-                        mode.Width = createWindow.width;
-                        mode.Height = createWindow.height;
-                        this.OnCreate(EventArgs.Empty);
-                        Debug.WriteLine(
-                            String.Format("OnCreate fired: {0}x{1}", mode.Width, mode.Height)
-                        );
+                        // A child was created - nothing to do
                         break;
 
                     case EventType.DestroyNotify:
@@ -288,6 +284,7 @@ namespace OpenTK.Platform.X11
             if (this.Create != null)
             {
                 this.Create(this, e);
+                Debug.Print("OnCreate fired, from window: {0}", info.ToString());
             }
         }
 
