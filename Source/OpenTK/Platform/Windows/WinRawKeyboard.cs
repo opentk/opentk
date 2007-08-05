@@ -297,12 +297,10 @@ namespace OpenTK.Platform.Windows
                             if (!WinRawKeyboard.KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
                             {
                                 Debug.Print("Virtual key {0} not mapped.", rin.Data.Keyboard.VKey);
-                                OpenTK.OpenGL.GL.ClearColor(1.0f, 0.3f, 0.3f, 0.0f);
                             }
                             else
                             {
                                 keyboards[0][WinRawKeyboard.KeyMap[rin.Data.Keyboard.VKey]] = pressed;
-                                OpenTK.OpenGL.GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
                             }
                             break;
                     }
