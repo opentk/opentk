@@ -55,7 +55,7 @@ namespace OpenTK.Platform.X11
                 window.Display,
                 window.Parent.Handle,
                 0, 0,
-                1, 1,
+                0, 0,
                 0, 0,
                 Constants.InputOnly,
                 window.VisualInfo.visual,
@@ -67,6 +67,8 @@ namespace OpenTK.Platform.X11
             {
                 throw new Exception("Could not create input window.");
             }
+
+            API.MapWindow(window.Display, window.Handle);
 
             Debug.WriteLine("done! (id: " + window + ")");
 
