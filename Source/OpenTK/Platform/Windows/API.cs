@@ -57,11 +57,11 @@ namespace OpenTK.Platform.Windows
         // Prevent BeforeFieldInit optimization, and initialize 'size' fields.
         static API()
         {
-            RawInputHeaderSize = (uint)Marshal.SizeOf(typeof(RawInputHeader));
-            RawInputSize = (uint)Marshal.SizeOf(typeof(RawInput));
-            RawInputDeviceSize = (uint)Marshal.SizeOf(typeof(RawInputDevice));
-            RawInputDeviceListSize = (uint)Marshal.SizeOf(typeof(RawInputDeviceList));
-            RawInputDeviceInfoSize = (uint)Marshal.SizeOf(typeof(RawInputDeviceInfo));
+            RawInputHeaderSize = Marshal.SizeOf(typeof(RawInputHeader));
+            RawInputSize = Marshal.SizeOf(typeof(RawInput));
+            RawInputDeviceSize = Marshal.SizeOf(typeof(RawInputDevice));
+            RawInputDeviceListSize = Marshal.SizeOf(typeof(RawInputDeviceList));
+            RawInputDeviceInfoSize = Marshal.SizeOf(typeof(RawInputDeviceInfo));
         }
 
         #region Constants
@@ -246,12 +246,23 @@ namespace OpenTK.Platform.Windows
 
         #region PostMessage
 
+        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern BOOL PostMessage(
             HWND hWnd,
             UINT Msg,
+            WPARAM wParam,
+            LPARAM lParam
+        );
+
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern BOOL PostMessage(
+            HWND hWnd,
+            INT Msg,
             WPARAM wParam,
             LPARAM lParam
         );
@@ -647,12 +658,23 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        [CLSCompliant(false)]
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern LRESULT CallWindowProc(
             WNDPROC lpPrevWndFunc,
             HWND hWnd,
             UINT Msg,
+            WPARAM wParam,
+            LPARAM lParam
+        );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern LRESULT CallWindowProc(
+            WNDPROC lpPrevWndFunc,
+            HWND hWnd,
+            INT Msg,
             WPARAM wParam,
             LPARAM lParam
         );
@@ -719,12 +741,21 @@ namespace OpenTK.Platform.Windows
         /// <param name="Input">Number of RawInput structures pointed to by paRawInput.</param>
         /// <param name="SizeHeader">Size, in bytes, of the RawInputHeader structure.</param>
         /// <returns>If successful, the function returns S_OK. Otherwise it returns an error value.</returns>
+        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern LRESULT DefRawInputProc(
             RawInput[] RawInput,
             INT Input,
             UINT SizeHeader
+        );
+
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern LRESULT DefRawInputProc(
+            RawInput[] RawInput,
+            INT Input,
+            INT SizeHeader
         );
 
         #endregion
@@ -746,12 +777,21 @@ namespace OpenTK.Platform.Windows
         /// <returns>
         /// TRUE if the function succeeds; otherwise, FALSE. If the function fails, call GetLastError for more information.
         /// </returns>
+        [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern BOOL RegisterRawInputDevices(
             RawInputDevice[] RawInputDevices,
             UINT NumDevices,
             UINT Size
+        );
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern BOOL RegisterRawInputDevices(
+            RawInputDevice[] RawInputDevices,
+            INT NumDevices,
+            INT Size
         );
 
         #endregion
@@ -773,12 +813,21 @@ namespace OpenTK.Platform.Windows
         /// of RawInput structures written to Data.
         /// If an error occurs, the return value is (UINT)-1. Call GetLastError for the error code.
         /// </returns>
+        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRawInputBuffer(
             [Out] RawInput[] Data,
             [In, Out] ref UINT Size,
             [In] UINT SizeHeader
+        );
+
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern INT GetRawInputBuffer(
+            [Out] RawInput[] Data,
+            [In, Out] ref INT Size,
+            [In] INT SizeHeader
         );
 
         #endregion
@@ -811,11 +860,19 @@ namespace OpenTK.Platform.Windows
         /// If the function fails for any other reason, it returns -1. For more details, call GetLastError.
         /// </para>
         /// </returns>
+        [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRegisteredRawInputDevices(
             [Out] RawInput[] RawInputDevices,
             [In, Out] ref UINT NumDevices,
             UINT cbSize
+        );
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern INT GetRegisteredRawInputDevices(
+            [Out] RawInput[] RawInputDevices,
+            [In, Out] ref INT NumDevices,
+            INT cbSize
         );
 
         #endregion
@@ -849,11 +906,19 @@ namespace OpenTK.Platform.Windows
         /// Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
         /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
         /// </returns>
+        [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRawInputDeviceList(
             [In, Out] RawInputDeviceList[] RawInputDeviceList,
             [In, Out] ref UINT NumDevices,
             UINT Size
+        );
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern INT GetRawInputDeviceList(
+            [In, Out] RawInputDeviceList[] RawInputDeviceList,
+            [In, Out] ref INT NumDevices,
+            INT Size
         );
 
         /// <summary>
@@ -883,11 +948,19 @@ namespace OpenTK.Platform.Windows
         /// Calling GetLastError returns ERROR_INSUFFICIENT_BUFFER.
         /// On any other error, the function returns (UINT) -1 and GetLastError returns the error indication.
         /// </returns>
+        [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRawInputDeviceList(
             [In, Out] IntPtr RawInputDeviceList,
             [In, Out] ref UINT NumDevices,
             UINT Size
+        );
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern INT GetRawInputDeviceList(
+            [In, Out] IntPtr RawInputDeviceList,
+            [In, Out] ref INT NumDevices,
+            INT Size
         );
 
         #endregion
@@ -925,6 +998,7 @@ namespace OpenTK.Platform.Windows
         /// <para>If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.</para>
         /// <para>Call GetLastError to identify any other errors.</para>
         /// </returns>
+        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRawInputDeviceInfo(
@@ -932,6 +1006,15 @@ namespace OpenTK.Platform.Windows
             [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
             [In, Out] LPVOID Data,
             [In, Out] ref UINT Size
+        );
+
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern INT GetRawInputDeviceInfo(
+            HANDLE Device,
+            [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
+            [In, Out] LPVOID Data,
+            [In, Out] ref INT Size
         );
 
         /// <summary>
@@ -965,6 +1048,7 @@ namespace OpenTK.Platform.Windows
         /// <para>If Data is not large enough for the data, the function returns -1. If Data is NULL, the function returns a value of zero. In both of these cases, Size is set to the minimum size required for the Data buffer.</para>
         /// <para>Call GetLastError to identify any other errors.</para>
         /// </returns>
+        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRawInputDeviceInfo(
@@ -973,6 +1057,16 @@ namespace OpenTK.Platform.Windows
             [In, Out] RawInputDeviceInfo Data,
             [In, Out] ref UINT Size
         );
+
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern INT GetRawInputDeviceInfo(
+            HANDLE Device,
+            [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
+            [In, Out] RawInputDeviceInfo Data,
+            [In, Out] ref INT Size
+        );
+
 
         #endregion
 
@@ -999,6 +1093,7 @@ namespace OpenTK.Platform.Windows
         /// <remarks>
         /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array of RawInput structures.
         /// </remarks>
+        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRawInputData(
@@ -1007,6 +1102,16 @@ namespace OpenTK.Platform.Windows
             [Out] LPVOID Data,
             [In, Out] ref UINT Size,
             UINT SizeHeader
+        );
+
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern INT GetRawInputData(
+            HRAWINPUT RawInput,
+            GetRawInputDataEnum Command,
+            [Out] LPVOID Data,
+            [In, Out] ref INT Size,
+            INT SizeHeader
         );
 
         /// <summary>
@@ -1030,6 +1135,7 @@ namespace OpenTK.Platform.Windows
         /// <remarks>
         /// GetRawInputData gets the raw input one RawInput structure at a time. In contrast, GetRawInputBuffer gets an array of RawInput structures.
         /// </remarks>
+        [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern UINT GetRawInputData(
@@ -1038,6 +1144,16 @@ namespace OpenTK.Platform.Windows
             [MarshalAs(UnmanagedType.LPStruct)] [Out] RawInput Data,
             [In, Out] ref UINT Size,
             UINT SizeHeader
+        );
+
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern INT GetRawInputData(
+            HRAWINPUT RawInput,
+            GetRawInputDataEnum Command,
+            [MarshalAs(UnmanagedType.LPStruct)] [Out] RawInput Data,
+            [In, Out] ref INT Size,
+            INT SizeHeader
         );
 
         #endregion
@@ -1464,7 +1580,7 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputDevice
 
-        public static readonly uint RawInputDeviceSize;
+        public static readonly int RawInputDeviceSize;
 
         /// <summary>
         /// Defines information for the raw input devices.
@@ -1478,11 +1594,13 @@ namespace OpenTK.Platform.Windows
             /// <summary>
             /// Top level collection Usage page for the raw input device.
             /// </summary>
-            public USHORT UsagePage;
+            //public USHORT UsagePage;
+            public SHORT UsagePage;
             /// <summary>
             /// Top level collection Usage for the raw input device.
             /// </summary>
-            public USHORT Usage;
+            //public USHORT Usage;
+            public SHORT Usage;
             /// <summary>
             /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
             /// It can be zero (the default) or one of the following values.
@@ -1505,7 +1623,7 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputDeviceList
 
-        public static readonly uint RawInputDeviceListSize;
+        public static readonly int RawInputDeviceListSize;
 
         /// <summary>
         /// Contains information about a raw input device.
@@ -1532,7 +1650,7 @@ namespace OpenTK.Platform.Windows
 
         #region RawInput
 
-        public static uint RawInputSize;
+        public static int RawInputSize;
 
         /// <summary>
         /// Contains the raw input from a device.
@@ -1565,7 +1683,7 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputHeader
 
-        public static readonly uint RawInputHeaderSize;
+        public static readonly int RawInputHeaderSize;
 
         /// <summary>
         /// Contains the header information that is part of the raw input data.
@@ -1607,7 +1725,8 @@ namespace OpenTK.Platform.Windows
             /// <summary>
             /// Scan code from the key depression. The scan code for keyboard overrun is KEYBOARD_OVERRUN_MAKE_CODE.
             /// </summary>
-            public USHORT MakeCode;
+            //public USHORT MakeCode;
+            public SHORT MakeCode;
             /// <summary>
             /// Flags for scan code information. It can be one or more of the following.
             /// RI_KEY_MAKE
@@ -1630,11 +1749,13 @@ namespace OpenTK.Platform.Windows
             /// <summary>
             /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.
             /// </summary>
-            public UINT Message;
+            //public UINT Message;
+            public INT Message;
             /// <summary>
             /// Device-specific additional information for the event.
             /// </summary>
-            public ULONG ExtraInformation;
+            //public ULONG ExtraInformation;
+            public LONG ExtraInformation;
         }
 
         #endregion
@@ -1659,7 +1780,8 @@ namespace OpenTK.Platform.Windows
             /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
             /// </summary>
             [FieldOffset(0)]
-            public USHORT Flags;
+            //public USHORT Flags;
+            public SHORT Flags;
             /// <summary>
             /// Reserved.
             /// </summary>
@@ -1674,12 +1796,14 @@ namespace OpenTK.Platform.Windows
             /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
             /// </summary>
             [FieldOffset(4)]
-            public USHORT ButtonData;
+            //public USHORT ButtonData;
+            public SHORT ButtonData;
             /// <summary>
             /// Raw state of the mouse buttons.
             /// </summary>
             [FieldOffset(6)]
-            public ULONG RawButtons;
+            //public ULONG RawButtons;
+            public LONG RawButtons;
             /// <summary>
             /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
             /// </summary>
@@ -1694,7 +1818,8 @@ namespace OpenTK.Platform.Windows
             /// Device-specific additional information for the event.
             /// </summary>
             [FieldOffset(18)]
-            public ULONG ExtraInformation;
+            //public ULONG ExtraInformation;
+            public LONG ExtraInformation;
         }
 
         #endregion
@@ -1731,7 +1856,7 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputDeviceInfo
 
-        public static readonly uint RawInputDeviceInfoSize;
+        public static readonly int RawInputDeviceInfoSize;
 
         /// <summary>
         /// Defines the raw input data coming from any device.
@@ -1785,11 +1910,13 @@ namespace OpenTK.Platform.Windows
             /// <summary>
             /// Top-level collection Usage Page for the device.
             /// </summary>
-            public USHORT UsagePage;
+            //public USHORT UsagePage;
+            public SHORT UsagePage;
             /// <summary>
             /// Top-level collection Usage for the device.
             /// </summary>
-            public USHORT Usage;
+            //public USHORT Usage;
+            public SHORT Usage;
         }
 
         #endregion
@@ -2060,7 +2187,7 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputMouseState
 
-        public enum RawInputMouseState : ushort
+        public enum RawInputMouseState : short// : ushort
         {
             LEFT_BUTTON_DOWN = 0x0001,  // Left Button changed to down.
             LEFT_BUTTON_UP   = 0x0002,  // Left Button changed to up.
@@ -2088,7 +2215,7 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputKeyboardDataFlags
 
-        public enum RawInputKeyboardDataFlags : ushort
+        public enum RawInputKeyboardDataFlags : short //: ushort
         {
             MAKE            = 0,
             BREAK           = 1,
