@@ -28,6 +28,11 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine("Initalizing X11 input driver.");
             Debug.Indent();
 
+            if (parent == null)
+            {
+                throw new ArgumentException("A valid parent window must be defined, in order to create an X11Input driver.");
+            }
+
             Debug.WriteLine("Creating hidden input window.");
 
             SetWindowAttributes wnd_attributes = new SetWindowAttributes();
