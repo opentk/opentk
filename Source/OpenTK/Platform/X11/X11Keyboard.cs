@@ -130,11 +130,13 @@ namespace OpenTK.Platform.X11
         /// <returns>True if the event was processed, false otherwise.</returns>
         internal bool ProcessKeyboardEvent(X11.XKeyEvent e)
         {
-            int keysym = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
-            int keysym2 = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
+            //int keysym = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
+            //int keysym2 = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
             bool pressed = e.type == XEventName.KeyPress;
 
-            switch (keysym)
+            IntPtr keysym = API.LookupKeysym(ref e, 0);
+
+            switch (keysym.ToInt64())
             {
                 default:
                     if (keymap.ContainsKey((XKey)keysym))
@@ -143,7 +145,8 @@ namespace OpenTK.Platform.X11
                     }
                     else
                     {
-                        Debug.Print("Virtual key {0} not mapped. (keysym: {1},{2})", e.keycode, keysym, keysym2);
+                        //Debug.Print("Virtual key {0} not mapped. (keysym: {1},{2})", e.keycode, keysym, keysym2);
+                        Debug.Print("Virtual key {0} not mapped. (keysym: {1})", e.keycode, keysym);
                     }
                     return true;
 
