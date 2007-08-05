@@ -33,7 +33,8 @@ namespace OpenTK.Platform.Windows
         #region --- Contructors ---
 
         /// <summary>
-        /// Constructs a new WinGLNative window, using safe defaults for the DisplayMode.
+        /// Constructs a new WinGLNative class. Call CreateWindow to create the
+        /// actual render window.
         /// </summary>
         public WinGLNative()
         {
