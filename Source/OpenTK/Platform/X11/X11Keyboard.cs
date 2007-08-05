@@ -4,6 +4,7 @@ using System.Text;
 
 using OpenTK.Input;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace OpenTK.Platform.X11
 {
@@ -117,7 +118,7 @@ namespace OpenTK.Platform.X11
             keyboards.Add(kb);
         }
 
-        #region internal bool ProcessKeyboardEvent(API.RawInput rin)
+        #region internal bool ProcessKeyboardEvent(X11.KeyEvent e)
 
         /// <summary>
         /// Processes X11 KeyEvents.
@@ -126,6 +127,25 @@ namespace OpenTK.Platform.X11
         /// <returns>True if the event was processed, false otherwise.</returns>
         internal bool ProcessKeyboardEvent(X11.KeyEvent e)
         {
+            int keysym = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
+            int keysym2 = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
+            bool pressed = e.type == EventType.KeyPress;
+
+            switch (keysym)
+            {
+                default:
+                    if (keymap.ContainsKey((XKey)keysym))
+                    {
+                        keyboards[0][keymap[(XKey)keysym]] = pressed;
+                    }
+                    else
+                    {
+                        Debug.Print("Virtual key {0} not mapped. (keysym: {1},{2})", e.keycode, keysym, keysym2);
+                    }
+                    return true;
+
+            }
+
             return false;
             /*API.e.keycode
             switch (rin.Header.Type)
