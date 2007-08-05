@@ -32,8 +32,6 @@ namespace OpenTK.Platform.X11
 
         IntPtr[] keysyms;
 
-
-
         private static bool keymapExists;
 
         #region private static void Initialize()
