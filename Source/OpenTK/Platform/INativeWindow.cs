@@ -10,8 +10,6 @@ namespace OpenTK.Platform
         void ProcessEvents();
         void Exit();
 
-        event CreateEvent Create;
-
         bool Created { get; }
         bool Quit { get; }
         IntPtr Handle { get; }

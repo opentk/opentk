@@ -214,7 +214,7 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         public void Exit()
         {
-            API.PostMessage(this.Handle, (uint)API.Constants.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
+            API.PostMessage(this.Handle, API.Constants.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
         }
 
         #endregion

@@ -155,7 +155,7 @@ namespace OpenTK.Platform.Windows
 
         internal void UpdateKeyboardList()
         {
-            uint count = WinRawInput.DeviceCount;
+            int count = WinRawInput.DeviceCount;
             API.RawInputDeviceList[] ridl = new API.RawInputDeviceList[count];
             for (int i = 0; i < count; i++)
                 ridl[i] = new API.RawInputDeviceList();
@@ -209,7 +209,7 @@ namespace OpenTK.Platform.Windows
 
                         // Register the keyboard:
                         API.RawInputDeviceInfo info = new API.RawInputDeviceInfo();
-                        uint devInfoSize = API.RawInputDeviceInfoSize;
+                        int devInfoSize = API.RawInputDeviceInfoSize;
                         API.GetRawInputDeviceInfo(ridl[i].Device, API.RawInputDeviceInfoEnum.DEVICEINFO,
                                 info, ref devInfoSize);
 

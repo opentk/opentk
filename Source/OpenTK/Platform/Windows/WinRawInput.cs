@@ -44,9 +44,9 @@ namespace OpenTK.Platform.Windows
             Debug.Unindent();
         }
 
-        private static uint deviceCount;
+        private static int deviceCount;
 
-        internal static uint DeviceCount
+        internal static int DeviceCount
         {
             get
             {
@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Windows
         */
         #region protected override void WndProc(ref Message msg)
 
-        uint size = 0;
+        int size = 0;
 
         /// <summary>
         /// Processes the input Windows Message, routing the data to the correct Keyboard, Mouse or HID.
