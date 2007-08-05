@@ -35,7 +35,7 @@ namespace OpenTK.Platform.X11
         public override string ToString()
         {
             return String.Format("X11.WindowInfo: Display {0}, Screen {1}, Handle {2}{3}    Parent {4}",
-                this.Display, this.Screen, this.Handle, System.Environment.NewLine, this.Parent.ToString());
+                this.Display, this.Screen, this.Handle, System.Environment.NewLine, this.Parent != null ? this.Parent.ToString() : "null");
         }
     }
 }
