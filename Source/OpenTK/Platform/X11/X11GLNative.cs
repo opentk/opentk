@@ -116,6 +116,7 @@ namespace OpenTK.Platform.X11
             //API.CreateColormap(display, rootWindow, glxVisualInfo.visual, 0/*AllocNone*/);
             wnd_attributes.event_mask =
                 EventMask.StructureNotifyMask |
+                EventMask.SubstructureNotifyMask |
                 EventMask.ExposureMask;
 
             CreateWindowMask cw_mask =
