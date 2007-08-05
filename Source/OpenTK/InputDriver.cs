@@ -17,9 +17,14 @@ namespace OpenTK
             {
                 inputDriver = new OpenTK.Platform.Windows.WinRawInput(parentHandle);
             }
+            else if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                inputDriver = new OpenTK.Platform.X11.X11Input(parentHandle);
+            }
             else
             {
-                throw new PlatformNotSupportedException("Input is not implemented for platforms prior to Windows XP, yet.");
+                throw new PlatformNotSupportedException(
+                    "Input handling is not supported on the current platform. Please report the problem to http://opentk.sourceforge.net");
             }
         }
 
@@ -35,9 +40,9 @@ namespace OpenTK
             get { return inputDriver.Keyboard; }
         }
 
-        public IList<Keyboard> Mouse
+        IList<Mouse> IMouseDriver.Mouse
         {
-            get { throw new NotImplementedException(); }
+            get { return inputDriver.Mouse; }
         }
 
         #endregion

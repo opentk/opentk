@@ -18,7 +18,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    internal class WinRawInput : NativeWindow, Input.IInputDriver
+    internal class WinRawInput : NativeWindow, IInputDriver
     {
         /// <summary>
         /// Input event data.
@@ -159,6 +159,15 @@ namespace OpenTK.Platform.Windows
         }
 
         public IList<Keyboard> Mouse
+        {
+            get { throw new Exception("The method or operation is not implemented."); }
+        }
+
+        #endregion
+
+        #region IMouseDriver Members
+
+        IList<Mouse> IMouseDriver.Mouse
         {
             get { throw new Exception("The method or operation is not implemented."); }
         }
