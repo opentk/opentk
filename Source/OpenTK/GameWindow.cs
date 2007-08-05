@@ -56,7 +56,8 @@ namespace OpenTK
         {
             //glWindow.Context.MakeCurrent();
 
-            driver = new InputDriver(this.WindowInfo);
+            if (driver == null)
+                driver = new InputDriver(this.WindowInfo);
             glWindow.Create -= glWindow_CreateInputDriver;
 
             this.OnCreate(e);
@@ -80,12 +81,7 @@ namespace OpenTK
         {
             get
             {
-                if (driver == null)
-                {
-                    Debug.WriteLine("WARNING: Requested the list of Keyboard devices, without creating an InputDriver first. Continuing by creating an input driver, but this may indicate a prorgamming error.");
-                    driver = new InputDriver(this.WindowInfo);
-                }
-                return driver.Keyboard;
+                return InputDriver.Keyboard;
             }
         }
 
@@ -100,16 +96,24 @@ namespace OpenTK
         {
             get
             {
-                if (driver == null)
-                {
-                    Debug.WriteLine("WARNING: Requested available InputDevices, without creating an InputDriver first. Continuing by creating an input driver, but this may indicate a prorgamming error.");
-                    driver = new InputDriver(this.WindowInfo);
-                }
-                return driver.InputDevices;
+                return InputDriver.InputDevices;
             }
         }
 
         #endregion
+
+        internal InputDriver InputDriver
+        {
+            get
+            {
+                if (driver == null)
+                {
+                    Debug.WriteLine("WARNING: Accessed null InputDriver - creating new. This may indicate a prorgamming error.");
+                    driver = new InputDriver(this.WindowInfo);
+                }
+                return driver;
+            }
+        }
 
         #endregion
 
@@ -279,8 +283,9 @@ namespace OpenTK
         /// </remarks>
         public void ProcessEvents()
         {
+            if (driver != null)
+                driver.ProcessEvents();
             glWindow.ProcessEvents();
-            driver.ProcessEvents();
         }
 
         #endregion

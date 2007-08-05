@@ -24,7 +24,7 @@ namespace OpenTK.Platform.X11
         private int screenNo;
 
         private DisplayMode mode;// = new DisplayMode();
-        internal WindowInfo windowInfo = new WindowInfo();
+        internal WindowInfo windowInfo;
         private VisualInfo visualInfo;
 
         //private IntPtr desktopResolution = IntPtr.Zero;
@@ -45,14 +45,9 @@ namespace OpenTK.Platform.X11
             this.mode = new DisplayMode();
         }
 
-        internal X11GLContext(WindowInfo info, DisplayMode mode)
+        internal X11GLContext(WindowInfo window, DisplayMode mode)
         {
-            this.windowInfo.Handle = info.Handle;
-            this.windowInfo.RootWindow = info.RootWindow;
-            this.windowInfo.TopLevelWindow = info.TopLevelWindow;
-            this.windowInfo.Display = info.Display;
-            this.windowInfo.Screen = info.Screen;
-            
+            this.windowInfo = new WindowInfo(window);
             this.mode = mode;
         }
 
@@ -269,12 +264,5 @@ namespace OpenTK.Platform.X11
         {
             get { return this.x11context; }
         }
-/*
-        public IntPtr ContainingWindow
-        {
-            get { return info.Window; }
-            internal set { info.Window = value; }
-        }
-*/
     }
 }

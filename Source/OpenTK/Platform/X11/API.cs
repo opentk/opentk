@@ -30,6 +30,7 @@ namespace OpenTK.Platform.X11
     using KeyCode = System.Byte;    // Or maybe ushort?
 
     using Display = System.IntPtr;
+    using XPointer = System.IntPtr;
 
     #endregion
 
@@ -145,7 +146,7 @@ namespace OpenTK.Platform.X11
         [DllImport(_dll_name, EntryPoint = "XPeekEvent")]
         extern internal static void PeekEvent(
             Display display,
-            [In, Out]Event event_return
+            [In, Out]XEvent event_return
         );
 
         [DllImport(_dll_name, EntryPoint = "XSendEvent")]
@@ -156,7 +157,7 @@ namespace OpenTK.Platform.X11
             bool propagate,
             [MarshalAs(UnmanagedType.SysInt)]
             EventMask event_mask,
-            ref Event event_send
+           ref XEvent event_send
         );
 
         /// <summary>
@@ -182,6 +183,22 @@ namespace OpenTK.Platform.X11
         /// </remarks>
         [DllImport(_dll_name, EntryPoint = "XSelectInput")]
         internal static extern void SelectInput(Display display, Window w, EventMask event_mask);
+
+        /// <summary>
+        /// When the predicate procedure finds a match, XCheckIfEvent() copies the matched event into the client-supplied XEvent structure and returns True. (This event is removed from the queue.) If the predicate procedure finds no match, XCheckIfEvent() returns False, and the output buffer will have been flushed. All earlier events stored in the queue are not discarded.
+        /// </summary>
+        /// <param name="display">Specifies the connection to the X server.</param>
+        /// <param name="event_return">Returns a copy of the matched event's associated structure.</param>
+        /// <param name="predicate">Specifies the procedure that is to be called to determine if the next event in the queue matches what you want</param>
+        /// <param name="arg">Specifies the user-supplied argument that will be passed to the predicate procedure.</param>
+        /// <returns>true if the predicate returns true for some event, false otherwise</returns>
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool CheckIfEvent(Display display, ref XEvent event_return,
+            /*[MarshalAs(UnmanagedType.FunctionPtr)] */ CheckEventPredicate predicate, /*XPointer*/ IntPtr arg);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal delegate bool CheckEventPredicate(Display display, ref XEvent @event, IntPtr arg);
 
         #endregion
 
@@ -626,220 +643,6 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
 
-    #region Event structures
-
-    #region XEvent
-
-    [StructLayout(LayoutKind.Sequential)]
-    //[StructLayout(LayoutKind.Explicit)]
-    internal class Event
-    {
-        internal EventType Type;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst=192)]
-        byte[] pad = new byte[192];
-        /*[FieldOffset(0)]internal EventType Type;*/
-        /*[FieldOffset(0)]
-        IntPtr
-            pad1 , pad2 , pad3 , pad4 , pad5 , pad6 ,
-            pad7 , pad8 , pad9 , pad10, pad11, pad12,
-            pad13, pad14, pad15, pad16, pad17, pad18,
-            pad19, pad20, pad21, pad22, pad23, pad24;*/
-            
-        /*private ConfigureNotifyEvent cne = new ConfigureNotifyEvent();
-        internal ConfigureNotifyEvent ConfigureEvent
-        {
-            get
-            {
-                cne.type = this.Type;
-                cne.serial = this.pad1;
-            }
-        }*/
-       
-        //[FieldOffset(0)]internal AnyEvent Any;
-        //[FieldOffset(0)]internal KeyEvent Key;
-        //[FieldOffset(0)]internal DestroyWindowEvent DestroyWindow;
-        //[FieldOffset(0)]internal CreateWindowEvent CreateWindow;
-        //[FieldOffset(0)]internal ResizeRequestEvent ResizeRequest;
-        //[FieldOffset(0)]internal ConfigureNotifyEvent ConfigureNotify;
-        //[FieldOffset(0)]internal ReparentNotifyEvent ReparentNotify;
-        //[FieldOffset(0)]internal ExposeEvent Expose;
-    }
-
-    #endregion
-
-    #region XAnyEvent
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal class AnyEvent
-    {
-        internal EventType type;
-	    //[MarshalAs(UnmanagedType.SysUInt)]
-        internal IntPtr serial;	/* # of last request processed by server */
-	    [MarshalAs(UnmanagedType.Bool)]
-        internal bool send_event;	/* true if this came from a SendEvent request */
-	    internal Display display;	/* Display the event was read from */
-	    internal Window window;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst=192)]
-        byte[] pad = new byte[192];
-
-    }
-
-    #endregion
-
-    #region XKeyEvent
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal class KeyEvent
-    {
-        internal EventType type;		/* KeyPress or KeyRelease */
-        [MarshalAs(UnmanagedType.SysUInt)]
-	    internal ulong serial;	/* # of last request processed by server */
-        [MarshalAs(UnmanagedType.Bool)]
-	    internal bool send_event;	/* true if this came from a SendEvent request */
-	    internal Display display;	/* Display the event was read from */
-	    internal Window window;		/* ``event'' window it is reported relative to */
-	    internal Window root;		/* root window that the event occurred on */
-	    internal Window subwindow;	/* child window */
-	    [MarshalAs(UnmanagedType.SysUInt)]
-        internal Time time;		    /* milliseconds */
-	    internal int x, y;		/* pointer x, y coordinates in event window */
-	    internal int x_root, y_root;	/* coordinates relative to root */
-	    internal uint state;	/* key or button mask */
-	    internal uint keycode;	/* detail */
-        [MarshalAs(UnmanagedType.Bool)]
-	    internal bool same_screen;	/* same screen flag */
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst=192)]
-        byte[] pad = new byte[192];
-    }
-
-    #endregion
-
-    #region XDestroyWindowEvent
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal class DestroyWindowEvent
-    {
-        internal EventType type;		    /* DestroyNotify */
-        internal ulong serial;	    /* # of last request processed by server */
-	    [MarshalAs(UnmanagedType.Bool)]
-        internal bool send_event;	/* true if this came from a SendEvent request */
-        internal Display display;	/* Display the event was read from */
-        internal Window @event;
-        internal Window window;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst=192)]
-        byte[] pad = new byte[192];
-    }
-
-    #endregion
-
-    #region XCreateWindowEvent
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal class CreateWindowEvent
-    {
-        internal EventType type;		/* CreateNotify */
-        internal ulong serial;	/* # of last request processed by server */
-        [MarshalAs(UnmanagedType.Bool)]
-        internal bool send_event;	/* true if this came from a SendEvent request */
-        internal Display display;	/* Display the event was read from */
-        internal Window parent;		/* parent of the window */
-        internal Window window;		/* window id of window created */
-        internal int x, y;		/* window location */
-        internal int width, height;	/* size of window */
-        internal int border_width;	/* border width */
-        [MarshalAs(UnmanagedType.Bool)]
-        internal bool override_redirect;	/* creation should be overridden */
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst=192)]
-        byte[] pad = new byte[192];
-    }
-
-    #endregion
-
-    #region XResizeRequestEvent
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal class ResizeRequestEvent
-    {
-        internal EventType type;	/* ResizeRequest */
-	    internal ulong serial;	    /* # of last request processed by server */
-        [MarshalAs(UnmanagedType.Bool)]
-	    internal bool send_event;	/* true if this came from a SendEvent request */
-	    internal Display display;	/* Display the event was read from */
-	    internal Window window;
-	    internal int width, height;
-    }
-
-    #endregion
-
-    #region XConfigureNotifyEvent
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal class ConfigureNotifyEvent
-    {
-        internal EventType type;	        /* ConfigureNotify */
-        internal ulong serial;	/* # of last request processed by server */
-        [MarshalAs(UnmanagedType.Bool)]
-	    internal bool send_event;	/* true if this came from a SendEvent request */
-        internal Display display;	/* Display the event was read from */
-        internal Window @event;
-        internal Window window;
-        internal int x, y;
-        internal int width, height;
-        internal int border_width;
-        internal Window above;
-        [MarshalAs(UnmanagedType.Bool)]
-        internal bool override_redirect;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst=192)]
-        byte[] pad = new byte[192];
-    }
-
-    #endregion
-    
-    #region XReparentNotifyEvent
-    
-    [StructLayout(LayoutKind.Sequential)]
-    internal class ReparentNotifyEvent
-    {
-    	internal EventType type;               /* ReparentNotify */
-        //[MarshalAs(UnmanagedType.SysUInt)]
-    	internal IntPtr serial;	/* # of last request processed by server */
-    	//[MarshalAs(UnmanagedType.Bool)]
-    	internal bool send_event;	/* true if this came from a SendEvent request */
-    	internal Display display;	/* Display the event was read from */
-    	internal Window @event;
-    	internal Window window;
-    	internal Window parent;
-    	internal int x, y;
-    	//[MarshalAs(UnmanagedType.Bool)]
-    	internal bool override_redirect;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst=192)]
-        byte[] pad = new byte[192];
-    }
-    
-    #endregion
-    
-    #region XExposeEvent
-    
-    [StructLayout(LayoutKind.Sequential)]
-    internal class ExposeEvent
-    {
-    	internal EventType type;		/* Expose */
-    	internal ulong serial;	/* # of last request processed by server */
-    	[MarshalAs(UnmanagedType.Bool)]
-    	internal bool send_event;	/* true if this came from a SendEvent request */
-    	internal Display display;	/* Display the event was read from */
-    	internal Window window;
-    	internal int x, y;
-    	internal int width, height;
-    	internal int count;		/* if nonzero, at least this many more */
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst=192)]
-        byte[] pad = new byte[192];
-    }
-
-    #endregion
-
-    #endregion
-
     #endregion
 
     #region X11 Constants and Enums
@@ -854,45 +657,6 @@ XF86VidModeGetGammaRampSize(
         internal const int CWX = 1;
         internal const int InputOutput = 1;
         internal const int InputOnly = 2;
-    }
-
-    internal enum EventType : int
-    {
-        NoEventMask	= 0,
-        FocusOut	= 10,
-        KeymapNotify = 11,
-        Expose	= 12,
-        GraphicsExpose	= 13,
-        NoExpose	= 14,
-        VisibilityNotify	= 15,
-        CreateNotify	= 16,
-        DestroyNotify	= 17,
-        UnmapNotify	= 18,
-        MapNotify	= 19,
-        KeyPress	= 2,
-        MapRequest	= 20,
-        ReparentNotify	= 21,
-        ConfigureNotify	= 22,
-        ConfigureRequest	= 23,
-        GravityNotify	= 24,
-        ResizeRequest	= 25,
-        CirculateNotify	= 26,
-        CirculateRequest	= 27,
-        PropertyNotify	= 28,
-        SelectionClear	= 29,
-        KeyRelease	= 3,
-        SelectionRequest	= 30,
-        SelectionNotify	= 31,
-        ColormapNotify	= 32,
-        ClientMessage	= 33,
-        MappingNotify	= 34,
-        LASTEvent	= 35,
-        ButtonPress	= 4,
-        ButtonRelease	= 5,
-        MotionNotify	= 6,
-        EnterNotify	= 7,
-        LeaveNotify	= 8,
-        FocusIn = 9,
     }
 
     internal enum ErrorCodes : int
@@ -915,42 +679,6 @@ XF86VidModeGetGammaRampSize(
         BadName = 15,
         BadLength = 16,
         BadImplementation = 17,
-    }
-
-    internal enum GrabMode : int
-    {
-        Sync = 0,
-        Async = 1,
-    }
-
-    [Flags]
-    internal enum EventMask : long //: ulong
-    {
-        NoEventMask	= 0,
-        KeyPressMask	= (1L<<0),
-        KeyReleaseMask	= (1L<<1),
-        Button3MotionMask	= (1L<<10),
-        Button4MotionMask	= (1L<<11),
-        Button5MotionMask	= (1L<<12),
-        ButtonMotionMask	= (1L<<13),
-        KeymapStateMask	= (1L<<14),
-        ExposureMask	= (1L<<15),
-        VisibilityChangeMask	= (1L<<16),
-        StructureNotifyMask	= (1L<<17),
-        ResizeRedirectMask	= (1L<<18),
-        SubstructureNotifyMask	= (1L<<19),
-        ButtonPressMask	= (1L<<2),
-        SubstructureRedirectMask	= (1L<<20),
-        FocusChangeMask	= (1L<<21),
-        PropertyChangeMask	= (1L<<22),
-        CoormapChangeMask	= (1L<<23),
-        ButtonReleaseMask	= (1L<<3),
-        EnterWindowMask	= (1L<<4),
-        LeaveWindowMask	= (1L<<5),
-        PointerMotionMask	= (1L<<6),
-        PointerMotionHintMask	= (1L<<7),
-        Button1MotionMask	= (1L<<8),
-        Button2MotionMask	= (1L<<9),
     }
 
     [Flags]
