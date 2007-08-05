@@ -27,22 +27,6 @@ namespace OpenTK.Input
 
         public Keyboard()
         {
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                Environment.OSVersion.Platform == PlatformID.Win32Windows)
-            {
-                //keyboard = new OpenTK.Platform.Windows.WinRawKeyboard();
-            }
-            else if (Environment.OSVersion.Platform == PlatformID.Unix ||
-                Environment.OSVersion.Platform == (PlatformID)128) // some older versions of Mono reported 128.
-            {
-                throw new NotImplementedException();
-            }
-            else
-            {
-                throw new PlatformNotSupportedException(
-                    "Your operating system is not currently supported. We are sorry for the inconvenience."
-                );
-            }
         }
 
         #endregion

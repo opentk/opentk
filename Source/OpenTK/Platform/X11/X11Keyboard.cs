@@ -112,6 +112,11 @@ namespace OpenTK.Platform.X11
             //keysyms = (IntPtr[])Marshal.PtrToStructure(keysym_ptr, typeof(IntPtr[]));
 
             API.Free(keysym_ptr);
+
+            Keyboard kb = new Keyboard();
+            kb.Description = "Default X11 keyboard";
+            kb.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
+            keyboards.Add(kb);
         }
 
         #region internal bool ProcessKeyboardEvent(API.RawInput rin)
