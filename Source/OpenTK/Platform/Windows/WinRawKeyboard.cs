@@ -23,14 +23,14 @@ namespace OpenTK.Platform.Windows
         private List<Keyboard> keyboards = new List<Keyboard>();
         private IntPtr windowHandle;
 
-        #region internal static Dictionary<API.VirtualKeys, Input.Keys> KeyMap
+        #region internal static Dictionary<API.VirtualKeys, Input.Key> KeyMap
 
-        internal static Dictionary<API.VirtualKeys, Input.Keys> KeyMap =
-            new Dictionary<API.VirtualKeys, Input.Keys>((int)API.VirtualKeys.Last);
+        internal static Dictionary<API.VirtualKeys, Input.Key> KeyMap =
+            new Dictionary<API.VirtualKeys, Input.Key>((int)API.VirtualKeys.Last);
 
         private static bool keyMapExists;
         /// <summary>
-        /// Initializes the map between VirtualKeys and OpenTK.Keys
+        /// Initializes the map between VirtualKeys and OpenTK.Key
         /// </summary>
         private static void InitKeyMap()
         {
@@ -38,81 +38,81 @@ namespace OpenTK.Platform.Windows
             {
                 try
                 {
-                    KeyMap.Add(API.VirtualKeys.ESCAPE, Input.Keys.Escape);
+                    KeyMap.Add(API.VirtualKeys.ESCAPE, Input.Key.Escape);
 
                     // Function keys
                     for (int i = 0; i < 24; i++)
                     {
-                        KeyMap.Add((API.VirtualKeys)((int)API.VirtualKeys.F1 + i), Input.Keys.F1 + i);
+                        KeyMap.Add((API.VirtualKeys)((int)API.VirtualKeys.F1 + i), Input.Key.F1 + i);
                     }
 
                     // Number keys (0-9)
                     for (int i = 0; i <= 9; i++)
                     {
-                        KeyMap.Add((API.VirtualKeys)(0x30 + i), Input.Keys.Number0 + i);
+                        KeyMap.Add((API.VirtualKeys)(0x30 + i), Input.Key.Number0 + i);
                     }
 
                     // Letters (A-Z)
                     for (int i = 0; i < 26; i++)
                     {
-                        KeyMap.Add((API.VirtualKeys)(0x41 + i), Input.Keys.A + i);
+                        KeyMap.Add((API.VirtualKeys)(0x41 + i), Input.Key.A + i);
                     }
 
-                    KeyMap.Add(API.VirtualKeys.TAB, Input.Keys.Tab);
-                    KeyMap.Add(API.VirtualKeys.CAPITAL, Input.Keys.CapsLock);
-                    KeyMap.Add(API.VirtualKeys.LCONTROL, Input.Keys.LeftControl);
-                    KeyMap.Add(API.VirtualKeys.LSHIFT, Input.Keys.LeftShift);
-                    KeyMap.Add(API.VirtualKeys.LWIN, Input.Keys.LeftApp);
-                    KeyMap.Add(API.VirtualKeys.LMENU, Input.Keys.LeftAlt);
-                    KeyMap.Add(API.VirtualKeys.SPACE, Input.Keys.Space);
-                    KeyMap.Add(API.VirtualKeys.RMENU, Input.Keys.RightAlt);
-                    KeyMap.Add(API.VirtualKeys.RWIN, Input.Keys.RightApp);
-                    KeyMap.Add(API.VirtualKeys.APPS, Input.Keys.Menu);
-                    KeyMap.Add(API.VirtualKeys.RCONTROL, Input.Keys.RightControl);
-                    KeyMap.Add(API.VirtualKeys.RSHIFT, Input.Keys.RightShift);
-                    KeyMap.Add(API.VirtualKeys.RETURN, Input.Keys.Enter);
-                    KeyMap.Add(API.VirtualKeys.BACK, Input.Keys.Backspace);
+                    KeyMap.Add(API.VirtualKeys.TAB, Input.Key.Tab);
+                    KeyMap.Add(API.VirtualKeys.CAPITAL, Input.Key.CapsLock);
+                    KeyMap.Add(API.VirtualKeys.LCONTROL, Input.Key.ControlLeft);
+                    KeyMap.Add(API.VirtualKeys.LSHIFT, Input.Key.ShiftLeft);
+                    KeyMap.Add(API.VirtualKeys.LWIN, Input.Key.WinLeft);
+                    KeyMap.Add(API.VirtualKeys.LMENU, Input.Key.AltLeft);
+                    KeyMap.Add(API.VirtualKeys.SPACE, Input.Key.Space);
+                    KeyMap.Add(API.VirtualKeys.RMENU, Input.Key.AltRight);
+                    KeyMap.Add(API.VirtualKeys.RWIN, Input.Key.WinRight);
+                    KeyMap.Add(API.VirtualKeys.APPS, Input.Key.Menu);
+                    KeyMap.Add(API.VirtualKeys.RCONTROL, Input.Key.ControlRight);
+                    KeyMap.Add(API.VirtualKeys.RSHIFT, Input.Key.ShiftRight);
+                    KeyMap.Add(API.VirtualKeys.RETURN, Input.Key.Enter);
+                    KeyMap.Add(API.VirtualKeys.BACK, Input.Key.Backspace);
 
-                    KeyMap.Add(API.VirtualKeys.OEM_1, Input.Keys.Semicolon);      // Varies by keyboard, ;: on Win2K/US
-                    KeyMap.Add(API.VirtualKeys.OEM_2, Input.Keys.Slash);          // Varies by keyboard, /? on Win2K/US
-                    KeyMap.Add(API.VirtualKeys.OEM_3, Input.Keys.Tilde);          // Varies by keyboard, `~ on Win2K/US
-                    KeyMap.Add(API.VirtualKeys.OEM_4, Input.Keys.LeftBracket);    // Varies by keyboard, [{ on Win2K/US
-                    KeyMap.Add(API.VirtualKeys.OEM_5, Input.Keys.BackSlash);      // Varies by keyboard, \| on Win2K/US
-                    KeyMap.Add(API.VirtualKeys.OEM_6, Input.Keys.RightBracket);   // Varies by keyboard, ]} on Win2K/US
-                    KeyMap.Add(API.VirtualKeys.OEM_7, Input.Keys.Quote);          // Varies by keyboard, '" on Win2K/US
-                    KeyMap.Add(API.VirtualKeys.OEM_PLUS, Input.Keys.Plus);        // Invariant: +
-                    KeyMap.Add(API.VirtualKeys.OEM_COMMA, Input.Keys.Comma);      // Invariant: ,
-                    KeyMap.Add(API.VirtualKeys.OEM_MINUS, Input.Keys.Minus);      // Invariant: -
-                    KeyMap.Add(API.VirtualKeys.OEM_PERIOD, Input.Keys.Period);    // Invariant: .
+                    KeyMap.Add(API.VirtualKeys.OEM_1, Input.Key.Semicolon);      // Varies by keyboard, ;: on Win2K/US
+                    KeyMap.Add(API.VirtualKeys.OEM_2, Input.Key.Slash);          // Varies by keyboard, /? on Win2K/US
+                    KeyMap.Add(API.VirtualKeys.OEM_3, Input.Key.Tilde);          // Varies by keyboard, `~ on Win2K/US
+                    KeyMap.Add(API.VirtualKeys.OEM_4, Input.Key.LeftBracket);    // Varies by keyboard, [{ on Win2K/US
+                    KeyMap.Add(API.VirtualKeys.OEM_5, Input.Key.BackSlash);      // Varies by keyboard, \| on Win2K/US
+                    KeyMap.Add(API.VirtualKeys.OEM_6, Input.Key.RightBracket);   // Varies by keyboard, ]} on Win2K/US
+                    KeyMap.Add(API.VirtualKeys.OEM_7, Input.Key.Quote);          // Varies by keyboard, '" on Win2K/US
+                    KeyMap.Add(API.VirtualKeys.OEM_PLUS, Input.Key.Plus);        // Invariant: +
+                    KeyMap.Add(API.VirtualKeys.OEM_COMMA, Input.Key.Comma);      // Invariant: ,
+                    KeyMap.Add(API.VirtualKeys.OEM_MINUS, Input.Key.Minus);      // Invariant: -
+                    KeyMap.Add(API.VirtualKeys.OEM_PERIOD, Input.Key.Period);    // Invariant: .
 
-                    KeyMap.Add(API.VirtualKeys.HOME, Input.Keys.Home);
-                    KeyMap.Add(API.VirtualKeys.END, Input.Keys.End);
-                    KeyMap.Add(API.VirtualKeys.DELETE, Input.Keys.Delete);
-                    KeyMap.Add(API.VirtualKeys.PRIOR, Input.Keys.PageUp);
-                    KeyMap.Add(API.VirtualKeys.NEXT, Input.Keys.PageDown);
-                    KeyMap.Add(API.VirtualKeys.PRINT, Input.Keys.PrintScreen);
-                    KeyMap.Add(API.VirtualKeys.PAUSE, Input.Keys.Pause);
-                    KeyMap.Add(API.VirtualKeys.NUMLOCK, Input.Keys.NumLock);
+                    KeyMap.Add(API.VirtualKeys.HOME, Input.Key.Home);
+                    KeyMap.Add(API.VirtualKeys.END, Input.Key.End);
+                    KeyMap.Add(API.VirtualKeys.DELETE, Input.Key.Delete);
+                    KeyMap.Add(API.VirtualKeys.PRIOR, Input.Key.PageUp);
+                    KeyMap.Add(API.VirtualKeys.NEXT, Input.Key.PageDown);
+                    KeyMap.Add(API.VirtualKeys.PRINT, Input.Key.PrintScreen);
+                    KeyMap.Add(API.VirtualKeys.PAUSE, Input.Key.Pause);
+                    KeyMap.Add(API.VirtualKeys.NUMLOCK, Input.Key.NumLock);
                     
-                    KeyMap.Add(API.VirtualKeys.SLEEP, Input.Keys.Sleep);
+                    KeyMap.Add(API.VirtualKeys.SLEEP, Input.Key.Sleep);
 
                     // Keypad
                     for (int i = 0; i <= 9; i++)
                     {
-                        KeyMap.Add((API.VirtualKeys)((int)API.VirtualKeys.NUMPAD0 + i), Input.Keys.Keypad0 + i);
+                        KeyMap.Add((API.VirtualKeys)((int)API.VirtualKeys.NUMPAD0 + i), Input.Key.Keypad0 + i);
 
                     }
-                    KeyMap.Add(API.VirtualKeys.DECIMAL, Input.Keys.KeypadDecimal);
-                    KeyMap.Add(API.VirtualKeys.ADD, Input.Keys.KeypadAdd);
-                    KeyMap.Add(API.VirtualKeys.SUBTRACT, Input.Keys.KeypadSubtract);
-                    KeyMap.Add(API.VirtualKeys.DIVIDE, Input.Keys.KeypadDivide);
-                    KeyMap.Add(API.VirtualKeys.MULTIPLY, Input.Keys.KeypadMultiply);
+                    KeyMap.Add(API.VirtualKeys.DECIMAL, Input.Key.KeypadDecimal);
+                    KeyMap.Add(API.VirtualKeys.ADD, Input.Key.KeypadAdd);
+                    KeyMap.Add(API.VirtualKeys.SUBTRACT, Input.Key.KeypadSubtract);
+                    KeyMap.Add(API.VirtualKeys.DIVIDE, Input.Key.KeypadDivide);
+                    KeyMap.Add(API.VirtualKeys.MULTIPLY, Input.Key.KeypadMultiply);
 
                     // Navigation
-                    KeyMap.Add(API.VirtualKeys.UP, Input.Keys.Up);
-                    KeyMap.Add(API.VirtualKeys.DOWN, Input.Keys.Down);
-                    KeyMap.Add(API.VirtualKeys.LEFT, Input.Keys.Left);
-                    KeyMap.Add(API.VirtualKeys.RIGHT, Input.Keys.Right);
+                    KeyMap.Add(API.VirtualKeys.UP, Input.Key.Up);
+                    KeyMap.Add(API.VirtualKeys.DOWN, Input.Key.Down);
+                    KeyMap.Add(API.VirtualKeys.LEFT, Input.Key.Left);
+                    KeyMap.Add(API.VirtualKeys.RIGHT, Input.Key.Right);
                 }
                 catch (ArgumentException e)
                 {
@@ -282,15 +282,15 @@ namespace OpenTK.Platform.Windows
                     switch (rin.Data.Keyboard.VKey)
                     {
                         case API.VirtualKeys.SHIFT:
-                            keyboards[0][Input.Keys.LeftShift] = keyboards[0][Input.Keys.RightShift] = pressed;
+                            keyboards[0][Input.Key.ShiftLeft] = keyboards[0][Input.Key.ShiftRight] = pressed;
                             return false;
 
                         case API.VirtualKeys.CONTROL:
-                            keyboards[0][Input.Keys.LeftControl] = keyboards[0][Input.Keys.RightControl] = pressed;
+                            keyboards[0][Input.Key.ControlLeft] = keyboards[0][Input.Key.ControlRight] = pressed;
                             return false;
 
                         case API.VirtualKeys.MENU:
-                            keyboards[0][Input.Keys.LeftAlt] = keyboards[0][Input.Keys.RightAlt] = pressed;
+                            keyboards[0][Input.Key.AltLeft] = keyboards[0][Input.Key.AltRight] = pressed;
                             return false;
 
                         default:
