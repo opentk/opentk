@@ -37,12 +37,12 @@ namespace OpenTK.Platform.X11
 
         #region --- Public Constructor ---
 
-        private X11GLContext()
+        internal X11GLContext()
         {
             this.mode = new DisplayMode();
         }
 
-        public X11GLContext(IWindowInfo info, DisplayMode mode)
+        internal X11GLContext(IWindowInfo info, DisplayMode mode)
         {
             X11WindowInfo xInfo = info as X11WindowInfo;            
             this.windowInfo.Window = xInfo.Window;
@@ -52,32 +52,6 @@ namespace OpenTK.Platform.X11
             this.windowInfo.Screen = xInfo.Screen;
             
             this.mode = mode;
-        }
-
-        public X11GLContext(
-            IntPtr handle,
-            IntPtr display,
-            IntPtr rootWindow,
-            int screenNo,
-            IntPtr handleToTopLevelControl,
-            ColorDepth color,
-            ColorDepth accum,
-            int depthBits,
-            int stencilBits,
-            int auxBits,
-            bool stereo,
-            bool doublebuffer
-        )
-        {
-            Trace.WriteLine("Creating opengl context (X11GLContext driver)");
-            Trace.Indent();
-
-            this.display = display;
-            this.screenNo = screenNo;
-            //this.depthBits = depthBits;
-            //this.stencilBits = stencilBits;
-
-            this.CreateVisual();
         }
 
         #endregion
@@ -210,8 +184,8 @@ namespace OpenTK.Platform.X11
 
         public void CreateVisual()
         {
-            Trace.WriteLine("Creating visual.");
-            Trace.Indent();
+            Debug.WriteLine("Creating visual.");
+            Debug.Indent();
 
             ColorDepth color = new ColorDepth(24);
             int depthBits = 16;
@@ -248,7 +222,7 @@ namespace OpenTK.Platform.X11
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.NONE);
             */
-            Trace.Write(
+            Debug.Write(
                 String.Format(
                     "Requesting visual: {0} ({1}{2}{3}{4})... ",
                     mode.ToString(),
@@ -266,8 +240,8 @@ namespace OpenTK.Platform.X11
             }
             visualInfo = (VisualInfo)Marshal.PtrToStructure(visual, typeof(VisualInfo));
 
-            Trace.WriteLine(String.Format("done! (id: {0})", x11context));
-            Trace.Unindent();
+            Debug.Print("done! (id: {0})", x11context);
+            Debug.Unindent();
         }
 
         #endregion
