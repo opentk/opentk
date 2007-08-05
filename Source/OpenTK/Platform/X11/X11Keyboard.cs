@@ -107,7 +107,7 @@ namespace OpenTK.Platform.X11
             IntPtr keysym_ptr = API.GetKeyboardMapping(window.Display, (byte)firstKeyCode,
                 lastKeyCode - firstKeyCode + 1, ref keysyms_per_keycode);
 
-            Marshal.PtrToStructure(keysym_ptr, keysyms);
+            keysyms = (IntPtr[])Marshal.PtrToStructure(keysym_ptr, typeof(IntPtr[]));
             API.Free(keysym_ptr);
         }
 
