@@ -85,7 +85,7 @@ namespace OpenTK.Platform.X11
 
         public IList<Keyboard> Keyboard
         {
-            get { throw new Exception("The method or operation is not implemented."); }
+            get { return keyboardDriver.Keyboard; }
         }
 
         #endregion
