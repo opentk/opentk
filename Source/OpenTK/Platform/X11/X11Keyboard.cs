@@ -107,17 +107,20 @@ namespace OpenTK.Platform.X11
             IntPtr keysym_ptr = API.GetKeyboardMapping(window.Display, (byte)firstKeyCode,
                 lastKeyCode - firstKeyCode + 1, ref keysyms_per_keycode);
 
-            keysyms = (IntPtr[])Marshal.PtrToStructure(keysym_ptr, typeof(IntPtr[]));
+            keysyms = new IntPtr[(lastKeyCode - firstKeyCode + 1) * keysyms_per_keycode];
+            Marshal.PtrToStructure(keysym_ptr, keysyms);
+            //keysyms = (IntPtr[])Marshal.PtrToStructure(keysym_ptr, typeof(IntPtr[]));
+
             API.Free(keysym_ptr);
         }
 
         #region internal bool ProcessKeyboardEvent(API.RawInput rin)
 
         /// <summary>
-        /// Processes raw input events.
+        /// Processes X11 KeyEvents.
         /// </summary>
-        /// <param name="rin"></param>
-        /// <returns></returns>
+        /// <param name="e">The X11.KeyEvent to process</param>
+        /// <returns>True if the event was processed, false otherwise.</returns>
         internal bool ProcessKeyboardEvent(X11.KeyEvent e)
         {
             return false;
