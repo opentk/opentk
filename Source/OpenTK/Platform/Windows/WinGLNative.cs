@@ -317,10 +317,12 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                throw new NotImplementedException();
+                return false;
+                //throw new NotImplementedException();
             }
             set
             {
+                fullscreen = false;
                 throw new NotImplementedException();
             }
         }

@@ -84,8 +84,7 @@ namespace OpenTK
             if (height > 0)
                 this.Height = height;
             */
-            if (mode.Fullscreen)
-                this.Fullscreen = true;
+            this.Fullscreen = mode.Fullscreen;
             
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -135,11 +134,12 @@ namespace OpenTK
         {
             get
             {
-                throw new NotImplementedException();
+                return false;
+                //throw new NotImplementedException();
             }
             set
             {
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
             }
         }
 
