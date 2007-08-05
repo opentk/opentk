@@ -110,9 +110,9 @@ namespace OpenTK.Platform.X11
             wnd_attributes.colormap = glContext.XColormap;
             //API.CreateColormap(display, rootWindow, glxVisualInfo.visual, 0/*AllocNone*/);
             wnd_attributes.event_mask =
-                EventMask.StructureNotifyMask |
-                EventMask.SubstructureNotifyMask |
-                EventMask.ExposureMask;
+                EventMask.StructureNotifyMask;// |
+                //EventMask.SubstructureNotifyMask |
+                //EventMask.ExposureMask;
 
             CreateWindowMask cw_mask =
                 CreateWindowMask.CWBackPixel |
@@ -126,10 +126,8 @@ namespace OpenTK.Platform.X11
                 0, 0,
                 mode.Width, mode.Height,
                 0,
-                //glxVisualInfo.depth,
                 glContext.XVisualInfo.depth,
                 Constants.InputOutput,
-                //glxVisualInfo.visual,
                 glContext.XVisualInfo.visual,
                 cw_mask,
                 wnd_attributes
@@ -141,17 +139,16 @@ namespace OpenTK.Platform.X11
             }
 
             Debug.WriteLine("done! (id: " + info.Handle + ")");
-
+/*
             // Set the window hints
-            /*
             SizeHints hints = new SizeHints();
             hints.x = 0;
             hints.y = 0;
             hints.width = 640;
             hints.height = 480;
             hints.flags = USSize | USPosition;
-            X11Api.SetNormalHints(display, window, hints);
-            X11Api.SetStandardProperties(
+            API.SetNormalHints(display, window, hints);
+            API.SetStandardProperties(
                 display,
                 window,
                 name,
@@ -161,10 +158,9 @@ namespace OpenTK.Platform.X11
                 0,
                 hints
             );
-            */
 
             //glContext.ContainingWindow = info.Window;
-
+*/
 
             glContext.windowInfo.Handle = info.Handle;
             glContext.CreateContext(null, true);
