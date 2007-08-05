@@ -17,6 +17,12 @@ namespace OpenTK.Platform.X11
 
         #region --- Constructors ---
 
+        /// <summary>
+        /// Constructs a new X11Input driver. Creates a hidden InputOnly window, child to
+        /// the main application window, which selects input events and routes them to 
+        /// the device specific drivers (Keyboard, Mouse, Hid).
+        /// </summary>
+        /// <param name="parent"></param>
         public X11Input(WindowInfo parent)
         {
             Debug.WriteLine("Initalizing X11 input driver.");
@@ -37,7 +43,7 @@ namespace OpenTK.Platform.X11
 
             window.Handle = API.CreateWindow(
                 window.Display,
-                window.RootWindow,
+                window.Parent.Handle,
                 0, 0,
                 1, 1,
                 0,

@@ -100,7 +100,6 @@ namespace OpenTK.Platform.X11
 
         internal X11Keyboard(WindowInfo window)
         {
-            /*
             this.window = window;
             Initialize();
 
@@ -113,7 +112,7 @@ namespace OpenTK.Platform.X11
             //keysyms = (IntPtr[])Marshal.PtrToStructure(keysym_ptr, typeof(IntPtr[]));
 
             API.Free(keysym_ptr);
-            */
+            
             Keyboard kb = new Keyboard();
             kb.Description = "Default X11 keyboard";
             kb.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
