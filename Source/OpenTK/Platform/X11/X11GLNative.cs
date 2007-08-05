@@ -26,57 +26,39 @@ namespace OpenTK.Platform.X11
         private IntPtr window;
 
         private DisplayMode mode = new DisplayMode();
-        
-        private bool created;
-
-        //private X11Keyboard key;
 
         // Number of pending events.
         private int pending = 0;
+
         // C# ResizeEventArgs
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
+
         // Low level X11 resize request
         private X11.Event xresize = new Event();
-        // This is never written in the code. If at some point it gets != 0,
-        // then memory corruption is taking place from the xresize struct.
         // Event used for event loop.
         private Event e = new Event();
+        // This is never written in the code. If at some point it gets != 0,
+        // then memory corruption is taking place from the xresize struct.
+        int memGuard = 0;
         private ConfigureNotifyEvent configure = new ConfigureNotifyEvent();
         private ReparentNotifyEvent reparent = new ReparentNotifyEvent();
         private ExposeEvent expose = new ExposeEvent();
         private CreateWindowEvent createWindow = new CreateWindowEvent();
         private DestroyWindowEvent destroyWindow = new DestroyWindowEvent();
-        // This is never written in the code. If at some point it gets != 0,
-        // then memory corruption is taking place from the xresize struct.
-        int memGuard = 0;
-
-        //private int width, height;
 
         private bool disposed;
+        private bool created;
 
         #endregion
 
         #region --- Public Constructors ---
 
         /// <summary>
-        /// Constructs a new X11GLNative window, with its associated context.
-        /// Safe defaults for visual, colormap, etc.
+        /// Constructs and initializes a new X11GLNative window.
+        /// Call CreateWindow to create the actual render window.
         /// </summary>
         public X11GLNative()
         {
-            Trace.WriteLine("Creating GameWindow (X11GLNative driver)");
-            Trace.Indent();
-
-            // Set default (safe) DisplayMode.
-            mode.Width = 640;
-            mode.Height = 480;
-            mode.Color = new ColorDepth(24);
-            mode.DepthBits = 16;
-            mode.Buffers = 2;
-
-            Trace.WriteLine(String.Format("Display mode: {0}", mode));
-
-            this.CreateWindow(mode);
         }
 
         #endregion
@@ -85,8 +67,24 @@ namespace OpenTK.Platform.X11
 
         #region public void CreateWindow(DisplayMode mode)
 
+        /// <summary>
+        /// Opens a new render window with the given DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the render window.</param>
+        /// <remarks>
+        /// Creates the window visual and colormap. Associates the colormap/visual
+        /// with the window and raises the window on top of the window stack.
+        /// <para>
+        /// Colormap creation is currently disabled.
+        /// </para>
+        /// </remarks>
         public void CreateWindow(DisplayMode mode)
         {
+            Debug.WriteLine("Creating GameWindow (X11GLNative driver)");
+            Debug.Indent();
+
+            Debug.WriteLine(String.Format("Display mode: {0}", mode));
+
             windowInfo.Display = display = API.OpenDisplay(null); // null == default display
             if (display == IntPtr.Zero)
             {
@@ -95,20 +93,18 @@ namespace OpenTK.Platform.X11
             windowInfo.Screen = screen = API.DefaultScreen(display);
             windowInfo.RootWindow = rootWindow = API.RootWindow(display, screen);
 
-            Trace.WriteLine(
-                String.Format(
-                    "Display: {0}, Screen {1}, Root window: {2}",
-                    windowInfo.Display,
-                    windowInfo.Screen,
-                    windowInfo.RootWindow
-                )
+            Debug.Print(
+                "Display: {0}, Screen {1}, Root window: {2}",
+                windowInfo.Display,
+                windowInfo.Screen,
+                windowInfo.RootWindow
             );
 
             glContext = new X11GLContext(windowInfo, mode);
             glContext.CreateVisual();
 
             // Create a window on this display using the visual above
-            Trace.Write("Creating output window... ");
+            Debug.Write("Creating output window... ");
 
             SetWindowAttributes wnd_attributes = new SetWindowAttributes();
             wnd_attributes.background_pixel = 0;
@@ -146,7 +142,7 @@ namespace OpenTK.Platform.X11
                 throw new Exception("Could not create window.");
             }
 
-            Trace.WriteLine("done! (id: " + window + ")");
+            Debug.WriteLine("done! (id: " + window + ")");
 
             // Set the window hints
             /*
@@ -177,12 +173,12 @@ namespace OpenTK.Platform.X11
 
             API.MapRaised(display, window);
 
-            Trace.WriteLine("Mapped window.");
+            Debug.WriteLine("Mapped window.");
 
             //glContext.MakeCurrent();
 
-            Trace.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
-            Trace.Unindent();
+            Debug.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
+            Debug.Unindent();
             created = true;
         }
 
