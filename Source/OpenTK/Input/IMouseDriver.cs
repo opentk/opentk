@@ -6,6 +6,6 @@ namespace OpenTK.Input
 {
     public interface IMouseDriver
     {
-        IList<Keyboard> Mouse { get; }
+        IList<Mouse> Mouse { get; }
     }
 }

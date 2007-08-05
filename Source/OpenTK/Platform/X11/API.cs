@@ -561,18 +561,15 @@ XF86VidModeGetGammaRampSize(
         internal int min_width, min_height;
         internal int max_width, max_height;
         internal int width_inc, height_inc;
-        internal struct min_aspect
-        {
-            internal int x;       /* numerator */
-            internal int y;       /* denominator */
-        }
-        internal struct max_aspect
-        {
-            internal int x;       /* numerator */
-            internal int y;       /* denominator */
-        }
+        internal Rectangle min_aspect, max_aspect;
         internal int base_width, base_height;
         internal int win_gravity;
+        internal struct Rectangle
+        {
+            internal int x;       /* numerator */
+            internal int y;       /* denominator */
+            private void stop_the_compiler_warnings() { x = y = 0; }
+        }
         /* this structure may be extended in the future */
     }
 

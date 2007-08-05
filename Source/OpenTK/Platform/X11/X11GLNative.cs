@@ -183,6 +183,7 @@ namespace OpenTK.Platform.X11
 
             Trace.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
             Trace.Unindent();
+            created = true;
         }
 
         #endregion
