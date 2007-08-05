@@ -19,7 +19,7 @@ namespace OpenTK.Platform.X11
         WindowInfo window;
 
         private bool[] keys = new bool[(int)OpenTK.Input.Key.MaxKeys];
-        private List<Keyboard> keyboards;
+        private List<Keyboard> keyboards = new List<Keyboard>();
         private static Dictionary<XKey, Key> keymap = new Dictionary<XKey, Key>((int)Key.MaxKeys);
         /// <summary>
         /// The smallest and largest KeyCode supported by the X server. Queried through API.DisplayKeycodes()
