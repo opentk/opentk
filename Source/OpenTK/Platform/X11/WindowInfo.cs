@@ -17,7 +17,7 @@ namespace OpenTK.Platform.X11
             this.Screen = parent.Screen;
             this.Display = parent.Display;
             this.RootWindow = parent.RootWindow;
-            this.Handle = parent.Handle;
+            this.Parent = parent;
         }
 
         private IntPtr rootWindow, handle, topLevelWindow, display;
