@@ -31,5 +31,11 @@ namespace OpenTK.Platform.X11
 
         public IntPtr Handle { get { return handle; } internal set { handle = value; } }
         public IWindowInfo Parent { get { return parent; } internal set { parent = value as WindowInfo; } }
+
+        public override string ToString()
+        {
+            return String.Format("X11.WindowInfo: Display {0}, Screen {1}, Handle {2}{3}    Parent {4}",
+                this.Display, this.Screen, this.Handle, System.Environment.NewLine, this.Parent.ToString());
+        }
     }
 }

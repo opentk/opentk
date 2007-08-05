@@ -28,5 +28,12 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return String.Format("Windows.WindowInfo: Handle {0}{1}    Parent {2}",
+                this.Handle, System.Environment.NewLine, this.Parent.ToString());
+        }
+
     }
 }
