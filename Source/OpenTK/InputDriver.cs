@@ -30,7 +30,7 @@ namespace OpenTK
 
         #region --- IInputDriver Members ---
 
-        IList<IInputDevice> IInputDriver.InputDevices
+        public IList<IInputDevice> InputDevices
         {
             get { return inputDriver.InputDevices; }
         }
@@ -40,7 +40,7 @@ namespace OpenTK
             get { return inputDriver.Keyboard; }
         }
 
-        IList<Mouse> IMouseDriver.Mouse
+        public IList<Mouse> Mouse
         {
             get { return inputDriver.Mouse; }
         }
