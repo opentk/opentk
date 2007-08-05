@@ -141,9 +141,8 @@ namespace OpenTK.Platform.Windows
 
         public void ProcessEvents()
         {
-            // Do nothing, the WndProc is automatically notified of new events.
+            // Do nothing, the WndProc is automatically notified of new events (sub-classing magic).
         }
-
 
         #endregion
 

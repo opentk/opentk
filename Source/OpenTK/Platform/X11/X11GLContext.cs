@@ -184,7 +184,7 @@ namespace OpenTK.Platform.X11
 
         #region public void CreateVisual()
 
-        public void CreateVisual()
+        internal VisualInfo CreateVisual()
         {
             Debug.WriteLine("Creating visual.");
             Debug.Indent();
@@ -244,6 +244,8 @@ namespace OpenTK.Platform.X11
 
             Debug.Print("done! (id: {0})", x11context);
             Debug.Unindent();
+
+            return visualInfo;
         }
 
         #endregion
