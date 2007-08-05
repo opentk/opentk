@@ -79,7 +79,7 @@ namespace OpenTK.Platform.X11
             
             keyboardDriver = new X11Keyboard(window);
             */
-
+            window = new WindowInfo(parent);
             keyboardDriver = new X11Keyboard(parent);
             API.SelectInput(parent.Display, parent.Handle,
                 EventMask.KeyReleaseMask | EventMask.KeyPressMask);
@@ -124,6 +124,12 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public void ProcessEvents()
         {
+            while (API.CheckMaskEvent(window.Display, EventMask.KeyReleaseMask | EventMask.KeyPressMask, ref e))
+            {
+                Debug.Print("Input window received {0} event... ", e.type.ToString());
+                keyboardDriver.ProcessKeyboardEvent(e.KeyEvent);
+            }
+            /*
             try
             {
                 while (API.CheckIfEvent(window.Display, ref e, check, IntPtr.Zero))
@@ -136,6 +142,7 @@ namespace OpenTK.Platform.X11
             {
                 Debug.Print("DANGER: Possible callback exception: {0}", e.ToString());
             }
+            */
         }
 
         API.CheckEventPredicate check = KeyEventPredicate;
