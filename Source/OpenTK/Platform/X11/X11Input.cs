@@ -56,14 +56,9 @@ namespace OpenTK.Platform.X11
                 window.Parent.Handle,
                 0, 0,
                 1, 1,
-                0,
-                //glxVisualInfo.depth,
-                //glContext.XVisualInfo.depth,
-                0,
+                0, 0,
                 Constants.InputOnly,
-                //glxVisualInfo.visual,
-                //glContext.XVisualInfo.visual,
-                IntPtr.Zero,
+                window.VisualInfo.visual,
                 cw_mask,
                 wnd_attributes
             );

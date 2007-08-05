@@ -99,7 +99,7 @@ namespace OpenTK.Platform.X11
             );
 
             glContext = new X11GLContext(info, mode);
-            glContext.CreateVisual();
+            info.VisualInfo = glContext.CreateVisual();
 
             // Create a window on this display using the visual above
             Debug.Write("Creating output window... ");
