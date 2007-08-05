@@ -149,7 +149,7 @@ namespace Examples.Tutorial
         {
             base.OnUpdateFrame();
 
-            if (Keyboard[0][OpenTK.Input.Keys.Escape])
+            if (Keyboard[0][OpenTK.Input.Key.Escape])
             {
                 this.Exit();
             }

@@ -130,7 +130,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public override void OnUpdateFrame()
         {
-            if (Keyboard[0][OpenTK.Input.Keys.Escape])
+            if (Keyboard[0][OpenTK.Input.Key.Escape])
             {
                 this.Exit();
                 return;

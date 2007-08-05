@@ -18,7 +18,7 @@ namespace OpenTK.Input
     public class Keyboard : IKeyboard
     {
         //private IKeyboard keyboard;
-        private bool[] keys = new bool[(int)Keys.MaxKeys];
+        private bool[] keys = new bool[(int)Key.MaxKeys];
         private string description;
         private int numKeys, numFKeys, numLeds;
         private long devID;
@@ -49,7 +49,7 @@ namespace OpenTK.Input
 
         #region --- IKeyboard members ---
 
-        public bool this[Keys k]
+        public bool this[Key k]
         {
             get { return keys[(int)k]; }
             internal set
@@ -117,25 +117,26 @@ namespace OpenTK.Input
         }
     }
 
-    #region public enum Keys : int
+    #region public enum Key : int
 
     /// <summary>
     /// The available keyboard keys.
     /// </summary>
-    public enum Keys : int
+    public enum Key : int
     {
         // Modifiers
-        LeftShift = 0,
-        RightShift,
-        LeftControl,
-        RightControl,
-        LeftAlt,
-        RightAlt,
-        LeftApp,
-        RightApp,
+        ShiftLeft = 0,
+        ShiftRight,
+        ControlLeft,
+        ControlRight,
+        AltLeft,
+        AltRight,
+        WinLeft,
+        WinRight,
         Menu,
 
         // Function keys (hopefully enough for most keyboards - mine has 26)
+        // <keysymdef.h> on X11 reports up to 35 function keys.
         F1, F2, F3, F4,
         F5, F6, F7, F8,
         F9, F10, F11, F12,
@@ -144,6 +145,7 @@ namespace OpenTK.Input
         F21, F22, F23, F24,
         F25, F26, F27, F28,
         F29, F30, F31, F32,
+        F33, F34, F35,
 
         // Direction arrows
         Up,

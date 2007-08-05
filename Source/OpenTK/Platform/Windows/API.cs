@@ -2243,7 +2243,7 @@ namespace OpenTK.Platform.Windows
         public enum VirtualKeys : short
         {
             /*
-             * Virtual Keys, Standard Set
+             * Virtual Key, Standard Set
              */
             LBUTTON      = 0x01,
             RBUTTON      = 0x02,
