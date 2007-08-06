@@ -9,16 +9,19 @@ namespace OpenTK.Platform
     {
         void Run();
 
-        void OnRenderFrame();
-        void OnUpdateFrame();
+        void OnRenderFrame(EventArgs e);
+        void OnUpdateFrame(EventArgs e);
+        void OnLoad(EventArgs e);
 
         event UpdateFrameEvent UpdateFrame;
         event RenderFrameEvent RenderFrame;
+        event LoadEvent Load;
 
         bool IsExiting { get; }
         IList<OpenTK.Input.Keyboard> Keyboard { get; }
     }
 
-    public delegate void UpdateFrameEvent(EventArgs e);
-    public delegate void RenderFrameEvent(EventArgs e);
+    public delegate void UpdateFrameEvent(object sender, EventArgs e);
+    public delegate void RenderFrameEvent(object sender, EventArgs e);
+    public delegate void LoadEvent(object sender, EventArgs e);
 }

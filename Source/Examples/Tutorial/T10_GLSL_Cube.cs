@@ -51,12 +51,62 @@ namespace Examples.Tutorial
         public T10_GLSL_Cube()
         {
             this.CreateWindow(new OpenTK.Platform.DisplayMode(800, 600));
-            Context.MakeCurrent();
+        }
+
+        #endregion
+
+        #region public void Launch()
+
+        /// <summary>
+        /// Launches this example.
+        /// </summary>
+        /// <remarks>
+        /// Provides a simple way for the example launcher to launch the examples.
+        /// </remarks>
+        public void Launch()
+        {
+            Run();
+        }
+
+        #endregion
+
+        #region OnCreate
+
+        /// <summary>
+        /// This is the place to change window parameters.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        public override void OnCreate(EventArgs e)
+        {
+            base.OnCreate(e);
 
             //Text =
             //    GL.GetString(Enums.StringName.VENDOR) + " " +
             //    GL.GetString(Enums.StringName.RENDERER) + " " +
             //    GL.GetString(Enums.StringName.VERSION);
+        }
+
+        #endregion
+
+        #region OnLoad
+
+        /// <summary>
+        /// This is the place to load resources that change little
+        /// during the lifetime of the GameWindow. In this case, we
+        /// check for GLSL support, and load the shaders.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        public override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            // Check for necessary capabilities:
+            if (!GL.IsExtensionSupported("VERSION_2_0"))
+            {
+                MessageBox.Show("You need at least OpenGL 2.0 to run this example. Aborting.", "GLSL not supported",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                this.Exit();
+            }
 
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
@@ -106,25 +156,6 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region public void Launch()
-
-        /// <summary>
-        /// Launches this example.
-        /// </summary>
-        /// <remarks>
-        /// Provides a simple way for the example launcher to launch the examples.
-        /// </remarks>
-        public void Launch()
-        {
-            //using (T10_GLSL_Cube ex = new T10_GLSL_Cube())
-            {
-                //ex.Run();
-                Run();
-            }
-        }
-
-        #endregion
-
         #region OnResize
 
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
@@ -145,9 +176,13 @@ namespace Examples.Tutorial
 
         #region OnUpdateFrame
 
-        public override void OnUpdateFrame()
+        /// <summary>
+        /// Occurs when it is time to update the next frame.
+        /// </summary>
+        /// <param name="e">Not used yet.</param>
+        public override void OnUpdateFrame(EventArgs e)
         {
-            base.OnUpdateFrame();
+            base.OnUpdateFrame(e);
 
             if (Keyboard[0][OpenTK.Input.Key.Escape])
             {
@@ -169,9 +204,9 @@ namespace Examples.Tutorial
 
         #region OnRenderFrame
 
-        public override void OnRenderFrame()
+        public override void OnRenderFrame(EventArgs e)
         {
- 	        base.OnRenderFrame();
+ 	        base.OnRenderFrame(e);
 
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 

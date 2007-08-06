@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Windows
 
         public override string ToString()
         {
-            return String.Format("Windows.WindowInfo: Handle {0}, Parent {1}",
+            return String.Format("Windows.WindowInfo: Handle {0}, Parent ({1})",
                 this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
         }
 

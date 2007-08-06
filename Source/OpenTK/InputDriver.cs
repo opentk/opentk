@@ -16,7 +16,7 @@ namespace OpenTK
             if (Environment.OSVersion.Version.Major > 5 ||
                 (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
             {
-                inputDriver = new OpenTK.Platform.Windows.WinRawInput(parent.Handle);
+                inputDriver = new OpenTK.Platform.Windows.WinRawInput(parent as OpenTK.Platform.Windows.WindowInfo);
             }
             else if (Environment.OSVersion.Platform == PlatformID.Unix)
             {

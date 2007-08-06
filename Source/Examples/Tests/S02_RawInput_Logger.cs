@@ -60,9 +60,9 @@ namespace Examples.Tests
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         }
 
-        public override void OnRenderFrame()
+        public override void OnRenderFrame(EventArgs e)
         {
-            base.OnRenderFrame();
+            base.OnRenderFrame(e);
 
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
             Context.SwapBuffers();
@@ -73,8 +73,8 @@ namespace Examples.Tests
             while (!Quit)
             {
                 ProcessEvents();
-                OnUpdateFrame();
-                OnRenderFrame();
+                OnUpdateFrame(EventArgs.Empty);
+                OnRenderFrame(EventArgs.Empty);
                 Thread.Sleep(10);
             }
         }

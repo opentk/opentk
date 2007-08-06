@@ -10,11 +10,21 @@ namespace OpenTK.Platform
     interface INativeGLWindow : IGLControl, IResizable
     {
         void CreateWindow(DisplayMode mode);
+        void DestroyWindow();
         void ProcessEvents();
         void Exit();
+
+        void OnCreate(EventArgs e);
+        void OnDestroy(EventArgs e);
 
         bool Exists { get; }
         bool Quit { get; }
         IWindowInfo WindowInfo { get; }
+
+        event CreateEvent Create;
+        event DestroyEvent Destroy;
     }
+
+    public delegate void CreateEvent(object sender, EventArgs e);
+    public delegate void DestroyEvent(object sender, EventArgs e);
 }
