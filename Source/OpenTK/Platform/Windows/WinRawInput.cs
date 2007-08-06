@@ -29,24 +29,25 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         private static int deviceCount;
 
-
         private WinRawKeyboard keyboardDriver;
 
         #region --- Constructors ---
 
-        internal WinRawInput(IntPtr parentHandle)
+        internal WinRawInput(WindowInfo parent)
         {
             Debug.WriteLine("Initalizing windows raw input driver.");
             Debug.Indent();
-            
-            AssignHandle(parentHandle);
-            Debug.Print("Input window attached to parent {0}", this.Handle);
+
+            AssignHandle(parent.Handle);
+            Debug.Print("Input window attached to parent {0}", parent);
             keyboardDriver = new WinRawKeyboard(this.Handle);
             
             Debug.Unindent();
         }
 
         #endregion
+
+        #region internal static int DeviceCount
 
         internal static int DeviceCount
         {
@@ -56,6 +57,8 @@ namespace OpenTK.Platform.Windows
                 return deviceCount;
             }
         }
+
+        #endregion
 
         #region protected override void WndProc(ref Message msg)
 

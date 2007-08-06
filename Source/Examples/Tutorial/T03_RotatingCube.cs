@@ -35,18 +35,23 @@ namespace Examples.Tutorial
         public T03_RotatingCube()
         {
             CreateWindow(new DisplayMode(800, 600));
-
-            Context.MakeCurrent();
-        
-            GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
-            GL.Enable(Enums.EnableCap.DEPTH_TEST);
-
-            this.OnResize(new ResizeEventArgs(this.Width, this.Height));
         }
 
         #endregion
-        
-        #region Resize event handler
+
+        #region OnLoad
+
+        public override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
+            GL.Enable(Enums.EnableCap.DEPTH_TEST);
+        }
+
+        #endregion
+
+        #region OnResize
 
         /// <summary>
         /// Called when the user resizes the window.
@@ -70,7 +75,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region OnUpdateFrame function
+        #region OnUpdateFrame
 
         /// <summary>
         /// Prepares the next frame for rendering.
@@ -79,7 +84,7 @@ namespace Examples.Tutorial
         /// Place your control logic here. This is the place to respond to user input,
         /// update object positions etc.
         /// </remarks>
-        public override void OnUpdateFrame()
+        public override void OnUpdateFrame(EventArgs e)
         {
             if (Keyboard[0][OpenTK.Input.Key.Escape])
             {
@@ -107,12 +112,12 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region OnRenderFrame function
+        #region OnRenderFrame
 
         /// <summary>
         /// Place your rendering code here.
         /// </summary>
-        public override void OnRenderFrame()
+        public override void OnRenderFrame(EventArgs e)
         {
             GL.Clear(Enums.ClearBufferMask.COLOR_BUFFER_BIT | Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 

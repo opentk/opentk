@@ -90,7 +90,7 @@ namespace OpenTK.OpenGL
         #endregion private enum Platform
 
         private static Platform platform = Platform.Unknown;
-        private static System.Collections.Generic.Dictionary<string, bool> AvailableExtensions;
+        private static System.Collections.Generic.Dictionary<string, bool> AvailableExtensions = new Dictionary<string, bool>();
 
         #region internal static extern IntPtr glxGetProcAddressARB(string s);
         // also linux, for our ARB-y friends
@@ -295,8 +295,12 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
             // Use cached results
             if (useCache)
             {
-                // Build cache if it is not available
-                if (AvailableExtensions == null)
+                // Build cache if it is not available. We assume that all drivers
+                // will support at least one extension to opengl 1.0 (for example
+                // opengl 1.1). This should hold true even for software contexts
+                // (microsoft's soft implementation is gl 1.1 compatible), at least
+                // for any system capable of running .Net/Mono.
+                if (AvailableExtensions.Count == 0)
                 {
                     ParseAvailableExtensions();
                 }
@@ -305,8 +309,8 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
                 // strings "1.0" to "2.1" with "GL_VERSION_1_0" to "GL_VERSION_2_1"
                 if (AvailableExtensions.ContainsKey(name))
                     return AvailableExtensions[name];
-                else
-                    return false;
+                
+                return false;
             }
 
             // Do not use cached results
@@ -340,8 +344,6 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
         {
             // Assumes there is a current context.
 
-            AvailableExtensions = new Dictionary<string, bool>();
-
             string version_string = GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.VERSION);
             if (String.IsNullOrEmpty(version_string))
                 return;               // this shoudn't happen
@@ -350,42 +352,42 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
 
             if (version.StartsWith("1.2"))
             {
-                AvailableExtensions.Add("GL_VERSION_1_2", true);
+                AvailableExtensions.Add("VERSION_1_2", true);
             }
             else if (version.StartsWith("1.3"))
             {
-                AvailableExtensions.Add("GL_VERSION_1_2", true);
-                AvailableExtensions.Add("GL_VERSION_1_3", true);
+                AvailableExtensions.Add("VERSION_1_2", true);
+                AvailableExtensions.Add("VERSION_1_3", true);
             }
             else if (version.StartsWith("1.4"))
             {
-                AvailableExtensions.Add("GL_VERSION_1_2", true);
-                AvailableExtensions.Add("GL_VERSION_1_3", true);
-                AvailableExtensions.Add("GL_VERSION_1_4", true);
+                AvailableExtensions.Add("VERSION_1_2", true);
+                AvailableExtensions.Add("VERSION_1_3", true);
+                AvailableExtensions.Add("VERSION_1_4", true);
             }
             else if (version.StartsWith("1.5"))
             {
-                AvailableExtensions.Add("GL_VERSION_1_2", true);
-                AvailableExtensions.Add("GL_VERSION_1_3", true);
-                AvailableExtensions.Add("GL_VERSION_1_4", true);
-                AvailableExtensions.Add("GL_VERSION_1_5", true);
+                AvailableExtensions.Add("VERSION_1_2", true);
+                AvailableExtensions.Add("VERSION_1_3", true);
+                AvailableExtensions.Add("VERSION_1_4", true);
+                AvailableExtensions.Add("VERSION_1_5", true);
             }
             else if (version.StartsWith("2.0"))
             {
-                AvailableExtensions.Add("GL_VERSION_1_2", true);
-                AvailableExtensions.Add("GL_VERSION_1_3", true);
-                AvailableExtensions.Add("GL_VERSION_1_4", true);
-                AvailableExtensions.Add("GL_VERSION_1_5", true);
-                AvailableExtensions.Add("GL_VERSION_2_0", true);
+                AvailableExtensions.Add("VERSION_1_2", true);
+                AvailableExtensions.Add("VERSION_1_3", true);
+                AvailableExtensions.Add("VERSION_1_4", true);
+                AvailableExtensions.Add("VERSION_1_5", true);
+                AvailableExtensions.Add("VERSION_2_0", true);
             }
             else if (version.StartsWith("2.1"))
             {
-                AvailableExtensions.Add("GL_VERSION_1_2", true);
-                AvailableExtensions.Add("GL_VERSION_1_3", true);
-                AvailableExtensions.Add("GL_VERSION_1_4", true);
-                AvailableExtensions.Add("GL_VERSION_1_5", true);
-                AvailableExtensions.Add("GL_VERSION_2_0", true);
-                AvailableExtensions.Add("GL_VERSION_2_1", true);
+                AvailableExtensions.Add("VERSION_1_2", true);
+                AvailableExtensions.Add("VERSION_1_3", true);
+                AvailableExtensions.Add("VERSION_1_4", true);
+                AvailableExtensions.Add("VERSION_1_5", true);
+                AvailableExtensions.Add("VERSION_2_0", true);
+                AvailableExtensions.Add("VERSION_2_1", true);
             }
 
             string extension_string = GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.EXTENSIONS);
@@ -428,7 +430,8 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
                 f.SetValue(null, GetDelegateForMethod(f.Name, f.FieldType));
             }
 
-            ParseAvailableExtensions();
+            //ParseAvailableExtensions();
+            AvailableExtensions.Clear();
         }
         #endregion
 
