@@ -53,13 +53,12 @@ namespace OpenTK.Platform.X11
                 keymap.Add(XKey.Meta_R, Key.WinRight);
                 
                 keymap.Add(XKey.Menu, Key.Menu);
-                keymap.Add(XKey.Print, Key.PrintScreen);
                 keymap.Add(XKey.Tab, Key.Tab);
                 keymap.Add(XKey.minus, Key.Minus);
                 keymap.Add(XKey.plus, Key.Plus);
+                keymap.Add(XKey.equal, Key.Plus);
                 //keymap.Add
 
-                //keymap.Add(XKey.Scroll_Lock, Key.Scr);
                 keymap.Add(XKey.Caps_Lock, Key.CapsLock);
                 keymap.Add(XKey.Num_Lock, Key.NumLock);
 
@@ -68,28 +67,49 @@ namespace OpenTK.Platform.X11
                     keymap.Add((XKey)i, (Key)((int)Key.F1 + (i - (int)XKey.F1)));
                 }
 
-                for (int i = (int)XKey.a; i < 26; i++)
+                for (int i = (int)XKey.a; i < (int)XKey.z; i++)
                 {
-                    keymap.Add((XKey)i, (Key)((int)Key.A + i));
+                    keymap.Add((XKey)i, (Key)((int)Key.A + (i - (int)XKey.a)));
                 }
 
-                for (int i = (int)XKey.A; i < 26; i++)
+                for (int i = (int)XKey.A; i < (int)XKey.Z; i++)
                 {
-                    keymap.Add((XKey)i, (Key)((int)Key.A + i));
+                    keymap.Add((XKey)i, (Key)((int)Key.A + (i - (int)XKey.A)));
                 }
 
-                for (int i = (int)XKey.Number0; i <= 9; i++)
+                for (int i = (int)XKey.Number0; i <= (int)XKey.Number9; i++)
                 {
-                    keymap.Add((XKey)i, (Key)((int)Key.Number0 + i));
+                    keymap.Add((XKey)i, (Key)((int)Key.Number0 + (i - (int)XKey.Number0)));
                 }
 
-                for (int i = (int)XKey.KP_0; i <= 9; i++)
+                for (int i = (int)XKey.KP_0; i <= (int)XKey.KP_9; i++)
                 {
-                    keymap.Add((XKey)i, (Key)((int)Key.Keypad0 + i));
+                    keymap.Add((XKey)i, (Key)((int)Key.Keypad0 + (i - (int)XKey.KP_0)));
                 }
 
                 keymap.Add(XKey.Pause, Key.Pause);
                 keymap.Add(XKey.Break, Key.Pause);
+                keymap.Add(XKey.Scroll_Lock, Key.Pause);
+                keymap.Add(XKey.Insert, Key.PrintScreen);
+                keymap.Add(XKey.Print, Key.PrintScreen);
+                keymap.Add(XKey.Sys_Req, Key.PrintScreen);
+
+                keymap.Add(XKey.braceleft, Key.BracketLeft);
+                keymap.Add(XKey.bracketleft, Key.BracketLeft);
+                keymap.Add(XKey.braceright, Key.BracketRight);
+                keymap.Add(XKey.bracketright, Key.BracketRight);
+                keymap.Add(XKey.colon, Key.Semicolon);
+                keymap.Add(XKey.semicolon, Key.Semicolon);
+                keymap.Add(XKey.quoteright, Key.Quote);
+                keymap.Add(XKey.quotedbl, Key.Quote);
+
+                keymap.Add(XKey.comma, Key.Comma);
+                keymap.Add(XKey.less, Key.Comma);
+                keymap.Add(XKey.period, Key.Period);
+                keymap.Add(XKey.greater, Key.Period);
+                keymap.Add(XKey.slash, Key.Slash);
+                keymap.Add(XKey.question, Key.Slash);
+
 
                 keymapExists = true;
             }
@@ -135,6 +155,7 @@ namespace OpenTK.Platform.X11
             bool pressed = e.type == XEventName.KeyPress;
 
             IntPtr keysym = API.LookupKeysym(ref e, 0);
+            IntPtr keysym2 = API.LookupKeysym(ref e, 1);
 
             switch (keysym.ToInt64())
             {
@@ -143,10 +164,13 @@ namespace OpenTK.Platform.X11
                     {
                         keyboards[0][keymap[(XKey)keysym]] = pressed;
                     }
+                    else if (keymap.ContainsKey((XKey)keysym2))
+                    {
+                        keyboards[0][keymap[(XKey)keysym2]] = pressed;
+                    }
                     else
                     {
-                        //Debug.Print("Virtual key {0} not mapped. (keysym: {1},{2})", e.keycode, keysym, keysym2);
-                        Debug.Print("Virtual key {0} not mapped. (keysym: {1})", e.keycode, keysym);
+                        Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
                     }
                     return true;
 
