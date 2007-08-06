@@ -834,7 +834,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum EventMask// : long
+    internal enum EventMask : long
     {
         NoEventMask = 0,
         KeyPressMask = 1 << 0,

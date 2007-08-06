@@ -37,7 +37,7 @@ namespace OpenTK.Platform.X11
         private XEvent e = new XEvent();
 
         private bool disposed;
-        private bool created;
+        private bool exists;
 
         #endregion
 
@@ -56,121 +56,6 @@ namespace OpenTK.Platform.X11
 
         #region --- INativeGLWindow Members ---
 
-        #region public void CreateWindow(DisplayMode mode)
-
-        /// <summary>
-        /// Opens a new render window with the given DisplayMode.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the render window.</param>
-        /// <remarks>
-        /// Creates the window visual and colormap. Associates the colormap/visual
-        /// with the window and raises the window on top of the window stack.
-        /// <para>
-        /// Colormap creation is currently disabled.
-        /// </para>
-        /// </remarks>
-        public void CreateWindow(DisplayMode mode)
-        {
-            if (created)
-            {
-                throw new ApplicationException("Render window already exists!");
-            }
-            else
-            {
-                Debug.Print("Creating native window with mode: {0}", mode.ToString());
-                Debug.Indent();
-
-                window.Display = API.OpenDisplay(null); // null == default display
-                if (window.Display == IntPtr.Zero)
-                {
-                    throw new Exception("Could not open connection to X");
-                }
-                window.Screen = API.DefaultScreen(window.Display);
-                window.RootWindow = API.RootWindow(window.Display, window.Screen);
-
-                Debug.Print(
-                    "Display: {0}, Screen {1}, Root window: {2}",
-                    window.Display,
-                    window.Screen,
-                    window.RootWindow
-                );
-
-                glContext = new X11GLContext(window, mode);
-                window.VisualInfo = glContext.CreateVisual();
-
-                // Create a window on this display using the visual above
-                Debug.Write("Creating output window... ");
-
-                XSetWindowAttributes attributes = new XSetWindowAttributes();
-                attributes.colormap = glContext.colormap;
-                attributes.event_mask = (IntPtr)(EventMask.StructureNotifyMask | EventMask.ExposureMask);
-
-                SetWindowValuemask mask = SetWindowValuemask.ColorMap | SetWindowValuemask.EventMask;
-
-                window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
-                    0, 0, mode.Width, mode.Height, 0, glContext.XVisualInfo.depth,
-                    (int)CreateWindowArgs.InputOutput, glContext.XVisualInfo.visual, (UIntPtr)mask,
-                    ref attributes);
-
-                if (window.Handle == IntPtr.Zero)
-                {
-                    throw new Exception("Could not create window.");
-                }
-                /*
-                // Set the window hints
-                XSizeHints hints = new XSizeHints();
-                hints.x = 0;
-                hints.y = 0;
-                hints.width = 640;
-                hints.height = 480;
-                hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
-                Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
-                XTextProperty text = new XTextProperty();
-                text.value = "OpenTK Game Window";
-                text.format = 8;
-                Functions.XSetWMName(window.Display, window.Handle, ref text);
-                Functions.XSetWMProperties(
-                    display,
-                    window,
-                    name,
-                    name,
-                    0,  // None
-                    null,
-                    0,
-                    hints
-                );*/
-
-                Debug.Print("done! (id: {0})", window.Handle);
-
-                glContext.windowInfo.Handle = window.Handle;
-                glContext.CreateContext(null, true);
-                
-                API.MapRaised(window.Display, window.Handle);
-
-                Debug.WriteLine("Mapped window.");
-
-                glContext.MakeCurrent();
-
-                Debug.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
-                Debug.Unindent();
-                created = true;
-            }
-        }
-
-        #endregion
-
-        #region public void Exit()
-
-        public void Exit()
-        {
-            Debug.WriteLine("X11GLNative shutdown sequence initiated.");
-            quit = true;
-            Functions.XUnmapWindow(window.Display, window.Handle);
-            Functions.XDestroyWindow(window.Display, window.Handle);
-        }
-
-        #endregion
-
         #region public void ProcessEvents()
 
         public void ProcessEvents()
@@ -178,10 +63,14 @@ namespace OpenTK.Platform.X11
             // Process all pending events
             while (true)
             {
-                pending = Functions.XPending(window.Display);
+                //pending = Functions.XPending(window.Display);
+                pending = API.Pending(window.Display);
 
                 if (pending == 0)
+                {
+                    //Debug.Print("No events pending on display {0}", window.Display);
                     return;
+                }
 
                 Functions.XNextEvent(window.Display, ref e);
 
@@ -201,10 +90,11 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.DestroyNotify:
-                        glContext.Dispose();
+                        this.exists = false;
+                        this.OnDestroy(EventArgs.Empty);
                         quit = true;
-                        Debug.WriteLine("Window destroyed, shutting down.");
-                        break;
+                        Debug.Print("X11 window {0} destroyed.", e.DestroyWindowEvent.window);
+                        return;
 
 
                     case XEventName.ConfigureNotify:
@@ -242,7 +132,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public bool Exists
         {
-            get { return created; }
+            get { return exists; }
         }
 
         #endregion
@@ -314,10 +204,109 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        public void DestroyWindow()
+        #region public void CreateWindow(DisplayMode mode)
+
+        /// <summary>
+        /// Opens a new render window with the given DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the render window.</param>
+        /// <remarks>
+        /// Creates the window visual and colormap. Associates the colormap/visual
+        /// with the window and raises the window on top of the window stack.
+        /// <para>
+        /// Colormap creation is currently disabled.
+        /// </para>
+        /// </remarks>
+        public void CreateWindow(DisplayMode mode)
         {
-            throw new Exception("The method or operation is not implemented.");
+            if (exists)
+            {
+                throw new ApplicationException("Render window already exists!");
+            }
+            else
+            {
+                Debug.Print("Creating native window with mode: {0}", mode.ToString());
+                Debug.Indent();
+
+                window.Display = API.OpenDisplay(null); // null == default display
+                if (window.Display == IntPtr.Zero)
+                {
+                    throw new Exception("Could not open connection to X");
+                }
+                window.Screen = API.DefaultScreen(window.Display);
+                window.RootWindow = API.RootWindow(window.Display, window.Screen);
+
+                Debug.Print(
+                    "Display: {0}, Screen {1}, Root window: {2}",
+                    window.Display,
+                    window.Screen,
+                    window.RootWindow
+                );
+
+                glContext = new X11GLContext(window, mode);
+                window.VisualInfo = glContext.CreateVisual();
+
+                // Create a window on this display using the visual above
+                Debug.Write("Creating output window... ");
+
+                XSetWindowAttributes attributes = new XSetWindowAttributes();
+                attributes.colormap = glContext.colormap;
+                attributes.event_mask = (IntPtr)(EventMask.StructureNotifyMask |
+                    EventMask.SubstructureNotifyMask | EventMask.ExposureMask);
+
+                SetWindowValuemask mask = SetWindowValuemask.ColorMap | SetWindowValuemask.EventMask;
+
+                window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
+                    0, 0, mode.Width, mode.Height, 0, glContext.XVisualInfo.depth,
+                    (int)CreateWindowArgs.InputOutput, glContext.XVisualInfo.visual, (UIntPtr)mask,
+                    ref attributes);
+
+                if (window.Handle == IntPtr.Zero)
+                {
+                    throw new Exception("Could not create window.");
+                }
+                /*
+                // Set the window hints
+                XSizeHints hints = new XSizeHints();
+                hints.x = 0;
+                hints.y = 0;
+                hints.width = 640;
+                hints.height = 480;
+                hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
+                Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
+                XTextProperty text = new XTextProperty();
+                text.value = "OpenTK Game Window";
+                text.format = 8;
+                Functions.XSetWMName(window.Display, window.Handle, ref text);
+                Functions.XSetWMProperties(
+                    display,
+                    window,
+                    name,
+                    name,
+                    0,  // None
+                    null,
+                    0,
+                    hints
+                );*/
+
+                Debug.Print("done! (id: {0})", window.Handle);
+
+                glContext.windowInfo.Handle = window.Handle;
+                glContext.CreateContext(null, true);
+
+                API.MapRaised(window.Display, window.Handle);
+
+                Debug.WriteLine("Mapped window.");
+
+                glContext.MakeCurrent();
+
+                Debug.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
+                Debug.Unindent();
+                exists = true;
+            }
         }
+
+        #endregion
 
         #region OnCreate
 
@@ -334,12 +323,40 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public void Exit()
+
+        public void Exit()
+        {
+            this.DestroyWindow();
+        }
+
+        #endregion
+
+        #region public void DestroyWindow()
+
+        public void DestroyWindow()
+        {
+            Debug.WriteLine("X11GLNative shutdown sequence initiated.");
+//            Functions.XUnmapWindow(window.Display, window.Handle);
+            Functions.XDestroyWindow(window.Display, window.Handle);
+        }
+
+        #endregion
+
+        #region OnDestroy
+
         public void OnDestroy(EventArgs e)
         {
-            throw new Exception("The method or operation is not implemented.");
+            Debug.Print("Destroy event fired from window: {0}", window.ToString());
+            if (this.Destroy != null)
+            {
+                this.Destroy(this, e);
+            }
         }
 
         public event DestroyEvent Destroy;
+
+        #endregion
 
         #endregion
 
@@ -433,7 +450,7 @@ namespace OpenTK.Platform.X11
         {
             if (!disposed)
             {
-                if (window != null)
+                if (Exists)
                     Functions.XDestroyWindow(window.Display, window.Handle);
                 // Kills connection to the X-Server. We don't want that,
                 // 'cause it kills the ExampleLauncher too.
@@ -454,7 +471,5 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
-
-
     }
 }
