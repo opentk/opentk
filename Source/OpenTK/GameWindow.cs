@@ -10,6 +10,8 @@ using System.Text;
 using System.Diagnostics;
 
 using OpenTK.Platform;
+using OpenTK.Input;
+using System.Threading;
 
 namespace OpenTK
 {
@@ -22,6 +24,9 @@ namespace OpenTK
         private DisplayMode mode;
 
         private InputDriver driver;
+
+        private bool isExiting;
+        private bool disposed;
 
         #endregion
 
@@ -70,37 +75,9 @@ namespace OpenTK
 
         #endregion
 
-        #region --- Public Properties ---
-
-        #region public IList<Input.Keyboard> Keyboard
-
-        /// <summary>
-        /// Gets the list of available Keyboard devices.
-        /// </summary>
-        public IList<Input.Keyboard> Keyboard
-        {
-            get
-            {
-                return InputDriver.Keyboard;
-            }
-        }
-
-        #endregion
+        #region --- Internal Properties ---
 
         #region public IList<OpenTK.Input.IInputDevice> Input
-
-        /// <summary>
-        /// Gets the list of available InputDevices.
-        /// </summary>
-        public IList<OpenTK.Input.IInputDevice> Input
-        {
-            get
-            {
-                return InputDriver.InputDevices;
-            }
-        }
-
-        #endregion
 
         internal InputDriver InputDriver
         {
@@ -117,6 +94,8 @@ namespace OpenTK
 
         #endregion
 
+        #endregion
+
         #region --- INativeGLWindow Members ---
 
         #region public void CreateWindow(DisplayMode mode)
@@ -128,7 +107,7 @@ namespace OpenTK
         /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
         public void CreateWindow(DisplayMode mode)
         {
-            if (!Created)
+            if (!Exists)
             {
                 glWindow.CreateWindow(mode);
             }
@@ -144,10 +123,15 @@ namespace OpenTK
 
         /// <summary>
         /// Gracefully exits the current GameWindow.
+        /// Override if you want to provide yor own exit sequence.
+        /// If you override this method, place a call to base.Exit(), to ensure
+        /// proper OpenTK shutdown.
         /// </summary>
-        public void Exit()
+        public virtual void Exit()
         {
-            glWindow.Exit();
+            isExiting = true;
+            //glWindow.Exit();
+            //this.Dispose();
         }
 
         #endregion
@@ -202,7 +186,7 @@ namespace OpenTK
         {
             get
             {
-                if (!glWindow.Created)
+                if (!glWindow.Exists)
                 {
                     Debug.WriteLine("WARNING: OpenGL Context accessed before creating a render window. This may indicate a programming error. Force-creating a render window.");
                     mode = new DisplayMode(640, 480);
@@ -214,14 +198,14 @@ namespace OpenTK
 
         #endregion
 
-        #region public bool Created
+        #region public bool Exists
 
         /// <summary>
-        /// Gets a value indicating whether a render window has been created.
+        /// Gets a value indicating whether a render window has been exists.
         /// </summary>
-        public bool Created
+        public bool Exists
         {
-            get { return glWindow.Created; }
+            get { return glWindow.Exists; }
         }
 
         #endregion
@@ -258,11 +242,17 @@ namespace OpenTK
         /// </remarks>
         public virtual void Run()
         {
-            while (!this.Quit)
+            while (!this.Quit && !IsExiting)
             {
                 this.ProcessEvents();
                 this.OnUpdateFrame();
                 this.OnRenderFrame();
+            }
+
+            glWindow.Exit();
+            while (glWindow.Exists)
+            {
+                this.ProcessEvents();
             }
         }
 
@@ -315,7 +305,7 @@ namespace OpenTK
         /// </remarks>
         public virtual void OnRenderFrame()
         {
-            if (!this.Created)
+            if (!this.Exists)
             {
                 Debug.Print("WARNING: RenderFrame event raised, without a valid render window. This may indicate a programming error. Creating render window.");
                 mode = new DisplayMode(640, 480);
@@ -338,7 +328,7 @@ namespace OpenTK
         /// </remarks>
         public virtual void OnUpdateFrame()
         {
-            if (!this.Created)
+            if (!this.Exists)
             {
                 Debug.Print("WARNING: UpdateFrame event raised, without a valid render window. This may indicate a programming error. Creating render window.");
                 mode = new DisplayMode(640, 480);
@@ -359,6 +349,36 @@ namespace OpenTK
         /// Occurs when it is time to render the next frame.
         /// </summary>
         public event RenderFrameEvent RenderFrame;
+
+        #region public bool IsExiting
+
+        /// <summary>
+        /// Gets a value indicating whether the shutdown sequence has been initiated
+        /// for this window, by calling GameWindow.Exit() or hitting the 'close' button.
+        /// If this property is true, it is no longer safe to use any OpenTK.Input or
+        /// OpenTK.OpenGL functions or properties.
+        /// </summary>
+        public bool IsExiting
+        {
+            get { return isExiting; }
+        }
+
+        #endregion
+
+        #region public IList<Keyboard> Keyboard
+
+        /// <summary>
+        /// Gets the list of available Keyboard devices.
+        /// </summary>
+        public IList<Keyboard> Keyboard
+        {
+            get
+            {
+                return InputDriver.Keyboard;
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -438,8 +458,32 @@ namespace OpenTK
 
         public void Dispose()
         {
-            glWindow.Dispose();
-            glWindow = null;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                // Is this safe? Maybe 'Debug' has been disposed, too...
+                Debug.Print("{0} disposing GameWindow.", manual ? "Manually" : "Automatically");
+
+                if (manual)
+                {
+                    if (glWindow != null)
+                    {
+                        glWindow.Dispose();
+                        glWindow = null;
+                    }
+                }
+                disposed = true;
+            }
+        }
+
+        ~GameWindow()
+        {
+            Dispose(false);
         }
 
         #endregion

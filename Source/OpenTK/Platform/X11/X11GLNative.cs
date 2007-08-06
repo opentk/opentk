@@ -103,7 +103,7 @@ namespace OpenTK.Platform.X11
 
                 XSetWindowAttributes attributes = new XSetWindowAttributes();
                 attributes.colormap = glContext.colormap;
-                attributes.event_mask = (IntPtr)(EventMask.StructureNotifyMask);
+                attributes.event_mask = (IntPtr)(EventMask.StructureNotifyMask | EventMask.ExposureMask);
 
                 SetWindowValuemask mask = SetWindowValuemask.ColorMap | SetWindowValuemask.EventMask;
 
@@ -163,13 +163,12 @@ namespace OpenTK.Platform.X11
 
         public void Exit()
         {
-            /*Event e = new Event();
-            X11Api.SendEvent(
-                display,
-                window,
-                false,
-                0,*/
-            //quit = true;
+            Debug.WriteLine("X11GLNative shutdown sequence initiated.");
+            quit = true;
+            Functions.XDestroyWindow(window.Display, window.Handle);
+            window = null;
+            glContext.Dispose();
+            glContext = null;
         }
 
         #endregion
@@ -181,7 +180,6 @@ namespace OpenTK.Platform.X11
             // Process all pending events
             while (true)
             {
-                //pending = Functions.XPending(info.Display);
                 pending = Functions.XPending(window.Display);
 
                 if (pending == 0)
@@ -201,15 +199,14 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.CreateNotify:
-                        // A child was created - nothing to do
+                        // A child was exists - nothing to do
                         break;
 
                     case XEventName.DestroyNotify:
-                        glContext.Dispose();
-                        Functions.XDestroyWindow(window.Display, window.Handle);
-                        window = null;
-                        glContext = null;
-                        quit = true;
+                        //glContext.Dispose();
+                        //window = null;
+                        //glContext = null;
+                        //quit = true;
                         Debug.WriteLine("Window destroyed, shutting down.");
                         break;
 
@@ -257,12 +254,12 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public bool Created
+        #region public bool Exists
 
         /// <summary>
         /// Returns true if a render window/context exists.
         /// </summary>
-        public bool Created
+        public bool Exists
         {
             get { return created; }
         }
