@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using OpenTK.OpenGL;
 using Enums = OpenTK.OpenGL.GL.Enums;
 using OpenTK;
+using System.Threading;
 
 #endregion --- Using Directives ---
 
@@ -158,6 +159,7 @@ namespace Examples.Tutorial
 
 
             Context.SwapBuffers();
+            Thread.Sleep(0);
         }
 
         #endregion

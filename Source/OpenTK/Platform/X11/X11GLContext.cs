@@ -20,8 +20,6 @@ namespace OpenTK.Platform.X11
     public sealed class X11GLContext : OpenTK.Platform.IGLContext
     {
         private IntPtr x11context;
-        private IntPtr display;
-        private int screenNo;
 
         private DisplayMode mode;// = new DisplayMode();
         internal WindowInfo windowInfo;
@@ -42,6 +40,7 @@ namespace OpenTK.Platform.X11
 
         internal X11GLContext()
         {
+            this.windowInfo = new WindowInfo();
             this.mode = new DisplayMode();
         }
 

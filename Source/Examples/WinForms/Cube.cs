@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using OpenTK.OpenGL;
 using Enums = OpenTK.OpenGL.GL.Enums;
 using OpenTK.Platform;
+using System.Threading;
 
 #endregion
 
@@ -81,6 +82,7 @@ namespace Examples.WinForms
             DrawCube();
 
             glControl.Context.SwapBuffers();
+            Thread.Sleep(0);
         }
 
         #endregion

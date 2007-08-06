@@ -14,6 +14,7 @@ using OpenTK;
 using OpenTK.OpenGL;
 using OpenTK.Platform;
 using Enums = OpenTK.OpenGL.GL.Enums;
+using System.Threading;
 
 #endregion
 
@@ -124,6 +125,7 @@ namespace Examples.Tutorial
             DrawCube();
 
             Context.SwapBuffers();
+            Thread.Sleep(0);
         }
 
         #endregion

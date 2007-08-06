@@ -13,6 +13,7 @@ using System.Text;
 using OpenTK;
 using OpenTK.OpenGL;
 using OpenTK.Platform;
+using System.Threading;
 
 #endregion
 
@@ -177,6 +178,7 @@ namespace Examples.Tutorial
             GL.BindBuffer(GL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER, 0);
 
             Context.SwapBuffers();
+            Thread.Sleep(0);
         }
 
         #endregion
