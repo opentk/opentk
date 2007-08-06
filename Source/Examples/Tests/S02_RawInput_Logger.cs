@@ -57,6 +57,13 @@ namespace Examples.Tests
 
         public S02_RawInput_Logger()
         {
+            this.CreateWindow(new OpenTK.Platform.DisplayMode(100, 100));
+        }
+
+        public override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         }
 
