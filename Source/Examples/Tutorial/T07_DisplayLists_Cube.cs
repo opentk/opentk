@@ -120,11 +120,25 @@ namespace Examples.Tutorial
 
         #endregion
 
+        #region OnUpdateFrame
+
+        public override void OnUpdateFrame(EventArgs e)
+        {
+            base.OnUpdateFrame(e);
+
+            if (Keyboard[0][OpenTK.Input.Key.Escape])
+            {
+                this.Exit();
+            }
+        }
+
+        #endregion
+
         #region OnRenderFrame
 
-        public override void OnRenderFrame()
+        public override void OnRenderFrame(EventArgs e)
         {
-            base.OnRenderFrame();
+            base.OnRenderFrame(e);
 
             GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
@@ -144,20 +158,6 @@ namespace Examples.Tutorial
 
 
             Context.SwapBuffers();
-        }
-
-        #endregion
-
-        #region OnUpdateFrame
-
-        public override void OnUpdateFrame()
-        {
-	        base.OnUpdateFrame();
-
-            if (Keyboard[0][OpenTK.Input.Key.Escape])
-            {
-                this.Exit();
-            }
         }
 
         #endregion

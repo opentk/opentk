@@ -47,8 +47,6 @@ namespace OpenTK.Platform.Windows
 
         #region --- IGLControl membmers ---
 
-        public event CreateEvent Create;
-
         #region public bool IsIdle
 
         public bool IsIdle

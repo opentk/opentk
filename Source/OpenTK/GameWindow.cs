@@ -55,6 +55,12 @@ namespace OpenTK
 
             glWindow.Resize += new ResizeEvent(glWindow_Resize);
             glWindow.Create += new CreateEvent(glWindow_CreateInputDriver);
+            glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
+        }
+
+        void glWindow_Destroy(object sender, EventArgs e)
+        {
+            this.isExiting = true;
         }
 
         void glWindow_CreateInputDriver(object sender, EventArgs e)
@@ -97,27 +103,6 @@ namespace OpenTK
         #endregion
 
         #region --- INativeGLWindow Members ---
-
-        #region public void CreateWindow(DisplayMode mode)
-
-        /// <summary>
-        /// Creates a new render window.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the render window.</param>
-        /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
-        public void CreateWindow(DisplayMode mode)
-        {
-            if (!Exists)
-            {
-                glWindow.CreateWindow(mode);
-            }
-            else
-            {
-                throw new ApplicationException("A render window already exists");
-            }
-        }
-
-        #endregion
 
         #region public void Exit()
 
@@ -219,6 +204,71 @@ namespace OpenTK
 
         #endregion
 
+        #region public void CreateWindow(DisplayMode mode)
+
+        /// <summary>
+        /// Creates a new render window.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the render window.</param>
+        /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
+        public void CreateWindow(DisplayMode mode)
+        {
+            if (!Exists)
+            {
+                glWindow.CreateWindow(mode);
+            }
+            else
+            {
+                throw new ApplicationException("A render window already exists");
+            }
+        }
+
+        #endregion
+
+        #region OnCreate
+
+        public event CreateEvent Create;
+
+        public virtual void OnCreate(EventArgs e)
+        {
+            if (this.Create != null)
+            {
+                this.Create(this, e);
+            }
+        }
+
+        #endregion
+
+        #region public void DestroyWindow()
+
+        public void DestroyWindow()
+        {
+            if (Exists)
+            {
+                glWindow.DestroyWindow();
+            }
+            else
+            {
+                throw new ApplicationException("Tried to destroy inexistent window.");
+            }
+        }
+
+        #endregion
+
+        #region OnDestroy
+
+        public virtual void OnDestroy(EventArgs e)
+        {
+            if (this.Destroy != null)
+            {
+                this.Destroy(this, e);
+            }
+        }
+
+        public event DestroyEvent Destroy;
+
+        #endregion
+
         #endregion
 
         #region --- IGameWindow Members ---
@@ -242,17 +292,30 @@ namespace OpenTK
         /// </remarks>
         public virtual void Run()
         {
+            this.OnLoad(EventArgs.Empty);
+            resizeEventArgs.Width = this.Width;
+            resizeEventArgs.Height = this.Height;
+            this.OnResize(resizeEventArgs);
+
+            Debug.Print("Entering main loop");
+
             while (!this.Quit && !IsExiting)
             {
                 this.ProcessEvents();
-                this.OnUpdateFrame();
-                this.OnRenderFrame();
+                if (!IsExiting)
+                {
+                    this.OnUpdateFrame(EventArgs.Empty);
+                    this.OnRenderFrame(EventArgs.Empty);
+                }
             }
 
-            glWindow.Exit();
-            while (glWindow.Exists)
+            if (glWindow.Exists)
             {
-                this.ProcessEvents();
+                glWindow.Exit();
+                while (glWindow.Exists)
+                {
+                    this.ProcessEvents();
+                }
             }
         }
 
@@ -280,21 +343,7 @@ namespace OpenTK
 
         #endregion
 
-        #region public event CreateEvent Create;
-
-        public event CreateEvent Create;
-
-        private void OnCreate(EventArgs e)
-        {
-            if (this.Create != null)
-            {
-                this.Create(this, e);
-            }
-        }
-
-        #endregion
-
-        #region public virtual void OnRenderFrame()
+        #region public virtual void OnRenderFrame(EventArgs e)
 
         /// <summary>
         /// Raises the RenderFrame event. Override in derived classes to render a frame.
@@ -303,7 +352,7 @@ namespace OpenTK
         /// If overriden, the base.OnRenderFrame() function should be called, to ensure
         /// listeners are notified of RenderFrame events.
         /// </remarks>
-        public virtual void OnRenderFrame()
+        public virtual void OnRenderFrame(EventArgs e)
         {
             if (!this.Exists)
             {
@@ -312,12 +361,17 @@ namespace OpenTK
                 this.CreateWindow(mode);
             }
             if (RenderFrame != null)
-                RenderFrame(EventArgs.Empty);
+                RenderFrame(this, e);
         }
+
+        /// <summary>
+        /// Occurs when it is time to render the next frame.
+        /// </summary>
+        public event RenderFrameEvent RenderFrame;
 
         #endregion
 
-        #region public virtual void OnUpdateFrame()
+        #region public virtual void OnUpdateFrame(EventArgs e)
 
         /// <summary>
         /// Raises the UpdateFrame event. Override in derived classes to update a frame.
@@ -326,7 +380,7 @@ namespace OpenTK
         /// If overriden, the base.OnUpdateFrame() function should be called, to ensure
         /// listeners are notified of UpdateFrame events.
         /// </remarks>
-        public virtual void OnUpdateFrame()
+        public virtual void OnUpdateFrame(EventArgs e)
         {
             if (!this.Exists)
             {
@@ -335,20 +389,38 @@ namespace OpenTK
                 this.CreateWindow(mode);
             }
             if (UpdateFrame != null)
-                UpdateFrame(EventArgs.Empty);
+                UpdateFrame(this, e);
         }
-
-        #endregion
 
         /// <summary>
         /// Occurs when it is time to update the next frame.
         /// </summary>
         public event UpdateFrameEvent UpdateFrame;
 
+        #endregion
+
+        #region public virtual void OnLoad(EventArgs e)
+
         /// <summary>
-        /// Occurs when it is time to render the next frame.
+        /// Raises the Load event. Override to load resources that should
+        /// be maintained for the lifetime of the application.
         /// </summary>
-        public event RenderFrameEvent RenderFrame;
+        public virtual void OnLoad(EventArgs e)
+        {
+            Debug.Print("Firing GameWindow.Load event.");
+            if (this.Load != null)
+            {
+                this.Load(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Occurs after the GameWindow has been created, but before
+        /// entering the main loop.
+        /// </summary>
+        public event LoadEvent Load;
+
+        #endregion
 
         #region public bool IsExiting
 
@@ -446,6 +518,7 @@ namespace OpenTK
         /// <param name="e">Contains the new Width and Height of the window.</param>
         protected virtual void OnResize(ResizeEventArgs e)
         {
+            Debug.Print("Firing GameWindow.Resize event: {0}.", e.ToString());
             if (this.Resize != null)
                 this.Resize(this, e);
         }

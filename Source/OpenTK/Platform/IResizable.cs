@@ -27,5 +27,10 @@ namespace OpenTK.Platform
             this.Width = width;
             this.Height = height;
         }
+
+        public override string ToString()
+        {
+            return String.Format("New size: {0}x{1}", Width, Height);
+        }
     }
 }

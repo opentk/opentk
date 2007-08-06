@@ -73,8 +73,22 @@ namespace Examples.Tutorial
         public T08_VBO()
         {
             this.CreateWindow(new DisplayMode(800, 600));
+        }
 
-            this.Context.MakeCurrent();
+        #endregion
+
+        #region OnLoad
+
+        public override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            if (!GL.IsExtensionSupported("VERSION_1_4"))
+            {
+                System.Windows.Forms.MessageBox.Show("You need at least OpenGL 1.4 to run this example. Aborting.", "VBOs not supported",
+                    System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
+                this.Exit();
+            }
 
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
@@ -88,11 +102,59 @@ namespace Examples.Tutorial
 
         #endregion
 
+        #region OnResize
+
+        protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
+        {
+            base.OnResize(e);
+
+            GL.Viewport(0, 0, e.Width, e.Height);
+
+            double ratio = e.Width / (double)e.Height;
+
+            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.LoadIdentity();
+            Glu.Perspective(45.0, ratio, 1.0, 64.0);
+        }
+
+        #endregion
+
+        #region OnUpdateFrame
+
+        /// <summary>
+        /// Prepares the next frame for rendering.
+        /// </summary>
+        /// <remarks>
+        /// Place your control logic here. This is the place to respond to user input,
+        /// update object positions etc.
+        /// </remarks>
+        public override void OnUpdateFrame(EventArgs e)
+        {
+            if (Keyboard[0][OpenTK.Input.Key.Escape])
+            {
+                this.Exit();
+                return;
+            }
+
+            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.LoadIdentity();
+            Glu.LookAt(
+                0.0, 5.0, 5.0,
+                0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0
+            );
+
+            //GL.Rotatef(angle, 0.0f, 1.0f, 0.0f);
+            //angle += 0.5f;
+        }
+
+        #endregion
+
         #region OnRenderFrame
 
-        public override void OnRenderFrame()
+        public override void OnRenderFrame(EventArgs e)
         {
-            base.OnRenderFrame();
+            base.OnRenderFrame(e);
 
             GL.Clear(
                 GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT |
@@ -115,54 +177,6 @@ namespace Examples.Tutorial
             GL.BindBuffer(GL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER, 0);
 
             Context.SwapBuffers();
-        }
-
-        #endregion
-
-        #region OnUpdateFrame
-
-        /// <summary>
-        /// Prepares the next frame for rendering.
-        /// </summary>
-        /// <remarks>
-        /// Place your control logic here. This is the place to respond to user input,
-        /// update object positions etc.
-        /// </remarks>
-        public override void OnUpdateFrame()
-        {
-            if (Keyboard[0][OpenTK.Input.Key.Escape])
-            {
-                this.Exit();
-                return;
-            }
-
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
-            GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 5.0, 5.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
-
-            //GL.Rotatef(angle, 0.0f, 1.0f, 0.0f);
-            //angle += 0.5f;
-        }
-
-        #endregion
-
-        #region Resize event
-
-        protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
-        {
-            base.OnResize(e);
-
-            GL.Viewport(0, 0, e.Width, e.Height);
-
-            double ratio = e.Width / (double)e.Height;
-
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
-            GL.LoadIdentity();
-            Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
 
         #endregion

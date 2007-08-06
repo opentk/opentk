@@ -144,12 +144,12 @@ namespace OpenTK.Platform.X11
 
                 glContext.windowInfo.Handle = window.Handle;
                 glContext.CreateContext(null, true);
-
+                
                 API.MapRaised(window.Display, window.Handle);
 
                 Debug.WriteLine("Mapped window.");
 
-                //glContext.MakeCurrent();
+                glContext.MakeCurrent();
 
                 Debug.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
                 Debug.Unindent();
@@ -165,10 +165,8 @@ namespace OpenTK.Platform.X11
         {
             Debug.WriteLine("X11GLNative shutdown sequence initiated.");
             quit = true;
+            Functions.XUnmapWindow(window.Display, window.Handle);
             Functions.XDestroyWindow(window.Display, window.Handle);
-            window = null;
-            glContext.Dispose();
-            glContext = null;
         }
 
         #endregion
@@ -203,10 +201,8 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.DestroyNotify:
-                        //glContext.Dispose();
-                        //window = null;
-                        //glContext = null;
-                        //quit = true;
+                        glContext.Dispose();
+                        quit = true;
                         Debug.WriteLine("Window destroyed, shutting down.");
                         break;
 
@@ -234,21 +230,6 @@ namespace OpenTK.Platform.X11
                         Debug.WriteLine(String.Format("{0} event was not handled", e.type));
                         break;
                 }
-            }
-        }
-
-        #endregion
-
-        #region public event CreateEvent Create;
-
-        public event CreateEvent Create;
-
-        private void OnCreate(EventArgs e)
-        {
-            if (this.Create != null)
-            {
-                Debug.Print("Create event fired from window: {0}", window.ToString());
-                this.Create(this, e);
             }
         }
 
@@ -332,6 +313,33 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        public void DestroyWindow()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        #region OnCreate
+
+        public event CreateEvent Create;
+
+        public void OnCreate(EventArgs e)
+        {
+            if (this.Create != null)
+            {
+                Debug.Print("Create event fired from window: {0}", window.ToString());
+                this.Create(this, e);
+            }
+        }
+
+        #endregion
+
+        public void OnDestroy(EventArgs e)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public event DestroyEvent Destroy;
 
         #endregion
 
@@ -446,5 +454,7 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+
     }
 }

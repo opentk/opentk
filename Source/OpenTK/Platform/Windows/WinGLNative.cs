@@ -21,7 +21,7 @@ namespace OpenTK.Platform.Windows
     /// Drives GameWindow on Windows.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    sealed class WinGLNative : NativeWindow, OpenTK.Platform.INativeGLWindow, IDisposable
+    sealed class WinGLNative : NativeWindow, INativeGLWindow, IDisposable
     {
         #region --- Fields ---
 
@@ -32,7 +32,12 @@ namespace OpenTK.Platform.Windows
         private bool disposed;
         private bool quit;
         private bool exists;
-        private WindowInfo info;
+        private WindowInfo window;
+
+        /// <summary>
+        /// For use in WndProc only.
+        /// </summary>
+        private int width, height;
 
         #endregion
 
@@ -50,11 +55,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region protected override void WndProc(ref Message m)
-
-        /// <summary>
-        /// For use in WndProc only.
-        /// </summary>
-        private int width, height;
 
         /// <summary>
         /// Processes incoming WM_* messages.
@@ -86,12 +86,6 @@ namespace OpenTK.Platform.Windows
                     mode.Width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cx"));
                     mode.Height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cy"));
 
-                    info = new WindowInfo();
-                    info.Handle = this.Handle;
-                    info.Parent = null;
-
-                    Debug.Print("Window handle: {0}", this.Handle);
-
                     // Raise the Create event
                     this.OnCreate(EventArgs.Empty);
                     return;
@@ -101,14 +95,8 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 case API.Constants.WM_DESTROY:
-                    if (this.Handle != IntPtr.Zero)
-                    {
-                        Debug.Print("Window handle {0} destroyed.", this.Handle);
-                        this.DestroyHandle();
-                        exists = false;
-                    }
-                    API.PostQuitMessage(0);
-                    return;
+                    this.OnDestroy(EventArgs.Empty);
+                    break;
 
                 case API.Constants.WM_QUIT:
                     quit = true;
@@ -116,113 +104,12 @@ namespace OpenTK.Platform.Windows
                     return;
             }
 
- 	        //base.WndProc(ref m);
             DefWndProc(ref m);
         }
 
         #endregion
 
         #region --- INativeGLWindow Members ---
-
-        #region private void CreateWindow(DisplayMode mode)
-
-        public void CreateWindow(DisplayMode mode)
-        {
-            Debug.Print("Creating native window with mode: {0}", mode.ToString());
-            Debug.Indent();
-
-            CreateParams cp = new CreateParams();
-            cp.ClassStyle =
-                (int)API.WindowClassStyle.OwnDC |
-                (int)API.WindowClassStyle.VRedraw |
-                (int)API.WindowClassStyle.HRedraw | (int)API.WindowClassStyle.Ime;
-            cp.Style =
-                (int)API.WindowStyle.Visible |
-                (int)API.WindowStyle.ClipChildren |
-                (int)API.WindowStyle.ClipSiblings |
-                (int)API.WindowStyle.OverlappedWindow;
-            cp.Width = mode.Width;
-            cp.Height = mode.Height;
-            cp.Caption = "OpenTK Game Window";
-
-            // Keep in mind that some construction code runs in WM_CREATE,
-            // which is raised CreateHandle()
-            CreateHandle(cp);
-
-            glContext = new WinGLContext(
-                this.Handle,
-                new DisplayMode(
-                    width, height,
-                    new ColorDepth(32),
-                    16, 0, 0, 2,
-                    fullscreen,
-                    false,
-                    false,
-                    0.0f
-                )
-            );
-
-            if (this.Handle != IntPtr.Zero && glContext != null)
-            {
-                Debug.WriteLine("Window creation was succesful.");
-                exists = true;
-            }
-            else
-            {
-                throw new ApplicationException(String.Format(
-                    "Could not create native window and/or context. Handle: {0}, Context {1}",
-                    this.Handle, this.Context.ToString()));
-            }
-
-            Debug.Unindent();
-        }
-
-        /*
-        private void CreateWindow()
-        {
-            WinApi.WindowClass wc = new WinApi.WindowClass();
-            wc.style =
-                WinApi.WindowClassStyle.HRedraw |
-                WinApi.WindowClassStyle.VRedraw |
-                WinApi.WindowClassStyle.OwnDC;
-            wc.WindowProcedure = new WinApi.WindowProcedureEventHandler(WndProc);
-            wc.Instance = instance;
-            //wc.ClassName = Marshal.StringToHGlobalAuto(className);
-            wc.ClassName = className;
-
-            classAtom = WinApi.RegisterClass(wc);
-
-            if (classAtom == 0)
-            {
-                throw new Exception("Could not register class, error: " + Marshal.GetLastWin32Error());
-            }
-            
-            // Change for fullscreen!
-            handle = WinApi.CreateWindowEx(
-                WinApi.ExtendedWindowStyle.ApplicationWindow |
-                WinApi.ExtendedWindowStyle.OverlappedWindow |
-                WinApi.ExtendedWindowStyle.Topmost,
-                className,
-                //Marshal.StringToHGlobalAuto("OpenTK Game Window"),
-                "OpenTK Game Window",
-                WinApi.WindowStyle.OverlappedWindow |
-                WinApi.WindowStyle.ClipChildren |
-                WinApi.WindowStyle.ClipSiblings,
-                0, 0,
-                640, 480,
-                IntPtr.Zero,
-                IntPtr.Zero,
-                instance,
-                IntPtr.Zero
-            );
-
-            if (handle == IntPtr.Zero)
-            {
-                throw new Exception("Could not create window, error: " + Marshal.GetLastWin32Error());
-            }
-        }
-        */
-        #endregion
 
         #region public void Exit()
 
@@ -231,7 +118,7 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         public void Exit()
         {
-            API.PostMessage(this.Handle, API.Constants.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
+            DestroyWindow();
         }
 
         #endregion
@@ -252,21 +139,7 @@ namespace OpenTK.Platform.Windows
                         Marshal.GetLastWin32Error()));
                 }
                 API.DispatchMessage(ref msg);
-                WndProc(ref msg);
-            }
-        }
-
-        #endregion
-
-        #region public event CreateEvent Create;
-
-        public event CreateEvent Create;
-
-        private void OnCreate(EventArgs e)
-        {
-            if (this.Create != null)
-            {
-                this.Create(this, e);
+                //WndProc(ref msg);
             }
         }
 
@@ -338,8 +211,117 @@ namespace OpenTK.Platform.Windows
 
         public IWindowInfo WindowInfo
         {
-            get { return info; }
+            get { return window; }
         }
+
+        #endregion
+
+        #region private void CreateWindow(DisplayMode mode)
+
+        public void CreateWindow(DisplayMode mode)
+        {
+            Debug.Print("Creating native window with mode: {0}", mode.ToString());
+            Debug.Indent();
+
+            CreateParams cp = new CreateParams();
+            cp.ClassStyle =
+                (int)API.WindowClassStyle.OwnDC |
+                (int)API.WindowClassStyle.VRedraw |
+                (int)API.WindowClassStyle.HRedraw | (int)API.WindowClassStyle.Ime;
+            cp.Style =
+                (int)API.WindowStyle.Visible |
+                (int)API.WindowStyle.ClipChildren |
+                (int)API.WindowStyle.ClipSiblings |
+                (int)API.WindowStyle.OverlappedWindow;
+            cp.Width = mode.Width;
+            cp.Height = mode.Height;
+            cp.Caption = "OpenTK Game Window";
+
+            // Keep in mind that some construction code runs in WM_CREATE,
+            // which is raised CreateHandle()
+            CreateHandle(cp);
+
+            if (this.Handle != IntPtr.Zero && glContext != null)
+            {
+                Debug.WriteLine("Window creation was succesful.");
+                exists = true;
+            }
+            else
+            {
+                throw new ApplicationException(String.Format(
+                    "Could not create native window and/or context. Handle: {0}, Context {1}",
+                    this.Handle, this.Context.ToString()));
+            }
+
+            Debug.Unindent();
+        }
+
+        #endregion
+
+        #region OnCreate
+
+        public event CreateEvent Create;
+
+        public void OnCreate(EventArgs e)
+        {
+            window = new WindowInfo();
+            window.Handle = this.Handle;
+            window.Parent = null;
+
+            Debug.Print("Window created: {0}", window);
+
+            glContext = new WinGLContext(
+                this.Handle,
+                new DisplayMode(
+                    width, height,
+                    new ColorDepth(32),
+                    16, 0, 0, 2,
+                    fullscreen,
+                    false,
+                    false,
+                    0.0f
+                )
+            );
+
+            glContext.MakeCurrent();
+
+            if (this.Create != null)
+            {
+                this.Create(this, e);
+            }
+        }
+
+        #endregion
+
+        #region private void DestroyWindow()
+
+        public void DestroyWindow()
+        {
+            Debug.Print("Destroying window: {0}", window.ToString());
+            API.PostMessage(this.Handle, API.Constants.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        #endregion
+
+        #region OnDestroy
+
+        public void OnDestroy(EventArgs e)
+        {
+            if (this.Handle != IntPtr.Zero)
+            {
+                Debug.Print("Window handle {0} destroyed.", this.Handle);
+                //this.DestroyHandle(); // Destroyed automatically by DefWndProc
+                exists = false;
+            }
+            API.PostQuitMessage(0);
+
+            if (this.Destroy != null)
+            {
+                this.Destroy(this, e);
+            }
+        }
+
+        public event DestroyEvent Destroy;
 
         #endregion
 
