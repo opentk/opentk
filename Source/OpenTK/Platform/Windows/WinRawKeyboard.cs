@@ -71,7 +71,7 @@ namespace OpenTK.Platform.Windows
                     KeyMap.Add(API.VirtualKeys.RCONTROL, Input.Key.ControlRight);
                     KeyMap.Add(API.VirtualKeys.RSHIFT, Input.Key.ShiftRight);
                     KeyMap.Add(API.VirtualKeys.RETURN, Input.Key.Enter);
-                    KeyMap.Add(API.VirtualKeys.BACK, Input.Key.Backspace);
+                    KeyMap.Add(API.VirtualKeys.BACK, Input.Key.BackSpace);
 
                     KeyMap.Add(API.VirtualKeys.OEM_1, Input.Key.Semicolon);      // Varies by keyboard, ;: on Win2K/US
                     KeyMap.Add(API.VirtualKeys.OEM_2, Input.Key.Slash);          // Varies by keyboard, /? on Win2K/US
