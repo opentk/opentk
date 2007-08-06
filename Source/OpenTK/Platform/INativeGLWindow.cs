@@ -13,7 +13,7 @@ namespace OpenTK.Platform
         void ProcessEvents();
         void Exit();
 
-        bool Created { get; }
+        bool Exists { get; }
         bool Quit { get; }
         IWindowInfo WindowInfo { get; }
     }

@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Windows
         private bool fullscreen = false;
         private bool disposed;
         private bool quit;
-        private bool created;
+        private bool exists;
         private WindowInfo info;
 
         #endregion
@@ -94,27 +94,18 @@ namespace OpenTK.Platform.Windows
 
                     // Raise the Create event
                     this.OnCreate(EventArgs.Empty);
-
-                    // Raise the resize event:
-                    //resizeEventArgs.Width = width;
-                    //resizeEventArgs.Height = height;
-                    //this.OnResize(resizeEventArgs);
                     return;
 
-                //case API.Constants.WM_KEYDOWN:          // Legacy input events
-                //case API.Constants.WM_KEYUP:
-                //    break;
-
                 case API.Constants.WM_CLOSE:
-                    //this.Exit();
-                    //return;
-                    break;
+                    this.Exit();
+                    return;
 
                 case API.Constants.WM_DESTROY:
                     if (this.Handle != IntPtr.Zero)
                     {
                         Debug.Print("Window handle {0} destroyed.", this.Handle);
                         this.DestroyHandle();
+                        exists = false;
                     }
                     API.PostQuitMessage(0);
                     return;
@@ -174,7 +165,7 @@ namespace OpenTK.Platform.Windows
             if (this.Handle != IntPtr.Zero && glContext != null)
             {
                 Debug.WriteLine("Window creation was succesful.");
-                created = true;
+                exists = true;
             }
             else
             {
@@ -281,14 +272,14 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public bool Created
+        #region public bool Exists
 
         /// <summary>
         /// Returns true if a render window/context exists.
         /// </summary>
-        public bool Created
+        public bool Exists
         {
-            get { return created; }
+            get { return exists; }
         }
 
         #endregion

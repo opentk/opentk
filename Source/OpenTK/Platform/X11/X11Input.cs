@@ -126,39 +126,8 @@ namespace OpenTK.Platform.X11
         {
             while (API.CheckMaskEvent(window.Display, EventMask.KeyReleaseMask | EventMask.KeyPressMask, ref e))
             {
-                Debug.Print("Input window received {0} event... ", e.type.ToString());
                 keyboardDriver.ProcessKeyboardEvent(e.KeyEvent);
             }
-            /*
-            try
-            {
-                while (API.CheckIfEvent(window.Display, ref e, check, IntPtr.Zero))
-                {
-                    Debug.Print("Input window received {0} event... ", e.type.ToString());
-                    keyboardDriver.ProcessKeyboardEvent(e.KeyEvent);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.Print("DANGER: Possible callback exception: {0}", e.ToString());
-            }
-            */
-        }
-
-        API.CheckEventPredicate check = KeyEventPredicate;
-
-        private static bool KeyEventPredicate(IntPtr display, ref XEvent @event, IntPtr arg)
-        {
-            bool ret = false;
-            try
-            {
-                ret = (@event.type == XEventName.KeyRelease || @event.type == XEventName.KeyPress);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("DANGER: Exception caught during unmanaged callback: {0}", e.ToString());
-            }
-            return ret;
         }
 
         #endregion

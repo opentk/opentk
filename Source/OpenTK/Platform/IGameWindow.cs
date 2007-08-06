@@ -14,6 +14,9 @@ namespace OpenTK.Platform
 
         event UpdateFrameEvent UpdateFrame;
         event RenderFrameEvent RenderFrame;
+
+        bool IsExiting { get; }
+        IList<OpenTK.Input.Keyboard> Keyboard { get; }
     }
 
     public delegate void UpdateFrameEvent(EventArgs e);

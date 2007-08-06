@@ -141,7 +141,7 @@ namespace OpenTK.Input
         Escape,
         Space,
         Tab,
-        Backspace,
+        BackSpace,
         Insert,
         Delete,
         PageUp,

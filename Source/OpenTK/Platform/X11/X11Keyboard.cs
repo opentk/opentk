@@ -41,6 +41,11 @@ namespace OpenTK.Platform.X11
         {
             if (!keymapExists)
             {
+                keymap.Add(XKey.Escape, Key.Escape);
+                keymap.Add(XKey.Return, Key.Enter);
+                keymap.Add(XKey.space, Key.Space);
+                keymap.Add(XKey.BackSpace, Key.BackSpace);
+
                 keymap.Add(XKey.Shift_L, Key.ShiftLeft);
                 keymap.Add(XKey.Shift_R, Key.ShiftRight);
                 keymap.Add(XKey.Alt_L, Key.AltLeft);
@@ -57,22 +62,21 @@ namespace OpenTK.Platform.X11
                 keymap.Add(XKey.minus, Key.Minus);
                 keymap.Add(XKey.plus, Key.Plus);
                 keymap.Add(XKey.equal, Key.Plus);
-                //keymap.Add
 
                 keymap.Add(XKey.Caps_Lock, Key.CapsLock);
                 keymap.Add(XKey.Num_Lock, Key.NumLock);
 
-                for (int i = (int)XKey.F1; i < (int)XKey.F35; i++)
+                for (int i = (int)XKey.F1; i <= (int)XKey.F35; i++)
                 {
                     keymap.Add((XKey)i, (Key)((int)Key.F1 + (i - (int)XKey.F1)));
                 }
 
-                for (int i = (int)XKey.a; i < (int)XKey.z; i++)
+                for (int i = (int)XKey.a; i <= (int)XKey.z; i++)
                 {
                     keymap.Add((XKey)i, (Key)((int)Key.A + (i - (int)XKey.a)));
                 }
 
-                for (int i = (int)XKey.A; i < (int)XKey.Z; i++)
+                for (int i = (int)XKey.A; i <= (int)XKey.Z; i++)
                 {
                     keymap.Add((XKey)i, (Key)((int)Key.A + (i - (int)XKey.A)));
                 }
@@ -94,6 +98,8 @@ namespace OpenTK.Platform.X11
                 keymap.Add(XKey.Print, Key.PrintScreen);
                 keymap.Add(XKey.Sys_Req, Key.PrintScreen);
 
+                keymap.Add(XKey.backslash, Key.BackSlash);
+                keymap.Add(XKey.bar, Key.BackSlash);
                 keymap.Add(XKey.braceleft, Key.BracketLeft);
                 keymap.Add(XKey.bracketleft, Key.BracketLeft);
                 keymap.Add(XKey.braceright, Key.BracketRight);
@@ -102,6 +108,8 @@ namespace OpenTK.Platform.X11
                 keymap.Add(XKey.semicolon, Key.Semicolon);
                 keymap.Add(XKey.quoteright, Key.Quote);
                 keymap.Add(XKey.quotedbl, Key.Quote);
+                keymap.Add(XKey.quoteleft, Key.Tilde);
+                keymap.Add(XKey.asciitilde, Key.Tilde);
 
                 keymap.Add(XKey.comma, Key.Comma);
                 keymap.Add(XKey.less, Key.Comma);
@@ -110,6 +118,35 @@ namespace OpenTK.Platform.X11
                 keymap.Add(XKey.slash, Key.Slash);
                 keymap.Add(XKey.question, Key.Slash);
 
+                keymap.Add(XKey.Left, Key.Left);
+                keymap.Add(XKey.Down, Key.Down);
+                keymap.Add(XKey.Right, Key.Right);
+                keymap.Add(XKey.Up, Key.Up);
+                
+                keymap.Add(XKey.Delete, Key.Delete);
+                keymap.Add(XKey.Home, Key.Home);
+                keymap.Add(XKey.End, Key.End);
+                //keymap.Add(XKey.Prior, Key.PageUp);   // XKey.Prior == XKey.Page_Up
+                keymap.Add(XKey.Page_Up, Key.PageUp);
+                keymap.Add(XKey.Page_Down, Key.PageDown);
+                //keymap.Add(XKey.Next, Key.PageDown);  // XKey.Next == XKey.Page_Down
+                
+                keymap.Add(XKey.KP_Add, Key.KeypadAdd);
+                keymap.Add(XKey.KP_Subtract, Key.KeypadSubtract);
+                keymap.Add(XKey.KP_Multiply, Key.KeypadMultiply);
+                keymap.Add(XKey.KP_Divide, Key.KeypadDivide);
+                keymap.Add(XKey.KP_Decimal, Key.KeypadDecimal);
+                keymap.Add(XKey.KP_Insert, Key.Keypad0);
+                keymap.Add(XKey.KP_End, Key.Keypad1);
+                keymap.Add(XKey.KP_Down, Key.Keypad2);
+                keymap.Add(XKey.KP_Page_Down, Key.Keypad3);
+                keymap.Add(XKey.KP_Left, Key.Keypad4);
+                keymap.Add(XKey.KP_Right, Key.Keypad6);
+                keymap.Add(XKey.KP_Home, Key.Keypad7);
+                keymap.Add(XKey.KP_Up, Key.Keypad8);
+                keymap.Add(XKey.KP_Page_Up, Key.Keypad9);
+                keymap.Add(XKey.KP_Delete, Key.KeypadDecimal);
+                keymap.Add(XKey.KP_Enter, Key.Enter);
 
                 keymapExists = true;
             }
@@ -139,6 +176,7 @@ namespace OpenTK.Platform.X11
             kb.Description = "Default X11 keyboard";
             kb.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
             keyboards.Add(kb);
+            Debug.Print("Keyboard added: {0}", kb.ToString());
         }
 
         #region internal bool ProcessKeyboardEvent(X11.KeyEvent e)
@@ -171,55 +209,11 @@ namespace OpenTK.Platform.X11
                     else
                     {
                         Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
+                        return false;
                     }
                     return true;
 
             }
-
-            return false;
-            /*API.e.keycode
-            switch (rin.Header.Type)
-            {
-                case API.RawInputDeviceType.KEYBOARD:
-                    bool pressed =
-                        rin.Data.Keyboard.Message == API.Constants.WM_KEYDOWN ||
-                        rin.Data.Keyboard.Message == API.Constants.WM_SYSKEYDOWN;
-
-                    // Generic control, shift, alt keys may be sent instead of left/right.
-                    // It seems you have to explicitly register left/right events.
-                    switch (rin.Data.Keyboard.VKey)
-                    {
-                        case API.VirtualKeys.SHIFT:
-                            keyboards[0][Input.Key.ShiftLeft] = keyboards[0][Input.Key.ShiftRight] = pressed;
-                            return false;
-
-                        case API.VirtualKeys.CONTROL:
-                            keyboards[0][Input.Key.ControlLeft] = keyboards[0][Input.Key.ControlRight] = pressed;
-                            return false;
-
-                        case API.VirtualKeys.MENU:
-                            keyboards[0][Input.Key.AltLeft] = keyboards[0][Input.Key.AltRight] = pressed;
-                            return false;
-
-                        default:
-                            if (!WinRawKeyboard.KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
-                            {
-                                Debug.Print("Virtual key {0} not mapped.", rin.Data.Keyboard.VKey);
-                                OpenTK.OpenGL.GL.ClearColor(1.0f, 0.3f, 0.3f, 0.0f);
-                            }
-                            else
-                            {
-                                keyboards[0][WinRawKeyboard.KeyMap[rin.Data.Keyboard.VKey]] = pressed;
-                                OpenTK.OpenGL.GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-                            }
-                            break;
-                    }
-                    break;
-
-                default:
-                    throw new ApplicationException("Windows raw keyboard driver received invalid data.");
-            }
-            return false;*/
         }
 
         #endregion
