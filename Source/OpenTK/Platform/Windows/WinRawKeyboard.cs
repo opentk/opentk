@@ -76,9 +76,9 @@ namespace OpenTK.Platform.Windows
                     KeyMap.Add(API.VirtualKeys.OEM_1, Input.Key.Semicolon);      // Varies by keyboard, ;: on Win2K/US
                     KeyMap.Add(API.VirtualKeys.OEM_2, Input.Key.Slash);          // Varies by keyboard, /? on Win2K/US
                     KeyMap.Add(API.VirtualKeys.OEM_3, Input.Key.Tilde);          // Varies by keyboard, `~ on Win2K/US
-                    KeyMap.Add(API.VirtualKeys.OEM_4, Input.Key.LeftBracket);    // Varies by keyboard, [{ on Win2K/US
+                    KeyMap.Add(API.VirtualKeys.OEM_4, Input.Key.BracketLeft);    // Varies by keyboard, [{ on Win2K/US
                     KeyMap.Add(API.VirtualKeys.OEM_5, Input.Key.BackSlash);      // Varies by keyboard, \| on Win2K/US
-                    KeyMap.Add(API.VirtualKeys.OEM_6, Input.Key.RightBracket);   // Varies by keyboard, ]} on Win2K/US
+                    KeyMap.Add(API.VirtualKeys.OEM_6, Input.Key.BracketRight);   // Varies by keyboard, ]} on Win2K/US
                     KeyMap.Add(API.VirtualKeys.OEM_7, Input.Key.Quote);          // Varies by keyboard, '" on Win2K/US
                     KeyMap.Add(API.VirtualKeys.OEM_PLUS, Input.Key.Plus);        // Invariant: +
                     KeyMap.Add(API.VirtualKeys.OEM_COMMA, Input.Key.Comma);      // Invariant: ,
