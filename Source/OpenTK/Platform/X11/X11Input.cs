@@ -72,16 +72,15 @@ namespace OpenTK.Platform.X11
             API.GrabKeyboard(window.Display, window.Handle, false, GrabMode.GrabModeAsync, GrabMode.GrabModeAsync, 0);
 
             Debug.WriteLine("done! (id: " + window + ")");
-
-            // Select input events to be reported here.
-            //API.SelectInput(window.Display, window.Parent.Handle,
-            //    EventMask.KeyReleaseMask | EventMask.KeyPressMask);
-            
+             
             keyboardDriver = new X11Keyboard(window);
             */
+
             window = new WindowInfo(parent);
             keyboardDriver = new X11Keyboard(parent);
-            API.SelectInput(parent.Display, parent.Handle,
+            // Todo: donparent's mask is now specified by hand, hard to keep in sync.
+            API.SelectInput(parent.Display, parent.Handle, EventMask.StructureNotifyMask |
+                EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
                 EventMask.KeyReleaseMask | EventMask.KeyPressMask);
 
             Debug.Unindent();

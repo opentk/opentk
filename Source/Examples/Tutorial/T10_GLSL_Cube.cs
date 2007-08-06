@@ -213,6 +213,7 @@ namespace Examples.Tutorial
             DrawCube();
 
             Context.SwapBuffers();
+            Thread.Sleep(0);
         }
 
         #endregion

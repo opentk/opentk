@@ -55,12 +55,14 @@ namespace OpenTK
 
             glWindow.Resize += new ResizeEvent(glWindow_Resize);
             glWindow.Create += new CreateEvent(glWindow_CreateInputDriver);
-            glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
+            //glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
         }
 
         void glWindow_Destroy(object sender, EventArgs e)
         {
+            Debug.Print("GameWindow {0} notified of destruction.", this.isExiting.ToString());
             this.isExiting = true;
+            glWindow.Destroy -= glWindow_Destroy;
         }
 
         void glWindow_CreateInputDriver(object sender, EventArgs e)
