@@ -75,7 +75,7 @@ namespace OpenTK.Platform.X11
                 );
 
                 glContext = new X11GLContext(info,
-                    new DisplayMode(width, height, new ColorDepth(24), 16, 0, 0, 2, false, false, false, 0.0f),
+                    new DisplayMode(width, height, new ColorDepth(24), 16, 0, 0, 2, false, false, false, 0.0f)
                 );
                 
                 glContext.CreateVisual();
