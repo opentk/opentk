@@ -248,22 +248,22 @@ namespace OpenTK.Platform.X11
 
                 // Create a window on this display using the visual above
                 Debug.Write("Creating output window... ");
-
+                
                 XSetWindowAttributes attributes = new XSetWindowAttributes();
-                attributes.colormap = glContext.colormap;
+                //attributes.colormap = glContext.colormap;
                 attributes.event_mask = (IntPtr)(EventMask.StructureNotifyMask |
                     EventMask.SubstructureNotifyMask | EventMask.ExposureMask);
 
-                SetWindowValuemask mask = SetWindowValuemask.ColorMap | SetWindowValuemask.EventMask;
+                uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask;
 
-                window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
-                    0, 0, mode.Width, mode.Height, 0, glContext.XVisualInfo.depth,
-                    (int)CreateWindowArgs.InputOutput, glContext.XVisualInfo.visual, (UIntPtr)mask,
+                window.Handle = Functions.XCreateWindow(window.Display, /*window.RootWindow*/0,
+                    0, 0, mode.Width, mode.Height, 0, /*window.VisualInfo.depth*/(int)CreateWindowArgs.CopyFromParent,
+                    (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask,
                     ref attributes);
 
                 if (window.Handle == IntPtr.Zero)
                 {
-                    throw new Exception("Could not create window.");
+                    throw new ApplicationException("Could not create window.");
                 }
                 /*
                 // Set the window hints

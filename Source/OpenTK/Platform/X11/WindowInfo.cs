@@ -10,7 +10,11 @@ namespace OpenTK.Platform.X11
     /// </summary>
     internal class WindowInfo : IWindowInfo
     {
-        internal WindowInfo() { }
+        internal WindowInfo()
+        {
+            visinfo = new VisualInfo();
+        }
+        
         internal WindowInfo(WindowInfo parent)
         {
             this.TopLevelWindow = parent.TopLevelWindow;

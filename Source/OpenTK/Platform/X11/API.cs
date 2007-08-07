@@ -552,7 +552,7 @@ XF86VidModeGetGammaRampSize(
         public override string ToString()
         {
             // return base.ToString();
-            return String.Format("VisualInfo: id ({0}), screen ({1}), depth ({2}), class ({3})",
+            return String.Format("id ({0}), screen ({1}), depth ({2}), class ({3})",
                 visualid, screen, depth, @class);
         }
     }
