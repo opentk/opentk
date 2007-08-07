@@ -256,7 +256,7 @@ namespace OpenTK.Platform.X11
 
                 uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask;
 
-                window.Handle = Functions.XCreateWindow(window.Display, /*window.RootWindow*/0,
+                window.Handle = Functions.XCreateWindow(window.Display, /*window.RootWindow*/IntPtr.Zero,
                     0, 0, mode.Width, mode.Height, 0, /*window.VisualInfo.depth*/(int)CreateWindowArgs.CopyFromParent,
                     (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask,
                     ref attributes);
