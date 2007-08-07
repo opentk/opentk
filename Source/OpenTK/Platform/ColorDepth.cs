@@ -88,7 +88,7 @@ namespace OpenTK.Platform
 
         public override string ToString()
         {
-            return string.Format(CultureInfo.CurrentCulture, "{0}", BitsPerPixel + (IsIndexed ? " indexed" : String.Empty) + " bpp");
+            return string.Format("{0} ({1})", BitsPerPixel, (IsIndexed ? " indexed" : Red.ToString() + Green.ToString() + Blue.ToString() + Alpha.ToString()));
         }
     }
 }

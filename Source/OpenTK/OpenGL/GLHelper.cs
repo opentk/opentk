@@ -422,7 +422,7 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
         {
             Assembly asm = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.OpenGL");
             Type delegates_class = asm.GetType("OpenTK.OpenGL.Delegates");
-            Type imports_class = asm.GetType("OpenTK.OpenGL.Imports");
+            //Type imports_class = asm.GetType("OpenTK.OpenGL.Imports");
 
             FieldInfo[] v = delegates_class.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
             foreach (FieldInfo f in v)
@@ -464,7 +464,7 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
         {
             Assembly asm = Assembly.Load("OpenTK.OpenGL");
             Type delegates_class = asm.GetType("OpenTK.OpenGL.Delegates");
-            Type imports_class = asm.GetType("OpenTK.OpenGL.Imports");
+            //Type imports_class = asm.GetType("OpenTK.OpenGL.Imports");
 
             FieldInfo f = delegates_class.GetField(name);
             if (f == null)

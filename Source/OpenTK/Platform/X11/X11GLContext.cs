@@ -148,16 +148,16 @@ namespace OpenTK.Platform.X11
 
         public void CreateContext(X11GLContext shareContext, bool direct)
         {
-            Trace.WriteLine("Creating opengl context.");
-            Trace.Indent();
+            Debug.WriteLine("Creating opengl context.");
+            Debug.Indent();
 
             IntPtr shareHandle = shareContext != null ? shareContext.Handle : IntPtr.Zero;
-            Trace.WriteLine(
+            Debug.WriteLine(
                 shareHandle == IntPtr.Zero ?
                 "Context is not shared." :
                 String.Format("Context is shared with context: {0}", shareHandle)
             );
-            Trace.WriteLine(
+            Debug.WriteLine(
                 direct ?
                 "Context is direct." :
                 "Context is indirect."
@@ -168,10 +168,15 @@ namespace OpenTK.Platform.X11
                 shareHandle,
                 direct
             );
-            Trace.WriteLine(String.Format("New opengl context created. (id: {0})", x11context));
-            Trace.Unindent();
-
-            //MakeCurrent();
+            if (x11context != IntPtr.Zero)
+            {
+                Debug.WriteLine(String.Format("New opengl context created. (id: {0})", x11context));
+                Debug.Unindent();
+            }
+            else
+            {
+                throw new ApplicationException("Could not create opengl context.");
+            }
         }
 
         #endregion
@@ -182,7 +187,7 @@ namespace OpenTK.Platform.X11
         {
             Debug.WriteLine("Creating visual.");
             Debug.Indent();
-
+/*
             ColorDepth color = new ColorDepth(24);
             int depthBits = 16;
 
@@ -201,8 +206,10 @@ namespace OpenTK.Platform.X11
             visualAttributes.Add((int)depthBits);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.NONE);
-            
-            /*
+*/            
+
+            Debug.Print("Requesting visual: {0}... ", mode.ToString());
+
             List<int> visualAttributes = new List<int>();
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.RED_SIZE);
@@ -214,20 +221,9 @@ namespace OpenTK.Platform.X11
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
             visualAttributes.Add((int)mode.Color.Alpha);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
-            visualAttributes.Add((int)depthBits);
+            visualAttributes.Add((int)mode.DepthBits);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.NONE);
-            */
-            Debug.Write(
-                String.Format(
-                    "Requesting visual: {0} ({1}{2}{3}{4})... ",
-                    mode.ToString(),
-                    mode.Color.Red,
-                    mode.Color.Green,
-                    mode.Color.Blue,
-                    mode.Color.Alpha
-                )
-            );
 
             visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, visualAttributes.ToArray());
             if (visual == IntPtr.Zero)
@@ -235,8 +231,8 @@ namespace OpenTK.Platform.X11
                 throw new Exception("Requested visual not available.");
             }
             visualInfo = (VisualInfo)Marshal.PtrToStructure(visual, typeof(VisualInfo));
+            Debug.Print("Got visual: {0}", visualInfo.ToString());
 
-            Debug.Print("done! (id: {0})", x11context);
             Debug.Unindent();
 
             return visualInfo;

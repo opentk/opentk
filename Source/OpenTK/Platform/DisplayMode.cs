@@ -78,7 +78,7 @@ namespace OpenTK.Platform
         /// Constructs a new DisplayMode with default values.
         /// </summary>
         public DisplayMode()
-            : this(0, 0, new ColorDepth(0), 0, 0, 0, 0, false, false, false, 0.0f)
+            : this(0, 0, new ColorDepth(32), 0, 0, 0, 0, false, false, false, 0.0f)
         {
         }
 
@@ -88,24 +88,10 @@ namespace OpenTK.Platform
         /// <param name="width">The Width of the DisplayMode in pixels.</param>
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         public DisplayMode(int width, int height)
-            : this(width, height, new ColorDepth(0), 0, 0, 0, 0, false, false, false, 0.0f)
+            : this(width, height, new ColorDepth(32), 0, 0, 0, 0, false, false, false, 0.0f)
         {
         }
-        /*
-        public DisplayMode(int width, int height, int bpp, int frequency)
-            : this(width, height, 0, 0, 0, 0, frequency)
-        {
-            color = new ColorDepth(bpp);
-        }
-        */
-        /*
-        public DisplayMode(int width, int height, int r, int g, int b, int a, int frequency)
-        {
-            size = new Size(width, height);
-            color = new ColorDepth(r, g, b, a);
-            displayFrequency = frequency;
-        }
-        */
+
         #endregion
 
         #region --- Public Properties ---
@@ -139,7 +125,7 @@ namespace OpenTK.Platform
             get { return width; }
             set
             {
-                if (value > 0 /* && (value < Screen[0].Width) */)
+                if (value > 0)
                 {
                     width = value;
                 }
@@ -215,7 +201,7 @@ namespace OpenTK.Platform
                 CultureInfo.CurrentCulture,
                 "{0}x{1}, {2}, {3}Hz",
                 Width, Height,
-                Color,
+                Color.ToString(),
                 RefreshRate
             );
         }
