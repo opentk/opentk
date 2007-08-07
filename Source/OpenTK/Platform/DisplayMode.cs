@@ -78,7 +78,7 @@ namespace OpenTK.Platform
         /// Constructs a new DisplayMode with default values.
         /// </summary>
         public DisplayMode()
-            : this(0, 0, new ColorDepth(32), 0, 0, 0, 0, false, false, false, 0.0f)
+            : this(0, 0, new ColorDepth(32), 16, 0, 0, 0, false, false, false, 0.0f)
         {
         }
 
@@ -88,7 +88,7 @@ namespace OpenTK.Platform
         /// <param name="width">The Width of the DisplayMode in pixels.</param>
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         public DisplayMode(int width, int height)
-            : this(width, height, new ColorDepth(32), 0, 0, 0, 0, false, false, false, 0.0f)
+            : this(width, height, new ColorDepth(32), 16, 0, 0, 0, false, false, false, 0.0f)
         {
         }
 
@@ -199,9 +199,10 @@ namespace OpenTK.Platform
         {
             return string.Format(
                 CultureInfo.CurrentCulture,
-                "{0}x{1}, {2}, {3}Hz",
+                "{0}x{1}, rgba: {2}, depth: {3}, refresh {4}Hz",
                 Width, Height,
                 Color.ToString(),
+                DepthBits,
                 RefreshRate
             );
         }

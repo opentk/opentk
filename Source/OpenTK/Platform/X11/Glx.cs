@@ -305,15 +305,12 @@ namespace OpenTK.Platform.X11
 
         internal static IntPtr ChooseVisual(IntPtr dpy, int screen, int[] attriblist)
         {
-            GCHandle h0 = GCHandle.Alloc(attriblist, GCHandleType.Pinned);
-
-            try
+            unsafe
             {
-                return ChooseVisual(dpy, screen, h0.AddrOfPinnedObject());
-            }
-            finally
-            {
-                h0.Free();
+                fixed (int* attriblist_ptr = attriblist)
+                {
+                    return ChooseVisual(dpy, screen, (IntPtr)attriblist_ptr);
+                }
             }
         }
 
