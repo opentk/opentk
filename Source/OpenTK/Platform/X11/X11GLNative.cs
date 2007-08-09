@@ -250,14 +250,18 @@ namespace OpenTK.Platform.X11
                 Debug.Write("Creating output window... ");
                 
                 XSetWindowAttributes attributes = new XSetWindowAttributes();
-                //attributes.colormap = glContext.colormap;
+                attributes.background_pixel = IntPtr.Zero;
+                attributes.border_pixel = IntPtr.Zero;
+                attributes.colormap = API.CreateColormap(window.Display, window.RootWindow,
+                    window.VisualInfo.visual, 0/*AllocNone*/); //glContext.colormap;
                 attributes.event_mask = (IntPtr)(EventMask.StructureNotifyMask |
                     EventMask.SubstructureNotifyMask | EventMask.ExposureMask);
 
-                uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask;
+                uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
+                    (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
 
-                window.Handle = Functions.XCreateWindow(window.Display, /*window.RootWindow*/IntPtr.Zero,
-                    0, 0, mode.Width, mode.Height, 0, /*window.VisualInfo.depth*/(int)CreateWindowArgs.CopyFromParent,
+                window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
+                    0, 0, mode.Width, mode.Height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
                     (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask,
                     ref attributes);
 

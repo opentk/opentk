@@ -187,7 +187,7 @@ namespace OpenTK.Platform.X11
         {
             Debug.WriteLine("Creating visual.");
             Debug.Indent();
-
+/*
             ColorDepth color = new ColorDepth(24);
             int depthBits = 16;
 
@@ -206,7 +206,8 @@ namespace OpenTK.Platform.X11
             visualAttributes.Add((int)depthBits);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.NONE);
-/*
+*/
+
             Debug.Print("Requesting DisplayMode: {0}. ", mode.ToString());
             // Hack; Temp workaround for invalid depth of 24
             if (mode.DepthBits == 24)
@@ -226,10 +227,11 @@ namespace OpenTK.Platform.X11
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
             visualAttributes.Add((int)mode.Color.Alpha);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
-            visualAttributes.Add((int)mode.DepthBits);
+            //visualAttributes.Add((int)mode.DepthBits);
+            visualAttributes.Add(1);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.NONE);
-*/
+
             visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, visualAttributes.ToArray());
             if (visual == IntPtr.Zero)
             {
