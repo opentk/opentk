@@ -46,7 +46,7 @@ namespace OpenTK
         public GLControl(DisplayMode mode)
         {
             InitializeComponent();
-
+/*
             System.Diagnostics.Debug.Listeners.Clear();
             System.Diagnostics.Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             System.Diagnostics.Debug.AutoFlush = true;
@@ -54,11 +54,11 @@ namespace OpenTK
             System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
             System.Diagnostics.Trace.AutoFlush = true;
             Trace.AutoFlush = true;
-
+*/
             if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
                 Environment.OSVersion.Platform == PlatformID.Win32Windows)
             {
-                glControl = new OpenTK.Platform.Windows.WinGLControl(this, Width, Height, false);
+                glControl = new OpenTK.Platform.Windows.WinGLControl(this, new DisplayMode(Width, Height));
             }
             else if (Environment.OSVersion.Platform == PlatformID.Unix ||
                      Environment.OSVersion.Platform == (PlatformID)128)

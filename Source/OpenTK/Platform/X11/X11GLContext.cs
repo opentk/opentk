@@ -80,9 +80,9 @@ namespace OpenTK.Platform.X11
 
             if (!result)
             {
-                Debug.WriteLine(String.Format("Failed to make context {0} current.", x11context));
+                Debug.WriteLine("failed...");
                 // probably need to recreate context here.
-                throw new Exception(String.Format("Failed to make context {0} current.", x11context));
+                //throw new Exception(String.Format("Failed to make context {0} current.", x11context));
             }
             else
             {
@@ -151,7 +151,7 @@ namespace OpenTK.Platform.X11
             Debug.WriteLine("Creating opengl context.");
             Debug.Indent();
 
-            IntPtr shareHandle = shareContext != null ? shareContext.Handle : IntPtr.Zero;
+            IntPtr shareHandle = shareContext != null ? shareContext.windowInfo.Handle : IntPtr.Zero;
             Debug.WriteLine(
                 shareHandle == IntPtr.Zero ?
                 "Context is not shared." :
@@ -187,34 +187,14 @@ namespace OpenTK.Platform.X11
         {
             Debug.WriteLine("Creating visual.");
             Debug.Indent();
-/*
-            ColorDepth color = new ColorDepth(24);
-            int depthBits = 16;
-
-            // Create the Visual
-            List<int> visualAttributes = new List<int>();
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.RED_SIZE);
-            visualAttributes.Add((int)color.Red);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.GREEN_SIZE);
-            visualAttributes.Add((int)color.Green);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.BLUE_SIZE);
-            visualAttributes.Add((int)color.Blue);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
-            visualAttributes.Add((int)color.Alpha);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
-            visualAttributes.Add((int)depthBits);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.NONE);
-*/
 
             Debug.Print("Requesting DisplayMode: {0}. ", mode.ToString());
             // Hack; Temp workaround for invalid depth of 24
-            if (mode.DepthBits == 24)
-            {
-                mode.DepthBits = 16;
-                Debug.WriteLine("Temporary workaround applied: depth changed to 16.");
-            }
+            //if (mode.DepthBits == 24)
+            //{
+            //    mode.DepthBits = 16;
+            //    Debug.WriteLine("Temporary workaround applied: depth changed to 16.");
+            //}
             
             List<int> visualAttributes = new List<int>();
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
@@ -247,6 +227,7 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        [Obsolete]
         internal IntPtr XVisual
         {
             get { return this.visual; }
@@ -257,11 +238,13 @@ namespace OpenTK.Platform.X11
             get { return windowInfo.VisualInfo; }
         }
 
+        [Obsolete]
         internal IntPtr XColormap
         {
             get { return colormap; }
         }
 
+        [Obsolete]
         internal IntPtr Handle
         {
             get { return this.x11context; }

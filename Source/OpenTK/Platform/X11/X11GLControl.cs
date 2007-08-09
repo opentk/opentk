@@ -25,30 +25,32 @@ namespace OpenTK.Platform.X11
 
         #region --- Contructors ---
 
+        [Obsolete("Use X11GLControl(UserControl c, DisplayMode mode) instead.")]
         public X11GLControl(UserControl c, int width, int height, bool fullscreen)
+            : this(c, new DisplayMode(width, height, new ColorDepth(32), 16,
+                   0, 0, 2, false, false, false, 0.0f)) { }
+        
+        public X11GLControl(UserControl c, DisplayMode mode)
         {
-            Trace.WriteLine("Creating opengl control (X11GLControl driver)");
-            Trace.Indent();
-
-            c.ParentChanged += new EventHandler(c_ParentChanged);
-            if (c.ParentForm != null)
-                throw new Exception("I was stupid!");
+            Debug.WriteLine("Creating opengl control (X11GLControl driver)");
+            Debug.Indent();
 
             if (c == null/* || c.TopLevelControl == null*/)
             {
-                throw new Exception("Attempted to bind to non-existent control.");
+                throw new ArgumentException("UserControl c may not be null.");
+            }
+
+            c.ParentChanged += new EventHandler(c_ParentChanged);
+            if (c.ParentForm != null)
+            {
+                throw new ApplicationException("Internal OpenTK error, please report at http://opentk.sourceforge.net");
             }
 
             info.Handle = c.Handle;
-            Trace.WriteLine(
-                String.Format(
-                    "Binding to control: {0}",
-                    String.IsNullOrEmpty(c.Name) ? c.Text : c.Name
-                )
-            );
+            Debug.Print("Binding to control: {0}", String.IsNullOrEmpty(c.Name) ? c.Text : c.Name);
 
             xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-            Trace.WriteLine("Acquired System.Windows.Forms.XplatUIX11 type.");
+            Debug.Write("System.Windows.Forms.XplatUIX11: ");
 
             if (xplatui != null)
             {
@@ -64,28 +66,21 @@ namespace OpenTK.Platform.X11
                     System.Reflection.BindingFlags.Static |
                     System.Reflection.BindingFlags.NonPublic).GetValue(null);
 
-                Trace.WriteLine(
-                    String.Format(
-                        "Screen: {0}, Display: {1}, Root Window: {2}, Control: {3}",
-                        info.Screen,
-                        info.Display,
-                        info.RootWindow,
-                        info.Handle
-                    )
-                );
+                Debug.Print(
+                    "Screen: {0}, Display: {1}, Root Window: {2}, Control: {3}",
+                    info.Screen, info.Display, info.RootWindow, info.Handle);
 
-                glContext = new X11GLContext(info,
-                    new DisplayMode(width, height, new ColorDepth(24), 16, 0, 0, 2, false, false, false, 0.0f)
-                );
+                glContext = new X11GLContext(info, mode);
                 
-                glContext.CreateVisual();
+                info.VisualInfo = glContext.CreateVisual();
 
                 xplatui.GetField(
                     "CustomVisual",
                     System.Reflection.BindingFlags.Static |
                     System.Reflection.BindingFlags.NonPublic).SetValue(
                         null,
-                        glContext.XVisual
+                        //glContext.XVisual
+                        info.VisualInfo.visual
                     );
 
                 xplatui.GetField(
@@ -93,7 +88,8 @@ namespace OpenTK.Platform.X11
                     System.Reflection.BindingFlags.Static |
                     System.Reflection.BindingFlags.NonPublic).SetValue(
                         null,
-                        glContext.XColormap
+                        API.CreateColormap(info.Display, info.RootWindow, info.VisualInfo.visual, 0/*AllocNone*/)
+                        //glContext.colormap
                     );
 
                 glContext.CreateContext(null, true);
@@ -103,7 +99,7 @@ namespace OpenTK.Platform.X11
         void c_ParentChanged(object sender, EventArgs e)
         {
             UserControl c = sender as UserControl;
-            Trace.WriteLine(
+            Debug.WriteLine(
                 String.Format(
                     "TopLevel control is {0}",
                     c.TopLevelControl != null ? c.TopLevelControl.ToString() : "not available"
@@ -120,9 +116,9 @@ namespace OpenTK.Platform.X11
                 info.TopLevelWindow = c.TopLevelControl.Handle;
             }
 
-            Trace.WriteLine(String.Format("Mapping window to top level: {0}", info.TopLevelWindow));
+            Debug.WriteLine(String.Format("Mapping window to top level: {0}", info.TopLevelWindow));
             API.MapRaised(info.Display, info.TopLevelWindow);
-            Trace.Unindent();
+            Debug.Unindent();
         }
 
         #endregion
