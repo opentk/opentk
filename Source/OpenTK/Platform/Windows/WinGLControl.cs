@@ -27,6 +27,12 @@ namespace OpenTK.Platform.Windows
 
         #region --- Constructors ---
 
+        public WinGLControl(Control c, DisplayMode mode)
+        {
+            glContext = new WinGLContext(c.Handle, mode);
+        }
+
+        [Obsolete]
         public WinGLControl(Control c, int width, int height, bool fullscreen)
         {
             glContext = new WinGLContext(
