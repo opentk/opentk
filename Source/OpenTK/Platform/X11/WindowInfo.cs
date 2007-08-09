@@ -17,6 +17,7 @@ namespace OpenTK.Platform.X11
         
         internal WindowInfo(WindowInfo parent)
         {
+            this.Handle = parent.Handle;
             this.TopLevelWindow = parent.TopLevelWindow;
             this.Screen = parent.Screen;
             this.Display = parent.Display;

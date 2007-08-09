@@ -69,10 +69,11 @@ namespace OpenTK.Platform.X11
         {
             Debug.Write(
                 String.Format(
-                    "Making context {0} current on thread {1} (display: {2}, window: {3})... ",
+                    "Making context {0} current on thread {1} (Display: {2}, Screen: {3}, Window: {4})... ",
                     x11context,
                     System.Threading.Thread.CurrentThread.ManagedThreadId,
                     windowInfo.Display,
+                    windowInfo.Screen,
                     windowInfo.Handle
                 )
             );
