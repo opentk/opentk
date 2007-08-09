@@ -67,7 +67,7 @@ namespace OpenTK.Platform.X11
                     System.Reflection.BindingFlags.NonPublic).GetValue(null);
 
                 Debug.Print(
-                    "Screen: {0}, Display: {1}, Root Window: {2}, Control: {3}",
+                    "Screen: {0}, Display: {1}, Root Window: {2}, Handle: {3}",
                     info.Screen, info.Display, info.RootWindow, info.Handle);
 
                 glContext = new X11GLContext(info, mode);
