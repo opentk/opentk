@@ -17,6 +17,8 @@ namespace OpenTK
     {
         IInputDriver inputDriver;
 
+        #region --- Constructors ---
+        
         public InputDriver(IWindowInfo parent)
         {
             if (Environment.OSVersion.Version.Major > 5 ||
@@ -35,6 +37,8 @@ namespace OpenTK
                     "Input handling is not supported on the current platform. Please report the problem to http://opentk.sourceforge.net");
             }
         }
+        
+        #endregion
 
         #region --- IInputDriver Members ---
 
