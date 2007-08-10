@@ -38,6 +38,7 @@ namespace OpenTK.Platform.X11
 
         private bool disposed;
         private bool exists;
+        private bool isExiting;
 
         #endregion
 
@@ -92,7 +93,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.DestroyNotify:
                         this.exists = false;
                         this.OnDestroy(EventArgs.Empty);
-                        quit = true;
+                        isExiting = true;
                         Debug.Print("X11 window {0} destroyed.", e.DestroyWindowEvent.window);
                         return;
 
@@ -139,10 +140,9 @@ namespace OpenTK.Platform.X11
 
         #region public bool Quit
 
-        private bool quit;
-        public bool Quit
+        public bool IsExiting
         {
-            get { return quit; }
+            get { return isExiting; }
         }
 
         #endregion

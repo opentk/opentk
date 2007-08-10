@@ -18,13 +18,12 @@ namespace OpenTK.Platform
         void CreateWindow(DisplayMode mode);
         void DestroyWindow();
         void ProcessEvents();
-        void Exit();
 
         void OnCreate(EventArgs e);
         void OnDestroy(EventArgs e);
 
         bool Exists { get; }
-        bool Quit { get; }
+        //bool IsExiting { get; }
         IWindowInfo WindowInfo { get; }
 
         event CreateEvent Create;

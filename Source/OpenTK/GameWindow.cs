@@ -55,14 +55,16 @@ namespace OpenTK
 
             glWindow.Resize += new ResizeEvent(glWindow_Resize);
             glWindow.Create += new CreateEvent(glWindow_CreateInputDriver);
-            //glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
+            glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
         }
 
         void glWindow_Destroy(object sender, EventArgs e)
         {
-            Debug.Print("GameWindow {0} notified of destruction.", this.isExiting.ToString());
+            Debug.Print("GameWindow destruction imminent.");
             this.isExiting = true;
+            this.OnDestroy(EventArgs.Empty);
             glWindow.Destroy -= glWindow_Destroy;
+            this.Dispose();
         }
 
         void glWindow_CreateInputDriver(object sender, EventArgs e)
@@ -91,7 +93,7 @@ namespace OpenTK
         {
             get
             {
-                if (driver == null)
+                if (driver == null && !this.IsExiting)
                 {
                     Debug.WriteLine("WARNING: Accessed null InputDriver - creating new. This may indicate a prorgamming error.");
                     driver = new InputDriver(this.WindowInfo);
@@ -136,23 +138,6 @@ namespace OpenTK
 
         #endregion
 
-        #region public bool Quit
-
-        /// <summary>
-        /// Gets a value indicating whether the current GameWindow is quitting.
-        /// </summary>
-        /// <remarks>
-        /// You should not call OnRenderFrame, Resize, and other GameWindow related function
-        /// when the quit sequence has been initiated, as indicated by the Quitting property.
-        /// NullReference- or ApplicationExceptions may occur otherwise.
-        /// </remarks>
-        public bool Quit
-        {
-            get { return glWindow.Quit; }
-        }
-
-        #endregion
-
         #region public bool Fullscreen
 
         public bool Fullscreen
@@ -173,14 +158,14 @@ namespace OpenTK
         {
             get
             {
-                if (!glWindow.Exists)
-                {
-                    Debug.WriteLine("WARNING: OpenGL Context accessed before creating a render window. This may indicate a programming error. Force-creating a render window.");
-                    mode = new DisplayMode(640, 480);
-                    this.CreateWindow(mode);
-                }
-                return glWindow.Context;
-            }
+				if (!this.Exists && !this.IsExiting)
+				{
+				    Debug.WriteLine("WARNING: OpenGL Context accessed before creating a render window. This may indicate a programming error. Force-creating a render window.");
+				    mode = new DisplayMode(640, 480);
+				    this.CreateWindow(mode);
+				}
+				return glWindow.Context;
+			}
         }
 
         #endregion
@@ -192,7 +177,7 @@ namespace OpenTK
         /// </summary>
         public bool Exists
         {
-            get { return glWindow.Exists; }
+            get { return glWindow == null ? false : glWindow.Exists; }
         }
 
         #endregion
@@ -209,7 +194,8 @@ namespace OpenTK
         #region public void CreateWindow(DisplayMode mode)
 
         /// <summary>
-        /// Creates a new render window.
+        /// Creates a new render window. The Create event is raised after the window creation
+        /// is complete, to allow resource initalisation.
         /// </summary>
         /// <param name="mode">The DisplayMode of the render window.</param>
         /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
@@ -231,6 +217,10 @@ namespace OpenTK
 
         public event CreateEvent Create;
 
+        /// <summary>
+        /// Raises the Create event. Override in derived classes to initialize resources.
+        /// </summary>
+        /// <param name="e"></param>
         public virtual void OnCreate(EventArgs e)
         {
             if (this.Create != null)
@@ -243,6 +233,10 @@ namespace OpenTK
 
         #region public void DestroyWindow()
 
+        /// <summary>
+        /// Destroys the GameWindow. The Destroy event is raised before destruction commences
+        /// (while the opengl context still exists), to allow resource cleanup.
+        /// </summary>
         public void DestroyWindow()
         {
             if (Exists)
@@ -259,6 +253,11 @@ namespace OpenTK
 
         #region OnDestroy
 
+        /// <summary>
+        /// Raises the Destroy event. Override in derived classes, to modify the shutdown
+        /// sequence (e.g. to release resources before shutdown).
+        /// </summary>
+        /// <param name="e"></param>
         public virtual void OnDestroy(EventArgs e)
         {
             if (this.Destroy != null)
@@ -301,7 +300,7 @@ namespace OpenTK
 
             Debug.Print("Entering main loop");
 
-            while (!this.Quit && !IsExiting)
+            while (this.Exists && !IsExiting)
             {
                 this.ProcessEvents();
                 if (!IsExiting)
@@ -311,10 +310,10 @@ namespace OpenTK
                 }
             }
 
-            if (glWindow.Exists)
+            if (this.Exists)
             {
-                glWindow.Exit();
-                while (glWindow.Exists)
+                glWindow.DestroyWindow();
+                while (this.Exists)
                 {
                     this.ProcessEvents();
                 }
@@ -356,7 +355,7 @@ namespace OpenTK
         /// </remarks>
         public virtual void OnRenderFrame(EventArgs e)
         {
-            if (!this.Exists)
+            if (!this.Exists && !this.IsExiting)
             {
                 Debug.Print("WARNING: RenderFrame event raised, without a valid render window. This may indicate a programming error. Creating render window.");
                 mode = new DisplayMode(640, 480);
@@ -384,7 +383,7 @@ namespace OpenTK
         /// </remarks>
         public virtual void OnUpdateFrame(EventArgs e)
         {
-            if (!this.Exists)
+            if (!this.Exists && !this.IsExiting)
             {
                 Debug.Print("WARNING: UpdateFrame event raised, without a valid render window. This may indicate a programming error. Creating render window.");
                 mode = new DisplayMode(640, 480);

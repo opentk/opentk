@@ -4,6 +4,8 @@
  */
 #endregion
 
+#region --- Using Directives ---
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,12 +15,15 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Threading;
-using OpenTK;
 using System.Diagnostics;
 using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
 using System.IO;
+
+using OpenTK;
+
+#endregion
 
 namespace Examples
 {
@@ -30,16 +35,18 @@ namespace Examples
         [STAThread]
         static void Main()
         {
-            StreamWriter sw = new StreamWriter(Path.Combine(System.Environment.CurrentDirectory, "debug.log"));
-            System.Diagnostics.Debug.Listeners.Clear();
-            System.Diagnostics.Debug.Listeners.Add(new TextWriterTraceListener(sw));
-            System.Diagnostics.Debug.AutoFlush = true;
-            Debug.AutoFlush = true;
-            System.Diagnostics.Trace.Listeners.Clear();
-            System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            System.Diagnostics.Trace.AutoFlush = true;
-            Trace.AutoFlush = true;
+        	try
+        	{
+	            if (File.Exists("debug.log"))
+	                File.Delete("debug.log");
+        	}
+        	catch (Exception e)
+        	{
+        		MessageBox.Show("Could not access debug.log");
+        	}
 
+        	Debug.Listeners.Add(new TextWriterTraceListener("debug.log"));
+        	                    
             try
             {
                 using (Form exampleLauncher = new ExampleLauncher())
@@ -54,8 +61,6 @@ namespace Examples
                 Debug.Close();
                 Trace.Flush();
                 Trace.Close();
-                sw.Flush();
-                sw.Close();
             }
         }
 
@@ -72,8 +77,9 @@ namespace Examples
                     Assembly.GetExecutingAssembly().GetType(
                         "Examples." + listBox1.SelectedItem.ToString().Replace(": ", ".").Replace(' ', '_'),
                         true,
-                        true
-                    );
+                        true);
+                
+                Debug.Print("Launching example: {0}", example.ToString());
 
                 if (example.BaseType == typeof(GameWindow))
                 {
@@ -98,8 +104,7 @@ namespace Examples
                                 expt.StackTrace,
                                 expt.InnerException
                             ),
-                            expt.Message
-                        );
+                            expt.Message);
                     }
                 }
             }
@@ -112,9 +117,16 @@ namespace Examples
             {
                 (ex.GetConstructor(Type.EmptyTypes).Invoke(null) as IExample).Launch();
             }
-            catch (Exception e)
+            catch (Exception expt)
             {
-                Debug.WriteLine(e.ToString());
+				MessageBox.Show(
+				    String.Format(
+				        "Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
+				        System.Environment.NewLine,
+				        expt.StackTrace,
+				        expt.InnerException
+				    ),
+				    expt.Message);
             }
         }
 

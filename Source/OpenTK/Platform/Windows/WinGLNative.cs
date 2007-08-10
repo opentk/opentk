@@ -30,7 +30,7 @@ namespace OpenTK.Platform.Windows
 
         private bool fullscreen = false;
         private bool disposed;
-        private bool quit;
+        private bool isExiting;
         private bool exists;
         private WindowInfo window;
 
@@ -91,7 +91,7 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 case API.Constants.WM_CLOSE:
-                    this.Exit();
+                    this.DestroyWindow();
                     return;
 
                 case API.Constants.WM_DESTROY:
@@ -99,8 +99,8 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case API.Constants.WM_QUIT:
-                    quit = true;
-                    Debug.WriteLine("Application quit.");
+                    isExiting = true;
+                    //Debug.WriteLine("Application quit.");
                     return;
             }
 
@@ -110,18 +110,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region --- INativeGLWindow Members ---
-
-        #region public void Exit()
-
-        /// <summary>
-        /// Starts the teardown sequence for the current window.
-        /// </summary>
-        public void Exit()
-        {
-            DestroyWindow();
-        }
-
-        #endregion
 
         #region public void ProcessEvents()
 
@@ -159,9 +147,9 @@ namespace OpenTK.Platform.Windows
 
         #region public bool Quit
 
-        public bool Quit
+        public bool IsExiting
         {
-            get { return quit; }
+            get { return isExiting; }
         }
 
         #endregion
@@ -295,6 +283,9 @@ namespace OpenTK.Platform.Windows
 
         #region private void DestroyWindow()
 
+        /// <summary>
+        /// Starts the teardown sequence for the current window.
+        /// </summary>
         public void DestroyWindow()
         {
             Debug.Print("Destroying window: {0}", window.ToString());
@@ -307,6 +298,11 @@ namespace OpenTK.Platform.Windows
 
         public void OnDestroy(EventArgs e)
         {
+            if (this.Destroy != null)
+            {
+                this.Destroy(this, e);
+            }
+            
             if (this.Handle != IntPtr.Zero)
             {
                 Debug.Print("Window handle {0} destroyed.", this.Handle);
@@ -314,11 +310,6 @@ namespace OpenTK.Platform.Windows
                 exists = false;
             }
             API.PostQuitMessage(0);
-
-            if (this.Destroy != null)
-            {
-                this.Destroy(this, e);
-            }
         }
 
         public event DestroyEvent Destroy;
