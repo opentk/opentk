@@ -17,6 +17,9 @@ namespace Bind.Structures
         internal static FunctionCollection Wrappers;
 
         private static bool loaded;
+        
+        #region internal static void Initialize()
+        
         internal static void Initialize()
         {
             if (!loaded)
@@ -25,26 +28,24 @@ namespace Bind.Structures
                 loaded = true;
             }
         }
+        
+        #endregion
 
+        Regex functionsNotToTrim = new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?))[dfis]v");
+        
+        //Regex endings = new Regex(@"(.)+[df(u?[isb])]v?");
+        
         private static List<string> endings = new List<string>(
             new string[]
             {
-                "fv",
-                "f",
-                "dv",
-                "d",
-                "i",
-                "iv",
-                "s",
-                "sv",
-                "b",
-                "bv",
-                "ui",
-                "uiv",
-                "us",
-                "usv",
-                "ub",
-                "ubv"
+                "fv", "f",
+                "dv", "d",
+                "i",  "iv",
+                "s",  "sv",
+                "b",  "bv",
+                "ui", "uiv",
+                "us", "usv",
+                "ub", "ubv"
             });
 
         #region --- Constructors ---
@@ -139,45 +140,42 @@ namespace Bind.Structures
                 // TODO: Use some regex's here, to reduce clutter.
                 if (Settings.Compatibility != Settings.Legacy.Tao)
                 {
-                    string ext = Utilities.GetGL2Extension(value);
-                    string trimmedName = value;
-
-                    // Remove extension
-                    if (!String.IsNullOrEmpty(ext))
+                    TrimmedName = value;
+                    TrimmedName = Utilities.StripGL2Extension(value);
+                    
+                    //if (TrimmedName.Contains("Uniform2iv"))
                     {
-                        trimmedName = trimmedName.Substring(0, trimmedName.Length - ext.Length);
+                    	//Console.Write("niar");
                     }
 
                     // Remove overload
-                    if (endings.Contains(trimmedName.Substring(trimmedName.Length - 3)))
+                    for (int i = 3; i >= 1; i--)
                     {
-                        if (!trimmedName.EndsWith("v"))
-                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 3);
-                        else
-                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 3) + "v";
-                        return;
-                    }
-
-                    if (endings.Contains(trimmedName.Substring(trimmedName.Length - 2)))
-                    {
-                        if (!trimmedName.EndsWith("v"))
-                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 2);
-                        else
-                            TrimmedName = trimmedName.Substring(0, trimmedName.Length - 2) + "v";
-                        return;
-                    }
-
-                    if (endings.Contains(trimmedName.Substring(trimmedName.Length - 1)))
-                    {
-                        // An ending 's' may be either a plural form (glCallLists), which we
-                        // do not want to change, or an actual overload (glColor3s). We assume
-                        // (perhaps incorrectly), that an 's' preceeded be a digit indicates an
-                        // overload. If there is no digit, we assume a plural form (no change).
-                        if (!trimmedName.EndsWith("v"))
-                            if (Char.IsDigit(trimmedName[trimmedName.Length - 2]))
-                                TrimmedName = trimmedName.Substring(0, trimmedName.Length - 1);
-
-                        return;
+		                if (endings.Contains(TrimmedName.Substring(TrimmedName.Length - i)))
+		                {
+		                	// If there is a digit before the ending (e.g. 3fv) then we will remove
+		                	// the ending (some functions are blacklisted for CLS-Compliance).
+		                	// Otherwise, if there is no digit, but it ends with a 'v', do not remove
+		                	// the 'v' (CLS-Compliance). If no digit and it ends with a (plural) 's',
+		                	// do not remove anything (e.g. glCallLists)
+		                	// TODO: Add better handling for CLS-Compliance on ref ('v') functions.
+		                	if (Char.IsDigit(TrimmedName[TrimmedName.Length - (i + 1)]))
+		                	{
+	                	    	if (!functionsNotToTrim.IsMatch(Name))
+	                	    	{
+		                    		TrimmedName = TrimmedName.Substring(0, TrimmedName.Length - i);	
+	                	    	}
+	                	    	else
+	                	    	{
+	                	    		Console.WriteLine("Function {0} blacklisted from trimming (CLS-Compliance).", Name);
+	                	    	}
+		                	}
+		                	else if (TrimmedName.EndsWith("v"))
+		                	{
+		                        TrimmedName = TrimmedName.Substring(0, TrimmedName.Length - i) + "v";
+		                	}
+		                    return;
+		                }
                     }
                 }
             }

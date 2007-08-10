@@ -165,42 +165,43 @@ namespace Examples.WinForms
 
         #endregion
 
-        #region DrawCube
-        public void DrawCube()
+		#region private void DrawCube()
+
+        private void DrawCube()
         {
             GL.Begin(GL.Enums.BeginMode.QUADS);
 
-            GL.Color3(1, 0, 0);
+            GL.Color3(1.0f, 0.0f, 0.0f);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
 
-            GL.Color3(1, 1, 0);
+            GL.Color3(1.0f, 1.0f, 0.0f);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3(1, 0, 1);
+            GL.Color3(1.0f, 0.0f, 1.0f);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0, 1, 0);
+            GL.Color3(0.0f, 1.0f, 0.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
-            GL.Color3(0, 0, 1);
+            GL.Color3(0.0f, 0.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0, 1, 1);
+            GL.Color3(0.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
@@ -208,8 +209,9 @@ namespace Examples.WinForms
 
             GL.End();
         }
-        #endregion
 
+        #endregion
+        
         #region IExample Members
 
         public void Launch()
