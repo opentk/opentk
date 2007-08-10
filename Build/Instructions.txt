@@ -16,6 +16,7 @@ debug - build the debug version (e.g. 'build net debug').
 clean - delete intermediate object files and projects (reclaim some space, the binaries are not touched).
 distclean - delete intermediate and final object files (reclaim all space used during compilation).
 
-vs2005 - create project files for Visual Studio 2005.
-monodev - create project files for MonoDevelop.
-sharpdev - as above, for SharpDevelop.
+vs2005 (vs) - create project files for Visual Studio 2005.
+monodev (md) - create project files for MonoDevelop.
+sharpdev (sd) - as above, for SharpDevelop.
+sharpdev2 (sd2) - as above, for SharpDevelop2.
