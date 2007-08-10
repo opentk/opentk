@@ -13,9 +13,10 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 using OpenTK.OpenGL;
-using Enums = OpenTK.OpenGL.GL.Enums;
+//using Enums = OpenTK.OpenGL.GL.Enums;
 using OpenTK.Platform;
 using System.Threading;
 
@@ -32,7 +33,7 @@ namespace Examples.WinForms
         public Cube()
         {
             InitializeComponent();
-
+           
             Application.Idle += Application_Idle;
 
             this.ShowDialog();
@@ -67,7 +68,7 @@ namespace Examples.WinForms
 
         private void Render()
         { 
-            GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
             Glu.LookAt(
                 0.0, 5.0, 5.0,
@@ -77,7 +78,7 @@ namespace Examples.WinForms
             GL.Rotatef(angle, 0.0f, 1.0f, 0.0f);
             angle += 0.5f;
 
-            GL.Clear(Enums.ClearBufferMask.COLOR_BUFFER_BIT | Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 
             DrawCube();
 
@@ -94,12 +95,12 @@ namespace Examples.WinForms
             base.OnLoad(e);
 
             Text =
-                GL.GetString(Enums.StringName.VENDOR) + " " +
-                GL.GetString(Enums.StringName.RENDERER) + " " +
-                GL.GetString(Enums.StringName.VERSION);
+                GL.GetString(GL.Enums.StringName.VENDOR) + " " +
+                GL.GetString(GL.Enums.StringName.RENDERER) + " " +
+                GL.GetString(GL.Enums.StringName.VERSION);
 
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
-            GL.Enable(Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
 
             glControl.KeyDown += new KeyEventHandler(Cube_KeyDown);
 
@@ -126,7 +127,7 @@ namespace Examples.WinForms
             //else
             //    ratio = ClientSize.Height / (double)ClientSize.Width;
 
-            GL.MatrixMode(Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -167,7 +168,7 @@ namespace Examples.WinForms
         #region DrawCube
         public void DrawCube()
         {
-            GL.Begin(Enums.BeginMode.QUADS);
+            GL.Begin(GL.Enums.BeginMode.QUADS);
 
             GL.Color3(1, 0, 0);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);

@@ -216,7 +216,7 @@ namespace OpenTK.Platform.Windows
 
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -225,6 +225,7 @@ namespace OpenTK.Platform.Windows
             if (!disposed)
             {
                 // Clean unmanaged resources here:
+                Wgl.MakeCurrent(deviceContext, renderContext);
                 Wgl.DeleteContext(renderContext);
                 API.ReleaseDC(windowHandle, deviceContext);
                 API.FreeLibrary(opengl32Handle);

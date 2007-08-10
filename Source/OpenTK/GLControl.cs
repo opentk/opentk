@@ -64,7 +64,7 @@ namespace OpenTK
                      Environment.OSVersion.Platform == (PlatformID)128)
                     // some older versions of Mono reported 128.
             {
-	glControl =  new OpenTK.Platform.X11.X11GLControl(this, new DisplayMode(Width, Height));
+				glControl =  new OpenTK.Platform.X11.X11GLControl(this, new DisplayMode(Width, Height));
             }
             else
             {
@@ -240,43 +240,6 @@ namespace OpenTK
 
         #endregion
 
-        #endregion
-
-        #region --- IResizable Members ---
-
-        //public new event ResizeEvent Resize;
-
-        #endregion
-
-        #region --- IDisposable Members ---
-
-        protected override void DestroyHandle()
-        {
-            base.DestroyHandle();
-
-            glControl.Dispose();
-        }
-
-        /*
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool manuallyCalled)
-        {
-            if (manuallyCalled)
-            {
-                glWindow.Dispose();
-            }
-        }
-
-        ~GLControl()
-        {
-            this.Dispose(false);
-        }
-        */
         #endregion
     }
 }

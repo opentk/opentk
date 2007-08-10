@@ -17,6 +17,7 @@ namespace OpenTK.Platform
         void OnRenderFrame(EventArgs e);
         void OnUpdateFrame(EventArgs e);
         void OnLoad(EventArgs e);
+        void Exit();
 
         event UpdateFrameEvent UpdateFrame;
         event RenderFrameEvent RenderFrame;
