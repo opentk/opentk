@@ -1,4 +1,10 @@
-﻿using System;
+﻿#region --- License ---
+/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -12,6 +18,8 @@ namespace Bind.Structures
 
         private static bool typesLoaded;
 
+        #region internal static void Initialize(string glTypes, string csTypes)
+        
         internal static void Initialize(string glTypes, string csTypes)
         {
             if (!typesLoaded)
@@ -33,7 +41,11 @@ namespace Bind.Structures
                 typesLoaded = true;
             }
         }
+        
+        #endregion
 
+        #region --- Constructors ---
+        
         public Type()
         {
         }
@@ -47,6 +59,8 @@ namespace Bind.Structures
             this.Pointer = t.Pointer;
             this.Reference = t.Reference;
         }
+        
+        #endregion
 
         #region public string Type
 
@@ -217,10 +231,16 @@ namespace Bind.Structures
 
         #endregion
 
+        #region public override string ToString()
+        
         public override string ToString()
         {
             return CurrentType;
         }
+        
+        #endregion
+        
+        #region internal static Type Translate(Type type)
 
         internal static Type Translate(Type type)
         {
@@ -234,5 +254,7 @@ namespace Bind.Structures
 
             return t;
         }
+        
+        #endregion
     }
 }

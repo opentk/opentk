@@ -4,7 +4,7 @@ How to build OpenTK:
 2) Navigate to the Build folder and execute Build.exe:
 	2a) Under Linux/Mac OS X, type 'mono Build.exe mono' or 'mono Build.exe mono debug' for the release/debug versions of the library.
 	2b) Under Windows type 'build net' (or 'build net debug').
-3) The binaries (library, examples) are placed in the Binaries/Release folder.
+3) The binaries (library, examples) are placed in the Binaries/Release or Binaries/Debug folder.
 
 
 There are other parameters you can pass to Build.exe. A brief list:
@@ -15,7 +15,6 @@ debug - build the debug version (e.g. 'build net debug').
 
 clean - delete intermediate object files and projects (reclaim some space, the binaries are not touched).
 distclean - delete intermediate and final object files (reclaim all space used during compilation).
-svnclean - delete '.svn' folders. Useful if you checked out from svn, useless if you downloaded a file release.
 
 vs2005 - create project files for Visual Studio 2005.
 monodev - create project files for MonoDevelop.
