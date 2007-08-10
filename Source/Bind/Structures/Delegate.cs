@@ -22,6 +22,9 @@ namespace Bind.Structures
         internal static DelegateCollection Delegates;
 
         private static bool delegatesLoaded;
+        
+        #region internal static void Initialize(string glSpec, string glSpecExt)
+        
         internal static void Initialize(string glSpec, string glSpecExt)
         {
             if (!delegatesLoaded)
@@ -45,6 +48,8 @@ namespace Bind.Structures
             }
         }
 
+        #endregion
+        
         #region --- Constructors ---
 
         public Delegate()
