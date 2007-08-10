@@ -45,7 +45,6 @@
             this.glControl1.Name = "glControl1";
             this.glControl1.Size = new System.Drawing.Size(629, 565);
             this.glControl1.TabIndex = 0;
-            this.glControl1.Resize += new OpenTK.Platform.ResizeEvent(this.glControl1_Resize);
             this.glControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl1_Paint);
             this.glControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyDown);
             // 

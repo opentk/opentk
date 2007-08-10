@@ -1,6 +1,7 @@
-#region License
-//Copyright (c) 2006 Stefanos Apostolopoulos
-//See license.txt for license info
+#region --- License ---
+/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
 #endregion
 
 using System;
@@ -123,30 +124,6 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public string GetFullType()
-
-        public string GetFullType(Dictionary<string, string> CSTypes, bool compliant)
-        {
-            if (Pointer && Settings.Compatibility == Settings.Legacy.Tao)
-                return "IntPtr";
-
-            if (!compliant)
-            {
-                return
-                    CurrentType +
-                    (Pointer ? "*" : "") +
-                    (Array > 0 ? "[]" : "");
-            }
-
-            return 
-                GetCLSCompliantType() +
-                (Pointer ? "*" : "") +
-                (Array > 0 ? "[]" : "");
-
-        }
-
-        #endregion
-
         #region override public string ToString()
 
         override public string ToString()
@@ -216,6 +193,8 @@ namespace Bind.Structures
 
         #endregion
 
+        #region internal static Parameter Translate(Parameter par, string Category)
+        
         internal static Parameter Translate(Parameter par, string Category)
         {
             Enum @enum;
@@ -296,6 +275,8 @@ namespace Bind.Structures
 
             return p;
         }
+        
+        #endregion
     }
 
     #endregion
