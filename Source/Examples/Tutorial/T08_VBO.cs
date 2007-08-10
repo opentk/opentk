@@ -19,7 +19,7 @@ using System.Threading;
 
 namespace Examples.Tutorial
 {
-    public class T08_VBO : OpenTK.GameWindow, IExample
+    public class T08_VBO : OpenTK.GameWindow /*, IExample */
     {
         #region --- Private Fields ---
 

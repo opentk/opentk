@@ -23,7 +23,6 @@ namespace OpenTK.Platform.X11
 
         private DisplayMode mode;// = new DisplayMode();
         internal WindowInfo windowInfo;
-        private VisualInfo visualInfo;
 
         //private IntPtr desktopResolution = IntPtr.Zero;
 
@@ -31,8 +30,7 @@ namespace OpenTK.Platform.X11
         //private int stencilBits;
 
         // These have to be used by the X11GLControl.
-        internal IntPtr visual;
-        internal IntPtr colormap;
+        private IntPtr visual;
 
         private bool disposed;
 
@@ -237,12 +235,6 @@ namespace OpenTK.Platform.X11
         internal VisualInfo XVisualInfo
         {
             get { return windowInfo.VisualInfo; }
-        }
-
-        [Obsolete]
-        internal IntPtr XColormap
-        {
-            get { return colormap; }
         }
 
         [Obsolete]

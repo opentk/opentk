@@ -23,7 +23,6 @@ namespace Examples.WinForms
 {
     public partial class W01_First_Window : Form, IExample
     {
-        OpenTK.InputDriver input;
         public W01_First_Window()
         {
             InitializeComponent();
@@ -34,8 +33,6 @@ namespace Examples.WinForms
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-
-            //input = new OpenTK.InputDriver(OpenTK.Platform.Utilities.GetWindowInfo(this));
         }
 
         private void redButton_Click(object sender, EventArgs e)

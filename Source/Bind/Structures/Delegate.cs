@@ -108,8 +108,6 @@ namespace Bind.Structures
 
         #region public bool NeedsWrapper
 
-        bool _needs_wrapper;
-
         /// <summary>
         /// Indicates whether this function needs to be wrapped with a Marshaling function.
         /// This flag is set if a function contains an Array parameter, or returns

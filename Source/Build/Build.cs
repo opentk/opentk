@@ -43,6 +43,7 @@ namespace OpenTK.Build
             Mono,
             VS2005,
             SharpDevelop,
+            SharpDevelop2,
             MonoDevelop,
             Clean,
             DistClean,
@@ -108,6 +109,12 @@ namespace OpenTK.Build
                             target = BuildTarget.MonoDevelop;
                             break;
 
+                        case "sharpdev2":
+                        case "sharpdevelop2":
+                        case "sd2":
+                            target = BuildTarget.SharpDevelop2;
+                            break;
+                           
                         case "sharpdev":
                         case "sharpdevelop":
                         case "sd":
@@ -177,7 +184,12 @@ namespace OpenTK.Build
 
                     case BuildTarget.SharpDevelop:
                         Console.WriteLine("Creating SharpDevelop project files");
-                        ExecuteProcess(PrebuildPath, "/target monodev /file " + PrebuildXml);
+                        ExecuteProcess(PrebuildPath, "/target sharpdev /file " + PrebuildXml);
+                        break;
+                        
+                    case BuildTarget.SharpDevelop2:
+                        Console.WriteLine("Creating SharpDevelop project files");
+                        ExecuteProcess(PrebuildPath, "/target sharpdev2 /file " + PrebuildXml);
                         break;
 
                     case BuildTarget.VS2005:

@@ -1,6 +1,7 @@
-#region License
-//Copyright (c) 2006 Stefanos Apostolopoulos
-//See license.txt for license info
+#region --- License ---
+/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
 #endregion
 
 using System;

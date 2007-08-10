@@ -1,4 +1,10 @@
-﻿using System;
+﻿#region --- License ---
+/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -73,17 +79,6 @@ namespace Examples.Tests
 
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
             Context.SwapBuffers();
-        }
-
-        public override void Run()
-        {
-            while (!Quit)
-            {
-                ProcessEvents();
-                OnUpdateFrame(EventArgs.Empty);
-                OnRenderFrame(EventArgs.Empty);
-                Thread.Sleep(10);
-            }
         }
     }
 }

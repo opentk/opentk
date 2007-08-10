@@ -64,7 +64,7 @@ namespace OpenTK
                      Environment.OSVersion.Platform == (PlatformID)128)
                     // some older versions of Mono reported 128.
             {
-                glControl =  new OpenTK.Platform.X11.X11GLControl(this, Width, Height, false);
+	glControl =  new OpenTK.Platform.X11.X11GLControl(this, new DisplayMode(Width, Height));
             }
             else
             {
@@ -146,8 +146,6 @@ namespace OpenTK
         #endregion
 
         #region --- IGLControl Members ---
-
-        public event CreateEvent Create;
 
         #region public bool IsIdle
 
@@ -246,7 +244,7 @@ namespace OpenTK
 
         #region --- IResizable Members ---
 
-        public new event ResizeEvent Resize;
+        //public new event ResizeEvent Resize;
 
         #endregion
 
