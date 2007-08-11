@@ -41,12 +41,9 @@ OpenTK.Platform:
 	+ Add native support for the MacOS X platform (now goes through X).
 * GLControl class:
 	+ Improve the interface. Add more constructors.
-* GameWindow class:
-	+ Add input support.
 
 
 OpenTK.Input todos:
-* Make Key class non-static. Static means all GameWindows share the same input!
 * Complete the Key class.
 * Implement mouse input.
 + Implement other input devices.
@@ -57,7 +54,6 @@ OpenTK.Timing todos:
 
 
 Examples:
-+ Add comments were needed.
 + Add more Tutorials and WinForms examples.
 
 
