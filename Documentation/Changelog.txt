@@ -1,19 +1,46 @@
+'+' complete, '*' WIP, '-' missing
+
+
 OpenTK 0.3.8 -> 0.3.9
 
 + Bind
-	+ Rewrote almost everything. Does not rely on CodeDOM anymore (wasn't flexible enough).
-		+ Initial work for gl3, wgl, glx, glu compatibility.
+	+ Does not rely on CodeDOM anymore (wasn't flexible enough).
+		+ Initial work on gl3, wgl, glx, glu compatibility.
 	+ Implemented almost all pending features:
 		+ Extensions in different classes (e.g. GL.ARB.ActiveTexture)
 		+ Fixed statement instead of GCHandle for improved performance
 		+ Real pointers instead of IntPtrs
 		+ CLS-Compliant and non CLS-Compliant overloads (e.g. functions with unsigned parameters).
 		+ Overloads over the 'basic' function (e.g. GL.Vertex3fv -> GL.Vertex3)
-		+ Enums now in the GL class.
+		+ Enums now inside the GL class.
 	+ New commandline options
 		+ 'legacy':	defines compatibility with Tao ('-legacy:tao')
 		+ 'mode':	defines translation mode (e.g. gl2, gl3, wgl etc)
 	+ 4 files are now generated: GL.cs, GLCore.cs, GLDelegates.cs, GLEnums.cs
+
++ Build
+	+ Corrected sharpdev target (was generating monodev projects before)
+	+ Added sharpdev2 target.
+
++ OpenTK
+	+ GameWindow
+		+ Added support for keyboard input. Windows (raw input) and linux drivers.
+		* Improved GameWindow events (Load, Create, Destroy). Still incomplete.
+		* Fixed several crash bugs.
+		- Crashes observed when frequently creating/destroying GameWindows.
+	+ Input
+		* Interface for input devices: keyboard, mouse.
+		* Driver implementation for windows (raw input) and linux.
+		+ Works with GameWindow.
+		- Does not work with GLControl, yet.
+	+ Platform
+		+ X11 enhanced with Mono's X11 bindings.
+		* Work on platform interop utilities.
+		+ Minor additions to Windows.API
+
++ Examples
+	+ New GL interface.
+	* Temporarily disabled incomplete examples.
 
 
 OpenTK 0.3.7 -> 0.3.8
