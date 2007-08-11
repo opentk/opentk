@@ -1,6 +1,6 @@
 ================================================================================
 
-OpenTK 0.3.8 WIP alpha Release notes
+OpenTK 0.3.9 WIP alpha Release notes
 
 IMPORTANT: This release is intended for testing and experimentation only. Use at your own risk!
 
@@ -9,13 +9,12 @@ IMPORTANT: This release is intended for testing and experimentation only. Use at
 Highlights:
 
  * MAJOR (breaking) changes:
-	* GLContext, GLControl. Unfortunately, projects using 0.3.7 (or previous version of OpenTK) will not compile without changes.
-	* GameWindow class, a simple, no-nonsense windowing toolkit for games (incomplete).
-	* Removed the OpenTK.Framework. Use the GameWindow instead.
+	* Improved interface for GL class (see changelog for more information).
+	* Keyboard support for GameWindow (windows/linux).
  * Minor changes:
-	* GLControls can be edited through in the Visual Studio designer.
-	* Numerous bugfixes and additions in OpenTK.Platform.Windows and OpenTK.Platform.X11
-	* Resource cleanup fixed (disposable pattern used on all classes with unmanaged resources).
+	* Updates to GameWindow events.
+	* X11 bindings enhanced with mono's bindings.
+	* Fixed several crash bugs.
  
 --------------------------------------------------------------------------------
 
