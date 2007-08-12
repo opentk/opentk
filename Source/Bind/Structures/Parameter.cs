@@ -200,7 +200,7 @@ namespace Bind.Structures
             Enum @enum;
             string s;
             Parameter p = new Parameter(par);
-
+            
             // Translate enum types
             if (Enum.GLEnums.TryGetValue(p.CurrentType, out @enum) && @enum.Name != "GLenum")
             {
