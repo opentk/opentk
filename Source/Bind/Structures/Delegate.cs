@@ -847,8 +847,9 @@ namespace Bind.Structures
 
         protected virtual void TranslateParameters()
         {
-            if (this.Name.Contains("MultiTexCoord1"))
+            if (this.Name.Contains("SetLayerPaletteEntries"))
             {
+            //	Console.WriteLine();
             }
             for (int i = 0; i < Parameters.Count; i++)
             {
@@ -866,6 +867,24 @@ namespace Bind.Structures
                     // Special case: these functions take a string[]
                     //IsPointer = true;
                     Parameters[i].Array = 1;
+                }
+                
+                if (Parameters[i].CurrentType == "PIXELFORMATDESCRIPTOR")
+                {
+                	Parameters[i].CurrentType = Settings.WindowsPlatform + ".PixelFormatDescriptor";
+                }
+                else if (Parameters[i].CurrentType == "LAYERPLANEDESCRIPTOR")
+                {
+                	Parameters[i].CurrentType = Settings.WindowsPlatform + ".LayerPlaneDescriptor";
+                }
+                else if (Parameters[i].CurrentType == "LPCSTR")
+                {
+                	// TODO: Why doesn't the cs typemap work for LPCSTR and COLORREF?
+                	Parameters[i].CurrentType = "String";
+                }
+                else if (Parameters[i].CurrentType == "COLORREF")
+                {
+                	Parameters[i].CurrentType = "Int32";
                 }
             }
         }
