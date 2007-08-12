@@ -196,7 +196,8 @@ namespace Bind
             if (name.EndsWith("SGIS")) { return "SGIS"; }
             if (name.EndsWith("SGIX")) { return "SGIX"; }
             if (name.EndsWith("MESA")) { return "MESA"; }
-            if (name.EndsWith("G3DFX")) { return "G3DFX"; }
+            if (name.EndsWith("3DFX")) { return "3DFX"; }
+            if (name.EndsWith("INTEL")) { return "INTEL"; }
             if (name.EndsWith("IBM")) { return "IBM"; }
             if (name.EndsWith("GREMEDY")) { return "GREMEDY"; }
             if (name.EndsWith("HP")) { return "HP"; }
@@ -238,9 +239,13 @@ namespace Bind
 
         #endregion
 
+        #region internal static string StripGL2Extension(string p)
+        
         internal static string StripGL2Extension(string p)
         {
             return p.Substring(0, p.Length - GetGL2Extension(p).Length);
         }
+        
+        #endregion
     }
 }

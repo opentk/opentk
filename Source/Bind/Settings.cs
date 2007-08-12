@@ -12,7 +12,7 @@ namespace Bind
 {
     static class Settings
     {
-        public static string InputPath = "..\\..\\..\\Source\\Bind\\Specifications\\gl2";
+        public static string InputPath = "..\\..\\..\\Source\\Bind\\Specifications";
         public static string OutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
         public static string OutputNamespace = "OpenTK.OpenGL";
         public static string GLClass = "GL";
@@ -34,11 +34,13 @@ namespace Bind
         /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
         /// </summary>
         public static string CompleteEnumName = "All";
-
+        
         public enum Legacy
         {
             None,
             Tao,
         }
+        
+        public static string WindowsPlatform = "OpenTK.Platform.Windows.API";
     }
 }

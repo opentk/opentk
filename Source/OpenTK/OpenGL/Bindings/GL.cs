@@ -14940,115 +14940,6 @@ namespace OpenTK.OpenGL
             unsafe { Delegates.glUniformMatrix4x3fv((Int32)location, (Int32)count, (GL.Enums.Boolean)transpose, (Single*)value); }
         }
         
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexPointervINTEL(Int32 size, GL.Enums.VertexPointerType type, void* pointer)
-        {
-            unsafe { Delegates.glVertexPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer); }
-        }
-        
-        public static 
-        void VertexPointervINTEL(Int32 size, GL.Enums.VertexPointerType type, [In, Out] object pointer)
-        {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            unsafe
-            {
-                try
-                {
-                    Delegates.glVertexPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
-                }
-            }
-        }
-        
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void NormalPointervINTEL(GL.Enums.NormalPointerType type, void* pointer)
-        {
-            unsafe { Delegates.glNormalPointervINTEL((GL.Enums.NormalPointerType)type, (void*)pointer); }
-        }
-        
-        public static 
-        void NormalPointervINTEL(GL.Enums.NormalPointerType type, [In, Out] object pointer)
-        {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            unsafe
-            {
-                try
-                {
-                    Delegates.glNormalPointervINTEL((GL.Enums.NormalPointerType)type, (void*)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
-                }
-            }
-        }
-        
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void ColorPointervINTEL(Int32 size, GL.Enums.VertexPointerType type, void* pointer)
-        {
-            unsafe { Delegates.glColorPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer); }
-        }
-        
-        public static 
-        void ColorPointervINTEL(Int32 size, GL.Enums.VertexPointerType type, [In, Out] object pointer)
-        {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            unsafe
-            {
-                try
-                {
-                    Delegates.glColorPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
-                }
-            }
-        }
-        
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoordPointervINTEL(Int32 size, GL.Enums.VertexPointerType type, void* pointer)
-        {
-            unsafe { Delegates.glTexCoordPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer); }
-        }
-        
-        public static 
-        void TexCoordPointervINTEL(Int32 size, GL.Enums.VertexPointerType type, [In, Out] object pointer)
-        {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            unsafe
-            {
-                try
-                {
-                    Delegates.glTexCoordPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
-                }
-            }
-        }
-        
-        [System.CLSCompliant(false)]
-        public static 
-        void TbufferMask3DFX(UInt32 mask)
-        {
-            Delegates.glTbufferMask3DFX((UInt32)mask);
-        }
-        
-        public static 
-        void TbufferMask3DFX(Int32 mask)
-        {
-            Delegates.glTbufferMask3DFX((UInt32)mask);
-        }
-        
         public static class ARB
         {
             public static 
@@ -31745,6 +31636,106 @@ namespace OpenTK.OpenGL
             void Hint(GL.Enums.PGI_misc_hints target, Int32 mode)
             {
                 Delegates.glHintPGI((GL.Enums.PGI_misc_hints)target, (Int32)mode);
+            }
+            
+        }
+
+        public static class INTEL
+        {
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexPointerv(Int32 size, GL.Enums.VertexPointerType type, void* pointer)
+            {
+                unsafe { Delegates.glVertexPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer); }
+            }
+            
+            public static 
+            void VertexPointerv(Int32 size, GL.Enums.VertexPointerType type, [In, Out] object pointer)
+            {
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                unsafe
+                {
+                    try
+                    {
+                        Delegates.glVertexPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void NormalPointerv(GL.Enums.NormalPointerType type, void* pointer)
+            {
+                unsafe { Delegates.glNormalPointervINTEL((GL.Enums.NormalPointerType)type, (void*)pointer); }
+            }
+            
+            public static 
+            void NormalPointerv(GL.Enums.NormalPointerType type, [In, Out] object pointer)
+            {
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                unsafe
+                {
+                    try
+                    {
+                        Delegates.glNormalPointervINTEL((GL.Enums.NormalPointerType)type, (void*)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ColorPointerv(Int32 size, GL.Enums.VertexPointerType type, void* pointer)
+            {
+                unsafe { Delegates.glColorPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer); }
+            }
+            
+            public static 
+            void ColorPointerv(Int32 size, GL.Enums.VertexPointerType type, [In, Out] object pointer)
+            {
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                unsafe
+                {
+                    try
+                    {
+                        Delegates.glColorPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoordPointerv(Int32 size, GL.Enums.VertexPointerType type, void* pointer)
+            {
+                unsafe { Delegates.glTexCoordPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer); }
+            }
+            
+            public static 
+            void TexCoordPointerv(Int32 size, GL.Enums.VertexPointerType type, [In, Out] object pointer)
+            {
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                unsafe
+                {
+                    try
+                    {
+                        Delegates.glTexCoordPointervINTEL((Int32)size, (GL.Enums.VertexPointerType)type, (void*)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
+                }
             }
             
         }
@@ -59513,6 +59504,23 @@ namespace OpenTK.OpenGL
                         pointer_ptr.Free();
                     }
                 }
+            }
+            
+        }
+
+        public static class GL_3DFX
+        {
+            [System.CLSCompliant(false)]
+            public static 
+            void TbufferMask(UInt32 mask)
+            {
+                Delegates.glTbufferMask3DFX((UInt32)mask);
+            }
+            
+            public static 
+            void TbufferMask(Int32 mask)
+            {
+                Delegates.glTbufferMask3DFX((UInt32)mask);
             }
             
         }

@@ -3,10 +3,10 @@ GLsizei,            Int32
 GLsizeiptr,         IntPtr
 GLintptr,           IntPtr
 # GLenum,             Int32
-GLboolean,          Boolean  #Int32
+GLboolean,          Boolean	#Int32
 GLbitfield,         UInt32
-# GLvoid*,          IntPtr
-# GLvoid,				Void	 #Object
+# GLvoid*,            IntPtr
+# GLvoid,             Void	#Object
 GLchar,             Char
 GLbyte,             SByte
 GLubyte,            Byte
@@ -33,3 +33,27 @@ GLint64EXT,         Int64
 GLuint64EXT,        UInt64
 GLint64,            Int64
 GLuint64,           UInt64
+
+# Wgl types.
+PROC,           IntPtr
+LPCSTR,         String
+COLORREF,       Int32
+BOOL,           Boolean
+DWORD,          Int32
+FLOAT,          Single
+HANDLE,         IntPtr
+HDC,            IntPtr
+HGLRC,          IntPtr
+HPBUFFERARB,    IntPtr		#HPBUFFERARB
+HPBUFFEREXT,    IntPtr		#HPBUFFEREXT
+INT32,          Int32
+INT64,          Int64
+LPVOID,         void*
+#String,         const char *
+UINT,           UInt32
+USHORT,         UInt16
+VOID,           Void
+VoidPointer,    void*
+float,          float
+int,            int
+#void,           *

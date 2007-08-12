@@ -38,10 +38,12 @@ namespace OpenTK.Platform.Windows
     using USHORT = System.UInt16;
     using LONG = System.Int32;
     using ULONG = System.UInt32;
+    using WORD = System.Int16;
     using DWORD = System.Int32;
     using BOOL = System.Boolean;
     using INT = System.Int32;
     using UINT = System.UInt32;
+    using COLORREF = System.Int32;
     using LONG_PTR = System.IntPtr;
     
     using WNDPROC = System.IntPtr;
@@ -1280,7 +1282,7 @@ namespace OpenTK.Platform.Windows
         [StructLayout(LayoutKind.Sequential)]
         public class PixelFormatDescriptor
         {
-            short Size = 40;   // No need for the user to set the size, since it is predefined.
+        	public readonly short Size = (short)Marshal.SizeOf(typeof(PixelFormatDescriptor));   // No need for the user to set the size, since it is predefined.
             public short Version = 1;
             public PixelFormatDescriptorFlags Flags =
                 //PixelFormatDescriptorFlags.DOUBLEBUFFER |
@@ -1310,6 +1312,42 @@ namespace OpenTK.Platform.Windows
             public int VisibleMask = 0;
             public int DamageMask = 0;
         }
+        #endregion
+        
+        #region public class LayerPlaneDescriptor
+        
+        /// <summary>
+        /// Describes the pixel format of a drawing surface.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public class LayerPlaneDescriptor
+        {
+			public readonly WORD  Size = (WORD)Marshal.SizeOf(typeof(PixelFormatDescriptor)); 
+			public WORD  Version; 
+			public DWORD Flags; 
+			public BYTE  PixelType; 
+			public BYTE  ColorBits; 
+			public BYTE  RedBits; 
+			public BYTE  RedShift; 
+			public BYTE  GreenBits; 
+			public BYTE  GreenShift; 
+			public BYTE  BlueBits; 
+			public BYTE  BlueShift; 
+			public BYTE  AlphaBits; 
+			public BYTE  AlphaShift; 
+			public BYTE  AccumBits; 
+			public BYTE  AccumRedBits; 
+			public BYTE  AccumGreenBits; 
+			public BYTE  AccumBlueBits; 
+			public BYTE  AccumAlphaBits; 
+			public BYTE  DepthBits; 
+			public BYTE  StencilBits; 
+			public BYTE  AuxBuffers; 
+			public BYTE  LayerPlane; 
+			BYTE  Reserved; 
+			public COLORREF crTransparent; 
+		}
+        
         #endregion
 
         #region DeviceMode

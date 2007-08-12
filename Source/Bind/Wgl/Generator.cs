@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace Bind.Wgl
 {
@@ -15,17 +16,41 @@ namespace Bind.Wgl
         public Generator(string path)
             : base(path)
         {
-            glTypemap = "wgl.tm";
-            csTypemap = "..\\gl2\\csharp.tm";
-            enumSpec = "wglenum.spec";
-            enumSpecExt = "wglenumext.spec";
-            glSpec = "wgl.spec";
-            glSpecExt = "wglext.spec";
+            glTypemap = "Wgl\\wgl.tm";
+            csTypemap = "csharp.tm";
+            enumSpec = "Wgl\\wglenum.spec";
+            enumSpecExt = "Wgl\\wglenumext.spec";
+            glSpec = "Wgl\\wgl.spec";
+            glSpecExt = "Wgl\\wglext.spec";
+            
+            importsFile = "WglCore.cs";
+            delegatesFile = "WglDelegates.cs";
+            enumsFile = "WglEnums.cs";
+            wrappersFile = "Wgl.cs";
+            
+            className = "Wgl";
         }
 
         public override void Process()
         {
-            base.Process();
+            Bind.Structures.Type.Initialize(glTypemap, csTypemap);
+            Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt);
+            Bind.Structures.Function.Initialize();
+            Bind.Structures.Delegate.Initialize(glSpec, glSpecExt);
+            
+            // Process enums and delegates - create wrappers.
+            Trace.WriteLine("Processing specs, please wait...");
+            this.Translate();
+
+            this.WriteBindings(
+            	Bind.Structures.Delegate.Delegates,
+            	Bind.Structures.Function.Wrappers,
+            	Bind.Structures.Enum.GLEnums);
         }
+        
+		public override Bind.Structures.DelegateCollection ReadDelegates(System.IO.StreamReader specFile)
+		{
+			return base.ReadDelegates(specFile);
+		}
     }
 }
