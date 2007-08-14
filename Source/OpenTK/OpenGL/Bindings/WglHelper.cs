@@ -8,6 +8,7 @@
 #endregion
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.OpenGL
 {
@@ -41,7 +42,7 @@ namespace OpenTK.OpenGL
 		
 		public static Delegate Load(string function, Type signature)
 		{
-			
+            return null;
 		}
 	}
 }
