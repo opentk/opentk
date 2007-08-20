@@ -19,7 +19,6 @@ namespace OpenTK.Platform.X11
         private Type xplatui;
         X11GLContext glContext;
 
-        private bool quit;
         private bool disposed;
         private bool fullscreen;
 
@@ -40,11 +39,7 @@ namespace OpenTK.Platform.X11
                 throw new ArgumentException("UserControl c may not be null.");
             }
 
-            c.ParentChanged += new EventHandler(c_ParentChanged);
-            if (c.ParentForm != null)
-            {
-                throw new ApplicationException("Internal OpenTK error, please report at http://opentk.sourceforge.net");
-            }
+            //c.ParentChanged += new EventHandler(c_ParentChanged);
 
             info.Handle = c.Handle;
             Debug.Print("Binding to control: {0}", String.IsNullOrEmpty(c.Name) ? c.Text : c.Name);
@@ -93,6 +88,7 @@ namespace OpenTK.Platform.X11
                     );
 
                 glContext.CreateContext(null, true);
+                this.c_ParentChanged(c, EventArgs.Empty);
             }
         }
 

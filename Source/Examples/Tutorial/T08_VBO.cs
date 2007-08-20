@@ -84,7 +84,7 @@ namespace Examples.Tutorial
         {
             base.OnLoad(e);
 
-            if (!GL.IsExtensionSupported("VERSION_1_4"))
+            if (!GL.SupportsExtension("VERSION_1_4"))
             {
                 System.Windows.Forms.MessageBox.Show("You need at least OpenGL 1.4 to run this example. Aborting.", "VBOs not supported",
                     System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);

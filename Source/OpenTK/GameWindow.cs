@@ -223,6 +223,7 @@ namespace OpenTK
         /// <param name="e"></param>
         public virtual void OnCreate(EventArgs e)
         {
+            Debug.WriteLine("Firing GameWindow.Create event");
             if (this.Create != null)
             {
                 this.Create(this, e);
@@ -260,6 +261,7 @@ namespace OpenTK
         /// <param name="e"></param>
         public virtual void OnDestroy(EventArgs e)
         {
+            Debug.WriteLine("Firing GameWindow.Destroy event");
             if (this.Destroy != null)
             {
                 this.Destroy(this, e);

@@ -87,7 +87,7 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.CreateNotify:
-                        // A child was exists - nothing to do
+                        // A child was was created - nothing to do
                         break;
 
                     case XEventName.DestroyNotify:
@@ -301,8 +301,6 @@ namespace OpenTK.Platform.X11
                 API.MapRaised(window.Display, window.Handle);
 
                 Debug.WriteLine("Mapped window.");
-
-                glContext.MakeCurrent();
 
                 Debug.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
                 Debug.Unindent();
