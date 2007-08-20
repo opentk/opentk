@@ -97,6 +97,8 @@ namespace OpenTK.Platform.X11
             */
             //glContext.MakeCurrent();
             //OpenTK.OpenGL.GL.LoadAll();
+
+            Debug.Unindent();
         }
 
         void c_HandleCreated(object sender, EventArgs e)
@@ -104,11 +106,12 @@ namespace OpenTK.Platform.X11
             UserControl c = (sender as UserControl);
             Debug.Print("GLControl handle created, creating X11GLContext.");
             Debug.Indent();
-            glContext.windowInfo.Handle = info.Handle = (sender as UserControl).Handle;
 
             try
             {
+                glContext.windowInfo.Handle = info.Handle = (sender as UserControl).Handle;
                 glContext.CreateContext(null, true);
+                glContext.MakeCurrent();
             }
             catch (ApplicationException expt)
             {

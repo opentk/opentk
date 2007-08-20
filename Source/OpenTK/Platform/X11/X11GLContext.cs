@@ -142,10 +142,10 @@ visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, attrib);
             Debug.WriteLine(direct ? "Context is direct." : "Context is indirect.");
 
             context = Glx.CreateContext(windowInfo.Display, visual, shareHandle, direct);
+            Debug.Unindent();
             if (context != IntPtr.Zero)
             {
                 Debug.WriteLine(String.Format("New opengl context created. (id: {0})", context));
-                Debug.Unindent();
             }
             else
             {
