@@ -20,19 +20,20 @@ namespace Bind
         public readonly static string DefaultOutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
         public readonly static string DefaultOutputNamespace = "OpenTK.OpenGL";
 
-        public static string GLClass = "GL";
+        public static string OutputClass = "GL";
+        public static string FunctionPrefix = "gl";
+        public static string ConstantPrefix = "GL_";
+
         private static string enumsClass = "Enums";
         public static string GLEnumsClass
         {
-            get { return GLClass + "." + enumsClass; }
+            get { return OutputClass + "." + enumsClass; }
             set { enumsClass = value; }
 
         }
         public static string DelegatesClass = "Delegates";
         public static string ImportsClass = "Imports";
-        public static string WglClass = "Wgl";
-        public static string GlxClass = "Glx";
-        public static string GluClass = "Glu";
+
         public static Legacy Compatibility = Legacy.None;
 
         public readonly static string DefaultWglOutputPath = "..\\..\\..\\Source\\OpenTK\\Platform\\Windows\\Bindings";
@@ -48,6 +49,6 @@ namespace Bind
             Tao,
         }
         
-        public static string WindowsPlatform = "OpenTK.Platform.Windows.API";
+        public static string WindowsGDI = "OpenTK.Platform.Windows.API";
     }
 }

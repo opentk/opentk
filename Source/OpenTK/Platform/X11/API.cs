@@ -144,21 +144,12 @@ namespace OpenTK.Platform.X11
         );
 
         [DllImport(_dll_name, EntryPoint = "XPeekEvent")]
-        extern internal static void PeekEvent(
-            Display display,
-            [In, Out]XEvent event_return
-        );
+        extern internal static void PeekEvent(Display display, [In, Out]XEvent event_return);
 
         [DllImport(_dll_name, EntryPoint = "XSendEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        extern internal static bool SendEvent(
-            Display display,
-            Window window,
-            bool propagate,
-            [MarshalAs(UnmanagedType.SysInt)]
-            EventMask event_mask,
-           ref XEvent event_send
-        );
+        extern internal static bool SendEvent(Display display, Window window, bool propagate,
+            [MarshalAs(UnmanagedType.SysInt)]EventMask event_mask, ref XEvent event_send);
 
         /// <summary>
         /// The XSelectInput() function requests that the X server report the events associated
@@ -197,8 +188,12 @@ namespace OpenTK.Platform.X11
         internal static extern bool CheckIfEvent(Display display, ref XEvent event_return,
             /*[MarshalAs(UnmanagedType.FunctionPtr)] */ CheckEventPredicate predicate, /*XPointer*/ IntPtr arg);
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        [DllImport(_dll_name, EntryPoint = "XIfEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool IfEvent(Display display, ref XEvent event_return,
+            /*[MarshalAs(UnmanagedType.FunctionPtr)] */ CheckEventPredicate predicate, /*XPointer*/ IntPtr arg);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate bool CheckEventPredicate(Display display, ref XEvent @event, IntPtr arg);
 
         [DllImport(_dll_name, EntryPoint = "XCheckMaskEvent")]

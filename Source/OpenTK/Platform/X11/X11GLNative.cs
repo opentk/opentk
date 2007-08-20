@@ -51,6 +51,7 @@ namespace OpenTK.Platform.X11
         public X11GLNative()
         {
             Debug.Print("Native window driver: {0}", this.ToString());
+            window = new WindowInfo();
         }
 
         #endregion
@@ -225,7 +226,7 @@ namespace OpenTK.Platform.X11
             }
             else
             {
-                Debug.Print("Creating native window with mode: {0}", mode.ToString());
+                Debug.Print("Creating GameWindow with mode: {0}", mode.ToString());
                 Debug.Indent();
 
                 window.Display = API.OpenDisplay(null); // null == default display
@@ -243,11 +244,12 @@ namespace OpenTK.Platform.X11
                     window.RootWindow
                 );
 
-                glContext = new X11GLContext(window, mode);
-                window.VisualInfo = glContext.CreateVisual();
+                glContext = new X11GLContext(mode);
+                glContext.PrepareContext(window);
+                window.VisualInfo = glContext.windowInfo.VisualInfo;
 
                 // Create a window on this display using the visual above
-                Debug.Write("Creating output window... ");
+                Debug.Write("Opening render window... ");
                 
                 XSetWindowAttributes attributes = new XSetWindowAttributes();
                 attributes.background_pixel = IntPtr.Zero;
@@ -267,7 +269,7 @@ namespace OpenTK.Platform.X11
 
                 if (window.Handle == IntPtr.Zero)
                 {
-                    throw new ApplicationException("Could not create window.");
+                    throw new ApplicationException("XCreateWindow call failed (returned 0).");
                 }
                 /*
                 // Set the window hints
@@ -295,6 +297,24 @@ namespace OpenTK.Platform.X11
 
                 Debug.Print("done! (id: {0})", window.Handle);
 
+                API.MapRaised(window.Display, window.Handle);
+                
+                /*Debug.WriteLine("Mapped window.");
+
+                XEvent ev = new XEvent();
+                API.IfEvent(window.Display, ref ev,
+                    delegate(IntPtr display, ref XEvent @event, IntPtr arg)
+                    {
+                        Debug.Print("Checking event: {0}", @event.type);
+                        if (@event.type == XEventName.MapNotify)
+                        {
+                            Debug.Print("Map event for window: {0}", @event.MapEvent.window);
+                        }
+                        return (@event.type == XEventName.MapNotify) && (@event.MapEvent.window == arg);
+                    },
+                    window.Handle);
+                */
+                glContext.Mode = mode;//new DisplayMode(mode);
                 glContext.windowInfo.Handle = window.Handle;
                 glContext.CreateContext(null, true);
 

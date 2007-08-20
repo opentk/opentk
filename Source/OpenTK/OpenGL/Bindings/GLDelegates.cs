@@ -10,7 +10,6 @@ namespace OpenTK.OpenGL
         {
             static Delegates()
             {
-                GL.LoadAll();
             }
 
             [System.Security.SuppressUnmanagedCodeSecurity()]

@@ -46,8 +46,6 @@ namespace Bind
             //Console.WriteLine(" - the OpenTK team ;-)");
             Console.WriteLine();
 
-            #region Handle Arguments
-
             try
             {
                 foreach (string a in arguments)
@@ -80,19 +78,17 @@ namespace Bind
                             case "ns":
                                 Settings.OutputNamespace = b[1];
                                 break;
-                            case "gl":
-                                Settings.GLClass = b[1];
-                                break;
-                            case "glu":
-                                Settings.GluClass = b[1];
-                                break;
+                            //case "gl":
+                            //    Settings.OutputClass = b[1];
+                            //    break;
+                            //case "glu":
+                            //    Settings.OutputClass = b[1];
+                            //    break;
                             case "legacy":
                                 Settings.Compatibility = b[1].ToLower() == "tao" ? Settings.Legacy.Tao : Settings.Legacy.None;
-                                Settings.OutputNamespace = "Tao.OpenGl";
-                                Settings.GLClass = "Gl";
                                 break;
                             case "class":
-                                Settings.GLClass = b[1];
+                                Settings.OutputClass = b[1];
                                 break;
                             default:
                                 throw new ArgumentException(
@@ -113,8 +109,6 @@ namespace Bind
                 return;
             }
 
-            #endregion
-
             try
             {
                 long ticks = System.DateTime.Now.Ticks;
@@ -122,7 +116,7 @@ namespace Bind
                 switch (mode)
                 {
                     case GeneratorMode.GL2:
-                        Generator = new Bind.GL2.Generator(Settings.InputPath);
+                        Generator = new Bind.GL2.Generator();
                         break;
 
                     case GeneratorMode.Wgl:
@@ -134,7 +128,7 @@ namespace Bind
                         {
                             Settings.OutputNamespace = "OpenTK.Platform.Windows";
                         }
-                        Generator = new Bind.Wgl.Generator(Settings.InputPath);
+                        Generator = new Bind.Wgl.Generator();
                         break;
 
                     default:

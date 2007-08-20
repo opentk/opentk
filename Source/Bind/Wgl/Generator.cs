@@ -15,8 +15,8 @@ namespace Bind.Wgl
     {
         #region --- Constructors ---
 
-        public Generator(string path)
-            : base(path)
+        public Generator()
+            : base()
         {
             glTypemap = "Wgl\\wgl.tm";
             csTypemap = "csharp.tm";
@@ -29,10 +29,20 @@ namespace Bind.Wgl
             delegatesFile = "WglDelegates.cs";
             enumsFile = "WglEnums.cs";
             wrappersFile = "Wgl.cs";
-            
-            className = "Wgl";
 
-            functionPrefix = "wgl";
+            Settings.OutputClass = "Wgl";
+            Settings.FunctionPrefix = "wgl";
+            Settings.ConstantPrefix = "WGL_";
+
+            if (Settings.Compatibility == Settings.Legacy.Tao)
+            {
+                Settings.OutputNamespace = "Tao.Platform.Windows";
+                Settings.WindowsGDI = "Tao.Platform.Windows.Gdi";
+            }
+            else
+            {
+                Settings.OutputNamespace = "OpenTK.Platform.Windows";
+            }
         }
 
         #endregion

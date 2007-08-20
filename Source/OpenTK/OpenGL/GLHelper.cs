@@ -77,7 +77,7 @@ namespace OpenTK.OpenGL
 
         #region --- Fields ---
 
-        internal const string Library = "OPENGL32.DLL";
+        internal const string Library = "opengl32.dll";
         
         private static System.Collections.Generic.Dictionary<string, bool> AvailableExtensions = new Dictionary<string, bool>();
         private static bool rebuildExtensionList;

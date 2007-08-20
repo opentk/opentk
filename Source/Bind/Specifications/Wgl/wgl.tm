@@ -22,3 +22,8 @@ VoidPointer,*,*,    void*,*,*
 float,*,*,          float,*,*
 int,*,*,            int,*,*
 #void,*,*,           *,*,*
+PIXELFORMATDESCRIPTOR    PIXELFORMATDESCRIPTOR
+LAYERPLANEDESCRIPTOR     LAYERPLANEDESCRIPTOR
+GLYPHMETRICSFLOAT        GLYPHMETRICSFLOAT
+COLORREF            Int32
+LPCSTR              String

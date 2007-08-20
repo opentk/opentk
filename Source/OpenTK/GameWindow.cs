@@ -204,6 +204,7 @@ namespace OpenTK
             if (!Exists)
             {
                 glWindow.CreateWindow(mode);
+                OpenTK.OpenGL.GL.LoadAll();
             }
             else
             {
