@@ -39,34 +39,35 @@ namespace Examples.WinForms
 
         private void redButton_Click(object sender, EventArgs e)
         {
-            //GL.ClearColor(0.7f, 0.0f, 0.0f, 0.0f);
-            //glControl1.Invalidate();
+            GL.ClearColor(0.7f, 0.0f, 0.0f, 0.0f);
+            glControl1.Invalidate();
         }
 
         private void greenButton_Click(object sender, EventArgs e)
         {
-            //GL.ClearColor(0.0f, 0.5f, 0.0f, 0.0f);
-            //glControl1.Invalidate();
+            GL.ClearColor(0.0f, 0.5f, 0.0f, 0.0f);
+            glControl1.Invalidate();
         }
 
         private void blueButton_Click(object sender, EventArgs e)
         {
-            //GL.ClearColor(0.0f, 0.0f, 0.7f, 0.0f);
-            //glControl1.Invalidate();
+            GL.ClearColor(0.0f, 0.0f, 0.7f, 0.0f);
+            glControl1.Invalidate();
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
-            //GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
-            //glControl1.SwapBuffers();
+            System.Diagnostics.Debug.Print("Paint");
+            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
+            glControl1.SwapBuffers();
         }
 
         private void glControl1_Resize(object sender, OpenTK.Platform.ResizeEventArgs e)
         {
-            //if (glControl1.ClientSize.Height == 0)
-            //    glControl1.ClientSize = new System.Drawing.Size(glControl1.ClientSize.Width, 1);
+            if (glControl1.ClientSize.Height == 0)
+                glControl1.ClientSize = new System.Drawing.Size(glControl1.ClientSize.Width, 1);
 
-            //GL.Viewport(0, 0, glControl1.ClientSize.Width, glControl1.ClientSize.Height);
+            GL.Viewport(0, 0, glControl1.ClientSize.Width, glControl1.ClientSize.Height);
         }
 
         private void glControl1_KeyDown(object sender, KeyEventArgs e)
