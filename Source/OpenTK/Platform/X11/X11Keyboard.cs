@@ -204,21 +204,20 @@ namespace OpenTK.Platform.X11
             switch (keysym.ToInt64())
             {
                 default:
-                    if (keymap.ContainsKey((XKey)keysym))
-                    {
-                        keyboards[0][keymap[(XKey)keysym]] = pressed;
-                    }
-                    else if (keymap.ContainsKey((XKey)keysym2))
-                    {
-                        keyboards[0][keymap[(XKey)keysym2]] = pressed;
-                    }
-                    else
-                    {
-                        Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
-                        return false;
-                    }
-                    return true;
-
+                if (keymap.ContainsKey((XKey)keysym))
+                {
+                    keyboards[0][keymap[(XKey)keysym]] = pressed;
+                }
+                else if (keymap.ContainsKey((XKey)keysym2))
+                {
+                    keyboards[0][keymap[(XKey)keysym2]] = pressed;
+                }
+                else
+                {
+                    Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
+                    return false;
+                }
+                return true;
             }
         }
 
