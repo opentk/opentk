@@ -98,8 +98,8 @@ visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, attrib);
             visualAttributes.Add((int)mode.Color.Green);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.BLUE_SIZE);
             visualAttributes.Add((int)mode.Color.Blue);
-            //visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
-            //visualAttributes.Add((int)mode.Color.Alpha);
+            visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
+            visualAttributes.Add((int)mode.Color.Alpha);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
             visualAttributes.Add((int)mode.DepthBits);
             visualAttributes.Add((int)1);
@@ -161,7 +161,6 @@ visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, attrib);
 
         public void SwapBuffers()
         {
-            Debug.Print("Swapping buffers");
             Glx.SwapBuffers(windowInfo.Display, windowInfo.Handle);
         }
 
