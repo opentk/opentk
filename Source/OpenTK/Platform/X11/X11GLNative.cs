@@ -76,7 +76,7 @@ namespace OpenTK.Platform.X11
 
                 Functions.XNextEvent(window.Display, ref e);
 
-                Debug.WriteLine(String.Format("Event: {0} ({1} pending)", e.type, pending));
+                Debug.Print("Event: {0} ({1} pending)", e.type, pending);
 
                 // Respond to the event e
                 switch (e.type)
@@ -117,6 +117,10 @@ namespace OpenTK.Platform.X11
                             this.OnResize(resizeEventArgs);
                         }
                         break;
+
+                    case XEventName.KeyPress:
+                    case XEventName.KeyRelease:
+                        return;
 
                     default:
                         Debug.WriteLine(String.Format("{0} event was not handled", e.type));
@@ -237,12 +241,8 @@ namespace OpenTK.Platform.X11
                 window.Screen = API.DefaultScreen(window.Display);
                 window.RootWindow = API.RootWindow(window.Display, window.Screen);
 
-                Debug.Print(
-                    "Display: {0}, Screen {1}, Root window: {2}",
-                    window.Display,
-                    window.Screen,
-                    window.RootWindow
-                );
+                Debug.Print("Display: {0}, Screen {1}, Root window: {2}",
+                    window.Display, window.Screen, window.RootWindow);
 
                 glContext = new X11GLContext(mode);
                 glContext.PrepareContext(window);
@@ -264,8 +264,7 @@ namespace OpenTK.Platform.X11
 
                 window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
                     0, 0, mode.Width, mode.Height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
-                    (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask,
-                    ref attributes);
+                    (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask, ref attributes);
 
                 if (window.Handle == IntPtr.Zero)
                 {
@@ -297,10 +296,7 @@ namespace OpenTK.Platform.X11
 
                 Debug.Print("done! (id: {0})", window.Handle);
 
-                API.MapRaised(window.Display, window.Handle);
-                
-                /*Debug.WriteLine("Mapped window.");
-
+                /*
                 XEvent ev = new XEvent();
                 API.IfEvent(window.Display, ref ev,
                     delegate(IntPtr display, ref XEvent @event, IntPtr arg)
@@ -314,16 +310,16 @@ namespace OpenTK.Platform.X11
                     },
                     window.Handle);
                 */
-                glContext.Mode = mode;//new DisplayMode(mode);
                 glContext.windowInfo.Handle = window.Handle;
                 glContext.CreateContext(null, true);
 
                 API.MapRaised(window.Display, window.Handle);
-
                 Debug.WriteLine("Mapped window.");
 
-                Debug.WriteLine("Our shiny new context is now current - ready to rock 'n' roll!");
+                glContext.MakeCurrent();
+
                 Debug.Unindent();
+                Debug.WriteLine("GameWindow creation completed successfully!");
                 exists = true;
             }
         }
