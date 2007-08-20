@@ -33,8 +33,6 @@ namespace Examples.WinForms
         public Cube()
         {
             InitializeComponent();
-           
-            Application.Idle += Application_Idle;
 
             this.ShowDialog();
         }
@@ -94,6 +92,12 @@ namespace Examples.WinForms
         {
             base.OnLoad(e);
 
+            glControl.KeyDown += new KeyEventHandler(glControl_KeyDown);
+            glControl.Resize += new EventHandler(glControl_Resize);
+            glControl.Paint += new PaintEventHandler(glControl_Paint);
+
+            glControl.CreateContext();
+
             Text =
                 GL.GetString(GL.Enums.StringName.VENDOR) + " " +
                 GL.GetString(GL.Enums.StringName.RENDERER) + " " +
@@ -102,30 +106,24 @@ namespace Examples.WinForms
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
 
-            glControl.KeyDown += new KeyEventHandler(Cube_KeyDown);
-
-            OnResize(e);
+            Application.Idle += Application_Idle;
         }
-        
+
         #endregion
 
-        #region Resize event handler
+        #region GLControl.Resize event handler
 
-        protected override void OnResize(EventArgs e)
+        void glControl_Resize(object sender, EventArgs e)
         {
-            base.OnResize(e);
+            OpenTK.GLControl c = sender as OpenTK.GLControl;
 
-            if (ClientSize.Height == 0)
-                ClientSize = new System.Drawing.Size(ClientSize.Width, 1);
+            if (c.ClientSize.Height == 0)
+                c.ClientSize = new System.Drawing.Size(c.ClientSize.Width, 1);
 
-            GL.Viewport(0, 0, ClientSize.Width, ClientSize.Height);
+            GL.Viewport(0, 0, c.ClientSize.Width, c.ClientSize.Height);
 
             double ratio = 0.0;
-            ratio = ClientSize.Width / (double)ClientSize.Height;
-            //if (ClientSize.Width > ClientSize.Height)
-            //    ratio = ClientSize.Width / (double)ClientSize.Height;
-            //else
-            //    ratio = ClientSize.Height / (double)ClientSize.Width;
+            ratio = c.ClientSize.Width / (double)c.ClientSize.Height;
 
             GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
             GL.LoadIdentity();
@@ -134,20 +132,9 @@ namespace Examples.WinForms
 
         #endregion
 
-        #region Paint event handler
+        #region GLControl.KeyDown event handler
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-
-            Render();
-        }
-
-        #endregion
-
-        #region KeyDown event handler
-
-        void Cube_KeyDown(object sender, KeyEventArgs e)
+        void glControl_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Alt && e.Shift)
             {
@@ -161,6 +148,15 @@ namespace Examples.WinForms
                     this.Close();
                     break;
             }
+        }
+
+        #endregion
+
+        #region GLControl.Paint event handler
+
+        void glControl_Paint(object sender, PaintEventArgs e)
+        {
+            Render();
         }
 
         #endregion

@@ -23,7 +23,7 @@ namespace OpenTK
     // TODO: Document the GLControl class.
 
     /// <summary>
-    /// 
+    /// Defines a UserControl with opengl rendering capabilities.
     /// </summary>
     public partial class GLControl : UserControl, IGLControl
     {
@@ -43,6 +43,10 @@ namespace OpenTK
         {
         }
 
+        /// <summary>
+        /// Constructs a new GLControl, with the specified DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the control.</param>
         public GLControl(DisplayMode mode)
         {
             InitializeComponent();
@@ -88,9 +92,6 @@ namespace OpenTK
         /// </summary>
         public void CreateContext()
         {
-            Debug.Print("Creating opengl context");
-            Debug.Indent();
-
             if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
                 Environment.OSVersion.Platform == PlatformID.Win32Windows)
             {
@@ -109,8 +110,7 @@ namespace OpenTK
             }
 
             OpenTK.OpenGL.GL.LoadAll();
-
-            Debug.Unindent();
+            this.OnResize(EventArgs.Empty);
         }
 
         /// <summary>
