@@ -14,7 +14,6 @@ namespace OpenTK.Platform
 {
     public interface IGLControl : IDisposable
     {
-
         bool IsIdle { get; }
         bool Fullscreen { get; set; }
         IGLContext Context { get; }

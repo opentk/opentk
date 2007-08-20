@@ -10,7 +10,6 @@ namespace OpenTK.Platform.Windows
         {
             static Delegates()
             {
-                Wgl.LoadAll();
             }
 
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -29,11 +28,11 @@ namespace OpenTK.Platform.Windows
             internal delegate Boolean CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, UInt32 mask);
             internal static CopyContext wglCopyContext = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate int ChoosePixelFormat(IntPtr hDc, OpenTK.Platform.Windows.API.PixelFormatDescriptor pPfd);
-            internal static ChoosePixelFormat wglChoosePixelFormat = null;
+            internal unsafe delegate int ChoosePixelFormat(IntPtr hDc, API.PixelFormatDescriptor* pPfd);
+            internal unsafe static ChoosePixelFormat wglChoosePixelFormat = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, OpenTK.Platform.Windows.API.PixelFormatDescriptor ppfd);
-            internal static DescribePixelFormat wglDescribePixelFormat = null;
+            internal unsafe delegate int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, API.PixelFormatDescriptor* ppfd);
+            internal unsafe static DescribePixelFormat wglDescribePixelFormat = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate IntPtr GetCurrentDC();
             internal static GetCurrentDC wglGetCurrentDC = null;
@@ -47,8 +46,8 @@ namespace OpenTK.Platform.Windows
             internal delegate int GetPixelFormat(IntPtr hdc);
             internal static GetPixelFormat wglGetPixelFormat = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean SetPixelFormat(IntPtr hdc, int ipfd, OpenTK.Platform.Windows.API.PixelFormatDescriptor ppfd);
-            internal static SetPixelFormat wglSetPixelFormat = null;
+            internal unsafe delegate Boolean SetPixelFormat(IntPtr hdc, int ipfd, API.PixelFormatDescriptor* ppfd);
+            internal unsafe static SetPixelFormat wglSetPixelFormat = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean SwapBuffers(IntPtr hdc);
             internal static SwapBuffers wglSwapBuffers = null;
@@ -59,14 +58,14 @@ namespace OpenTK.Platform.Windows
             internal delegate IntPtr CreateLayerContext(IntPtr hDc, int level);
             internal static CreateLayerContext wglCreateLayerContext = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, OpenTK.Platform.Windows.API.LayerPlaneDescriptor plpd);
-            internal static DescribeLayerPlane wglDescribeLayerPlane = null;
+            internal unsafe delegate Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, API.LayerPlaneDescriptor* plpd);
+            internal unsafe static DescribeLayerPlane wglDescribeLayerPlane = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32 pcr);
-            internal static SetLayerPaletteEntries wglSetLayerPaletteEntries = null;
+            internal unsafe delegate int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr);
+            internal unsafe static SetLayerPaletteEntries wglSetLayerPaletteEntries = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32 pcr);
-            internal static GetLayerPaletteEntries wglGetLayerPaletteEntries = null;
+            internal unsafe delegate int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr);
+            internal unsafe static GetLayerPaletteEntries wglGetLayerPaletteEntries = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean RealizeLayerPalette(IntPtr hdc, int iLayerPlane, Boolean bRealize);
             internal static RealizeLayerPalette wglRealizeLayerPalette = null;
@@ -79,6 +78,12 @@ namespace OpenTK.Platform.Windows
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean UseFontBitmapsW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase);
             internal static UseFontBitmapsW wglUseFontBitmapsW = null;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics);
+            internal unsafe static UseFontOutlinesA wglUseFontOutlinesA = null;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics);
+            internal unsafe static UseFontOutlinesW wglUseFontOutlinesW = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate IntPtr CreateBufferRegionARB(IntPtr hDC, int iLayerPlane, UInt32 uType);
             internal static CreateBufferRegionARB wglCreateBufferRegionARB = null;
@@ -101,7 +106,7 @@ namespace OpenTK.Platform.Windows
             internal unsafe delegate Boolean GetPixelFormatAttribfvARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] Single* pfValues);
             internal unsafe static GetPixelFormatAttribfvARB wglGetPixelFormatAttribfvARB = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean ChoosePixelFormatARB(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32 nNumFormats);
+            internal unsafe delegate Boolean ChoosePixelFormatARB(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats);
             internal unsafe static ChoosePixelFormatARB wglChoosePixelFormatARB = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean MakeContextCurrentARB(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc);
@@ -122,8 +127,8 @@ namespace OpenTK.Platform.Windows
             internal delegate Boolean DestroyPbufferARB(IntPtr hPbuffer);
             internal static DestroyPbufferARB wglDestroyPbufferARB = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean QueryPbufferARB(IntPtr hPbuffer, int iAttribute, [Out] int piValue);
-            internal static QueryPbufferARB wglQueryPbufferARB = null;
+            internal unsafe delegate Boolean QueryPbufferARB(IntPtr hPbuffer, int iAttribute, [Out] int* piValue);
+            internal unsafe static QueryPbufferARB wglQueryPbufferARB = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean BindTexImageARB(IntPtr hPbuffer, int iBuffer);
             internal static BindTexImageARB wglBindTexImageARB = null;
@@ -167,8 +172,8 @@ namespace OpenTK.Platform.Windows
             internal delegate Boolean DestroyPbufferEXT(IntPtr hPbuffer);
             internal static DestroyPbufferEXT wglDestroyPbufferEXT = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean QueryPbufferEXT(IntPtr hPbuffer, int iAttribute, [Out] int piValue);
-            internal static QueryPbufferEXT wglQueryPbufferEXT = null;
+            internal unsafe delegate Boolean QueryPbufferEXT(IntPtr hPbuffer, int iAttribute, [Out] int* piValue);
+            internal unsafe static QueryPbufferEXT wglQueryPbufferEXT = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate Boolean GetPixelFormatAttribivEXT(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] int* piValues);
             internal unsafe static GetPixelFormatAttribivEXT wglGetPixelFormatAttribivEXT = null;
@@ -176,7 +181,7 @@ namespace OpenTK.Platform.Windows
             internal unsafe delegate Boolean GetPixelFormatAttribfvEXT(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] Single* pfValues);
             internal unsafe static GetPixelFormatAttribfvEXT wglGetPixelFormatAttribfvEXT = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean ChoosePixelFormatEXT(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32 nNumFormats);
+            internal unsafe delegate Boolean ChoosePixelFormatEXT(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats);
             internal unsafe static ChoosePixelFormatEXT wglChoosePixelFormatEXT = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean SwapIntervalEXT(int interval);
@@ -233,35 +238,35 @@ namespace OpenTK.Platform.Windows
             internal delegate Boolean DisableGenlockI3D(IntPtr hDC);
             internal static DisableGenlockI3D wglDisableGenlockI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean IsEnabledGenlockI3D(IntPtr hDC, [Out] Boolean pFlag);
-            internal static IsEnabledGenlockI3D wglIsEnabledGenlockI3D = null;
+            internal unsafe delegate Boolean IsEnabledGenlockI3D(IntPtr hDC, [Out] Boolean* pFlag);
+            internal unsafe static IsEnabledGenlockI3D wglIsEnabledGenlockI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean GenlockSourceI3D(IntPtr hDC, UInt32 uSource);
             internal static GenlockSourceI3D wglGenlockSourceI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean GetGenlockSourceI3D(IntPtr hDC, [Out] UInt32 uSource);
-            internal static GetGenlockSourceI3D wglGetGenlockSourceI3D = null;
+            internal unsafe delegate Boolean GetGenlockSourceI3D(IntPtr hDC, [Out] UInt32* uSource);
+            internal unsafe static GetGenlockSourceI3D wglGetGenlockSourceI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean GenlockSourceEdgeI3D(IntPtr hDC, UInt32 uEdge);
             internal static GenlockSourceEdgeI3D wglGenlockSourceEdgeI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean GetGenlockSourceEdgeI3D(IntPtr hDC, [Out] UInt32 uEdge);
-            internal static GetGenlockSourceEdgeI3D wglGetGenlockSourceEdgeI3D = null;
+            internal unsafe delegate Boolean GetGenlockSourceEdgeI3D(IntPtr hDC, [Out] UInt32* uEdge);
+            internal unsafe static GetGenlockSourceEdgeI3D wglGetGenlockSourceEdgeI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean GenlockSampleRateI3D(IntPtr hDC, UInt32 uRate);
             internal static GenlockSampleRateI3D wglGenlockSampleRateI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean GetGenlockSampleRateI3D(IntPtr hDC, [Out] UInt32 uRate);
-            internal static GetGenlockSampleRateI3D wglGetGenlockSampleRateI3D = null;
+            internal unsafe delegate Boolean GetGenlockSampleRateI3D(IntPtr hDC, [Out] UInt32* uRate);
+            internal unsafe static GetGenlockSampleRateI3D wglGetGenlockSampleRateI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean GenlockSourceDelayI3D(IntPtr hDC, UInt32 uDelay);
             internal static GenlockSourceDelayI3D wglGenlockSourceDelayI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean GetGenlockSourceDelayI3D(IntPtr hDC, [Out] UInt32 uDelay);
-            internal static GetGenlockSourceDelayI3D wglGetGenlockSourceDelayI3D = null;
+            internal unsafe delegate Boolean GetGenlockSourceDelayI3D(IntPtr hDC, [Out] UInt32* uDelay);
+            internal unsafe static GetGenlockSourceDelayI3D wglGetGenlockSourceDelayI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean QueryGenlockMaxSourceDelayI3D(IntPtr hDC, [Out] UInt32 uMaxLineDelay, [Out] UInt32 uMaxPixelDelay);
-            internal static QueryGenlockMaxSourceDelayI3D wglQueryGenlockMaxSourceDelayI3D = null;
+            internal unsafe delegate Boolean QueryGenlockMaxSourceDelayI3D(IntPtr hDC, [Out] UInt32* uMaxLineDelay, [Out] UInt32* uMaxPixelDelay);
+            internal unsafe static QueryGenlockMaxSourceDelayI3D wglQueryGenlockMaxSourceDelayI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate IntPtr CreateImageBufferI3D(IntPtr hDC, Int32 dwSize, UInt32 uFlags);
             internal static CreateImageBufferI3D wglCreateImageBufferI3D = null;
@@ -281,14 +286,14 @@ namespace OpenTK.Platform.Windows
             internal delegate Boolean DisableFrameLockI3D();
             internal static DisableFrameLockI3D wglDisableFrameLockI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean IsEnabledFrameLockI3D([Out] Boolean pFlag);
-            internal static IsEnabledFrameLockI3D wglIsEnabledFrameLockI3D = null;
+            internal unsafe delegate Boolean IsEnabledFrameLockI3D([Out] Boolean* pFlag);
+            internal unsafe static IsEnabledFrameLockI3D wglIsEnabledFrameLockI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean QueryFrameLockMasterI3D([Out] Boolean pFlag);
-            internal static QueryFrameLockMasterI3D wglQueryFrameLockMasterI3D = null;
+            internal unsafe delegate Boolean QueryFrameLockMasterI3D([Out] Boolean* pFlag);
+            internal unsafe static QueryFrameLockMasterI3D wglQueryFrameLockMasterI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean GetFrameUsageI3D([Out] float pUsage);
-            internal static GetFrameUsageI3D wglGetFrameUsageI3D = null;
+            internal unsafe delegate Boolean GetFrameUsageI3D([Out] float* pUsage);
+            internal unsafe static GetFrameUsageI3D wglGetFrameUsageI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean BeginFrameTrackingI3D();
             internal static BeginFrameTrackingI3D wglBeginFrameTrackingI3D = null;
@@ -296,8 +301,8 @@ namespace OpenTK.Platform.Windows
             internal delegate Boolean EndFrameTrackingI3D();
             internal static EndFrameTrackingI3D wglEndFrameTrackingI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean QueryFrameTrackingI3D([Out] Int32 pFrameCount, [Out] Int32 pMissedFrames, [Out] float pLastMissedUsage);
-            internal static QueryFrameTrackingI3D wglQueryFrameTrackingI3D = null;
+            internal unsafe delegate Boolean QueryFrameTrackingI3D([Out] Int32* pFrameCount, [Out] Int32* pMissedFrames, [Out] float* pLastMissedUsage);
+            internal unsafe static QueryFrameTrackingI3D wglQueryFrameTrackingI3D = null;
         }
     }
 }

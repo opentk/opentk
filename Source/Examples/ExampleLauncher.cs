@@ -45,8 +45,10 @@ namespace Examples
         		MessageBox.Show("Could not access debug.log", e.ToString());
         	}
 
+            Debug.Listeners.Clear();
         	Debug.Listeners.Add(new TextWriterTraceListener("debug.log"));
             Debug.Listeners.Add(new ConsoleTraceListener());
+            Debug.AutoFlush = true;
         	                    
             try
             {
@@ -70,7 +72,45 @@ namespace Examples
             InitializeComponent();
         }
 
-        private void listBox1_DoubleClick(object sender, EventArgs e)
+        void Launch(object example)
+        {
+            Type ex = example as Type;
+            try
+            {
+                (ex.GetConstructor(Type.EmptyTypes).Invoke(null) as IExample).Launch();
+            }
+            catch (Exception expt)
+            {
+				MessageBox.Show(String.Format("Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
+				    System.Environment.NewLine, expt.StackTrace, expt.InnerException), expt.Message);
+            }
+        }
+
+        public void ExampleLauncher_Load(object sender, EventArgs e)
+        {
+            SortedList<string, string> sl = new SortedList<string, string>();
+
+            // Get all examples
+            Type[] types = Assembly.GetExecutingAssembly().GetTypes();
+            foreach (Type type in types)
+            {
+                if (type.GetInterface("IExample") != null)
+                {
+                    sl.Add((type.Namespace.Replace("Examples.", String.Empty) + ": " + type.Name).Replace('_', ' '), null);
+                }
+            }
+
+            foreach (string s in sl.Keys)
+                listBox1.Items.Add(s);
+
+            // Select first item
+            if (listBox1.Items.Count > 0)
+            {
+                this.listBox1.SelectedIndex = 0;
+            }
+        }
+
+        private void RunExample()
         {
             if (listBox1.SelectedItem != null)
             {
@@ -79,7 +119,7 @@ namespace Examples
                         "Examples." + listBox1.SelectedItem.ToString().Replace(": ", ".").Replace(' ', '_'),
                         true,
                         true);
-                
+
                 Debug.Print("Launching example: {0}", example.ToString());
 
                 if (example.BaseType == typeof(GameWindow))
@@ -111,51 +151,24 @@ namespace Examples
             }
         }
 
-        void Launch(object example)
+        private void listBox1_DoubleClick(object sender, EventArgs e)
         {
-            Type ex = example as Type;
-            try
+            RunExample();
+        }
+
+        private void listBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
             {
-                (ex.GetConstructor(Type.EmptyTypes).Invoke(null) as IExample).Launch();
-            }
-            catch (Exception expt)
-            {
-				MessageBox.Show(
-				    String.Format(
-				        "Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
-				        System.Environment.NewLine,
-				        expt.StackTrace,
-				        expt.InnerException
-				    ),
-				    expt.Message);
+                case Keys.Enter:
+                    RunExample();
+                    break;
             }
         }
 
-        public void ExampleLauncher_Load(object sender, EventArgs e)
+        private void runButton_Click(object sender, EventArgs e)
         {
-            SortedList<string, string> sl = new SortedList<string, string>();
-
-            // Get all examples
-            Type[] types = Assembly.GetExecutingAssembly().GetTypes();
-            foreach (Type type in types)
-            {
-                if (type.GetInterface("IExample") != null)
-                {
-                    sl.Add(
-                        (type.Namespace.Replace("Examples.", String.Empty) + ": " + type.Name).Replace('_', ' '),
-                        null
-                    );
-                }
-            }
-
-            foreach (string s in sl.Keys)
-                listBox1.Items.Add(s);
-
-            // Select first item
-            if (listBox1.Items.Count > 0)
-            {
-                this.listBox1.SelectedIndex = 0;
-            }
+            RunExample();
         }
     }
 }

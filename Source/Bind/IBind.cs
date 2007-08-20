@@ -12,9 +12,6 @@ namespace Bind
 {
     interface IBind : ISpecReader, ISpecWriter
     {
-        //ISpecReader SpecReader { get; }
         void Process();
-
-        string FunctionPrefix { get; }
     }
 }

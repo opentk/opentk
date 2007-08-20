@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace Bind.Structures
 {
-    public class Function : Delegate
+    public class Function : Delegate, IEquatable<Function>
     {
         internal static FunctionCollection Wrappers;
 
@@ -138,9 +138,13 @@ namespace Bind.Structures
                 // remove the Extension and the overload information from the name
                 // (Extension == "ARB", "EXT", etc, overload == [u][bsidf][v])
                 // TODO: Use some regex's here, to reduce clutter.
-                if (Settings.Compatibility != Settings.Legacy.Tao)
+                TrimmedName = value;
+
+                if (Settings.Compatibility == Settings.Legacy.Tao)
                 {
-                    TrimmedName = value;
+                }
+                else
+                {
                     TrimmedName = Utilities.StripGL2Extension(value);
                     
                     //if (TrimmedName.Contains("Uniform2iv"))
@@ -194,7 +198,7 @@ namespace Bind.Structures
             sb.Append(" ");
             if (Settings.Compatibility == Settings.Legacy.Tao)
             {
-                sb.Append("gl");
+                sb.Append(Settings.FunctionPrefix);
             }
             sb.Append(!String.IsNullOrEmpty(TrimmedName) ? TrimmedName : Name);
             sb.Append(Parameters.ToString(true));
@@ -209,38 +213,13 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public Function GetCLSCompliantFunction(Dictionary<string, string> CSTypes)
+        #region IEquatable<Function> Members
 
-        public Function GetCLSCompliantFunction()
+        public bool Equals(Function other)
         {
-            Function f = new Function(this);
-
-            bool somethingChanged = false;
-            for (int i = 0; i < f.Parameters.Count; i++)
-            {
-                f.Parameters[i].CurrentType = f.Parameters[i].GetCLSCompliantType();
-                if (f.Parameters[i].CurrentType != this.Parameters[i].CurrentType)
-                    somethingChanged = true;
-            }
-
-            if (!somethingChanged)
-                return null;
-
-            f.Body.Clear();
-            if (!f.NeedsWrapper)
-            {
-                f.Body.Add((f.ReturnType.CurrentType != "void" ? "return " + this.CallString() : this.CallString()) + ";");
-            }
-            else
-            {
-                f.Body.AddRange(this.GetBodyWithPins(true));
-            }
-
-            // The type system cannot differentiate between functions with the same parameters
-            // but different return types. Tough, only CLS-Compliant function in that case.
-            //f.ReturnType.Type = f.ReturnType.GetCLSCompliantType(CSTypes);
-
-            return f;
+            return !String.IsNullOrEmpty(this.TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
+                this.TrimmedName == other.TrimmedName &&
+                this.Parameters.ToString(true) == other.Parameters.ToString(true);
         }
 
         #endregion
@@ -259,6 +238,32 @@ namespace Bind.Structures
             foreach (string s in fb)
             {
                 this.Add(s);
+            }
+        }
+
+        private string indent = "";
+
+        public void Indent()
+        {
+            indent += "    ";
+        }
+
+        public void Unindent()
+        {
+            if (indent.Length >= 4)
+                indent = indent.Substring(4);
+        }
+
+        new public void Add(string s)
+        {
+            base.Add(indent + s);
+        }
+
+        new public void AddRange(IEnumerable<string> collection)
+        {
+            foreach (string t in collection)
+            {
+                this.Add(t);
             }
         }
 
@@ -286,6 +291,8 @@ namespace Bind.Structures
 
     class FunctionCollection : Dictionary<string, List<Function>>
     {
+        Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
+
         public void Add(Function f)
         {
             if (!this.ContainsKey(f.Extension))
@@ -314,28 +321,28 @@ namespace Bind.Structures
         /// <param name="f">The Function to add.</param>
         public void AddChecked(Function f)
         {
-            bool exists = false;
             if (Bind.Structures.Function.Wrappers.ContainsKey(f.Extension))
             {
-                Function fun = Bind.Structures.Function.Wrappers[f.Extension]
-                    .Find(delegate(Function target)
-                        {
-                            return
-                                !String.IsNullOrEmpty(target.TrimmedName) &&
-                                target.TrimmedName == f.TrimmedName &&
-                                target.Parameters.ToString(true) == f.Parameters.ToString(true);
-                        });
-                if (fun != null)
+                int index = Bind.Structures.Function.Wrappers[f.Extension].IndexOf(f);
+                if (index == -1)
                 {
-                    exists = true;
-                    /*Debug.WriteLine("Function redefinition:");
-                    Debug.WriteLine(fun.ToString());
-                    Debug.WriteLine(f.ToString());*/
+                    Bind.Structures.Function.Wrappers.Add(f);
+                }
+                else
+                {
+                    if (unsignedFunctions.IsMatch(Utilities.StripGL2Extension(f.Name)))// &&
+                        //!unsignedFunctions.IsMatch(
+                        //    Utilities.StripGL2Extension(Bind.Structures.Function.Wrappers[f.Extension][index].Name)))
+                    {
+                        Bind.Structures.Function.Wrappers[f.Extension].RemoveAt(index);
+                        Bind.Structures.Function.Wrappers[f.Extension].Add(f);
+                    }
                 }
             }
-
-            if (!exists)
+            else
+            {
                 Bind.Structures.Function.Wrappers.Add(f);
+            }
         }
     }
 
