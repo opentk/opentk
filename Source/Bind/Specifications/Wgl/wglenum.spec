@@ -357,3 +357,8 @@ WGL_ATI_pixel_format_float enum:
 ###############################################################################
 
 # Any_vendor_future_use: 0x21C0-0xFFFF
+
+# Added by hand:
+WGL_font_type enum:
+	WGL_FONT_LINES						= 0
+	WGL_FONT_POLYGONS					= 1

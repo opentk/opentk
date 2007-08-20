@@ -64,9 +64,11 @@ namespace OpenTK.Platform.Windows
             RawInputDeviceSize = Marshal.SizeOf(typeof(RawInputDevice));
             RawInputDeviceListSize = Marshal.SizeOf(typeof(RawInputDeviceList));
             RawInputDeviceInfoSize = Marshal.SizeOf(typeof(RawInputDeviceInfo));
+            PixelFormatDescriptorVersion = 1;
+            PixelFormatDescriptorSize = (short)Marshal.SizeOf(typeof(PixelFormatDescriptor));
         }
 
-        #region Constants
+        #region --- Constants ---
 
         public struct Constants
         {
@@ -401,7 +403,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="pfd"></param>
         /// <returns></returns>
         [DllImport("gdi32.dll")]
-        public static extern int ChoosePixelFormat(IntPtr dc, [In, MarshalAs(UnmanagedType.LPStruct)]PixelFormatDescriptor pfd);
+        public static extern int ChoosePixelFormat(IntPtr dc, ref PixelFormatDescriptor pfd);
 
         #endregion
 
@@ -416,12 +418,7 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         [DllImport("gdi32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetPixelFormat(
-            IntPtr dc,
-            int format,
-            [In, MarshalAs(UnmanagedType.LPStruct)]PixelFormatDescriptor pfd
-        );
-
+        public static extern bool SetPixelFormat(IntPtr dc, int format, ref PixelFormatDescriptor pfd);
 
         #endregion
 
@@ -1275,54 +1272,56 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region PixelFormatDescriptor
+
+        internal static short PixelFormatDescriptorSize;
+        internal static short PixelFormatDescriptorVersion;
+
         /// <summary>
         /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
         /// Found in WinGDI.h
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        public class PixelFormatDescriptor
+        public struct PixelFormatDescriptor
         {
-        	public readonly short Size = (short)Marshal.SizeOf(typeof(PixelFormatDescriptor));   // No need for the user to set the size, since it is predefined.
-            public short Version = 1;
-            public PixelFormatDescriptorFlags Flags =
-                //PixelFormatDescriptorFlags.DOUBLEBUFFER |
-                PixelFormatDescriptorFlags.DRAW_TO_WINDOW |
-                PixelFormatDescriptorFlags.SUPPORT_OPENGL;
-            public byte PixelType = Constants.PFD_TYPE_RGBA;
-            public byte ColorBits = 0;
-            public byte RedBits = 0;
-            public byte RedShift = 0;
-            public byte GreenBits = 0;
-            public byte GreenShift = 0;
-            public byte BlueBits = 0;
-            public byte BlueShift = 0;
-            public byte AlphaBits = 8;
-            public byte AlphaShift = 0;
-            public byte AccumBits = 0;
-            public byte AccumRedBits = 0;
-            public byte AccumGreenBits = 0;
-            public byte AccumBlueBits = 0;
-            public byte AccumAlphaBits = 0;
-            public byte DepthBits = 0;
-            public byte StencilBits = 0;
-            public byte AuxBuffers = 0;
-            public byte LayerType = unchecked((byte)Constants.PFD_MAIN_PLANE);
-            byte Reserved = 0;
-            public int LayerMask = 0;
-            public int VisibleMask = 0;
-            public int DamageMask = 0;
+            internal short Size;
+            internal short Version;
+            public PixelFormatDescriptorFlags Flags;
+            public PixelType PixelType;
+            public byte ColorBits;
+            public byte RedBits;
+            public byte RedShift;
+            public byte GreenBits;
+            public byte GreenShift;
+            public byte BlueBits;
+            public byte BlueShift;
+            public byte AlphaBits;
+            public byte AlphaShift;
+            public byte AccumBits;
+            public byte AccumRedBits;
+            public byte AccumGreenBits;
+            public byte AccumBlueBits;
+            public byte AccumAlphaBits;
+            public byte DepthBits;
+            public byte StencilBits;
+            public byte AuxBuffers;
+            public byte LayerType;
+            private byte Reserved;
+            public int LayerMask;
+            public int VisibleMask;
+            public int DamageMask;
         }
+
         #endregion
         
         #region public class LayerPlaneDescriptor
-        
+
         /// <summary>
         /// Describes the pixel format of a drawing surface.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        public class LayerPlaneDescriptor
+        public struct LayerPlaneDescriptor
         {
-			public readonly WORD  Size = (WORD)Marshal.SizeOf(typeof(PixelFormatDescriptor)); 
+            public static readonly WORD Size = (WORD)Marshal.SizeOf(typeof(LayerPlaneDescriptor)); 
 			public WORD  Version; 
 			public DWORD Flags; 
 			public BYTE  PixelType; 
@@ -1348,6 +1347,63 @@ namespace OpenTK.Platform.Windows
 			public COLORREF crTransparent; 
 		}
         
+        #endregion
+
+        #region GlyphMetricsFloat
+
+        /// <summary>
+        /// The <b>GlyphMetricsFloat</b> structure contains information about the placement and orientation of a glyph in a
+        /// character cell.
+        /// </summary>
+        /// <remarks>The values of <b>GlyphMetricsFloat</b> are specified as notional units.</remarks>
+        /// <seealso cref="POINTFLOAT" />
+        /// <seealso cref="Wgl.wglUseFontOutlines" />
+        [StructLayout(LayoutKind.Sequential)]
+        public struct GlyphMetricsFloat
+        {
+            /// <summary>
+            /// Specifies the width of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
+            /// </summary>
+            public float BlackBoxX;
+            /// <summary>
+            /// Specifies the height of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
+            /// </summary>
+            public float BlackBoxY;
+            /// <summary>
+            /// Specifies the x and y coordinates of the upper-left corner of the smallest rectangle that completely encloses the glyph.
+            /// </summary>
+            public PointFloat GlyphOrigin;
+            /// <summary>
+            /// Specifies the horizontal distance from the origin of the current character cell to the origin of the next character cell.
+            /// </summary>
+            public float CellIncX;
+            /// <summary>
+            /// Specifies the vertical distance from the origin of the current character cell to the origin of the next character cell.
+            /// </summary>
+            public float CellIncY;
+        }
+
+        #endregion
+
+        #region PointFloat
+
+        /// <summary>
+        /// The <b>POINTFLOAT</b> structure contains the x and y coordinates of a point.
+        /// </summary>
+        /// <seealso cref="GLYPHMETRICSFLOAT" />
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PointFloat
+        {
+            /// <summary>
+            /// Specifies the horizontal (x) coordinate of a point.
+            /// </summary>
+            public float X;
+            /// <summary>
+            /// Specifies the vertical (y) coordinate of a point.
+            /// </summary>
+            public float Y;
+        };
+
         #endregion
 
         #region DeviceMode
@@ -2106,6 +2162,16 @@ namespace OpenTK.Platform.Windows
             DOUBLEBUFFER_DONTCARE = unchecked((int)0x40000000),
             STEREO_DONTCARE = unchecked((int)0x80000000)
         }
+        #endregion
+
+        #region PixelType
+
+        public enum PixelType : byte
+        {
+            RGBA = 0,
+            INDEXED = 1
+        }
+
         #endregion
 
         #region WindowPlacementOptions enum

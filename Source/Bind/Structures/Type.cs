@@ -216,12 +216,16 @@ namespace Bind.Structures
                 switch (CurrentType)
                 {
                     case "UInt16":
+                    case "ushort":
                         return "Int16";
                     case "UInt32":
+                    case "uint":
                         return "Int32";
                     case "UInt64":
+                    case "ulong":
                         return "Int64";
                     case "SByte":
+                    case "sbyte":
                         return "Byte";
                 }
             }

@@ -44,6 +44,10 @@ namespace Bind
         /// </summary>
         PointerParameter,
         /// <summary>
+        /// Function that takes a reference to a struct.
+        /// </summary>
+        ReferenceParameter,
+        /// <summary>
         /// Function returns string - needs manual marshalling through IntPtr to prevent the managed GC
         /// from freeing memory allocated on the unmanaged side (e.g. glGetString).
         /// </summary>

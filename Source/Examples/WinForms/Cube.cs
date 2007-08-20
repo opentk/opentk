@@ -67,7 +67,7 @@ namespace Examples.WinForms
         #region private void Render()
 
         private void Render()
-        { 
+        {
             GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
             Glu.LookAt(
@@ -171,37 +171,38 @@ namespace Examples.WinForms
         {
             GL.Begin(GL.Enums.BeginMode.QUADS);
 
-            GL.Color3(1.0f, 0.0f, 0.0f);
+            GL.Color3((byte)Color.Silver.R, (byte)Color.Silver.G, (byte)Color.Silver.B);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
 
-            GL.Color3(1.0f, 1.0f, 0.0f);
+            GL.Color3((byte)Color.Honeydew.R, (byte)Color.Honeydew.G, (byte)Color.Honeydew.B);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3(1.0f, 0.0f, 1.0f);
+            GL.Color3((byte)Color.Moccasin.R, (byte)Color.Moccasin.G, (byte)Color.Moccasin.B);
+
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0.0f, 1.0f, 0.0f);
+            GL.Color3((byte)Color.IndianRed.R, (byte)Color.IndianRed.G, (byte)Color.IndianRed.B);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
-            GL.Color3(0.0f, 0.0f, 1.0f);
+            GL.Color3((byte)Color.PaleVioletRed.R, (byte)Color.PaleVioletRed.G, (byte)Color.PaleVioletRed.B);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0.0f, 1.0f, 1.0f);
+            GL.Color3((byte)Color.ForestGreen.R, (byte)Color.ForestGreen.G, (byte)Color.ForestGreen.B);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);

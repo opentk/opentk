@@ -258,22 +258,17 @@ namespace OpenTK.Platform.Windows
 
             Debug.Print("Window created: {0}", window);
 
-            glContext = new WinGLContext(
-                this.Handle,
-                new DisplayMode(
-                    width, height,
-                    new ColorDepth(32),
-                    16, 0, 0, 2,
-                    fullscreen,
-                    false,
-                    false,
-                    0.0f
-                )
-            );
-
-            glContext.CreateContext();
-
-            OpenTK.OpenGL.GL.LoadAll();
+            try
+            {
+                glContext = new WinGLContext(this.mode);
+                glContext.PrepareContext(this.Handle);
+                glContext.CreateContext();
+            }
+            catch (ApplicationException expt)
+            {
+                Debug.Print("Could not create opengl context, error: {0}", expt.ToString());
+                throw;
+            }
 
             if (this.Create != null)
             {

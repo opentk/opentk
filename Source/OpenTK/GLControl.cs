@@ -47,6 +47,7 @@ namespace OpenTK
         {
             InitializeComponent();
 
+            this.Visible = false;
             this.Fullscreen = mode.Fullscreen;
             
             this.SetStyle(ControlStyles.UserPaint, true);

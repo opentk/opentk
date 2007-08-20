@@ -27,10 +27,10 @@ namespace OpenTK.Platform.Windows
             internal extern static Boolean CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, UInt32 mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglChoosePixelFormat", ExactSpelling = true)]
-            internal extern static int ChoosePixelFormat(IntPtr hDc, OpenTK.Platform.Windows.API.PixelFormatDescriptor pPfd);
+            internal extern static unsafe int ChoosePixelFormat(IntPtr hDc, API.PixelFormatDescriptor* pPfd);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglDescribePixelFormat", ExactSpelling = true)]
-            internal extern static int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, OpenTK.Platform.Windows.API.PixelFormatDescriptor ppfd);
+            internal extern static unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, API.PixelFormatDescriptor* ppfd);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglGetCurrentDC", ExactSpelling = true)]
             internal extern static IntPtr GetCurrentDC();
@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Windows
             internal extern static int GetPixelFormat(IntPtr hdc);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglSetPixelFormat", ExactSpelling = true)]
-            internal extern static Boolean SetPixelFormat(IntPtr hdc, int ipfd, OpenTK.Platform.Windows.API.PixelFormatDescriptor ppfd);
+            internal extern static unsafe Boolean SetPixelFormat(IntPtr hdc, int ipfd, API.PixelFormatDescriptor* ppfd);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglSwapBuffers", ExactSpelling = true)]
             internal extern static Boolean SwapBuffers(IntPtr hdc);
@@ -57,13 +57,13 @@ namespace OpenTK.Platform.Windows
             internal extern static IntPtr CreateLayerContext(IntPtr hDc, int level);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglDescribeLayerPlane", ExactSpelling = true)]
-            internal extern static Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, OpenTK.Platform.Windows.API.LayerPlaneDescriptor plpd);
+            internal extern static unsafe Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, API.LayerPlaneDescriptor* plpd);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglSetLayerPaletteEntries", ExactSpelling = true)]
-            internal extern static int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32 pcr);
+            internal extern static unsafe int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglGetLayerPaletteEntries", ExactSpelling = true)]
-            internal extern static int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32 pcr);
+            internal extern static unsafe int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglRealizeLayerPalette", ExactSpelling = true)]
             internal extern static Boolean RealizeLayerPalette(IntPtr hdc, int iLayerPlane, Boolean bRealize);
@@ -71,11 +71,17 @@ namespace OpenTK.Platform.Windows
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglSwapLayerBuffers", ExactSpelling = true)]
             internal extern static Boolean SwapLayerBuffers(IntPtr hdc, UInt32 fuFlags);
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglUseFontBitmapsA", ExactSpelling = true)]
+            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglUseFontBitmapsA", CharSet = CharSet.Auto)]
             internal extern static Boolean UseFontBitmapsA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase);
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglUseFontBitmapsW", ExactSpelling = true)]
+            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglUseFontBitmapsW", CharSet = CharSet.Auto)]
             internal extern static Boolean UseFontBitmapsW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglUseFontOutlinesA", CharSet = CharSet.Auto)]
+            internal extern static unsafe Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglUseFontOutlinesW", CharSet = CharSet.Auto)]
+            internal extern static unsafe Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics);
         }
     }
 }
