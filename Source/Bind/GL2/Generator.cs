@@ -15,8 +15,7 @@ namespace Bind.GL2
 {
     class Generator : IBind
     {
-        //internal static SpecReader specReader;
-        //internal static SpecWriter specWriter;
+        #region --- Fields ---
 
         protected static string glTypemap = "GL2\\gl.tm";
         protected static string csTypemap = "csharp.tm";
@@ -29,15 +28,24 @@ namespace Bind.GL2
     	protected static string delegatesFile = "GLDelegates.cs";
     	protected static string enumsFile = "GLEnums.cs";
     	protected static string wrappersFile = "GL.cs";
-    	
-    	protected static string className = Settings.GLClass;
+
+        protected static string className = Settings.GLClass;
+        protected static string loadAllFuncName = "LoadAll";
+        protected static string functionPrefix = "gl";
+        public string FunctionPrefix { get { return functionPrefix; } }
 
         protected string specFolder;
+
+        #endregion
+
+        #region --- Constructors ---
 
         public Generator(string folder)
         {
             specFolder = folder;
         }
+
+        #endregion
 
         #region IBind Members
 
@@ -591,7 +599,7 @@ namespace Bind.GL2
             sw.WriteLine("{");
             // --- Workaround for mono gmcs 1.2.4 issue, where static initalization fails. ---
             sw.Indent();
-            sw.WriteLine("{0}.ReloadFunctions();", className);
+            sw.WriteLine("{0}.{1}();", className, loadAllFuncName);
             sw.Unindent();
             // --- End workaround ---
             sw.WriteLine("}");
@@ -600,31 +608,13 @@ namespace Bind.GL2
             {
                 sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
                 sw.WriteLine("internal {0};", d.ToString());
-                if (d.Extension == "Core")
-                {
-                    /*sw.WriteLine(
-                        "internal {0}static {1} gl{1} = ({1}){2}.{3}(\"gl{1}\", typeof({1})) ?? new {1}({4}.{1});",
-                        d.Unsafe ? "unsafe " : "",
-                        d.Name,
-                        Settings.GLClass,
-                        "GetDelegateForExtensionMethod",
-                        Settings.ImportsClass);*/
-                    // --- Workaround for mono gmcs 1.2.4 issue, where static initalization fails. ---
-                    sw.WriteLine(
-                        "internal {0}static {1} gl{1} = null;",
-                        d.Unsafe ? "unsafe " : "",
-                        d.Name);
-                    // --- End workaround ---
-                }
-                else
-                {
-                    sw.WriteLine(
-                        "internal {0}static {1} gl{1} = ({1}){2}.{3}(\"gl{1}\", typeof({1}));",
-                        d.Unsafe ? "unsafe " : "",
-                        d.Name,
-                        className,
-                        "GetDelegateForExtensionMethod");
-                }
+                // --- Workaround for mono gmcs 1.2.4 issue, where static initalization fails. ---
+                sw.WriteLine(
+                    "internal {0}static {1} {2}{1} = null;",
+                    d.Unsafe ? "unsafe " : "",
+                    d.Name,
+                    functionPrefix);
+                // --- End workaround ---s
             }
             sw.Unindent();
             sw.WriteLine("}");
@@ -657,8 +647,9 @@ namespace Bind.GL2
             	{
 	                sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
 	                sw.WriteLine(
-	                    "[System.Runtime.InteropServices.DllImport({0}.Library, EntryPoint = \"gl{1}\", ExactSpelling = true)]",
+	                    "[System.Runtime.InteropServices.DllImport({0}.Library, EntryPoint = \"{1}{2}\", ExactSpelling = true)]",
 	                    className,
+                        functionPrefix,
 	                    d.Name
 	                );
 	                sw.WriteLine("internal extern static {0};", d.DeclarationString());
@@ -683,13 +674,13 @@ namespace Bind.GL2
             sw.WriteLine("{");
 
             sw.Indent();
-            sw.WriteLine("static {0}() {1} {2}", className, "{", "}");    // Disable BeforeFieldInit
+            //sw.WriteLine("static {0}() {1} {2}", className, "{", "}");    // Static init in GLHelper.cs
             sw.WriteLine();
             foreach (string key in wrappers.Keys)
             {
                 if (Settings.Compatibility == Settings.Legacy.None && key != "Core")
                 {
-                	if (key != "3DFX")
+                	if (!Char.IsDigit(key[0]))
                 	{
 						sw.WriteLine("public static class {0}", key);
                 	}

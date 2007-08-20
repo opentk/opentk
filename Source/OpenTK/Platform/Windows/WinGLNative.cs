@@ -271,7 +271,9 @@ namespace OpenTK.Platform.Windows
                 )
             );
 
-            glContext.MakeCurrent();
+            glContext.CreateContext();
+
+            OpenTK.OpenGL.GL.LoadAll();
 
             if (this.Create != null)
             {

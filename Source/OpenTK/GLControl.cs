@@ -46,25 +46,59 @@ namespace OpenTK
         public GLControl(DisplayMode mode)
         {
             InitializeComponent();
-/*
-            System.Diagnostics.Debug.Listeners.Clear();
-            System.Diagnostics.Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            System.Diagnostics.Debug.AutoFlush = true;
-            System.Diagnostics.Trace.Listeners.Clear();
-            System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-            System.Diagnostics.Trace.AutoFlush = true;
-            Trace.AutoFlush = true;
-*/
+
+            this.Fullscreen = mode.Fullscreen;
+            
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            //this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+
+            //Debug.Print("Creating GLControl.");
+            //this.CreateControl();
+        }
+
+        #endregion
+        /*
+        CreateParams @params;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                if (@params == null)
+                {
+                    @params = base.CreateParams;
+                    //@params.ClassStyle = (int)
+                    //    (OpenTK.Platform.Windows.API.WindowClassStyle.OwnDC |
+                    //    OpenTK.Platform.Windows.API.WindowClassStyle.HRedraw |
+                    //    OpenTK.Platform.Windows.API.WindowClassStyle.VRedraw);
+                    //@params.Style = (int)
+                    //    (OpenTK.Platform.Windows.API.WindowStyle.ClipChildren);
+                    //    OpenTK.Platform.Windows.API.WindowStyle.ClipSiblings);
+                    //@params.ExStyle = OpenTK.Platform.Windows.API.ExtendedWindowStyle.
+                }
+                return @params;
+            }
+        }
+        */
+        #region --- Public Methods ---
+
+        /// <summary>
+        /// Forces the creation of the opengl rendering context.
+        /// </summary>
+        public void CreateContext()
+        {
+            Debug.Print("Creating opengl context");
+            Debug.Indent();
+
             if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
                 Environment.OSVersion.Platform == PlatformID.Win32Windows)
             {
                 glControl = new OpenTK.Platform.Windows.WinGLControl(this, new DisplayMode(Width, Height));
             }
             else if (Environment.OSVersion.Platform == PlatformID.Unix ||
-                     Environment.OSVersion.Platform == (PlatformID)128)
-                    // some older versions of Mono reported 128.
+                Environment.OSVersion.Platform == (PlatformID)128) // some older versions of Mono reported 128.
             {
-				glControl =  new OpenTK.Platform.X11.X11GLControl(this, new DisplayMode(Width, Height));
+                glControl = new OpenTK.Platform.X11.X11GLControl(this, new DisplayMode(Width, Height));
             }
             else
             {
@@ -73,26 +107,10 @@ namespace OpenTK
                 );
             }
 
-            glControl.Context.MakeCurrent();
-            /*
-            Context.MakeCurrent();
+            OpenTK.OpenGL.GL.LoadAll();
 
-            //GL.ReloadFunctions();
-
-            if (width > 0)
-                this.Width = width;
-            if (height > 0)
-                this.Height = height;
-            */
-            this.Fullscreen = mode.Fullscreen;
-            
-            this.SetStyle(ControlStyles.UserPaint, true);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            Debug.Unindent();
         }
-
-        #endregion
-
-        #region --- Public Methods ---
 
         /// <summary>
         /// Swaps the front and back buffers, and presents the rendered scene to the screen.
@@ -154,7 +172,13 @@ namespace OpenTK
         /// </summary>
         public bool IsIdle
         {
-            get { return glControl.IsIdle; }
+            get
+            {
+                if (glControl == null)
+                    this.CreateContext();
+                
+                return glControl.IsIdle;
+            }
         }
 
         #endregion
@@ -166,7 +190,13 @@ namespace OpenTK
         /// </summary>
         public IGLContext Context
         {
-            get { return glControl.Context; }
+            get
+            {
+                if (glControl == null)
+                    this.CreateContext();
+                
+                return glControl.Context;
+            }
         }
 
         #endregion

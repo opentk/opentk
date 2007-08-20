@@ -43,8 +43,6 @@ namespace OpenTK.Platform.Windows
 
             PrepareContext(mode);
 
-            CreateContext();
-
             Trace.Unindent();
         }
 
@@ -53,10 +51,15 @@ namespace OpenTK.Platform.Windows
         public void CreateContext()
         {
             Trace.Write("Creating render context... ");
-            renderContext = Wgl.CreateContext(deviceContext);
+            // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
+            // and Wgl extensions will fail to load.
+            //renderContext = Wgl.CreateContext(deviceContext);     
+            renderContext = Wgl.Imports.CreateContext(deviceContext);
             Trace.WriteLine(String.Format("done! (id: {0})", renderContext));
+            Wgl.Imports.MakeCurrent(deviceContext, renderContext);
+            Wgl.LoadAll();
         }
-
+        
         public void PrepareContext(DisplayMode mode)
         {
             // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.

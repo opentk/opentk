@@ -126,6 +126,14 @@ namespace Bind
                         break;
 
                     case GeneratorMode.Wgl:
+                        if (Settings.OutputPath == Settings.DefaultOutputPath)
+                        {
+                            Settings.OutputPath = Settings.DefaultWglOutputPath;
+                        }
+                        if (Settings.OutputNamespace == Settings.DefaultOutputNamespace)
+                        {
+                            Settings.OutputNamespace = "OpenTK.Platform.Windows";
+                        }
                         Generator = new Bind.Wgl.Generator(Settings.InputPath);
                         break;
 

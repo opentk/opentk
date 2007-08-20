@@ -15,6 +15,11 @@ namespace Bind
         public static string InputPath = "..\\..\\..\\Source\\Bind\\Specifications";
         public static string OutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
         public static string OutputNamespace = "OpenTK.OpenGL";
+
+        public readonly static string DefaultInputPath = "..\\..\\..\\Source\\Bind\\Specifications";
+        public readonly static string DefaultOutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
+        public readonly static string DefaultOutputNamespace = "OpenTK.OpenGL";
+
         public static string GLClass = "GL";
         private static string enumsClass = "Enums";
         public static string GLEnumsClass
@@ -29,6 +34,8 @@ namespace Bind
         public static string GlxClass = "Glx";
         public static string GluClass = "Glu";
         public static Legacy Compatibility = Legacy.None;
+
+        public readonly static string DefaultWglOutputPath = "..\\..\\..\\Source\\OpenTK\\Platform\\Windows\\Bindings";
 
         /// <summary>
         /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
