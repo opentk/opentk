@@ -60,6 +60,24 @@ namespace Examples.Tests
         public S02_RawInput_Logger()
         {
             this.CreateWindow(new OpenTK.Platform.DisplayMode(100, 100));
+
+            foreach (OpenTK.Input.Keyboard k in this.Keyboard)
+            {
+                k.KeyDown += new OpenTK.Input.KeyDownEvent(LogKeyDown);
+                k.KeyUp += new OpenTK.Input.KeyUpEvent(LogKeyUp);
+            }
+        }
+
+        void LogKeyDown(object sender, OpenTK.Input.Key key)
+        {
+            Trace.WriteLine(String.Format("OpenTK key {0} pressed on Keyboard: ({1}).",
+                key, sender as OpenTK.Input.Keyboard));
+        }
+
+        void LogKeyUp(object sender, OpenTK.Input.Key key)
+        {
+            Trace.WriteLine(String.Format("OpenTK key {0} released on Keyboard: ({1}).",
+                key, sender as OpenTK.Input.Keyboard));
         }
 
         public override void OnLoad(EventArgs e)
@@ -75,6 +93,7 @@ namespace Examples.Tests
 
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
             Context.SwapBuffers();
+            Thread.Sleep(1);
         }
     }
 }

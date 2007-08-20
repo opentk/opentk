@@ -133,6 +133,16 @@ namespace OpenTK.Platform.X11
             {
                 keyboardDriver.ProcessKeyboardEvent(e.KeyEvent);
             }
+            /*
+            if (API.Pending(window.Display) > 0)
+            {
+                Functions.XPeekEvent(window.Display, ref e);
+                if (e.type == XEventName.KeyRelease || e.type == XEventName.KeyPress)
+                {
+                    keyboardDriver.ProcessKeyboardEvent(e.KeyEvent);
+                }
+            }
+            */
         }
 
         #endregion

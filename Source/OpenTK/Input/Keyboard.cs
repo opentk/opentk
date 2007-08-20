@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace OpenTK.Input
 {
-    public class Keyboard : IKeyboard
+    public sealed class Keyboard : IKeyboard
     {
         //private IKeyboard keyboard;
         private bool[] keys = new bool[(int)Key.MaxKeys];
@@ -38,8 +38,16 @@ namespace OpenTK.Input
             get { return keys[(int)k]; }
             internal set
             {
-                Debug.Print("OpenTK key {0} {1}.", k, value ? "pressed" : "released");
                 keys[(int)k] = value;
+
+                if (value && KeyDown != null)
+                {
+                    KeyDown(this, k);
+                }
+                else if (!value && KeyUp != null)
+                {
+                    KeyUp(this, k);
+                }
             }
         }
 
@@ -70,6 +78,16 @@ namespace OpenTK.Input
             internal set { devID = value; }
         }
 
+        /// <summary>
+        /// Occurs when a key is pressed.
+        /// </summary>
+        public event KeyDownEvent KeyDown;
+
+        /// <summary>
+        /// Occurs when a key is released.
+        /// </summary>
+        public event KeyUpEvent KeyUp;
+
         #endregion
 
         #region --- IInputDevice Members ---
@@ -87,6 +105,8 @@ namespace OpenTK.Input
 
         #endregion
 
+        #region --- Public Methods ---
+
         public override int GetHashCode()
         {
             //return base.GetHashCode();
@@ -96,9 +116,11 @@ namespace OpenTK.Input
         public override string ToString()
         {
             //return base.ToString();
-            return String.Format("Keyboard: '{0}', {1} keys, {2} function keys, {3} leds. Device ID: {4}",
-                description, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds, DeviceID);
+            return String.Format("ID: {0} (keys: {1}, function keys: {2}, leds: {3}",
+                DeviceID, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds);
         }
+
+        #endregion
     }
 
     #region public enum Key : int
