@@ -203,7 +203,15 @@ namespace OpenTK
         {
             if (!Exists)
             {
-                glWindow.CreateWindow(mode);
+                try
+                {
+                    glWindow.CreateWindow(mode);
+                }
+                catch (ApplicationException expt)
+                {
+                    Debug.Print(expt.ToString());
+                    throw;
+                }
                 OpenTK.OpenGL.GL.LoadAll();
             }
             else
