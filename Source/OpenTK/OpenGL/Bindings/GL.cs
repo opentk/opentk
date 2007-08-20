@@ -5,7 +5,6 @@ namespace OpenTK.OpenGL
 
     public static partial class GL
     {
-        static GL() { }
 
         [System.CLSCompliant(false)]
         public static 

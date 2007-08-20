@@ -199,7 +199,9 @@ namespace Bind.Structures
             set
             {
                 if (!String.IsNullOrEmpty(value))
+                {
                     _name = value.Trim();
+                }
             }
         }
 
@@ -267,7 +269,8 @@ namespace Bind.Structures
             StringBuilder sb = new StringBuilder();
 
             sb.Append(Settings.DelegatesClass);
-            sb.Append(".gl");
+            sb.Append(".");
+            sb.Append(Bind.MainClass.Generator.FunctionPrefix);
             sb.Append(Name);
             sb.Append(Parameters.CallString());
 

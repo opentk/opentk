@@ -30,9 +30,11 @@ namespace OpenTK.Platform.Windows
         public WinGLControl(Control c, DisplayMode mode)
         {
             glContext = new WinGLContext(c.Handle, mode);
+
+            glContext.CreateContext();
         }
 
-        [Obsolete]
+        [Obsolete("Use WinGLControl(Control c, DisplayMode mode) instead")]
         public WinGLControl(Control c, int width, int height, bool fullscreen)
         {
             glContext = new WinGLContext(
@@ -47,6 +49,11 @@ namespace OpenTK.Platform.Windows
                     0.0f
                 )
             );
+
+            glContext.CreateContext();
+
+            glContext.MakeCurrent();
+            OpenTK.OpenGL.GL.LoadAll();
         }
 
         #endregion

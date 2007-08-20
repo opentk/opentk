@@ -101,7 +101,7 @@ namespace Examples.Tutorial
             base.OnLoad(e);
 
             // Check for necessary capabilities:
-            if (!GL.IsExtensionSupported("VERSION_2_0"))
+            if (!GL.SupportsExtension("VERSION_2_0"))
             {
                 MessageBox.Show("You need at least OpenGL 2.0 to run this example. Aborting.", "GLSL not supported",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

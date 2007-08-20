@@ -24,35 +24,31 @@ namespace Examples.Tests
 
         public void Launch()
         {
-            //using (S02_RawInput_Logger ex = new S02_RawInput_Logger())
+            try
             {
-                try
-                {
-                    //ex.Run();
-                    Run();
-                }
-                catch (Exception expt)
-                {
-                    System.Diagnostics.Debug.WriteLine(
-                        String.Format(
-                            "Exception: {3}{0}Stacktrace:{0}{1}{0}{0}{2}",
-                            System.Environment.NewLine,
-                            expt.TargetSite,
-                            expt.StackTrace,
-                            expt.Message
-                        )
-                    );
-                    /*MessageBox.Show(
-                        String.Format(
-                            "Stacktrace:{0}{1}{0}{0}{2}",
-                            System.Environment.NewLine,
-                            expt.TargetSite,
-                            expt.StackTrace
-                        ),
+                Run();
+            }
+            catch (Exception expt)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    String.Format(
+                        "Exception: {3}{0}Stacktrace:{0}{1}{0}{0}{2}",
+                        System.Environment.NewLine,
+                        expt.TargetSite,
+                        expt.StackTrace,
                         expt.Message
-                    );*/
-                    throw;
-                }
+                    )
+                );
+                /*MessageBox.Show(
+                    String.Format(
+                        "Stacktrace:{0}{1}{0}{0}{2}",
+                        System.Environment.NewLine,
+                        expt.TargetSite,
+                        expt.StackTrace
+                    ),
+                    expt.Message
+                );*/
+                throw;
             }
             Debug.Flush();
             Debug.Close();

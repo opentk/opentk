@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using OpenTK.Platform;
 
 #endregion
 
@@ -66,286 +67,69 @@ namespace OpenTK.OpenGL
     /// </remarks>
     public static partial class GL
     {
-        #region internal string Library
+        static GL()
+        {
+            assembly = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.OpenGL");
+            glClass = assembly.GetType("OpenTK.OpenGL.GL");
+            delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
+            importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
+        }
 
-        internal const string Library = "opengl32.dll";
+        #region --- Fields ---
+
+        internal const string Library = "OPENGL32.DLL";
         
-        #endregion
-
-        #region private enum Platform
-
-        /// <summary>
-        /// Enumerates the platforms OpenTK can run on.
-        /// </summary>
-        private enum Platform
-        {
-            Unknown,
-            Windows,
-            X11,
-            X11_ARB,
-            OSX
-        };
-
-        #endregion private enum Platform
-
-        private static Platform platform = Platform.Unknown;
         private static System.Collections.Generic.Dictionary<string, bool> AvailableExtensions = new Dictionary<string, bool>();
+        private static bool rebuildExtensionList;
 
-        #region internal static extern IntPtr glxGetProcAddressARB(string s);
-        // also linux, for our ARB-y friends
-        [DllImport(Library, EntryPoint = "glXGetProcAddressARB")]
-        internal static extern IntPtr glxGetProcAddressARB(string s);
+        private static Assembly assembly;
+        private static Type glClass;
+        private static Type delegatesClass;
+        private static Type importsClass;
+
         #endregion
 
-        #region internal static IntPtr aglGetProcAddress(string s)
-        // osx gets complicated
-        [DllImport("libdl.dylib", EntryPoint = "NSIsSymbolNameDefined")]
-        internal static extern bool NSIsSymbolNameDefined(string s);
-        [DllImport("libdl.dylib", EntryPoint = "NSLookupAndBindSymbol")]
-        internal static extern IntPtr NSLookupAndBindSymbol(string s);
-        [DllImport("libdl.dylib", EntryPoint = "NSAddressOfSymbol")]
-        internal static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
+        #region public static bool SupportsExtension(string name)
 
-        internal static IntPtr aglGetProcAddress(string s)
-        {
-            string fname = "_" + s;
-            if (!NSIsSymbolNameDefined(fname))
-                return IntPtr.Zero;
-
-            IntPtr symbol = NSLookupAndBindSymbol(fname);
-            if (symbol != IntPtr.Zero)
-                symbol = NSAddressOfSymbol(symbol);
-
-            return symbol;
-        }
-        #endregion
-
-        #region public static IntPtr GetFunctionPointerForExtensionMethod(string name)
-        /// <summary>
-        /// Retrieves the entry point for a dynamically exported OpenGL function.
-        /// </summary>
-        /// <param name="name">The function string for the OpenGL function (eg. "glNewList")</param>
-        /// <returns>
-        /// An IntPtr contaning the address for the entry point, or IntPtr.Zero if the specified
-        /// OpenGL function is not dynamically exported.
-        /// </returns>
-        /// <remarks>
-        /// <para>
-        /// The Marshal.GetDelegateForFunctionPointer method can be used to turn the return value
-        /// into a call-able delegate.
-        /// </para>
-        /// <para>
-        /// This function is cross-platform. It determines the underlying platform and uses the
-        /// correct wgl, glx or agl GetAddress function to retrieve the function pointer.
-        /// </para>
-        /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
-        /// <seealso cref="Gl.GetDelegateForExtensionMethod"/>
-        /// </remarks>
-        public static IntPtr GetFunctionPointerForExtensionMethod(string name)
-        {
-            IntPtr result = IntPtr.Zero;
-
-            switch (platform)
-            {
-                case Platform.Unknown:
-                    // WGL?
-                    try
-                    {
-                        result = OpenTK.Platform.Windows.Wgl.GetProcAddress(name);
-                        platform = Platform.Windows;
-                        return result;
-                    }
-                    catch (Exception)
-                    { }
-
-                    // AGL? (before X11, since GLX might exist on OSX)
-                    try
-                    {
-                        result = aglGetProcAddress(name);
-                        platform = Platform.OSX;
-                        return result;
-                    }
-                    catch (Exception)
-                    { }
-
-                    // X11?
-                    try
-                    {
-                        result = OpenTK.Platform.X11.Glx.GetProcAddress(name);
-                        platform = Platform.X11;
-                        return result;
-                    }
-                    catch (Exception)
-                    { }
-
-                    // X11 ARB?
-                    try
-                    {
-                        result = glxGetProcAddressARB(name);
-                        platform = Platform.X11_ARB;
-                        return result;
-                    }
-                    catch (Exception)
-                    { }
-
-                    // Ack!
-                    throw new NotSupportedException(
-@"Could not find out how to retrive function pointers for this platform.
-Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
-");
-
-                case Platform.Windows:
-                    return OpenTK.Platform.Windows.Wgl.GetProcAddress(name);
-
-                case Platform.OSX:
-                    return aglGetProcAddress(name);
-
-                case Platform.X11:
-                    return OpenTK.Platform.X11.Glx.GetProcAddress(name);
-
-                case Platform.X11_ARB:
-                    return glxGetProcAddressARB(name);
-            }
-
-            throw new NotSupportedException("Internal error - please report.");
-        }
-        #endregion public static IntPtr GetFunctionPointerForExtensionMethod(string s)
-
-        #region public static Delegate GetDelegateForExtensionMethod(string name, Type signature)
-        /// <summary>
-        /// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
-        /// </summary>
-        /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
-        /// <param name="signature">The signature of the OpenGL function.</param>
-        /// <returns>
-        /// A System.Delegate that can be used to call this OpenGL function or null
-        /// if the function is not available in the current OpenGL context.
-        /// </returns>
-        public static Delegate GetDelegateForExtensionMethod(string name, Type signature)
-        {
-            IntPtr address = GetFunctionPointerForExtensionMethod(name);
-
-            if (address == IntPtr.Zero ||
-                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
-                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
-            {
-                return null;
-            }
-            else
-            {
-                return Marshal.GetDelegateForFunctionPointer(address, signature);
-            }
-        }
-        #endregion public static Delegate GetAddress(string name, Type signature)
-
-        #region public static Delegate GetDelegateForMethod(string name, Type signature)
-        /// <summary>
-        /// Creates a System.Delegate that can be used to call an OpenGL function, core or extension.
-        /// </summary>
-        /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
-        /// <param name="signature">The signature of the OpenGL function.</param>
-        /// <returns>
-        /// A System.Delegate that can be used to call this OpenGL function, or null if the specified
-        /// function name did not correspond to an OpenGL function.
-        /// </returns>
-        public static Delegate GetDelegateForMethod(string name, Type signature)
-        {
-            Delegate d;
-
-            if (Assembly.GetExecutingAssembly()
-                .GetType("OpenTK.OpenGL.Imports")
-                .GetMethod(name.Substring(2), BindingFlags.NonPublic | BindingFlags.Static) != null)
-            {
-                d = GetDelegateForExtensionMethod(name, signature) ??
-                    Delegate.CreateDelegate(signature, typeof(Imports), name.Substring(2));
-            }
-            else
-            {
-                d = GetDelegateForExtensionMethod(name, signature);
-            }
-
-            return d;
-        }
-        #endregion
-
-        #region public static bool IsExtensionSupported(string name)
         /// <summary>
         /// Determines whether the specified OpenGL extension category is available in
         /// the current OpenGL context. Equivalent to IsExtensionSupported(name, true)
         /// </summary>
         /// <param name="name">The string for the OpenGL extension category (eg. "GL_ARB_multitexture")</param>
         /// <returns>True if the specified extension is available, false otherwise.</returns>
-        public static bool IsExtensionSupported(string name)
+        public static bool SupportsExtension(string name)
         {
-            return IsExtensionSupported(name, true);
-        }
-        #endregion
-
-        #region public static bool IsExtensionSupported(string name, bool useCache)
-        /// <summary>
-        /// Determines whether the specified OpenGL extension category is available in
-        /// the current OpenGL context.
-        /// </summary>
-        /// <param name="name">The string for the OpenGL extension category (eg. "GL_ARB_multitexture")</param>
-        /// <param name="useCache">If true, the results will be cached to speed up future results.</param>
-        /// <returns>True if the specified extension is available, false otherwise.</returns>
-        public static bool IsExtensionSupported(string name, bool useCache)
-        {
-            // Use cached results
-            if (useCache)
+            if (rebuildExtensionList)
             {
-                // Build cache if it is not available. We assume that all drivers
-                // will support at least one extension to opengl 1.0 (for example
-                // opengl 1.1). This should hold true even for software contexts
-                // (microsoft's soft implementation is gl 1.1 compatible), at least
-                // for any system capable of running .Net/Mono.
-                if (AvailableExtensions.Count == 0)
-                {
-                    ParseAvailableExtensions();
-                }
+                BuildExtensionList();
+            }
 
-                // Search the cache for the string. Note that the cache substitutes
-                // strings "1.0" to "2.1" with "GL_VERSION_1_0" to "GL_VERSION_2_1"
-                if (AvailableExtensions.ContainsKey(name))
-                    return AvailableExtensions[name];
+            // Search the cache for the string. Note that the cache substitutes
+            // strings "1.0" to "2.1" with "GL_VERSION_1_0" to "GL_VERSION_2_1"
+            if (AvailableExtensions.ContainsKey(name))
+            {
+                return AvailableExtensions[name];
+            }
                 
-                return false;
-            }
-
-            // Do not use cached results
-            string extension_string = GL.GetString(GL.Enums.StringName.EXTENSIONS);
-            if (String.IsNullOrEmpty(extension_string))
-                return false;               // no extensions are available
-
-            // Check if the user searches for GL_VERSION_X_X and search glGetString(GL_VERSION) instead.
-            if (name.Contains("GL_VERSION_"))
-            {
-                return GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.VERSION).Trim().StartsWith(name.Replace("GL_VERSION_", String.Empty).Replace('_', '.'));
-            }
-
-            // Search for the string given.
-            string[] extensions = extension_string.Split(' ');
-            foreach (string s in extensions)
-            {
-                if (name == s)
-                    return true;
-            }
-
             return false;
         }
+
         #endregion
 
-        #region private static void ParseAvailableExtensions()
+        #region private static void BuildExtensionList()
+
         /// <summary>
         /// Builds a cache of the supported extensions to speed up searches.
         /// </summary>
-        private static void ParseAvailableExtensions()
+        private static void BuildExtensionList()
         {
-            // Assumes there is a current context.
+            // Assumes there is an opengl context current.
 
             string version_string = GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.VERSION);
             if (String.IsNullOrEmpty(version_string))
-                return;               // this shoudn't happen
+            {
+                throw new ApplicationException("Failed to build extension list. Is there an opengl context current?");
+            }
 
             string version = version_string.Trim(' ');
 
@@ -398,43 +182,73 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
             {
                 AvailableExtensions.Add(ext, true);
             }
+
+            rebuildExtensionList = false;
         }
+
         #endregion
 
-        #region public static void ReloadFunctions()
+        #region public static Delegate GetDelegate(string name, Type signature)
+
         /// <summary>
-        /// Reloads all OpenGL functions (core and extensions).
+        /// Creates a System.Delegate that can be used to call an OpenGL function, core or extension.
+        /// </summary>
+        /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
+        /// <param name="signature">The signature of the OpenGL function.</param>
+        /// <returns>
+        /// A System.Delegate that can be used to call this OpenGL function, or null if the specified
+        /// function name did not correspond to an OpenGL function.
+        /// </returns>
+        public static Delegate GetDelegate(string name, Type signature)
+        {
+            Delegate d;
+
+            if (importsClass.GetMethod(name.Substring(2), BindingFlags.NonPublic | BindingFlags.Static) != null)
+            {
+                d = Utilities.GetExtensionDelegate(name, signature) ??
+                    Delegate.CreateDelegate(signature, typeof(Imports), name.Substring(2));
+            }
+            else
+            {
+                d = Utilities.GetExtensionDelegate(name, signature);
+            }
+
+            return d;
+        }
+
+        #endregion
+
+        #region public static void LoadAll()
+
+        /// <summary>
+        /// Loads all OpenGL functions (core and extensions).
         /// </summary>
         /// <remarks>
         /// <para>
-        /// Call this function to reload all OpenGL entry points. This should be done 
-        /// whenever you change the pixelformat/visual, or in the case you cannot (or do not want)
-        /// to use the automatic initialisation.
+        /// This function will be automatically called the first time you use any opengl function. There is 
         /// </para>
         /// <para>
-        /// Calling this function before the automatic initialisation has taken place will result
-        /// in the Gl class being initialised twice. This is harmless, but given the automatic
-        /// initialisation should be preferred.
+        /// Call this function manually whenever you need to update OpenGL entry points.
+        /// This need may arise if you change the pixelformat/visual, or in case you cannot
+        /// (or do not want) to use the automatic initialisation of the GL class.
         /// </para>
         /// </remarks>
-        public static void ReloadFunctions()
+        public static void LoadAll()
         {
-            Assembly asm = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.OpenGL");
-            Type delegates_class = asm.GetType("OpenTK.OpenGL.Delegates");
-            //Type imports_class = asm.GetType("OpenTK.OpenGL.Imports");
-
-            FieldInfo[] v = delegates_class.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+            FieldInfo[] v = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
             foreach (FieldInfo f in v)
             {
-                f.SetValue(null, GetDelegateForMethod(f.Name, f.FieldType));
+                f.SetValue(null, GetDelegate(f.Name, f.FieldType));
             }
 
-            //ParseAvailableExtensions();
             AvailableExtensions.Clear();
+            rebuildExtensionList = true;
         }
+
         #endregion
 
-        #region public static bool ReloadFunction(string name)
+        #region public static bool Load(string function)
+
         /// <summary>
         /// Tries to reload the given OpenGL function (core or extension).
         /// </summary>
@@ -451,28 +265,24 @@ Did you remember to copy OpenTK.OpenGL.dll.config to your binary's folder?
         /// you will need, or use ReloadFunctions() to load all available entry points.
         /// </para>
         /// <para>
-        /// This function will return true if the given OpenGL function exists, false otherwise.
-        /// A return value of "true" does not mean that any specific OpenGL function is supported;
-        /// rather it means that the string passed to this function denotes a known OpenGL function.
+        /// This function returns true if the given OpenGL function is supported, false otherwise.
         /// </para>
         /// <para>
-        /// To query supported extensions use the IsExtensionSupported() function instead.
+        /// To query for supported extensions use the IsExtensionSupported() function instead.
         /// </para>
         /// </remarks>
-        public static bool ReloadFunction(string name)
+        public static bool Load(string function)
         {
-            Assembly asm = Assembly.Load("OpenTK.OpenGL");
-            Type delegates_class = asm.GetType("OpenTK.OpenGL.Delegates");
-            //Type imports_class = asm.GetType("OpenTK.OpenGL.Imports");
-
-            FieldInfo f = delegates_class.GetField(name);
+            FieldInfo f = delegatesClass.GetField(function);
             if (f == null)
                 return false;
 
-            f.SetValue(null, GetDelegateForMethod(f.Name, f.FieldType));
+            f.SetValue(null, GetDelegate(f.Name, f.FieldType));
+            rebuildExtensionList = true;
 
-            return true;
+            return f.GetValue(null) != null;
         }
+
         #endregion
     }
 }

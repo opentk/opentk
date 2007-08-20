@@ -13,6 +13,8 @@ namespace Bind.Wgl
 {
     class Generator : Bind.GL2.Generator
     {
+        #region --- Constructors ---
+
         public Generator(string path)
             : base(path)
         {
@@ -29,7 +31,11 @@ namespace Bind.Wgl
             wrappersFile = "Wgl.cs";
             
             className = "Wgl";
+
+            functionPrefix = "wgl";
         }
+
+        #endregion
 
         public override void Process()
         {

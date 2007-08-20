@@ -42,13 +42,8 @@ namespace OpenTK.Platform.X11
     /// <summary>
     /// Provides access to GLX functions.
     /// </summary>
-    internal static class Glx
+    public static partial class Glx
     {
-        // Disable BeforeFieldInit optimization.
-        static Glx() { }
-
-        const string _dll_name = "libGL.so.1";
-
         #region Enums
 
         public struct Enums
@@ -269,7 +264,7 @@ namespace OpenTK.Platform.X11
 
         #region GLX functions
 
-        [DllImport(_dll_name, EntryPoint = "glXCreateContext")]
+        [DllImport(Library, EntryPoint = "glXCreateContext")]
         internal static extern IntPtr CreateContext(IntPtr dpy, IntPtr vis, IntPtr shareList, bool direct);
 
         internal static IntPtr CreateContext(IntPtr dpy, VisualInfo vis, IntPtr shareList, bool direct)
@@ -286,21 +281,21 @@ namespace OpenTK.Platform.X11
             }
         }
         
-        [DllImport(_dll_name, EntryPoint = "glXDestroyContext")]
+        [DllImport(Library, EntryPoint = "glXDestroyContext")]
         public static extern void DestroyContext(IntPtr dpy, IntPtr context);
 
-        [DllImport(_dll_name, EntryPoint = "glXMakeCurrent")]
+        [DllImport(Library, EntryPoint = "glXMakeCurrent")]
         public static extern bool MakeCurrent(IntPtr display, IntPtr drawable, IntPtr context);
 
-        [DllImport(_dll_name, EntryPoint = "glXSwapBuffers")]
+        [DllImport(Library, EntryPoint = "glXSwapBuffers")]
         public static extern void SwapBuffers(IntPtr display, IntPtr drawable);
 
-        [DllImport(_dll_name, EntryPoint = "glXGetProcAddress")]
+        [DllImport(Library, EntryPoint = "glXGetProcAddress")]
         public static extern IntPtr GetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
 
         #region glXChooseVisual
 
-        [DllImport(_dll_name, EntryPoint = "glXChooseVisual")]
+        [DllImport(Library, EntryPoint = "glXChooseVisual")]
         internal extern static IntPtr ChooseVisual(IntPtr dpy, int screen, IntPtr attriblist);
 
         internal static IntPtr ChooseVisual(IntPtr dpy, int screen, int[] attriblist)
