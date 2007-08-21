@@ -1,6 +1,35 @@
 '+' complete, '*' WIP, '-' missing
 
 
+OpenTK 0.3.9 -> 0.3.10
+
++ Bind
+	+ Added Generator for WGL.
+	+ Corrected bug where trimmed overloads (like Color3) did not call the correct delegates internally (Color3ub called glColor3b)
+	+ Improved configuration capabilities - can now change the function prefix/postfix, and more.
+	+ Improved commandline argument handling.
+
++ OpenTK
+	+ Platform
+		+ Added complete WGL bindings (Wgl.cs, WglCore.cs, WglDelegates.cs, WglEnums.cs)
+		* Should request up-to-date specs from Khronos.
+	+ GameWindow and GLControl
+		+ Improved creation/destruction event sequence.
+		+ Improved loading speed.
+		+ Corrected long-standing stability issues (moving between GameWindow/GLControl examples no longer results in a crash)
+		+ Improved compatibility (now works with Mesa3d 7.0.x as well as 6.5.x)
+		+ Better error handling (although not completely safe by any measure).
+		+ Corrected client rectangle under Windows GameWindow implementation - now the Viewport correctly corresponds the rendering area.
+	+ Input
+		+ Slightly improved keyboard handling functions.
+	+ OpenGL
+		+ Added convenience overloads for Color[34] that can directly take a System.Drawing.Color struct.
+
++ Examples
+	+ Slight improvements to event handling.
+	+ Improved the ExampleLauncher interface (now responds to key events, added a 'Run Example' button).
+	
+
 OpenTK 0.3.8 -> 0.3.9
 
 + Bind
