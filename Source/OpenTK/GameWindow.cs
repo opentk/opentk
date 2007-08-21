@@ -212,7 +212,7 @@ namespace OpenTK
                     Debug.Print(expt.ToString());
                     throw;
                 }
-                OpenTK.OpenGL.GL.LoadAll();
+                //OpenTK.OpenGL.GL.LoadAll();
             }
             else
             {

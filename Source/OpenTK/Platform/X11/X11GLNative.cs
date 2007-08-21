@@ -309,6 +309,8 @@ namespace OpenTK.Platform.X11
 
                 API.MapRaised(window.Display, window.Handle);
 
+                OpenTK.OpenGL.GL.LoadAll();
+
                 Debug.Unindent();
                 Debug.WriteLine("GameWindow creation completed successfully!");
                 exists = true;
