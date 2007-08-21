@@ -165,7 +165,7 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XChangeProperty")]
         public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, ref int value, int nelements);
 
-        [DllImport("libX11", EntryPoint = "XChangeProperty")]
+        [DllImport("libX11", EntryPoint = "XChangeProperty"), CLSCompliant(false)]
         public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, ref IntPtr value, int nelements);
 
         [DllImport("libX11", EntryPoint = "XChangeProperty"), CLSCompliant(false)]
