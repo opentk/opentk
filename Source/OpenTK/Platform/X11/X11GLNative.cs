@@ -53,14 +53,8 @@ namespace OpenTK.Platform.X11
         {
             Debug.Print("Native window driver: {0}", this.ToString());
             window = new WindowInfo();
-            Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-            if (xplatui != null)
-            {
-                FieldInfo f = xplatui.GetField("ErrorExceptions",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-                if (f != null)
-                    f.SetValue(null, true);
-            }
+
+            Utilities.ThrowOnX11Error = true;
         }
 
         #endregion

@@ -92,22 +92,33 @@ namespace OpenTK
         /// </summary>
         public void CreateContext()
         {
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                Environment.OSVersion.Platform == PlatformID.Win32Windows)
+            try
             {
-                glControl = new OpenTK.Platform.Windows.WinGLControl(this, new DisplayMode(Width, Height));
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
+                    Environment.OSVersion.Platform == PlatformID.Win32Windows)
+                {
+                    glControl = new OpenTK.Platform.Windows.WinGLControl(this, new DisplayMode(Width, Height));
+                }
+                else if (Environment.OSVersion.Platform == PlatformID.Unix ||
+                    Environment.OSVersion.Platform == (PlatformID)128) // some older versions of Mono reported 128.
+                {
+                    glControl = new OpenTK.Platform.X11.X11GLControl(this);
+                        //, new DisplayMode(this.Width, this.Height, new OpenTK.Platform.ColorDepth(1, 1, 1, 1), 1, 0, 0, 0, false, false, false, 0.0f));
+                }
+                else
+                {
+                    throw new PlatformNotSupportedException(
+                        "Your operating system is not currently supported. We are sorry for the inconvenience."
+                    );
+                }
             }
-            else if (Environment.OSVersion.Platform == PlatformID.Unix ||
-                Environment.OSVersion.Platform == (PlatformID)128) // some older versions of Mono reported 128.
+            catch (Exception e)
             {
-                glControl = new OpenTK.Platform.X11.X11GLControl(this, new DisplayMode(Width, Height));
+                Debug.Print("Could not create GLControl, error: {0}", e.ToString());
+                throw;
             }
-            else
-            {
-                throw new PlatformNotSupportedException(
-                    "Your operating system is not currently supported. We are sorry for the inconvenience."
-                );
-            }
+
+            this.Visible = true;
 
             OpenTK.OpenGL.GL.LoadAll();
             this.OnResize(EventArgs.Empty);
