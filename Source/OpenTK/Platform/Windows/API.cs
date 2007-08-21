@@ -43,9 +43,11 @@ namespace OpenTK.Platform.Windows
     using BOOL = System.Boolean;
     using INT = System.Int32;
     using UINT = System.UInt32;
-    using COLORREF = System.Int32;
     using LONG_PTR = System.IntPtr;
-    
+
+    using COLORREF = System.Int32;
+    using RECT = OpenTK.Platform.Windows.API.Rectangle;
+
     using WNDPROC = System.IntPtr;
 
     #endregion
@@ -173,6 +175,239 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region --- Functions ---
+
+        #region Window Creation
+
+        #region SetWindowPos
+
+        // WINUSERAPI BOOL WINAPI SetWindowPos(__in HWND hWnd, __in_opt HWND hWndInsertAfter,
+        //                                     __in int X, __in int Y, __in int cx, __in int cy, __in UINT uFlags);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetWindowPos(
+            IntPtr handle,
+            WindowPlacementOptions placement,
+            int x, int y, int cx, int cy,
+            SetWindowPosFlags flags
+        );
+
+        #endregion
+
+        #region AdjustWindowRect
+
+        /// <summary>
+        /// Calculates the required size of the window rectangle, based on the desired client-rectangle size. The window rectangle can then be passed to the CreateWindow function to create a window whose client area is the desired size.
+        /// </summary>
+        /// <param name="lpRect">[in, out] Pointer to a RECT structure that contains the coordinates of the top-left and bottom-right corners of the desired client area. When the function returns, the structure contains the coordinates of the top-left and bottom-right corners of the window to accommodate the desired client area.</param>
+        /// <param name="dwStyle">[in] Specifies the window style of the window whose required size is to be calculated. Note that you cannot specify the WS_OVERLAPPED style.</param>
+        /// <param name="bMenu">[in] Specifies whether the window has a menu.</param>
+        /// <returns>
+        /// If the function succeeds, the return value is nonzero.
+        /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+        /// </returns>
+        /// <remarks>
+        /// A client rectangle is the smallest rectangle that completely encloses a client area. A window rectangle is the smallest rectangle that completely encloses the window, which includes the client area and the nonclient area. 
+        /// The AdjustWindowRect function does not add extra space when a menu bar wraps to two or more rows. 
+        /// The AdjustWindowRect function does not take the WS_VSCROLL or WS_HSCROLL styles into account. To account for the scroll bars, call the GetSystemMetrics function with SM_CXVSCROLL or SM_CYHSCROLL.
+        /// Found Winuser.h, user32.dll
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
+        public static extern BOOL AdjustWindowRect([In, Out] ref RECT lpRect, WindowStyle dwStyle, BOOL bMenu);
+
+        #endregion
+
+        #region CreateWindowEx
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr CreateWindowEx(
+            [In]ExtendedWindowStyle ExStyle,
+            [In]string className,
+            [In]string windowName,
+            [In]WindowStyle Style,
+            [In]int X, int Y,
+            [In]int Width, int Height,
+            [In]IntPtr HandleToParentWindow,
+            [In]IntPtr Menu,
+            [In]IntPtr Instance,
+            [In]IntPtr Param);
+        /*
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int CreateWindowEx(
+            [In]ExtendedWindowStyle ExStyle,
+            [In]IntPtr ClassName,
+            [In]IntPtr WindowName,
+            [In]WindowStyle Style,
+            [In]int X, [In]int Y,
+            [In]int Width, [In]int Height,
+            [In]IntPtr HandleToParentWindow,
+            [In]IntPtr Menu,
+            [In]IntPtr Instance,
+            [In]IntPtr Param);
+        */
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr CreateWindowEx(
+            ExtendedWindowStyle ExStyle,
+            IntPtr ClassName,
+            IntPtr WindowName,
+            WindowStyle Style,
+            int X, int Y,
+            int Width, int Height,
+            IntPtr HandleToParentWindow,
+            IntPtr Menu,
+            IntPtr Instance,
+            IntPtr Param);
+
+        public enum WindowStyle : int
+        {
+            Overlapped = 0x00000000,
+            Popup = unchecked((int)0x80000000),
+            Child = 0x40000000,
+            Minimize = 0x20000000,
+            Visible = 0x10000000,
+            Disabled = 0x08000000,
+            ClipSiblings = 0x04000000,
+            ClipChildren = 0x02000000,
+            Maximize = 0x01000000,
+            Caption = 0x00C00000,    // Border | DialogFrame
+            Border = 0x00800000,
+            DialogFrame = 0x00400000,
+            VScroll = 0x00200000,
+            HScreen = 0x00100000,
+            SystemMenu = 0x00080000,
+            ThickFrame = 0x00040000,
+            Group = 0x00020000,
+            TabStop = 0x00010000,
+
+            MinimizeBox = 0x00020000,
+            MaximizeBox = 0x00010000,
+
+            Tiled = Overlapped,
+            Iconic = Minimize,
+            SizeBox = ThickFrame,
+            TiledWindow = OverlappedWindow,
+
+            // Common window styles:
+            OverlappedWindow = Overlapped | Caption | SystemMenu | ThickFrame | MinimizeBox | MaximizeBox,
+            PopupWindow = Popup | Border | SystemMenu,
+            ChildWindow = Child
+        }
+
+        [Flags]
+        public enum ExtendedWindowStyle : int
+        {
+            DialogModalFrame = 0x00000001,
+            NoParentNotify = 0x00000004,
+            Topmost = 0x00000008,
+            AcceptFiles = 0x00000010,
+            Transparent = 0x00000020,
+
+            // #if(WINVER >= 0x0400)
+            MdiChild = 0x00000040,
+            ToolWindow = 0x00000080,
+            WindowEdge = 0x00000100,
+            ClientEdge = 0x00000200,
+            ContextHelp = 0x00000400,
+            // #endif
+
+            // #if(WINVER >= 0x0400)
+            Right = 0x00001000,
+            Left = 0x00000000,
+            RightToLeftReading = 0x00002000,
+            LeftToRightReading = 0x00000000,
+            LeftScrollbar = 0x00004000,
+            RightScrollbar = 0x00000000,
+
+            ControlParent = 0x00010000,
+            StaticEdge = 0x00020000,
+            ApplicationWindow = 0x00040000,
+
+            OverlappedWindow = WindowEdge | ClientEdge,
+            PaletteWindow = WindowEdge | ToolWindow | Topmost,
+            // #endif
+
+            // #if(_WIN32_WINNT >= 0x0500)
+            Layered = 0x00080000,
+            // #endif
+
+            // #if(WINVER >= 0x0500)
+            NoInheritLayout = 0x00100000, // Disable inheritence of mirroring by children
+            RightToLeftLayout = 0x00400000, // Right to left mirroring
+            // #endif /* WINVER >= 0x0500 */
+
+            // #if(_WIN32_WINNT >= 0x0501)
+            Composited = 0x02000000,
+            // #endif /* _WIN32_WINNT >= 0x0501 */
+
+            // #if(_WIN32_WINNT >= 0x0500)
+            NoActivate = 0x08000000
+            // #endif /* _WIN32_WINNT >= 0x0500 */
+        }
+
+        #endregion
+
+        #region DestroyWindow
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DestroyWindow(IntPtr windowHandle);
+
+        #endregion
+
+        #region RegisterClass
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern short RegisterClass(WindowClass window_class);
+
+        #endregion
+
+        #region UnregisterClass
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern short UnregisterClass(string className, IntPtr instance);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern short UnregisterClass(IntPtr className, IntPtr instance);
+
+        #endregion
+
+        [CLSCompliant(false)]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern LRESULT CallWindowProc(
+            WNDPROC lpPrevWndFunc,
+            HWND hWnd,
+            UINT Msg,
+            WPARAM wParam,
+            LPARAM lParam
+        );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern LRESULT CallWindowProc(
+            WNDPROC lpPrevWndFunc,
+            HWND hWnd,
+            INT Msg,
+            WPARAM wParam,
+            LPARAM lParam
+        );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern LONG_PTR SetWindowLongPtr(
+            HWND hWnd,
+            GetWindowLongOffsets nIndex,
+            LONG_PTR dwNewLong
+        );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern LONG_PTR GetWindowLongPtr(
+            HWND hWnd,
+            GetWindowLongOffsets nIndex
+        );
+
+        #endregion
 
         #region Message handling
 
@@ -482,216 +717,6 @@ namespace OpenTK.Platform.Windows
         public static extern bool FreeLibrary(IntPtr handle);
 
         #endregion
-
-        #endregion
-
-        #region Window Creation
-
-        #region SetWindowPos
-
-        // WINUSERAPI BOOL WINAPI SetWindowPos(__in HWND hWnd, __in_opt HWND hWndInsertAfter,
-        //                                     __in int X, __in int Y, __in int cx, __in int cy, __in UINT uFlags);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetWindowPos(
-            IntPtr handle,
-            WindowPlacementOptions placement,
-            int x, int y, int cx, int cy,
-            SetWindowPosFlags flags
-        );
-
-        #endregion
-
-        #region CreateWindowEx
-
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern IntPtr CreateWindowEx(
-            [In]ExtendedWindowStyle ExStyle,
-            [In]string className,
-            [In]string windowName,
-            [In]WindowStyle Style,
-            [In]int X, int Y,
-            [In]int Width, int Height,
-            [In]IntPtr HandleToParentWindow,
-            [In]IntPtr Menu,
-            [In]IntPtr Instance,
-            [In]IntPtr Param);
-        /*
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern int CreateWindowEx(
-            [In]ExtendedWindowStyle ExStyle,
-            [In]IntPtr ClassName,
-            [In]IntPtr WindowName,
-            [In]WindowStyle Style,
-            [In]int X, [In]int Y,
-            [In]int Width, [In]int Height,
-            [In]IntPtr HandleToParentWindow,
-            [In]IntPtr Menu,
-            [In]IntPtr Instance,
-            [In]IntPtr Param);
-        */
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern IntPtr CreateWindowEx(
-            ExtendedWindowStyle ExStyle,
-            IntPtr ClassName,
-            IntPtr WindowName,
-            WindowStyle Style,
-            int X, int Y,
-            int Width, int Height,
-            IntPtr HandleToParentWindow,
-            IntPtr Menu,
-            IntPtr Instance,
-            IntPtr Param);
-
-        public enum WindowStyle : int
-        {
-            Overlapped = 0x00000000,
-            Popup = unchecked((int)0x80000000),
-            Child = 0x40000000,
-            Minimize = 0x20000000,
-            Visible = 0x10000000,
-            Disabled = 0x08000000,
-            ClipSiblings = 0x04000000,
-            ClipChildren = 0x02000000,
-            Maximize = 0x01000000,
-            Caption = 0x00C00000,    // Border | DialogFrame
-            Border = 0x00800000,
-            DialogFrame = 0x00400000,
-            VScroll = 0x00200000,
-            HScreen = 0x00100000,
-            SystemMenu = 0x00080000,
-            ThickFrame = 0x00040000,
-            Group = 0x00020000,
-            TabStop = 0x00010000,
-
-            MinimizeBox = 0x00020000,
-            MaximizeBox = 0x00010000,
-
-            Tiled = Overlapped,
-            Iconic = Minimize,
-            SizeBox = ThickFrame,
-            TiledWindow = OverlappedWindow,
-
-            // Common window styles:
-            OverlappedWindow = Overlapped | Caption | SystemMenu | ThickFrame | MinimizeBox | MaximizeBox,
-            PopupWindow = Popup | Border | SystemMenu,
-            ChildWindow = Child
-        }
-
-        [Flags]
-        public enum ExtendedWindowStyle : int
-        {
-            DialogModalFrame = 0x00000001,
-            NoParentNotify = 0x00000004,
-            Topmost = 0x00000008,
-            AcceptFiles = 0x00000010,
-            Transparent = 0x00000020,
-
-            // #if(WINVER >= 0x0400)
-            MdiChild = 0x00000040,
-            ToolWindow = 0x00000080,
-            WindowEdge = 0x00000100,
-            ClientEdge = 0x00000200,
-            ContextHelp = 0x00000400,
-            // #endif
-
-            // #if(WINVER >= 0x0400)
-            Right = 0x00001000,
-            Left = 0x00000000,
-            RightToLeftReading = 0x00002000,
-            LeftToRightReading = 0x00000000,
-            LeftScrollbar = 0x00004000,
-            RightScrollbar = 0x00000000,
-
-            ControlParent = 0x00010000,
-            StaticEdge = 0x00020000,
-            ApplicationWindow = 0x00040000,
-
-            OverlappedWindow = WindowEdge | ClientEdge,
-            PaletteWindow = WindowEdge | ToolWindow | Topmost,
-            // #endif
-
-            // #if(_WIN32_WINNT >= 0x0500)
-            Layered = 0x00080000,
-            // #endif
-
-            // #if(WINVER >= 0x0500)
-            NoInheritLayout = 0x00100000, // Disable inheritence of mirroring by children
-            RightToLeftLayout = 0x00400000, // Right to left mirroring
-            // #endif /* WINVER >= 0x0500 */
-
-            // #if(_WIN32_WINNT >= 0x0501)
-            Composited = 0x02000000,
-            // #endif /* _WIN32_WINNT >= 0x0501 */
-
-            // #if(_WIN32_WINNT >= 0x0500)
-            NoActivate = 0x08000000
-            // #endif /* _WIN32_WINNT >= 0x0500 */
-        }
-
-        #endregion
-
-        #region DestroyWindow
-
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool DestroyWindow(IntPtr windowHandle);
-
-        #endregion
-
-        #region RegisterClass
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern short RegisterClass(WindowClass window_class);
-
-        #endregion
-
-        #region UnregisterClass
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern short UnregisterClass(string className, IntPtr instance);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern short UnregisterClass(IntPtr className, IntPtr instance);
-
-        #endregion
-
-        [CLSCompliant(false)]
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern LRESULT CallWindowProc(
-            WNDPROC lpPrevWndFunc,
-            HWND hWnd,
-            UINT Msg,
-            WPARAM wParam,
-            LPARAM lParam
-        );
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern LRESULT CallWindowProc(
-            WNDPROC lpPrevWndFunc,
-            HWND hWnd,
-            INT Msg,
-            WPARAM wParam,
-            LPARAM lParam
-        );
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern LONG_PTR SetWindowLongPtr(
-            HWND hWnd,
-            GetWindowLongOffsets nIndex,
-            LONG_PTR dwNewLong
-        );
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern LONG_PTR GetWindowLongPtr(
-            HWND hWnd,
-            GetWindowLongOffsets nIndex
-        );
 
         #endregion
 
@@ -2114,6 +2139,42 @@ namespace OpenTK.Platform.Windows
             public static readonly int EXSTYLE       = (-20);
             public static readonly int USERDATA      = (-21);
             public static readonly int ID            = (-12);
+        }
+
+        #endregion
+
+        #region Rectangle
+
+        /// <summary>
+        /// Defines the coordinates of the upper-left and lower-right corners of a rectangle.
+        /// </summary>
+        /// <remarks>
+        /// By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom row of pixels. This structure is identical to the RECTL structure.
+        /// </remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Rectangle
+        {
+            /// <summary>
+            /// Specifies the x-coordinate of the upper-left corner of the rectangle.
+            /// </summary>
+            public LONG left;
+            /// <summary>
+            /// Specifies the y-coordinate of the upper-left corner of the rectangle.
+            /// </summary>
+            public LONG top;
+            /// <summary>
+            /// Specifies the x-coordinate of the lower-right corner of the rectangle.
+            /// </summary>
+            public LONG right;
+            /// <summary>
+            /// Specifies the y-coordinate of the lower-right corner of the rectangle.
+            /// </summary>
+            public LONG bottom;
+
+            public override string ToString()
+            {
+                return String.Format("({0},{1})-({2},{3})", left, top, right, bottom);
+            }
         }
 
         #endregion

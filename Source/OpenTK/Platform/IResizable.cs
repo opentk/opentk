@@ -14,7 +14,12 @@ namespace OpenTK.Platform
     {
         int Height { get; set; }
         int Width { get; set; }
-
+        /*
+        int Top { get; }
+        int Bottom { get; }
+        int Left { get; }
+        int Right { get; }
+        */
         event ResizeEvent Resize;
     }
 

@@ -33,11 +33,14 @@ namespace OpenTK.Platform.Windows
         private bool isExiting;
         private bool exists;
         private WindowInfo window;
+        private int top, bottom, left, right;
 
         /// <summary>
         /// For use in WndProc only.
         /// </summary>
-        private int width, height;
+        private int width = 0, height = 0;
+
+        private int left_border, right_border, top_border, bottom_border;
 
         #endregion
 
@@ -68,8 +71,10 @@ namespace OpenTK.Platform.Windows
                     // Get window size
                     width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.WindowPosition), "cx"));
                     height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.WindowPosition), "cy"));
+                    width -= (left_border + right_border);
+                    height -= (top_border + bottom_border);
                     //if (resizeEventArgs.Width != width || resizeEventArgs.Height != height)
-                    if (mode.Width != width || mode.Height != height)
+                    if (this.mode.Width != width || this.mode.Height != height)
                     {
                         // If the size has changed, raise the ResizeEvent.
                         resizeEventArgs.Width = width;
@@ -83,8 +88,10 @@ namespace OpenTK.Platform.Windows
 
                 case API.Constants.WM_CREATE:
                     // Set the window width and height:
-                    mode.Width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cx"));
-                    mode.Height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cy"));
+                    this.mode.Width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cx"));
+                    this.mode.Height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cy"));
+                    this.mode.Width -= (left_border + right_border);
+                    this.mode.Height -= (top_border + bottom_border);
 
                     // Raise the Create event
                     this.OnCreate(EventArgs.Empty);
@@ -206,7 +213,7 @@ namespace OpenTK.Platform.Windows
 
         #region private void CreateWindow(DisplayMode mode)
 
-        public void CreateWindow(DisplayMode mode)
+        public void CreateWindow(DisplayMode windowMode)
         {
             Debug.Print("Creating native window with mode: {0}", mode.ToString());
             Debug.Indent();
@@ -215,14 +222,34 @@ namespace OpenTK.Platform.Windows
             cp.ClassStyle =
                 (int)API.WindowClassStyle.OwnDC |
                 (int)API.WindowClassStyle.VRedraw |
-                (int)API.WindowClassStyle.HRedraw | (int)API.WindowClassStyle.Ime;
+                (int)API.WindowClassStyle.HRedraw |
+                (int)API.WindowClassStyle.Ime;
             cp.Style =
                 (int)API.WindowStyle.Visible |
                 (int)API.WindowStyle.ClipChildren |
                 (int)API.WindowStyle.ClipSiblings |
                 (int)API.WindowStyle.OverlappedWindow;
-            cp.Width = mode.Width;
-            cp.Height = mode.Height;
+
+            API.Rectangle rect = new API.Rectangle();
+            rect.top = rect.left = 0;
+            rect.bottom = windowMode.Height;
+            rect.right = windowMode.Width;
+            API.AdjustWindowRect(ref rect, API.WindowStyle.OverlappedWindow, false);
+
+            // Not used
+            Top = 0;
+            Left = 0;
+            Right = windowMode.Width;
+            Bottom = windowMode.Height;
+            // --------
+
+            top_border = -rect.top;
+            left_border = -rect.left;
+            bottom_border = rect.bottom - windowMode.Height;
+            right_border = rect.right - windowMode.Width;
+            
+            cp.Width = rect.right - rect.left;
+            cp.Height = rect.bottom - rect.top;
             cp.Caption = "OpenTK Game Window";
 
             // Keep in mind that some construction code runs in WM_CREATE,
@@ -360,11 +387,6 @@ namespace OpenTK.Platform.Windows
             set
             {
                 throw new NotImplementedException();
-                //WinApi.PostMessage(
-                //    this.Handle,
-                //    WinApi.Constants.WM_WINDOWPOSCHANGING,
-
-                //mode.Width = value;
             }
         }
 
@@ -403,6 +425,30 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        public int Top
+        {
+            get { return top; }
+            private set { top = value; }
+        }
+
+        public int Bottom
+        {
+            get { return bottom; }
+            private set { bottom = value; }
+        }
+
+        public int Left
+        {
+            get { return left; }
+            private set { left = value; }
+        }
+
+        public int Right
+        {
+            get { return right; }
+            private set { right = value; }
+        }
 
         #endregion
     }

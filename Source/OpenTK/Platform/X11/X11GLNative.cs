@@ -30,6 +30,8 @@ namespace OpenTK.Platform.X11
         // Number of pending events.
         private int pending = 0;
 
+        private int top, bottom, left, right;
+
         // C# ResizeEventArgs
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
@@ -288,6 +290,10 @@ namespace OpenTK.Platform.X11
                 hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
                 Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
 
+                Top = Left = 0;
+                Right = Width;
+                Bottom = Height;
+
                 //XTextProperty text = new XTextProperty();
                 //text.value = "OpenTK Game Window";
                 //text.format = 8;
@@ -438,6 +444,30 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        public int Top
+        {
+            get { return top; }
+            private set { top = value; }
+        }
+
+        public int Bottom
+        {
+            get { return bottom; }
+            private set { bottom = value; }
+        }
+
+        public int Left
+        {
+            get { return left; }
+            private set { left = value; }
+        }
+
+        public int Right
+        {
+            get { return right; }
+            private set { right = value; }
+        }
 
         #endregion
 

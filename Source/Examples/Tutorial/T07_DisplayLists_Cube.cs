@@ -104,7 +104,7 @@ namespace Examples.Tutorial
         {
             base.OnResize(e);
 
-            GL.Viewport(0, 0, this.Width, this.Height);
+            GL.Viewport(0, 0, Width, Height);
 
             double ratio = 0.0;
             ratio = this.Width / (double)this.Height;
