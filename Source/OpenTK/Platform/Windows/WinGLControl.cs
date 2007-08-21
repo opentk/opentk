@@ -37,11 +37,6 @@ namespace OpenTK.Platform.Windows
             c.HandleDestroyed += new EventHandler(c_HandleDestroyed);
 
             glContext = new WinGLContext(mode);
-
-            // Create the actual context
-            c.Visible = true;
-            //c.CreateControl();
-            glContext.MakeCurrent();
         }
 
         void c_HandleCreated(object sender, EventArgs e)
@@ -53,6 +48,7 @@ namespace OpenTK.Platform.Windows
             {
                 glContext.PrepareContext((sender as Control).Handle);
                 glContext.CreateContext();
+                glContext.MakeCurrent();
             }
             catch (ApplicationException expt)
             {

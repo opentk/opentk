@@ -470,6 +470,9 @@ namespace OpenTK
 
         #region public int Width, Height
 
+        /// <summary>
+        /// Gets or sets the Width of the GameWindow's rendering area, in pixels.
+        /// </summary>
         public int Width
         {
             get { return glWindow.Width; }
@@ -494,6 +497,9 @@ namespace OpenTK
             }
         }
 
+        /// <summary>
+        /// Gets or sets the Height of the GameWindow's rendering area, in pixels.
+        /// </summary>
         public int Height
         {
             get { return glWindow.Height; }
@@ -536,7 +542,39 @@ namespace OpenTK
         }
 
         #endregion
+        /*
+        /// <summary>
+        /// Gets the Top coordinate of the GameWindow's rendering area, in pixel coordinates relative to the GameWindow's top left point.
+        /// </summary>
+        public int Top
+        {
+            get { return glWindow.Top; }
+        }
 
+        /// <summary>
+        /// /// Gets the Bottom coordinate of the GameWindow's rendering area, in pixel coordinates relative to the GameWindow's top left point.
+        /// </summary>
+        public int Bottom
+        {
+            get { return glWindow.Bottom; }
+        }
+
+        /// <summary>
+        /// Gets the Left coordinate of the GameWindow's rendering area, in pixel coordinates relative to the GameWindow's top left point.
+        /// </summary>
+        public int Left
+        {
+            get { return glWindow.Left; }
+        }
+
+        /// <summary>
+        /// Gets the Right coordinate of the GameWindow's rendering area, in pixel coordinates relative to the GameWindow's top left point.
+        /// </summary>
+        public int Right
+        {
+            get { return glWindow.Right; }
+        }
+        */
         #endregion
 
         #region --- IDisposable Members ---
