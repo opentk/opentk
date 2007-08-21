@@ -43,580 +43,580 @@ namespace OpenTK.Platform.X11
     //
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XAnyEvent
+    public struct XAnyEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XKeyEvent
+    public struct XKeyEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal IntPtr root;
-        internal IntPtr subwindow;
-        internal IntPtr time;
-        internal int x;
-        internal int y;
-        internal int x_root;
-        internal int y_root;
-        internal int state;
-        internal int keycode;
-        internal bool same_screen;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public IntPtr root;
+        public IntPtr subwindow;
+        public IntPtr time;
+        public int x;
+        public int y;
+        public int x_root;
+        public int y_root;
+        public int state;
+        public int keycode;
+        public bool same_screen;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XButtonEvent
+    public struct XButtonEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal IntPtr root;
-        internal IntPtr subwindow;
-        internal IntPtr time;
-        internal int x;
-        internal int y;
-        internal int x_root;
-        internal int y_root;
-        internal int state;
-        internal int button;
-        internal bool same_screen;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public IntPtr root;
+        public IntPtr subwindow;
+        public IntPtr time;
+        public int x;
+        public int y;
+        public int x_root;
+        public int y_root;
+        public int state;
+        public int button;
+        public bool same_screen;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XMotionEvent
+    public struct XMotionEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal IntPtr root;
-        internal IntPtr subwindow;
-        internal IntPtr time;
-        internal int x;
-        internal int y;
-        internal int x_root;
-        internal int y_root;
-        internal int state;
-        internal byte is_hint;
-        internal bool same_screen;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public IntPtr root;
+        public IntPtr subwindow;
+        public IntPtr time;
+        public int x;
+        public int y;
+        public int x_root;
+        public int y_root;
+        public int state;
+        public byte is_hint;
+        public bool same_screen;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XCrossingEvent
+    public struct XCrossingEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal IntPtr root;
-        internal IntPtr subwindow;
-        internal IntPtr time;
-        internal int x;
-        internal int y;
-        internal int x_root;
-        internal int y_root;
-        internal NotifyMode mode;
-        internal NotifyDetail detail;
-        internal bool same_screen;
-        internal bool focus;
-        internal int state;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public IntPtr root;
+        public IntPtr subwindow;
+        public IntPtr time;
+        public int x;
+        public int y;
+        public int x_root;
+        public int y_root;
+        public NotifyMode mode;
+        public NotifyDetail detail;
+        public bool same_screen;
+        public bool focus;
+        public int state;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XFocusChangeEvent
+    public struct XFocusChangeEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal int mode;
-        internal NotifyDetail detail;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public int mode;
+        public NotifyDetail detail;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XKeymapEvent
+    public struct XKeymapEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal byte key_vector0;
-        internal byte key_vector1;
-        internal byte key_vector2;
-        internal byte key_vector3;
-        internal byte key_vector4;
-        internal byte key_vector5;
-        internal byte key_vector6;
-        internal byte key_vector7;
-        internal byte key_vector8;
-        internal byte key_vector9;
-        internal byte key_vector10;
-        internal byte key_vector11;
-        internal byte key_vector12;
-        internal byte key_vector13;
-        internal byte key_vector14;
-        internal byte key_vector15;
-        internal byte key_vector16;
-        internal byte key_vector17;
-        internal byte key_vector18;
-        internal byte key_vector19;
-        internal byte key_vector20;
-        internal byte key_vector21;
-        internal byte key_vector22;
-        internal byte key_vector23;
-        internal byte key_vector24;
-        internal byte key_vector25;
-        internal byte key_vector26;
-        internal byte key_vector27;
-        internal byte key_vector28;
-        internal byte key_vector29;
-        internal byte key_vector30;
-        internal byte key_vector31;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public byte key_vector0;
+        public byte key_vector1;
+        public byte key_vector2;
+        public byte key_vector3;
+        public byte key_vector4;
+        public byte key_vector5;
+        public byte key_vector6;
+        public byte key_vector7;
+        public byte key_vector8;
+        public byte key_vector9;
+        public byte key_vector10;
+        public byte key_vector11;
+        public byte key_vector12;
+        public byte key_vector13;
+        public byte key_vector14;
+        public byte key_vector15;
+        public byte key_vector16;
+        public byte key_vector17;
+        public byte key_vector18;
+        public byte key_vector19;
+        public byte key_vector20;
+        public byte key_vector21;
+        public byte key_vector22;
+        public byte key_vector23;
+        public byte key_vector24;
+        public byte key_vector25;
+        public byte key_vector26;
+        public byte key_vector27;
+        public byte key_vector28;
+        public byte key_vector29;
+        public byte key_vector30;
+        public byte key_vector31;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XExposeEvent
+    public struct XExposeEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal int x;
-        internal int y;
-        internal int width;
-        internal int height;
-        internal int count;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public int count;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XGraphicsExposeEvent
+    public struct XGraphicsExposeEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr drawable;
-        internal int x;
-        internal int y;
-        internal int width;
-        internal int height;
-        internal int count;
-        internal int major_code;
-        internal int minor_code;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr drawable;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public int count;
+        public int major_code;
+        public int minor_code;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XNoExposeEvent
+    public struct XNoExposeEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr drawable;
-        internal int major_code;
-        internal int minor_code;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr drawable;
+        public int major_code;
+        public int minor_code;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XVisibilityEvent
+    public struct XVisibilityEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal int state;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public int state;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XCreateWindowEvent
+    public struct XCreateWindowEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr parent;
-        internal IntPtr window;
-        internal int x;
-        internal int y;
-        internal int width;
-        internal int height;
-        internal int border_width;
-        internal bool override_redirect;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr parent;
+        public IntPtr window;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public int border_width;
+        public bool override_redirect;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XDestroyWindowEvent
+    public struct XDestroyWindowEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr xevent;
-        internal IntPtr window;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr xevent;
+        public IntPtr window;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XUnmapEvent
+    public struct XUnmapEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr xevent;
-        internal IntPtr window;
-        internal bool from_configure;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr xevent;
+        public IntPtr window;
+        public bool from_configure;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XMapEvent
+    public struct XMapEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr xevent;
-        internal IntPtr window;
-        internal bool override_redirect;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr xevent;
+        public IntPtr window;
+        public bool override_redirect;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XMapRequestEvent
+    public struct XMapRequestEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr parent;
-        internal IntPtr window;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr parent;
+        public IntPtr window;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XReparentEvent
+    public struct XReparentEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr xevent;
-        internal IntPtr window;
-        internal IntPtr parent;
-        internal int x;
-        internal int y;
-        internal bool override_redirect;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr xevent;
+        public IntPtr window;
+        public IntPtr parent;
+        public int x;
+        public int y;
+        public bool override_redirect;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XConfigureEvent
+    public struct XConfigureEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr xevent;
-        internal IntPtr window;
-        internal int x;
-        internal int y;
-        internal int width;
-        internal int height;
-        internal int border_width;
-        internal IntPtr above;
-        internal bool override_redirect;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr xevent;
+        public IntPtr window;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public int border_width;
+        public IntPtr above;
+        public bool override_redirect;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XGravityEvent
+    public struct XGravityEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr xevent;
-        internal IntPtr window;
-        internal int x;
-        internal int y;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr xevent;
+        public IntPtr window;
+        public int x;
+        public int y;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XResizeRequestEvent
+    public struct XResizeRequestEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal int width;
-        internal int height;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public int width;
+        public int height;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XConfigureRequestEvent
+    public struct XConfigureRequestEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr parent;
-        internal IntPtr window;
-        internal int x;
-        internal int y;
-        internal int width;
-        internal int height;
-        internal int border_width;
-        internal IntPtr above;
-        internal int detail;
-        internal IntPtr value_mask;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr parent;
+        public IntPtr window;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public int border_width;
+        public IntPtr above;
+        public int detail;
+        public IntPtr value_mask;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XCirculateEvent
+    public struct XCirculateEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr xevent;
-        internal IntPtr window;
-        internal int place;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr xevent;
+        public IntPtr window;
+        public int place;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XCirculateRequestEvent
+    public struct XCirculateRequestEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr parent;
-        internal IntPtr window;
-        internal int place;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr parent;
+        public IntPtr window;
+        public int place;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XPropertyEvent
+    public struct XPropertyEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal IntPtr atom;
-        internal IntPtr time;
-        internal int state;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public IntPtr atom;
+        public IntPtr time;
+        public int state;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XSelectionClearEvent
+    public struct XSelectionClearEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal IntPtr selection;
-        internal IntPtr time;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public IntPtr selection;
+        public IntPtr time;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XSelectionRequestEvent
+    public struct XSelectionRequestEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr owner;
-        internal IntPtr requestor;
-        internal IntPtr selection;
-        internal IntPtr target;
-        internal IntPtr property;
-        internal IntPtr time;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr owner;
+        public IntPtr requestor;
+        public IntPtr selection;
+        public IntPtr target;
+        public IntPtr property;
+        public IntPtr time;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XSelectionEvent
+    public struct XSelectionEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr requestor;
-        internal IntPtr selection;
-        internal IntPtr target;
-        internal IntPtr property;
-        internal IntPtr time;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr requestor;
+        public IntPtr selection;
+        public IntPtr target;
+        public IntPtr property;
+        public IntPtr time;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XColormapEvent
+    public struct XColormapEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal IntPtr colormap;
-        internal bool c_new;
-        internal int state;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public IntPtr colormap;
+        public bool c_new;
+        public int state;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XClientMessageEvent
+    public struct XClientMessageEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal IntPtr message_type;
-        internal int format;
-        internal IntPtr ptr1;
-        internal IntPtr ptr2;
-        internal IntPtr ptr3;
-        internal IntPtr ptr4;
-        internal IntPtr ptr5;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public IntPtr message_type;
+        public int format;
+        public IntPtr ptr1;
+        public IntPtr ptr2;
+        public IntPtr ptr3;
+        public IntPtr ptr4;
+        public IntPtr ptr5;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XMappingEvent
+    public struct XMappingEvent
     {
-        internal XEventName type;
-        internal IntPtr serial;
-        internal bool send_event;
-        internal IntPtr display;
-        internal IntPtr window;
-        internal int request;
-        internal int first_keycode;
-        internal int count;
+        public XEventName type;
+        public IntPtr serial;
+        public bool send_event;
+        public IntPtr display;
+        public IntPtr window;
+        public int request;
+        public int first_keycode;
+        public int count;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XErrorEvent
+    public struct XErrorEvent
     {
-        internal XEventName type;
-        internal IntPtr display;
-        internal IntPtr resourceid;
-        internal IntPtr serial;
-        internal byte error_code;
-        internal XRequest request_code;
-        internal byte minor_code;
+        public XEventName type;
+        public IntPtr display;
+        public IntPtr resourceid;
+        public IntPtr serial;
+        public byte error_code;
+        public XRequest request_code;
+        public byte minor_code;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XEventPad
+    public struct XEventPad
     {
-        internal IntPtr pad0;
-        internal IntPtr pad1;
-        internal IntPtr pad2;
-        internal IntPtr pad3;
-        internal IntPtr pad4;
-        internal IntPtr pad5;
-        internal IntPtr pad6;
-        internal IntPtr pad7;
-        internal IntPtr pad8;
-        internal IntPtr pad9;
-        internal IntPtr pad10;
-        internal IntPtr pad11;
-        internal IntPtr pad12;
-        internal IntPtr pad13;
-        internal IntPtr pad14;
-        internal IntPtr pad15;
-        internal IntPtr pad16;
-        internal IntPtr pad17;
-        internal IntPtr pad18;
-        internal IntPtr pad19;
-        internal IntPtr pad20;
-        internal IntPtr pad21;
-        internal IntPtr pad22;
-        internal IntPtr pad23;
+        public IntPtr pad0;
+        public IntPtr pad1;
+        public IntPtr pad2;
+        public IntPtr pad3;
+        public IntPtr pad4;
+        public IntPtr pad5;
+        public IntPtr pad6;
+        public IntPtr pad7;
+        public IntPtr pad8;
+        public IntPtr pad9;
+        public IntPtr pad10;
+        public IntPtr pad11;
+        public IntPtr pad12;
+        public IntPtr pad13;
+        public IntPtr pad14;
+        public IntPtr pad15;
+        public IntPtr pad16;
+        public IntPtr pad17;
+        public IntPtr pad18;
+        public IntPtr pad19;
+        public IntPtr pad20;
+        public IntPtr pad21;
+        public IntPtr pad22;
+        public IntPtr pad23;
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    internal struct XEvent
+    public struct XEvent
     {
         [FieldOffset(0)]
-        internal XEventName type;
+        public XEventName type;
         [FieldOffset(0)]
-        internal XAnyEvent AnyEvent;
+        public XAnyEvent AnyEvent;
         [FieldOffset(0)]
-        internal XKeyEvent KeyEvent;
+        public XKeyEvent KeyEvent;
         [FieldOffset(0)]
-        internal XButtonEvent ButtonEvent;
+        public XButtonEvent ButtonEvent;
         [FieldOffset(0)]
-        internal XMotionEvent MotionEvent;
+        public XMotionEvent MotionEvent;
         [FieldOffset(0)]
-        internal XCrossingEvent CrossingEvent;
+        public XCrossingEvent CrossingEvent;
         [FieldOffset(0)]
-        internal XFocusChangeEvent FocusChangeEvent;
+        public XFocusChangeEvent FocusChangeEvent;
         [FieldOffset(0)]
-        internal XExposeEvent ExposeEvent;
+        public XExposeEvent ExposeEvent;
         [FieldOffset(0)]
-        internal XGraphicsExposeEvent GraphicsExposeEvent;
+        public XGraphicsExposeEvent GraphicsExposeEvent;
         [FieldOffset(0)]
-        internal XNoExposeEvent NoExposeEvent;
+        public XNoExposeEvent NoExposeEvent;
         [FieldOffset(0)]
-        internal XVisibilityEvent VisibilityEvent;
+        public XVisibilityEvent VisibilityEvent;
         [FieldOffset(0)]
-        internal XCreateWindowEvent CreateWindowEvent;
+        public XCreateWindowEvent CreateWindowEvent;
         [FieldOffset(0)]
-        internal XDestroyWindowEvent DestroyWindowEvent;
+        public XDestroyWindowEvent DestroyWindowEvent;
         [FieldOffset(0)]
-        internal XUnmapEvent UnmapEvent;
+        public XUnmapEvent UnmapEvent;
         [FieldOffset(0)]
-        internal XMapEvent MapEvent;
+        public XMapEvent MapEvent;
         [FieldOffset(0)]
-        internal XMapRequestEvent MapRequestEvent;
+        public XMapRequestEvent MapRequestEvent;
         [FieldOffset(0)]
-        internal XReparentEvent ReparentEvent;
+        public XReparentEvent ReparentEvent;
         [FieldOffset(0)]
-        internal XConfigureEvent ConfigureEvent;
+        public XConfigureEvent ConfigureEvent;
         [FieldOffset(0)]
-        internal XGravityEvent GravityEvent;
+        public XGravityEvent GravityEvent;
         [FieldOffset(0)]
-        internal XResizeRequestEvent ResizeRequestEvent;
+        public XResizeRequestEvent ResizeRequestEvent;
         [FieldOffset(0)]
-        internal XConfigureRequestEvent ConfigureRequestEvent;
+        public XConfigureRequestEvent ConfigureRequestEvent;
         [FieldOffset(0)]
-        internal XCirculateEvent CirculateEvent;
+        public XCirculateEvent CirculateEvent;
         [FieldOffset(0)]
-        internal XCirculateRequestEvent CirculateRequestEvent;
+        public XCirculateRequestEvent CirculateRequestEvent;
         [FieldOffset(0)]
-        internal XPropertyEvent PropertyEvent;
+        public XPropertyEvent PropertyEvent;
         [FieldOffset(0)]
-        internal XSelectionClearEvent SelectionClearEvent;
+        public XSelectionClearEvent SelectionClearEvent;
         [FieldOffset(0)]
-        internal XSelectionRequestEvent SelectionRequestEvent;
+        public XSelectionRequestEvent SelectionRequestEvent;
         [FieldOffset(0)]
-        internal XSelectionEvent SelectionEvent;
+        public XSelectionEvent SelectionEvent;
         [FieldOffset(0)]
-        internal XColormapEvent ColormapEvent;
+        public XColormapEvent ColormapEvent;
         [FieldOffset(0)]
-        internal XClientMessageEvent ClientMessageEvent;
+        public XClientMessageEvent ClientMessageEvent;
         [FieldOffset(0)]
-        internal XMappingEvent MappingEvent;
+        public XMappingEvent MappingEvent;
         [FieldOffset(0)]
-        internal XErrorEvent ErrorEvent;
+        public XErrorEvent ErrorEvent;
         [FieldOffset(0)]
-        internal XKeymapEvent KeymapEvent;
+        public XKeymapEvent KeymapEvent;
 
         //[MarshalAs(System.Runtime.InteropServices.UnmanagedType.ByValArray, SizeConst=24)]
-        //[ FieldOffset(0) ] internal int[] pad;
+        //[ FieldOffset(0) ] public int[] pad;
         [FieldOffset(0)]
-        internal XEventPad Pad;
+        public XEventPad Pad;
         public override string ToString()
         {
             switch (type)
@@ -651,51 +651,51 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XSetWindowAttributes
+    public struct XSetWindowAttributes
     {
-        internal IntPtr background_pixmap;
-        internal IntPtr background_pixel;
-        internal IntPtr border_pixmap;
-        internal IntPtr border_pixel;
-        internal Gravity bit_gravity;
-        internal Gravity win_gravity;
-        internal int backing_store;
-        internal IntPtr backing_planes;
-        internal IntPtr backing_pixel;
-        internal bool save_under;
-        internal IntPtr event_mask;
-        internal IntPtr do_not_propagate_mask;
-        internal bool override_redirect;
-        internal IntPtr colormap;
-        internal IntPtr cursor;
+        public IntPtr background_pixmap;
+        public IntPtr background_pixel;
+        public IntPtr border_pixmap;
+        public IntPtr border_pixel;
+        public Gravity bit_gravity;
+        public Gravity win_gravity;
+        public int backing_store;
+        public IntPtr backing_planes;
+        public IntPtr backing_pixel;
+        public bool save_under;
+        public IntPtr event_mask;
+        public IntPtr do_not_propagate_mask;
+        public bool override_redirect;
+        public IntPtr colormap;
+        public IntPtr cursor;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XWindowAttributes
+    public struct XWindowAttributes
     {
-        internal int x;
-        internal int y;
-        internal int width;
-        internal int height;
-        internal int border_width;
-        internal int depth;
-        internal IntPtr visual;
-        internal IntPtr root;
-        internal int c_class;
-        internal Gravity bit_gravity;
-        internal Gravity win_gravity;
-        internal int backing_store;
-        internal IntPtr backing_planes;
-        internal IntPtr backing_pixel;
-        internal bool save_under;
-        internal IntPtr colormap;
-        internal bool map_installed;
-        internal MapState map_state;
-        internal IntPtr all_event_masks;
-        internal IntPtr your_event_mask;
-        internal IntPtr do_not_propagate_mask;
-        internal bool override_direct;
-        internal IntPtr screen;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public int border_width;
+        public int depth;
+        public IntPtr visual;
+        public IntPtr root;
+        public int c_class;
+        public Gravity bit_gravity;
+        public Gravity win_gravity;
+        public int backing_store;
+        public IntPtr backing_planes;
+        public IntPtr backing_pixel;
+        public bool save_under;
+        public IntPtr colormap;
+        public bool map_installed;
+        public MapState map_state;
+        public IntPtr all_event_masks;
+        public IntPtr your_event_mask;
+        public IntPtr do_not_propagate_mask;
+        public bool override_direct;
+        public IntPtr screen;
 
         public override string ToString()
         {
@@ -704,21 +704,21 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XTextProperty
+    public struct XTextProperty
     {
-        internal string value;
-        internal IntPtr encoding;
-        internal int format;
-        internal IntPtr nitems;
+        public string value;
+        public IntPtr encoding;
+        public int format;
+        public IntPtr nitems;
     }
 
-    internal enum XWindowClass
+    public enum XWindowClass
     {
         InputOutput = 1,
         InputOnly = 2
     }
 
-    internal enum XEventName
+    public enum XEventName
     {
         KeyPress = 2,
         KeyRelease = 3,
@@ -758,7 +758,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum SetWindowValuemask
+    public enum SetWindowValuemask
     {
         Nothing = 0,
         BackPixmap = 1,
@@ -778,7 +778,7 @@ namespace OpenTK.Platform.X11
         Cursor = 16384
     }
 
-    internal enum CreateWindowArgs
+    public enum CreateWindowArgs
     {
         CopyFromParent = 0,
         ParentRelative = 1,
@@ -786,7 +786,7 @@ namespace OpenTK.Platform.X11
         InputOnly = 2
     }
 
-    internal enum Gravity
+    public enum Gravity
     {
         ForgetGravity = 0,
         NorthWestGravity = 1,
@@ -801,7 +801,7 @@ namespace OpenTK.Platform.X11
         StaticGravity = 10
     }
 
-    internal enum XKeySym : uint
+    public enum XKeySym : uint
     {
         XK_BackSpace = 0xFF08,
         XK_Tab = 0xFF09,
@@ -834,7 +834,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum EventMask
+    public enum EventMask
     {
         NoEventMask = 0,
         KeyPressMask = 1 << 0,
@@ -864,39 +864,39 @@ namespace OpenTK.Platform.X11
         OwnerGrabButtonMask = 1 << 24
     }
 
-    internal enum GrabMode
+    public enum GrabMode
     {
         GrabModeSync = 0,
         GrabModeAsync = 1
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XStandardColormap
+    public struct XStandardColormap
     {
-        internal IntPtr colormap;
-        internal IntPtr red_max;
-        internal IntPtr red_mult;
-        internal IntPtr green_max;
-        internal IntPtr green_mult;
-        internal IntPtr blue_max;
-        internal IntPtr blue_mult;
-        internal IntPtr base_pixel;
-        internal IntPtr visualid;
-        internal IntPtr killid;
+        public IntPtr colormap;
+        public IntPtr red_max;
+        public IntPtr red_mult;
+        public IntPtr green_max;
+        public IntPtr green_mult;
+        public IntPtr blue_max;
+        public IntPtr blue_mult;
+        public IntPtr base_pixel;
+        public IntPtr visualid;
+        public IntPtr killid;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 2)]
-    internal struct XColor
+    public struct XColor
     {
-        internal IntPtr pixel;
-        internal ushort red;
-        internal ushort green;
-        internal ushort blue;
-        internal byte flags;
-        internal byte pad;
+        public IntPtr pixel;
+        public ushort red;
+        public ushort green;
+        public ushort blue;
+        public byte flags;
+        public byte pad;
     }
 
-    internal enum Atom
+    public enum Atom
     {
         AnyPropertyType = 0,
         XA_PRIMARY = 1,
@@ -972,32 +972,32 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XScreen
+    public struct XScreen
     {
-        internal IntPtr ext_data;
-        internal IntPtr display;
-        internal IntPtr root;
-        internal int width;
-        internal int height;
-        internal int mwidth;
-        internal int mheight;
-        internal int ndepths;
-        internal IntPtr depths;
-        internal int root_depth;
-        internal IntPtr root_visual;
-        internal IntPtr default_gc;
-        internal IntPtr cmap;
-        internal IntPtr white_pixel;
-        internal IntPtr black_pixel;
-        internal int max_maps;
-        internal int min_maps;
-        internal int backing_store;
-        internal bool save_unders;
-        internal IntPtr root_input_mask;
+        public IntPtr ext_data;
+        public IntPtr display;
+        public IntPtr root;
+        public int width;
+        public int height;
+        public int mwidth;
+        public int mheight;
+        public int ndepths;
+        public IntPtr depths;
+        public int root_depth;
+        public IntPtr root_visual;
+        public IntPtr default_gc;
+        public IntPtr cmap;
+        public IntPtr white_pixel;
+        public IntPtr black_pixel;
+        public int max_maps;
+        public int min_maps;
+        public int backing_store;
+        public bool save_unders;
+        public IntPtr root_input_mask;
     }
 
     [Flags]
-    internal enum ChangeWindowFlags
+    public enum ChangeWindowFlags
     {
         CWX = 1 << 0,
         CWY = 1 << 1,
@@ -1008,7 +1008,7 @@ namespace OpenTK.Platform.X11
         CWStackMode = 1 << 6
     }
 
-    internal enum StackMode
+    public enum StackMode
     {
         Above = 0,
         Below = 1,
@@ -1018,33 +1018,33 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XWindowChanges
+    public struct XWindowChanges
     {
-        internal int x;
-        internal int y;
-        internal int width;
-        internal int height;
-        internal int border_width;
-        internal IntPtr sibling;
-        internal StackMode stack_mode;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public int border_width;
+        public IntPtr sibling;
+        public StackMode stack_mode;
     }
 
     [Flags]
-    internal enum ColorFlags
+    public enum ColorFlags
     {
         DoRed = 1 << 0,
         DoGreen = 1 << 1,
         DoBlue = 1 << 2
     }
 
-    internal enum NotifyMode
+    public enum NotifyMode
     {
         NotifyNormal = 0,
         NotifyGrab = 1,
         NotifyUngrab = 2
     }
 
-    internal enum NotifyDetail
+    public enum NotifyDetail
     {
         NotifyAncestor = 0,
         NotifyVirtual = 1,
@@ -1057,13 +1057,13 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct MotifWmHints
+    public struct MotifWmHints
     {
-        internal IntPtr flags;
-        internal IntPtr functions;
-        internal IntPtr decorations;
-        internal IntPtr input_mode;
-        internal IntPtr status;
+        public IntPtr flags;
+        public IntPtr functions;
+        public IntPtr decorations;
+        public IntPtr input_mode;
+        public IntPtr status;
 
         public override string ToString()
         {
@@ -1072,7 +1072,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum MotifFlags
+    public enum MotifFlags
     {
         Functions = 1,
         Decorations = 2,
@@ -1081,7 +1081,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum MotifFunctions
+    public enum MotifFunctions
     {
         All = 0x01,
         Resize = 0x02,
@@ -1092,7 +1092,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum MotifDecorations
+    public enum MotifDecorations
     {
         All = 0x01,
         Border = 0x02,
@@ -1105,7 +1105,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum MotifInputMode
+    public enum MotifInputMode
     {
         Modeless = 0,
         ApplicationModal = 1,
@@ -1114,7 +1114,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum KeyMasks
+    public enum KeyMasks
     {
         ShiftMask = (1 << 0),
         LockMask = (1 << 1),
@@ -1129,13 +1129,13 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XModifierKeymap
+    public struct XModifierKeymap
     {
         public int max_keypermod;
         public IntPtr modifiermap;
     }
 
-    internal enum PropertyMode
+    public enum PropertyMode
     {
         Replace = 0,
         Prepend = 1,
@@ -1143,7 +1143,7 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XKeyBoardState
+    public struct XKeyBoardState
     {
         public int key_click_percent;
         public int bell_percent;
@@ -1164,7 +1164,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum GCFunction
+    public enum GCFunction
     {
         GCFunction = 1 << 0,
         GCPlaneMask = 1 << 1,
@@ -1191,21 +1191,21 @@ namespace OpenTK.Platform.X11
         GCArcMode = 1 << 22
     }
 
-    internal enum GCJoinStyle
+    public enum GCJoinStyle
     {
         JoinMiter = 0,
         JoinRound = 1,
         JoinBevel = 2
     }
 
-    internal enum GCLineStyle
+    public enum GCLineStyle
     {
         LineSolid = 0,
         LineOnOffDash = 1,
         LineDoubleDash = 2
     }
 
-    internal enum GCCapStyle
+    public enum GCCapStyle
     {
         CapNotLast = 0,
         CapButt = 1,
@@ -1213,7 +1213,7 @@ namespace OpenTK.Platform.X11
         CapProjecting = 3
     }
 
-    internal enum GCFillStyle
+    public enum GCFillStyle
     {
         FillSolid = 0,
         FillTiled = 1,
@@ -1221,53 +1221,53 @@ namespace OpenTK.Platform.X11
         FillOpaqueStppled = 3
     }
 
-    internal enum GCFillRule
+    public enum GCFillRule
     {
         EvenOddRule = 0,
         WindingRule = 1
     }
 
-    internal enum GCArcMode
+    public enum GCArcMode
     {
         ArcChord = 0,
         ArcPieSlice = 1
     }
 
-    internal enum GCSubwindowMode
+    public enum GCSubwindowMode
     {
         ClipByChildren = 0,
         IncludeInferiors = 1
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XGCValues
+    public struct XGCValues
     {
-        internal GXFunction function;
-        internal IntPtr plane_mask;
-        internal IntPtr foreground;
-        internal IntPtr background;
-        internal int line_width;
-        internal GCLineStyle line_style;
-        internal GCCapStyle cap_style;
-        internal GCJoinStyle join_style;
-        internal GCFillStyle fill_style;
-        internal GCFillRule fill_rule;
-        internal GCArcMode arc_mode;
-        internal IntPtr tile;
-        internal IntPtr stipple;
-        internal int ts_x_origin;
-        internal int ts_y_origin;
-        internal IntPtr font;
-        internal GCSubwindowMode subwindow_mode;
-        internal bool graphics_exposures;
-        internal int clip_x_origin;
-        internal int clib_y_origin;
-        internal IntPtr clip_mask;
-        internal int dash_offset;
-        internal byte dashes;
+        public GXFunction function;
+        public IntPtr plane_mask;
+        public IntPtr foreground;
+        public IntPtr background;
+        public int line_width;
+        public GCLineStyle line_style;
+        public GCCapStyle cap_style;
+        public GCJoinStyle join_style;
+        public GCFillStyle fill_style;
+        public GCFillRule fill_rule;
+        public GCArcMode arc_mode;
+        public IntPtr tile;
+        public IntPtr stipple;
+        public int ts_x_origin;
+        public int ts_y_origin;
+        public IntPtr font;
+        public GCSubwindowMode subwindow_mode;
+        public bool graphics_exposures;
+        public int clip_x_origin;
+        public int clib_y_origin;
+        public IntPtr clip_mask;
+        public int dash_offset;
+        public byte dashes;
     }
 
-    internal enum GXFunction
+    public enum GXFunction
     {
         GXclear = 0x0,		/* 0 */
         GXand = 0x1,		/* src AND dst */
@@ -1287,28 +1287,28 @@ namespace OpenTK.Platform.X11
         GXset = 0xf		/* 1 */
     }
 
-    internal enum NetWindowManagerState
+    public enum NetWindowManagerState
     {
         Remove = 0,
         Add = 1,
         Toggle = 2
     }
 
-    internal enum RevertTo
+    public enum RevertTo
     {
         None = 0,
         PointerRoot = 1,
         Parent = 2
     }
 
-    internal enum MapState
+    public enum MapState
     {
         IsUnmapped = 0,
         IsUnviewable = 1,
         IsViewable = 2
     }
 
-    internal enum CursorFontShape
+    public enum CursorFontShape
     {
         XC_X_cursor = 0,
         XC_arrow = 2,
@@ -1396,7 +1396,7 @@ namespace OpenTK.Platform.X11
         XC_num_glyphs = 154
     }
 
-    internal enum SystrayRequest
+    public enum SystrayRequest
     {
         SYSTEM_TRAY_REQUEST_DOCK = 0,
         SYSTEM_TRAY_BEGIN_MESSAGE = 1,
@@ -1404,7 +1404,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum XSizeHintsFlags
+    public enum XSizeHintsFlags
     {
         USPosition = (1 << 0),
         USSize = (1 << 1),
@@ -1420,30 +1420,30 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XSizeHints
+    public struct XSizeHints
     {
-        internal IntPtr flags;
-        internal int x;
-        internal int y;
-        internal int width;
-        internal int height;
-        internal int min_width;
-        internal int min_height;
-        internal int max_width;
-        internal int max_height;
-        internal int width_inc;
-        internal int height_inc;
-        internal int min_aspect_x;
-        internal int min_aspect_y;
-        internal int max_aspect_x;
-        internal int max_aspect_y;
-        internal int base_width;
-        internal int base_height;
-        internal int win_gravity;
+        public IntPtr flags;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        public int min_width;
+        public int min_height;
+        public int max_width;
+        public int max_height;
+        public int width_inc;
+        public int height_inc;
+        public int min_aspect_x;
+        public int min_aspect_y;
+        public int max_aspect_x;
+        public int max_aspect_y;
+        public int base_width;
+        public int base_height;
+        public int win_gravity;
     }
 
     [Flags]
-    internal enum XWMHintsFlags
+    public enum XWMHintsFlags
     {
         InputHint = (1 << 0),
         StateHint = (1 << 1),
@@ -1455,7 +1455,7 @@ namespace OpenTK.Platform.X11
         AllHints = (InputHint | StateHint | IconPixmapHint | IconWindowHint | IconPositionHint | IconMaskHint | WindowGroupHint)
     }
 
-    internal enum XInitialState
+    public enum XInitialState
     {
         DontCareState = 0,
         NormalState = 1,
@@ -1465,33 +1465,33 @@ namespace OpenTK.Platform.X11
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XWMHints
+    public struct XWMHints
     {
-        internal IntPtr flags;
-        internal bool input;
-        internal XInitialState initial_state;
-        internal IntPtr icon_pixmap;
-        internal IntPtr icon_window;
-        internal int icon_x;
-        internal int icon_y;
-        internal IntPtr icon_mask;
-        internal IntPtr window_group;
+        public IntPtr flags;
+        public bool input;
+        public XInitialState initial_state;
+        public IntPtr icon_pixmap;
+        public IntPtr icon_window;
+        public int icon_x;
+        public int icon_y;
+        public IntPtr icon_mask;
+        public IntPtr window_group;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XIconSize
+    public struct XIconSize
     {
-        internal int min_width;
-        internal int min_height;
-        internal int max_width;
-        internal int max_height;
-        internal int width_inc;
-        internal int height_inc;
+        public int min_width;
+        public int min_height;
+        public int max_width;
+        public int max_height;
+        public int width_inc;
+        public int height_inc;
     }
 
-    internal delegate int XErrorHandler(IntPtr DisplayHandle, ref XErrorEvent error_event);
+    public delegate int XErrorHandler(IntPtr DisplayHandle, ref XErrorEvent error_event);
 
-    internal enum XRequest : byte
+    public enum XRequest : byte
     {
         X_CreateWindow = 1,
         X_ChangeWindowAttributes = 2,
@@ -1616,7 +1616,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum XIMProperties
+    public enum XIMProperties
     {
         XIMPreeditArea = 0x0001,
         XIMPreeditCallbacks = 0x0002,
@@ -1630,14 +1630,14 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    internal enum WindowType
+    public enum WindowType
     {
         Client = 1,
         Whole = 2,
         Both = 3
     }
 
-    internal enum XEmbedMessage
+    public enum XEmbedMessage
     {
         EmbeddedNotify = 0,
         WindowActivate = 1,

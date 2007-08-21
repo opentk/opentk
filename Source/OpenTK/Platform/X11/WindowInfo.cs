@@ -14,14 +14,14 @@ namespace OpenTK.Platform.X11
     /// Describes an X11 window.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal class WindowInfo : IWindowInfo
+    public class WindowInfo : IWindowInfo
     {
-        internal WindowInfo()
+        public WindowInfo()
         {
             visinfo = new VisualInfo();
         }
-        
-        internal WindowInfo(WindowInfo parent)
+
+        public WindowInfo(WindowInfo parent)
         {
             this.Handle = parent.Handle;
             this.TopLevelWindow = parent.TopLevelWindow;
@@ -37,14 +37,14 @@ namespace OpenTK.Platform.X11
         private WindowInfo parent;
         private VisualInfo visinfo;
 
-        internal IntPtr RootWindow { get { return rootWindow; } set { rootWindow = value; } }
-        internal IntPtr TopLevelWindow { get { return topLevelWindow; } set { topLevelWindow = value; } }
-        internal IntPtr Display { get { return display; } set { display = value; } }
-        internal int Screen { get { return screen; } set { screen = value; } }
-        internal VisualInfo VisualInfo { get { return visinfo; } set { visinfo = value; } }
+        public IntPtr RootWindow { get { return rootWindow; } set { rootWindow = value; } }
+        public IntPtr TopLevelWindow { get { return topLevelWindow; } set { topLevelWindow = value; } }
+        public IntPtr Display { get { return display; } set { display = value; } }
+        public int Screen { get { return screen; } set { screen = value; } }
+        public VisualInfo VisualInfo { get { return visinfo; } set { visinfo = value; } }
 
-        public IntPtr Handle { get { return handle; } internal set { handle = value; } }
-        public IWindowInfo Parent { get { return parent; } internal set { parent = value as WindowInfo; } }
+        public IntPtr Handle { get { return handle; } set { handle = value; } }
+        public IWindowInfo Parent { get { return parent; } set { parent = value as WindowInfo; } }
 
         public override string ToString()
         {
