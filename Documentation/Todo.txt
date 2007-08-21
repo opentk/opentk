@@ -25,14 +25,14 @@ Generic Todos:
 
 Bind:
 * Get ready for OpenGL 3.0 (Long Peaks).
-* Fix problems reported on the Tao Framework forums.
+* Implement Glx and Glu bindings. Agl, too?
+* Improve speed (FunctionCollection.AddChecked is very slow).
+* Get rid of the "object" overloads in favour of generics.
 
 
 OpenTK.OpenGL todos:
 * Improve call performance for functions that use GCHandles.
-+ Inline XML documentation.
-+ Add complete Wgl, Glx, Agl and Glu bindings.
-+ Get rid of the "object" overloads in favour of generics.
+* Inline XML documentation.
 
 
 OpenTK.Platform:
