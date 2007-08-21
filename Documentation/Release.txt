@@ -1,6 +1,6 @@
 ================================================================================
 
-OpenTK 0.3.9 WIP alpha Release notes
+OpenTK 0.3.10 WIP Release notes
 
 IMPORTANT: This release is intended for testing and experimentation only. Use at your own risk!
 
@@ -8,13 +8,12 @@ IMPORTANT: This release is intended for testing and experimentation only. Use at
 
 Highlights:
 
- * MAJOR (breaking) changes:
-	* Improved interface for GL class (see changelog for more information).
-	* Keyboard support for GameWindow (windows/linux).
- * Minor changes:
-	* Updates to GameWindow events.
-	* X11 bindings enhanced with mono's bindings.
-	* Fixed several crash bugs.
+ * Added complete WGL bindings.
+ * Corrected interminent crashes when loading examples.
+ * Improved GLControl and GameWindow load/unload sequence, for improved stability and speed.
+ * Corrected an insidious bug that returned corrupt visuals under x64 Linux.
+ * Improved GLControl compatibility with Linux drivers.
+ * Now compatible with both Mesa3d 6.5.x and 7.0.x
  
 --------------------------------------------------------------------------------
 
