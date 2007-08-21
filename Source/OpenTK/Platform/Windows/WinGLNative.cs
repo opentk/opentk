@@ -290,6 +290,8 @@ namespace OpenTK.Platform.Windows
                 glContext = new WinGLContext(this.mode);
                 glContext.PrepareContext(this.Handle);
                 glContext.CreateContext();
+                //glContext.MakeCurrent();
+                OpenTK.OpenGL.GL.LoadAll();
             }
             catch (ApplicationException expt)
             {
