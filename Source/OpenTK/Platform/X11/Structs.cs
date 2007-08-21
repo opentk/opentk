@@ -801,6 +801,7 @@ namespace OpenTK.Platform.X11
         StaticGravity = 10
     }
 
+    [CLSCompliant(false)]
     public enum XKeySym : uint
     {
         XK_BackSpace = 0xFF08,
@@ -885,7 +886,7 @@ namespace OpenTK.Platform.X11
         public IntPtr killid;
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack = 2)]
+    [StructLayout(LayoutKind.Sequential, Pack = 2), CLSCompliant(false)]
     public struct XColor
     {
         public IntPtr pixel;
@@ -1142,7 +1143,7 @@ namespace OpenTK.Platform.X11
         Append = 2
     }
 
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential), CLSCompliant(false)]
     public struct XKeyBoardState
     {
         public int key_click_percent;
