@@ -165,6 +165,8 @@ namespace OpenTK.Platform.X11
             this.window = window;
             Initialize();
 
+            //Debug.Print("Info: {0}", window.ToString());
+
             API.DisplayKeycodes(window.Display, ref firstKeyCode, ref lastKeyCode);
             Debug.Print("First keycode: {0}, last {1}", firstKeyCode, lastKeyCode);
 

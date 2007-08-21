@@ -34,9 +34,9 @@ namespace OpenTK.Platform.X11
 
     #endregion
 
-    #region internal static class API
+    #region public static class API
 
-    internal static class API
+    public static class API
     {
         // Prevent BeforeFieldInit optimization.
         static API() { }
@@ -46,21 +46,21 @@ namespace OpenTK.Platform.X11
 
         // Display management
         [DllImport(_dll_name, EntryPoint = "XOpenDisplay")]
-        extern internal static IntPtr OpenDisplay([MarshalAs(UnmanagedType.LPTStr)] string display_name);
+        extern public static IntPtr OpenDisplay([MarshalAs(UnmanagedType.LPTStr)] string display_name);
 
         [DllImport(_dll_name, EntryPoint = "XCloseDisplay")]
-        extern internal static void CloseDisplay(Display display);
+        extern public static void CloseDisplay(Display display);
 
         [DllImport(_dll_name, EntryPoint = "XCreateColormap")]
-        extern internal static IntPtr CreateColormap(Display display, Window window, IntPtr visual, int alloc);
+        extern public static IntPtr CreateColormap(Display display, Window window, IntPtr visual, int alloc);
 
         #region Window handling
 
         [DllImport(_dll_name, EntryPoint = "XRootWindow")]
-        internal static extern Window RootWindow(Display display, int screen);
+        public static extern Window RootWindow(Display display, int screen);
 
         [DllImport(_dll_name, EntryPoint = "XCreateWindow")]
-        internal extern static Window CreateWindow(
+        public extern static Window CreateWindow(
             Display display,
             Window parent,
             int x, int y,
@@ -77,7 +77,7 @@ namespace OpenTK.Platform.X11
         );
 
         [DllImport(_dll_name, EntryPoint = "XCreateSimpleWindow")]
-        internal extern static Window CreateSimpleWindow(
+        public extern static Window CreateSimpleWindow(
             Display display,
             Window parent,
             int x, int y,
@@ -88,24 +88,24 @@ namespace OpenTK.Platform.X11
         );
 
         [DllImport(_dll_name, EntryPoint = "XResizeWindow")]
-        internal extern static int XResizeWindow(Display display, Window window, int width, int height);
+        public extern static int XResizeWindow(Display display, Window window, int width, int height);
 
         [DllImport(_dll_name, EntryPoint = "XDestroyWindow")]
-        internal extern static void DestroyWindow(Display display, Window window);
+        public extern static void DestroyWindow(Display display, Window window);
 
         [DllImport(_dll_name, EntryPoint = "XMapWindow")]
-        extern internal static void MapWindow(Display display, Window window);
+        extern public static void MapWindow(Display display, Window window);
 
         [DllImport(_dll_name, EntryPoint = "XMapRaised")]
-        extern internal static void MapRaised(Display display, Window window);
+        extern public static void MapRaised(Display display, Window window);
 
         #endregion
 
         [DllImport(_dll_name, EntryPoint = "XDefaultScreen")]
-        extern internal static int DefaultScreen(Display display);
+        extern public static int DefaultScreen(Display display);
 
         [DllImport(_dll_name, EntryPoint = "XDefaultVisual")]
-        extern internal static IntPtr DefaultVisual(Display display, int screen_number);
+        extern public static IntPtr DefaultVisual(Display display, int screen_number);
 
         #region XFree
 
@@ -114,7 +114,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         /// <param name="data">A pointer to the structure that will be freed.</param>
         [DllImport(_dll_name, EntryPoint = "XFree")]
-        extern internal static void Free(IntPtr data);
+        extern public static void Free(IntPtr data);
 
         #endregion
 
@@ -122,33 +122,33 @@ namespace OpenTK.Platform.X11
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, EntryPoint = "XEventsQueued")]
-        extern internal static int EventsQueued(Display display, int mode);
+        extern public static int EventsQueued(Display display, int mode);
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, EntryPoint = "XPending")]
-        extern internal static int Pending(Display display);
+        extern public static int Pending(Display display);
 
         //[System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, EntryPoint = "XNextEvent")]
-        extern internal static void NextEvent(
+        extern public static void NextEvent(
             Display display,
             [MarshalAs(UnmanagedType.AsAny)][In, Out]object e);
 
         [DllImport(_dll_name, EntryPoint = "XNextEvent")]
-        extern internal static void NextEvent(Display display, [In, Out] IntPtr e);
+        extern public static void NextEvent(Display display, [In, Out] IntPtr e);
 
         [DllImport(_dll_name, EntryPoint = "XPeekEvent")]
-        extern internal static void PeekEvent(
+        extern public static void PeekEvent(
             Display display,
             [MarshalAs(UnmanagedType.AsAny)][In, Out]object event_return
         );
 
         [DllImport(_dll_name, EntryPoint = "XPeekEvent")]
-        extern internal static void PeekEvent(Display display, [In, Out]XEvent event_return);
+        extern public static void PeekEvent(Display display, [In, Out]XEvent event_return);
 
         [DllImport(_dll_name, EntryPoint = "XSendEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        extern internal static bool SendEvent(Display display, Window window, bool propagate,
+        extern public static bool SendEvent(Display display, Window window, bool propagate,
             [MarshalAs(UnmanagedType.SysInt)]EventMask event_mask, ref XEvent event_send);
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace OpenTK.Platform.X11
         /// <para>XSelectInput() can generate a BadWindow error.</para>
         /// </remarks>
         [DllImport(_dll_name, EntryPoint = "XSelectInput")]
-        internal static extern void SelectInput(Display display, Window w, EventMask event_mask);
+        public static extern void SelectInput(Display display, Window w, EventMask event_mask);
 
         /// <summary>
         /// When the predicate procedure finds a match, XCheckIfEvent() copies the matched event into the client-supplied XEvent structure and returns True. (This event is removed from the queue.) If the predicate procedure finds no match, XCheckIfEvent() returns False, and the output buffer will have been flushed. All earlier events stored in the queue are not discarded.
@@ -185,39 +185,39 @@ namespace OpenTK.Platform.X11
         /// <returns>true if the predicate returns true for some event, false otherwise</returns>
         [DllImport(_dll_name, EntryPoint = "XCheckIfEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool CheckIfEvent(Display display, ref XEvent event_return,
+        public static extern bool CheckIfEvent(Display display, ref XEvent event_return,
             /*[MarshalAs(UnmanagedType.FunctionPtr)] */ CheckEventPredicate predicate, /*XPointer*/ IntPtr arg);
 
         [DllImport(_dll_name, EntryPoint = "XIfEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool IfEvent(Display display, ref XEvent event_return,
+        public static extern bool IfEvent(Display display, ref XEvent event_return,
             /*[MarshalAs(UnmanagedType.FunctionPtr)] */ CheckEventPredicate predicate, /*XPointer*/ IntPtr arg);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        internal delegate bool CheckEventPredicate(Display display, ref XEvent @event, IntPtr arg);
+        public delegate bool CheckEventPredicate(Display display, ref XEvent @event, IntPtr arg);
 
         [DllImport(_dll_name, EntryPoint = "XCheckMaskEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool CheckMaskEvent(Display display, EventMask event_mask, ref XEvent event_return);
+        public static extern bool CheckMaskEvent(Display display, EventMask event_mask, ref XEvent event_return);
 
         #endregion
 
         #region Pointer and Keyboard functions
 
         [DllImport(_dll_name, EntryPoint = "XGrabPointer")]
-        extern internal static ErrorCodes GrabPointer(Display display, IntPtr grab_window,
+        extern public static ErrorCodes GrabPointer(Display display, IntPtr grab_window,
             bool owner_events, int event_mask, GrabMode pointer_mode, GrabMode keyboard_mode,
             IntPtr confine_to, IntPtr cursor, int time);
 
         [DllImport(_dll_name, EntryPoint = "XUngrabPointer")]
-        extern internal static ErrorCodes UngrabPointer(Display display, int time);
+        extern public static ErrorCodes UngrabPointer(Display display, int time);
 
         [DllImport(_dll_name, EntryPoint = "XGrabKeyboard")]
-        extern internal static ErrorCodes GrabKeyboard(Display display, IntPtr grab_window,
+        extern public static ErrorCodes GrabKeyboard(Display display, IntPtr grab_window,
             bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode, int time);
 
         [DllImport(_dll_name, EntryPoint = "XUngrabKeyboard")]
-        extern internal static void UngrabKeyboard(Display display, int time);
+        extern public static void UngrabKeyboard(Display display, int time);
 
         /// <summary>
         /// The XGetKeyboardMapping() function returns the symbols for the specified number of KeyCodes starting with first_keycode.
@@ -240,7 +240,7 @@ namespace OpenTK.Platform.X11
         /// <para>BadValue:	Some numeric value falls outside the range of values accepted by the request. Unless a specific range is specified for an argument, the full range defined by the argument's type is accepted. Any argument defined as a set of alternatives can generate this error.</para>
         /// </remarks>
         [DllImport(_dll_name, EntryPoint = "XGetKeyboardMapping")]
-        internal static extern KeySym GetKeyboardMapping(Display display, KeyCode first_keycode, int keycode_count,
+        public static extern KeySym GetKeyboardMapping(Display display, KeyCode first_keycode, int keycode_count,
             ref int keysyms_per_keycode_return);
 
         /// <summary>
@@ -251,14 +251,14 @@ namespace OpenTK.Platform.X11
         /// <param name="max_keycodes_return">Returns the maximum number of KeyCodes.</param>
         /// <remarks> The minimum number of KeyCodes returned is never less than 8, and the maximum number of KeyCodes returned is never greater than 255. Not all KeyCodes in this range are required to have corresponding keys.</remarks>
         [DllImport(_dll_name, EntryPoint = "XDisplayKeycodes")]
-        internal static extern void DisplayKeycodes(Display display, ref int min_keycodes_return, ref int max_keycodes_return);
+        public static extern void DisplayKeycodes(Display display, ref int min_keycodes_return, ref int max_keycodes_return);
 
         #endregion
 
-        #region Xf86VidMode internal structures
+        #region Xf86VidMode public structures
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct XF86VidModeModeLine
+        public struct XF86VidModeModeLine
         {
             short hdisplay;   /* Number of display pixels horizontally */
             short hsyncstart; /* Horizontal sync start */
@@ -277,67 +277,67 @@ namespace OpenTK.Platform.X11
         /// Specifies an XF86 display mode.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        internal struct XF86VidModeModeInfo
+        public struct XF86VidModeModeInfo
         {
             /// <summary>
             /// Pixel clock.
             /// </summary>
-            internal int dotclock;
+            public int dotclock;
 
             /// <summary>
             /// Number of display pixels horizontally
             /// </summary>
-            internal short hdisplay;
+            public short hdisplay;
 
             /// <summary>
             /// Horizontal sync start
             /// </summary>
-            internal short hsyncstart;
+            public short hsyncstart;
 
             /// <summary>
             /// Horizontal sync end
             /// </summary>
-            internal short hsyncend;
+            public short hsyncend;
 
             /// <summary>
             /// Total horizontal pixel
             /// </summary>
-            internal short htotal;
+            public short htotal;
 
             /// <summary>
             /// 
             /// </summary>
-            internal short hskew;
+            public short hskew;
 
             /// <summary>
             /// Number of display pixels vertically
             /// </summary>
-            internal short vdisplay;
+            public short vdisplay;
 
             /// <summary>
             /// Vertical sync start
             /// </summary>
-            internal short vsyncstart;
+            public short vsyncstart;
 
             /// <summary>
             /// Vertical sync end
             /// </summary>
-            internal short vsyncend;
+            public short vsyncend;
 
             /// <summary>
             /// Total vertical pixels
             /// </summary>
-            internal short vtotal;
+            public short vtotal;
 
             /// <summary>
             /// 
             /// </summary>
-            internal short vskew;
+            public short vskew;
 
             /// <summary>
             /// Mode flags
             /// </summary>
-            internal int flags;
+            public int flags;
 
             int privsize;   /* Size of private */
             IntPtr _private;   /* Server privates */
@@ -345,7 +345,7 @@ namespace OpenTK.Platform.X11
 
         //Monitor information:
         [StructLayout(LayoutKind.Sequential)]
-        internal struct XF86VidModeMonitor
+        public struct XF86VidModeMonitor
         {
             [MarshalAs(UnmanagedType.LPStr)]
             string vendor;     /* Name of manufacturer */
@@ -361,14 +361,14 @@ namespace OpenTK.Platform.X11
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct XF86VidModeSyncRange
+        public struct XF86VidModeSyncRange
         {
             float hi;         /* Top of range */
             float lo;         /* Bottom of range */
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct XF86VidModeNotifyEvent
+        public struct XF86VidModeNotifyEvent
         {
             int type;                      /* of event */
             ulong serial;          /* # of last request processed by server */
@@ -383,7 +383,7 @@ namespace OpenTK.Platform.X11
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct XF86VidModeGamma
+        public struct XF86VidModeGamma
         {
             float red;                     /* Red Gamma value */
             float green;                   /* Green Gamma value */
@@ -394,20 +394,20 @@ namespace OpenTK.Platform.X11
         #region libXxf86vm Functions
 
         [DllImport(_dll_name_vid)]
-        extern internal static bool XF86VidModeQueryExtension(
+        extern public static bool XF86VidModeQueryExtension(
             Display display,
             out int event_base_return,
             out int error_base_return);
         /*
         [DllImport(_dll_name_vid)]
-        extern internal static bool XF86VidModeSwitchMode(
+        extern public static bool XF86VidModeSwitchMode(
             Display display,
             int screen,
             int zoom);
         */
 
         [DllImport(_dll_name_vid)]
-        extern internal static bool XF86VidModeSwitchToMode(
+        extern public static bool XF86VidModeSwitchToMode(
             Display display,
             int screen,
             IntPtr
@@ -415,13 +415,13 @@ namespace OpenTK.Platform.X11
 
 
         [DllImport(_dll_name_vid)]
-        extern internal static bool XF86VidModeQueryVersion(
+        extern public static bool XF86VidModeQueryVersion(
             Display display,
             out int major_version_return,
             out int minor_version_return);
 
         [DllImport(_dll_name_vid)]
-        extern internal static bool XF86VidModeGetAllModeLines(
+        extern public static bool XF86VidModeGetAllModeLines(
             Display display,
             int screen,
             out int modecount_return,
@@ -429,7 +429,7 @@ namespace OpenTK.Platform.X11
             out IntPtr modesinfo);
 
         [DllImport(_dll_name_vid)]
-        extern internal static bool XF86VidModeSetViewPort(
+        extern public static bool XF86VidModeSetViewPort(
             Display display,
             int screen,
             int x,
@@ -521,32 +521,31 @@ XF86VidModeGetGammaRampSize(
         #endregion
 
         [DllImport(_dll_name, EntryPoint = "XLookupKeysym")]
-        internal static extern KeySym LookupKeysym(ref XKeyEvent key_event, int index);
+        public static extern KeySym LookupKeysym(ref XKeyEvent key_event, int index);
 
     }
     #endregion
 
     #region X11 Structures
 
-    #region internal class VisualInfo
+    #region public class VisualInfo
 
     [StructLayout(LayoutKind.Sequential)]
     public class VisualInfo
     {
-        internal IntPtr visual;
-        internal int visualid;
-        internal int screen;
-        internal int depth;
-        internal int @class;
-        internal long redMask;
-        internal long greenMask;
-        internal long blueMask;
-        internal int colormap_size;
-        internal int bits_per_rgb;
+        public IntPtr visual;
+        public VisualID visualid;
+        public int screen;
+        public int depth;
+        public XVisualClass @class;
+        public long redMask;
+        public long greenMask;
+        public long blueMask;
+        public int colormap_size;
+        public int bits_per_rgb;
 
         public override string ToString()
         {
-            // return base.ToString();
             return String.Format("id ({0}), screen ({1}), depth ({2}), class ({3})",
                 visualid, screen, depth, @class);
         }
@@ -554,93 +553,93 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
 
-    #region internal class SetWindowAttributes
+    #region public class SetWindowAttributes
 
     [StructLayout(LayoutKind.Sequential)]
-    internal class SetWindowAttributes
+    public class SetWindowAttributes
     {
         /// <summary>
         /// background, None, or ParentRelative
         /// </summary>
-        internal Pixmap background_pixmap;
+        public Pixmap background_pixmap;
         /// <summary>
         /// background pixel
         /// </summary>
-        internal long background_pixel;
+        public long background_pixel;
         /// <summary>
         /// border of the window or CopyFromParent
         /// </summary>
-        internal Pixmap border_pixmap;
+        public Pixmap border_pixmap;
         /// <summary>
         /// border pixel value
         /// </summary>
-        internal long border_pixel;
+        public long border_pixel;
         /// <summary>
         /// one of bit gravity values
         /// </summary>
-        internal int bit_gravity;
+        public int bit_gravity;
         /// <summary>
         /// one of the window gravity values
         /// </summary>
-        internal int win_gravity;
+        public int win_gravity;
         /// <summary>
         /// NotUseful, WhenMapped, Always
         /// </summary>
-        internal int backing_store;
+        public int backing_store;
         /// <summary>
         /// planes to be preserved if possible
         /// </summary>
-        internal long backing_planes;
+        public long backing_planes;
         /// <summary>
         /// value to use in restoring planes
         /// </summary>
-        internal long backing_pixel;
+        public long backing_pixel;
         /// <summary>
         /// should bits under be saved? (popups)
         /// </summary>
-        internal bool save_under;
+        public bool save_under;
         /// <summary>
         /// set of events that should be saved
         /// </summary>
-        internal EventMask event_mask;
+        public EventMask event_mask;
         /// <summary>
         /// set of events that should not propagate
         /// </summary>
-        internal long do_not_propagate_mask;
+        public long do_not_propagate_mask;
         /// <summary>
         /// boolean value for override_redirect
         /// </summary>
-        internal bool override_redirect;
+        public bool override_redirect;
         /// <summary>
         /// color map to be associated with window
         /// </summary>
-        internal Colormap colormap;
+        public Colormap colormap;
         /// <summary>
         /// cursor to be displayed (or None)
         /// </summary>
-        internal Cursor cursor;
+        public Cursor cursor;
     }
 
     #endregion
 
-    #region internal struct SizeHints
+    #region public struct SizeHints
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct SizeHints
+    public struct SizeHints
     {
-        internal long flags;         /* marks which fields in this structure are defined */
-        internal int x, y;           /* Obsolete */
-        internal int width, height;  /* Obsolete */
-        internal int min_width, min_height;
-        internal int max_width, max_height;
-        internal int width_inc, height_inc;
-        internal Rectangle min_aspect, max_aspect;
-        internal int base_width, base_height;
-        internal int win_gravity;
-        internal struct Rectangle
+        public long flags;         /* marks which fields in this structure are defined */
+        public int x, y;           /* Obsolete */
+        public int width, height;  /* Obsolete */
+        public int min_width, min_height;
+        public int max_width, max_height;
+        public int width_inc, height_inc;
+        public Rectangle min_aspect, max_aspect;
+        public int base_width, base_height;
+        public int win_gravity;
+        public struct Rectangle
         {
-            internal int x;       /* numerator */
-            internal int y;       /* denominator */
+            public int x;       /* numerator */
+            public int y;       /* denominator */
             private void stop_the_compiler_warnings() { x = y = 0; }
         }
         /* this structure may be extended in the future */
@@ -652,19 +651,19 @@ XF86VidModeGetGammaRampSize(
 
     #region X11 Constants and Enums
 
-    internal struct Constants
+    public struct Constants
     {
-        internal const int QueuedAlready = 0;
-        internal const int QueuedAfterReading = 1;
-        internal const int QueuedAfterFlush = 2;
+        public const int QueuedAlready = 0;
+        public const int QueuedAfterReading = 1;
+        public const int QueuedAfterFlush = 2;
 
-        internal const int CopyFromParent	= 0;
-        internal const int CWX = 1;
-        internal const int InputOutput = 1;
-        internal const int InputOnly = 2;
+        public const int CopyFromParent	= 0;
+        public const int CWX = 1;
+        public const int InputOutput = 1;
+        public const int InputOnly = 2;
     }
 
-    internal enum ErrorCodes : int
+    public enum ErrorCodes : int
     {
         Success = 0,
         BadRequest = 1,
@@ -687,7 +686,7 @@ XF86VidModeGetGammaRampSize(
     }
 
     [Flags]
-    internal enum CreateWindowMask : long//: ulong
+    public enum CreateWindowMask : long//: ulong
     {
         CWBackPixmap	= (1L<<0),
         CWBackPixel     = (1L<<1),
@@ -718,7 +717,7 @@ XF86VidModeGetGammaRampSize(
     /// <summary>
     /// Defines LATIN-1 and miscellaneous keys.
     /// </summary>
-    internal enum XKey
+    public enum XKey
     {
         /*
          * TTY function keys, cleverly chosen to map to ASCII, for convenience of
@@ -1037,6 +1036,32 @@ XF86VidModeGetGammaRampSize(
     }
 
     #endregion
+
+    public enum XVisualClass : int
+    {
+        StaticGray = 0,
+        GrayScale = 1,
+        StaticColor = 2,
+        PseudoColor = 3,
+        TrueColor = 4,
+        DirectColor = 5,
+    }
+
+    public enum XVisualInfoMask
+    {
+        VisualNoMask = 0x0,
+        VisualIDMask = 0x1,
+        VisualScreenMask = 0x2,
+        VisualDepthMask = 0x4,
+        VisualClassMask = 0x8,
+        VisualRedMaskMask = 0x10,
+        VisualGreenMaskMask = 0x20,
+        VisualBlueMaskMask = 0x40,
+        VisualColormapSizeMask = 0x80,
+        VisualBitsPerRGBMask = 0x100,
+        VisualAllMask = 0x1FF,
+    }
+
 
     #endregion
 }

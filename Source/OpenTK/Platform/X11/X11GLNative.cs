@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Reflection;
 
 //using OpenTK.OpenGL;
 
@@ -52,6 +53,14 @@ namespace OpenTK.Platform.X11
         {
             Debug.Print("Native window driver: {0}", this.ToString());
             window = new WindowInfo();
+            Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+            if (xplatui != null)
+            {
+                FieldInfo f = xplatui.GetField("ErrorExceptions",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
+                if (f != null)
+                    f.SetValue(null, true);
+            }
         }
 
         #endregion
@@ -86,6 +95,11 @@ namespace OpenTK.Platform.X11
                         // ReparentNotify seems to be the first event raised on window creation.
                         this.OnCreate(EventArgs.Empty);
                         break;
+
+
+                    case XEventName.MapNotify:
+                        Debug.WriteLine("Window mapped.");
+                        return;
 
                     case XEventName.CreateNotify:
                         // A child was was created - nothing to do
@@ -254,10 +268,10 @@ namespace OpenTK.Platform.X11
                 XSetWindowAttributes attributes = new XSetWindowAttributes();
                 attributes.background_pixel = IntPtr.Zero;
                 attributes.border_pixel = IntPtr.Zero;
-                attributes.colormap = API.CreateColormap(window.Display, window.RootWindow,
-                    window.VisualInfo.visual, 0/*AllocNone*/); //glContext.colormap;
-                attributes.event_mask = (IntPtr)(EventMask.StructureNotifyMask |
-                    EventMask.SubstructureNotifyMask | EventMask.ExposureMask);
+                attributes.colormap =
+                    API.CreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
+                attributes.event_mask =
+                    (IntPtr)(EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask);
 
                 uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
                     (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
@@ -270,53 +284,30 @@ namespace OpenTK.Platform.X11
                 {
                     throw new ApplicationException("XCreateWindow call failed (returned 0).");
                 }
-                /*
+                
                 // Set the window hints
                 XSizeHints hints = new XSizeHints();
                 hints.x = 0;
                 hints.y = 0;
-                hints.width = 640;
-                hints.height = 480;
+                hints.width = mode.Width;
+                hints.height = mode.Height;
                 hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
                 Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
-                XTextProperty text = new XTextProperty();
-                text.value = "OpenTK Game Window";
-                text.format = 8;
-                Functions.XSetWMName(window.Display, window.Handle, ref text);
-                Functions.XSetWMProperties(
-                    display,
-                    window,
-                    name,
-                    name,
-                    0,  // None
-                    null,
-                    0,
-                    hints
-                );*/
+
+                //XTextProperty text = new XTextProperty();
+                //text.value = "OpenTK Game Window";
+                //text.format = 8;
+                //Functions.XSetWMName(window.Display, window.Handle, ref text);
+                //Functions.XSetWMProperties(display, window, name, name, 0,  /*None*/ null, 0, hints);
 
                 Debug.Print("done! (id: {0})", window.Handle);
 
-                /*
-                XEvent ev = new XEvent();
-                API.IfEvent(window.Display, ref ev,
-                    delegate(IntPtr display, ref XEvent @event, IntPtr arg)
-                    {
-                        Debug.Print("Checking event: {0}", @event.type);
-                        if (@event.type == XEventName.MapNotify)
-                        {
-                            Debug.Print("Map event for window: {0}", @event.MapEvent.window);
-                        }
-                        return (@event.type == XEventName.MapNotify) && (@event.MapEvent.window == arg);
-                    },
-                    window.Handle);
-                */
                 glContext.windowInfo.Handle = window.Handle;
                 glContext.CreateContext(null, true);
 
-                API.MapRaised(window.Display, window.Handle);
-                Debug.WriteLine("Mapped window.");
-
                 glContext.MakeCurrent();
+
+                API.MapRaised(window.Display, window.Handle);
 
                 Debug.Unindent();
                 Debug.WriteLine("GameWindow creation completed successfully!");
@@ -330,7 +321,7 @@ namespace OpenTK.Platform.X11
 
         public event CreateEvent Create;
 
-        public void OnCreate(EventArgs e)
+        private void OnCreate(EventArgs e)
         {
             if (this.Create != null)
             {
@@ -363,7 +354,9 @@ namespace OpenTK.Platform.X11
 
         #region OnDestroy
 
-        public void OnDestroy(EventArgs e)
+        public event DestroyEvent Destroy;
+
+        private void OnDestroy(EventArgs e)
         {
             Debug.Print("Destroy event fired from window: {0}", window.ToString());
             if (this.Destroy != null)
@@ -371,8 +364,6 @@ namespace OpenTK.Platform.X11
                 this.Destroy(this, e);
             }
         }
-
-        public event DestroyEvent Destroy;
 
         #endregion
 
