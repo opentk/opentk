@@ -16,7 +16,7 @@ namespace OpenTK.Platform.X11
     sealed class X11GLControl : IGLControl
     {
         WindowInfo info = new WindowInfo();
-        DisplayMode mode;
+        //DisplayMode mode;
         private Type xplatui;
         X11GLContext glContext;
 
@@ -25,25 +25,23 @@ namespace OpenTK.Platform.X11
 
         #region --- Contructors ---
 
-        public X11GLControl(UserControl c, DisplayMode mode)
+        public X11GLControl(UserControl c)
         {
             Debug.WriteLine("Creating opengl control (X11GLControl driver)");
             Debug.Indent();
 
+            Utilities.ThrowOnX11Error = true;
 
             if (c == null/* || c.TopLevelControl == null*/)
             {
                 throw new ArgumentException("UserControl c may not be null.");
             }
 
-            this.mode = mode;//new DisplayMode(mode);
-            glContext = new X11GLContext(mode);
+            //this.mode = mode;
+            glContext = new X11GLContext(null);
 
             c.HandleCreated += new EventHandler(c_HandleCreated);
             c.HandleDestroyed += new EventHandler(c_HandleDestroyed);
-            //c.ParentChanged += new EventHandler(c_ParentChanged);
-            //c.Load += new EventHandler(c_Load);
-            //Debug.Print("GLControl events hooked to X11GLControl.");
 
             xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
             Debug.Write("System.Windows.Forms.XplatUIX11: ");
@@ -61,42 +59,18 @@ namespace OpenTK.Platform.X11
 
                 Debug.Print("Display: {0}, Screen: {1}, Root Window: {2}, GLControl: {3}",
                     info.Display, info.Screen, info.RootWindow, info.Handle);
-                
+
                 glContext.PrepareContext(info);
                 info.VisualInfo = glContext.windowInfo.VisualInfo;
+
+                Debug.Print("Setting XplatUIX11.CustomVisual");
                 xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
                     .SetValue(null, info.VisualInfo.visual);
 
+                Debug.Print("Setting XplatUIX11.CustomColormap");
                 xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
                     .SetValue(null, API.CreateColormap(info.Display, info.RootWindow, info.VisualInfo.visual, 0));
-
-                c.Visible = true;
-                glContext.windowInfo.Handle = info.Handle = c.Handle;
             }
-            
-            //Debug.Print("Parent: {0}", c.ParentForm.Handle);
-            //API.MapRaised(info.Display, info.Handle);
-            //API.MapRaised(info.Display, c.ParentForm.Handle);
-
-            //OpenTK.OpenGL.GL.Imports.Flush();
-
-            /*
-            // Wait until the GLControl is mapped.
-            XEvent ev = new XEvent();
-            API.IfEvent(info.Display, ref ev,
-                delegate(IntPtr display, ref XEvent @event, IntPtr arg)
-                {
-                    Debug.Print("Checking event: {0}", @event.type);
-                    if (@event.type == XEventName.MapNotify)
-                    {
-                        Debug.Print("Map event for window: {0}", @event.MapEvent.window);
-                    }
-                    return (@event.type == XEventName.MapNotify) && (@event.MapEvent.window == arg);
-                },
-                info.Handle);
-            */
-            //glContext.MakeCurrent();
-            //OpenTK.OpenGL.GL.LoadAll();
 
             Debug.Unindent();
         }
@@ -121,13 +95,6 @@ namespace OpenTK.Platform.X11
             finally
             {
                 Debug.Unindent();
-                /*
-                Debug.WriteLine(String.Format("Mapping control {0} to parent {1}", c.Handle, c.Handle));
-                API.MapRaised(info.Display, c.Handle);
-
-                Context.MakeCurrent();
-                OpenTK.OpenGL.GL.LoadAll();
-                */
             }
         }
 
@@ -137,48 +104,7 @@ namespace OpenTK.Platform.X11
             glContext.Dispose();
         }
 
-        void c_ParentChanged(object sender, EventArgs e)
-        {
-            Debug.Print("Mapping X11GLControl.");
-            Debug.Indent();
-
-            Control c = sender as Control;
-            Debug.Print("TopLevel control is {0}",
-                c.TopLevelControl != null ? c.TopLevelControl.ToString() : "not available");
-
-            if (c.TopLevelControl == null)
-            {
-                throw new ApplicationException("Problem: GLControl does not have a parent, aborting.");
-            }
-            else
-            {
-                info.TopLevelWindow = c.TopLevelControl.Handle;
-            }
-
-            Debug.WriteLine(String.Format("Mapping GLControl {0} to window {1}", info.Handle, info.TopLevelWindow));
-            //API.MapRaised(info.Display, info.TopLevelWindow);
-            /*
-            // Wait until the GLControl is mapped.
-            XEvent ev = new XEvent();
-            API.IfEvent(info.Display, ref ev,
-                delegate(IntPtr display, ref XEvent @event, IntPtr arg)
-                {
-                    //Debug.Print("Checking event: {0}", @event.type);
-                    return (@event.type == XEventName.MapNotify) && (@event.MapEvent.window == arg);
-                },
-                info.Handle);
-
-            glContext.MakeCurrent();
-            OpenTK.OpenGL.GL.LoadAll();*/
-            Debug.Unindent();
-        }
-
-        void c_Load(object sender, EventArgs e)
-        {
-            Debug.Print("GLControl loaded, will now try to make context current and load all GL functions.");
-            Context.MakeCurrent();
-            OpenTK.OpenGL.GL.LoadAll();
-        }
+        #region private IntPtr FindColormap()
 
         /// <summary>
         /// Finds a colormap suitable for use with the GLControl.
@@ -198,6 +124,8 @@ namespace OpenTK.Platform.X11
 
             return API.CreateColormap(info.Display, info.RootWindow, glContext.windowInfo.VisualInfo.visual, 0/*AllocNone*/);
         }
+
+        #endregion
 
         #endregion
 

@@ -166,5 +166,28 @@ namespace OpenTK.Platform
         }
 
         #endregion
+
+        static bool throw_on_error;
+        internal static bool ThrowOnX11Error
+        {
+            get { return throw_on_error; }
+            set
+            {
+                if (value && !throw_on_error)
+                {
+                    Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms")
+                        .GetField("ErrorExceptions", System.Reflection.BindingFlags.Static |
+                            System.Reflection.BindingFlags.NonPublic)
+                        .SetValue(null, true);
+                }
+                else if (!value && throw_on_error)
+                {
+                    Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms")
+                        .GetField("ErrorExceptions", System.Reflection.BindingFlags.Static |
+                            System.Reflection.BindingFlags.NonPublic)
+                        .SetValue(null, false);
+                }
+            }
+        }
     }
 }

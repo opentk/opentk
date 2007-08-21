@@ -20,16 +20,10 @@ namespace OpenTK.Platform.X11
     public sealed class X11GLContext : OpenTK.Platform.IGLContext
     {
         private IntPtr context;
-        private DisplayMode mode;// = new DisplayMode();
+        private DisplayMode mode;
         internal WindowInfo windowInfo;
 
-        //private IntPtr desktopResolution = IntPtr.Zero;
-
-        //private int depthBits;
-        //private int stencilBits;
-
-        // These have to be used by the X11GLControl.
-        private IntPtr visual;
+        internal IntPtr visual;
 
         private bool disposed;
 
@@ -74,26 +68,38 @@ namespace OpenTK.Platform.X11
         {
             this.windowInfo = new WindowInfo(info);
 
-            Debug.Print("Preparing visual for DisplayMode: {0}", mode.ToString());
-
             List<int> visualAttributes = new List<int>();
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.RED_SIZE);
-            visualAttributes.Add((int)mode.Color.Red);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.GREEN_SIZE);
-            visualAttributes.Add((int)mode.Color.Green);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.BLUE_SIZE);
-            visualAttributes.Add((int)mode.Color.Blue);
-            //visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
-            //visualAttributes.Add((int)mode.Color.Alpha);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
-            visualAttributes.Add((int)mode.DepthBits);
-            visualAttributes.Add((int)1);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
-            visualAttributes.Add((int)0);
 
-            //try
-            //{
+            if (mode == null)
+            {
+                // Define the bare essentials - needed for compatibility with Mono's System.Windows.Forms
+                Debug.Print("Preparing visual for System.Windows.Forms (compatibility mode)");
+
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
+                visualAttributes.Add((int)1);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
+                visualAttributes.Add((int)0);
+            }
+            else
+            {
+                Debug.Print("Preparing visual for DisplayMode: {0}", mode.ToString());
+
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.RED_SIZE);
+                visualAttributes.Add((int)mode.Color.Red);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.GREEN_SIZE);
+                visualAttributes.Add((int)mode.Color.Green);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.BLUE_SIZE);
+                visualAttributes.Add((int)mode.Color.Blue);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
+                visualAttributes.Add((int)mode.Color.Alpha);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
+                visualAttributes.Add((int)mode.DepthBits);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
+                visualAttributes.Add((int)0);
+            }
+            
             visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, visualAttributes.ToArray());
             if (visual == IntPtr.Zero)
             {
@@ -104,12 +110,6 @@ namespace OpenTK.Platform.X11
                 windowInfo.VisualInfo = (VisualInfo)Marshal.PtrToStructure(visual, typeof(VisualInfo));
                 Debug.Print("Prepared visual: {0}", windowInfo.VisualInfo.ToString());
             }
-            //}
-            //catch (Exception e)
-            //{
-            //    Debug.Print(e.ToString());
-            //    throw;
-            //}
         }
 
         #endregion
