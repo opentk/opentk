@@ -25,7 +25,15 @@ namespace Examples.WinForms
     {
         public W01_First_Window()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine("Exception during initialization, aborting: {0}", e.ToString());
+                return;
+            }
 
             this.ShowDialog();
         }
