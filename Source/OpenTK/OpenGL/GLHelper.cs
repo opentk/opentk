@@ -284,5 +284,19 @@ namespace OpenTK.OpenGL
         }
 
         #endregion
+
+        #region public static void Color3()
+
+        public static void Color4(System.Drawing.Color color)
+        {
+            GL.Color4(color.R, color.G, color.B, color.A);
+        }
+
+        public static void Color3(System.Drawing.Color color)
+        {
+            GL.Color3(color.R, color.G, color.B);
+        }
+
+        #endregion
     }
 }

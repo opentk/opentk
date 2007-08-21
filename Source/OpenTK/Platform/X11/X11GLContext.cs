@@ -76,20 +76,6 @@ namespace OpenTK.Platform.X11
 
             Debug.Print("Preparing visual for DisplayMode: {0}", mode.ToString());
 
-            /*
-int[] attrib =
-    {
-        (int)Glx.Enums.GLXAttribute.RGBA,
-        (int)Glx.Enums.GLXAttribute.RED_SIZE, 1,
-        (int)Glx.Enums.GLXAttribute.GREEN_SIZE, 1,
-        (int)Glx.Enums.GLXAttribute.BLUE_SIZE, 1,
-        (int)Glx.Enums.GLXAttribute.DEPTH_SIZE, 1,
-        (int)Glx.Enums.GLXAttribute.DOUBLEBUFFER,
-        0
-    };
-visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, attrib);
-*/
-
             List<int> visualAttributes = new List<int>();
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.RED_SIZE);
@@ -98,8 +84,8 @@ visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, attrib);
             visualAttributes.Add((int)mode.Color.Green);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.BLUE_SIZE);
             visualAttributes.Add((int)mode.Color.Blue);
-            visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
-            visualAttributes.Add((int)mode.Color.Alpha);
+            //visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
+            //visualAttributes.Add((int)mode.Color.Alpha);
             visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
             visualAttributes.Add((int)mode.DepthBits);
             visualAttributes.Add((int)1);

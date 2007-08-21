@@ -265,9 +265,9 @@ namespace OpenTK.Platform.X11
         #region GLX functions
 
         [DllImport(Library, EntryPoint = "glXCreateContext")]
-        internal static extern IntPtr CreateContext(IntPtr dpy, IntPtr vis, IntPtr shareList, bool direct);
+        public static extern IntPtr CreateContext(IntPtr dpy, IntPtr vis, IntPtr shareList, bool direct);
 
-        internal static IntPtr CreateContext(IntPtr dpy, VisualInfo vis, IntPtr shareList, bool direct)
+        public static IntPtr CreateContext(IntPtr dpy, VisualInfo vis, IntPtr shareList, bool direct)
         {
             GCHandle h0 = GCHandle.Alloc(vis, GCHandleType.Pinned);
 
@@ -296,9 +296,9 @@ namespace OpenTK.Platform.X11
         #region glXChooseVisual
 
         [DllImport(Library, EntryPoint = "glXChooseVisual")]
-        internal extern static IntPtr ChooseVisual(IntPtr dpy, int screen, IntPtr attriblist);
+        public extern static IntPtr ChooseVisual(IntPtr dpy, int screen, IntPtr attriblist);
 
-        internal static IntPtr ChooseVisual(IntPtr dpy, int screen, int[] attriblist)
+        public static IntPtr ChooseVisual(IntPtr dpy, int screen, int[] attriblist)
         {
             unsafe
             {
