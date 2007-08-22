@@ -167,38 +167,38 @@ namespace Examples.WinForms
         {
             GL.Begin(GL.Enums.BeginMode.QUADS);
 
-            GL.Color3((byte)Color.Silver.R, (byte)Color.Silver.G, (byte)Color.Silver.B);
+            GL.Color3(Color.Silver);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
 
-            GL.Color3((byte)Color.Honeydew.R, (byte)Color.Honeydew.G, (byte)Color.Honeydew.B);
+            GL.Color3(Color.Honeydew);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3((byte)Color.Moccasin.R, (byte)Color.Moccasin.G, (byte)Color.Moccasin.B);
+            GL.Color3(Color.Moccasin);
 
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
 
-            GL.Color3((byte)Color.IndianRed.R, (byte)Color.IndianRed.G, (byte)Color.IndianRed.B);
+            GL.Color3(Color.IndianRed);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
-            GL.Color3((byte)Color.PaleVioletRed.R, (byte)Color.PaleVioletRed.G, (byte)Color.PaleVioletRed.B);
+            GL.Color3(Color.PaleVioletRed);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
 
-            GL.Color3((byte)Color.ForestGreen.R, (byte)Color.ForestGreen.G, (byte)Color.ForestGreen.B);
+            GL.Color3(Color.ForestGreen);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);

@@ -146,5 +146,14 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        #region --- IDisposable Members ---
+
+        public void Dispose()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        #endregion
     }
 }

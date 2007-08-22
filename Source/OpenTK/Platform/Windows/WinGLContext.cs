@@ -281,7 +281,7 @@ namespace OpenTK.Platform.Windows
             Dispose(false);
         }
 
-        #region public void ReleaseResources()
+        #region private void ReleaseResources()
 
         private void ReleaseResources()
         {

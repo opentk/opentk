@@ -333,46 +333,15 @@ namespace OpenTK.Platform.Windows
             {
                 Debug.Print("Window handle {0} destroyed.", this.Handle);
                 //this.DestroyHandle(); // Destroyed automatically by DefWndProc
+                //this.Dispose();
                 exists = false;
             }
-            API.PostQuitMessage(0);
+            //API.PostQuitMessage(0);
         }
 
         public event DestroyEvent Destroy;
 
         #endregion
-
-        #endregion
-
-        #region --- IDisposable Members ---
-
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-
-        }
-
-        private void Dispose(bool calledManually)
-        {
-            if (!disposed)
-            {
-                // Clean unmanaged resources here:
-
-                if (calledManually)
-                {
-                    // Safe to clean managed resources
-                    glContext.Dispose();
-                    base.DestroyHandle();
-                }
-                disposed = true;
-            }
-        }
-
-        ~WinGLNative()
-        {
-            Dispose(false);
-        }
 
         #endregion
 
@@ -450,6 +419,37 @@ namespace OpenTK.Platform.Windows
         {
             get { return right; }
             private set { right = value; }
+        }
+
+        #endregion
+
+        #region --- IDisposable Members ---
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool calledManually)
+        {
+            if (!disposed)
+            {
+                // Clean unmanaged resources here:
+
+                if (calledManually)
+                {
+                    // Safe to clean managed resources
+                    glContext.Dispose();
+                    base.DestroyHandle();
+                }
+                disposed = true;
+            }
+        }
+
+        ~WinGLNative()
+        {
+            Dispose(false);
         }
 
         #endregion
