@@ -18,7 +18,7 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    internal class WinRawKeyboard : IKeyboardDriver
+    internal class WinRawKeyboard : IKeyboardDriver, IDisposable
     {
         private List<Keyboard> keyboards = new List<Keyboard>();
         private IntPtr windowHandle;
@@ -175,9 +175,7 @@ namespace OpenTK.Platform.Windows
                     // This is a terminal services devices, skip it.
                     continue;
                 }
-                else if (
-                    ridl[i].Type == API.RawInputDeviceType.KEYBOARD ||
-                    ridl[i].Type == API.RawInputDeviceType.HID)
+                else if (ridl[i].Type == API.RawInputDeviceType.KEYBOARD || ridl[i].Type == API.RawInputDeviceType.HID)
                 {
                     //It's a keyboard – or a USB device that could be a keyboard
 
@@ -283,15 +281,15 @@ namespace OpenTK.Platform.Windows
                     {
                         case API.VirtualKeys.SHIFT:
                             keyboards[0][Input.Key.ShiftLeft] = keyboards[0][Input.Key.ShiftRight] = pressed;
-                            return false;
+                            return true;
 
                         case API.VirtualKeys.CONTROL:
                             keyboards[0][Input.Key.ControlLeft] = keyboards[0][Input.Key.ControlRight] = pressed;
-                            return false;
+                            return true;
 
                         case API.VirtualKeys.MENU:
                             keyboards[0][Input.Key.AltLeft] = keyboards[0][Input.Key.AltRight] = pressed;
-                            return false;
+                            return true;
 
                         default:
                             if (!WinRawKeyboard.KeyMap.ContainsKey(rin.Data.Keyboard.VKey))
@@ -302,7 +300,7 @@ namespace OpenTK.Platform.Windows
                             {
                                 keyboards[0][WinRawKeyboard.KeyMap[rin.Data.Keyboard.VKey]] = pressed;
                             }
-                            break;
+                            return false;
                     }
                     break;
 
@@ -333,6 +331,36 @@ namespace OpenTK.Platform.Windows
         public IList<Keyboard> Keyboard
         {
             get { return keyboards; }
+        }
+
+        #endregion
+
+        #region --- IDisposable Members ---
+
+        private bool disposed;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    //keyboards.Clear();
+                }
+
+                disposed = true;
+            }
+        }
+
+        ~WinRawKeyboard()
+        {
+            Dispose(false);
         }
 
         #endregion

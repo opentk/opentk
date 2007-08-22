@@ -10,11 +10,9 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    public interface IInputDriver : IKeyboardDriver, IMouseDriver
+    public interface IInputDriver : IKeyboardDriver, IMouseDriver, IDisposable
     {
         IList<IInputDevice> InputDevices { get; }
         void ProcessEvents();
-        //IEnumerable<IMouse> Mice { get; }
-        //IEnumerable<IHid> Hids { get; }
     }
 }
