@@ -14847,7 +14847,7 @@ namespace OpenTK.OpenGL
             unsafe { Delegates.glUniformMatrix4x3fv((Int32)location, (Int32)count, (GL.Enums.Boolean)transpose, (Single*)value); }
         }
         
-        public static class ARB
+        public static partial class ARB
         {
             public static 
             void ActiveTexture(GL.Enums.ARB_multitexture texture)
@@ -22619,7 +22619,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class EXT
+        public static partial class EXT
         {
             public static 
             void BlendColor(Single red, Single green, Single blue, Single alpha)
@@ -29393,7 +29393,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class SGIS
+        public static partial class SGIS
         {
             [System.CLSCompliant(false)]
             public static 
@@ -29888,7 +29888,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class SGI
+        public static partial class SGI
         {
             [System.CLSCompliant(false)]
             public static 
@@ -30070,7 +30070,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class SGIX
+        public static partial class SGIX
         {
             public static 
             void PixelTexGen(GL.Enums.SGIX_pixel_texture mode)
@@ -31243,7 +31243,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class HP
+        public static partial class HP
         {
             public static 
             void ImageTransformParameteri(GL.Enums.HP_image_transform target, GL.Enums.HP_image_transform pname, Int32 param)
@@ -31385,7 +31385,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class PGI
+        public static partial class PGI
         {
             public static 
             void Hint(GL.Enums.PGI_misc_hints target, Int32 mode)
@@ -31395,7 +31395,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class INTEL
+        public static partial class INTEL
         {
             [System.CLSCompliant(false)]
             public static 
@@ -31491,7 +31491,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class SUNX
+        public static partial class SUNX
         {
             public static 
             void FinishTexture()
@@ -31501,7 +31501,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class SUN
+        public static partial class SUN
         {
             [System.CLSCompliant(false)]
             public static 
@@ -51748,7 +51748,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class INGR
+        public static partial class INGR
         {
             public static 
             void BlendFuncSeparate(GL.Enums.All sfactorRGB, GL.Enums.All dfactorRGB, GL.Enums.All sfactorAlpha, GL.Enums.All dfactorAlpha)
@@ -51758,7 +51758,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class NV
+        public static partial class NV
         {
             public static 
             void FlushVertexArrayRange()
@@ -61290,7 +61290,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class MESA
+        public static partial class MESA
         {
             public static 
             void ResizeBuffers()
@@ -61744,7 +61744,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class IBM
+        public static partial class IBM
         {
             [System.CLSCompliant(false)]
             public static 
@@ -62573,7 +62573,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class gl3DFX
+        public static partial class gl3DFX
         {
             [System.CLSCompliant(false)]
             public static 
@@ -62590,7 +62590,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class ATI
+        public static partial class ATI
         {
             [System.CLSCompliant(false)]
             public static 
@@ -64534,7 +64534,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class APPLE
+        public static partial class APPLE
         {
             [System.CLSCompliant(false)]
             public static 
@@ -65353,7 +65353,7 @@ namespace OpenTK.OpenGL
             
         }
 
-        public static class GREMEDY
+        public static partial class GREMEDY
         {
             [System.CLSCompliant(false)]
             public static 
