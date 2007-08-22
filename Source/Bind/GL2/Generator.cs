@@ -707,12 +707,12 @@ namespace Bind.GL2
                 {
                 	if (!Char.IsDigit(key[0]))
                 	{
-						sw.WriteLine("public static class {0}", key);
+						sw.WriteLine("public static partial class {0}", key);
                 	}
                     else
                     {
                     	// Identifiers cannot start with a number:
-                        sw.WriteLine("public static class {0}{1}", Settings.FunctionPrefix, key);
+                        sw.WriteLine("public static partial class {0}{1}", Settings.FunctionPrefix, key);
                     }
                     sw.WriteLine("{");
                     sw.Indent();
