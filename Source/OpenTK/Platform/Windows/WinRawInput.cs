@@ -89,16 +89,17 @@ namespace OpenTK.Platform.Windows
                         switch (data.Header.Type)
                         {
                             case API.RawInputDeviceType.KEYBOARD:
-                                keyboardDriver.ProcessKeyboardEvent(data);
-                                break;
+                            if (!keyboardDriver.ProcessKeyboardEvent(data))
+                                API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
+                            return;
 
                             case API.RawInputDeviceType.MOUSE:
-                                //throw new NotImplementedException();
-                                break;
+                            API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
+                            return;
 
                             case API.RawInputDeviceType.HID:
-                                //throw new NotImplementedException();
-                                break;
+                            API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
+                            return;
                         }
                     }
                     else
@@ -111,13 +112,14 @@ namespace OpenTK.Platform.Windows
 
                 case API.Constants.WM_CLOSE:
                 case API.Constants.WM_DESTROY:
-                    Debug.Print("Input window detached from parent {0}.", Handle);
-                    ReleaseHandle();
-                    break;
+                Debug.Print("Input window detached from parent {0}.", Handle);
+                ReleaseHandle();
+                break;
 
                 case API.Constants.WM_QUIT:
-                    Debug.WriteLine("Input window quit.");
-                    break;
+                Debug.WriteLine("Input window quit.");
+                this.Dispose();
+                break;
             }
 
             base.WndProc(ref msg);
@@ -137,7 +139,7 @@ namespace OpenTK.Platform.Windows
             get { return keyboardDriver.Keyboard; }
         }
 
-        public IList<Keyboard> Mouse
+        public IList<Mouse> Mouse
         {
             get { throw new Exception("The method or operation is not implemented."); }
         }
@@ -149,11 +151,32 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region IMouseDriver Members
+        #region --- IDisposable Members ---
 
-        IList<Mouse> IMouseDriver.Mouse
+        private bool disposed;
+
+        public void Dispose()
         {
-            get { throw new Exception("The method or operation is not implemented."); }
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    keyboardDriver.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
+
+        ~WinRawInput()
+        {
+            Dispose(false);
         }
 
         #endregion

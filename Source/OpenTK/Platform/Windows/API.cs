@@ -768,19 +768,28 @@ namespace OpenTK.Platform.Windows
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern LRESULT DefRawInputProc(
-            RawInput[] RawInput,
-            INT Input,
-            UINT SizeHeader
-        );
+        public static extern LRESULT DefRawInputProc(RawInput[] RawInput, INT Input, UINT SizeHeader);
 
+        /*
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern LRESULT DefRawInputProc(
-            RawInput[] RawInput,
-            INT Input,
-            INT SizeHeader
-        );
+        public static extern LRESULT DefRawInputProc(RawInput[] RawInput, INT Input, INT SizeHeader);
+        */
+
+        /// <summary>
+        /// calls the default raw input procedure to provide default processing for
+        /// any raw input messages that an application does not process.
+        /// This function ensures that every message is processed.
+        /// DefRawInputProc is called with the same parameters received by the window procedure.
+        /// </summary>
+        /// <param name="RawInput">Pointer to an array of RawInput structures.</param>
+        /// <param name="Input">Number of RawInput structures pointed to by paRawInput.</param>
+        /// <param name="SizeHeader">Size, in bytes, of the RawInputHeader structure.</param>
+        /// <returns>If successful, the function returns S_OK. Otherwise it returns an error value.</returns>
+        [CLSCompliant(false)]
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        unsafe public static extern LRESULT DefRawInputProc(ref RawInput RawInput, INT Input, UINT SizeHeader);
 
         #endregion
 

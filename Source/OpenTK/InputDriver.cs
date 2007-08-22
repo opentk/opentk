@@ -15,7 +15,7 @@ namespace OpenTK
 {
     public class InputDriver : IInputDriver
     {
-        IInputDriver inputDriver;
+        private IInputDriver inputDriver;
 
         #region --- Constructors ---
         
@@ -60,6 +60,36 @@ namespace OpenTK
         public void ProcessEvents()
         {
             inputDriver.ProcessEvents();
+        }
+
+        #endregion
+
+        #region --- IDisposable Members ---
+
+        private bool disposed;
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    inputDriver.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
+
+        ~InputDriver()
+        {
+            this.Dispose(false);
         }
 
         #endregion
