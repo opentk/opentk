@@ -108,9 +108,35 @@ namespace OpenTK.Platform.Windows
             }
         }
         
+        public static 
+        int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, API.PixelFormatDescriptor[] ppfd)
+        {
+            unsafe
+            {
+                fixed (API.PixelFormatDescriptor* ppfd_ptr = ppfd)
+                {
+                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (API.PixelFormatDescriptor*)ppfd_ptr);
+                    return retval;
+                }
+            }
+        }
+        
         [System.CLSCompliant(false)]
         public static 
         int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, ref API.PixelFormatDescriptor ppfd)
+        {
+            unsafe
+            {
+                fixed (API.PixelFormatDescriptor* ppfd_ptr = &ppfd)
+                {
+                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (API.PixelFormatDescriptor*)ppfd_ptr);
+                    return retval;
+                }
+            }
+        }
+        
+        public static 
+        int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, ref API.PixelFormatDescriptor ppfd)
         {
             unsafe
             {
@@ -229,9 +255,35 @@ namespace OpenTK.Platform.Windows
             }
         }
         
+        public static 
+        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, API.LayerPlaneDescriptor[] plpd)
+        {
+            unsafe
+            {
+                fixed (API.LayerPlaneDescriptor* plpd_ptr = plpd)
+                {
+                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (API.LayerPlaneDescriptor*)plpd_ptr);
+                    return retval;
+                }
+            }
+        }
+        
         [System.CLSCompliant(false)]
         public static 
         Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, ref API.LayerPlaneDescriptor plpd)
+        {
+            unsafe
+            {
+                fixed (API.LayerPlaneDescriptor* plpd_ptr = &plpd)
+                {
+                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (API.LayerPlaneDescriptor*)plpd_ptr);
+                    return retval;
+                }
+            }
+        }
+        
+        public static 
+        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, ref API.LayerPlaneDescriptor plpd)
         {
             unsafe
             {
@@ -406,7 +458,7 @@ namespace OpenTK.Platform.Windows
             }
         }
         
-        public static class ARB
+        public static partial class ARB
         {
             [System.CLSCompliant(false)]
             public static 
@@ -479,7 +531,36 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] int[] piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piValues_ptr = piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] out int piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piValues_ptr = &piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues_ptr);
+                                piValues = *piValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -508,7 +589,35 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] int* piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] int[] piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    fixed (int* piValues_ptr = piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -524,6 +633,21 @@ namespace OpenTK.Platform.Windows
             [System.CLSCompliant(false)]
             public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] out int piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    fixed (int* piValues_ptr = &piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues_ptr);
+                                piValues = *piValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -553,7 +677,35 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] int* piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] int[] piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    fixed (int* piValues_ptr = piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -569,6 +721,21 @@ namespace OpenTK.Platform.Windows
             [System.CLSCompliant(false)]
             public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] out int piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    fixed (int* piValues_ptr = &piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues_ptr);
+                                piValues = *piValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -616,7 +783,36 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] Single[] pfValues)
+            {
+                unsafe
+                {
+                    fixed (Single* pfValues_ptr = pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] out Single pfValues)
+            {
+                unsafe
+                {
+                    fixed (Single* pfValues_ptr = &pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues_ptr);
+                                pfValues = *pfValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -645,7 +841,35 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] Single* pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] Single[] pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    fixed (Single* pfValues_ptr = pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -661,6 +885,21 @@ namespace OpenTK.Platform.Windows
             [System.CLSCompliant(false)]
             public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] out Single pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    fixed (Single* pfValues_ptr = &pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues_ptr);
+                                pfValues = *pfValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -690,7 +929,35 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] Single* pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] Single[] pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    fixed (Single* pfValues_ptr = pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -706,6 +973,21 @@ namespace OpenTK.Platform.Windows
             [System.CLSCompliant(false)]
             public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] out Single pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    fixed (Single* pfValues_ptr = &pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues_ptr);
+                                pfValues = *pfValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -753,6 +1035,20 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -768,7 +1064,36 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -797,6 +1122,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -813,7 +1153,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -844,6 +1215,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -861,7 +1248,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -890,6 +1308,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -906,7 +1339,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -937,6 +1401,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -954,7 +1434,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -987,6 +1500,23 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1005,7 +1535,39 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1034,6 +1596,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1050,7 +1627,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1081,6 +1689,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1098,7 +1722,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1131,6 +1788,23 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1149,7 +1823,39 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1178,6 +1884,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1194,7 +1915,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1225,6 +1977,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1242,7 +2010,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1275,6 +2076,23 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1293,7 +2111,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1324,6 +2175,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1341,7 +2208,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1372,6 +2272,22 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
@@ -1390,9 +2306,43 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1425,6 +2375,23 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
@@ -1444,9 +2411,42 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1477,6 +2477,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1494,7 +2510,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1525,6 +2574,22 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
@@ -1543,9 +2608,43 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1578,6 +2677,23 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
@@ -1597,9 +2713,41 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1628,6 +2776,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1644,7 +2807,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1675,6 +2869,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1692,7 +2902,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1725,6 +2968,23 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1743,7 +3003,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1774,6 +3067,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1791,7 +3100,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1822,6 +3164,22 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
@@ -1840,9 +3198,43 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1875,6 +3267,23 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
@@ -1894,9 +3303,42 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1927,6 +3369,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1944,7 +3402,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -1975,6 +3466,22 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
@@ -1993,9 +3500,43 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -2028,6 +3569,23 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
@@ -2038,6 +3596,24 @@ namespace OpenTK.Platform.Windows
                     fixed (Single* pfAttribFList_ptr = &pfAttribFList)
                     fixed (int* piFormats_ptr = &piFormats)
                     fixed (UInt32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
                     {
                         Boolean retval = Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
                                 piFormats = *piFormats_ptr;
@@ -2191,7 +3767,7 @@ namespace OpenTK.Platform.Windows
             
         }
 
-        public static class EXT
+        public static partial class EXT
         {
             [System.CLSCompliant(false)]
             public static 
@@ -2238,6 +3814,19 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean LoadDisplayColorTable(Int16[] table, Int32 length)
+            {
+                unsafe
+                {
+                    fixed (Int16* table_ptr = table)
+                    {
+                        Boolean retval = Delegates.wglLoadDisplayColorTableEXT((UInt16*)table_ptr, (UInt32)length);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean LoadDisplayColorTable(ref UInt16 table, UInt32 length)
@@ -2245,6 +3834,19 @@ namespace OpenTK.Platform.Windows
                 unsafe
                 {
                     fixed (UInt16* table_ptr = &table)
+                    {
+                        Boolean retval = Delegates.wglLoadDisplayColorTableEXT((UInt16*)table_ptr, (UInt32)length);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean LoadDisplayColorTable(ref Int16 table, Int32 length)
+            {
+                unsafe
+                {
+                    fixed (Int16* table_ptr = &table)
                     {
                         Boolean retval = Delegates.wglLoadDisplayColorTableEXT((UInt16*)table_ptr, (UInt32)length);
                         return retval;
@@ -2415,7 +4017,36 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] int[] piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piValues_ptr = piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] out int piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piValues_ptr = &piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues_ptr);
+                                piValues = *piValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -2444,7 +4075,35 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] int* piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] int[] piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    fixed (int* piValues_ptr = piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -2460,6 +4119,21 @@ namespace OpenTK.Platform.Windows
             [System.CLSCompliant(false)]
             public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] out int piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    fixed (int* piValues_ptr = &piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues_ptr);
+                                piValues = *piValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -2490,7 +4164,37 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] int* piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues);
+                                piAttributes = *piAttributes_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] int[] piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    fixed (int* piValues_ptr = piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues_ptr);
+                                piAttributes = *piAttributes_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -2507,6 +4211,22 @@ namespace OpenTK.Platform.Windows
             [System.CLSCompliant(false)]
             public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] out int piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    fixed (int* piValues_ptr = &piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (int*)piValues_ptr);
+                                piAttributes = *piAttributes_ptr;
+                                piValues = *piValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -2555,7 +4275,36 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] Single[] pfValues)
+            {
+                unsafe
+                {
+                    fixed (Single* pfValues_ptr = pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] out Single pfValues)
+            {
+                unsafe
+                {
+                    fixed (Single* pfValues_ptr = &pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues_ptr);
+                                pfValues = *pfValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -2584,7 +4333,35 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] Single* pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] Single[] pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    fixed (Single* pfValues_ptr = pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -2600,6 +4377,21 @@ namespace OpenTK.Platform.Windows
             [System.CLSCompliant(false)]
             public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] out Single pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = piAttributes)
+                    fixed (Single* pfValues_ptr = &pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues_ptr);
+                                pfValues = *pfValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -2630,7 +4422,37 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] Single* pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues);
+                                piAttributes = *piAttributes_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] Single[] pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    fixed (Single* pfValues_ptr = pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues_ptr);
+                                piAttributes = *piAttributes_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -2647,6 +4469,22 @@ namespace OpenTK.Platform.Windows
             [System.CLSCompliant(false)]
             public static 
             Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] out Single pfValues)
+            {
+                unsafe
+                {
+                    fixed (int* piAttributes_ptr = &piAttributes)
+                    fixed (Single* pfValues_ptr = &pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes_ptr, (Single*)pfValues_ptr);
+                                piAttributes = *piAttributes_ptr;
+                                pfValues = *pfValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -2695,6 +4533,20 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -2710,7 +4562,36 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -2739,6 +4620,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -2755,7 +4651,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -2786,6 +4713,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -2803,7 +4746,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -2832,6 +4806,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -2848,7 +4837,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -2879,6 +4899,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -2896,7 +4932,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -2929,6 +4998,23 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -2947,7 +5033,39 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -2976,6 +5094,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -2992,7 +5125,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3023,6 +5187,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3040,7 +5220,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3073,6 +5286,23 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3091,7 +5321,39 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3120,6 +5382,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3136,7 +5413,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3167,6 +5475,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3184,7 +5508,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3217,6 +5574,23 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3235,7 +5609,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3266,6 +5673,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3283,7 +5706,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3314,6 +5770,22 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
@@ -3332,9 +5804,43 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3367,6 +5873,23 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
@@ -3386,9 +5909,42 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3419,6 +5975,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3436,7 +6008,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3467,6 +6072,22 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
@@ -3485,9 +6106,43 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3520,6 +6175,23 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
@@ -3539,9 +6211,41 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3570,6 +6274,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3586,7 +6305,38 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3617,6 +6367,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3634,7 +6400,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3667,6 +6466,23 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3685,7 +6501,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3716,6 +6565,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3733,7 +6598,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3764,6 +6662,22 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
@@ -3782,9 +6696,43 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3817,6 +6765,23 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
@@ -3836,9 +6801,42 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3869,6 +6867,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -3886,7 +6900,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3917,6 +6964,22 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] out UInt32 nNumFormats)
@@ -3935,9 +6998,43 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] UInt32* nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32* nNumFormats)
             {
                 unsafe
                 {
@@ -3970,6 +7067,23 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] Int32[] nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
@@ -3980,6 +7094,24 @@ namespace OpenTK.Platform.Windows
                     fixed (Single* pfAttribFList_ptr = &pfAttribFList)
                     fixed (int* piFormats_ptr = &piFormats)
                     fixed (UInt32* nNumFormats_ptr = &nNumFormats)
+                    {
+                        Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
+                                piFormats = *piFormats_ptr;
+                                nNumFormats = *nNumFormats_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
+            {
+                unsafe
+                {
+                    fixed (int* piAttribIList_ptr = &piAttribIList)
+                    fixed (Single* pfAttribFList_ptr = &pfAttribFList)
+                    fixed (int* piFormats_ptr = &piFormats)
+                    fixed (Int32* nNumFormats_ptr = &nNumFormats)
                     {
                         Boolean retval = Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList_ptr, (Single*)pfAttribFList_ptr, (UInt32)nMaxFormats, (int*)piFormats_ptr, (UInt32*)nNumFormats_ptr);
                                 piFormats = *piFormats_ptr;
@@ -4003,7 +7135,7 @@ namespace OpenTK.Platform.Windows
             
         }
 
-        public static class NV
+        public static partial class NV
         {
             public static 
             IntPtr AllocateMemory(Int32 size, Single readfreq, Single writefreq, Single priority)
@@ -4036,7 +7168,7 @@ namespace OpenTK.Platform.Windows
             
         }
 
-        public static class OML
+        public static partial class OML
         {
             [System.CLSCompliant(false)]
             public static 
@@ -5431,7 +8563,7 @@ namespace OpenTK.Platform.Windows
             
         }
 
-        public static class I3D
+        public static partial class I3D
         {
             [System.CLSCompliant(false)]
             public static 
@@ -5601,11 +8733,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16* puRed, [Out] Int16* puGreen, [Out] Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] UInt16* puRed, [Out] UInt16* puGreen, [Out] out UInt16 puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                                puBlue = *puBlue_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16* puRed, [Out] Int16* puGreen, [Out] out Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puBlue_ptr = &puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
                                 puBlue = *puBlue_ptr;
@@ -5630,12 +8791,41 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16* puRed, [Out] Int16[] puGreen, [Out] Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] UInt16* puRed, [Out] UInt16[] puGreen, [Out] UInt16[] puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puGreen_ptr = puGreen)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16* puRed, [Out] Int16[] puGreen, [Out] Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                         return retval;
@@ -5661,11 +8851,42 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16* puRed, [Out] Int16[] puGreen, [Out] out Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puBlue = *puBlue_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] UInt16* puRed, [Out] out UInt16 puGreen, [Out] UInt16* puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puGreen_ptr = &puGreen)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                                puGreen = *puGreen_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16* puRed, [Out] out Int16 puGreen, [Out] Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = &puGreen)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
                                 puGreen = *puGreen_ptr;
@@ -5682,6 +8903,22 @@ namespace OpenTK.Platform.Windows
                 {
                     fixed (UInt16* puGreen_ptr = &puGreen)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puGreen = *puGreen_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16* puRed, [Out] out Int16 puGreen, [Out] Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                                 puGreen = *puGreen_ptr;
@@ -5709,11 +8946,42 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16* puRed, [Out] out Int16 puGreen, [Out] out Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puGreen = *puGreen_ptr;
+                                puBlue = *puBlue_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] UInt16[] puRed, [Out] UInt16* puGreen, [Out] UInt16* puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puRed_ptr = puRed)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] Int16* puGreen, [Out] Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue);
                         return retval;
@@ -5729,6 +8997,21 @@ namespace OpenTK.Platform.Windows
                 {
                     fixed (UInt16* puRed_ptr = puRed)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] Int16* puGreen, [Out] Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
                         return retval;
@@ -5754,12 +9037,43 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] Int16* puGreen, [Out] out Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                                puBlue = *puBlue_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] UInt16[] puRed, [Out] UInt16[] puGreen, [Out] UInt16* puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puRed_ptr = puRed)
                     fixed (UInt16* puGreen_ptr = puGreen)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] Int16[] puGreen, [Out] Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
                         return retval;
@@ -5783,6 +9097,21 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] Int16[] puGreen, [Out] Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] UInt16[] puRed, [Out] UInt16[] puGreen, [Out] out UInt16 puBlue)
@@ -5792,6 +9121,22 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = puRed)
                     fixed (UInt16* puGreen_ptr = puGreen)
                     fixed (UInt16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puBlue = *puBlue_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] Int16[] puGreen, [Out] out Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                                 puBlue = *puBlue_ptr;
@@ -5818,6 +9163,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] out Int16 puGreen, [Out] Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                                puGreen = *puGreen_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] UInt16[] puRed, [Out] out UInt16 puGreen, [Out] UInt16[] puBlue)
             {
                 unsafe
@@ -5825,6 +9186,22 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = puRed)
                     fixed (UInt16* puGreen_ptr = &puGreen)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puGreen = *puGreen_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] out Int16 puGreen, [Out] Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                                 puGreen = *puGreen_ptr;
@@ -5851,6 +9228,23 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] out Int16 puGreen, [Out] out Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puGreen = *puGreen_ptr;
+                                puBlue = *puBlue_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out UInt16 puRed, [Out] UInt16* puGreen, [Out] UInt16* puBlue)
@@ -5868,12 +9262,43 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] Int16* puGreen, [Out] Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue);
+                                puRed = *puRed_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out UInt16 puRed, [Out] UInt16* puGreen, [Out] UInt16[] puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                                puRed = *puRed_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] Int16* puGreen, [Out] Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
                                 puRed = *puRed_ptr;
@@ -5901,12 +9326,45 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] Int16* puGreen, [Out] out Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                                puRed = *puRed_ptr;
+                                puBlue = *puBlue_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out UInt16 puRed, [Out] UInt16[] puGreen, [Out] UInt16* puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puGreen_ptr = puGreen)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                                puRed = *puRed_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] Int16[] puGreen, [Out] Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
                                 puRed = *puRed_ptr;
@@ -5932,6 +9390,22 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] Int16[] puGreen, [Out] Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puRed = *puRed_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out UInt16 puRed, [Out] UInt16[] puGreen, [Out] out UInt16 puBlue)
@@ -5941,6 +9415,23 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puGreen_ptr = puGreen)
                     fixed (UInt16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puRed = *puRed_ptr;
+                                puBlue = *puBlue_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] Int16[] puGreen, [Out] out Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                                 puRed = *puRed_ptr;
@@ -5969,6 +9460,23 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] out Int16 puGreen, [Out] Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                                puRed = *puRed_ptr;
+                                puGreen = *puGreen_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out UInt16 puRed, [Out] out UInt16 puGreen, [Out] UInt16[] puBlue)
             {
                 unsafe
@@ -5976,6 +9484,23 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puGreen_ptr = &puGreen)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puRed = *puRed_ptr;
+                                puGreen = *puGreen_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] out Int16 puGreen, [Out] Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                                 puRed = *puRed_ptr;
@@ -5994,6 +9519,24 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puGreen_ptr = &puGreen)
                     fixed (UInt16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                                puRed = *puRed_ptr;
+                                puGreen = *puGreen_ptr;
+                                puBlue = *puBlue_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] out Int16 puGreen, [Out] out Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
                     {
                         Boolean retval = Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                                 puRed = *puRed_ptr;
@@ -6038,6 +9581,20 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16* puRed, Int16* puGreen, Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16* puRed, UInt16* puGreen, ref UInt16 puBlue)
             {
                 unsafe
@@ -6052,11 +9609,39 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16* puRed, Int16* puGreen, ref Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16* puRed, UInt16[] puGreen, UInt16* puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puGreen_ptr = puGreen)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16* puRed, Int16[] puGreen, Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = puGreen)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
                         return retval;
@@ -6081,6 +9666,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16* puRed, Int16[] puGreen, Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16* puRed, UInt16[] puGreen, ref UInt16 puBlue)
             {
                 unsafe
@@ -6096,11 +9696,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16* puRed, Int16[] puGreen, ref Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16* puRed, ref UInt16 puGreen, UInt16* puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puGreen_ptr = &puGreen)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16* puRed, ref Int16 puGreen, Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = &puGreen)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
                         return retval;
@@ -6125,6 +9754,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16* puRed, ref Int16 puGreen, Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16* puRed, ref UInt16 puGreen, ref UInt16 puBlue)
             {
                 unsafe
@@ -6140,11 +9784,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16* puRed, ref Int16 puGreen, ref Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16[] puRed, UInt16* puGreen, UInt16* puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puRed_ptr = puRed)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, Int16* puGreen, Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue);
                         return retval;
@@ -6169,12 +9842,42 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, Int16* puGreen, Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16[] puRed, UInt16* puGreen, ref UInt16 puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puRed_ptr = puRed)
                     fixed (UInt16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, Int16* puGreen, ref Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puBlue_ptr = &puBlue)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
                         return retval;
@@ -6199,6 +9902,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, Int16[] puGreen, Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16[] puRed, UInt16[] puGreen, UInt16[] puBlue)
             {
                 unsafe
@@ -6206,6 +9924,21 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = puRed)
                     fixed (UInt16* puGreen_ptr = puGreen)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, Int16[] puGreen, Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                         return retval;
@@ -6222,6 +9955,21 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = puRed)
                     fixed (UInt16* puGreen_ptr = puGreen)
                     fixed (UInt16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, Int16[] puGreen, ref Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                         return retval;
@@ -6246,6 +9994,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, ref Int16 puGreen, Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16[] puRed, ref UInt16 puGreen, UInt16[] puBlue)
             {
                 unsafe
@@ -6253,6 +10016,21 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = puRed)
                     fixed (UInt16* puGreen_ptr = &puGreen)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, ref Int16 puGreen, Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                         return retval;
@@ -6276,6 +10054,21 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, ref Int16 puGreen, ref Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, ref UInt16 puRed, UInt16* puGreen, UInt16* puBlue)
@@ -6283,6 +10076,20 @@ namespace OpenTK.Platform.Windows
                 unsafe
                 {
                     fixed (UInt16* puRed_ptr = &puRed)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, Int16* puGreen, Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue);
                         return retval;
@@ -6307,12 +10114,42 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, Int16* puGreen, Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, ref UInt16 puRed, UInt16* puGreen, ref UInt16 puBlue)
             {
                 unsafe
                 {
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, Int16* puGreen, ref Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puBlue_ptr = &puBlue)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen, (UInt16*)puBlue_ptr);
                         return retval;
@@ -6337,6 +10174,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, Int16[] puGreen, Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean SetGammaTable(IntPtr hDC, int iEntries, ref UInt16 puRed, UInt16[] puGreen, UInt16[] puBlue)
             {
                 unsafe
@@ -6344,6 +10196,21 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puGreen_ptr = puGreen)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, Int16[] puGreen, Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                         return retval;
@@ -6360,6 +10227,21 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puGreen_ptr = puGreen)
                     fixed (UInt16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, Int16[] puGreen, ref Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                         return retval;
@@ -6384,6 +10266,21 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, ref Int16 puGreen, Int16* puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean SetGammaTable(IntPtr hDC, int iEntries, ref UInt16 puRed, ref UInt16 puGreen, UInt16[] puBlue)
             {
                 unsafe
@@ -6391,6 +10288,21 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puGreen_ptr = &puGreen)
                     fixed (UInt16* puBlue_ptr = puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, ref Int16 puGreen, Int16[] puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = puBlue)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                         return retval;
@@ -6407,6 +10319,21 @@ namespace OpenTK.Platform.Windows
                     fixed (UInt16* puRed_ptr = &puRed)
                     fixed (UInt16* puGreen_ptr = &puGreen)
                     fixed (UInt16* puBlue_ptr = &puBlue)
+                    {
+                        Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, ref Int16 puGreen, ref Int16 puBlue)
+            {
+                unsafe
+                {
+                    fixed (Int16* puRed_ptr = &puRed)
+                    fixed (Int16* puGreen_ptr = &puGreen)
+                    fixed (Int16* puBlue_ptr = &puBlue)
                     {
                         Boolean retval = Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed_ptr, (UInt16*)puGreen_ptr, (UInt16*)puBlue_ptr);
                         return retval;
@@ -6478,6 +10405,19 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean GetGenlockSource(IntPtr hDC, [Out] Int32[] uSource)
+            {
+                unsafe
+                {
+                    fixed (Int32* uSource_ptr = uSource)
+                    {
+                        Boolean retval = Delegates.wglGetGenlockSourceI3D((IntPtr)hDC, (UInt32*)uSource_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean GetGenlockSource(IntPtr hDC, [Out] out UInt32 uSource)
@@ -6485,6 +10425,20 @@ namespace OpenTK.Platform.Windows
                 unsafe
                 {
                     fixed (UInt32* uSource_ptr = &uSource)
+                    {
+                        Boolean retval = Delegates.wglGetGenlockSourceI3D((IntPtr)hDC, (UInt32*)uSource_ptr);
+                                uSource = *uSource_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetGenlockSource(IntPtr hDC, [Out] out Int32 uSource)
+            {
+                unsafe
+                {
+                    fixed (Int32* uSource_ptr = &uSource)
                     {
                         Boolean retval = Delegates.wglGetGenlockSourceI3D((IntPtr)hDC, (UInt32*)uSource_ptr);
                                 uSource = *uSource_ptr;
@@ -6538,6 +10492,19 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean GetGenlockSourceEdge(IntPtr hDC, [Out] Int32[] uEdge)
+            {
+                unsafe
+                {
+                    fixed (Int32* uEdge_ptr = uEdge)
+                    {
+                        Boolean retval = Delegates.wglGetGenlockSourceEdgeI3D((IntPtr)hDC, (UInt32*)uEdge_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean GetGenlockSourceEdge(IntPtr hDC, [Out] out UInt32 uEdge)
@@ -6545,6 +10512,20 @@ namespace OpenTK.Platform.Windows
                 unsafe
                 {
                     fixed (UInt32* uEdge_ptr = &uEdge)
+                    {
+                        Boolean retval = Delegates.wglGetGenlockSourceEdgeI3D((IntPtr)hDC, (UInt32*)uEdge_ptr);
+                                uEdge = *uEdge_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetGenlockSourceEdge(IntPtr hDC, [Out] out Int32 uEdge)
+            {
+                unsafe
+                {
+                    fixed (Int32* uEdge_ptr = &uEdge)
                     {
                         Boolean retval = Delegates.wglGetGenlockSourceEdgeI3D((IntPtr)hDC, (UInt32*)uEdge_ptr);
                                 uEdge = *uEdge_ptr;
@@ -6598,6 +10579,19 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean GetGenlockSampleRate(IntPtr hDC, [Out] Int32[] uRate)
+            {
+                unsafe
+                {
+                    fixed (Int32* uRate_ptr = uRate)
+                    {
+                        Boolean retval = Delegates.wglGetGenlockSampleRateI3D((IntPtr)hDC, (UInt32*)uRate_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean GetGenlockSampleRate(IntPtr hDC, [Out] out UInt32 uRate)
@@ -6605,6 +10599,20 @@ namespace OpenTK.Platform.Windows
                 unsafe
                 {
                     fixed (UInt32* uRate_ptr = &uRate)
+                    {
+                        Boolean retval = Delegates.wglGetGenlockSampleRateI3D((IntPtr)hDC, (UInt32*)uRate_ptr);
+                                uRate = *uRate_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetGenlockSampleRate(IntPtr hDC, [Out] out Int32 uRate)
+            {
+                unsafe
+                {
+                    fixed (Int32* uRate_ptr = &uRate)
                     {
                         Boolean retval = Delegates.wglGetGenlockSampleRateI3D((IntPtr)hDC, (UInt32*)uRate_ptr);
                                 uRate = *uRate_ptr;
@@ -6658,6 +10666,19 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean GetGenlockSourceDelay(IntPtr hDC, [Out] Int32[] uDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uDelay_ptr = uDelay)
+                    {
+                        Boolean retval = Delegates.wglGetGenlockSourceDelayI3D((IntPtr)hDC, (UInt32*)uDelay_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             Boolean GetGenlockSourceDelay(IntPtr hDC, [Out] out UInt32 uDelay)
@@ -6665,6 +10686,20 @@ namespace OpenTK.Platform.Windows
                 unsafe
                 {
                     fixed (UInt32* uDelay_ptr = &uDelay)
+                    {
+                        Boolean retval = Delegates.wglGetGenlockSourceDelayI3D((IntPtr)hDC, (UInt32*)uDelay_ptr);
+                                uDelay = *uDelay_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean GetGenlockSourceDelay(IntPtr hDC, [Out] out Int32 uDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uDelay_ptr = &uDelay)
                     {
                         Boolean retval = Delegates.wglGetGenlockSourceDelayI3D((IntPtr)hDC, (UInt32*)uDelay_ptr);
                                 uDelay = *uDelay_ptr;
@@ -6707,11 +10742,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] Int32* uMaxLineDelay, [Out] Int32[] uMaxPixelDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uMaxPixelDelay_ptr = uMaxPixelDelay)
+                    {
+                        Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay, (UInt32*)uMaxPixelDelay_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] UInt32* uMaxLineDelay, [Out] out UInt32 uMaxPixelDelay)
             {
                 unsafe
                 {
                     fixed (UInt32* uMaxPixelDelay_ptr = &uMaxPixelDelay)
+                    {
+                        Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay, (UInt32*)uMaxPixelDelay_ptr);
+                                uMaxPixelDelay = *uMaxPixelDelay_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] Int32* uMaxLineDelay, [Out] out Int32 uMaxPixelDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uMaxPixelDelay_ptr = &uMaxPixelDelay)
                     {
                         Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay, (UInt32*)uMaxPixelDelay_ptr);
                                 uMaxPixelDelay = *uMaxPixelDelay_ptr;
@@ -6736,12 +10800,40 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] Int32[] uMaxLineDelay, [Out] Int32* uMaxPixelDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uMaxLineDelay_ptr = uMaxLineDelay)
+                    {
+                        Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] UInt32[] uMaxLineDelay, [Out] UInt32[] uMaxPixelDelay)
             {
                 unsafe
                 {
                     fixed (UInt32* uMaxLineDelay_ptr = uMaxLineDelay)
                     fixed (UInt32* uMaxPixelDelay_ptr = uMaxPixelDelay)
+                    {
+                        Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay_ptr);
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] Int32[] uMaxLineDelay, [Out] Int32[] uMaxPixelDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uMaxLineDelay_ptr = uMaxLineDelay)
+                    fixed (Int32* uMaxPixelDelay_ptr = uMaxPixelDelay)
                     {
                         Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay_ptr);
                         return retval;
@@ -6757,6 +10849,21 @@ namespace OpenTK.Platform.Windows
                 {
                     fixed (UInt32* uMaxLineDelay_ptr = uMaxLineDelay)
                     fixed (UInt32* uMaxPixelDelay_ptr = &uMaxPixelDelay)
+                    {
+                        Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay_ptr);
+                                uMaxPixelDelay = *uMaxPixelDelay_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] Int32[] uMaxLineDelay, [Out] out Int32 uMaxPixelDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uMaxLineDelay_ptr = uMaxLineDelay)
+                    fixed (Int32* uMaxPixelDelay_ptr = &uMaxPixelDelay)
                     {
                         Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay_ptr);
                                 uMaxPixelDelay = *uMaxPixelDelay_ptr;
@@ -6782,12 +10889,42 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] out Int32 uMaxLineDelay, [Out] Int32* uMaxPixelDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uMaxLineDelay_ptr = &uMaxLineDelay)
+                    {
+                        Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay);
+                                uMaxLineDelay = *uMaxLineDelay_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] out UInt32 uMaxLineDelay, [Out] UInt32[] uMaxPixelDelay)
             {
                 unsafe
                 {
                     fixed (UInt32* uMaxLineDelay_ptr = &uMaxLineDelay)
                     fixed (UInt32* uMaxPixelDelay_ptr = uMaxPixelDelay)
+                    {
+                        Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay_ptr);
+                                uMaxLineDelay = *uMaxLineDelay_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] out Int32 uMaxLineDelay, [Out] Int32[] uMaxPixelDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uMaxLineDelay_ptr = &uMaxLineDelay)
+                    fixed (Int32* uMaxPixelDelay_ptr = uMaxPixelDelay)
                     {
                         Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay_ptr);
                                 uMaxLineDelay = *uMaxLineDelay_ptr;
@@ -6804,6 +10941,22 @@ namespace OpenTK.Platform.Windows
                 {
                     fixed (UInt32* uMaxLineDelay_ptr = &uMaxLineDelay)
                     fixed (UInt32* uMaxPixelDelay_ptr = &uMaxPixelDelay)
+                    {
+                        Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay_ptr);
+                                uMaxLineDelay = *uMaxLineDelay_ptr;
+                                uMaxPixelDelay = *uMaxPixelDelay_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            public static 
+            Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] out Int32 uMaxLineDelay, [Out] out Int32 uMaxPixelDelay)
+            {
+                unsafe
+                {
+                    fixed (Int32* uMaxLineDelay_ptr = &uMaxLineDelay)
+                    fixed (Int32* uMaxPixelDelay_ptr = &uMaxPixelDelay)
                     {
                         Boolean retval = Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay_ptr, (UInt32*)uMaxPixelDelay_ptr);
                                 uMaxLineDelay = *uMaxLineDelay_ptr;
@@ -6888,7 +11041,35 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, void* pAddress, Int32[] pSize, Int32 count)
+            {
+                unsafe
+                {
+                    fixed (Int32* pSize_ptr = pSize)
+                    {
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, void* pAddress, ref Int32 pSize, UInt32 count)
+            {
+                unsafe
+                {
+                    fixed (Int32* pSize_ptr = &pSize)
+                    {
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, void* pAddress, ref Int32 pSize, Int32 count)
             {
                 unsafe
                 {
@@ -6920,7 +11101,46 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, Int32* pSize, Int32 count)
+            {
+                unsafe
+                {
+                    System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
+                        return retval;
+                    }
+                    finally
+                    {
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, Int32[] pSize, UInt32 count)
+            {
+                unsafe
+                {
+                    fixed (Int32* pSize_ptr = pSize)
+                    {
+                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                        try
+                        {
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            return retval;
+                        }
+                        finally
+                        {
+                        }
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, Int32[] pSize, Int32 count)
             {
                 unsafe
                 {
@@ -6962,7 +11182,42 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, ref Int32 pSize, Int32 count)
+            {
+                unsafe
+                {
+                    fixed (Int32* pSize_ptr = &pSize)
+                    {
+                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                        try
+                        {
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            return retval;
+                        }
+                        finally
+                        {
+                        }
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, Int32* pSize, UInt32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = pEvent)
+                    {
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize, (UInt32)count);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, Int32* pSize, Int32 count)
             {
                 unsafe
                 {
@@ -6991,7 +11246,37 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, Int32[] pSize, Int32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = pEvent)
+                    fixed (Int32* pSize_ptr = pSize)
+                    {
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, ref Int32 pSize, UInt32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = pEvent)
+                    fixed (Int32* pSize_ptr = &pSize)
+                    {
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, ref Int32 pSize, Int32 count)
             {
                 unsafe
                 {
@@ -7027,7 +11312,49 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, Int32* pSize, Int32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = pEvent)
+                    {
+                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                        try
+                        {
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
+                            return retval;
+                        }
+                        finally
+                        {
+                        }
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, Int32[] pSize, UInt32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = pEvent)
+                    fixed (Int32* pSize_ptr = pSize)
+                    {
+                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                        try
+                        {
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            return retval;
+                        }
+                        finally
+                        {
+                        }
+                    }
+                }
+            }
+            
+            public static 
+            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, Int32[] pSize, Int32 count)
             {
                 unsafe
                 {
@@ -7069,9 +11396,44 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, ref Int32 pSize, Int32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = pEvent)
+                    fixed (Int32* pSize_ptr = &pSize)
+                    {
+                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                        try
+                        {
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            return retval;
+                        }
+                        finally
+                        {
+                        }
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, Int32* pSize, UInt32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = &pEvent)
+                    {
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize, (UInt32)count);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, Int32* pSize, Int32 count)
             {
                 unsafe
                 {
@@ -7100,7 +11462,37 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, Int32[] pSize, Int32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = &pEvent)
+                    fixed (Int32* pSize_ptr = pSize)
+                    {
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, ref Int32 pSize, UInt32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = &pEvent)
+                    fixed (Int32* pSize_ptr = &pSize)
+                    {
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, ref Int32 pSize, Int32 count)
             {
                 unsafe
                 {
@@ -7136,7 +11528,49 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, Int32* pSize, Int32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = &pEvent)
+                    {
+                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                        try
+                        {
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
+                            return retval;
+                        }
+                        finally
+                        {
+                        }
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, Int32[] pSize, UInt32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = &pEvent)
+                    fixed (Int32* pSize_ptr = pSize)
+                    {
+                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                        try
+                        {
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            return retval;
+                        }
+                        finally
+                        {
+                        }
+                    }
+                }
+            }
+            
+            public static 
+            Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, Int32[] pSize, Int32 count)
             {
                 unsafe
                 {
@@ -7178,6 +11612,27 @@ namespace OpenTK.Platform.Windows
                 }
             }
             
+            public static 
+            Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, ref Int32 pSize, Int32 count)
+            {
+                unsafe
+                {
+                    fixed (IntPtr* pEvent_ptr = &pEvent)
+                    fixed (Int32* pSize_ptr = &pSize)
+                    {
+                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                        try
+                        {
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            return retval;
+                        }
+                        finally
+                        {
+                        }
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean ReleaseImageBufferEvents(IntPtr hDC, void* pAddress, UInt32 count)
@@ -7199,6 +11654,23 @@ namespace OpenTK.Platform.Windows
             [System.CLSCompliant(false)]
             public static 
             Boolean ReleaseImageBufferEvents(IntPtr hDC, [In, Out] object pAddress, UInt32 count)
+            {
+                unsafe
+                {
+                    System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Boolean retval = Delegates.wglReleaseImageBufferEventsI3D((IntPtr)hDC, (void*)pAddress_ptr.AddrOfPinnedObject(), (UInt32)count);
+                        return retval;
+                    }
+                    finally
+                    {
+                    }
+                }
+            }
+            
+            public static 
+            Boolean ReleaseImageBufferEvents(IntPtr hDC, [In, Out] object pAddress, Int32 count)
             {
                 unsafe
                 {

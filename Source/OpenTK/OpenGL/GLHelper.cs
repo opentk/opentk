@@ -273,7 +273,7 @@ namespace OpenTK.OpenGL
         /// </remarks>
         public static bool Load(string function)
         {
-            FieldInfo f = delegatesClass.GetField(function);
+            FieldInfo f = delegatesClass.GetField(function, BindingFlags.Static | BindingFlags.NonPublic);
             if (f == null)
                 return false;
 
@@ -285,7 +285,7 @@ namespace OpenTK.OpenGL
 
         #endregion
 
-        #region public static void Color3()
+        #region public static void Color[34]() overloads
 
         public static void Color4(System.Drawing.Color color)
         {
