@@ -8,13 +8,24 @@ IMPORTANT: This release is intended for testing and experimentation only. Use at
 
 Highlights:
 
- * Added complete WGL bindings.
- * Corrected interminent crashes when loading examples.
- * Improved GLControl and GameWindow load/unload sequence, for improved stability and speed.
- * Corrected an insidious bug that returned corrupt visuals under x64 Linux.
- * Improved GLControl compatibility with Linux drivers.
- * Now compatible with both Mesa3d 6.5.x and 7.0.x
- 
+ * IMPORTANT: Please report any deadlocks at http://opentk.sourceforge.net!
+
+ * New feature: Complete WGL bindings.
+ * New feature: Now compatible with both Mesa3d 6.5.x and 7.0.x!
+ * Feature: Improved loading speed for GLControl and GameWindow.
+ * Feature: Improved GLControl compatibility under Linux (now selects a visual with the same bit-depth as the parent window).
+ * Feature: Improved GLControl and GameWindow stability (but see known issues below).
+ * Feature: GL.Color3 and GL.Color4 can now take a System.Drawing.Color (e.g. GL.Color3(System.Drawing.Color.MidnightBlue)).
+
+ * Bug fix: Fixed interminent ExampleLauncher crashes (but see known issues below).
+ * Bug fix: Fixed corrupt visuals under 64-bit Linux.
+ * Bug fix: GL.Load() would fail to load OpenGL functions.
+ * Bug fix: OpenGL overloads now call the closest matching delegate (corrects issues with GL.Color3(byte, byte, byte)).
+
+ * Known critical bug: ExampleLauncher locks up on Windows XP 32-bit. No such problem under Linux or 64-bit Vista. 
+ * Known bug: ExampleLauncher shuts down when closing any GameWindow under Linux.
+ * Known issue: 32-bit modes exhibit flashing under Mesa3d 6.5.x. Is a Mesa3d problem, update to Mesa3d 7.0.x or use a 24-bit visual.
+
 --------------------------------------------------------------------------------
 
 For support, bug reports, feature requests and flames, visit the OpenTK site: http://opentk.sourceforge.net/
