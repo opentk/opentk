@@ -20,6 +20,7 @@ OpenTK 0.3.9 -> 0.3.10
 		+ Improved compatibility (now works with Mesa3d 7.0.x as well as 6.5.x)
 		+ Better error handling (although not completely safe by any measure).
 		+ Corrected client rectangle under Windows GameWindow implementation - now the Viewport correctly corresponds the rendering area.
+		* Critical bug: deadlock on Windows XP 32-bit. Investigating.
 	+ Input
 		+ Slightly improved keyboard handling functions.
 	+ OpenGL
@@ -28,8 +29,8 @@ OpenTK 0.3.9 -> 0.3.10
 + Examples
 	+ Slight improvements to event handling.
 	+ Improved the ExampleLauncher interface (now responds to key events, added a 'Run Example' button).
-	
 
+	
 OpenTK 0.3.8 -> 0.3.9
 
 + Bind
