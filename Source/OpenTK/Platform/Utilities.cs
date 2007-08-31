@@ -179,6 +179,7 @@ namespace OpenTK.Platform
                         .GetField("ErrorExceptions", System.Reflection.BindingFlags.Static |
                             System.Reflection.BindingFlags.NonPublic)
                         .SetValue(null, true);
+                    throw_on_error = true;
                 }
                 else if (!value && throw_on_error)
                 {
@@ -186,6 +187,7 @@ namespace OpenTK.Platform
                         .GetField("ErrorExceptions", System.Reflection.BindingFlags.Static |
                             System.Reflection.BindingFlags.NonPublic)
                         .SetValue(null, false);
+                    throw_on_error = false;
                 }
             }
         }

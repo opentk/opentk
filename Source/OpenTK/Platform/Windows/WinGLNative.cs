@@ -28,7 +28,7 @@ namespace OpenTK.Platform.Windows
         private WinGLContext glContext;
         private DisplayMode mode = new DisplayMode();
 
-        private bool fullscreen = false;
+        private bool fullscreen;
         private bool disposed;
         private bool isExiting;
         private bool exists;
