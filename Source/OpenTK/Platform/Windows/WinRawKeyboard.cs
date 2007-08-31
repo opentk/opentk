@@ -302,12 +302,10 @@ namespace OpenTK.Platform.Windows
                             }
                             return false;
                     }
-                    break;
 
                 default:
                     throw new ApplicationException("Windows raw keyboard driver received invalid data.");
             }
-            return false;
         }
 
         #endregion
