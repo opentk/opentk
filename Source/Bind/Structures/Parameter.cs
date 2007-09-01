@@ -246,11 +246,11 @@ namespace Bind.Structures
                         else
                         {
                             if (p.CurrentType == "PIXELFORMATDESCRIPTOR")
-                                p.CurrentType ="API.PixelFormatDescriptor";
+                                p.CurrentType ="PixelFormatDescriptor";
                             else if (p.CurrentType == "LAYERPLANEDESCRIPTOR")
-                                p.CurrentType = "API.LayerPlaneDescriptor";
+                                p.CurrentType = "LayerPlaneDescriptor";
                             else if (p.CurrentType == "GLYPHMETRICSFLOAT")
-                                p.CurrentType = "API.GlyphMetricsFloat";
+                                p.CurrentType = "GlyphMetricsFloat";
                         }
                     }
                     else
