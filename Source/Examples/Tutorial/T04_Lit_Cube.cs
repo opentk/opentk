@@ -13,7 +13,7 @@ using OpenTK.OpenGL;
 
 namespace Examples.Tutorial
 {
-    class T04_Lit_Cube : GameWindow, IExample
+    class T04_Lit_Cube : GameWindow//, IExample
     {
         public T04_Lit_Cube()
         {
