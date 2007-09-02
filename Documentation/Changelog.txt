@@ -28,6 +28,8 @@ OpenTK 0.3.10 -> 0.3.11
 	+ Improved example names inside the ExampleLauncher. Renamed some examples to better reflect their contents.
 	+ Added two new tutorials: 'T01: Simple Window' and 'T02: Resizable Window'
 	+ Updated the DrawCube() immediate mode functions to use System.Drawing.Colors
+	+ Resolved issue where 'T10: GLSL Cube' example failed with an NRE when compiled with Mono 1.2.x
+	+ Added 'W03: Extensions' example.
 
 
 OpenTK 0.3.9 -> 0.3.10
