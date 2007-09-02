@@ -24,7 +24,7 @@ namespace Bind.Structures
         {
             Initialize(enumFile, enumextFile);
 
-            using (System.IO.StreamReader sr = new System.IO.StreamReader(Path.Combine(Settings.InputPath, "GL2\\enum.spec")))
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(Path.Combine(Settings.InputPath, auxFile)))
             {
                 AuxEnums = Bind.MainClass.Generator.ReadEnums(sr);
             }

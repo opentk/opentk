@@ -74,7 +74,7 @@ namespace OpenTK.Platform.X11
             {
                 // Define the bare essentials - needed for compatibility with Mono's System.Windows.Forms
                 Debug.Print("Preparing visual for System.Windows.Forms (compatibility mode)");
-
+            
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
                 visualAttributes.Add((int)1);

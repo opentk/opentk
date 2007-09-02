@@ -14,7 +14,8 @@ namespace OpenTK.OpenGL
     /// <summary>
     /// Provides access to GLU functions.
     /// </summary>
-    public static partial class Glu
+    [Obsolete]
+    public static partial class GluOld
     {
         #region GLU functions
 

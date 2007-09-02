@@ -24,13 +24,10 @@ namespace Bind
         public static string FunctionPrefix = "gl";
         public static string ConstantPrefix = "GL_";
 
-        private static string enumsClass = "Enums";
-        public static string GLEnumsClass
-        {
-            get { return OutputClass + "." + enumsClass; }
-            set { enumsClass = value; }
+        public static string NestedEunmsClass = "Enums";
+        public static string NormalEnumsClass = OutputClass + "." + NestedEunmsClass;
+        public static string AuxEnumsClass = "GL." + NestedEunmsClass;
 
-        }
         public static string DelegatesClass = "Delegates";
         public static string ImportsClass = "Imports";
 

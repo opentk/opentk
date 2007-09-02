@@ -274,7 +274,7 @@ namespace OpenTK.Platform.Windows
             internal unsafe delegate Boolean DestroyImageBufferI3D(IntPtr hDC, void* pAddress);
             internal unsafe static DestroyImageBufferI3D wglDestroyImageBufferI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean AssociateImageBufferEventsI3D(IntPtr hDC, IntPtr* pEvent, void* pAddress, Int32* pSize, UInt32 count);
+            internal unsafe delegate Boolean AssociateImageBufferEventsI3D(IntPtr hDC, IntPtr pEvent, void* pAddress, Int32* pSize, UInt32 count);
             internal unsafe static AssociateImageBufferEventsI3D wglAssociateImageBufferEventsI3D = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate Boolean ReleaseImageBufferEventsI3D(IntPtr hDC, void* pAddress, UInt32 count);

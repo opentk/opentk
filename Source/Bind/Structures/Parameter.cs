@@ -250,16 +250,33 @@ namespace Bind.Structures
             Enum @enum;
             string s;
             Parameter p = new Parameter(par);
+
+            // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
+            // Otherwise, try to find it in the aux enums list. If it exists in neither, it is not an enum.
+            bool normal = false;
+            bool aux = false;
+            normal = Enum.GLEnums.TryGetValue(p.CurrentType, out @enum);
+            if (!normal)
+                aux = Enum.AuxEnums != null && Enum.AuxEnums.TryGetValue(p.CurrentType, out @enum);
             
             // Translate enum types
-            if ((Enum.GLEnums.TryGetValue(p.CurrentType, out @enum) ||
-                (Enum.AuxEnums != null && Enum.AuxEnums.TryGetValue(p.CurrentType, out @enum))) &&
-                @enum.Name != "GLenum")
+            if ((normal || aux) && @enum.Name != "GLenum")
             {
                 if (Settings.Compatibility == Settings.Legacy.Tao)
+                {
                     p.CurrentType = "int";
+                }
                 else
-                    p.CurrentType = p.CurrentType.Insert(0, String.Format("{0}.", Settings.GLEnumsClass));
+                {
+                    if (normal)
+                    {
+                        p.CurrentType = p.CurrentType.Insert(0, String.Format("{0}.", Settings.NormalEnumsClass));
+                    }
+                    else if (aux)
+                    {
+                        p.CurrentType = p.CurrentType.Insert(0, String.Format("{0}.", Settings.AuxEnumsClass));
+                    }
+                }
             }
             else if (Bind.Structures.Type.GLTypes.TryGetValue(p.CurrentType, out s))
             {
@@ -272,11 +289,11 @@ namespace Bind.Structures
                         // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                         if (Enum.GLEnums.ContainsKey(Category))
                         {
-                            p.CurrentType = String.Format("{0}.{1}", Settings.GLEnumsClass, Category);
+                            p.CurrentType = String.Format("{0}.{1}", Settings.NormalEnumsClass, Category);
                         }
                         else
                         {
-                            p.CurrentType = String.Format("{0}.{1}", Settings.GLEnumsClass, Settings.CompleteEnumName);
+                            p.CurrentType = String.Format("{0}.{1}", Settings.NormalEnumsClass, Settings.CompleteEnumName);
                         }
                     }
                     else
@@ -304,6 +321,12 @@ namespace Bind.Structures
                                 p.CurrentType = "GlyphMetricsFloat";
                         }
                     }
+                    else if (p.CurrentType == "XVisualInfo")
+                    {
+                        //p.Pointer = false;
+                        //p.Reference = true;
+
+                    }
                     else
                     {
                         p.CurrentType = s;
@@ -311,6 +334,11 @@ namespace Bind.Structures
                     p.CurrentType =
                         Bind.Structures.Type.CSTypes.ContainsKey(p.CurrentType) ?
                         Bind.Structures.Type.CSTypes[p.CurrentType] : p.CurrentType;
+
+                    if (p.CurrentType == "IntPtr")
+                    {
+                        p.Pointer = false;
+                    }
                 }
             }
 
@@ -356,8 +384,6 @@ namespace Bind.Structures
         #endregion
     }
 
-    #region ParameterCollection class
-
     /// <summary>
     /// Holds the parameter list of an opengl function.
     /// </summary>
@@ -365,7 +391,17 @@ namespace Bind.Structures
     {
         string cache = String.Empty;
         string callStringCache = String.Empty;
-        bool rebuild = true;
+        private bool rebuild = true;
+        bool hasPointerParameters;
+        bool hasReferenceParameters;
+        private bool Rebuild
+        {
+            get { return rebuild; }
+            set
+            {
+                rebuild = value;
+            }
+        }
 
         #region Constructors
 
@@ -383,11 +419,67 @@ namespace Bind.Structures
 
         #endregion
 
+        void BuildCache()
+        {
+            BuildCallStringCache();
+            BuildToStringCache();
+            BuildReferenceAndPointerParametersCache();
+            Rebuild = false;
+        }
+
+        public bool HasPointerParameters
+        {
+            get
+            {
+                if (!rebuild)
+                {
+                    return hasPointerParameters;
+                }
+                else
+                {
+                    BuildCache();
+                    return hasPointerParameters;
+                }
+            }
+        }
+        
+        public bool HasReferenceParameters
+        {
+            get
+            {
+                if (!Rebuild)
+                {
+                    return hasReferenceParameters;
+                }
+                else
+                {
+                    BuildCache();
+                    return hasReferenceParameters;
+                }
+            }
+        }
+
+        void BuildReferenceAndPointerParametersCache()
+        {
+            foreach (Parameter p in this)
+            {
+                if (p.Pointer)
+                    hasPointerParameters = true;
+
+                if (p.Reference)
+                    hasReferenceParameters = true;
+            }
+        }
+
+        #region new public void Add(Parameter p)
+
         new public void Add(Parameter p)
         {
-            rebuild = true;
+            Rebuild = true;
             base.Add(p);
         }
+
+        #endregion
 
         #region override public string ToString()
 
@@ -412,108 +504,128 @@ namespace Bind.Structures
         /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
         public string ToString(bool taoCompatible)
         {
-            if (!rebuild)
+            if (!Rebuild)
             {
                 return cache;
             }
             else
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("(");
-                if (this.Count > 0)
-                {
-                    foreach (Parameter p in this)
-                    {
-                        if (taoCompatible)
-                        {
-                            sb.Append(p.ToString(true));
-                        }
-                        else
-                        {
-                            sb.Append(p.ToString());
-                        }
-                        sb.Append(", ");
-                    }
-                    sb.Replace(", ", ")", sb.Length - 2, 2);
-                }
-                else
-                    sb.Append(")");
-
-                cache = sb.ToString();
+                BuildCache();
                 return cache;
             }
         }
 
         #endregion
 
-        public string CallString()
+        #region void BuildToStringCache()
+
+        void BuildToStringCache()
         {
-            return CallString(false);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("(");
+            if (this.Count > 0)
+            {
+                foreach (Parameter p in this)
+                {
+                    if (Settings.Compatibility == Settings.Legacy.Tao)
+                    {
+                        sb.Append(p.ToString(true));
+                    }
+                    else
+                    {
+                        sb.Append(p.ToString());
+                    }
+                    sb.Append(", ");
+                }
+                sb.Replace(", ", ")", sb.Length - 2, 2);
+            }
+            else
+                sb.Append(")");
+
+            cache = sb.ToString();
         }
 
-        public string CallString(bool taoCompatible)
+        #endregion
+
+        #region public string CallString()
+
+        public string CallString()
         {
-            if (!rebuild)
+            if (!Rebuild)
             {
                 return callStringCache;
             }
             else
             {
-                StringBuilder sb = new StringBuilder();
-
-                sb.Append("(");
-
-                if (this.Count > 0)
-                {
-                    foreach (Parameter p in this)
-                    {
-                        if (p.Unchecked)
-                            sb.Append("unchecked((" + p.CurrentType + ")");
-
-                        if (p.CurrentType != "object")
-                        {
-                            if (p.CurrentType.ToLower().Contains("string"))
-                            {
-                                sb.Append(String.Format("({0}{1})",
-                                    p.CurrentType, (p.Array > 0) ? "[]" : ""));
-
-                            }
-                            else if (p.Pointer || p.Array > 0 || p.Reference)
-                            {
-                                sb.Append(String.Format("({0}*)",
-                                    p.CurrentType /*, (p.Pointer || p.Array > 0) ? "*" : ""*/));
-                            }
-                            //else if (p.Reference)
-                            //{
-                            //    sb.Append(String.Format("{0} ({1})",
-                            //       p.Flow == Parameter.FlowDirection.Out ? "out" : "ref", p.CurrentType));
-                            //}
-                            else
-                            {
-                                sb.Append(String.Format("({0})", p.CurrentType));
-                            }
-                        }
-
-                        sb.Append(
-                            Utilities.Keywords.Contains(p.Name) ? "@" + p.Name : p.Name
-                        );
-
-                        if (p.Unchecked)
-                            sb.Append(")");
-
-                        sb.Append(", ");
-                    }
-                    sb.Replace(", ", ")", sb.Length - 2, 2);
-                }
-                else
-                {
-                    sb.Append(")");
-                }
-
-                callStringCache = sb.ToString();
+                BuildCache();
                 return callStringCache;
             }
         }
+
+        #endregion
+
+        #region private void BuildCallStringCache()
+
+        /// <summary>
+        /// Builds a call string instance and caches it.
+        /// </summary>
+        private void BuildCallStringCache()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("(");
+
+            if (this.Count > 0)
+            {
+                foreach (Parameter p in this)
+                {
+                    if (p.Unchecked)
+                        sb.Append("unchecked((" + p.CurrentType + ")");
+
+                    if (p.CurrentType != "object")
+                    {
+                        if (p.CurrentType.ToLower().Contains("string"))
+                        {
+                            sb.Append(String.Format("({0}{1})",
+                                p.CurrentType, (p.Array > 0) ? "[]" : ""));
+
+                        }
+                        else if (p.Pointer || p.Array > 0 || p.Reference)
+                        {
+                            sb.Append(String.Format("({0}*)",
+                                p.CurrentType /*, (p.Pointer || p.Array > 0) ? "*" : ""*/));
+                        }
+                        //else if (p.Reference)
+                        //{
+                        //    sb.Append(String.Format("{0} ({1})",
+                        //       p.Flow == Parameter.FlowDirection.Out ? "out" : "ref", p.CurrentType));
+                        //}
+                        else
+                        {
+                            sb.Append(String.Format("({0})", p.CurrentType));
+                        }
+                    }
+
+                    sb.Append(
+                        Utilities.Keywords.Contains(p.Name) ? "@" + p.Name : p.Name
+                    );
+
+                    if (p.Unchecked)
+                        sb.Append(")");
+
+                    sb.Append(", ");
+                }
+                sb.Replace(", ", ")", sb.Length - 2, 2);
+            }
+            else
+            {
+                sb.Append(")");
+            }
+
+            callStringCache = sb.ToString();
+        }
+
+        #endregion
 
         public bool ContainsType(string type)
         {
@@ -523,6 +635,4 @@ namespace Bind.Structures
             return false;
         }
     }
-
-    #endregion
 }

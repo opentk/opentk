@@ -51,14 +51,12 @@ namespace Bind.GL2
 
         #endregion
 
-        #region IBind Members
-
         #region public void Process()
 
         public virtual void Process()
         {
             Function.endingsAddV =
-                new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?)|Parameter|Fog(Coord)?.*|VertexWeight|(Fragment)?Light(Model)?|Material|ReplacementCodeu?b?|Tex(Gen|Env)|Indexu?b?)", RegexOptions.Compiled);
+                new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?)|(Point|Convolution|Transform|Sprite|List|Combiner|Tex)Parameter|Fog(Coord)?.*|VertexWeight|(Fragment)?Light(Model)?|Material|ReplacementCodeu?b?|Tex(Gen|Env)|Indexu?.v)", RegexOptions.Compiled);
 
 
             Bind.Structures.Type.Initialize(glTypemap, csTypemap);
@@ -102,8 +100,6 @@ namespace Bind.GL2
             	Bind.Structures.Function.Wrappers,
             	Bind.Structures.Enum.GLEnums);
         }
-
-        #endregion
 
         #endregion
 
@@ -655,7 +651,7 @@ namespace Bind.GL2
         
         #region void WriteImports
 
-        public void WriteImports(BindStreamWriter sw, DelegateCollection delegates)
+        public virtual void WriteImports(BindStreamWriter sw, DelegateCollection delegates)
         {
             Trace.WriteLine(String.Format("Writing imports to {0}.{1}", Settings.OutputNamespace, Settings.ImportsClass));
 
@@ -717,7 +713,7 @@ namespace Bind.GL2
                     else
                     {
                     	// Identifiers cannot start with a number:
-                        sw.WriteLine("public static partial class {0}{1}", Settings.FunctionPrefix, key);
+                        sw.WriteLine("public static partial class {0}{1}", Settings.ConstantPrefix, key);
                     }
                     sw.WriteLine("{");
                     sw.Indent();

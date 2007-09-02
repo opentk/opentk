@@ -188,7 +188,7 @@ namespace Examples.Tutorial
         private void LoadCube()
         {
             int size; // To check whether the buffers were uploaded correctly.
-            
+            //GL.
             // First, generate the buffer objects
             GL.GenBuffers(1, out vbo);
             GL.GenBuffers(1, out ibo);
@@ -200,7 +200,7 @@ namespace Examples.Tutorial
                 (IntPtr)(vdata.Length * 4),
                 vdata,
                 GL.Enums.VERSION_1_5.STATIC_DRAW);
-            GL.GetBufferParameterv(
+            GL.GetBufferParameter(
                 GL.Enums.VERSION_1_5.ARRAY_BUFFER,
                 GL.Enums.VERSION_1_5.BUFFER_SIZE,
                 out size);
@@ -217,7 +217,7 @@ namespace Examples.Tutorial
                 idata,
                 GL.Enums.VERSION_1_5.STATIC_DRAW
             );
-            GL.GetBufferParameterv(
+            GL.GetBufferParameter(
                 GL.Enums.VERSION_1_5.ELEMENT_ARRAY_BUFFER,
                 GL.Enums.VERSION_1_5.BUFFER_SIZE,
                 out size);
