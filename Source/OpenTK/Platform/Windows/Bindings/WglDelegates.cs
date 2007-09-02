@@ -28,10 +28,10 @@ namespace OpenTK.Platform.Windows
             internal delegate Boolean CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, UInt32 mask);
             internal static CopyContext wglCopyContext = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int ChoosePixelFormat(IntPtr hDc, API.PixelFormatDescriptor* pPfd);
+            internal unsafe delegate int ChoosePixelFormat(IntPtr hDc, PixelFormatDescriptor* pPfd);
             internal unsafe static ChoosePixelFormat wglChoosePixelFormat = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, API.PixelFormatDescriptor* ppfd);
+            internal unsafe delegate int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, PixelFormatDescriptor* ppfd);
             internal unsafe static DescribePixelFormat wglDescribePixelFormat = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate IntPtr GetCurrentDC();
@@ -46,7 +46,7 @@ namespace OpenTK.Platform.Windows
             internal delegate int GetPixelFormat(IntPtr hdc);
             internal static GetPixelFormat wglGetPixelFormat = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean SetPixelFormat(IntPtr hdc, int ipfd, API.PixelFormatDescriptor* ppfd);
+            internal unsafe delegate Boolean SetPixelFormat(IntPtr hdc, int ipfd, PixelFormatDescriptor* ppfd);
             internal unsafe static SetPixelFormat wglSetPixelFormat = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean SwapBuffers(IntPtr hdc);
@@ -58,7 +58,7 @@ namespace OpenTK.Platform.Windows
             internal delegate IntPtr CreateLayerContext(IntPtr hDc, int level);
             internal static CreateLayerContext wglCreateLayerContext = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, API.LayerPlaneDescriptor* plpd);
+            internal unsafe delegate Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, LayerPlaneDescriptor* plpd);
             internal unsafe static DescribeLayerPlane wglDescribeLayerPlane = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr);
@@ -79,10 +79,10 @@ namespace OpenTK.Platform.Windows
             internal delegate Boolean UseFontBitmapsW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase);
             internal static UseFontBitmapsW wglUseFontBitmapsW = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics);
+            internal unsafe delegate Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics);
             internal unsafe static UseFontOutlinesA wglUseFontOutlinesA = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics);
+            internal unsafe delegate Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics);
             internal unsafe static UseFontOutlinesW wglUseFontOutlinesW = null;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate IntPtr CreateBufferRegionARB(IntPtr hDC, int iLayerPlane, UInt32 uType);
