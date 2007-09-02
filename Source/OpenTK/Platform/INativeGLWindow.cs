@@ -13,7 +13,7 @@ namespace OpenTK.Platform
     /// <summary>
     /// This interface supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    interface INativeGLWindow : IGLControl, IResizable
+    interface INativeGLWindow : IGLControl, IResizable, IDisposable
     {
         void CreateWindow(DisplayMode mode);
         void DestroyWindow();
