@@ -73,6 +73,7 @@ namespace Examples.Tutorial
                 MessageBox.Show("You need at least OpenGL 2.0 to run this example. Aborting.", "GLSL not supported",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 this.Exit();
+                return;
             }
 
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
