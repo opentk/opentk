@@ -1,4 +1,10 @@
-﻿using System;
+﻿#region --- License ---
+/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,11 +18,19 @@ namespace OpenTK.Platform.X11
         static Glx() { }
     }
 
-    public struct GLXDrawable
+    public struct Status
     {
     }
 
-    public struct GLXContext
+    public struct GLXFBConfig
+    {
+    }
+
+    public struct GLXPbuffer
+    {
+    }
+
+    public struct GLXContextID
     {
     }
 
@@ -28,7 +42,31 @@ namespace OpenTK.Platform.X11
     {
     }
 
+    public struct GLXHyperpipeConfigSGIX
+    {
+    }
+
     public struct GLXHyperpipeConfigPointer
+    {
+    }
+
+    public struct GLXVideoSourceSGIX
+    {
+    }
+
+    public struct GLXFBConfigSGIX
+    {
+    }
+
+    public struct GLXPbufferSGIX
+    {
+    }
+
+    public struct DMparams
+    {
+    }
+
+    public struct DMbuffer
     {
     }
 }

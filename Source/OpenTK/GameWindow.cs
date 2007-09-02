@@ -12,6 +12,7 @@ using System.Diagnostics;
 using OpenTK.Platform;
 using OpenTK.Input;
 using System.Threading;
+using OpenTK.OpenGL;
 
 namespace OpenTK
 {

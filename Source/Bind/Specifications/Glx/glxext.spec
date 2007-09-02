@@ -961,7 +961,7 @@ QueryHyperpipeBestAttribSGIX(dpy, timeSlice, attrib, size, attribList, returnAtt
 	param		timeSlice	int in value
 	param		attrib		int in value
 	param		size		int in value
-	param		attribList	void out array [COMPSIZE(size)]
+	param		attribList	void in array [COMPSIZE(size)]			# Changed out to in
 	param		returnAttribList void out array [COMPSIZE(size)]
 	glxflags	client-handcode server-handcode
 	category	SGIX_hyperpipe
@@ -973,7 +973,7 @@ HyperpipeAttribSGIX(dpy, timeSlice, attrib, size, attribList)
 	param		timeSlice	int in value
 	param		attrib		int in value
 	param		size		int in value
-	param		attribList	void out array [COMPSIZE(size)]
+	param		attribList	void in array [COMPSIZE(size)]			# Changed out to in
 	glxflags	client-handcode server-handcode
 	category	SGIX_hyperpipe
 	glxvendorglx	???

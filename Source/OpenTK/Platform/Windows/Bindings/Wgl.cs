@@ -155,13 +155,13 @@ namespace OpenTK.Platform.Windows
         }
         
         public static 
-        IntPtr GetDefaultProcAddress(String lpszProc)
+        IntPtr GetDefaultProcAddres(String lpszProc)
         {
             return Delegates.wglGetDefaultProcAddress((String)lpszProc);
         }
         
         public static 
-        IntPtr GetProcAddress(String lpszProc)
+        IntPtr GetProcAddres(String lpszProc)
         {
             return Delegates.wglGetProcAddress((String)lpszProc);
         }
@@ -297,13 +297,13 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr)
+        unsafe int SetLayerPaletteEntrie(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr)
         {
             unsafe { return Delegates.wglSetLayerPaletteEntries((IntPtr)hdc, (int)iLayerPlane, (int)iStart, (int)cEntries, (Int32*)pcr); }
         }
         
         public static 
-        int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32[] pcr)
+        int SetLayerPaletteEntrie(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32[] pcr)
         {
             unsafe
             {
@@ -316,7 +316,7 @@ namespace OpenTK.Platform.Windows
         }
         
         public static 
-        int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, ref Int32 pcr)
+        int SetLayerPaletteEntrie(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, ref Int32 pcr)
         {
             unsafe
             {
@@ -330,13 +330,13 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr)
+        unsafe int GetLayerPaletteEntrie(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr)
         {
             unsafe { return Delegates.wglGetLayerPaletteEntries((IntPtr)hdc, (int)iLayerPlane, (int)iStart, (int)cEntries, (Int32*)pcr); }
         }
         
         public static 
-        int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32[] pcr)
+        int GetLayerPaletteEntrie(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32[] pcr)
         {
             unsafe
             {
@@ -349,7 +349,7 @@ namespace OpenTK.Platform.Windows
         }
         
         public static 
-        int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, ref Int32 pcr)
+        int GetLayerPaletteEntrie(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, ref Int32 pcr)
         {
             unsafe
             {
@@ -499,14 +499,14 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] int* piValues)
             {
                 unsafe { return Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -517,7 +517,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] int[] piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -531,7 +531,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] int[] piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -545,22 +545,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] out int piValues)
-            {
-                unsafe
-                {
-                    fixed (int* piValues_ptr = &piValues)
-                    {
-                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues_ptr);
-                                piValues = *piValues_ptr;
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] out int piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -575,7 +560,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] out int piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piValues_ptr = &piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues_ptr);
+                                piValues = *piValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -589,7 +589,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -603,7 +603,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] int[] piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -617,7 +617,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] int[] piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -632,7 +632,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] out int piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -647,7 +647,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] out int piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -663,7 +663,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -677,7 +677,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -691,7 +691,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] int[] piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -705,7 +705,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] int[] piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -720,7 +720,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] out int piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -735,7 +735,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] out int piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -751,14 +751,14 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] Single* pfValues)
             {
                 unsafe { return Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -769,7 +769,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] Single[] pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -783,7 +783,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] Single[] pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -797,22 +797,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] out Single pfValues)
-            {
-                unsafe
-                {
-                    fixed (Single* pfValues_ptr = &pfValues)
-                    {
-                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues_ptr);
-                                pfValues = *pfValues_ptr;
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] out Single pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -827,7 +812,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] out Single pfValues)
+            {
+                unsafe
+                {
+                    fixed (Single* pfValues_ptr = &pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues_ptr);
+                                pfValues = *pfValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -841,7 +841,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -855,7 +855,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] Single[] pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -869,7 +869,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] Single[] pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -884,7 +884,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] out Single pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -899,7 +899,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] out Single pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -915,7 +915,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -929,7 +929,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -943,7 +943,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] Single[] pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -957,7 +957,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] Single[] pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -972,7 +972,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] out Single pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -987,7 +987,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] out Single pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -3985,14 +3985,14 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] int* piValues)
             {
                 unsafe { return Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -4003,7 +4003,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] int[] piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -4017,7 +4017,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] int[] piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -4031,22 +4031,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] out int piValues)
-            {
-                unsafe
-                {
-                    fixed (int* piValues_ptr = &piValues)
-                    {
-                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues_ptr);
-                                piValues = *piValues_ptr;
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] out int piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -4061,7 +4046,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] out int piValues)
+            {
+                unsafe
+                {
+                    fixed (int* piValues_ptr = &piValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues_ptr);
+                                piValues = *piValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -4075,7 +4075,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -4089,7 +4089,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] int[] piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -4103,7 +4103,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] int[] piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -4118,7 +4118,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] out int piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -4133,7 +4133,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] out int piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -4149,7 +4149,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -4164,7 +4164,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] int* piValues)
+            unsafe Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] int* piValues)
             {
                 unsafe
                 {
@@ -4179,7 +4179,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] int[] piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -4194,7 +4194,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] int[] piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] int[] piValues)
             {
                 unsafe
                 {
@@ -4210,7 +4210,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] out int piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -4226,7 +4226,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] out int piValues)
+            Boolean GetPixelFormatAttribiv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] out int piValues)
             {
                 unsafe
                 {
@@ -4243,14 +4243,14 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] Single* pfValues)
             {
                 unsafe { return Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -4261,7 +4261,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] Single[] pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -4275,7 +4275,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] Single[] pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -4289,22 +4289,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] out Single pfValues)
-            {
-                unsafe
-                {
-                    fixed (Single* pfValues_ptr = &pfValues)
-                    {
-                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues_ptr);
-                                pfValues = *pfValues_ptr;
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] out Single pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -4319,7 +4304,22 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] out Single pfValues)
+            {
+                unsafe
+                {
+                    fixed (Single* pfValues_ptr = &pfValues)
+                    {
+                        Boolean retval = Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues_ptr);
+                                pfValues = *pfValues_ptr;
+                        return retval;
+                    }
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -4333,7 +4333,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -4347,7 +4347,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] Single[] pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -4361,7 +4361,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] Single[] pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -4376,7 +4376,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] out Single pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -4391,7 +4391,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] out Single pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -4407,7 +4407,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -4422,7 +4422,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] Single* pfValues)
+            unsafe Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] Single* pfValues)
             {
                 unsafe
                 {
@@ -4437,7 +4437,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] Single[] pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -4452,7 +4452,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] Single[] pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
                 {
@@ -4468,7 +4468,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] out Single pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -4484,7 +4484,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetPixelFormatAttribv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] out Single pfValues)
+            Boolean GetPixelFormatAttribfv(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
                 {
@@ -7162,6 +7162,7 @@ namespace OpenTK.Platform.Windows
                     }
                     finally
                     {
+                        pointer_ptr.Free();
                     }
                 }
             }
@@ -7172,14 +7173,14 @@ namespace OpenTK.Platform.Windows
         {
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] Int64* msc, [Out] Int64* sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64* ust, [Out] Int64* msc, [Out] Int64* sbc)
             {
                 unsafe { return Delegates.wglGetSyncValuesOML((IntPtr)hdc, (Int64*)ust, (Int64*)msc, (Int64*)sbc); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] Int64* msc, [Out] Int64[] sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64* ust, [Out] Int64* msc, [Out] Int64[] sbc)
             {
                 unsafe
                 {
@@ -7193,7 +7194,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] Int64* msc, [Out] out Int64 sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64* ust, [Out] Int64* msc, [Out] out Int64 sbc)
             {
                 unsafe
                 {
@@ -7208,7 +7209,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] Int64[] msc, [Out] Int64* sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64* ust, [Out] Int64[] msc, [Out] Int64* sbc)
             {
                 unsafe
                 {
@@ -7222,7 +7223,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] Int64[] msc, [Out] Int64[] sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64* ust, [Out] Int64[] msc, [Out] Int64[] sbc)
             {
                 unsafe
                 {
@@ -7237,7 +7238,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] Int64[] msc, [Out] out Int64 sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64* ust, [Out] Int64[] msc, [Out] out Int64 sbc)
             {
                 unsafe
                 {
@@ -7253,7 +7254,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] out Int64 msc, [Out] Int64* sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64* ust, [Out] out Int64 msc, [Out] Int64* sbc)
             {
                 unsafe
                 {
@@ -7268,7 +7269,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] out Int64 msc, [Out] Int64[] sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64* ust, [Out] out Int64 msc, [Out] Int64[] sbc)
             {
                 unsafe
                 {
@@ -7284,7 +7285,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] out Int64 msc, [Out] out Int64 sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64* ust, [Out] out Int64 msc, [Out] out Int64 sbc)
             {
                 unsafe
                 {
@@ -7301,7 +7302,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] Int64* msc, [Out] Int64* sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64[] ust, [Out] Int64* msc, [Out] Int64* sbc)
             {
                 unsafe
                 {
@@ -7315,7 +7316,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] Int64* msc, [Out] Int64[] sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64[] ust, [Out] Int64* msc, [Out] Int64[] sbc)
             {
                 unsafe
                 {
@@ -7330,7 +7331,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] Int64* msc, [Out] out Int64 sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64[] ust, [Out] Int64* msc, [Out] out Int64 sbc)
             {
                 unsafe
                 {
@@ -7346,7 +7347,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] Int64[] msc, [Out] Int64* sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64[] ust, [Out] Int64[] msc, [Out] Int64* sbc)
             {
                 unsafe
                 {
@@ -7360,7 +7361,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] Int64[] msc, [Out] Int64[] sbc)
+            Boolean GetSyncValue(IntPtr hdc, [Out] Int64[] ust, [Out] Int64[] msc, [Out] Int64[] sbc)
             {
                 unsafe
                 {
@@ -7375,7 +7376,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] Int64[] msc, [Out] out Int64 sbc)
+            Boolean GetSyncValue(IntPtr hdc, [Out] Int64[] ust, [Out] Int64[] msc, [Out] out Int64 sbc)
             {
                 unsafe
                 {
@@ -7392,7 +7393,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] out Int64 msc, [Out] Int64* sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] Int64[] ust, [Out] out Int64 msc, [Out] Int64* sbc)
             {
                 unsafe
                 {
@@ -7407,7 +7408,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] out Int64 msc, [Out] Int64[] sbc)
+            Boolean GetSyncValue(IntPtr hdc, [Out] Int64[] ust, [Out] out Int64 msc, [Out] Int64[] sbc)
             {
                 unsafe
                 {
@@ -7423,7 +7424,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] out Int64 msc, [Out] out Int64 sbc)
+            Boolean GetSyncValue(IntPtr hdc, [Out] Int64[] ust, [Out] out Int64 msc, [Out] out Int64 sbc)
             {
                 unsafe
                 {
@@ -7441,7 +7442,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] Int64* msc, [Out] Int64* sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] out Int64 ust, [Out] Int64* msc, [Out] Int64* sbc)
             {
                 unsafe
                 {
@@ -7456,7 +7457,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] Int64* msc, [Out] Int64[] sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] out Int64 ust, [Out] Int64* msc, [Out] Int64[] sbc)
             {
                 unsafe
                 {
@@ -7472,7 +7473,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] Int64* msc, [Out] out Int64 sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] out Int64 ust, [Out] Int64* msc, [Out] out Int64 sbc)
             {
                 unsafe
                 {
@@ -7489,7 +7490,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] Int64[] msc, [Out] Int64* sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] out Int64 ust, [Out] Int64[] msc, [Out] Int64* sbc)
             {
                 unsafe
                 {
@@ -7504,7 +7505,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] Int64[] msc, [Out] Int64[] sbc)
+            Boolean GetSyncValue(IntPtr hdc, [Out] out Int64 ust, [Out] Int64[] msc, [Out] Int64[] sbc)
             {
                 unsafe
                 {
@@ -7520,7 +7521,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] Int64[] msc, [Out] out Int64 sbc)
+            Boolean GetSyncValue(IntPtr hdc, [Out] out Int64 ust, [Out] Int64[] msc, [Out] out Int64 sbc)
             {
                 unsafe
                 {
@@ -7538,7 +7539,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] out Int64 msc, [Out] Int64* sbc)
+            unsafe Boolean GetSyncValue(IntPtr hdc, [Out] out Int64 ust, [Out] out Int64 msc, [Out] Int64* sbc)
             {
                 unsafe
                 {
@@ -7554,7 +7555,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] out Int64 msc, [Out] Int64[] sbc)
+            Boolean GetSyncValue(IntPtr hdc, [Out] out Int64 ust, [Out] out Int64 msc, [Out] Int64[] sbc)
             {
                 unsafe
                 {
@@ -7571,7 +7572,7 @@ namespace OpenTK.Platform.Windows
             }
             
             public static 
-            Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] out Int64 msc, [Out] out Int64 sbc)
+            Boolean GetSyncValue(IntPtr hdc, [Out] out Int64 ust, [Out] out Int64 msc, [Out] out Int64 sbc)
             {
                 unsafe
                 {
@@ -11003,37 +11004,38 @@ namespace OpenTK.Platform.Windows
                     }
                     finally
                     {
+                        pAddress_ptr.Free();
                     }
                 }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, void* pAddress, Int32* pSize, UInt32 count)
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, void* pAddress, Int32* pSize, UInt32 count)
             {
-                unsafe { return Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress, (Int32*)pSize, (UInt32)count); }
+                unsafe { return Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress, (Int32*)pSize, (UInt32)count); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, void* pAddress, Int32* pSize, Int32 count)
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, void* pAddress, Int32* pSize, Int32 count)
             {
                 unsafe
                 {
-                    Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress, (Int32*)pSize, (UInt32)count);
+                    Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress, (Int32*)pSize, (UInt32)count);
                     return retval;
                 }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, void* pAddress, Int32[] pSize, UInt32 count)
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, void* pAddress, Int32[] pSize, UInt32 count)
             {
                 unsafe
                 {
                     fixed (Int32* pSize_ptr = pSize)
                     {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
                         return retval;
                     }
                 }
@@ -11041,13 +11043,13 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, void* pAddress, Int32[] pSize, Int32 count)
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, void* pAddress, Int32[] pSize, Int32 count)
             {
                 unsafe
                 {
                     fixed (Int32* pSize_ptr = pSize)
                     {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
                         return retval;
                     }
                 }
@@ -11055,13 +11057,13 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, void* pAddress, ref Int32 pSize, UInt32 count)
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, void* pAddress, ref Int32 pSize, UInt32 count)
             {
                 unsafe
                 {
                     fixed (Int32* pSize_ptr = &pSize)
                     {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
                         return retval;
                     }
                 }
@@ -11069,13 +11071,13 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, void* pAddress, ref Int32 pSize, Int32 count)
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, void* pAddress, ref Int32 pSize, Int32 count)
             {
                 unsafe
                 {
                     fixed (Int32* pSize_ptr = &pSize)
                     {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
                         return retval;
                     }
                 }
@@ -11083,43 +11085,45 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, Int32* pSize, UInt32 count)
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, Int32* pSize, UInt32 count)
             {
                 unsafe
                 {
                     System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
                     try
                     {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
                         return retval;
                     }
                     finally
                     {
+                        pAddress_ptr.Free();
                     }
                 }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, Int32* pSize, Int32 count)
+            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, Int32* pSize, Int32 count)
             {
                 unsafe
                 {
                     System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
                     try
                     {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
+                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
                         return retval;
                     }
                     finally
                     {
+                        pAddress_ptr.Free();
                     }
                 }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, Int32[] pSize, UInt32 count)
+            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, Int32[] pSize, UInt32 count)
             {
                 unsafe
                 {
@@ -11128,19 +11132,19 @@ namespace OpenTK.Platform.Windows
                         System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
                         try
                         {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
                             return retval;
                         }
                         finally
                         {
+                            pAddress_ptr.Free();
                         }
                     }
                 }
             }
             
-            [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, Int32[] pSize, Int32 count)
+            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, Int32[] pSize, Int32 count)
             {
                 unsafe
                 {
@@ -11149,11 +11153,12 @@ namespace OpenTK.Platform.Windows
                         System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
                         try
                         {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
                             return retval;
                         }
                         finally
                         {
+                            pAddress_ptr.Free();
                         }
                     }
                 }
@@ -11161,7 +11166,7 @@ namespace OpenTK.Platform.Windows
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, ref Int32 pSize, UInt32 count)
+            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, ref Int32 pSize, UInt32 count)
             {
                 unsafe
                 {
@@ -11170,19 +11175,19 @@ namespace OpenTK.Platform.Windows
                         System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
                         try
                         {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
                             return retval;
                         }
                         finally
                         {
+                            pAddress_ptr.Free();
                         }
                     }
                 }
             }
             
-            [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr* pEvent, [In, Out] object pAddress, ref Int32 pSize, Int32 count)
+            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, ref Int32 pSize, Int32 count)
             {
                 unsafe
                 {
@@ -11191,443 +11196,12 @@ namespace OpenTK.Platform.Windows
                         System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
                         try
                         {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
+                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pEvent, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
                             return retval;
                         }
                         finally
                         {
-                        }
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, Int32* pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, Int32* pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, Int32[] pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    fixed (Int32* pSize_ptr = pSize)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, Int32[] pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    fixed (Int32* pSize_ptr = pSize)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, ref Int32 pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    fixed (Int32* pSize_ptr = &pSize)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, void* pAddress, ref Int32 pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    fixed (Int32* pSize_ptr = &pSize)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, Int32* pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, Int32* pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, Int32[] pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    fixed (Int32* pSize_ptr = pSize)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            public static 
-            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, Int32[] pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    fixed (Int32* pSize_ptr = pSize)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, ref Int32 pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    fixed (Int32* pSize_ptr = &pSize)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            public static 
-            Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr[] pEvent, [In, Out] object pAddress, ref Int32 pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = pEvent)
-                    fixed (Int32* pSize_ptr = &pSize)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, Int32* pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, Int32* pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, Int32[] pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    fixed (Int32* pSize_ptr = pSize)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, Int32[] pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    fixed (Int32* pSize_ptr = pSize)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, ref Int32 pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    fixed (Int32* pSize_ptr = &pSize)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, void* pAddress, ref Int32 pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    fixed (Int32* pSize_ptr = &pSize)
-                    {
-                        Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress, (Int32*)pSize_ptr, (UInt32)count);
-                        return retval;
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, Int32* pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, Int32* pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, Int32[] pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    fixed (Int32* pSize_ptr = pSize)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            public static 
-            Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, Int32[] pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    fixed (Int32* pSize_ptr = pSize)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            [System.CLSCompliant(false)]
-            public static 
-            Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, ref Int32 pSize, UInt32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    fixed (Int32* pSize_ptr = &pSize)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
-                        }
-                    }
-                }
-            }
-            
-            public static 
-            Boolean AssociateImageBufferEvents(IntPtr hDC, ref IntPtr pEvent, [In, Out] object pAddress, ref Int32 pSize, Int32 count)
-            {
-                unsafe
-                {
-                    fixed (IntPtr* pEvent_ptr = &pEvent)
-                    fixed (Int32* pSize_ptr = &pSize)
-                    {
-                        System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Boolean retval = Delegates.wglAssociateImageBufferEventsI3D((IntPtr)hDC, (IntPtr*)pEvent_ptr, (void*)pAddress_ptr.AddrOfPinnedObject(), (Int32*)pSize_ptr, (UInt32)count);
-                            return retval;
-                        }
-                        finally
-                        {
+                            pAddress_ptr.Free();
                         }
                     }
                 }
@@ -11665,6 +11239,7 @@ namespace OpenTK.Platform.Windows
                     }
                     finally
                     {
+                        pAddress_ptr.Free();
                     }
                 }
             }
@@ -11682,6 +11257,7 @@ namespace OpenTK.Platform.Windows
                     }
                     finally
                     {
+                        pAddress_ptr.Free();
                     }
                 }
             }

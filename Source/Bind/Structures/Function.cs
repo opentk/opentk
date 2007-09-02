@@ -31,8 +31,8 @@ namespace Bind.Structures
         
         #endregion
 
-        static Regex endings = new Regex(@"([df]|u?[isb])v?", RegexOptions.Compiled | RegexOptions.RightToLeft);
-        static Regex endingsNotToTrim = new Regex("(ib|[tdr]s|nd)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        static Regex endings = new Regex(@"((([df]|u?[isb])v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        static Regex endingsNotToTrim = new Regex("(ib|[tdre]s|[eE]n[vd])", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
         /// <summary>
         /// Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
@@ -172,22 +172,29 @@ namespace Bind.Structures
                     }
                     */
 
-                    if (!endingsNotToTrim.IsMatch(Name))
+                    //if (Name.Contains("BooleanIndexed"))
+                    {
+                    }
+                    Match m = endingsNotToTrim.Match(TrimmedName);
+                    if ((m.Index + m.Length) != TrimmedName.Length)
                     {
                         // Some endings should not be trimmed, for example: 'b' from Attrib
 
-                        Match m = endings.Match(TrimmedName);
+                        m = endings.Match(TrimmedName);
 
-                        if (m.Index + m.Length == TrimmedName.Length)
+                        if (m.Length > 0 && m.Index + m.Length == TrimmedName.Length)
                         {   // Only trim endings, not internal matches.
-                            if (m.Value[m.Length - 1] == 'v' && endingsAddV.IsMatch(Name))
+                            if (m.Value[m.Length - 1] == 'v' && endingsAddV.IsMatch(Name) &&
+                                !Name.StartsWith("Get") && !Name.StartsWith("MatrixIndex"))
                             {   // Only trim ending 'v' when there is a number
                                 TrimmedName = TrimmedName.Substring(0, m.Index) + "v";
                             }
                             else
                             {
-
-                                TrimmedName = TrimmedName.Substring(0, m.Index);
+                                if (!TrimmedName.EndsWith("xedv"))
+                                    TrimmedName = TrimmedName.Substring(0, m.Index);
+                                else
+                                    TrimmedName = TrimmedName.Substring(0, m.Index + 1);
                             }
                         }
                     }

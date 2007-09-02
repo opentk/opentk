@@ -66,7 +66,7 @@ namespace Examples.Tutorial
         public override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
+            
             // Check for necessary capabilities:
             if (!GL.SupportsExtension("VERSION_2_0"))
             {
