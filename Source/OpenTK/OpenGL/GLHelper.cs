@@ -202,19 +202,10 @@ namespace OpenTK.OpenGL
         /// </returns>
         public static Delegate GetDelegate(string name, Type signature)
         {
-            Delegate d;
-
-            if (importsClass.GetMethod(name.Substring(2), BindingFlags.NonPublic | BindingFlags.Static) != null)
-            {
-                d = Utilities.GetExtensionDelegate(name, signature) ??
-                    Delegate.CreateDelegate(signature, typeof(Imports), name.Substring(2));
-            }
-            else
-            {
-                d = Utilities.GetExtensionDelegate(name, signature);
-            }
-
-            return d;
+            MethodInfo m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic);
+            return
+                Utilities.GetExtensionDelegate(name, signature) ??
+                (m != null ? Delegate.CreateDelegate(signature, m) : null);
         }
 
         #endregion
@@ -237,10 +228,14 @@ namespace OpenTK.OpenGL
         public static void LoadAll()
         {
             FieldInfo[] v = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
-
             int supported = 0;
 
             Debug.Print("Will now try to load all {0} opengl functions.", v.Length);
+
+            System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
+            time.Reset();
+            time.Start();
+
             foreach (FieldInfo f in v)
             {
                 Delegate d = GetDelegate(f.Name, f.FieldType);
@@ -251,7 +246,11 @@ namespace OpenTK.OpenGL
 
                 f.SetValue(null, d);
             }
+
+            time.Stop();
+            Trace.WriteLine(String.Format("OpenGL extensions loaded in {0} milliseconds.", time.ElapsedMilliseconds));
             Debug.Print("Total supported functions: {0}.", supported);
+            time.Reset();
 
             AvailableExtensions.Clear();
             rebuildExtensionList = true;
