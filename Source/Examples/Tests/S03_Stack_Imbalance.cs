@@ -34,7 +34,7 @@ namespace Examples.Tests
         {
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
 
-            GL.GetFloatv(GL.Enums.GetPName.PROJECTION_MATRIX, proj);
+            GL.GetFloat(GL.Enums.GetPName.PROJECTION_MATRIX, proj);
 
             float sum = 0.0f;
             for (int i = 0; i < 16; i++)
@@ -44,7 +44,7 @@ namespace Examples.Tests
 
             if (sum == 0)
             {
-                throw new Exception("GetFloatv did not return anything!");
+                throw new Exception("GetFloat did not return anything!");
             }
 
 

@@ -73,4 +73,14 @@ int32_t			int
 Display			IntPtr
 Window			IntPtr
 Pixmap			IntPtr
+Colormap		IntPtr
+
+GLXWindow		IntPtr
+GLXContext		IntPtr
+GLXDrawable		IntPtr
+GLXPixmap		IntPtr
 __GLXextFuncPtr IntPtr
+
+VLServer		IntPtr
+VLPath			IntPtr
+VLNode			IntPtr

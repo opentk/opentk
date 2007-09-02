@@ -270,7 +270,7 @@ namespace Bind.Structures
             sb.Append(".");
             sb.Append(Settings.FunctionPrefix);
             sb.Append(Name);
-            sb.Append(Parameters.CallString(Settings.Compatibility == Settings.Legacy.Tao));
+            sb.Append(Parameters.CallString());
 
             return sb.ToString();
         }
@@ -338,7 +338,7 @@ namespace Bind.Structures
 
         public void CreateWrappers()
         {
-            if (this.Name.Contains("GenBuffers"))
+            if (this.Name.Contains("EndList"))
             {
             }
 
@@ -465,30 +465,13 @@ namespace Bind.Structures
         {
             if (index == 0)
             {
-                bool containsPointerParameters = false, containsReferenceParameters = false;
-                // Check if there are any IntPtr parameters (we may have come here from a ReturnType wrapper
-                // such as glGetString, which contains no IntPtr parameters)
-                foreach (Parameter p in function.Parameters)
-                {
-                    if (p.Pointer)
-                    {
-                        containsPointerParameters = true;
-                        break;
-                    }
-                    else if (p.Reference)
-                    {
-                        containsReferenceParameters = true;
-                        break;
-                    }
-                }
-
-                if (containsPointerParameters)
+                if (function.Parameters.HasPointerParameters)
                 {
                     wrappers.Add(DefaultWrapper(function));
                 }
-                else if (containsReferenceParameters)
-                {
-                }
+                //else if (containsReferenceParameters)
+                //{
+                //}
                 else
                 {
                     if (function.Body.Count == 0)
@@ -627,6 +610,7 @@ namespace Bind.Structures
         #region protected FunctionBody CreateBody(Function fun, bool wantCLSCompliance)
 
         static List<string> handle_statements = new List<string>();
+        static List<string> handle_release_statements = new List<string>();
         static List<string> fixed_statements = new List<string>();
         static List<string> assign_statements = new List<string>();
 
@@ -636,6 +620,7 @@ namespace Bind.Structures
 
             f.Body.Clear();
             handle_statements.Clear();
+            handle_release_statements.Clear();
             fixed_statements.Clear();
             assign_statements.Clear();
 
@@ -644,7 +629,6 @@ namespace Bind.Structures
             }
 
             // Obtain pointers by pinning the parameters
-            int param = 0;
             foreach (Parameter p in f.Parameters)
             {
                 if (p.NeedsPin)
@@ -654,17 +638,19 @@ namespace Bind.Structures
                         // Use GCHandle to obtain pointer to generic parameters and 'fixed' for arrays.
                         // This is because fixed can only take the address of fields, not managed objects.
                         handle_statements.Add(String.Format(
-                            "{0} {1} = {0}.Alloc({2}, System.Runtime.InteropServices.GCHandleType.Pinned);",
-                            "System.Runtime.InteropServices.GCHandle", p.Name + "_ptr", p.Name));
+                            "{0} {1}_ptr = {0}.Alloc({1}, System.Runtime.InteropServices.GCHandleType.Pinned);",
+                            "System.Runtime.InteropServices.GCHandle", p.Name));
+
+                        handle_release_statements.Add(String.Format("{0}_ptr.Free();", p.Name));
 
                         if (p.Flow == Parameter.FlowDirection.Out)
                         {
                             assign_statements.Add(String.Format(
-                                "        {0} = ({1}){2}.Target;",
-                                p.Name, p.CurrentType, p.Name + "_ptr"));
+                                "        {0} = ({1}){0}_ptr.Target;",
+                                p.Name, p.CurrentType));
                         }
 
-                        // Note! The following line modifies f.Parameters, *not* function.Parameters
+                        // Note! The following line modifies f.Parameters, *not* this.Parameters
                         p.Name = "(void*)" + p.Name + "_ptr.AddrOfPinnedObject()";
                     }
                     else if (p.WrapperType == WrapperTypes.PointerParameter ||
@@ -734,6 +720,7 @@ namespace Bind.Structures
                 f.Body.Add("return retval;");
             }
 
+            // Free all allocated GCHandles
             if (handle_statements.Count > 0)
             {
                 f.Body.Unindent();
@@ -741,14 +728,9 @@ namespace Bind.Structures
                 f.Body.Add("finally");
                 f.Body.Add("{");
                 f.Body.Indent();
-                // Free all allocated GCHandles
-                foreach (Parameter p in this.Parameters)
-                {
-                    if (p.NeedsPin && p.WrapperType == WrapperTypes.GenericParameter)
-                    {
-                        f.Body.Add(String.Format("    {0}_ptr.Free();", p.Name));
-                    }
-                }
+
+                f.Body.AddRange(handle_release_statements);
+
                 f.Body.Unindent();
                 f.Body.Add("}");
             }
@@ -817,7 +799,7 @@ namespace Bind.Structures
                 if (Settings.Compatibility == Settings.Legacy.None)
                     ReturnType.CurrentType =
                         String.Format("{0}.{1}",
-                            Settings.GLEnumsClass,
+                            Settings.NormalEnumsClass,
                             Settings.CompleteEnumName);
                 else
                     ReturnType.CurrentType = "int";

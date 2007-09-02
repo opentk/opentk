@@ -70,7 +70,8 @@ namespace Bind
                                 break;
                             case "mode":
                                 string arg = b[1].ToLower();
-                                mode = 
+                                mode =
+                                    arg == "gl" ? GeneratorMode.GL2 : 
                                     arg == "gl2" ? GeneratorMode.GL2 : 
                                     arg == "gl3" ? GeneratorMode.GL3 :
                                     arg == "wgl" ? GeneratorMode.Wgl : 

@@ -614,7 +614,7 @@ QueryHyperpipeAttribSGIX(dpy, timeSlice, attrib, size, returnAttribList)
 	param		timeSlice	int in value
 	param		attrib		int in value
 	param		size		int in value
-	param		returnAttribList void in array[size]
+	param		returnAttribList void out array[size]		# Changed in to out
 	glxflags	client-handcode server-handcode
 	category	glx
 	dlflags		notlistable
