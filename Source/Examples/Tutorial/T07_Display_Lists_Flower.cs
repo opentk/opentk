@@ -150,8 +150,8 @@ namespace Examples.Tutorial
             foreach (DisplayList d in lists)
             {
                 GL.LoadIdentity();
-                GL.Rotated(angle, 0.0, 0.0, 1.0);
-                GL.Translated(5.0, 0.0, 0.0);
+                GL.Rotate(angle, 0.0, 0.0, 1.0);
+                GL.Translate(5.0, 0.0, 0.0);
 
                 d.Render();
                 angle += 360 / lists.Count;

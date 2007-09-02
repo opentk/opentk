@@ -126,11 +126,11 @@ namespace Bind
                         break;
 
                     case GeneratorMode.Glu:
-                        Generator = new Bind.Glu.Generator();
+                        
                         break;
 
                     case GeneratorMode.Glx:
-                        Generator = new Bind.Glx.Generator();
+                        
                         break;
 
                     case GeneratorMode.GL3:
