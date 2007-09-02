@@ -12,7 +12,7 @@ using OpenTK.OpenGL;
 
 namespace OpenTK.Platform
 {
-    public interface IGLControl : IDisposable
+    public interface IGLControl
     {
         bool IsIdle { get; }
         bool Fullscreen { get; set; }
