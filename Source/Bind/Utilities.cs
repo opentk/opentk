@@ -66,7 +66,7 @@ namespace Bind
 
     public static class Utilities
     {
-        public static char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
+        public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
 
         #region internal StreamReader OpenSpecFile(string file)
 

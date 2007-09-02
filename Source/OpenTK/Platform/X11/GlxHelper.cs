@@ -11,4 +11,24 @@ namespace OpenTK.Platform.X11
         // Disable BeforeFieldInit optimization.
         static Glx() { }
     }
+
+    public struct GLXDrawable
+    {
+    }
+
+    public struct GLXContext
+    {
+    }
+
+    public struct GLXHyperpipeNetworkPointer
+    {
+    }
+
+    public struct GLXHyperpipeConfig
+    {
+    }
+
+    public struct GLXHyperpipeConfigPointer
+    {
+    }
 }

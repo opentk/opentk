@@ -10,6 +10,7 @@ using System.Text;
 using System.IO;
 using Bind.Structures;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Bind.GL2
 {
@@ -56,6 +57,10 @@ namespace Bind.GL2
 
         public virtual void Process()
         {
+            Function.endingsAddV =
+                new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?)|Parameter|Fog(Coord)?.*|VertexWeight|(Fragment)?Light(Model)?|Material|ReplacementCodeu?b?|Tex(Gen|Env)|Indexu?b?)", RegexOptions.Compiled);
+
+
             Bind.Structures.Type.Initialize(glTypemap, csTypemap);
             Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt);
             Bind.Structures.Function.Initialize();
@@ -173,7 +178,7 @@ namespace Bind.GL2
                     // Get function name:
                     d.Name = line.Split(Utilities.Separators, StringSplitOptions.RemoveEmptyEntries)[0];
 
-                    if (d.Name.Contains("UseFontOutlinesA"))
+                    if (d.Name.Contains("QueryHyperpipeBestAttribSGIX"))
                     {
                     }
 
@@ -201,7 +206,7 @@ namespace Bind.GL2
 
                                 p.Name = Utilities.Keywords.Contains(words[1]) ? "@" + words[1] : words[1];
                                 p.CurrentType = words[2];
-                                p.Pointer = words[4] == "array" ? true : words[4] == "reference" ? true : false;
+                                p.Pointer = words[4].Contains("array") ? true : words[4].Contains("reference") ? true : false;
                                 p.Flow = words[3] == "in" ? Parameter.FlowDirection.In : Parameter.FlowDirection.Out;
  
                                 d.Parameters.Add(p);

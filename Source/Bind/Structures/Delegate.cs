@@ -59,14 +59,12 @@ namespace Bind.Structures
 
         public Delegate(Delegate d)
         {
-            this.Category = !String.IsNullOrEmpty(d.Category) ? new string(d.Category.ToCharArray()) : "";
-            //this.Extension = !String.IsNullOrEmpty(d.Extension) ? new string(d.Extension.ToCharArray()) : "";
-            this.Name = new string(d.Name.ToCharArray());
-            //this.NeedsWrapper = d.NeedsWrapper;
+            this.Category = d.Category;
+            this.Name = d.Name;
             this.Parameters = new ParameterCollection(d.Parameters);
             this.ReturnType = new Type(d.ReturnType);
-            this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
-            //this.Unsafe = d.Unsafe;
+            this.Version = d.Version;
+            //this.Version = !String.IsNullOrEmpty(d.Version) ? new string(d.Version.ToCharArray()) : "";
         }
 
         #endregion
@@ -451,7 +449,7 @@ namespace Bind.Structures
 
         #region protected void WrapParameters(Function function, List<Function> wrappers)
 
-        protected static int index = 0;
+        protected static int index;
 
         /// <summary>
         /// This function needs some heavy refactoring. I'm ashamed I ever wrote it, but it works...
@@ -522,7 +520,7 @@ namespace Bind.Structures
                             WrapParameters(function, wrappers);
                             --index;
 
-                            if (function.Name == "UseFontOutlinesA")
+                            //if (function.Name == "UseFontOutlinesA")
                             {
                             }
 
@@ -631,7 +629,6 @@ namespace Bind.Structures
         static List<string> handle_statements = new List<string>();
         static List<string> fixed_statements = new List<string>();
         static List<string> assign_statements = new List<string>();
-        static string function_call_statement;
 
         protected FunctionBody CreateBody(Function fun, bool wantCLSCompliance)
         {
@@ -642,7 +639,7 @@ namespace Bind.Structures
             fixed_statements.Clear();
             assign_statements.Clear();
 
-            if (f.Name == "LoadDisplayColorTableEXT")
+            //if (f.Name == "LoadDisplayColorTableEXT")
             { 
             }
 
@@ -652,10 +649,10 @@ namespace Bind.Structures
             {
                 if (p.NeedsPin)
                 {
-                    // Use GCHandle to obtain pointer to generic parameters and 'fixed' for arrays.
-                    // This is because fixed can only take the address of fields, not managed objects.
                     if (p.WrapperType == WrapperTypes.GenericParameter)
                     {
+                        // Use GCHandle to obtain pointer to generic parameters and 'fixed' for arrays.
+                        // This is because fixed can only take the address of fields, not managed objects.
                         handle_statements.Add(String.Format(
                             "{0} {1} = {0}.Alloc({2}, System.Runtime.InteropServices.GCHandleType.Pinned);",
                             "System.Runtime.InteropServices.GCHandle", p.Name + "_ptr", p.Name));
@@ -674,6 +671,7 @@ namespace Bind.Structures
                         p.WrapperType == WrapperTypes.ArrayParameter ||
                         p.WrapperType == WrapperTypes.ReferenceParameter)
                     {
+                        // A fixed statement is issued for all non-generic pointers, arrays and references.
                         fixed_statements.Add(String.Format(
                             "fixed ({0}* {1} = {2})",
                             wantCLSCompliance && !p.CLSCompliant ? p.GetCLSCompliantType() : p.CurrentType,

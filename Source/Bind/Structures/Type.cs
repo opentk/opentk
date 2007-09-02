@@ -52,12 +52,15 @@ namespace Bind.Structures
 
         public Type(Type t)
         {
-            this.CurrentType = new string(t.CurrentType.ToCharArray());
-            this.PreviousType = !String.IsNullOrEmpty(t.PreviousType) ? new string(t.PreviousType.ToCharArray()) : "";
-            this.WrapperType = t.WrapperType;
-            this.Array = t.Array;
-            this.Pointer = t.Pointer;
-            this.Reference = t.Reference;
+            if (t != null)
+            {
+                this.CurrentType = t.CurrentType;
+                this.PreviousType = t.PreviousType;
+                this.WrapperType = t.WrapperType;
+                this.Array = t.Array;
+                this.Pointer = t.Pointer;
+                this.Reference = t.Reference;
+            }
         }
         
         #endregion
@@ -136,7 +139,7 @@ namespace Bind.Structures
 
         #region public bool Pointer
 
-        bool pointer = false;
+        bool pointer;
 
         public bool Pointer
         {

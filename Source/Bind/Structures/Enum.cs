@@ -16,27 +16,43 @@ namespace Bind.Structures
     public class Enum
     {
         internal static EnumCollection GLEnums;
+        internal static EnumCollection AuxEnums;
 
         private static bool enumsLoaded;
+
+        internal static void Initialize(string enumFile, string enumextFile, string auxFile)
+        {
+            Initialize(enumFile, enumextFile);
+
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(Path.Combine(Settings.InputPath, "GL2\\enum.spec")))
+            {
+                AuxEnums = Bind.MainClass.Generator.ReadEnums(sr);
+            }
+        }
 
         internal static void Initialize(string enumFile, string enumextFile)
         {
             if (!enumsLoaded)
             {
-                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, enumFile))
+                if (!String.IsNullOrEmpty(enumFile))
                 {
-                    GLEnums = Bind.MainClass.Generator.ReadEnums(sr);
-                }
-
-                using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, enumextFile))
-                {
-                    foreach (Bind.Structures.Enum e in Bind.MainClass.Generator.ReadEnums(sr).Values)
+                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, enumFile))
                     {
-                        //enums.Add(e.Name, e);
-                        Utilities.Merge(GLEnums, e);
+                        GLEnums = Bind.MainClass.Generator.ReadEnums(sr);
                     }
                 }
 
+                if (!String.IsNullOrEmpty(enumextFile))
+                {
+                    using (StreamReader sr = Utilities.OpenSpecFile(Settings.InputPath, enumextFile))
+                    {
+                        foreach (Bind.Structures.Enum e in Bind.MainClass.Generator.ReadEnums(sr).Values)
+                        {
+                            //enums.Add(e.Name, e);
+                            Utilities.Merge(GLEnums, e);
+                        }
+                    }
+                }
                 enumsLoaded = true;
             }
         }

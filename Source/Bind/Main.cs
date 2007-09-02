@@ -72,7 +72,9 @@ namespace Bind
                                 mode = 
                                     arg == "gl2" ? GeneratorMode.GL2 : 
                                     arg == "gl3" ? GeneratorMode.GL3 :
-                                    arg == "wgl" ? GeneratorMode.Wgl : GeneratorMode.GL2;
+                                    arg == "wgl" ? GeneratorMode.Wgl : 
+                                    arg == "glu" ? GeneratorMode.Glu : 
+                                    arg == "glx" ? GeneratorMode.Glx : GeneratorMode.GL2;
                                 break;
                             case "namespace":
                             case "ns":
@@ -120,17 +122,18 @@ namespace Bind
                         break;
 
                     case GeneratorMode.Wgl:
-                        if (Settings.OutputPath == Settings.DefaultOutputPath)
-                        {
-                            Settings.OutputPath = Settings.DefaultWglOutputPath;
-                        }
-                        if (Settings.OutputNamespace == Settings.DefaultOutputNamespace)
-                        {
-                            Settings.OutputNamespace = "OpenTK.Platform.Windows";
-                        }
                         Generator = new Bind.Wgl.Generator();
                         break;
 
+                    case GeneratorMode.Glu:
+                        Generator = new Bind.Glu.Generator();
+                        break;
+
+                    case GeneratorMode.Glx:
+                        Generator = new Bind.Glx.Generator();
+                        break;
+
+                    case GeneratorMode.GL3:
                     default:
                         throw new NotImplementedException(String.Format("Mode {0} not implemented.", mode));
                 }
