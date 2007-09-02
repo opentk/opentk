@@ -222,7 +222,7 @@ namespace OpenTK.OpenGL
         /// <para>
         /// Call this function manually whenever you need to update OpenGL entry points.
         /// This need may arise if you change the pixelformat/visual, or in case you cannot
-        /// (or do not want) to use the automatic initialisation of the GL class.
+        /// (or do not want) to use the automatic initialization of the GL class.
         /// </para>
         /// </remarks>
         public static void LoadAll()
