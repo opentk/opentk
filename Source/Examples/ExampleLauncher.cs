@@ -38,6 +38,21 @@ namespace Examples
 
         public void ExampleLauncher_Load(object sender, EventArgs e)
         {
+            try
+            {
+                if (File.Exists("debug.log"))
+                    File.Delete("debug.log");
+            }
+            catch (Exception expt)
+            {
+                MessageBox.Show("Could not access debug.log", expt.ToString());
+            }
+
+            Debug.Listeners.Clear();
+            Debug.Listeners.Add(new TextWriterTraceListener("debug.log"));
+            Debug.Listeners.Add(new ConsoleTraceListener());
+            Debug.AutoFlush = true;
+
             // Get all examples
             Type[] types = Assembly.GetExecutingAssembly().GetTypes();
             foreach (Type type in types)
@@ -159,36 +174,19 @@ namespace Examples
         [STAThread]
         static void Main()
         {
-            try
+            using (Form exampleLauncher = new ExampleLauncher())
             {
-                if (File.Exists("debug.log"))
-                    File.Delete("debug.log");
+                Application.EnableVisualStyles();
+                Application.Run(exampleLauncher);
             }
-            catch (Exception e)
-            {
-                MessageBox.Show("Could not access debug.log", e.ToString());
-            }
+        }
 
-            Debug.Listeners.Clear();
-            Debug.Listeners.Add(new TextWriterTraceListener("debug.log"));
-            Debug.Listeners.Add(new ConsoleTraceListener());
-            Debug.AutoFlush = true;
-
-            try
-            {
-                using (Form exampleLauncher = new ExampleLauncher())
-                {
-                    Application.EnableVisualStyles();
-                    Application.Run(exampleLauncher);
-                }
-            }
-            finally
-            {
-                Debug.Flush();
-                Debug.Close();
-                Trace.Flush();
-                Trace.Close();
-            }
+        private void ExampleLauncher_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Debug.Flush();
+            Debug.Close();
+            Trace.Flush();
+            Trace.Close();
         }
     }
 }

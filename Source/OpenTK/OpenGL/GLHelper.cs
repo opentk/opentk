@@ -12,6 +12,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using OpenTK.Platform;
+using System.Diagnostics;
 
 #endregion
 
@@ -236,10 +237,21 @@ namespace OpenTK.OpenGL
         public static void LoadAll()
         {
             FieldInfo[] v = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+
+            int supported = 0;
+
+            Debug.Print("Will now try to load all {0} opengl functions.", v.Length);
             foreach (FieldInfo f in v)
             {
-                f.SetValue(null, GetDelegate(f.Name, f.FieldType));
+                Delegate d = GetDelegate(f.Name, f.FieldType);
+                if (d != null)
+                {
+                    ++supported;
+                }
+
+                f.SetValue(null, d);
             }
+            Debug.Print("Total supported functions: {0}.", supported);
 
             AvailableExtensions.Clear();
             rebuildExtensionList = true;
