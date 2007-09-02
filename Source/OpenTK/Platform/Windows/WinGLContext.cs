@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Windows
         #region --- Contructors ---
 
         public WinGLContext()
-            : this(new DisplayMode(640, 480, new ColorDepth(32), 16, 0, 0, 2, false, false, false, 0.0f))
+            : this(new DisplayMode(640, 480, new ColorMode(32), 16, 0, 0, 2, false, false, false, 0.0f))
         {
         }
 
@@ -72,20 +72,20 @@ namespace OpenTK.Platform.Windows
             Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
 
             Debug.Write("Setting pixel format... ");
-            API.PixelFormatDescriptor pixelFormat = new API.PixelFormatDescriptor();
+            PixelFormatDescriptor pixelFormat = new PixelFormatDescriptor();
             pixelFormat.Size = API.PixelFormatDescriptorSize;
             pixelFormat.Version = API.PixelFormatDescriptorVersion;
             pixelFormat.Flags =
-                API.PixelFormatDescriptorFlags.SUPPORT_OPENGL |
-                API.PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
+                PixelFormatDescriptorFlags.SUPPORT_OPENGL |
+                PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
             pixelFormat.ColorBits = (byte)(mode.Color.Red + mode.Color.Green + mode.Color.Blue);
             if (mode.Color.IsIndexed)
             {
-                pixelFormat.PixelType = API.PixelType.INDEXED;
+                pixelFormat.PixelType = PixelType.INDEXED;
             }
             else
             {
-                pixelFormat.PixelType = API.PixelType.RGBA;
+                pixelFormat.PixelType = PixelType.RGBA;
                 pixelFormat.RedBits = (byte)mode.Color.Red;
                 pixelFormat.GreenBits = (byte)mode.Color.Green;
                 pixelFormat.BlueBits = (byte)mode.Color.Blue;
@@ -107,17 +107,17 @@ namespace OpenTK.Platform.Windows
 
             if (mode.DepthBits <= 0)
             {
-                pixelFormat.Flags |= API.PixelFormatDescriptorFlags.DEPTH_DONTCARE;
+                pixelFormat.Flags |= PixelFormatDescriptorFlags.DEPTH_DONTCARE;
             }
 
             if (mode.Stereo)
             {
-                pixelFormat.Flags |= API.PixelFormatDescriptorFlags.STEREO;
+                pixelFormat.Flags |= PixelFormatDescriptorFlags.STEREO;
             }
 
             if (mode.Buffers > 1)
             {
-                pixelFormat.Flags |= API.PixelFormatDescriptorFlags.DOUBLEBUFFER;
+                pixelFormat.Flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
             }
 
             // TODO: More elaborate mode setting, using DescribePixelFormat.
@@ -209,8 +209,8 @@ namespace OpenTK.Platform.Windows
 
             while (!done)
             {
-                API.DeviceMode currentMode = new API.DeviceMode();
-                IntPtr handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(API.DeviceMode)));
+                DeviceMode currentMode = new DeviceMode();
+                IntPtr handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DeviceMode)));
                 Marshal.StructureToPtr(currentMode, handle, true);
 
                 done = (API.EnumDisplaySettings(null, index++, handle) != 0) ? false : true;
@@ -231,7 +231,7 @@ namespace OpenTK.Platform.Windows
                 DisplayMode mode = new DisplayMode(
                     currentMode.PelsWidth,
                     currentMode.PelsHeight,
-                    new ColorDepth(currentMode.BitsPerPel),
+                    new ColorMode(currentMode.BitsPerPel),
                     0,
                     0,
                     0,
@@ -256,7 +256,7 @@ namespace OpenTK.Platform.Windows
 
         public void Dispose()
         {
-            Debug.Print("Manually disposing WinGLContext {0}.", this.renderContext);
+            //Debug.Print("Manually disposing WinGLContext {0}.", this.renderContext);
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -265,7 +265,8 @@ namespace OpenTK.Platform.Windows
         {
             if (!disposed)
             {
-                // Clean unmanaged resources here:
+                // Clean unmanaged resources here
+                // The following call uses the Debug and Wgl classes, making it unsafe?
                 ReleaseResources();
 
                 if (calledManually)
@@ -290,9 +291,8 @@ namespace OpenTK.Platform.Windows
                 Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
                 if (!Wgl.Imports.DeleteContext(renderContext))
                 {
-                    throw new ApplicationException(
-                        "Could not destroy the OpenGL render context. Error: " + Marshal.GetLastWin32Error()
-                    );
+                    //throw new ApplicationException("Could not destroy the OpenGL render context. Error: " + Marshal.GetLastWin32Error());
+                    //Debug.Print("Could not destroy the OpenGL render context. Error: {0}", Marshal.GetLastWin32Error());
                 }
                 renderContext = IntPtr.Zero;
             }
@@ -301,8 +301,8 @@ namespace OpenTK.Platform.Windows
             {
                 if (!API.ReleaseDC(windowHandle, deviceContext))
                 {
-                    throw new ApplicationException(
-                        "Could not release device context. Error: " + Marshal.GetLastWin32Error());
+                    //throw new ApplicationException("Could not release device context. Error: " + Marshal.GetLastWin32Error());
+                    //Debug.Print("Could not destroy the device context. Error: {0}", Marshal.GetLastWin32Error());
                 }
             }
 
@@ -310,9 +310,8 @@ namespace OpenTK.Platform.Windows
             {
                 if (!API.FreeLibrary(opengl32Handle))
                 {
-                    throw new ApplicationException(
-                        "FreeLibray call failed ('opengl32.dll'), Error: " + Marshal.GetLastWin32Error()
-                    );
+                    //throw new ApplicationException("FreeLibray call failed ('opengl32.dll'), Error: " + Marshal.GetLastWin32Error());
+                    //Debug.Print("Could not release {0}. Error: {1}", opengl32Name, Marshal.GetLastWin32Error());
                 }
                 opengl32Handle = IntPtr.Zero;
             }

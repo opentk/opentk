@@ -17,7 +17,7 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    sealed class WinGLControl : OpenTK.Platform.IGLControl
+    sealed class WinGLControl : IGLControl, IDisposable
     {
         private WinGLContext glContext;
         private bool fullscreen;
@@ -25,7 +25,7 @@ namespace OpenTK.Platform.Windows
         private DisplayMode mode;
 
         private bool disposed;
-        private Message msg;        // Used only by the IsIdle event.
+        private MSG msg;        // Used only by the IsIdle event.
 
         #region --- Constructors ---
 
@@ -38,6 +38,8 @@ namespace OpenTK.Platform.Windows
 
             glContext = new WinGLContext(mode);
         }
+
+        #endregion
 
         void c_HandleCreated(object sender, EventArgs e)
         {
@@ -66,9 +68,7 @@ namespace OpenTK.Platform.Windows
             glContext.Dispose();
         }
 
-        #endregion
-
-        #region --- IGLControl membmers ---
+        #region --- IGLControl members ---
 
         #region public bool IsIdle
 
@@ -76,7 +76,7 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return !API.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
+                return !API.PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
             }
         }
 
@@ -115,7 +115,7 @@ namespace OpenTK.Platform.Windows
         public void Dispose()
         {
             this.Dispose(true);
-            GC.SuppressFinalize(this);
+            //GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool calledManually)
@@ -132,12 +132,12 @@ namespace OpenTK.Platform.Windows
                 disposed = true;
             }
         }
-
+        /*
         ~WinGLControl()
         {
             Dispose(false);
         }
-
+        */
         #endregion
     }
 }

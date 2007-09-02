@@ -46,7 +46,7 @@ namespace OpenTK.Platform.Windows
     using LONG_PTR = System.IntPtr;
 
     using COLORREF = System.Int32;
-    using RECT = OpenTK.Platform.Windows.API.Rectangle;
+    using RECT = OpenTK.Platform.Windows.Rectangle;
 
     using WNDPROC = System.IntPtr;
 
@@ -70,109 +70,13 @@ namespace OpenTK.Platform.Windows
             PixelFormatDescriptorSize = (short)Marshal.SizeOf(typeof(PixelFormatDescriptor));
         }
 
-        #region --- Constants ---
-
-        public struct Constants
-        {
-            // Mouse indicator flags (found in winuser.h)
-            public const int MOUSE_MOVE_RELATIVE = 0;
-            public const int MOUSE_MOVE_ABSOLUTE = 1;
-            public const int MOUSE_VIRTUAL_DESKTOP = 0x02;  // the coordinates are mapped to the virtual desktop
-            public const int MOUSE_ATTRIBUTES_CHANGED = 0x04;  // requery for mouse attributes
-
-            // Found in winuser.h
-            public const int KEYBOARD_OVERRUN_MAKE_CODE = 0xFF;
-
-            // WM_ACTIVATE state values (found in winuser.h)
-            public const int WA_INACTIVE    = 0;
-            public const int WA_ACTIVE      = 1;
-            public const int WA_CLICKACTIVE = 2;
-
-            // Window Messages (found in winuser.h)
-            public const int WM_NULL = 0x0000;
-            public const int WM_CREATE = 0x0001;
-            public const int WM_DESTROY = 0x0002;
-            public const int WM_MOVE = 0x0003;
-            public const int WM_SIZE = 0x0005;
-            public const int WM_ACTIVATE = 0x0006;
-            public const int WM_SETFOCUS = 0x0007;
-            public const int WM_KILLFOCUS = 0x0008;
-            public const int WM_ENABLE = 0x000A;
-            public const int WM_SETREDRAW = 0x000B;
-            public const int WM_SETTEXT = 0x000C;
-            public const int WM_GETTEXT = 0x000D;
-            public const int WM_GETTEXTLENGTH = 0x000E;
-            public const int WM_PAINT = 0x000F;
-            public const int WM_CLOSE = 0x0010;
-            // _WIN32_WCE
-            public const int WM_QUERYENDSESSION = 0x0011;
-            public const int WM_QUERYOPEN = 0x0013;
-            public const int WM_ENDSESSION = 0x0016;
-            public const int WM_QUIT = 0x0012;
-            public const int WM_ERASEBKGND = 0x0014;
-            public const int WM_SYSCOLORCHANGE = 0x0015;
-            public const int WM_SHOWWINDOW = 0x0018;
-            public const int WM_WININICHANGE = 0x001A;
-            // WINVER >= 0x400
-            public const int WM_SETTINGCHANGE = WM_WININICHANGE;
-
-            public const int WM_DEVMODECHANGE = 0x001B;
-            public const int WM_ACTIVATEAPP = 0x001C;
-            public const int WM_FONTCHANGE = 0x001D;
-            public const int WM_TIMECHANGE = 0x001E;
-            public const int WM_CANCELMODE = 0x001F;
-            public const int WM_SETCURSOR = 0x0020;
-            public const int WM_MOUSEACTIVATE = 0x0021;
-            public const int WM_CHILDACTIVATE = 0x0022;
-            public const int WM_QUEUESYNC = 0x0023;
-
-            public const int WM_GETMINMAXINFO = 0x0024;
-
-            public const int WM_WINDOWPOSCHANGING = 0x0046;
-            public const int WM_WINDOWPOSCHANGED = 0x0047;
-
-            // Keyboard events (found in winuser.h)
-            public const int WM_INPUT = 0x00FF;       // Raw input. XP and higher only.
-            public const int WM_KEYDOWN = 0x0100;
-            public const int WM_KEYUP = 0x101;
-            public const int WM_SYSKEYDOWN = 0x0104;
-            public const int WM_SYSKEYUP = 0x0105;
-            public const int WM_COMMAND = 0x0111;
-            public const int WM_SYSCOMMAND = 0x0112;
-            public const int WM_ENTERIDLE = 0x121;
-
-            // Pixel types (found in wingdi.h)
-            public const byte PFD_TYPE_RGBA = 0;
-            public const byte PFD_TYPE_COLORINDEX = 1;
-
-            // Layer types (found in wingdi.h)
-            public const byte PFD_MAIN_PLANE = 0;
-            public const byte PFD_OVERLAY_PLANE = 1;
-            public const byte PFD_UNDERLAY_PLANE = unchecked((byte)-1);
-
-            // Device mode types (found in wingdi.h)
-            public const int DM_BITSPERPEL = 0x00040000;
-            public const int DM_PELSWIDTH = 0x00080000;
-            public const int DM_PELSHEIGHT = 0x00100000;
-            public const int DM_DISPLAYFLAGS = 0x00200000;
-            public const int DM_DISPLAYFREQUENCY = 0x00400000;
-
-            // ChangeDisplaySettings types (found in winuser.h)
-            public const int CDS_UPDATEREGISTRY = 0x00000001;
-            public const int CDS_TEST = 0x00000002;
-            public const int CDS_FULLSCREEN = 0x00000004;
-
-            // ChangeDisplaySettings results (found in winuser.h)
-            public const int DISP_CHANGE_SUCCESSFUL = 0;
-            public const int DISP_CHANGE_RESTART = 1;
-            public const int DISP_CHANGE_FAILED = -1;
-
-            // (found in winuser.h)
-            public const int ENUM_REGISTRY_SETTINGS = -2;
-            public const int ENUM_CURRENT_SETTINGS = -1;
-        }
-
-        #endregion
+        internal static readonly short PixelFormatDescriptorSize;
+        internal static readonly short PixelFormatDescriptorVersion;
+        internal static int RawInputSize;
+        internal static readonly int RawInputDeviceSize;
+        internal static readonly int RawInputHeaderSize;
+        internal static readonly int RawInputDeviceListSize;
+        internal static readonly int RawInputDeviceInfoSize;
 
         #region --- Functions ---
 
@@ -258,94 +162,6 @@ namespace OpenTK.Platform.Windows
             IntPtr Instance,
             IntPtr Param);
 
-        public enum WindowStyle : int
-        {
-            Overlapped = 0x00000000,
-            Popup = unchecked((int)0x80000000),
-            Child = 0x40000000,
-            Minimize = 0x20000000,
-            Visible = 0x10000000,
-            Disabled = 0x08000000,
-            ClipSiblings = 0x04000000,
-            ClipChildren = 0x02000000,
-            Maximize = 0x01000000,
-            Caption = 0x00C00000,    // Border | DialogFrame
-            Border = 0x00800000,
-            DialogFrame = 0x00400000,
-            VScroll = 0x00200000,
-            HScreen = 0x00100000,
-            SystemMenu = 0x00080000,
-            ThickFrame = 0x00040000,
-            Group = 0x00020000,
-            TabStop = 0x00010000,
-
-            MinimizeBox = 0x00020000,
-            MaximizeBox = 0x00010000,
-
-            Tiled = Overlapped,
-            Iconic = Minimize,
-            SizeBox = ThickFrame,
-            TiledWindow = OverlappedWindow,
-
-            // Common window styles:
-            OverlappedWindow = Overlapped | Caption | SystemMenu | ThickFrame | MinimizeBox | MaximizeBox,
-            PopupWindow = Popup | Border | SystemMenu,
-            ChildWindow = Child
-        }
-
-        [Flags]
-        public enum ExtendedWindowStyle : int
-        {
-            DialogModalFrame = 0x00000001,
-            NoParentNotify = 0x00000004,
-            Topmost = 0x00000008,
-            AcceptFiles = 0x00000010,
-            Transparent = 0x00000020,
-
-            // #if(WINVER >= 0x0400)
-            MdiChild = 0x00000040,
-            ToolWindow = 0x00000080,
-            WindowEdge = 0x00000100,
-            ClientEdge = 0x00000200,
-            ContextHelp = 0x00000400,
-            // #endif
-
-            // #if(WINVER >= 0x0400)
-            Right = 0x00001000,
-            Left = 0x00000000,
-            RightToLeftReading = 0x00002000,
-            LeftToRightReading = 0x00000000,
-            LeftScrollbar = 0x00004000,
-            RightScrollbar = 0x00000000,
-
-            ControlParent = 0x00010000,
-            StaticEdge = 0x00020000,
-            ApplicationWindow = 0x00040000,
-
-            OverlappedWindow = WindowEdge | ClientEdge,
-            PaletteWindow = WindowEdge | ToolWindow | Topmost,
-            // #endif
-
-            // #if(_WIN32_WINNT >= 0x0500)
-            Layered = 0x00080000,
-            // #endif
-
-            // #if(WINVER >= 0x0500)
-            NoInheritLayout = 0x00100000, // Disable inheritence of mirroring by children
-            RightToLeftLayout = 0x00400000, // Right to left mirroring
-            // #endif /* WINVER >= 0x0500 */
-
-            // #if(_WIN32_WINNT >= 0x0501)
-            Composited = 0x02000000,
-            // #endif /* _WIN32_WINNT >= 0x0501 */
-
-            // #if(_WIN32_WINNT >= 0x0500)
-            NoActivate = 0x08000000
-            // #endif /* _WIN32_WINNT >= 0x0500 */
-        }
-
-        #endregion
-
         #region DestroyWindow
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -423,35 +239,9 @@ namespace OpenTK.Platform.Windows
         /// <param name="flags">Not used</param>
         /// <returns>True if there is a message pending.</returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        [DllImport("User32.dll"), CLSCompliant(false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool PeekMessage(
-            out Message msg,
-            IntPtr hWnd,
-            int messageFilterMin,
-            int messageFilterMax,
-            int flags
-        );
-
-        /// <summary>
-        /// Low-level WINAPI function that checks the next message in the queue.
-        /// </summary>
-        /// <param name="msg">The pending message (if any) is stored here.</param>
-        /// <param name="hWnd">Not used</param>
-        /// <param name="messageFilterMin">Not used</param>
-        /// <param name="messageFilterMax">Not used</param>
-        /// <param name="flags">Not used</param>
-        /// <returns>True if there is a message pending.</returns>
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool PeekMessage(
-            out System.Windows.Forms.Message msg,
-            IntPtr hWnd,
-            int messageFilterMin,
-            int messageFilterMax,
-            int flags
-        );
+        public static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
 
         #endregion
 
@@ -472,14 +262,10 @@ namespace OpenTK.Platform.Windows
         /// To get extended error information, call GetLastError.
         /// </returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        [DllImport("User32.dll"), CLSCompliant(false)]
         //[return: MarshalAs(UnmanagedType.Bool)]
-        public static extern INT GetMessage(
-            out System.Windows.Forms.Message msg,
-            IntPtr windowHandle,
-            int messageFilterMin,
-            int messageFilterMax
-        );
+        public static extern INT GetMessage(ref MSG msg,
+            IntPtr windowHandle, int messageFilterMin, int messageFilterMax);
 
         #endregion
 
@@ -491,17 +277,7 @@ namespace OpenTK.Platform.Windows
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern BOOL PostMessage(
             HWND hWnd,
-            UINT Msg,
-            WPARAM wParam,
-            LPARAM lParam
-        );
-
-        [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL PostMessage(
-            HWND hWnd,
-            INT Msg,
+            WindowMessage Msg,
             WPARAM wParam,
             LPARAM lParam
         );
@@ -518,8 +294,8 @@ namespace OpenTK.Platform.Windows
         #region DispatchMessage
 
         [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern LRESULT DispatchMessage(ref System.Windows.Forms.Message lpmsg);
+        [DllImport("User32.dll"), CLSCompliant(false)]
+        public static extern LRESULT DispatchMessage(ref MSG msg);
 
         #endregion
 
@@ -1195,25 +971,114 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- Structures ---
+        #endregion
+    }
 
-        #region Message
+    #region --- Constants ---
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Message
+        public struct Constants
         {
-            public IntPtr HWnd;
-            public int Msg;
-            public IntPtr WParam;
-            public IntPtr LParam;
-            public IntPtr Result;
+            // Mouse indicator flags (found in winuser.h)
+            public const int MOUSE_MOVE_RELATIVE = 0;
+            public const int MOUSE_MOVE_ABSOLUTE = 1;
+            public const int MOUSE_VIRTUAL_DESKTOP = 0x02;  // the coordinates are mapped to the virtual desktop
+            public const int MOUSE_ATTRIBUTES_CHANGED = 0x04;  // requery for mouse attributes
 
-            //public int Time;
-            //public System.Drawing.Point p;
-            //System.Drawing.
+            // Found in winuser.h
+            public const int KEYBOARD_OVERRUN_MAKE_CODE = 0xFF;
+
+            // WM_ACTIVATE state values (found in winuser.h)
+            public const int WA_INACTIVE    = 0;
+            public const int WA_ACTIVE      = 1;
+            public const int WA_CLICKACTIVE = 2;
+
+            // Window Messages (found in winuser.h)
+            public const int WM_NULL = 0x0000;
+            public const int WM_CREATE = 0x0001;
+            public const int WM_DESTROY = 0x0002;
+            public const int WM_MOVE = 0x0003;
+            public const int WM_SIZE = 0x0005;
+            public const int WM_ACTIVATE = 0x0006;
+            public const int WM_SETFOCUS = 0x0007;
+            public const int WM_KILLFOCUS = 0x0008;
+            public const int WM_ENABLE = 0x000A;
+            public const int WM_SETREDRAW = 0x000B;
+            public const int WM_SETTEXT = 0x000C;
+            public const int WM_GETTEXT = 0x000D;
+            public const int WM_GETTEXTLENGTH = 0x000E;
+            public const int WM_PAINT = 0x000F;
+            public const int WM_CLOSE = 0x0010;
+            // _WIN32_WCE
+            public const int WM_QUERYENDSESSION = 0x0011;
+            public const int WM_QUERYOPEN = 0x0013;
+            public const int WM_ENDSESSION = 0x0016;
+            public const int WM_QUIT = 0x0012;
+            public const int WM_ERASEBKGND = 0x0014;
+            public const int WM_SYSCOLORCHANGE = 0x0015;
+            public const int WM_SHOWWINDOW = 0x0018;
+            public const int WM_WININICHANGE = 0x001A;
+            // WINVER >= 0x400
+            public const int WM_SETTINGCHANGE = WM_WININICHANGE;
+
+            public const int WM_DEVMODECHANGE = 0x001B;
+            public const int WM_ACTIVATEAPP = 0x001C;
+            public const int WM_FONTCHANGE = 0x001D;
+            public const int WM_TIMECHANGE = 0x001E;
+            public const int WM_CANCELMODE = 0x001F;
+            public const int WM_SETCURSOR = 0x0020;
+            public const int WM_MOUSEACTIVATE = 0x0021;
+            public const int WM_CHILDACTIVATE = 0x0022;
+            public const int WM_QUEUESYNC = 0x0023;
+
+            public const int WM_GETMINMAXINFO = 0x0024;
+
+            public const int WM_WINDOWPOSCHANGING = 0x0046;
+            public const int WM_WINDOWPOSCHANGED = 0x0047;
+
+            // Keyboard events (found in winuser.h)
+            public const int WM_INPUT = 0x00FF;       // Raw input. XP and higher only.
+            public const int WM_KEYDOWN = 0x0100;
+            public const int WM_KEYUP = 0x101;
+            public const int WM_SYSKEYDOWN = 0x0104;
+            public const int WM_SYSKEYUP = 0x0105;
+            public const int WM_COMMAND = 0x0111;
+            public const int WM_SYSCOMMAND = 0x0112;
+            public const int WM_ENTERIDLE = 0x121;
+
+            // Pixel types (found in wingdi.h)
+            public const byte PFD_TYPE_RGBA = 0;
+            public const byte PFD_TYPE_COLORINDEX = 1;
+
+            // Layer types (found in wingdi.h)
+            public const byte PFD_MAIN_PLANE = 0;
+            public const byte PFD_OVERLAY_PLANE = 1;
+            public const byte PFD_UNDERLAY_PLANE = unchecked((byte)-1);
+
+            // Device mode types (found in wingdi.h)
+            public const int DM_BITSPERPEL = 0x00040000;
+            public const int DM_PELSWIDTH = 0x00080000;
+            public const int DM_PELSHEIGHT = 0x00100000;
+            public const int DM_DISPLAYFLAGS = 0x00200000;
+            public const int DM_DISPLAYFREQUENCY = 0x00400000;
+
+            // ChangeDisplaySettings types (found in winuser.h)
+            public const int CDS_UPDATEREGISTRY = 0x00000001;
+            public const int CDS_TEST = 0x00000002;
+            public const int CDS_FULLSCREEN = 0x00000004;
+
+            // ChangeDisplaySettings results (found in winuser.h)
+            public const int DISP_CHANGE_SUCCESSFUL = 0;
+            public const int DISP_CHANGE_RESTART = 1;
+            public const int DISP_CHANGE_FAILED = -1;
+
+            // (found in winuser.h)
+            public const int ENUM_REGISTRY_SETTINGS = -2;
+            public const int ENUM_CURRENT_SETTINGS = -1;
         }
 
         #endregion
+
+    #region --- Structures ---
 
         #region CreateStruct
 
@@ -1306,9 +1171,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region PixelFormatDescriptor
-
-        internal static short PixelFormatDescriptorSize;
-        internal static short PixelFormatDescriptorVersion;
 
         /// <summary>
         /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
@@ -1708,8 +1570,6 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputDevice
 
-        public static readonly int RawInputDeviceSize;
-
         /// <summary>
         /// Defines information for the raw input devices.
         /// </summary>
@@ -1751,8 +1611,6 @@ namespace OpenTK.Platform.Windows
 
         #region RawInputDeviceList
 
-        public static readonly int RawInputDeviceListSize;
-
         /// <summary>
         /// Contains information about a raw input device.
         /// </summary>
@@ -1777,8 +1635,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region RawInput
-
-        public static int RawInputSize;
 
         /// <summary>
         /// Contains the raw input from a device.
@@ -1810,8 +1666,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region RawInputHeader
-
-        public static readonly int RawInputHeaderSize;
 
         /// <summary>
         /// Contains the header information that is part of the raw input data.
@@ -1983,8 +1837,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region RawInputDeviceInfo
-
-        public static readonly int RawInputDeviceInfoSize;
 
         /// <summary>
         /// Defines the raw input data coming from any device.
@@ -2190,568 +2042,914 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- Enums ---
-
-        #region GetWindowLongOffsets enum
-
-        public enum GetWindowLongOffsets : int
-        {
-            WNDPROC       = (-4),
-            HINSTANCE     = (-6),
-            HWNDPARENT    = (-8),
-            STYLE         = (-16),
-            EXSTYLE       = (-20),
-            USERDATA      = (-21),
-            ID            = (-12),
-        }
-
-        #endregion
-
-        #region PixelFormatDescriptorFlags enum
-        [Flags]
-        public enum PixelFormatDescriptorFlags : int
-        {
-            // PixelFormatDescriptor flags
-            DOUBLEBUFFER,
-            STEREO,
-            DRAW_TO_WINDOW,
-            DRAW_TO_BITMAP,
-            SUPPORT_GDI,
-            SUPPORT_OPENGL,
-            GENERIC_FORMAT,
-            NEED_PALETTE,
-            NEED_SYSTEM_PALETTE,
-            SWAP_EXCHANGE,
-            SWAP_COPY,
-            SWAP_LAYER_BUFFERS,
-            GENERIC_ACCELERATED,
-            SUPPORT_DIRECTDRAW,
-
-            // PixelFormatDescriptor flags for use in ChoosePixelFormat only
-            DEPTH_DONTCARE = unchecked((int)0x20000000),
-            DOUBLEBUFFER_DONTCARE = unchecked((int)0x40000000),
-            STEREO_DONTCARE = unchecked((int)0x80000000)
-        }
-        #endregion
-
-        #region PixelType
-
-        public enum PixelType : byte
-        {
-            RGBA = 0,
-            INDEXED = 1
-        }
-
-        #endregion
-
-        #region WindowPlacementOptions enum
-
-        public enum WindowPlacementOptions
-        {
-            TOP = 0,
-            BOTTOM = 1,
-            TOPMOST = -1,
-            NOTOPMOST = -2
-        }
-
-        #endregion
-
-        #region WindowClassStyle enum
-        [Flags]
-        public enum WindowClassStyle
-        {
-            //None            = 0x0000,
-            VRedraw = 0x0001,
-            HRedraw = 0x0002,
-            DoubleClicks = 0x0008,
-            OwnDC = 0x0020,
-            ClassDC = 0x0040,
-            ParentDC = 0x0080,
-            NoClose = 0x0200,
-            SaveBits = 0x0800,
-            ByteAlignClient = 0x1000,
-            ByteAlignWindow = 0x2000,
-            GlobalClass = 0x4000,
-
-            Ime = 0x00010000,
-
-            // #if(_WIN32_WINNT >= 0x0501)
-            DropShadow = 0x00020000
-            // #endif /* _WIN32_WINNT >= 0x0501 */
-        }
-        #endregion
-
-        #region RawInputDeviceFlags enum
-
-        [Flags]
-        public enum RawInputDeviceFlags : int
-        {
-            /// <summary>
-            /// If set, this removes the top level collection from the inclusion list.
-            /// This tells the operating system to stop reading from a device which matches the top level collection.
-            /// </summary>
-            REMOVE          = 0x00000001,
-            /// <summary>
-            /// If set, this specifies the top level collections to exclude when reading a complete usage page.
-            /// This flag only affects a TLC whose usage page is already specified with RawInputDeviceEnum.PAGEONLY. 
-            /// </summary>
-            EXCLUDE         = 0x00000010,
-            /// <summary>
-            /// If set, this specifies all devices whose top level collection is from the specified UsagePage.
-            /// Note that usUsage must be zero. To exclude a particular top level collection, use EXCLUDE.
-            /// </summary>
-            PAGEONLY        = 0x00000020,
-            /// <summary>
-            /// If set, this prevents any devices specified by UsagePage or Usage from generating legacy messages.
-            /// This is only for the mouse and keyboard. See RawInputDevice Remarks.
-            /// </summary>
-            NOLEGACY        = 0x00000030,
-            /// <summary>
-            /// If set, this enables the caller to receive the input even when the caller is not in the foreground.
-            /// Note that Target must be specified in RawInputDevice.
-            /// </summary>
-            INPUTSINK       = 0x00000100,
-            /// <summary>
-            /// If set, the mouse button click does not activate the other window.
-            /// </summary>
-            CAPTUREMOUSE    = 0x00000200, // effective when mouse nolegacy is specified, otherwise it would be an error
-            /// <summary>
-            /// If set, the application-defined keyboard device hotkeys are not handled.
-            /// However, the system hotkeys; for example, ALT+TAB and CTRL+ALT+DEL, are still handled.
-            /// By default, all keyboard hotkeys are handled.
-            /// NOHOTKEYS can be specified even if NOLEGACY is not specified and Target is NULL in RawInputDevice.
-            /// </summary>
-            NOHOTKEYS       = 0x00000200, // effective for keyboard.
-            /// <summary>
-            /// Microsoft Windows XP Service Pack 1 (SP1): If set, the application command keys are handled. APPKEYS can be specified only if NOLEGACY is specified for a keyboard device.
-            /// </summary>
-            APPKEYS         = 0x00000400, // effective for keyboard.
-            /// <summary>
-            /// If set, this enables the caller to receive input in the background only if the foreground application
-            /// does not process it. In other words, if the foreground application is not registered for raw input,
-            /// then the background application that is registered will receive the input.
-            /// </summary>
-            EXINPUTSINK     = 0x00001000,
-            DEVNOTIFY       = 0x00002000,
-            //EXMODEMASK      = 0x000000F0
-        }
-
-        #endregion
-
-        #region GetRawInputDataEnum
-
-        public enum GetRawInputDataEnum
-        {
-            INPUT             = 0x10000003,
-            HEADER            = 0x10000005
-        }
-
-        #endregion
-
-        #region RawInputDeviceInfoEnum
-
-        public enum RawInputDeviceInfoEnum
-        {
-            PREPARSEDDATA    = 0x20000005,
-            DEVICENAME       = 0x20000007,  // the return valus is the character length, not the byte size
-            DEVICEINFO       = 0x2000000b
-        }
-
-        #endregion
-
-        #region RawInputMouseState
-
-        public enum RawInputMouseState : short// : ushort
-        {
-            LEFT_BUTTON_DOWN = 0x0001,  // Left Button changed to down.
-            LEFT_BUTTON_UP   = 0x0002,  // Left Button changed to up.
-            RIGHT_BUTTON_DOWN   = 0x0004,  // Right Button changed to down.
-            RIGHT_BUTTON_UP  = 0x0008,  // Right Button changed to up.
-            MIDDLE_BUTTON_DOWN  = 0x0010,  // Middle Button changed to down.
-            MIDDLE_BUTTON_UP = 0x0020,  // Middle Button changed to up.
-
-            BUTTON_1_DOWN    = LEFT_BUTTON_DOWN,
-            BUTTON_1_UP      = LEFT_BUTTON_UP,
-            BUTTON_2_DOWN    = RIGHT_BUTTON_DOWN,
-            BUTTON_2_UP      = RIGHT_BUTTON_UP,
-            BUTTON_3_DOWN    = MIDDLE_BUTTON_DOWN,
-            BUTTON_3_UP      = MIDDLE_BUTTON_UP,
-
-            BUTTON_4_DOWN    = 0x0040,
-            BUTTON_4_UP      = 0x0080,
-            BUTTON_5_DOWN    = 0x0100,
-            BUTTON_5_UP      = 0x0200,
-
-            WHEEL            = 0x0400
-        }
-
-        #endregion
-
-        #region RawInputKeyboardDataFlags
-
-        public enum RawInputKeyboardDataFlags : short //: ushort
-        {
-            MAKE            = 0,
-            BREAK           = 1,
-            E0              = 2,
-            E1              = 4,
-            TERMSRV_SET_LED = 8,
-            TERMSRV_SHADOW  = 0x10
-        }
-
-        #endregion
-
-        #region RawInputDeviceType
-
-        public enum RawInputDeviceType : int
-        {
-            MOUSE    = 0,
-            KEYBOARD = 1,
-            HID      = 2
-        }
-
-        #endregion
-
-        #region VirtualKeys
-
-        public enum VirtualKeys : short
-        {
-            /*
-             * Virtual Key, Standard Set
-             */
-            LBUTTON      = 0x01,
-            RBUTTON      = 0x02,
-            CANCEL       = 0x03,
-            MBUTTON      = 0x04,   /* NOT contiguous with L & RBUTTON */
-
-            XBUTTON1     = 0x05,   /* NOT contiguous with L & RBUTTON */
-            XBUTTON2     = 0x06,   /* NOT contiguous with L & RBUTTON */
-
-            /*
-             * 0x07 : unassigned
-             */
-
-            BACK         = 0x08,
-            TAB          = 0x09,
-
-            /*
-             * 0x0A - 0x0B : reserved
-             */
-
-            CLEAR        = 0x0C,
-            RETURN       = 0x0D,
-
-            SHIFT        = 0x10,
-            CONTROL      = 0x11,
-            MENU         = 0x12,
-            PAUSE        = 0x13,
-            CAPITAL      = 0x14,
-
-            KANA         = 0x15,
-            HANGEUL      = 0x15,  /* old name - should be here for compatibility */
-            HANGUL       = 0x15,
-            JUNJA        = 0x17,
-            FINAL        = 0x18,
-            HANJA        = 0x19,
-            KANJI        = 0x19,
-
-            ESCAPE       = 0x1B,
-
-            CONVERT      = 0x1C,
-            NONCONVERT   = 0x1D,
-            ACCEPT       = 0x1E,
-            MODECHANGE   = 0x1F,
-            
-            SPACE        = 0x20,
-            PRIOR        = 0x21,
-            NEXT         = 0x22,
-            END          = 0x23,
-            HOME         = 0x24,
-            LEFT         = 0x25,
-            UP           = 0x26,
-            RIGHT        = 0x27,
-            DOWN         = 0x28,
-            SELECT       = 0x29,
-            PRINT        = 0x2A,
-            EXECUTE      = 0x2B,
-            SNAPSHOT     = 0x2C,
-            INSERT       = 0x2D,
-            DELETE       = 0x2E,
-            HELP         = 0x2F,
-            
-            /*
-             * 0 - 9 are the same as ASCII '0' - '9' (0x30 - 0x39)
-             * 0x40 : unassigned
-             * A - Z are the same as ASCII 'A' - 'Z' (0x41 - 0x5A)
-             */
-
-            LWIN         = 0x5B,
-            RWIN         = 0x5C,
-            APPS         = 0x5D,
-            
-            /*
-             * 0x5E : reserved
-             */
-
-            SLEEP        = 0x5F,
-
-            NUMPAD0      = 0x60,
-            NUMPAD1      = 0x61,
-            NUMPAD2      = 0x62,
-            NUMPAD3      = 0x63,
-            NUMPAD4      = 0x64,
-            NUMPAD5      = 0x65,
-            NUMPAD6      = 0x66,
-            NUMPAD7      = 0x67,
-            NUMPAD8      = 0x68,
-            NUMPAD9      = 0x69,
-            MULTIPLY     = 0x6A,
-            ADD          = 0x6B,
-            SEPARATOR    = 0x6C,
-            SUBTRACT     = 0x6D,
-            DECIMAL      = 0x6E,
-            DIVIDE       = 0x6F,
-            F1           = 0x70,
-            F2           = 0x71,
-            F3           = 0x72,
-            F4           = 0x73,
-            F5           = 0x74,
-            F6           = 0x75,
-            F7           = 0x76,
-            F8           = 0x77,
-            F9           = 0x78,
-            F10          = 0x79,
-            F11          = 0x7A,
-            F12          = 0x7B,
-            F13          = 0x7C,
-            F14          = 0x7D,
-            F15          = 0x7E,
-            F16          = 0x7F,
-            F17          = 0x80,
-            F18          = 0x81,
-            F19          = 0x82,
-            F20          = 0x83,
-            F21          = 0x84,
-            F22          = 0x85,
-            F23          = 0x86,
-            F24          = 0x87,
-            
-            /*
-             * 0x88 - 0x8F : unassigned
-             */
-
-            NUMLOCK      = 0x90,
-            SCROLL       = 0x91,
-
-            /*
-             * NEC PC-9800 kbd definitions
-             */
-            OEM_NEC_EQUAL= 0x92,  // '=' key on numpad
-
-            /*
-             * Fujitsu/OASYS kbd definitions
-             */
-            OEM_FJ_JISHO = 0x92,  // 'Dictionary' key
-            OEM_FJ_MASSHOU = 0x93,  // 'Unregister word' key
-            OEM_FJ_TOUROKU = 0x94,  // 'Register word' key
-            OEM_FJ_LOYA  = 0x95,  // 'Left OYAYUBI' key
-            OEM_FJ_ROYA  = 0x96,  // 'Right OYAYUBI' key
-
-            /*
-             * 0x97 - 0x9F : unassigned
-             */
-
-            /*
-             * L* & R* - left and right Alt, Ctrl and Shift virtual keys.
-             * Used only as parameters to GetAsyncKeyState() and GetKeyState().
-             * No other API or message will distinguish left and right keys in this way.
-             */
-            LSHIFT       = 0xA0,
-            RSHIFT       = 0xA1,
-            LCONTROL     = 0xA2,
-            RCONTROL     = 0xA3,
-            LMENU        = 0xA4,
-            RMENU        = 0xA5,
-            
-            BROWSER_BACK      = 0xA6,
-            BROWSER_FORWARD   = 0xA7,
-            BROWSER_REFRESH   = 0xA8,
-            BROWSER_STOP      = 0xA9,
-            BROWSER_SEARCH    = 0xAA,
-            BROWSER_FAVORITES = 0xAB,
-            BROWSER_HOME      = 0xAC,
-            
-            VOLUME_MUTE       = 0xAD,
-            VOLUME_DOWN       = 0xAE,
-            VOLUME_UP         = 0xAF,
-            MEDIA_NEXT_TRACK  = 0xB0,
-            MEDIA_PREV_TRACK  = 0xB1,
-            MEDIA_STOP        = 0xB2,
-            MEDIA_PLAY_PAUSE  = 0xB3,
-            LAUNCH_MAIL       = 0xB4,
-            LAUNCH_MEDIA_SELECT = 0xB5,
-            LAUNCH_APP1       = 0xB6,
-            LAUNCH_APP2       = 0xB7,
-        
-            /*
-             * 0xB8 - 0xB9 : reserved
-             */
-
-            OEM_1        = 0xBA,   // ';:' for US
-            OEM_PLUS     = 0xBB,   // '+' any country
-            OEM_COMMA    = 0xBC,   // ',' any country
-            OEM_MINUS    = 0xBD,   // '-' any country
-            OEM_PERIOD   = 0xBE,   // '.' any country
-            OEM_2        = 0xBF,   // '/?' for US
-            OEM_3        = 0xC0,   // '`~' for US
-
-            /*
-             * 0xC1 - 0xD7 : reserved
-             */
-
-            /*
-             * 0xD8 - 0xDA : unassigned
-             */
-
-            OEM_4        = 0xDB,  //  '[{' for US
-            OEM_5        = 0xDC,  //  '\|' for US
-            OEM_6        = 0xDD,  //  ']}' for US
-            OEM_7        = 0xDE,  //  ''"' for US
-            OEM_8        = 0xDF,
-
-            /*
-             * 0xE0 : reserved
-             */
-
-            /*
-             * Various extended or enhanced keyboards
-             */
-            OEM_AX       = 0xE1,  //  'AX' key on Japanese AX kbd
-            OEM_102      = 0xE2,  //  "<>" or "\|" on RT 102-key kbd.
-            ICO_HELP     = 0xE3,  //  Help key on ICO
-            ICO_00       = 0xE4,  //  00 key on ICO
-
-            PROCESSKEY   = 0xE5,
-
-            ICO_CLEAR    = 0xE6,
-
-
-            PACKET       = 0xE7,
-
-            /*
-             * 0xE8 : unassigned
-             */
-
-            /*
-             * Nokia/Ericsson definitions
-             */
-            OEM_RESET    = 0xE9,
-            OEM_JUMP     = 0xEA,
-            OEM_PA1      = 0xEB,
-            OEM_PA2      = 0xEC,
-            OEM_PA3      = 0xED,
-            OEM_WSCTRL   = 0xEE,
-            OEM_CUSEL    = 0xEF,
-            OEM_ATTN     = 0xF0,
-            OEM_FINISH   = 0xF1,
-            OEM_COPY     = 0xF2,
-            OEM_AUTO     = 0xF3,
-            OEM_ENLW     = 0xF4,
-            OEM_BACKTAB  = 0xF5,
-
-            ATTN         = 0xF6,
-            CRSEL        = 0xF7,
-            EXSEL        = 0xF8,
-            EREOF        = 0xF9,
-            PLAY         = 0xFA,
-            ZOOM         = 0xFB,
-            NONAME       = 0xFC,
-            PA1          = 0xFD,
-            OEM_CLEAR    = 0xFE,
-
-            Last
-        }
-
-        #endregion
-
-        #region QueueStatusFlags
-
-        [Flags]
+    #region --- Enums ---
+
+    public enum WindowStyle : int
+    {
+        Overlapped = 0x00000000,
+        Popup = unchecked((int)0x80000000),
+        Child = 0x40000000,
+        Minimize = 0x20000000,
+        Visible = 0x10000000,
+        Disabled = 0x08000000,
+        ClipSiblings = 0x04000000,
+        ClipChildren = 0x02000000,
+        Maximize = 0x01000000,
+        Caption = 0x00C00000,    // Border | DialogFrame
+        Border = 0x00800000,
+        DialogFrame = 0x00400000,
+        VScroll = 0x00200000,
+        HScreen = 0x00100000,
+        SystemMenu = 0x00080000,
+        ThickFrame = 0x00040000,
+        Group = 0x00020000,
+        TabStop = 0x00010000,
+
+        MinimizeBox = 0x00020000,
+        MaximizeBox = 0x00010000,
+
+        Tiled = Overlapped,
+        Iconic = Minimize,
+        SizeBox = ThickFrame,
+        TiledWindow = OverlappedWindow,
+
+        // Common window styles:
+        OverlappedWindow = Overlapped | Caption | SystemMenu | ThickFrame | MinimizeBox | MaximizeBox,
+        PopupWindow = Popup | Border | SystemMenu,
+        ChildWindow = Child
+    }
+
+    [Flags]
+    public enum ExtendedWindowStyle : int
+    {
+        DialogModalFrame = 0x00000001,
+        NoParentNotify = 0x00000004,
+        Topmost = 0x00000008,
+        AcceptFiles = 0x00000010,
+        Transparent = 0x00000020,
+
+        // #if(WINVER >= 0x0400)
+        MdiChild = 0x00000040,
+        ToolWindow = 0x00000080,
+        WindowEdge = 0x00000100,
+        ClientEdge = 0x00000200,
+        ContextHelp = 0x00000400,
+        // #endif
+
+        // #if(WINVER >= 0x0400)
+        Right = 0x00001000,
+        Left = 0x00000000,
+        RightToLeftReading = 0x00002000,
+        LeftToRightReading = 0x00000000,
+        LeftScrollbar = 0x00004000,
+        RightScrollbar = 0x00000000,
+
+        ControlParent = 0x00010000,
+        StaticEdge = 0x00020000,
+        ApplicationWindow = 0x00040000,
+
+        OverlappedWindow = WindowEdge | ClientEdge,
+        PaletteWindow = WindowEdge | ToolWindow | Topmost,
+        // #endif
+
+        // #if(_WIN32_WINNT >= 0x0500)
+        Layered = 0x00080000,
+        // #endif
+
+        // #if(WINVER >= 0x0500)
+        NoInheritLayout = 0x00100000, // Disable inheritence of mirroring by children
+        RightToLeftLayout = 0x00400000, // Right to left mirroring
+        // #endif /* WINVER >= 0x0500 */
+
+        // #if(_WIN32_WINNT >= 0x0501)
+        Composited = 0x02000000,
+        // #endif /* _WIN32_WINNT >= 0x0501 */
+
+        // #if(_WIN32_WINNT >= 0x0500)
+        NoActivate = 0x08000000
+        // #endif /* _WIN32_WINNT >= 0x0500 */
+    }
+
+    #region GetWindowLongOffsets enum
+
+    public enum GetWindowLongOffsets : int
+    {
+        WNDPROC       = (-4),
+        HINSTANCE     = (-6),
+        HWNDPARENT    = (-8),
+        STYLE         = (-16),
+        EXSTYLE       = (-20),
+        USERDATA      = (-21),
+        ID            = (-12),
+    }
+
+    #endregion
+
+    #region PixelFormatDescriptorFlags enum
+    [Flags]
+    public enum PixelFormatDescriptorFlags : int
+    {
+        // PixelFormatDescriptor flags
+        DOUBLEBUFFER,
+        STEREO,
+        DRAW_TO_WINDOW,
+        DRAW_TO_BITMAP,
+        SUPPORT_GDI,
+        SUPPORT_OPENGL,
+        GENERIC_FORMAT,
+        NEED_PALETTE,
+        NEED_SYSTEM_PALETTE,
+        SWAP_EXCHANGE,
+        SWAP_COPY,
+        SWAP_LAYER_BUFFERS,
+        GENERIC_ACCELERATED,
+        SUPPORT_DIRECTDRAW,
+
+        // PixelFormatDescriptor flags for use in ChoosePixelFormat only
+        DEPTH_DONTCARE = unchecked((int)0x20000000),
+        DOUBLEBUFFER_DONTCARE = unchecked((int)0x40000000),
+        STEREO_DONTCARE = unchecked((int)0x80000000)
+    }
+    #endregion
+
+    #region PixelType
+
+    public enum PixelType : byte
+    {
+        RGBA = 0,
+        INDEXED = 1
+    }
+
+    #endregion
+
+    #region WindowPlacementOptions enum
+
+    public enum WindowPlacementOptions
+    {
+        TOP = 0,
+        BOTTOM = 1,
+        TOPMOST = -1,
+        NOTOPMOST = -2
+    }
+
+    #endregion
+
+    #region WindowClassStyle enum
+    [Flags]
+    public enum WindowClassStyle
+    {
+        //None            = 0x0000,
+        VRedraw = 0x0001,
+        HRedraw = 0x0002,
+        DoubleClicks = 0x0008,
+        OwnDC = 0x0020,
+        ClassDC = 0x0040,
+        ParentDC = 0x0080,
+        NoClose = 0x0200,
+        SaveBits = 0x0800,
+        ByteAlignClient = 0x1000,
+        ByteAlignWindow = 0x2000,
+        GlobalClass = 0x4000,
+
+        Ime = 0x00010000,
+
+        // #if(_WIN32_WINNT >= 0x0501)
+        DropShadow = 0x00020000
+        // #endif /* _WIN32_WINNT >= 0x0501 */
+    }
+    #endregion
+
+    #region RawInputDeviceFlags enum
+
+    [Flags]
+    public enum RawInputDeviceFlags : int
+    {
         /// <summary>
-        /// Queue status flags for GetQueueStatus() and MsgWaitForMultipleObjects()
+        /// If set, this removes the top level collection from the inclusion list.
+        /// This tells the operating system to stop reading from a device which matches the top level collection.
         /// </summary>
-        public enum QueueStatusFlags
-        {
-            /// <summary>
-            /// A WM_KEYUP, WM_KEYDOWN, WM_SYSKEYUP, or WM_SYSKEYDOWN message is in the queue.
-            /// </summary>
-            KEY            = 0x0001,
-            /// <summary>
-            /// A WM_MOUSEMOVE message is in the queue.
-            /// </summary>
-            MOUSEMOVE      = 0x0002,
-            /// <summary>
-            /// A mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
-            /// </summary>
-            MOUSEBUTTON    = 0x0004,
-            /// <summary>
-            /// A posted message (other than those listed here) is in the queue.
-            /// </summary>
-            POSTMESSAGE    = 0x0008,
-            /// <summary>
-            /// A WM_TIMER message is in the queue.
-            /// </summary>
-            TIMER          = 0x0010,
-            /// <summary>
-            /// A WM_PAINT message is in the queue.
-            /// </summary>
-            PAINT          = 0x0020,
-            /// <summary>
-            /// A message sent by another thread or application is in the queue.
-            /// </summary>
-            SENDMESSAGE    = 0x0040,
-            /// <summary>
-            /// A WM_HOTKEY message is in the queue.
-            /// </summary>
-            HOTKEY         = 0x0080,
-            /// <summary>
-            /// A posted message (other than those listed here) is in the queue.
-            /// </summary>
-            ALLPOSTMESSAGE = 0x0100,
-            /// <summary>
-            /// A raw input message is in the queue. For more information, see Raw Input.
-            /// Windows XP and higher only.
-            /// </summary>
-            RAWINPUT       = 0x0400,
-            /// <summary>
-            /// A WM_MOUSEMOVE message or mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
-            /// </summary>
-            MOUSE          = MOUSEMOVE | MOUSEBUTTON,
-            /// <summary>
-            /// An input message is in the queue. This is composed of KEY, MOUSE and RAWINPUT.
-            /// Windows XP and higher only.
-            /// </summary>
-            INPUT          = MOUSE | KEY | RAWINPUT,
-            /// <summary>
-            /// An input message is in the queue. This is composed of QS_KEY and QS_MOUSE.
-            /// Windows 2000 and earlier.
-            /// </summary>
-            INPUT_LEGACY   = MOUSE | KEY,
-            /// <summary>
-            /// An input, WM_TIMER, WM_PAINT, WM_HOTKEY, or posted message is in the queue.
-            /// </summary>
-            ALLEVENTS      = INPUT | POSTMESSAGE | TIMER | PAINT | HOTKEY,
-            /// <summary>
-            /// Any message is in the queue.
-            /// </summary>
-            ALLINPUT       = INPUT | POSTMESSAGE | TIMER | PAINT | HOTKEY | SENDMESSAGE
-        }
+        REMOVE          = 0x00000001,
+        /// <summary>
+        /// If set, this specifies the top level collections to exclude when reading a complete usage page.
+        /// This flag only affects a TLC whose usage page is already specified with RawInputDeviceEnum.PAGEONLY. 
+        /// </summary>
+        EXCLUDE         = 0x00000010,
+        /// <summary>
+        /// If set, this specifies all devices whose top level collection is from the specified UsagePage.
+        /// Note that usUsage must be zero. To exclude a particular top level collection, use EXCLUDE.
+        /// </summary>
+        PAGEONLY        = 0x00000020,
+        /// <summary>
+        /// If set, this prevents any devices specified by UsagePage or Usage from generating legacy messages.
+        /// This is only for the mouse and keyboard. See RawInputDevice Remarks.
+        /// </summary>
+        NOLEGACY        = 0x00000030,
+        /// <summary>
+        /// If set, this enables the caller to receive the input even when the caller is not in the foreground.
+        /// Note that Target must be specified in RawInputDevice.
+        /// </summary>
+        INPUTSINK       = 0x00000100,
+        /// <summary>
+        /// If set, the mouse button click does not activate the other window.
+        /// </summary>
+        CAPTUREMOUSE    = 0x00000200, // effective when mouse nolegacy is specified, otherwise it would be an error
+        /// <summary>
+        /// If set, the application-defined keyboard device hotkeys are not handled.
+        /// However, the system hotkeys; for example, ALT+TAB and CTRL+ALT+DEL, are still handled.
+        /// By default, all keyboard hotkeys are handled.
+        /// NOHOTKEYS can be specified even if NOLEGACY is not specified and Target is NULL in RawInputDevice.
+        /// </summary>
+        NOHOTKEYS       = 0x00000200, // effective for keyboard.
+        /// <summary>
+        /// Microsoft Windows XP Service Pack 1 (SP1): If set, the application command keys are handled. APPKEYS can be specified only if NOLEGACY is specified for a keyboard device.
+        /// </summary>
+        APPKEYS         = 0x00000400, // effective for keyboard.
+        /// <summary>
+        /// If set, this enables the caller to receive input in the background only if the foreground application
+        /// does not process it. In other words, if the foreground application is not registered for raw input,
+        /// then the background application that is registered will receive the input.
+        /// </summary>
+        EXINPUTSINK     = 0x00001000,
+        DEVNOTIFY       = 0x00002000,
+        //EXMODEMASK      = 0x000000F0
+    }
 
-        #endregion
+    #endregion
 
-        #endregion
+    #region GetRawInputDataEnum
 
-        #region --- Callbacks ---
+    public enum GetRawInputDataEnum
+    {
+        INPUT             = 0x10000003,
+        HEADER            = 0x10000005
+    }
+
+    #endregion
+
+    #region RawInputDeviceInfoEnum
+
+    public enum RawInputDeviceInfoEnum
+    {
+        PREPARSEDDATA    = 0x20000005,
+        DEVICENAME       = 0x20000007,  // the return valus is the character length, not the byte size
+        DEVICEINFO       = 0x2000000b
+    }
+
+    #endregion
+
+    #region RawInputMouseState
+
+    public enum RawInputMouseState : short// : ushort
+    {
+        LEFT_BUTTON_DOWN = 0x0001,  // Left Button changed to down.
+        LEFT_BUTTON_UP   = 0x0002,  // Left Button changed to up.
+        RIGHT_BUTTON_DOWN   = 0x0004,  // Right Button changed to down.
+        RIGHT_BUTTON_UP  = 0x0008,  // Right Button changed to up.
+        MIDDLE_BUTTON_DOWN  = 0x0010,  // Middle Button changed to down.
+        MIDDLE_BUTTON_UP = 0x0020,  // Middle Button changed to up.
+
+        BUTTON_1_DOWN    = LEFT_BUTTON_DOWN,
+        BUTTON_1_UP      = LEFT_BUTTON_UP,
+        BUTTON_2_DOWN    = RIGHT_BUTTON_DOWN,
+        BUTTON_2_UP      = RIGHT_BUTTON_UP,
+        BUTTON_3_DOWN    = MIDDLE_BUTTON_DOWN,
+        BUTTON_3_UP      = MIDDLE_BUTTON_UP,
+
+        BUTTON_4_DOWN    = 0x0040,
+        BUTTON_4_UP      = 0x0080,
+        BUTTON_5_DOWN    = 0x0100,
+        BUTTON_5_UP      = 0x0200,
+
+        WHEEL            = 0x0400
+    }
+
+    #endregion
+
+    #region RawInputKeyboardDataFlags
+
+    public enum RawInputKeyboardDataFlags : short //: ushort
+    {
+        MAKE            = 0,
+        BREAK           = 1,
+        E0              = 2,
+        E1              = 4,
+        TERMSRV_SET_LED = 8,
+        TERMSRV_SHADOW  = 0x10
+    }
+
+    #endregion
+
+    #region RawInputDeviceType
+
+    public enum RawInputDeviceType : int
+    {
+        MOUSE    = 0,
+        KEYBOARD = 1,
+        HID      = 2
+    }
+
+    #endregion
+
+    #region VirtualKeys
+
+    public enum VirtualKeys : short
+    {
+        /*
+         * Virtual Key, Standard Set
+         */
+        LBUTTON      = 0x01,
+        RBUTTON      = 0x02,
+        CANCEL       = 0x03,
+        MBUTTON      = 0x04,   /* NOT contiguous with L & RBUTTON */
+
+        XBUTTON1     = 0x05,   /* NOT contiguous with L & RBUTTON */
+        XBUTTON2     = 0x06,   /* NOT contiguous with L & RBUTTON */
+
+        /*
+         * 0x07 : unassigned
+         */
+
+        BACK         = 0x08,
+        TAB          = 0x09,
+
+        /*
+         * 0x0A - 0x0B : reserved
+         */
+
+        CLEAR        = 0x0C,
+        RETURN       = 0x0D,
+
+        SHIFT        = 0x10,
+        CONTROL      = 0x11,
+        MENU         = 0x12,
+        PAUSE        = 0x13,
+        CAPITAL      = 0x14,
+
+        KANA         = 0x15,
+        HANGEUL      = 0x15,  /* old name - should be here for compatibility */
+        HANGUL       = 0x15,
+        JUNJA        = 0x17,
+        FINAL        = 0x18,
+        HANJA        = 0x19,
+        KANJI        = 0x19,
+
+        ESCAPE       = 0x1B,
+
+        CONVERT      = 0x1C,
+        NONCONVERT   = 0x1D,
+        ACCEPT       = 0x1E,
+        MODECHANGE   = 0x1F,
+        
+        SPACE        = 0x20,
+        PRIOR        = 0x21,
+        NEXT         = 0x22,
+        END          = 0x23,
+        HOME         = 0x24,
+        LEFT         = 0x25,
+        UP           = 0x26,
+        RIGHT        = 0x27,
+        DOWN         = 0x28,
+        SELECT       = 0x29,
+        PRINT        = 0x2A,
+        EXECUTE      = 0x2B,
+        SNAPSHOT     = 0x2C,
+        INSERT       = 0x2D,
+        DELETE       = 0x2E,
+        HELP         = 0x2F,
+        
+        /*
+         * 0 - 9 are the same as ASCII '0' - '9' (0x30 - 0x39)
+         * 0x40 : unassigned
+         * A - Z are the same as ASCII 'A' - 'Z' (0x41 - 0x5A)
+         */
+
+        LWIN         = 0x5B,
+        RWIN         = 0x5C,
+        APPS         = 0x5D,
+        
+        /*
+         * 0x5E : reserved
+         */
+
+        SLEEP        = 0x5F,
+
+        NUMPAD0      = 0x60,
+        NUMPAD1      = 0x61,
+        NUMPAD2      = 0x62,
+        NUMPAD3      = 0x63,
+        NUMPAD4      = 0x64,
+        NUMPAD5      = 0x65,
+        NUMPAD6      = 0x66,
+        NUMPAD7      = 0x67,
+        NUMPAD8      = 0x68,
+        NUMPAD9      = 0x69,
+        MULTIPLY     = 0x6A,
+        ADD          = 0x6B,
+        SEPARATOR    = 0x6C,
+        SUBTRACT     = 0x6D,
+        DECIMAL      = 0x6E,
+        DIVIDE       = 0x6F,
+        F1           = 0x70,
+        F2           = 0x71,
+        F3           = 0x72,
+        F4           = 0x73,
+        F5           = 0x74,
+        F6           = 0x75,
+        F7           = 0x76,
+        F8           = 0x77,
+        F9           = 0x78,
+        F10          = 0x79,
+        F11          = 0x7A,
+        F12          = 0x7B,
+        F13          = 0x7C,
+        F14          = 0x7D,
+        F15          = 0x7E,
+        F16          = 0x7F,
+        F17          = 0x80,
+        F18          = 0x81,
+        F19          = 0x82,
+        F20          = 0x83,
+        F21          = 0x84,
+        F22          = 0x85,
+        F23          = 0x86,
+        F24          = 0x87,
+        
+        /*
+         * 0x88 - 0x8F : unassigned
+         */
+
+        NUMLOCK      = 0x90,
+        SCROLL       = 0x91,
+
+        /*
+         * NEC PC-9800 kbd definitions
+         */
+        OEM_NEC_EQUAL= 0x92,  // '=' key on numpad
+
+        /*
+         * Fujitsu/OASYS kbd definitions
+         */
+        OEM_FJ_JISHO = 0x92,  // 'Dictionary' key
+        OEM_FJ_MASSHOU = 0x93,  // 'Unregister word' key
+        OEM_FJ_TOUROKU = 0x94,  // 'Register word' key
+        OEM_FJ_LOYA  = 0x95,  // 'Left OYAYUBI' key
+        OEM_FJ_ROYA  = 0x96,  // 'Right OYAYUBI' key
+
+        /*
+         * 0x97 - 0x9F : unassigned
+         */
+
+        /*
+         * L* & R* - left and right Alt, Ctrl and Shift virtual keys.
+         * Used only as parameters to GetAsyncKeyState() and GetKeyState().
+         * No other API or message will distinguish left and right keys in this way.
+         */
+        LSHIFT       = 0xA0,
+        RSHIFT       = 0xA1,
+        LCONTROL     = 0xA2,
+        RCONTROL     = 0xA3,
+        LMENU        = 0xA4,
+        RMENU        = 0xA5,
+        
+        BROWSER_BACK      = 0xA6,
+        BROWSER_FORWARD   = 0xA7,
+        BROWSER_REFRESH   = 0xA8,
+        BROWSER_STOP      = 0xA9,
+        BROWSER_SEARCH    = 0xAA,
+        BROWSER_FAVORITES = 0xAB,
+        BROWSER_HOME      = 0xAC,
+        
+        VOLUME_MUTE       = 0xAD,
+        VOLUME_DOWN       = 0xAE,
+        VOLUME_UP         = 0xAF,
+        MEDIA_NEXT_TRACK  = 0xB0,
+        MEDIA_PREV_TRACK  = 0xB1,
+        MEDIA_STOP        = 0xB2,
+        MEDIA_PLAY_PAUSE  = 0xB3,
+        LAUNCH_MAIL       = 0xB4,
+        LAUNCH_MEDIA_SELECT = 0xB5,
+        LAUNCH_APP1       = 0xB6,
+        LAUNCH_APP2       = 0xB7,
+    
+        /*
+         * 0xB8 - 0xB9 : reserved
+         */
+
+        OEM_1        = 0xBA,   // ';:' for US
+        OEM_PLUS     = 0xBB,   // '+' any country
+        OEM_COMMA    = 0xBC,   // ',' any country
+        OEM_MINUS    = 0xBD,   // '-' any country
+        OEM_PERIOD   = 0xBE,   // '.' any country
+        OEM_2        = 0xBF,   // '/?' for US
+        OEM_3        = 0xC0,   // '`~' for US
+
+        /*
+         * 0xC1 - 0xD7 : reserved
+         */
+
+        /*
+         * 0xD8 - 0xDA : unassigned
+         */
+
+        OEM_4        = 0xDB,  //  '[{' for US
+        OEM_5        = 0xDC,  //  '\|' for US
+        OEM_6        = 0xDD,  //  ']}' for US
+        OEM_7        = 0xDE,  //  ''"' for US
+        OEM_8        = 0xDF,
+
+        /*
+         * 0xE0 : reserved
+         */
+
+        /*
+         * Various extended or enhanced keyboards
+         */
+        OEM_AX       = 0xE1,  //  'AX' key on Japanese AX kbd
+        OEM_102      = 0xE2,  //  "<>" or "\|" on RT 102-key kbd.
+        ICO_HELP     = 0xE3,  //  Help key on ICO
+        ICO_00       = 0xE4,  //  00 key on ICO
+
+        PROCESSKEY   = 0xE5,
+
+        ICO_CLEAR    = 0xE6,
+
+
+        PACKET       = 0xE7,
+
+        /*
+         * 0xE8 : unassigned
+         */
+
+        /*
+         * Nokia/Ericsson definitions
+         */
+        OEM_RESET    = 0xE9,
+        OEM_JUMP     = 0xEA,
+        OEM_PA1      = 0xEB,
+        OEM_PA2      = 0xEC,
+        OEM_PA3      = 0xED,
+        OEM_WSCTRL   = 0xEE,
+        OEM_CUSEL    = 0xEF,
+        OEM_ATTN     = 0xF0,
+        OEM_FINISH   = 0xF1,
+        OEM_COPY     = 0xF2,
+        OEM_AUTO     = 0xF3,
+        OEM_ENLW     = 0xF4,
+        OEM_BACKTAB  = 0xF5,
+
+        ATTN         = 0xF6,
+        CRSEL        = 0xF7,
+        EXSEL        = 0xF8,
+        EREOF        = 0xF9,
+        PLAY         = 0xFA,
+        ZOOM         = 0xFB,
+        NONAME       = 0xFC,
+        PA1          = 0xFD,
+        OEM_CLEAR    = 0xFE,
+
+        Last
+    }
+
+    #endregion
+
+    #region QueueStatusFlags
+
+    [Flags]
+    /// <summary>
+    /// Queue status flags for GetQueueStatus() and MsgWaitForMultipleObjects()
+    /// </summary>
+    public enum QueueStatusFlags
+    {
+        /// <summary>
+        /// A WM_KEYUP, WM_KEYDOWN, WM_SYSKEYUP, or WM_SYSKEYDOWN message is in the queue.
+        /// </summary>
+        KEY            = 0x0001,
+        /// <summary>
+        /// A WM_MOUSEMOVE message is in the queue.
+        /// </summary>
+        MOUSEMOVE      = 0x0002,
+        /// <summary>
+        /// A mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
+        /// </summary>
+        MOUSEBUTTON    = 0x0004,
+        /// <summary>
+        /// A posted message (other than those listed here) is in the queue.
+        /// </summary>
+        POSTMESSAGE    = 0x0008,
+        /// <summary>
+        /// A WM_TIMER message is in the queue.
+        /// </summary>
+        TIMER          = 0x0010,
+        /// <summary>
+        /// A WM_PAINT message is in the queue.
+        /// </summary>
+        PAINT          = 0x0020,
+        /// <summary>
+        /// A message sent by another thread or application is in the queue.
+        /// </summary>
+        SENDMESSAGE    = 0x0040,
+        /// <summary>
+        /// A WM_HOTKEY message is in the queue.
+        /// </summary>
+        HOTKEY         = 0x0080,
+        /// <summary>
+        /// A posted message (other than those listed here) is in the queue.
+        /// </summary>
+        ALLPOSTMESSAGE = 0x0100,
+        /// <summary>
+        /// A raw input message is in the queue. For more information, see Raw Input.
+        /// Windows XP and higher only.
+        /// </summary>
+        RAWINPUT       = 0x0400,
+        /// <summary>
+        /// A WM_MOUSEMOVE message or mouse-button message (WM_LBUTTONUP, WM_RBUTTONDOWN, and so on).
+        /// </summary>
+        MOUSE          = MOUSEMOVE | MOUSEBUTTON,
+        /// <summary>
+        /// An input message is in the queue. This is composed of KEY, MOUSE and RAWINPUT.
+        /// Windows XP and higher only.
+        /// </summary>
+        INPUT          = MOUSE | KEY | RAWINPUT,
+        /// <summary>
+        /// An input message is in the queue. This is composed of QS_KEY and QS_MOUSE.
+        /// Windows 2000 and earlier.
+        /// </summary>
+        INPUT_LEGACY   = MOUSE | KEY,
+        /// <summary>
+        /// An input, WM_TIMER, WM_PAINT, WM_HOTKEY, or posted message is in the queue.
+        /// </summary>
+        ALLEVENTS      = INPUT | POSTMESSAGE | TIMER | PAINT | HOTKEY,
+        /// <summary>
+        /// Any message is in the queue.
+        /// </summary>
+        ALLINPUT       = INPUT | POSTMESSAGE | TIMER | PAINT | HOTKEY | SENDMESSAGE
+    }
+
+    #endregion
+
+    #region WindowMessage
+
+    public enum WindowMessage
+    {
+        NULL = 0x0000,
+        CREATE = 0x0001,
+        DESTROY = 0x0002,
+        MOVE = 0x0003,
+        SIZE = 0x0005,
+        ACTIVATE = 0x0006,
+        SETFOCUS = 0x0007,
+        KILLFOCUS = 0x0008,
+        //              public const uint SETVISIBLE           = 0x0009;
+        ENABLE = 0x000A,
+        SETREDRAW = 0x000B,
+        SETTEXT = 0x000C,
+        GETTEXT = 0x000D,
+        GETTEXTLENGTH = 0x000E,
+        PAINT = 0x000F,
+        CLOSE = 0x0010,
+        QUERYENDSESSION = 0x0011,
+        QUIT = 0x0012,
+        QUERYOPEN = 0x0013,
+        ERASEBKGND = 0x0014,
+        SYSCOLORCHANGE = 0x0015,
+        ENDSESSION = 0x0016,
+        //              public const uint SYSTEMERROR          = 0x0017;
+        SHOWWINDOW = 0x0018,
+        CTLCOLOR = 0x0019,
+        WININICHANGE = 0x001A,
+        SETTINGCHANGE = 0x001A,
+        DEVMODECHANGE = 0x001B,
+        ACTIVATEAPP = 0x001C,
+        FONTCHANGE = 0x001D,
+        TIMECHANGE = 0x001E,
+        CANCELMODE = 0x001F,
+        SETCURSOR = 0x0020,
+        MOUSEACTIVATE = 0x0021,
+        CHILDACTIVATE = 0x0022,
+        QUEUESYNC = 0x0023,
+        GETMINMAXINFO = 0x0024,
+        PAINTICON = 0x0026,
+        ICONERASEBKGND = 0x0027,
+        NEXTDLGCTL = 0x0028,
+        //              public const uint ALTTABACTIVE         = 0x0029;
+        SPOOLERSTATUS = 0x002A,
+        DRAWITEM = 0x002B,
+        MEASUREITEM = 0x002C,
+        DELETEITEM = 0x002D,
+        VKEYTOITEM = 0x002E,
+        CHARTOITEM = 0x002F,
+        SETFONT = 0x0030,
+        GETFONT = 0x0031,
+        SETHOTKEY = 0x0032,
+        GETHOTKEY = 0x0033,
+        //              public const uint FILESYSCHANGE        = 0x0034;
+        //              public const uint ISACTIVEICON         = 0x0035;
+        //              public const uint QUERYPARKICON        = 0x0036;
+        QUERYDRAGICON = 0x0037,
+        COMPAREITEM = 0x0039,
+        //              public const uint TESTING              = 0x003a;
+        //              public const uint OTHERWINDOWCREATED = 0x003c;
+        GETOBJECT = 0x003D,
+        //                      public const uint ACTIVATESHELLWINDOW        = 0x003e;
+        COMPACTING = 0x0041,
+        COMMNOTIFY = 0x0044,
+        WINDOWPOSCHANGING = 0x0046,
+        WINDOWPOSCHANGED = 0x0047,
+        POWER = 0x0048,
+        COPYDATA = 0x004A,
+        CANCELJOURNAL = 0x004B,
+        NOTIFY = 0x004E,
+        INPUTLANGCHANGEREQUEST = 0x0050,
+        INPUTLANGCHANGE = 0x0051,
+        TCARD = 0x0052,
+        HELP = 0x0053,
+        USERCHANGED = 0x0054,
+        NOTIFYFORMAT = 0x0055,
+        CONTEXTMENU = 0x007B,
+        STYLECHANGING = 0x007C,
+        STYLECHANGED = 0x007D,
+        DISPLAYCHANGE = 0x007E,
+        GETICON = 0x007F,
+
+        // Non-Client messages
+        SETICON = 0x0080,
+        NCCREATE = 0x0081,
+        NCDESTROY = 0x0082,
+        NCCALCSIZE = 0x0083,
+        NCHITTEST = 0x0084,
+        NCPAINT = 0x0085,
+        NCACTIVATE = 0x0086,
+        GETDLGCODE = 0x0087,
+        SYNCPAINT = 0x0088,
+        //              public const uint SYNCTASK       = 0x0089;
+        NCMOUSEMOVE = 0x00A0,
+        NCLBUTTONDOWN = 0x00A1,
+        NCLBUTTONUP = 0x00A2,
+        NCLBUTTONDBLCLK = 0x00A3,
+        NCRBUTTONDOWN = 0x00A4,
+        NCRBUTTONUP = 0x00A5,
+        NCRBUTTONDBLCLK = 0x00A6,
+        NCMBUTTONDOWN = 0x00A7,
+        NCMBUTTONUP = 0x00A8,
+        NCMBUTTONDBLCLK = 0x00A9,
+        //              public const uint NCXBUTTONDOWN    = 0x00ab;
+        //              public const uint NCXBUTTONUP      = 0x00ac;
+        //              public const uint NCXBUTTONDBLCLK  = 0x00ad;
+        
+        INPUT = 0x00FF,
+        
+        KEYDOWN = 0x0100,
+        KEYFIRST = 0x0100,
+        KEYUP = 0x0101,
+        CHAR = 0x0102,
+        DEADCHAR = 0x0103,
+        SYSKEYDOWN = 0x0104,
+        SYSKEYUP = 0x0105,
+        SYSCHAR = 0x0106,
+        SYSDEADCHAR = 0x0107,
+        KEYLAST = 0x0108,
+        IME_STARTCOMPOSITION = 0x010D,
+        IME_ENDCOMPOSITION = 0x010E,
+        IME_COMPOSITION = 0x010F,
+        IME_KEYLAST = 0x010F,
+        INITDIALOG = 0x0110,
+        COMMAND = 0x0111,
+        SYSCOMMAND = 0x0112,
+        TIMER = 0x0113,
+        HSCROLL = 0x0114,
+        VSCROLL = 0x0115,
+        INITMENU = 0x0116,
+        INITMENUPOPUP = 0x0117,
+        //              public const uint SYSTIMER       = 0x0118;
+        MENUSELECT = 0x011F,
+        MENUCHAR = 0x0120,
+        ENTERIDLE = 0x0121,
+        MENURBUTTONUP = 0x0122,
+        MENUDRAG = 0x0123,
+        MENUGETOBJECT = 0x0124,
+        UNINITMENUPOPUP = 0x0125,
+        MENUCOMMAND = 0x0126,
+
+        CHANGEUISTATE = 0x0127,
+        UPDATEUISTATE = 0x0128,
+        QUERYUISTATE = 0x0129,
+
+        //              public const uint LBTRACKPOINT     = 0x0131;
+        CTLCOLORMSGBOX = 0x0132,
+        CTLCOLOREDIT = 0x0133,
+        CTLCOLORLISTBOX = 0x0134,
+        CTLCOLORBTN = 0x0135,
+        CTLCOLORDLG = 0x0136,
+        CTLCOLORSCROLLBAR = 0x0137,
+        CTLCOLORSTATIC = 0x0138,
+        MOUSEMOVE = 0x0200,
+        MOUSEFIRST = 0x0200,
+        LBUTTONDOWN = 0x0201,
+        LBUTTONUP = 0x0202,
+        LBUTTONDBLCLK = 0x0203,
+        RBUTTONDOWN = 0x0204,
+        RBUTTONUP = 0x0205,
+        RBUTTONDBLCLK = 0x0206,
+        MBUTTONDOWN = 0x0207,
+        MBUTTONUP = 0x0208,
+        MBUTTONDBLCLK = 0x0209,
+        MOUSEWHEEL = 0x020A,
+        MOUSELAST = 0x020D,
+        //              public const uint XBUTTONDOWN      = 0x020B;
+        //              public const uint XBUTTONUP        = 0x020C;
+        //              public const uint XBUTTONDBLCLK    = 0x020D;
+        PARENTNOTIFY = 0x0210,
+        ENTERMENULOOP = 0x0211,
+        EXITMENULOOP = 0x0212,
+        NEXTMENU = 0x0213,
+        SIZING = 0x0214,
+        CAPTURECHANGED = 0x0215,
+        MOVING = 0x0216,
+        //              public const uint POWERBROADCAST   = 0x0218;
+        DEVICECHANGE = 0x0219,
+        MDICREATE = 0x0220,
+        MDIDESTROY = 0x0221,
+        MDIACTIVATE = 0x0222,
+        MDIRESTORE = 0x0223,
+        MDINEXT = 0x0224,
+        MDIMAXIMIZE = 0x0225,
+        MDITILE = 0x0226,
+        MDICASCADE = 0x0227,
+        MDIICONARRANGE = 0x0228,
+        MDIGETACTIVE = 0x0229,
+        /* D&D messages */
+        //              public const uint DROPOBJECT     = 0x022A;
+        //              public const uint QUERYDROPOBJECT  = 0x022B;
+        //              public const uint BEGINDRAG      = 0x022C;
+        //              public const uint DRAGLOOP       = 0x022D;
+        //              public const uint DRAGSELECT     = 0x022E;
+        //              public const uint DRAGMOVE       = 0x022F;
+        MDISETMENU = 0x0230,
+        ENTERSIZEMOVE = 0x0231,
+        EXITSIZEMOVE = 0x0232,
+        DROPFILES = 0x0233,
+        MDIREFRESHMENU = 0x0234,
+        IME_SETCONTEXT = 0x0281,
+        IME_NOTIFY = 0x0282,
+        IME_CONTROL = 0x0283,
+        IME_COMPOSITIONFULL = 0x0284,
+        IME_SELECT = 0x0285,
+        IME_CHAR = 0x0286,
+        IME_REQUEST = 0x0288,
+        IME_KEYDOWN = 0x0290,
+        IME_KEYUP = 0x0291,
+        NCMOUSEHOVER = 0x02A0,
+        MOUSEHOVER = 0x02A1,
+        NCMOUSELEAVE = 0x02A2,
+        MOUSELEAVE = 0x02A3,
+        CUT = 0x0300,
+        COPY = 0x0301,
+        PASTE = 0x0302,
+        CLEAR = 0x0303,
+        UNDO = 0x0304,
+        RENDERFORMAT = 0x0305,
+        RENDERALLFORMATS = 0x0306,
+        DESTROYCLIPBOARD = 0x0307,
+        DRAWCLIPBOARD = 0x0308,
+        PAINTCLIPBOARD = 0x0309,
+        VSCROLLCLIPBOARD = 0x030A,
+        SIZECLIPBOARD = 0x030B,
+        ASKCBFORMATNAME = 0x030C,
+        CHANGECBCHAIN = 0x030D,
+        HSCROLLCLIPBOARD = 0x030E,
+        QUERYNEWPALETTE = 0x030F,
+        PALETTEISCHANGING = 0x0310,
+        PALETTECHANGED = 0x0311,
+        HOTKEY = 0x0312,
+        PRINT = 0x0317,
+        PRINTCLIENT = 0x0318,
+        HANDHELDFIRST = 0x0358,
+        HANDHELDLAST = 0x035F,
+        AFXFIRST = 0x0360,
+        AFXLAST = 0x037F,
+        PENWINFIRST = 0x0380,
+        PENWINLAST = 0x038F,
+        APP = 0x8000,
+        USER = 0x0400,
+
+        // Our "private" ones
+        MOUSE_ENTER = 0x0401,
+        ASYNC_MESSAGE = 0x0403,
+        REFLECT = USER + 0x1c00,
+        CLOSE_INTERNAL = USER + 0x1c01,
+
+        // NotifyIcon (Systray) Balloon messages 
+        BALLOONSHOW = USER + 0x0002,
+        BALLOONHIDE = USER + 0x0003,
+        BALLOONTIMEOUT = USER + 0x0004,
+        BALLOONUSERCLICK = USER + 0x0005
+    }        
+
+    #endregion
+
+    #endregion
+
+    #region --- Callbacks ---
 
         public delegate void WindowProcedure(ref System.Windows.Forms.Message msg);
 
@@ -2768,6 +2966,53 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        #endregion
+    #region Message
+
+    [StructLayout(LayoutKind.Sequential), CLSCompliant(false)]
+    public struct MSG
+    {
+        public IntPtr HWnd;
+        public WindowMessage Message;
+        public IntPtr WParam;
+        public IntPtr LParam;
+        public uint Time;
+        public POINT Point;
+        public object RefObject;
+
+        public override string ToString()
+        {
+            return String.Format("msg=0x{0:x} ({1}) hwnd=0x{2:x} wparam=0x{3:x} lparam=0x{4:x} pt=0x{5:x}", (int)Message, Message.ToString(), HWnd.ToInt32(), WParam.ToInt32(), LParam.ToInt32(), Point);
+        }
     }
+
+    #endregion
+
+    #region Point
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINT
+    {
+        public int X;
+        public int Y;
+
+        public POINT(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
+
+        public System.Drawing.Point ToPoint()
+        {
+            return new System.Drawing.Point(X, Y);
+        }
+
+        public override string ToString()
+        {
+            return "Point {" + X.ToString() + ", " + Y.ToString() + ")";
+        }
+    }
+
+    #endregion
+
+    #endregion
 }

@@ -45,32 +45,32 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe int ChoosePixelFormat(IntPtr hDc, API.PixelFormatDescriptor* pPfd)
+        unsafe int ChoosePixelFormat(IntPtr hDc, PixelFormatDescriptor* pPfd)
         {
-            unsafe { return Delegates.wglChoosePixelFormat((IntPtr)hDc, (API.PixelFormatDescriptor*)pPfd); }
+            unsafe { return Delegates.wglChoosePixelFormat((IntPtr)hDc, (PixelFormatDescriptor*)pPfd); }
         }
         
         public static 
-        int ChoosePixelFormat(IntPtr hDc, API.PixelFormatDescriptor[] pPfd)
+        int ChoosePixelFormat(IntPtr hDc, PixelFormatDescriptor[] pPfd)
         {
             unsafe
             {
-                fixed (API.PixelFormatDescriptor* pPfd_ptr = pPfd)
+                fixed (PixelFormatDescriptor* pPfd_ptr = pPfd)
                 {
-                    int retval = Delegates.wglChoosePixelFormat((IntPtr)hDc, (API.PixelFormatDescriptor*)pPfd_ptr);
+                    int retval = Delegates.wglChoosePixelFormat((IntPtr)hDc, (PixelFormatDescriptor*)pPfd_ptr);
                     return retval;
                 }
             }
         }
         
         public static 
-        int ChoosePixelFormat(IntPtr hDc, ref API.PixelFormatDescriptor pPfd)
+        int ChoosePixelFormat(IntPtr hDc, ref PixelFormatDescriptor pPfd)
         {
             unsafe
             {
-                fixed (API.PixelFormatDescriptor* pPfd_ptr = &pPfd)
+                fixed (PixelFormatDescriptor* pPfd_ptr = &pPfd)
                 {
-                    int retval = Delegates.wglChoosePixelFormat((IntPtr)hDc, (API.PixelFormatDescriptor*)pPfd_ptr);
+                    int retval = Delegates.wglChoosePixelFormat((IntPtr)hDc, (PixelFormatDescriptor*)pPfd_ptr);
                     return retval;
                 }
             }
@@ -78,44 +78,44 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, API.PixelFormatDescriptor* ppfd)
+        unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, PixelFormatDescriptor* ppfd)
         {
-            unsafe { return Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (API.PixelFormatDescriptor*)ppfd); }
+            unsafe { return Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (PixelFormatDescriptor*)ppfd); }
         }
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, API.PixelFormatDescriptor* ppfd)
+        unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, PixelFormatDescriptor* ppfd)
         {
             unsafe
             {
-                int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (API.PixelFormatDescriptor*)ppfd);
+                int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (PixelFormatDescriptor*)ppfd);
                 return retval;
             }
         }
         
         [System.CLSCompliant(false)]
         public static 
-        int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, API.PixelFormatDescriptor[] ppfd)
+        int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, PixelFormatDescriptor[] ppfd)
         {
             unsafe
             {
-                fixed (API.PixelFormatDescriptor* ppfd_ptr = ppfd)
+                fixed (PixelFormatDescriptor* ppfd_ptr = ppfd)
                 {
-                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (API.PixelFormatDescriptor*)ppfd_ptr);
+                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (PixelFormatDescriptor*)ppfd_ptr);
                     return retval;
                 }
             }
         }
         
         public static 
-        int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, API.PixelFormatDescriptor[] ppfd)
+        int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, PixelFormatDescriptor[] ppfd)
         {
             unsafe
             {
-                fixed (API.PixelFormatDescriptor* ppfd_ptr = ppfd)
+                fixed (PixelFormatDescriptor* ppfd_ptr = ppfd)
                 {
-                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (API.PixelFormatDescriptor*)ppfd_ptr);
+                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (PixelFormatDescriptor*)ppfd_ptr);
                     return retval;
                 }
             }
@@ -123,26 +123,26 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, ref API.PixelFormatDescriptor ppfd)
+        int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, ref PixelFormatDescriptor ppfd)
         {
             unsafe
             {
-                fixed (API.PixelFormatDescriptor* ppfd_ptr = &ppfd)
+                fixed (PixelFormatDescriptor* ppfd_ptr = &ppfd)
                 {
-                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (API.PixelFormatDescriptor*)ppfd_ptr);
+                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (PixelFormatDescriptor*)ppfd_ptr);
                     return retval;
                 }
             }
         }
         
         public static 
-        int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, ref API.PixelFormatDescriptor ppfd)
+        int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, ref PixelFormatDescriptor ppfd)
         {
             unsafe
             {
-                fixed (API.PixelFormatDescriptor* ppfd_ptr = &ppfd)
+                fixed (PixelFormatDescriptor* ppfd_ptr = &ppfd)
                 {
-                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (API.PixelFormatDescriptor*)ppfd_ptr);
+                    int retval = Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (PixelFormatDescriptor*)ppfd_ptr);
                     return retval;
                 }
             }
@@ -174,32 +174,32 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe Boolean SetPixelFormat(IntPtr hdc, int ipfd, API.PixelFormatDescriptor* ppfd)
+        unsafe Boolean SetPixelFormat(IntPtr hdc, int ipfd, PixelFormatDescriptor* ppfd)
         {
-            unsafe { return Delegates.wglSetPixelFormat((IntPtr)hdc, (int)ipfd, (API.PixelFormatDescriptor*)ppfd); }
+            unsafe { return Delegates.wglSetPixelFormat((IntPtr)hdc, (int)ipfd, (PixelFormatDescriptor*)ppfd); }
         }
         
         public static 
-        Boolean SetPixelFormat(IntPtr hdc, int ipfd, API.PixelFormatDescriptor[] ppfd)
+        Boolean SetPixelFormat(IntPtr hdc, int ipfd, PixelFormatDescriptor[] ppfd)
         {
             unsafe
             {
-                fixed (API.PixelFormatDescriptor* ppfd_ptr = ppfd)
+                fixed (PixelFormatDescriptor* ppfd_ptr = ppfd)
                 {
-                    Boolean retval = Delegates.wglSetPixelFormat((IntPtr)hdc, (int)ipfd, (API.PixelFormatDescriptor*)ppfd_ptr);
+                    Boolean retval = Delegates.wglSetPixelFormat((IntPtr)hdc, (int)ipfd, (PixelFormatDescriptor*)ppfd_ptr);
                     return retval;
                 }
             }
         }
         
         public static 
-        Boolean SetPixelFormat(IntPtr hdc, int ipfd, ref API.PixelFormatDescriptor ppfd)
+        Boolean SetPixelFormat(IntPtr hdc, int ipfd, ref PixelFormatDescriptor ppfd)
         {
             unsafe
             {
-                fixed (API.PixelFormatDescriptor* ppfd_ptr = &ppfd)
+                fixed (PixelFormatDescriptor* ppfd_ptr = &ppfd)
                 {
-                    Boolean retval = Delegates.wglSetPixelFormat((IntPtr)hdc, (int)ipfd, (API.PixelFormatDescriptor*)ppfd_ptr);
+                    Boolean retval = Delegates.wglSetPixelFormat((IntPtr)hdc, (int)ipfd, (PixelFormatDescriptor*)ppfd_ptr);
                     return retval;
                 }
             }
@@ -225,44 +225,44 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, API.LayerPlaneDescriptor* plpd)
+        unsafe Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, LayerPlaneDescriptor* plpd)
         {
-            unsafe { return Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (API.LayerPlaneDescriptor*)plpd); }
+            unsafe { return Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (LayerPlaneDescriptor*)plpd); }
         }
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, API.LayerPlaneDescriptor* plpd)
+        unsafe Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, LayerPlaneDescriptor* plpd)
         {
             unsafe
             {
-                Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (API.LayerPlaneDescriptor*)plpd);
+                Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (LayerPlaneDescriptor*)plpd);
                 return retval;
             }
         }
         
         [System.CLSCompliant(false)]
         public static 
-        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, API.LayerPlaneDescriptor[] plpd)
+        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, LayerPlaneDescriptor[] plpd)
         {
             unsafe
             {
-                fixed (API.LayerPlaneDescriptor* plpd_ptr = plpd)
+                fixed (LayerPlaneDescriptor* plpd_ptr = plpd)
                 {
-                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (API.LayerPlaneDescriptor*)plpd_ptr);
+                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (LayerPlaneDescriptor*)plpd_ptr);
                     return retval;
                 }
             }
         }
         
         public static 
-        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, API.LayerPlaneDescriptor[] plpd)
+        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, LayerPlaneDescriptor[] plpd)
         {
             unsafe
             {
-                fixed (API.LayerPlaneDescriptor* plpd_ptr = plpd)
+                fixed (LayerPlaneDescriptor* plpd_ptr = plpd)
                 {
-                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (API.LayerPlaneDescriptor*)plpd_ptr);
+                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (LayerPlaneDescriptor*)plpd_ptr);
                     return retval;
                 }
             }
@@ -270,26 +270,26 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, ref API.LayerPlaneDescriptor plpd)
+        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, ref LayerPlaneDescriptor plpd)
         {
             unsafe
             {
-                fixed (API.LayerPlaneDescriptor* plpd_ptr = &plpd)
+                fixed (LayerPlaneDescriptor* plpd_ptr = &plpd)
                 {
-                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (API.LayerPlaneDescriptor*)plpd_ptr);
+                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (LayerPlaneDescriptor*)plpd_ptr);
                     return retval;
                 }
             }
         }
         
         public static 
-        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, ref API.LayerPlaneDescriptor plpd)
+        Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, ref LayerPlaneDescriptor plpd)
         {
             unsafe
             {
-                fixed (API.LayerPlaneDescriptor* plpd_ptr = &plpd)
+                fixed (LayerPlaneDescriptor* plpd_ptr = &plpd)
                 {
-                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (API.LayerPlaneDescriptor*)plpd_ptr);
+                    Boolean retval = Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (LayerPlaneDescriptor*)plpd_ptr);
                     return retval;
                 }
             }
@@ -394,32 +394,32 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics)
+        unsafe Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics)
         {
-            unsafe { return Delegates.wglUseFontOutlinesA((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (API.GlyphMetricsFloat*)glyphMetrics); }
+            unsafe { return Delegates.wglUseFontOutlinesA((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (GlyphMetricsFloat*)glyphMetrics); }
         }
         
         public static 
-        Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat[] glyphMetrics)
+        Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat[] glyphMetrics)
         {
             unsafe
             {
-                fixed (API.GlyphMetricsFloat* glyphMetrics_ptr = glyphMetrics)
+                fixed (GlyphMetricsFloat* glyphMetrics_ptr = glyphMetrics)
                 {
-                    Boolean retval = Delegates.wglUseFontOutlinesA((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (API.GlyphMetricsFloat*)glyphMetrics_ptr);
+                    Boolean retval = Delegates.wglUseFontOutlinesA((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (GlyphMetricsFloat*)glyphMetrics_ptr);
                     return retval;
                 }
             }
         }
         
         public static 
-        Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, ref API.GlyphMetricsFloat glyphMetrics)
+        Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, ref GlyphMetricsFloat glyphMetrics)
         {
             unsafe
             {
-                fixed (API.GlyphMetricsFloat* glyphMetrics_ptr = &glyphMetrics)
+                fixed (GlyphMetricsFloat* glyphMetrics_ptr = &glyphMetrics)
                 {
-                    Boolean retval = Delegates.wglUseFontOutlinesA((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (API.GlyphMetricsFloat*)glyphMetrics_ptr);
+                    Boolean retval = Delegates.wglUseFontOutlinesA((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (GlyphMetricsFloat*)glyphMetrics_ptr);
                     return retval;
                 }
             }
@@ -427,32 +427,32 @@ namespace OpenTK.Platform.Windows
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics)
+        unsafe Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics)
         {
-            unsafe { return Delegates.wglUseFontOutlinesW((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (API.GlyphMetricsFloat*)glyphMetrics); }
+            unsafe { return Delegates.wglUseFontOutlinesW((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (GlyphMetricsFloat*)glyphMetrics); }
         }
         
         public static 
-        Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat[] glyphMetrics)
+        Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat[] glyphMetrics)
         {
             unsafe
             {
-                fixed (API.GlyphMetricsFloat* glyphMetrics_ptr = glyphMetrics)
+                fixed (GlyphMetricsFloat* glyphMetrics_ptr = glyphMetrics)
                 {
-                    Boolean retval = Delegates.wglUseFontOutlinesW((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (API.GlyphMetricsFloat*)glyphMetrics_ptr);
+                    Boolean retval = Delegates.wglUseFontOutlinesW((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (GlyphMetricsFloat*)glyphMetrics_ptr);
                     return retval;
                 }
             }
         }
         
         public static 
-        Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, ref API.GlyphMetricsFloat glyphMetrics)
+        Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, ref GlyphMetricsFloat glyphMetrics)
         {
             unsafe
             {
-                fixed (API.GlyphMetricsFloat* glyphMetrics_ptr = &glyphMetrics)
+                fixed (GlyphMetricsFloat* glyphMetrics_ptr = &glyphMetrics)
                 {
-                    Boolean retval = Delegates.wglUseFontOutlinesW((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (API.GlyphMetricsFloat*)glyphMetrics_ptr);
+                    Boolean retval = Delegates.wglUseFontOutlinesW((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (GlyphMetricsFloat*)glyphMetrics_ptr);
                     return retval;
                 }
             }

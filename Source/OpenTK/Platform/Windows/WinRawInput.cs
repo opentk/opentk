@@ -23,7 +23,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Input event data.
         /// </summary>
-        private API.RawInput data = new API.RawInput();
+        private RawInput data = new RawInput();
         /// <summary>
         /// The total number of input devices connected to this system.
         /// </summary>
@@ -70,12 +70,12 @@ namespace OpenTK.Platform.Windows
         /// <param name="msg">The WM_INPUT message, containing the data on the input event.</param>
         protected override void WndProc(ref Message msg)
         {
-            switch (msg.Msg)
+            switch ((WindowMessage)msg.Msg)
             {
-                case API.Constants.WM_INPUT:
+                case WindowMessage.INPUT:
                     size = 0;
                     // Get the size of the input data
-                    API.GetRawInputData(msg.LParam, API.GetRawInputDataEnum.INPUT,
+                    API.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
                         IntPtr.Zero, ref size, API.RawInputHeaderSize);
 
                     //if (data == null || API.RawInputSize < size)
@@ -83,21 +83,21 @@ namespace OpenTK.Platform.Windows
                     //    throw new ApplicationException("Critical error when processing raw windows input.");
                     //}
 
-                    if (size == API.GetRawInputData(msg.LParam, API.GetRawInputDataEnum.INPUT,
+                    if (size == API.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
                             data, ref size, API.RawInputHeaderSize))
                     {
                         switch (data.Header.Type)
                         {
-                            case API.RawInputDeviceType.KEYBOARD:
+                            case RawInputDeviceType.KEYBOARD:
                             if (!keyboardDriver.ProcessKeyboardEvent(data))
                                 API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
                             return;
 
-                            case API.RawInputDeviceType.MOUSE:
+                            case RawInputDeviceType.MOUSE:
                             API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
                             return;
 
-                            case API.RawInputDeviceType.HID:
+                            case RawInputDeviceType.HID:
                             API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
                             return;
                         }
@@ -110,13 +110,13 @@ namespace OpenTK.Platform.Windows
                     }
                     break;
 
-                case API.Constants.WM_CLOSE:
-                case API.Constants.WM_DESTROY:
+                case WindowMessage.CLOSE:
+                case WindowMessage.DESTROY:
                 Debug.Print("Input window detached from parent {0}.", Handle);
                 ReleaseHandle();
                 break;
 
-                case API.Constants.WM_QUIT:
+                case WindowMessage.QUIT:
                 Debug.WriteLine("Input window quit.");
                 this.Dispose();
                 break;
@@ -168,6 +168,7 @@ namespace OpenTK.Platform.Windows
                 if (manual)
                 {
                     keyboardDriver.Dispose();
+                    this.ReleaseHandle();
                 }
 
                 disposed = true;
