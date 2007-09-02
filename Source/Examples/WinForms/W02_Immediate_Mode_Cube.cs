@@ -96,7 +96,7 @@ namespace Examples.WinForms
                 0.0, 0.0, 0.0,
                 0.0, 1.0, 0.0
             );
-            GL.Rotatef(angle, 0.0f, 1.0f, 0.0f);
+            GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
             angle += 0.5f;
 
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);

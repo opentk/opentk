@@ -267,7 +267,7 @@ namespace OpenTK.Platform.X11
         [DllImport(Library, EntryPoint = "glXCreateContext")]
         public static extern IntPtr CreateContext(IntPtr dpy, IntPtr vis, IntPtr shareList, bool direct);
 
-        public static IntPtr CreateContext(IntPtr dpy, VisualInfo vis, IntPtr shareList, bool direct)
+        public static IntPtr CreateContext(IntPtr dpy, XVisualInfo vis, IntPtr shareList, bool direct)
         {
             GCHandle h0 = GCHandle.Alloc(vis, GCHandleType.Pinned);
 
