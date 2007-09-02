@@ -10,6 +10,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
+using OpenTK.OpenGL;
 
 //using OpenTK.OpenGL;
 
@@ -309,7 +310,8 @@ namespace OpenTK.Platform.X11
 
                 API.MapRaised(window.Display, window.Handle);
 
-                OpenTK.OpenGL.GL.LoadAll();
+                GL.LoadAll();
+                Glu.LoadAll();
 
                 Debug.Unindent();
                 Debug.WriteLine("GameWindow creation completed successfully!");
