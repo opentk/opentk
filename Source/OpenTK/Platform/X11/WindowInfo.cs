@@ -41,7 +41,7 @@ namespace OpenTK.Platform.X11
         public IntPtr TopLevelWindow { get { return topLevelWindow; } set { topLevelWindow = value; } }
         public IntPtr Display { get { return display; } set { display = value; } }
         public int Screen { get { return screen; } set { screen = value; } }
-        public VisualInfo VisualInfo { get { return visinfo; } set { visinfo = value; } }
+        public XVisualInfo VisualInfo { get { return visinfo; } set { visinfo = value; } }
 
         public IntPtr Handle { get { return handle; } set { handle = value; } }
         public IWindowInfo Parent { get { return parent; } set { parent = value as WindowInfo; } }
