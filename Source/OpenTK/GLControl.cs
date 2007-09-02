@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using OpenTK.Platform;
+using OpenTK.OpenGL;
 
 #endregion
 
@@ -100,7 +101,8 @@ namespace OpenTK
 
             this.Visible = true;
 
-            OpenTK.OpenGL.GL.LoadAll();
+            GL.LoadAll();
+            Glu.LoadAll();
             this.OnResize(EventArgs.Empty);
         }
 
