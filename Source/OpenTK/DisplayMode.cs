@@ -12,14 +12,14 @@ using System.Globalization;
 
 #endregion
 
-namespace OpenTK.Platform
+namespace OpenTK
 {
     public sealed class DisplayMode
     {
         #region --- Private Variables ---
 
         private int width, height;
-        private ColorDepth color;
+        private ColorMode color;
 
         private int depthBits, stencilBits, auxBits;
 
@@ -50,7 +50,7 @@ namespace OpenTK.Platform
         public DisplayMode(
             int width,
             int height,
-            ColorDepth color,
+            ColorMode color,
             int depth,
             int stencil,
             int aux,
@@ -78,7 +78,7 @@ namespace OpenTK.Platform
         /// Constructs a new DisplayMode with default values.
         /// </summary>
         public DisplayMode()
-            : this(0, 0, new ColorDepth(32), 16, 0, 0, 0, false, false, false, 0.0f)
+            : this(0, 0, new ColorMode(32), 16, 0, 0, 0, false, false, false, 0.0f)
         {
         }
 
@@ -88,7 +88,7 @@ namespace OpenTK.Platform
         /// <param name="width">The Width of the DisplayMode in pixels.</param>
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         public DisplayMode(int width, int height)
-            : this(width, height, new ColorDepth(32), 16, 0, 0, 0, false, false, false, 0.0f)
+            : this(width, height, new ColorMode(32), 16, 0, 0, 0, false, false, false, 0.0f)
         {
         }
 
@@ -136,7 +136,7 @@ namespace OpenTK.Platform
 
         #region public ColorDepth Color
 
-        public ColorDepth Color
+        public ColorMode Color
         {
             get { return this.color; }
             set { this.color = value; }
@@ -206,7 +206,6 @@ namespace OpenTK.Platform
                 RefreshRate
             );
         }
-
     }
 
     public class DisplayModeMatchOptions { }

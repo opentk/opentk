@@ -213,7 +213,7 @@ namespace Examples.Windowing
         {
             //glWindow2 = GLContext.Create(panel2, new OpenTK.OpenGL.ColorDepth(8, 8, 8, 8), 8, 0);
             glWindow2 = new GLControl(
-                new DisplayMode(0, 0, new OpenTK.Platform.ColorDepth(32), 16, 0, 0, 2, false, false, false, 0.0f));
+                new DisplayMode(0, 0, new ColorMode(32), 16, 0, 0, 2, false, false, false, 0.0f));
 
             create2.Enabled = false;
             dispose2.Enabled = true;
