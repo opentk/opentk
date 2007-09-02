@@ -64,7 +64,7 @@ namespace OpenTK
             this.isExiting = true;
             this.OnDestroy(EventArgs.Empty);
             glWindow.Destroy -= glWindow_Destroy;
-            this.Dispose();
+            //this.Dispose();
         }
 
         void glWindow_CreateInputDriver(object sender, EventArgs e)
@@ -224,12 +224,14 @@ namespace OpenTK
 
         #region OnCreate
 
+        [Obsolete("The Create event is obsolete and will be removed on later versions. Use the Load event instead.")]
         public event CreateEvent Create;
 
         /// <summary>
         /// Raises the Create event. Override in derived classes to initialize resources.
         /// </summary>
         /// <param name="e"></param>
+        [Obsolete("The OnCreate method is obsolete and will be removed on later versions. Use the OnLoad method instead.")]
         public virtual void OnCreate(EventArgs e)
         {
             Debug.WriteLine("Firing GameWindow.Create event");
@@ -582,7 +584,6 @@ namespace OpenTK
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool manual)
@@ -590,10 +591,16 @@ namespace OpenTK
             if (!disposed)
             {
                 // Is this safe? Maybe 'Debug' has been disposed, too...
-                Debug.Print("{0} disposing GameWindow.", manual ? "Manually" : "Automatically");
+                //Debug.Print("{0} disposing GameWindow.", manual ? "Manually" : "Automatically");
 
                 if (manual)
                 {
+                    if (driver != null)
+                    {
+                        driver.Dispose();
+                        driver = null;
+                    }
+
                     if (glWindow != null)
                     {
                         glWindow.Dispose();
@@ -602,11 +609,6 @@ namespace OpenTK
                 }
                 disposed = true;
             }
-        }
-
-        ~GameWindow()
-        {
-            Dispose(false);
         }
 
         #endregion
