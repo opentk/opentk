@@ -31,23 +31,18 @@ namespace Bind.Structures
         
         #endregion
 
-        Regex functionsNotToTrim = new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?))[dfis]v");
-        
-        //Regex endings = new Regex(@"(.)+[df(u?[isb])]v?");
-        
-        private static List<string> endings = new List<string>(
-            new string[]
-            {
-                "fv", "f",
-                "dv", "d",
-                "i",  "iv",
-                "s",  "sv",
-                "b",  "bv",
-                "ui", "uiv",
-                "us", "usv",
-                "ub", "ubv"
-            });
+        static Regex endings = new Regex(@"([df]|u?[isb])v?", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        static Regex endingsNotToTrim = new Regex("(ib|[tdr]s|nd)", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
+        /// <summary>
+        /// Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
+        /// a 'type' and a 'ref type' (such overloads are not CLS Compliant).
+        /// </summary>
+        /// <remarks>
+        /// The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior. 
+        /// </remarks>
+        internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
+        
         #region --- Constructors ---
 
         public Function()
@@ -55,14 +50,7 @@ namespace Bind.Structures
         {
             Body = new FunctionBody();
         }
-        /*
-        public Function(Function f)
-            : base(f)
-        {
-            this.Body = new FunctionBody(f.Body);
-            this.Name = f.Name;
-        }
-        */
+
         public Function(Delegate d)
             : base(d)
         {
@@ -103,7 +91,7 @@ namespace Bind.Structures
         #endregion
 
         #region public string TrimmedName
-
+        /*
         string trimmedName;
         /// <summary>
         /// Gets or sets the name of the opengl function, trimming the excess 234dfubsiv endings.
@@ -117,7 +105,8 @@ namespace Bind.Structures
                     trimmedName = value.Trim();
             }
         }
-
+        */
+        public string TrimmedName;
         #endregion
 
         #region public override string Name
@@ -134,25 +123,25 @@ namespace Bind.Structures
             {
                 base.Name = value;
 
-                // If we don't need compatibility with Tao,
-                // remove the Extension and the overload information from the name
-                // (Extension == "ARB", "EXT", etc, overload == [u][bsidf][v])
-                // TODO: Use some regex's here, to reduce clutter.
-                TrimmedName = value;
-
                 if (Settings.Compatibility == Settings.Legacy.Tao)
                 {
+                    // If we don't need compatibility with Tao,
+                    // remove the Extension and the overload information from the name
+                    // (Extension == "ARB", "EXT", etc, overload == [u][bsidf][v])
+                    // TODO: Use some regex's here, to reduce clutter.
+                    TrimmedName = value;
                 }
                 else
                 {
                     TrimmedName = Utilities.StripGL2Extension(value);
                     
                     //if (TrimmedName.Contains("Uniform2iv"))
-                    {
-                    	//Console.Write("niar");
-                    }
+                    //{
+                    //    Console.Write("niar");
+                    //}
 
                     // Remove overload
+                    /*
                     for (int i = 3; i >= 1; i--)
                     {
 		                if (endings.Contains(TrimmedName.Substring(TrimmedName.Length - i)))
@@ -165,7 +154,7 @@ namespace Bind.Structures
 		                	// TODO: Add better handling for CLS-Compliance on ref ('v') functions.
 		                	if (Char.IsDigit(TrimmedName[TrimmedName.Length - (i + 1)]))
 		                	{
-	                	    	if (!functionsNotToTrim.IsMatch(Name))
+	                	    	if (!endingsAddV.IsMatch(Name))
 	                	    	{
 		                    		TrimmedName = TrimmedName.Substring(0, TrimmedName.Length - i);	
 	                	    	}
@@ -180,6 +169,27 @@ namespace Bind.Structures
 		                	}
 		                    return;
 		                }
+                    }
+                    */
+
+                    if (!endingsNotToTrim.IsMatch(Name))
+                    {
+                        // Some endings should not be trimmed, for example: 'b' from Attrib
+
+                        Match m = endings.Match(TrimmedName);
+
+                        if (m.Index + m.Length == TrimmedName.Length)
+                        {   // Only trim endings, not internal matches.
+                            if (m.Value[m.Length - 1] == 'v' && endingsAddV.IsMatch(Name))
+                            {   // Only trim ending 'v' when there is a number
+                                TrimmedName = TrimmedName.Substring(0, m.Index) + "v";
+                            }
+                            else
+                            {
+
+                                TrimmedName = TrimmedName.Substring(0, m.Index);
+                            }
+                        }
                     }
                 }
             }
@@ -217,7 +227,8 @@ namespace Bind.Structures
 
         public bool Equals(Function other)
         {
-            return !String.IsNullOrEmpty(this.TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
+            return
+                !String.IsNullOrEmpty(this.TrimmedName) && !String.IsNullOrEmpty(other.TrimmedName) &&
                 this.TrimmedName == other.TrimmedName &&
                 this.Parameters.ToString(true) == other.Parameters.ToString(true);
         }

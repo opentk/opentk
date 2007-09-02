@@ -119,7 +119,7 @@ namespace Examples.Windowing
                 0.0, 0.0, 0.0,
                 0.0, 1.0, 0.0
             );
-            GL.Rotatef(angle + angle_add, 0.0f, 1.0f, 0.0f);
+            GL.Rotate(angle + angle_add, 0.0f, 1.0f, 0.0f);
             angle += 0.5f;
 
             GL.Clear(Enums.ClearBufferMask.COLOR_BUFFER_BIT | Enums.ClearBufferMask.DEPTH_BUFFER_BIT);

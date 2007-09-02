@@ -76,7 +76,7 @@ namespace Bind.Structures
 
         #region public bool Unchecked
 
-        private bool @unchecked = false;
+        private bool @unchecked;
 
         public bool Unchecked
         {
