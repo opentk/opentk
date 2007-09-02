@@ -86,7 +86,7 @@ namespace Examples.Tutorial
             vertex_shader_object = (uint)GL.CreateShader(GL.Enums.VERSION_2_0.VERTEX_SHADER);
             fragment_shader_object = (uint)GL.CreateShader(GL.Enums.VERSION_2_0.FRAGMENT_SHADER);
 
-            GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, (int[])null);
+            unsafe { GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, (int*)null); }
             GL.CompileShader(vertex_shader_object);
             GL.GetShader(vertex_shader_object, GL.Enums.VERSION_2_0.COMPILE_STATUS, out status);
             if (status != (int)GL.Enums.Boolean.TRUE)
@@ -99,7 +99,7 @@ namespace Examples.Tutorial
                 throw new Exception(info.ToString());
             }
 
-            GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, (int[])null);
+            unsafe { GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, (int*)null); }
             GL.CompileShader(fragment_shader_object);
             GL.GetShader(fragment_shader_object, GL.Enums.VERSION_2_0.COMPILE_STATUS, out status);
             if (status != (int)GL.Enums.Boolean.TRUE)
