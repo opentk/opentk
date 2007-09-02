@@ -18,11 +18,12 @@ namespace Bind
 {
     enum GeneratorMode
     {
+        Unknown,
         GL2,
         GL3,
         Wgl,
         Glx,
-        Glu
+        Glu,
     }
 
     static class MainClass
@@ -73,8 +74,12 @@ namespace Bind
                                     arg == "gl2" ? GeneratorMode.GL2 : 
                                     arg == "gl3" ? GeneratorMode.GL3 :
                                     arg == "wgl" ? GeneratorMode.Wgl : 
-                                    arg == "glu" ? GeneratorMode.Glu : 
-                                    arg == "glx" ? GeneratorMode.Glx : GeneratorMode.GL2;
+                                    arg == "glu" ? GeneratorMode.Glu :
+                                    arg == "glx" ? GeneratorMode.Glx : GeneratorMode.Unknown;
+                                if (mode == GeneratorMode.Unknown)
+                                {
+                                    throw new ArgumentException(String.Format("Mode {0} unknown.", arg));
+                                }
                                 break;
                             case "namespace":
                             case "ns":
@@ -126,11 +131,11 @@ namespace Bind
                         break;
 
                     case GeneratorMode.Glu:
-                        
+                        Generator = new Bind.Glu.Generator();
                         break;
 
                     case GeneratorMode.Glx:
-                        
+                        Generator = new Bind.Glx.Generator();
                         break;
 
                     case GeneratorMode.GL3:
