@@ -41,29 +41,30 @@ namespace Examples.WinForms
             base.OnLoad(e);
 
             glControl1.CreateContext();
+
+            GL.ClearColor(Color.Crimson);
         }
 
         private void redButton_Click(object sender, EventArgs e)
         {
-            GL.ClearColor(0.7f, 0.0f, 0.0f, 0.0f);
+            GL.ClearColor(Color.Crimson);
             glControl1.Invalidate();
         }
 
         private void greenButton_Click(object sender, EventArgs e)
         {
-            GL.ClearColor(0.0f, 0.5f, 0.0f, 0.0f);
+            GL.ClearColor(Color.ForestGreen);
             glControl1.Invalidate();
         }
 
         private void blueButton_Click(object sender, EventArgs e)
         {
-            GL.ClearColor(0.0f, 0.0f, 0.7f, 0.0f);
+            GL.ClearColor(Color.RoyalBlue);
             glControl1.Invalidate();
         }
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
-            System.Diagnostics.Debug.Print("Paint");
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
             glControl1.SwapBuffers();
         }

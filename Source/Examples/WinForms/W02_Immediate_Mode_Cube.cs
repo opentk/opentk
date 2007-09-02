@@ -54,7 +54,7 @@ namespace Examples.WinForms
                 GL.GetString(GL.Enums.StringName.RENDERER) + " " +
                 GL.GetString(GL.Enums.StringName.VERSION);
 
-            GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
+            GL.ClearColor(Color.MidnightBlue);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
 
             Application.Idle += Application_Idle;
