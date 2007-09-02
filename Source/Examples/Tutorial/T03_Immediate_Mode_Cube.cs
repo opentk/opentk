@@ -9,18 +9,18 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Threading;
+using System.Drawing;
 
 using OpenTK;
 using OpenTK.OpenGL;
 using OpenTK.Platform;
-using Enums = OpenTK.OpenGL.GL.Enums;
-using System.Threading;
 
 #endregion
 
 namespace Examples.Tutorial
 {
-    public class T03_RotatingCube : OpenTK.GameWindow, IExample
+    public class T03_Immediate_Mode_Cube : OpenTK.GameWindow, IExample
     {
         #region --- Fields ---
 
@@ -33,7 +33,7 @@ namespace Examples.Tutorial
 
         #region --- Constructors ---
 
-        public T03_RotatingCube()
+        public T03_Immediate_Mode_Cube()
         {
             CreateWindow(new DisplayMode(800, 600));
         }
@@ -47,7 +47,7 @@ namespace Examples.Tutorial
             base.OnLoad(e);
 
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
-            GL.Enable(Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
         }
 
         #endregion
@@ -69,7 +69,7 @@ namespace Examples.Tutorial
 
             double ratio = e.Width / (double)e.Height;
 
-            GL.MatrixMode(Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -99,7 +99,7 @@ namespace Examples.Tutorial
                 Fullscreen = !Fullscreen;
             }
 
-            GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
             Glu.LookAt(
                 0.0, 5.0, 5.0,
@@ -120,7 +120,7 @@ namespace Examples.Tutorial
         /// </summary>
         public override void OnRenderFrame(EventArgs e)
         {
-            GL.Clear(Enums.ClearBufferMask.COLOR_BUFFER_BIT | Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 
             DrawCube();
 
@@ -136,37 +136,38 @@ namespace Examples.Tutorial
         {
             GL.Begin(GL.Enums.BeginMode.QUADS);
 
-            GL.Color3(1.0f, 0.0f, 0.0f);
+            GL.Color3(Color.Silver);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
 
-            GL.Color3(1.0f, 1.0f, 0.0f);
+            GL.Color3(Color.Honeydew);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3(1.0f, 0.0f, 1.0f);
+            GL.Color3(Color.Moccasin);
+
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0.0f, 1.0f, 0.0f);
+            GL.Color3(Color.IndianRed);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
-            GL.Color3(0.0f, 0.0f, 1.0f);
+            GL.Color3(Color.PaleVioletRed);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0.0f, 1.0f, 1.0f);
+            GL.Color3(Color.ForestGreen);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);

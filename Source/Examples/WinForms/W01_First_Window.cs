@@ -34,8 +34,6 @@ namespace Examples.WinForms
                 System.Diagnostics.Trace.WriteLine("Exception during initialization, aborting: {0}", e.ToString());
                 return;
             }
-
-            this.ShowDialog();
         }
 
         protected override void OnLoad(EventArgs e)

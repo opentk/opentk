@@ -50,40 +50,7 @@ namespace Examples.Tutorial
 
         public T10_GLSL_Cube()
         {
-            this.CreateWindow(new OpenTK.Platform.DisplayMode(800, 600));
-        }
-
-        #endregion
-
-        #region public void Launch()
-
-        /// <summary>
-        /// Launches this example.
-        /// </summary>
-        /// <remarks>
-        /// Provides a simple way for the example launcher to launch the examples.
-        /// </remarks>
-        public void Launch()
-        {
-            Run();
-        }
-
-        #endregion
-
-        #region OnCreate
-
-        /// <summary>
-        /// This is the place to change window parameters.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        public override void OnCreate(EventArgs e)
-        {
-            base.OnCreate(e);
-
-            //Text =
-            //    GL.GetString(Enums.StringName.VENDOR) + " " +
-            //    GL.GetString(Enums.StringName.RENDERER) + " " +
-            //    GL.GetString(Enums.StringName.VERSION);
+            this.CreateWindow(new DisplayMode(800, 600));
         }
 
         #endregion
@@ -224,43 +191,59 @@ namespace Examples.Tutorial
         {
             GL.Begin(GL.Enums.BeginMode.QUADS);
 
-            GL.Color3(1.0f, 0.0f, 0.0f);
+            GL.Color3(Color.Silver);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
 
-            GL.Color3(1.0f, 1.0f, 0.0f);
+            GL.Color3(Color.Honeydew);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3(1.0f, 0.0f, 1.0f);
+            GL.Color3(Color.Moccasin);
+
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0.0f, 1.0f, 0.0f);
+            GL.Color3(Color.IndianRed);
             GL.Vertex3(-1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
-            GL.Color3(0.0f, 0.0f, 1.0f);
+            GL.Color3(Color.PaleVioletRed);
             GL.Vertex3(-1.0f, 1.0f, -1.0f);
             GL.Vertex3(-1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
 
-            GL.Color3(0.0f, 1.0f, 1.0f);
+            GL.Color3(Color.ForestGreen);
             GL.Vertex3(1.0f, -1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, -1.0f);
             GL.Vertex3(1.0f, 1.0f, 1.0f);
             GL.Vertex3(1.0f, -1.0f, 1.0f);
 
             GL.End();
+        }
+
+        #endregion
+
+        #region public void Launch()
+
+        /// <summary>
+        /// Launches this example.
+        /// </summary>
+        /// <remarks>
+        /// Provides a simple way for the example launcher to launch the examples.
+        /// </remarks>
+        public void Launch()
+        {
+            Run();
         }
 
         #endregion

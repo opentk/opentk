@@ -59,7 +59,7 @@ namespace Examples.Tests
 
         public S02_RawInput_Logger()
         {
-            this.CreateWindow(new OpenTK.Platform.DisplayMode(100, 100));
+            this.CreateWindow(new DisplayMode(100, 100));
 
             foreach (OpenTK.Input.Keyboard k in this.Keyboard)
             {
