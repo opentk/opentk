@@ -116,7 +116,7 @@ namespace OpenTK.Input
         public override string ToString()
         {
             //return base.ToString();
-            return String.Format("ID: {0} (keys: {1}, function keys: {2}, leds: {3}",
+            return String.Format("ID: {0} (keys: {1}, function keys: {2}, leds: {3})",
                 DeviceID, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds);
         }
 

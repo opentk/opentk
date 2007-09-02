@@ -58,8 +58,16 @@ namespace OpenTK
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             //this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
+            this.Disposed += new EventHandler(GLControl_Disposed);
+
             //Debug.Print("Creating GLControl.");
             //this.CreateControl();
+        }
+
+        void GLControl_Disposed(object sender, EventArgs e)
+        {
+            //glControl.Context.Dispose();
+            //Application.ExitThread();
         }
 
         #endregion
@@ -92,24 +100,27 @@ namespace OpenTK
         /// </summary>
         public void CreateContext()
         {
+            if (glControl != null)
+            {
+                throw new ApplicationException("Attempted to create GLControl more than once.");
+            }
+
             try
             {
-                if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                    Environment.OSVersion.Platform == PlatformID.Win32Windows)
+                switch (Environment.OSVersion.Platform)
                 {
-                    glControl = new OpenTK.Platform.Windows.WinGLControl(this, new DisplayMode(Width, Height));
-                }
-                else if (Environment.OSVersion.Platform == PlatformID.Unix ||
-                    Environment.OSVersion.Platform == (PlatformID)128) // some older versions of Mono reported 128.
-                {
-                    glControl = new OpenTK.Platform.X11.X11GLControl(this);
-                        //, new DisplayMode(this.Width, this.Height, new OpenTK.Platform.ColorDepth(1, 1, 1, 1), 1, 0, 0, 0, false, false, false, 0.0f));
-                }
-                else
-                {
-                    throw new PlatformNotSupportedException(
-                        "Your operating system is not currently supported. We are sorry for the inconvenience."
-                    );
+                    case PlatformID.Win32NT:
+                    case PlatformID.Win32Windows:
+                        glControl = new OpenTK.Platform.Windows.WinGLControl(this, new DisplayMode(Width, Height));
+                        break;
+                
+                    case PlatformID.Unix:
+                    case (PlatformID)128: // some older versions of Mono reported 128.
+                        glControl = new OpenTK.Platform.X11.X11GLControl(this);
+                        break;
+                    
+                    default:
+                        throw new PlatformNotSupportedException("Your operating system is not currently supported. We are sorry for the inconvenience.");
                 }
             }
             catch (Exception e)
@@ -283,5 +294,6 @@ namespace OpenTK
         #endregion
 
         #endregion
+
     }
 }
