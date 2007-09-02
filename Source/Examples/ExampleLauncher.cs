@@ -29,48 +29,40 @@ namespace Examples
 {
     public partial class ExampleLauncher : Form
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-        	try
-        	{
-	            if (File.Exists("debug.log"))
-	                File.Delete("debug.log");
-        	}
-        	catch (Exception e)
-        	{
-        		MessageBox.Show("Could not access debug.log", e.ToString());
-        	}
-
-            Debug.Listeners.Clear();
-        	Debug.Listeners.Add(new TextWriterTraceListener("debug.log"));
-            Debug.Listeners.Add(new ConsoleTraceListener());
-            Debug.AutoFlush = true;
-        	                    
-            try
-            {
-                using (Form exampleLauncher = new ExampleLauncher())
-                {
-                    Application.EnableVisualStyles();
-                    Application.Run(exampleLauncher);
-                }
-            }
-            finally
-            {
-                Debug.Flush();
-                Debug.Close();
-                Trace.Flush();
-                Trace.Close();
-            }
-        }
+        SortedList<string, string> examples = new SortedList<string, string>();
 
         public ExampleLauncher()
         {
             InitializeComponent();
         }
+
+        public void ExampleLauncher_Load(object sender, EventArgs e)
+        {
+            // Get all examples
+            Type[] types = Assembly.GetExecutingAssembly().GetTypes();
+            foreach (Type type in types)
+            {
+                if (type.GetInterface("IExample") != null)
+                {
+                    examples.Add(
+                        type.Namespace.Replace("Examples.", String.Empty) + " " +
+                        type.Name.Substring(1, 2) + ": " +
+                        type.Name.Substring(3).Replace('_', ' '),
+                        type.Namespace + "." + type.Name);
+                }
+            }
+
+            foreach (string s in examples.Keys)
+                listBox1.Items.Add(s);
+
+            // Select first item
+            if (listBox1.Items.Count > 0)
+            {
+                this.listBox1.SelectedIndex = 0;
+            }
+        }
+
+        delegate void LaunchDelegate(object example);
 
         void Launch(object example)
         {
@@ -81,32 +73,8 @@ namespace Examples
             }
             catch (Exception expt)
             {
-				MessageBox.Show(String.Format("Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
-				    System.Environment.NewLine, expt.StackTrace, expt.InnerException), expt.Message);
-            }
-        }
-
-        public void ExampleLauncher_Load(object sender, EventArgs e)
-        {
-            SortedList<string, string> sl = new SortedList<string, string>();
-
-            // Get all examples
-            Type[] types = Assembly.GetExecutingAssembly().GetTypes();
-            foreach (Type type in types)
-            {
-                if (type.GetInterface("IExample") != null)
-                {
-                    sl.Add((type.Namespace.Replace("Examples.", String.Empty) + ": " + type.Name).Replace('_', ' '), null);
-                }
-            }
-
-            foreach (string s in sl.Keys)
-                listBox1.Items.Add(s);
-
-            // Select first item
-            if (listBox1.Items.Count > 0)
-            {
-                this.listBox1.SelectedIndex = 0;
+                MessageBox.Show(String.Format("Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
+                    System.Environment.NewLine, expt.StackTrace, expt.InnerException), expt.Message);
             }
         }
 
@@ -114,19 +82,22 @@ namespace Examples
         {
             if (listBox1.SelectedItem != null)
             {
-                Type example =
-                    Assembly.GetExecutingAssembly().GetType(
-                        "Examples." + listBox1.SelectedItem.ToString().Replace(": ", ".").Replace(' ', '_'),
-                        true,
-                        true);
+                Type example = Assembly.GetExecutingAssembly().GetType(
+                    examples[listBox1.SelectedItem.ToString()], true, true);
 
                 Debug.Print("Launching example: {0}", example.ToString());
+                this.Visible = false;
 
                 if (example.BaseType == typeof(GameWindow))
                 {
                     // Start the GameWindow in a new thread - it runs its own message loop, and it would
                     // interfere with the message loop of the ExampleLauncher.
-                    new Thread(Launch).Start(example);
+                    //Thread t = new Thread(Launch);
+                    //t.Start(example);
+                    //t = null;
+                    Launch(example);
+                    //IAsyncResult res = BeginInvoke(new LaunchDelegate(Launch), example);
+                    //EndInvoke(res);
                 }
                 else if (example.BaseType == typeof(Form))
                 {
@@ -134,7 +105,10 @@ namespace Examples
                     {
                         // In this we do not want a different thread: these examples rely on the Application.Idle
                         // event, which would then be raised by both the ExampleLauncher thread *and* the new one!
-                        this.AddOwnedForm((Form)example.GetConstructor(Type.EmptyTypes).Invoke(null));
+                        Form f = (Form)example.GetConstructor(Type.EmptyTypes).Invoke(null);
+                        f.ShowDialog(this);
+                        f.Dispose();
+                        f = null;
                     }
                     catch (Exception expt)
                     {
@@ -146,8 +120,16 @@ namespace Examples
                                 expt.InnerException
                             ),
                             expt.Message);
+
+                        throw;
                     }
                 }
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+
+                this.Visible = true;
             }
         }
 
@@ -169,6 +151,44 @@ namespace Examples
         private void runButton_Click(object sender, EventArgs e)
         {
             RunExample();
+        }
+
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            try
+            {
+                if (File.Exists("debug.log"))
+                    File.Delete("debug.log");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Could not access debug.log", e.ToString());
+            }
+
+            Debug.Listeners.Clear();
+            Debug.Listeners.Add(new TextWriterTraceListener("debug.log"));
+            Debug.Listeners.Add(new ConsoleTraceListener());
+            Debug.AutoFlush = true;
+
+            try
+            {
+                using (Form exampleLauncher = new ExampleLauncher())
+                {
+                    Application.EnableVisualStyles();
+                    Application.Run(exampleLauncher);
+                }
+            }
+            finally
+            {
+                Debug.Flush();
+                Debug.Close();
+                Trace.Flush();
+                Trace.Close();
+            }
         }
     }
 }
