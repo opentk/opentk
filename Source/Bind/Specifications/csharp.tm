@@ -52,8 +52,25 @@ LPVOID,         void*
 #String,         const char *
 UINT,           UInt32
 USHORT,         UInt16
-VOID,           Void
+VOID,           void
 VoidPointer,    void*
 float,          float
 int,            int
 #void,           *
+
+# Glu types.
+Float64         double
+Float64Pointer  double*
+Float32         float
+Float32Pointer  float*
+
+# Glx types.
+Void			void
+Bool			bool
+int64_t			long
+int32_t			int
+
+Display			IntPtr
+Window			IntPtr
+Pixmap			IntPtr
+__GLXextFuncPtr IntPtr

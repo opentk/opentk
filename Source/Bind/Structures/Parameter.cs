@@ -11,13 +11,14 @@ using System.Runtime.InteropServices;
 
 namespace Bind.Structures
 {
-    #region Parameter class
-
     /// <summary>
     /// Represents a single parameter of an opengl function.
     /// </summary>
     public class Parameter : Type
     {
+        string cache;
+        bool rebuild;
+
         #region Constructors
 
         /// <summary>
@@ -38,24 +39,33 @@ namespace Bind.Structures
             if (p == null)
                 return;
 
-            this.Name = !String.IsNullOrEmpty(p.Name) ? new string(p.Name.ToCharArray()) : "";
+            this.Name = p.Name;
             this.Unchecked = p.Unchecked;
             this.UnmanagedType = p.UnmanagedType;
             this.Flow = p.Flow;
+            this.cache = p.cache;
+            //this.rebuild = false;
         }
 
         #endregion
 
         #region public string Name
 
-        string _name;
+        string _name = String.Empty;
         /// <summary>
         /// Gets or sets the name of the parameter.
         /// </summary>
         public string Name
         {
             get { return _name; }
-            set { _name = value; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    rebuild = true;
+                }
+            }
         }
 
         #endregion
@@ -69,7 +79,14 @@ namespace Bind.Structures
         private UnmanagedType UnmanagedType
         {
             get { return _unmanaged_type; }
-            set { _unmanaged_type = value; }
+            set
+            {
+                if (_unmanaged_type != value)
+                {
+                    _unmanaged_type = value;
+                    rebuild = true;
+                }
+            }
         }
 
         #endregion
@@ -95,7 +112,14 @@ namespace Bind.Structures
         public FlowDirection Flow
         {
             get { return _flow; }
-            set { _flow = value; }
+            set
+            {
+                if (_flow != value)
+                {
+                    _flow = value;
+                    rebuild = true;
+                }
+            }
         }
 
         #endregion
@@ -120,7 +144,31 @@ namespace Bind.Structures
         public bool Unchecked
         {
             get { return _unchecked; }
-            set { _unchecked = value; }
+            set
+            {
+                if (_unchecked != value)
+                {
+                    _unchecked = value;
+                    rebuild = true;
+                }
+            }
+        }
+
+        #endregion
+
+        #region public override string CurrentType
+
+        public override string CurrentType
+        {
+            get
+            {
+                return base.CurrentType;
+            }
+            set
+            {
+                base.CurrentType = value;
+                rebuild = true;
+            }
         }
 
         #endregion
@@ -138,58 +186,59 @@ namespace Bind.Structures
 
         public string ToString(bool taoCompatible)
         {
-            StringBuilder sb = new StringBuilder();
-
-            //if (UnmanagedType == UnmanagedType.AsAny && Flow == FlowDirection.In)
-            //    sb.Append("[MarshalAs(UnmanagedType.AsAny)] ");
-
-            //if (UnmanagedType == UnmanagedType.LPArray)
-            //    sb.Append("[MarshalAs(UnmanagedType.LPArray)] ");
-
-            //if (Flow == FlowDirection.Out && !Array && !(Type == "IntPtr"))
-            //    sb.Append("out ");
-
-            if (Flow == FlowDirection.Out)
-                sb.Append("[Out] ");
-            else if (Flow == FlowDirection.Undefined)
-                sb.Append("[In, Out] ");
-
-            if (Reference)
+            if (!String.IsNullOrEmpty(cache) && !rebuild)
             {
-                if (Flow == FlowDirection.Out)
-                    sb.Append("out ");
-                else
-                    sb.Append("ref ");
+               return cache;
             }
-
-            if (taoCompatible && Settings.Compatibility == Settings.Legacy.Tao)
+            else
             {
-                if (Pointer)
+                StringBuilder sb = new StringBuilder();
+
+                if (Flow == FlowDirection.Out)
+                    sb.Append("[Out] ");
+                else if (Flow == FlowDirection.Undefined)
+                    sb.Append("[In, Out] ");
+
+                if (Reference)
                 {
-                    sb.Append("IntPtr");
+                    if (Flow == FlowDirection.Out)
+                        sb.Append("out ");
+                    else
+                        sb.Append("ref ");
+                }
+
+                if (taoCompatible && Settings.Compatibility == Settings.Legacy.Tao)
+                {
+                    if (Pointer)
+                    {
+                        sb.Append("IntPtr");
+                    }
+                    else
+                    {
+                        sb.Append(CurrentType);
+                        if (Array > 0)
+                            sb.Append("[]");
+                    }
                 }
                 else
                 {
                     sb.Append(CurrentType);
+                    if (Pointer)
+                        sb.Append("*");
                     if (Array > 0)
                         sb.Append("[]");
                 }
-            }
-            else
-            {
-                sb.Append(CurrentType);
-                if (Pointer)
-                    sb.Append("*");
-                if (Array > 0)
-                    sb.Append("[]");
-            }
 
-            if (!String.IsNullOrEmpty(Name))
-            {
-                sb.Append(" ");
-                sb.Append(Utilities.Keywords.Contains(Name) ? "@" + Name : Name);
+                if (!String.IsNullOrEmpty(Name))
+                {
+                    sb.Append(" ");
+                    sb.Append(Utilities.Keywords.Contains(Name) ? "@" + Name : Name);
+                }
+
+                rebuild = false;
+                cache = sb.ToString();
+                return cache;
             }
-            return sb.ToString();
         }
 
         #endregion
@@ -203,7 +252,9 @@ namespace Bind.Structures
             Parameter p = new Parameter(par);
             
             // Translate enum types
-            if (Enum.GLEnums.TryGetValue(p.CurrentType, out @enum) && @enum.Name != "GLenum")
+            if ((Enum.GLEnums.TryGetValue(p.CurrentType, out @enum) ||
+                (Enum.AuxEnums != null && Enum.AuxEnums.TryGetValue(p.CurrentType, out @enum))) &&
+                @enum.Name != "GLenum")
             {
                 if (Settings.Compatibility == Settings.Legacy.Tao)
                     p.CurrentType = "int";
@@ -305,8 +356,6 @@ namespace Bind.Structures
         #endregion
     }
 
-    #endregion
-
     #region ParameterCollection class
 
     /// <summary>
@@ -314,6 +363,10 @@ namespace Bind.Structures
     /// </summary>
     public class ParameterCollection : List<Parameter>
     {
+        string cache = String.Empty;
+        string callStringCache = String.Empty;
+        bool rebuild = true;
+
         #region Constructors
 
         public ParameterCollection()
@@ -329,6 +382,12 @@ namespace Bind.Structures
         }
 
         #endregion
+
+        new public void Add(Parameter p)
+        {
+            rebuild = true;
+            base.Add(p);
+        }
 
         #region override public string ToString()
 
@@ -353,28 +412,36 @@ namespace Bind.Structures
         /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
         public string ToString(bool taoCompatible)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("(");
-            if (this.Count > 0)
+            if (!rebuild)
             {
-                foreach (Parameter p in this)
-                {
-                    if (taoCompatible)
-                    {
-                        sb.Append(p.ToString(true));
-                    }
-                    else
-                    {
-                        sb.Append(p.ToString());
-                    }
-                    sb.Append(", ");
-                }
-                sb.Replace(", ", ")", sb.Length - 2, 2);
+                return cache;
             }
             else
-                sb.Append(")");
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("(");
+                if (this.Count > 0)
+                {
+                    foreach (Parameter p in this)
+                    {
+                        if (taoCompatible)
+                        {
+                            sb.Append(p.ToString(true));
+                        }
+                        else
+                        {
+                            sb.Append(p.ToString());
+                        }
+                        sb.Append(", ");
+                    }
+                    sb.Replace(", ", ")", sb.Length - 2, 2);
+                }
+                else
+                    sb.Append(")");
 
-            return sb.ToString();
+                cache = sb.ToString();
+                return cache;
+            }
         }
 
         #endregion
@@ -386,58 +453,66 @@ namespace Bind.Structures
 
         public string CallString(bool taoCompatible)
         {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("(");
-
-            if (this.Count > 0)
+            if (!rebuild)
             {
-                foreach (Parameter p in this)
-                {
-                    if (p.Unchecked)
-                        sb.Append("unchecked((" + p.CurrentType + ")");
-
-                    if (p.CurrentType != "object")
-                    {
-                        if (p.CurrentType.ToLower().Contains("string"))
-                        {
-                            sb.Append(String.Format("({0}{1})",
-                                p.CurrentType, (p.Array > 0) ? "[]" : ""));
-
-                        }
-                        else if (p.Pointer || p.Array > 0 || p.Reference)
-                        {
-                            sb.Append(String.Format("({0}*)",
-                                p.CurrentType /*, (p.Pointer || p.Array > 0) ? "*" : ""*/));
-                        }
-                        //else if (p.Reference)
-                        //{
-                        //    sb.Append(String.Format("{0} ({1})",
-                        //       p.Flow == Parameter.FlowDirection.Out ? "out" : "ref", p.CurrentType));
-                        //}
-                        else
-                        {
-                            sb.Append(String.Format("({0})", p.CurrentType));
-                        }
-                    }
-
-                    sb.Append(
-                        Utilities.Keywords.Contains(p.Name) ? "@" + p.Name : p.Name
-                    );
-
-                    if (p.Unchecked)
-                        sb.Append(")");
-
-                    sb.Append(", ");
-                }
-                sb.Replace(", ", ")", sb.Length - 2, 2);
+                return callStringCache;
             }
             else
             {
-                sb.Append(")");
-            }
+                StringBuilder sb = new StringBuilder();
 
-            return sb.ToString();
+                sb.Append("(");
+
+                if (this.Count > 0)
+                {
+                    foreach (Parameter p in this)
+                    {
+                        if (p.Unchecked)
+                            sb.Append("unchecked((" + p.CurrentType + ")");
+
+                        if (p.CurrentType != "object")
+                        {
+                            if (p.CurrentType.ToLower().Contains("string"))
+                            {
+                                sb.Append(String.Format("({0}{1})",
+                                    p.CurrentType, (p.Array > 0) ? "[]" : ""));
+
+                            }
+                            else if (p.Pointer || p.Array > 0 || p.Reference)
+                            {
+                                sb.Append(String.Format("({0}*)",
+                                    p.CurrentType /*, (p.Pointer || p.Array > 0) ? "*" : ""*/));
+                            }
+                            //else if (p.Reference)
+                            //{
+                            //    sb.Append(String.Format("{0} ({1})",
+                            //       p.Flow == Parameter.FlowDirection.Out ? "out" : "ref", p.CurrentType));
+                            //}
+                            else
+                            {
+                                sb.Append(String.Format("({0})", p.CurrentType));
+                            }
+                        }
+
+                        sb.Append(
+                            Utilities.Keywords.Contains(p.Name) ? "@" + p.Name : p.Name
+                        );
+
+                        if (p.Unchecked)
+                            sb.Append(")");
+
+                        sb.Append(", ");
+                    }
+                    sb.Replace(", ", ")", sb.Length - 2, 2);
+                }
+                else
+                {
+                    sb.Append(")");
+                }
+
+                callStringCache = sb.ToString();
+                return callStringCache;
+            }
         }
 
         public bool ContainsType(string type)

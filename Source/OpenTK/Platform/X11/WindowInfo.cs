@@ -18,7 +18,7 @@ namespace OpenTK.Platform.X11
     {
         public WindowInfo()
         {
-            visinfo = new VisualInfo();
+            visinfo = new XVisualInfo();
         }
 
         public WindowInfo(WindowInfo parent)
@@ -35,7 +35,7 @@ namespace OpenTK.Platform.X11
         private IntPtr rootWindow, handle, topLevelWindow, display;
         private int screen;
         private WindowInfo parent;
-        private VisualInfo visinfo;
+        private XVisualInfo visinfo;
 
         public IntPtr RootWindow { get { return rootWindow; } set { rootWindow = value; } }
         public IntPtr TopLevelWindow { get { return topLevelWindow; } set { topLevelWindow = value; } }

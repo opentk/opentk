@@ -4,9 +4,10 @@ DMbuffer,*,*,		    DMbuffer,*,*
 DMparams,*,*,		    DMparams,*,*
 Display,*,*,		    Display,*,*
 DisplayPointer,*,*,	    Display *,*,*
-FunctionPointer,*,*,	    __GLXextFuncPtr,*,*
+FunctionPointer,*,*,    __GLXextFuncPtr,*,*
 GLXContext,*,*,		    GLXContext,*,*
-constGLXContext,*,*,	    const GLXContext,*,*
+#constGLXContext,*,*,	const GLXContext,*,*
+constGLXContext,*,*,	GLXContext,*,*
 GLXContextID,*,*,	    GLXContextID,*,*
 GLXDrawable,*,*,	    GLXDrawable,*,*
 GLXFBConfig,*,*,	    GLXFBConfig,*,*
@@ -26,7 +27,8 @@ GLfunction,*,*,		    GLfunction,*,*
 GLubyte,*,*,		    GLubyte,*,*
 Pixmap,*,*,		    Pixmap,*,*
 Status,*,*,		    Status,*,*
-Uint,*,*,		    unsigned int,*,*
+#Uint,*,*,		    unsigned int,*,*
+Uint				uint
 VLNode,*,*,		    VLNode,*,*
 VLPath,*,*,		    VLPath,*,*
 VLServer,*,*,		    VLServer,*,*
@@ -35,9 +37,12 @@ XVisualInfo,*,*,	    XVisualInfo,*,*
 XVisualInfoPointer,*,*,     XVisualInfo *,*,*
 float,*,*,		    float,*,*
 int,*,*,		    int,*,*
-uint,*,*,		    unsigned int,*,*
-int32_t,*,*,		    int32_t,*,*
-int64_t,*,*,		    int64_t,*,*
+#uint,*,*,		    unsigned int,*,*
+uint				uint
+int32_t,*,*,	    int32_t,*,*
+int64_t,*,*,	    int64_t,*,*
 long,*,*,		    long,*,*
-ulong,*,*,		    unsigned long,*,*
+#ulong,*,*,		    unsigned long,*,*
+ulong				ulong
 void,*,*,		    void,*,*
+Void				Void
