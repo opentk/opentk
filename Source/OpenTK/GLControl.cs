@@ -57,43 +57,13 @@ namespace OpenTK
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             //this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-
-            this.Disposed += new EventHandler(GLControl_Disposed);
-
-            //Debug.Print("Creating GLControl.");
-            //this.CreateControl();
-        }
-
-        void GLControl_Disposed(object sender, EventArgs e)
-        {
-            //glControl.Context.Dispose();
-            //Application.ExitThread();
         }
 
         #endregion
-        /*
-        CreateParams @params;
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                if (@params == null)
-                {
-                    @params = base.CreateParams;
-                    //@params.ClassStyle = (int)
-                    //    (OpenTK.Platform.Windows.API.WindowClassStyle.OwnDC |
-                    //    OpenTK.Platform.Windows.API.WindowClassStyle.HRedraw |
-                    //    OpenTK.Platform.Windows.API.WindowClassStyle.VRedraw);
-                    //@params.Style = (int)
-                    //    (OpenTK.Platform.Windows.API.WindowStyle.ClipChildren);
-                    //    OpenTK.Platform.Windows.API.WindowStyle.ClipSiblings);
-                    //@params.ExStyle = OpenTK.Platform.Windows.API.ExtendedWindowStyle.
-                }
-                return @params;
-            }
-        }
-        */
+
         #region --- Public Methods ---
+
+        #region public void CreateContext()
 
         /// <summary>
         /// Forces the creation of the opengl rendering context.
@@ -105,7 +75,11 @@ namespace OpenTK
                 throw new ApplicationException("Attempted to create GLControl more than once.");
             }
 
-            try
+            if (this.DesignMode)
+            {
+                glControl = new DummyGLControl();
+            }
+            else
             {
                 switch (Environment.OSVersion.Platform)
                 {
@@ -113,20 +87,15 @@ namespace OpenTK
                     case PlatformID.Win32Windows:
                         glControl = new OpenTK.Platform.Windows.WinGLControl(this, new DisplayMode(Width, Height));
                         break;
-                
+
                     case PlatformID.Unix:
                     case (PlatformID)128: // some older versions of Mono reported 128.
                         glControl = new OpenTK.Platform.X11.X11GLControl(this);
                         break;
-                    
+
                     default:
                         throw new PlatformNotSupportedException("Your operating system is not currently supported. We are sorry for the inconvenience.");
                 }
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Could not create GLControl, error: {0}", e.ToString());
-                throw;
             }
 
             this.Visible = true;
@@ -134,6 +103,10 @@ namespace OpenTK
             OpenTK.OpenGL.GL.LoadAll();
             this.OnResize(EventArgs.Empty);
         }
+
+        #endregion
+
+        #region public void SwapBuffers()
 
         /// <summary>
         /// Swaps the front and back buffers, and presents the rendered scene to the screen.
@@ -143,6 +116,10 @@ namespace OpenTK
             Context.SwapBuffers();
         }
 
+        #endregion
+
+        #region public void MakeCurrent()
+
         /// <summary>
         /// Makes the underlying GLContext of this GLControl current. All OpenGL commands issued
         /// from this point are interpreted by this GLContext.
@@ -151,6 +128,8 @@ namespace OpenTK
         {
             Context.MakeCurrent();
         }
+
+        #endregion
 
         #endregion
 
