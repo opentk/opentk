@@ -33,21 +33,22 @@
             // 
             // glControl
             // 
-            this.glControl.BackColor = System.Drawing.Color.MidnightBlue;
+            this.glControl.BackColor = System.Drawing.Color.Black;
             this.glControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.glControl.Fullscreen = false;
             this.glControl.Location = new System.Drawing.Point(0, 0);
             this.glControl.Name = "glControl";
             this.glControl.Size = new System.Drawing.Size(624, 444);
             this.glControl.TabIndex = 0;
+            this.glControl.Visible = false;
             // 
-            // Cube
+            // W02_Immediate_Mode_Cube
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 444);
             this.Controls.Add(this.glControl);
-            this.Name = "Cube";
+            this.Name = "W02_Immediate_Mode_Cube";
             this.Text = "Cube";
             this.ResumeLayout(false);
 

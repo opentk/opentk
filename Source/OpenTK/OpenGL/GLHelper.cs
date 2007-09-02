@@ -298,5 +298,14 @@ namespace OpenTK.OpenGL
         }
 
         #endregion
+
+        #region public static void ClearColor() overloads
+
+        public static void ClearColor(System.Drawing.Color color)
+        {
+            ClearColor(color.R/255.0f, color.G/255.0f, color.B/255.0f, color.A/255.0f);
+        }
+
+        #endregion
     }
 }
