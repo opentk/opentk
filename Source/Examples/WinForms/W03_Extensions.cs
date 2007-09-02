@@ -15,10 +15,11 @@ using System.Windows.Forms;
 using OpenTK;
 using System.Reflection;
 using OpenTK.OpenGL;
+using System.Threading;
 
 namespace Examples.WinForms
 {
-    public partial class W03_Extensions : Form//, IExample
+    public partial class W03_Extensions : Form, IExample
     {
         GLControl glControl = new GLControl();
         Assembly assembly;
@@ -42,12 +43,13 @@ namespace Examples.WinForms
 
             glControl.CreateContext();
 
-            listBox1.BeginInvoke(new LoadExtensionsDelegate(LoadExtensions));
+            //listBox1.BeginInvoke(new LoadExtensionsDelegate(LoadExtensions));
+            ThreadPool.QueueUserWorkItem(new WaitCallback(LoadExtensions));
         }
 
-        delegate void LoadExtensionsDelegate();
+        delegate void LoadExtensionsDelegate(object data);
 
-        void LoadExtensions()
+        void LoadExtensions(object data)
         {
             glControl.MakeCurrent();
 
@@ -64,6 +66,10 @@ namespace Examples.WinForms
                     f.SetValue(null, d);
                     listBox1.Items.Add(String.Format("{0}/{1} {2}: {3}",
                         (++i).ToString(), v.Length, d != null ? "ok" : "failed", f.Name));
+                    
+                    listBox1.Update();
+
+                    //Thread.Sleep(1);
 
                     if (d != null)
                     {
