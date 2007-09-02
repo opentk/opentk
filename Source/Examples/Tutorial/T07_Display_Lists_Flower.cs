@@ -23,7 +23,7 @@ using System.Threading;
 
 namespace Examples.Tutorial
 {
-    public partial class T07_DisplayLists_Cube : GameWindow, IExample
+    public partial class T07_Display_Lists_Flower : GameWindow, IExample
     {
         #region --- Variables ---
 
@@ -33,9 +33,9 @@ namespace Examples.Tutorial
 
         #region --- Constructors ---
 
-        public T07_DisplayLists_Cube()
+        public T07_Display_Lists_Flower()
         {
-            this.CreateWindow(new OpenTK.Platform.DisplayMode(800, 600));
+            this.CreateWindow(new DisplayMode(800, 600));
             //Text =
             //    "DisplayLists example (" +
             //    GL.GetString(Enums.StringName.RENDERER) + " " +

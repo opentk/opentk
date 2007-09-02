@@ -24,28 +24,51 @@ using System.Threading;
 
 namespace Examples.WinForms
 {
-    public partial class Cube : Form, IExample
+    public partial class W02_Immediate_Mode_Cube : Form, IExample
     {
         static float angle;
 
         #region --- Constructor ---
 
-        public Cube()
+        public W02_Immediate_Mode_Cube()
         {
             InitializeComponent();
-
-            this.ShowDialog();
         }
 
         #endregion
 
-        #region Closing event
+        #region OnLoad
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            glControl.KeyDown += new KeyEventHandler(glControl_KeyDown);
+            glControl.Resize += new EventHandler(glControl_Resize);
+            glControl.Paint += new PaintEventHandler(glControl_Paint);
+
+            glControl.CreateContext();
+
+            Text =
+                GL.GetString(GL.Enums.StringName.VENDOR) + " " +
+                GL.GetString(GL.Enums.StringName.RENDERER) + " " +
+                GL.GetString(GL.Enums.StringName.VERSION);
+
+            GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
+            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+
+            Application.Idle += Application_Idle;
+        }
+
+        #endregion
+
+        #region OnClosing
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            base.OnClosing(e);
-
             Application.Idle -= Application_Idle;
+
+            base.OnClosing(e);
         }
 
         #endregion
@@ -82,31 +105,6 @@ namespace Examples.WinForms
 
             glControl.Context.SwapBuffers();
             Thread.Sleep(0);
-        }
-
-        #endregion
-
-        #region Load event handler
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-
-            glControl.KeyDown += new KeyEventHandler(glControl_KeyDown);
-            glControl.Resize += new EventHandler(glControl_Resize);
-            glControl.Paint += new PaintEventHandler(glControl_Paint);
-
-            glControl.CreateContext();
-
-            Text =
-                GL.GetString(GL.Enums.StringName.VENDOR) + " " +
-                GL.GetString(GL.Enums.StringName.RENDERER) + " " +
-                GL.GetString(GL.Enums.StringName.VERSION);
-
-            GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
-            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
-
-            Application.Idle += Application_Idle;
         }
 
         #endregion

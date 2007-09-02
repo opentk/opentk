@@ -1,6 +1,6 @@
 ﻿namespace Examples.WinForms
 {
-    partial class Cube
+    partial class W02_Immediate_Mode_Cube
     {
         /// <summary>
         /// Required designer variable.
