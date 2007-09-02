@@ -1,6 +1,6 @@
 ================================================================================
 
-OpenTK 0.3.11 WIP Release notes
+OpenTK 0.3.11.4 WIP Release notes
 
 IMPORTANT: This release is intended for testing and experimentation only. Use at your own risk!
 
@@ -15,6 +15,7 @@ Highlights:
 
  * Critical Bug fix: Resolved deadlocks under 32-bit Windows platforms.
  * Bug fix: Overloads for all relevant OpenGL functions (some endings where not trimmed in 0.3.9). Breaking change.
+ * Bug fix: T10: GLSL Cube example would fail with an NRE when compiled under Mono.
 
  * Known issue: ExampleLauncher shuts down when closing any GameWindow under Linux.
  * Known issue: 32-bit modes exhibit flashing under Mesa3d 6.5.x/Ubuntu 7.04. Is a Mesa3d problem, update to Mesa3d 7.0.x or use a 24-bit depth when requesting the visual.
