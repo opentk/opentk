@@ -12,13 +12,17 @@ Highlights:
  * Feature: GL.ClearColor now accepts a System.Drawing.Color (e.g. GL.ClearColor(Color.MidnightBlue))
  * Feature: GameWindow.Create event is obsolete. Use the GameWindow.Load event instead.
  * Feature: Improved binding generation speed. Initial support for GLU and GLX.
+ * Feature: Timing information for OpenGL extension loading.
 
- * Critical Bug fix: Resolved deadlocks under 32-bit Windows platforms.
+ * Critical fix: Resolved deadlocks under 32-bit Windows platforms.
+
  * Bug fix: Overloads for all relevant OpenGL functions (some endings where not trimmed in 0.3.9). Breaking change.
  * Bug fix: T10: GLSL Cube example would fail with an NRE when compiled under Mono.
+ * Bug fix: GCHandles were not freed (bug introduced in 0.3.10).
+ * Bug fix: GL.LoadAll() was being called twice under some circumstances.
 
  * Known issue: ExampleLauncher shuts down when closing any GameWindow under Linux.
- * Known issue: 32-bit modes exhibit flashing under Mesa3d 6.5.x/Ubuntu 7.04. Is a Mesa3d problem, update to Mesa3d 7.0.x or use a 24-bit depth when requesting the visual.
+ * Known issue: 32-bit modes exhibit flashing under Mesa3d 6.5.x/Ubuntu 7.04. Is a Mesa3d problem, update to Mesa3d 7.0.x or request a 24-bit depth.
 
 --------------------------------------------------------------------------------
 
