@@ -299,15 +299,14 @@ namespace OpenTK.Platform.Windows
                 glContext.PrepareContext(this.Handle);
                 glContext.CreateContext();
                 //glContext.MakeCurrent();
-                OpenTK.OpenGL.GL.LoadAll();
+                GL.LoadAll();
+                Glu.LoadAll();
             }
             catch (ApplicationException expt)
             {
                 Debug.Print("Could not create opengl context, error: {0}", expt.ToString());
                 throw;
             }
-            GL.LoadAll();
-            Glu.LoadAll();
 
             if (this.Create != null)
             {
