@@ -21,7 +21,7 @@ namespace OpenTK.Platform.Windows
     /// Drives GameWindow on Windows.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    sealed class WinGLNative : NativeWindow, INativeGLWindow, IDisposable
+    sealed class WinGLNative : NativeWindow, INativeGLWindow
     {
         #region --- Fields ---
 
@@ -34,6 +34,11 @@ namespace OpenTK.Platform.Windows
         private bool exists;
         private WindowInfo window;
         private int top, bottom, left, right;
+
+        /// <summary>
+        /// For use in PeekMessage. System.Windows.Forms.Message causes deadlock there.
+        /// </summary>
+        private MSG myGoodMsg = new MSG();
 
         /// <summary>
         /// For use in WndProc only.
@@ -65,12 +70,12 @@ namespace OpenTK.Platform.Windows
         /// <param name="m">Reference to the incoming Windows Message.</param>
         protected override void WndProc(ref Message m)
         {
-            switch (m.Msg)
+            switch ((WindowMessage)m.Msg)
             {
-                case API.Constants.WM_WINDOWPOSCHANGED:
+                case WindowMessage.WINDOWPOSCHANGED:
                     // Get window size
-                    width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.WindowPosition), "cx"));
-                    height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.WindowPosition), "cy"));
+                    width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cx"));
+                    height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cy"));
                     width -= (left_border + right_border);
                     height -= (top_border + bottom_border);
                     //if (resizeEventArgs.Width != width || resizeEventArgs.Height != height)
@@ -86,10 +91,10 @@ namespace OpenTK.Platform.Windows
                     // If the message was not a resize notification, send it to the default WndProc.
                     break;
 
-                case API.Constants.WM_CREATE:
+                case WindowMessage.CREATE:
                     // Set the window width and height:
-                    this.mode.Width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cx"));
-                    this.mode.Height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(API.CreateStruct), "cy"));
+                    this.mode.Width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(CreateStruct), "cx"));
+                    this.mode.Height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(CreateStruct), "cy"));
                     this.mode.Width -= (left_border + right_border);
                     this.mode.Height -= (top_border + bottom_border);
 
@@ -97,21 +102,23 @@ namespace OpenTK.Platform.Windows
                     this.OnCreate(EventArgs.Empty);
                     return;
 
-                case API.Constants.WM_CLOSE:
+                case WindowMessage.CLOSE:
                     this.DestroyWindow();
                     return;
 
-                case API.Constants.WM_DESTROY:
+                case WindowMessage.DESTROY:
                     this.OnDestroy(EventArgs.Empty);
                     break;
 
-                case API.Constants.WM_QUIT:
+                case WindowMessage.QUIT:
                     isExiting = true;
+                    //this.Dispose();
                     //Debug.WriteLine("Application quit.");
                     return;
             }
 
-            DefWndProc(ref m);
+            //DefWndProc(ref m);
+            base.WndProc(ref m);
         }
 
         #endregion
@@ -121,12 +128,12 @@ namespace OpenTK.Platform.Windows
         #region public void ProcessEvents()
 
         private int ret;
-        System.Windows.Forms.Message msg;
+        MSG msg;
         public void ProcessEvents()
         {
             while (!IsIdle)
             {
-                ret = API.GetMessage(out msg, Handle, 0, 0);
+                ret = API.GetMessage(ref msg, Handle, 0, 0);
                 if (ret == -1)
                 {
                     throw new ApplicationException(String.Format(
@@ -195,7 +202,7 @@ namespace OpenTK.Platform.Windows
             get
             {
                 //return !API.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
-                return !API.PeekMessage(out msg, this.Handle, 0, 0, 0);
+                return !API.PeekMessage(ref myGoodMsg, this.Handle, 0, 0, 0);
                 //return API.GetQueueStatus(API.QueueStatusFlags.ALLEVENTS) == 0;
             }
         }
@@ -220,21 +227,21 @@ namespace OpenTK.Platform.Windows
 
             CreateParams cp = new CreateParams();
             cp.ClassStyle =
-                (int)API.WindowClassStyle.OwnDC |
-                (int)API.WindowClassStyle.VRedraw |
-                (int)API.WindowClassStyle.HRedraw |
-                (int)API.WindowClassStyle.Ime;
+                (int)WindowClassStyle.OwnDC |
+                (int)WindowClassStyle.VRedraw |
+                (int)WindowClassStyle.HRedraw |
+                (int)WindowClassStyle.Ime;
             cp.Style =
-                (int)API.WindowStyle.Visible |
-                (int)API.WindowStyle.ClipChildren |
-                (int)API.WindowStyle.ClipSiblings |
-                (int)API.WindowStyle.OverlappedWindow;
+                (int)WindowStyle.Visible |
+                (int)WindowStyle.ClipChildren |
+                (int)WindowStyle.ClipSiblings |
+                (int)WindowStyle.OverlappedWindow;
 
-            API.Rectangle rect = new API.Rectangle();
+            Rectangle rect = new Rectangle();
             rect.top = rect.left = 0;
             rect.bottom = windowMode.Height;
             rect.right = windowMode.Width;
-            API.AdjustWindowRect(ref rect, API.WindowStyle.OverlappedWindow, false);
+            API.AdjustWindowRect(ref rect, WindowStyle.OverlappedWindow, false);
 
             // Not used
             Top = 0;
@@ -315,7 +322,7 @@ namespace OpenTK.Platform.Windows
         public void DestroyWindow()
         {
             Debug.Print("Destroying window: {0}", window.ToString());
-            API.PostMessage(this.Handle, API.Constants.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
+            API.PostMessage(this.Handle, WindowMessage.DESTROY, IntPtr.Zero, IntPtr.Zero);
         }
 
         #endregion
@@ -428,7 +435,7 @@ namespace OpenTK.Platform.Windows
         public void Dispose()
         {
             this.Dispose(true);
-            GC.SuppressFinalize(this);
+            //GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool calledManually)
@@ -441,17 +448,17 @@ namespace OpenTK.Platform.Windows
                 {
                     // Safe to clean managed resources
                     glContext.Dispose();
-                    base.DestroyHandle();
+                    //base.DestroyHandle();
                 }
                 disposed = true;
             }
         }
-
+        /*
         ~WinGLNative()
         {
             Dispose(false);
         }
-
+        */
         #endregion
     }
 

@@ -27,10 +27,10 @@ namespace OpenTK.Platform.Windows
             internal extern static Boolean CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, UInt32 mask);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglChoosePixelFormat", ExactSpelling = true)]
-            internal extern static unsafe int ChoosePixelFormat(IntPtr hDc, API.PixelFormatDescriptor* pPfd);
+            internal extern static unsafe int ChoosePixelFormat(IntPtr hDc, PixelFormatDescriptor* pPfd);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglDescribePixelFormat", ExactSpelling = true)]
-            internal extern static unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, API.PixelFormatDescriptor* ppfd);
+            internal extern static unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, PixelFormatDescriptor* ppfd);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglGetCurrentDC", ExactSpelling = true)]
             internal extern static IntPtr GetCurrentDC();
@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Windows
             internal extern static int GetPixelFormat(IntPtr hdc);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglSetPixelFormat", ExactSpelling = true)]
-            internal extern static unsafe Boolean SetPixelFormat(IntPtr hdc, int ipfd, API.PixelFormatDescriptor* ppfd);
+            internal extern static unsafe Boolean SetPixelFormat(IntPtr hdc, int ipfd, PixelFormatDescriptor* ppfd);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglSwapBuffers", ExactSpelling = true)]
             internal extern static Boolean SwapBuffers(IntPtr hdc);
@@ -57,7 +57,7 @@ namespace OpenTK.Platform.Windows
             internal extern static IntPtr CreateLayerContext(IntPtr hDc, int level);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglDescribeLayerPlane", ExactSpelling = true)]
-            internal extern static unsafe Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, API.LayerPlaneDescriptor* plpd);
+            internal extern static unsafe Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, LayerPlaneDescriptor* plpd);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglSetLayerPaletteEntries", ExactSpelling = true)]
             internal extern static unsafe int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr);
@@ -78,10 +78,10 @@ namespace OpenTK.Platform.Windows
             internal extern static Boolean UseFontBitmapsW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglUseFontOutlinesA", CharSet = CharSet.Auto)]
-            internal extern static unsafe Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics);
+            internal extern static unsafe Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglUseFontOutlinesW", CharSet = CharSet.Auto)]
-            internal extern static unsafe Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, API.GlyphMetricsFloat* glyphMetrics);
+            internal extern static unsafe Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics);
         }
     }
 }
