@@ -8,15 +8,15 @@ using System;
 using System.Drawing;
 using System.Globalization;
 
-namespace OpenTK.Platform
+namespace OpenTK
 {
-    public class ColorDepth
+    public class ColorMode
     {
         public byte Red, Green, Blue, Alpha;
         public bool IsIndexed = false;
         public int BitsPerPixel;
         
-        public ColorDepth(int bpp)
+        public ColorMode(int bpp)
         {
             Red = Green = Blue = Alpha = 0;
             BitsPerPixel = bpp;
@@ -47,7 +47,7 @@ namespace OpenTK.Platform
             }
         }
 
-        public ColorDepth(int red, int green, int blue, int alpha)
+        public ColorMode(int red, int green, int blue, int alpha)
         {
             Red = (byte)red;
             Green = (byte)green;
@@ -58,10 +58,10 @@ namespace OpenTK.Platform
 
         public override bool Equals(object obj)
         {
-            return (obj is ColorDepth) ? (this == (ColorDepth)obj) : false;
+            return (obj is ColorMode) ? (this == (ColorMode)obj) : false;
         }
 
-        public static bool operator ==(ColorDepth left, ColorDepth right)
+        public static bool operator ==(ColorMode left, ColorMode right)
         {
             if ((object)left == (object)null && (object)right != (object)null ||
                 (object)left != (object)null && (object)right == (object)null)
@@ -76,7 +76,7 @@ namespace OpenTK.Platform
                    left.Alpha == right.Alpha;
         }
 
-        public static bool operator !=(ColorDepth left, ColorDepth right)
+        public static bool operator !=(ColorMode left, ColorMode right)
         {
             return !(left == right);
         }
