@@ -100,6 +100,7 @@ namespace OpenTK
             }
 
             this.Visible = true;
+            this.CreateControl();
 
             GL.LoadAll();
             Glu.LoadAll();
