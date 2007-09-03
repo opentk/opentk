@@ -202,10 +202,12 @@ namespace OpenTK.OpenGL
         /// </returns>
         public static Delegate GetDelegate(string name, Type signature)
         {
-            MethodInfo m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic);
+            //MethodInfo m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic);
+            MethodInfo m;
             return
                 Utilities.GetExtensionDelegate(name, signature) ??
-                (m != null ? Delegate.CreateDelegate(signature, m) : null);
+                ((m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic)) != null ?
+                Delegate.CreateDelegate(signature, m) : null);
         }
 
         #endregion
@@ -245,6 +247,10 @@ namespace OpenTK.OpenGL
                 }
 
                 f.SetValue(null, d);
+                
+                //Type type = f.ReflectedType;
+                //TypedReference t = __makeref(type);
+                //f.SetValueDirect(t, d);
             }
 
             time.Stop();

@@ -194,7 +194,10 @@ namespace OpenTK.Platform.Windows
         
         public void MakeCurrent()
         {
-            Wgl.Imports.MakeCurrent(deviceContext, renderContext);
+            if (!Wgl.Imports.MakeCurrent(deviceContext, renderContext))
+            {
+                Debug.Print("WinGLContext.MakeCurrent() call failed. Error: {0}", Marshal.GetLastWin32Error());
+            }
         }
 
 	    #endregion

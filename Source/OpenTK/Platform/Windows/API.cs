@@ -2977,7 +2977,7 @@ namespace OpenTK.Platform.Windows
         public IntPtr LParam;
         public uint Time;
         public POINT Point;
-        public object RefObject;
+        //public object RefObject;
 
         public override string ToString()
         {
