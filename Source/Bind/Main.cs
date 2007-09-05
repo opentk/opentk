@@ -140,8 +140,13 @@ namespace Bind
                         break;
 
                     case GeneratorMode.GL3:
-                    default:
                         throw new NotImplementedException(String.Format("Mode {0} not implemented.", mode));
+                    
+                    case GeneratorMode.Unknown:
+                    default:
+                        Console.WriteLine("Please specify a generator mode (use '-mode:gl2/gl3/glu/wgl/glx])'");
+                        return;
+                        
                 }
 
                 Generator.Process();
