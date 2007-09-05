@@ -6,9 +6,8 @@ namespace OpenTK.OpenGL
     partial class GL
     {
 
-        internal static class Imports
+        internal static partial class Imports
         {
-            static Imports() { }
 
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glNewList", ExactSpelling = true)]

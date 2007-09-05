@@ -6,11 +6,8 @@ namespace OpenTK.OpenGL
     partial class GL
     {
 
-        internal static class Delegates
+        internal static partial class Delegates
         {
-            static Delegates()
-            {
-            }
 
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void NewList(UInt32 list, GL.Enums.ListMode mode);

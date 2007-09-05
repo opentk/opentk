@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using OpenTK.Platform;
 using System.Diagnostics;
+using System.Reflection.Emit;
 
 #endregion
 
@@ -52,18 +53,14 @@ namespace OpenTK.OpenGL
     /// formats.
     /// </para>
     /// <para>
-    /// You may retrieve the entry point for an OpenGL extension using the Gl.GetDelegateForExtensionMethod
-    /// and Gl.GetFunctionPointerForExtensionMethod methods. You may retrieve the entry point for an OpenGL
-    /// function using the Gl.GetDelegateForMethod method. All three methods are cross-platform.
+    /// You may retrieve the entry point for an OpenGL function using the GL.GetDelegate method.
     /// </para>
     /// <para>
     /// <see href="http://opengl.org/registry/"/>
-    /// <seealso cref="Gl.IsExtensionSupported(string, bool)"/>
-    /// <seealso cref="Gl.GetDelegateForExtensionMethod"/>
-    /// <seealso cref="Gl.GetFunctionPointerForExtensionMethod"/>
-    /// <seealso cref="Gl.GetDelegateForMethod"/>
-    /// <seealso cref="Gl.ReloadFunctions"/>
-    /// <seealso cref="Gl.ReloadFunction"/>
+    /// <seealso cref="GL.SupportsExtension"/>
+    /// <seealso cref="GL.GetDelegate"/>
+    /// <seealso cref="GL.LoadAll"/>
+    /// <seealso cref="GL.Load"/>
     /// </para>
     /// </remarks>
     public static partial class GL
@@ -76,18 +73,34 @@ namespace OpenTK.OpenGL
             importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
         }
 
+        partial class Imports
+        {
+            internal static SortedList<string, MethodInfo> import;  // This is faster than either Dictionary or SortedDictionary
+            static Imports()
+            {
+                MethodInfo[] methods = importsClass.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
+                import = new SortedList<string, MethodInfo>(methods.Length);
+                foreach (MethodInfo m in methods)
+                {
+                    import.Add(m.Name, m);
+                }
+            }
+        }
+
         #region --- Fields ---
 
         internal const string Library = "opengl32.dll";
         
-        private static System.Collections.Generic.Dictionary<string, bool> AvailableExtensions = new Dictionary<string, bool>();
+        //private static Dictionary<string, bool> AvailableExtensions = new Dictionary<string, bool>();
+        private static SortedList<string, bool> AvailableExtensions = new SortedList<string, bool>();
         private static bool rebuildExtensionList;
 
         private static Assembly assembly;
         private static Type glClass;
         private static Type delegatesClass;
         private static Type importsClass;
-
+        private static FieldInfo[] delegates;
+        
         #endregion
 
         #region public static bool SupportsExtension(string name)
@@ -109,7 +122,8 @@ namespace OpenTK.OpenGL
             // strings "1.0" to "2.1" with "GL_VERSION_1_0" to "GL_VERSION_2_1"
             if (AvailableExtensions.ContainsKey(name))
             {
-                return AvailableExtensions[name];
+                //return AvailableExtensions[name];
+                return true;
             }
                 
             return false;
@@ -125,7 +139,7 @@ namespace OpenTK.OpenGL
         private static void BuildExtensionList()
         {
             // Assumes there is an opengl context current.
-
+            AvailableExtensions.Clear();
             string version_string = GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.VERSION);
             if (String.IsNullOrEmpty(version_string))
             {
@@ -202,11 +216,11 @@ namespace OpenTK.OpenGL
         /// </returns>
         public static Delegate GetDelegate(string name, Type signature)
         {
-            //MethodInfo m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic);
             MethodInfo m;
             return
                 Utilities.GetExtensionDelegate(name, signature) ??
-                ((m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic)) != null ?
+                /*((m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic)) != null ?*/
+                (Imports.import.TryGetValue((name.Substring(2)), out m) ?
                 Delegate.CreateDelegate(signature, m) : null);
         }
 
@@ -229,37 +243,39 @@ namespace OpenTK.OpenGL
         /// </remarks>
         public static void LoadAll()
         {
-            FieldInfo[] v = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
             int supported = 0;
+            if (delegates == null)
+            {
+                delegates = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+            }
 
-            Debug.Print("Will now try to load all {0} opengl functions.", v.Length);
+            Debug.Print("GL.LoadAll(): Loading all {0} OpenGL functions.", delegates.Length);
 
             System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
             time.Reset();
             time.Start();
 
-            foreach (FieldInfo f in v)
+            foreach (FieldInfo f in delegates)
             {
                 Delegate d = GetDelegate(f.Name, f.FieldType);
                 if (d != null)
                 {
                     ++supported;
                 }
-
-                f.SetValue(null, d);
                 
-                //Type type = f.ReflectedType;
-                //TypedReference t = __makeref(type);
-                //f.SetValueDirect(t, d);
+                f.SetValue(null, d);
             }
 
             time.Stop();
-            Trace.WriteLine(String.Format("OpenGL extensions loaded in {0} milliseconds.", time.ElapsedMilliseconds));
-            Debug.Print("Total supported functions: {0}.", supported);
+            Trace.WriteLine(String.Format("{0} OpenGL extensions loaded in {1} milliseconds.", supported, time.ElapsedMilliseconds));
             time.Reset();
 
-            AvailableExtensions.Clear();
             rebuildExtensionList = true;
+        }
+
+        static void set(object d, Delegate value)
+        {
+            d = value;
         }
 
         #endregion
@@ -294,10 +310,15 @@ namespace OpenTK.OpenGL
             if (f == null)
                 return false;
 
-            f.SetValue(null, GetDelegate(f.Name, f.FieldType));
-            rebuildExtensionList = true;
-
-            return f.GetValue(null) != null;
+            Delegate old = f.GetValue(null) as Delegate;
+            Delegate @new = f.GetValue(null) as Delegate;
+            if (old.Target != @new.Target)
+            {
+                f.SetValue(null, @new);
+                rebuildExtensionList = true;
+                return true;
+            }
+            return false;
         }
 
         #endregion
@@ -320,7 +341,7 @@ namespace OpenTK.OpenGL
 
         public static void ClearColor(System.Drawing.Color color)
         {
-            ClearColor(color.R/255.0f, color.G/255.0f, color.B/255.0f, color.A/255.0f);
+            GL.ClearColor(color.R/255.0f, color.G/255.0f, color.B/255.0f, color.A/255.0f);
         }
 
         #endregion
