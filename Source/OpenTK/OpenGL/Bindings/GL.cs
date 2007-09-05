@@ -5871,7 +5871,7 @@ namespace OpenTK.OpenGL
         }
         
         public static 
-        void DrawArray(GL.Enums.BeginMode mode, Int32 first, Int32 count)
+        void DrawArrays(GL.Enums.BeginMode mode, Int32 first, Int32 count)
         {
             Delegates.glDrawArrays((GL.Enums.BeginMode)mode, (Int32)first, (Int32)count);
         }
@@ -5980,13 +5980,13 @@ namespace OpenTK.OpenGL
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe void InterleavedArray(GL.Enums.InterleavedArrayFormat format, Int32 stride, void* pointer)
+        unsafe void InterleavedArrays(GL.Enums.InterleavedArrayFormat format, Int32 stride, void* pointer)
         {
             unsafe { Delegates.glInterleavedArrays((GL.Enums.InterleavedArrayFormat)format, (Int32)stride, (void*)pointer); }
         }
         
         public static 
-        void InterleavedArray(GL.Enums.InterleavedArrayFormat format, Int32 stride, [In, Out] object pointer)
+        void InterleavedArrays(GL.Enums.InterleavedArrayFormat format, Int32 stride, [In, Out] object pointer)
         {
             unsafe
             {
@@ -8594,14 +8594,14 @@ namespace OpenTK.OpenGL
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount)
+        unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount)
         {
             unsafe { Delegates.glMultiDrawArrays((GL.Enums.BeginMode)mode, (Int32*)first, (Int32*)count, (Int32)primcount); }
         }
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32[] count, Int32 primcount)
+        unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32[] count, Int32 primcount)
         {
             unsafe
             {
@@ -8614,7 +8614,7 @@ namespace OpenTK.OpenGL
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] out Int32 count, Int32 primcount)
+        unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] out Int32 count, Int32 primcount)
         {
             unsafe
             {
@@ -8628,7 +8628,7 @@ namespace OpenTK.OpenGL
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] Int32* count, Int32 primcount)
+        unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] Int32* count, Int32 primcount)
         {
             unsafe
             {
@@ -8640,7 +8640,7 @@ namespace OpenTK.OpenGL
         }
         
         public static 
-        void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] Int32[] count, Int32 primcount)
+        void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] Int32[] count, Int32 primcount)
         {
             unsafe
             {
@@ -8653,7 +8653,7 @@ namespace OpenTK.OpenGL
         }
         
         public static 
-        void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] out Int32 count, Int32 primcount)
+        void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] out Int32 count, Int32 primcount)
         {
             unsafe
             {
@@ -8668,7 +8668,7 @@ namespace OpenTK.OpenGL
         
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] Int32* count, Int32 primcount)
+        unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] Int32* count, Int32 primcount)
         {
             unsafe
             {
@@ -8681,7 +8681,7 @@ namespace OpenTK.OpenGL
         }
         
         public static 
-        void MultiDrawArray(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] Int32[] count, Int32 primcount)
+        void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] Int32[] count, Int32 primcount)
         {
             unsafe
             {
@@ -8695,7 +8695,7 @@ namespace OpenTK.OpenGL
         }
         
         public static 
-        void MultiDrawArray(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] out Int32 count, Int32 primcount)
+        void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] out Int32 count, Int32 primcount)
         {
             unsafe
             {
@@ -23925,7 +23925,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void DrawArray(GL.Enums.BeginMode mode, Int32 first, Int32 count)
+            void DrawArrays(GL.Enums.BeginMode mode, Int32 first, Int32 count)
             {
                 Delegates.glDrawArraysEXT((GL.Enums.BeginMode)mode, (Int32)first, (Int32)count);
             }
@@ -24255,13 +24255,13 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void LockArray(Int32 first, Int32 count)
+            void LockArrays(Int32 first, Int32 count)
             {
                 Delegates.glLockArraysEXT((Int32)first, (Int32)count);
             }
             
             public static 
-            void UnlockArray()
+            void UnlockArrays()
             {
                 Delegates.glUnlockArraysEXT();
             }
@@ -24817,14 +24817,14 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount)
+            unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount)
             {
                 unsafe { Delegates.glMultiDrawArraysEXT((GL.Enums.BeginMode)mode, (Int32*)first, (Int32*)count, (Int32)primcount); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32[] count, Int32 primcount)
+            unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32[] count, Int32 primcount)
             {
                 unsafe
                 {
@@ -24837,7 +24837,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] out Int32 count, Int32 primcount)
+            unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32* first, [Out] out Int32 count, Int32 primcount)
             {
                 unsafe
                 {
@@ -24851,7 +24851,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] Int32* count, Int32 primcount)
+            unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] Int32* count, Int32 primcount)
             {
                 unsafe
                 {
@@ -24863,7 +24863,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] Int32[] count, Int32 primcount)
+            void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] Int32[] count, Int32 primcount)
             {
                 unsafe
                 {
@@ -24876,7 +24876,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiDrawArray(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] out Int32 count, Int32 primcount)
+            void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] Int32[] first, [Out] out Int32 count, Int32 primcount)
             {
                 unsafe
                 {
@@ -24891,7 +24891,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiDrawArray(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] Int32* count, Int32 primcount)
+            unsafe void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] Int32* count, Int32 primcount)
             {
                 unsafe
                 {
@@ -24904,7 +24904,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiDrawArray(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] Int32[] count, Int32 primcount)
+            void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] Int32[] count, Int32 primcount)
             {
                 unsafe
                 {
@@ -24918,7 +24918,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiDrawArray(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] out Int32 count, Int32 primcount)
+            void MultiDrawArrays(GL.Enums.BeginMode mode, [Out] out Int32 first, [Out] out Int32 count, Int32 primcount)
             {
                 unsafe
                 {
@@ -29178,9 +29178,29 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetBooleanIndexed(GL.Enums.EXT_draw_buffers2 target, Int32 index, [Out] GL.Enums.Boolean* data)
+            {
+                unsafe
+                {
+                    Delegates.glGetBooleanIndexedvEXT((GL.Enums.EXT_draw_buffers2)target, (UInt32)index, (GL.Enums.Boolean*)data);
+                }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
             unsafe void GetIntegerIndexed(GL.Enums.EXT_draw_buffers2 target, UInt32 index, [Out] Int32* data)
             {
                 unsafe { Delegates.glGetIntegerIndexedvEXT((GL.Enums.EXT_draw_buffers2)target, (UInt32)index, (Int32*)data); }
+            }
+            
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetIntegerIndexed(GL.Enums.EXT_draw_buffers2 target, Int32 index, [Out] Int32* data)
+            {
+                unsafe
+                {
+                    Delegates.glGetIntegerIndexedvEXT((GL.Enums.EXT_draw_buffers2)target, (UInt32)index, (Int32*)data);
+                }
             }
             
             [System.CLSCompliant(false)]
@@ -29196,9 +29216,34 @@ namespace OpenTK.OpenGL
                 }
             }
             
+            public static 
+            void GetIntegerIndexed(GL.Enums.EXT_draw_buffers2 target, Int32 index, [Out] Int32[] data)
+            {
+                unsafe
+                {
+                    fixed (Int32* data_ptr = data)
+                    {
+                        Delegates.glGetIntegerIndexedvEXT((GL.Enums.EXT_draw_buffers2)target, (UInt32)index, (Int32*)data_ptr);
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             void GetIntegerIndexed(GL.Enums.EXT_draw_buffers2 target, UInt32 index, [Out] out Int32 data)
+            {
+                unsafe
+                {
+                    fixed (Int32* data_ptr = &data)
+                    {
+                        Delegates.glGetIntegerIndexedvEXT((GL.Enums.EXT_draw_buffers2)target, (UInt32)index, (Int32*)data_ptr);
+                                data = *data_ptr;
+                    }
+                }
+            }
+            
+            public static 
+            void GetIntegerIndexed(GL.Enums.EXT_draw_buffers2 target, Int32 index, [Out] out Int32 data)
             {
                 unsafe
                 {
@@ -51785,7 +51830,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void DrawMeshArray(GL.Enums.BeginMode mode, Int32 first, Int32 count, Int32 width)
+            void DrawMeshArrays(GL.Enums.BeginMode mode, Int32 first, Int32 count, Int32 width)
             {
                 Delegates.glDrawMeshArraysSUN((GL.Enums.BeginMode)mode, (Int32)first, (Int32)count, (Int32)width);
             }
@@ -61798,14 +61843,14 @@ namespace OpenTK.OpenGL
         {
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode* mode, Int32* first, Int32* count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode* mode, Int32* first, Int32* count, Int32 primcount, Int32 modestride)
             {
                 unsafe { Delegates.glMultiModeDrawArraysIBM((GL.Enums.BeginMode*)mode, (Int32*)first, (Int32*)count, (Int32)primcount, (Int32)modestride); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode* mode, Int32* first, Int32[] count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode* mode, Int32* first, Int32[] count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61818,7 +61863,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode* mode, Int32* first, ref Int32 count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode* mode, Int32* first, ref Int32 count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61831,7 +61876,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode* mode, Int32[] first, Int32* count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode* mode, Int32[] first, Int32* count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61844,7 +61889,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode* mode, Int32[] first, Int32[] count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode* mode, Int32[] first, Int32[] count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61858,7 +61903,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode* mode, Int32[] first, ref Int32 count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode* mode, Int32[] first, ref Int32 count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61872,7 +61917,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode* mode, ref Int32 first, Int32* count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode* mode, ref Int32 first, Int32* count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61885,7 +61930,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode* mode, ref Int32 first, Int32[] count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode* mode, ref Int32 first, Int32[] count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61899,7 +61944,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode* mode, ref Int32 first, ref Int32 count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode* mode, ref Int32 first, ref Int32 count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61913,7 +61958,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode[] mode, Int32* first, Int32* count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode[] mode, Int32* first, Int32* count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61926,7 +61971,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode[] mode, Int32* first, Int32[] count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode[] mode, Int32* first, Int32[] count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61940,7 +61985,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode[] mode, Int32* first, ref Int32 count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode[] mode, Int32* first, ref Int32 count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61954,7 +61999,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode[] mode, Int32[] first, Int32* count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode[] mode, Int32[] first, Int32* count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61967,7 +62012,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiModeDrawArray(GL.Enums.BeginMode[] mode, Int32[] first, Int32[] count, Int32 primcount, Int32 modestride)
+            void MultiModeDrawArrays(GL.Enums.BeginMode[] mode, Int32[] first, Int32[] count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61981,7 +62026,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiModeDrawArray(GL.Enums.BeginMode[] mode, Int32[] first, ref Int32 count, Int32 primcount, Int32 modestride)
+            void MultiModeDrawArrays(GL.Enums.BeginMode[] mode, Int32[] first, ref Int32 count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -61996,7 +62041,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(GL.Enums.BeginMode[] mode, ref Int32 first, Int32* count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(GL.Enums.BeginMode[] mode, ref Int32 first, Int32* count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62009,7 +62054,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiModeDrawArray(GL.Enums.BeginMode[] mode, ref Int32 first, Int32[] count, Int32 primcount, Int32 modestride)
+            void MultiModeDrawArrays(GL.Enums.BeginMode[] mode, ref Int32 first, Int32[] count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62023,7 +62068,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiModeDrawArray(GL.Enums.BeginMode[] mode, ref Int32 first, ref Int32 count, Int32 primcount, Int32 modestride)
+            void MultiModeDrawArrays(GL.Enums.BeginMode[] mode, ref Int32 first, ref Int32 count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62038,7 +62083,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(ref GL.Enums.BeginMode mode, Int32* first, Int32* count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(ref GL.Enums.BeginMode mode, Int32* first, Int32* count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62051,7 +62096,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(ref GL.Enums.BeginMode mode, Int32* first, Int32[] count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(ref GL.Enums.BeginMode mode, Int32* first, Int32[] count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62065,7 +62110,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(ref GL.Enums.BeginMode mode, Int32* first, ref Int32 count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(ref GL.Enums.BeginMode mode, Int32* first, ref Int32 count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62079,7 +62124,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(ref GL.Enums.BeginMode mode, Int32[] first, Int32* count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(ref GL.Enums.BeginMode mode, Int32[] first, Int32* count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62092,7 +62137,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiModeDrawArray(ref GL.Enums.BeginMode mode, Int32[] first, Int32[] count, Int32 primcount, Int32 modestride)
+            void MultiModeDrawArrays(ref GL.Enums.BeginMode mode, Int32[] first, Int32[] count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62106,7 +62151,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiModeDrawArray(ref GL.Enums.BeginMode mode, Int32[] first, ref Int32 count, Int32 primcount, Int32 modestride)
+            void MultiModeDrawArrays(ref GL.Enums.BeginMode mode, Int32[] first, ref Int32 count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62121,7 +62166,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawArray(ref GL.Enums.BeginMode mode, ref Int32 first, Int32* count, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(ref GL.Enums.BeginMode mode, ref Int32 first, Int32* count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62134,7 +62179,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiModeDrawArray(ref GL.Enums.BeginMode mode, ref Int32 first, Int32[] count, Int32 primcount, Int32 modestride)
+            void MultiModeDrawArrays(ref GL.Enums.BeginMode mode, ref Int32 first, Int32[] count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -62148,7 +62193,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void MultiModeDrawArray(ref GL.Enums.BeginMode mode, ref Int32 first, ref Int32 count, Int32 primcount, Int32 modestride)
+            void MultiModeDrawArrays(ref GL.Enums.BeginMode mode, ref Int32 first, ref Int32 count, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -65211,14 +65256,14 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteVertexArray(Int32 n, UInt32* arrays)
+            unsafe void DeleteVertexArrays(Int32 n, UInt32* arrays)
             {
                 unsafe { Delegates.glDeleteVertexArraysAPPLE((Int32)n, (UInt32*)arrays); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteVertexArray(Int32 n, Int32* arrays)
+            unsafe void DeleteVertexArrays(Int32 n, Int32* arrays)
             {
                 unsafe
                 {
@@ -65228,7 +65273,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            void DeleteVertexArray(Int32 n, UInt32[] arrays)
+            void DeleteVertexArrays(Int32 n, UInt32[] arrays)
             {
                 unsafe
                 {
@@ -65240,7 +65285,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void DeleteVertexArray(Int32 n, Int32[] arrays)
+            void DeleteVertexArrays(Int32 n, Int32[] arrays)
             {
                 unsafe
                 {
@@ -65253,7 +65298,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            void DeleteVertexArray(Int32 n, ref UInt32 arrays)
+            void DeleteVertexArrays(Int32 n, ref UInt32 arrays)
             {
                 unsafe
                 {
@@ -65265,7 +65310,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void DeleteVertexArray(Int32 n, ref Int32 arrays)
+            void DeleteVertexArrays(Int32 n, ref Int32 arrays)
             {
                 unsafe
                 {
@@ -65278,14 +65323,14 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenVertexArray(Int32 n, [Out] UInt32* arrays)
+            unsafe void GenVertexArrays(Int32 n, [Out] UInt32* arrays)
             {
                 unsafe { Delegates.glGenVertexArraysAPPLE((Int32)n, (UInt32*)arrays); }
             }
             
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenVertexArray(Int32 n, [Out] Int32* arrays)
+            unsafe void GenVertexArrays(Int32 n, [Out] Int32* arrays)
             {
                 unsafe
                 {
@@ -65295,7 +65340,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            void GenVertexArray(Int32 n, [Out] UInt32[] arrays)
+            void GenVertexArrays(Int32 n, [Out] UInt32[] arrays)
             {
                 unsafe
                 {
@@ -65307,7 +65352,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void GenVertexArray(Int32 n, [Out] Int32[] arrays)
+            void GenVertexArrays(Int32 n, [Out] Int32[] arrays)
             {
                 unsafe
                 {
@@ -65320,7 +65365,7 @@ namespace OpenTK.OpenGL
             
             [System.CLSCompliant(false)]
             public static 
-            void GenVertexArray(Int32 n, [Out] out UInt32 arrays)
+            void GenVertexArrays(Int32 n, [Out] out UInt32 arrays)
             {
                 unsafe
                 {
@@ -65333,7 +65378,7 @@ namespace OpenTK.OpenGL
             }
             
             public static 
-            void GenVertexArray(Int32 n, [Out] out Int32 arrays)
+            void GenVertexArrays(Int32 n, [Out] out Int32 arrays)
             {
                 unsafe
                 {
