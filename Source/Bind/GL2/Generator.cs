@@ -615,19 +615,19 @@ namespace Bind.GL2
             sw.WriteLine("{");
             sw.Indent();
             sw.WriteLine();
-            sw.WriteLine("internal static class {0}", Settings.DelegatesClass);
+            sw.WriteLine("internal static partial class {0}", Settings.DelegatesClass);
             sw.WriteLine("{");
 
             sw.Indent();
             // Disable BeforeFieldInit
-            sw.WriteLine("static {0}()", Settings.DelegatesClass);
-            sw.WriteLine("{");
+            //sw.WriteLine("static {0}()", Settings.DelegatesClass);
+            //sw.WriteLine("{");
             // --- Workaround for mono gmcs 1.2.4 issue, where static initalization fails. ---
             //sw.Indent();
             //sw.WriteLine("{0}.{1}();", Settings.OutputClass, loadAllFuncName);
             //sw.Unindent();
             // --- End workaround ---
-            sw.WriteLine("}");
+            //sw.WriteLine("}");
             sw.WriteLine();
             foreach (Bind.Structures.Delegate d in delegates.Values)
             {
@@ -660,11 +660,10 @@ namespace Bind.GL2
             sw.WriteLine("{");
             sw.Indent();
             sw.WriteLine();
-            sw.WriteLine("internal static class {0}", Settings.ImportsClass);
+            sw.WriteLine("internal static partial class {0}", Settings.ImportsClass);
             sw.WriteLine("{");
-
             sw.Indent();
-            sw.WriteLine("static {0}() {1} {2}", Settings.ImportsClass, "{", "}");    // Disable BeforeFieldInit
+            //sw.WriteLine("static {0}() {1} {2}", Settings.ImportsClass, "{", "}");    // Disable BeforeFieldInit
             sw.WriteLine();
             foreach (Bind.Structures.Delegate d in delegates.Values)
             {
