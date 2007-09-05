@@ -72,7 +72,7 @@ namespace Examples.WinForms
                     }
 
                     backgroundWorker1.ReportProgress((int)(((float)i / all) * 100.0f),
-                        String.Format("{0}/{1} {2}: {3}", (++i).ToString(), all, d != null ? "ok" : "failed", f.Name));
+                        String.Format("({0}/{1}) {2}:\t{3}", (++i).ToString(), all, d != null ? "ok" : "failed", f.Name));
                 }
             }
             catch (Exception expt)
