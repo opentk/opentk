@@ -73,7 +73,7 @@ namespace OpenTK.OpenGL
             importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
         }
 
-        partial class Imports
+        internal static partial class Imports
         {
             internal static SortedList<string, MethodInfo> import;  // This is faster than either Dictionary or SortedDictionary
             static Imports()
