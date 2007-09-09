@@ -18,7 +18,7 @@ namespace OpenTK.Platform.X11
         WindowInfo info = new WindowInfo();
         //DisplayMode mode;
         private Type xplatui;
-        X11GLContext glContext;
+        IGLContext glContext;
 
         private bool disposed;
         private bool fullscreen;
@@ -55,10 +55,10 @@ namespace OpenTK.Platform.X11
             Debug.Print("Data read from System.Windows.Forms.XplatUIX11: {0}", info.ToString());
 
             //this.mode = mode;
-            glContext = new X11GLContext(null, info);
+            glContext = new GLContext(null, info);
             //glContext.PrepareContext(info);
             
-            info.VisualInfo = glContext.VisualInfo;
+            info.VisualInfo = (glContext.Info as X11.WindowInfo).VisualInfo;
 
             Debug.Print("Setting XplatUIX11.CustomVisual");
             xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
@@ -83,8 +83,8 @@ namespace OpenTK.Platform.X11
 
             try
             {
-                glContext.Handle = info.Handle = (sender as UserControl).Handle;
-                glContext.CreateContext(null, true);
+                (glContext.Info as X11.WindowInfo).Handle = info.Handle = (sender as UserControl).Handle;
+                glContext.CreateContext(true, null);
                 glContext.MakeCurrent();
             }
             catch (ApplicationException expt)
@@ -128,7 +128,8 @@ namespace OpenTK.Platform.X11
                 return Functions.XDefaultColormap(info.Display, info.Screen);
             }
 
-            return API.CreateColormap(info.Display, info.RootWindow, glContext.VisualInfo.visual, 0/*AllocNone*/);
+            return API.CreateColormap(info.Display, info.RootWindow,
+                (glContext.Info as X11.WindowInfo).VisualInfo.visual, 0/*AllocNone*/);
         }
 
         #endregion

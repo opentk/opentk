@@ -18,9 +18,5 @@ namespace OpenTK.Platform
     {
         IntPtr Handle { get; }
         IWindowInfo Parent { get; }
-        void GetInfoFrom(System.Windows.Forms.Control control);
-        void GetInfoFrom(System.Windows.Forms.NativeWindow window);
-        void GetInfoFrom(OpenTK.GameWindow window);
-        void GetInfoFrom(IWindowInfo info);
     }
 }
