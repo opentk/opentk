@@ -5,9 +5,9 @@ using System.Text;
 namespace OpenTK.Platform
 {
     /// <summary>
-    /// A dummy GLControl to be used inside the Visual Studio designer.
+    /// An IGLControl implementation to be used inside the Visual Studio designer.
     /// </summary>
-    internal class DummyGLControl : IGLControl
+    internal sealed class DummyGLControl : IGLControl
     {
         bool fullscreen;
         IGLContext glContext = new DummyGLContext();
