@@ -32,6 +32,7 @@ namespace Examples.WinForms
             catch (Exception e)
             {
                 System.Diagnostics.Trace.WriteLine("Exception during initialization, aborting: {0}", e.ToString());
+                this.Close();
                 return;
             }
         }
