@@ -10,10 +10,59 @@ using System.Text;
 
 namespace OpenTK.Platform
 {
+    /// <summary>
+    /// Provides methods for creating and interacting with an OpenGL context.
+    /// </summary>
     public interface IGLContext : IDisposable
     {
         /// <summary>
-        /// Swaps buffers on a context.  This presents the rendered scene to the user.
+        /// Gets a handle to the OpenGL rendering context.
+        /// </summary>
+        IntPtr Context { get; }
+
+        /// <summary>
+        /// Gets the IWindowInfo describing the window associated with this context.
+        /// </summary>
+        IWindowInfo Info { get; }
+
+        /// <summary>
+        /// Gets the DisplayMode of the context.
+        /// </summary>
+        DisplayMode Mode { get; }
+
+        /// <summary>
+        /// Creates an OpenGL context.
+        /// </summary>
+        void CreateContext();
+
+        /// <summary>
+        /// Creates an OpenGL context with a direct or indirect rendering mode. This parameter is ignored
+        /// on Windows platforms (direct mode only).
+        /// </summary>
+        /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
+        /// <remarks>
+        /// <para>
+        /// Direct rendering is the default rendering mode for OpenTK, since it can provide higher performance
+        /// in some circumastances.
+        /// </para>
+        /// <para>
+        /// The 'direct' parameter is a hint, and will ignored if the specified mode is not supported (e.g. setting
+        /// indirect rendering on Windows platforms).
+        /// </para>
+        /// </remarks>
+        void CreateContext(bool direct);
+
+        /// <summary>
+        /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
+        /// specified IGLContext.
+        /// </summary>
+        /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
+        /// <param name="source">The source IGLContext to share state from.</param>.
+        /// <seealso cref="CreateContext(bool)"/>
+        void CreateContext(bool direct, IGLContext source);
+
+        /// <summary>
+        /// Swaps buffers on a context. This presents the rendered scene to the user.
         /// </summary>
         void SwapBuffers();
 

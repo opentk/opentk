@@ -5,13 +5,17 @@
  */
 #endregion
 
+#region --- Using Directives ---
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 using OpenTK.OpenGL;
-using System.Diagnostics;
+
+#endregion
 
 namespace OpenTK.Platform.Windows
 {
@@ -24,7 +28,7 @@ namespace OpenTK.Platform.Windows
         private IntPtr deviceContext;
         private IntPtr renderContext;
         static private IntPtr opengl32Handle;
-        static private readonly string opengl32Name = "OPENGL32.DLL";
+        private const string opengl32Name = "OPENGL32.DLL";
         private WindowInfo windowInfo = new WindowInfo();
 
         private DisplayMode mode;
@@ -158,10 +162,58 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+        
+        #region --- IGLContext Members ---
+
+        #region public IntPtr Context
+
+        public IntPtr Context
+        {
+            get { return renderContext; }
+            private set { renderContext = value; }
+        }
+
+        #endregion
+
+        #region public IWindowInfo Info
+
+        public IWindowInfo Info
+        {
+            get { return windowInfo; }
+        }
+
+        #endregion
+
+        #region public DisplayMode Mode
+
+        public DisplayMode Mode
+        {
+            get { return new DisplayMode(mode); }
+        }
+
+        #endregion
 
         #region public void CreateContext()
 
         public void CreateContext()
+        {
+            this.CreateContext(true, null);
+        }
+
+        #endregion
+
+        #region public void CreateContext(bool direct)
+
+        public void CreateContext(bool direct)
+        {
+            this.CreateContext(direct, null);
+        }
+
+        #endregion
+
+        #region public void CreateContext(bool direct, IGLContext source)
+
+        public void CreateContext(bool direct, IGLContext source)
         {
             this.PrepareContext();
 
@@ -175,15 +227,19 @@ namespace OpenTK.Platform.Windows
             }
             else
             {
-                throw new ApplicationException("Could not create opengl Rendering Context.");
+                throw new ApplicationException("Could not create OpenGL render context (Wgl.CreateContext() return 0).");
             }
             Wgl.Imports.MakeCurrent(deviceContext, renderContext);
             Wgl.LoadAll();
+
+            if (source != null)
+            {
+                Debug.Print("Sharing state with context {0}", (source as WinGLContext).Context);
+                Wgl.Imports.ShareLists(renderContext, (source as WinGLContext).Context);
+            }
         }
 
         #endregion
-
-        #region --- IGLContext Members ---
 
         #region public void SwapBuffers()
 
