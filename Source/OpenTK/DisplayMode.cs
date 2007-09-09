@@ -33,37 +33,63 @@ namespace OpenTK
 
         #region --- Constructors ---
 
+        public DisplayMode(DisplayMode mode)
+            : this(mode.Width, mode.Height, mode.Color, mode.DepthBits, mode.StencilBits, mode.AuxBits, mode.Buffers,
+            mode.Fullscreen, mode.Stereo, mode.Vsync, mode.RefreshRate)
+        {
+        }
+
         /// <summary>
-        /// Constructs a new DisplayMode from the given parameters.
+        /// Constructs a new DisplayMode from the specified parameters.
         /// </summary>
         /// <param name="width">The Width of the DisplayMode, in pixels.</param>
         /// <param name="height">The Height of the DisplayMode, in pixels.</param>
-        /// <param name="color">The ColorDepth of the DisplayMode.</param>
-        /// <param name="depth">The size of the Depth Buffer, in bits.</param>
-        /// <param name="stencil">The size of Stencil Buffer, in bits.</param>
-        /// <param name="aux">The size of the Auxilliary Buffer, in bits.</param>
+        /// <param name="color">The ColorMode of the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        /// <param name="stencil">The number of bits in the stencil buffer.</param>
+        /// <param name="aux">The number of bits in the auxilliary buffer.</param>
         /// <param name="fullscreen">Set to true for a fullscreen DisplayMode.</param>
         /// <param name="stereo">Set to true for a DisplayMode with stereographic capabilities.</param>
-        /// <param name="buffers">The number of Display Buffers. Usually one, two or three.</param>
+        /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
         /// <param name="vsync">Set to true to sync the updates to the screen refresh rate.</param>
         /// <param name="refresh">The desired RefreshRate. Taken into account only for Fullscreen DisplayModes.</param>
-        public DisplayMode(
-            int width,
-            int height,
-            ColorMode color,
-            int depth,
-            int stencil,
-            int aux,
-            int buffers,
-            bool fullscreen,
-            bool stereo,
-            bool vsync,
-            float refresh
-        )
+        public DisplayMode(int width, int height, ColorMode color, int depth, int stencil, int aux, int buffers,
+            bool fullscreen, bool stereo, bool vsync, float refresh)
         {
             this.Width = width;
             this.Height = height;
             this.Color = color;
+            this.DepthBits = depth;
+            this.StencilBits = stencil;
+            this.AuxBits = aux;
+            this.Buffers = buffers;
+            this.Fullscreen = fullscreen;
+            this.Stereo = stereo;
+            this.Vsync = vsync;
+            this.RefreshRate = refresh;
+        }
+
+
+        /// <summary>
+        /// Constructs a new DisplayMode from the specified parameters.
+        /// </summary>
+        /// <param name="width">The Width of the DisplayMode, in pixels.</param>
+        /// <param name="height">The Height of the DisplayMode, in pixels.</param>
+        /// <param name="color">The number of bits in the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        /// <param name="stencil">The number of bits in the stencil buffer.</param>
+        /// <param name="aux">The number of bits in the auxilliary buffer.</param>
+        /// <param name="fullscreen">Set to true for a fullscreen DisplayMode.</param>
+        /// <param name="stereo">Set to true for a DisplayMode with stereographic capabilities.</param>
+        /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
+        /// <param name="vsync">Set to true to sync the updates to the screen refresh rate.</param>
+        /// <param name="refresh">The desired RefreshRate. Taken into account only for Fullscreen DisplayModes.</param>
+        public DisplayMode(int width, int height, int color, int depth, int stencil, int aux, int buffers,
+            bool fullscreen, bool stereo, bool vsync, float refresh)
+        {
+            this.Width = width;
+            this.Height = height;
+            this.Color = new ColorMode(color);
             this.DepthBits = depth;
             this.StencilBits = stencil;
             this.AuxBits = aux;
@@ -83,12 +109,84 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Creates a DisplayMode.
+        /// Constructs a new DisplayMode.
         /// </summary>
         /// <param name="width">The Width of the DisplayMode in pixels.</param>
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         public DisplayMode(int width, int height)
             : this(width, height, new ColorMode(32), 16, 0, 0, 0, false, false, false, 0.0f)
+        {
+        }
+
+        /// <summary>
+        /// Constructs a new DisplayMode.
+        /// </summary>
+        /// <param name="width">The Width of the DisplayMode in pixels.</param>
+        /// <param name="height">The Height of the DisplayMode in pixels.</param>
+        /// <param name="color">The number of bits in the color buffer.</param>
+        public DisplayMode(int width, int height, int color)
+            : this(width, height, new ColorMode(color), 16, 0, 0, 0, false, false, false, 0.0f)
+        {
+        }
+
+        /// <summary>
+        /// Constructs a new DisplayMode.
+        /// </summary>
+        /// <param name="width">The Width of the DisplayMode in pixels.</param>
+        /// <param name="height">The Height of the DisplayMode in pixels.</param>
+        /// <param name="color">The ColorMode of the color buffer.</param>
+        public DisplayMode(int width, int height, ColorMode color)
+            : this(width, height, color, 16, 0, 0, 0, false, false, false, 0.0f)
+        {
+        }
+
+        /// <summary>
+        /// Constructs a new DisplayMode.
+        /// </summary>
+        /// <param name="width">The Width of the DisplayMode in pixels.</param>
+        /// <param name="height">The Height of the DisplayMode in pixels.</param>
+        /// <param name="color">The number of bits in the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        public DisplayMode(int width, int height, int color, int depth)
+            : this(width, height, new ColorMode(color), depth, 0, 0, 0, false, false, false, 0.0f)
+        {
+        }
+
+        /// <summary>
+        /// Constructs a new DisplayMode.
+        /// </summary>
+        /// <param name="width">The Width of the DisplayMode in pixels.</param>
+        /// <param name="height">The Height of the DisplayMode in pixels.</param>
+        /// <param name="color">The ColorMode of the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        public DisplayMode(int width, int height, ColorMode color, int depth)
+            : this(width, height, color, depth, 0, 0, 0, false, false, false, 0.0f)
+        {
+        }
+
+        /// <summary>
+        /// Constructs a new DisplayMode.
+        /// </summary>
+        /// <param name="width">The Width of the DisplayMode in pixels.</param>
+        /// <param name="height">The Height of the DisplayMode in pixels.</param>
+        /// <param name="color">The number of bits in the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        /// <param name="fullscreen">True for a fullscreen DisplayMode, false otherwise.</param>
+        public DisplayMode(int width, int height, int color, int depth, bool fullscreen)
+            : this(width, height, color, depth, 0, 0, 0, fullscreen, false, false, 0.0f)
+        {
+        }
+
+        /// <summary>
+        /// Constructs a new DisplayMode.
+        /// </summary>
+        /// <param name="width">The Width of the DisplayMode in pixels.</param>
+        /// <param name="height">The Height of the DisplayMode in pixels.</param>
+        /// <param name="color">The ColorMode of the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        /// <param name="fullscreen">True for a fullscreen DisplayMode, false otherwise.</param>
+        public DisplayMode(int width, int height, ColorMode color, int depth, bool fullscreen)
+            : this(width, height, color, depth, 0, 0, 0, fullscreen, false, false, 0.0f)
         {
         }
 
@@ -191,7 +289,6 @@ namespace OpenTK
             get { return this.refreshRate; }
             set { this.refreshRate = value; }
         }
-
 
         #endregion
 
