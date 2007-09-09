@@ -18,7 +18,7 @@ using System.Diagnostics;
 
 namespace Examples.Tests
 {
-    public class S02_RawInput_Logger : GameWindow, IExample
+    public class S02_RawInput_Logger : GameWindow//, IExample
     {
         #region IExample Members
 
