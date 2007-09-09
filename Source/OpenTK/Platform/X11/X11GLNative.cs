@@ -255,9 +255,9 @@ namespace OpenTK.Platform.X11
                 Debug.Print("Display: {0}, Screen {1}, Root window: {2}",
                     window.Display, window.Screen, window.RootWindow);
 
-                glContext = new X11GLContext(mode);
-                glContext.PrepareContext(window);
-                window.VisualInfo = glContext.windowInfo.VisualInfo;
+                glContext = new X11GLContext(mode, window);
+                //glContext.PrepareContext(window);
+                window.VisualInfo = glContext.VisualInfo;
 
                 // Create a window on this display using the visual above
                 Debug.Write("Opening render window... ");
@@ -303,7 +303,7 @@ namespace OpenTK.Platform.X11
 
                 Debug.Print("done! (id: {0})", window.Handle);
 
-                glContext.windowInfo.Handle = window.Handle;
+                glContext.Handle = window.Handle;
                 glContext.CreateContext(null, true);
 
                 glContext.MakeCurrent();

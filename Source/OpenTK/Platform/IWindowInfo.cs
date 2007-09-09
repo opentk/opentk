@@ -11,11 +11,16 @@ using System.Text;
 namespace OpenTK.Platform
 {
     /// <summary>
-    /// This interface supports OpenTK, and is not intended for use by OpenTK programs.
+    /// Provides a platform independent mechanism to interact with System.Windows.Forms.Control,
+    /// System.Windows.Forms.NativeWindow and OpenTK.GameWindow low-level implementation data.
     /// </summary>
     public interface IWindowInfo
     {
         IntPtr Handle { get; }
         IWindowInfo Parent { get; }
+        void GetInfoFrom(System.Windows.Forms.Control control);
+        void GetInfoFrom(System.Windows.Forms.NativeWindow window);
+        void GetInfoFrom(OpenTK.GameWindow window);
+        void GetInfoFrom(IWindowInfo info);
     }
 }
