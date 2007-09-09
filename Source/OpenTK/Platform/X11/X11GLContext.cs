@@ -15,29 +15,55 @@ using OpenTK.OpenGL;
 namespace OpenTK.Platform.X11
 {
     /// <summary>
-    /// Provides methods to create and control an opengl context on X11.
+    /// Provides methods to create and control an opengl context on the X11 platform.
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs. 
     /// </summary>
-    public sealed class X11GLContext : OpenTK.Platform.IGLContext
+    internal sealed class X11GLContext : OpenTK.Platform.IGLContext
     {
         private IntPtr context;
         private DisplayMode mode;
-        internal WindowInfo windowInfo;
-
-        internal IntPtr visual;
+        private WindowInfo windowInfo;
+        private IntPtr visual;
 
         private bool disposed;
 
-        #region --- Public Constructor ---
+        #region --- Constructors ---
 
-        internal X11GLContext()
-            : this(new DisplayMode())
+        internal X11GLContext() : this(new DisplayMode(), new WindowInfo())
         {
         }
 
-        internal X11GLContext(DisplayMode mode)
+        internal X11GLContext(DisplayMode mode) : this(mode, new WindowInfo())
         {
-            this.windowInfo = new WindowInfo();
+        }
+
+        internal X11GLContext(DisplayMode mode, IWindowInfo info)
+        {
+            if (info == null)
+                throw new ArgumentException("IWindowInfo cannot be null.");
+
+            this.windowInfo = info as WindowInfo;
             this.mode = mode;
+            this.ChooseContext();
+        }
+
+        #endregion
+
+        #region internal XVisualInfo VisualInfo
+
+        internal XVisualInfo VisualInfo
+        {
+            get { return windowInfo.VisualInfo; }
+        }
+
+        #endregion
+
+        #region internal IntPtr Handle
+
+        internal IntPtr Handle
+        {
+            get { return windowInfo.Handle; }
+            set { windowInfo.Handle = value; }
         }
 
         #endregion
@@ -62,12 +88,10 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region internal void PrepareContext(X11.WindowInfo info)
+        #region private void PrepareContext()
 
-        internal void PrepareContext(X11.WindowInfo info)
+        private void ChooseContext()
         {
-            this.windowInfo = new WindowInfo(info);
-
             List<int> visualAttributes = new List<int>();
 
             if (mode == null)
