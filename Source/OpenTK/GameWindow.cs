@@ -38,20 +38,22 @@ namespace OpenTK
         /// </summary>
         public GameWindow()
         {
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                Environment.OSVersion.Platform == PlatformID.Win32Windows)
+            switch (Environment.OSVersion.Platform)
             {
-                glWindow = new OpenTK.Platform.Windows.WinGLNative();
-            }
-            else if (Environment.OSVersion.Platform == PlatformID.Unix)
-            {
-                glWindow = new OpenTK.Platform.X11.X11GLNative();
-            }
-            else
-            {
-                throw new PlatformNotSupportedException(
-                    "Your platform is not currently supported. Refer to http://opentk.sourceforge.net for more information."
-                );
+                case PlatformID.Win32NT:
+                case PlatformID.Win32S:
+                case PlatformID.Win32Windows:
+                case PlatformID.WinCE:
+                    glWindow = new OpenTK.Platform.Windows.WinGLNative();
+                    break;
+            
+                case PlatformID.Unix:
+                case (PlatformID)128:
+                    glWindow = new OpenTK.Platform.X11.X11GLNative();
+                    break;
+                
+                default:
+                    throw new PlatformNotSupportedException("Your platform is not supported currently. Please, refer to http://opentk.sourceforge.net for more information.");
             }
 
             glWindow.Resize += new ResizeEvent(glWindow_Resize);
