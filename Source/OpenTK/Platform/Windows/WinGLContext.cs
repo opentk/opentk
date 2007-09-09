@@ -13,16 +13,19 @@ using System.Runtime.InteropServices;
 using OpenTK.OpenGL;
 using System.Diagnostics;
 
-
 namespace OpenTK.Platform.Windows
 {
-    public sealed class WinGLContext : OpenTK.Platform.IGLContext, IDisposable
+    /// <summary>
+    /// Provides methods to create and control an opengl context on the Windows platform.
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs. 
+    /// </summary>
+    internal sealed class WinGLContext : OpenTK.Platform.IGLContext, IDisposable
     {
         private IntPtr deviceContext;
         private IntPtr renderContext;
         static private IntPtr opengl32Handle;
         static private readonly string opengl32Name = "OPENGL32.DLL";
-        private IntPtr windowHandle;
+        private WindowInfo windowInfo = new WindowInfo();
 
         private DisplayMode mode;
 
@@ -30,25 +33,33 @@ namespace OpenTK.Platform.Windows
 
         #region --- Contructors ---
 
-        public WinGLContext()
-            : this(new DisplayMode(640, 480, new ColorMode(32), 16, 0, 0, 2, false, false, false, 0.0f))
+        internal WinGLContext()
+            : this(new DisplayMode(640, 480))
         {
         }
 
-        public WinGLContext(DisplayMode mode)
+        internal WinGLContext(DisplayMode mode)
         {
-            Trace.WriteLine(String.Format("Creating opengl context (driver: {0})", this.ToString()));
+            //Trace.WriteLine(String.Format("Creating opengl context (driver: {0})", this.ToString()));
+            this.mode = mode;
+        }
+
+        public WinGLContext(DisplayMode mode, IWindowInfo info)
+        {
+            this.windowInfo = info as WindowInfo;
             this.mode = mode;
         }
 
         #endregion
 
-        #region public void PrepareContext(IntPtr handle)
+        #region private void PrepareContext()
 
-        public void PrepareContext(IntPtr handle)
+        private void PrepareContext()
         {
-            this.windowHandle = handle;
-            Debug.WriteLine(String.Format("OpenGL context is bound to handle: {0}", windowHandle));
+            if (this.windowInfo.Handle == IntPtr.Zero)
+                throw new ApplicationException("No Window Handle specified for opengl context.");
+
+            Debug.WriteLine(String.Format("OpenGL context is bound to handle: {0}", this.windowInfo.Handle));
 
             // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.
             if (opengl32Handle == IntPtr.Zero)
@@ -68,7 +79,7 @@ namespace OpenTK.Platform.Windows
                 Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
             }
 
-            deviceContext = API.GetDC(windowHandle);
+            deviceContext = API.GetDC(this.windowInfo.Handle);
             Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
 
             Debug.Write("Setting pixel format... ");
@@ -152,6 +163,8 @@ namespace OpenTK.Platform.Windows
 
         public void CreateContext()
         {
+            this.PrepareContext();
+
             Debug.Write("Creating render context... ");
             // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
             // and Wgl extensions will fail to load.
@@ -302,7 +315,7 @@ namespace OpenTK.Platform.Windows
 
             if (deviceContext != IntPtr.Zero)
             {
-                if (!API.ReleaseDC(windowHandle, deviceContext))
+                if (!API.ReleaseDC(this.windowInfo.Handle, deviceContext))
                 {
                     //throw new ApplicationException("Could not release device context. Error: " + Marshal.GetLastWin32Error());
                     //Debug.Print("Could not destroy the device context. Error: {0}", Marshal.GetLastWin32Error());

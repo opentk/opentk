@@ -7,17 +7,58 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 
 namespace OpenTK.Platform.Windows
 {
     /// <summary>
-    /// Describes a Windows window.
+    /// Describes a Windows.Form.Control, Windows.Forms.NativeWindow or OpenTK.GameWindow on the Windows platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal class WindowInfo : IWindowInfo
+    internal sealed class WindowInfo : IWindowInfo
     {
         private IntPtr handle;
         private WindowInfo parent;
+
+        public WindowInfo()
+        {
+        }
+
+        public WindowInfo(IWindowInfo info)
+        {
+            if (info == null)
+                throw new ArgumentException("WindowInfo cannot be null.");
+
+            this.Handle = info.Handle;
+            this.Parent = info.Parent;
+        }
+
+        public WindowInfo(Control control)
+        {
+            if (control == null)
+                throw new ArgumentException("Control cannot be null.");
+
+            this.Handle = control.Handle;
+            this.Parent = control.Parent != null ? new WindowInfo(control.Parent) : this.Parent;
+        }
+
+        public WindowInfo(NativeWindow window)
+        {
+            if (window == null)
+                throw new ArgumentException("NativeWindow cannot be null.");
+
+            this.Handle = window.Handle;
+            this.Parent = null;
+        }
+
+        public WindowInfo(GameWindow window)
+        {
+            if (window == null)
+                throw new ArgumentException("GameWindow cannot be null.");
+
+            this.Handle = window.WindowInfo.Handle;
+            this.Parent = window.WindowInfo.Parent;
+        }
 
         #region --- IWindowInfo Members ---
 
@@ -30,7 +71,57 @@ namespace OpenTK.Platform.Windows
         public IWindowInfo Parent
         {
             get { return parent; }
-            internal set { parent = value as WindowInfo; }
+            internal set
+            {
+                parent = value as WindowInfo;
+            }
+        }
+
+        public void GetInfoFrom(Control control)
+        {
+            if (control == null)
+                throw new ArgumentException("Control cannot be null.");
+
+            this.Handle = control.Handle;
+            if (control.Parent == null)
+            {
+                this.Parent = null;
+            }
+            else
+            {
+                if (this.Parent == null)
+                    this.Parent = new WindowInfo(control.Parent);
+                else
+                    this.Parent.GetInfoFrom(control.Parent);
+            }
+        }
+
+        public void GetInfoFrom(NativeWindow window)
+        {
+            if (window == null)
+                throw new ArgumentException("NativeWindow cannot be null.");
+
+            this.Handle = window.Handle;
+            this.Parent = null;
+        }
+
+        public void GetInfoFrom(GameWindow window)
+        {
+            if (window == null)
+                throw new ArgumentException("GameWindow cannot be null.");
+
+            WindowInfo info = (window.WindowInfo as Windows.WindowInfo);
+            this.Handle = info.Handle;
+            this.Parent = info.Parent;
+        }
+
+        public void GetInfoFrom(IWindowInfo info)
+        {
+            if (info == null)
+                throw new ArgumentException("IWindowInfo cannot be null.");
+         
+            this.Handle = info.Handle;
+            this.Parent = info.Parent;
         }
 
         #endregion
@@ -40,6 +131,5 @@ namespace OpenTK.Platform.Windows
             return String.Format("Windows.WindowInfo: Handle {0}, Parent ({1})",
                 this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
         }
-
     }
 }

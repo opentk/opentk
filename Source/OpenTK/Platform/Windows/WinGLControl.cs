@@ -35,8 +35,6 @@ namespace OpenTK.Platform.Windows
             
             c.HandleCreated += new EventHandler(c_HandleCreated);
             c.HandleDestroyed += new EventHandler(c_HandleDestroyed);
-
-            glContext = new WinGLContext(mode);
         }
 
         #endregion
@@ -48,7 +46,10 @@ namespace OpenTK.Platform.Windows
 
             try
             {
-                glContext.PrepareContext((sender as Control).Handle);
+                if (glContext != null)
+                    glContext.Dispose();
+
+                glContext = new WinGLContext(mode, new WindowInfo(sender as Control));
                 glContext.CreateContext();
                 glContext.MakeCurrent();
             }

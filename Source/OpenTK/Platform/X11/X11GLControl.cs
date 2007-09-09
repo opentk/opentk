@@ -25,6 +25,8 @@ namespace OpenTK.Platform.X11
 
         #region --- Contructors ---
 
+        #region public X11GLControl(UserControl c)
+
         public X11GLControl(UserControl c)
         {
             Debug.WriteLine("Creating opengl control (X11GLControl driver)");
@@ -37,43 +39,41 @@ namespace OpenTK.Platform.X11
                 throw new ArgumentException("UserControl c may not be null.");
             }
 
-            //this.mode = mode;
-            glContext = new X11GLContext(null);
-
             c.HandleCreated += new EventHandler(c_HandleCreated);
             c.HandleDestroyed += new EventHandler(c_HandleDestroyed);
 
             xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-            Debug.Write("System.Windows.Forms.XplatUIX11: ");
+            if (xplatui == null)
+                throw new ApplicationException("Could not get System.Windows.Forms.XplatUIX11 through reflection. Unsupported platform or Mono runtime version, aborting.");
+    
+            info.Display = (IntPtr)xplatui.GetField("DisplayHandle",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            info.RootWindow = (IntPtr)xplatui.GetField("RootWindow",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            info.Screen = (int)xplatui.GetField("ScreenNo",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            Debug.Print("Data read from System.Windows.Forms.XplatUIX11: {0}", info.ToString());
 
-            if (xplatui != null)
-            {
-                info.Display = (IntPtr)xplatui.GetField("DisplayHandle",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            //this.mode = mode;
+            glContext = new X11GLContext(null, info);
+            //glContext.PrepareContext(info);
+            
+            info.VisualInfo = glContext.VisualInfo;
 
-                info.RootWindow = (IntPtr)xplatui.GetField("RootWindow",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            Debug.Print("Setting XplatUIX11.CustomVisual");
+            xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+                .SetValue(null, info.VisualInfo.visual);
 
-                info.Screen = (int)xplatui.GetField("ScreenNo",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
-
-                Debug.Print("Display: {0}, Screen: {1}, Root Window: {2}, GLControl: {3}",
-                    info.Display, info.Screen, info.RootWindow, info.Handle);
-
-                glContext.PrepareContext(info);
-                info.VisualInfo = glContext.windowInfo.VisualInfo;
-
-                Debug.Print("Setting XplatUIX11.CustomVisual");
-                xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                    .SetValue(null, info.VisualInfo.visual);
-
-                Debug.Print("Setting XplatUIX11.CustomColormap");
-                xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                    .SetValue(null, API.CreateColormap(info.Display, info.RootWindow, info.VisualInfo.visual, 0));
-            }
+            Debug.Print("Setting XplatUIX11.CustomColormap");
+            xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+                .SetValue(null, API.CreateColormap(info.Display, info.RootWindow, info.VisualInfo.visual, 0));
 
             Debug.Unindent();
         }
+
+        #endregion
+
+        #region void c_HandleCreated(object sender, EventArgs e)
 
         void c_HandleCreated(object sender, EventArgs e)
         {
@@ -83,7 +83,7 @@ namespace OpenTK.Platform.X11
 
             try
             {
-                glContext.windowInfo.Handle = info.Handle = (sender as UserControl).Handle;
+                glContext.Handle = info.Handle = (sender as UserControl).Handle;
                 glContext.CreateContext(null, true);
                 glContext.MakeCurrent();
             }
@@ -98,11 +98,17 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        #endregion
+
+        #region void c_HandleDestroyed(object sender, EventArgs e)
+
         void c_HandleDestroyed(object sender, EventArgs e)
         {
             Debug.Print("X11GLControl handle destroyed, disposing X11GLContext.");
             glContext.Dispose();
         }
+
+        #endregion
 
         #region private IntPtr FindColormap()
 
@@ -122,7 +128,7 @@ namespace OpenTK.Platform.X11
                 return Functions.XDefaultColormap(info.Display, info.Screen);
             }
 
-            return API.CreateColormap(info.Display, info.RootWindow, glContext.windowInfo.VisualInfo.visual, 0/*AllocNone*/);
+            return API.CreateColormap(info.Display, info.RootWindow, glContext.VisualInfo.visual, 0/*AllocNone*/);
         }
 
         #endregion

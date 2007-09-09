@@ -82,11 +82,6 @@ namespace OpenTK.Platform
 
         private static Platform platform = Platform.Unknown;
 
-        public static IWindowInfo GetWindowInfo(Form form)
-        {
-            throw new NotImplementedException();
-        }
-
         #region public static IntPtr GetAddress(string function)
 
         /// <summary>

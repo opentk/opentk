@@ -215,6 +215,7 @@ namespace OpenTK.Platform.Windows
         public IWindowInfo WindowInfo
         {
             get { return window; }
+            private set { window = value as WindowInfo; }
         }
 
         #endregion
@@ -287,16 +288,14 @@ namespace OpenTK.Platform.Windows
 
         public void OnCreate(EventArgs e)
         {
-            window = new WindowInfo();
-            window.Handle = this.Handle;
-            window.Parent = null;
+            this.WindowInfo = new WindowInfo(this);
 
             Debug.Print("Window created: {0}", window);
 
             try
             {
-                glContext = new WinGLContext(this.mode);
-                glContext.PrepareContext(this.Handle);
+                glContext = new WinGLContext(this.mode, this.WindowInfo);
+                //glContext.PrepareContext(this.Handle);
                 glContext.CreateContext();
                 //glContext.MakeCurrent();
                 GL.LoadAll();
