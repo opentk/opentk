@@ -5,9 +5,9 @@ using System.Text;
 namespace OpenTK.Platform
 {
     /// <summary>
-    /// A dummy GLContext to be used inside the Visual Studio designer.
+    /// An empty IGLContext implementation to be used inside the Visual Studio designer.
     /// </summary>
-    internal class DummyGLContext : IGLContext
+    internal sealed class DummyGLContext : IGLContext
     {
         #region --- IGLContext Members ---
 
