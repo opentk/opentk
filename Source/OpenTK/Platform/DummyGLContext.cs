@@ -9,33 +9,30 @@ namespace OpenTK.Platform
     /// </summary>
     internal sealed class DummyGLContext : IGLContext
     {
+        WindowInfo info = new WindowInfo();
+        DisplayMode mode = new DisplayMode();
+
         #region --- IGLContext Members ---
 
-        public void SwapBuffers()
-        {
-        }
+        public IntPtr Context { get { return IntPtr.Zero; } }
+        public IWindowInfo Info { get { return info; } }
+        public DisplayMode Mode { get { return mode; } }
 
-        public void MakeCurrent()
-        {
-        }
+        public void CreateContext() { }
+        public void CreateContext(bool direct) { }
+        public void CreateContext(bool direct, IGLContext source) { }
 
-        public IntPtr GetAddress(string function)
-        {
-            return IntPtr.Zero;
-        }
+        public void SwapBuffers() { }
+        public void MakeCurrent() { }
 
-        public IEnumerable<DisplayMode> GetDisplayModes()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
+        public IntPtr GetAddress(string function) { return IntPtr.Zero; }
+        public IEnumerable<DisplayMode> GetDisplayModes() { return null; }
 
         #endregion
 
         #region --- IDisposable Members ---
 
-        public void Dispose()
-        {
-        }
+        public void Dispose() { }
 
         #endregion
     }

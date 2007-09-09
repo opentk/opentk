@@ -8,9 +8,9 @@ namespace OpenTK.Platform
     /// <summary>
     /// Describes a Windows.Form.Control, Windows.Forms.NativeWindow or OpenTK.GameWindow.
     /// </summary>
-    public sealed class WindowInfo : IWindowInfo
+    public sealed class WindowInfo : IMutableWindowInfo
     {
-        IWindowInfo implementation;
+        IMutableWindowInfo implementation;
 
         #region --- Constructors ---
 
@@ -45,7 +45,7 @@ namespace OpenTK.Platform
         /// <param name="control">The System.Windows.Forms.Control to get info from.</param>
         public WindowInfo(Control control) : this()
         {
-            implementation.GetInfoFrom(control);
+            implementation.CopyInfoFrom(implementation.GetInfoFrom(control));
         }
 
         /// <summary>
@@ -86,40 +86,49 @@ namespace OpenTK.Platform
             get { return implementation.Parent; }
         }
 
+        #endregion
+
+        #region --- IMutableWindowInfo Members ---
+
         /// <summary>
         /// Updates the WindowInfo to describe the specified Control.
         /// </summary>
         /// <param name="control">The System.Windows.Forms.Control to describe.</param>
-        public void GetInfoFrom(Control control)
+        public IWindowInfo GetInfoFrom(Control control)
         {
-            implementation.GetInfoFrom(control);
+            return implementation.GetInfoFrom(control);
         }
 
         /// <summary>
         /// Updates the WindowInfo to describe the specified NativeWindow.
         /// </summary>
         /// <param name="window">The System.Windows.Forms.NativeWindow to describe.</param>
-        public void GetInfoFrom(NativeWindow window)
+        public IWindowInfo GetInfoFrom(NativeWindow window)
         {
-            implementation.GetInfoFrom(window);
+            return implementation.GetInfoFrom(window);
         }
 
         /// <summary>
         /// Updates the WindowInfo to describe the specified GameWindow.
         /// </summary>
         /// <param name="window">The OpenTK.GameWindow to describe.</param>
-        public void GetInfoFrom(GameWindow window)
+        public IWindowInfo GetInfoFrom(GameWindow window)
         {
-            implementation.GetInfoFrom(window);
+            return implementation.GetInfoFrom(window);
         }
 
         /// <summary>
         /// Updates the WindowInfo using the specified WindowInfo.
         /// </summary>
         /// <param name="window">The OpenTK.Platform.Window to get information from.</param>
-        public void GetInfoFrom(IWindowInfo info)
+        public IWindowInfo GetInfoFrom(IWindowInfo info)
         {
-            implementation.GetInfoFrom(info);
+            return implementation.GetInfoFrom(info);
+        }
+
+        public void CopyInfoFrom(IWindowInfo info)
+        {
+            implementation.CopyInfoFrom(info);
         }
 
         #endregion

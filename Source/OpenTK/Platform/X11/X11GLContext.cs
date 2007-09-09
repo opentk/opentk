@@ -37,7 +37,7 @@ namespace OpenTK.Platform.X11
         {
         }
 
-        internal X11GLContext(DisplayMode mode, IWindowInfo info)
+        public X11GLContext(DisplayMode mode, IWindowInfo info)
         {
             if (info == null)
                 throw new ArgumentException("IWindowInfo cannot be null.");
@@ -49,44 +49,24 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region internal XVisualInfo VisualInfo
+        //#region private XVisualInfo VisualInfo
 
-        internal XVisualInfo VisualInfo
-        {
-            get { return windowInfo.VisualInfo; }
-        }
+        //private XVisualInfo VisualInfo
+        //{
+        //    get { return windowInfo.VisualInfo; }
+        //}
 
-        #endregion
+        //#endregion
 
-        #region internal IntPtr Handle
+        //#region private IntPtr Handle
 
-        internal IntPtr Handle
-        {
-            get { return windowInfo.Handle; }
-            set { windowInfo.Handle = value; }
-        }
+        //private IntPtr Handle
+        //{
+        //    get { return windowInfo.Handle; }
+        //    set { windowInfo.Handle = value; }
+        //}
 
-        #endregion
-
-        #region internal DisplayMode Mode
-
-        internal DisplayMode Mode
-        {
-            get { return mode; }
-            set
-            {
-                if (context == IntPtr.Zero)
-                {
-                    mode = value;
-                }
-                else
-                {
-                    Debug.Print("Cannot change DisplayMode of an existing context.");
-                }
-            }
-        }
-
-        #endregion
+        //#endregion
 
         #region private void PrepareContext()
 
@@ -138,34 +118,98 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region internal void CreateContext(X11GLContext shareContext, bool direct)
+        #region --- IGLContext Members ---
 
-        internal void CreateContext(X11GLContext shareContext, bool direct)
+        #region public IntPtr Context
+
+        public IntPtr Context
         {
-            Debug.WriteLine("Creating opengl context.");
-            Debug.Indent();
+            get { return context; }
+            private set { context = value; }
+        }
 
-            IntPtr shareHandle = shareContext != null ? shareContext.windowInfo.Handle : IntPtr.Zero;
-            Debug.WriteLine(shareHandle == IntPtr.Zero ? "Context is not shared." :
-                String.Format("Context is shared with context: {0}", shareHandle));
+        #endregion
 
-            Debug.WriteLine(direct ? "Context is direct." : "Context is indirect.");
+        #region public DisplayMode Mode
 
-            context = Glx.CreateContext(windowInfo.Display, visual, shareHandle, direct);
-            Debug.Unindent();
-            if (context != IntPtr.Zero)
+        public DisplayMode Mode
+        {
+            get { return mode; }
+            private set
             {
-                Debug.WriteLine(String.Format("New opengl context created. (id: {0})", context));
-            }
-            else
-            {
-                throw new ApplicationException("Glx.CreateContext call failed (returned 0).");
+                if (context == IntPtr.Zero)
+                {
+                    mode = value;
+                }
+                else
+                {
+                    Debug.Print("Cannot change DisplayMode of an existing context.");
+                }
             }
         }
 
         #endregion
 
-        #region --- IGLContext Members ---
+        #region public IWindowInfo Info
+
+        public IWindowInfo Info { get { return windowInfo; } }
+
+        #endregion
+
+        public void CreateContext()
+        {
+            this.CreateContext(true, null);
+        }
+
+        public void CreateContext(bool direct)
+        {
+            this.CreateContext(direct, null);
+        }
+
+        #region public void CreateContext(bool direct, IGLContext shareContext)
+
+        public void CreateContext(bool direct, IGLContext shareContext)
+        {
+            try
+            {
+                Debug.WriteLine("Creating opengl context.");
+                Debug.Indent();
+
+                IntPtr shareHandle = shareContext != null ? (shareContext as X11GLContext).Context: IntPtr.Zero;
+
+                Debug.Write(direct ? "Context is direct, " : "Context is indirect, ");
+                Debug.WriteLine(shareHandle == IntPtr.Zero ? "not shared." :
+                    String.Format("shared with ({0}).", shareHandle));
+
+                // Try to call Glx.CreateContext with the specified parameters.
+                context = Glx.CreateContext(windowInfo.Display, visual, shareHandle, direct);
+
+                // Context creation succeeded, return.
+                if (context != IntPtr.Zero)
+                {
+                    Debug.Print("New opengl context created. (id: {0})", context);
+                    return;
+                }
+                // Context creation failed. Retry with a non-shared context with the
+                // direct/indirect rendering mode flipped.
+                Debug.Print("Cotnext creation failed, retrying with a non-shared, {0} context.",
+                    !direct ? "direct" : "indirect");
+                context = Glx.CreateContext(windowInfo.Display, visual, IntPtr.Zero, !direct);
+                if (context != IntPtr.Zero)
+                {
+                    Debug.Print("New opengl context created. (id: {0})", context);
+                    return;
+                }
+                    
+                throw new ApplicationException("Glx.CreateContext call failed (returned 0).");
+            }
+            finally
+            {
+                Debug.Unindent();
+            }
+        }
+
+        #endregion
 
         #region public void SwapBuffers()
 

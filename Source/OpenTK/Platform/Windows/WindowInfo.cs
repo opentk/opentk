@@ -15,13 +15,19 @@ namespace OpenTK.Platform.Windows
     /// Describes a Windows.Form.Control, Windows.Forms.NativeWindow or OpenTK.GameWindow on the Windows platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WindowInfo : IWindowInfo
+    internal sealed class WindowInfo : IMutableWindowInfo
     {
         private IntPtr handle;
         private WindowInfo parent;
 
         public WindowInfo()
         {
+        }
+
+        public WindowInfo(IntPtr handle, IWindowInfo parent)
+        {
+            this.Handle = handle;
+            this.Parent = parent;
         }
 
         public WindowInfo(IWindowInfo info)
@@ -77,51 +83,47 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public void GetInfoFrom(Control control)
+        public IWindowInfo GetInfoFrom(Control control)
         {
             if (control == null)
                 throw new ArgumentException("Control cannot be null.");
 
-            this.Handle = control.Handle;
             if (control.Parent == null)
             {
-                this.Parent = null;
+                return new WindowInfo(control.Handle, null);
             }
-            else
-            {
-                if (this.Parent == null)
-                    this.Parent = new WindowInfo(control.Parent);
-                else
-                    this.Parent.GetInfoFrom(control.Parent);
-            }
+            
+            return new WindowInfo(control.Handle, GetInfoFrom(control.Parent));
         }
 
-        public void GetInfoFrom(NativeWindow window)
+        public IWindowInfo GetInfoFrom(NativeWindow window)
         {
             if (window == null)
                 throw new ArgumentException("NativeWindow cannot be null.");
 
-            this.Handle = window.Handle;
-            this.Parent = null;
+            return new WindowInfo(window.Handle, null);
         }
 
-        public void GetInfoFrom(GameWindow window)
+        public IWindowInfo GetInfoFrom(GameWindow window)
         {
             if (window == null)
                 throw new ArgumentException("GameWindow cannot be null.");
 
-            WindowInfo info = (window.WindowInfo as Windows.WindowInfo);
-            this.Handle = info.Handle;
-            this.Parent = info.Parent;
+            return GetInfoFrom(window.WindowInfo as Windows.WindowInfo);
         }
 
-        public void GetInfoFrom(IWindowInfo info)
+        public IWindowInfo GetInfoFrom(IWindowInfo info)
         {
             if (info == null)
                 throw new ArgumentException("IWindowInfo cannot be null.");
-         
+
+            return info;
+        }
+
+        public void CopyInfoFrom(IWindowInfo info)
+        {
             this.Handle = info.Handle;
-            this.Parent = info.Parent;
+            this.Parent = info.Parent; 
         }
 
         #endregion
