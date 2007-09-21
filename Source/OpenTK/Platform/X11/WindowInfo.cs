@@ -15,36 +15,53 @@ namespace OpenTK.Platform.X11
     /// Describes a Windows.Form.Control, Windows.Forms.NativeWindow or OpenTK.GameWindow on the X11 platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WindowInfo : IMutableWindowInfo
+    public sealed class WindowInfo : IMutableWindowInfo
     {
-        private IntPtr rootWindow, handle, topLevelWindow, display;
+        private IntPtr handle, topLevelWindow;
+        private IntPtr rootWindow, display;
         private int screen;
         private WindowInfo parent;
         private XVisualInfo visinfo;
+        private static Type xplatui;
 
         public WindowInfo()
         {
-            visinfo = new XVisualInfo();
+            //visinfo = new XVisualInfo();
+        }
+
+        public WindowInfo(IWindowInfo info)
+        {
+            this.CopyInfoFrom(info);
         }
 
         public WindowInfo(Control control)
         {
-            throw new NotImplementedException();
+            if (control == null)
+                throw new ArgumentException("Control cannot be null.");
+
+            this.CopyInfoFromXPlatUI();
+            this.Handle = control.Handle;
+            this.Parent = control.Parent != null ? new WindowInfo(control.Parent) : this.Parent;
+            this.TopLevelWindow = control.TopLevelControl != null ? control.TopLevelControl.Handle : IntPtr.Zero;
         }
 
         public WindowInfo(NativeWindow window)
         {
-            throw new NotImplementedException();
+            if (window == null)
+                throw new ArgumentException("NativeWindow cannot be null.");
+
+            this.CopyInfoFromXPlatUI();
+            this.Handle = window.Handle;
+            this.Parent = null;
+            this.TopLevelWindow = IntPtr.Zero;
         }
 
         public WindowInfo(GameWindow window)
         {
-            throw new NotImplementedException();
-        }
+            if (window == null)
+                throw new ArgumentException("GameWindow cannot be null.");
 
-        public WindowInfo(WindowInfo info)
-        {
-            this.GetInfoFrom(info);
+            this.CopyInfoFrom(window.WindowInfo);
         }
 
         #region --- IWindowInfo Members ---
@@ -52,24 +69,20 @@ namespace OpenTK.Platform.X11
         public IntPtr Handle { get { return handle; } internal set { handle = value; } }
         public IWindowInfo Parent { get { return parent; } internal set { parent = value as WindowInfo; } }
 
-        #endregion
-
-        #region --- IMutableWindowInfo Members ---
-
         public IWindowInfo GetInfoFrom(Control control)
         {
             if (control == null)
-                throw new ArgumentException("GameWindow cannot be null.");
-            
-            throw new NotImplementedException();
+                throw new ArgumentException("Control cannot be null.");
+
+            return new WindowInfo(control);
         }
 
         public IWindowInfo GetInfoFrom(NativeWindow window)
         {
             if (window == null)
-                throw new ArgumentException("GameWindow cannot be null.");
+                throw new ArgumentException("NativeWindow cannot be null.");
 
-            throw new NotImplementedException();
+            return new WindowInfo(window);
         }
 
         public IWindowInfo GetInfoFrom(GameWindow window)
@@ -87,6 +100,10 @@ namespace OpenTK.Platform.X11
 
             return info;
         }
+
+        #endregion
+
+        #region --- IMutableWindowInfo Members ---
 
         public void CopyInfoFrom(IWindowInfo info)
         {
@@ -114,6 +131,20 @@ namespace OpenTK.Platform.X11
         {
             return String.Format("X11.WindowInfo: Display {0}, Screen {1}, Handle {2}, Parent: ({3})",
                 this.Display, this.Screen, this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
+        }
+
+        private void CopyInfoFromXPlatUI()
+        {
+            xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+            if (xplatui == null)
+                throw new ApplicationException("Could not get System.Windows.Forms.XplatUIX11 through reflection. Unsupported platform or Mono runtime version, aborting.");
+
+            this.Display = (IntPtr)xplatui.GetField("DisplayHandle",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            this.RootWindow = (IntPtr)xplatui.GetField("RootWindow",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            this.Screen = (int)xplatui.GetField("ScreenNo",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
         }
     }
 }

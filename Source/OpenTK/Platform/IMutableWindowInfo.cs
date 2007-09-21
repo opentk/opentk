@@ -15,10 +15,6 @@ namespace OpenTK.Platform
     /// </summary>
     public interface IMutableWindowInfo : IWindowInfo
     {
-        IWindowInfo GetInfoFrom(System.Windows.Forms.Control control);
-        IWindowInfo GetInfoFrom(System.Windows.Forms.NativeWindow window);
-        IWindowInfo GetInfoFrom(OpenTK.GameWindow window);
-        IWindowInfo GetInfoFrom(IWindowInfo info);
         void CopyInfoFrom(IWindowInfo info);
     }
 }
