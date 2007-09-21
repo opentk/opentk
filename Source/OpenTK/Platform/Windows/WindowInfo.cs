@@ -15,7 +15,7 @@ namespace OpenTK.Platform.Windows
     /// Describes a Windows.Form.Control, Windows.Forms.NativeWindow or OpenTK.GameWindow on the Windows platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WindowInfo : IMutableWindowInfo
+    public sealed class WindowInfo : IMutableWindowInfo
     {
         private IntPtr handle;
         private WindowInfo parent;
@@ -24,19 +24,16 @@ namespace OpenTK.Platform.Windows
         {
         }
 
-        public WindowInfo(IntPtr handle, IWindowInfo parent)
-        {
-            this.Handle = handle;
-            this.Parent = parent;
-        }
-
         public WindowInfo(IWindowInfo info)
         {
+            /*
             if (info == null)
                 throw new ArgumentException("WindowInfo cannot be null.");
 
             this.Handle = info.Handle;
             this.Parent = info.Parent;
+            */
+            this.CopyInfoFrom(info);
         }
 
         public WindowInfo(Control control)
@@ -61,9 +58,11 @@ namespace OpenTK.Platform.Windows
         {
             if (window == null)
                 throw new ArgumentException("GameWindow cannot be null.");
-
+            /*
             this.Handle = window.WindowInfo.Handle;
             this.Parent = window.WindowInfo.Parent;
+            */
+            this.CopyInfoFrom(window.WindowInfo);
         }
 
         #region --- IWindowInfo Members ---
@@ -88,12 +87,7 @@ namespace OpenTK.Platform.Windows
             if (control == null)
                 throw new ArgumentException("Control cannot be null.");
 
-            if (control.Parent == null)
-            {
-                return new WindowInfo(control.Handle, null);
-            }
-            
-            return new WindowInfo(control.Handle, GetInfoFrom(control.Parent));
+            return new WindowInfo(control);
         }
 
         public IWindowInfo GetInfoFrom(NativeWindow window)
@@ -101,7 +95,7 @@ namespace OpenTK.Platform.Windows
             if (window == null)
                 throw new ArgumentException("NativeWindow cannot be null.");
 
-            return new WindowInfo(window.Handle, null);
+            return new WindowInfo(window);
         }
 
         public IWindowInfo GetInfoFrom(GameWindow window)
@@ -120,10 +114,14 @@ namespace OpenTK.Platform.Windows
             return info;
         }
 
+        #endregion
+
+        #region --- IMutableWindowInfo Members ---
+
         public void CopyInfoFrom(IWindowInfo info)
         {
             this.Handle = info.Handle;
-            this.Parent = info.Parent; 
+            this.Parent = info.Parent;
         }
 
         #endregion
