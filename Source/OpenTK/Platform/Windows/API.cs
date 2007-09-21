@@ -978,12 +978,6 @@ namespace OpenTK.Platform.Windows
 
         public struct Constants
         {
-            // Mouse indicator flags (found in winuser.h)
-            public const int MOUSE_MOVE_RELATIVE = 0;
-            public const int MOUSE_MOVE_ABSOLUTE = 1;
-            public const int MOUSE_VIRTUAL_DESKTOP = 0x02;  // the coordinates are mapped to the virtual desktop
-            public const int MOUSE_ATTRIBUTES_CHANGED = 0x04;  // requery for mouse attributes
-
             // Found in winuser.h
             public const int KEYBOARD_OVERRUN_MAKE_CODE = 0xFF;
 
@@ -1650,17 +1644,17 @@ namespace OpenTK.Platform.Windows
         {
             public RawInputHeader Header;
             public RawInputData Data;
+        }
 
-            [StructLayout(LayoutKind.Explicit)]
-            public struct RawInputData
-            {
-                [FieldOffset(0)]
-                public RawMouse Mouse;
-                [FieldOffset(0)]
-                public RawKeyboard Keyboard;
-                [FieldOffset(0)]
-                public RawHID HID; 
-            }
+        [StructLayout(LayoutKind.Explicit)]
+        public struct RawInputData
+        {
+            [FieldOffset(0)]
+            public RawMouse Mouse;
+            [FieldOffset(0)]
+            public RawKeyboard Keyboard;
+            [FieldOffset(0)]
+            public RawHID HID;
         }
 
         #endregion
@@ -1747,7 +1741,7 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Contains information about the state of the mouse.
         /// </summary>
-        [StructLayout(LayoutKind.Explicit)]
+        [StructLayout(LayoutKind.Sequential)]
         public struct RawMouse
         {
             /// <summary>
@@ -1761,45 +1755,44 @@ namespace OpenTK.Platform.Windows
             /// MOUSE_VIRTUAL_DESKTOP
             /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
             /// </summary>
-            [FieldOffset(0)]
-            //public USHORT Flags;
-            public SHORT Flags;
-            /// <summary>
-            /// Reserved.
-            /// </summary>
-            [FieldOffset(2)]
-            ULONG Buttons;
+            //[FieldOffset(0)]
+            public RawMouseFlags Flags;     // USHORT
+            // /// <summary>
+            // /// Reserved.
+            // /// </summary>
+            // [FieldOffset(2)]
+            // ULONG Buttons;
             /// <summary>
             /// Transition state of the mouse buttons.
             /// </summary>
-            [FieldOffset(2)]
+            //[FieldOffset(2)]
             public RawInputMouseState ButtonFlags;
             /// <summary>
             /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
             /// </summary>
-            [FieldOffset(4)]
+            //[FieldOffset(4)]
             //public USHORT ButtonData;
             public SHORT ButtonData;
             /// <summary>
             /// Raw state of the mouse buttons.
             /// </summary>
-            [FieldOffset(6)]
+            //[FieldOffset(6)]
             //public ULONG RawButtons;
             public LONG RawButtons;
             /// <summary>
             /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
             /// </summary>
-            [FieldOffset(10)]
+            //[FieldOffset(10)]
             public LONG LastX;
             /// <summary>
             /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
             /// </summary>
-            [FieldOffset(14)]
+            //[FieldOffset(14)]
             public LONG LastY;
             /// <summary>
             /// Device-specific additional information for the event.
             /// </summary>
-            [FieldOffset(18)]
+            //[FieldOffset(18)]
             //public ULONG ExtraInformation;
             public LONG ExtraInformation;
         }
@@ -2044,6 +2037,8 @@ namespace OpenTK.Platform.Windows
 
     #region --- Enums ---
 
+    #region public enum WindowStyle : int
+        
     public enum WindowStyle : int
     {
         Overlapped = 0x00000000,
@@ -2078,6 +2073,10 @@ namespace OpenTK.Platform.Windows
         PopupWindow = Popup | Border | SystemMenu,
         ChildWindow = Child
     }
+
+    #endregion
+
+    #region public enum ExtendedWindowStyle : int
 
     [Flags]
     public enum ExtendedWindowStyle : int
@@ -2129,6 +2128,8 @@ namespace OpenTK.Platform.Windows
         NoActivate = 0x08000000
         // #endif /* _WIN32_WINNT >= 0x0500 */
     }
+
+    #endregion
 
     #region GetWindowLongOffsets enum
 
@@ -2349,6 +2350,34 @@ namespace OpenTK.Platform.Windows
     }
 
     #endregion
+
+    #region RawMouseFlags
+
+    /// <summary>
+    /// Mouse indicator flags (found in winuser.h).
+    /// </summary>
+    public enum RawMouseFlags : short
+    {
+        /// <summary>
+        /// LastX/Y indicate relative motion.
+        /// </summary>
+        MOUSE_MOVE_RELATIVE = 0x00,
+        /// <summary>
+        /// LastX/Y indicate absolute motion.
+        /// </summary>
+        MOUSE_MOVE_ABSOLUTE = 0x01,
+        /// <summary>
+        /// The coordinates are mapped to the virtual desktop.
+        /// </summary>
+        MOUSE_VIRTUAL_DESKTOP = 0x02,
+        /// <summary>
+        /// Requery for mouse attributes.
+        /// </summary>
+        MOUSE_ATTRIBUTES_CHANGED = 0x04,
+    }
+
+    #endregion
+
 
     #region VirtualKeys
 
