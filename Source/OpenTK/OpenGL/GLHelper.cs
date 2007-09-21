@@ -243,13 +243,17 @@ namespace OpenTK.OpenGL
         /// </remarks>
         public static void LoadAll()
         {
+            // Using reflection is more than 3 times faster than directly loading delegates on the first
+            // run, probably due to code generation overhead. Subsequent runs are faster with direct loading
+            // than with reflection, but the first time is more significant.
+
             int supported = 0;
             if (delegates == null)
             {
                 delegates = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
             }
 
-            Debug.Print("GL.LoadAll(): Loading all {0} OpenGL functions.", delegates.Length);
+            Trace.Write("GL.LoadAll(): ");
 
             System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
             time.Reset();
@@ -262,10 +266,10 @@ namespace OpenTK.OpenGL
                 {
                     ++supported;
                 }
-                
+
                 f.SetValue(null, d);
             }
-
+            
             time.Stop();
             Trace.WriteLine(String.Format("{0} OpenGL extensions loaded in {1} milliseconds.", supported, time.ElapsedMilliseconds));
             time.Reset();
