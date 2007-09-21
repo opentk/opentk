@@ -9,11 +9,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Bind.Structures;
+using System.Text.RegularExpressions;
 
 namespace Bind
 {
     class BindStreamWriter : StreamWriter
     {
+        int indent_level = 0;
+        Regex splitLines = new Regex(System.Environment.NewLine, RegexOptions.Compiled);
+
         public BindStreamWriter(string file)
             : base(file)
         {
@@ -23,37 +27,41 @@ namespace Bind
 
         public void Indent()
         {
-            indent = "    " + indent;
+            ++indent_level;
         }
 
         public void Unindent()
         {
-            if (!String.IsNullOrEmpty(indent))
-                indent = indent.Substring(4);
+            if (indent_level > 0)
+                --indent_level;
         }
 
         public override void Write(string value)
         {
-            base.Write(indent + value);
+            for (int i = indent_level; i > 0; i--)
+                base.Write("    ");
+
+            base.Write(value);
         }
 
         public override void WriteLine(string value)
         {
-            base.WriteLine(indent + value);
+            for (int i = indent_level; i > 0; i--)
+                base.Write("    ");
+
+            base.WriteLine(value);
         }
 
         public void Write(Bind.Structures.Enum e)
         {
-            StringBuilder sb = new StringBuilder(e.ToString());
-            sb.Replace(System.Environment.NewLine, System.Environment.NewLine + indent);
-            Write(sb);
+            foreach (string s in splitLines.Split(e.ToString()))
+                WriteLine(s);
         }
 
         public void Write(Bind.Structures.Function f)
         {
-            StringBuilder sb = new StringBuilder(f.ToString());
-            sb.Replace(System.Environment.NewLine, System.Environment.NewLine + indent);
-            Write(sb);
+            foreach (string s in splitLines.Split(f.ToString()))
+                WriteLine(s);
         }
     }
 }
