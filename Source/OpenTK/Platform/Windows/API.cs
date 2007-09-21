@@ -1755,45 +1755,34 @@ namespace OpenTK.Platform.Windows
             /// MOUSE_VIRTUAL_DESKTOP
             /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
             /// </summary>
-            //[FieldOffset(0)]
-            public RawMouseFlags Flags;     // USHORT
+            public RawMouseFlags Flags;     // USHORT in winuser.h, but only INT works -- USHORT returns 0.
             // /// <summary>
             // /// Reserved.
             // /// </summary>
-            // [FieldOffset(2)]
             // ULONG Buttons;
             /// <summary>
             /// Transition state of the mouse buttons.
             /// </summary>
-            //[FieldOffset(2)]
             public RawInputMouseState ButtonFlags;
             /// <summary>
             /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
             /// </summary>
-            //[FieldOffset(4)]
-            //public USHORT ButtonData;
             public SHORT ButtonData;
             /// <summary>
             /// Raw state of the mouse buttons.
             /// </summary>
-            //[FieldOffset(6)]
-            //public ULONG RawButtons;
             public LONG RawButtons;
             /// <summary>
             /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
             /// </summary>
-            //[FieldOffset(10)]
             public LONG LastX;
             /// <summary>
             /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
             /// </summary>
-            //[FieldOffset(14)]
             public LONG LastY;
             /// <summary>
             /// Device-specific additional information for the event.
             /// </summary>
-            //[FieldOffset(18)]
-            //public ULONG ExtraInformation;
             public LONG ExtraInformation;
         }
 
@@ -2356,7 +2345,7 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Mouse indicator flags (found in winuser.h).
     /// </summary>
-    public enum RawMouseFlags : short
+    public enum RawMouseFlags : int//short
     {
         /// <summary>
         /// LastX/Y indicate relative motion.
