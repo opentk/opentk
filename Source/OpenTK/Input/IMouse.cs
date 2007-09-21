@@ -10,7 +10,23 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    interface IMouse : IInputDevice
+    public interface IMouse : IInputDevice
     {
+        int NumberOfButtons { get; }
+        int NumberOfWheels { get; }
+        IntPtr DeviceID { get; }
+        int Wheel { get; }
+        int X { get; }
+        int Y { get; }
+        int DeltaX { get; }
+        int DeltaY { get; }
+
+        event MouseMoveEvent Move;
+        event MouseButtonDownEvent ButtonDown;
+        event MouseButtonUpEvent ButtonUp;
     }
+
+    public delegate void MouseMoveEvent(IMouse sender, MouseMoveData key);
+    public delegate void MouseButtonDownEvent(IMouse sender, MouseButton button);
+    public delegate void MouseButtonUpEvent(IMouse sender, MouseButton button);
 }
