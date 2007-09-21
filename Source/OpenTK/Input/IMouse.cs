@@ -21,7 +21,7 @@ namespace OpenTK.Input
         int DeltaX { get; }
         int DeltaY { get; }
 
-        event MouseMoveEvent Move;
+        //event MouseMoveEvent Move;
         event MouseButtonDownEvent ButtonDown;
         event MouseButtonUpEvent ButtonUp;
     }
