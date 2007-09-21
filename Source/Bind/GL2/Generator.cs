@@ -562,14 +562,16 @@ namespace Bind.GL2
             {
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
-
                 sw.Indent();
-                //specWriter.WriteTypes(sw, Bind.Structures.Type.CSTypes);
+
                 sw.WriteLine("using System;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
-                WriteDelegates(sw, Bind.Structures.Delegate.Delegates);
-                sw.Unindent();
 
+                sw.WriteLine("#pragma warning disable 0649");
+                WriteDelegates(sw, Bind.Structures.Delegate.Delegates);
+                sw.WriteLine("#pragma warning restore 0649");
+
+                sw.Unindent();
                 sw.WriteLine("}");
             }
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, importsFile)))
@@ -606,7 +608,7 @@ namespace Bind.GL2
         
         #region void WriteDelegates
         
-        public void WriteDelegates(BindStreamWriter sw, DelegateCollection delegates)
+        public virtual void WriteDelegates(BindStreamWriter sw, DelegateCollection delegates)
         {
             Trace.WriteLine(String.Format("Writing delegates to {0}.{1}", Settings.OutputNamespace, Settings.DelegatesClass));
 
@@ -635,7 +637,7 @@ namespace Bind.GL2
                 sw.WriteLine("internal {0};", d.ToString());
                 // --- Workaround for mono gmcs 1.2.4 issue, where static initalization fails. ---
                 sw.WriteLine(
-                    "internal {0}static {1} {2}{1} = null;",
+                    "internal {0}static {1} {2}{1};",   //  = null
                     d.Unsafe ? "unsafe " : "",
                     d.Name,
                     Settings.FunctionPrefix);
@@ -643,12 +645,13 @@ namespace Bind.GL2
             }
             sw.Unindent();
             sw.WriteLine("}");
+
             sw.Unindent();
             sw.WriteLine("}");
         }
-        
+
         #endregion
-        
+
         #region void WriteImports
 
         public virtual void WriteImports(BindStreamWriter sw, DelegateCollection delegates)
@@ -687,7 +690,7 @@ namespace Bind.GL2
         }
         
         #endregion
-        
+
         #region void WriteWrappers
 
         public void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers, Dictionary<string, string> CSTypes)
@@ -741,7 +744,7 @@ namespace Bind.GL2
         }
 
         #endregion
-     
+
         #region void WriteTypes
 
         public void WriteTypes(BindStreamWriter sw, Dictionary<string, string> CSTypes)
