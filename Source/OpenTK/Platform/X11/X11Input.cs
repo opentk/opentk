@@ -20,7 +20,8 @@ namespace OpenTK.Platform.X11
     internal sealed class X11Input : IInputDriver
     {
         private X11Keyboard keyboardDriver;
-        private WindowInfo window;
+        private X11Mouse mouseDriver;
+        private X11.WindowInfo window;
 
         XEvent e = new XEvent();
 
@@ -31,13 +32,13 @@ namespace OpenTK.Platform.X11
         /// the main application window, which selects input events and routes them to 
         /// the device specific drivers (Keyboard, Mouse, Hid).
         /// </summary>
-        /// <param name="parent"></param>
-        public X11Input(WindowInfo parent)
+        /// <param name="attach">The window which the InputDriver will attach itself on.</param>
+        public X11Input(IWindowInfo attach)
         {
             Debug.WriteLine("Initalizing X11 input driver.");
             Debug.Indent();
 
-            if (parent == null)
+            if (attach == null)
             {
                 throw new ArgumentException("A valid parent window must be defined, in order to create an X11Input driver.");
             }
@@ -82,10 +83,11 @@ namespace OpenTK.Platform.X11
             keyboardDriver = new X11Keyboard(window);
             */
 
-            window = new WindowInfo(parent);
-            keyboardDriver = new X11Keyboard(parent);
-            // Todo: donparent's mask is now specified by hand, hard to keep in sync.
-            API.SelectInput(parent.Display, parent.Handle, EventMask.StructureNotifyMask |
+            window = attach as Platform.WindowInfo ?? attach as X11.WindowInfo;
+
+            keyboardDriver = new X11Keyboard(window);
+            // Todo: mask is now specified by hand, hard to keep in sync.
+            API.SelectInput(window.Display, window.Handle, EventMask.StructureNotifyMask |
                 EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
                 EventMask.KeyReleaseMask | EventMask.KeyPressMask);
 

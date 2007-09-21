@@ -12,6 +12,16 @@ namespace OpenTK.Input
 {
     public interface IMouseDriver
     {
-        IList<OpenTK.Input.Mouse> Mouse { get; }
+        /// <summary>
+        /// Gets the list of available mouse devices.
+        /// </summary>
+        IList<Mouse> Mouse { get; }
+        /*
+        /// <summary>
+        /// Registers available mouse devices.
+        /// </summary>
+        /// <returns>The number of devices registered.</returns>
+        int RegisterDevices();
+        */
     }
 }

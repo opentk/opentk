@@ -30,10 +30,11 @@ namespace OpenTK.Platform.Windows
         private static int deviceCount;
 
         private WinRawKeyboard keyboardDriver;
+        private WinRawMouse mouseDriver;
 
         #region --- Constructors ---
 
-        internal WinRawInput(WindowInfo parent)
+        internal WinRawInput(IWindowInfo parent)
         {
             Debug.WriteLine("Initalizing windows raw input driver.");
             Debug.Indent();
@@ -41,6 +42,7 @@ namespace OpenTK.Platform.Windows
             AssignHandle(parent.Handle);
             Debug.Print("Input window attached to parent {0}", parent);
             keyboardDriver = new WinRawKeyboard(this.Handle);
+            mouseDriver = new WinRawMouse(this.Handle);
             
             Debug.Unindent();
         }
@@ -89,17 +91,21 @@ namespace OpenTK.Platform.Windows
                         switch (data.Header.Type)
                         {
                             case RawInputDeviceType.KEYBOARD:
-                            if (!keyboardDriver.ProcessKeyboardEvent(data))
-                                API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
-                            return;
+                                if (!keyboardDriver.ProcessKeyboardEvent(data))
+                                    API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
+                                return;
 
                             case RawInputDeviceType.MOUSE:
-                            API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
-                            return;
+                                if (!mouseDriver.ProcessEvent(data))
+                                    API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
+                                return;
 
                             case RawInputDeviceType.HID:
-                            API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
-                            return;
+                                API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
+                                return;
+
+                            default:
+                                break;
                         }
                     }
                     else
@@ -141,7 +147,7 @@ namespace OpenTK.Platform.Windows
 
         public IList<Mouse> Mouse
         {
-            get { throw new Exception("The method or operation is not implemented."); }
+            get { return mouseDriver.Mouse; }
         }
 
         public void ProcessEvents()
