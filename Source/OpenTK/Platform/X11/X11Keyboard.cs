@@ -12,6 +12,8 @@ using OpenTK.Input;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
+// TODO: How to detect multiple keyboards?
+
 namespace OpenTK.Platform.X11
 {
     /// <summary>
@@ -162,6 +164,9 @@ namespace OpenTK.Platform.X11
 
         internal X11Keyboard(WindowInfo window)
         {
+            if (window == null)
+                throw new ArgumentException("Window cannot be null.");
+
             this.window = window;
             Initialize();
 
@@ -183,6 +188,7 @@ namespace OpenTK.Platform.X11
             Keyboard kb = new Keyboard();
             kb.Description = "Default X11 keyboard";
             kb.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
+            kb.DeviceID = IntPtr.Zero;
             keyboards.Add(kb);
             Debug.Print("Keyboard added: {0}", kb.ToString());
         }
@@ -203,16 +209,23 @@ namespace OpenTK.Platform.X11
             IntPtr keysym = API.LookupKeysym(ref e, 0);
             IntPtr keysym2 = API.LookupKeysym(ref e, 1);
 
+            Debug.Print("Key down: {0}", e.ToString());
+
+            int index = keyboards.FindIndex(delegate(Keyboard kb)
+            {
+                return kb.DeviceID == IntPtr.Zero;
+            });
+
             switch (keysym.ToInt64())
             {
                 default:
                 if (keymap.ContainsKey((XKey)keysym))
                 {
-                    keyboards[0][keymap[(XKey)keysym]] = pressed;
+                    keyboards[index][keymap[(XKey)keysym]] = pressed;
                 }
                 else if (keymap.ContainsKey((XKey)keysym2))
                 {
-                    keyboards[0][keymap[(XKey)keysym2]] = pressed;
+                    keyboards[index][keymap[(XKey)keysym2]] = pressed;
                 }
                 else
                 {

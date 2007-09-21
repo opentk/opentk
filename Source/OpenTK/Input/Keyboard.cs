@@ -21,7 +21,8 @@ namespace OpenTK.Input
         private bool[] keys = new bool[(int)Key.MaxKeys];
         private string description;
         private int numKeys, numFKeys, numLeds;
-        private long devID;
+        private IntPtr devID;
+        private bool repeat;
 
         #region --- Constructors ---
 
@@ -38,15 +39,18 @@ namespace OpenTK.Input
             get { return keys[(int)k]; }
             internal set
             {
-                keys[(int)k] = value;
+                if (keys[(int)k] != value || KeyRepeat)
+                {
+                    keys[(int)k] = value;
 
-                if (value && KeyDown != null)
-                {
-                    KeyDown(this, k);
-                }
-                else if (!value && KeyUp != null)
-                {
-                    KeyUp(this, k);
+                    if (value && KeyDown != null)
+                    {
+                        KeyDown(this, k);
+                    }
+                    else if (!value && KeyUp != null)
+                    {
+                        KeyUp(this, k);
+                    }
                 }
             }
         }
@@ -72,11 +76,28 @@ namespace OpenTK.Input
         /// <summary>
         /// Device dependent ID.
         /// </summary>
-        public long DeviceID
+        public IntPtr DeviceID
         {
             get { return devID; }
             internal set { devID = value; }
         }
+
+        #region public bool KeyRepeat
+
+        /// <summary>
+        /// Gets or sets a value indicating whether key repeat is turned on or off.
+        /// </summary>
+        /// <remarks>
+        /// Setting key repeat to on will generate multiple KeyDown events when a key is held pressed.
+        /// Setting key repeat to on will generate only one KeyDown/KeyUp event pair when a key is held pressed.
+        /// </remarks>
+        public bool KeyRepeat
+        {
+            get { return repeat; }
+            set { repeat = value; }
+        }
+
+        #endregion
 
         /// <summary>
         /// Occurs when a key is pressed.
@@ -171,11 +192,13 @@ namespace OpenTK.Input
         Home,
         End,
         CapsLock,
+        ScrollLock,
         PrintScreen,
         Pause,
         NumLock,
 
         // Special keys
+        Clear,          // Keypad5 with NumLock off.
         Sleep,
         /*LogOff,
         Help,
@@ -205,9 +228,9 @@ namespace OpenTK.Input
         PlayPause,
         Stop,
         VolumeUp,
-        VOlumeDown,
-        PreviousTrack,
-        NextTrack,*/
+        VolumeDown,
+        TrackPrevious,
+        TrackNext,*/
 
         // Keypad keys
         Keypad0,
