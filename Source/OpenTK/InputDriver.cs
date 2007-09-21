@@ -21,15 +21,18 @@ namespace OpenTK
         
         public InputDriver(IWindowInfo parent)
         {
+            if (parent == null)
+                throw new ArgumentException("A valid window (IWindowInfo) must be specified to construct an InputDriver");
+
             if (Environment.OSVersion.Version.Major > 5 ||
                 (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
             {
-                inputDriver = new OpenTK.Platform.Windows.WinRawInput(parent as OpenTK.Platform.Windows.WindowInfo);
+                inputDriver = new OpenTK.Platform.Windows.WinRawInput(parent);
             }
             else if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
                 inputDriver = 
-                    new OpenTK.Platform.X11.X11Input(parent as OpenTK.Platform.X11.WindowInfo);
+                    new OpenTK.Platform.X11.X11Input(parent);
             }
             else
             {
@@ -52,7 +55,7 @@ namespace OpenTK
             get { return inputDriver.Keyboard; }
         }
 
-        public IList<OpenTK.Input.Mouse> Mouse
+        public IList<Mouse> Mouse
         {
             get { return inputDriver.Mouse; }
         }
@@ -61,7 +64,12 @@ namespace OpenTK
         {
             inputDriver.ProcessEvents();
         }
-
+        /*
+        int IMouseDriver.RegisterDevices()
+        {
+            return inputDriver.RegisterDevices();
+        }
+        */
         #endregion
 
         #region --- IDisposable Members ---
