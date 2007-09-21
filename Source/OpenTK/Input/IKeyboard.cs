@@ -4,6 +4,8 @@
  */
 #endregion
 
+using System;
+
 namespace OpenTK.Input
 {
     public interface IKeyboard : IInputDevice
@@ -12,18 +14,13 @@ namespace OpenTK.Input
         int NumberOfKeys { get; }
         int NumberOfFunctionKeys { get; }
         int NumberOfLeds { get; }
-        long DeviceID { get; }
+        IntPtr DeviceID { get; }
+        bool KeyRepeat { get; set; }
 
         event KeyDownEvent KeyDown;
         event KeyUpEvent KeyUp;
     }
 
-    public delegate void KeyDownEvent(object sender, Key key);
-    public delegate void KeyUpEvent(object sender, Key key);
-
-    //public class KeyEventArgs : System.EventArgs
-    //{
-    //    private Key key;
-    //    public Key Key { get { return key; } }
-    //}
+    public delegate void KeyDownEvent(IKeyboard sender, Key key);
+    public delegate void KeyUpEvent(IKeyboard sender, Key key);
 }
