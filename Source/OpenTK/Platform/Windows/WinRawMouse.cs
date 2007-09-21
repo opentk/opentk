@@ -91,10 +91,10 @@ namespace OpenTK.Platform.Windows
 
                     RegistryKey regkey = Registry.LocalMachine.OpenSubKey(findme);
 
-                    string deviceDesc =
-                        (string)regkey.GetValue("DeviceDesc");
-                    string deviceClass =
-                        (string)regkey.GetValue("Class");
+                    string deviceDesc = (string)regkey.GetValue("DeviceDesc");
+                    deviceDesc = deviceDesc.Substring(deviceDesc.LastIndexOf(';') + 1);
+                    string deviceClass = (string)regkey.GetValue("Class");
+
                     if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
                     {
                         OpenTK.Input.Mouse mouse = new OpenTK.Input.Mouse();

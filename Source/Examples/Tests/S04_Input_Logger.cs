@@ -68,11 +68,40 @@ namespace Examples.Tests
                     break;
             }
 
+            // Add available mice to the mouse input logger.
+            int i = 0;
+            foreach (Mouse m in driver.Mouse)
+            {
+                ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", ++i, m.Description));
+                //m.ButtonDown += LogMouseButtonDown;
+                //m.ButtonUp += LogMouseButtonUp;
+                //m.Move += LogMouseMove;
+            }
+            if (i > 0)
+            {
+                ChooseMouse.SelectedIndex = 0;
+            }
+
             foreach (OpenTK.Input.Keyboard k in driver.Keyboard)
             {
                 k.KeyDown += new KeyDownEvent(LogKeyDown);
                 k.KeyUp += new KeyUpEvent(LogKeyUp);
             }
+        }
+
+        void LogMouseButtonDown(IMouse sender, MouseButton button)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        void LogMouseButtonUp(IMouse sender, MouseButton button)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        void LogMouseMove(IMouse sender, MouseMoveData key)
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
 
         void LogKeyDown(object sender, Key key)
