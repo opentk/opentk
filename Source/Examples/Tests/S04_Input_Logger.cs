@@ -21,6 +21,17 @@ namespace Examples.Tests
         public S04_Input_Logger()
         {
             InitializeComponent();
+
+            Application.Idle += new EventHandler(Application_Idle);
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            // Update mouse coordinates.
+            textBox1.Text = driver.Mouse[ChooseMouse.SelectedIndex].X.ToString();
+            textBox2.Text = driver.Mouse[ChooseMouse.SelectedIndex].Y.ToString();
+            textBox3.Text = driver.Mouse[ChooseMouse.SelectedIndex].DeltaX.ToString();
+            textBox4.Text = driver.Mouse[ChooseMouse.SelectedIndex].DeltaY.ToString();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -76,7 +87,6 @@ namespace Examples.Tests
                 ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", ++i, m.Description));
                 m.ButtonDown += LogMouseButtonDown;
                 m.ButtonUp += LogMouseButtonUp;
-                //m.Move += LogMouseMove;
             }
             if (i > 0)
             {
@@ -100,11 +110,6 @@ namespace Examples.Tests
         {
             Debug.Print("Mouse button up: {0} on device: {1}", button, sender.DeviceID);
             MouseButtons.Items.Remove(button);
-        }
-
-        void LogMouseMove(IMouse sender, MouseMoveData key)
-        {
-            throw new Exception("The method or operation is not implemented.");
         }
 
         void LogKeyDown(object sender, Key key)

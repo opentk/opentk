@@ -279,10 +279,16 @@ namespace OpenTK.Platform.Windows
                     bool pressed =
                         rin.Data.Keyboard.Message == (int)WindowMessage.KEYDOWN ||
                         rin.Data.Keyboard.Message == (int)WindowMessage.SYSKEYDOWN;
+                    
+                    // Find the device where the button was pressed. It can be that the input notification
+                    // came not from a physical keyboard device but from a code-generated input message - in
+                    // that case, the event goes to the default (first) keyboard.
+                    // TODO: Send the event to all keyboards instead of the default one.
                     int index = keyboards.FindIndex(delegate(Keyboard kb)
                     {
                         return kb.DeviceID == rin.Header.Device;
                     });
+                    if (index == -1) index = 0;
 
                     // Generic control, shift, alt keys may be sent instead of left/right.
                     // It seems you have to explicitly register left/right events.
