@@ -30,6 +30,7 @@ namespace Examples.Tests
             WindowInfo info = new WindowInfo(this);
             driver = new InputDriver(info);
             Debug.Print("Keyboard count: {0}", driver.Keyboard.Count);
+            Debug.Print("Mouse count: {0}", driver.Mouse.Count);
 
             switch (driver.Keyboard.Count)
             {
@@ -73,8 +74,8 @@ namespace Examples.Tests
             foreach (Mouse m in driver.Mouse)
             {
                 ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", ++i, m.Description));
-                //m.ButtonDown += LogMouseButtonDown;
-                //m.ButtonUp += LogMouseButtonUp;
+                m.ButtonDown += LogMouseButtonDown;
+                m.ButtonUp += LogMouseButtonUp;
                 //m.Move += LogMouseMove;
             }
             if (i > 0)
@@ -91,12 +92,14 @@ namespace Examples.Tests
 
         void LogMouseButtonDown(IMouse sender, MouseButton button)
         {
-            throw new Exception("The method or operation is not implemented.");
+            Debug.Print("Mouse button down: {0} on device: {1}", button, sender.DeviceID);
+            MouseButtons.Items.Add(button);
         }
 
         void LogMouseButtonUp(IMouse sender, MouseButton button)
         {
-            throw new Exception("The method or operation is not implemented.");
+            Debug.Print("Mouse button up: {0} on device: {1}", button, sender.DeviceID);
+            MouseButtons.Items.Remove(button);
         }
 
         void LogMouseMove(IMouse sender, MouseMoveData key)
@@ -112,6 +115,7 @@ namespace Examples.Tests
 
         void LogKeyUp(object sender, Key key)
         {
+            Debug.Print("Key up: {0} on device: {1}", key, (sender as Keyboard).DeviceID);
             keyboardListBoxes[(sender as Keyboard).DeviceID].Items.Remove(key);
         }
 
