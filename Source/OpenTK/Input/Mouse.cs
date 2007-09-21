@@ -95,6 +95,14 @@ namespace OpenTK.Input
         {
             internal set
             {
+                if (ButtonDown != null && value && !button[(int)b])
+                {
+                    ButtonDown(this, b);
+                }
+                else if (ButtonUp != null && !value && button[(int)b])
+                {
+                    ButtonUp(this, b);
+                }
                 button[(int)b] = value;
             }
 

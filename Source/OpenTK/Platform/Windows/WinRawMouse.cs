@@ -168,11 +168,16 @@ namespace OpenTK.Platform.Windows
             switch (rin.Header.Type)
             {
                 case RawInputDeviceType.MOUSE:
-                    mouse[MouseButton.Left] = rin.Data.Mouse.ButtonFlags == RawInputMouseState.LEFT_BUTTON_DOWN;
-                    mouse[MouseButton.Right] = rin.Data.Mouse.ButtonFlags == RawInputMouseState.RIGHT_BUTTON_DOWN;
-                    mouse[MouseButton.Middle] = rin.Data.Mouse.ButtonFlags == RawInputMouseState.MIDDLE_BUTTON_DOWN;
-                    mouse[MouseButton.Button1] = rin.Data.Mouse.ButtonFlags == RawInputMouseState.BUTTON_4_DOWN;
-                    mouse[MouseButton.Button2] = rin.Data.Mouse.ButtonFlags == RawInputMouseState.BUTTON_5_DOWN;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0) mouse[MouseButton.Left] = true;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.LEFT_BUTTON_UP) != 0) mouse[MouseButton.Left] = false;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_DOWN) != 0) mouse[MouseButton.Right] = true;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.RIGHT_BUTTON_UP) != 0) mouse[MouseButton.Right] = false;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_DOWN) != 0) mouse[MouseButton.Middle] = true;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.MIDDLE_BUTTON_UP) != 0) mouse[MouseButton.Middle] = false;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_4_DOWN) != 0) mouse[MouseButton.Button1] = true;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_4_UP) != 0) mouse[MouseButton.Button1] = false;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0) mouse[MouseButton.Button2] = true;
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0) mouse[MouseButton.Button2] = false;
 
                     if (rin.Data.Mouse.ButtonFlags == RawInputMouseState.WHEEL)
                     {
@@ -181,8 +186,8 @@ namespace OpenTK.Platform.Windows
 
                     if (rin.Data.Mouse.Flags == RawMouseFlags.MOUSE_MOVE_ABSOLUTE)
                     {
-                        mouse.DeltaX = mouse.X - rin.Data.Mouse.LastX;
-                        mouse.DeltaY = mouse.Y - rin.Data.Mouse.LastY;
+                        mouse.DeltaX = rin.Data.Mouse.LastX - mouse.X;
+                        mouse.DeltaY = rin.Data.Mouse.LastY - mouse.Y;
                         mouse.X = rin.Data.Mouse.LastX;
                         mouse.Y = rin.Data.Mouse.LastY;
                     }
