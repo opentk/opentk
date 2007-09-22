@@ -4,38 +4,26 @@
  */
 #endregion
 
-#region --- Using Directives ---
-
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Threading;
+using System.Text;
 using System.Drawing;
+using System.Threading;
 
 using OpenTK;
 using OpenTK.OpenGL;
-using OpenTK.Platform;
-
-#endregion
 
 namespace Examples.Tutorial
 {
-    public class T03_Immediate_Mode_Cube : OpenTK.GameWindow, IExample
+    class T02_Vertex_Array_Cube : GameWindow, IExample
     {
-        #region --- Fields ---
+        float angle;
 
-        /// <summary>
-        /// Denotes the cube rotation.
-        /// </summary>
-        float angle = 0.0f;
+        #region Constructor
 
-        #endregion
-
-        #region --- Constructors ---
-
-        public T03_Immediate_Mode_Cube()
+        public T02_Vertex_Array_Cube()
         {
-            CreateWindow(new DisplayMode(800, 600));
+            this.CreateWindow(new DisplayMode(800, 600));
         }
 
         #endregion
@@ -48,6 +36,11 @@ namespace Examples.Tutorial
 
             GL.ClearColor(Color.MidnightBlue);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+            
+            GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
+            GL.EnableClientState(GL.Enums.EnableCap.COLOR_ARRAY);
+            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, Shapes.Cube.Vertices);
+            GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, Shapes.Cube.Colors);
         }
 
         #endregion
@@ -108,7 +101,9 @@ namespace Examples.Tutorial
             );
 
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
-            angle += 0.5f;
+            angle += 180.0f * e.Time;
+            if (angle > 720.0f)
+                angle -= 720.0f;
         }
 
         #endregion
@@ -122,58 +117,17 @@ namespace Examples.Tutorial
         {
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 
-            DrawCube();
+            unsafe
+            {
+                fixed (ushort* index_pointer = Shapes.Cube.Indices)
+                {
+                    GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, Shapes.Cube.Indices.Length,
+                        GL.Enums.All.UNSIGNED_SHORT, index_pointer);
+                }
+            }
 
             Context.SwapBuffers();
             Thread.Sleep(0);
-        }
-
-        #endregion
-
-        #region private void DrawCube()
-
-        private void DrawCube()
-        {
-            GL.Begin(GL.Enums.BeginMode.QUADS);
-
-            GL.Color3(Color.Silver);
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-
-            GL.Color3(Color.Honeydew);
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-
-            GL.Color3(Color.Moccasin);
-
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-
-            GL.Color3(Color.IndianRed);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-
-            GL.Color3(Color.PaleVioletRed);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-
-            GL.Color3(Color.ForestGreen);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-
-            GL.End();
         }
 
         #endregion
