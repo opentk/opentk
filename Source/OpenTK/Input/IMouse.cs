@@ -18,8 +18,8 @@ namespace OpenTK.Input
         int Wheel { get; }
         int X { get; }
         int Y { get; }
-        int DeltaX { get; }
-        int DeltaY { get; }
+        int XDelta { get; }
+        int YDelta { get; }
 
         //event MouseMoveEvent Move;
         event MouseButtonDownEvent ButtonDown;

@@ -23,21 +23,11 @@ namespace Examples.Tests
     {
         InputDriver driver;
         Dictionary<IntPtr, ListBox> keyboardListBoxes = new Dictionary<IntPtr, ListBox>(4);
+        bool stop_polling;
 
         public S04_Input_Logger()
         {
             InitializeComponent();
-
-            Application.Idle += new EventHandler(Application_Idle);
-        }
-
-        void Application_Idle(object sender, EventArgs e)
-        {
-            // Update mouse coordinates.
-            textBox1.Text = driver.Mouse[ChooseMouse.SelectedIndex].X.ToString();
-            textBox2.Text = driver.Mouse[ChooseMouse.SelectedIndex].Y.ToString();
-            textBox3.Text = driver.Mouse[ChooseMouse.SelectedIndex].DeltaX.ToString();
-            textBox4.Text = driver.Mouse[ChooseMouse.SelectedIndex].DeltaY.ToString();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -46,8 +36,8 @@ namespace Examples.Tests
 
             WindowInfo info = new WindowInfo(this);
             driver = new InputDriver(info);
-            Debug.Print("Keyboard count: {0}", driver.Keyboard.Count);
-            Debug.Print("Mouse count: {0}", driver.Mouse.Count);
+            Trace.WriteLine(String.Format("Keyboard count: {0}", driver.Keyboard.Count));
+            Trace.WriteLine(String.Format("Mouse count: {0}", driver.Mouse.Count));
 
             switch (driver.Keyboard.Count)
             {
@@ -87,15 +77,15 @@ namespace Examples.Tests
             }
 
             // Add available mice to the mouse input logger.
-            int i = 0;
-            foreach (Mouse m in driver.Mouse)
+            if (driver.Mouse.Count > 0)
             {
-                ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", ++i, m.Description));
-                m.ButtonDown += LogMouseButtonDown;
-                m.ButtonUp += LogMouseButtonUp;
-            }
-            if (i > 0)
-            {
+                int i = 0;
+                foreach (Mouse m in driver.Mouse)
+                {
+                    ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", ++i, m.Description));
+                    m.ButtonDown += LogMouseButtonDown;
+                    m.ButtonUp += LogMouseButtonUp;
+                }
                 ChooseMouse.SelectedIndex = 0;
             }
 
@@ -104,29 +94,46 @@ namespace Examples.Tests
                 k.KeyDown += new KeyDownEvent(LogKeyDown);
                 k.KeyUp += new KeyUpEvent(LogKeyUp);
             }
+
+            //PollTimer.Tick += new EventHandler(PollTimer_Tick);
+            //PollTimer.Start();
+            Application.Idle += new EventHandler(Application_Idle);
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            // Update mouse coordinates.
+            MouseXText.Text = driver.Mouse[ChooseMouse.SelectedIndex].X.ToString();
+            MouseYText.Text = driver.Mouse[ChooseMouse.SelectedIndex].Y.ToString();
+            MouseDXText.Text = driver.Mouse[ChooseMouse.SelectedIndex].XDelta.ToString();
+            MouseDYText.Text = driver.Mouse[ChooseMouse.SelectedIndex].YDelta.ToString();
+            MouseWheelText.Text = driver.Mouse[ChooseMouse.SelectedIndex].Wheel.ToString();
+            //MouseWheelDelta.Text = driver.Mouse[ChooseMouse.SelectedIndex].WheelDelta.ToString();
         }
 
         void LogMouseButtonDown(IMouse sender, MouseButton button)
         {
-            Debug.Print("Mouse button down: {0} on device: {1}", button, sender.DeviceID);
-            MouseButtons.Items.Add(button);
+            Trace.WriteLine(String.Format("Mouse button down: {0} on device: {1}", button, sender.DeviceID));
+            if (sender.DeviceID == driver.Mouse[ChooseMouse.SelectedIndex].DeviceID)
+                MouseButtons.Items.Add(button);
         }
 
         void LogMouseButtonUp(IMouse sender, MouseButton button)
         {
-            Debug.Print("Mouse button up: {0} on device: {1}", button, sender.DeviceID);
-            MouseButtons.Items.Remove(button);
+            Trace.WriteLine(String.Format("Mouse button up: {0} on device: {1}", button, sender.DeviceID));
+            if (sender.DeviceID == driver.Mouse[ChooseMouse.SelectedIndex].DeviceID)
+                MouseButtons.Items.Remove(button);
         }
 
         void LogKeyDown(object sender, Key key)
         {
-            Debug.Print("Key down: {0} on device: {1}", key, (sender as Keyboard).DeviceID);
+            Trace.WriteLine(String.Format("Key down: {0} on device: {1}", key, (sender as Keyboard).DeviceID));
             keyboardListBoxes[(sender as Keyboard).DeviceID].Items.Add(key);
         }
 
         void LogKeyUp(object sender, Key key)
         {
-            Debug.Print("Key up: {0} on device: {1}", key, (sender as Keyboard).DeviceID);
+            Trace.WriteLine(String.Format("Key up: {0} on device: {1}", key, (sender as Keyboard).DeviceID));
             keyboardListBoxes[(sender as Keyboard).DeviceID].Items.Remove(key);
         }
 
@@ -138,5 +145,10 @@ namespace Examples.Tests
         }
 
         #endregion
+
+        private void ChooseMouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MouseButtons.Items.Clear();
+        }
     }
 }
