@@ -23,9 +23,26 @@ namespace Examples.Tutorial
         }
 
         /// <summary>
+        /// Override the OnResize method to respond to window resize events.
+        /// Do not forget to call base.OnResize() so that event listeners
+        /// will be notified of window resize events!
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
+        {
+            GL.Viewport(0, 0, e.Width, e.Height);
+
+            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.LoadIdentity();
+            GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 4.0);
+
+            base.OnResize(e);
+        }
+
+        /// <summary>
         /// Override the OnRenderFrame method to add your drawing code.
         /// Do not forget to call base.OnRenderFrame() so that event listeners
-        /// will be notified every time a frame is drawn!
+        /// will be notified of frame rendering events!
         /// </summary>
         /// <param name="e">Not used.</param>
         public override void OnRenderFrame(EventArgs e)

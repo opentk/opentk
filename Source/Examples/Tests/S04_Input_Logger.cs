@@ -24,7 +24,6 @@ namespace Examples.Tests
     {
         InputDriver driver;
         Dictionary<IntPtr, ListBox> keyboardListBoxes = new Dictionary<IntPtr, ListBox>(4);
-        bool stop_polling;
 
         public S04_Input_Logger()
         {
