@@ -354,7 +354,7 @@ namespace OpenTK
         public void ProcessEvents()
         {
             if (driver != null)
-                driver.ProcessEvents();
+                driver.Poll();
             glWindow.ProcessEvents();
         }
 

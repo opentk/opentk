@@ -186,5 +186,48 @@ namespace OpenTK.Platform
                 }
             }
         }
+
+        #region public bool IsIdle
+
+        interface IIsIdle { bool IsIdle { get; } }
+
+        class X11IsIdle : IIsIdle
+        {
+            public bool IsIdle
+            {
+                get
+                {
+                    return X11.API.Pending(IntPtr.Zero) == 0;
+                }
+            }
+        }
+
+        class WindowsIsIdle : IIsIdle
+        {
+            Windows.MSG msg;
+
+            public bool IsIdle
+            {
+                get
+                {
+                    return !Windows.API.PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
+                }
+            }
+        }
+
+        static IIsIdle isIdleImpl =
+            System.Environment.OSVersion.Platform == PlatformID.Unix ?
+            (IIsIdle)new X11IsIdle() : (IIsIdle)new WindowsIsIdle();
+
+        public static bool IsIdle
+        {
+            get
+            {
+                return isIdleImpl.IsIdle;
+            }
+        }
+
+
+        #endregion
     }
 }
