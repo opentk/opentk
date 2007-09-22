@@ -316,12 +316,19 @@ namespace OpenTK
 
             Debug.Print("Entering main loop");
 
+            System.Diagnostics.Stopwatch watch = new Stopwatch();
+            watch.Reset();
+            UpdateFrameEventArgs updateArgs = new UpdateFrameEventArgs();
+
             while (this.Exists && !IsExiting)
             {
                 this.ProcessEvents();
                 if (!IsExiting)
                 {
-                    this.OnUpdateFrame(EventArgs.Empty);
+                    updateArgs.Time = watch.ElapsedMilliseconds / 1000.0f;
+                    watch.Reset();
+                    watch.Start();
+                    this.OnUpdateFrame(updateArgs);
                     this.OnRenderFrame(EventArgs.Empty);
                 }
             }
@@ -388,7 +395,7 @@ namespace OpenTK
 
         #endregion
 
-        #region public virtual void OnUpdateFrame(EventArgs e)
+        #region public virtual void OnUpdateFrame(UpdateFrameEventArgs e)
 
         /// <summary>
         /// Raises the UpdateFrame event. Override in derived classes to update a frame.
@@ -397,7 +404,7 @@ namespace OpenTK
         /// If overriden, the base.OnUpdateFrame() function should be called, to ensure
         /// listeners are notified of UpdateFrame events.
         /// </remarks>
-        public virtual void OnUpdateFrame(EventArgs e)
+        public virtual void OnUpdateFrame(UpdateFrameEventArgs e)
         {
             if (!this.Exists && !this.IsExiting)
             {
@@ -615,5 +622,19 @@ namespace OpenTK
         }
 
         #endregion
+    }
+
+    public class UpdateFrameEventArgs : EventArgs
+    {
+        private float time;
+
+        /// <summary>
+        /// Gets the Time elapsed between frame updates, in seconds.
+        /// </summary>
+        public float Time
+        {
+            get { return time; }
+            internal set { time = value; }
+        }
     }
 }

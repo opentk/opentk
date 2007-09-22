@@ -123,7 +123,7 @@ namespace Examples.Tutorial
 
         #region OnUpdateFrame
 
-        public override void OnUpdateFrame(EventArgs e)
+        public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
             base.OnUpdateFrame(e);
 
