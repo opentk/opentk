@@ -129,7 +129,7 @@ namespace OpenTK.Platform.X11
         /// Consumes to keyboard, mouse, etc events, routing them to their
         /// respective drivers.
         /// </summary>
-        public void ProcessEvents()
+        public void Poll()
         {
             while (API.CheckMaskEvent(window.Display, EventMask.KeyReleaseMask | EventMask.KeyPressMask, ref e))
             {

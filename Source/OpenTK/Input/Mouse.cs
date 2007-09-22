@@ -16,7 +16,7 @@ namespace OpenTK.Input
         private int numButtons, numWheels;
         private IntPtr id;
         private bool[] button = new bool[(int)MouseButton.LastButton];
-        private int wheel, x, y, delta_x, delta_y;
+        private int wheel, x, y, wheel_delta, delta_x, delta_y;
 
         #region --- IInputDevice Members ---
 
@@ -56,7 +56,24 @@ namespace OpenTK.Input
         public int Wheel
         {
             get { return wheel; }
-            internal set { wheel = value; }
+            internal set
+            {
+                wheel = value;
+            }
+        }
+
+        internal int WheelDelta
+        {
+            get
+            {
+                int delta = wheel_delta;
+                //wheel_delta = 0;
+                return delta;
+            }
+            set
+            {
+                wheel_delta = value;
+            }
         }
 
         public int X
@@ -71,13 +88,13 @@ namespace OpenTK.Input
             internal set { y = value; }
         }
 
-        public int DeltaX
+        public int XDelta
         {
             get { return delta_x; }
             internal set { delta_x = value; }
         }
 
-        public int DeltaY
+        public int YDelta
         {
             get { return delta_y; }
             internal set { delta_y = value; }

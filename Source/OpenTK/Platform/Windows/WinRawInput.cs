@@ -28,6 +28,7 @@ namespace OpenTK.Platform.Windows
         /// The total number of input devices connected to this system.
         /// </summary>
         private static int deviceCount;
+        int rawInputStructSize = API.RawInputSize;
 
         private WinRawKeyboard keyboardDriver;
         private WinRawMouse mouseDriver;
@@ -45,6 +46,8 @@ namespace OpenTK.Platform.Windows
             mouseDriver = new WinRawMouse(this.Handle);
             
             Debug.Unindent();
+
+            AllocateBuffer();
         }
 
         #endregion
@@ -64,8 +67,6 @@ namespace OpenTK.Platform.Windows
 
         #region protected override void WndProc(ref Message msg)
 
-        int size = 0;
-
         /// <summary>
         /// Processes the input Windows Message, routing the data to the correct Keyboard, Mouse or HID.
         /// </summary>
@@ -75,7 +76,7 @@ namespace OpenTK.Platform.Windows
             switch ((WindowMessage)msg.Msg)
             {
                 case WindowMessage.INPUT:
-                    size = 0;
+                    int size = 0;
                     // Get the size of the input data
                     API.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
                         IntPtr.Zero, ref size, API.RawInputHeaderSize);
@@ -84,7 +85,6 @@ namespace OpenTK.Platform.Windows
                     //{
                     //    throw new ApplicationException("Critical error when processing raw windows input.");
                     //}
-
                     if (size == API.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
                             data, ref size, API.RawInputHeaderSize))
                     {
@@ -118,14 +118,14 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.CLOSE:
                 case WindowMessage.DESTROY:
-                Debug.Print("Input window detached from parent {0}.", Handle);
-                ReleaseHandle();
-                break;
+                    Debug.Print("Input window detached from parent {0}.", Handle);
+                    ReleaseHandle();
+                    break;
 
                 case WindowMessage.QUIT:
-                Debug.WriteLine("Input window quit.");
-                this.Dispose();
-                break;
+                    Debug.WriteLine("Input window quit.");
+                    this.Dispose();
+                    break;
             }
 
             base.WndProc(ref msg);
@@ -134,11 +134,6 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region --- IInputDriver Members ---
-
-        IList<Input.IInputDevice> Input.IInputDriver.InputDevices
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
-        }
 
         public IList<Keyboard> Keyboard
         {
@@ -150,9 +145,85 @@ namespace OpenTK.Platform.Windows
             get { return mouseDriver.Mouse; }
         }
 
-        public void ProcessEvents()
+        int allocated_buffer_size;  // rin_data size in bytes.
+        IntPtr rin_data;        // Unmanaged buffer with grow-only behavior. Freed at Dispose(bool).
+
+        /// <summary>
+        /// Allocates a buffer for buffered reading of RawInput structs. Starts at 16*sizeof(RawInput) and
+        /// doubles the buffer every call thereafter.
+        /// </summary>
+        private void AllocateBuffer()
         {
-            // Do nothing, the WndProc is automatically notified of new events (sub-classing magic).
+            // Find the size of the buffer (grow-only).
+            if (allocated_buffer_size == 0)
+            {
+                allocated_buffer_size = 16536 * rawInputStructSize;
+            }
+            else
+            {
+                allocated_buffer_size *= 2;
+            }
+
+            // Allocate the new buffer.
+            if (rin_data != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(rin_data);
+            }
+            rin_data = Marshal.AllocHGlobal(allocated_buffer_size);
+            if (rin_data == IntPtr.Zero)
+            {
+                throw new OutOfMemoryException(String.Format(
+                    "Failed to allocate {0} bytes for raw input structures.", allocated_buffer_size));
+            }
+        }
+
+        public void Poll()
+        {
+            return;
+            // We will do a buffered read for all input devices and route the RawInput structures
+            // to the correct 'ProcessData' handlers. First, we need to find out the size of the
+            // buffer to allocate for the structures. Then we allocate the buffer and read the
+            // structures, calling the correct handler for each one. Last, we free the allocated
+            // buffer.
+            while (true)
+            {
+                // Iterate reading all available RawInput structures and routing them to their respective
+                // handlers.
+                int num = API.GetRawInputBuffer(rin_data, ref allocated_buffer_size, API.RawInputHeaderSize);
+                if (num == 0)
+                    return;
+                else if (num < 0)
+                {
+                    /*int error = Marshal.GetLastWin32Error();
+                    if (error == 122)
+                    {
+                        // Enlarge the buffer, it was too small.
+                        AllocateBuffer();
+                    }
+                    else
+                    {
+                        throw new ApplicationException(String.Format(
+                            "GetRawInputBuffer failed with code: {0}", error));
+                    }*/
+                    Debug.Print("GetRawInputBuffer failed with code: {0}", Marshal.GetLastWin32Error());
+                    //AllocateBuffer();
+                    return;
+                }
+
+                IntPtr next_rin = rin_data;
+                int i = num;
+                while (--i > 0)
+                {
+                    RawInput rin;
+                    rin = (RawInput)Marshal.PtrToStructure(next_rin, typeof(RawInput));
+                    if (rin.Header.Type == RawInputDeviceType.KEYBOARD)
+                        keyboardDriver.ProcessKeyboardEvent(rin);
+                    else if (rin.Header.Type == RawInputDeviceType.MOUSE)
+                        mouseDriver.ProcessEvent(rin);
+                    next_rin = API.NextRawInputStructure(next_rin);
+                }
+                API.DefRawInputProc(rin_data, num, (uint)API.RawInputHeaderSize);
+            }
         }
 
         #endregion
@@ -171,6 +242,11 @@ namespace OpenTK.Platform.Windows
         {
             if (!disposed)
             {
+                if (rin_data != IntPtr.Zero)
+                {
+                    Marshal.FreeHGlobal(rin_data);
+                }
+
                 if (manual)
                 {
                     keyboardDriver.Dispose();

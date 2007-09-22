@@ -14,6 +14,9 @@ using Microsoft.Win32;
 
 namespace OpenTK.Platform.Windows
 {
+    /// <summary>
+    /// Contains methods to register for and process mouse WM_INPUT messages.
+    /// </summary>
     internal class WinRawMouse : IMouseDriver, IDisposable
     {
         private List<Mouse> mice = new List<Mouse>();
@@ -46,6 +49,8 @@ namespace OpenTK.Platform.Windows
         {
             get { return mice; }
         }
+
+        #region public int RegisterDevices()
 
         public int RegisterDevices()
         {
@@ -122,6 +127,8 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #endregion
+
         #region internal void RegisterRawDevice(OpenTK.Input.Mouse mouse)
 
         internal void RegisterRawDevice(OpenTK.Input.Mouse mouse)
@@ -164,6 +171,7 @@ namespace OpenTK.Platform.Windows
             {
                 return m.DeviceID == rin.Header.Device;
             });
+            if (mouse == null && mice.Count > 0) mouse = mice[0];
 
             switch (rin.Header.Type)
             {
@@ -179,24 +187,28 @@ namespace OpenTK.Platform.Windows
                     if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0) mouse[MouseButton.Button2] = true;
                     if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0) mouse[MouseButton.Button2] = false;
 
+
                     if (rin.Data.Mouse.ButtonFlags == RawInputMouseState.WHEEL)
                     {
-                        mouse.Wheel += rin.Data.Mouse.ButtonData;
+                        //mouse.WheelDelta = rin.Data.Mouse.ButtonData;
+                        //mouse.Wheel += rin.Data.Mouse.ButtonData;
+                        mouse.WheelDelta = rin.Data.Mouse.ButtonData > 0 ? 1 : -1;
+                        mouse.Wheel += mouse.WheelDelta;
                     }
 
                     if (rin.Data.Mouse.Flags == RawMouseFlags.MOUSE_MOVE_ABSOLUTE)
                     {
-                        mouse.DeltaX = rin.Data.Mouse.LastX - mouse.X;
-                        mouse.DeltaY = rin.Data.Mouse.LastY - mouse.Y;
+                        mouse.XDelta = rin.Data.Mouse.LastX - mouse.X;
+                        mouse.YDelta = rin.Data.Mouse.LastY - mouse.Y;
                         mouse.X = rin.Data.Mouse.LastX;
                         mouse.Y = rin.Data.Mouse.LastY;
                     }
                     else if (rin.Data.Mouse.Flags == RawMouseFlags.MOUSE_MOVE_RELATIVE)
                     {
-                        mouse.DeltaX = rin.Data.Mouse.LastX;
-                        mouse.DeltaY = rin.Data.Mouse.LastY;
-                        mouse.X += mouse.DeltaX;
-                        mouse.Y += mouse.DeltaY;
+                        mouse.XDelta = rin.Data.Mouse.LastX;
+                        mouse.YDelta = rin.Data.Mouse.LastY;
+                        mouse.X += mouse.XDelta;
+                        mouse.Y += mouse.YDelta;
                     }
 
                     return false;
@@ -208,11 +220,40 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region public void Poll()
+
+        public void Poll()
+        {
+
+        }
+
+        #endregion
+
         #region --- IDisposable Members ---
+
+        private bool disposed;
 
         public void Dispose()
         {
-            //throw new Exception("The method or operation is not implemented.");
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    mice.Clear();
+                }
+                disposed = true;
+            }
+        }
+
+        ~WinRawMouse()
+        {
+            Dispose(false);
         }
 
         #endregion

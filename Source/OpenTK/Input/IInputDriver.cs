@@ -12,7 +12,7 @@ namespace OpenTK.Input
 {
     public interface IInputDriver : IKeyboardDriver, IMouseDriver, IDisposable
     {
-        IList<IInputDevice> InputDevices { get; }
-        void ProcessEvents();
+        //IList<IInputDevice> InputDevices { get; }
+        void Poll();
     }
 }

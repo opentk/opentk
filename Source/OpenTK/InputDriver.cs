@@ -45,11 +45,6 @@ namespace OpenTK
 
         #region --- IInputDriver Members ---
 
-        public IList<IInputDevice> InputDevices
-        {
-            get { return inputDriver.InputDevices; }
-        }
-
         public IList<Keyboard> Keyboard
         {
             get { return inputDriver.Keyboard; }
@@ -60,9 +55,9 @@ namespace OpenTK
             get { return inputDriver.Mouse; }
         }
 
-        public void ProcessEvents()
+        public void Poll()
         {
-            inputDriver.ProcessEvents();
+            inputDriver.Poll();
         }
         /*
         int IMouseDriver.RegisterDevices()
