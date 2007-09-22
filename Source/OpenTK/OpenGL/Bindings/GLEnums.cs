@@ -28,7 +28,7 @@ namespace OpenTK.OpenGL
                 POLYGON_BIT = ((int)0x00000008),
                 POLYGON_STIPPLE_BIT = ((int)0x00000010),
             }
-            
+
             public enum ClearBufferMask
             {
                 COLOR_BUFFER_BIT = ((int)AttribMask.COLOR_BUFFER_BIT),
@@ -36,20 +36,20 @@ namespace OpenTK.OpenGL
                 ACCUM_BUFFER_BIT = ((int)AttribMask.ACCUM_BUFFER_BIT),
                 DEPTH_BUFFER_BIT = ((int)AttribMask.DEPTH_BUFFER_BIT),
             }
-            
+
             public enum ClientAttribMask
             {
                 CLIENT_VERTEX_ARRAY_BIT = ((int)0x00000002),
                 CLIENT_PIXEL_STORE_BIT = ((int)0x00000001),
                 CLIENT_ALL_ATTRIB_BITS = unchecked((int)0xFFFFFFFF),
             }
-            
+
             public enum Boolean
             {
                 TRUE = ((int)1),
                 FALSE = ((int)0),
             }
-            
+
             public enum BeginMode
             {
                 POINTS = ((int)0x0000),
@@ -63,7 +63,7 @@ namespace OpenTK.OpenGL
                 LINE_STRIP = ((int)0x0003),
                 LINES = ((int)0x0001),
             }
-            
+
             public enum AccumOp
             {
                 MULT = ((int)0x0103),
@@ -72,7 +72,7 @@ namespace OpenTK.OpenGL
                 LOAD = ((int)0x0101),
                 ACCUM = ((int)0x0100),
             }
-            
+
             public enum AlphaFunction
             {
                 GEQUAL = ((int)0x0206),
@@ -84,7 +84,7 @@ namespace OpenTK.OpenGL
                 NOTEQUAL = ((int)0x0205),
                 ALWAYS = ((int)0x0207),
             }
-            
+
             public enum BlendingFactorDest
             {
                 ONE_MINUS_SRC_COLOR = ((int)0x0301),
@@ -100,7 +100,7 @@ namespace OpenTK.OpenGL
                 SRC_COLOR = ((int)0x0300),
                 CONSTANT_COLOR_EXT = ((int)EXT_blend_color.CONSTANT_COLOR_EXT),
             }
-            
+
             public enum BlendingFactorSrc
             {
                 DST_COLOR = ((int)0x0306),
@@ -117,7 +117,7 @@ namespace OpenTK.OpenGL
                 DST_ALPHA = ((int)BlendingFactorDest.DST_ALPHA),
                 CONSTANT_COLOR_EXT = ((int)EXT_blend_color.CONSTANT_COLOR_EXT),
             }
-            
+
             public enum BlendEquationModeEXT
             {
                 ALPHA_MAX_SGIX = ((int)SGIX_blend_alpha_minmax.ALPHA_MAX_SGIX),
@@ -129,14 +129,14 @@ namespace OpenTK.OpenGL
                 MIN_EXT = ((int)EXT_blend_minmax.MIN_EXT),
                 FUNC_ADD_EXT = ((int)EXT_blend_minmax.FUNC_ADD_EXT),
             }
-            
+
             public enum ColorMaterialFace
             {
                 BACK = ((int)DrawBufferMode.BACK),
                 FRONT = ((int)DrawBufferMode.FRONT),
                 FRONT_AND_BACK = ((int)DrawBufferMode.FRONT_AND_BACK),
             }
-            
+
             public enum ColorMaterialParameter
             {
                 DIFFUSE = ((int)LightParameter.DIFFUSE),
@@ -145,7 +145,7 @@ namespace OpenTK.OpenGL
                 SPECULAR = ((int)LightParameter.SPECULAR),
                 EMISSION = ((int)MaterialParameter.EMISSION),
             }
-            
+
             public enum ColorPointerType
             {
                 INT = ((int)DataType.INT),
@@ -157,13 +157,13 @@ namespace OpenTK.OpenGL
                 DOUBLE = ((int)DataType.DOUBLE),
                 FLOAT = ((int)DataType.FLOAT),
             }
-            
+
             public enum ColorTableParameterPNameSGI
             {
                 COLOR_TABLE_BIAS_SGI = ((int)SGI_color_table.COLOR_TABLE_BIAS_SGI),
                 COLOR_TABLE_SCALE_SGI = ((int)SGI_color_table.COLOR_TABLE_SCALE_SGI),
             }
-            
+
             public enum ColorTableTargetSGI
             {
                 POST_CONVOLUTION_COLOR_TABLE_SGI = ((int)SGI_color_table.POST_CONVOLUTION_COLOR_TABLE_SGI),
@@ -175,32 +175,32 @@ namespace OpenTK.OpenGL
                 TEXTURE_COLOR_TABLE_SGI = ((int)SGI_texture_color_table.TEXTURE_COLOR_TABLE_SGI),
                 COLOR_TABLE_SGI = ((int)SGI_color_table.COLOR_TABLE_SGI),
             }
-            
+
             public enum ConvolutionBorderModeEXT
             {
                 REDUCE_EXT = ((int)EXT_convolution.REDUCE_EXT),
             }
-            
+
             public enum ConvolutionParameterEXT
             {
                 CONVOLUTION_FILTER_BIAS_EXT = ((int)EXT_convolution.CONVOLUTION_FILTER_BIAS_EXT),
                 CONVOLUTION_BORDER_MODE_EXT = ((int)EXT_convolution.CONVOLUTION_BORDER_MODE_EXT),
                 CONVOLUTION_FILTER_SCALE_EXT = ((int)EXT_convolution.CONVOLUTION_FILTER_SCALE_EXT),
             }
-            
+
             public enum ConvolutionTargetEXT
             {
                 CONVOLUTION_1D_EXT = ((int)EXT_convolution.CONVOLUTION_1D_EXT),
                 CONVOLUTION_2D_EXT = ((int)EXT_convolution.CONVOLUTION_2D_EXT),
             }
-            
+
             public enum CullFaceMode
             {
                 BACK = ((int)DrawBufferMode.BACK),
                 FRONT = ((int)DrawBufferMode.FRONT),
                 FRONT_AND_BACK = ((int)DrawBufferMode.FRONT_AND_BACK),
             }
-            
+
             public enum DepthFunction
             {
                 GEQUAL = ((int)AlphaFunction.GEQUAL),
@@ -212,7 +212,7 @@ namespace OpenTK.OpenGL
                 NOTEQUAL = ((int)AlphaFunction.NOTEQUAL),
                 ALWAYS = ((int)AlphaFunction.ALWAYS),
             }
-            
+
             public enum DrawBufferMode
             {
                 BACK = ((int)0x0405),
@@ -230,7 +230,7 @@ namespace OpenTK.OpenGL
                 AUX3 = ((int)0x040C),
                 FRONT = ((int)0x0404),
             }
-            
+
             public enum EnableCap
             {
                 TEXTURE_GEN_S = ((int)GetPName.TEXTURE_GEN_S),
@@ -340,7 +340,7 @@ namespace OpenTK.OpenGL
                 LIGHT4 = ((int)GetPName.LIGHT4),
                 TEXTURE_GEN_T = ((int)GetPName.TEXTURE_GEN_T),
             }
-            
+
             public enum ErrorCode
             {
                 NO_ERROR = ((int)0),
@@ -353,7 +353,7 @@ namespace OpenTK.OpenGL
                 TABLE_TOO_LARGE_EXT = ((int)EXT_histogram.TABLE_TOO_LARGE_EXT),
                 INVALID_VALUE = ((int)0x0501),
             }
-            
+
             public enum FeedbackType
             {
                 GL_3D_COLOR = ((int)0x0602),
@@ -362,7 +362,7 @@ namespace OpenTK.OpenGL
                 GL_3D = ((int)0x0601),
                 GL_3D_COLOR_TEXTURE = ((int)0x0603),
             }
-            
+
             public enum FeedBackToken
             {
                 LINE_TOKEN = ((int)0x0702),
@@ -374,19 +374,19 @@ namespace OpenTK.OpenGL
                 DRAW_PIXEL_TOKEN = ((int)0x0705),
                 POLYGON_TOKEN = ((int)0x0703),
             }
-            
+
             public enum FfdMaskSGIX
             {
                 GEOMETRY_DEFORMATION_BIT_SGIX = ((int)0x00000002),
                 TEXTURE_DEFORMATION_BIT_SGIX = ((int)0x00000001),
             }
-            
+
             public enum FfdTargetSGIX
             {
                 GEOMETRY_DEFORMATION_SGIX = ((int)SGIX_polynomial_ffd.GEOMETRY_DEFORMATION_SGIX),
                 TEXTURE_DEFORMATION_SGIX = ((int)SGIX_polynomial_ffd.TEXTURE_DEFORMATION_SGIX),
             }
-            
+
             public enum FogMode
             {
                 EXP2 = ((int)0x0801),
@@ -394,7 +394,7 @@ namespace OpenTK.OpenGL
                 EXP = ((int)0x0800),
                 LINEAR = ((int)TextureMagFilter.LINEAR),
             }
-            
+
             public enum FogParameter
             {
                 FOG_OFFSET_VALUE_SGIX = ((int)SGIX_fog_offset.FOG_OFFSET_VALUE_SGIX),
@@ -405,7 +405,7 @@ namespace OpenTK.OpenGL
                 FOG_START = ((int)GetPName.FOG_START),
                 FOG_MODE = ((int)GetPName.FOG_MODE),
             }
-            
+
             public enum FragmentLightModelParameterSGIX
             {
                 FRAGMENT_LIGHT_MODEL_NORMAL_INTERPOLATION_SGIX = ((int)SGIX_fragment_lighting.FRAGMENT_LIGHT_MODEL_NORMAL_INTERPOLATION_SGIX),
@@ -413,13 +413,13 @@ namespace OpenTK.OpenGL
                 FRAGMENT_LIGHT_MODEL_TWO_SIDE_SGIX = ((int)SGIX_fragment_lighting.FRAGMENT_LIGHT_MODEL_TWO_SIDE_SGIX),
                 FRAGMENT_LIGHT_MODEL_LOCAL_VIEWER_SGIX = ((int)SGIX_fragment_lighting.FRAGMENT_LIGHT_MODEL_LOCAL_VIEWER_SGIX),
             }
-            
+
             public enum FrontFaceDirection
             {
                 CW = ((int)0x0900),
                 CCW = ((int)0x0901),
             }
-            
+
             public enum GetColorTableParameterPNameSGI
             {
                 COLOR_TABLE_INTENSITY_SIZE_SGI = ((int)SGI_color_table.COLOR_TABLE_INTENSITY_SIZE_SGI),
@@ -433,7 +433,7 @@ namespace OpenTK.OpenGL
                 COLOR_TABLE_BLUE_SIZE_SGI = ((int)SGI_color_table.COLOR_TABLE_BLUE_SIZE_SGI),
                 COLOR_TABLE_RED_SIZE_SGI = ((int)SGI_color_table.COLOR_TABLE_RED_SIZE_SGI),
             }
-            
+
             public enum GetConvolutionParameter
             {
                 CONVOLUTION_FILTER_SCALE_EXT = ((int)EXT_convolution.CONVOLUTION_FILTER_SCALE_EXT),
@@ -445,7 +445,7 @@ namespace OpenTK.OpenGL
                 CONVOLUTION_BORDER_MODE_EXT = ((int)EXT_convolution.CONVOLUTION_BORDER_MODE_EXT),
                 MAX_CONVOLUTION_WIDTH_EXT = ((int)EXT_convolution.MAX_CONVOLUTION_WIDTH_EXT),
             }
-            
+
             public enum GetHistogramParameterPNameEXT
             {
                 HISTOGRAM_RED_SIZE_EXT = ((int)EXT_histogram.HISTOGRAM_RED_SIZE_EXT),
@@ -457,20 +457,20 @@ namespace OpenTK.OpenGL
                 HISTOGRAM_GREEN_SIZE_EXT = ((int)EXT_histogram.HISTOGRAM_GREEN_SIZE_EXT),
                 HISTOGRAM_ALPHA_SIZE_EXT = ((int)EXT_histogram.HISTOGRAM_ALPHA_SIZE_EXT),
             }
-            
+
             public enum GetMapQuery
             {
                 DOMAIN = ((int)0x0A02),
                 COEFF = ((int)0x0A00),
                 ORDER = ((int)0x0A01),
             }
-            
+
             public enum GetMinmaxParameterPNameEXT
             {
                 MINMAX_SINK_EXT = ((int)EXT_histogram.MINMAX_SINK_EXT),
                 MINMAX_FORMAT_EXT = ((int)EXT_histogram.MINMAX_FORMAT_EXT),
             }
-            
+
             public enum GetPixelMap
             {
                 PIXEL_MAP_I_TO_G = ((int)0x0C73),
@@ -484,7 +484,7 @@ namespace OpenTK.OpenGL
                 PIXEL_MAP_B_TO_B = ((int)0x0C78),
                 PIXEL_MAP_I_TO_I = ((int)0x0C70),
             }
-            
+
             public enum GetPointervPName
             {
                 NORMAL_ARRAY_POINTER = ((int)0x808F),
@@ -497,7 +497,7 @@ namespace OpenTK.OpenGL
                 COLOR_ARRAY_POINTER = ((int)0x8090),
                 FEEDBACK_BUFFER_POINTER = ((int)0x0DF0),
             }
-            
+
             public enum GetPName
             {
                 INDEX_CLEAR_VALUE = ((int)0x0C20),
@@ -879,7 +879,7 @@ namespace OpenTK.OpenGL
                 UNPACK_SKIP_IMAGES_EXT = ((int)EXT_texture3D.UNPACK_SKIP_IMAGES_EXT),
                 SPRITE_TRANSLATION_SGIX = ((int)SGIX_sprite.SPRITE_TRANSLATION_SGIX),
             }
-            
+
             public enum GetTextureParameter
             {
                 TEXTURE_CLIPMAP_LOD_OFFSET_SGIX = ((int)SGIX_clipmap.TEXTURE_CLIPMAP_LOD_OFFSET_SGIX),
@@ -936,14 +936,14 @@ namespace OpenTK.OpenGL
                 TEXTURE_WRAP_T = ((int)TextureParameterName.TEXTURE_WRAP_T),
                 TEXTURE_RED_SIZE = ((int)0x805C),
             }
-            
+
             public enum HintMode
             {
                 FASTEST = ((int)0x1101),
                 NICEST = ((int)0x1102),
                 DONT_CARE = ((int)0x1100),
             }
-            
+
             public enum HintTarget
             {
                 LINE_SMOOTH_HINT = ((int)GetPName.LINE_SMOOTH_HINT),
@@ -958,13 +958,13 @@ namespace OpenTK.OpenGL
                 FOG_HINT = ((int)GetPName.FOG_HINT),
                 GENERATE_MIPMAP_HINT_SGIS = ((int)SGIS_generate_mipmap.GENERATE_MIPMAP_HINT_SGIS),
             }
-            
+
             public enum HistogramTargetEXT
             {
                 PROXY_HISTOGRAM_EXT = ((int)EXT_histogram.PROXY_HISTOGRAM_EXT),
                 HISTOGRAM_EXT = ((int)EXT_histogram.HISTOGRAM_EXT),
             }
-            
+
             public enum IndexPointerType
             {
                 FLOAT = ((int)DataType.FLOAT),
@@ -972,25 +972,25 @@ namespace OpenTK.OpenGL
                 SHORT = ((int)DataType.SHORT),
                 DOUBLE = ((int)DataType.DOUBLE),
             }
-            
+
             public enum LightEnvModeSGIX
             {
                 REPLACE = ((int)StencilOp.REPLACE),
                 MODULATE = ((int)TextureEnvMode.MODULATE),
                 ADD = ((int)AccumOp.ADD),
             }
-            
+
             public enum LightEnvParameterSGIX
             {
                 LIGHT_ENV_MODE_SGIX = ((int)SGIX_fragment_lighting.LIGHT_ENV_MODE_SGIX),
             }
-            
+
             public enum LightModelColorControl
             {
                 SEPARATE_SPECULAR_COLOR = ((int)VERSION_1_2.SEPARATE_SPECULAR_COLOR),
                 SINGLE_COLOR = ((int)VERSION_1_2.SINGLE_COLOR),
             }
-            
+
             public enum LightModelParameter
             {
                 LIGHT_MODEL_COLOR_CONTROL = ((int)VERSION_1_2.LIGHT_MODEL_COLOR_CONTROL),
@@ -998,7 +998,7 @@ namespace OpenTK.OpenGL
                 LIGHT_MODEL_LOCAL_VIEWER = ((int)GetPName.LIGHT_MODEL_LOCAL_VIEWER),
                 LIGHT_MODEL_TWO_SIDE = ((int)GetPName.LIGHT_MODEL_TWO_SIDE),
             }
-            
+
             public enum LightParameter
             {
                 CONSTANT_ATTENUATION = ((int)0x1207),
@@ -1012,13 +1012,13 @@ namespace OpenTK.OpenGL
                 AMBIENT = ((int)0x1200),
                 SPOT_DIRECTION = ((int)0x1204),
             }
-            
+
             public enum ListMode
             {
                 COMPILE = ((int)0x1300),
                 COMPILE_AND_EXECUTE = ((int)0x1301),
             }
-            
+
             public enum DataType
             {
                 INT = ((int)0x1404),
@@ -1034,7 +1034,7 @@ namespace OpenTK.OpenGL
                 GL_3_BYTES = ((int)0x1408),
                 FLOAT = ((int)0x1406),
             }
-            
+
             public enum ListNameType
             {
                 INT = ((int)DataType.INT),
@@ -1048,12 +1048,12 @@ namespace OpenTK.OpenGL
                 GL_3_BYTES = ((int)DataType.GL_3_BYTES),
                 FLOAT = ((int)DataType.FLOAT),
             }
-            
+
             public enum ListParameterName
             {
                 LIST_PRIORITY_SGIX = ((int)SGIX_list_priority.LIST_PRIORITY_SGIX),
             }
-            
+
             public enum LogicOp
             {
                 NOR = ((int)0x1508),
@@ -1073,7 +1073,7 @@ namespace OpenTK.OpenGL
                 CLEAR = ((int)0x1500),
                 OR_INVERTED = ((int)0x150D),
             }
-            
+
             public enum MapTarget
             {
                 MAP1_INDEX = ((int)GetPName.MAP1_INDEX),
@@ -1097,14 +1097,14 @@ namespace OpenTK.OpenGL
                 MAP2_NORMAL = ((int)GetPName.MAP2_NORMAL),
                 MAP1_TEXTURE_COORD_1 = ((int)GetPName.MAP1_TEXTURE_COORD_1),
             }
-            
+
             public enum MaterialFace
             {
                 BACK = ((int)DrawBufferMode.BACK),
                 FRONT = ((int)DrawBufferMode.FRONT),
                 FRONT_AND_BACK = ((int)DrawBufferMode.FRONT_AND_BACK),
             }
-            
+
             public enum MaterialParameter
             {
                 DIFFUSE = ((int)LightParameter.DIFFUSE),
@@ -1115,32 +1115,32 @@ namespace OpenTK.OpenGL
                 SPECULAR = ((int)LightParameter.SPECULAR),
                 EMISSION = ((int)0x1600),
             }
-            
+
             public enum MatrixMode
             {
                 MODELVIEW = ((int)0x1700),
                 TEXTURE = ((int)0x1702),
                 PROJECTION = ((int)0x1701),
             }
-            
+
             public enum MeshMode1
             {
                 POINT = ((int)PolygonMode.POINT),
                 LINE = ((int)PolygonMode.LINE),
             }
-            
+
             public enum MeshMode2
             {
                 FILL = ((int)PolygonMode.FILL),
                 POINT = ((int)PolygonMode.POINT),
                 LINE = ((int)PolygonMode.LINE),
             }
-            
+
             public enum MinmaxTargetEXT
             {
                 MINMAX_EXT = ((int)EXT_histogram.MINMAX_EXT),
             }
-            
+
             public enum NormalPointerType
             {
                 BYTE = ((int)DataType.BYTE),
@@ -1149,14 +1149,14 @@ namespace OpenTK.OpenGL
                 SHORT = ((int)DataType.SHORT),
                 DOUBLE = ((int)DataType.DOUBLE),
             }
-            
+
             public enum PixelCopyType
             {
                 COLOR = ((int)0x1800),
                 DEPTH = ((int)0x1801),
                 STENCIL = ((int)0x1802),
             }
-            
+
             public enum PixelFormat
             {
                 COLOR_INDEX = ((int)0x1900),
@@ -1181,7 +1181,7 @@ namespace OpenTK.OpenGL
                 GREEN = ((int)0x1904),
                 LUMINANCE_ALPHA = ((int)0x190A),
             }
-            
+
             public enum PixelMap
             {
                 PIXEL_MAP_I_TO_G = ((int)GetPixelMap.PIXEL_MAP_I_TO_G),
@@ -1195,7 +1195,7 @@ namespace OpenTK.OpenGL
                 PIXEL_MAP_B_TO_B = ((int)GetPixelMap.PIXEL_MAP_B_TO_B),
                 PIXEL_MAP_I_TO_I = ((int)GetPixelMap.PIXEL_MAP_I_TO_I),
             }
-            
+
             public enum PixelStoreParameter
             {
                 PIXEL_TILE_CACHE_SIZE_SGIX = ((int)SGIX_pixel_tiles.PIXEL_TILE_CACHE_SIZE_SGIX),
@@ -1229,21 +1229,21 @@ namespace OpenTK.OpenGL
                 PACK_SWAP_BYTES = ((int)GetPName.PACK_SWAP_BYTES),
                 PACK_SKIP_ROWS = ((int)GetPName.PACK_SKIP_ROWS),
             }
-            
+
             public enum PixelStoreResampleMode
             {
                 RESAMPLE_REPLICATE_SGIX = ((int)SGIX_resample.RESAMPLE_REPLICATE_SGIX),
                 RESAMPLE_ZERO_FILL_SGIX = ((int)SGIX_resample.RESAMPLE_ZERO_FILL_SGIX),
                 RESAMPLE_DECIMATE_SGIX = ((int)SGIX_resample.RESAMPLE_DECIMATE_SGIX),
             }
-            
+
             public enum PixelStoreSubsampleRate
             {
                 PIXEL_SUBSAMPLE_2424_SGIX = ((int)SGIX_subsample.PIXEL_SUBSAMPLE_2424_SGIX),
                 PIXEL_SUBSAMPLE_4242_SGIX = ((int)SGIX_subsample.PIXEL_SUBSAMPLE_4242_SGIX),
                 PIXEL_SUBSAMPLE_4444_SGIX = ((int)SGIX_subsample.PIXEL_SUBSAMPLE_4444_SGIX),
             }
-            
+
             public enum PixelTexGenMode
             {
                 RGBA = ((int)PixelFormat.RGBA),
@@ -1256,13 +1256,13 @@ namespace OpenTK.OpenGL
                 LUMINANCE_ALPHA = ((int)PixelFormat.LUMINANCE_ALPHA),
                 PIXEL_TEX_GEN_ALPHA_MS_SGIX = ((int)SGIX_impact_pixel_texture.PIXEL_TEX_GEN_ALPHA_MS_SGIX),
             }
-            
+
             public enum PixelTexGenParameterNameSGIS
             {
                 PIXEL_FRAGMENT_ALPHA_SOURCE_SGIS = ((int)SGIS_pixel_texture.PIXEL_FRAGMENT_ALPHA_SOURCE_SGIS),
                 PIXEL_FRAGMENT_RGB_SOURCE_SGIS = ((int)SGIS_pixel_texture.PIXEL_FRAGMENT_RGB_SOURCE_SGIS),
             }
-            
+
             public enum PixelTransferParameter
             {
                 RED_BIAS = ((int)GetPName.RED_BIAS),
@@ -1296,7 +1296,7 @@ namespace OpenTK.OpenGL
                 DEPTH_BIAS = ((int)GetPName.DEPTH_BIAS),
                 INDEX_SHIFT = ((int)GetPName.INDEX_SHIFT),
             }
-            
+
             public enum PixelType
             {
                 INT = ((int)DataType.INT),
@@ -1313,7 +1313,7 @@ namespace OpenTK.OpenGL
                 UNSIGNED_INT_8_8_8_8_EXT = ((int)EXT_packed_pixels.UNSIGNED_INT_8_8_8_8_EXT),
                 BYTE = ((int)DataType.BYTE),
             }
-            
+
             public enum PointParameterNameSGIS
             {
                 POINT_FADE_THRESHOLD_SIZE_SGIS = ((int)SGIS_point_parameters.POINT_FADE_THRESHOLD_SIZE_SGIS),
@@ -1321,14 +1321,14 @@ namespace OpenTK.OpenGL
                 POINT_SIZE_MAX_SGIS = ((int)SGIS_point_parameters.POINT_SIZE_MAX_SGIS),
                 DISTANCE_ATTENUATION_SGIS = ((int)SGIS_point_parameters.DISTANCE_ATTENUATION_SGIS),
             }
-            
+
             public enum PolygonMode
             {
                 FILL = ((int)0x1B02),
                 POINT = ((int)0x1B00),
                 LINE = ((int)0x1B01),
             }
-            
+
             public enum ReadBufferMode
             {
                 BACK = ((int)DrawBufferMode.BACK),
@@ -1344,14 +1344,14 @@ namespace OpenTK.OpenGL
                 AUX3 = ((int)DrawBufferMode.AUX3),
                 LEFT = ((int)DrawBufferMode.LEFT),
             }
-            
+
             public enum RenderingMode
             {
                 FEEDBACK = ((int)0x1C01),
                 SELECT = ((int)0x1C02),
                 RENDER = ((int)0x1C00),
             }
-            
+
             public enum SamplePatternSGIS
             {
                 GL_4PASS_3_SGIS = ((int)SGIS_multisample.GL_4PASS_3_SGIS),
@@ -1362,18 +1362,18 @@ namespace OpenTK.OpenGL
                 GL_2PASS_1_SGIS = ((int)SGIS_multisample.GL_2PASS_1_SGIS),
                 GL_2PASS_0_SGIS = ((int)SGIS_multisample.GL_2PASS_0_SGIS),
             }
-            
+
             public enum SeparableTargetEXT
             {
                 SEPARABLE_2D_EXT = ((int)EXT_convolution.SEPARABLE_2D_EXT),
             }
-            
+
             public enum ShadingModel
             {
                 FLAT = ((int)0x1D00),
                 SMOOTH = ((int)0x1D01),
             }
-            
+
             public enum StencilFunction
             {
                 GEQUAL = ((int)AlphaFunction.GEQUAL),
@@ -1385,7 +1385,7 @@ namespace OpenTK.OpenGL
                 NOTEQUAL = ((int)AlphaFunction.NOTEQUAL),
                 ALWAYS = ((int)AlphaFunction.ALWAYS),
             }
-            
+
             public enum StencilOp
             {
                 ZERO = ((int)BlendingFactorDest.ZERO),
@@ -1395,7 +1395,7 @@ namespace OpenTK.OpenGL
                 KEEP = ((int)0x1E00),
                 DECR = ((int)0x1E03),
             }
-            
+
             public enum StringName
             {
                 VENDOR = ((int)0x1F00),
@@ -1403,7 +1403,7 @@ namespace OpenTK.OpenGL
                 EXTENSIONS = ((int)0x1F03),
                 VERSION = ((int)0x1F02),
             }
-            
+
             public enum TexCoordPointerType
             {
                 FLOAT = ((int)DataType.FLOAT),
@@ -1411,7 +1411,7 @@ namespace OpenTK.OpenGL
                 SHORT = ((int)DataType.SHORT),
                 DOUBLE = ((int)DataType.DOUBLE),
             }
-            
+
             public enum TextureCoordName
             {
                 R = ((int)0x2002),
@@ -1419,7 +1419,7 @@ namespace OpenTK.OpenGL
                 Q = ((int)0x2003),
                 T = ((int)0x2001),
             }
-            
+
             public enum TextureEnvMode
             {
                 ADD = ((int)AccumOp.ADD),
@@ -1429,23 +1429,23 @@ namespace OpenTK.OpenGL
                 BLEND = ((int)GetPName.BLEND),
                 DECAL = ((int)0x2101),
             }
-            
+
             public enum TextureEnvParameter
             {
                 TEXTURE_ENV_MODE = ((int)0x2200),
                 TEXTURE_ENV_COLOR = ((int)0x2201),
             }
-            
+
             public enum TextureEnvTarget
             {
                 TEXTURE_ENV = ((int)0x2300),
             }
-            
+
             public enum TextureFilterFuncSGIS
             {
                 FILTER4_SGIS = ((int)SGIS_texture_filter4.FILTER4_SGIS),
             }
-            
+
             public enum TextureGenMode
             {
                 EYE_LINEAR = ((int)0x2400),
@@ -1456,7 +1456,7 @@ namespace OpenTK.OpenGL
                 EYE_DISTANCE_TO_LINE_SGIS = ((int)SGIS_point_line_texgen.EYE_DISTANCE_TO_LINE_SGIS),
                 OBJECT_DISTANCE_TO_LINE_SGIS = ((int)SGIS_point_line_texgen.OBJECT_DISTANCE_TO_LINE_SGIS),
             }
-            
+
             public enum TextureGenParameter
             {
                 EYE_LINE_SGIS = ((int)SGIS_point_line_texgen.EYE_LINE_SGIS),
@@ -1467,7 +1467,7 @@ namespace OpenTK.OpenGL
                 OBJECT_PLANE = ((int)0x2501),
                 TEXTURE_GEN_MODE = ((int)0x2500),
             }
-            
+
             public enum TextureMagFilter
             {
                 PIXEL_TEX_GEN_Q_FLOOR_SGIX = ((int)SGIX_impact_pixel_texture.PIXEL_TEX_GEN_Q_FLOOR_SGIX),
@@ -1483,7 +1483,7 @@ namespace OpenTK.OpenGL
                 LINEAR_SHARPEN_SGIS = ((int)SGIS_sharpen_texture.LINEAR_SHARPEN_SGIS),
                 LINEAR_DETAIL_COLOR_SGIS = ((int)SGIS_detail_texture.LINEAR_DETAIL_COLOR_SGIS),
             }
-            
+
             public enum TextureMinFilter
             {
                 NEAREST_CLIPMAP_LINEAR_SGIX = ((int)SGIX_clipmap.NEAREST_CLIPMAP_LINEAR_SGIX),
@@ -1501,7 +1501,7 @@ namespace OpenTK.OpenGL
                 LINEAR_CLIPMAP_NEAREST_SGIX = ((int)SGIX_clipmap.LINEAR_CLIPMAP_NEAREST_SGIX),
                 FILTER4_SGIS = ((int)SGIS_texture_filter4.FILTER4_SGIS),
             }
-            
+
             public enum TextureParameterName
             {
                 TEXTURE_WRAP_T = ((int)0x2803),
@@ -1535,7 +1535,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_WRAP_S = ((int)0x2802),
                 TEXTURE_CLIPMAP_VIRTUAL_DEPTH_SGIX = ((int)SGIX_clipmap.TEXTURE_CLIPMAP_VIRTUAL_DEPTH_SGIX),
             }
-            
+
             public enum TextureTarget
             {
                 TEXTURE_MAX_LOD_SGIS = ((int)SGIS_texture_lod.TEXTURE_MAX_LOD_SGIS),
@@ -1552,7 +1552,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_MIN_LOD_SGIS = ((int)SGIS_texture_lod.TEXTURE_MIN_LOD_SGIS),
                 TEXTURE_MAX_LEVEL_SGIS = ((int)SGIS_texture_lod.TEXTURE_MAX_LEVEL_SGIS),
             }
-            
+
             public enum TextureWrapMode
             {
                 REPEAT = ((int)0x2901),
@@ -1560,7 +1560,7 @@ namespace OpenTK.OpenGL
                 CLAMP_TO_EDGE_SGIS = ((int)SGIS_texture_edge_clamp.CLAMP_TO_EDGE_SGIS),
                 CLAMP_TO_BORDER_SGIS = ((int)SGIS_texture_border_clamp.CLAMP_TO_BORDER_SGIS),
             }
-            
+
             public enum PixelInternalFormat
             {
                 RGB_ICC_SGIX = ((int)SGIX_icc_texture.RGB_ICC_SGIX),
@@ -1633,7 +1633,7 @@ namespace OpenTK.OpenGL
                 DUAL_INTENSITY4_SGIS = ((int)SGIS_texture_select.DUAL_INTENSITY4_SGIS),
                 RGBA_ICC_SGIX = ((int)SGIX_icc_texture.RGBA_ICC_SGIX),
             }
-            
+
             public enum InterleavedArrayFormat
             {
                 C4UB_V2F = ((int)0x2A22),
@@ -1651,7 +1651,7 @@ namespace OpenTK.OpenGL
                 C4F_N3F_V3F = ((int)0x2A26),
                 C4UB_V3F = ((int)0x2A23),
             }
-            
+
             public enum VertexPointerType
             {
                 FLOAT = ((int)DataType.FLOAT),
@@ -1659,7 +1659,7 @@ namespace OpenTK.OpenGL
                 SHORT = ((int)DataType.SHORT),
                 DOUBLE = ((int)DataType.DOUBLE),
             }
-            
+
             public enum ClipPlaneName
             {
                 CLIP_PLANE5 = ((int)0x3005),
@@ -1669,7 +1669,7 @@ namespace OpenTK.OpenGL
                 CLIP_PLANE3 = ((int)0x3003),
                 CLIP_PLANE2 = ((int)0x3002),
             }
-            
+
             public enum LightName
             {
                 LIGHT6 = ((int)0x4006),
@@ -1689,12 +1689,12 @@ namespace OpenTK.OpenGL
                 LIGHT3 = ((int)0x4003),
                 FRAGMENT_LIGHT1_SGIX = ((int)SGIX_fragment_lighting.FRAGMENT_LIGHT1_SGIX),
             }
-            
+
             public enum EXT_abgr
             {
                 ABGR_EXT = ((int)0x8000),
             }
-            
+
             public enum EXT_blend_color
             {
                 CONSTANT_COLOR = ((int)0x8001),
@@ -1708,7 +1708,7 @@ namespace OpenTK.OpenGL
                 ONE_MINUS_CONSTANT_ALPHA_EXT = ((int)0x8004),
                 CONSTANT_COLOR_EXT = ((int)0x8001),
             }
-            
+
             public enum EXT_blend_minmax
             {
                 MIN = ((int)0x8007),
@@ -1720,7 +1720,7 @@ namespace OpenTK.OpenGL
                 MIN_EXT = ((int)0x8007),
                 FUNC_ADD_EXT = ((int)0x8006),
             }
-            
+
             public enum EXT_blend_subtract
             {
                 FUNC_SUBTRACT_EXT = ((int)0x800A),
@@ -1728,7 +1728,7 @@ namespace OpenTK.OpenGL
                 FUNC_REVERSE_SUBTRACT = ((int)0x800B),
                 FUNC_SUBTRACT = ((int)0x800A),
             }
-            
+
             public enum EXT_cmyka
             {
                 PACK_CMYK_HINT_EXT = ((int)0x800E),
@@ -1736,7 +1736,7 @@ namespace OpenTK.OpenGL
                 CMYKA_EXT = ((int)0x800D),
                 UNPACK_CMYK_HINT_EXT = ((int)0x800F),
             }
-            
+
             public enum EXT_convolution
             {
                 CONVOLUTION_FILTER_SCALE = ((int)0x8014),
@@ -1780,7 +1780,7 @@ namespace OpenTK.OpenGL
                 POST_CONVOLUTION_RED_SCALE_EXT = ((int)0x801C),
                 MAX_CONVOLUTION_HEIGHT = ((int)0x801B),
             }
-            
+
             public enum EXT_histogram
             {
                 HISTOGRAM_WIDTH = ((int)0x8026),
@@ -1812,7 +1812,7 @@ namespace OpenTK.OpenGL
                 HISTOGRAM_SINK = ((int)0x802D),
                 PROXY_HISTOGRAM_EXT = ((int)0x8025),
             }
-            
+
             public enum EXT_packed_pixels
             {
                 UNSIGNED_SHORT_5_5_5_1 = ((int)0x8034),
@@ -1840,20 +1840,20 @@ namespace OpenTK.OpenGL
                 UNSIGNED_INT_8_8_8_8_REV = ((int)0x8367),
                 UNSIGNED_BYTE_3_3_2 = ((int)0x8032),
             }
-            
+
             public enum EXT_polygon_offset
             {
                 POLYGON_OFFSET_EXT = ((int)0x8037),
                 POLYGON_OFFSET_FACTOR_EXT = ((int)0x8038),
                 POLYGON_OFFSET_BIAS_EXT = ((int)0x8039),
             }
-            
+
             public enum EXT_rescale_normal
             {
                 RESCALE_NORMAL = ((int)0x803A),
                 RESCALE_NORMAL_EXT = ((int)0x803A),
             }
-            
+
             public enum EXT_texture
             {
                 LUMINANCE12_EXT = ((int)0x8041),
@@ -1900,7 +1900,7 @@ namespace OpenTK.OpenGL
                 INTENSITY12_EXT = ((int)0x804C),
                 RGB10_EXT = ((int)0x8052),
             }
-            
+
             public enum EXT_texture_object
             {
                 TEXTURE_RESIDENT_EXT = ((int)0x8067),
@@ -1909,7 +1909,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_3D_BINDING_EXT = ((int)0x806A),
                 TEXTURE_PRIORITY_EXT = ((int)0x8066),
             }
-            
+
             public enum EXT_texture3D
             {
                 TEXTURE_3D_EXT = ((int)0x806F),
@@ -1931,7 +1931,7 @@ namespace OpenTK.OpenGL
                 UNPACK_IMAGE_HEIGHT = ((int)0x806E),
                 PACK_SKIP_IMAGES = ((int)0x806B),
             }
-            
+
             public enum EXT_vertex_array
             {
                 NORMAL_ARRAY_POINTER_EXT = ((int)0x808F),
@@ -1967,12 +1967,12 @@ namespace OpenTK.OpenGL
                 TEXTURE_COORD_ARRAY_TYPE_EXT = ((int)0x8089),
                 TEXTURE_COORD_ARRAY_POINTER_EXT = ((int)0x8092),
             }
-            
+
             public enum SGIX_interlace
             {
                 INTERLACE_SGIX = ((int)0x8094),
             }
-            
+
             public enum SGIS_detail_texture
             {
                 DETAIL_TEXTURE_FUNC_POINTS_SGIS = ((int)0x809C),
@@ -1984,7 +1984,7 @@ namespace OpenTK.OpenGL
                 DETAIL_TEXTURE_2D_BINDING_SGIS = ((int)0x8096),
                 LINEAR_DETAIL_COLOR_SGIS = ((int)0x8099),
             }
-            
+
             public enum ARB_multisample
             {
                 SAMPLE_COVERAGE_ARB = ((int)0x80A0),
@@ -2005,7 +2005,7 @@ namespace OpenTK.OpenGL
                 SAMPLE_ALPHA_TO_ONE = ((int)0x809F),
                 SAMPLE_COVERAGE_VALUE = ((int)0x80AA),
             }
-            
+
             public enum SGIS_multisample
             {
                 GL_2PASS_1_SGIS = ((int)0x80A3),
@@ -2025,7 +2025,7 @@ namespace OpenTK.OpenGL
                 SAMPLE_BUFFERS_SGIS = ((int)0x80A8),
                 SAMPLE_ALPHA_TO_ONE_SGIS = ((int)0x809F),
             }
-            
+
             public enum SGIS_sharpen_texture
             {
                 LINEAR_SHARPEN_COLOR_SGIS = ((int)0x80AF),
@@ -2033,7 +2033,7 @@ namespace OpenTK.OpenGL
                 LINEAR_SHARPEN_ALPHA_SGIS = ((int)0x80AE),
                 LINEAR_SHARPEN_SGIS = ((int)0x80AD),
             }
-            
+
             public enum SGI_color_matrix
             {
                 POST_COLOR_MATRIX_RED_BIAS_SGI = ((int)0x80B8),
@@ -2059,23 +2059,23 @@ namespace OpenTK.OpenGL
                 POST_COLOR_MATRIX_ALPHA_BIAS = ((int)0x80BB),
                 COLOR_MATRIX_SGI = ((int)0x80B1),
             }
-            
+
             public enum SGI_texture_color_table
             {
                 TEXTURE_COLOR_TABLE_SGI = ((int)0x80BC),
                 PROXY_TEXTURE_COLOR_TABLE_SGI = ((int)0x80BD),
             }
-            
+
             public enum SGIX_texture_add_env
             {
                 TEXTURE_ENV_BIAS_SGIX = ((int)0x80BE),
             }
-            
+
             public enum SGIX_shadow_ambient
             {
                 SHADOW_AMBIENT_SGIX = ((int)0x80BF),
             }
-            
+
             public enum SGI_color_table
             {
                 PROXY_POST_COLOR_MATRIX_COLOR_TABLE_SGI = ((int)0x80D5),
@@ -2111,7 +2111,7 @@ namespace OpenTK.OpenGL
                 COLOR_TABLE_SCALE_SGI = ((int)0x80D6),
                 POST_CONVOLUTION_COLOR_TABLE = ((int)0x80D1),
             }
-            
+
             public enum EXT_bgra
             {
                 BGRA_EXT = ((int)0x80E1),
@@ -2119,7 +2119,7 @@ namespace OpenTK.OpenGL
                 BGRA = ((int)0x80E1),
                 BGR_EXT = ((int)0x80E0),
             }
-            
+
             public enum VERSION_1_2
             {
                 UNSIGNED_INT_10_10_10_2 = ((int)0x8036),
@@ -2164,7 +2164,7 @@ namespace OpenTK.OpenGL
                 SINGLE_COLOR = ((int)0x81F9),
                 TEXTURE_MIN_LOD = ((int)0x813A),
             }
-            
+
             public enum SGIS_texture_select
             {
                 DUAL_LUMINANCE12_SGIS = ((int)0x8116),
@@ -2190,7 +2190,7 @@ namespace OpenTK.OpenGL
                 DUAL_INTENSITY12_SGIS = ((int)0x811A),
                 QUAD_INTENSITY8_SGIS = ((int)0x8123),
             }
-            
+
             public enum SGIS_point_parameters
             {
                 POINT_SIZE_MIN_EXT = ((int)0x8126),
@@ -2210,32 +2210,32 @@ namespace OpenTK.OpenGL
                 DISTANCE_ATTENUATION_EXT = ((int)0x8129),
                 POINT_SIZE_MIN_SGIS = ((int)0x8126),
             }
-            
+
             public enum SGIS_fog_function
             {
                 MAX_FOG_FUNC_POINTS_SGIS = ((int)0x812C),
                 FOG_FUNC_SGIS = ((int)0x812A),
                 FOG_FUNC_POINTS_SGIS = ((int)0x812B),
             }
-            
+
             public enum SGIS_texture_border_clamp
             {
                 CLAMP_TO_BORDER_SGIS = ((int)0x812D),
                 CLAMP_TO_BORDER = ((int)0x812D),
                 CLAMP_TO_BORDER_ARB = ((int)0x812D),
             }
-            
+
             public enum SGIX_texture_multi_buffer
             {
                 TEXTURE_MULTI_BUFFER_HINT_SGIX = ((int)0x812E),
             }
-            
+
             public enum SGIS_texture_edge_clamp
             {
                 CLAMP_TO_EDGE_SGIS = ((int)0x812F),
                 CLAMP_TO_EDGE = ((int)0x812F),
             }
-            
+
             public enum SGIS_texture4D
             {
                 UNPACK_IMAGE_DEPTH_SGIS = ((int)0x8133),
@@ -2249,13 +2249,13 @@ namespace OpenTK.OpenGL
                 PACK_IMAGE_DEPTH_SGIS = ((int)0x8131),
                 TEXTURE_WRAP_Q_SGIS = ((int)0x8137),
             }
-            
+
             public enum SGIX_pixel_texture
             {
                 PIXEL_TEX_GEN_MODE_SGIX = ((int)0x832B),
                 PIXEL_TEX_GEN_SGIX = ((int)0x8139),
             }
-            
+
             public enum SGIS_texture_lod
             {
                 TEXTURE_MAX_LOD = ((int)0x813B),
@@ -2267,7 +2267,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_MIN_LOD_SGIS = ((int)0x813A),
                 TEXTURE_MAX_LEVEL_SGIS = ((int)0x813D),
             }
-            
+
             public enum SGIX_pixel_tiles
             {
                 PIXEL_TILE_CACHE_SIZE_SGIX = ((int)0x8145),
@@ -2279,13 +2279,13 @@ namespace OpenTK.OpenGL
                 PIXEL_TILE_GRID_WIDTH_SGIX = ((int)0x8142),
                 PIXEL_TILE_CACHE_INCREMENT_SGIX = ((int)0x813F),
             }
-            
+
             public enum SGIS_texture_filter4
             {
                 TEXTURE_FILTER4_SIZE_SGIS = ((int)0x8147),
                 FILTER4_SGIS = ((int)0x8146),
             }
-            
+
             public enum SGIX_sprite
             {
                 SPRITE_OBJECT_ALIGNED_SGIX = ((int)0x814D),
@@ -2296,7 +2296,7 @@ namespace OpenTK.OpenGL
                 SPRITE_TRANSLATION_SGIX = ((int)0x814B),
                 SPRITE_AXIS_SGIX = ((int)0x814A),
             }
-            
+
             public enum HP_convolution_border_modes
             {
                 REPLICATE_BORDER_HP = ((int)0x8153),
@@ -2307,7 +2307,7 @@ namespace OpenTK.OpenGL
                 REPLICATE_BORDER = ((int)0x8153),
                 CONSTANT_BORDER_HP = ((int)0x8151),
             }
-            
+
             public enum SGIX_clipmap
             {
                 MAX_CLIPMAP_DEPTH_SGIX = ((int)0x8177),
@@ -2323,7 +2323,7 @@ namespace OpenTK.OpenGL
                 MAX_CLIPMAP_VIRTUAL_DEPTH_SGIX = ((int)0x8178),
                 TEXTURE_CLIPMAP_LOD_OFFSET_SGIX = ((int)0x8175),
             }
-            
+
             public enum SGIX_texture_scale_bias
             {
                 POST_TEXTURE_FILTER_BIAS_RANGE_SGIX = ((int)0x817B),
@@ -2331,34 +2331,34 @@ namespace OpenTK.OpenGL
                 POST_TEXTURE_FILTER_SCALE_SGIX = ((int)0x817A),
                 POST_TEXTURE_FILTER_SCALE_RANGE_SGIX = ((int)0x817C),
             }
-            
+
             public enum SGIX_reference_plane
             {
                 REFERENCE_PLANE_EQUATION_SGIX = ((int)0x817E),
                 REFERENCE_PLANE_SGIX = ((int)0x817D),
             }
-            
+
             public enum SGIX_ir_instrument1
             {
                 IR_INSTRUMENT1_SGIX = ((int)0x817F),
             }
-            
+
             public enum SGIX_instruments
             {
                 INSTRUMENT_MEASUREMENTS_SGIX = ((int)0x8181),
                 INSTRUMENT_BUFFER_POINTER_SGIX = ((int)0x8180),
             }
-            
+
             public enum SGIX_list_priority
             {
                 LIST_PRIORITY_SGIX = ((int)0x8182),
             }
-            
+
             public enum SGIX_calligraphic_fragment
             {
                 CALLIGRAPHIC_FRAGMENT_SGIX = ((int)0x8183),
             }
-            
+
             public enum SGIX_impact_pixel_texture
             {
                 PIXEL_TEX_GEN_Q_ROUND_SGIX = ((int)0x8185),
@@ -2369,21 +2369,21 @@ namespace OpenTK.OpenGL
                 PIXEL_TEX_GEN_ALPHA_MS_SGIX = ((int)0x818A),
                 PIXEL_TEX_GEN_Q_FLOOR_SGIX = ((int)0x8186),
             }
-            
+
             public enum SGIX_framezoom
             {
                 FRAMEZOOM_FACTOR_SGIX = ((int)0x818C),
                 FRAMEZOOM_SGIX = ((int)0x818B),
                 MAX_FRAMEZOOM_FACTOR_SGIX = ((int)0x818D),
             }
-            
+
             public enum SGIX_texture_lod_bias
             {
                 TEXTURE_LOD_BIAS_R_SGIX = ((int)0x8190),
                 TEXTURE_LOD_BIAS_T_SGIX = ((int)0x818F),
                 TEXTURE_LOD_BIAS_S_SGIX = ((int)0x818E),
             }
-            
+
             public enum SGIS_generate_mipmap
             {
                 GENERATE_MIPMAP_SGIS = ((int)0x8191),
@@ -2395,13 +2395,13 @@ namespace OpenTK.OpenGL
                 MAX_DEFORMATION_ORDER_SGIX = ((int)0x8197),
                 GENERATE_MIPMAP_HINT_SGIS = ((int)0x8192),
             }
-            
+
             public enum SGIX_fog_offset
             {
                 FOG_OFFSET_VALUE_SGIX = ((int)0x8199),
                 FOG_OFFSET_SGIX = ((int)0x8198),
             }
-            
+
             public enum SGIX_shadow
             {
                 TEXTURE_GEQUAL_R_SGIX = ((int)0x819D),
@@ -2409,7 +2409,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_LEQUAL_R_SGIX = ((int)0x819C),
                 TEXTURE_COMPARE_SGIX = ((int)0x819A),
             }
-            
+
             public enum SGIX_depth_texture
             {
                 DEPTH_COMPONENT24_SGIX = ((int)0x81A6),
@@ -2419,18 +2419,18 @@ namespace OpenTK.OpenGL
                 DEPTH_COMPONENT32_SGIX = ((int)0x81A7),
                 DEPTH_COMPONENT16 = ((int)0x81A5),
             }
-            
+
             public enum SGIX_ycrcb
             {
                 YCRCB_444_SGIX = ((int)0x81BC),
                 YCRCB_422_SGIX = ((int)0x81BB),
             }
-            
+
             public enum SGIS_texture_color_mask
             {
                 TEXTURE_COLOR_WRITEMASK_SGIS = ((int)0x81EF),
             }
-            
+
             public enum SGIS_point_line_texgen
             {
                 OBJECT_DISTANCE_TO_POINT_SGIS = ((int)0x81F1),
@@ -2442,7 +2442,7 @@ namespace OpenTK.OpenGL
                 EYE_LINE_SGIS = ((int)0x81F6),
                 EYE_DISTANCE_TO_POINT_SGIS = ((int)0x81F0),
             }
-            
+
             public enum EXT_separate_specular_color
             {
                 SINGLE_COLOR = ((int)0x81F9),
@@ -2452,30 +2452,30 @@ namespace OpenTK.OpenGL
                 LIGHT_MODEL_COLOR_CONTROL_EXT = ((int)0x81F8),
                 SINGLE_COLOR_EXT = ((int)0x81F9),
             }
-            
+
             public enum EXT_shared_texture_palette
             {
                 SHARED_TEXTURE_PALETTE_EXT = ((int)0x81FB),
             }
-            
+
             public enum SGIX_convolution_accuracy
             {
                 CONVOLUTION_HINT_SGIX = ((int)0x8316),
             }
-            
+
             public enum SGIX_blend_alpha_minmax
             {
                 ASYNC_MARKER_SGIX = ((int)0x8329),
                 ALPHA_MAX_SGIX = ((int)0x8321),
                 ALPHA_MIN_SGIX = ((int)0x8320),
             }
-            
+
             public enum SGIX_async_histogram
             {
                 ASYNC_HISTOGRAM_SGIX = ((int)0x832C),
                 MAX_ASYNC_HISTOGRAM_SGIX = ((int)0x832D),
             }
-            
+
             public enum EXT_pixel_transform
             {
                 MAX_PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT = ((int)0x8337),
@@ -2488,7 +2488,7 @@ namespace OpenTK.OpenGL
                 PIXEL_TRANSFORM_2D_EXT = ((int)0x8330),
                 PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT = ((int)0x8336),
             }
-            
+
             public enum SGIS_pixel_texture
             {
                 PIXEL_GROUP_COLOR_SGIS = ((int)0x8356),
@@ -2496,7 +2496,7 @@ namespace OpenTK.OpenGL
                 PIXEL_FRAGMENT_RGB_SOURCE_SGIS = ((int)0x8354),
                 PIXEL_TEXTURE_SGIS = ((int)0x8353),
             }
-            
+
             public enum SGIX_async_pixel
             {
                 MAX_ASYNC_TEX_IMAGE_SGIX = ((int)0x835F),
@@ -2506,7 +2506,7 @@ namespace OpenTK.OpenGL
                 ASYNC_DRAW_PIXELS_SGIX = ((int)0x835D),
                 ASYNC_READ_PIXELS_SGIX = ((int)0x835E),
             }
-            
+
             public enum SGIX_texture_coordinate_clamp
             {
                 TEXTURE_MAX_CLAMP_R_SGIX = ((int)0x836B),
@@ -2514,13 +2514,13 @@ namespace OpenTK.OpenGL
                 TEXTURE_MAX_CLAMP_T_SGIX = ((int)0x836A),
                 FOG_FACTOR_TO_ALPHA_SGIX = ((int)0x836F),
             }
-            
+
             public enum SGIX_vertex_preclip
             {
                 VERTEX_PRECLIP_HINT_SGIX = ((int)0x83EF),
                 VERTEX_PRECLIP_SGIX = ((int)0x83EE),
             }
-            
+
             public enum EXT_texture_compression_s3tc
             {
                 COMPRESSED_RGBA_S3TC_DXT3_EXT = ((int)0x83F2),
@@ -2528,7 +2528,7 @@ namespace OpenTK.OpenGL
                 COMPRESSED_RGBA_S3TC_DXT1_EXT = ((int)0x83F1),
                 COMPRESSED_RGB_S3TC_DXT1_EXT = ((int)0x83F0),
             }
-            
+
             public enum INTEL_parallel_arrays
             {
                 TEXTURE_COORD_ARRAY_PARALLEL_POINTERS_INTEL = ((int)0x83F8),
@@ -2537,7 +2537,7 @@ namespace OpenTK.OpenGL
                 VERTEX_ARRAY_PARALLEL_POINTERS_INTEL = ((int)0x83F5),
                 NORMAL_ARRAY_PARALLEL_POINTERS_INTEL = ((int)0x83F6),
             }
-            
+
             public enum SGIX_fragment_lighting
             {
                 FRAGMENT_LIGHT2_SGIX = ((int)0x840E),
@@ -2561,7 +2561,7 @@ namespace OpenTK.OpenGL
                 FRAGMENT_LIGHT3_SGIX = ((int)0x840F),
                 FRAGMENT_LIGHT5_SGIX = ((int)0x8411),
             }
-            
+
             public enum SGIX_resample
             {
                 RESAMPLE_REPLICATE_SGIX = ((int)0x842E),
@@ -2570,7 +2570,7 @@ namespace OpenTK.OpenGL
                 RESAMPLE_DECIMATE_SGIX = ((int)0x8430),
                 PACK_RESAMPLE_SGIX = ((int)0x842C),
             }
-            
+
             public enum SGIX_subsample
             {
                 PIXEL_SUBSAMPLE_2424_SGIX = ((int)0x85A3),
@@ -2579,7 +2579,7 @@ namespace OpenTK.OpenGL
                 PACK_SUBSAMPLE_RATE_SGIX = ((int)0x85A0),
                 UNPACK_SUBSAMPLE_RATE_SGIX = ((int)0x85A1),
             }
-            
+
             public enum All
             {
                 MAX_GEOMETRY_BINDABLE_UNIFORMS_EXT = ((int)0x8DE4),
@@ -5570,7 +5570,7 @@ namespace OpenTK.OpenGL
                 PIXEL_TILE_CACHE_INCREMENT_SGIX = ((int)0x813F),
                 FEEDBACK = ((int)0x1C01),
             }
-            
+
             public enum ARB_imaging
             {
                 CONVOLUTION_FILTER_SCALE = ((int)0x8014),
@@ -5649,7 +5649,7 @@ namespace OpenTK.OpenGL
                 COLOR_TABLE_SCALE = ((int)0x80D6),
                 MAX_CONVOLUTION_HEIGHT = ((int)0x801B),
             }
-            
+
             public enum VERSION_1_3
             {
                 MAX_CUBE_MAP_TEXTURE_SIZE = ((int)0x851C),
@@ -5749,7 +5749,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_CUBE_MAP = ((int)0x8513),
                 CLAMP_TO_BORDER = ((int)0x812D),
             }
-            
+
             public enum VERSION_1_4
             {
                 DECR_WRAP = ((int)0x8508),
@@ -5792,7 +5792,7 @@ namespace OpenTK.OpenGL
                 BLEND_SRC_ALPHA = ((int)0x80CB),
                 BLEND_SRC_RGB = ((int)0x80C9),
             }
-            
+
             public enum VERSION_1_5
             {
                 INDEX_ARRAY_BUFFER_BINDING = ((int)0x8899),
@@ -5846,7 +5846,7 @@ namespace OpenTK.OpenGL
                 STREAM_READ = ((int)0x88E1),
                 FOG_COORD_ARRAY_BUFFER_BINDING = ((int)VERSION_1_5.FOG_COORDINATE_ARRAY_BUFFER_BINDING),
             }
-            
+
             public enum VERSION_2_0
             {
                 FLOAT_VEC2 = ((int)0x8B50),
@@ -5934,7 +5934,7 @@ namespace OpenTK.OpenGL
                 CURRENT_PROGRAM = ((int)0x8B8D),
                 FLOAT_MAT4 = ((int)0x8B5C),
             }
-            
+
             public enum VERSION_2_1
             {
                 PIXEL_PACK_BUFFER = ((int)0x88EB),
@@ -5961,7 +5961,7 @@ namespace OpenTK.OpenGL
                 FLOAT_MAT2x3 = ((int)0x8B65),
                 SRGB_ALPHA = ((int)0x8C42),
             }
-            
+
             public enum ARB_multitexture
             {
                 TEXTURE22_ARB = ((int)0x84D6),
@@ -6000,7 +6000,7 @@ namespace OpenTK.OpenGL
                 TEXTURE7_ARB = ((int)0x84C7),
                 TEXTURE15_ARB = ((int)0x84CF),
             }
-            
+
             public enum ARB_transpose_matrix
             {
                 TRANSPOSE_COLOR_MATRIX_ARB = ((int)0x84E6),
@@ -6008,11 +6008,11 @@ namespace OpenTK.OpenGL
                 TRANSPOSE_PROJECTION_MATRIX_ARB = ((int)0x84E4),
                 TRANSPOSE_TEXTURE_MATRIX_ARB = ((int)0x84E5),
             }
-            
+
             public enum ARB_texture_env_add
             {
             }
-            
+
             public enum ARB_texture_cube_map
             {
                 TEXTURE_CUBE_MAP_POSITIVE_X_ARB = ((int)0x8515),
@@ -6028,7 +6028,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_BINDING_CUBE_MAP_ARB = ((int)0x8514),
                 NORMAL_MAP_ARB = ((int)0x8511),
             }
-            
+
             public enum ARB_texture_compression
             {
                 COMPRESSED_TEXTURE_FORMATS_ARB = ((int)0x86A3),
@@ -6043,12 +6043,12 @@ namespace OpenTK.OpenGL
                 COMPRESSED_RGBA_ARB = ((int)0x84EE),
                 COMPRESSED_RGB_ARB = ((int)0x84ED),
             }
-            
+
             public enum ARB_texture_border_clamp
             {
                 CLAMP_TO_BORDER_ARB = ((int)0x812D),
             }
-            
+
             public enum ARB_point_parameters
             {
                 POINT_SIZE_MIN_ARB = ((int)0x8126),
@@ -6056,7 +6056,7 @@ namespace OpenTK.OpenGL
                 POINT_FADE_THRESHOLD_SIZE_ARB = ((int)0x8128),
                 POINT_SIZE_MAX_ARB = ((int)0x8127),
             }
-            
+
             public enum ARB_vertex_blend
             {
                 MODELVIEW18_ARB = ((int)0x8732),
@@ -6102,7 +6102,7 @@ namespace OpenTK.OpenGL
                 MODELVIEW19_ARB = ((int)0x8733),
                 WEIGHT_ARRAY_ARB = ((int)0x86AD),
             }
-            
+
             public enum ARB_matrix_palette
             {
                 MATRIX_INDEX_ARRAY_ARB = ((int)0x8844),
@@ -6116,7 +6116,7 @@ namespace OpenTK.OpenGL
                 MATRIX_PALETTE_ARB = ((int)0x8840),
                 CURRENT_PALETTE_MATRIX_ARB = ((int)0x8843),
             }
-            
+
             public enum ARB_texture_env_combine
             {
                 SOURCE1_ALPHA_ARB = ((int)0x8589),
@@ -6142,22 +6142,22 @@ namespace OpenTK.OpenGL
                 COMBINE_ARB = ((int)0x8570),
                 OPERAND0_ALPHA_ARB = ((int)0x8598),
             }
-            
+
             public enum ARB_texture_env_crossbar
             {
             }
-            
+
             public enum ARB_texture_env_dot3
             {
                 DOT3_RGBA_ARB = ((int)0x86AF),
                 DOT3_RGB_ARB = ((int)0x86AE),
             }
-            
+
             public enum ARB_texture_mirrored_repeat
             {
                 MIRRORED_REPEAT_ARB = ((int)0x8370),
             }
-            
+
             public enum ARB_depth_texture
             {
                 DEPTH_TEXTURE_MODE_ARB = ((int)0x884B),
@@ -6166,23 +6166,23 @@ namespace OpenTK.OpenGL
                 DEPTH_COMPONENT24_ARB = ((int)0x81A6),
                 TEXTURE_DEPTH_SIZE_ARB = ((int)0x884A),
             }
-            
+
             public enum ARB_shadow
             {
                 COMPARE_R_TO_TEXTURE_ARB = ((int)0x884E),
                 TEXTURE_COMPARE_MODE_ARB = ((int)0x884C),
                 TEXTURE_COMPARE_FUNC_ARB = ((int)0x884D),
             }
-            
+
             public enum ARB_shadow_ambient
             {
                 TEXTURE_COMPARE_FAIL_VALUE_ARB = ((int)0x80BF),
             }
-            
+
             public enum ARB_window_pos
             {
             }
-            
+
             public enum ARB_vertex_program
             {
                 MATRIX11_ARB = ((int)0x88CB),
@@ -6265,7 +6265,7 @@ namespace OpenTK.OpenGL
                 MATRIX29_ARB = ((int)0x88DD),
                 MATRIX9_ARB = ((int)0x88C9),
             }
-            
+
             public enum ARB_fragment_program
             {
                 MAX_TEXTURE_IMAGE_UNITS_ARB = ((int)0x8872),
@@ -6284,7 +6284,7 @@ namespace OpenTK.OpenGL
                 MAX_TEXTURE_COORDS_ARB = ((int)0x8871),
                 PROGRAM_TEX_INSTRUCTIONS_ARB = ((int)0x8806),
             }
-            
+
             public enum ARB_vertex_buffer_object
             {
                 READ_ONLY_ARB = ((int)0x88B8),
@@ -6319,7 +6319,7 @@ namespace OpenTK.OpenGL
                 INDEX_ARRAY_BUFFER_BINDING_ARB = ((int)0x8899),
                 STREAM_COPY_ARB = ((int)0x88E2),
             }
-            
+
             public enum ARB_occlusion_query
             {
                 QUERY_COUNTER_BITS_ARB = ((int)0x8864),
@@ -6328,7 +6328,7 @@ namespace OpenTK.OpenGL
                 QUERY_RESULT_AVAILABLE_ARB = ((int)0x8867),
                 QUERY_RESULT_ARB = ((int)0x8866),
             }
-            
+
             public enum ARB_shader_objects
             {
                 INT_VEC3_ARB = ((int)0x8B54),
@@ -6366,7 +6366,7 @@ namespace OpenTK.OpenGL
                 SAMPLER_1D_SHADOW_ARB = ((int)0x8B61),
                 BOOL_ARB = ((int)0x8B56),
             }
-            
+
             public enum ARB_vertex_shader
             {
                 MAX_VARYING_FLOATS_ARB = ((int)0x8B4B),
@@ -6377,33 +6377,33 @@ namespace OpenTK.OpenGL
                 OBJECT_ACTIVE_ATTRIBUTE_MAX_LENGTH_ARB = ((int)0x8B8A),
                 MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB = ((int)0x8B4C),
             }
-            
+
             public enum ARB_fragment_shader
             {
                 FRAGMENT_SHADER_ARB = ((int)0x8B30),
                 MAX_FRAGMENT_UNIFORM_COMPONENTS_ARB = ((int)0x8B49),
                 FRAGMENT_SHADER_DERIVATIVE_HINT_ARB = ((int)0x8B8B),
             }
-            
+
             public enum ARB_shading_language_100
             {
                 SHADING_LANGUAGE_VERSION_ARB = ((int)0x8B8C),
             }
-            
+
             public enum ARB_texture_non_power_of_two
             {
             }
-            
+
             public enum ARB_point_sprite
             {
                 POINT_SPRITE_ARB = ((int)0x8861),
                 COORD_REPLACE_ARB = ((int)0x8862),
             }
-            
+
             public enum ARB_fragment_program_shadow
             {
             }
-            
+
             public enum ARB_draw_buffers
             {
                 DRAW_BUFFER3_ARB = ((int)0x8828),
@@ -6424,7 +6424,7 @@ namespace OpenTK.OpenGL
                 DRAW_BUFFER0_ARB = ((int)0x8825),
                 DRAW_BUFFER8_ARB = ((int)0x882D),
             }
-            
+
             public enum ARB_texture_rectangle
             {
                 TEXTURE_BINDING_RECTANGLE_ARB = ((int)0x84F6),
@@ -6432,7 +6432,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_RECTANGLE_ARB = ((int)0x84F5),
                 PROXY_TEXTURE_RECTANGLE_ARB = ((int)0x84F7),
             }
-            
+
             public enum ARB_color_buffer_float
             {
                 CLAMP_VERTEX_COLOR_ARB = ((int)0x891A),
@@ -6441,12 +6441,12 @@ namespace OpenTK.OpenGL
                 RGBA_FLOAT_MODE_ARB = ((int)0x8820),
                 FIXED_ONLY_ARB = ((int)0x891D),
             }
-            
+
             public enum ARB_half_float_pixel
             {
                 HALF_FLOAT_ARB = ((int)0x140B),
             }
-            
+
             public enum ARB_texture_float
             {
                 RGB32F_ARB = ((int)0x8815),
@@ -6470,7 +6470,7 @@ namespace OpenTK.OpenGL
                 UNSIGNED_NORMALIZED_ARB = ((int)0x8C17),
                 LUMINANCE_ALPHA32F_ARB = ((int)0x8819),
             }
-            
+
             public enum ARB_pixel_buffer_object
             {
                 PIXEL_UNPACK_BUFFER_BINDING_ARB = ((int)0x88EF),
@@ -6478,23 +6478,23 @@ namespace OpenTK.OpenGL
                 PIXEL_UNPACK_BUFFER_ARB = ((int)0x88EC),
                 PIXEL_PACK_BUFFER_BINDING_ARB = ((int)0x88ED),
             }
-            
+
             public enum EXT_subtexture
             {
             }
-            
+
             public enum EXT_copy_texture
             {
             }
-            
+
             public enum EXT_misc_attribute
             {
             }
-            
+
             public enum EXT_blend_logic_op
             {
             }
-            
+
             public enum EXT_point_parameters
             {
                 DISTANCE_ATTENUATION_EXT = ((int)0x8129),
@@ -6502,11 +6502,11 @@ namespace OpenTK.OpenGL
                 POINT_SIZE_MAX_EXT = ((int)0x8127),
                 POINT_SIZE_MIN_EXT = ((int)0x8126),
             }
-            
+
             public enum SGIX_tag_sample_buffer
             {
             }
-            
+
             public enum SGIX_polynomial_ffd
             {
                 GEOMETRY_DEFORMATION_SGIX = ((int)0x8194),
@@ -6514,11 +6514,11 @@ namespace OpenTK.OpenGL
                 MAX_DEFORMATION_ORDER_SGIX = ((int)0x8197),
                 TEXTURE_DEFORMATION_SGIX = ((int)0x8195),
             }
-            
+
             public enum SGIX_flush_raster
             {
             }
-            
+
             public enum HP_image_transform
             {
                 IMAGE_ROTATE_ANGLE_HP = ((int)0x8159),
@@ -6537,15 +6537,15 @@ namespace OpenTK.OpenGL
                 IMAGE_TRANSLATE_X_HP = ((int)0x8157),
                 POST_IMAGE_TRANSFORM_COLOR_TABLE_HP = ((int)0x8162),
             }
-            
+
             public enum INGR_palette_buffer
             {
             }
-            
+
             public enum EXT_color_subtable
             {
             }
-            
+
             public enum PGI_vertex_hints
             {
                 TEXCOORD4_BIT_PGI = unchecked((int)0x80000000),
@@ -6571,7 +6571,7 @@ namespace OpenTK.OpenGL
                 MAT_AMBIENT_AND_DIFFUSE_BIT_PGI = ((int)0x00200000),
                 VERTEX23_BIT_PGI = ((int)0x00000004),
             }
-            
+
             public enum PGI_misc_hints
             {
                 RECLAIM_MEMORY_HINT_PGI = ((int)0x1A1FE),
@@ -6595,7 +6595,7 @@ namespace OpenTK.OpenGL
                 FULL_STIPPLE_HINT_PGI = ((int)0x1A219),
                 CLIP_FAR_HINT_PGI = ((int)0x1A221),
             }
-            
+
             public enum EXT_paletted_texture
             {
                 COLOR_INDEX1_EXT = ((int)0x80E2),
@@ -6606,30 +6606,30 @@ namespace OpenTK.OpenGL
                 COLOR_INDEX12_EXT = ((int)0x80E6),
                 COLOR_INDEX8_EXT = ((int)0x80E5),
             }
-            
+
             public enum EXT_clip_volume_hint
             {
                 CLIP_VOLUME_CLIPPING_HINT_EXT = ((int)0x80F0),
             }
-            
+
             public enum EXT_index_texture
             {
             }
-            
+
             public enum EXT_index_material
             {
                 INDEX_MATERIAL_EXT = ((int)0x81B8),
                 INDEX_MATERIAL_FACE_EXT = ((int)0x81BA),
                 INDEX_MATERIAL_PARAMETER_EXT = ((int)0x81B9),
             }
-            
+
             public enum EXT_index_func
             {
                 INDEX_TEST_REF_EXT = ((int)0x81B7),
                 INDEX_TEST_EXT = ((int)0x81B5),
                 INDEX_TEST_FUNC_EXT = ((int)0x81B6),
             }
-            
+
             public enum EXT_index_array_formats
             {
                 IUI_N3F_V2F_EXT = ((int)0x81AF),
@@ -6641,49 +6641,49 @@ namespace OpenTK.OpenGL
                 T2F_IUI_V2F_EXT = ((int)0x81B1),
                 T2F_IUI_V3F_EXT = ((int)0x81B2),
             }
-            
+
             public enum EXT_compiled_vertex_array
             {
                 ARRAY_ELEMENT_LOCK_COUNT_EXT = ((int)0x81A9),
                 ARRAY_ELEMENT_LOCK_FIRST_EXT = ((int)0x81A8),
             }
-            
+
             public enum EXT_cull_vertex
             {
                 CULL_VERTEX_OBJECT_POSITION_EXT = ((int)0x81AC),
                 CULL_VERTEX_EYE_POSITION_EXT = ((int)0x81AB),
                 CULL_VERTEX_EXT = ((int)0x81AA),
             }
-            
+
             public enum IBM_rasterpos_clip
             {
                 RASTER_POSITION_UNCLIPPED_IBM = ((int)0x19262),
             }
-            
+
             public enum HP_texture_lighting
             {
                 TEXTURE_LIGHTING_MODE_HP = ((int)0x8167),
                 TEXTURE_POST_SPECULAR_HP = ((int)0x8168),
                 TEXTURE_PRE_SPECULAR_HP = ((int)0x8169),
             }
-            
+
             public enum EXT_draw_range_elements
             {
                 MAX_ELEMENTS_INDICES_EXT = ((int)0x80E9),
                 MAX_ELEMENTS_VERTICES_EXT = ((int)0x80E8),
             }
-            
+
             public enum WIN_phong_shading
             {
                 PHONG_HINT_WIN = ((int)0x80EB),
                 PHONG_WIN = ((int)0x80EA),
             }
-            
+
             public enum WIN_specular_fog
             {
                 FOG_SPECULAR_TEXTURE_WIN = ((int)0x80EC),
             }
-            
+
             public enum EXT_light_texture
             {
                 ATTENUATION_EXT = ((int)0x834D),
@@ -6697,26 +6697,26 @@ namespace OpenTK.OpenGL
                 TEXTURE_LIGHT_EXT = ((int)0x8350),
                 FRAGMENT_COLOR_EXT = ((int)0x834C),
             }
-            
+
             public enum SGIX_async
             {
                 ASYNC_MARKER_SGIX = ((int)0x8329),
             }
-            
+
             public enum INTEL_texture_scissor
             {
             }
-            
+
             public enum HP_occlusion_test
             {
                 OCCLUSION_TEST_RESULT_HP = ((int)0x8166),
                 OCCLUSION_TEST_HP = ((int)0x8165),
             }
-            
+
             public enum EXT_pixel_transform_color_table
             {
             }
-            
+
             public enum EXT_secondary_color
             {
                 SECONDARY_COLOR_ARRAY_SIZE_EXT = ((int)0x845A),
@@ -6727,17 +6727,17 @@ namespace OpenTK.OpenGL
                 SECONDARY_COLOR_ARRAY_TYPE_EXT = ((int)0x845B),
                 COLOR_SUM_EXT = ((int)0x8458),
             }
-            
+
             public enum EXT_texture_perturb_normal
             {
                 TEXTURE_NORMAL_EXT = ((int)0x85AF),
                 PERTURB_EXT = ((int)0x85AE),
             }
-            
+
             public enum EXT_multi_draw_arrays
             {
             }
-            
+
             public enum EXT_fog_coord
             {
                 FOG_COORDINATE_ARRAY_STRIDE_EXT = ((int)0x8455),
@@ -6749,13 +6749,13 @@ namespace OpenTK.OpenGL
                 FRAGMENT_DEPTH_EXT = ((int)0x8452),
                 FOG_COORDINATE_EXT = ((int)0x8451),
             }
-            
+
             public enum REND_screen_coordinates
             {
                 INVERTED_SCREEN_W_REND = ((int)0x8491),
                 SCREEN_COORDINATES_REND = ((int)0x8490),
             }
-            
+
             public enum EXT_coordinate_frame
             {
                 TANGENT_ARRAY_TYPE_EXT = ((int)0x843E),
@@ -6773,7 +6773,7 @@ namespace OpenTK.OpenGL
                 MAP2_TANGENT_EXT = ((int)0x8445),
                 TANGENT_ARRAY_POINTER_EXT = ((int)0x8442),
             }
-            
+
             public enum EXT_texture_env_combine
             {
                 OPERAND2_RGB_EXT = ((int)0x8592),
@@ -6798,35 +6798,35 @@ namespace OpenTK.OpenGL
                 PRIMARY_COLOR_EXT = ((int)0x8577),
                 OPERAND2_ALPHA_EXT = ((int)0x859A),
             }
-            
+
             public enum APPLE_specular_vector
             {
                 LIGHT_MODEL_SPECULAR_VECTOR_APPLE = ((int)0x85B0),
             }
-            
+
             public enum APPLE_transform_hint
             {
                 TRANSFORM_HINT_APPLE = ((int)0x85B1),
             }
-            
+
             public enum SGIX_fog_scale
             {
                 FOG_SCALE_SGIX = ((int)0x81FC),
                 FOG_SCALE_VALUE_SGIX = ((int)0x81FD),
             }
-            
+
             public enum SUNX_constant_data
             {
                 UNPACK_CONSTANT_DATA_SUNX = ((int)0x81D5),
                 TEXTURE_CONSTANT_DATA_SUNX = ((int)0x81D6),
             }
-            
+
             public enum SUN_global_alpha
             {
                 GLOBAL_ALPHA_SUN = ((int)0x81D9),
                 GLOBAL_ALPHA_FACTOR_SUN = ((int)0x81DA),
             }
-            
+
             public enum SUN_triangle_list
             {
                 RESTART_SUN = ((int)0x0001),
@@ -6847,11 +6847,11 @@ namespace OpenTK.OpenGL
                 R1UI_C3F_V3F_SUN = ((int)0x85C6),
                 R1UI_T2F_V3F_SUN = ((int)0x85C9),
             }
-            
+
             public enum SUN_vertex
             {
             }
-            
+
             public enum EXT_blend_func_separate
             {
                 BLEND_DST_RGB_EXT = ((int)0x80C8),
@@ -6859,7 +6859,7 @@ namespace OpenTK.OpenGL
                 BLEND_SRC_RGB_EXT = ((int)0x80C9),
                 BLEND_SRC_ALPHA_EXT = ((int)0x80CB),
             }
-            
+
             public enum INGR_color_clamp
             {
                 BLUE_MAX_CLAMP_INGR = ((int)0x8566),
@@ -6871,18 +6871,18 @@ namespace OpenTK.OpenGL
                 GREEN_MAX_CLAMP_INGR = ((int)0x8565),
                 RED_MAX_CLAMP_INGR = ((int)0x8564),
             }
-            
+
             public enum INGR_interlace_read
             {
                 INTERLACE_READ_INGR = ((int)0x8568),
             }
-            
+
             public enum EXT_stencil_wrap
             {
                 INCR_WRAP_EXT = ((int)0x8507),
                 DECR_WRAP_EXT = ((int)0x8508),
             }
-            
+
             public enum EXT_422_pixels
             {
                 GL_422_AVERAGE_EXT = ((int)0x80CE),
@@ -6890,13 +6890,13 @@ namespace OpenTK.OpenGL
                 GL_422_REV_EXT = ((int)0x80CD),
                 GL_422_EXT = ((int)0x80CC),
             }
-            
+
             public enum NV_texgen_reflection
             {
                 REFLECTION_MAP_NV = ((int)0x8512),
                 NORMAL_MAP_NV = ((int)0x8511),
             }
-            
+
             public enum EXT_texture_cube_map
             {
                 MAX_CUBE_MAP_TEXTURE_SIZE_EXT = ((int)0x851C),
@@ -6912,29 +6912,29 @@ namespace OpenTK.OpenGL
                 TEXTURE_BINDING_CUBE_MAP_EXT = ((int)0x8514),
                 TEXTURE_CUBE_MAP_POSITIVE_X_EXT = ((int)0x8515),
             }
-            
+
             public enum SUN_convolution_border_modes
             {
                 WRAP_BORDER_SUN = ((int)0x81D4),
             }
-            
+
             public enum EXT_texture_env_add
             {
             }
-            
+
             public enum EXT_texture_lod_bias
             {
                 TEXTURE_LOD_BIAS_EXT = ((int)0x8501),
                 TEXTURE_FILTER_CONTROL_EXT = ((int)0x8500),
                 MAX_TEXTURE_LOD_BIAS_EXT = ((int)0x84FD),
             }
-            
+
             public enum EXT_texture_filter_anisotropic
             {
                 TEXTURE_MAX_ANISOTROPY_EXT = ((int)0x84FE),
                 MAX_TEXTURE_MAX_ANISOTROPY_EXT = ((int)0x84FF),
             }
-            
+
             public enum EXT_vertex_weighting
             {
                 VERTEX_WEIGHTING_EXT = ((int)0x8509),
@@ -6951,13 +6951,13 @@ namespace OpenTK.OpenGL
                 VERTEX_WEIGHT_ARRAY_STRIDE_EXT = ((int)0x850F),
                 MODELVIEW0_EXT = ((int)All.MODELVIEW),
             }
-            
+
             public enum NV_light_max_exponent
             {
                 MAX_SPOT_EXPONENT_NV = ((int)0x8505),
                 MAX_SHININESS_NV = ((int)0x8504),
             }
-            
+
             public enum NV_vertex_array_range
             {
                 VERTEX_ARRAY_RANGE_VALID_NV = ((int)0x851F),
@@ -6966,7 +6966,7 @@ namespace OpenTK.OpenGL
                 VERTEX_ARRAY_RANGE_LENGTH_NV = ((int)0x851E),
                 VERTEX_ARRAY_RANGE_NV = ((int)0x851D),
             }
-            
+
             public enum NV_register_combiners
             {
                 CONSTANT_COLOR1_NV = ((int)0x852B),
@@ -7026,7 +7026,7 @@ namespace OpenTK.OpenGL
                 VARIABLE_B_NV = ((int)0x8524),
                 VARIABLE_A_NV = ((int)0x8523),
             }
-            
+
             public enum NV_fog_distance
             {
                 FOG_DISTANCE_MODE_NV = ((int)0x855A),
@@ -7034,18 +7034,18 @@ namespace OpenTK.OpenGL
                 EYE_RADIAL_NV = ((int)0x855B),
                 EYE_PLANE_ABSOLUTE_NV = ((int)0x855C),
             }
-            
+
             public enum NV_texgen_emboss
             {
                 EMBOSS_LIGHT_NV = ((int)0x855D),
                 EMBOSS_CONSTANT_NV = ((int)0x855E),
                 EMBOSS_MAP_NV = ((int)0x855F),
             }
-            
+
             public enum NV_blend_square
             {
             }
-            
+
             public enum NV_texture_env_combine4
             {
                 SOURCE3_RGB_NV = ((int)0x8583),
@@ -7054,24 +7054,24 @@ namespace OpenTK.OpenGL
                 SOURCE3_ALPHA_NV = ((int)0x858B),
                 OPERAND3_RGB_NV = ((int)0x8593),
             }
-            
+
             public enum MESA_resize_buffers
             {
             }
-            
+
             public enum MESA_window_pos
             {
             }
-            
+
             public enum IBM_cull_vertex
             {
                 CULL_VERTEX_IBM = ((int)103050),
             }
-            
+
             public enum IBM_multimode_draw_arrays
             {
             }
-            
+
             public enum IBM_vertex_array_lists
             {
                 FOG_COORDINATE_ARRAY_LIST_IBM = ((int)103076),
@@ -7091,7 +7091,7 @@ namespace OpenTK.OpenGL
                 EDGE_FLAG_ARRAY_LIST_IBM = ((int)103075),
                 VERTEX_ARRAY_LIST_IBM = ((int)103070),
             }
-            
+
             public enum SGIX_ycrcb_subsample
             {
                 PIXEL_SUBSAMPLE_2424_SGIX = ((int)0x85A3),
@@ -7100,26 +7100,26 @@ namespace OpenTK.OpenGL
                 PACK_SUBSAMPLE_RATE_SGIX = ((int)0x85A0),
                 UNPACK_SUBSAMPLE_RATE_SGIX = ((int)0x85A1),
             }
-            
+
             public enum SGIX_ycrcba
             {
                 YCRCB_SGIX = ((int)0x8318),
                 YCRCBA_SGIX = ((int)0x8319),
             }
-            
+
             public enum SGI_depth_pass_instrument
             {
                 DEPTH_PASS_INSTRUMENT_SGIX = ((int)0x8310),
                 DEPTH_PASS_INSTRUMENT_COUNTERS_SGIX = ((int)0x8311),
                 DEPTH_PASS_INSTRUMENT_MAX_SGIX = ((int)0x8312),
             }
-            
+
             public enum GL_3DFX_texture_compression_FXT1
             {
                 COMPRESSED_RGB_FXT1_3DFX = ((int)0x86B0),
                 COMPRESSED_RGBA_FXT1_3DFX = ((int)0x86B1),
             }
-            
+
             public enum GL_3DFX_multisample
             {
                 SAMPLES_3DFX = ((int)0x86B4),
@@ -7127,11 +7127,11 @@ namespace OpenTK.OpenGL
                 MULTISAMPLE_3DFX = ((int)0x86B2),
                 MULTISAMPLE_BIT_3DFX = ((int)0x20000000),
             }
-            
+
             public enum GL_3DFX_tbuffer
             {
             }
-            
+
             public enum EXT_multisample
             {
                 SAMPLES_EXT = ((int)0x80A9),
@@ -7152,31 +7152,31 @@ namespace OpenTK.OpenGL
                 SAMPLE_MASK_INVERT_EXT = ((int)0x80AB),
                 MULTISAMPLE_EXT = ((int)0x809D),
             }
-            
+
             public enum EXT_texture_env_dot3
             {
                 DOT3_RGBA_EXT = ((int)0x8741),
                 DOT3_RGB_EXT = ((int)0x8740),
             }
-            
+
             public enum ATI_texture_mirror_once
             {
                 MIRROR_CLAMP_TO_EDGE_ATI = ((int)0x8743),
                 MIRROR_CLAMP_ATI = ((int)0x8742),
             }
-            
+
             public enum NV_fence
             {
                 ALL_COMPLETED_NV = ((int)0x84F2),
                 FENCE_STATUS_NV = ((int)0x84F3),
                 FENCE_CONDITION_NV = ((int)0x84F4),
             }
-            
+
             public enum IBM_texture_mirrored_repeat
             {
                 MIRRORED_REPEAT_IBM = ((int)0x8370),
             }
-            
+
             public enum NV_evaluators
             {
                 EVAL_VERTEX_ATTRIB9_NV = ((int)0x86CF),
@@ -7204,22 +7204,22 @@ namespace OpenTK.OpenGL
                 EVAL_VERTEX_ATTRIB10_NV = ((int)0x86D0),
                 MAX_MAP_TESSELLATION_NV = ((int)0x86D6),
             }
-            
+
             public enum NV_packed_depth_stencil
             {
                 UNSIGNED_INT_24_8_NV = ((int)0x84FA),
                 DEPTH_STENCIL_NV = ((int)0x84F9),
             }
-            
+
             public enum NV_register_combiners2
             {
                 PER_STAGE_CONSTANTS_NV = ((int)0x8535),
             }
-            
+
             public enum NV_texture_compression_vtc
             {
             }
-            
+
             public enum NV_texture_rectangle
             {
                 TEXTURE_RECTANGLE_NV = ((int)0x84F5),
@@ -7227,7 +7227,7 @@ namespace OpenTK.OpenGL
                 MAX_RECTANGLE_TEXTURE_SIZE_NV = ((int)0x84F8),
                 PROXY_TEXTURE_RECTANGLE_NV = ((int)0x84F7),
             }
-            
+
             public enum NV_texture_shader
             {
                 TEXTURE_SHADER_NV = ((int)0x86DE),
@@ -7304,17 +7304,17 @@ namespace OpenTK.OpenGL
                 SIGNED_LUMINANCE_ALPHA_NV = ((int)0x8703),
                 DOT_PRODUCT_CONST_EYE_REFLECT_CUBE_MAP_NV = ((int)0x86F3),
             }
-            
+
             public enum NV_texture_shader2
             {
                 DOT_PRODUCT_TEXTURE_3D_NV = ((int)0x86EF),
             }
-            
+
             public enum NV_vertex_array_range2
             {
                 VERTEX_ARRAY_RANGE_WITHOUT_FLUSH_NV = ((int)0x8533),
             }
-            
+
             public enum NV_vertex_program
             {
                 ATTRIB_ARRAY_SIZE_NV = ((int)0x8623),
@@ -7401,24 +7401,24 @@ namespace OpenTK.OpenGL
                 MAP1_VERTEX_ATTRIB15_4_NV = ((int)0x866F),
                 MAP1_VERTEX_ATTRIB14_4_NV = ((int)0x866E),
             }
-            
+
             public enum SGIX_scalebias_hint
             {
                 SCALEBIAS_HINT_SGIX = ((int)0x8322),
             }
-            
+
             public enum OML_interlace
             {
                 INTERLACE_READ_OML = ((int)0x8981),
                 INTERLACE_OML = ((int)0x8980),
             }
-            
+
             public enum OML_subsample
             {
                 FORMAT_SUBSAMPLE_244_244_OML = ((int)0x8983),
                 FORMAT_SUBSAMPLE_24_24_OML = ((int)0x8982),
             }
-            
+
             public enum OML_resample
             {
                 PACK_RESAMPLE_OML = ((int)0x8984),
@@ -7428,13 +7428,13 @@ namespace OpenTK.OpenGL
                 RESAMPLE_ZERO_FILL_OML = ((int)0x8987),
                 RESAMPLE_DECIMATE_OML = ((int)0x8989),
             }
-            
+
             public enum NV_copy_depth_to_color
             {
                 DEPTH_STENCIL_TO_RGBA_NV = ((int)0x886E),
                 DEPTH_STENCIL_TO_BGRA_NV = ((int)0x886F),
             }
-            
+
             public enum ATI_envmap_bumpmap
             {
                 DU8DV8_ATI = ((int)0x877A),
@@ -7446,7 +7446,7 @@ namespace OpenTK.OpenGL
                 DUDV_ATI = ((int)0x8779),
                 BUMP_ROT_MATRIX_SIZE_ATI = ((int)0x8776),
             }
-            
+
             public enum ATI_fragment_shader
             {
                 CON_2_ATI = ((int)0x8943),
@@ -7554,7 +7554,7 @@ namespace OpenTK.OpenGL
                 CON_22_ATI = ((int)0x8957),
                 SATURATE_BIT_ATI = ((int)0x00000040),
             }
-            
+
             public enum ATI_pn_triangles
             {
                 PN_TRIANGLES_NORMAL_MODE_ATI = ((int)0x87F3),
@@ -7567,7 +7567,7 @@ namespace OpenTK.OpenGL
                 PN_TRIANGLES_POINT_MODE_LINEAR_ATI = ((int)0x87F5),
                 PN_TRIANGLES_NORMAL_MODE_LINEAR_ATI = ((int)0x87F7),
             }
-            
+
             public enum ATI_vertex_array_object
             {
                 STATIC_ATI = ((int)0x8760),
@@ -7579,7 +7579,7 @@ namespace OpenTK.OpenGL
                 DISCARD_ATI = ((int)0x8763),
                 PRESERVE_ATI = ((int)0x8762),
             }
-            
+
             public enum EXT_vertex_shader
             {
                 LOCAL_CONSTANT_VALUE_EXT = ((int)0x87EC),
@@ -7693,7 +7693,7 @@ namespace OpenTK.OpenGL
                 OUTPUT_TEXTURE_COORD7_EXT = ((int)0x87A4),
                 OUTPUT_TEXTURE_COORD23_EXT = ((int)0x87B4),
             }
-            
+
             public enum ATI_vertex_streams
             {
                 VERTEX_STREAM5_ATI = ((int)0x8771),
@@ -7707,35 +7707,35 @@ namespace OpenTK.OpenGL
                 MAX_VERTEX_STREAMS_ATI = ((int)0x876B),
                 VERTEX_STREAM4_ATI = ((int)0x8770),
             }
-            
+
             public enum ATI_element_array
             {
                 ELEMENT_ARRAY_ATI = ((int)0x8768),
                 ELEMENT_ARRAY_TYPE_ATI = ((int)0x8769),
                 ELEMENT_ARRAY_POINTER_ATI = ((int)0x876A),
             }
-            
+
             public enum SUN_mesh_array
             {
                 QUAD_MESH_SUN = ((int)0x8614),
                 TRIANGLE_MESH_SUN = ((int)0x8615),
             }
-            
+
             public enum SUN_slice_accum
             {
                 SLICE_ACCUM_SUN = ((int)0x85CC),
             }
-            
+
             public enum NV_multisample_filter_hint
             {
                 MULTISAMPLE_FILTER_HINT_NV = ((int)0x8534),
             }
-            
+
             public enum NV_depth_clamp
             {
                 DEPTH_CLAMP_NV = ((int)0x864F),
             }
-            
+
             public enum NV_occlusion_query
             {
                 PIXEL_COUNTER_BITS_NV = ((int)0x8864),
@@ -7743,14 +7743,14 @@ namespace OpenTK.OpenGL
                 PIXEL_COUNT_AVAILABLE_NV = ((int)0x8867),
                 CURRENT_OCCLUSION_QUERY_ID_NV = ((int)0x8865),
             }
-            
+
             public enum NV_point_sprite
             {
                 POINT_SPRITE_R_MODE_NV = ((int)0x8863),
                 POINT_SPRITE_NV = ((int)0x8861),
                 COORD_REPLACE_NV = ((int)0x8862),
             }
-            
+
             public enum NV_texture_shader3
             {
                 OFFSET_HILO_TEXTURE_2D_NV = ((int)0x8854),
@@ -7771,49 +7771,49 @@ namespace OpenTK.OpenGL
                 HILO8_NV = ((int)0x885E),
                 OFFSET_HILO_TEXTURE_RECTANGLE_NV = ((int)0x8855),
             }
-            
+
             public enum NV_vertex_program1_1
             {
             }
-            
+
             public enum EXT_shadow_funcs
             {
             }
-            
+
             public enum EXT_stencil_two_side
             {
                 STENCIL_TEST_TWO_SIDE_EXT = ((int)0x8910),
                 ACTIVE_STENCIL_FACE_EXT = ((int)0x8911),
             }
-            
+
             public enum ATI_text_fragment_shader
             {
                 TEXT_FRAGMENT_SHADER_ATI = ((int)0x8200),
             }
-            
+
             public enum APPLE_client_storage
             {
                 UNPACK_CLIENT_STORAGE_APPLE = ((int)0x85B2),
             }
-            
+
             public enum APPLE_element_array
             {
                 ELEMENT_ARRAY_TYPE_APPLE = ((int)0x8769),
                 ELEMENT_ARRAY_POINTER_APPLE = ((int)0x876A),
                 ELEMENT_ARRAY_APPLE = ((int)0x8768),
             }
-            
+
             public enum APPLE_fence
             {
                 FENCE_APPLE = ((int)0x8A0B),
                 DRAW_PIXELS_APPLE = ((int)0x8A0A),
             }
-            
+
             public enum APPLE_vertex_array_object
             {
                 VERTEX_ARRAY_BINDING_APPLE = ((int)0x85B5),
             }
-            
+
             public enum APPLE_vertex_array_range
             {
                 STORAGE_CACHED_APPLE = ((int)0x85BE),
@@ -7823,14 +7823,14 @@ namespace OpenTK.OpenGL
                 VERTEX_ARRAY_RANGE_APPLE = ((int)0x851D),
                 VERTEX_ARRAY_STORAGE_HINT_APPLE = ((int)0x851F),
             }
-            
+
             public enum APPLE_ycbcr_422
             {
                 UNSIGNED_SHORT_8_8_APPLE = ((int)0x85BA),
                 YCBCR_422_APPLE = ((int)0x85B9),
                 UNSIGNED_SHORT_8_8_REV_APPLE = ((int)0x85BB),
             }
-            
+
             public enum S3_s3tc
             {
                 RGB_S3TC = ((int)0x83A0),
@@ -7838,7 +7838,7 @@ namespace OpenTK.OpenGL
                 RGB4_S3TC = ((int)0x83A1),
                 RGBA_S3TC = ((int)0x83A2),
             }
-            
+
             public enum ATI_draw_buffers
             {
                 MAX_DRAW_BUFFERS_ATI = ((int)0x8824),
@@ -7859,20 +7859,20 @@ namespace OpenTK.OpenGL
                 DRAW_BUFFER15_ATI = ((int)0x8834),
                 DRAW_BUFFER2_ATI = ((int)0x8827),
             }
-            
+
             public enum ATI_pixel_format_float
             {
                 COLOR_CLEAR_UNCLAMPED_VALUE_ATI = ((int)0x8835),
                 TYPE_RGBA_FLOAT_ATI = ((int)0x8820),
             }
-            
+
             public enum ATI_texture_env_combine3
             {
                 MODULATE_SIGNED_ADD_ATI = ((int)0x8745),
                 MODULATE_ADD_ATI = ((int)0x8744),
                 MODULATE_SUBTRACT_ATI = ((int)0x8746),
             }
-            
+
             public enum ATI_texture_float
             {
                 RGB_FLOAT16_ATI = ((int)0x881B),
@@ -7888,7 +7888,7 @@ namespace OpenTK.OpenGL
                 ALPHA_FLOAT16_ATI = ((int)0x881C),
                 LUMINANCE_FLOAT16_ATI = ((int)0x881E),
             }
-            
+
             public enum NV_float_buffer
             {
                 FLOAT_RG_NV = ((int)0x8881),
@@ -7907,7 +7907,7 @@ namespace OpenTK.OpenGL
                 FLOAT_RGB16_NV = ((int)0x8888),
                 FLOAT_R_NV = ((int)0x8880),
             }
-            
+
             public enum NV_fragment_program
             {
                 PROGRAM_ERROR_STRING_NV = ((int)0x8874),
@@ -7917,12 +7917,12 @@ namespace OpenTK.OpenGL
                 MAX_TEXTURE_IMAGE_UNITS_NV = ((int)0x8872),
                 FRAGMENT_PROGRAM_NV = ((int)0x8870),
             }
-            
+
             public enum NV_half_float
             {
                 HALF_FLOAT_NV = ((int)0x140B),
             }
-            
+
             public enum NV_pixel_data_range
             {
                 READ_PIXEL_DATA_RANGE_NV = ((int)0x8879),
@@ -7932,26 +7932,26 @@ namespace OpenTK.OpenGL
                 WRITE_PIXEL_DATA_RANGE_LENGTH_NV = ((int)0x887A),
                 READ_PIXEL_DATA_RANGE_LENGTH_NV = ((int)0x887B),
             }
-            
+
             public enum NV_primitive_restart
             {
                 PRIMITIVE_RESTART_NV = ((int)0x8558),
                 PRIMITIVE_RESTART_INDEX_NV = ((int)0x8559),
             }
-            
+
             public enum NV_texture_expand_normal
             {
                 TEXTURE_UNSIGNED_REMAP_MODE_NV = ((int)0x888F),
             }
-            
+
             public enum NV_vertex_program2
             {
             }
-            
+
             public enum ATI_map_object_buffer
             {
             }
-            
+
             public enum ATI_separate_stencil
             {
                 STENCIL_BACK_PASS_DEPTH_FAIL_ATI = ((int)0x8802),
@@ -7959,48 +7959,48 @@ namespace OpenTK.OpenGL
                 STENCIL_BACK_FAIL_ATI = ((int)0x8801),
                 STENCIL_BACK_PASS_DEPTH_PASS_ATI = ((int)0x8803),
             }
-            
+
             public enum ATI_vertex_attrib_array_object
             {
             }
-            
+
             public enum OES_read_format
             {
                 IMPLEMENTATION_COLOR_READ_FORMAT_OES = ((int)0x8B9B),
                 IMPLEMENTATION_COLOR_READ_TYPE_OES = ((int)0x8B9A),
             }
-            
+
             public enum EXT_depth_bounds_test
             {
                 DEPTH_BOUNDS_EXT = ((int)0x8891),
                 DEPTH_BOUNDS_TEST_EXT = ((int)0x8890),
             }
-            
+
             public enum EXT_texture_mirror_clamp
             {
                 MIRROR_CLAMP_TO_EDGE_EXT = ((int)0x8743),
                 MIRROR_CLAMP_TO_BORDER_EXT = ((int)0x8912),
                 MIRROR_CLAMP_EXT = ((int)0x8742),
             }
-            
+
             public enum EXT_blend_equation_separate
             {
                 BLEND_EQUATION_ALPHA_EXT = ((int)0x883D),
                 BLEND_EQUATION_RGB_EXT = ((int)ARB_imaging.BLEND_EQUATION),
             }
-            
+
             public enum MESA_pack_invert
             {
                 PACK_INVERT_MESA = ((int)0x8758),
             }
-            
+
             public enum MESA_ycbcr_texture
             {
                 UNSIGNED_SHORT_8_8_REV_MESA = ((int)0x85BB),
                 YCBCR_MESA = ((int)0x8757),
                 UNSIGNED_SHORT_8_8_MESA = ((int)0x85BA),
             }
-            
+
             public enum EXT_pixel_buffer_object
             {
                 PIXEL_UNPACK_BUFFER_EXT = ((int)0x88EC),
@@ -8008,11 +8008,11 @@ namespace OpenTK.OpenGL
                 PIXEL_UNPACK_BUFFER_BINDING_EXT = ((int)0x88EF),
                 PIXEL_PACK_BUFFER_EXT = ((int)0x88EB),
             }
-            
+
             public enum NV_fragment_program_option
             {
             }
-            
+
             public enum NV_fragment_program2
             {
                 MAX_PROGRAM_LOOP_COUNT_NV = ((int)0x88F8),
@@ -8021,18 +8021,18 @@ namespace OpenTK.OpenGL
                 MAX_PROGRAM_IF_DEPTH_NV = ((int)0x88F6),
                 MAX_PROGRAM_EXEC_INSTRUCTIONS_NV = ((int)0x88F4),
             }
-            
+
             public enum NV_vertex_program2_option
             {
                 MAX_PROGRAM_CALL_DEPTH_NV = ((int)NV_fragment_program2.MAX_PROGRAM_CALL_DEPTH_NV),
                 MAX_PROGRAM_EXEC_INSTRUCTIONS_NV = ((int)NV_fragment_program2.MAX_PROGRAM_EXEC_INSTRUCTIONS_NV),
             }
-            
+
             public enum NV_vertex_program3
             {
                 MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB = ((int)ARB_vertex_shader.MAX_VERTEX_TEXTURE_IMAGE_UNITS_ARB),
             }
-            
+
             public enum EXT_framebuffer_object
             {
                 STENCIL_INDEX8_EXT = ((int)0x8D48),
@@ -8087,11 +8087,11 @@ namespace OpenTK.OpenGL
                 COLOR_ATTACHMENT7_EXT = ((int)0x8CE7),
                 RENDERBUFFER_GREEN_SIZE_EXT = ((int)0x8D51),
             }
-            
+
             public enum GREMEDY_string_marker
             {
             }
-            
+
             public enum EXT_packed_depth_stencil
             {
                 DEPTH_STENCIL_EXT = ((int)0x84F9),
@@ -8099,13 +8099,13 @@ namespace OpenTK.OpenGL
                 DEPTH24_STENCIL8_EXT = ((int)0x88F0),
                 UNSIGNED_INT_24_8_EXT = ((int)0x84FA),
             }
-            
+
             public enum EXT_stencil_clear_tag
             {
                 STENCIL_CLEAR_TAG_VALUE_EXT = ((int)0x88F3),
                 STENCIL_TAG_BITS_EXT = ((int)0x88F2),
             }
-            
+
             public enum EXT_texture_sRGB
             {
                 COMPRESSED_SLUMINANCE_EXT = ((int)0x8C4A),
@@ -8125,7 +8125,7 @@ namespace OpenTK.OpenGL
                 SLUMINANCE8_EXT = ((int)0x8C47),
                 COMPRESSED_SRGB_S3TC_DXT1_EXT = ((int)0x8C4C),
             }
-            
+
             public enum EXT_framebuffer_blit
             {
                 READ_FRAMEBUFFER_EXT = ((int)0x8CA8),
@@ -8133,14 +8133,14 @@ namespace OpenTK.OpenGL
                 DRAW_FRAMEBUFFER_EXT = ((int)0x8CA9),
                 READ_FRAMEBUFFER_BINDING_EXT = ((int)EXT_framebuffer_object.FRAMEBUFFER_BINDING_EXT),
             }
-            
+
             public enum EXT_framebuffer_multisample
             {
                 MAX_SAMPLES_EXT = ((int)0x8D57),
                 FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_EXT = ((int)0x8D56),
                 RENDERBUFFER_SAMPLES_EXT = ((int)0x8CAB),
             }
-            
+
             public enum MESAX_texture_stack
             {
                 TEXTURE_2D_STACK_MESAX = ((int)0x875A),
@@ -8150,22 +8150,22 @@ namespace OpenTK.OpenGL
                 TEXTURE_2D_STACK_BINDING_MESAX = ((int)0x875E),
                 TEXTURE_1D_STACK_BINDING_MESAX = ((int)0x875D),
             }
-            
+
             public enum EXT_timer_query
             {
                 TIME_ELAPSED_EXT = ((int)0x88BF),
             }
-            
+
             public enum EXT_gpu_program_parameters
             {
             }
-            
+
             public enum APPLE_flush_buffer_range
             {
                 BUFFER_FLUSHING_UNMAP_APPLE = ((int)0x8A13),
                 BUFFER_SERIALIZED_MODIFY_APPLE = ((int)0x8A12),
             }
-            
+
             public enum NV_gpu_program4
             {
                 MAX_PROGRAM_TEXEL_OFFSET_NV = ((int)0x8905),
@@ -8177,7 +8177,7 @@ namespace OpenTK.OpenGL
                 MAX_PROGRAM_GENERIC_RESULTS_NV = ((int)0x8DA6),
                 PROGRAM_ATTRIB_COMPONENTS_NV = ((int)0x8906),
             }
-            
+
             public enum NV_geometry_program4
             {
                 GEOMETRY_VERTICES_OUT_EXT = ((int)0x8DDA),
@@ -8197,7 +8197,7 @@ namespace OpenTK.OpenGL
                 FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_EXT = ((int)0x8DA9),
                 MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_EXT = ((int)0x8C29),
             }
-            
+
             public enum EXT_geometry_shader4
             {
                 MAX_GEOMETRY_VARYING_COMPONENTS_EXT = ((int)0x8DDD),
@@ -8221,12 +8221,12 @@ namespace OpenTK.OpenGL
                 GEOMETRY_VERTICES_OUT_EXT = ((int)NV_geometry_program4.GEOMETRY_VERTICES_OUT_EXT),
                 GEOMETRY_OUTPUT_TYPE_EXT = ((int)NV_geometry_program4.GEOMETRY_OUTPUT_TYPE_EXT),
             }
-            
+
             public enum NV_vertex_program4
             {
                 VERTEX_ATTRIB_ARRAY_INTEGER_NV = ((int)0x88FD),
             }
-            
+
             public enum EXT_gpu_shader4
             {
                 UNSIGNED_INT_VEC3_EXT = ((int)0x8DC7),
@@ -8255,18 +8255,18 @@ namespace OpenTK.OpenGL
                 UNSIGNED_INT_SAMPLER_BUFFER_EXT = ((int)0x8DD8),
                 INT_SAMPLER_1D_EXT = ((int)0x8DC9),
             }
-            
+
             public enum EXT_draw_instanced
             {
             }
-            
+
             public enum EXT_packed_float
             {
                 RGBA_SIGNED_COMPONENTS_EXT = ((int)0x8C3C),
                 R11F_G11F_B10F_EXT = ((int)0x8C3A),
                 UNSIGNED_INT_10F_11F_11F_REV_EXT = ((int)0x8C3B),
             }
-            
+
             public enum EXT_texture_array
             {
                 TEXTURE_BINDING_2D_ARRAY_EXT = ((int)0x8C1D),
@@ -8279,7 +8279,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_BINDING_1D_ARRAY_EXT = ((int)0x8C1C),
                 MAX_ARRAY_TEXTURE_LAYERS_EXT = ((int)0x88FF),
             }
-            
+
             public enum EXT_texture_buffer_object
             {
                 TEXTURE_BUFFER_EXT = ((int)0x8C2A),
@@ -8288,7 +8288,7 @@ namespace OpenTK.OpenGL
                 TEXTURE_BUFFER_DATA_STORE_BINDING_EXT = ((int)0x8C2D),
                 TEXTURE_BUFFER_FORMAT_EXT = ((int)0x8C2E),
             }
-            
+
             public enum EXT_texture_compression_latc
             {
                 COMPRESSED_SIGNED_LUMINANCE_LATC1_EXT = ((int)0x8C71),
@@ -8296,7 +8296,7 @@ namespace OpenTK.OpenGL
                 COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT = ((int)0x8C72),
                 COMPRESSED_SIGNED_LUMINANCE_ALPHA_LATC2_EXT = ((int)0x8C73),
             }
-            
+
             public enum EXT_texture_compression_rgtc
             {
                 COMPRESSED_SIGNED_RED_GREEN_RGTC2_EXT = ((int)0x8DBE),
@@ -8304,14 +8304,14 @@ namespace OpenTK.OpenGL
                 COMPRESSED_RED_RGTC1_EXT = ((int)0x8DBB),
                 COMPRESSED_RED_GREEN_RGTC2_EXT = ((int)0x8DBD),
             }
-            
+
             public enum EXT_texture_shared_exponent
             {
                 TEXTURE_SHARED_SIZE_EXT = ((int)0x8C3F),
                 RGB9_E5_EXT = ((int)0x8C3D),
                 UNSIGNED_INT_5_9_9_9_REV_EXT = ((int)0x8C3E),
             }
-            
+
             public enum NV_depth_buffer_float
             {
                 DEPTH_BUFFER_FLOAT_MODE_NV = ((int)0x8DAF),
@@ -8319,11 +8319,11 @@ namespace OpenTK.OpenGL
                 DEPTH_COMPONENT32F_NV = ((int)0x8DAB),
                 FLOAT_32_UNSIGNED_INT_24_8_REV_NV = ((int)0x8DAD),
             }
-            
+
             public enum NV_fragment_program4
             {
             }
-            
+
             public enum NV_framebuffer_multisample_coverage
             {
                 MULTISAMPLE_COVERAGE_MODES_NV = ((int)0x8E12),
@@ -8331,17 +8331,17 @@ namespace OpenTK.OpenGL
                 RENDERBUFFER_COVERAGE_SAMPLES_NV = ((int)0x8CAB),
                 RENDERBUFFER_COLOR_SAMPLES_NV = ((int)0x8E10),
             }
-            
+
             public enum EXT_framebuffer_sRGB
             {
                 FRAMEBUFFER_SRGB_EXT = ((int)0x8DB9),
                 FRAMEBUFFER_SRGB_CAPABLE_EXT = ((int)0x8DBA),
             }
-            
+
             public enum NV_geometry_shader4
             {
             }
-            
+
             public enum NV_parameter_buffer_object
             {
                 GEOMETRY_PROGRAM_PARAMETER_BUFFER_NV = ((int)0x8DA3),
@@ -8350,11 +8350,11 @@ namespace OpenTK.OpenGL
                 MAX_PROGRAM_PARAMETER_BUFFER_BINDINGS_NV = ((int)0x8DA0),
                 FRAGMENT_PROGRAM_PARAMETER_BUFFER_NV = ((int)0x8DA4),
             }
-            
+
             public enum EXT_draw_buffers2
             {
             }
-            
+
             public enum NV_transform_feedback
             {
                 TRANSFORM_FEEDBACK_RECORD_NV = ((int)0x8C86),
@@ -8383,7 +8383,7 @@ namespace OpenTK.OpenGL
                 SEPARATE_ATTRIBS_NV = ((int)0x8C8D),
                 MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS_NV = ((int)0x8C8B),
             }
-            
+
             public enum EXT_bindable_uniform
             {
                 MAX_FRAGMENT_BINDABLE_UNIFORMS_EXT = ((int)0x8DE3),
@@ -8393,7 +8393,7 @@ namespace OpenTK.OpenGL
                 UNIFORM_BUFFER_BINDING_EXT = ((int)0x8DEF),
                 MAX_VERTEX_BINDABLE_UNIFORMS_EXT = ((int)0x8DE2),
             }
-            
+
             public enum EXT_texture_integer
             {
                 LUMINANCE_ALPHA8I_EXT = ((int)0x8D93),
@@ -8444,7 +8444,7 @@ namespace OpenTK.OpenGL
                 RGB16UI_EXT = ((int)0x8D77),
                 ALPHA8I_EXT = ((int)0x8D90),
             }
-            
+
             public enum SGIX_icc_texture
             {
                 R5_G6_B5_A8_ICC_SGIX = ((int)0x8467),
@@ -8460,7 +8460,7 @@ namespace OpenTK.OpenGL
                 LUMINANCE16_ICC_SGIX = ((int)0x8469),
                 ALPHA16_ICC_SGIX = ((int)0x8468),
             }
-            
+
         }
     }
 }

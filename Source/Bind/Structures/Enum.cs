@@ -94,7 +94,7 @@ namespace Bind.Structures
                 sb.Append(c.ToString());
                 sb.AppendLine(",");
             }
-            sb.AppendLine("}");
+            sb.Append("}");
 
             return sb.ToString();
         }

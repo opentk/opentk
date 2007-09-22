@@ -55,7 +55,7 @@ namespace Bind
         public void Write(Bind.Structures.Enum e)
         {
             foreach (string s in splitLines.Split(e.ToString()))
-                WriteLine(s);
+                WriteLine(s.TrimEnd('\r', '\n'));
         }
 
         public void Write(Bind.Structures.Function f)
