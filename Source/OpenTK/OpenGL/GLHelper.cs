@@ -360,31 +360,46 @@ namespace OpenTK.OpenGL
 
         internal class GetProcAddressWindows : IGetProcAddress
         {
+            [System.Runtime.InteropServices.DllImport(Library, EntryPoint = "wglGetProcAddress", ExactSpelling = true)]
+            private static extern IntPtr wglGetProcAddress(String lpszProc);
+
             public IntPtr GetProcAddress(string function)
             {
-                return OpenTK.Platform.Windows.Wgl.Imports.GetProcAddress(function);
+                return wglGetProcAddress(function);
             }
         }
 
         internal class GetProcAddressX11 : IGetProcAddress
         {
+            [DllImport(Library, EntryPoint = "glXGetProcAddress")]
+            private static extern IntPtr glxGetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
+
             public IntPtr GetProcAddress(string function)
             {
-                return X11.Glx.GetProcAddress(function);
+                return glxGetProcAddress(function);
             }
         }
 
         internal class GetProcAddressOSX : IGetProcAddress
         {
+            private const string Library = "libdl.dylib";
+
+            [DllImport(Library, EntryPoint = "NSIsSymbolNameDefined")]
+            private static extern bool NSIsSymbolNameDefined(string s);
+            [DllImport(Library, EntryPoint = "NSLookupAndBindSymbol")]
+            private static extern IntPtr NSLookupAndBindSymbol(string s);
+            [DllImport(Library, EntryPoint = "NSAddressOfSymbol")]
+            private static extern IntPtr NSAddressOfSymbol(IntPtr symbol);
+
             public IntPtr GetProcAddress(string function)
             {
                 string fname = "_" + function;
-                if (!OSX.Functions.NSIsSymbolNameDefined(fname))
+                if (!NSIsSymbolNameDefined(fname))
                     return IntPtr.Zero;
 
-                IntPtr symbol = OSX.Functions.NSLookupAndBindSymbol(fname);
+                IntPtr symbol = NSLookupAndBindSymbol(fname);
                 if (symbol != IntPtr.Zero)
-                    symbol = OSX.Functions.NSAddressOfSymbol(symbol);
+                    symbol = NSAddressOfSymbol(symbol);
 
                 return symbol;
             }
@@ -439,7 +454,7 @@ namespace OpenTK.OpenGL
 
         #endregion
 
-        #region private static Delegate GetExtensionDelegate(string name, Type signature)
+        #region internal static Delegate GetExtensionDelegate(string name, Type signature)
 
         /// <summary>
         /// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
@@ -450,7 +465,7 @@ namespace OpenTK.OpenGL
         /// A System.Delegate that can be used to call this OpenGL function or null
         /// if the function is not available in the current OpenGL context.
         /// </returns>
-        private static Delegate GetExtensionDelegate(string name, Type signature)
+        internal static Delegate GetExtensionDelegate(string name, Type signature)
         {
             IntPtr address = GetAddress(name);
 

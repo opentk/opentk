@@ -62,15 +62,44 @@ namespace OpenTK.Platform.Windows
             if (importsClass.GetMethod(realName,
                 BindingFlags.NonPublic | BindingFlags.Static) != null)
             {
-                d = Utilities.GetExtensionDelegate(name, signature) ??
+                d = GetExtensionDelegate(name, signature) ??
                     Delegate.CreateDelegate(signature, typeof(Imports), realName);
             }
             else
             {
-                d = Utilities.GetExtensionDelegate(name, signature);
+                d = GetExtensionDelegate(name, signature);
             }
 
             return d;
+        }
+
+        #endregion
+
+        #region private static Delegate GetExtensionDelegate(string name, Type signature)
+
+        /// <summary>
+        /// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
+        /// </summary>
+        /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
+        /// <param name="signature">The signature of the OpenGL function.</param>
+        /// <returns>
+        /// A System.Delegate that can be used to call this OpenGL function or null
+        /// if the function is not available in the current OpenGL context.
+        /// </returns>
+        private static Delegate GetExtensionDelegate(string name, Type signature)
+        {
+            IntPtr address = Imports.GetProcAddress(name);
+
+            if (address == IntPtr.Zero ||
+                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
+                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
+            {
+                return null;
+            }
+            else
+            {
+                return Marshal.GetDelegateForFunctionPointer(address, signature);
+            }
         }
 
         #endregion

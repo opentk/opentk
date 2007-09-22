@@ -47,7 +47,7 @@ namespace OpenTK.OpenGL
         {
             MethodInfo m = importsClass.GetMethod(name.Substring(3), BindingFlags.Static | BindingFlags.NonPublic);
             return 
-                Utilities.GetExtensionDelegate(name, signature) ??
+                GL.GetExtensionDelegate(name, signature) ??
                 (m != null ? Delegate.CreateDelegate(signature, m) : null);
         }
 
