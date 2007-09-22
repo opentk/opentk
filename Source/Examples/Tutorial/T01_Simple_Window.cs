@@ -22,6 +22,8 @@ namespace Examples.Tutorial
             this.CreateWindow(new DisplayMode(800, 600));
         }
 
+        #region OnResize
+
         /// <summary>
         /// Override the OnResize method to respond to window resize events.
         /// Do not forget to call base.OnResize() so that event listeners
@@ -38,6 +40,10 @@ namespace Examples.Tutorial
 
             base.OnResize(e);
         }
+
+        #endregion
+
+        #region OnRenderFrame
 
         /// <summary>
         /// Override the OnRenderFrame method to add your drawing code.
@@ -64,6 +70,8 @@ namespace Examples.Tutorial
 
             base.OnRenderFrame(e);
         }
+
+        #endregion
 
         #region IExample Members
 

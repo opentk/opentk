@@ -129,7 +129,7 @@ namespace Examples.Tutorial
         /// Place your control logic here. This is the place to respond to user input,
         /// update object positions etc.
         /// </remarks>
-        public override void OnUpdateFrame(EventArgs e)
+        public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
             if (Keyboard[0][OpenTK.Input.Key.Escape])
             {

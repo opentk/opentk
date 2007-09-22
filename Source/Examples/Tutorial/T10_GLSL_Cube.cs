@@ -148,7 +148,7 @@ namespace Examples.Tutorial
         /// Occurs when it is time to update the next frame.
         /// </summary>
         /// <param name="e">Not used yet.</param>
-        public override void OnUpdateFrame(EventArgs e)
+        public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
             base.OnUpdateFrame(e);
 
