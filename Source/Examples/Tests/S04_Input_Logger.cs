@@ -16,6 +16,7 @@ using OpenTK;
 using OpenTK.Platform;
 using OpenTK.Input;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Examples.Tests
 {
@@ -95,13 +96,13 @@ namespace Examples.Tests
                 k.KeyUp += new KeyUpEvent(LogKeyUp);
             }
 
-            //PollTimer.Tick += new EventHandler(PollTimer_Tick);
-            //PollTimer.Start();
-            Application.Idle += new EventHandler(Application_Idle);
+            Application.Idle += new EventHandler(UpdateDevices);
         }
 
-        void Application_Idle(object sender, EventArgs e)
+        void UpdateDevices(object sender, EventArgs e)
         {
+            driver.Poll();
+
             // Update mouse coordinates.
             MouseXText.Text = driver.Mouse[ChooseMouse.SelectedIndex].X.ToString();
             MouseYText.Text = driver.Mouse[ChooseMouse.SelectedIndex].Y.ToString();
@@ -113,14 +114,14 @@ namespace Examples.Tests
 
         void LogMouseButtonDown(IMouse sender, MouseButton button)
         {
-            Trace.WriteLine(String.Format("Mouse button down: {0} on device: {1}", button, sender.DeviceID));
+            //Trace.WriteLine(String.Format("Mouse button down: {0} on device: {1}", button, sender.DeviceID));
             if (sender.DeviceID == driver.Mouse[ChooseMouse.SelectedIndex].DeviceID)
                 MouseButtons.Items.Add(button);
         }
 
         void LogMouseButtonUp(IMouse sender, MouseButton button)
         {
-            Trace.WriteLine(String.Format("Mouse button up: {0} on device: {1}", button, sender.DeviceID));
+            //Trace.WriteLine(String.Format("Mouse button up: {0} on device: {1}", button, sender.DeviceID));
             if (sender.DeviceID == driver.Mouse[ChooseMouse.SelectedIndex].DeviceID)
                 MouseButtons.Items.Remove(button);
         }

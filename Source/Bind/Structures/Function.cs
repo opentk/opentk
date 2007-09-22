@@ -297,7 +297,7 @@ namespace Bind.Structures
             {
                 sb.AppendLine("    " + s);
             }
-            sb.AppendLine("}");
+            sb.Append("}");
 
             return sb.ToString();
         }

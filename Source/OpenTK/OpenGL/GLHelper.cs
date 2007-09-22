@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Reflection;
-using OpenTK.Platform;
 using System.Diagnostics;
 using System.Reflection.Emit;
 
@@ -218,7 +217,7 @@ namespace OpenTK.OpenGL
         {
             MethodInfo m;
             return
-                Utilities.GetExtensionDelegate(name, signature) ??
+                GetExtensionDelegate(name, signature) ??
                 /*((m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic)) != null ?*/
                 (Imports.import.TryGetValue((name.Substring(2)), out m) ?
                 Delegate.CreateDelegate(signature, m) : null);
@@ -347,6 +346,127 @@ namespace OpenTK.OpenGL
         {
             GL.ClearColor(color.R/255.0f, color.G/255.0f, color.B/255.0f, color.A/255.0f);
         }
+
+        #endregion
+
+        #region --- GetProcAddress ---
+
+        private static IGetProcAddress getProcAddress;
+
+        internal interface IGetProcAddress
+        {
+            IntPtr GetProcAddress(string function);
+        }
+
+        internal class GetProcAddressWindows : IGetProcAddress
+        {
+            public IntPtr GetProcAddress(string function)
+            {
+                return OpenTK.Platform.Windows.Wgl.Imports.GetProcAddress(function);
+            }
+        }
+
+        internal class GetProcAddressX11 : IGetProcAddress
+        {
+            public IntPtr GetProcAddress(string function)
+            {
+                return X11.Glx.GetProcAddress(function);
+            }
+        }
+
+        internal class GetProcAddressOSX : IGetProcAddress
+        {
+            public IntPtr GetProcAddress(string function)
+            {
+                string fname = "_" + function;
+                if (!OSX.Functions.NSIsSymbolNameDefined(fname))
+                    return IntPtr.Zero;
+
+                IntPtr symbol = OSX.Functions.NSLookupAndBindSymbol(fname);
+                if (symbol != IntPtr.Zero)
+                    symbol = OSX.Functions.NSAddressOfSymbol(symbol);
+
+                return symbol;
+            }
+        }
+
+        #region private static IntPtr GetAddress(string function)
+
+        /// <summary>
+        /// Retrieves the entry point for a dynamically exported OpenGL function.
+        /// </summary>
+        /// <param name="name">The function string for the OpenGL function (eg. "glNewList")</param>
+        /// <returns>
+        /// An IntPtr contaning the address for the entry point, or IntPtr.Zero if the specified
+        /// OpenGL function is not dynamically exported.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The Marshal.GetDelegateForFunctionPointer method can be used to turn the return value
+        /// into a call-able delegate.
+        /// </para>
+        /// <para>
+        /// This function is cross-platform. It determines the underlying platform and uses the
+        /// correct wgl, glx or agl GetAddress function to retrieve the function pointer.
+        /// </para>
+        /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
+        /// <seealso cref="Gl.GetDelegateForExtensionMethod"/>
+        /// </remarks>
+        private static IntPtr GetAddress(string function)
+        {
+            if (getProcAddress == null)
+            {
+                if (System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
+                    System.Environment.OSVersion.Platform == PlatformID.Win32S ||
+                    System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
+                    System.Environment.OSVersion.Platform == PlatformID.WinCE)
+                {
+                    getProcAddress = new GetProcAddressWindows();
+                }
+                else if (System.Environment.OSVersion.Platform == PlatformID.Unix)
+                {
+                    getProcAddress = new GetProcAddressX11();
+                }
+                else
+                {
+                    throw new PlatformNotSupportedException(
+                        "Extension loading is only supported under X11 and Windows. We are sorry for the inconvience.");
+                }
+            }
+
+            return getProcAddress.GetProcAddress(function);
+        }
+
+        #endregion
+
+        #region private static Delegate GetExtensionDelegate(string name, Type signature)
+
+        /// <summary>
+        /// Creates a System.Delegate that can be used to call a dynamically exported OpenGL function.
+        /// </summary>
+        /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
+        /// <param name="signature">The signature of the OpenGL function.</param>
+        /// <returns>
+        /// A System.Delegate that can be used to call this OpenGL function or null
+        /// if the function is not available in the current OpenGL context.
+        /// </returns>
+        private static Delegate GetExtensionDelegate(string name, Type signature)
+        {
+            IntPtr address = GetAddress(name);
+
+            if (address == IntPtr.Zero ||
+                address == new IntPtr(1) ||     // Workaround for buggy nvidia drivers which return
+                address == new IntPtr(2))       // 1 or 2 instead of IntPtr.Zero for some extensions.
+            {
+                return null;
+            }
+            else
+            {
+                return Marshal.GetDelegateForFunctionPointer(address, signature);
+            }
+        }
+
+        #endregion
 
         #endregion
     }
