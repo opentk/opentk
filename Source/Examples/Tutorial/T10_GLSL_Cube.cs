@@ -28,17 +28,21 @@ namespace Examples.Tutorial
         #region Shaders
 
         string[] vertex_shader_source =
-        {
-            "void main() {",
-            "gl_FrontColor = gl_Color;",
-            "gl_Position = ftransform();",
-            "}",
-        };
+{@"
+void main()
+{
+    gl_FrontColor = gl_Color;
+    gl_Position = ftransform();
+}
+"};
 
         string[] fragment_shader_source =
-        {
-            "void main() { gl_FragColor = gl_Color; }\0"
-        };
+{@"
+void main()
+{
+    gl_FragColor = gl_Color;
+}
+"};
 
         #endregion
 
@@ -76,8 +80,13 @@ namespace Examples.Tutorial
                 return;
             }
 
-            GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
+            GL.ClearColor(Color.MidnightBlue);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+
+            GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
+            GL.EnableClientState(GL.Enums.EnableCap.COLOR_ARRAY);
+            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, Shapes.Cube.Vertices);
+            GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, Shapes.Cube.Colors);
 
             uint vertex_shader_object, fragment_shader_object;
             int status;
@@ -126,14 +135,20 @@ namespace Examples.Tutorial
 
         #region OnResize
 
+        /// <summary>
+        /// Called when the user resizes the window.
+        /// </summary>
+        /// <param name="e">Contains the new width/height of the window.</param>
+        /// <remarks>
+        /// You want the OpenGL viewport to match the window. This is the place to do it!
+        /// </remarks>
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
         {
             base.OnResize(e);
 
             GL.Viewport(0, 0, Width, Height);
 
-            double ratio = 0.0;
-            ratio = this.Width / (double)this.Height;
+            double ratio = e.Width / (double)e.Height;
 
             GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
             GL.LoadIdentity();
@@ -145,18 +160,27 @@ namespace Examples.Tutorial
         #region OnUpdateFrame
 
         /// <summary>
-        /// Occurs when it is time to update the next frame.
+        /// Prepares the next frame for rendering.
         /// </summary>
-        /// <param name="e">Not used yet.</param>
+        /// <remarks>
+        /// Place your control logic here. This is the place to respond to user input,
+        /// update object positions etc.
+        /// </remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            base.OnUpdateFrame(e);
-
             if (Keyboard[0][OpenTK.Input.Key.Escape])
             {
                 this.Exit();
+                return;
             }
 
+            if ((Keyboard[0][OpenTK.Input.Key.AltLeft] || Keyboard[0][OpenTK.Input.Key.AltRight]) &&
+                Keyboard[0][OpenTK.Input.Key.Enter])
+            {
+                Fullscreen = !Fullscreen;
+            }
+
+            //angle += 180.0f * (float)e.Time;
             angle += 3.0f;
             if (angle > 720.0f)
                 angle -= 720.0f;
@@ -166,10 +190,11 @@ namespace Examples.Tutorial
 
         #region OnRenderFrame
 
+        /// <summary>
+        /// Place your rendering code here.
+        /// </summary>
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
- 	        base.OnRenderFrame(e);
-
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 
             GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
@@ -181,57 +206,10 @@ namespace Examples.Tutorial
             );
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
-            DrawCube();
+            GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, Shapes.Cube.Indices.Length,
+                GL.Enums.All.UNSIGNED_SHORT, Shapes.Cube.Indices);
 
             Context.SwapBuffers();
-        }
-
-        #endregion
-
-        #region private void DrawCube()
-
-        private void DrawCube()
-        {
-            GL.Begin(GL.Enums.BeginMode.QUADS);
-
-            GL.Color3(Color.Silver);
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-
-            GL.Color3(Color.Honeydew);
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-
-            GL.Color3(Color.Moccasin);
-
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-
-            GL.Color3(Color.IndianRed);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-
-            GL.Color3(Color.PaleVioletRed);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-
-            GL.Color3(Color.ForestGreen);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-
-            GL.End();
         }
 
         #endregion
@@ -246,6 +224,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public void Launch()
         {
+            // Lock UpdateFrame and RenderFrame at 60Hz.
             Run(60.0, 60.0);
         }
 
