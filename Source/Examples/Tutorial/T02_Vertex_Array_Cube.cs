@@ -136,7 +136,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public void Launch()
         {
-            // Run the main loop calling UpdateFrame and RenderFrame 60 times per second.
+            // Lock UpdateFrame and RenderFrame at 60Hz.
             Run(60.0, 60.0);
         }
 
