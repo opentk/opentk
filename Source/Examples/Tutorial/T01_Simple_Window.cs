@@ -77,7 +77,7 @@ namespace Examples.Tutorial
 
         public void Launch()
         {
-            this.Run();
+            this.Run(1.0, 5.0);
         }
 
         #endregion
