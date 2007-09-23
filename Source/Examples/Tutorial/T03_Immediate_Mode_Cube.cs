@@ -118,7 +118,7 @@ namespace Examples.Tutorial
         /// <summary>
         /// Place your rendering code here.
         /// </summary>
-        public override void OnRenderFrame(EventArgs e)
+        public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 

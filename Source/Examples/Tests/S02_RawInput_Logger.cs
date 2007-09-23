@@ -87,7 +87,7 @@ namespace Examples.Tests
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         }
 
-        public override void OnRenderFrame(EventArgs e)
+        public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             base.OnRenderFrame(e);
 

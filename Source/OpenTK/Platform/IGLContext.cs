@@ -62,12 +62,12 @@ namespace OpenTK.Platform
         void CreateContext(bool direct, IGLContext source);
 
         /// <summary>
-        /// Swaps buffers on a context. This presents the rendered scene to the user.
+        /// Swaps buffers, presenting the rendered scene to the user.
         /// </summary>
         void SwapBuffers();
 
         /// <summary>
-        /// Makes this context the current rendering target.
+        /// Makes the Context current in the calling thread, i.e. future OpenGL commands will affect this Context.
         /// </summary>
         void MakeCurrent();
 

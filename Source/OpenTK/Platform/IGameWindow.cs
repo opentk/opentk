@@ -14,10 +14,12 @@ namespace OpenTK.Platform
     {
         void Run();
 
-        void OnRenderFrame(EventArgs e);
+        void OnRenderFrame(RenderFrameEventArgs e);
         void OnUpdateFrame(UpdateFrameEventArgs e);
         void OnLoad(EventArgs e);
         void Exit();
+
+        void SwapBuffers();
 
         event UpdateFrameEvent UpdateFrame;
         event RenderFrameEvent RenderFrame;
@@ -28,6 +30,6 @@ namespace OpenTK.Platform
     }
 
     public delegate void UpdateFrameEvent(object sender, UpdateFrameEventArgs e);
-    public delegate void RenderFrameEvent(object sender, EventArgs e);
+    public delegate void RenderFrameEvent(object sender, RenderFrameEventArgs e);
     public delegate void LoadEvent(object sender, EventArgs e);
 }
