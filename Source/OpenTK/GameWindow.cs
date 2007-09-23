@@ -29,6 +29,8 @@ namespace OpenTK
         private bool isExiting;
         private bool disposed;
 
+        private double updateTime, renderTime, eventTime, frameTime;
+
         #endregion
 
         #region --- Contructors ---
@@ -293,7 +295,7 @@ namespace OpenTK
         #region public virtual void Run()
 
         /// <summary>
-        /// Runs the default game loop on GameWindow (process event->update frame->render frame).
+        /// Runs the default game loop on GameWindow at the maximum possible update and render speed.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -307,7 +309,18 @@ namespace OpenTK
         /// to Operating System events.
         /// </para>
         /// </remarks>
-        public virtual void Run()
+        /// <see cref="public virtual void Run(float update_frequency, float render_frequency)"/>
+        public void Run()
+        {
+            Run(0.0f, 0.0f);
+        }
+
+        /// <summary>
+        /// Runs the default game loop on GameWindow at the specified update and render speed.
+        /// </summary>
+        /// <param name="update_frequency">Indicates how many times UpdateFrame will be called per second.</param>
+        /// <param name="render_frequency">Indicates how many times RenderFrame will be called per second.</param>
+        public virtual void Run(double update_frequency, double render_frequency)
         {
             this.OnLoad(EventArgs.Empty);
             resizeEventArgs.Width = this.Width;
@@ -316,20 +329,65 @@ namespace OpenTK
 
             Debug.Print("Entering main loop");
 
-            System.Diagnostics.Stopwatch watch = new Stopwatch();
-            watch.Reset();
+            Stopwatch watch = new Stopwatch();
             UpdateFrameEventArgs updateArgs = new UpdateFrameEventArgs();
+            RenderFrameEventArgs renderArgs = new RenderFrameEventArgs();
+
+            double update_target = 0.0, render_target = 0.0, next_update = 0.0, next_render = 0.0;
+            double time, total_time;
+
+            if (update_frequency > 0.0)
+            {
+                next_update = update_target = 1.0 / update_frequency;
+            }
+            if (render_frequency > 0.0)
+            {
+                next_render = render_target = 1.0 / render_frequency;
+            }
 
             while (this.Exists && !IsExiting)
             {
+                total_time = frameTime = watch.Elapsed.TotalSeconds;
+                if (total_time > 0.1)
+                    total_time = 0.1;
+                updateArgs.Time = renderArgs.Time = total_time;
+
+                watch.Reset();
+                watch.Start();
+
+                time = watch.Elapsed.TotalSeconds;
                 this.ProcessEvents();
+                eventTime = watch.Elapsed.TotalSeconds - time;
+
                 if (!IsExiting)
                 {
-                    updateArgs.Time = watch.ElapsedMilliseconds / 1000.0f;
-                    watch.Reset();
-                    watch.Start();
-                    this.OnUpdateFrame(updateArgs);
-                    this.OnRenderFrame(EventArgs.Empty);
+                    time = watch.Elapsed.TotalSeconds;
+                    next_update -= (total_time + time);
+                    while (next_update <= 0.0)
+                    {
+                        updateArgs.Time += watch.Elapsed.TotalSeconds;
+                        this.OnUpdateFrame(updateArgs);
+                        if (update_target == 0.0)
+                            break;
+                        next_update += update_target;
+                    }
+                    updateTime = watch.Elapsed.TotalSeconds - time;
+
+                    time = watch.Elapsed.TotalSeconds;
+                    next_render -= (total_time + time);
+                    if (next_render <= 0.0)
+                    {
+                        renderArgs.Time += time;
+                        this.OnRenderFrame(renderArgs);
+                        next_render += render_target;
+                    }
+                    renderTime = watch.Elapsed.TotalSeconds - time;
+
+                    if (renderTime < render_target && updateTime < update_target)
+                    {
+                        Thread.Sleep((int)(1000.0 * System.Math.Min(
+                            render_target - renderTime, update_target - updateTime)));
+                    }
                 }
             }
 
@@ -367,7 +425,7 @@ namespace OpenTK
 
         #endregion
 
-        #region public virtual void OnRenderFrame(EventArgs e)
+        #region public virtual void OnRenderFrame(RenderFrameEventArgs e)
 
         /// <summary>
         /// Raises the RenderFrame event. Override in derived classes to render a frame.
@@ -376,7 +434,7 @@ namespace OpenTK
         /// If overriden, the base.OnRenderFrame() function should be called, to ensure
         /// listeners are notified of RenderFrame events.
         /// </remarks>
-        public virtual void OnRenderFrame(EventArgs e)
+        public virtual void OnRenderFrame(RenderFrameEventArgs e)
         {
             if (!this.Exists && !this.IsExiting)
             {
@@ -626,12 +684,26 @@ namespace OpenTK
 
     public class UpdateFrameEventArgs : EventArgs
     {
-        private float time;
+        private double time;
 
         /// <summary>
         /// Gets the Time elapsed between frame updates, in seconds.
         /// </summary>
-        public float Time
+        public double Time
+        {
+            get { return time; }
+            internal set { time = value; }
+        }
+    }
+
+    public class RenderFrameEventArgs : EventArgs
+    {
+        private double time;
+
+        /// <summary>
+        /// Gets the Time elapsed between frame updates, in seconds.
+        /// </summary>
+        public double Time
         {
             get { return time; }
             internal set { time = value; }

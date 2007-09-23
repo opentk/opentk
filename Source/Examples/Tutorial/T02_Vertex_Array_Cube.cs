@@ -92,16 +92,8 @@ namespace Examples.Tutorial
                 Fullscreen = !Fullscreen;
             }
 
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
-            GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 5.0, 5.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
-
-            GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
-            angle += 180.0f * e.Time;
+            //angle += 180.0f * (float)e.Time;
+            angle += 3.0f;
             if (angle > 720.0f)
                 angle -= 720.0f;
         }
@@ -113,21 +105,23 @@ namespace Examples.Tutorial
         /// <summary>
         /// Place your rendering code here.
         /// </summary>
-        public override void OnRenderFrame(EventArgs e)
+        public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
 
-            unsafe
-            {
-                fixed (ushort* index_pointer = Shapes.Cube.Indices)
-                {
-                    GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, Shapes.Cube.Indices.Length,
-                        GL.Enums.All.UNSIGNED_SHORT, index_pointer);
-                }
-            }
+            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.LoadIdentity();
+            Glu.LookAt(
+                0.0, 5.0, 5.0,
+                0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0
+            );
+            GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
+
+            GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, Shapes.Cube.Indices.Length,
+                GL.Enums.All.UNSIGNED_SHORT, Shapes.Cube.Indices);
 
             Context.SwapBuffers();
-            Thread.Sleep(0);
         }
 
         #endregion
@@ -142,7 +136,8 @@ namespace Examples.Tutorial
         /// </remarks>
         public void Launch()
         {
-            Run();
+            // Run the main loop calling UpdateFrame and RenderFrame 60 times per second.
+            Run(60.0, 60.0);
         }
 
         #endregion

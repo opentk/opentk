@@ -51,7 +51,7 @@ namespace Examples.Tutorial
         /// will be notified of frame rendering events!
         /// </summary>
         /// <param name="e">Not used.</param>
-        public override void OnRenderFrame(EventArgs e)
+        public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
 

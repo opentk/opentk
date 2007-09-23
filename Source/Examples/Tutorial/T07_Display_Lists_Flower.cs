@@ -137,7 +137,7 @@ namespace Examples.Tutorial
 
         #region OnRenderFrame
 
-        public override void OnRenderFrame(EventArgs e)
+        public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             base.OnRenderFrame(e);
 
