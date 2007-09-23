@@ -353,13 +353,13 @@ namespace OpenTK
             double update_target = 0.0, render_target = 0.0, next_update = 0.0, next_render = 0.0;
             double time, total_time;
 
-            if (update_frequency > 0.0)
+            if (updateFrequency > 0.0)
             {
-                next_update = update_target = 1.0 / update_frequency;
+                next_update = update_target = 1.0 / updateFrequency;
             }
-            if (render_frequency > 0.0)
+            if (renderFrequency > 0.0)
             {
-                next_render = render_target = 1.0 / render_frequency;
+                next_render = render_target = 1.0 / renderFrequency;
             }
 
             while (this.Exists && !IsExiting)
