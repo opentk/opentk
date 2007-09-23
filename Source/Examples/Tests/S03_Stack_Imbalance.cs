@@ -30,7 +30,7 @@ namespace Examples.Tests
         }
 
         float[] proj = new float[16];
-        public override void OnRenderFrame(EventArgs e)
+        public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
 
