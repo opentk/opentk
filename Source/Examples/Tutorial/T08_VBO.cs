@@ -239,11 +239,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public void Launch()
         {
-            //using (T08_VBO ex = new T08_VBO())
-            {
-                //ex.Run();
-                Run();
-            }
+            Run(60.0, 60.0);
         }
 
         #endregion

@@ -31,7 +31,7 @@ namespace Examples.Tutorial
 
         public void Launch()
         {
-            this.Run();
+            this.Run(60.0, 60.0);
         }
 
         #endregion

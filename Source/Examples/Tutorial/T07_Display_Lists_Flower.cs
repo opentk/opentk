@@ -81,21 +81,6 @@ namespace Examples.Tutorial
 
         #endregion         
 
-        #region public void Launch()
-
-        /// <summary>
-        /// Launches this example.
-        /// </summary>
-        /// <remarks>
-        /// Provides a simple way for the example launcher to launch the examples.
-        /// </remarks>
-        public void Launch()
-        {
-            Run();
-        }
-
-        #endregion
-
         #region --- Event Handlers ---
 
         #region OnResize
@@ -165,5 +150,20 @@ namespace Examples.Tutorial
         #endregion
 
         #endregion --- Event Handlers ---
+
+        #region public void Launch()
+
+        /// <summary>
+        /// Launches this example.
+        /// </summary>
+        /// <remarks>
+        /// Provides a simple way for the example launcher to launch the examples.
+        /// </remarks>
+        public void Launch()
+        {
+            this.Run(1.0, 5.0);
+        }
+
+        #endregion
     }
 }

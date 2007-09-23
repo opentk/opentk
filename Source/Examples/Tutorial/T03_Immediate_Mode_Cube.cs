@@ -99,16 +99,9 @@ namespace Examples.Tutorial
                 Fullscreen = !Fullscreen;
             }
 
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
-            GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 5.0, 5.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
-
-            GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
-            angle += 0.5f;
+            angle += 3.0f;
+            if (angle > 720.0f)
+                angle -= 720.0f;
         }
 
         #endregion
@@ -121,6 +114,15 @@ namespace Examples.Tutorial
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+
+            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.LoadIdentity();
+            Glu.LookAt(
+                0.0, 5.0, 5.0,
+                0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0
+            );
+            GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
             DrawCube();
 
@@ -188,7 +190,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public void Launch()
         {
-            Run();
+            Run(60.0, 60.0);
         }
 
         #endregion
