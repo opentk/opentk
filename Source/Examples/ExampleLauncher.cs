@@ -88,8 +88,8 @@ namespace Examples
             }
             catch (Exception expt)
             {
-                MessageBox.Show(String.Format("Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
-                    System.Environment.NewLine, expt.StackTrace, expt.InnerException), expt.Message);
+                MessageBox.Show(String.Format("{3}{0}Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
+                    System.Environment.NewLine, expt.StackTrace, expt.InnerException, expt.Message), expt.Message);
             }
         }
 
