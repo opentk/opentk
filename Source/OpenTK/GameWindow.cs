@@ -295,12 +295,40 @@ namespace OpenTK
         #region public virtual void Run()
 
         /// <summary>
-        /// Runs the default game loop on GameWindow at the maximum possible update and render speed.
+        /// Enters the game loop of GameWindow, updating and rendering at the maximum possible frequency.
         /// </summary>
+        /// <see cref="public virtual void Run(float update_frequency, float render_frequency)"/>
+        public void Run()
+        {
+            Run(0.0, 0.0);
+        }
+
+        /// <summary>
+        /// Runs the default game loop on GameWindow at the specified update frequency, maintaining the
+        /// maximum possible render frequency.
+        /// </summary>
+        /// <see cref="public virtual void Run(double updateFrequency, double renderFrequency)"/>
+        public void Run(double updateFrequency)
+        {
+            Run(updateFrequency, 0.0);
+        }
+
+        /// <summary>
+        /// Runs the default game loop on GameWindow at the specified update and render frequency.
+        /// </summary>
+        /// <param name="updateFrequency">If greater than zero, indicates how many times UpdateFrame will be called per second. If less than or equal to zero, UpdateFrame is raised at maximum possible frequency.</param>
+        /// <param name="renderFrequency">If greater than zero, indicates how many times RenderFrame will be called per second. If less than or equal to zero, RenderFrame is raised at maximum possible frequency.</param>
         /// <remarks>
         /// <para>
-        /// A default game loop consists of three parts: Event processing,
-        /// a frame update and a frame render.
+        /// A default game loop consists of three parts: Event processing, frame updating and a frame rendering.
+        /// This function will try to maintain the requested updateFrequency at all costs, dropping the renderFrequency if
+        /// there is not enough CPU time.
+        /// </para>
+        /// <para>
+        /// It is recommended that you specify a target for update- and renderFrequency.
+        /// Doing so, will yield unused CPU time to other processes, dropping power consumption
+        /// and maximizing batter life. If either frequency is left unspecified, the GameWindow
+        /// will consume all available CPU time (only useful for benchmarks and stress tests).
         /// </para>
         /// <para>
         /// Override this function if you want to change the behaviour of the
@@ -309,18 +337,7 @@ namespace OpenTK
         /// to Operating System events.
         /// </para>
         /// </remarks>
-        /// <see cref="public virtual void Run(float update_frequency, float render_frequency)"/>
-        public void Run()
-        {
-            Run(0.0f, 0.0f);
-        }
-
-        /// <summary>
-        /// Runs the default game loop on GameWindow at the specified update and render speed.
-        /// </summary>
-        /// <param name="update_frequency">Indicates how many times UpdateFrame will be called per second.</param>
-        /// <param name="render_frequency">Indicates how many times RenderFrame will be called per second.</param>
-        public virtual void Run(double update_frequency, double render_frequency)
+        public virtual void Run(double updateFrequency, double renderFrequency)
         {
             this.OnLoad(EventArgs.Empty);
             resizeEventArgs.Width = this.Width;
@@ -502,6 +519,20 @@ namespace OpenTK
         /// </summary>
         public event LoadEvent Load;
 
+        #endregion
+
+        #region public void SwapBuffers()
+
+        /// <summary>
+        /// Swaps the front and back buffer, presenting the rendered scene to the user.
+        /// Only useful in double- or triple-buffered formats.
+        /// </summary>
+        /// <remarks>Calling this function is equivalent to calling Context.SwapBuffers()</remarks>
+        public void SwapBuffers()
+        {
+            Context.SwapBuffers();
+        }
+        
         #endregion
 
         #region public bool IsExiting
