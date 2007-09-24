@@ -17,15 +17,21 @@ namespace OpenTK.Math
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector2
     {
+        #region Fields
+
         /// <summary>
-        /// The X coordinate of the Vector2.
+        /// The X component of the Vector2.
         /// </summary>
         public float X;
             
         /// <summary>
-        /// The Y coordinate of the Vector2.
+        /// The Y component of the Vector2.
         /// </summary>
         public float Y;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Constructs a new Vector2.
@@ -37,6 +43,10 @@ namespace OpenTK.Math
             X = x;
             Y = y;
         }
+
+        #endregion
+
+        #region Add
 
         /// <summary>
         /// Adds the given Vector2 to the current Vector2.
@@ -68,6 +78,10 @@ namespace OpenTK.Math
             return new Vector4(X + right.X, Y + right.Y, right.Z, right.W);
         }
 
+        #endregion
+
+        #region Sub
+
         /// <summary>
         /// Subtracts the given Vector2 from the current Vector2.
         /// </summary>
@@ -98,8 +112,12 @@ namespace OpenTK.Math
             return new Vector4(X - right.X, Y - right.Y, -right.Z, -right.W);
         }
 
+        #endregion
+
+        #region Dot
+
         /// <summary>
-        /// Computes the dot product between the curren Vector2 and the given Vector2.
+        /// Computes the dot product between the current Vector2 and the given Vector2.
         /// </summary>
         /// <param name="right">The right operand of the dot product.</param>
         /// <returns>A float containing the result of the dot product.</returns>
@@ -109,7 +127,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// Computes the dot product between the curren Vector2 and the given Vector3.
+        /// Computes the dot product between the current Vector2 and the given Vector3.
         /// </summary>
         /// <param name="right">The right operand of the dot product.</param>
         /// <returns>A float containing the result of the dot product.</returns>
@@ -119,7 +137,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// Computes the dot product between the curren Vector2 and the given Vector4.
+        /// Computes the dot product between the current Vector2 and the given Vector4.
         /// </summary>
         /// <param name="right">The right operand of the dot product.</param>
         /// <returns>A float containing the result of the dot product.</returns>
@@ -127,6 +145,10 @@ namespace OpenTK.Math
         {
             return X * right.X + Y * right.Y;
         }
+
+        #endregion
+
+        #region Operator overloads
 
         public static Vector2 operator +(Vector2 left, Vector2 right)
         {
@@ -157,5 +179,13 @@ namespace OpenTK.Math
         {
             return left.Sub(right);
         }
+
+        [CLSCompliant(false)]
+        unsafe public static implicit operator float*(Vector2 v)
+        {
+            return &v.X;
+        }
+
+        #endregion
     }
 }
