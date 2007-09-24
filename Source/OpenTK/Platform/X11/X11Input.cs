@@ -86,10 +86,13 @@ namespace OpenTK.Platform.X11
             window = attach as Platform.WindowInfo ?? attach as X11.WindowInfo;
 
             keyboardDriver = new X11Keyboard(window);
+            mouseDriver = new X11Mouse(window);
             // Todo: mask is now specified by hand, hard to keep in sync.
             API.SelectInput(window.Display, window.Handle, EventMask.StructureNotifyMask |
                 EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
-                EventMask.KeyReleaseMask | EventMask.KeyPressMask);
+                EventMask.KeyReleaseMask | EventMask.KeyPressMask |
+                EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
+                EventMask.ButtonPressMask | EventMask.ButtonReleaseMask);
 
             Debug.Unindent();
         }
