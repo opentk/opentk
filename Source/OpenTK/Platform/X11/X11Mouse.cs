@@ -25,6 +25,15 @@ namespace OpenTK.Platform.X11
         public X11Mouse(WindowInfo window)
         {
             this.window = window;
+
+            // Just create one mouse now.
+            // TODO: support for multiple devices through evdev.
+            Mouse m = new Mouse();
+            m.Description = "Default X11 mouse";
+            m.DeviceID = IntPtr.Zero;
+            m.NumberOfButtons = 5;
+            m.NumberOfWheels = 1;
+            mice.Add(m);
         }
 
         #endregion
@@ -33,14 +42,39 @@ namespace OpenTK.Platform.X11
 
         public IList<Mouse> Mouse
         {
-            get {  }
-        }
-
-        public int RegisterDevices()
-        {
-            throw new Exception("The method or operation is not implemented.");
+            get { return mice; }
         }
 
         #endregion
+
+        /// <summary>
+        /// Processes XButtonEvents.
+        /// </summary>
+        /// <param name="e">The X11.XButtonEvent to process.</param>
+        /// <returns>True if the event was processed, false otherwise.</returns>
+        internal bool ProcessButton(X11.XButtonEvent e)
+        {
+            Mouse m = mice[0];
+            bool pressed = e.type == XEventName.ButtonPress;
+            if ((e.state & (int)X11.MouseMask.Button1Mask) != 0) m[OpenTK.Input.MouseButton.Button1] = pressed;
+            if ((e.state & (int)X11.MouseMask.Button2Mask) != 0) m[OpenTK.Input.MouseButton.Button2] = pressed;
+            if ((e.state & (int)X11.MouseMask.Button3Mask) != 0) m[OpenTK.Input.MouseButton.Button3] = pressed;
+            if ((e.state & (int)X11.MouseMask.Button4Mask) != 0) m[OpenTK.Input.MouseButton.Button4] = pressed;
+            if ((e.state & (int)X11.MouseMask.Button5Mask) != 0) m[OpenTK.Input.MouseButton.Button5] = pressed;
+            return true;
+        }
+
+        /// <summary>
+        /// Processes XMotionEvents.
+        /// </summary>
+        /// <param name="e">The X11.XMotionEvent to process.</param>
+        /// <returns>True if the event was processed, false otherwise.</returns>
+        internal bool ProcessMotion(X11.XMotionEvent e)
+        {
+            Mouse m = mice[0];
+            m.X = e.x;
+            m.Y = e.y;
+            return true;
+        }
     }
 }

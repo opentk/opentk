@@ -1065,4 +1065,35 @@ XF86VidModeGetGammaRampSize(
 
 
     #endregion
+
+    public enum MouseMask
+    {
+        Button1MotionMask = (1 << 8),
+        Button2MotionMask = (1 << 9),
+        Button3MotionMask = (1 << 10),
+        Button4MotionMask = (1 << 11),
+        Button5MotionMask = (1 << 12),
+        Button1Mask = (1 << 8),
+        Button2Mask = (1 << 9),
+        Button3Mask = (1 << 10),
+        Button4Mask = (1 << 11),
+        Button5Mask = (1 << 12),
+        ShiftMask = (1 << 0),
+        LockMask = (1 << 1),
+        ControlMask = (1 << 2),
+        Mod1Mask = (1 << 3),
+        Mod2Mask = (1 << 4),
+        Mod3Mask = (1 << 5),
+        Mod4Mask = (1 << 6),
+        Mod5Mask = (1 << 7),
+    }
+
+    public enum MouseButton
+    {
+        Button1 = 1,
+        Button2 = 2,
+        Button3 = 3,
+        Button4 = 4,
+        Button5 = 5,
+    }
 }
