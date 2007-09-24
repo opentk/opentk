@@ -17,19 +17,18 @@ using System.Diagnostics;
 namespace OpenTK.Platform.X11
 {
     /// <summary>
-    /// Drives the Keyboard devices on X11.
+    /// Drives Keyboard devices on X11.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal class X11Keyboard : IKeyboardDriver
+    internal sealed class X11Keyboard : IKeyboardDriver
     {
         /// <summary>
         /// The window receiving input events.
         /// </summary>
         WindowInfo window;
 
-        private bool[] keys = new bool[(int)OpenTK.Input.Key.MaxKeys];
-        private List<Keyboard> keyboards = new List<Keyboard>();
-        private static Dictionary<XKey, Key> keymap = new Dictionary<XKey, Key>((int)Key.MaxKeys);
+        List<Keyboard> keyboards = new List<Keyboard>();
+        static Dictionary<XKey, Key> keymap = new Dictionary<XKey, Key>((int)Key.MaxKeys);
         /// <summary>
         /// The smallest and largest KeyCode supported by the X server. Queried through API.DisplayKeycodes()
         /// </summary>
@@ -162,6 +161,8 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region Constructor
+
         internal X11Keyboard(WindowInfo window)
         {
             if (window == null)
@@ -192,6 +193,8 @@ namespace OpenTK.Platform.X11
             keyboards.Add(kb);
             Debug.Print("Keyboard added: {0}", kb.ToString());
         }
+
+        #endregion
 
         #region internal bool ProcessKeyboardEvent(X11.KeyEvent e)
 
