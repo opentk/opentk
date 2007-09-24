@@ -11,13 +11,29 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
-    class X11Mouse : IMouseDriver
+    /// <summary>
+    /// Drives Mouse devices on X11.
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
+    /// </summary>
+    internal sealed class X11Mouse : IMouseDriver
     {
+        WindowInfo window;
+        List<Mouse> mice = new List<Mouse>();
+
+        #region Constructor
+
+        public X11Mouse(WindowInfo window)
+        {
+            this.window = window;
+        }
+
+        #endregion
+
         #region --- IMouseDriver Members ---
 
         public IList<Mouse> Mouse
         {
-            get { throw new Exception("The method or operation is not implemented."); }
+            get {  }
         }
 
         public int RegisterDevices()
