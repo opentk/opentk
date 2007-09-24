@@ -187,5 +187,48 @@ namespace OpenTK.Math
         }
 
         #endregion
+
+        /// <summary>
+        /// Returns the length of the vector.
+        /// </summary>
+        public float Length
+        {
+            get
+            {
+                return System.Math.Sqrt(this.LengthSquared);
+            }
+        }
+
+        /// <summary>
+        /// Returns the square of the vector length.
+        /// </summary>
+        public float LengthSquared
+        {
+            get
+            {
+                return X * X + Y * Y;
+            }
+        }
+
+        /// <summary>
+        /// Scales the Vector2 to unit length.
+        /// </summary>
+        /// <returns>The normalized version of the current vector.</returns>
+        public Vector2 Normalize()
+        {
+            float length = this.Length;
+            return new Vector2(X / length, Y / Length);
+        }
+
+        /// <summary>
+        /// Scales the current Vector2 by the given amounts.
+        /// </summary>
+        /// <param name="sx">The scale of the X component.</param>
+        /// <param name="sy">The scale of the Y component.</param>
+        /// <returns>A new, scaled Vector2.</returns>
+        public Vector2 Scale(float sx, float sy)
+        {
+            return new Vector2(X * x, Y * y);
+        }
     }
 }
