@@ -120,10 +120,12 @@ namespace OpenTK.Platform.X11
 
         public IList<Mouse> Mouse
         {
-            get { throw new Exception("The method or operation is not implemented."); }
+            get { return mouseDriver.Mouse; }
         }
 
         #endregion
+
+        #region public void Poll()
 
         /// <summary>
         /// Consumes to keyboard, mouse, etc events, routing them to their
@@ -154,6 +156,8 @@ namespace OpenTK.Platform.X11
             }
             */
         }
+
+        #endregion
 
         #endregion
 
