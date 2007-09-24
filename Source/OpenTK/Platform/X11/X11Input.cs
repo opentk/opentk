@@ -135,6 +135,14 @@ namespace OpenTK.Platform.X11
             {
                 keyboardDriver.ProcessKeyboardEvent(e.KeyEvent);
             }
+            while (API.CheckMaskEvent(window.Display, EventMask.ButtonPressMask | EventMask.ButtonPressMask, ref e))
+            {
+                mouseDriver.ProcessButton(e.ButtonEvent);
+            }
+            while (API.CheckMaskEvent(window.Display, EventMask.PointerMotionMask | EventMask.PointerMotionHintMask, ref e))
+            {
+                mouseDriver.ProcessMotion(e.MotionEvent);
+            }
             /*
             if (API.Pending(window.Display) > 0)
             {
