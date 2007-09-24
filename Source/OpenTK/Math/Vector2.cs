@@ -195,7 +195,7 @@ namespace OpenTK.Math
         {
             get
             {
-                return System.Math.Sqrt(this.LengthSquared);
+                return (float)System.Math.Sqrt(this.LengthSquared);
             }
         }
 
@@ -228,7 +228,7 @@ namespace OpenTK.Math
         /// <returns>A new, scaled Vector2.</returns>
         public Vector2 Scale(float sx, float sy)
         {
-            return new Vector2(X * x, Y * y);
+            return new Vector2(X * sx, Y * sy);
         }
     }
 }
