@@ -37,11 +37,13 @@ namespace Examples.WinForms
             glClass = assembly.GetType("OpenTK.OpenGL.GL");
             delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
+
+            Application.Idle += StartAsync;
         }
 
-        protected override void OnLoad(EventArgs e)
+        void StartAsync(object sender, EventArgs e)
         {
-            base.OnLoad(e);
+            Application.Idle -= StartAsync;
 
             glControl.CreateContext();
 
