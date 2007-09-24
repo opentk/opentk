@@ -31,8 +31,7 @@ namespace OpenTK
             }
             else if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
-                inputDriver = 
-                    new OpenTK.Platform.X11.X11Input(parent);
+                inputDriver = new OpenTK.Platform.X11.X11Input(parent);
             }
             else
             {
