@@ -47,6 +47,7 @@ void main()
         #endregion
 
         static float angle;
+        int vertex_shader_object, fragment_shader_object, shader_program;
 
         #endregion
 
@@ -88,12 +89,10 @@ void main()
             GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, Shapes.Cube.Vertices);
             GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, Shapes.Cube.Colors);
 
-            uint vertex_shader_object, fragment_shader_object;
             int status;
-            uint shader_program;
 
-            vertex_shader_object = (uint)GL.CreateShader(GL.Enums.VERSION_2_0.VERTEX_SHADER);
-            fragment_shader_object = (uint)GL.CreateShader(GL.Enums.VERSION_2_0.FRAGMENT_SHADER);
+            vertex_shader_object = GL.CreateShader(GL.Enums.VERSION_2_0.VERTEX_SHADER);
+            fragment_shader_object = GL.CreateShader(GL.Enums.VERSION_2_0.FRAGMENT_SHADER);
 
             unsafe { GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, (int*)null); }
             GL.CompileShader(vertex_shader_object);
@@ -121,7 +120,7 @@ void main()
                 throw new Exception(info.ToString());
             }
 
-            shader_program = (uint)GL.CreateProgram();
+            shader_program = GL.CreateProgram();
             GL.AttachShader(shader_program, fragment_shader_object);
             GL.AttachShader(shader_program, vertex_shader_object);
 
@@ -226,6 +225,19 @@ void main()
         {
             // Lock UpdateFrame and RenderFrame at 60Hz.
             Run(60.0, 60.0);
+        }
+
+        #endregion
+
+        #region public override void Dispose()
+
+        public override void Dispose()
+        {
+            GL.DeleteProgram(shader_program);
+            GL.DeleteShader(fragment_shader_object);
+            GL.DeleteShader(vertex_shader_object);
+
+            base.Dispose();
         }
 
         #endregion

@@ -73,11 +73,19 @@ namespace Examples.Tutorial
 
         #endregion
 
+        public override void OnUpdateFrame(UpdateFrameEventArgs e)
+        {
+            base.OnUpdateFrame(e);
+
+            if (Keyboard[0][OpenTK.Input.Key.Escape])
+                this.Exit();
+        }
+
         #region IExample Members
 
         public void Launch()
         {
-            this.Run(1.0, 5.0);
+            this.Run(30.0, 5.0);
         }
 
         #endregion
