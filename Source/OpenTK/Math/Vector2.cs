@@ -44,7 +44,39 @@ namespace OpenTK.Math
             Y = y;
         }
 
+        /// <summary>
+        /// Constructs a new Vector2 from the given Vector2.
+        /// </summary>
+        /// <param name="v">The Vector2 to copy components from.</param>
+        public Vector2(Vector2 v)
+        {
+            X = v.X;
+            Y = v.Y;
+        }
+
+        /// <summary>
+        /// Constructs a new Vector2 from the given Vector3.
+        /// </summary>
+        /// <param name="v">The Vector3 to copy components from. Z is discarded.</param>
+        public Vector2(Vector3 v)
+        {
+            X = v.X;
+            Y = v.Y;
+        }
+
+        /// <summary>
+        /// Constructs a new Vector2 from the given Vector4.
+        /// </summary>
+        /// <param name="v">The Vector4 to copy components from. Z and W are discarded.</param>
+        public Vector2(Vector4 v)
+        {
+            X = v.X;
+            Y = v.Y;
+        }
+
         #endregion
+
+        #region Functions
 
         #region Add
 
@@ -148,6 +180,67 @@ namespace OpenTK.Math
 
         #endregion
 
+        #region public float Length
+
+        /// <summary>
+        /// Gets the length of the vector.
+        /// </summary>
+        public float Length
+        {
+            get
+            {
+                return (float)System.Math.Sqrt(this.LengthSquared);
+            }
+        }
+
+        #endregion
+
+        #region public float LengthSquared
+
+        /// <summary>
+        /// Gets the square of the vector length.
+        /// </summary>
+        public float LengthSquared
+        {
+            get
+            {
+                return X * X + Y * Y;
+            }
+        }
+
+        #endregion
+
+        #region public Vector2 Normalize()
+
+        /// <summary>
+        /// Scales the Vector2 to unit length.
+        /// </summary>
+        /// <returns>The normalized version of the current vector.</returns>
+        public Vector2 Normalize()
+        {
+            float length = this.Length;
+            return new Vector2(X / length, Y / Length);
+        }
+
+        #endregion
+
+        #region public Vector2 Scale(float sx, float sy)
+
+        /// <summary>
+        /// Scales the current Vector2 by the given amounts.
+        /// </summary>
+        /// <param name="sx">The scale of the X component.</param>
+        /// <param name="sy">The scale of the Y component.</param>
+        /// <returns>A new, scaled Vector2.</returns>
+        public Vector2 Scale(float sx, float sy)
+        {
+            return new Vector2(X * sx, Y * sy);
+        }
+
+        #endregion
+
+        #endregion
+
         #region Operator overloads
 
         public static Vector2 operator +(Vector2 left, Vector2 right)
@@ -187,48 +280,5 @@ namespace OpenTK.Math
         }
 
         #endregion
-
-        /// <summary>
-        /// Returns the length of the vector.
-        /// </summary>
-        public float Length
-        {
-            get
-            {
-                return (float)System.Math.Sqrt(this.LengthSquared);
-            }
-        }
-
-        /// <summary>
-        /// Returns the square of the vector length.
-        /// </summary>
-        public float LengthSquared
-        {
-            get
-            {
-                return X * X + Y * Y;
-            }
-        }
-
-        /// <summary>
-        /// Scales the Vector2 to unit length.
-        /// </summary>
-        /// <returns>The normalized version of the current vector.</returns>
-        public Vector2 Normalize()
-        {
-            float length = this.Length;
-            return new Vector2(X / length, Y / Length);
-        }
-
-        /// <summary>
-        /// Scales the current Vector2 by the given amounts.
-        /// </summary>
-        /// <param name="sx">The scale of the X component.</param>
-        /// <param name="sy">The scale of the Y component.</param>
-        /// <returns>A new, scaled Vector2.</returns>
-        public Vector2 Scale(float sx, float sy)
-        {
-            return new Vector2(X * sx, Y * sy);
-        }
     }
 }
