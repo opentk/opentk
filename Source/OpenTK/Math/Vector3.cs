@@ -86,10 +86,12 @@ namespace OpenTK.Math
 
         #endregion
 
+        #region Functions
+
         #region Add
 
         /// <summary>
-        /// Adds the given Vector2 to the current Vector3. Z-coordinate remains unaffected.
+        /// Adds the given Vector2 to the current Vector3.
         /// </summary>
         /// <param name="right">The right operand of the addition.</param>
         /// <returns>A new Vector3 containing the result of the addition.</returns>
@@ -123,7 +125,7 @@ namespace OpenTK.Math
         #region Sub
 
         /// <summary>
-        /// Subtracts the given Vector2 from the current Vector3. Z component remains unaffected.
+        /// Subtracts the given Vector2 from the current Vector3.
         /// </summary>
         /// <param name="right">The right operand of the subtraction.</param>
         /// <returns>A new Vector3 containing the result of the subtraction.</returns>
@@ -202,6 +204,68 @@ namespace OpenTK.Math
                 Z * right.X - X * right.Z,
                 X * right.Y - Y * right.X);
         }
+
+        #endregion
+
+        #region public float Length
+
+        /// <summary>
+        /// Gets the length of the vector.
+        /// </summary>
+        public float Length
+        {
+            get
+            {
+                return (float)System.Math.Sqrt(this.LengthSquared);
+            }
+        }
+
+        #endregion
+
+        #region public float LengthSquared
+
+        /// <summary>
+        /// Gets the square of the vector length.
+        /// </summary>
+        public float LengthSquared
+        {
+            get
+            {
+                return X * X + Y * Y + Z * Z;
+            }
+        }
+
+        #endregion
+
+        #region public Vector3 Normalize()
+
+        /// <summary>
+        /// Scales the Vector3 to unit length.
+        /// </summary>
+        /// <returns>The normalized version of the current vector.</returns>
+        public Vector3 Normalize()
+        {
+            float length = this.Length;
+            return new Vector3(X / length, Y / Length, Z / length);
+        }
+
+        #endregion
+
+        #region public Vector3 Scale(float sx, float sy, float sz)
+
+        /// <summary>
+        /// Scales the current Vector3 by the given amounts.
+        /// </summary>
+        /// <param name="sx">The scale of the X component.</param>
+        /// <param name="sy">The scale of the Y component.</param>
+        /// <param name="sz">The scale of the Z component.</param>
+        /// <returns>A new, scaled Vector3.</returns>
+        public Vector3 Scale(float sx, float sy, float sz)
+        {
+            return new Vector3(X * sx, Y * sy, Z * sz);
+        }
+
+        #endregion
 
         #endregion
 
