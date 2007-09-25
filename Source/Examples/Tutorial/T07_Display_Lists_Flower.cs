@@ -161,7 +161,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public void Launch()
         {
-            this.Run(1.0, 5.0);
+            this.Run(30.0, 5.0);
         }
 
         #endregion

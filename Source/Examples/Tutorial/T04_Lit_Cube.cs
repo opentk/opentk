@@ -7,16 +7,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 using OpenTK;
 using OpenTK.OpenGL;
-using System.Drawing;
+using Examples.Shapes;
 
 namespace Examples.Tutorial
 {
     class T04_Lit_Cube : GameWindow, IExample
     {
-        float angle;
+        float x_angle, zoom;
+        Shape shape = new Plane(16, 16, 4.0f, 4.0f);
 
         #region Constructor
 
@@ -35,16 +37,16 @@ namespace Examples.Tutorial
 
             GL.ClearColor(Color.MidnightBlue);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(GL.Enums.EnableCap.CULL_FACE);
             
             GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
             GL.EnableClientState(GL.Enums.EnableCap.NORMAL_ARRAY);
-            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, Shapes.Cube.Vertices);
-            GL.NormalPointer(GL.Enums.NormalPointerType.FLOAT, 0, Shapes.Cube.Normals);
-            //GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, Shapes.Cube.Colors);
+            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, shape.Vertices);
+            GL.NormalPointer(GL.Enums.NormalPointerType.FLOAT, 0, shape.Normals);
 
             // Enable Light 0 and set its parameters.
-            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.POSITION, new float[] { 1.0f, 1.0f, 0.0f });
-            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.AMBIENT, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
+            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.POSITION, new float[] { 1.0f, 1.0f, -0.5f });
+            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.AMBIENT, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
             GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.DIFFUSE, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.SPECULAR, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.LightModelv(GL.Enums.LightModelParameter.LIGHT_MODEL_AMBIENT, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
@@ -52,8 +54,8 @@ namespace Examples.Tutorial
             GL.Enable(GL.Enums.EnableCap.LIGHT0);
 
             // Use GL.Material to set your object's material parameters..
-            GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.AMBIENT, new float[] { 0.3f, 0.3f, 0.9f, 1.0f });
-            GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.DIFFUSE, new float[] { 0.3f, 0.3f, 0.9f, 1.0f });
+            GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.AMBIENT, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
+            GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.DIFFUSE, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.SPECULAR, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.EMISSION, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
         }
@@ -107,10 +109,18 @@ namespace Examples.Tutorial
                 Fullscreen = !Fullscreen;
             }
 
-            //angle += 180.0f * (float)e.Time;
-            angle += 3.0f;
-            if (angle > 720.0f)
-                angle -= 720.0f;
+            if (Mouse[0][OpenTK.Input.MouseButton.Left])
+                x_angle += Mouse[0].XDelta * 2;
+            else
+                x_angle += 0.5f;
+
+            if (Mouse[0][OpenTK.Input.MouseButton.Right])
+                zoom += Mouse[0].YDelta * 0.5f;
+
+            if (x_angle > 720.0f)
+                x_angle -= 720.0f;
+            else if (x_angle < -720.0f)
+                x_angle += 720.0f;
         }
 
         #endregion
@@ -127,14 +137,20 @@ namespace Examples.Tutorial
             GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
             Glu.LookAt(
-                0.0, 5.0, 5.0,
+                0.0, 0.0, -7.5 + zoom,
                 0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
-            GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
+                0.0, 1.0, 0.0);
+            GL.Rotate(x_angle, 0.0f, 1.0f, 0.0f);
 
-            GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, Shapes.Cube.Indices.Length,
-                GL.Enums.All.UNSIGNED_SHORT, Shapes.Cube.Indices);
+            unsafe
+            {
+                fixed (int* ptr = shape.Indices)
+                {
+                    GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, shape.Indices.Length,
+                        GL.Enums.All.UNSIGNED_INT, ptr);
+                }
+            }
+            GL.DrawArrays(GL.Enums.BeginMode.POINTS, 0, shape.Vertices.Length);
 
             Context.SwapBuffers();
         }
