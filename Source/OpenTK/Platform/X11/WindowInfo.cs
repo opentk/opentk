@@ -20,9 +20,10 @@ namespace OpenTK.Platform.X11
         private IntPtr handle, topLevelWindow;
         private IntPtr rootWindow, display;
         private int screen;
-        private WindowInfo parent;
+        private X11.WindowInfo parent;
         private XVisualInfo visinfo;
         private static Type xplatui;
+        private EventMask eventMask;
 
         public WindowInfo()
         {
@@ -90,7 +91,7 @@ namespace OpenTK.Platform.X11
             if (window == null)
                 throw new ArgumentException("GameWindow cannot be null.");
 
-            return this.GetInfoFrom(window.WindowInfo as X11.WindowInfo);
+            return this.GetInfoFrom(window.WindowInfo);
         }
 
         public IWindowInfo GetInfoFrom(IWindowInfo info)
@@ -107,25 +108,31 @@ namespace OpenTK.Platform.X11
 
         public void CopyInfoFrom(IWindowInfo info)
         {
+            if (info == null)
+                throw new ArgumentException("IWindowInfo info cannot be null.");
             this.Handle = info.Handle;
             this.Parent = info.Parent;
 
-            WindowInfo winfo = info as WindowInfo;
+            X11.WindowInfo winfo = info as X11.WindowInfo ?? (X11.WindowInfo)(info as Platform.WindowInfo);
 
             this.RootWindow = winfo.RootWindow;
             this.TopLevelWindow = winfo.TopLevelWindow;
             this.Display = winfo.Display;
             this.Screen = winfo.Screen;
             this.VisualInfo = winfo.VisualInfo;
+            this.EventMask = winfo.EventMask;
         }
 
         #endregion
 
         public IntPtr RootWindow { get { return rootWindow; } internal set { rootWindow = value; } }
         public IntPtr TopLevelWindow { get { return topLevelWindow; } internal set { topLevelWindow = value; } }
+        public IntPtr ParentHandle { get { return parent.Handle; } internal set { parent.Handle = value; } }
         public IntPtr Display { get { return display; } internal set { display = value; } }
         public int Screen { get { return screen; } internal set { screen = value; } }
         public XVisualInfo VisualInfo { get { return visinfo; } internal set { visinfo = value; } }
+        public EventMask EventMask { get { return eventMask; } internal set { eventMask = value; } }
+        
 
         public override string ToString()
         {
@@ -145,6 +152,7 @@ namespace OpenTK.Platform.X11
                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
             this.Screen = (int)xplatui.GetField("ScreenNo",
                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+
         }
     }
 }

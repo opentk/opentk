@@ -10,6 +10,7 @@ using System.Text;
 
 using OpenTK.Input;
 using System.Diagnostics;
+using System.Threading;
 
 namespace OpenTK.Platform.X11
 {
@@ -19,11 +20,15 @@ namespace OpenTK.Platform.X11
     /// </summary>
     internal sealed class X11Input : IInputDriver
     {
-        private X11Keyboard keyboardDriver;
-        private X11Mouse mouseDriver;
-        private X11.WindowInfo window;
+        X11Keyboard keyboardDriver;
+        X11Mouse mouseDriver;
+        X11.WindowInfo window;
 
         XEvent e = new XEvent();
+
+        Thread pollingThread;
+
+        bool disposed, disposing;
 
         #region --- Constructors ---
 
@@ -33,7 +38,7 @@ namespace OpenTK.Platform.X11
         /// the device specific drivers (Keyboard, Mouse, Hid).
         /// </summary>
         /// <param name="attach">The window which the InputDriver will attach itself on.</param>
-        public X11Input(IWindowInfo attach)
+        public X11Input(X11.WindowInfo attach)
         {
             Debug.WriteLine("Initalizing X11 input driver.");
             Debug.Indent();
@@ -42,62 +47,93 @@ namespace OpenTK.Platform.X11
             {
                 throw new ArgumentException("A valid parent window must be defined, in order to create an X11Input driver.");
             }
+
+            window = new X11.WindowInfo(attach);
+            window.Parent = attach;
             /*
-            Debug.WriteLine("Creating hidden input window.");
+            Debug.Print("Creating hidden input window.");
 
-            SetWindowAttributes wnd_attributes = new SetWindowAttributes();
-            wnd_attributes.background_pixel = 0;
-            wnd_attributes.border_pixel = 0;
-            wnd_attributes.colormap = IntPtr.Zero;
-            wnd_attributes.event_mask = EventMask.KeyPressMask | EventMask.KeyReleaseMask |
-                EventMask.FocusChangeMask;
+            XSetWindowAttributes wnd_attr = new XSetWindowAttributes();
+            wnd_attr.background_pixel = IntPtr.Zero;
+            wnd_attr.border_pixel = IntPtr.Zero;
+            //wnd_attr.colormap = IntPtr.Zero;
+            wnd_attr.event_mask = (IntPtr)
+                (EventMask.StructureNotifyMask |
+                EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
+                EventMask.ButtonPressMask | EventMask.ButtonReleaseMask |
+                EventMask.KeyPressMask | EventMask.KeyReleaseMask);
+            uint cw = 
+                (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
+                (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
 
-            CreateWindowMask cw_mask =
-                CreateWindowMask.CWEventMask;
-
-            window = new WindowInfo(parent);
-
-            window.Handle = API.CreateWindow(
-                window.Display,
-                window.Parent.Handle,
-                0, 0,
-                1, 1,
-                0, 0,
-                Constants.InputOnly,
-                //window.VisualInfo.visual,
-                (IntPtr)0,
-                cw_mask,
-                wnd_attributes
-            );
-
+            window.Handle = Functions.XCreateWindow(window.Display, window.Parent.Handle,
+                0, 0, 30, 30, 0, Constants.CopyFromParent, Constants.InputOutput,
+                IntPtr.Zero, (UIntPtr)cw, ref wnd_attr);
+            
             if (window.Handle == IntPtr.Zero)
-            {
-                throw new Exception("Could not create input window.");
-            }
+                throw new ApplicationException("Could not create hidden input window.");
 
-            API.MapWindow(window.Display, window.Handle);
-            API.GrabKeyboard(window.Display, window.Handle, false, GrabMode.GrabModeAsync, GrabMode.GrabModeAsync, 0);
-
-            Debug.WriteLine("done! (id: " + window + ")");
-             
-            keyboardDriver = new X11Keyboard(window);
+            Functions.XMapWindow(window.Display, window.Handle);
             */
-
-            window = attach as Platform.WindowInfo ?? attach as X11.WindowInfo;
-
+            window = attach;
             keyboardDriver = new X11Keyboard(window);
             mouseDriver = new X11Mouse(window);
-            // Todo: mask is now specified by hand, hard to keep in sync.
-            API.SelectInput(window.Display, window.Handle, EventMask.StructureNotifyMask |
-                EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
-                EventMask.KeyReleaseMask | EventMask.KeyPressMask |
-                EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
-                EventMask.ButtonPressMask | EventMask.ButtonReleaseMask);
 
+            Thread pollingThread = new Thread(InternalPoll);
+            //pollingThread.Priority = ThreadPriority.BelowNormal;
+            pollingThread.IsBackground = true;
+            pollingThread.Start();
+            
             Debug.Unindent();
         }
 
         #endregion
+
+        private void InternalPoll()
+        {
+            try
+            {
+                while (!disposed)
+                {
+                    Functions.XMaskEvent(window.Display,
+                        EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
+                        EventMask.ButtonPressMask | EventMask.ButtonReleaseMask |
+                        EventMask.KeyPressMask | EventMask.KeyReleaseMask |
+                        EventMask.StructureNotifyMask, ref e);
+
+                    if (disposed || disposing)
+                        return;
+
+                    switch (e.type)
+                    {
+                        case XEventName.KeyPress:
+                        case XEventName.KeyRelease:
+                            keyboardDriver.ProcessKeyboardEvent(ref e.KeyEvent);
+                            break;
+
+                        case XEventName.ButtonPress:
+                        case XEventName.ButtonRelease:
+                            mouseDriver.ProcessButton(ref e.ButtonEvent);
+                            break;
+
+                        case XEventName.MotionNotify:
+                            mouseDriver.ProcessMotion(ref e.MotionEvent);
+                            break;
+
+                        case XEventName.DestroyNotify:
+                            Functions.XPutBackEvent(window.Display, ref e);
+                            //pollingThread.Abort();
+                            return;
+                    }
+                }
+            }
+            catch (ThreadAbortException expt)
+            {
+                Functions.XUnmapWindow(window.Display, window.Handle);
+                Functions.XDestroyWindow(window.Display, window.Handle);
+                return;
+            }
+        }
 
         #region --- IInputDriver Members ---
 
@@ -136,28 +172,6 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public void Poll()
         {
-            while (API.CheckMaskEvent(window.Display, EventMask.KeyReleaseMask | EventMask.KeyPressMask, ref e))
-            {
-                keyboardDriver.ProcessKeyboardEvent(e.KeyEvent);
-            }
-            while (API.CheckMaskEvent(window.Display, EventMask.ButtonPressMask | EventMask.ButtonPressMask, ref e))
-            {
-                mouseDriver.ProcessButton(e.ButtonEvent);
-            }
-            while (API.CheckMaskEvent(window.Display, EventMask.PointerMotionMask | EventMask.PointerMotionHintMask, ref e))
-            {
-                mouseDriver.ProcessMotion(e.MotionEvent);
-            }
-            /*
-            if (API.Pending(window.Display) > 0)
-            {
-                Functions.XPeekEvent(window.Display, ref e);
-                if (e.type == XEventName.KeyRelease || e.type == XEventName.KeyPress)
-                {
-                    keyboardDriver.ProcessKeyboardEvent(e.KeyEvent);
-                }
-            }
-            */
         }
 
         #endregion
@@ -168,7 +182,29 @@ namespace OpenTK.Platform.X11
 
         public void Dispose()
         {
-            throw new Exception("The method or operation is not implemented.");
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                disposing = true;
+                if (pollingThread != null && pollingThread.IsAlive)
+                    pollingThread.Abort();
+
+                if (manual)
+                {
+                }
+
+                disposed = true;
+            }
+        }
+
+        ~X11Input()
+        {
+            this.Dispose(false);
         }
 
         #endregion

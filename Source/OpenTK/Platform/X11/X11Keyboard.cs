@@ -203,7 +203,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         /// <param name="e">The X11.KeyEvent to process</param>
         /// <returns>True if the event was processed, false otherwise.</returns>
-        internal bool ProcessKeyboardEvent(X11.XKeyEvent e)
+        internal bool ProcessKeyboardEvent(ref X11.XKeyEvent e)
         {
             //int keysym = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
             //int keysym2 = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
@@ -212,7 +212,7 @@ namespace OpenTK.Platform.X11
             IntPtr keysym = API.LookupKeysym(ref e, 0);
             IntPtr keysym2 = API.LookupKeysym(ref e, 1);
 
-            Debug.Print("Key down: {0}", e.ToString());
+            //Debug.Print("Key down: {0}", e.ToString());
 
             int index = keyboards.FindIndex(delegate(Keyboard kb)
             {
@@ -232,7 +232,7 @@ namespace OpenTK.Platform.X11
                 }
                 else
                 {
-                    Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
+                    //Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
                     return false;
                 }
                 return true;
@@ -249,5 +249,29 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        public void Poll()
+        {
+            //Keymap map = new Keymap();
+            //X11.Functions.XQueryKeymap(window.Display, map);
+            /*
+            byte[] bits = new byte[32];
+            X11.Functions.XQueryKeymap(window.Display, bits);
+
+            XKeyEvent e = new XKeyEvent();
+            e.display = window.Display;
+            e.window = window.Handle;
+            e.root = window.RootWindow;
+
+            for (int i = 0; i < 256; i++)
+            {
+                e.keycode = i;
+                ProcessKeyboardEvent(e);
+
+                //if (keymap.ContainsKey((XKey)i))
+                //    keyboards[0][keymap[(XKey)i]] = ((bits[i / 8] >> (i % 8)) & 0x01) != 0;
+            }
+            */
+        }
     }
 }

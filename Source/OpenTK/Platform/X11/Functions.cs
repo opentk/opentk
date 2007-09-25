@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.X11
 {
-    public class Functions
+    public static partial class Functions
     {
         [DllImport("libX11", EntryPoint = "XOpenDisplay")]
         public extern static IntPtr XOpenDisplay(IntPtr display);
@@ -14,8 +14,8 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XSynchronize")]
         public extern static IntPtr XSynchronize(IntPtr display, bool onoff);
 
-        [DllImport("libX11", EntryPoint = "XCreateWindow"), CLSCompliant(false)]
-        public extern static IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, int depth, int xclass, IntPtr visual, UIntPtr valuemask, ref XSetWindowAttributes attributes);
+        //[DllImport("libX11", EntryPoint = "XCreateWindow"), CLSCompliant(false)]
+        //public extern static IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, int depth, int xclass, IntPtr visual, UIntPtr valuemask, ref XSetWindowAttributes attributes);
         [DllImport("libX11", EntryPoint = "XCreateWindow")]
         public extern static IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, int depth, int xclass, IntPtr visual, IntPtr valuemask, ref XSetWindowAttributes attributes);
 
