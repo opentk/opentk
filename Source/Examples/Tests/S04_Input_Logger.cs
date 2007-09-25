@@ -20,7 +20,7 @@ using System.Threading;
 
 namespace Examples.Tests
 {
-    public partial class S04_Input_Logger : Form, IExample
+    public partial class S04_Input_Logger : Form//, IExample
     {
         InputDriver driver;
         Dictionary<IntPtr, ListBox> keyboardListBoxes = new Dictionary<IntPtr, ListBox>(4);
