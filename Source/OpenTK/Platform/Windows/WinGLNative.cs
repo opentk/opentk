@@ -215,7 +215,7 @@ namespace OpenTK.Platform.Windows
         public IWindowInfo WindowInfo
         {
             get { return window; }
-            private set { window = value as WindowInfo; }
+            //private set { window = value as WindowInfo; }
         }
 
         #endregion
@@ -288,7 +288,7 @@ namespace OpenTK.Platform.Windows
 
         public void OnCreate(EventArgs e)
         {
-            this.WindowInfo = new WindowInfo(this);
+            this.window = new WindowInfo(this);
 
             Debug.Print("Window created: {0}", window);
 

@@ -137,12 +137,12 @@ namespace OpenTK.Platform
             implementation.CopyInfoFrom(info);
         }
 
-        public static implicit operator Windows.WindowInfo (WindowInfo info)
+        public static explicit operator Windows.WindowInfo(WindowInfo info)
         {
             return (Windows.WindowInfo)info.implementation;
         }
 
-        public static implicit operator X11.WindowInfo (WindowInfo info)
+        public static explicit operator X11.WindowInfo(WindowInfo info)
         {
             return (X11.WindowInfo)info.implementation;
         }

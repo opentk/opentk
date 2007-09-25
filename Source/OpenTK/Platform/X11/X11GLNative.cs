@@ -131,6 +131,10 @@ namespace OpenTK.Platform.X11
 
                     case XEventName.KeyPress:
                     case XEventName.KeyRelease:
+                    case XEventName.MotionNotify:
+                    case XEventName.ButtonPress:
+                    case XEventName.ButtonRelease:
+                        Functions.XPutBackEvent(window.Display, ref e);
                         return;
 
                     default:
@@ -267,8 +271,12 @@ namespace OpenTK.Platform.X11
                 attributes.border_pixel = IntPtr.Zero;
                 attributes.colormap =
                     API.CreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
-                attributes.event_mask =
-                    (IntPtr)(EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask);
+                window.EventMask = 
+                    EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
+                    EventMask.KeyReleaseMask | EventMask.KeyPressMask |
+                    EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
+                    EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
+                attributes.event_mask = (IntPtr)window.EventMask;
 
                 uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
                     (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;

@@ -59,6 +59,7 @@ namespace OpenTK.Platform.X11
         [DllImport(_dll_name, EntryPoint = "XRootWindow")]
         public static extern Window RootWindow(Display display, int screen);
 
+        [Obsolete("Use XCreateWindow instead")]
         [DllImport(_dll_name, EntryPoint = "XCreateWindow")]
         public extern static Window CreateWindow(
             Display display,
@@ -555,7 +556,7 @@ XF86VidModeGetGammaRampSize(
 
     #region public class SetWindowAttributes
 
-    [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential), Obsolete("Use XSetWindowAttributes instead")]
     public class SetWindowAttributes
     {
         /// <summary>
@@ -1063,8 +1064,7 @@ XF86VidModeGetGammaRampSize(
         VisualAllMask = 0x1FF,
     }
 
-
-    #endregion
+    #region public enum MouseMask
 
     public enum MouseMask
     {
@@ -1088,6 +1088,10 @@ XF86VidModeGetGammaRampSize(
         Mod5Mask = (1 << 7),
     }
 
+    #endregion
+
+    #region public enum MouseButton
+
     public enum MouseButton
     {
         Button1 = 1,
@@ -1095,5 +1099,112 @@ XF86VidModeGetGammaRampSize(
         Button3 = 3,
         Button4 = 4,
         Button5 = 5,
+    }
+
+    #endregion
+
+    #endregion
+
+    public static partial class Functions
+    {
+        #region XCreateWindow
+
+        /// <summary>
+        /// The XCreateWindow function creates an unmapped subwindow for a specified parent window, returns the window ID of the created window, and causes the X server to generate a CreateNotify event. The created window is placed on top in the stacking order with respect to siblings.
+        /// </summary>
+        /// <param name="display">Specifies the connection to the X server.</param>
+        /// <param name="parent">Specifies the parent window.</param>
+        /// <param name="x">Specify the x coordinates, which are the top-left outside corner of the window's borders and are relative to the inside of the parent window's borders.</param>
+        /// <param name="y">Specify the y coordinates, which are the top-left outside corner of the window's borders and are relative to the inside of the parent window's borders.</param>
+        /// <param name="width">Specify the width, which is the created window's inside dimensions and do not include the created window's borders.</param>
+        /// <param name="height">Specify the height, which is the created window's inside dimensions and do not include the created window's borders.</param>
+        /// <param name="border_width">Specifies the width of the created window's border in pixels.</param>
+        /// <param name="depth">Specifies the window's depth. A depth of CopyFromParent means the depth is taken from the parent.</param>
+        /// <param name="class">Specifies the created window's class. You can pass InputOutput, InputOnly, or CopyFromParent. A class of CopyFromParent means the class is taken from the parent.</param>
+        /// <param name="visual">Specifies the visual type. A visual of CopyFromParent means the visual type is taken from the parent.</param>
+        /// <param name="valuemask">Specifies which window attributes are defined in the attributes argument. This mask is the bitwise inclusive OR of the valid attribute mask bits. If valuemask is zero, the attributes are ignored and are not referenced.</param>
+        /// <param name="attributes">Specifies the structure from which the values (as specified by the value mask) are to be taken. The value mask should have the appropriate bits set to indicate which attributes have been set in the structure.</param>
+        /// <returns>The window ID of the created window.</returns>
+        /// <remarks>
+        /// The coordinate system has the X axis horizontal and the Y axis vertical with the origin [0, 0] at the upper-left corner. Coordinates are integral, in terms of pixels, and coincide with pixel centers. Each window and pixmap has its own coordinate system. For a window, the origin is inside the border at the inside, upper-left corner. 
+        /// <para>The border_width for an InputOnly window must be zero, or a BadMatch error results. For class InputOutput, the visual type and depth must be a combination supported for the screen, or a BadMatch error results. The depth need not be the same as the parent, but the parent must not be a window of class InputOnly, or a BadMatch error results. For an InputOnly window, the depth must be zero, and the visual must be one supported by the screen. If either condition is not met, a BadMatch error results. The parent window, however, may have any depth and class. If you specify any invalid window attribute for a window, a BadMatch error results. </para>
+        /// <para>The created window is not yet displayed (mapped) on the user's display. To display the window, call XMapWindow(). The new window initially uses the same cursor as its parent. A new cursor can be defined for the new window by calling XDefineCursor(). The window will not be visible on the screen unless it and all of its ancestors are mapped and it is not obscured by any of its ancestors. </para>
+        /// <para>XCreateWindow can generate BadAlloc BadColor, BadCursor, BadMatch, BadPixmap, BadValue, and BadWindow errors. </para>
+        /// <para>The XCreateSimpleWindow function creates an unmapped InputOutput subwindow for a specified parent window, returns the window ID of the created window, and causes the X server to generate a CreateNotify event. The created window is placed on top in the stacking order with respect to siblings. Any part of the window that extends outside its parent window is clipped. The border_width for an InputOnly window must be zero, or a BadMatch error results. XCreateSimpleWindow inherits its depth, class, and visual from its parent. All other window attributes, except background and border, have their default values. </para>
+        /// <para>XCreateSimpleWindow can generate BadAlloc, BadMatch, BadValue, and BadWindow errors.</para>
+        /// </remarks>
+        [DllImport("libX11", EntryPoint = "XCreateWindow"), CLSCompliant(false)]
+        public extern static Window XCreateWindow(Display display, Window parent,
+            int x, int y, int width, int height, int border_width, int depth,
+            int @class, IntPtr visual, UIntPtr valuemask, ref XSetWindowAttributes attributes);
+
+        #endregion
+
+        #region XQueryKeymap
+
+        /// <summary>
+        /// The XQueryKeymap() function returns a bit vector for the logical state of the keyboard, where each bit set to 1 indicates that the corresponding key is currently pressed down. The vector is represented as 32 bytes. Byte N (from 0) contains the bits for keys 8N to 8N + 7 with the least-significant bit in the byte representing key 8N.
+        /// </summary>
+        /// <param name="display">Specifies the connection to the X server.</param>
+        /// <param name="keys">Returns an array of bytes that identifies which keys are pressed down. Each bit represents one key of the keyboard.</param>
+        /// <remarks>Note that the logical state of a device (as seen by client applications) may lag the physical state if device event processing is frozen.</remarks>
+        [DllImport("libX11", EntryPoint = "XQueryKeymap")]
+        extern public static void XQueryKeymap(IntPtr display, [MarshalAs(UnmanagedType.LPArray, SizeConst = 32), In, Out] Keymap keys);
+
+        /// <summary>
+        /// The XQueryKeymap() function returns a bit vector for the logical state of the keyboard, where each bit set to 1 indicates that the corresponding key is currently pressed down. The vector is represented as 32 bytes. Byte N (from 0) contains the bits for keys 8N to 8N + 7 with the least-significant bit in the byte representing key 8N.
+        /// </summary>
+        /// <param name="display">Specifies the connection to the X server.</param>
+        /// <param name="keys">Returns an array of bytes that identifies which keys are pressed down. Each bit represents one key of the keyboard.</param>
+        /// <remarks>Note that the logical state of a device (as seen by client applications) may lag the physical state if device event processing is frozen.</remarks>
+        [DllImport("libX11", EntryPoint = "XQueryKeymap")]
+        extern public static void XQueryKeymap(IntPtr display, byte[] keys);
+
+        #endregion
+
+        #region XMaskEvent
+
+        /// <summary>
+        /// The XMaskEvent() function searches the event queue for the events associated with the specified mask. When it finds a match, XMaskEvent() removes that event and copies it into the specified XEvent structure. The other events stored in the queue are not discarded. If the event you requested is not in the queue, XMaskEvent() flushes the output buffer and blocks until one is received.
+        /// </summary>
+        /// <param name="display">Specifies the connection to the X server.</param>
+        /// <param name="event_mask">Specifies the event mask.</param>
+        /// <param name="e">Returns the matched event's associated structure.</param>
+        [DllImport("libX11", EntryPoint = "XMaskEvent")]
+        extern public static void XMaskEvent(IntPtr display, EventMask event_mask, ref XEvent e);
+
+        #endregion
+
+        #region XPutBackEvent
+
+        /// <summary>
+        /// The XPutBackEvent() function pushes an event back onto the head of the display's event queue by copying the event into the queue. This can be useful if you read an event and then decide that you would rather deal with it later. There is no limit to the number of times in succession that you can call XPutBackEvent().
+        /// </summary>
+        /// <param name="display">Specifies the connection to the X server.</param>
+        /// <param name="event">Specifies the event.</param>
+        [DllImport("libX11", EntryPoint = "XPutBackEvent")]
+        public static extern void XPutBackEvent(IntPtr display, ref XEvent @event);
+        
+        #endregion
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Keymap
+    {
+        unsafe fixed byte bits[32];
+
+        public bool this[KeyCode key]
+        {
+            get
+            {
+                unsafe
+                {
+                    fixed (Keymap* ptr = &this)
+                    {
+                        return ((ptr->bits[key / 8] >> (key % 8)) & 0x01) != 0;
+                    }
+                }
+            }
+        }
     }
 }
