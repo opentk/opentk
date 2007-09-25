@@ -52,7 +52,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         /// <param name="e">The X11.XButtonEvent to process.</param>
         /// <returns>True if the event was processed, false otherwise.</returns>
-        internal bool ProcessButton(X11.XButtonEvent e)
+        internal bool ProcessButton(ref X11.XButtonEvent e)
         {
             Mouse m = mice[0];
             bool pressed = e.type == XEventName.ButtonPress;
@@ -69,7 +69,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         /// <param name="e">The X11.XMotionEvent to process.</param>
         /// <returns>True if the event was processed, false otherwise.</returns>
-        internal bool ProcessMotion(X11.XMotionEvent e)
+        internal bool ProcessMotion(ref X11.XMotionEvent e)
         {
             Mouse m = mice[0];
             m.X = e.x;

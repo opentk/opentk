@@ -680,9 +680,13 @@ namespace OpenTK
 
         #region --- IDisposable Members ---
 
-        public void Dispose()
+        /// <summary>
+        /// Disposes of the GameWindow, releasing all resources consumed by it.
+        /// </summary>
+        public virtual void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool manual)
@@ -708,6 +712,11 @@ namespace OpenTK
                 }
                 disposed = true;
             }
+        }
+
+        ~GameWindow()
+        {
+            this.Dispose(false);
         }
 
         #endregion
