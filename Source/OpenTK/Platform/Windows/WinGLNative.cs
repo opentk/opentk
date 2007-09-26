@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Diagnostics;
 using OpenTK.OpenGL;
+using OpenTK.Input;
 
 #endregion
 
@@ -28,6 +29,7 @@ namespace OpenTK.Platform.Windows
 
         private WinGLContext glContext;
         private DisplayMode mode = new DisplayMode();
+        private WinRawInput driver;
 
         private bool fullscreen;
         private bool disposed;
@@ -36,8 +38,10 @@ namespace OpenTK.Platform.Windows
         private WindowInfo window;
         private int top, bottom, left, right;
 
+        private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
+
         /// <summary>
-        /// For use in PeekMessage. System.Windows.Forms.Message causes deadlock there.
+        /// For use in PeekMessage.
         /// </summary>
         private MSG myGoodMsg = new MSG();
 
@@ -82,10 +86,12 @@ namespace OpenTK.Platform.Windows
                     //if (resizeEventArgs.Width != width || resizeEventArgs.Height != height)
                     if (this.mode.Width != width || this.mode.Height != height)
                     {
+                        mode.Width = width;
+                        mode.Height = height;
                         // If the size has changed, raise the ResizeEvent.
-                        resizeEventArgs.Width = width;
-                        resizeEventArgs.Height = height;
-                        this.OnResize(resizeEventArgs);
+                        //resizeEventArgs.Width = width;
+                        //resizeEventArgs.Height = height;
+                        //this.OnResize(resizeEventArgs);
                         // The message was processed.
                         return;
                     }
@@ -134,14 +140,14 @@ namespace OpenTK.Platform.Windows
         {
             while (!IsIdle)
             {
-                ret = API.GetMessage(ref msg, Handle, 0, 0);
+                ret = Functions.GetMessage(ref msg, Handle, 0, 0);
                 if (ret == -1)
                 {
                     throw new ApplicationException(String.Format(
                         "An error happened while processing the message queue. Windows error: {0}",
                         Marshal.GetLastWin32Error()));
                 }
-                API.DispatchMessage(ref msg);
+                Functions.DispatchMessage(ref msg);
                 //WndProc(ref msg);
             }
         }
@@ -203,8 +209,62 @@ namespace OpenTK.Platform.Windows
             get
             {
                 //return !API.PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
-                return !API.PeekMessage(ref myGoodMsg, this.Handle, 0, 0, 0);
+                return !Functions.PeekMessage(ref myGoodMsg, this.Handle, 0, 0, 0);
                 //return API.GetQueueStatus(API.QueueStatusFlags.ALLEVENTS) == 0;
+            }
+        }
+
+        #endregion
+
+        #region public string Text
+
+        public string Title
+        {
+            get
+            {
+                StringBuilder title = new StringBuilder(256);
+                Functions.GetWindowText(window.Handle, title, title.Capacity);
+                return title.ToString();
+            }
+            set
+            {
+#if DEBUG
+                bool ret = Functions.SetWindowText(window.Handle, value);
+                if (ret)
+                    Debug.Print("Window {0} title changed to {1}.", window.Handle, value);
+                else
+                    Debug.Print("Window {0} title failed to change to {1}.", window.Handle, value);
+#else
+                Functions.SetWindowText(window.Handle, value);
+#endif
+            }
+        }
+
+        #endregion
+
+        #region public bool Visible
+
+        public bool Visible
+        {
+            get
+            {
+                //Functions.GetW
+                return true;
+            }
+            set
+            {
+            }
+        }
+
+        #endregion
+
+        #region public IInputDriver InputDriver
+
+        public IInputDriver InputDriver
+        {
+            get
+            {
+                return driver;
             }
         }
 
@@ -224,7 +284,7 @@ namespace OpenTK.Platform.Windows
 
         public void CreateWindow(DisplayMode windowMode)
         {
-            Debug.Print("Creating native window with mode: {0}", mode.ToString());
+            Debug.Print("Creating native window with mode: {0}", windowMode.ToString());
             Debug.Indent();
 
             CreateParams cp = new CreateParams();
@@ -243,7 +303,7 @@ namespace OpenTK.Platform.Windows
             rect.top = rect.left = 0;
             rect.bottom = windowMode.Height;
             rect.right = windowMode.Width;
-            API.AdjustWindowRect(ref rect, WindowStyle.OverlappedWindow, false);
+            Functions.AdjustWindowRect(ref rect, WindowStyle.OverlappedWindow, false);
 
             // Not used
             Top = 0;
@@ -289,6 +349,7 @@ namespace OpenTK.Platform.Windows
         public void OnCreate(EventArgs e)
         {
             this.window = new WindowInfo(this);
+            driver = new WinRawInput(this.window);
 
             Debug.Print("Window created: {0}", window);
 
@@ -323,7 +384,7 @@ namespace OpenTK.Platform.Windows
         public void DestroyWindow()
         {
             Debug.Print("Destroying window: {0}", window.ToString());
-            API.PostMessage(this.Handle, WindowMessage.DESTROY, IntPtr.Zero, IntPtr.Zero);
+            Functions.PostMessage(this.Handle, WindowMessage.DESTROY, IntPtr.Zero, IntPtr.Zero);
         }
 
         #endregion
@@ -392,9 +453,10 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public event ResizeEvent Resize
+        #region public void OnResize
+
         public event ResizeEvent Resize;
-        private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
+
         public void OnResize(ResizeEventArgs e)
         {
             mode.Width = e.Width;
