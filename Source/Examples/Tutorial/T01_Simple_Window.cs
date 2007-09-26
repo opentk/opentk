@@ -15,21 +15,39 @@ using OpenTK.OpenGL;
 
 namespace Examples.Tutorial
 {
+    /// <summary>
+    /// Demonstrates the GameWindow class.
+    /// </summary>
     public class T01_Simple_Window : GameWindow, IExample
     {
         public T01_Simple_Window()
         {
-            this.CreateWindow(new DisplayMode(800, 600));
+            this.CreateWindow(new DisplayMode(800, 600), "OpenTK | Tutorial 1: Simple Window");
         }
+
+        #region OnLoad
+
+        /// <summary>
+        /// Load resources here.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        public override void OnLoad(EventArgs e)
+        {
+            Trace.WriteLine(String.Format("OpenGL driver information: {0}, {1}, {2}",
+                GL.GetString(GL.Enums.StringName.RENDERER),
+                GL.GetString(GL.Enums.StringName.VENDOR),
+                GL.GetString(GL.Enums.StringName.VERSION)));
+        }
+
+        #endregion
 
         #region OnResize
 
         /// <summary>
-        /// Override the OnResize method to respond to window resize events.
-        /// Do not forget to call base.OnResize() so that event listeners
-        /// will be notified of window resize events!
+        /// Respond to resize events here.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Contains information on the new GameWindow size.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
         {
             GL.Viewport(0, 0, e.Width, e.Height);
@@ -43,14 +61,30 @@ namespace Examples.Tutorial
 
         #endregion
 
+        #region OnUpdateFrame
+
+        /// <summary>
+        /// Add your game logic here.
+        /// </summary>
+        /// <param name="e">Contains timing information.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
+        public override void OnUpdateFrame(UpdateFrameEventArgs e)
+        {
+            base.OnUpdateFrame(e);
+
+            if (Keyboard[OpenTK.Input.Key.Escape])
+                this.Exit();
+        }
+
+        #endregion
+
         #region OnRenderFrame
 
         /// <summary>
-        /// Override the OnRenderFrame method to add your drawing code.
-        /// Do not forget to call base.OnRenderFrame() so that event listeners
-        /// will be notified of frame rendering events!
+        /// Add your game rendering code here.
         /// </summary>
-        /// <param name="e">Not used.</param>
+        /// <param name="e">Contains timing information.</param>
+        /// <remarks>There is no need to call the base implementation.</remarks>
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
@@ -66,23 +100,17 @@ namespace Examples.Tutorial
 
             GL.End();
 
-            Context.SwapBuffers();
-
-            base.OnRenderFrame(e);
+            this.SwapBuffers();
         }
 
         #endregion
 
-        public override void OnUpdateFrame(UpdateFrameEventArgs e)
-        {
-            base.OnUpdateFrame(e);
-
-            if (Keyboard[0][OpenTK.Input.Key.Escape])
-                this.Exit();
-        }
-
         #region IExample Members
 
+        /// <summary>
+        /// Only used by the ExampleLauncher application, no need to add a Launch() method in your code.
+        /// Add a call to Run() in your Main() function instead.
+        /// </summary>
         public void Launch()
         {
             this.Run(30.0, 5.0);

@@ -80,14 +80,14 @@ namespace Examples.Tutorial
         /// </remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            if (Keyboard[0][OpenTK.Input.Key.Escape])
+            if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
                 return;
             }
 
-            if ((Keyboard[0][OpenTK.Input.Key.AltLeft] || Keyboard[0][OpenTK.Input.Key.AltRight]) &&
-                Keyboard[0][OpenTK.Input.Key.Enter])
+            if ((Keyboard[OpenTK.Input.Key.AltLeft] || Keyboard[OpenTK.Input.Key.AltRight]) &&
+                Keyboard[OpenTK.Input.Key.Enter])
             {
                 Fullscreen = !Fullscreen;
             }

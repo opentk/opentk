@@ -112,7 +112,7 @@ namespace Examples.Tutorial
         {
             base.OnUpdateFrame(e);
 
-            if (Keyboard[0][OpenTK.Input.Key.Escape])
+            if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
             }
