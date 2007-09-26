@@ -13,6 +13,7 @@ namespace OpenTK.OpenGL
     /// <summary>
     /// Provides methods to create and render a display list.
     /// </summary>
+    [Obsolete("Use OpenGL methods directly, instead.")]
     public class DisplayList : IDisposable
     {
         #region --- Private variables ---
@@ -81,7 +82,9 @@ namespace OpenTK.OpenGL
             GL.CallList(Id);
         }
 
-        #region IDisposable Members
+        #endregion
+
+        #region --- IDisposable Members ---
 
         public void Dispose()
         {
@@ -89,8 +92,6 @@ namespace OpenTK.OpenGL
                 GL.DeleteLists(Id, 1);
             Id = -1;
         }
-
-        #endregion
 
         #endregion
     }
