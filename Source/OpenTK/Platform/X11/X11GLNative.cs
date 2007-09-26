@@ -28,7 +28,7 @@ namespace OpenTK.Platform.X11
         private X11GLContext glContext;
         private WindowInfo window = new WindowInfo();
         private DisplayMode mode = new DisplayMode();
-        X11Input driver;
+        private X11Input driver;
 
         // Number of pending events.
         private int pending = 0;
@@ -45,6 +45,33 @@ namespace OpenTK.Platform.X11
         private bool exists;
         private bool isExiting;
 
+        // XAtoms for window properties
+        private static IntPtr WMTitle;      // The title of the GameWindow.
+        private static IntPtr UTF8String;   // No idea.
+
+        #endregion
+
+        #region private static void RegisterAtoms()
+
+        /// <summary>
+        /// Not used yet.
+        /// Registers the necessary atoms for GameWindow.
+        /// </summary>
+        private static void RegisterAtoms(WindowInfo window)
+        {
+            string[] atom_names = new string[] 
+            {
+                "WM_TITLE",
+                "UTF8_STRING"
+            };
+            IntPtr[] atoms = new IntPtr[atom_names.Length];
+            //Functions.XInternAtoms(window.Display, atom_names, atom_names.Length, false, atoms);
+
+            int offset = 0;
+            WMTitle = atoms[offset++];
+            UTF8String = atoms[offset++];
+        }
+
         #endregion
 
         #region --- Public Constructors ---
@@ -56,9 +83,23 @@ namespace OpenTK.Platform.X11
         public X11GLNative()
         {
             Debug.Print("Native window driver: {0}", this.ToString());
-            window = new WindowInfo();
 
-            //Utilities.ThrowOnX11Error = true;
+            //Utilities.ThrowOnX11Error = true; // Not very reliable
+
+            // Open the display to the X server, and obtain the screen and root window.
+            window.Display = API.OpenDisplay(null); // null == default display
+            if (window.Display == IntPtr.Zero)
+            {
+                throw new Exception("Could not open connection to X");
+            }
+            window.Screen = API.DefaultScreen(window.Display);
+            window.RootWindow = API.RootWindow(window.Display, window.Screen);
+
+            Debug.Print("Display: {0}, Screen {1}, Root window: {2}",
+                window.Display, window.Screen, window.RootWindow);
+
+
+            RegisterAtoms(window);
         }
 
         #endregion
@@ -217,17 +258,37 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public string Text
+        #region public string Title
 
+        /// <summary>
+        /// TODO: Use atoms for this property.
+        /// Gets or sets the GameWindow title.
+        /// </summary>
         public string Title
         {
             get
             {
+                IntPtr name = IntPtr.Zero;
+                Functions.XFetchName(window.Display, window.Handle, ref name);
+                if (name != IntPtr.Zero)
+                    return Marshal.PtrToStringAnsi(name);
+
                 return String.Empty;
             }
             set
             {
+                /*
+                XTextProperty name = new XTextProperty();
+                name.format = 8; //STRING
+                if (value == null)
+                    name.value = String.Empty;
+                else
+                    name.value = value;
 
+                Functions.XSetWMName(window.Display, window.Handle, ref name);
+                */
+                if (value != null)
+                    Functions.XStoreName(window.Display, window.Handle, value);
             }
         }
 
@@ -235,14 +296,26 @@ namespace OpenTK.Platform.X11
 
         #region public bool Visible
 
+        bool mapped;
         public bool Visible
         {
             get
             {
-                return true;
+                //return true;
+                return mapped;
             }
             set
             {
+                if (value && !mapped)
+                {
+                    Functions.XMapWindow(window.Display, window.Handle);
+                    mapped = true;
+                }
+                else if (!value && mapped)
+                {
+                    Functions.XUnmapWindow(window.Display, window.Handle);
+                    mapped = false;
+                }
             }
         }
 
@@ -292,17 +365,6 @@ namespace OpenTK.Platform.X11
             {
                 Debug.Print("Creating GameWindow with mode: {0}", mode.ToString());
                 Debug.Indent();
-
-                window.Display = API.OpenDisplay(null); // null == default display
-                if (window.Display == IntPtr.Zero)
-                {
-                    throw new Exception("Could not open connection to X");
-                }
-                window.Screen = API.DefaultScreen(window.Display);
-                window.RootWindow = API.RootWindow(window.Display, window.Screen);
-
-                Debug.Print("Display: {0}, Screen {1}, Root window: {2}",
-                    window.Display, window.Screen, window.RootWindow);
 
                 glContext = new X11GLContext(mode, window);
                 //glContext.PrepareContext(window);
@@ -361,6 +423,7 @@ namespace OpenTK.Platform.X11
                 glContext.MakeCurrent();
 
                 API.MapRaised(window.Display, window.Handle);
+                mapped = true;
 
                 driver = new X11Input(window);
 
