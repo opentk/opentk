@@ -19,7 +19,8 @@ namespace OpenTK.Input
         private int numButtons, numWheels;
         private IntPtr id;
         private bool[] button = new bool[(int)MouseButton.LastButton];
-        private int wheel, x, y, wheel_delta, delta_x, delta_y;
+        private int wheel, x, y; //, wheel_delta , delta_x, delta_y;
+        internal int last_x, last_y, last_wheel;
 
         #region --- IInputDevice Members ---
 
@@ -42,7 +43,7 @@ namespace OpenTK.Input
 
         #endregion
 
-        #region --- IMouse Members ---
+        #region --- Public Methods ---
 
         /// <summary>
         /// Gets an integer representing the number of buttons on this MouseDevice.
@@ -79,6 +80,7 @@ namespace OpenTK.Input
             get { return wheel; }
             internal set
             {
+                last_wheel = wheel;
                 wheel = value;
             }
         }
@@ -90,14 +92,9 @@ namespace OpenTK.Input
         {
             get
             {
-                int delta = wheel_delta;
-                //wheel_delta = 0;
-                return delta;
+                return wheel - last_wheel;
             }
-            set
-            {
-                wheel_delta = value;
-            }
+            //internal set { wheel_delta = value; }
         }
 
         /// <summary>
@@ -106,7 +103,11 @@ namespace OpenTK.Input
         public int X
         {
             get { return x; }
-            internal set { x = value; }
+            internal set
+            {
+                last_x = x;
+                x = value;
+            }
         }
 
         /// <summary>
@@ -115,7 +116,11 @@ namespace OpenTK.Input
         public int Y
         {
             get { return y; }
-            internal set { y = value; }
+            internal set
+            {
+                last_y = y;
+                y = value;
+            }
         }
 
         /// <summary>
@@ -123,8 +128,12 @@ namespace OpenTK.Input
         /// </summary>
         public int XDelta
         {
-            get { return delta_x; }
-            internal set { delta_x = value; }
+            get
+            {
+                //return delta_x;
+                return x - last_x;
+            }
+            //internal set { delta_x = value; }
         }
 
         /// <summary>
@@ -132,8 +141,12 @@ namespace OpenTK.Input
         /// </summary>
         public int YDelta
         {
-            get { return delta_y; }
-            internal set { delta_y = value; }
+            get
+            {
+                //return delta_y;
+                return y - last_y;
+            }
+            //internal set { delta_y = value; }
         }
 
         //public event MouseMoveEvent Move;
@@ -148,12 +161,19 @@ namespace OpenTK.Input
         /// </summary>
         public event MouseButtonUpEvent ButtonUp;
 
-        #endregion
-
         #region public bool this[MouseButton b]
 
+        /// <summary>
+        /// Gets a value indicating the status of the specified MouseButton.
+        /// </summary>
+        /// <param name="key">The MouseButton to check.</param>
+        /// <returns>True if the MouseButton is pressed, false otherwise.</returns>
         public bool this[MouseButton b]
         {
+            get
+            {
+                return button[(int)b];
+            }
             internal set
             {
                 if (ButtonDown != null && value && !button[(int)b])
@@ -167,15 +187,9 @@ namespace OpenTK.Input
                 button[(int)b] = value;
                 //System.Diagnostics.Debug.Print("Mouse button {0} {1}", b, value ? "down" : "up");
             }
-            get
-            {
-                return button[(int)b];
-            }
         }
 
         #endregion
-
-        #region --- Public Methods ---
 
         public override int GetHashCode()
         {
