@@ -23,7 +23,7 @@ using System.Threading;
 
 namespace Examples.Tutorial
 {
-    public partial class T07_Display_Lists_Flower : GameWindow, IExample
+    public class T07_Display_Lists_Flower : GameWindow, IExample
     {
         #region --- Variables ---
 
