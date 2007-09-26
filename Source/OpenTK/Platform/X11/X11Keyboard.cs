@@ -27,7 +27,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         WindowInfo window;
 
-        List<Keyboard> keyboards = new List<Keyboard>();
+        List<KeyboardDevice> keyboards = new List<KeyboardDevice>();
         static Dictionary<XKey, Key> keymap = new Dictionary<XKey, Key>((int)Key.MaxKeys);
         /// <summary>
         /// The smallest and largest KeyCode supported by the X server. Queried through API.DisplayKeycodes()
@@ -186,7 +186,7 @@ namespace OpenTK.Platform.X11
 
             API.Free(keysym_ptr);
             
-            Keyboard kb = new Keyboard();
+            KeyboardDevice kb = new KeyboardDevice();
             kb.Description = "Default X11 keyboard";
             kb.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
             kb.DeviceID = IntPtr.Zero;
@@ -214,7 +214,7 @@ namespace OpenTK.Platform.X11
 
             //Debug.Print("Key down: {0}", e.ToString());
 
-            int index = keyboards.FindIndex(delegate(Keyboard kb)
+            int index = keyboards.FindIndex(delegate(KeyboardDevice kb)
             {
                 return kb.DeviceID == IntPtr.Zero;
             });
@@ -243,7 +243,7 @@ namespace OpenTK.Platform.X11
 
         #region --- IKeyboardDriver Members ---
 
-        public IList<Keyboard> Keyboard
+        public IList<KeyboardDevice> Keyboard
         {
             get { return keyboards; }
         }
