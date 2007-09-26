@@ -58,7 +58,7 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                API.GetRawInputDeviceList(null, ref deviceCount, API.RawInputDeviceListSize);
+                Functions.GetRawInputDeviceList(null, ref deviceCount, API.RawInputDeviceListSize);
                 return deviceCount;
             }
         }
@@ -78,30 +78,30 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.INPUT:
                     int size = 0;
                     // Get the size of the input data
-                    API.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
+                    Functions.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
                         IntPtr.Zero, ref size, API.RawInputHeaderSize);
 
                     //if (data == null || API.RawInputSize < size)
                     //{
                     //    throw new ApplicationException("Critical error when processing raw windows input.");
                     //}
-                    if (size == API.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
+                    if (size == Functions.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
                             data, ref size, API.RawInputHeaderSize))
                     {
                         switch (data.Header.Type)
                         {
                             case RawInputDeviceType.KEYBOARD:
                                 if (!keyboardDriver.ProcessKeyboardEvent(data))
-                                    API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
+                                    Functions.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
                                 return;
 
                             case RawInputDeviceType.MOUSE:
                                 if (!mouseDriver.ProcessEvent(data))
-                                    API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
+                                    Functions.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
                                 return;
 
                             case RawInputDeviceType.HID:
-                                API.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
+                                Functions.DefRawInputProc(ref data, 1, (uint)API.RawInputHeaderSize);
                                 return;
 
                             default:
@@ -116,7 +116,6 @@ namespace OpenTK.Platform.Windows
                     }
                     break;
                 
-                case WindowMessage.CLOSE:
                 case WindowMessage.DESTROY:
                     Debug.Print("Input window detached from parent {0}.", Handle);
                     ReleaseHandle();
@@ -135,12 +134,12 @@ namespace OpenTK.Platform.Windows
 
         #region --- IInputDriver Members ---
 
-        public IList<Keyboard> Keyboard
+        public IList<KeyboardDevice> Keyboard
         {
             get { return keyboardDriver.Keyboard; }
         }
 
-        public IList<Mouse> Mouse
+        public IList<MouseDevice> Mouse
         {
             get { return mouseDriver.Mouse; }
         }
@@ -155,7 +154,7 @@ namespace OpenTK.Platform.Windows
             // structures, calling the correct handler for each one. Last, we free the allocated
             // buffer.
             int size = 0;
-            API.GetRawInputBuffer(IntPtr.Zero, ref size, API.RawInputHeaderSize);
+            Functions.GetRawInputBuffer(IntPtr.Zero, ref size, API.RawInputHeaderSize);
             size *= 256;
             IntPtr rin_data = Marshal.AllocHGlobal(size);
 
@@ -163,7 +162,7 @@ namespace OpenTK.Platform.Windows
             {
                 // Iterate reading all available RawInput structures and routing them to their respective
                 // handlers.
-                int num = API.GetRawInputBuffer(rin_data, ref size, API.RawInputHeaderSize);
+                int num = Functions.GetRawInputBuffer(rin_data, ref size, API.RawInputHeaderSize);
                 if (num == 0)
                     break;
                 else if (num < 0)
@@ -200,10 +199,10 @@ namespace OpenTK.Platform.Windows
                             mouseDriver.ProcessEvent(rin_structs[i]);
                             break;
                     }
-                    
-                    next_rin = API.NextRawInputStructure(next_rin);
+
+                    next_rin = Functions.NextRawInputStructure(next_rin);
                 }
-                API.DefRawInputProc(rin_structs, num, (uint)API.RawInputHeaderSize);
+                Functions.DefRawInputProc(rin_structs, num, (uint)API.RawInputHeaderSize);
             }
 
             Marshal.FreeHGlobal(rin_data);
