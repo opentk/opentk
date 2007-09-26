@@ -25,70 +25,79 @@ namespace Examples.Tutorial
 {
     public class T07_Display_Lists_Flower : GameWindow, IExample
     {
-        #region --- Variables ---
+        #region --- Fields ---
 
-        List<DisplayList> lists = new List<DisplayList>();
+        const int num_lists = 9;
+        int[] lists = new int[num_lists];
 
-        #endregion --- Variables ---
+        #endregion
 
         #region --- Constructors ---
 
         public T07_Display_Lists_Flower()
+            : base(new DisplayMode(800, 600), "OpenTK | T07: Display Lists")
         {
-            this.CreateWindow(new DisplayMode(800, 600));
-            //Text =
-            //    "DisplayLists example (" +
-            //    GL.GetString(Enums.StringName.RENDERER) + " " +
-            //    GL.GetString(Enums.StringName.VERSION)
-            //    + ")";
+        }
 
+        #endregion
+
+        #region OnLoad
+
+        public override void OnLoad(EventArgs e)
+        {
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
             GL.Enable(Enums.EnableCap.DEPTH_TEST);
 
+            GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
+            GL.LoadIdentity();
+
             // Build some display lists.
+            int first_list = GL.GenLists(num_lists);
             float c = 0;
-            const int numDisplayLists = 9;
-            for (int i = numDisplayLists; i > 0; i--)
+            for (int i = 0; i < num_lists; i++)
             {
-                DisplayList d = new DisplayList();
+                lists[i] = first_list + i;
+                GL.NewList(first_list + i, Enums.ListMode.COMPILE);
 
-                d.Begin();
+                GL.Color3(1.0, c, 1 - c);
 
-                GL.Color3(
-                    1.0,
-                    c,
-                    1 - c
-                );
+                GL.PushMatrix();
+
+                GL.Rotate(c * 360.0f, 0.0, 0.0, 1.0);
+                GL.Translate(5.0, 0.0, 0.0);
 
                 GL.Begin(Enums.BeginMode.QUADS);
 
                 GL.Vertex3(-1.0f, -1.0f, 1.0f);
-                GL.Vertex3( 1.0f, -1.0f, 1.0f);
-                GL.Vertex3( 1.0f,  1.0f, 1.0f);
-                GL.Vertex3(-1.0f,  1.0f, 1.0f);
+                GL.Vertex3(1.0f, -1.0f, 1.0f);
+                GL.Vertex3(1.0f, 1.0f, 1.0f);
+                GL.Vertex3(-1.0f, 1.0f, 1.0f);
 
                 GL.End();
 
-                d.End();
+                GL.PopMatrix();
 
-                lists.Add(d);
+                GL.EndList();
 
-                c += 1 / (float)numDisplayLists;
+                c += 1 / (float)num_lists;
             }
-
-            OnResize(new OpenTK.Platform.ResizeEventArgs(this.Width, this.Height));
         }
 
-        #endregion         
+        #endregion
 
-        #region --- Event Handlers ---
+        #region OnUnload
+
+        public override void OnUnload(EventArgs e)
+        {
+            GL.DeleteLists(lists[0], num_lists);
+        }
+
+        #endregion
 
         #region OnResize
 
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
         {
-            base.OnResize(e);
-
             GL.Viewport(0, 0, Width, Height);
 
             double ratio = 0.0;
@@ -97,11 +106,6 @@ namespace Examples.Tutorial
             GL.MatrixMode(Enums.MatrixMode.PROJECTION);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
-            Glu.LookAt(
-                0.0, 0.0, 16.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
         }
 
         #endregion
@@ -110,8 +114,6 @@ namespace Examples.Tutorial
 
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            base.OnUpdateFrame(e);
-
             if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
@@ -124,32 +126,20 @@ namespace Examples.Tutorial
 
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
-            base.OnRenderFrame(e);
-
             GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
             GL.LoadIdentity();
+            Glu.LookAt(
+                0.0, 0.0, 16.0,
+                0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0);
 
             GL.Clear(Enums.ClearBufferMask.COLOR_BUFFER_BIT | Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+            GL.CallLists(num_lists, Enums.ListNameType.INT, lists);
 
-            double angle = 0.0;
-            foreach (DisplayList d in lists)
-            {
-                GL.LoadIdentity();
-                GL.Rotate(angle, 0.0, 0.0, 1.0);
-                GL.Translate(5.0, 0.0, 0.0);
-
-                d.Render();
-                angle += 360 / lists.Count;
-            }
-
-
-            Context.SwapBuffers();
-            Thread.Sleep(0);
+            SwapBuffers();
         }
 
         #endregion
-
-        #endregion --- Event Handlers ---
 
         #region public void Launch()
 
