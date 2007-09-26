@@ -24,6 +24,7 @@ namespace OpenTK.Platform
         event UpdateFrameEvent UpdateFrame;
         event RenderFrameEvent RenderFrame;
         event LoadEvent Load;
+        event UnloadEvent Unload;
 
         bool IsExiting { get; }
         //IList<OpenTK.Input.Keyboard> Keyboard { get; }
@@ -33,7 +34,8 @@ namespace OpenTK.Platform
         OpenTK.Input.MouseDevice Mouse { get; }
     }
 
-    public delegate void UpdateFrameEvent(object sender, UpdateFrameEventArgs e);
-    public delegate void RenderFrameEvent(object sender, RenderFrameEventArgs e);
-    public delegate void LoadEvent(object sender, EventArgs e);
+    public delegate void UpdateFrameEvent(GameWindow sender, UpdateFrameEventArgs e);
+    public delegate void RenderFrameEvent(GameWindow sender, RenderFrameEventArgs e);
+    public delegate void LoadEvent(GameWindow sender, EventArgs e);
+    public delegate void UnloadEvent(GameWindow sender, EventArgs e);
 }

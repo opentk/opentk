@@ -30,7 +30,7 @@ namespace OpenTK
     /// Call the Run() method to start the application's main loop. Run(double, double) takes two parameters that
     /// specify the logic update rate, and the render update rate.
     /// </remarks>
-    public class GameWindow : OpenTK.Platform.IGameWindow
+    public class GameWindow : IGameWindow
     {
         #region --- Fields ---
 
@@ -405,7 +405,7 @@ namespace OpenTK
 
         #region --- IGameWindow Members ---
 
-        #region public virtual void Run()
+        #region void Run()
 
         /// <summary>
         /// Enters the game loop of GameWindow, updating and rendering at the maximum possible frequency.
@@ -454,16 +454,12 @@ namespace OpenTK
         {
             this.OnLoad(EventArgs.Empty);
 
-            Debug.Print("Entering main loop");
-
-            //resizeEventArgs.Width = this.Width;
-            //resizeEventArgs.Height = this.Height;
-            //this.OnResize(resizeEventArgs);
-
+            // Setup timer
             Stopwatch watch = new Stopwatch();
             UpdateFrameEventArgs updateArgs = new UpdateFrameEventArgs();
             RenderFrameEventArgs renderArgs = new RenderFrameEventArgs();
 
+            // Setup update and render rates. If updateFrequency or renderFrequency <= 0.0, use full throttle for that frequency.
             double update_target = 0.0, render_target = 0.0, next_update = 0.0, next_render = 0.0;
             double time, total_time;
 
@@ -476,8 +472,19 @@ namespace OpenTK
                 next_render = render_target = 1.0 / renderFrequency;
             }
 
+            // Enter main loop:
+            // (1) Update total frame time (capped at 0.1 sec)
+            // (2) Process events and update event_time
+            // (3) Raise UpdateFrame event(s) and update update_time.
+            //     If there is enough CPU time, update and render events will be 1 on 1.
+            //     If there is not enough time, render events will be dropped in order to match the requested updateFrequency.
+            //     If the requested updateFrequency can't be matched, processing will slow down.
+            // (4) Raise RenderFrame event and update render_time.
+            // (5) If there is any CPU time left, and we are not running full-throttle, Sleep() to lower CPU usage.
+            Debug.Print("Entering main loop.");
             while (this.Exists && !IsExiting)
             {
+                // Update total frame time.
                 total_time = frameTime = watch.Elapsed.TotalSeconds;
                 if (total_time > 0.1)
                     total_time = 0.1;
@@ -486,12 +493,14 @@ namespace OpenTK
                 watch.Reset();
                 watch.Start();
 
+                // Process events and update event_time
                 time = watch.Elapsed.TotalSeconds;
                 this.ProcessEvents();
                 eventTime = watch.Elapsed.TotalSeconds - time;
 
                 if (!IsExiting)
                 {
+                    // Raise UpdateFrame event(s) and update update_time.
                     time = watch.Elapsed.TotalSeconds;
                     next_update -= (total_time + time);
                     while (next_update <= 0.0)
@@ -504,6 +513,7 @@ namespace OpenTK
                     }
                     updateTime = watch.Elapsed.TotalSeconds - time;
 
+                    // Raise RenderFrame event and update render_time.
                     time = watch.Elapsed.TotalSeconds;
                     next_render -= (total_time + time);
                     if (next_render <= 0.0)
@@ -514,6 +524,7 @@ namespace OpenTK
                     }
                     renderTime = watch.Elapsed.TotalSeconds - time;
 
+                    // If there is any CPU time left, and we are not running full-throttle, Sleep() to lower CPU usage.
                     if (renderTime < render_target && updateTime < update_target)
                     {
                         Thread.Sleep((int)(1000.0 * System.Math.Min(
@@ -521,6 +532,8 @@ namespace OpenTK
                     }
                 }
             }
+
+            OnUnloadInternal(EventArgs.Empty);
 
             if (this.Exists)
             {
@@ -652,6 +665,11 @@ namespace OpenTK
         /// <param name="e"></param>
         private void OnLoadInternal(EventArgs e)
         {
+            Debug.WriteLine(String.Format("OpenGL driver information: {0}, {1}, {2}",
+                GL.GetString(GL.Enums.StringName.RENDERER),
+                GL.GetString(GL.Enums.StringName.VENDOR),
+                GL.GetString(GL.Enums.StringName.VERSION)));
+
             if (this.Load != null)
             {
                 this.Load(this, e);
@@ -666,6 +684,38 @@ namespace OpenTK
         /// </summary>
         /// <param name="e">Not used.</param>
         public virtual void OnLoad(EventArgs e)
+        {
+        }
+
+        #endregion
+
+        #region OnUnload(EventArgs e)
+
+        /// <summary>
+        /// Occurs after after calling GameWindow.Exit, but before destroying the OpenGL context.
+        /// </summary>
+        public event UnloadEvent Unload;
+
+        /// <summary>
+        /// Raises the Unload event, and calls the user's OnUnload override.
+        /// </summary>
+        /// <param name="e"></param>
+        private void OnUnloadInternal(EventArgs e)
+        {
+            if (this.Unload != null)
+            {
+                this.Unload(this, e);
+            }
+
+            OnUnload(e);
+        }
+
+        /// <summary>
+        /// Occurs after after calling GameWindow.Exit, but before destroying the OpenGL context.
+        /// Override to unload application resources.
+        /// </summary>
+        /// <param name="e">Not used.</param>
+        public virtual void OnUnload(EventArgs e)
         {
         }
 
@@ -869,11 +919,20 @@ namespace OpenTK
         #region --- IDisposable Members ---
 
         /// <summary>
+        /// Not used yet.
+        /// </summary>
+        private void DisposeInternal()
+        {
+            Dispose();                  // User overridable Dispose method.
+
+        }
+
+        /// <summary>
         /// Disposes of the GameWindow, releasing all resources consumed by it.
         /// </summary>
         public virtual void Dispose()
         {
-            Dispose(true);
+            Dispose(true);              // Real Dispose method.
             GC.SuppressFinalize(this);
         }
 
