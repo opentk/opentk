@@ -131,7 +131,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            if (Keyboard[0][OpenTK.Input.Key.Escape])
+            if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
                 return;

@@ -22,119 +22,95 @@ namespace Examples.Tests
 {
     public partial class S04_Input_Logger : Form//, IExample
     {
-        InputDriver driver;
+        Thread thread;
+        GameWindow hidden;
+        bool start;
         Dictionary<IntPtr, ListBox> keyboardListBoxes = new Dictionary<IntPtr, ListBox>(4);
 
         public S04_Input_Logger()
         {
             InitializeComponent();
+
+            thread = new Thread(LaunchGameWindow);
+            thread.Start();
+        }
+
+        void LaunchGameWindow()
+        {
+            hidden = new GameWindow();
+            hidden.Load += hidden_Load;
+            hidden.CreateWindow(new DisplayMode(30, 30), "OpenTK | Hidden input window");
+            hidden.Run(60.0, 1.0);
+        }
+
+        void hidden_Load(object sender, EventArgs e)
+        {
+            start = true;
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
-            WindowInfo info = new WindowInfo(this);
-            driver = new InputDriver(info);
-            Trace.WriteLine(String.Format("Keyboard count: {0}", driver.Keyboard.Count));
-            Trace.WriteLine(String.Format("Mouse count: {0}", driver.Mouse.Count));
-
-            switch (driver.Keyboard.Count)
+            while (!start)
             {
-                case 0:
-                    Debug.Print("No keyboard present, or keyboard driver failed to load");
-                    break;
-
-                case 1:
-                    keyboardListBoxes.Add(driver.Keyboard[0].DeviceID, listBox1);
-                    break;
-
-                case 2:
-                    keyboardListBoxes.Add(driver.Keyboard[0].DeviceID, listBox1);
-                    keyboardListBoxes.Add(driver.Keyboard[1].DeviceID, listBox2);
-                    break;
-
-                case 3:
-                    keyboardListBoxes.Add(driver.Keyboard[0].DeviceID, listBox1);
-                    keyboardListBoxes.Add(driver.Keyboard[1].DeviceID, listBox2);
-                    keyboardListBoxes.Add(driver.Keyboard[2].DeviceID, listBox3);
-                    break;
-
-                case 4:
-                    keyboardListBoxes.Add(driver.Keyboard[0].DeviceID, listBox1);
-                    keyboardListBoxes.Add(driver.Keyboard[1].DeviceID, listBox2);
-                    keyboardListBoxes.Add(driver.Keyboard[2].DeviceID, listBox3);
-                    keyboardListBoxes.Add(driver.Keyboard[3].DeviceID, listBox4);
-                    break;
-
-                default:
-                    Debug.Print("Only the first 4 keyboards will be shown in the keyboard logger.");
-                    keyboardListBoxes.Add(driver.Keyboard[0].DeviceID, listBox1);
-                    keyboardListBoxes.Add(driver.Keyboard[1].DeviceID, listBox2);
-                    keyboardListBoxes.Add(driver.Keyboard[2].DeviceID, listBox3);
-                    keyboardListBoxes.Add(driver.Keyboard[3].DeviceID, listBox4);
-                    break;
+                Thread.Sleep(100);
             }
+
+            WindowInfo info = new WindowInfo(this);
+
+            keyboardListBoxes.Add(hidden.Keyboard.DeviceID, listBox1);
 
             // Add available mice to the mouse input logger.
-            if (driver.Mouse.Count > 0)
-            {
-                int i = 0;
-                foreach (Mouse m in driver.Mouse)
-                {
-                    ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", ++i, m.Description));
-                    m.ButtonDown += LogMouseButtonDown;
-                    m.ButtonUp += LogMouseButtonUp;
-                }
-                ChooseMouse.SelectedIndex = 0;
-            }
+            ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", 0, hidden.Mouse.Description));
+            hidden.Mouse.ButtonDown += LogMouseButtonDown;
+            hidden.Mouse.ButtonUp += LogMouseButtonUp;
 
-            foreach (OpenTK.Input.Keyboard k in driver.Keyboard)
-            {
-                k.KeyDown += new KeyDownEvent(LogKeyDown);
-                k.KeyUp += new KeyUpEvent(LogKeyUp);
-            }
+            hidden.Keyboard.KeyDown += LogKeyDown;
+            hidden.Keyboard.KeyUp += LogKeyUp;
 
-            Application.Idle += new EventHandler(UpdateDevices);
+            //Application.Idle += new EventHandler(UpdateDevices);
+            hidden.UpdateFrame += hidden_UpdateFrame;
+
         }
 
-        void UpdateDevices(object sender, EventArgs e)
+        void hidden_UpdateFrame(object sender, UpdateFrameEventArgs e)
         {
-            driver.Poll();
+            //hidden.Poll();
 
             // Update mouse coordinates.
-            MouseXText.Text = driver.Mouse[ChooseMouse.SelectedIndex].X.ToString();
-            MouseYText.Text = driver.Mouse[ChooseMouse.SelectedIndex].Y.ToString();
-            MouseDXText.Text = driver.Mouse[ChooseMouse.SelectedIndex].XDelta.ToString();
-            MouseDYText.Text = driver.Mouse[ChooseMouse.SelectedIndex].YDelta.ToString();
-            MouseWheelText.Text = driver.Mouse[ChooseMouse.SelectedIndex].Wheel.ToString();
+            MouseXText.Text = hidden.Mouse.X.ToString();
+            MouseYText.Text = hidden.Mouse.Y.ToString();
+            MouseDXText.Text = hidden.Mouse.XDelta.ToString();
+            MouseDYText.Text = hidden.Mouse.YDelta.ToString();
+            MouseWheelText.Text = hidden.Mouse.Wheel.ToString();
             //MouseWheelDelta.Text = driver.Mouse[ChooseMouse.SelectedIndex].WheelDelta.ToString();
         }
 
-        void LogMouseButtonDown(IMouse sender, MouseButton button)
+        void LogMouseButtonDown(MouseDevice sender, MouseButton button)
         {
             //Trace.WriteLine(String.Format("Mouse button down: {0} on device: {1}", button, sender.DeviceID));
-            if (sender.DeviceID == driver.Mouse[ChooseMouse.SelectedIndex].DeviceID)
+            if (sender.DeviceID == hidden.Mouse.DeviceID)
                 MouseButtons.Items.Add(button);
         }
 
-        void LogMouseButtonUp(IMouse sender, MouseButton button)
+        void LogMouseButtonUp(MouseDevice sender, MouseButton button)
         {
             //Trace.WriteLine(String.Format("Mouse button up: {0} on device: {1}", button, sender.DeviceID));
-            if (sender.DeviceID == driver.Mouse[ChooseMouse.SelectedIndex].DeviceID)
+            if (sender.DeviceID == hidden.Mouse.DeviceID)
                 MouseButtons.Items.Remove(button);
         }
 
-        void LogKeyDown(object sender, Key key)
+        void LogKeyDown(KeyboardDevice sender, Key key)
         {
-            Trace.WriteLine(String.Format("Key down: {0} on device: {1}", key, (sender as Keyboard).DeviceID));
-            keyboardListBoxes[(sender as Keyboard).DeviceID].Items.Add(key);
+            Trace.WriteLine(String.Format("Key down: {0} on device: {1}", key, (sender as KeyboardDevice).DeviceID));
+            keyboardListBoxes[(sender as KeyboardDevice).DeviceID].Items.Add(key);
         }
 
-        void LogKeyUp(object sender, Key key)
+        void LogKeyUp(KeyboardDevice sender, Key key)
         {
-            Trace.WriteLine(String.Format("Key up: {0} on device: {1}", key, (sender as Keyboard).DeviceID));
-            keyboardListBoxes[(sender as Keyboard).DeviceID].Items.Remove(key);
+            Trace.WriteLine(String.Format("Key up: {0} on device: {1}", key, (sender as KeyboardDevice).DeviceID));
+            keyboardListBoxes[(sender as KeyboardDevice).DeviceID].Items.Remove(key);
         }
 
         #region IExample Members

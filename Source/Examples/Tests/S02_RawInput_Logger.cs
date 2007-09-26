@@ -8,13 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
-
-using OpenTK;
-using OpenTK.OpenGL;
 using System.Threading;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Diagnostics;
+
+using OpenTK;
+using OpenTK.OpenGL;
 
 namespace Examples.Tests
 {
@@ -61,23 +61,20 @@ namespace Examples.Tests
         {
             this.CreateWindow(new DisplayMode(100, 100));
 
-            foreach (OpenTK.Input.Keyboard k in this.Keyboard)
-            {
-                k.KeyDown += new OpenTK.Input.KeyDownEvent(LogKeyDown);
-                k.KeyUp += new OpenTK.Input.KeyUpEvent(LogKeyUp);
-            }
+            Keyboard.KeyDown += new OpenTK.Input.KeyDownEvent(LogKeyDown);
+            Keyboard.KeyUp += new OpenTK.Input.KeyUpEvent(LogKeyUp);
         }
 
         void LogKeyDown(object sender, OpenTK.Input.Key key)
         {
             Trace.WriteLine(String.Format("OpenTK key {0} pressed on Keyboard: ({1}).",
-                key, sender as OpenTK.Input.Keyboard));
+                key, sender as OpenTK.Input.KeyboardDevice));
         }
 
         void LogKeyUp(object sender, OpenTK.Input.Key key)
         {
             Trace.WriteLine(String.Format("OpenTK key {0} released on Keyboard: ({1}).",
-                key, sender as OpenTK.Input.Keyboard));
+                key, sender as OpenTK.Input.KeyboardDevice));
         }
 
         public override void OnLoad(EventArgs e)

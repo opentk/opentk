@@ -15,6 +15,9 @@ using Examples.Shapes;
 
 namespace Examples.Tutorial
 {
+    /// <summary>
+    /// Demonstrates fixed-function OpenGL lighting. Tutorial is incomplete!
+    /// </summary>
     class T04_Lit_Cube : GameWindow, IExample
     {
         float x_angle, zoom;
@@ -24,7 +27,7 @@ namespace Examples.Tutorial
 
         public T04_Lit_Cube()
         {
-            this.CreateWindow(new DisplayMode(800, 600));
+            this.CreateWindow(new DisplayMode(800, 600), "OpenTK | Vertex Lighting example");
         }
 
         #endregion
@@ -37,7 +40,7 @@ namespace Examples.Tutorial
 
             GL.ClearColor(Color.MidnightBlue);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
-            GL.Enable(GL.Enums.EnableCap.CULL_FACE);
+            //GL.Enable(GL.Enums.EnableCap.CULL_FACE);
             
             GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
             GL.EnableClientState(GL.Enums.EnableCap.NORMAL_ARRAY);
@@ -50,8 +53,8 @@ namespace Examples.Tutorial
             GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.DIFFUSE, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.SPECULAR, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.LightModelv(GL.Enums.LightModelParameter.LIGHT_MODEL_AMBIENT, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
-            GL.Enable(GL.Enums.EnableCap.LIGHTING);
-            GL.Enable(GL.Enums.EnableCap.LIGHT0);
+            //GL.Enable(GL.Enums.EnableCap.LIGHTING);
+            //GL.Enable(GL.Enums.EnableCap.LIGHT0);
 
             // Use GL.Material to set your object's material parameters..
             GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.AMBIENT, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
@@ -97,25 +100,25 @@ namespace Examples.Tutorial
         /// </remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            if (Keyboard[0][OpenTK.Input.Key.Escape])
+            if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
                 return;
             }
 
-            if ((Keyboard[0][OpenTK.Input.Key.AltLeft] || Keyboard[0][OpenTK.Input.Key.AltRight]) &&
-                Keyboard[0][OpenTK.Input.Key.Enter])
+            if ((Keyboard[OpenTK.Input.Key.AltLeft] || Keyboard[OpenTK.Input.Key.AltRight]) &&
+                Keyboard[OpenTK.Input.Key.Enter])
             {
                 Fullscreen = !Fullscreen;
             }
 
-            if (Mouse[0][OpenTK.Input.MouseButton.Left])
-                x_angle += Mouse[0].XDelta * 2;
+            if (Mouse[OpenTK.Input.MouseButton.Left])
+                x_angle += Mouse.XDelta * 2;
             else
                 x_angle += 0.5f;
 
-            if (Mouse[0][OpenTK.Input.MouseButton.Right])
-                zoom += Mouse[0].YDelta * 0.5f;
+            if (Mouse[OpenTK.Input.MouseButton.Right])
+                zoom += Mouse.YDelta * 0.5f;
 
             if (x_angle > 720.0f)
                 x_angle -= 720.0f;
@@ -142,17 +145,10 @@ namespace Examples.Tutorial
                 0.0, 1.0, 0.0);
             GL.Rotate(x_angle, 0.0f, 1.0f, 0.0f);
 
-            unsafe
-            {
-                fixed (int* ptr = shape.Indices)
-                {
-                    GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, shape.Indices.Length,
-                        GL.Enums.All.UNSIGNED_INT, ptr);
-                }
-            }
-            GL.DrawArrays(GL.Enums.BeginMode.POINTS, 0, shape.Vertices.Length);
+            GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, shape.Indices.Length,
+                GL.Enums.All.UNSIGNED_INT, shape.Indices);
 
-            Context.SwapBuffers();
+            SwapBuffers();
         }
 
         #endregion

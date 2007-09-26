@@ -21,6 +21,9 @@ using OpenTK;
 
 namespace Examples.Tutorial
 {
+    /// <summary>
+    /// Demonstrates how to load and use a simple OpenGL shader program.
+    /// </summary>
     public class T10_GLSL_Cube : GameWindow, IExample
     {
         #region --- Fields ---
@@ -55,7 +58,7 @@ void main()
 
         public T10_GLSL_Cube()
         {
-            this.CreateWindow(new DisplayMode(800, 600));
+            this.CreateWindow(new DisplayMode(800, 600), "OpenTK | GLSL Example 1");
         }
 
         #endregion
@@ -127,7 +130,7 @@ void main()
             GL.LinkProgram(shader_program);
             GL.UseProgram(shader_program);
 
-            OnResize(new OpenTK.Platform.ResizeEventArgs(this.Width, this.Height));
+            //OnResize(new OpenTK.Platform.ResizeEventArgs(this.Width, this.Height));
         }
 
         #endregion
@@ -167,14 +170,14 @@ void main()
         /// </remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            if (Keyboard[0][OpenTK.Input.Key.Escape])
+            if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
                 return;
             }
 
-            if ((Keyboard[0][OpenTK.Input.Key.AltLeft] || Keyboard[0][OpenTK.Input.Key.AltRight]) &&
-                Keyboard[0][OpenTK.Input.Key.Enter])
+            if ((Keyboard[OpenTK.Input.Key.AltLeft] || Keyboard[OpenTK.Input.Key.AltRight]) &&
+                Keyboard[OpenTK.Input.Key.Enter])
             {
                 Fullscreen = !Fullscreen;
             }
