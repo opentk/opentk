@@ -26,7 +26,11 @@ namespace OpenTK.Platform
         event LoadEvent Load;
 
         bool IsExiting { get; }
-        IList<OpenTK.Input.Keyboard> Keyboard { get; }
+        //IList<OpenTK.Input.Keyboard> Keyboard { get; }
+        //IList<OpenTK.Input.Mouse> Mouse { get; }
+
+        OpenTK.Input.KeyboardDevice Keyboard { get; }
+        OpenTK.Input.MouseDevice Mouse { get; }
     }
 
     public delegate void UpdateFrameEvent(object sender, UpdateFrameEventArgs e);
