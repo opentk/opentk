@@ -68,7 +68,7 @@ namespace OpenTK.Platform.Windows
             // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.
             if (opengl32Handle == IntPtr.Zero)
             {
-                opengl32Handle = API.LoadLibrary(opengl32Name);
+                opengl32Handle = Functions.LoadLibrary(opengl32Name);
                 if (opengl32Handle == IntPtr.Zero)
                 {
                     //System.Diagnostics.Debug.WriteLine("LoadLibrary({0}) set error code: {1}. Will not load extensions.", _dll_name, error_code);
@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Windows
                 Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
             }
 
-            deviceContext = API.GetDC(this.windowInfo.Handle);
+            deviceContext = Functions.GetDC(this.windowInfo.Handle);
             Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
 
             Debug.Write("Setting pixel format... ");
@@ -151,12 +151,12 @@ namespace OpenTK.Platform.Windows
                 Debug.WriteLine(String.Format("done! (format: {0})", pixel));
             }
             */
-            int pixel = API.ChoosePixelFormat(deviceContext, ref pixelFormat);
+            int pixel = Functions.ChoosePixelFormat(deviceContext, ref pixelFormat);
             if (pixel == 0)
             {
                 throw new ApplicationException("The requested pixel format is not supported by the hardware configuration.");
             }
-            API.SetPixelFormat(deviceContext, pixel, ref pixelFormat);
+            Functions.SetPixelFormat(deviceContext, pixel, ref pixelFormat);
 
             Debug.Print("done! (format: {0})", pixel);
         }
@@ -245,7 +245,7 @@ namespace OpenTK.Platform.Windows
 
         public void SwapBuffers()
         {
-            API.SwapBuffers(deviceContext);
+            Functions.SwapBuffers(deviceContext);
         }
 
         #endregion
@@ -285,7 +285,7 @@ namespace OpenTK.Platform.Windows
                 IntPtr handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DeviceMode)));
                 Marshal.StructureToPtr(currentMode, handle, true);
 
-                done = (API.EnumDisplaySettings(null, index++, handle) != 0) ? false : true;
+                done = (Functions.EnumDisplaySettings(null, index++, handle) != 0) ? false : true;
                 int error = Marshal.GetLastWin32Error();
 
                 Marshal.PtrToStructure(handle, currentMode);
@@ -371,7 +371,7 @@ namespace OpenTK.Platform.Windows
 
             if (deviceContext != IntPtr.Zero)
             {
-                if (!API.ReleaseDC(this.windowInfo.Handle, deviceContext))
+                if (!Functions.ReleaseDC(this.windowInfo.Handle, deviceContext))
                 {
                     //throw new ApplicationException("Could not release device context. Error: " + Marshal.GetLastWin32Error());
                     //Debug.Print("Could not destroy the device context. Error: {0}", Marshal.GetLastWin32Error());
@@ -380,7 +380,7 @@ namespace OpenTK.Platform.Windows
 
             if (opengl32Handle != IntPtr.Zero)
             {
-                if (!API.FreeLibrary(opengl32Handle))
+                if (!Functions.FreeLibrary(opengl32Handle))
                 {
                     //throw new ApplicationException("FreeLibray call failed ('opengl32.dll'), Error: " + Marshal.GetLastWin32Error());
                     //Debug.Print("Could not release {0}. Error: {1}", opengl32Name, Marshal.GetLastWin32Error());
