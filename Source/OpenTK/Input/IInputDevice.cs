@@ -14,7 +14,6 @@ namespace OpenTK.Input
     {
         string Description { get; }
         InputDeviceType DeviceType { get; }
-
     }
 
     /// <summary>
