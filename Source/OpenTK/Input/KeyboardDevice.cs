@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace OpenTK.Input
 {
-    public sealed class Keyboard : IKeyboard
+    public sealed class KeyboardDevice : IInputDevice
     {
         //private IKeyboard keyboard;
         private bool[] keys = new bool[(int)Key.MaxKeys];
@@ -26,7 +26,7 @@ namespace OpenTK.Input
 
         #region --- Constructors ---
 
-        public Keyboard()
+        public KeyboardDevice()
         {
         }
 
@@ -34,39 +34,53 @@ namespace OpenTK.Input
 
         #region --- IKeyboard members ---
 
-        public bool this[Key k]
+        /// <summary>
+        /// Gets a value indicating the status of the specified Key.
+        /// </summary>
+        /// <param name="key">The Key to check.</param>
+        /// <returns>True if the Key is pressed, false otherwise.</returns>
+        public bool this[Key key]
         {
-            get { return keys[(int)k]; }
+            get { return keys[(int)key]; }
             internal set
             {
-                if (keys[(int)k] != value || KeyRepeat)
+                if (keys[(int)key] != value || KeyRepeat)
                 {
-                    keys[(int)k] = value;
+                    keys[(int)key] = value;
 
                     if (value && KeyDown != null)
                     {
-                        KeyDown(this, k);
+                        KeyDown(this, key);
                     }
                     else if (!value && KeyUp != null)
                     {
-                        KeyUp(this, k);
+                        KeyUp(this, key);
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Gets an integer representing the number of keys on this KeyboardDevice.
+        /// </summary>
         public int NumberOfKeys
         {
             get { return numKeys; }
             internal set { numKeys = value; }
         }
 
+        /// <summary>
+        /// Gets an integer representing the number of function keys (F-keys) on this KeyboardDevice.
+        /// </summary>
         public int NumberOfFunctionKeys
         {
             get { return numFKeys; }
             internal set { numFKeys = value; }
         }
 
+        /// <summary>
+        /// Gets a value indicating the number of led indicators on this KeyboardDevice.
+        /// </summary>
         public int NumberOfLeds
         {
             get { return numLeds; }
@@ -74,7 +88,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Device dependent ID.
+        /// Gets an IntPtr representing a device dependent ID.
         /// </summary>
         public IntPtr DeviceID
         {
@@ -85,7 +99,7 @@ namespace OpenTK.Input
         #region public bool KeyRepeat
 
         /// <summary>
-        /// Gets or sets a value indicating whether key repeat is turned on or off.
+        /// Gets or sets a value indicating whether key repeat status.
         /// </summary>
         /// <remarks>
         /// Setting key repeat to on will generate multiple KeyDown events when a key is held pressed.
@@ -137,12 +151,15 @@ namespace OpenTK.Input
         public override string ToString()
         {
             //return base.ToString();
-            return String.Format("ID: {0} (keys: {1}, function keys: {2}, leds: {3})",
-                DeviceID, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds);
+            return String.Format("ID: {0} ({1}). Keys: {2}, Function keys: {3}, Leds: {4}",
+                DeviceID, Description, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds);
         }
 
         #endregion
     }
+
+    public delegate void KeyDownEvent(KeyboardDevice sender, Key key);
+    public delegate void KeyUpEvent(KeyboardDevice sender, Key key);
 
     #region public enum Key : int
 
