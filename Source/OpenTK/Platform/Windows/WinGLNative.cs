@@ -244,6 +244,9 @@ namespace OpenTK.Platform.Windows
 
         #region public bool Visible
 
+        /// <summary>
+        /// TODO
+        /// </summary>
         public bool Visible
         {
             get
