@@ -15,6 +15,6 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the list of available mouse devices.
         /// </summary>
-        IList<Mouse> Mouse { get; }
+        IList<MouseDevice> Mouse { get; }
     }
 }
