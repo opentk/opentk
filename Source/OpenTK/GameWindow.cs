@@ -196,6 +196,10 @@ namespace OpenTK
 
         #region public bool Fullscreen
 
+        /// <summary>
+        /// TODO: This property is not implemented.
+        /// Gets or sets a value indicating whether the GameWindow is in fullscrren mode.
+        /// </summary>
         public bool Fullscreen
         {
             get { return glWindow.Fullscreen; }
@@ -260,16 +264,19 @@ namespace OpenTK
         #region public bool Visible
 
         /// <summary>
+        /// TODO: This property is not implemented
         /// Gets or sets a value indicating whether the GameWindow is visible.
         /// </summary>
         public bool Visible
         {
             get
             {
+                throw new NotImplementedException();
                 return glWindow.Visible;
             }
             set
             {
+                throw new NotImplementedException();
                 glWindow.Visible = value;
             }
         }
