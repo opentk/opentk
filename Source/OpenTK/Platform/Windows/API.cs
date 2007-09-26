@@ -77,10 +77,13 @@ namespace OpenTK.Platform.Windows
         internal static readonly int RawInputHeaderSize;
         internal static readonly int RawInputDeviceListSize;
         internal static readonly int RawInputDeviceInfoSize;
+    }
 
+    public static class Functions
+    {
         #region --- Functions ---
 
-        #region Window Creation
+        #region Window functions
 
         #region SetWindowPos
 
@@ -524,6 +527,75 @@ namespace OpenTK.Platform.Windows
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
         public static extern SHORT GetAsyncKeyState(int vKey);
+
+        #endregion
+
+        #region ShowWindow
+
+        /// <summary>
+        /// The ShowWindow function sets the specified window's show state.
+        /// </summary>
+        /// <param name="hWnd">[in] Handle to the window.</param>
+        /// <param name="nCmdShow">[in] Specifies how the window is to be shown. This parameter is ignored the first time an application calls ShowWindow, if the program that launched the application provides a STARTUPINFO structure. Otherwise, the first time ShowWindow is called, the value should be the value obtained by the WinMain function in its nCmdShow parameter. In subsequent calls, this parameter can be one of the ShowWindowEnum values.</param>
+        /// <returns>If the window was previously visible, the return value is true. Otherwise false.</returns>
+        /// <remarks>
+        /// <para>To perform certain special effects when showing or hiding a window, use AnimateWindow.</para>
+        /// <para>The first time an application calls ShowWindow, it should use the WinMain function's nCmdShow parameter as its nCmdShow parameter. Subsequent calls to ShowWindow must use one of the values in the given list, instead of the one specified by the WinMain function's nCmdShow parameter.</para>
+        /// <para>As noted in the discussion of the nCmdShow parameter, the nCmdShow value is ignored in the first call to ShowWindow if the program that launched the application specifies startup information in the structure. In this case, ShowWindow uses the information specified in the STARTUPINFO structure to show the window. On subsequent calls, the application must call ShowWindow with nCmdShow set to SW_SHOWDEFAULT to use the startup information provided by the program that launched the application. This behavior is designed for the following situations:</para>
+        /// <list type="">
+        /// <item>Applications create their main window by calling CreateWindow with the WS_VISIBLE flag set.</item>
+        /// <item>Applications create their main window by calling CreateWindow with the WS_VISIBLE flag cleared, and later call ShowWindow with the SW_SHOW flag set to make it visible.</item>
+        /// </list>
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
+        public static extern BOOL ShowWindow(HWND hWnd, ShowWindowCommand nCmdShow);
+
+        #endregion
+
+        #region SetWindowText
+
+        /// <summary>
+        /// The SetWindowText function changes the text of the specified window's title bar (if it has one). If the specified window is a control, the text of the control is changed. However, SetWindowText cannot change the text of a control in another application.
+        /// </summary>
+        /// <param name="hWnd">[in] Handle to the window or control whose text is to be changed.</param>
+        /// <param name="lpString">[in] Pointer to a null-terminated string to be used as the new title or control text.</param>
+        /// <returns>
+        /// <para>If the function succeeds, the return value is nonzero.</para>
+        /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+        /// </returns>
+        /// <remarks>
+        /// <para>If the target window is owned by the current process, SetWindowText causes a WM_SETTEXT message to be sent to the specified window or control. If the control is a list box control created with the WS_CAPTION style, however, SetWindowText sets the text for the control, not for the list box entries. </para>
+        /// <para>To set the text of a control in another process, send the WM_SETTEXT message directly instead of calling SetWindowText. </para>
+        /// <para>The SetWindowText function does not expand tab characters (ASCII code 0x09). Tab characters are displayed as vertical bar (|) characters. </para>
+        /// <para>Windows 95/98/Me: SetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me Systems .</para>
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
+        public static extern BOOL SetWindowText(HWND hWnd, LPCTSTR lpString);
+
+        #endregion
+
+        #region GetWindowText
+
+        /// <summary>
+        /// The GetWindowText function copies the text of the specified window's title bar (if it has one) into a buffer. If the specified window is a control, the text of the control is copied. However, GetWindowText cannot retrieve the text of a control in another application.
+        /// </summary>
+        /// <param name="hWnd">[in] Handle to the window or control containing the text.</param>
+        /// <param name="lpString">[out] Pointer to the buffer that will receive the text. If the string is as long or longer than the buffer, the string is truncated and terminated with a NULL character.</param>
+        /// <param name="nMaxCount">[in] Specifies the maximum number of characters to copy to the buffer, including the NULL character. If the text exceeds this limit, it is truncated.</param>
+        /// <returns>
+        /// If the function succeeds, the return value is the length, in characters, of the copied string, not including the terminating NULL character. If the window has no title bar or text, if the title bar is empty, or if the window or control handle is invalid, the return value is zero. To get extended error information, call GetLastError.
+        /// <para>This function cannot retrieve the text of an edit control in another application.</para>
+        /// </returns>
+        /// <remarks>
+        /// <para>If the target window is owned by the current process, GetWindowText causes a WM_GETTEXT message to be sent to the specified window or control. If the target window is owned by another process and has a caption, GetWindowText retrieves the window caption text. If the window does not have a caption, the return value is a null string. This behavior is by design. It allows applications to call GetWindowText without becoming unresponsive if the process that owns the target window is not responding. However, if the target window is not responding and it belongs to the calling application, GetWindowText will cause the calling application to become unresponsive.</para>
+        /// <para>To retrieve the text of a control in another process, send a WM_GETTEXT message directly instead of calling GetWindowText.</para>
+        /// <para>Windows 95/98/Me: GetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me</para>
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
+        public static extern int GetWindowText(HWND hWnd,
+            [MarshalAs(UnmanagedType.LPTStr), Out] StringBuilder lpString, int nMaxCount);
+
+        #endregion
 
         #endregion
 
@@ -980,7 +1052,7 @@ namespace OpenTK.Platform.Windows
         {
             unsafe
             {
-                return RawInputAlign((IntPtr)(((byte*)data) + RawInputHeaderSize));
+                return RawInputAlign((IntPtr)(((byte*)data) + API.RawInputHeaderSize));
             }
         }
 
@@ -992,8 +1064,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-
-        #endregion
 
         #endregion
 
@@ -2395,7 +2465,6 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
-
     #region VirtualKeys
 
     public enum VirtualKeys : short
@@ -2993,11 +3062,95 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    #region ShowWindowCommand
+
+    /// <summary>
+    // ShowWindow() Commands
+    /// </summary>
+    public enum ShowWindowCommand
+    {
+        /// <summary>
+        /// Hides the window and activates another window.
+        /// </summary>
+        HIDE            = 0,
+        /// <summary>
+        /// Activates and displays a window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when displaying the window for the first time.
+        /// </summary>
+        SHOWNORMAL      = 1,
+        //NORMAL          = 1,
+        /// <summary>
+        /// Activates the window and displays it as a minimized window.
+        /// </summary>
+        SHOWMINIMIZED   = 2,
+        /// <summary>
+        /// Activates the window and displays it as a maximized window.
+        /// </summary>
+        SHOWMAXIMIZED   = 3,
+        //MAXIMIZE        = 3,
+        /// <summary>
+        /// Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED, except the window is not activated.
+        /// </summary>
+        SHOWNOACTIVATE  = 4,
+        /// <summary>
+        /// Activates the window and displays it in its current size and position.
+        /// </summary>
+        SHOW            = 5,
+        /// <summary>
+        /// Minimizes the specified window and activates the next top-level window in the Z order.
+        /// </summary>
+        MINIMIZE        = 6,
+        /// <summary>
+        /// Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED, except the window is not activated.
+        /// </summary>
+        SHOWMINNOACTIVE = 7,
+        /// <summary>
+        /// Displays the window in its current size and position. This value is similar to SW_SHOW, except the window is not activated.
+        /// </summary>
+        SHOWNA          = 8,
+        /// <summary>
+        /// Activates and displays the window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when restoring a minimized window.
+        /// </summary>
+        RESTORE         = 9,
+        /// <summary>
+        /// Sets the show state based on the SW_ value specified in the STARTUPINFO structure passed to the CreateProcess function by the program that started the application.
+        /// </summary>
+        SHOWDEFAULT     = 10,
+        /// <summary>
+        /// Windows 2000/XP: Minimizes a window, even if the thread that owns the window is not responding. This flag should only be used when minimizing windows from a different thread.
+        /// </summary>
+        FORCEMINIMIZE   = 11,
+        //MAX             = 11,
+
+        // Old ShowWindow() Commands
+        //HIDE_WINDOW        = 0,
+        //SHOW_OPENWINDOW    = 1,
+        //SHOW_ICONWINDOW    = 2,
+        //SHOW_FULLSCREEN    = 3,
+        //SHOW_OPENNOACTIVATE= 4,
+    }
+
+    #endregion
+
+    #region ShowWindowMessageIdentifiers
+
+    /// <summary>
+    /// Identifiers for the WM_SHOWWINDOW message
+    /// </summary>
+    public enum ShowWindowMessageIdentifiers
+    {
+        PARENTCLOSING = 1,
+        OTHERZOOM = 2,
+        PARENTOPENING = 3,
+        OTHERUNZOOM = 4,
+    }
+
+    #endregion
+
     #endregion
 
     #region --- Callbacks ---
 
-        public delegate void WindowProcedure(ref System.Windows.Forms.Message msg);
+    public delegate void WindowProcedure(ref System.Windows.Forms.Message msg);
 
         [UnmanagedFunctionPointerAttribute(CallingConvention.Winapi)]
         public delegate void WindowProcedureEventHandler(object sender, WindowProcedureEventArgs e);

@@ -69,7 +69,7 @@ namespace OpenTK.Platform
             {
                 get
                 {
-                    return !Windows.API.PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
+                    return !Windows.Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
                 }
             }
         }
