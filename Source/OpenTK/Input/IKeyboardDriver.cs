@@ -12,6 +12,6 @@ namespace OpenTK.Input
 {
     public interface IKeyboardDriver
     {
-        IList<Keyboard> Keyboard { get; }
+        IList<KeyboardDevice> Keyboard { get; }
     }
 }
