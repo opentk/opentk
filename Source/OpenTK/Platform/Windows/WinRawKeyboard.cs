@@ -20,7 +20,7 @@ namespace OpenTK.Platform.Windows
 {
     internal class WinRawKeyboard : IKeyboardDriver, IDisposable
     {
-        private List<Keyboard> keyboards = new List<Keyboard>();
+        private List<KeyboardDevice> keyboards = new List<KeyboardDevice>();
         private IntPtr window;
 
         #region internal static Dictionary<VirtualKeys, Input.Key> KeyMap
@@ -163,15 +163,15 @@ namespace OpenTK.Platform.Windows
             RawInputDeviceList[] ridl = new RawInputDeviceList[count];
             for (int i = 0; i < count; i++)
                 ridl[i] = new RawInputDeviceList();
-            API.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
+            Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
 
             // Discover keyboard devices:
             for (int i = 0; i < count; i++)
             {
                 uint size = 0;
-                API.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
+                Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
                 IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
-                API.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
+                Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
                 string name = Marshal.PtrToStringAnsi(name_ptr);
                 Marshal.FreeHGlobal(name_ptr);
                 if (name.ToLower().Contains("root"))
@@ -206,13 +206,13 @@ namespace OpenTK.Platform.Windows
                         (string)regkey.GetValue("Class");
                     if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("keyboard"))
                     {
-                        Keyboard kb = new Keyboard();
+                        KeyboardDevice kb = new KeyboardDevice();
                         kb.Description = deviceDesc;
 
                         // Register the keyboard:
                         RawInputDeviceInfo info = new RawInputDeviceInfo();
                         int devInfoSize = API.RawInputDeviceInfoSize;
-                        API.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICEINFO,
+                        Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICEINFO,
                                 info, ref devInfoSize);
 
                         kb.NumberOfLeds = info.Device.Keyboard.NumberOfIndicators;
@@ -235,7 +235,7 @@ namespace OpenTK.Platform.Windows
 
         #region internal void RegisterKeyboardDevice(Keyboard kb)
 
-        internal void RegisterKeyboardDevice(Keyboard kb)
+        internal void RegisterKeyboardDevice(KeyboardDevice kb)
         {
             RawInputDevice[] rid = new RawInputDevice[1];
             // Keyboard is 1/6 (page/id). See http://www.microsoft.com/whdc/device/input/HID_HWID.mspx
@@ -245,7 +245,7 @@ namespace OpenTK.Platform.Windows
             rid[0].Flags = RawInputDeviceFlags.INPUTSINK;
             rid[0].Target = window;
 
-            if (!API.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
+            if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
             {
                 throw new ApplicationException(
                     String.Format(
@@ -284,7 +284,7 @@ namespace OpenTK.Platform.Windows
                     // came not from a physical keyboard device but from a code-generated input message - in
                     // that case, the event goes to the default (first) keyboard.
                     // TODO: Send the event to all keyboards instead of the default one.
-                    int index = keyboards.FindIndex(delegate(Keyboard kb)
+                    int index = keyboards.FindIndex(delegate(KeyboardDevice kb)
                     {
                         return kb.DeviceID == rin.Header.Device;
                     });
@@ -342,7 +342,7 @@ namespace OpenTK.Platform.Windows
 
         #region --- IKeyboardDriver Members ---
 
-        public IList<Keyboard> Keyboard
+        public IList<KeyboardDevice> Keyboard
         {
             get { return keyboards; }
         }

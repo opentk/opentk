@@ -19,7 +19,7 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal class WinRawMouse : IMouseDriver, IDisposable
     {
-        private List<Mouse> mice = new List<Mouse>();
+        private List<MouseDevice> mice = new List<MouseDevice>();
         private IntPtr window;
 
         #region --- Constructors ---
@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Windows
 
         #region --- IMouseDriver Members ---
 
-        public IList<Mouse> Mouse
+        public IList<MouseDevice> Mouse
         {
             get { return mice; }
         }
@@ -58,15 +58,15 @@ namespace OpenTK.Platform.Windows
             RawInputDeviceList[] ridl = new RawInputDeviceList[count];
             for (int i = 0; i < count; i++)
                 ridl[i] = new RawInputDeviceList();
-            API.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
+            Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
 
             // Discover mouse devices:
             for (int i = 0; i < count; i++)
             {
                 uint size = 0;
-                API.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
+                Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
                 IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
-                API.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
+                Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
                 string name = Marshal.PtrToStringAnsi(name_ptr);
                 Marshal.FreeHGlobal(name_ptr);
 
@@ -102,13 +102,13 @@ namespace OpenTK.Platform.Windows
 
                     if (!String.IsNullOrEmpty(deviceClass) && deviceClass.ToLower().Equals("mouse"))
                     {
-                        OpenTK.Input.Mouse mouse = new OpenTK.Input.Mouse();
+                        OpenTK.Input.MouseDevice mouse = new OpenTK.Input.MouseDevice();
                         mouse.Description = deviceDesc;
 
                         // Register the keyboard:
                         RawInputDeviceInfo info = new RawInputDeviceInfo();
                         int devInfoSize = API.RawInputDeviceInfoSize;
-                        API.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICEINFO,
+                        Functions.GetRawInputDeviceInfo(ridl[i].Device, RawInputDeviceInfoEnum.DEVICEINFO,
                                 info, ref devInfoSize);
 
                         mouse.NumberOfButtons = info.Device.Mouse.NumberOfButtons;
@@ -131,7 +131,7 @@ namespace OpenTK.Platform.Windows
 
         #region internal void RegisterRawDevice(OpenTK.Input.Mouse mouse)
 
-        internal void RegisterRawDevice(OpenTK.Input.Mouse mouse)
+        internal void RegisterRawDevice(OpenTK.Input.MouseDevice mouse)
         {
             RawInputDevice[] rid = new RawInputDevice[1];
             // Mouse is 1/2 (page/id). See http://www.microsoft.com/whdc/device/input/HID_HWID.mspx
@@ -141,7 +141,7 @@ namespace OpenTK.Platform.Windows
             rid[0].Flags = RawInputDeviceFlags.INPUTSINK;
             rid[0].Target = window;
 
-            if (!API.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
+            if (!Functions.RegisterRawInputDevices(rid, 1, API.RawInputDeviceSize))
             {
                 throw new ApplicationException(
                     String.Format(
@@ -167,7 +167,7 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         internal bool ProcessEvent(RawInput rin)
         {
-            Mouse mouse = mice.Find(delegate(Mouse m)
+            MouseDevice mouse = mice.Find(delegate(MouseDevice m)
             {
                 return m.DeviceID == rin.Header.Device;
             });
