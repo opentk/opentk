@@ -1,6 +1,50 @@
-'+' complete, '*' WIP, '-' missing
+[Legend: complete('+') | WIP('*') | missing('-')]
 
+-----------------------
+OpenTK 0.3.11 -> 0.3.12
+-----------------------
+
++ Bind
+	+ Minor output layout updates.
+
++ OpenTK
+	+ Platform
+		+ Renamed Windows.API to Windows.Functions, to match X11.Functions.
+		+ Added many new functions to both Windows and X11 bindings.
+		+ Improved inline documentation to Windows and X11 bindings.
+	+ GameWindow
+		+ Added timing logic to the Run() function. The target UpdateFrame and RenderFrame rates can be set independently. The GameWindow will try to maintain the UpdateFrame rate, dropping RenderFrames if necessary.
+		+ GameWindow.Run() now releases unused CPU time.
+		+ Improved event firing. Resize event called only once now. No need for users to call base.OnXYZ functions.
+		+ Corrected an issue where GameWindow could could fail to shutdown properly under Windows, due to WinRawInput driver eating up the CLOSE event.
+		+ GameWindow exposes only one Mouse and Keyboard now. Multiple keyboard/mouse support is provided through the InputDriver, but is still very much a WIP, so better to use the default Keyboard and Mouse devices reported by GameWindow.
+		+ Added the GameWindow.Title property, which can be used to retrieve or set the GameWindow caption.
+		+ Added new constructors and CreateWindow overloads.
+		+ Greatly improved documentation.
+		+ Internal layout changes, and general performance optimizations.
+	+ Input
+		+ Mouse input support through WinRawMouse and X11Mouse drivers.
+		- Mouse.Wheel and Mouse.WheelDelta are broken on both platforms.
+		- WinRawMouse is very resource intensive. Expect great performance improvements in the next releases.
+		+ Added some missing Keyboard keys.
+	+ Math
+		+ Added Vector2, Vector3 and Vector4 structs, and basic vector math functions. You can pass these structs directly to functions expecting float*, by casting to (float*).
+
++ Examples
+	+ Merged T02: Resizable Window example into T01: Simple Window.
+	+ Added T02: Vertex Array example.
+	+ Added T04: Lighting example.
+	+ Improved keyboard handling.
+	+ Improved documentation, especially T01: Simple Window.
+	+ Slightly cleaned up T10: GLSL Example.
+	+ Examples now use many of the new GameWindow capabilities. Check out T01.
+	+ Added Shape, IsoSphere, and Cube shapes. OpenTK.Example.Shape for more.
+
+
+
+-----------------------
 OpenTK 0.3.10 -> 0.3.11
+-----------------------
 
 + Bind
 	+ Preliminary support for GLU and GLX.
@@ -35,7 +79,10 @@ OpenTK 0.3.10 -> 0.3.11
 	+ Added 'T04: Lit Cube' example (still needs work).
 
 
+
+-----------------------
 OpenTK 0.3.9 -> 0.3.10
+-----------------------
 
 + Bind
 	+ Added Generator for WGL.
