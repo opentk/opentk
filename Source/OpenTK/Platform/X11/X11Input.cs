@@ -144,7 +144,7 @@ namespace OpenTK.Platform.X11
                     //Debug.Print("Keyboard press");
                     keyboardDriver.ProcessKeyboardEvent(ref e.KeyEvent);
                     break;
-
+                    /* See MouseDriver.Poll() instead.
                 case XEventName.ButtonPress:
                 case XEventName.ButtonRelease:
                     //Debug.Print("Button");
@@ -155,6 +155,7 @@ namespace OpenTK.Platform.X11
                     //Debug.Print("Mouse move");
                     mouseDriver.ProcessMotion(ref e.MotionEvent);
                     break;
+                    */
             }
         }
 
@@ -190,8 +191,7 @@ namespace OpenTK.Platform.X11
         #region public void Poll()
 
         /// <summary>
-        /// Consumes to keyboard, mouse, etc events, routing them to their
-        /// respective drivers.
+        /// Polls and updates state of all keyboard, mouse and joystick devices.
         /// </summary>
         public void Poll()
         {
