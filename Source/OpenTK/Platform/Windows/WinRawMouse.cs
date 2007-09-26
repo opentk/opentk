@@ -187,28 +187,26 @@ namespace OpenTK.Platform.Windows
                     if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0) mouse[MouseButton.Button2] = true;
                     if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0) mouse[MouseButton.Button2] = false;
 
-
                     if (rin.Data.Mouse.ButtonFlags == RawInputMouseState.WHEEL)
                     {
-                        //mouse.WheelDelta = rin.Data.Mouse.ButtonData;
-                        //mouse.Wheel += rin.Data.Mouse.ButtonData;
-                        mouse.WheelDelta = rin.Data.Mouse.ButtonData > 0 ? 1 : -1;
-                        mouse.Wheel += mouse.WheelDelta;
+                        mouse.Wheel += rin.Data.Mouse.ButtonData / 120;
                     }
 
                     if (rin.Data.Mouse.Flags == RawMouseFlags.MOUSE_MOVE_ABSOLUTE)
                     {
-                        mouse.XDelta = rin.Data.Mouse.LastX - mouse.X;
-                        mouse.YDelta = rin.Data.Mouse.LastY - mouse.Y;
+                        //mouse.XDelta = rin.Data.Mouse.LastX - mouse.X;
+                        //mouse.YDelta = rin.Data.Mouse.LastY - mouse.Y;
                         mouse.X = rin.Data.Mouse.LastX;
                         mouse.Y = rin.Data.Mouse.LastY;
                     }
                     else if (rin.Data.Mouse.Flags == RawMouseFlags.MOUSE_MOVE_RELATIVE)
                     {
-                        mouse.XDelta = rin.Data.Mouse.LastX;
-                        mouse.YDelta = rin.Data.Mouse.LastY;
-                        mouse.X += mouse.XDelta;
-                        mouse.Y += mouse.YDelta;
+                        //mouse.XDelta = rin.Data.Mouse.LastX;
+                        //mouse.YDelta = rin.Data.Mouse.LastY;
+                        //mouse.X += mouse.XDelta;
+                        //mouse.Y += mouse.YDelta;
+                        mouse.X += rin.Data.Mouse.LastX;
+                        mouse.Y += rin.Data.Mouse.LastY;
                     }
 
                     return false;
@@ -224,7 +222,6 @@ namespace OpenTK.Platform.Windows
 
         public void Poll()
         {
-
         }
 
         #endregion
