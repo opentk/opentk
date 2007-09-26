@@ -28,15 +28,12 @@ namespace Examples.Tutorial
         #region OnLoad
 
         /// <summary>
-        /// Load resources here.
+        /// Setup OpenGL and load resources here.
         /// </summary>
         /// <param name="e">Not used.</param>
         public override void OnLoad(EventArgs e)
         {
-            Trace.WriteLine(String.Format("OpenGL driver information: {0}, {1}, {2}",
-                GL.GetString(GL.Enums.StringName.RENDERER),
-                GL.GetString(GL.Enums.StringName.VENDOR),
-                GL.GetString(GL.Enums.StringName.VERSION)));
+            GL.ClearColor(Color.MidnightBlue);
         }
 
         #endregion
