@@ -20,6 +20,9 @@ using OpenTK.Platform;
 
 namespace Examples.Tutorial
 {
+    /// <summary>
+    /// Demonstrates immediate mode rendering. Example is incomplete, and will probably go away in the future.
+    /// </summary>
     public class T03_Immediate_Mode_Cube : OpenTK.GameWindow, IExample
     {
         #region --- Fields ---
