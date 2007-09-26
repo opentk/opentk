@@ -77,7 +77,7 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return !API.PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
+                return !Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
             }
         }
 
