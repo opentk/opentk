@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using OpenTK.Input;
+
 namespace OpenTK.Platform
 {
     /// <summary>
@@ -25,6 +27,11 @@ namespace OpenTK.Platform
         bool Exists { get; }
         //bool IsExiting { get; }
         IWindowInfo WindowInfo { get; }
+
+        string Title { get; set; }
+        bool Visible { get; set; }
+
+        IInputDriver InputDriver { get; }
 
         event CreateEvent Create;
         event DestroyEvent Destroy;
