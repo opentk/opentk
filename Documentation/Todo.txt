@@ -25,9 +25,7 @@ Generic Todos:
 
 Bind:
 * Get ready for OpenGL 3.0 (Long Peaks).
-* Implement Glx and Glu bindings. Agl, too?
-* Improve speed (FunctionCollection.AddChecked is very slow).
-* Get rid of the "object" overloads in favour of generics.
+* Implement Glx bindings.
 
 
 OpenTK.OpenGL todos:
@@ -37,20 +35,17 @@ OpenTK.OpenGL todos:
 
 OpenTK.Platform:
 * GLContext class:
-	+ Add more constructors.
+	+ FSAA support.
+	+ VSYNC support.
 	+ Add native support for the MacOS X platform (now goes through X).
 * GLControl class:
 	+ Improve the interface. Add more constructors.
 
 
 OpenTK.Input todos:
-* Complete the Key class.
-* Implement mouse input.
-+ Implement other input devices.
+* Fix Mouse.Wheel and Mouse.WheelDelta.
++ Implement Joystick input.
 
-
-OpenTK.Timing todos:
-+ Start implementing the Timer module.
 
 
 Examples:
@@ -58,7 +53,10 @@ Examples:
 
 
 OpenTK.Math todos:
-+ Start implementing the Math module.
+* Test Vectors.
++ Add Matrices
++ Add Quaternions.
++ Add Noise module.
 
 
 OpenTK.OpenAL todos:

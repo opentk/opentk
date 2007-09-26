@@ -1,6 +1,6 @@
 ================================================================================
 
-OpenTK 0.3.11.4 WIP Release notes
+OpenTK 0.3.12.4 WIP Release notes
 
 IMPORTANT: This release is intended for testing and experimentation only. Use at your own risk!
 
