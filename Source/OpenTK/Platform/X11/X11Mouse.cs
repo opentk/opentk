@@ -18,7 +18,7 @@ namespace OpenTK.Platform.X11
     internal sealed class X11Mouse : IMouseDriver
     {
         WindowInfo window;
-        List<Mouse> mice = new List<Mouse>();
+        List<MouseDevice> mice = new List<MouseDevice>();
 
         #region Constructor
 
@@ -28,7 +28,7 @@ namespace OpenTK.Platform.X11
 
             // Just create one mouse now.
             // TODO: support for multiple devices through evdev.
-            Mouse m = new Mouse();
+            MouseDevice m = new MouseDevice();
             m.Description = "Default X11 mouse";
             m.DeviceID = IntPtr.Zero;
             m.NumberOfButtons = 5;
@@ -40,7 +40,7 @@ namespace OpenTK.Platform.X11
 
         #region --- IMouseDriver Members ---
 
-        public IList<Mouse> Mouse
+        public IList<MouseDevice> Mouse
         {
             get { return mice; }
         }
@@ -54,13 +54,14 @@ namespace OpenTK.Platform.X11
         /// <returns>True if the event was processed, false otherwise.</returns>
         internal bool ProcessButton(ref X11.XButtonEvent e)
         {
-            Mouse m = mice[0];
+            MouseDevice m = mice[0];
             bool pressed = e.type == XEventName.ButtonPress;
-            if ((e.state & (int)X11.MouseMask.Button1Mask) != 0) m[OpenTK.Input.MouseButton.Button1] = pressed;
-            if ((e.state & (int)X11.MouseMask.Button2Mask) != 0) m[OpenTK.Input.MouseButton.Button2] = pressed;
-            if ((e.state & (int)X11.MouseMask.Button3Mask) != 0) m[OpenTK.Input.MouseButton.Button3] = pressed;
-            if ((e.state & (int)X11.MouseMask.Button4Mask) != 0) m[OpenTK.Input.MouseButton.Button4] = pressed;
-            if ((e.state & (int)X11.MouseMask.Button5Mask) != 0) m[OpenTK.Input.MouseButton.Button5] = pressed;
+            //e.
+            if ((e.state & (int)X11.MouseMask.Button1Mask) != 0) m[OpenTK.Input.MouseButton.Left] = pressed;
+            if ((e.state & (int)X11.MouseMask.Button2Mask) != 0) m[OpenTK.Input.MouseButton.Middle] = pressed;
+            if ((e.state & (int)X11.MouseMask.Button3Mask) != 0) m[OpenTK.Input.MouseButton.Right] = pressed;
+            if ((e.state & (int)X11.MouseMask.Button4Mask) != 0) m.Wheel++;
+            if ((e.state & (int)X11.MouseMask.Button5Mask) != 0) m.Wheel--;
             return true;
         }
 
@@ -71,10 +72,28 @@ namespace OpenTK.Platform.X11
         /// <returns>True if the event was processed, false otherwise.</returns>
         internal bool ProcessMotion(ref X11.XMotionEvent e)
         {
-            Mouse m = mice[0];
+            MouseDevice m = mice[0];
             m.X = e.x;
             m.Y = e.y;
             return true;
+        }
+
+        /// <summary>
+        /// Queries the mouse pos.
+        /// </summary>
+        internal void Poll()
+        {
+            IntPtr root, child;
+            int state, root_x, root_y, win_x, win_y;
+            MouseDevice m = mice[0];
+            Functions.XQueryPointer(window.Display, window.Handle, out root, out child, out root_x, out root_y, out win_x, out win_y, out state);
+            m[OpenTK.Input.MouseButton.Left] = (state & (int)X11.MouseMask.Button1Mask) != 0;
+            m[OpenTK.Input.MouseButton.Middle] = (state & (int)X11.MouseMask.Button2Mask) != 0;
+            m[OpenTK.Input.MouseButton.Right] = (state & (int)X11.MouseMask.Button3Mask) != 0;
+            m.Wheel += (state & (int)X11.MouseMask.Button4Mask);
+            m.Wheel -= (state & (int)X11.MouseMask.Button5Mask);
+            m.X = root_x;
+            m.Y = root_y;
         }
     }
 }

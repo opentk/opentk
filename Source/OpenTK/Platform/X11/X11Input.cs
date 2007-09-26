@@ -38,7 +38,7 @@ namespace OpenTK.Platform.X11
         /// the device specific drivers (Keyboard, Mouse, Hid).
         /// </summary>
         /// <param name="attach">The window which the InputDriver will attach itself on.</param>
-        public X11Input(X11.WindowInfo attach)
+        public X11Input(IWindowInfo attach)
         {
             Debug.WriteLine("Initalizing X11 input driver.");
             Debug.Indent();
@@ -75,14 +75,14 @@ namespace OpenTK.Platform.X11
 
             Functions.XMapWindow(window.Display, window.Handle);
             */
-            window = attach;
+            //window = attach;
             keyboardDriver = new X11Keyboard(window);
             mouseDriver = new X11Mouse(window);
 
-            Thread pollingThread = new Thread(InternalPoll);
+            //Thread pollingThread = new Thread(InternalPoll);
             //pollingThread.Priority = ThreadPriority.BelowNormal;
-            pollingThread.IsBackground = true;
-            pollingThread.Start();
+            //pollingThread.IsBackground = true;
+            //pollingThread.Start();
             
             Debug.Unindent();
         }
@@ -93,45 +93,68 @@ namespace OpenTK.Platform.X11
         {
             try
             {
-                while (!disposed)
-                {
-                    Functions.XMaskEvent(window.Display,
-                        EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
-                        EventMask.ButtonPressMask | EventMask.ButtonReleaseMask |
-                        EventMask.KeyPressMask | EventMask.KeyReleaseMask |
-                        EventMask.StructureNotifyMask, ref e);
+                //while (!disposed)
+                //{
+                //    Functions.XMaskEvent(window.Display,
+                //        EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
+                //        EventMask.ButtonPressMask | EventMask.ButtonReleaseMask |
+                //        EventMask.KeyPressMask | EventMask.KeyReleaseMask |
+                //        EventMask.StructureNotifyMask, ref e);
 
-                    if (disposed || disposing)
-                        return;
+                //    if (disposed || disposing)
+                //        return;
 
-                    switch (e.type)
-                    {
-                        case XEventName.KeyPress:
-                        case XEventName.KeyRelease:
-                            keyboardDriver.ProcessKeyboardEvent(ref e.KeyEvent);
-                            break;
+                //    switch (e.type)
+                //    {
+                //        case XEventName.KeyPress:
+                //        case XEventName.KeyRelease:
+                //            keyboardDriver.ProcessKeyboardEvent(ref e.KeyEvent);
+                //            break;
 
-                        case XEventName.ButtonPress:
-                        case XEventName.ButtonRelease:
-                            mouseDriver.ProcessButton(ref e.ButtonEvent);
-                            break;
+                //        case XEventName.ButtonPress:
+                //        case XEventName.ButtonRelease:
+                //            mouseDriver.ProcessButton(ref e.ButtonEvent);
+                //            break;
 
-                        case XEventName.MotionNotify:
-                            mouseDriver.ProcessMotion(ref e.MotionEvent);
-                            break;
+                //        case XEventName.MotionNotify:
+                //            mouseDriver.ProcessMotion(ref e.MotionEvent);
+                //            break;
 
-                        case XEventName.DestroyNotify:
-                            Functions.XPutBackEvent(window.Display, ref e);
-                            //pollingThread.Abort();
-                            return;
-                    }
-                }
+                //        case XEventName.DestroyNotify:
+                //            Functions.XPutBackEvent(window.Display, ref e);
+                //            //pollingThread.Abort();
+                //            return;
+                //    }
+                //}
             }
             catch (ThreadAbortException expt)
             {
                 Functions.XUnmapWindow(window.Display, window.Handle);
                 Functions.XDestroyWindow(window.Display, window.Handle);
                 return;
+            }
+        }
+
+        internal void ProcessEvent(ref XEvent e)
+        {
+            switch (e.type)
+            {
+                case XEventName.KeyPress:
+                case XEventName.KeyRelease:
+                    //Debug.Print("Keyboard press");
+                    keyboardDriver.ProcessKeyboardEvent(ref e.KeyEvent);
+                    break;
+
+                case XEventName.ButtonPress:
+                case XEventName.ButtonRelease:
+                    //Debug.Print("Button");
+                    mouseDriver.ProcessButton(ref e.ButtonEvent);
+                    break;
+
+                case XEventName.MotionNotify:
+                    //Debug.Print("Mouse move");
+                    mouseDriver.ProcessMotion(ref e.MotionEvent);
+                    break;
             }
         }
 
@@ -148,7 +171,7 @@ namespace OpenTK.Platform.X11
 
         #region public IList<Keyboard> Keyboard
 
-        public IList<Keyboard> Keyboard
+        public IList<KeyboardDevice> Keyboard
         {
             get { return keyboardDriver.Keyboard; }
         }
@@ -157,7 +180,7 @@ namespace OpenTK.Platform.X11
 
         #region public IList<Mouse> Mouse
 
-        public IList<Mouse> Mouse
+        public IList<MouseDevice> Mouse
         {
             get { return mouseDriver.Mouse; }
         }
@@ -172,6 +195,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public void Poll()
         {
+            mouseDriver.Poll();
         }
 
         #endregion

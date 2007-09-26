@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
 using OpenTK.OpenGL;
+using OpenTK.Input;
 
 //using OpenTK.OpenGL;
 
@@ -27,6 +28,7 @@ namespace OpenTK.Platform.X11
         private X11GLContext glContext;
         private WindowInfo window = new WindowInfo();
         private DisplayMode mode = new DisplayMode();
+        X11Input driver;
 
         // Number of pending events.
         private int pending = 0;
@@ -36,8 +38,7 @@ namespace OpenTK.Platform.X11
         // C# ResizeEventArgs
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
-        // Low level X11 resize request
-        // Event used for event loop.
+        // Used for event loop.
         private XEvent e = new XEvent();
 
         private bool disposed;
@@ -82,7 +83,7 @@ namespace OpenTK.Platform.X11
 
                 Functions.XNextEvent(window.Display, ref e);
 
-                Debug.Print("Event: {0} ({1} pending)", e.type, pending);
+                //Debug.Print("Event: {0} ({1} pending)", e.type, pending);
 
                 // Respond to the event e
                 switch (e.type)
@@ -90,7 +91,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.ReparentNotify:
                         // TODO: Is there a more suitable place to raise the Create event?
                         // ReparentNotify seems to be the first event raised on window creation.
-                        this.OnCreate(EventArgs.Empty);
+                        //this.OnCreate(EventArgs.Empty);
                         break;
 
 
@@ -134,8 +135,9 @@ namespace OpenTK.Platform.X11
                     case XEventName.MotionNotify:
                     case XEventName.ButtonPress:
                     case XEventName.ButtonRelease:
-                        Functions.XPutBackEvent(window.Display, ref e);
-                        return;
+                        //Functions.XPutBackEvent(window.Display, ref e);
+                        driver.ProcessEvent(ref e);
+                        break;
 
                     default:
                         Debug.WriteLine(String.Format("{0} event was not handled", e.type));
@@ -215,6 +217,49 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public string Text
+
+        public string Title
+        {
+            get
+            {
+                return String.Empty;
+            }
+            set
+            {
+
+            }
+        }
+
+        #endregion
+
+        #region public bool Visible
+
+        public bool Visible
+        {
+            get
+            {
+                return true;
+            }
+            set
+            {
+            }
+        }
+
+        #endregion
+
+        #region public IInputDriver InputDriver
+
+        public IInputDriver InputDriver
+        {
+            get
+            {
+                return driver;
+            }
+        }
+
+        #endregion
+
         #region public IWindowInfo WindowInfo
 
         public IWindowInfo WindowInfo
@@ -273,9 +318,9 @@ namespace OpenTK.Platform.X11
                     API.CreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
                 window.EventMask = 
                     EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
-                    EventMask.KeyReleaseMask | EventMask.KeyPressMask |
-                    EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
-                    EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
+                    EventMask.KeyReleaseMask | EventMask.KeyPressMask;/* |
+                    EventMask.PointerMotionMask | /* Bad! EventMask.PointerMotionHintMask | 
+                    EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;*/
                 attributes.event_mask = (IntPtr)window.EventMask;
 
                 uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
@@ -316,6 +361,8 @@ namespace OpenTK.Platform.X11
                 glContext.MakeCurrent();
 
                 API.MapRaised(window.Display, window.Handle);
+
+                driver = new X11Input(window);
 
                 GL.LoadAll();
                 Glu.LoadAll();
