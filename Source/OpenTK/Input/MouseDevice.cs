@@ -10,7 +10,10 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    public sealed class Mouse : IMouse
+    /// <summary>
+    /// The MouseDevice class represents a mouse device and provides methods to query its status.
+    /// </summary>
+    public sealed class MouseDevice : IInputDevice
     {
         private string description;
         private int numButtons, numWheels;
@@ -20,12 +23,18 @@ namespace OpenTK.Input
 
         #region --- IInputDevice Members ---
 
+        /// <summary>
+        /// Gets a string describing this MouseDevice.
+        /// </summary>
         public string Description
         {
             get { return description; }
             internal set { description = value; }
         }
 
+        /// <summary>
+        /// Gets an value indicating the InputDeviceType of this InputDevice. 
+        /// </summary>
         public InputDeviceType DeviceType
         {
             get { return InputDeviceType.Mouse; }
@@ -35,24 +44,36 @@ namespace OpenTK.Input
 
         #region --- IMouse Members ---
 
+        /// <summary>
+        /// Gets an integer representing the number of buttons on this MouseDevice.
+        /// </summary>
         public int NumberOfButtons
         {
             get { return numButtons; }
             internal set { numButtons = value; }
         }
 
+        /// <summary>
+        /// Gets an integer representing the number of wheels on this MouseDevice.
+        /// </summary>
         public int NumberOfWheels
         {
             get { return numWheels; }
             internal set { numWheels = value; }
         }
 
+        /// <summary>
+        /// Gets an IntPtr representing a device dependent ID.
+        /// </summary>
         public IntPtr DeviceID
         {
             get { return id; }
             internal set { id = value; }
         }
 
+        /// <summary>
+        /// Gets an integer representing the absolute wheel position.
+        /// </summary>
         public int Wheel
         {
             get { return wheel; }
@@ -62,7 +83,10 @@ namespace OpenTK.Input
             }
         }
 
-        internal int WheelDelta
+        /// <summary>
+        /// Gets an integer representing the relative wheel movement.
+        /// </summary>
+        public int WheelDelta
         {
             get
             {
@@ -76,32 +100,52 @@ namespace OpenTK.Input
             }
         }
 
+        /// <summary>
+        /// Gets an integer representing the absolute x position of the pointer, in screen pixel coordinates.
+        /// </summary>
         public int X
         {
             get { return x; }
             internal set { x = value; }
         }
 
+        /// <summary>
+        /// Gets an integer representing the absolute y position of the pointer, in screen pixel coordinates.
+        /// </summary>
         public int Y
         {
             get { return y; }
             internal set { y = value; }
         }
 
+        /// <summary>
+        /// Gets an integer representing the relative x movement of the pointer, in pixel coordinates.
+        /// </summary>
         public int XDelta
         {
             get { return delta_x; }
             internal set { delta_x = value; }
         }
 
+        /// <summary>
+        /// Gets an integer representing the relative y movement of the pointer, in pixel coordinates.
+        /// </summary>
         public int YDelta
         {
             get { return delta_y; }
             internal set { delta_y = value; }
         }
 
-        public event MouseMoveEvent Move;
+        //public event MouseMoveEvent Move;
+
+        /// <summary>
+        /// Occurs when a button is pressed.
+        /// </summary>
         public event MouseButtonDownEvent ButtonDown;
+
+        /// <summary>
+        /// Occurs when a button is released.
+        /// </summary>
         public event MouseButtonUpEvent ButtonUp;
 
         #endregion
@@ -121,8 +165,8 @@ namespace OpenTK.Input
                     ButtonUp(this, b);
                 }
                 button[(int)b] = value;
+                //System.Diagnostics.Debug.Print("Mouse button {0} {1}", b, value ? "down" : "up");
             }
-
             get
             {
                 return button[(int)b];
@@ -130,8 +174,33 @@ namespace OpenTK.Input
         }
 
         #endregion
+
+        #region --- Public Methods ---
+
+        public override int GetHashCode()
+        {
+            //return base.GetHashCode();
+            return (int)(numButtons ^ numWheels ^ id.GetHashCode() ^ description.GetHashCode());
+        }
+
+        public override string ToString()
+        {
+            return String.Format("ID: {0} ({1}). Buttons: {2}, Wheels: {3}",
+                DeviceID, Description, NumberOfButtons, NumberOfWheels);
+        }
+
+        #endregion
     }
 
+    //public delegate void MouseMoveEvent(MouseDevice sender, MouseMoveData key);
+    public delegate void MouseButtonDownEvent(MouseDevice sender, MouseButton button);
+    public delegate void MouseButtonUpEvent(MouseDevice sender, MouseButton button);
+
+    #region public enum MouseButton
+
+    /// <summary>
+    /// Enumerates all possible mouse buttons.
+    /// </summary>
     public enum MouseButton
     {
         Left = 0,
@@ -149,37 +218,20 @@ namespace OpenTK.Input
         LastButton
     }
 
-    public class MouseWheel
-    {
-        private int position;
-        private int delta;
+    #endregion
 
-        /// <summary>
-        /// Gets the absolute position of the mouse wheel.
-        /// </summary>
-        public int Position
-        {
-            get { return position; }
-            internal set { position = value; }
-        }
+    #region internal class MouseMoveData
 
-        /// <summary>
-        /// Gets the relative movement of the mouse wheel.
-        /// </summary>
-        public int Delta
-        {
-            get { return delta; }
-            internal set { delta = value; }
-        }
-    }
-
-    public class MouseMoveData
+    /// <summary>
+    /// Not used yet.
+    /// </summary>
+    internal class MouseMoveData
     {
         private int x;
         private int y;
         private int deltaX;
         private int deltaY;
-        private MouseWheel wheel;
+        private int wheel, deltaWheel;
 
         /// <summary>
         /// Gets the absolute X position of the mouse in screen pixel coordinates.
@@ -220,10 +272,12 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets data relevant to the mouse wheel.
         /// </summary>
-        public MouseWheel Wheel
-        {
-            get { return wheel; }
-            internal set { wheel = value; }
-        }
+        //public MouseWheel Wheel
+        //{
+        //    get { return wheel; }
+        //    internal set { wheel = value; }
+        //}
     }
+
+    #endregion
 }
