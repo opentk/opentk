@@ -1142,6 +1142,7 @@ XF86VidModeGetGammaRampSize(
 
         #region XQueryKeymap
 
+        /*
         /// <summary>
         /// The XQueryKeymap() function returns a bit vector for the logical state of the keyboard, where each bit set to 1 indicates that the corresponding key is currently pressed down. The vector is represented as 32 bytes. Byte N (from 0) contains the bits for keys 8N to 8N + 7 with the least-significant bit in the byte representing key 8N.
         /// </summary>
@@ -1150,6 +1151,7 @@ XF86VidModeGetGammaRampSize(
         /// <remarks>Note that the logical state of a device (as seen by client applications) may lag the physical state if device event processing is frozen.</remarks>
         [DllImport("libX11", EntryPoint = "XQueryKeymap")]
         extern public static void XQueryKeymap(IntPtr display, [MarshalAs(UnmanagedType.LPArray, SizeConst = 32), In, Out] Keymap keys);
+        */
 
         /// <summary>
         /// The XQueryKeymap() function returns a bit vector for the logical state of the keyboard, where each bit set to 1 indicates that the corresponding key is currently pressed down. The vector is represented as 32 bytes. Byte N (from 0) contains the bits for keys 8N to 8N + 7 with the least-significant bit in the byte representing key 8N.
@@ -1187,7 +1189,7 @@ XF86VidModeGetGammaRampSize(
         
         #endregion
     }
-
+    /*
     [StructLayout(LayoutKind.Sequential)]
     public struct Keymap
     {
@@ -1207,4 +1209,5 @@ XF86VidModeGetGammaRampSize(
             }
         }
     }
+    */
 }
