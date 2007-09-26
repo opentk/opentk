@@ -90,8 +90,10 @@ namespace OpenTK.Platform.X11
             m[OpenTK.Input.MouseButton.Left] = (state & (int)X11.MouseMask.Button1Mask) != 0;
             m[OpenTK.Input.MouseButton.Middle] = (state & (int)X11.MouseMask.Button2Mask) != 0;
             m[OpenTK.Input.MouseButton.Right] = (state & (int)X11.MouseMask.Button3Mask) != 0;
-            m.Wheel += (state & (int)X11.MouseMask.Button4Mask);
-            m.Wheel -= (state & (int)X11.MouseMask.Button5Mask);
+            if ((state & (int)X11.MouseMask.Button4Mask) != 0) m.Wheel++;
+            if ((state & (int)X11.MouseMask.Button5Mask) != 0) m.Wheel--;
+            //m.Wheel += (state & (int)X11.MouseMask.Button4Mask);
+            //m.Wheel -= (state & (int)X11.MouseMask.Button5Mask);
             m.X = root_x;
             m.Y = root_y;
         }
