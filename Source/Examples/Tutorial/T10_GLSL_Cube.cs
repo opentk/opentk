@@ -22,7 +22,7 @@ using OpenTK;
 namespace Examples.Tutorial
 {
     /// <summary>
-    /// Demonstrates how to load and use a simple OpenGL shader program.
+    /// Demonstrates how to load and use a simple OpenGL shader program. Example is incomplete (documentation).
     /// </summary>
     public class T10_GLSL_Cube : GameWindow, IExample
     {

@@ -15,6 +15,9 @@ using OpenTK.OpenGL;
 
 namespace Examples.Tutorial
 {
+    /// <summary>
+    /// Demonstrates Vertex Arrays (in system memory).  Example is incomplete (documentation).
+    /// </summary>
     class T02_Vertex_Array_Cube : GameWindow, IExample
     {
         float angle;

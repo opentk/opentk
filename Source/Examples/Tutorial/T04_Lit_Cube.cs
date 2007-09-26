@@ -16,7 +16,7 @@ using Examples.Shapes;
 namespace Examples.Tutorial
 {
     /// <summary>
-    /// Demonstrates fixed-function OpenGL lighting. Tutorial is incomplete!
+    /// Demonstrates fixed-function OpenGL lighting.  Example is incomplete (documentation).
     /// </summary>
     class T04_Lit_Cube : GameWindow, IExample
     {
@@ -53,8 +53,9 @@ namespace Examples.Tutorial
             GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.DIFFUSE, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.SPECULAR, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.LightModelv(GL.Enums.LightModelParameter.LIGHT_MODEL_AMBIENT, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
-            //GL.Enable(GL.Enums.EnableCap.LIGHTING);
-            //GL.Enable(GL.Enums.EnableCap.LIGHT0);
+            GL.LightModel(GL.Enums.LightModelParameter.LIGHT_MODEL_TWO_SIDE, 1);
+            GL.Enable(GL.Enums.EnableCap.LIGHTING);
+            GL.Enable(GL.Enums.EnableCap.LIGHT0);
 
             // Use GL.Material to set your object's material parameters..
             GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.AMBIENT, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
@@ -113,17 +114,17 @@ namespace Examples.Tutorial
             }
 
             if (Mouse[OpenTK.Input.MouseButton.Left])
-                x_angle += Mouse.XDelta * 2;
+                x_angle += Mouse.XDelta;
             else
                 x_angle += 0.5f;
 
-            if (Mouse[OpenTK.Input.MouseButton.Right])
-                zoom += Mouse.YDelta * 0.5f;
+            zoom = Mouse.Wheel * 0.5f;
 
-            if (x_angle > 720.0f)
-                x_angle -= 720.0f;
-            else if (x_angle < -720.0f)
-                x_angle += 720.0f;
+            // Do not leave x_angle drift too far away, as this will cause inaccuracies.
+            if (x_angle > 360.0f)
+                x_angle -= 360.0f;
+            else if (x_angle < -360.0f)
+                x_angle += 360.0f;
         }
 
         #endregion
