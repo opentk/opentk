@@ -135,6 +135,20 @@ void main()
 
         #endregion
 
+        #region OnUnload
+
+        public override void OnUnload(EventArgs e)
+        {
+            if (shader_program != 0)
+                GL.DeleteProgram(shader_program);
+            if (fragment_shader_object != 0)
+                GL.DeleteShader(fragment_shader_object);
+            if (vertex_shader_object != 0)
+                GL.DeleteShader(vertex_shader_object);
+        }
+
+        #endregion
+
         #region OnResize
 
         /// <summary>
@@ -228,19 +242,6 @@ void main()
         {
             // Lock UpdateFrame and RenderFrame at 60Hz.
             Run(60.0, 60.0);
-        }
-
-        #endregion
-
-        #region public override void Dispose()
-
-        public override void Dispose()
-        {
-            GL.DeleteProgram(shader_program);
-            GL.DeleteShader(fragment_shader_object);
-            GL.DeleteShader(vertex_shader_object);
-
-            base.Dispose();
         }
 
         #endregion
