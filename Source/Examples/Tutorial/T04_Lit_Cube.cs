@@ -52,8 +52,10 @@ namespace Examples.Tutorial
             GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.AMBIENT, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
             GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.DIFFUSE, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.SPECULAR, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
+            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.SPOT_EXPONENT, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
             GL.LightModelv(GL.Enums.LightModelParameter.LIGHT_MODEL_AMBIENT, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
             GL.LightModel(GL.Enums.LightModelParameter.LIGHT_MODEL_TWO_SIDE, 1);
+            GL.LightModel(GL.Enums.LightModelParameter.LIGHT_MODEL_LOCAL_VIEWER, 1);
             GL.Enable(GL.Enums.EnableCap.LIGHTING);
             GL.Enable(GL.Enums.EnableCap.LIGHT0);
 
@@ -118,7 +120,9 @@ namespace Examples.Tutorial
             else
                 x_angle += 0.5f;
 
-            zoom = Mouse.Wheel * 0.5f;
+            // zoom = Mouse.Wheel * 0.5f;   // Mouse.Wheel is broken on both Linux and Windows.
+            if (Mouse[OpenTK.Input.MouseButton.Right])
+                zoom += Mouse.YDelta;
 
             // Do not leave x_angle drift too far away, as this will cause inaccuracies.
             if (x_angle > 360.0f)
