@@ -16,27 +16,51 @@ using OpenTK.OpenGL;
 
 namespace OpenTK
 {
+    /// <summary>
+    /// The GameWindow class contains cross-platform methods to create and render on an OpenGL window, handle input and load resources.
+    /// </summary>
+    /// <remarks>
+    /// GameWindow contains several events you can hook or override to add your custom logic:
+    /// <list>
+    /// <item>OnLoad: Occurs after creating the OpenGL context, but before entering the main loop. Override to load resources.</item>
+    /// <item>OnResize: Occurs whenever GameWindow is resized. You should update the OpenGL Viewport and Projection Matrix here.</item>
+    /// <item>OnUpdateFrame: Occurs at the specified logic update rate. Override to add your game logic.</item>
+    /// <item>OnRenderFrame: Occurs at the specified frame render rate. Override to add your rendering code.</item>
+    /// </list>
+    /// Call the Run() method to start the application's main loop. Run(double, double) takes two parameters that
+    /// specify the logic update rate, and the render update rate.
+    /// </remarks>
     public class GameWindow : OpenTK.Platform.IGameWindow
     {
         #region --- Fields ---
 
-        private INativeGLWindow glWindow;
-        private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
-        private DisplayMode mode;
+        INativeGLWindow glWindow;
+        DisplayMode mode;
 
-        private InputDriver driver;
+        ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
-        private bool isExiting;
-        private bool disposed;
+        bool isExiting;
+        bool disposed;
 
-        private double updateTime, renderTime, eventTime, frameTime;
+        double updateTime, renderTime, eventTime, frameTime;
+
+        int width, height;
+
+        #endregion
+
+        #region --- Internal Fields ---
+
+        bool MustResize
+        {
+            get { return glWindow.Width != this.Width || glWindow.Height != this.Height; }
+        }
 
         #endregion
 
         #region --- Contructors ---
 
         /// <summary>
-        /// Constructs a new GameWindow, using a safe DisplayMode.
+        /// Constructs a new GameWindow. Call CreateWindow() to open a render window.
         /// </summary>
         public GameWindow()
         {
@@ -58,9 +82,29 @@ namespace OpenTK
                     throw new PlatformNotSupportedException("Your platform is not supported currently. Please, refer to http://opentk.sourceforge.net for more information.");
             }
 
-            glWindow.Resize += new ResizeEvent(glWindow_Resize);
-            glWindow.Create += new CreateEvent(glWindow_CreateInputDriver);
+            //glWindow.Resize += new ResizeEvent(glWindow_Resize);
             glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
+        }
+
+        /// <summary>
+        /// Constructs a new GameWindow, and opens a render window with the specified DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the GameWindow.</param>
+        public GameWindow(DisplayMode mode)
+            : this()
+        {
+            CreateWindow(mode);
+        }
+
+        /// <summary>
+        /// Constructs a new GameWindow with the specified title, and opens a render window with the specified DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the GameWindow.</param>
+        /// <param name="title">The Title of the GameWindow.</param>
+        public GameWindow(DisplayMode mode, string title)
+            : this()
+        {
+            CreateWindow(mode, title);
         }
 
         void glWindow_Destroy(object sender, EventArgs e)
@@ -72,38 +116,45 @@ namespace OpenTK
             //this.Dispose();
         }
 
-        void glWindow_CreateInputDriver(object sender, EventArgs e)
-        {
-            //glWindow.Context.MakeCurrent();
-
-            if (driver == null)
-                driver = new InputDriver(this.WindowInfo);
-            glWindow.Create -= glWindow_CreateInputDriver;
-
-            this.OnCreate(e);
-        }
-
         void glWindow_Resize(object sender, ResizeEventArgs e)
         {
-            this.OnResize(e);
+            this.OnResizeInternal(e);
         }
 
         #endregion
 
-        #region --- Internal Properties ---
+        #region --- Functions ---
 
-        #region public IList<OpenTK.Input.IInputDevice> Input
+        #region public void CreateWindow(DisplayMode mode, string title)
 
-        internal InputDriver InputDriver
+        /// <summary>
+        /// Creates a render window for the calling GameWindow, with the specified DisplayMode and Title.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the render window.</param>
+        /// <param name="title">The Title of the render window.</param>
+        /// <remarks>
+        /// It is an error to call this function when a render window already exists.
+        /// <para>Call DestroyWindow to close the render window.</para>
+        /// </remarks>
+        /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
+        public void CreateWindow(DisplayMode mode, string title)
         {
-            get
+            if (!Exists)
             {
-                if (driver == null && !this.IsExiting)
+                try
                 {
-                    Debug.WriteLine("WARNING: Accessed null InputDriver - creating new. This may indicate a prorgamming error.");
-                    driver = new InputDriver(this.WindowInfo);
+                    glWindow.CreateWindow(mode);
+                    this.Title = title;
                 }
-                return driver;
+                catch (ApplicationException expt)
+                {
+                    Debug.Print(expt.ToString());
+                    throw;
+                }
+            }
+            else
+            {
+                throw new ApplicationException("A render window already exists for this GameWindow.");
             }
         }
 
@@ -178,11 +229,49 @@ namespace OpenTK
         #region public bool Exists
 
         /// <summary>
-        /// Gets a value indicating whether a render window has been exists.
+        /// Gets a value indicating whether a render window exists.
         /// </summary>
         public bool Exists
         {
             get { return glWindow == null ? false : glWindow.Exists; }
+        }
+
+        #endregion
+
+        #region public string Text
+
+        /// <summary>
+        /// Gets or sets the GameWindow title.
+        /// </summary>
+        public string Title
+        {
+            get
+            {
+                return glWindow.Title;
+            }
+            set
+            {
+                glWindow.Title = value;
+            }
+        }
+
+        #endregion
+
+        #region public bool Visible
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the GameWindow is visible.
+        /// </summary>
+        public bool Visible
+        {
+            get
+            {
+                return glWindow.Visible;
+            }
+            set
+            {
+                glWindow.Visible = value;
+            }
         }
 
         #endregion
@@ -196,13 +285,31 @@ namespace OpenTK
 
         #endregion
 
+        #region public IInputDriver InputDriver
+
+        /// <summary>
+        /// Gets an interface to the InputDriver used to obtain Keyboard, Mouse and Joystick input.
+        /// </summary>
+        public IInputDriver InputDriver
+        {
+            get
+            {
+                return glWindow.InputDriver;
+            }
+        }
+
+        #endregion
+
         #region public void CreateWindow(DisplayMode mode)
 
         /// <summary>
-        /// Creates a new render window. The Create event is raised after the window creation
-        /// is complete, to allow resource initalisation.
+        /// Creates a render window for the calling GameWindow.
         /// </summary>
         /// <param name="mode">The DisplayMode of the render window.</param>
+        /// <remarks>
+        /// It is an error to call this function when a render window already exists.
+        /// <para>Call DestroyWindow to close the render window.</para>
+        /// </remarks>
         /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
         public void CreateWindow(DisplayMode mode)
         {
@@ -217,11 +324,10 @@ namespace OpenTK
                     Debug.Print(expt.ToString());
                     throw;
                 }
-                //OpenTK.OpenGL.GL.LoadAll();
             }
             else
             {
-                throw new ApplicationException("A render window already exists");
+                throw new ApplicationException("A render window already exists for this GameWindow.");
             }
         }
 
@@ -340,11 +446,12 @@ namespace OpenTK
         public virtual void Run(double updateFrequency, double renderFrequency)
         {
             this.OnLoad(EventArgs.Empty);
-            resizeEventArgs.Width = this.Width;
-            resizeEventArgs.Height = this.Height;
-            this.OnResize(resizeEventArgs);
 
             Debug.Print("Entering main loop");
+
+            //resizeEventArgs.Width = this.Width;
+            //resizeEventArgs.Height = this.Height;
+            //this.OnResize(resizeEventArgs);
 
             Stopwatch watch = new Stopwatch();
             UpdateFrameEventArgs updateArgs = new UpdateFrameEventArgs();
@@ -383,7 +490,7 @@ namespace OpenTK
                     while (next_update <= 0.0)
                     {
                         updateArgs.Time += watch.Elapsed.TotalSeconds;
-                        this.OnUpdateFrame(updateArgs);
+                        this.OnUpdateFrameInternal(updateArgs);
                         if (update_target == 0.0)
                             break;
                         next_update += update_target;
@@ -395,7 +502,7 @@ namespace OpenTK
                     if (next_render <= 0.0)
                     {
                         renderArgs.Time += time;
-                        this.OnRenderFrame(renderArgs);
+                        this.OnRenderFrameInternal(renderArgs);
                         next_render += render_target;
                     }
                     renderTime = watch.Elapsed.TotalSeconds - time;
@@ -435,23 +542,20 @@ namespace OpenTK
         /// </remarks>
         public void ProcessEvents()
         {
-            if (driver != null)
-                driver.Poll();
+            if (!isExiting)
+                InputDriver.Poll();
             glWindow.ProcessEvents();
         }
 
         #endregion
 
-        #region public virtual void OnRenderFrame(RenderFrameEventArgs e)
+        #region OnRenderFrame(RenderFrameEventArgs e)
 
         /// <summary>
-        /// Raises the RenderFrame event. Override in derived classes to render a frame.
+        /// Raises the RenderFrame event, and calls the public function.
         /// </summary>
-        /// <remarks>
-        /// If overriden, the base.OnRenderFrame() function should be called, to ensure
-        /// listeners are notified of RenderFrame events.
-        /// </remarks>
-        public virtual void OnRenderFrame(RenderFrameEventArgs e)
+        /// <param name="e"></param>
+        private void OnRenderFrameInternal(RenderFrameEventArgs e)
         {
             if (!this.Exists && !this.IsExiting)
             {
@@ -461,6 +565,20 @@ namespace OpenTK
             }
             if (RenderFrame != null)
                 RenderFrame(this, e);
+
+            // Call the user's override.
+            OnRenderFrame(e);
+        }
+
+        /// <summary>
+        /// Override in derived classes to render a frame.
+        /// </summary>
+        /// <param name="e">Contains information necessary for frame rendering.</param>
+        /// <remarks>
+        /// The base implementation (base.OnRenderFrame) is empty, there is no need to call it.
+        /// </remarks>
+        public virtual void OnRenderFrame(RenderFrameEventArgs e)
+        {
         }
 
         /// <summary>
@@ -470,16 +588,9 @@ namespace OpenTK
 
         #endregion
 
-        #region public virtual void OnUpdateFrame(UpdateFrameEventArgs e)
+        #region OnUpdateFrame(UpdateFrameEventArgs e)
 
-        /// <summary>
-        /// Raises the UpdateFrame event. Override in derived classes to update a frame.
-        /// </summary>
-        /// <remarks>
-        /// If overriden, the base.OnUpdateFrame() function should be called, to ensure
-        /// listeners are notified of UpdateFrame events.
-        /// </remarks>
-        public virtual void OnUpdateFrame(UpdateFrameEventArgs e)
+        private void OnUpdateFrameInternal(UpdateFrameEventArgs e)
         {
             if (!this.Exists && !this.IsExiting)
             {
@@ -487,8 +598,31 @@ namespace OpenTK
                 mode = new DisplayMode(640, 480);
                 this.CreateWindow(mode);
             }
+
+            if (MustResize)
+            {
+                resizeEventArgs.Width = glWindow.Width;
+                resizeEventArgs.Height = glWindow.Height;
+                OnResizeInternal(resizeEventArgs);
+            }
+
             if (UpdateFrame != null)
+            {
                 UpdateFrame(this, e);
+            }
+
+            OnUpdateFrame(e);
+        }
+
+        /// <summary>
+        /// Override in derived classes to update a frame.
+        /// </summary>
+        /// <param name="e">Contains information necessary for frame updating.</param>
+        /// <remarks>
+        /// The base implementation (base.OnUpdateFrame) is empty, there is no need to call it.
+        /// </remarks>
+        public virtual void OnUpdateFrame(UpdateFrameEventArgs e)
+        {
         }
 
         /// <summary>
@@ -498,26 +632,35 @@ namespace OpenTK
 
         #endregion
 
-        #region public virtual void OnLoad(EventArgs e)
+        #region OnLoad(EventArgs e)
 
         /// <summary>
-        /// Raises the Load event. Override to load resources that should
-        /// be maintained for the lifetime of the application.
+        /// Occurs after establishing an OpenGL context, but before entering the main loop.
         /// </summary>
-        public virtual void OnLoad(EventArgs e)
+        public event LoadEvent Load;
+
+        /// <summary>
+        /// Raises the Load event, and calls the user's OnLoad override.
+        /// </summary>
+        /// <param name="e"></param>
+        private void OnLoadInternal(EventArgs e)
         {
-            Debug.Print("Firing GameWindow.Load event.");
             if (this.Load != null)
             {
                 this.Load(this, e);
             }
+
+            OnLoad(e);
         }
 
         /// <summary>
-        /// Occurs after the GameWindow has been created, but before
-        /// entering the main loop.
+        /// Occurs after establishing an OpenGL context, but before entering the main loop.
+        /// Override to load resources that should be maintained for the lifetime of the application.
         /// </summary>
-        public event LoadEvent Load;
+        /// <param name="e">Not used.</param>
+        public virtual void OnLoad(EventArgs e)
+        {
+        }
 
         #endregion
 
@@ -550,16 +693,37 @@ namespace OpenTK
 
         #endregion
 
-        #region public IList<Keyboard> Keyboard
+        #region public Keyboard Keyboard
 
         /// <summary>
-        /// Gets the list of available Keyboard devices.
+        /// Gets the primary Keyboard device, or null if no Keyboard exists.
         /// </summary>
-        public IList<Keyboard> Keyboard
+        public KeyboardDevice Keyboard
         {
             get
             {
-                return InputDriver.Keyboard;
+                if (InputDriver.Keyboard.Count > 0)
+                    return InputDriver.Keyboard[0];
+                else
+                    return null;
+            }
+        }
+
+        #endregion
+
+        #region public Mouse Mouse
+
+        /// <summary>
+        /// Gets the primary Mouse device, or null if no Mouse exists.
+        /// </summary>
+        public MouseDevice Mouse
+        {
+            get
+            {
+                if (InputDriver.Mouse.Count > 0)
+                    return InputDriver.Mouse[0];
+                else
+                    return null;
             }
         }
 
@@ -576,7 +740,7 @@ namespace OpenTK
         /// </summary>
         public int Width
         {
-            get { return glWindow.Width; }
+            get { return width; }
             set
             {
                 if (value == this.Width)
@@ -603,7 +767,7 @@ namespace OpenTK
         /// </summary>
         public int Height
         {
-            get { return glWindow.Height; }
+            get { return height; }
             set
             {
                 if (value == this.Height)
@@ -629,17 +793,34 @@ namespace OpenTK
 
         #region public event ResizeEvent Resize;
 
+        /// <summary>
+        /// Occurs when the GameWindow is resized. Derived classes should override the OnResize method for better performance.
+        /// </summary>
         public event ResizeEvent Resize;
 
         /// <summary>
         /// Raises the Resize event.
         /// </summary>
-        /// <param name="e">Contains the new Width and Height of the window.</param>
-        protected virtual void OnResize(ResizeEventArgs e)
+        /// <param name="e">Contains information about the Resize event.</param>
+        private void OnResizeInternal(ResizeEventArgs e)
         {
             Debug.Print("Firing GameWindow.Resize event: {0}.", e.ToString());
+
+            this.width = e.Width;
+            this.height = e.Height;
+            
             if (this.Resize != null)
                 this.Resize(this, e);
+
+            OnResize(e);
+        }
+
+        /// <summary>
+        /// Override in derived classes to respond to the Resize events.
+        /// </summary>
+        /// <param name="e">Contains information about the Resize event.</param>
+        protected virtual void OnResize(ResizeEventArgs e)
+        {
         }
 
         #endregion
@@ -698,12 +879,6 @@ namespace OpenTK
 
                 if (manual)
                 {
-                    if (driver != null)
-                    {
-                        driver.Dispose();
-                        driver = null;
-                    }
-
                     if (glWindow != null)
                     {
                         glWindow.Dispose();
