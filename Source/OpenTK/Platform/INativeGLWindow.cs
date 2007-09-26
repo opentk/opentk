@@ -21,11 +21,7 @@ namespace OpenTK.Platform
         void DestroyWindow();
         void ProcessEvents();
 
-        //void OnCreate(EventArgs e);
-        //void OnDestroy(EventArgs e);
-
         bool Exists { get; }
-        //bool IsExiting { get; }
         IWindowInfo WindowInfo { get; }
 
         string Title { get; set; }
