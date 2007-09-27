@@ -113,7 +113,11 @@ namespace OpenTK.Platform.X11
             this.Handle = info.Handle;
             this.Parent = info.Parent;
 
-            X11.WindowInfo winfo = info as X11.WindowInfo ?? (X11.WindowInfo)(info as Platform.WindowInfo);
+            // Work around Mono 1.2.4 gmcs bug (resolved in 1.2.5)
+            // X11.WindowInfo winfo = info as X11.WindowInfo ?? (X11.WindowInfo)(info as Platform.WindowInfo);
+            X11.WindowInfo winfo = info as X11.WindowInfo;
+            if (winfo == null)
+                winfo = (X11.WindowInfo)(info as Platform.WindowInfo);
 
             this.RootWindow = winfo.RootWindow;
             this.TopLevelWindow = winfo.TopLevelWindow;
