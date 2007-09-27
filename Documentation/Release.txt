@@ -23,8 +23,8 @@ Highlights:
  * Known issue (Windows): GameWindow may become unstable after extended mouse movements on Windows. Probably due to an (unknown) OpenTK MouseDevice driver bug.
  * Known issue (Linux): ExampleLauncher abruptly shuts down when closing a GameWindow through the 'X' (close) button.
  * Known issue (Linux): OpenTK programs may exhibit instability under Mesa3d 6.5.x and/or Mono 1.2.4. Update to Mesa3d 7.0.x and Mono 1.2.5 to resolve this.
- * Known issue (Linux): DisplayModes with 32-bit bitdepths exhibit flashing under Mesa3d 6.5.x. Is a Mesa3d problem, update to Mesa3d 7.0.x or request a 24-bit depth.
- * Known issue (Linux): Example T10: "GLSL Cube" may report a glibc error when shutting down.Cube.
+ * Known issue (Linux): DisplayModes with 32-bit bit-depths exhibit flashing under Mesa3d 6.5.x. Is a Mesa3d problem, update to Mesa3d 7.0.x or request a 24-bit depth.
+ * Known issue (Linux): Example T10: "GLSL Cube" may report a glibc error when shutting down.
  * Known issue (Linux): Example S03: "Extensions" crashes under Mono 1.2.x
  * Known issue (Linux): Example T04: "Vertex Lighting" may exhibit incorrect lighting under some circumstances (Mesa3d 7.0.x)
 
