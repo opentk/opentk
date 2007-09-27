@@ -9,21 +9,24 @@ IMPORTANT: This release is intended for testing and experimentation only. Use at
 Highlights:
 
  * Feature: Mouse input support.
- * Feature: Two new tutorials (T02: Vertex Arrays) and (T04: Vertex Lighting) which showcase the relevant OpenGL features.
- * Feature: A new Test (S03: Extensions) which uses reflection to obtain a list of extensions supported by your hardware. NOT SUPPORTED UNDER MONO 1.2.5 (Mono Windows.Forms implementation issue).
+ * Feature: Two new tutorials (T02: Vertex Arrays) and (T04: Vertex Lighting) showcase the relevant OpenGL features.
+ * Feature: A new Test (S03: Extensions) uses reflection to obtain a list of extensions supported by your hardware. See known issues!
  * Feature: GameWindow.Title property to retrieve or set the title of the GameWindow.
  * Feature: GameWindow.Run() can now set a target update and render frequency.
  * Feature: Improved GameWindow events. No need to call base functions on inheriting classes (i.e. base.OnRenderFrame inside the OnRenderFrame override).
  * Feature: Optimized GL.LoadAll().
- * Feature: Vector2, Vector3 and Vector4 structs, with associated math functions.
+ * Feature: Vector2, Vector3 and Vector4 structs, with associated math functions. NOT READY FOR USE YET, INTERFACE WILL CHANGE.
 
- * Bug fix: Added a few missing Keys in Keyboard.
+ * Bug fix: Missing Key mapping in Windows and Linux in Keyboard drivers.
  * Bug fix: Resize event was raised twice during GameWindow startup.
 
- * Known issue: ExampleLauncher shuts down when closing any GameWindow under Linux.
- * Known issue: 32-bit modes exhibit flashing under Mesa3d 6.5.x/Ubuntu 7.04. Is a Mesa3d problem, update to Mesa3d 7.0.x or request a 24-bit depth.
- * Known issue: GameWindow may become unstable after extended mouse movements on Windows. Probably due to an (unknown) OpenTK MouseDevice driver bug.
- * Known issue: GameWindow only reports one Mouse- and one KeyboardDevice. Methods for multiple devices will be provided in the future.
+ * Known issue (Windows): GameWindow may become unstable after extended mouse movements on Windows. Probably due to an (unknown) OpenTK MouseDevice driver bug.
+ * Known issue (Linux): ExampleLauncher abruptly shuts down when closing a GameWindow through the 'X' (close) button.
+ * Known issue (Linux): OpenTK programs may exhibit instability under Mesa3d 6.5.x and/or Mono 1.2.4. Update to Mesa3d 7.0.x and Mono 1.2.5 to resolve this.
+ * Known issue (Linux): DisplayModes with 32-bit bitdepths exhibit flashing under Mesa3d 6.5.x. Is a Mesa3d problem, update to Mesa3d 7.0.x or request a 24-bit depth.
+ * Known issue (Linux): Example T10: "GLSL Cube" may report a glibc error when shutting down.Cube.
+ * Known issue (Linux): Example S03: "Extensions" crashes under Mono 1.2.x
+ * Known issue (Linux): Example T04: "Vertex Lighting" may exhibit incorrect lighting under some circumstances (Mesa3d 7.0.x)
 
 --------------------------------------------------------------------------------
 
