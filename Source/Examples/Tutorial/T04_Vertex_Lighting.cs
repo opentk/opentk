@@ -18,14 +18,14 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates fixed-function OpenGL lighting.  Example is incomplete (documentation).
     /// </summary>
-    class T04_Lit_Cube : GameWindow, IExample
+    class T04_Vertex_Lighting : GameWindow, IExample
     {
         float x_angle, zoom;
         Shape shape = new Plane(16, 16, 4.0f, 4.0f);
 
         #region Constructor
 
-        public T04_Lit_Cube()
+        public T04_Vertex_Lighting()
         {
             this.CreateWindow(new DisplayMode(800, 600), "OpenTK | Vertex Lighting example");
         }
