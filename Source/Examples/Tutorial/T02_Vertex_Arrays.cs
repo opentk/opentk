@@ -18,13 +18,13 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates Vertex Arrays (in system memory).  Example is incomplete (documentation).
     /// </summary>
-    class T02_Vertex_Array_Cube : GameWindow, IExample
+    class T02_Vertex_Arrays : GameWindow, IExample
     {
         float angle;
 
         #region Constructor
 
-        public T02_Vertex_Array_Cube()
+        public T02_Vertex_Arrays()
         {
             this.CreateWindow(new DisplayMode(800, 600));
         }
