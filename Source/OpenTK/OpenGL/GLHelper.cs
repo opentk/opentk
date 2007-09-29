@@ -314,14 +314,13 @@ namespace OpenTK.OpenGL
                 return false;
 
             Delegate old = f.GetValue(null) as Delegate;
-            Delegate @new = f.GetValue(null) as Delegate;
+            Delegate @new = GetDelegate(f.Name, f.FieldType);
             if (old.Target != @new.Target)
             {
                 f.SetValue(null, @new);
                 rebuildExtensionList = true;
-                return true;
             }
-            return false;
+            return @new != null;
         }
 
         #endregion
