@@ -153,6 +153,15 @@ namespace OpenTK
             return implementation.GetDisplayModes();
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether VSync is enabled.
+        /// </summary>
+        public bool VSync
+        {
+            get { return implementation.VSync; }
+            set { implementation.VSync = value;  }
+        }
+
         #endregion
 
         #region IDisposable Members
