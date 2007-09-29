@@ -32,6 +32,7 @@ namespace OpenTK.Platform.Windows
         private WindowInfo windowInfo = new WindowInfo();
 
         private DisplayMode mode;
+        private bool vsync_supported;
 
         private bool disposed;
 
@@ -232,6 +233,11 @@ namespace OpenTK.Platform.Windows
             Wgl.Imports.MakeCurrent(deviceContext, renderContext);
             Wgl.LoadAll();
 
+            vsync_supported = 
+                (Wgl.ARB.SupportsExtension(this.deviceContext, "WGL_EXT_swap_control") ||
+                 Wgl.EXT.SupportsExtension(this.deviceContext, "WGL_EXT_swap_control")) &&
+                Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
+
             if (source != null)
             {
                 Debug.Print("Sharing state with context {0}", (source as WinGLContext).Context);
@@ -321,6 +327,19 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        public bool VSync
+        {
+            get
+            {
+                //return vsync != 0;
+                return Wgl.EXT.GetSwapInterval() != 0;
+            }
+            set
+            {
+                Wgl.EXT.SwapInterval(value ? 1 : 0);
+            }
+        }
 
         #endregion
 

@@ -267,6 +267,18 @@ namespace OpenTK.Platform.X11
             throw new Exception("The method or operation is not implemented.");
         }
 
+        public bool VSync
+        {
+            get
+            {
+                return false;
+            }
+            set
+            {
+
+            }
+        }
+
         #endregion
 
         #region --- IDisposable Members ---
