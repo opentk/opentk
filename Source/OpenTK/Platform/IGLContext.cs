@@ -87,5 +87,10 @@ namespace OpenTK.Platform
         /// </summary>
         /// <returns>An IEnumerable containing all supported display modes.</returns>
         IEnumerable<DisplayMode> GetDisplayModes();
+
+        /// <summary>
+        /// Gets or sets a value indicating whether VSyncing is enabled.
+        /// </summary>
+        bool VSync { get; set; }
     }
 }
