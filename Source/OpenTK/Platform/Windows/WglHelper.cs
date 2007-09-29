@@ -41,6 +41,9 @@ namespace OpenTK.Platform.Windows
         private static Type delegatesClass;
         private static Type importsClass;
 
+        private static bool reload_ext_extension_strings = true;
+        private static bool reload_arb_extension_strings = true;
+
         #endregion
 
         #region public static Delegate GetDelegate(string name, Type signature)
@@ -104,6 +107,8 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region public static void LoadAll()
+
         /// <summary>
         /// Loads all Wgl entry points, core and extensions.
         /// </summary>
@@ -114,7 +119,13 @@ namespace OpenTK.Platform.Windows
             {
                 f.SetValue(null, GetDelegate(f.Name, f.FieldType));
             }
+            reload_ext_extension_strings = true;
+            reload_arb_extension_strings = true;
         }
+
+        #endregion
+
+        #region public static bool Load(string function)
 
         /// <summary>
         /// Loads the given Wgl entry point.
@@ -127,27 +138,81 @@ namespace OpenTK.Platform.Windows
             if (f == null)
                 return false;
 
-            f.SetValue(null, GetDelegate(f.Name, f.FieldType));
+            Delegate old = f.GetValue(null) as Delegate;
+            Delegate @new = GetDelegate(f.Name, f.FieldType);
 
-            return f.GetValue(null) != null;
+            if (old.Target != @new.Target)
+            {
+                f.SetValue(null, @new);
+                if (function.EndsWith("EXT"))
+                    reload_ext_extension_strings = true; 
+                else if (function.EndsWith("ARB"))
+                    reload_arb_extension_strings = true; 
+            }
+            return @new != null;
         }
+
+        #endregion
+
+        #region public static partial class ARB
 
         public static partial class ARB
         {
+            private static string[] extensions;
+
             /// <summary>
-            /// Checks if an extension is supported by the given context.
+            /// Checks if an "ARB" extension is supported by the given context.
             /// </summary>
-            /// <param name="deviceContext">The device context to check.</param>
+            /// <param name="deviceContext">The device context.</param>
             /// <param name="ext">The extension to check.</param>
             /// <returns>True if the extension is supported by the given context, false otherwise</returns>
             public static bool SupportsExtension(IntPtr deviceContext, string ext)
             {
-                string extension_string = Wgl.ARB.GetExtensionsString(deviceContext);
-                string[] extensions = extension_string.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                if (Wgl.Delegates.wglGetExtensionsStringARB != null)
+                {
+                    if (extensions == null || reload_arb_extension_strings)
+                    {
+                        extensions = Wgl.ARB.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        Array.Sort(extensions);
+                        reload_arb_extension_strings = false;
+                    }
 
-                Array.Sort(extensions);
-                return Array.BinarySearch(extensions, ext) != -1;
+                    return Array.BinarySearch(extensions, ext) != -1;
+                }
+                return false;
             }
         }
-	}
+
+        #endregion
+
+        #region public static partial class EXT
+
+        public static partial class EXT
+        {
+            private static string[] extensions;
+            /// <summary>
+            /// Checks if an "EXT" extension is supported by the given context.
+            /// </summary>
+            /// <param name="deviceContext">The device context.</param>
+            /// <param name="ext">The extension to check.</param>
+            /// <returns>True if the extension is supported by the given context, false otherwise</returns>
+            public static bool SupportsExtension(IntPtr deviceContext, string ext)
+            {
+                if (Wgl.Delegates.wglGetExtensionsStringEXT != null)
+                {
+                    if (extensions == null || reload_ext_extension_strings)
+                    {
+                        extensions = Wgl.ARB.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        Array.Sort(extensions);
+                        reload_ext_extension_strings = false;
+                    }
+
+                    return Array.BinarySearch(extensions, ext) != -1;
+                }
+                return false;
+            }
+        }
+
+        #endregion
+    }
 }
