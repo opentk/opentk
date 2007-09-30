@@ -23,6 +23,7 @@ namespace OpenTK
     /// GameWindow contains several events you can hook or override to add your custom logic:
     /// <list>
     /// <item>OnLoad: Occurs after creating the OpenGL context, but before entering the main loop. Override to load resources.</item>
+    /// <item>OnUnload: Occurs after exiting the main loop, but before deleting the OpenGL context. Override to unload resources.</item>
     /// <item>OnResize: Occurs whenever GameWindow is resized. You should update the OpenGL Viewport and Projection Matrix here.</item>
     /// <item>OnUpdateFrame: Occurs at the specified logic update rate. Override to add your game logic.</item>
     /// <item>OnRenderFrame: Occurs at the specified frame render rate. Override to add your rendering code.</item>
@@ -30,7 +31,7 @@ namespace OpenTK
     /// Call the Run() method to start the application's main loop. Run(double, double) takes two parameters that
     /// specify the logic update rate, and the render update rate.
     /// </remarks>
-    public class GameWindow : IGameWindow
+    public class GameWindow : INativeGLWindow
     {
         #region --- Fields ---
 
@@ -42,13 +43,18 @@ namespace OpenTK
         bool isExiting;
         bool disposed;
 
-        double updateTime, renderTime, eventTime, frameTime;
+        double update_period, render_period;
+        double target_update_period, target_render_period, target_render_period_doubled;
+        // TODO: Implement these:
+        double update_time, render_time, event_time;
 
         int width, height;
 
+        VSyncMode vsync;
+
         #endregion
 
-        #region --- Internal Fields ---
+        #region --- Internal Properties ---
 
         bool MustResize
         {
@@ -403,7 +409,7 @@ namespace OpenTK
 
         #endregion
 
-        #region --- IGameWindow Members ---
+        #region --- GameWindow Methods ---
 
         #region void Run()
 
@@ -426,6 +432,7 @@ namespace OpenTK
             Run(updateFrequency, 0.0);
         }
 
+#if false
         /// <summary>
         /// Runs the default game loop on GameWindow at the specified update and render frequency.
         /// </summary>
@@ -452,25 +459,30 @@ namespace OpenTK
         /// </remarks>
         public virtual void Run(double updateFrequency, double renderFrequency)
         {
-            this.OnLoad(EventArgs.Empty);
-
             // Setup timer
             Stopwatch watch = new Stopwatch();
             UpdateFrameEventArgs updateArgs = new UpdateFrameEventArgs();
             RenderFrameEventArgs renderArgs = new RenderFrameEventArgs();
 
             // Setup update and render rates. If updateFrequency or renderFrequency <= 0.0, use full throttle for that frequency.
-            double update_target = 0.0, render_target = 0.0, next_update = 0.0, next_render = 0.0;
-            double time, total_time;
+            double next_update = 0.0, next_render = 0.0;
+            double start_time;
+
+            double update_watch = 0.0, render_watch = 0.0;
+            int num_updates = 1;
+            double t0 = 0.0, t1 = 0.0, t2 = 0.0, t3 = 0.0;
 
             if (updateFrequency > 0.0)
             {
-                next_update = update_target = 1.0 / updateFrequency;
+                next_update = updateTimeTarget = 1.0 / updateFrequency;
             }
             if (renderFrequency > 0.0)
             {
-                next_render = render_target = 1.0 / renderFrequency;
+                next_render = renderTimeTarget = 1.0 / renderFrequency;
             }
+            renderTargetDoubled = renderTimeTarget * 2.0;
+
+            this.OnLoad(EventArgs.Empty);
 
             // Enter main loop:
             // (1) Update total frame time (capped at 0.1 sec)
@@ -484,52 +496,207 @@ namespace OpenTK
             Debug.Print("Entering main loop.");
             while (this.Exists && !IsExiting)
             {
-                // Update total frame time.
-                total_time = frameTime = watch.Elapsed.TotalSeconds;
-                if (total_time > 0.1)
-                    total_time = 0.1;
-                updateArgs.Time = renderArgs.Time = total_time;
-
                 watch.Reset();
                 watch.Start();
 
-                // Process events and update event_time
-                time = watch.Elapsed.TotalSeconds;
+                //frameTime = watch.Elapsed.TotalSeconds;
+                /*
+                // Adaptive VSync control:
+                bool disable_vsync = VSync == VSyncMode.Adaptive && Context.VSync && renderTime > renderTargetDoubled;
+                bool enable_vsync = VSync == VSyncMode.Adaptive && !Context.VSync && renderTime <= renderTargetDoubled;
+                if (disable_vsync)
+                {
+                    //Debug.Print("Disabled vsync");
+                    Title = "Off";
+                    Context.VSync = false;
+                }
+                else if (enable_vsync)
+                {
+                    //Debug.Print("Enabled vsync");
+                    Title = "On";
+                    Context.VSync = true;
+                }
+                */
+                t0 = watch.Elapsed.TotalSeconds;
+                // Process events and update eventTime
+                eventTime = t2 + t3 + t0;      // t2 and t3 come from the previous run through the loop.
                 this.ProcessEvents();
-                eventTime = watch.Elapsed.TotalSeconds - time;
 
                 if (!IsExiting)
                 {
-                    // Raise UpdateFrame event(s) and update update_time.
-                    time = watch.Elapsed.TotalSeconds;
-                    next_update -= (total_time + time);
-                    while (next_update <= 0.0)
-                    {
-                        updateArgs.Time += watch.Elapsed.TotalSeconds;
-                        this.OnUpdateFrameInternal(updateArgs);
-                        if (update_target == 0.0)
-                            break;
-                        next_update += update_target;
-                    }
-                    updateTime = watch.Elapsed.TotalSeconds - time;
+                    // --- UpdateFrame ---
+                    // Raise the necessary amount of UpdateFrame events to keep
+                    // the UpdateFrame rate constant. If the user didn't set an
+                    // UpdateFrame rate, raise only one event.
 
+                    t1 = watch.Elapsed.TotalSeconds - t0;
+
+                    start_time = t3 + t0 + t1;     // t3 come from the previous run through the loop.
+                    update_watch += start_time;
+                    if (num_updates > 0)
+                    {
+                        updateTime = update_watch / (double)num_updates;
+                        num_updates = 0;
+                        update_watch = 0.0;
+                    }
+
+                    next_update -= start_time;
+                    updateArgs.Time = update_watch;
+                    if (next_update <= 0.0)
+                    {
+                        //updateArgs.Time += watch.Elapsed.TotalSeconds;
+                        double prev_update = watch.Elapsed.TotalSeconds;
+                        this.OnUpdateFrameInternal(updateArgs);
+                        updateArgs.Time = watch.Elapsed.TotalSeconds - prev_update;
+
+                        ++num_updates;
+
+                        // Schedule next update
+                        //if (updateTimeTarget != 0.0)
+                        {
+                            next_update += updateTimeTarget;
+                            next_update -= (watch.Elapsed.TotalSeconds - start_time);
+                        }
+                        //else
+                        //    break;  // User didn't request a fixed UpdateFrame rate.
+                    }
+                    // --------------------
+                    t2 = watch.Elapsed.TotalSeconds - t1;
+                    // --- Render Frame ---
                     // Raise RenderFrame event and update render_time.
-                    time = watch.Elapsed.TotalSeconds;
-                    next_render -= (total_time + time);
+
+                    start_time = t0 + t1 + t2;
+                    render_watch += start_time;
+                    next_render -= start_time;
                     if (next_render <= 0.0)
                     {
-                        renderArgs.Time += time;
+                        // Update framerate counters
+                        renderTime = renderArgs.Time = render_watch;
+                        render_watch = 0.0;
+
                         this.OnRenderFrameInternal(renderArgs);
-                        next_render += render_target;
+
+                        next_render += renderTimeTarget;
+                        next_render -= (watch.Elapsed.TotalSeconds - start_time);
                     }
-                    renderTime = watch.Elapsed.TotalSeconds - time;
+
+                    // --------------------
 
                     // If there is any CPU time left, and we are not running full-throttle, Sleep() to lower CPU usage.
-                    if (renderTime < render_target && updateTime < update_target)
+                    /*
+                    if (renderTime < renderTimeTarget && updateTime < updateTimeTarget)
                     {
-                        Thread.Sleep((int)(1000.0 * System.Math.Min(
-                            render_target - renderTime, update_target - updateTime)));
+                        int sleep_time = (int)System.Math.Truncate(1000.0 * System.Math.Min(renderTimeTarget - renderTime - eventTime,
+                            updateTimeTarget - updateTime - eventTime));
+                        if (sleep_time < 0)
+                            sleep_time = 0;
+                        Thread.Sleep(sleep_time);
+
                     }
+                    */
+                    /*
+                    loop_time_clock = watch.Elapsed.TotalSeconds;
+                    if (loop_time_clock > 0.05)
+                        loop_time_clock = 0.05;
+                    render_time_clock += loop_time_clock;
+                    update_time_clock += loop_time_clock;
+                    */
+                    //if (loop_time_clock > 0.1)
+                    //    loop_time_clock = 0.1;
+
+                    t3 = watch.Elapsed.TotalSeconds - t2;
+                }
+            }
+
+            OnUnloadInternal(EventArgs.Empty);
+
+            if (this.Exists)
+            {
+                glWindow.DestroyWindow();
+                while (this.Exists)
+                {
+                    this.ProcessEvents();
+                }
+            }
+        }
+#endif
+        public void Run(double updates_per_second, double frames_per_second)
+        {
+            if (updates_per_second < 0.0 || updates_per_second > 200.0)
+                throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second, "Parameter should be inside the range [0.0, 200.0]");
+            if (frames_per_second < 0.0 || frames_per_second > 200.0)
+                throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second, "Parameter should be inside the range [0.0, 200.0]");
+
+            TargetUpdateFrequency = updates_per_second;
+            TargetRenderFrequency = frames_per_second;
+
+            Stopwatch update_watch = new Stopwatch(), render_watch = new Stopwatch();
+            double time, next_render = 0.0, next_update = 0.0, update_time_counter = 0.0;
+            int num_updates = 0;
+            UpdateFrameEventArgs update_args = new UpdateFrameEventArgs();
+            RenderFrameEventArgs render_args = new RenderFrameEventArgs();
+
+            GC.Collect(2);
+            GC.WaitForPendingFinalizers();
+            GC.Collect(2);
+
+            OnLoadInternal(EventArgs.Empty);
+
+            while (!isExiting)
+            {
+                // Events
+                ProcessEvents();
+
+                if (isExiting)
+                    break;
+
+                // Updates
+                time = update_watch.Elapsed.TotalSeconds;
+                if (time > 0.1)
+                    time = 0.1;
+                while (next_update - time <= 0.0)
+                {
+                    next_update = next_update - time + TargetUpdatePeriod;
+
+                    update_time_counter += time;
+                    ++num_updates;
+
+                    update_watch.Reset();
+                    update_watch.Start();
+
+                    update_args.Time = time;
+                    OnUpdateFrameInternal(update_args);
+
+                    if (TargetUpdateFrequency == 0.0)
+                        break;
+
+                    time = update_watch.Elapsed.TotalSeconds;
+                    next_update -= time;
+                    update_time_counter += time;
+                }
+                if (num_updates > 0)
+                {
+                    update_period = update_time_counter / (double)num_updates;
+                    num_updates = 0;
+                    update_time_counter = 0.0;
+                }
+
+                // Frame
+                if (isExiting)
+                    break;
+
+                time = render_watch.Elapsed.TotalSeconds;
+                if (time > 0.1)
+                    time = 0.1;
+                if (next_render - time <= 0.0)
+                {
+                    next_render = next_render - time + TargetRenderPeriod;
+                    render_watch.Reset();
+                    render_watch.Start();
+
+                    render_period = render_args.Time = time;
+                    render_args.ScaleFactor = RenderPeriod / UpdatePeriod;
+                    OnRenderFrameInternal(render_args);
                 }
             }
 
@@ -562,8 +729,8 @@ namespace OpenTK
         /// </remarks>
         public void ProcessEvents()
         {
-            if (!isExiting)
-                InputDriver.Poll();
+            //if (!isExiting)
+            //    InputDriver.Poll();
             glWindow.ProcessEvents();
         }
 
@@ -614,7 +781,7 @@ namespace OpenTK
         {
             if (!this.Exists && !this.IsExiting)
             {
-                Debug.Print("WARNING: UpdateFrame event raised, without a valid render window. This may indicate a programming error. Creating render window.");
+                Debug.Print("WARNING: UpdateFrame event raised without a valid render window. This may indicate a programming error. Creating render window.");
                 mode = new DisplayMode(640, 480);
                 this.CreateWindow(mode);
             }
@@ -721,20 +888,6 @@ namespace OpenTK
 
         #endregion
 
-        #region public void SwapBuffers()
-
-        /// <summary>
-        /// Swaps the front and back buffer, presenting the rendered scene to the user.
-        /// Only useful in double- or triple-buffered formats.
-        /// </summary>
-        /// <remarks>Calling this function is equivalent to calling Context.SwapBuffers()</remarks>
-        public void SwapBuffers()
-        {
-            Context.SwapBuffers();
-        }
-        
-        #endregion
-
         #region public bool IsExiting
 
         /// <summary>
@@ -781,6 +934,241 @@ namespace OpenTK
                     return InputDriver.Mouse[0];
                 else
                     return null;
+            }
+        }
+
+        #endregion
+
+        #region public VSyncMode VSync
+
+        /// <summary>
+        /// Gets or sets the VSyncMode.
+        /// </summary>
+        public VSyncMode VSync
+        {
+            get
+            {
+                return vsync;
+            }
+            set
+            {
+                if (value == VSyncMode.Off)
+                    Context.VSync = false;
+                else if (value == VSyncMode.On)
+                    Context.VSync = true;
+
+                vsync = value;
+            }
+        }
+
+        #endregion
+
+        #region public void SwapBuffers()
+
+        /// <summary>
+        /// Swaps the front and back buffer, presenting the rendered scene to the user.
+        /// Only useful in double- or triple-buffered formats.
+        /// </summary>
+        /// <remarks>Calling this function is equivalent to calling Context.SwapBuffers()</remarks>
+        public void SwapBuffers()
+        {
+            Context.SwapBuffers();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- GameWindow Timing ---
+
+
+        #region public double TargetRenderPeriod
+
+        /// <summary>
+        /// Gets or sets the target render period in seconds.
+        /// </summary>
+        /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
+        /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
+        /// </remarks>
+        public double TargetRenderPeriod
+        {
+            get
+            {
+                return target_render_period;
+            }
+            set
+            {
+                if (value <= 0.005)
+                {
+                    target_render_period = target_render_period_doubled = 0.0;
+                }
+                else if (value <= 1.0)
+                {
+                    target_render_period = value;
+                    target_render_period_doubled = 2.0 * target_render_period;
+                }
+                else Debug.Print("Target render period clamped to 1.0 seconds.");
+            }
+        }
+
+        #endregion
+
+        #region public double TargetRenderFrequency
+
+        /// <summary>
+        /// Gets or sets the target render frequency in Herz.
+        /// </summary>
+        /// <remarks>
+        /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
+        /// <para>Values lower than 1.0Hz are clamped to 1.0Hz. Values higher than 200.0Hz are clamped to 200.0Hz.</para>
+        /// </remarks>
+        public double TargetRenderFrequency
+        {
+            get
+            {
+                if (TargetRenderPeriod == 0.0)
+                    return 0.0;
+                return 1.0 / TargetRenderPeriod;
+            }
+            set
+            {
+                if (value <= 1.0)
+                {
+                    TargetRenderPeriod = 0.0;
+                }
+                else if (value <= 200.0)
+                {
+                    TargetRenderPeriod = 1.0 / value;
+                }
+                else Debug.Print("Target render frequency clamped to 200.0Hz.");
+            }
+        }
+
+        #endregion
+
+        #region public double TargetUpdatePeriod
+
+        /// <summary>
+        /// Gets or sets the target update period in seconds.
+        /// </summary>
+        /// <remarks>
+        /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
+        /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
+        /// </remarks>
+        public double TargetUpdatePeriod
+        {
+            get
+            {
+                return target_update_period;
+            }
+            set
+            {
+                if (value <= 0.005)
+                {
+                    target_update_period = 0.0;
+                }
+                else if (value <= 1.0)
+                {
+                    target_update_period = value;
+                }
+                else Debug.Print("Target update period clamped to 1.0 seconds.");
+            }
+        }
+
+        #endregion
+
+        #region public double TargetUpdateFrequency
+
+        /// <summary>
+        /// Gets or sets the target update frequency in Herz.
+        /// </summary>
+        /// <remarks>
+        /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
+        /// <para>Values lower than 1.0Hz are clamped to 1.0Hz. Values higher than 200.0Hz are clamped to 200.0Hz.</para>
+        /// </remarks>
+        public double TargetUpdateFrequency
+        {
+            get
+            {
+                if (TargetUpdatePeriod == 0.0)
+                    return 0.0;
+                return 1.0 / TargetUpdatePeriod;
+            }
+            set
+            {
+                if (value <= 1.0)
+                {
+                    TargetUpdatePeriod = 0.0;
+                }
+                else if (value <= 200.0)
+                {
+                    TargetUpdatePeriod = 1.0 / value;
+                }
+                else Debug.Print("Target update frequency clamped to 200.0Hz.");
+            }
+        }
+
+        #endregion
+
+        #region public double RenderFrequency
+
+        /// <summary>
+        /// Gets the actual frequency of RenderFrame events in Herz (i.e. FPS or Frames Per Second).
+        /// </summary>
+        public double RenderFrequency
+        {
+            get
+            {
+                if (render_period == 0.0)
+                    return 1.0;
+                return 1.0 / render_period;
+            }
+        }
+
+        #endregion
+
+        #region public double RenderPeriod
+
+        /// <summary>
+        /// Gets the period of RenderFrame events in seconds.
+        /// </summary>
+        public double RenderPeriod
+        {
+            get
+            {
+                return render_period;
+            }
+        }
+
+        #endregion
+
+        #region public double UpdateFrequency
+
+        /// <summary>
+        /// Gets the frequency of UpdateFrame events in Herz.
+        /// </summary>
+        public double UpdateFrequency
+        {
+            get
+            {
+                if (update_period == 0.0)
+                    return 1.0;
+                return 1.0 / update_period;
+            }
+        }
+
+        #endregion
+
+        #region public double UpdatePeriod
+
+        /// <summary>
+        /// Gets the period of UpdateFrame events in seconds.
+        /// </summary>
+        public double UpdatePeriod
+        {
+            get
+            {
+                return update_period;
             }
         }
 
@@ -963,6 +1351,36 @@ namespace OpenTK
         #endregion
     }
 
+    #region public enum VSyncMode
+
+    /// <summary>
+    /// Indicates the available VSync modes.
+    /// </summary>
+    public enum VSyncMode
+    {
+        /// <summary>
+        /// Vsync disabled.
+        /// </summary>
+        Off = 0,
+        /// <summary>
+        /// VSync enabled.
+        /// </summary>
+        On,
+        /// <summary>
+        /// VSync enabled, but automatically disabled if framerate falls below a specified limit.
+        /// </summary>
+        Adaptive
+    }
+
+    #endregion
+
+    #region --- GameWindow Events ---
+
+    public delegate void UpdateFrameEvent(GameWindow sender, UpdateFrameEventArgs e);
+    public delegate void RenderFrameEvent(GameWindow sender, RenderFrameEventArgs e);
+    public delegate void LoadEvent(GameWindow sender, EventArgs e);
+    public delegate void UnloadEvent(GameWindow sender, EventArgs e);
+
     public class UpdateFrameEventArgs : EventArgs
     {
         private double time;
@@ -980,6 +1398,7 @@ namespace OpenTK
     public class RenderFrameEventArgs : EventArgs
     {
         private double time;
+        private double scale_factor;
 
         /// <summary>
         /// Gets the Time elapsed between frame updates, in seconds.
@@ -989,5 +1408,22 @@ namespace OpenTK
             get { return time; }
             internal set { time = value; }
         }
+
+        public double ScaleFactor
+        {
+            get
+            {
+                return scale_factor;
+            }
+            internal set
+            {
+                if (value != 0.0 && !Double.IsNaN(value))
+                    scale_factor = value;
+                else
+                    scale_factor = 1.0;
+            }
+        }
     }
+
+    #endregion
 }
