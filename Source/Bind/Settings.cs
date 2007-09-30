@@ -24,8 +24,19 @@ namespace Bind
         public static string FunctionPrefix = "gl";
         public static string ConstantPrefix = "GL_";
 
+        // TODO: This code is too fragile.
         public static string NestedEunmsClass = "Enums";
-        public static string NormalEnumsClass = OutputClass + "." + NestedEunmsClass;
+        private static string normalEnumsClassOverride;
+        public static string NormalEnumsClass
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(normalEnumsClassOverride))
+                    return normalEnumsClassOverride;
+                return OutputClass + "." + NestedEunmsClass;
+            }
+            set { normalEnumsClassOverride = value; }
+        }
         public static string AuxEnumsClass = "GL." + NestedEunmsClass;
 
         public static string DelegatesClass = "Delegates";
