@@ -84,7 +84,11 @@ namespace Examples
             Type ex = example as Type;
             try
             {
-                (ex.GetConstructor(Type.EmptyTypes).Invoke(null) as IExample).Launch();
+                using (GameWindow gw = (GameWindow)(ex.GetConstructor(Type.EmptyTypes).Invoke(null)))
+                {
+                    (gw as IExample).Launch();
+                }
+                
             }
             catch (Exception expt)
             {
@@ -120,10 +124,10 @@ namespace Examples
                     {
                         // In this we do not want a different thread: these examples rely on the Application.Idle
                         // event, which would then be raised by both the ExampleLauncher thread *and* the new one!
-                        Form f = (Form)example.GetConstructor(Type.EmptyTypes).Invoke(null);
-                        f.ShowDialog(this);
-                        f.Dispose();
-                        f = null;
+                        using (Form f = (Form)example.GetConstructor(Type.EmptyTypes).Invoke(null))
+                        {
+                            f.ShowDialog(this);
+                        }
                     }
                     catch (Exception expt)
                     {
