@@ -90,6 +90,7 @@ namespace Examples.Tutorial
         /// </remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
+            /*
             if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
@@ -101,7 +102,7 @@ namespace Examples.Tutorial
             {
                 Fullscreen = !Fullscreen;
             }
-
+            */
             angle += 3.0f;
             if (angle > 720.0f)
                 angle -= 720.0f;
