@@ -52,6 +52,8 @@ void main()
         static float angle;
         int vertex_shader_object, fragment_shader_object, shader_program;
 
+        Shapes.Cube shape = new Examples.Shapes.Cube();
+
         #endregion
 
         #region --- Constructors ---
@@ -89,8 +91,8 @@ void main()
 
             GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
             GL.EnableClientState(GL.Enums.EnableCap.COLOR_ARRAY);
-            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, Shapes.Cube.Vertices);
-            GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, Shapes.Cube.Colors);
+            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, shape.Vertices);
+            GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, shape.Colors);
 
             int status;
 
@@ -222,8 +224,8 @@ void main()
             );
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
-            GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, Shapes.Cube.Indices.Length,
-                GL.Enums.All.UNSIGNED_SHORT, Shapes.Cube.Indices);
+            GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, shape.Indices.Length,
+                GL.Enums.All.UNSIGNED_SHORT, shape.Indices);
 
             Context.SwapBuffers();
         }
