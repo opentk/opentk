@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Text;
 
 using OpenTK.Math;
+using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace Examples.Shapes
 {
@@ -17,22 +19,14 @@ namespace Examples.Shapes
         private Vector3[] vertices, normals;
         private Vector2[] texcoords;
         private int[] indices;
-        unsafe int* index_ptr;
-        unsafe float* vertex_ptr, normal_ptr, texcoord_ptr;
+        private int[] colors;
 
         public Vector3[] Vertices
         {
             get { return vertices; }
             protected set
             {
-                unsafe
-                {
-                    vertices = value;
-                    //fixed (float* ptr = (float*)vertices[0])
-                    {
-                        vertex_ptr = (float*)vertices[0];
-                    }
-                }
+                vertices = value;
             }
         }
 
@@ -41,14 +35,7 @@ namespace Examples.Shapes
             get { return normals; }
             protected set
             {
-                unsafe
-                {
-                    normals = value;
-                    //fixed (float* ptr = (float*)normals[0])
-                    {
-                        normal_ptr = (float*)normals[0];
-                    }
-                }
+                normals = value;
             }
         }
 
@@ -57,14 +44,7 @@ namespace Examples.Shapes
             get { return texcoords; }
             protected set
             {
-                unsafe
-                {
-                    texcoords = value;
-                    //fixed (float* ptr = (float*)texcoords[0])
-                    {
-                        texcoord_ptr = (float*)texcoords[0];
-                    }
-                }
+                texcoords = value;
             }
         }
 
@@ -73,14 +53,16 @@ namespace Examples.Shapes
             get { return indices; }
             protected set
             {
-                unsafe
-                {
-                    indices = value;
-                    fixed (int* ptr = indices)
-                    {
-                        index_ptr = ptr;
-                    }
-                }
+                indices = value;
+            }
+        }
+
+        public int[] Colors
+        {
+            get { return colors; }
+            protected set
+            {
+                colors = value;
             }
         }
     }
