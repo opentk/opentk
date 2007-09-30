@@ -91,6 +91,7 @@ namespace OpenTK.Platform.X11
 
         private void InternalPoll()
         {
+            /*
             try
             {
                 //while (!disposed)
@@ -133,6 +134,7 @@ namespace OpenTK.Platform.X11
                 Functions.XDestroyWindow(window.Display, window.Handle);
                 return;
             }
+            */
         }
 
         internal void ProcessEvent(ref XEvent e)
