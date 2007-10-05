@@ -4,115 +4,140 @@
  */
 #endregion
 
-#region --- Using Directives ---
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Data;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 using OpenTK.Platform;
-using OpenTK.OpenGL;
-
-#endregion
 
 namespace OpenTK
 {
-    // TODO: Document the GLControl class.
-
     /// <summary>
-    /// Defines a UserControl with opengl rendering capabilities.
+    /// Defines a UserControl with OpenGL rendering capabilities.
     /// </summary>
-    public partial class GLControl : UserControl, IGLControl
+    public partial class GLControl : UserControl
     {
-        #region --- Private Fields ---
+        IGLContext context;
+        IPlatformIdle idle;
 
-        private IGLControl glControl;
+        #region --- Constructor ---
 
-        #endregion
-
-        #region --- Contructors ---
-
-        /// <summary>
-        /// Constructs a new GLControl.
-        /// </summary>
         public GLControl()
-            :this(new DisplayMode())
-        {
-        }
-
-        /// <summary>
-        /// Constructs a new GLControl, with the specified DisplayMode.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the control.</param>
-        public GLControl(DisplayMode mode)
         {
             InitializeComponent();
 
-            this.Visible = false;
-            this.Fullscreen = mode.Fullscreen;
-            
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            //this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
+
+        #endregion
+
+        #region --- Context Setup ---
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            // For maximum compatibility we do not set a specific depth for the DisplayMode.
+            // The driver is free to find the best match.
+            WindowInfo info = new WindowInfo(this);
+            if (!this.DesignMode)
+            {
+                context = new GLContext(new DisplayMode(), info);
+                context.CreateContext();
+                idle = new PlatformIdle(info);
+            }
+            else
+            {
+                context = new DummyGLContext();
+                idle = new DummyPlatformIdle();
+            }
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            base.OnHandleDestroyed(e);
+
+            context.Dispose();
+        }
+
+        #endregion
+
+        #region --- Public Properties ---
+
+        #region public bool IsIdle
+
+        /// <summary>
+        /// Gets a value indicating whether the current thread contains pending system messages.
+        /// </summary>
+        public bool IsIdle
+        {
+            get { return idle.IsIdle; }
+        }
+
+        #endregion
+
+        #region public IGLContext Context
+
+        /// <summary>
+        /// Gets an interface to the underlying GLContext used by this GLControl.
+        /// </summary>
+        public IGLContext Context
+        {
+            get { return context; }
+        }
+
+        #endregion
+
+        #region public float AspectRatio
+
+        /// <summary>
+        /// Gets the aspect ratio of this GLControl.
+        /// </summary>
+        public float AspectRatio
+        {
+            get
+            {
+                return this.ClientSize.Width / (float)this.ClientSize.Height;
+            }
+        }
+
+        #endregion
+
+        #region public bool VSync
+
+        /// <summary>
+        /// Gets or sets a value indicating whether vsync is active for this GLControl.
+        /// </summary>
+        public bool VSync
+        {
+            get
+            {
+                if (Context != null)
+                    return Context.VSync;
+                return false;
+            }
+            set
+            {
+                if (Context != null)
+                    Context.VSync = value;
+            }
+        }
+
+        #endregion
 
         #endregion
 
         #region --- Public Methods ---
 
-        #region public void CreateContext()
-
-        /// <summary>
-        /// Forces the creation of the opengl rendering context.
-        /// </summary>
-        public void CreateContext()
-        {
-            if (glControl != null)
-            {
-                throw new ApplicationException("Attempted to create GLControl more than once.");
-            }
-
-            if (this.DesignMode)
-            {
-                glControl = new DummyGLControl();
-            }
-            else
-            {
-                switch (Environment.OSVersion.Platform)
-                {
-                    case PlatformID.Win32NT:
-                    case PlatformID.Win32Windows:
-                        glControl = new OpenTK.Platform.Windows.WinGLControl(this, new DisplayMode(Width, Height));
-                        break;
-
-                    case PlatformID.Unix:
-                    case (PlatformID)128: // some older versions of Mono reported 128.
-                        glControl = new OpenTK.Platform.X11.X11GLControl(this);
-                        break;
-
-                    default:
-                        throw new PlatformNotSupportedException("Your operating system is not currently supported. We are sorry for the inconvenience.");
-                }
-            }
-
-            this.Visible = true;
-            this.CreateControl();
-
-            GL.LoadAll();
-            Glu.LoadAll();
-            this.OnResize(EventArgs.Empty);
-        }
-
-        #endregion
-
         #region public void SwapBuffers()
 
         /// <summary>
-        /// Swaps the front and back buffers, and presents the rendered scene to the screen.
+        /// Swaps the front and back buffers, presenting the rendered scene to the screen.
         /// </summary>
         public void SwapBuffers()
         {
@@ -124,8 +149,8 @@ namespace OpenTK
         #region public void MakeCurrent()
 
         /// <summary>
-        /// Makes the underlying GLContext of this GLControl current. All OpenGL commands issued
-        /// from this point are interpreted by this GLContext.
+        /// Makes the underlying this GLControl current in the calling thread.
+        /// All OpenGL commands issued are hereafter interpreted by this GLControl.
         /// </summary>
         public void MakeCurrent()
         {
@@ -135,147 +160,114 @@ namespace OpenTK
         #endregion
 
         #endregion
+    }
 
-        #region --- Public Properties ---
+    #region internal interface IPlatformIdle
 
-        /// <summary>
-        /// Gets the AspectRatio of the control this GLContext object
-        /// renders to. This is usually used in a call to Glu.Perspective.
-        /// </summary>
-        public double AspectRatio
+    internal interface IPlatformIdle
+    {
+        bool IsIdle { get; }
+    }
+
+    internal class WinPlatformIdle : IPlatformIdle
+    {
+        OpenTK.Platform.Windows.MSG msg = new OpenTK.Platform.Windows.MSG();
+        object get_lock = new object();
+        IntPtr handle;
+
+        public WinPlatformIdle(IWindowInfo info)
         {
-            get
-            {
-                return this.Width / (double)this.Height;
-            }
+            handle = info.Handle;
         }
 
-        /// <summary>
-        /// Gets or sets the display mode of the control.
-        /// </summary>
-        public bool Fullscreen
+        #region IPlatformIdle Members
+
+        public bool IsIdle
         {
-            get
+            get 
             {
-                return false;
-                //throw new NotImplementedException();
-            }
-            set
-            {
-                //throw new NotImplementedException();
+                lock (get_lock)
+                {
+                    return !OpenTK.Platform.Windows.Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
+                }
             }
         }
 
         #endregion
+    }
 
-        #region --- IGLControl Members ---
+    internal class X11PlatformIdle : IPlatformIdle
+    {
+        object get_lock = new object();
+        IntPtr display;
 
-        #region public bool IsIdle
+        public X11PlatformIdle(IWindowInfo info)
+        {
+            display = (info as OpenTK.Platform.X11.WindowInfo).Display;
+        }
 
-        /// <summary>
-        /// Gets the idle status of the control.
-        /// </summary>
+        #region IPlatformIdle Members
+
         public bool IsIdle
         {
             get
             {
-                if (glControl == null)
-                    this.CreateContext();
-                
-                return glControl.IsIdle;
+                lock (get_lock)
+                {
+                    return OpenTK.Platform.X11.Functions.XPending(display) == 0;
+                }
             }
         }
 
         #endregion
-
-        #region public IGLContext Context
-
-        /// <summary>
-        /// Gets the opengl context associated with this control.
-        /// </summary>
-        public IGLContext Context
-        {
-            get
-            {
-                if (glControl == null)
-                    this.CreateContext();
-                
-                return glControl.Context;
-            }
-        }
-
-        #endregion
-
-        #region DisplayMode changes
-
-        /// <summary>
-        /// Selects the fullscreen DisplayMode closest to the DisplayMode requested.
-        /// </summary>
-        /// <param name="mode">
-        /// The fullscreen DisplayMode to match, or null to get the current screen DisplayMode.
-        /// </param>
-        /// <returns>The DisplayMode closest to the requested one, or null if no DisplayModes are available.</returns>
-        /// <remarks>
-        /// <see cref="SetDisplayMode">SetDisplayMode</see>
-        /// </remarks>
-        public DisplayMode SelectDisplayMode(DisplayMode mode)
-        {
-            throw new NotImplementedException();
-            //return glWindow.SelectDisplayMode(mode);
-        }
-
-        /// <summary>
-        /// Selects the fullscreen DisplayMode closest to the DisplayMode requested, accoriding to the specified
-        /// parameters.
-        /// </summary>
-        /// <param name="mode">
-        /// The fullscreen DisplayMode to match, or null to get the current screen DisplayMode.
-        /// </param>
-        /// <param name="options">
-        /// The DisplayModeMatchOptions flags that indicate how to search for the requested DisplayMode.
-        /// </param>
-        /// <returns>
-        /// The DisplayMode closest to the requested one, or null if no DisplayModes are available or
-        /// DisplayModeMatchOptions.ExactMatch was passed.
-        /// </returns>
-        /// <remarks>
-        /// <see cref="SetDisplayMode">SetDisplayMode</see>
-        /// </remarks>
-        public DisplayMode SelectDisplayMode(DisplayMode mode, DisplayModeMatchOptions options)
-        {
-            throw new NotImplementedException();
-            //return glWindow.SelectDisplayMode(mode, options);
-        }
-
-        /// <summary>
-        /// Sets the requested DisplayMode.
-        /// </summary>
-        /// <param name="mode">
-        /// The fulscreen DisplayMode to set. Passing null will return the application to windowed
-        ///  mode.
-        /// </param>
-        /// <remarks>
-        /// Use SelectDisplayMode to select one of the available fullscreen modes.
-        /// <para>
-        /// If the mode requested is not available, this function will throw a
-        ///  <exception cref="DisplayModeNotAvailable">DisplayModeNotAvailable</exception> exception.
-        /// </para>
-        /// <para>
-        /// Pass null to return to windowed mode. The previous desktop DisplayMode will be automatically reset by this
-        /// function. This function cannot be used to permanently change the user's desktop DisplayMode.
-        /// </para>
-        /// <see cref="SelectDisplayMode(DisplayMode mode)">SelectDisplayMode</see>
-        /// <seealso cref="DisplayModeNotAvailable">DisplayModeNotAvailable exception</seealso>
-        /// </remarks>
-        public void SetDisplayMode(DisplayMode mode)
-        {
-            throw new NotImplementedException();
-            //glWindow.SetDisplayMode(mode);
-        }
-
-        #endregion
-
-        #endregion
-
     }
+
+    internal class PlatformIdle : IPlatformIdle
+    {
+        IPlatformIdle implementation;
+
+        public PlatformIdle(IWindowInfo info)
+        {
+            switch (System.Environment.OSVersion.Platform)
+            {
+                case PlatformID.Unix:
+                case (PlatformID)128:
+                    implementation = new X11PlatformIdle(info);
+                    break;
+
+                case PlatformID.Win32NT:
+                case PlatformID.Win32S:
+                case PlatformID.Win32Windows:
+                case PlatformID.WinCE:
+                    implementation = new WinPlatformIdle(info);
+                    break;
+
+                default:
+                    throw new PlatformNotSupportedException();
+            }
+        }
+
+        #region IPlatformIdle Members
+
+        public bool IsIdle
+        {
+            get { return implementation.IsIdle; }
+        }
+
+        #endregion
+    }
+
+    internal class DummyPlatformIdle : IPlatformIdle
+    {
+        #region IPlatformIdle Members
+
+        public bool IsIdle
+        {
+            get { return false; }
+        }
+
+        #endregion
+    }
+
+    #endregion
 }
