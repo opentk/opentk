@@ -35,12 +35,12 @@
             // 
             this.glControl.BackColor = System.Drawing.Color.Black;
             this.glControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glControl.Fullscreen = false;
             this.glControl.Location = new System.Drawing.Point(0, 0);
             this.glControl.Name = "glControl";
             this.glControl.Size = new System.Drawing.Size(624, 444);
             this.glControl.TabIndex = 0;
-            this.glControl.Visible = false;
+            this.glControl.VSync = false;
+            this.glControl.Layout += new System.Windows.Forms.LayoutEventHandler(this.glControl_Layout);
             // 
             // W02_Immediate_Mode_Cube
             // 
