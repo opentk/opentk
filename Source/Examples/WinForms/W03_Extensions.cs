@@ -38,14 +38,13 @@ namespace Examples.WinForms
             delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
 
-            Application.Idle += StartAsync;
+            glControl.Load += new EventHandler(glControl_Load);
+            glControl.CreateControl();
         }
 
-        void StartAsync(object sender, EventArgs e)
+        void glControl_Load(object sender, EventArgs e)
         {
-            Application.Idle -= StartAsync;
-
-            glControl.CreateContext();
+            Application.Idle += StartAsync;
 
             driver =
                 GL.GetString(GL.Enums.StringName.VENDOR) + " " +
@@ -54,6 +53,11 @@ namespace Examples.WinForms
 
             all = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic).Length;
             this.Text = String.Format("Loading {0} functions...", all);
+        }
+
+        void StartAsync(object sender, EventArgs e)
+        {
+            Application.Idle -= StartAsync;
 
             this.backgroundWorker1.RunWorkerAsync();
         }
