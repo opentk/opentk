@@ -40,7 +40,7 @@ namespace OpenTK.Platform.X11
         public X11GLContext(DisplayMode mode, IWindowInfo info)
         {
             if (info == null)
-                throw new ArgumentException("IWindowInfo cannot be null.");
+                throw new ArgumentNullException("IWindowInfo cannot be null.");
 
             this.windowInfo = info as WindowInfo;
             this.mode = mode;
