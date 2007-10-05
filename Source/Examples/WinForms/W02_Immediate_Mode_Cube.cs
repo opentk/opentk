@@ -26,7 +26,7 @@ namespace Examples.WinForms
 {
     public partial class W02_Immediate_Mode_Cube : Form, IExample
     {
-        static float angle;
+        static float angle = 0.0f;
 
         #region --- Constructor ---
 
@@ -44,10 +44,8 @@ namespace Examples.WinForms
             base.OnLoad(e);
 
             glControl.KeyDown += new KeyEventHandler(glControl_KeyDown);
-            glControl.Resize += new EventHandler(glControl_Resize);
+            //glControl.Resize += new EventHandler(glControl_Resize);
             glControl.Paint += new PaintEventHandler(glControl_Paint);
-
-            glControl.CreateContext();
 
             Text =
                 GL.GetString(GL.Enums.StringName.VENDOR) + " " +
@@ -58,6 +56,8 @@ namespace Examples.WinForms
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
 
             Application.Idle += Application_Idle;
+
+            //glControl_Resize(glControl, EventArgs.Empty);
         }
 
         #endregion
@@ -103,8 +103,7 @@ namespace Examples.WinForms
 
             DrawCube();
 
-            glControl.Context.SwapBuffers();
-            Thread.Sleep(0);
+            glControl.SwapBuffers();
         }
 
         #endregion
@@ -134,12 +133,6 @@ namespace Examples.WinForms
 
         void glControl_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Alt && e.Shift)
-            {
-                //this.SetResolution(this.Width, this.Height, this.ColorDepth, !this.IsFullscreen);
-                glControl.Fullscreen = !glControl.Fullscreen;
-            }
-
             switch (e.KeyData)
             {
                 case Keys.Escape:
@@ -215,5 +208,10 @@ namespace Examples.WinForms
         }
 
         #endregion
+
+        private void glControl_Layout(object sender, LayoutEventArgs e)
+        {
+            glControl_Resize(sender, EventArgs.Empty);
+        }
     }
 }

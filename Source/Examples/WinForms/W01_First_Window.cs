@@ -41,8 +41,6 @@ namespace Examples.WinForms
         {
             base.OnLoad(e);
 
-            glControl1.CreateContext();
-
             GL.ClearColor(Color.Crimson);
         }
 
