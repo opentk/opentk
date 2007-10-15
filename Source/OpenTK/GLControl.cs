@@ -23,15 +23,23 @@ namespace OpenTK
     {
         IGLContext context;
         IPlatformIdle idle;
+        DisplayMode display_mode;
 
         #region --- Constructor ---
 
         public GLControl()
+            : this(null)
+        {
+        }
+
+        public GLControl(DisplayMode mode)
         {
             InitializeComponent();
 
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+
+            this.display_mode = mode;
         }
 
         #endregion
@@ -41,28 +49,13 @@ namespace OpenTK
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-
-            // For maximum compatibility we do not set a specific depth for the DisplayMode.
-            // The driver is free to find the best match.
-            WindowInfo info = new WindowInfo(this);
-            if (!this.DesignMode)
-            {
-                context = new GLContext(new DisplayMode(), info);
-                context.CreateContext();
-                idle = new PlatformIdle(info);
-            }
-            else
-            {
-                context = new DummyGLContext();
-                idle = new DummyPlatformIdle();
-            }
+            this.CreateContext();
         }
 
         protected override void OnHandleDestroyed(EventArgs e)
         {
             base.OnHandleDestroyed(e);
-
-            context.Dispose();
+            this.DestroyContext();
         }
 
         #endregion
@@ -74,6 +67,7 @@ namespace OpenTK
         /// <summary>
         /// Gets a value indicating whether the current thread contains pending system messages.
         /// </summary>
+        [Browsable(false)]
         public bool IsIdle
         {
             get { return idle.IsIdle; }
@@ -86,9 +80,11 @@ namespace OpenTK
         /// <summary>
         /// Gets an interface to the underlying GLContext used by this GLControl.
         /// </summary>
+        [Browsable(false)]
         public IGLContext Context
         {
             get { return context; }
+            private set { context = value; }
         }
 
         #endregion
@@ -98,6 +94,7 @@ namespace OpenTK
         /// <summary>
         /// Gets the aspect ratio of this GLControl.
         /// </summary>
+        [Description("The aspect ratio of the client area of this GLControl.")]
         public float AspectRatio
         {
             get
@@ -113,6 +110,7 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets a value indicating whether vsync is active for this GLControl.
         /// </summary>
+        [Description("Indicates whether GLControl updates are synced to the monitor's refresh.")]
         public bool VSync
         {
             get
@@ -126,6 +124,21 @@ namespace OpenTK
                 if (Context != null)
                     Context.VSync = value;
             }
+        }
+
+        #endregion
+
+        #region public DisplayMode Mode
+
+        /// <summary>
+        /// Gets the DisplayMode of the GLContext attached to this GLControl.
+        /// </summary>
+        /// <remarks>
+        /// You cannot change the DisplayMode of an existing GLContext.
+        /// </remarks>
+        public DisplayMode Mode
+        {
+            get { return Context.Mode; }
         }
 
         #endregion
@@ -155,6 +168,50 @@ namespace OpenTK
         public void MakeCurrent()
         {
             Context.MakeCurrent();
+        }
+
+        #endregion
+
+        #region public void CreateContext()
+        
+        /// <summary>
+        /// Creates a GLContext and attaches it to this GLControl.
+        /// </summary>
+        public void CreateContext()
+        {
+            if (display_mode == null)
+                display_mode = new DisplayMode();
+            WindowInfo info = new WindowInfo(this);
+            
+            if (!this.DesignMode)
+            {
+                // Mono's implementation of Windows.Forms on X11 does not allow the context to
+                // have a different colordepth from the parent. To combat this, we do not set a
+                // specific depth for the DisplayMode - we let the driver select one instead.
+                display_mode.Color = new ColorMode(0);
+                context = new GLContext(display_mode, info);
+                context.CreateContext();
+                idle = new PlatformIdle(info);
+            }
+            else
+            {
+                context = new DummyGLContext(display_mode);
+                idle = new DummyPlatformIdle();
+            }
+        }
+
+        #endregion
+
+        #region public void DestroyContext()
+
+        /// <summary>
+        /// Destroys the GLContext attached to this GLControl.
+        /// </summary>
+        /// <exception cref="NullReferenceException">Occurs when no GLContext is attached.</exception>
+        public void DestroyContext()
+        {
+            Context.Dispose();
+            Context = null;
         }
 
         #endregion
