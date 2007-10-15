@@ -16,7 +16,14 @@ namespace OpenTK.Platform
     internal sealed class DummyGLContext : IGLContext
     {
         WindowInfo info = new WindowInfo();
-        DisplayMode mode = new DisplayMode();
+        DisplayMode mode;
+        bool vsync;
+
+        #region --- Constructors ---
+
+        public DummyGLContext(DisplayMode m) { mode = m; }
+
+        #endregion
 
         #region --- IGLContext Members ---
 
@@ -34,7 +41,7 @@ namespace OpenTK.Platform
         public IntPtr GetAddress(string function) { return IntPtr.Zero; }
         public IEnumerable<DisplayMode> GetDisplayModes() { return null; }
 
-        public bool VSync { get { return false; } set { } }
+        public bool VSync { get { return vsync; } set { vsync = value; } }
 
         #endregion
 
