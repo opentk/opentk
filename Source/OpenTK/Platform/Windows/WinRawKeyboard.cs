@@ -284,11 +284,15 @@ namespace OpenTK.Platform.Windows
                     // came not from a physical keyboard device but from a code-generated input message - in
                     // that case, the event goes to the default (first) keyboard.
                     // TODO: Send the event to all keyboards instead of the default one.
-                    int index = keyboards.FindIndex(delegate(KeyboardDevice kb)
-                    {
-                        return kb.DeviceID == rin.Header.Device;
-                    });
-                    if (index == -1) index = 0;
+                    // TODO: Optimize this! The predicate allocates way to much memory.
+                    //int index = keyboards.FindIndex(delegate(KeyboardDevice kb)
+                    //{
+                    //    return kb.DeviceID == rin.Header.Device;
+                    //});
+                    //if (index == -1) index = 0;
+                    int index;
+                    if (keyboards.Count > 0) index = 0;
+                    else return false;
 
                     // Generic control, shift, alt keys may be sent instead of left/right.
                     // It seems you have to explicitly register left/right events.
