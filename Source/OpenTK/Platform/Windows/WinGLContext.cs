@@ -29,7 +29,7 @@ namespace OpenTK.Platform.Windows
         private IntPtr renderContext;
         static private IntPtr opengl32Handle;
         private const string opengl32Name = "OPENGL32.DLL";
-        private WindowInfo windowInfo = new WindowInfo();
+        private WindowInfo windowInfo;
 
         private DisplayMode mode;
         private bool vsync_supported;
@@ -38,20 +38,10 @@ namespace OpenTK.Platform.Windows
 
         #region --- Contructors ---
 
-        internal WinGLContext()
-            : this(new DisplayMode(640, 480))
-        {
-        }
-
-        internal WinGLContext(DisplayMode mode)
-        {
-            //Trace.WriteLine(String.Format("Creating opengl context (driver: {0})", this.ToString()));
-            this.mode = mode;
-        }
-
         public WinGLContext(DisplayMode mode, IWindowInfo info)
         {
-            this.windowInfo = info as WindowInfo;
+            //this.windowInfo = info is Platform.WindowInfo ? (WindowInfo)(Platform.WindowInfo)info : (WindowInfo)info;
+            this.windowInfo = new WindowInfo(info);
             this.mode = mode;
         }
 
@@ -232,6 +222,8 @@ namespace OpenTK.Platform.Windows
             }
             Wgl.Imports.MakeCurrent(deviceContext, renderContext);
             Wgl.LoadAll();
+            GL.LoadAll();
+            Glu.LoadAll();
 
             vsync_supported = 
                 (Wgl.ARB.SupportsExtension(this.deviceContext, "WGL_EXT_swap_control") ||
