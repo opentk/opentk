@@ -167,11 +167,13 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         internal bool ProcessEvent(RawInput rin)
         {
-            MouseDevice mouse = mice.Find(delegate(MouseDevice m)
-            {
-                return m.DeviceID == rin.Header.Device;
-            });
-            if (mouse == null && mice.Count > 0) mouse = mice[0];
+            //MouseDevice mouse = mice.Find(delegate(MouseDevice m)
+            //{
+            //    return m.DeviceID == rin.Header.Device;
+            //});
+            MouseDevice mouse;
+            if (mice.Count > 0) mouse = mice[0];
+            else return false;
 
             switch (rin.Header.Type)
             {
