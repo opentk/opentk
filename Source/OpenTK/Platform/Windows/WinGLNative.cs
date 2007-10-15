@@ -362,8 +362,8 @@ namespace OpenTK.Platform.Windows
                 //glContext.PrepareContext(this.Handle);
                 glContext.CreateContext();
                 //glContext.MakeCurrent();
-                GL.LoadAll();
-                Glu.LoadAll();
+                //GL.LoadAll();
+                //Glu.LoadAll();
             }
             catch (ApplicationException expt)
             {
