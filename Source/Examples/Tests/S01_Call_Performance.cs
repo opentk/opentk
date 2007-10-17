@@ -5,118 +5,168 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Text;
+using System.Threading;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 using OpenTK.OpenGL;
-using System.Threading;
-using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Examples.Tests
 {
-    public  partial class S01_Call_Performance : Form /*, IExample*/
+    public class S01_Call_Performance : IExample
     {
-        public S01_Call_Performance()
-        {
-            InitializeComponent();
-
-            Application.Idle += new EventHandler(Application_Idle);
-
-            // Force opengl functions
-            GL.Viewport(0, 0, this.Width, this.Height);
-
-            this.ShowDialog();
-        }
-
-        bool run = false;
-
+        OpenTK.GLContext context;
+        const int num_calls = 1000000;
         float[] v = new float[] { 0.0f, 0.0f };
-
-        int i = 0;
-        void dummy()
-        {
-            unsafe
-            {
-                //fixed (int* i_ptr = &i)
-                {
-                    GCHandle h = GCHandle.Alloc(i, GCHandleType.Pinned);//.FromIntPtr((IntPtr)i_ptr);
-                    try
-                    {
-                        i = (int)h.AddrOfPinnedObject();
-                    }
-                    finally
-                    {
-                        h.Free();
-                    }
-                }
-            }
-        }
-
-        [DllImport("opengl32.dll", EntryPoint = "glVertex2f")]
-        extern static void glVertex2f_1(float a, float b);
-
-        [System.Security.SuppressUnmanagedCodeSecurity()]
-        [DllImport("opengl32.dll", EntryPoint = "glVertex2f")]
-        extern static void glVertex2f_2(float a, float b);
-
-        [System.Security.SuppressUnmanagedCodeSecurity()]
-        [DllImport("opengl32.dll", EntryPoint = "glVertex2fv")]
-        extern static void glVertex2fv(float[] v);
-
-        void Application_Idle(object sender, EventArgs e)
-        {
-            long count = 0;
-            bool stop = false;
-
-            if (!run)
-            {
-                run = true;
-
-                GL.Clear(
-                    GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT |
-                    GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
-
-                //GL.Begin(GL.Enums.BeginMode.POINTS);
-
-                System.Threading.Timer timer = new System.Threading.Timer(
-                    new TimerCallback(delegate { stop = true; }), null, 5000, Timeout.Infinite);
-
-                while (!stop)
-                {
-                    //GL.Vertex2(0.0f, 0.0f);
-                    GL.Vertex2(v);
-                    //GL.ARB.ActiveTexture(GL.Enums.ARB_multitexture.TEXTURE0_ARB);
-                    //dummy();
-                    //GL.ColorPointer(2, GL.Enums.ColorPointerType.FLOAT, 0, v);
-                    //glVertex2f_1(0.0f, 0.0f);
-                    //glVertex2f_2(0.0f, 0.0f);
-                    //glVertex2fv(v);
-                    count++;
-                }
-
-                //GL.End();
-
-                //glControl1.Context.SwapBuffers();
-
-                timer.Dispose();
-                this.Hide();
-                MessageBox.Show(String.Format("{0} calls/second.", count / 5.0));
-                Application.Idle -= Application_Idle;
-                this.Close();
-            }
-        }
-
-        #region IExample Members
+        public static int dummy_variable = 0;
 
         public void Launch()
         {
-            
+            using (Form f = new Form())
+            {
+                context = new OpenTK.GLContext(new OpenTK.DisplayMode(), new OpenTK.Platform.WindowInfo(f));
+                context.CreateContext();
+
+                Trace.WriteLine(String.Format("Number of calls: {0}", num_calls));
+
+                Stopwatch timer = new Stopwatch();
+
+                #region Managed functions
+
+                Trace.Write("Timing empty loop: ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+                Trace.Write("Timing inline .Net functions: ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                    InlineFunction();
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+                Trace.Write("Timing virtual .Net functions: ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                    VirtualFunction();
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+                #endregion
+
+                #region OpenTK.OpenGL
+
+                Trace.Write("Timing OpenTK.OpenGL core functions: ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                    GL.Vertex2(0.0f, 0.0f);
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+                Trace.Write("Timing OpenTK.OpenGL core functions (array): ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                    GL.Vertex2(v);
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+                Trace.Write("Timing OpenTK.OpenGL core functions (void*): ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                    GL.CallLists(v.Length, GL.Enums.ListNameType.FLOAT, v);
+
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+                Trace.Write("Timing OpenTK.OpenGL extension functions: ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                    GL.ARB.ActiveTexture(GL.Enums.ARB_multitexture.TEXTURE0_ARB);
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+                #endregion
+
+                #region DllImports
+
+                Trace.Write("Timing direct DllImport: ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                    glVertex2f(0.0f, 0.0f);
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+                Trace.Write("Timing direct DllImport (array): ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                    glVertex2fv(v);
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+
+                Trace.Write("Timing direct DllImport (void*): ");
+                timer.Start();
+                for (int i = 0; ++i < num_calls; )
+                {
+                    glCallLists(v.Length, GL.Enums.ListNameType.FLOAT, v);
+                }
+                timer.Stop();
+                Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
+                timer.Reset();
+
+                #endregion
+            }
         }
 
-        #endregion
+        public void InlineFunction()
+        {
+            ++dummy_variable;
+        }
+
+        public virtual void VirtualFunction()
+        {
+            ++dummy_variable;
+        }
+
+        [DllImport("opengl32.dll", EntryPoint = "glVertex2f"), SuppressUnmanagedCodeSecurity]
+        extern static void glVertex2f(float a, float b);
+
+        [DllImport("opengl32.dll", EntryPoint = "glVertex2fv"), SuppressUnmanagedCodeSecurity]
+        extern static void glVertex2fv(float[] v);
+
+        [DllImport("opengl32.dll", EntryPoint = "glCallLists"), SuppressUnmanagedCodeSecurity]
+        extern static void glCallLists(int count, GL.Enums.ListNameType type, object lists);
+
     }
 }
