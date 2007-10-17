@@ -92,8 +92,12 @@ namespace Examples
             }
             catch (Exception expt)
             {
-                MessageBox.Show(String.Format("{3}{0}Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
-                    System.Environment.NewLine, expt.StackTrace, expt.InnerException, expt.Message), expt.Message);
+                if (expt.InnerException != null)
+                    MessageBox.Show(expt.InnerException.ToString(), "An error has occured: \"" + expt.InnerException.Message + "\"",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else
+                    MessageBox.Show(expt.ToString(), "An error has occured: \"" + expt.Message + "\"",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -139,9 +143,12 @@ namespace Examples
                                 expt.InnerException
                             ),
                             expt.Message);
-
-                        throw;
                     }
+                }
+                else
+                {
+                    IExample ex = (IExample)example.GetConstructor(Type.EmptyTypes).Invoke(null);
+                    ex.Launch();
                 }
 
                 GC.Collect();
