@@ -29,7 +29,7 @@ namespace OpenTK.Platform.Windows
 
         private WinGLContext glContext;
         private DisplayMode mode = new DisplayMode();
-        private WinRawInput driver;
+        //private WinRawInput driver;
 
         private bool fullscreen;
         private bool disposed;
@@ -261,18 +261,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public IInputDriver InputDriver
-
-        public IInputDriver InputDriver
-        {
-            get
-            {
-                return driver;
-            }
-        }
-
-        #endregion
-
         #region public IWindowInfo WindowInfo
 
         public IWindowInfo WindowInfo
@@ -352,18 +340,14 @@ namespace OpenTK.Platform.Windows
         public void OnCreate(EventArgs e)
         {
             this.window = new WindowInfo(this);
-            driver = new WinRawInput(this.window);
+            //driver = new WinRawInput(this.window);
 
             Debug.Print("Window created: {0}", window);
 
             try
             {
                 glContext = new WinGLContext(this.mode, this.WindowInfo);
-                //glContext.PrepareContext(this.Handle);
                 glContext.CreateContext();
-                //glContext.MakeCurrent();
-                //GL.LoadAll();
-                //Glu.LoadAll();
             }
             catch (ApplicationException expt)
             {
