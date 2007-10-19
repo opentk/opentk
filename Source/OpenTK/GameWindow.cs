@@ -51,6 +51,8 @@ namespace OpenTK
         int width, height;
         VSyncMode vsync;
 
+        InputDriver input_driver;
+
         #endregion
 
         #region --- Internal Properties ---
@@ -65,9 +67,22 @@ namespace OpenTK
         #region --- Contructors ---
 
         /// <summary>
-        /// Constructs a new GameWindow. Call CreateWindow() to open a render window.
+        /// Constructs a new GameWindow using a safe DisplayMode.
         /// </summary>
-        public GameWindow()
+        public GameWindow() : this(new DisplayMode(640, 480, 0, 16, false), "OpenTK game window") { }
+
+        /// <summary>
+        /// Constructs a new GameWindow, and opens a render window with the specified DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the GameWindow.</param>
+        public GameWindow(DisplayMode mode) : this(mode, "OpenTK game window") { }
+
+        /// <summary>
+        /// Constructs a new GameWindow with the specified title, and opens a render window with the specified DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the GameWindow.</param>
+        /// <param name="title">The Title of the GameWindow.</param>
+        public GameWindow(DisplayMode mode, string title)
         {
             switch (Environment.OSVersion.Platform)
             {
@@ -77,53 +92,28 @@ namespace OpenTK
                 case PlatformID.WinCE:
                     glWindow = new OpenTK.Platform.Windows.WinGLNative();
                     break;
-            
+
                 case PlatformID.Unix:
                 case (PlatformID)128:
                     glWindow = new OpenTK.Platform.X11.X11GLNative();
                     break;
-                
+
                 default:
                     throw new PlatformNotSupportedException("Your platform is not supported currently. Please, refer to http://opentk.sourceforge.net for more information.");
             }
 
-            //glWindow.Resize += new ResizeEvent(glWindow_Resize);
             glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
-        }
-
-        /// <summary>
-        /// Constructs a new GameWindow, and opens a render window with the specified DisplayMode.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the GameWindow.</param>
-        public GameWindow(DisplayMode mode)
-            : this()
-        {
-            CreateWindow(mode);
-        }
-
-        /// <summary>
-        /// Constructs a new GameWindow with the specified title, and opens a render window with the specified DisplayMode.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the GameWindow.</param>
-        /// <param name="title">The Title of the GameWindow.</param>
-        public GameWindow(DisplayMode mode, string title)
-            : this()
-        {
+            
             CreateWindow(mode, title);
         }
 
         void glWindow_Destroy(object sender, EventArgs e)
         {
+            glWindow.Destroy -= glWindow_Destroy;
+
             Debug.Print("GameWindow destruction imminent.");
             this.isExiting = true;
-            this.OnDestroy(EventArgs.Empty);
-            glWindow.Destroy -= glWindow_Destroy;
-            //this.Dispose();
-        }
-
-        void glWindow_Resize(object sender, ResizeEventArgs e)
-        {
-            this.OnResizeInternal(e);
+            //this.OnDestroy(EventArgs.Empty);
         }
 
         #endregion
@@ -142,7 +132,7 @@ namespace OpenTK
         /// <para>Call DestroyWindow to close the render window.</para>
         /// </remarks>
         /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
-        public void CreateWindow(DisplayMode mode, string title)
+        private void CreateWindow(DisplayMode mode, string title)
         {
             if (!Exists)
             {
@@ -150,6 +140,7 @@ namespace OpenTK
                 {
                     glWindow.CreateWindow(mode);
                     this.Title = title;
+                    input_driver = new InputDriver(this);
                 }
                 catch (ApplicationException expt)
                 {
@@ -159,7 +150,7 @@ namespace OpenTK
             }
             else
             {
-                throw new ApplicationException("A render window already exists for this GameWindow.");
+                throw new InvalidOperationException("A render window already exists for this GameWindow.");
             }
         }
 
@@ -296,6 +287,8 @@ namespace OpenTK
         }
 
         #endregion
+        
+#if false
 
         #region public IInputDriver InputDriver
 
@@ -306,11 +299,13 @@ namespace OpenTK
         {
             get
             {
-                return glWindow.InputDriver;
+                return null;
             }
         }
 
         #endregion
+
+#endif
 
         #region public void CreateWindow(DisplayMode mode)
 
@@ -330,6 +325,7 @@ namespace OpenTK
                 try
                 {
                     glWindow.CreateWindow(mode);
+                    
                 }
                 catch (ApplicationException expt)
                 {
@@ -757,8 +753,8 @@ namespace OpenTK
         {
             get
             {
-                if (InputDriver.Keyboard.Count > 0)
-                    return InputDriver.Keyboard[0];
+                if (input_driver.Keyboard.Count > 0)
+                    return input_driver.Keyboard[0];
                 else
                     return null;
             }
@@ -775,8 +771,8 @@ namespace OpenTK
         {
             get
             {
-                if (InputDriver.Mouse.Count > 0)
-                    return InputDriver.Mouse[0];
+                if (input_driver.Mouse.Count > 0)
+                    return input_driver.Mouse[0];
                 else
                     return null;
             }
