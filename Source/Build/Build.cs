@@ -22,10 +22,12 @@ namespace OpenTK.Build
         static string SourcePath;
         static string ToolPath = "Build";
         static string PrebuildPath = Path.Combine(ToolPath, "Prebuild.exe");
-        static string BinPath = "Binaries";
-        static string ExePath = Path.Combine(BinPath, "Exe");
-        static string LibPath = Path.Combine(BinPath, "Libraries");
-        static string ExamplePath = Path.Combine(BinPath, "Examples");
+        static string BinPath;
+        static string ExePath;
+        static string LibPath;
+        static string ExamplePath;
+        static string DataSourcePath;
+        static string DataPath;
 
         static string PrebuildXml = Path.Combine(ToolPath, "Prebuild.xml");
 
@@ -68,6 +70,7 @@ namespace OpenTK.Build
                 Directory.GetCurrentDirectory().LastIndexOf("Build"));
             Directory.SetCurrentDirectory(RootPath);
             SourcePath = Path.Combine(RootPath, "Source");
+            DataSourcePath = Path.Combine(SourcePath, "Examples\\Data");
 
             // Workaroung for nant on x64 windows (safe for other platforms too, as this affects
             // only the current process).
@@ -145,15 +148,11 @@ namespace OpenTK.Build
                     }
                 }
 
-                ExePath = Path.Combine(
-                    BinPath,
-                    Path.Combine(mode == BuildMode.Debug ? "Debug" : "Release", "Exe"));
-                LibPath = Path.Combine(
-                    BinPath,
-                    Path.Combine(mode == BuildMode.Debug ? "Debug" : "Release", "Libraries"));
-                ExamplePath = Path.Combine(
-                    BinPath,
-                    Path.Combine(mode == BuildMode.Debug ? "Debug" : "Release", "Examples"));
+                BinPath = Path.Combine("Binaries", mode == BuildMode.Debug ? "Debug" : "Release");
+                ExePath = Path.Combine(BinPath, "Exe");
+                LibPath = Path.Combine(BinPath, "Libraries");
+                ExamplePath = Path.Combine(BinPath, "Examples");
+                DataPath = Path.Combine(ExamplePath, "Data");
 
                 switch (target)
                 {
@@ -250,6 +249,11 @@ namespace OpenTK.Build
             Directory.CreateDirectory(ExePath);
             Directory.CreateDirectory(LibPath);
             Directory.CreateDirectory(ExamplePath);
+            Directory.CreateDirectory(DataPath);
+            
+            // Copy Data files for the Examples.
+            foreach (string file in Directory.GetFiles(DataSourcePath))
+                File.Copy(file, Path.Combine(DataPath, Path.GetFileName(file)));
 
             // Move the libraries and the config files.
             FindFiles(SourcePath, "*.dll", dll_matches);
