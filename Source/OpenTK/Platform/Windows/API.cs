@@ -3146,6 +3146,38 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    #region GDI charset
+
+    /// <summary>
+    /// Enumerates the available character sets.
+    /// </summary>
+    public enum GdiCharset
+    {
+        Ansi = 0,
+        Default = 1,
+        Symbol = 2,
+        ShiftJIS = 128,
+        Hangeul = 129,
+        Hangul = 129,
+        GB2312 = 134,
+        ChineseBig5 = 136,
+        OEM = 255,
+        //#if(WINVER >= 0x0400)
+        Johab = 130,
+        Hebrew = 177,
+        Arabic = 178,
+        Greek = 161,
+        Turkish = 162,
+        Vietnamese = 163,
+        Thai = 222,
+        EastEurope = 238,
+        Russian = 204,
+        Mac = 77,
+        Baltic = 186,
+    }
+
+    #endregion
+
     #endregion
 
     #region --- Callbacks ---
