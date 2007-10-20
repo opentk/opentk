@@ -251,9 +251,10 @@ namespace OpenTK.Build
             Directory.CreateDirectory(ExamplePath);
             Directory.CreateDirectory(DataPath);
             
+            // Handled by Prebuild.exe now.
             // Copy Data files for the Examples.
-            foreach (string file in Directory.GetFiles(DataSourcePath))
-                File.Copy(file, Path.Combine(DataPath, Path.GetFileName(file)));
+            //foreach (string file in Directory.GetFiles(DataSourcePath))
+            //    File.Copy(file, Path.Combine(DataPath, Path.GetFileName(file)));
 
             // Move the libraries and the config files.
             FindFiles(SourcePath, "*.dll", dll_matches);
@@ -330,35 +331,43 @@ namespace OpenTK.Build
         {
             using (Process p = new Process())
             {
-                ProcessStartInfo sinfo = new ProcessStartInfo();
-                if (Environment.OSVersion.Platform == PlatformID.Unix && !path.ToLower().Contains("nant"))
+                try
                 {
-                    sinfo.FileName = "mono";
-                    sinfo.Arguments = path + " " + args;
+                    ProcessStartInfo sinfo = new ProcessStartInfo();
+                    if (Environment.OSVersion.Platform == PlatformID.Unix && !path.ToLower().Contains("nant"))
+                    {
+                        sinfo.FileName = "mono";
+                        sinfo.Arguments = path + " " + args;
+                    }
+                    else
+                    {
+                        sinfo.FileName = path;
+                        sinfo.Arguments = args;
+                    }
+
+                    sinfo.WorkingDirectory = RootPath;
+                    sinfo.CreateNoWindow = true;
+                    sinfo.RedirectStandardOutput = true;
+                    sinfo.UseShellExecute = false;
+                    p.StartInfo = sinfo;
+                    p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
+                    p.Start();
+                    p.BeginOutputReadLine();
+                    //StreamReader sr = p.StandardOutput;
+                    //while (!p.HasExited)
+                    //{
+                    //    Console.WriteLine(sr.ReadLine());
+                    //    Console.Out.Flush();
+                    //}
+
+                    p.WaitForExit();
                 }
-                else
+                catch (Exception e)
                 {
-                    sinfo.FileName = path;
-                    sinfo.Arguments = args;
+                    Console.WriteLine("Failed to execute process: {0}", p.ProcessName);
                 }
-
-                sinfo.WorkingDirectory = RootPath;
-                sinfo.CreateNoWindow = true;
-                sinfo.RedirectStandardOutput = true;
-                sinfo.UseShellExecute = false;
-                p.StartInfo = sinfo;
-                p.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
-                p.Start();
-                p.BeginOutputReadLine();
-                //StreamReader sr = p.StandardOutput;
-                //while (!p.HasExited)
-                //{
-                //    Console.WriteLine(sr.ReadLine());
-                //    Console.Out.Flush();
-                //}
-
-                p.WaitForExit();
             }
+
         }
 
         static void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
