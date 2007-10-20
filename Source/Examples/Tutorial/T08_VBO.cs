@@ -243,5 +243,7 @@ namespace Examples.Tutorial
         }
 
         #endregion
+
+        public static readonly int order = 8;
     }
 }

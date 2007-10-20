@@ -20,9 +20,8 @@ namespace Examples.Tutorial
     /// </summary>
     public class T01_Simple_Window : GameWindow, IExample
     {
-        public T01_Simple_Window()
+        public T01_Simple_Window() : base(new DisplayMode(800, 600), "OpenTK | Tutorial 1: Simple Window")
         {
-            this.CreateWindow(new DisplayMode(800, 600), "OpenTK | Tutorial 1: Simple Window");
         }
 
         #region OnLoad
@@ -112,6 +111,8 @@ namespace Examples.Tutorial
         {
             this.Run(30.0, 5.0);
         }
+
+        public static readonly int order = 1;
 
         #endregion
     }

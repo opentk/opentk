@@ -58,9 +58,8 @@ void main()
 
         #region --- Constructors ---
 
-        public T10_GLSL_Cube()
+        public T10_GLSL_Cube() : base(new DisplayMode(800, 600), "OpenTK | GLSL Example 1")
         {
-            this.CreateWindow(new DisplayMode(800, 600), "OpenTK | GLSL Example 1");
         }
 
         #endregion
@@ -232,6 +231,8 @@ void main()
 
         #endregion
 
+        #region IExample members
+
         #region public void Launch()
 
         /// <summary>
@@ -245,6 +246,10 @@ void main()
             // Lock UpdateFrame and RenderFrame at 60Hz.
             Run(60.0, 60.0);
         }
+
+        #endregion
+
+        public static readonly int order = 10;
 
         #endregion
     }

@@ -106,10 +106,9 @@ namespace Examples.WinForms
 
         #region IExample Members
 
-        public void Launch()
-        {
+        public void Launch() { }
 
-        }
+        public static readonly int order = 3;
 
         #endregion
 

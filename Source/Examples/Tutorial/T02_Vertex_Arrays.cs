@@ -13,6 +13,7 @@ using System.Threading;
 using OpenTK;
 using OpenTK.OpenGL;
 using System.Diagnostics;
+using OpenTK.Input;
 
 namespace Examples.Tutorial
 {
@@ -21,20 +22,31 @@ namespace Examples.Tutorial
     /// </summary>
     class T02_Vertex_Arrays : GameWindow, IExample
     {
-        float angle_speed = 3.0f;
+        float rotation_speed = 3.0f;
         float angle = 0.0f;
 
         Shapes.Shape shape = new Examples.Shapes.Plane(16, 16, 2.0f, 2.0f);
 
-        System.Threading.Timer info_timer;
-
         #region Constructor
 
-        public T02_Vertex_Arrays()
+        public T02_Vertex_Arrays() : base(new DisplayMode(800, 600), "OpenTK Tutorial 2: Vertex Arrays")
         {
-            this.CreateWindow(new DisplayMode(800, 600));
-            //Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
-            //this.VSync = VSyncMode.Off;
+            this.VSync = VSyncMode.On;
+            this.Keyboard.KeyUp += new KeyUpEvent(Keyboard_KeyUp);
+        }
+
+        void Keyboard_KeyUp(KeyboardDevice sender, Key key)
+        {
+            // F4 cycles between available VSync modes.
+            if (key == Key.F4)
+            {
+                if (this.VSync == VSyncMode.Off)
+                    this.VSync = VSyncMode.On;
+                else if (this.VSync == VSyncMode.On)
+                    this.VSync = VSyncMode.Adaptive;
+                else
+                    this.VSync = VSyncMode.Off;
+            }
         }
 
         #endregion
@@ -45,33 +57,16 @@ namespace Examples.Tutorial
         {
             base.OnLoad(e);
 
-            GL.ClearColor(Color.MidnightBlue);
+            GL.ClearColor(Color.CadetBlue);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
             
             GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
             //GL.EnableClientState(GL.Enums.EnableCap.COLOR_ARRAY);
             GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, shape.Vertices);
             //GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, shape.Colors);
-
-            factor_target = TargetRenderPeriod / TargetUpdatePeriod;
-            info_timer = new Timer(new TimerCallback(PrintDebugInfo), null, 1000, 1000);
-        }
-
-        double factor_target;
-        void PrintDebugInfo(object o)
-        {
-            double factor = RenderPeriod / UpdatePeriod;
-            Debug.Print("NORMAL: Frame: {0} ({1}), Update: {2} ({3}), Factor: {4}, Error: {5}",
-                RenderPeriod.ToString("g8"), RenderFrequency.ToString("g3"), UpdatePeriod.ToString("g8"), UpdateFrequency.ToString("g3"),
-                factor.ToString("g8"), Math.Abs(factor_target - factor).ToString("g8"));
         }
 
         #endregion
-
-        public override void OnUnload(EventArgs e)
-        {
-            info_timer.Dispose();
-        }
 
         #region OnResize
 
@@ -108,33 +103,29 @@ namespace Examples.Tutorial
         /// </remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            if (Keyboard[OpenTK.Input.Key.Escape])
+            // Escape quits.
+            if (Keyboard[Key.Escape])
             {
                 this.Exit();
                 return;
             }
 
-            if ((Keyboard[OpenTK.Input.Key.AltLeft] || Keyboard[OpenTK.Input.Key.AltRight]) &&
-                Keyboard[OpenTK.Input.Key.Enter])
+            // Alt+Enter toggles fullscreen mode.
+            if ((Keyboard[Key.AltLeft] || Keyboard[Key.AltRight]) && Keyboard[Key.Enter])
             {
                 Fullscreen = !Fullscreen;
             }
 
-            if (Keyboard[OpenTK.Input.Key.Plus])
-                TargetRenderFrequency++;
-            else if (Keyboard[OpenTK.Input.Key.Minus])
-                TargetRenderFrequency--;
-            else if (Keyboard[OpenTK.Input.Key.PageUp])
-                TargetUpdateFrequency++;
-            else if (Keyboard[OpenTK.Input.Key.PageDown])
-                TargetUpdateFrequency--;
+            // Plus/Minus change the target render frequency.
+            // PageUp/PageDown change the target update frequency.
+            if (Keyboard[Key.Plus] || Keyboard[Key.KeypadAdd]) TargetRenderFrequency++;
+            if (Keyboard[Key.Minus] || Keyboard[Key.KeypadSubtract]) TargetRenderFrequency--;
+            if (Keyboard[Key.PageUp]) TargetUpdateFrequency++;
+            if (Keyboard[Key.PageDown]) TargetUpdateFrequency--;
 
-            if (Keyboard[OpenTK.Input.Key.Space])
-                angle_speed = 12.0f;
-            else
-                angle_speed = 3.0f;
-            
-            //angle += angle_speed;
+            // Right/Left control the rotation speed and direction.
+            if (Keyboard[Key.Right]) rotation_speed += 0.5f;
+            if (Keyboard[Key.Left]) rotation_speed -= 0.5f;
         }
 
         #endregion
@@ -156,16 +147,8 @@ namespace Examples.Tutorial
                 0.0, 1.0, 0.0
             );
 
-            //angle += angle_speed * (float)(UpdateFrequency / RenderFrequency);
-            //if (e.Time != 0.0)
-            if (Math.Abs(e.ScaleFactor - factor_target) > 0.5)
-            {
-                /*Debug.Print("JITTER: Frame: {0} ({1}), Update: {2} ({3}), Factor: {4}, Error: {5}",
-                    RenderPeriod.ToString("g8"), RenderFrequency.ToString("g3"), UpdatePeriod.ToString("g8"), UpdateFrequency.ToString("g3"),
-                    e.ScaleFactor.ToString("g8"), Math.Abs(factor_target - e.ScaleFactor).ToString("g8"));*/
-            }
-            angle += angle_speed * (float)e.ScaleFactor;
-            //angle += angle_speed * (float)e.Time;
+            angle += rotation_speed * (float)e.ScaleFactor;
+
             if (angle >= 360.0f)
                 angle -= 360.0f;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
@@ -183,12 +166,7 @@ namespace Examples.Tutorial
 
             GL.End();
             
-            int zero = GC.CollectionCount(0);
-            int one = GC.CollectionCount(1);
-            int two = GC.CollectionCount(2);
-            
             SwapBuffers();
-            //Thread.Sleep(25);
         }
 
         #endregion
@@ -204,9 +182,12 @@ namespace Examples.Tutorial
         public void Launch()
         {
             // Lock UpdateFrame rate at 30Hz and RenderFrame rate 85Hz.
-            Run(30.0, 20.0);
+            //Run(60.0, 85.0);
+            Run(30.0);
         }
 
         #endregion
+
+        public static readonly int order = 2;
     }
 }

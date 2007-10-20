@@ -207,6 +207,8 @@ namespace Examples.WinForms
             
         }
 
+        public static readonly int order = 2;
+
         #endregion
 
         private void glControl_Layout(object sender, LayoutEventArgs e)
