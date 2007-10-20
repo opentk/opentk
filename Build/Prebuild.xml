@@ -97,7 +97,7 @@
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
-        <!--<Match path="." pattern="*.dll.config" recurse="true"/>-->
+        <Match path="." pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
       </Files>
 
     </Project>
@@ -126,6 +126,8 @@
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="./Data" pattern="*.*" buildAction="None" copyToOutput="Always"/>
+        <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
       </Files>
 
     </Project>
