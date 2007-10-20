@@ -105,6 +105,7 @@ namespace OpenTK
             glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
             
             CreateWindow(mode, title);
+            this.vsync = VSyncMode.Adaptive;
         }
 
         void glWindow_Destroy(object sender, EventArgs e)
@@ -433,121 +434,134 @@ namespace OpenTK
         /// <param name="frames_per_second">The frequency of RenderFrame events.</param>
         public void Run(double updates_per_second, double frames_per_second)
         {
-            if (updates_per_second < 0.0 || updates_per_second > 200.0)
-                throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second, "Parameter should be inside the range [0.0, 200.0]");
-            if (frames_per_second < 0.0 || frames_per_second > 200.0)
-                throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second, "Parameter should be inside the range [0.0, 200.0]");
-
-            TargetUpdateFrequency = updates_per_second;
-            TargetRenderFrequency = frames_per_second;
-
-            Stopwatch update_watch = new Stopwatch(), render_watch = new Stopwatch();
-            double time, next_render = 0.0, next_update = 0.0, update_time_counter = 0.0;
-            int num_updates = 0;
-            UpdateFrameEventArgs update_args = new UpdateFrameEventArgs();
-            RenderFrameEventArgs render_args = new RenderFrameEventArgs();
-            
-            double sleep_granularity;      // In seconds.
-
-            //GC.Collect(2);
-            //GC.WaitForPendingFinalizers();
-            //GC.Collect(2);
-
-            // Find the minimum granularity of the Thread.Sleep() function.
-            // TODO: Disabled - see comment on Thread.Sleep() problems below.
-            //update_watch.Start();
-            //const int test_times = 5;
-            //for (int i = test_times; --i > 0; )
-            //    Thread.Sleep(1);
-            //update_watch.Stop();
-            //sleep_granularity = System.Math.Round(1000.0 * update_watch.Elapsed.TotalSeconds / test_times, MidpointRounding.AwayFromZero) / 1000.0;
-            //update_watch.Reset();       // We don't want to affect the first UpdateFrame!
-
-            OnLoadInternal(EventArgs.Empty);
-
-            Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
-
-            while (!isExiting)
+            try
             {
-                // Process events
-                ProcessEvents();
+                if (updates_per_second < 0.0 || updates_per_second > 200.0)
+                    throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second, "Parameter should be inside the range [0.0, 200.0]");
+                if (frames_per_second < 0.0 || frames_per_second > 200.0)
+                    throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second, "Parameter should be inside the range [0.0, 200.0]");
 
-                if (isExiting)
-                    break;
+                TargetUpdateFrequency = updates_per_second;
+                TargetRenderFrequency = frames_per_second;
 
-                // Raise UpdateFrame events
-                time = update_watch.Elapsed.TotalSeconds;
-                if (time > 1.0)
-                    time = 1.0;
-                while (next_update - time <= 0.0)
+                Stopwatch update_watch = new Stopwatch(), render_watch = new Stopwatch();
+                double time, next_render = 0.0, next_update = 0.0, update_time_counter = 0.0;
+                int num_updates = 0;
+                UpdateFrameEventArgs update_args = new UpdateFrameEventArgs();
+                RenderFrameEventArgs render_args = new RenderFrameEventArgs();
+
+                double sleep_granularity;      // In seconds.
+
+                //GC.Collect(2);
+                //GC.WaitForPendingFinalizers();
+                //GC.Collect(2);
+
+                // Find the minimum granularity of the Thread.Sleep() function.
+                // TODO: Disabled - see comment on Thread.Sleep() problems below.
+                //update_watch.Start();
+                //const int test_times = 5;
+                //for (int i = test_times; --i > 0; )
+                //    Thread.Sleep(1);
+                //update_watch.Stop();
+                //sleep_granularity = System.Math.Round(1000.0 * update_watch.Elapsed.TotalSeconds / test_times, MidpointRounding.AwayFromZero) / 1000.0;
+                //update_watch.Reset();       // We don't want to affect the first UpdateFrame!
+
+                OnLoadInternal(EventArgs.Empty);
+
+                Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
+
+                while (!isExiting)
                 {
-                    next_update = next_update - time + TargetUpdatePeriod;
+                    // Process events
+                    ProcessEvents();
 
-                    update_time_counter += time;
-                    ++num_updates;
-
-                    update_watch.Reset();
-                    update_watch.Start();
-
-                    update_args.Time = time;
-                    OnUpdateFrameInternal(update_args);
-
-                    if (TargetUpdateFrequency == 0.0)
-                        break;
-
+                    // Raise UpdateFrame events
                     time = update_watch.Elapsed.TotalSeconds;
-                    next_update -= time;
-                    update_time_counter += time;
+                    if (time > 1.0)
+                        time = 1.0;
+                    while (next_update - time <= 0.0)
+                    {
+                        next_update = next_update - time + TargetUpdatePeriod;
 
-                    // Allow up to 10 frames to be dropped.
-                    // Prevent the application from hanging with very high update frequencies.
-                    if (num_updates >= 10)
-                        break;
+                        update_time_counter += time;
+                        ++num_updates;
+
+                        update_watch.Reset();
+                        update_watch.Start();
+
+                        update_args.Time = time;
+                        OnUpdateFrameInternal(update_args);
+
+                        if (TargetUpdateFrequency == 0.0)
+                            break;
+
+                        time = update_watch.Elapsed.TotalSeconds;
+                        next_update -= time;
+                        update_time_counter += time;
+
+                        // Allow up to 10 frames to be dropped.
+                        // Prevent the application from hanging with very high update frequencies.
+                        if (num_updates >= 10)
+                            break;
+                    }
+                    if (num_updates > 0)
+                    {
+                        update_period = update_time_counter / (double)num_updates;
+                        num_updates = 0;
+                        update_time_counter = 0.0;
+                    }
+
+                    // Raise RenderFrame event
+                    time = render_watch.Elapsed.TotalSeconds;
+                    if (time > 1.0)
+                        time = 1.0;
+                    double time_left = next_render - time;
+                    if (VSync == VSyncMode.Adaptive)
+                    {
+                        // Check if we have enough time for a vsync
+                        if (time_left <= 0.5 * TargetRenderFrequency)
+                            Context.VSync = false;
+                        else
+                            Context.VSync = true;
+                    }
+
+                    if (time_left <= 0.0)
+                    {
+                        next_render = time_left + TargetRenderPeriod;
+                        render_watch.Reset();
+                        render_watch.Start();
+
+                        render_period = render_args.Time = time;
+                        render_args.ScaleFactor = RenderPeriod / UpdatePeriod;
+                        OnRenderFrameInternal(render_args);
+                    }
+
+                    // Yield CPU time, if the Thread.Sleep() granularity allows it.
+                    // TODO: Disabled because it does not work reliably enough on all systems.
+                    // Enable vsync as a workaround.
+                    //if (AllowSleep && next_render > sleep_granularity && next_update > sleep_granularity)
+                    //{
+                    //    Thread.Sleep((int)(1000.0 * System.Math.Min(next_render - sleep_granularity, next_update - sleep_granularity)));
+                    //}
                 }
-                if (num_updates > 0)
-                {
-                    update_period = update_time_counter / (double)num_updates;
-                    num_updates = 0;
-                    update_time_counter = 0.0;
-                }
-
-                // Raise RenderFrame events
-                if (isExiting)
-                    break;
-
-                time = render_watch.Elapsed.TotalSeconds;
-                if (time > 1.0)
-                    time = 1.0;
-                if (next_render - time <= 0.0)
-                {
-                    next_render = next_render - time + TargetRenderPeriod;
-                    render_watch.Reset();
-                    render_watch.Start();
-
-                    render_period = render_args.Time = time;
-                    render_args.ScaleFactor = RenderPeriod / UpdatePeriod;
-                    OnRenderFrameInternal(render_args);
-                }
-
-                // Yield CPU time, if the Thread.Sleep() granularity allows it.
-                // TODO: Disabled because it does not work reliably enough on all systems.
-                // Enable vsync as a workaround.
-                //if (AllowSleep && next_render > sleep_granularity && next_update > sleep_granularity)
-                //{
-                //    Thread.Sleep((int)(1000.0 * System.Math.Min(next_render - sleep_granularity, next_update - sleep_granularity)));
-                //}
             }
-
-            Thread.CurrentThread.Priority = ThreadPriority.Normal;
-
-            OnUnloadInternal(EventArgs.Empty);
-
-            if (this.Exists)
+            catch (GameWindowExitException e)
             {
-                glWindow.DestroyWindow();
-                while (this.Exists)
+
+            }
+            finally
+            {
+                Thread.CurrentThread.Priority = ThreadPriority.Normal;
+
+                OnUnloadInternal(EventArgs.Empty);
+
+                if (this.Exists)
                 {
-                    this.ProcessEvents();
+                    glWindow.DestroyWindow();
+                    while (this.Exists)
+                    {
+                        this.ProcessEvents();
+                    }
                 }
             }
         }
