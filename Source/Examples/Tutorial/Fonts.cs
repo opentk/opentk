@@ -13,6 +13,7 @@ using OpenTK;
 using OpenTK.Fonts;
 using OpenTK.OpenGL;
 using OpenTK.Input;
+using System.IO;
 
 namespace Examples.Tutorial
 {
@@ -25,7 +26,7 @@ namespace Examples.Tutorial
 
         TextureFont serif;
 
-        string[] poem = Resources.Poem.Replace('\r', ' ').Split('\n');
+        string[] poem = new StreamReader("Data\\Poem.txt").ReadToEnd().Replace('\r', ' ').Split('\n');
         float scroll_speed;
         float scroll_position;
         float initial_position;
