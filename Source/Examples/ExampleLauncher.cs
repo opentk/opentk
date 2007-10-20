@@ -29,12 +29,40 @@ namespace Examples
 {
     public partial class ExampleLauncher : Form
     {
-        SortedList<string, string> examples = new SortedList<string, string>();
+        #region class ExampleInfo
+
+        /// <summary>
+        /// Contains the information necessary to display and launch an example thorugh the ExampleLauncer.
+        /// </summary>
+        class ExampleInfo
+        {
+            public string Name;
+            public string Description;
+            public Type Example;
+
+            public ExampleInfo(string name, string description, Type example)
+            {
+                Name = name;
+                Description = description;
+                Example = example;
+            }
+
+            public override string ToString()
+            {
+ 	             return Name;
+            }
+        }
+
+        #endregion
+
+        #region --- Constructor ---
 
         public ExampleLauncher()
         {
             InitializeComponent();
         }
+
+        #endregion
 
         public void ExampleLauncher_Load(object sender, EventArgs e)
         {
@@ -55,31 +83,43 @@ namespace Examples
 
             // Get all examples
             Type[] types = Assembly.GetExecutingAssembly().GetTypes();
+            StringBuilder sb = new StringBuilder();
             foreach (Type type in types)
             {
                 if (type.GetInterface("IExample") != null)
                 {
-                    examples.Add(
-                        type.Namespace.Replace("Examples.", String.Empty) + " " +
-                        type.Name.Substring(1, 2) + ": " +
-                        type.Name.Substring(3).Replace('_', ' '),
-                        type.Namespace + "." + type.Name);
+                    sb.Append(type.Namespace);
+                    sb.Replace("Examples.", String.Empty);
+                    sb.Append(" ");
+                    int order;
+                    try
+                    {
+                        FieldInfo info = type.GetField("order");
+                        order = (int)info.GetValue(null);
+                    }
+                    catch (NullReferenceException nre)
+                    {
+                        Debug.Print("Example {0} does not have ordering info", type.FullName);
+                        order = 0;
+                    }
+                    if (order < 10)
+                        sb.Append("0"); // To keep items sorted nicely.
+                    sb.Append(order.ToString());
+                    sb.Append(": ");
+                    sb.Append(type.Name);
+
+                    listBox1.Items.Add(new ExampleInfo(sb.ToString(), "", type));
+                    
+                    // Clean the StringBuilder for the next pass.
+                    sb.Remove(0, sb.Length);
                 }
             }
-
-            foreach (string s in examples.Keys)
-                listBox1.Items.Add(s);
-
             // Select first item
             if (listBox1.Items.Count > 0)
-            {
                 this.listBox1.SelectedIndex = 0;
-            }
         }
 
-        delegate void LaunchDelegate(object example);
-
-        void Launch(object example)
+        void LaunchGameWindow(object example)
         {
             Type ex = example as Type;
             try
@@ -105,29 +145,19 @@ namespace Examples
         {
             if (listBox1.SelectedItem != null)
             {
-                Type example = Assembly.GetExecutingAssembly().GetType(
-                    examples[listBox1.SelectedItem.ToString()], true, true);
+                Type example = (listBox1.SelectedItem as ExampleInfo).Example;
 
                 Debug.Print("Launching example: {0}", example.ToString());
                 this.Visible = false;
 
                 if (example.BaseType == typeof(GameWindow))
                 {
-                    // Start the GameWindow in a new thread - it runs its own message loop, and it would
-                    // interfere with the message loop of the ExampleLauncher.
-                    //Thread t = new Thread(Launch);
-                    //t.Start(example);
-                    //t = null;
-                    Launch(example);
-                    //IAsyncResult res = BeginInvoke(new LaunchDelegate(Launch), example);
-                    //EndInvoke(res);
+                    LaunchGameWindow(example);
                 }
                 else if (example.BaseType == typeof(Form))
                 {
                     try
                     {
-                        // In this we do not want a different thread: these examples rely on the Application.Idle
-                        // event, which would then be raised by both the ExampleLauncher thread *and* the new one!
                         using (Form f = (Form)example.GetConstructor(Type.EmptyTypes).Invoke(null))
                         {
                             f.ShowDialog(this);
@@ -147,6 +177,7 @@ namespace Examples
                 }
                 else
                 {
+                    // Console application.
                     IExample ex = (IExample)example.GetConstructor(Type.EmptyTypes).Invoke(null);
                     ex.Launch();
                 }
