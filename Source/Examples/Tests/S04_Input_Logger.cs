@@ -37,9 +37,8 @@ namespace Examples.Tests
 
         void LaunchGameWindow()
         {
-            hidden = new GameWindow();
+            hidden = new GameWindow(new DisplayMode(30, 30), "OpenTK | Hidden input window");
             hidden.Load += hidden_Load;
-            hidden.CreateWindow(new DisplayMode(30, 30), "OpenTK | Hidden input window");
             hidden.Run(60.0, 1.0);
         }
 
@@ -119,6 +118,8 @@ namespace Examples.Tests
         {
             // Empty
         }
+
+        public static readonly int order = 2;
 
         #endregion
 

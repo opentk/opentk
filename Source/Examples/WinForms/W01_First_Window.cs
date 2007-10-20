@@ -93,6 +93,8 @@ namespace Examples.WinForms
             
         }
 
+        public static readonly int order = 1;
+
         #endregion
     }
 }

@@ -194,9 +194,11 @@ namespace Examples.Tutorial
         /// </remarks>
         public void Launch()
         {
-            Run(60.0, 60.0);
+            Run(85.0, 0.0);
         }
 
         #endregion
+
+        public static readonly int order = 3;
     }
 }
