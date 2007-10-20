@@ -325,7 +325,6 @@ namespace OpenTK
                 try
                 {
                     glWindow.CreateWindow(mode);
-                    
                 }
                 catch (ApplicationException expt)
                 {
@@ -573,6 +572,13 @@ namespace OpenTK
             //if (!isExiting)
             //    InputDriver.Poll();
             glWindow.ProcessEvents();
+
+            if (MustResize)
+            {
+                resizeEventArgs.Width = glWindow.Width;
+                resizeEventArgs.Height = glWindow.Height;
+                OnResizeInternal(resizeEventArgs);
+            }
         }
 
         #endregion
@@ -622,16 +628,10 @@ namespace OpenTK
         {
             if (!this.Exists && !this.IsExiting)
             {
-                Debug.Print("WARNING: UpdateFrame event raised without a valid render window. This may indicate a programming error. Creating render window.");
-                mode = new DisplayMode(640, 480);
-                this.CreateWindow(mode);
-            }
-
-            if (MustResize)
-            {
-                resizeEventArgs.Width = glWindow.Width;
-                resizeEventArgs.Height = glWindow.Height;
-                OnResizeInternal(resizeEventArgs);
+                //Debug.Print("WARNING: UpdateFrame event raised without a valid render window. This may indicate a programming error. Creating render window.");
+                //mode = new DisplayMode(640, 480);
+                //this.CreateWindow(mode);
+                throw new InvalidOperationException("Cannot enter game loop without a render window");
             }
 
             if (UpdateFrame != null)
@@ -673,6 +673,13 @@ namespace OpenTK
         /// <param name="e"></param>
         private void OnLoadInternal(EventArgs e)
         {
+            if (MustResize)
+            {
+                resizeEventArgs.Width = glWindow.Width;
+                resizeEventArgs.Height = glWindow.Height;
+                OnResizeInternal(resizeEventArgs);
+            }
+
             Debug.WriteLine(String.Format("OpenGL driver information: {0}, {1}, {2}",
                 GL.GetString(GL.Enums.StringName.RENDERER),
                 GL.GetString(GL.Enums.StringName.VENDOR),
