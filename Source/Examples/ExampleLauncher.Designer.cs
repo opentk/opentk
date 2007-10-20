@@ -40,6 +40,7 @@
             this.listBox1.Margin = new System.Windows.Forms.Padding(1);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(284, 264);
+            this.listBox1.Sorted = true;
             this.listBox1.TabIndex = 0;
             this.listBox1.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
             this.listBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyUp);

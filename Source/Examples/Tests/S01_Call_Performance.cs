@@ -134,7 +134,7 @@ namespace Examples.Tests
                 Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
                 timer.Reset();
 
-
+                GL.GenLists(1);
                 Trace.Write("Timing direct DllImport (void*): ");
                 timer.Start();
                 for (int i = 0; ++i < num_calls; )
@@ -148,6 +148,8 @@ namespace Examples.Tests
                 #endregion
             }
         }
+
+        public static readonly int order = 1;
 
         public void InlineFunction()
         {
