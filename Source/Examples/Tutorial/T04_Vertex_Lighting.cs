@@ -25,9 +25,8 @@ namespace Examples.Tutorial
 
         #region Constructor
 
-        public T04_Vertex_Lighting()
+        public T04_Vertex_Lighting() : base(new DisplayMode(800, 600), "OpenTK | Vertex Lighting example")
         {
-            this.CreateWindow(new DisplayMode(800, 600), "OpenTK | Vertex Lighting example");
         }
 
         #endregion
@@ -173,5 +172,7 @@ namespace Examples.Tutorial
         }
 
         #endregion
+
+        public static readonly int order = 4;
     }
 }
