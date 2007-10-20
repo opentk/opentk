@@ -76,7 +76,10 @@ namespace OpenTK
         {
             Node node;
             bool found = items.TryGetValue(item, out node);
-            rect = node.Rect;
+            if (found)
+                rect = node.Rect;
+            else
+                rect = new Rectangle();
             return found;
         }
 
@@ -91,6 +94,23 @@ namespace OpenTK
         {
             items.Clear();
             root.Clear();
+        }
+
+        #endregion
+
+        #region public void ChangeSize(int new_width, int new_height)
+
+        /// <summary>
+        /// Changes the dimensions of the TexturePacker surface.
+        /// </summary>
+        /// <param name="new_width">The new width of the TexturePacker surface.</param>
+        /// <param name="new_height">The new height of the TexturePacker surface.</param>
+        /// <remarks>Changing the size of the TexturePacker surface will implicitly call TexturePacker.Clear().</remarks>
+        /// <seealso cref="Clear"/>
+        public void ChangeSize(int new_width, int new_height)
+        {
+            Clear();
+            root.Rect = new Rectangle(0, 0, new_width, new_height);
         }
 
         #endregion
