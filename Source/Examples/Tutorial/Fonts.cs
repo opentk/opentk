@@ -26,7 +26,7 @@ namespace Examples.Tutorial
 
         TextureFont serif;
 
-        string[] poem = new StreamReader("Data\\Poem.txt").ReadToEnd().Replace('\r', ' ').Split('\n');
+        string[] poem = new StreamReader("Data/Poem.txt").ReadToEnd().Replace('\r', ' ').Split('\n');
         float scroll_speed;
         float scroll_position;
         float initial_position;
