@@ -32,6 +32,8 @@ namespace Bind.GL2
 
         protected static string loadAllFuncName = "LoadAll";
 
+        protected static Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
+
         #endregion
 
         #region --- Constructors ---
@@ -55,8 +57,11 @@ namespace Bind.GL2
 
         public virtual void Process()
         {
+            // Matches functions that cannot have their trailing 'v' trimmed for CLS-Compliance reasons.
+            // Built through trial and error :)
             Function.endingsAddV =
-                new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?)|(Point|Convolution|Transform|Sprite|List|Combiner|Tex)Parameter|Fog(Coord)?.*|VertexWeight|(Fragment)?Light(Model)?|Material|ReplacementCodeu?b?|Tex(Gen|Env)|Indexu?.v)", RegexOptions.Compiled);
+                new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?)|(Point|Convolution|Transform|Sprite|List|Combiner|Tex)Parameter|Fog(Coord)?.*|VertexWeight|(Fragment)?Light(Model)?|Material|ReplacementCodeu?b?|Tex(Gen|Env)|Indexu?.v)",
+                RegexOptions.Compiled);
 
 
             Bind.Structures.Type.Initialize(glTypemap, csTypemap);
@@ -107,10 +112,12 @@ namespace Bind.GL2
 
         protected virtual void Translate()
         {
-            foreach (Bind.Structures.Enum e in Bind.Structures.Enum.GLEnums.Values)
-            {
-                TranslateEnum(e);
-            }
+            Bind.Structures.Enum.GLEnums.Translate();
+
+            //foreach (Bind.Structures.Enum e in Bind.Structures.Enum.GLEnums.Values)
+            //{
+            //    TranslateEnum(e);
+            //}
 
             //foreach (Bind.Structures.Delegate d in Bind.Structures.Delegate.Delegates.Values)
             {
@@ -174,9 +181,9 @@ namespace Bind.GL2
                     // Get function name:
                     d.Name = line.Split(Utilities.Separators, StringSplitOptions.RemoveEmptyEntries)[0];
 
-                    if (d.Name.Contains("QueryHyperpipeBestAttribSGIX"))
-                    {
-                    }
+                    //if (d.Name.Contains("QueryHyperpipeBestAttribSGIX"))
+                    //{
+                    //}
 
                     do
                     {
@@ -351,6 +358,33 @@ namespace Bind.GL2
                             c.Value = words[2];
                         }
 
+#if false
+                        // Translate the enum's name to match .Net naming conventions
+                        if ((Settings.Compatibility & Settings.Legacy.AllCapsEnums) == Settings.Legacy.None)
+                        {
+                            int pos;
+                            // e.Name = enumToDotNet.Replace(e.Name, 
+                            while ((pos = e.Name.IndexOf("_")) != -1)
+                            {
+                                e.Name = e.Name.Insert(pos, Char.ToUpper(e.Name[pos + 1]).ToString());
+                                e.Name = e.Name.Remove(pos + 1, 2);
+                            }
+                            //e.Name = e.Name.Replace("_", "");
+                        }
+#endif
+                        // Translate the constant's name to match .Net naming conventions
+                        if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
+                        {
+                            int pos;
+
+                            c.Name = c.Name[0] + c.Name.Substring(1).ToLower();
+                            while ((pos = c.Name.IndexOf("_")) != -1)
+                            {
+                                c.Name = c.Name.Insert(pos, Char.ToUpper(c.Name[pos + 1]).ToString());
+                                c.Name = c.Name.Remove(pos + 1, 2);
+                            }
+                        }
+
                         //if (!String.IsNullOrEmpty(c.Name) && !e.Members.Contains.Contains(c))
                         //SpecTranslator.Merge(e.Members, c);
                         if (!e.ConstantCollection.ContainsKey(c.Name))
@@ -359,13 +393,9 @@ namespace Bind.GL2
                         }
                         else
                         {
-                            Trace.WriteLine(
-                                String.Format(
-                                    "Spec error: Constant {0} defined twice in enum {1}, discarding last definition.",
-                                    c.Name,
-                                    e.Name
-                                )
-                            );
+                            Trace.WriteLine(String.Format(
+                                "Spec error: Constant {0} defined twice in enum {1}, discarding last definition.",
+                                c.Name, e.Name));
                         }
 
                         // Insert the current constant in the list of all constants.
@@ -616,33 +646,21 @@ namespace Bind.GL2
             sw.WriteLine("partial class {0}", Settings.OutputClass);
             sw.WriteLine("{");
             sw.Indent();
-            sw.WriteLine();
+
             sw.WriteLine("internal static partial class {0}", Settings.DelegatesClass);
             sw.WriteLine("{");
-
             sw.Indent();
-            // Disable BeforeFieldInit
-            //sw.WriteLine("static {0}()", Settings.DelegatesClass);
-            //sw.WriteLine("{");
-            // --- Workaround for mono gmcs 1.2.4 issue, where static initalization fails. ---
-            //sw.Indent();
-            //sw.WriteLine("{0}.{1}();", Settings.OutputClass, loadAllFuncName);
-            //sw.Unindent();
-            // --- End workaround ---
-            //sw.WriteLine("}");
-            sw.WriteLine();
+            
             foreach (Bind.Structures.Delegate d in delegates.Values)
             {
                 sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
                 sw.WriteLine("internal {0};", d.ToString());
-                // --- Workaround for mono gmcs 1.2.4 issue, where static initalization fails. ---
-                sw.WriteLine(
-                    "internal {0}static {1} {2}{1};",   //  = null
+                sw.WriteLine("internal {0}static {1} {2}{1};",   //  = null
                     d.Unsafe ? "unsafe " : "",
                     d.Name,
                     Settings.FunctionPrefix);
-                // --- End workaround ---s
             }
+            
             sw.Unindent();
             sw.WriteLine("}");
 
@@ -706,7 +724,7 @@ namespace Bind.GL2
             sw.WriteLine();
             foreach (string key in wrappers.Keys)
             {
-                if (Settings.Compatibility == Settings.Legacy.None && key != "Core")
+                if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
                 {
                 	if (!Char.IsDigit(key[0]))
                 	{
@@ -732,7 +750,7 @@ namespace Bind.GL2
                     sw.WriteLine();
                 }
 
-                if (Settings.Compatibility == Settings.Legacy.None && key != "Core")
+                if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
                 {
                     sw.Unindent();
                     sw.WriteLine("}");
@@ -765,22 +783,28 @@ namespace Bind.GL2
         {
             Trace.WriteLine(String.Format("Writing enums to {0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
 
-            if (Settings.Compatibility == Settings.Legacy.None)
+            if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
             {
-                sw.WriteLine("public class Enums");
-                sw.WriteLine("{");
+                if (!String.IsNullOrEmpty(Settings.NestedEnumsClass))
+                {
+                    sw.WriteLine("public class Enums");
+                    sw.WriteLine("{");
+                    sw.Indent();
+                }
 
-                sw.Indent();
                 foreach (Bind.Structures.Enum @enum in enums.Values)
                 {
                     sw.Write(@enum);
                     sw.WriteLine();
                 }
-                sw.Unindent();
 
-                sw.WriteLine("}");
+                if (!String.IsNullOrEmpty(Settings.NestedEnumsClass))
+                {
+                    sw.Unindent();
+                    sw.WriteLine("}");
+                }
             }
-            else if (Settings.Compatibility == Settings.Legacy.Tao)
+            else
             {
                 // Tao legacy mode: dump all enums as constants in GLClass.
                 foreach (Bind.Structures.Constant c in enums[Settings.CompleteEnumName].ConstantCollection.Values)

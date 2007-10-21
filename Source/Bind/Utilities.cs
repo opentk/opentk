@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Bind.Structures;
+using System.Text.RegularExpressions;
 
 namespace Bind
 {
@@ -67,6 +68,9 @@ namespace Bind
     public static class Utilities
     {
         public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
+        public static readonly Regex Extensions = new Regex(
+            "(ARB|EXT|ATI|NV|SUNX|SUN|SGIS|SGIX|SGI|MESA|3DFX|IBM|GREMEDY|HP|INTEL|PGI|INGR|APPLE|OML|I3D)",
+            RegexOptions.Compiled);
 
         #region internal StreamReader OpenSpecFile(string file)
 

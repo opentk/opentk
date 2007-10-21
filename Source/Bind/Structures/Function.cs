@@ -63,14 +63,26 @@ namespace Bind.Structures
 
         #endregion
 
+        public void TurnVoidPointersToIntPtr()
+        {
+            foreach (Parameter p in this.Parameters)
+            {
+                if (p.Pointer && p.CurrentType == "void")
+                {
+                    p.CurrentType = "IntPtr";
+                    p.Pointer = false;
+                }
+            }
+        }
+
         #region public override bool Unsafe
 
         public override bool Unsafe
         {
             get
             {
-                if (Settings.Compatibility == Settings.Legacy.Tao)
-                    return false;
+                //if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
+                //    return false;
 
                 return base.Unsafe;
             }
@@ -91,22 +103,9 @@ namespace Bind.Structures
         #endregion
 
         #region public string TrimmedName
-        /*
-        string trimmedName;
-        /// <summary>
-        /// Gets or sets the name of the opengl function, trimming the excess 234dfubsiv endings.
-        /// </summary>
-        public string TrimmedName
-        {
-            get { return trimmedName; }
-            set
-            {
-                if (!String.IsNullOrEmpty(value))
-                    trimmedName = value.Trim();
-            }
-        }
-        */
+
         public string TrimmedName;
+
         #endregion
 
         #region public override string Name
@@ -123,7 +122,7 @@ namespace Bind.Structures
             {
                 base.Name = value;
 
-                if (Settings.Compatibility == Settings.Legacy.Tao)
+                if ((Settings.Compatibility & Settings.Legacy.NoTrimFunctionEnding) != Settings.Legacy.None)
                 {
                     // If we don't need compatibility with Tao,
                     // remove the Extension and the overload information from the name
@@ -134,43 +133,6 @@ namespace Bind.Structures
                 else
                 {
                     TrimmedName = Utilities.StripGL2Extension(value);
-                    
-                    //if (TrimmedName.Contains("Uniform2iv"))
-                    //{
-                    //    Console.Write("niar");
-                    //}
-
-                    // Remove overload
-                    /*
-                    for (int i = 3; i >= 1; i--)
-                    {
-		                if (endings.Contains(TrimmedName.Substring(TrimmedName.Length - i)))
-		                {
-		                	// If there is a digit before the ending (e.g. 3fv) then we will remove
-		                	// the ending (some functions are blacklisted for CLS-Compliance).
-		                	// Otherwise, if there is no digit, but it ends with a 'v', do not remove
-		                	// the 'v' (CLS-Compliance). If no digit and it ends with a (plural) 's',
-		                	// do not remove anything (e.g. glCallLists)
-		                	// TODO: Add better handling for CLS-Compliance on ref ('v') functions.
-		                	if (Char.IsDigit(TrimmedName[TrimmedName.Length - (i + 1)]))
-		                	{
-	                	    	if (!endingsAddV.IsMatch(Name))
-	                	    	{
-		                    		TrimmedName = TrimmedName.Substring(0, TrimmedName.Length - i);	
-	                	    	}
-	                	    	else
-	                	    	{
-	                	    		Console.WriteLine("Function {0} blacklisted from trimming (CLS-Compliance).", Name);
-	                	    	}
-		                	}
-		                	else if (TrimmedName.EndsWith("v"))
-		                	{
-		                        TrimmedName = TrimmedName.Substring(0, TrimmedName.Length - i) + "v";
-		                	}
-		                    return;
-		                }
-                    }
-                    */
 
                     //if (Name.Contains("BooleanIndexed"))
                     {
@@ -183,10 +145,12 @@ namespace Bind.Structures
                         m = endings.Match(TrimmedName);
 
                         if (m.Length > 0 && m.Index + m.Length == TrimmedName.Length)
-                        {   // Only trim endings, not internal matches.
+                        {
+                            // Only trim endings, not internal matches.
                             if (m.Value[m.Length - 1] == 'v' && endingsAddV.IsMatch(Name) &&
                                 !Name.StartsWith("Get") && !Name.StartsWith("MatrixIndex"))
-                            {   // Only trim ending 'v' when there is a number
+                            {
+                                // Only trim ending 'v' when there is a number
                                 TrimmedName = TrimmedName.Substring(0, m.Index) + "v";
                             }
                             else
@@ -213,12 +177,12 @@ namespace Bind.Structures
             sb.Append(Unsafe ? "unsafe " : "");
             sb.Append(ReturnType);
             sb.Append(" ");
-            if (Settings.Compatibility == Settings.Legacy.Tao)
+            if ((Settings.Compatibility & Settings.Legacy.NoTrimFunctionEnding) != Settings.Legacy.None)
             {
                 sb.Append(Settings.FunctionPrefix);
             }
             sb.Append(!String.IsNullOrEmpty(TrimmedName) ? TrimmedName : Name);
-            sb.Append(Parameters.ToString(true));
+            sb.Append(Parameters.ToString(false));
             if (Body.Count > 0)
             {
                 sb.AppendLine();

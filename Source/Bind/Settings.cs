@@ -20,24 +20,27 @@ namespace Bind
         public const string DefaultOutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
         public const string DefaultOutputNamespace = "OpenTK.OpenGL";
 
-        public static string OutputClass = "GL";
+        public static string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
+        public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
         public static string FunctionPrefix = "gl";
         public static string ConstantPrefix = "GL_";
 
         // TODO: This code is too fragile.
-        public static string NestedEunmsClass = "Enums";
         private static string normalEnumsClassOverride;
+        public static string NestedEnumsClass = "Enums";
         public static string NormalEnumsClass
         {
             get
             {
-                if (!String.IsNullOrEmpty(normalEnumsClassOverride))
-                    return normalEnumsClassOverride;
-                return OutputClass + "." + NestedEunmsClass;
+                return String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass :
+                    OutputClass + "." + NestedEnumsClass;
             }
-            set { normalEnumsClassOverride = value; }
         }
-        public static string AuxEnumsClass = "GL." + NestedEunmsClass;
+ 
+        public static string AuxEnumsClass 
+        {
+            get { return GLClass + NestedEnumsClass; }
+        }
 
         public static string DelegatesClass = "Delegates";
         public static string ImportsClass = "Imports";
@@ -49,10 +52,18 @@ namespace Bind
         /// </summary>
         public static string CompleteEnumName = "All";
         
+        [Flags]
         public enum Legacy
         {
-            None,
-            Tao,
+            None = 0x00,
+            ConstIntEnums = 0x01,
+            NoAdvancedEnumProcessing = 0x02,
+            NoPublicUnsafeFunctions = 0x04,
+            NoTrimFunctionEnding = NoPublicUnsafeFunctions,
+            NoTrimFunctionPrefix = 0x08,
+            NoSeparateFunctionNamespaces = 0x10,
+            TurnVoidPointersToIntPtr = 0x20,
+            Tao = ConstIntEnums | NoAdvancedEnumProcessing | NoPublicUnsafeFunctions | NoTrimFunctionEnding | NoTrimFunctionPrefix | NoSeparateFunctionNamespaces | TurnVoidPointersToIntPtr,
         }
         
         public static string WindowsGDI = "OpenTK.Platform.Windows.API";

@@ -151,6 +151,9 @@ namespace Bind.Structures
             //set { @unsafe = value; }
             get
             {
+                //if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
+                //    return false;
+
                 if (ReturnType.Pointer)
                     return true;
 
@@ -309,7 +312,7 @@ namespace Bind.Structures
             sb.Append(ReturnType);
             sb.Append(" ");
             sb.Append(Name);
-            sb.Append(Parameters.ToString());
+            sb.Append(Parameters.ToString(true));
 
             return sb.ToString();
         }
@@ -486,102 +489,94 @@ namespace Bind.Structures
             {
                 Function f;
 
-                if (function.Parameters[index].WrapperType == WrapperTypes.None)
+                switch (function.Parameters[index].WrapperType)
                 {
-                    // No wrapper needed, visit the next parameter
-                    ++index;
-                    WrapParameters(function, wrappers);
-                    --index;
-                }
-                else
-                {
-                    switch (function.Parameters[index].WrapperType)
-                    {
-                        case WrapperTypes.ArrayParameter:
-                            // Recurse to the last parameter
-                            ++index;
-                            WrapParameters(function, wrappers);
-                            --index;
+                    case WrapperTypes.None:
+                        // No wrapper needed, visit the next parameter
+                        ++index;
+                        WrapParameters(function, wrappers);
+                        --index;
+                        break;
 
-                            //if (function.Name == "UseFontOutlinesA")
-                            {
-                            }
+                    case WrapperTypes.ArrayParameter:
+                        // Recurse to the last parameter
+                        ++index;
+                        WrapParameters(function, wrappers);
+                        --index;
 
-                            // On stack rewind, create array wrappers
-                            f = new Function(function);
-                            f.Parameters[index].Reference = false;
-                            f.Parameters[index].Array = 1;
-                            f.Parameters[index].Pointer = false;
-                            f.Body = CreateBody(f, false);
-                            //f = ReferenceWrapper(new Function(function), index);
-                            wrappers.Add(f);
+                        // On stack rewind, create array wrappers
+                        f = new Function(function);
+                        f.Parameters[index].Reference = false;
+                        f.Parameters[index].Array = 1;
+                        f.Parameters[index].Pointer = false;
+                        f.Body = CreateBody(f, false);
+                        wrappers.Add(f);
 
-                            // Recurse to the last parameter again, keeping the Array wrappers
-                            ++index;
-                            WrapParameters(f, wrappers);
-                            --index;
+                        // Recurse to the last parameter again, keeping the Array wrappers
+                        ++index;
+                        WrapParameters(f, wrappers);
+                        --index;
 
-                            f = new Function(function);
-                            f.Parameters[index].Reference = true;
-                            f.Parameters[index].Array = 0;
-                            f.Parameters[index].Pointer = false;
-                            f.Body = CreateBody(f, false);
-                            //f = ReferenceWrapper(new Function(function), index);
-                            wrappers.Add(f);
+                        // On stack rewind create reference wrappers.
+                        f = new Function(function);
+                        f.Parameters[index].Reference = true;
+                        f.Parameters[index].Array = 0;
+                        f.Parameters[index].Pointer = false;
+                        f.Body = CreateBody(f, false);
+                        wrappers.Add(f);
 
-                            // Keeping the current Ref wrapper, visit all other parameters once more
-                            ++index;
-                            WrapParameters(f, wrappers);
-                            --index;
+                        // Keeping the current reference wrapper, revisit all other parameters.
+                        ++index;
+                        WrapParameters(f, wrappers);
+                        --index;
 
-                            break;
+                        break;
 
-                        case WrapperTypes.GenericParameter:
-                            // Recurse to the last parameter
-                            ++index;
-                            WrapParameters(function, wrappers);
-                            --index;
+                    case WrapperTypes.GenericParameter:
+                        // Recurse to the last parameter
+                        ++index;
+                        WrapParameters(function, wrappers);
+                        --index;
 
-                            // On stack rewind, create array wrappers
-                            f = new Function(function);
-                            f.Parameters[index].Reference = false;
-                            f.Parameters[index].Array = 0;
-                            f.Parameters[index].Pointer = false;
-                            f.Parameters[index].CurrentType = "object";
-                            f.Parameters[index].Flow = Parameter.FlowDirection.Undefined;
+                        // On stack rewind, create object wrappers
+                        f = new Function(function);
+                        f.Parameters[index].Reference = false;
+                        f.Parameters[index].Array = 0;
+                        f.Parameters[index].Pointer = false;
+                        f.Parameters[index].CurrentType = "object";
+                        f.Parameters[index].Flow = Parameter.FlowDirection.Undefined;
 
-                            f.Body = CreateBody(f, false);
-                            wrappers.Add(f);
+                        f.Body = CreateBody(f, false);
+                        wrappers.Add(f);
 
-                            // Keeping the current Object wrapper, visit all other parameters once more
-                            ++index;
-                            WrapParameters(f, wrappers);
-                            --index;
+                        // Keeping the current Object wrapper, visit all other parameters once more
+                        ++index;
+                        WrapParameters(f, wrappers);
+                        --index;
 
-                            break;
+                        break;
 
-                        case WrapperTypes.ReferenceParameter:
-                            // Recurse to the last parameter
-                            ++index;
-                            WrapParameters(function, wrappers);
-                            --index;
+                    //case WrapperTypes.ReferenceParameter:
+                    //    // Recurse to the last parameter
+                    //    ++index;
+                    //    WrapParameters(function, wrappers);
+                    //    --index;
 
-                            // On stack rewind, create reference wrappers
-                            f = new Function(function);
-                            f.Parameters[index].Reference = true;
-                            f.Parameters[index].Array = 0;
-                            f.Parameters[index].Pointer = false;
-                            f.Body = CreateBody(f, false);
-                            //f = ReferenceWrapper(new Function(function), index);
-                            wrappers.Add(f);
+                    //    // On stack rewind, create reference wrappers
+                    //    f = new Function(function);
+                    //    f.Parameters[index].Reference = true;
+                    //    f.Parameters[index].Array = 0;
+                    //    f.Parameters[index].Pointer = false;
+                    //    f.Body = CreateBody(f, false);
+                    //    //f = ReferenceWrapper(new Function(function), index);
+                    //    wrappers.Add(f);
 
-                            // Keeping the current Object wrapper, visit all other parameters once more
-                            ++index;
-                            WrapParameters(f, wrappers);
-                            --index;
+                    //    // Keeping the current Object wrapper, visit all other parameters once more
+                    //    ++index;
+                    //    WrapParameters(f, wrappers);
+                    //    --index;
 
-                            break;
-                    }
+                    //    break;
                 }
             }
         }
@@ -592,7 +587,7 @@ namespace Bind.Structures
 
         protected Function DefaultWrapper(Function f)
         {
-            bool returns = f.ReturnType.CurrentType.ToLower().Contains("void") && !f.ReturnType.Pointer;
+            bool returns = f.ReturnType.CurrentType.ToLower().Contains("void");// && !f.ReturnType.Pointer;
             string callString = String.Format(
                 "{0} {1}{2}; {3}",
                 Unsafe ? "unsafe {" : "",
@@ -625,8 +620,8 @@ namespace Bind.Structures
             assign_statements.Clear();
 
             //if (f.Name == "LoadDisplayColorTableEXT")
-            { 
-            }
+            //{ 
+            //}
 
             // Obtain pointers by pinning the parameters
             foreach (Parameter p in f.Parameters)
@@ -651,7 +646,10 @@ namespace Bind.Structures
                         }
 
                         // Note! The following line modifies f.Parameters, *not* this.Parameters
-                        p.Name = "(void*)" + p.Name + "_ptr.AddrOfPinnedObject()";
+                        //if ((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None)
+                            p.Name = "(IntPtr)" + p.Name + "_ptr.AddrOfPinnedObject()";
+                        //else
+                        //p.Name = "(void*)" + p.Name + "_ptr.AddrOfPinnedObject()";
                     }
                     else if (p.WrapperType == WrapperTypes.PointerParameter ||
                         p.WrapperType == WrapperTypes.ArrayParameter ||
@@ -752,9 +750,7 @@ namespace Bind.Structures
 
         #endregion
 
-        #endregion
-
-        #region Translate
+        #region protected virtual void TranslateReturnType()
 
         /// <summary>
         /// Translates the opengl return type to the equivalent C# type.
@@ -824,18 +820,20 @@ namespace Bind.Structures
             ReturnType.CurrentType = ReturnType.GetCLSCompliantType();
         }
 
+        #endregion
+
+        #region protected virtual void TranslateParameters()
+
         protected virtual void TranslateParameters()
         {
-            if (this.Name.Contains("SetLayerPaletteEntries"))
-            {
-            //	Console.WriteLine();
-            }
+            //if (this.Name.Contains("VertexPointer"))
+            //{
+                //	Console.WriteLine();
+            //}
             for (int i = 0; i < Parameters.Count; i++)
             {
                 Parameters[i] = Parameter.Translate(Parameters[i], this.Category);
 
-                // Special cases: glLineStipple and gl(Get)ShaderSource:
-                // Check for LineStipple (should be unchecked)
                 if (Parameters[i].CurrentType == "UInt16" && Name.Contains("LineStipple"))
                 {
                     Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
@@ -849,6 +847,8 @@ namespace Bind.Structures
                 }
             }
         }
+
+        #endregion
 
         internal void Translate()
         {

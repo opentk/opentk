@@ -18,6 +18,7 @@ namespace Bind.Structures
     {
         string cache;
         bool rebuild;
+        bool unsafe_allowed;        // True if the cache may contain unsafe types, false otherwise.
 
         #region Constructors
 
@@ -173,19 +174,18 @@ namespace Bind.Structures
 
         #endregion
 
-        #region override public string ToString()
-
-        override public string ToString()
+        public override string ToString()
         {
             return ToString(false);
         }
 
-        #endregion
+        #region public string ToString(bool override_unsafe_setting)
 
-        #region public string ToString(bool taoCompatible)
-
-        public string ToString(bool taoCompatible)
+        public string ToString(bool override_unsafe_setting)
         {
+            rebuild |= unsafe_allowed |= override_unsafe_setting;
+            unsafe_allowed = override_unsafe_setting;
+
             if (!String.IsNullOrEmpty(cache) && !rebuild)
             {
                return cache;
@@ -207,7 +207,7 @@ namespace Bind.Structures
                         sb.Append("ref ");
                 }
 
-                if (taoCompatible && Settings.Compatibility == Settings.Legacy.Tao)
+                if (!override_unsafe_setting && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
                 {
                     if (Pointer)
                     {
@@ -228,7 +228,6 @@ namespace Bind.Structures
                     if (Array > 0)
                         sb.Append("[]");
                 }
-
                 if (!String.IsNullOrEmpty(Name))
                 {
                     sb.Append(" ");
@@ -262,7 +261,7 @@ namespace Bind.Structures
             // Translate enum types
             if ((normal || aux) && @enum.Name != "GLenum")
             {
-                if (Settings.Compatibility == Settings.Legacy.Tao)
+                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
                 {
                     p.CurrentType = "int";
                 }
@@ -284,7 +283,7 @@ namespace Bind.Structures
                 // check if a better match exists:
                 if (s.Contains("GLenum") && !String.IsNullOrEmpty(Category))
                 {
-                    if (Settings.Compatibility == Settings.Legacy.None)
+                    if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
                     {
                         // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                         if (Enum.GLEnums.ContainsKey(Category))
@@ -346,7 +345,7 @@ namespace Bind.Structures
             //    p.CurrentType = CSTypes[p.CurrentType];
 
             // Translate pointer parameters
-            if (p.Pointer)
+            if (p.Pointer || p.CurrentType == "IntPtr")
             {
                 p.WrapperType = WrapperTypes.ArrayParameter;
 
@@ -361,8 +360,10 @@ namespace Bind.Structures
                     p.Pointer = false;
                     p.WrapperType = WrapperTypes.None;
                 }
-                else if (p.CurrentType.ToLower().Contains("void"))
+                else if (p.CurrentType.ToLower().Contains("void") || p.CurrentType.Contains("IntPtr"))
                 {
+                    p.CurrentType = "IntPtr";
+                    p.Pointer = false;
                     p.WrapperType = WrapperTypes.GenericParameter;
                 }
             }
@@ -394,6 +395,7 @@ namespace Bind.Structures
         private bool rebuild = true;
         bool hasPointerParameters;
         bool hasReferenceParameters;
+        bool unsafe_types_allowed;
         private bool Rebuild
         {
             get { return rebuild; }
@@ -419,13 +421,19 @@ namespace Bind.Structures
 
         #endregion
 
+        #region void BuildCache()
+
         void BuildCache()
         {
             BuildCallStringCache();
-            BuildToStringCache();
+            BuildToStringCache(unsafe_types_allowed);
             BuildReferenceAndPointerParametersCache();
             Rebuild = false;
         }
+
+        #endregion
+
+        #region public bool HasPointerParameters
 
         public bool HasPointerParameters
         {
@@ -442,7 +450,11 @@ namespace Bind.Structures
                 }
             }
         }
-        
+
+        #endregion
+
+        #region public bool HasReferenceParameters
+
         public bool HasReferenceParameters
         {
             get
@@ -459,17 +471,23 @@ namespace Bind.Structures
             }
         }
 
+        #endregion
+
+        #region void BuildReferenceAndPointerParametersCache()
+
         void BuildReferenceAndPointerParametersCache()
         {
             foreach (Parameter p in this)
             {
-                if (p.Pointer)
+                if (p.Pointer || p.CurrentType.Contains("IntPtr"))
                     hasPointerParameters = true;
 
                 if (p.Reference)
                     hasReferenceParameters = true;
             }
         }
+
+        #endregion
 
         #region new public void Add(Parameter p)
 
@@ -481,29 +499,23 @@ namespace Bind.Structures
 
         #endregion
 
-        #region override public string ToString()
-
-        /// <summary>
-        /// Gets the parameter declaration string.
-        /// </summary>
-        /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
-        override public string ToString()
+        public override string ToString()
         {
             return ToString(false);
         }
 
-        #endregion
-
-        #region public string ToString(bool taoCompatible)
+        #region public string ToString(bool override_unsafe_setting)
 
         /// <summary>
         /// Gets the parameter declaration string.
         /// </summary>
-        /// <param name="getCLSCompliant">If true, all types will be replaced by their CLSCompliant C# equivalents</param>
-        /// <param name="CSTypes">The list of C# types equivalent to the OpenGL types.</param>
+        /// <param name="override_unsafe_setting">If true, unsafe types will be used even if the Settings.Compatibility.NoPublicUnsafeFunctions flag is set.</param>
         /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
-        public string ToString(bool taoCompatible)
+        public string ToString(bool override_unsafe_setting)
         {
+            Rebuild |= unsafe_types_allowed != override_unsafe_setting;
+            unsafe_types_allowed = override_unsafe_setting;
+
             if (!Rebuild)
             {
                 return cache;
@@ -517,24 +529,19 @@ namespace Bind.Structures
 
         #endregion
 
-        #region void BuildToStringCache()
+        #region void BuildToStringCache(bool override_unsafe_setting)
 
-        void BuildToStringCache()
+        void BuildToStringCache(bool override_unsafe_setting)
         {
+            unsafe_types_allowed = override_unsafe_setting;
+
             StringBuilder sb = new StringBuilder();
             sb.Append("(");
             if (this.Count > 0)
             {
                 foreach (Parameter p in this)
                 {
-                    if (Settings.Compatibility == Settings.Legacy.Tao)
-                    {
-                        sb.Append(p.ToString(true));
-                    }
-                    else
-                    {
-                        sb.Append(p.ToString());
-                    }
+                    sb.Append(p.ToString(override_unsafe_setting));
                     sb.Append(", ");
                 }
                 sb.Replace(", ", ")", sb.Length - 2, 2);
@@ -588,18 +595,15 @@ namespace Bind.Structures
                         {
                             sb.Append(String.Format("({0}{1})",
                                 p.CurrentType, (p.Array > 0) ? "[]" : ""));
-
                         }
                         else if (p.Pointer || p.Array > 0 || p.Reference)
                         {
-                            sb.Append(String.Format("({0}*)",
-                                p.CurrentType /*, (p.Pointer || p.Array > 0) ? "*" : ""*/));
+                            if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) &&
+                                p.Pointer && p.CurrentType.Contains("void"))
+                                sb.Append("(IntPtr)");
+                            else 
+                                sb.Append(String.Format("({0}*)", p.CurrentType));
                         }
-                        //else if (p.Reference)
-                        //{
-                        //    sb.Append(String.Format("{0} ({1})",
-                        //       p.Flow == Parameter.FlowDirection.Out ? "out" : "ref", p.CurrentType));
-                        //}
                         else
                         {
                             sb.Append(String.Format("({0})", p.CurrentType));
