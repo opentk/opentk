@@ -76,8 +76,8 @@ namespace Bind.Structures
             //get { return _type; }
             get
             {
-                //if (Pointer && Settings.Compatibility == Settings.Legacy.Tao)
-                //    return "IntPtr";
+                if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) && Pointer && type.Contains("void"))
+                    return "IntPtr";
 
                 return type;
             }
@@ -155,11 +155,16 @@ namespace Bind.Structures
         {
             get
             {
-                return !(
-                    (Pointer && (Settings.Compatibility != Settings.Legacy.Tao)) ||
+                bool compliant = !(CurrentType.Contains("UInt") || CurrentType.Contains("SByte"));
+                return compliant && (!Pointer || CurrentType.Contains("IntPtr"));
+                //return compliant && !(Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) == Settings.Legacy.None));
+                
+                /*
+                 * return !(
+                    (Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) == Settings.Legacy.None ) ||
                     CurrentType.Contains("UInt") ||
-                    CurrentType.Contains("SByte"));
-
+                    CurrentType.Contains("SByte")));
+                */
 
                 /*(Type.Contains("GLu") && !Type.Contains("GLubyte")) ||
                 Type == "GLbitfield" ||
@@ -187,8 +192,8 @@ namespace Bind.Structures
 
         public string GetFullType(Dictionary<string, string> CSTypes, bool compliant)
         {
-            if (Pointer && Settings.Compatibility == Settings.Legacy.Tao)
-                return "IntPtr";
+            //if (Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
+            //    return "IntPtr";
 
             if (!compliant)
             {
@@ -230,6 +235,8 @@ namespace Bind.Structures
                     case "SByte":
                     case "sbyte":
                         return "Byte";
+                    case "UIntPtr":
+                        return "IntPtr";
                 }
             }
 
