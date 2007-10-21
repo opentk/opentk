@@ -139,6 +139,12 @@ namespace Bind.Structures
                     }
                 }
             }
+
+            // Obey .Net naming rules:
+            if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
+            {
+
+            }
         }
     }
 

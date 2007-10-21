@@ -86,17 +86,20 @@ namespace Bind
                             case "ns":
                                 Settings.OutputNamespace = b[1];
                                 break;
-                            //case "gl":
-                            //    Settings.OutputClass = b[1];
-                            //    break;
-                            //case "glu":
-                            //    Settings.OutputClass = b[1];
-                            //    break;
-                            case "legacy":
-                                Settings.Compatibility = b[1].ToLower() == "tao" ? Settings.Legacy.Tao : Settings.Legacy.None;
-                                break;
                             case "class":
                                 Settings.OutputClass = b[1];
+                                break;
+                            case "gl":
+                                Settings.GLClass = b[1];
+                                break;
+                            case "legacy":
+                                Settings.Compatibility |= b[1].ToLower().Contains("tao") ? Settings.Legacy.Tao : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower().Contains("enums") ? Settings.Legacy.NoAdvancedEnumProcessing : Settings.Legacy.None;
+                                Settings.Compatibility |= b[1].ToLower().Contains("safe") ? Settings.Legacy.NoPublicUnsafeFunctions : Settings.Legacy.None;
+                                //Settings.Compatibility |= b[1].ToLower().Contains("novoid") ? Settings.Legacy.TurnVoidPointersToIntPtr : Settings.Legacy.None;
+                                break;
+                            case "enum":
+                                Settings.NestedEnumsClass = b[1];
                                 break;
                             default:
                                 throw new ArgumentException(
