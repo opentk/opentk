@@ -98,27 +98,7 @@ namespace OpenTK.Math
 
         #region Functions
 
-        #region Add
-
-        /// <summary>
-        /// Adds the given Vector2 to the current Vector4.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector4 containing the result of the addition.</returns>
-        public Vector4 Add(Vector2 right)
-        {
-            return new Vector4(X + right.X, Y + right.Y, Z, W);
-        }
-
-        /// <summary>
-        /// Adds the given Vector3 to the current Vector4.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector4 containing the result of the addition.</returns>
-        public Vector4 Add(Vector3 right)
-        {
-            return new Vector4(X + right.X, Y + right.Y, Z + right.Z, W);
-        }
+        #region public Vector4 Add(Vector4 right)
 
         /// <summary>
         /// Adds the given Vector4 to the current Vector4. W-coordinate remains unaffected.
@@ -127,32 +107,16 @@ namespace OpenTK.Math
         /// <returns>A new Vector4 containing the result of the addition.</returns>
         public Vector4 Add(Vector4 right)
         {
-            return new Vector4(X + right.X, Y + right.Y, Z + right.Z, W + right.W);
+            X += right.X;
+            Y += right.Y;
+            Z += right.Z;
+            W += right.W;
+            return this;
         }
 
         #endregion
 
-        #region Sub
-
-        /// <summary>
-        /// Subtracts the given Vector2 from the current Vector4.
-        /// </summary>
-        /// <param name="right">The right operand of the subtraction.</param>
-        /// <returns>A new Vector4 containing the result of the subtraction.</returns>
-        public Vector4 Sub(Vector2 right)
-        {
-            return new Vector4(X - right.X, Y - right.Y, Z, W);
-        }
-
-        /// <summary>
-        /// Subtracts the given Vector3 from the current Vector4.
-        /// </summary>
-        /// <param name="right">The right operand of the subtraction.</param>
-        /// <returns>A new Vector4 containing the result of the subtraction.</returns>
-        public Vector4 Sub(Vector3 right)
-        {
-            return new Vector4(X - right.X, Y - right.Y, Z - right.Z, W);
-        }
+        #region public Vector4 Sub(Vector4 right)
 
         /// <summary>
         /// Subtracts the given Vector4 from the current Vector4.
@@ -161,32 +125,16 @@ namespace OpenTK.Math
         /// <returns>A new Vector4 containing the result of the subtraction.</returns>
         public Vector4 Sub(Vector4 right)
         {
-            return new Vector4(X - right.X, Y - right.Y, Z - right.Z, W - right.W);
+            X -= right.X;
+            Y -= right.Y;
+            Z -= right.Z;
+            W -= right.W;
+            return this;
         }
 
         #endregion
 
-        #region Dot
-
-        /// <summary>
-        /// Computes the dot product between the current Vector4 and the given Vector2.
-        /// </summary>
-        /// <param name="right">The right operand of the dot product.</param>
-        /// <returns>A float containing the result of the dot product.</returns>
-        public float Dot(Vector2 right)
-        {
-            return X * right.X + Y * right.Y;
-        }
-
-        /// <summary>
-        /// Computes the dot product between the current Vector4 and the given Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the dot product.</param>
-        /// <returns>A float containing the result of the dot product.</returns>
-        public float Dot(Vector3 right)
-        {
-            return X * right.X + Y * right.Y + Z * right.Z;
-        }
+        #region public float Dot(Vector4 right)
 
         /// <summary>
         /// Computes the dot product between the current Vector4 and the given Vector4.
@@ -199,34 +147,41 @@ namespace OpenTK.Math
         }
 
         #endregion
-        /*
-        #region Cross
 
-        /// <summary>
-        /// Computes the cross product between the current and the given Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the cross product</param>
-        /// <returns>A new Vector3 containing the result of the computation.</returns>
-        public Vector3 Cross(Vector3 right)
-        {
-            return new Vector3(
-                Y * right.Z - Z * right.Y,
-                Z * right.X - X * right.Z,
-                X * right.Y - Y * right.X);
-        }
-
-        #endregion
-        */
         #region public float Length
 
         /// <summary>
-        /// Gets the length of the vector.
+        /// Gets the length (magnitude) of the vector.
         /// </summary>
+        /// <see cref="FastLength"/>
+        /// <seealso cref="LengthSquared"/>
         public float Length
         {
             get
             {
-                return (float)System.Math.Sqrt(this.LengthSquared);
+                return (float)System.Math.Sqrt(X * X + Y * Y + Z * Z + W * W);
+            }
+        }
+
+        #endregion
+
+        #region public float LengthFast
+
+        /// <summary>
+        /// Gets an approximation of the vector length (magnitude).
+        /// </summary>
+        /// <remarks>
+        /// This property uses an approximation of the square root function to calculate vector magnitude, with
+        /// an upper error bound of 0.001.
+        /// </remarks>
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthSquared"/>
+        /// <seealso cref="OpenTK.Math.FastSqrt"/>
+        public float LengthFast
+        {
+            get
+            {
+                return 1.0f / OpenTK.Math.Functions.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
             }
         }
 
@@ -235,8 +190,14 @@ namespace OpenTK.Math
         #region public float LengthSquared
 
         /// <summary>
-        /// Gets the square of the vector length.
+        /// Gets the square of the vector length (magnitude).
         /// </summary>
+        /// <remarks>
+        /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
+        /// for comparisons.
+        /// </remarks>
+        /// <see cref="Length"/>
+        /// <seealso cref="FastLength"/>
         public float LengthSquared
         {
             get
@@ -255,13 +216,35 @@ namespace OpenTK.Math
         /// <returns>The normalized version of the current vector.</returns>
         public Vector4 Normalize()
         {
-            float length = this.Length;
-            return new Vector4(X / length, Y / Length, Z / length, W / length);
+            float scale = 1.0f / this.Length;
+            X *= scale;
+            Y *= scale;
+            Z *= scale;
+            W *= scale;
+            return this;
         }
 
         #endregion
 
-        #region public Vector2 Scale(float sx, float sy, float sz, float sw)
+        #region public Vector4 NormalizeFast()
+
+        /// <summary>
+        /// Scales the Vector4 to approximately unit length.
+        /// </summary>
+        /// <returns>The normalized version of the current vector.</returns>
+        public Vector4 NormalizeFast()
+        {
+            float scale = Functions.InverseSqrtFast(X * X + Y * Y + Z * Z);
+            X *= scale;
+            Y *= scale;
+            Z *= scale;
+            W *= scale;
+            return this;
+        }
+
+        #endregion
+
+        #region public Vector4 Scale(float sx, float sy, float sz, float sw)
 
         /// <summary>
         /// Scales the current Vector4 by the given amounts.
@@ -270,7 +253,7 @@ namespace OpenTK.Math
         /// <param name="sy">The scale of the Y component.</param>
         /// <param name="sz">The scale of the Z component.</param>
         /// <param name="sw">The scale of the Z component.</param>
-        /// <returns>A new, scaled Vector4.</returns>
+        /// <returns>The current Vector4, scaled.</returns>
         public Vector4 Scale(float sx, float sy, float sz, float sw)
         {
             return new Vector4(X * sx, Y * sy, Z * sz, W * sw);
@@ -282,29 +265,9 @@ namespace OpenTK.Math
 
         #region Operator overloads
 
-        public static Vector4 operator +(Vector4 left, Vector2 right)
-        {
-            return left.Add(right);
-        }
-
-        public static Vector4 operator +(Vector4 left, Vector3 right)
-        {
-            return left.Add(right);
-        }
-
         public static Vector4 operator +(Vector4 left, Vector4 right)
         {
             return left.Add(right);
-        }
-
-        public static Vector4 operator -(Vector4 left, Vector2 right)
-        {
-            return left.Sub(right);
-        }
-
-        public static Vector4 operator -(Vector4 left, Vector3 right)
-        {
-            return left.Sub(right);
         }
 
         public static Vector4 operator -(Vector4 left, Vector4 right)
@@ -313,10 +276,19 @@ namespace OpenTK.Math
         }
 
         [CLSCompliant(false)]
-        unsafe public static implicit operator float*(Vector4 v)
+        unsafe public static explicit operator float*(Vector4 v)
         {
             return &v.X;
         }
+
+        public static explicit operator IntPtr(Vector4 v)
+        {
+            unsafe
+            {
+                return (IntPtr)(&v.X);
+            }
+        }
+
 
         #endregion
 

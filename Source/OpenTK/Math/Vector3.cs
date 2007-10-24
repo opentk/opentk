@@ -11,9 +11,9 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Math
 {
-    /// <summary>
-    /// Represents a three-dimensional vector.
-    /// </summary>
+        /// <summary>
+        /// Represents a three-dimensional vector.
+        /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector3
     {
@@ -88,51 +88,24 @@ namespace OpenTK.Math
 
         #region Functions
 
-        #region Add
-
-        /// <summary>
-        /// Adds the given Vector2 to the current Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector3 containing the result of the addition.</returns>
-        public Vector3 Add(Vector2 right)
-        {
-            return new Vector3(X + right.X, Y + right.Y, Z);
-        }
+        #region public Vector3 Add(Vector3 right)
 
         /// <summary>
         /// Adds the given Vector3 to the current Vector3.
         /// </summary>
         /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector3 containing the result of the addition.</returns>
+        /// <returns>The current Vector3, containing the result of the addition.</returns>
         public Vector3 Add(Vector3 right)
         {
-            return new Vector3(X + right.X, Y + right.Y, Z + right.Z);
-        }
-
-        /// <summary>
-        /// Adds the given Vector4 to the current Vector3. W-coordinate remains unaffected.
-        /// </summary>
-        /// <param name="right">The right operand of the addition.</param>
-        /// <returns>A new Vector4 containing the result of the addition.</returns>
-        public Vector4 Add(Vector4 right)
-        {
-            return new Vector4(X + right.X, Y + right.Y, Z + right.Z, right.W);
+            X += right.X;
+            Y += right.Y;
+            Z += right.Z;
+            return this;
         }
 
         #endregion
 
-        #region Sub
-
-        /// <summary>
-        /// Subtracts the given Vector2 from the current Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the subtraction.</param>
-        /// <returns>A new Vector3 containing the result of the subtraction.</returns>
-        public Vector3 Sub(Vector2 right)
-        {
-            return new Vector3(X - right.X, Y - right.Y, Z);
-        }
+        #region public Vector3 Sub(Vector3 right)
 
         /// <summary>
         /// Subtracts the given Vector3 from the current Vector3.
@@ -141,32 +114,15 @@ namespace OpenTK.Math
         /// <returns>A new Vector3 containing the result of the subtraction.</returns>
         public Vector3 Sub(Vector3 right)
         {
-            return new Vector3(X - right.X, Y - right.Y, Z - right.Z);
-        }
-
-        /// <summary>
-        /// Subtracts the given Vector4 from the current Vector3.
-        /// </summary>
-        /// <param name="right">The right operand of the subtraction.</param>
-        /// <returns>A new Vector4 containing the result of the subtraction.</returns>
-        public Vector4 Sub(Vector4 right)
-        {
-            return new Vector4(X - right.X, Y - right.Y, Z - right.Z, -right.W);
+            X -= right.X;
+            Y -= right.Y;
+            Z -= right.Z;
+            return this;
         }
 
         #endregion
 
-        #region Dot
-
-        /// <summary>
-        /// Computes the dot product between the current Vector3 and the given Vector2.
-        /// </summary>
-        /// <param name="right">The right operand of the dot product.</param>
-        /// <returns>A float containing the result of the dot product.</returns>
-        public float Dot(Vector2 right)
-        {
-            return X * right.X + Y * right.Y;
-        }
+        #region public float Dot(Vector3 right)
 
         /// <summary>
         /// Computes the dot product between the current Vector3 and the given Vector3.
@@ -178,31 +134,25 @@ namespace OpenTK.Math
             return X * right.X + Y * right.Y + Z * right.Z;
         }
 
-        /// <summary>
-        /// Computes the dot product between the current Vector3 and the given Vector4.
-        /// </summary>
-        /// <param name="right">The right operand of the dot product.</param>
-        /// <returns>A float containing the result of the dot product.</returns>
-        public float Dot(Vector4 right)
-        {
-            return X * right.X + Y * right.Y + Z * right.Z;
-        }
-
         #endregion
 
-        #region Cross
+        #region public Vector3 Cross(Vector3 right)
 
         /// <summary>
-        /// Computes the cross product between the current and the given Vector3.
+        /// Computes the cross product between the current and the given Vector3. The current Vector3 is set to the result of the computation.
         /// </summary>
         /// <param name="right">The right operand of the cross product</param>
-        /// <returns>A new Vector3 containing the result of the computation.</returns>
+        /// <returns>The current </returns>
         public Vector3 Cross(Vector3 right)
         {
-            return new Vector3(
-                Y * right.Z - Z * right.Y,
-                Z * right.X - X * right.Z,
-                X * right.Y - Y * right.X);
+            float
+                x = Y * right.Z - Z * right.Y,
+                y = Z * right.X - X * right.Z,
+                z = X * right.Y - Y * right.X;
+            X = x;
+            Y = y;
+            Z = z;
+            return this;
         }
 
         #endregion
@@ -210,13 +160,37 @@ namespace OpenTK.Math
         #region public float Length
 
         /// <summary>
-        /// Gets the length of the vector.
+        /// Gets the length (magnitude) of the vector.
         /// </summary>
+        /// <see cref="FastLength"/>
+        /// <seealso cref="LengthSquared"/>
         public float Length
         {
             get
             {
-                return (float)System.Math.Sqrt(this.LengthSquared);
+                return (float)System.Math.Sqrt(X * X + Y * Y + Z * Z);
+            }
+        }
+
+        #endregion
+
+        #region public float LengthFast
+
+        /// <summary>
+        /// Gets an approximation of the vector length (magnitude).
+        /// </summary>
+        /// <remarks>
+        /// This property uses an approximation of the square root function to calculate vector magnitude, with
+        /// an upper error bound of 0.001.
+        /// </remarks>
+        /// <see cref="Length"/>
+        /// <seealso cref="LengthSquared"/>
+        /// <seealso cref="OpenTK.Math.FastSqrt"/>
+        public float LengthFast
+        {
+            get
+            {
+                return 1.0f / OpenTK.Math.Functions.InverseSqrtFast(X * X + Y * Y + Z * Z);
             }
         }
 
@@ -225,8 +199,14 @@ namespace OpenTK.Math
         #region public float LengthSquared
 
         /// <summary>
-        /// Gets the square of the vector length.
+        /// Gets the square of the vector length (magnitude).
         /// </summary>
+        /// <remarks>
+        /// This property avoids the costly square root operation required by the Length property. This makes it more suitable
+        /// for comparisons.
+        /// </remarks>
+        /// <see cref="Length"/>
+        /// <seealso cref="FastLength"/>
         public float LengthSquared
         {
             get
@@ -245,8 +225,28 @@ namespace OpenTK.Math
         /// <returns>The normalized version of the current vector.</returns>
         public Vector3 Normalize()
         {
-            float length = this.Length;
-            return new Vector3(X / length, Y / Length, Z / length);
+            float scale = 1.0f / this.Length;
+            X *= scale;
+            Y *= scale;
+            Z *= scale;
+            return this;
+        }
+
+        #endregion
+
+        #region public Vector3 NormalizeFast()
+
+        /// <summary>
+        /// Scales the Vector3 to approximately unit length.
+        /// </summary>
+        /// <returns>The normalized version of the current vector.</returns>
+        public Vector3 NormalizeFast()
+        {
+            float scale = Functions.InverseSqrtFast(X * X + Y * Y + Z * Z);
+            X *= scale;
+            Y *= scale;
+            Z *= scale;
+            return this;
         }
 
         #endregion
@@ -259,10 +259,13 @@ namespace OpenTK.Math
         /// <param name="sx">The scale of the X component.</param>
         /// <param name="sy">The scale of the Y component.</param>
         /// <param name="sz">The scale of the Z component.</param>
-        /// <returns>A new, scaled Vector3.</returns>
+        /// <returns>The current Vector3, scaled.</returns>
         public Vector3 Scale(float sx, float sy, float sz)
         {
-            return new Vector3(X * sx, Y * sy, Z * sz);
+            this.X = X * sx;
+            this.Y = Y * sy;
+            this.Z = Z * sz;
+            return this;
         }
 
         #endregion
@@ -271,41 +274,33 @@ namespace OpenTK.Math
 
         #region Operator overloads
 
-        public static Vector3 operator +(Vector3 left, Vector2 right)
-        {
-            return left.Add(right);
-        }
-
         public static Vector3 operator +(Vector3 left, Vector3 right)
         {
-            return left.Add(right);
-        }
-
-        public static Vector4 operator +(Vector3 left, Vector4 right)
-        {
-            return left.Add(right);
-        }
-
-        public static Vector3 operator -(Vector3 left, Vector2 right)
-        {
-            return left.Sub(right);
+            return new Vector3(left.Add(right));
         }
 
         public static Vector3 operator -(Vector3 left, Vector3 right)
         {
-            return left.Sub(right);
-        }
-
-        public static Vector4 operator -(Vector3 left, Vector4 right)
-        {
-            return left.Sub(right);
+            return new Vector3(left.Sub(right));
         }
 
         [CLSCompliant(false)]
-        unsafe public static implicit operator float*(Vector3 v)
+        unsafe public static explicit operator float*(Vector3 v)
         {
             return &v.X;
         }
+
+        public static explicit operator IntPtr(Vector3 v)
+        {
+            unsafe
+            {
+                return (IntPtr)(&v.X);
+            }
+        }
+
+        #endregion
+
+        #region Static functions
 
         #endregion
 
