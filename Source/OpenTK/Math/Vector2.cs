@@ -160,7 +160,7 @@ namespace OpenTK.Math
         {
             get
             {
-                return OpenTK.Math.SqrtFast(X * X + Y * Y);
+                return OpenTK.Math.Functions.SqrtFast(X * X + Y * Y);
             }
         }
 
