@@ -40,6 +40,8 @@ namespace OpenTK
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 
             this.display_mode = mode;
+
+            this.CreateControl();
         }
 
         #endregion
