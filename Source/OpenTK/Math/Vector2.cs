@@ -160,7 +160,7 @@ namespace OpenTK.Math
         {
             get
             {
-                return OpenTK.Math.Functions.InverseSqrtFast(X * X + Y * Y);
+                return 1.0f / OpenTK.Math.Functions.InverseSqrtFast(X * X + Y * Y);
             }
         }
 
@@ -195,8 +195,10 @@ namespace OpenTK.Math
         /// <returns>The normalized version of the current vector.</returns>
         public Vector2 Normalize()
         {
-            float length = this.Length;
-            return new Vector2(X / length, Y / Length);
+            float scale = 1.0f / this.Length;
+            X *= scale;
+            Y *= scale;
+            return this;
         }
 
         #endregion
@@ -204,14 +206,14 @@ namespace OpenTK.Math
         #region public Vector2 NormalizeFast()
 
         /// <summary>
-        /// Scales the Vector2 to unit length.
+        /// Scales the Vector2 to approximately unit length.
         /// </summary>
         /// <returns>The normalized version of the current vector.</returns>
         public Vector2 NormalizeFast()
         {
-            float length = this.LengthFast;
-            this.X = X / length;
-            this.Y = Y / length;
+            float scale = Functions.InverseSqrtFast(X * X + Y * Y);
+            X *= scale;
+            Y *= scale;
             return this;
         }
 
@@ -249,9 +251,17 @@ namespace OpenTK.Math
         }
 
         [CLSCompliant(false)]
-        unsafe public static implicit operator float*(Vector2 v)
+        unsafe public static explicit operator float*(Vector2 v)
         {
             return &v.X;
+        }
+
+        public static explicit operator IntPtr(Vector2 v)
+        {
+            unsafe
+            {
+                return (IntPtr)(&v.X);
+            }
         }
 
         #endregion
