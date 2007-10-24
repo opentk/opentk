@@ -70,6 +70,8 @@
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="." pattern="*.spec" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.tm" recurse="true" buildAction="None"/>
       </Files>
 
     </Project>
