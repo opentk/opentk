@@ -15,6 +15,8 @@
 # glext.h version number - this should be automatically updated,
 #   when changing either enum or template spec files.
 
+# Edited by StApostol: Revision 1
+
 passthru:
 passthru: /* Header file version number, required by OpenGL ABI for Linux */
 passthru: /* glext.h last updated 2007/02/12 */
@@ -3351,7 +3353,6 @@ ATI_fragment_shader enum:
 	QUARTER_BIT_ATI					= 0x00000010
 	EIGHTH_BIT_ATI					= 0x00000020
 	SATURATE_BIT_ATI				= 0x00000040
-	2X_BIT_ATI					= 0x00000001
 	COMP_BIT_ATI					= 0x00000002
 	NEGATE_BIT_ATI					= 0x00000004
 	BIAS_BIT_ATI					= 0x00000008
