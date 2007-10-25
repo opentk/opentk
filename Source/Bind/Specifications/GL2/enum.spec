@@ -88,6 +88,11 @@
 #	no new allocations will be made there in the forseeable future.
 #
 ###############################################################################
+###############################################################################
+#
+# Edited by StApostol. Revision 1
+#
+###############################################################################
 
 Extensions define:
 	VERSION_1_1					= 1
@@ -493,7 +498,12 @@ EnableCap enum:
 	use EXT_rescale_normal RESCALE_NORMAL_EXT
 	use EXT_shared_texture_palette SHARED_TEXTURE_PALETTE_EXT
 	use EXT_texture3D TEXTURE_3D_EXT
-	use SGIS_multisample MULTISAMPLE_SGIS
+	
+	# Revision 1
+	use VERSION_1_3 MULTISAMPLE
+	
+	#use SGIS_multisample MULTISAMPLE_SGIS
+	
 	use SGIS_multisample SAMPLE_ALPHA_TO_MASK_SGIS
 	use SGIS_multisample SAMPLE_ALPHA_TO_ONE_SGIS
 	use SGIS_multisample SAMPLE_MASK_SGIS
@@ -1164,6 +1174,10 @@ GetPName enum:
 	use SGI_color_table POST_COLOR_MATRIX_COLOR_TABLE_SGI
 
 	use SGI_texture_color_table TEXTURE_COLOR_TABLE_SGI
+	
+	# Revision 1
+	use VERSION_1_3 SAMPLES
+	use VERSION_1_3 SAMPLE_BUFFERS
 
 ###############################################################################
 
@@ -1406,9 +1420,15 @@ MaterialParameter enum:
 	SHININESS					= 0x1601
 	AMBIENT_AND_DIFFUSE				= 0x1602
 	COLOR_INDEXES					= 0x1603
-	use LightProperty AMBIENT
-	use LightProperty DIFFUSE
-	use LightProperty SPECULAR
+	
+	# Revision 1
+	use LightParameter AMBIENT
+	use LightParameter DIFFUSE
+	use LightParameter SPECULAR
+	
+	#use LightProperty AMBIENT
+	#use LightProperty DIFFUSE
+	#use LightProperty SPECULAR
 
 ###############################################################################
 
@@ -1475,6 +1495,10 @@ PixelFormat enum:
 	use SGIX_icc_texture LUMINANCE16_ALPHA8_ICC_SGIX
 	use SGIX_ycrcb YCRCB_422_SGIX
 	use SGIX_ycrcb YCRCB_444_SGIX
+	
+	# Revision 1
+	use EXT_bgra BGR 
+	use EXT_bgra BGRA
 
 ###############################################################################
 
@@ -1846,14 +1870,23 @@ TextureTarget enum:
 	use SGIS_texture_lod TEXTURE_MAX_LOD_SGIS
 	use SGIS_texture_lod TEXTURE_BASE_LEVEL_SGIS
 	use SGIS_texture_lod TEXTURE_MAX_LEVEL_SGIS
+	
+	# Revision 1
+	use ARB_texture_rectangle TEXTURE_RECTANGLE_ARB
+	use NV_texture_rectangle TEXTURE_RECTANGLE_NV
 
 ###############################################################################
 
 TextureWrapMode enum:
 	CLAMP						= 0x2900
 	REPEAT						= 0x2901
-	use SGIS_texture_border_clamp CLAMP_TO_BORDER_SGIS
-	use SGIS_texture_edge_clamp CLAMP_TO_EDGE_SGIS
+	
+	# Revision 1
+	# use SGIS_texture_border_clamp CLAMP_TO_BORDER_SGIS
+	# use SGIS_texture_edge_clamp CLAMP_TO_EDGE_SGIS
+	
+	use VERSION_1_3 CLAMP_TO_BORDER
+	use VERSION_1_2 CLAMP_TO_EDGE
 
 ###############################################################################
 
@@ -3422,19 +3455,21 @@ SGIX_resample enum:
 ###############################################################################
 
 # Incomplete extension, not in enumext.spec
-# SGIX_icc_texture enum:
-#	RGB_ICC_SGIX					= 0x8460
-#	RGBA_ICC_SGIX					= 0x8461
-#	ALPHA_ICC_SGIX					= 0x8462
-#	LUMINANCE_ICC_SGIX				= 0x8463
-#	INTENSITY_ICC_SGIX				= 0x8464
-#	LUMINANCE_ALPHA_ICC_SGIX			= 0x8465
-#	R5_G6_B5_ICC_SGIX				= 0x8466
-#	R5_G6_B5_A8_ICC_SGIX				= 0x8467
-#	ALPHA16_ICC_SGIX				= 0x8468
-#	LUMINANCE16_ICC_SGIX				= 0x8469
-#	INTENSITY16_ICC_SGIX				= 0x846A
-#	LUMINANCE16_ALPHA8_ICC_SGIX			= 0x846B
+
+# Revision 1
+SGIX_icc_texture enum:
+	RGB_ICC_SGIX					= 0x8460
+	RGBA_ICC_SGIX					= 0x8461
+	ALPHA_ICC_SGIX					= 0x8462
+	LUMINANCE_ICC_SGIX				= 0x8463
+	INTENSITY_ICC_SGIX				= 0x8464
+	LUMINANCE_ALPHA_ICC_SGIX			= 0x8465
+	R5_G6_B5_ICC_SGIX				= 0x8466
+	R5_G6_B5_A8_ICC_SGIX				= 0x8467
+	ALPHA16_ICC_SGIX				= 0x8468
+	LUMINANCE16_ICC_SGIX				= 0x8469
+	INTENSITY16_ICC_SGIX				= 0x846A
+	LUMINANCE16_ALPHA8_ICC_SGIX			= 0x846B
 
 ###############################################################################
 
