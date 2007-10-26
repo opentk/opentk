@@ -6,9 +6,8 @@ namespace OpenTK.OpenGL
     partial class Glu
     {
 
-        internal static class Imports
+        internal static partial class Imports
         {
-            static Imports() { }
 
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluBeginCurve", ExactSpelling = true)]
@@ -24,22 +23,22 @@ namespace OpenTK.OpenGL
             internal extern static void BeginTrim(int nurb);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluBuild1DMipmapLevels", ExactSpelling = true)]
-            internal extern static unsafe Int32 Build1DMipmapLevels(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, void* data);
+            internal extern static Int32 Build1DMipmapLevels(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluBuild1DMipmaps", ExactSpelling = true)]
-            internal extern static unsafe Int32 Build1DMipmaps(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* data);
+            internal extern static Int32 Build1DMipmaps(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluBuild2DMipmapLevels", ExactSpelling = true)]
-            internal extern static unsafe Int32 Build2DMipmapLevels(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, void* data);
+            internal extern static Int32 Build2DMipmapLevels(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluBuild2DMipmaps", ExactSpelling = true)]
-            internal extern static unsafe Int32 Build2DMipmaps(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* data);
+            internal extern static Int32 Build2DMipmaps(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluBuild3DMipmapLevels", ExactSpelling = true)]
-            internal extern static unsafe Int32 Build3DMipmapLevels(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, void* data);
+            internal extern static Int32 Build3DMipmapLevels(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluBuild3DMipmaps", ExactSpelling = true)]
-            internal extern static unsafe Int32 Build3DMipmaps(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, void* data);
+            internal extern static Int32 Build3DMipmaps(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluCheckExtension", ExactSpelling = true)]
             internal extern static unsafe Boolean CheckExtension(Byte* extName, Byte* extString);
@@ -105,7 +104,7 @@ namespace OpenTK.OpenGL
             internal extern static void NurbsCallback(int nurb, Glu.Enums.NurbsCallback which, IntPtr CallBackFunc);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluNurbsCallbackData", ExactSpelling = true)]
-            internal extern static unsafe void NurbsCallbackData(int nurb, void* userData);
+            internal extern static void NurbsCallbackData(int nurb, IntPtr userData);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluNurbsCurve", ExactSpelling = true)]
             internal extern static unsafe void NurbsCurve(int nurb, Int32 knotCount, [Out] float* knots, Int32 stride, [Out] float* control, Int32 order, GL.Enums.MapTarget type);
@@ -150,7 +149,7 @@ namespace OpenTK.OpenGL
             internal extern static void QuadricTexture(int quad, Glu.Enums.Boolean texture);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluScaleImage", ExactSpelling = true)]
-            internal extern static unsafe Int32 ScaleImage(GL.Enums.PixelFormat format, Int32 wIn, Int32 hIn, GL.Enums.PixelType typeIn, void* dataIn, Int32 wOut, Int32 hOut, GL.Enums.PixelType typeOut, [Out] void* dataOut);
+            internal extern static Int32 ScaleImage(GL.Enums.PixelFormat format, Int32 wIn, Int32 hIn, GL.Enums.PixelType typeIn, IntPtr dataIn, Int32 wOut, Int32 hOut, GL.Enums.PixelType typeOut, [Out] IntPtr dataOut);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluSphere", ExactSpelling = true)]
             internal extern static void Sphere(int quad, double radius, Int32 slices, Int32 stacks);
@@ -159,7 +158,7 @@ namespace OpenTK.OpenGL
             internal extern static void TessBeginContour(int tess);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluTessBeginPolygon", ExactSpelling = true)]
-            internal extern static unsafe void TessBeginPolygon(int tess, void* data);
+            internal extern static void TessBeginPolygon(int tess, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluTessCallback", ExactSpelling = true)]
             internal extern static void TessCallback(int tess, Glu.Enums.TessCallback which, IntPtr CallBackFunc);
@@ -177,7 +176,7 @@ namespace OpenTK.OpenGL
             internal extern static void TessProperty(int tess, Glu.Enums.TessProperty which, double data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluTessVertex", ExactSpelling = true)]
-            internal extern static unsafe void TessVertex(int tess, [Out] double* location, void* data);
+            internal extern static unsafe void TessVertex(int tess, [Out] double* location, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluUnProject", ExactSpelling = true)]
             internal extern static unsafe Int32 UnProject(double winX, double winY, double winZ, double* model, double* proj, Int32* view, double* objX, double* objY, double* objZ);
