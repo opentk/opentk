@@ -39,7 +39,7 @@ namespace Bind
  
         public static string AuxEnumsClass 
         {
-            get { return GLClass + NestedEnumsClass; }
+            get { return GLClass + "." + NestedEnumsClass; }
         }
 
         public static string DelegatesClass = "Delegates";
@@ -63,7 +63,8 @@ namespace Bind
             NoTrimFunctionPrefix = 0x08,
             NoSeparateFunctionNamespaces = 0x10,
             TurnVoidPointersToIntPtr = 0x20,
-            Tao = ConstIntEnums | NoAdvancedEnumProcessing | NoPublicUnsafeFunctions | NoTrimFunctionEnding | NoTrimFunctionPrefix | NoSeparateFunctionNamespaces | TurnVoidPointersToIntPtr,
+            GenerateAllPermutations = 0x40,
+            Tao = ConstIntEnums | NoAdvancedEnumProcessing | NoPublicUnsafeFunctions | NoTrimFunctionEnding | NoTrimFunctionPrefix | NoSeparateFunctionNamespaces | TurnVoidPointersToIntPtr | GenerateAllPermutations,
         }
         
         public static string WindowsGDI = "OpenTK.Platform.Windows.API";
