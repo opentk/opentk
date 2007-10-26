@@ -1449,8 +1449,8 @@ namespace OpenTK.OpenGL
             internal delegate void GetBufferSubData(GL.Enums.VERSION_1_5 target, IntPtr offset, IntPtr size, [Out] IntPtr data);
             internal static GetBufferSubData glGetBufferSubData;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr MapBuffer(GL.Enums.VERSION_1_5 target, GL.Enums.VERSION_1_5 access);
-            internal static MapBuffer glMapBuffer;
+            internal unsafe delegate IntPtr MapBuffer(GL.Enums.VERSION_1_5 target, GL.Enums.VERSION_1_5 access);
+            internal unsafe static MapBuffer glMapBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean UnmapBuffer(GL.Enums.VERSION_1_5 target);
             internal static UnmapBuffer glUnmapBuffer;
@@ -2202,8 +2202,8 @@ namespace OpenTK.OpenGL
             internal delegate void GetBufferSubDataARB(GL.Enums.ARB_vertex_buffer_object target, IntPtr offset, IntPtr size, [Out] IntPtr data);
             internal static GetBufferSubDataARB glGetBufferSubDataARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr MapBufferARB(GL.Enums.ARB_vertex_buffer_object target, GL.Enums.ARB_vertex_buffer_object access);
-            internal static MapBufferARB glMapBufferARB;
+            internal unsafe delegate IntPtr MapBufferARB(GL.Enums.ARB_vertex_buffer_object target, GL.Enums.ARB_vertex_buffer_object access);
+            internal unsafe static MapBufferARB glMapBufferARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean UnmapBufferARB(GL.Enums.ARB_vertex_buffer_object target);
             internal static UnmapBufferARB glUnmapBufferARB;
@@ -4212,8 +4212,8 @@ namespace OpenTK.OpenGL
             internal delegate void PrimitiveRestartIndexNV(UInt32 index);
             internal static PrimitiveRestartIndexNV glPrimitiveRestartIndexNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr MapObjectBufferATI(UInt32 buffer);
-            internal static MapObjectBufferATI glMapObjectBufferATI;
+            internal unsafe delegate IntPtr MapObjectBufferATI(UInt32 buffer);
+            internal unsafe static MapObjectBufferATI glMapObjectBufferATI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void UnmapObjectBufferATI(UInt32 buffer);
             internal static UnmapObjectBufferATI glUnmapObjectBufferATI;
