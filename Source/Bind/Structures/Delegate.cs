@@ -360,9 +360,12 @@ namespace Bind.Structures
             }
             else
             {
-                Function f = WrapReturnType();
-
-                WrapParameters(new Function((Function)f ?? this), wrappers);
+                Function f = new Function(this);
+                f.WrapReturnType();
+                if ((Settings.Compatibility & Settings.Legacy.GenerateAllPermutations) == Settings.Legacy.None)
+                    f.WrapParameters(wrappers);
+                else
+                    f.WrapParametersComplete(wrappers);
             }
 
             // If the function is not CLS-compliant (e.g. it contains unsigned parameters)
@@ -385,7 +388,8 @@ namespace Bind.Structures
                     }
                     else
                     {
-                        cls.Body.AddRange(this.CreateBody(cls, true));
+                        cls.CreateBody(true);
+                        //cls.Body.AddRange(this.CreateBody(cls, true));
                     }
 
                     bool somethingChanged = false;
@@ -404,353 +408,7 @@ namespace Bind.Structures
 
         #endregion
 
-        #region protected Function WrapReturnType()
-
-        protected Function WrapReturnType()
-        {
-            // We have to add wrappers for all possible WrapperTypes.
-            Function f;
-
-            // First, check if the return type needs wrapping:
-            switch (this.ReturnType.WrapperType)
-            {
-                // If the function returns a string (glGetString) we must manually marshal it
-                // using Marshal.PtrToStringXXX. Otherwise, the GC will try to free the memory
-                // used by the string, resulting in corruption (the memory belongs to the
-                // unmanaged boundary).
-                case WrapperTypes.StringReturnType:
-                    f = new Function(this);
-                    f.ReturnType.CurrentType = "System.String";
-
-                    f.Body.Add(
-                        String.Format(
-                            "return System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0});",
-                            this.CallString()
-                        )
-                    );
-
-                    return f;         // Only occurs in glGetString, there's no need to check parameters.
-
-                // If the function returns a void* (GenericReturnValue), we'll have to return an IntPtr.
-                // The user will unfortunately need to marshal this IntPtr to a data type manually.
-                case WrapperTypes.GenericReturnType:
-                    ReturnType.CurrentType = "IntPtr";
-                    ReturnType.Pointer = false;
-
-                    break;
-
-                case WrapperTypes.None:
-                default:
-                    // No return wrapper needed
-                    break;
-            }
-
-            return null;
-        }
-        
-        #endregion
-
-        #region protected void WrapParameters(Function function, List<Function> wrappers)
-
-        protected static int index;
-
-        /// <summary>
-        /// This function needs some heavy refactoring. I'm ashamed I ever wrote it, but it works...
-        /// What it does is this: it adds to the wrapper list all possible wrapper permutations
-        /// for functions that have more than one IntPtr parameter. Example:
-        /// "void Delegates.f(IntPtr p, IntPtr q)" where p and q are pointers to void arrays needs the following wrappers:
-        /// "void f(IntPtr p, IntPtr q)"
-        /// "void f(IntPtr p, object q)"
-        /// "void f(object p, IntPtr q)"
-        /// "void f(object p, object q)"
-        /// </summary>
-        protected void WrapParameters(Function function, List<Function> wrappers)
-        {
-            if (index == 0)
-            {
-                if (function.Parameters.HasPointerParameters)
-                {
-                    wrappers.Add(DefaultWrapper(function));
-                }
-                //else if (containsReferenceParameters)
-                //{
-                //}
-                else
-                {
-                    if (function.Body.Count == 0)
-                        wrappers.Add(DefaultWrapper(function));
-                    else
-                        wrappers.Add(function);
-                    return;
-                }
-            }
-
-            if (index >= 0 && index < function.Parameters.Count)
-            {
-                Function f;
-
-                switch (function.Parameters[index].WrapperType)
-                {
-                    case WrapperTypes.None:
-                        // No wrapper needed, visit the next parameter
-                        ++index;
-                        WrapParameters(function, wrappers);
-                        --index;
-                        break;
-
-                    case WrapperTypes.ArrayParameter:
-                        // Recurse to the last parameter
-                        ++index;
-                        WrapParameters(function, wrappers);
-                        --index;
-
-                        // On stack rewind, create array wrappers
-                        f = new Function(function);
-                        f.Parameters[index].Reference = false;
-                        f.Parameters[index].Array = 1;
-                        f.Parameters[index].Pointer = false;
-                        f.Body = CreateBody(f, false);
-                        wrappers.Add(f);
-
-                        // Recurse to the last parameter again, keeping the Array wrappers
-                        ++index;
-                        WrapParameters(f, wrappers);
-                        --index;
-
-                        // On stack rewind create reference wrappers.
-                        f = new Function(function);
-                        f.Parameters[index].Reference = true;
-                        f.Parameters[index].Array = 0;
-                        f.Parameters[index].Pointer = false;
-                        f.Body = CreateBody(f, false);
-                        wrappers.Add(f);
-
-                        // Keeping the current reference wrapper, revisit all other parameters.
-                        ++index;
-                        WrapParameters(f, wrappers);
-                        --index;
-
-                        break;
-
-                    case WrapperTypes.GenericParameter:
-                        // Recurse to the last parameter
-                        ++index;
-                        WrapParameters(function, wrappers);
-                        --index;
-
-                        // On stack rewind, create object wrappers
-                        f = new Function(function);
-                        f.Parameters[index].Reference = false;
-                        f.Parameters[index].Array = 0;
-                        f.Parameters[index].Pointer = false;
-                        f.Parameters[index].CurrentType = "object";
-                        f.Parameters[index].Flow = Parameter.FlowDirection.Undefined;
-
-                        f.Body = CreateBody(f, false);
-                        wrappers.Add(f);
-
-                        // Keeping the current Object wrapper, visit all other parameters once more
-                        ++index;
-                        WrapParameters(f, wrappers);
-                        --index;
-
-                        break;
-
-                    //case WrapperTypes.ReferenceParameter:
-                    //    // Recurse to the last parameter
-                    //    ++index;
-                    //    WrapParameters(function, wrappers);
-                    //    --index;
-
-                    //    // On stack rewind, create reference wrappers
-                    //    f = new Function(function);
-                    //    f.Parameters[index].Reference = true;
-                    //    f.Parameters[index].Array = 0;
-                    //    f.Parameters[index].Pointer = false;
-                    //    f.Body = CreateBody(f, false);
-                    //    //f = ReferenceWrapper(new Function(function), index);
-                    //    wrappers.Add(f);
-
-                    //    // Keeping the current Object wrapper, visit all other parameters once more
-                    //    ++index;
-                    //    WrapParameters(f, wrappers);
-                    //    --index;
-
-                    //    break;
-                }
-            }
-        }
-
-        #endregion
-
-        #region protected Function DefaultWrapper(Function f)
-
-        protected Function DefaultWrapper(Function f)
-        {
-            bool returns = f.ReturnType.CurrentType.ToLower().Contains("void");// && !f.ReturnType.Pointer;
-            string callString = String.Format(
-                "{0} {1}{2}; {3}",
-                Unsafe ? "unsafe {" : "",
-                returns ? "" : "return ",
-                this.CallString(),
-                Unsafe ? "}" : "");
-
-            f.Body.Add(callString);
-
-            return f;
-        }
-
-        #endregion
-
-        #region protected FunctionBody CreateBody(Function fun, bool wantCLSCompliance)
-
-        static List<string> handle_statements = new List<string>();
-        static List<string> handle_release_statements = new List<string>();
-        static List<string> fixed_statements = new List<string>();
-        static List<string> assign_statements = new List<string>();
-
-        protected FunctionBody CreateBody(Function fun, bool wantCLSCompliance)
-        {
-            Function f = new Function(fun);
-
-            f.Body.Clear();
-            handle_statements.Clear();
-            handle_release_statements.Clear();
-            fixed_statements.Clear();
-            assign_statements.Clear();
-
-            //if (f.Name == "LoadDisplayColorTableEXT")
-            //{ 
-            //}
-
-            // Obtain pointers by pinning the parameters
-            foreach (Parameter p in f.Parameters)
-            {
-                if (p.NeedsPin)
-                {
-                    if (p.WrapperType == WrapperTypes.GenericParameter)
-                    {
-                        // Use GCHandle to obtain pointer to generic parameters and 'fixed' for arrays.
-                        // This is because fixed can only take the address of fields, not managed objects.
-                        handle_statements.Add(String.Format(
-                            "{0} {1}_ptr = {0}.Alloc({1}, System.Runtime.InteropServices.GCHandleType.Pinned);",
-                            "System.Runtime.InteropServices.GCHandle", p.Name));
-
-                        handle_release_statements.Add(String.Format("{0}_ptr.Free();", p.Name));
-
-                        if (p.Flow == Parameter.FlowDirection.Out)
-                        {
-                            assign_statements.Add(String.Format(
-                                "        {0} = ({1}){0}_ptr.Target;",
-                                p.Name, p.CurrentType));
-                        }
-
-                        // Note! The following line modifies f.Parameters, *not* this.Parameters
-                        //if ((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None)
-                            p.Name = "(IntPtr)" + p.Name + "_ptr.AddrOfPinnedObject()";
-                        //else
-                        //p.Name = "(void*)" + p.Name + "_ptr.AddrOfPinnedObject()";
-                    }
-                    else if (p.WrapperType == WrapperTypes.PointerParameter ||
-                        p.WrapperType == WrapperTypes.ArrayParameter ||
-                        p.WrapperType == WrapperTypes.ReferenceParameter)
-                    {
-                        // A fixed statement is issued for all non-generic pointers, arrays and references.
-                        fixed_statements.Add(String.Format(
-                            "fixed ({0}* {1} = {2})",
-                            wantCLSCompliance && !p.CLSCompliant ? p.GetCLSCompliantType() : p.CurrentType,
-                            p.Name + "_ptr",
-                            p.Array > 0 ? p.Name : "&" + p.Name));
-
-                        if (p.Flow == Parameter.FlowDirection.Out && p.Array == 0)  // Fixed Arrays of blittable types don't need explicit assignment.
-                        {
-                            assign_statements.Add(String.Format("        {0} = *{0}_ptr;", p.Name));
-                        }
-
-                        p.Name = p.Name + "_ptr";
-                    }
-                    else
-                    {
-                        throw new ApplicationException("Unknown parameter type");
-                    }
-                }
-            }
-
-            //if (!f.Unsafe && (fixed_statements.Count > 0 || fixed_statements.Count > 0))
-            {
-                f.Body.Add("unsafe");
-                f.Body.Add("{");
-                f.Body.Indent();
-            }
-
-            if (fixed_statements.Count > 0)
-            {
-                f.Body.AddRange(fixed_statements);
-                f.Body.Add("{");
-                f.Body.Indent();
-            }
-
-            if (handle_statements.Count > 0)
-            {
-                f.Body.AddRange(handle_statements);
-                f.Body.Add("try");
-                f.Body.Add("{");
-                f.Body.Indent();
-            }
-
-            if (f.ReturnType.CurrentType.ToLower().Contains("void"))
-            {
-                f.Body.Add(String.Format("{0};", f.CallString()));
-            }
-            else
-            {
-                f.Body.Add(String.Format("{0} {1} = {2};", f.ReturnType.CurrentType, "retval", f.CallString()));
-            }
-
-            if (assign_statements.Count > 0)
-            {
-                f.Body.AddRange(assign_statements);
-            }
-
-            // Return:
-            if (!f.ReturnType.CurrentType.ToLower().Contains("void"))
-            {
-                f.Body.Add("return retval;");
-            }
-
-            // Free all allocated GCHandles
-            if (handle_statements.Count > 0)
-            {
-                f.Body.Unindent();
-                f.Body.Add("}");
-                f.Body.Add("finally");
-                f.Body.Add("{");
-                f.Body.Indent();
-
-                f.Body.AddRange(handle_release_statements);
-
-                f.Body.Unindent();
-                f.Body.Add("}");
-            }
-
-            if (fixed_statements.Count > 0)
-            {
-                f.Body.Unindent();
-                f.Body.Add("}");
-            }
-
-            //if (!f.Unsafe && (fixed_statements.Count > 0 || fixed_statements.Count > 0))
-            {
-                f.Body.Unindent();
-                f.Body.Add("}");
-            }
-
-            return f.Body;
-        }
-
-        #endregion
-
-        #region protected virtual void TranslateReturnType()
+        #region void TranslateReturnType()
 
         /// <summary>
         /// Translates the opengl return type to the equivalent C# type.
@@ -765,7 +423,7 @@ namespace Bind.Structures
         /// 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
         /// Return types must always be CLS-compliant, because .Net does not support overloading on return types.
         /// </remarks>
-        protected virtual void TranslateReturnType()
+        void TranslateReturnType()
         {
             if (Bind.Structures.Type.GLTypes.ContainsKey(ReturnType.CurrentType))
                 ReturnType.CurrentType = Bind.Structures.Type.GLTypes[ReturnType.CurrentType];
@@ -775,6 +433,7 @@ namespace Bind.Structures
 
             if (ReturnType.CurrentType.ToLower().Contains("void") && ReturnType.Pointer)
             {
+                ReturnType.CurrentType = "IntPtr";
                 ReturnType.WrapperType = WrapperTypes.GenericReturnType;
             }
 
@@ -852,6 +511,9 @@ namespace Bind.Structures
 
         internal void Translate()
         {
+            if (Name.Contains("String"))
+            {
+            }
             TranslateReturnType();
             TranslateParameters();
 
