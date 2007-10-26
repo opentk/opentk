@@ -119,46 +119,6 @@ namespace OpenTK
 
         #endregion
 
-        #region --- Functions ---
-
-        #region public void CreateWindow(DisplayMode mode, string title)
-
-        /// <summary>
-        /// Creates a render window for the calling GameWindow, with the specified DisplayMode and Title.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the render window.</param>
-        /// <param name="title">The Title of the render window.</param>
-        /// <remarks>
-        /// It is an error to call this function when a render window already exists.
-        /// <para>Call DestroyWindow to close the render window.</para>
-        /// </remarks>
-        /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
-        private void CreateWindow(DisplayMode mode, string title)
-        {
-            if (!Exists)
-            {
-                try
-                {
-                    glWindow.CreateWindow(mode);
-                    this.Title = title;
-                    input_driver = new InputDriver(this);
-                }
-                catch (ApplicationException expt)
-                {
-                    Debug.Print(expt.ToString());
-                    throw;
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException("A render window already exists for this GameWindow.");
-            }
-        }
-
-        #endregion
-
-        #endregion
-
         #region --- INativeGLWindow Members ---
 
         #region public void Exit()
@@ -172,6 +132,7 @@ namespace OpenTK
         public virtual void Exit()
         {
             isExiting = true;
+            //throw new GameWindowExitException();
             //glWindow.Exit();
             //this.Dispose();
         }
@@ -406,6 +367,42 @@ namespace OpenTK
 
         #region --- GameWindow Methods ---
 
+        #region public void CreateWindow(DisplayMode mode, string title)
+
+        /// <summary>
+        /// Creates a render window for the calling GameWindow, with the specified DisplayMode and Title.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the render window.</param>
+        /// <param name="title">The Title of the render window.</param>
+        /// <remarks>
+        /// It is an error to call this function when a render window already exists.
+        /// <para>Call DestroyWindow to close the render window.</para>
+        /// </remarks>
+        /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
+        private void CreateWindow(DisplayMode mode, string title)
+        {
+            if (!Exists)
+            {
+                try
+                {
+                    glWindow.CreateWindow(mode);
+                    this.Title = title;
+                    input_driver = new InputDriver(this);
+                }
+                catch (ApplicationException expt)
+                {
+                    Debug.Print(expt.ToString());
+                    throw;
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("A render window already exists for this GameWindow.");
+            }
+        }
+
+        #endregion
+
         #region void Run()
 
         /// <summary>
@@ -450,7 +447,7 @@ namespace OpenTK
                 UpdateFrameEventArgs update_args = new UpdateFrameEventArgs();
                 RenderFrameEventArgs render_args = new RenderFrameEventArgs();
 
-                double sleep_granularity;      // In seconds.
+                //double sleep_granularity;      // In seconds.
 
                 //GC.Collect(2);
                 //GC.WaitForPendingFinalizers();
@@ -482,6 +479,8 @@ namespace OpenTK
                     while (next_update - time <= 0.0)
                     {
                         next_update = next_update - time + TargetUpdatePeriod;
+                        if (next_update < -1.0)       // Cap the maximum time drift, to avoid lengthy catch-up games.
+                            next_update = -1.0;
 
                         update_time_counter += time;
                         ++num_updates;
@@ -491,6 +490,7 @@ namespace OpenTK
 
                         update_args.Time = time;
                         OnUpdateFrameInternal(update_args);
+                        update_time = update_watch.Elapsed.TotalSeconds;
 
                         if (TargetUpdateFrequency == 0.0)
                             break;
@@ -499,8 +499,8 @@ namespace OpenTK
                         next_update -= time;
                         update_time_counter += time;
 
-                        // Allow up to 10 frames to be dropped.
-                        // Prevent the application from hanging with very high update frequencies.
+                        // Allow up to 10 frames to be dropped. Prevents the application from hanging
+                        // with very high update frequencies.
                         if (num_updates >= 10)
                             break;
                     }
@@ -511,6 +511,9 @@ namespace OpenTK
                         update_time_counter = 0.0;
                     }
 
+                    if (isExiting)
+                        break;
+
                     // Raise RenderFrame event
                     time = render_watch.Elapsed.TotalSeconds;
                     if (time > 1.0)
@@ -519,7 +522,7 @@ namespace OpenTK
                     if (VSync == VSyncMode.Adaptive)
                     {
                         // Check if we have enough time for a vsync
-                        if (time_left <= 0.5 * TargetRenderFrequency)
+                        if (RenderTime > 2.0 * TargetRenderPeriod)
                             Context.VSync = false;
                         else
                             Context.VSync = true;
@@ -528,12 +531,16 @@ namespace OpenTK
                     if (time_left <= 0.0)
                     {
                         next_render = time_left + TargetRenderPeriod;
+                        if (next_render < -1.0)       // Cap the maximum time drift, to avoid lengthy catch-up games.
+                            next_render = -1.0;
+
                         render_watch.Reset();
                         render_watch.Start();
 
                         render_period = render_args.Time = time;
                         render_args.ScaleFactor = RenderPeriod / UpdatePeriod;
                         OnRenderFrameInternal(render_args);
+                        render_time = render_watch.Elapsed.TotalSeconds;
                     }
 
                     // Yield CPU time, if the Thread.Sleep() granularity allows it.
@@ -545,10 +552,10 @@ namespace OpenTK
                     //}
                 }
             }
-            catch (GameWindowExitException e)
-            {
+            //catch (GameWindowExitException e)
+            //{
 
-            }
+            //}
             finally
             {
                 Thread.CurrentThread.Priority = ThreadPriority.Normal;
@@ -858,7 +865,7 @@ namespace OpenTK
         #region public double TargetRenderPeriod
 
         /// <summary>
-        /// Gets or sets the target render period in seconds.
+        /// Gets or sets a double representing the target render period, in seconds.
         /// </summary>
         /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
         /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
@@ -889,7 +896,7 @@ namespace OpenTK
         #region public double TargetRenderFrequency
 
         /// <summary>
-        /// Gets or sets the target render frequency in Herz.
+        /// Gets or sets a double representing the target render frequency, in Herz.
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
@@ -922,7 +929,7 @@ namespace OpenTK
         #region public double TargetUpdatePeriod
 
         /// <summary>
-        /// Gets or sets the target update period in seconds.
+        /// Gets or sets a double representing the target update period, in seconds.
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
@@ -953,7 +960,7 @@ namespace OpenTK
         #region public double TargetUpdateFrequency
 
         /// <summary>
-        /// Gets or sets the target update frequency in Herz.
+        /// Gets or sets a double representing the target update frequency, in Herz.
         /// </summary>
         /// <remarks>
         /// <para>A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
@@ -986,7 +993,7 @@ namespace OpenTK
         #region public double RenderFrequency
 
         /// <summary>
-        /// Gets the actual frequency of RenderFrame events in Herz (i.e. FPS or Frames Per Second).
+        /// Gets a double representing the actual frequency of RenderFrame events, in Herz (i.e. FPS or Frames Per Second).
         /// </summary>
         public double RenderFrequency
         {
@@ -1003,7 +1010,7 @@ namespace OpenTK
         #region public double RenderPeriod
 
         /// <summary>
-        /// Gets the period of RenderFrame events in seconds.
+        /// Gets a double representing the period of RenderFrame events, in seconds.
         /// </summary>
         public double RenderPeriod
         {
@@ -1018,7 +1025,7 @@ namespace OpenTK
         #region public double UpdateFrequency
 
         /// <summary>
-        /// Gets the frequency of UpdateFrame events in Herz.
+        /// Gets a double representing the frequency of UpdateFrame events, in Herz.
         /// </summary>
         public double UpdateFrequency
         {
@@ -1035,7 +1042,7 @@ namespace OpenTK
         #region public double UpdatePeriod
 
         /// <summary>
-        /// Gets the period of UpdateFrame events in seconds.
+        /// Gets a double representing the period of UpdateFrame events, in seconds.
         /// </summary>
         public double UpdatePeriod
         {
@@ -1043,6 +1050,31 @@ namespace OpenTK
             {
                 return update_period;
             }
+        }
+
+        #endregion
+
+        #region public double RenderTime
+
+        /// <summary>
+        /// Gets a double representing the time spent in the RenderFrame function, in seconds.
+        /// </summary>
+        public double RenderTime
+        {
+            get { return render_time; }
+            protected set { render_time = value; }
+        }
+
+        #endregion
+
+        #region public double RenderTime
+
+        /// <summary>
+        /// Gets a double representing the time spent in the UpdateFrame function, in seconds.
+        /// </summary>
+        public double UpdateTime
+        {
+            get { return update_time; }
         }
 
         #endregion
@@ -1193,7 +1225,7 @@ namespace OpenTK
         /// </summary>
         public virtual void Dispose()
         {
-            Dispose(true);              // Real Dispose method.
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -1201,9 +1233,6 @@ namespace OpenTK
         {
             if (!disposed)
             {
-                // Is this safe? Maybe 'Debug' has been disposed, too...
-                //Debug.Print("{0} disposing GameWindow.", manual ? "Manually" : "Automatically");
-
                 if (manual)
                 {
                     if (glWindow != null)
@@ -1218,7 +1247,7 @@ namespace OpenTK
 
         ~GameWindow()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         #endregion
