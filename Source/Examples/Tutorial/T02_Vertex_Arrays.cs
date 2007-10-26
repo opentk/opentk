@@ -14,6 +14,7 @@ using OpenTK;
 using OpenTK.OpenGL;
 using System.Diagnostics;
 using OpenTK.Input;
+using OpenTK.Fonts;
 
 namespace Examples.Tutorial
 {
@@ -26,12 +27,13 @@ namespace Examples.Tutorial
         float angle = 0.0f;
 
         Shapes.Shape shape = new Examples.Shapes.Plane(16, 16, 2.0f, 2.0f);
+        TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 32, FontStyle.Regular, GraphicsUnit.Pixel));
 
         #region Constructor
 
         public T02_Vertex_Arrays() : base(new DisplayMode(800, 600), "OpenTK Tutorial 2: Vertex Arrays")
         {
-            this.VSync = VSyncMode.On;
+            //this.VSync = VSyncMode.On;
             this.Keyboard.KeyUp += new KeyUpEvent(Keyboard_KeyUp);
         }
 
@@ -55,7 +57,7 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
+            GL.Enable(GL.Enums.EnableCap.TEXTURE_2D);
 
             GL.ClearColor(Color.CadetBlue);
             GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
@@ -158,13 +160,26 @@ namespace Examples.Tutorial
 
 //            GL.DrawArrays(GL.Enums.BeginMode.LINES, 0, shape.Vertices.Length);
 
-            GL.Begin(GL.Enums.BeginMode.TRIANGLES);
+            //GL.Begin(GL.Enums.BeginMode.TRIANGLES);
 
-            GL.Vertex3(-1.0, -1.0, 5.0);
-            GL.Vertex3(1.0, -1.0, 5.0);
-            GL.Vertex3(1.0, 1.0, 5.0);
+            //GL.Vertex3(-1.0, -1.0, 5.0);
+            //GL.Vertex3(1.0, -1.0, 5.0);
+            //GL.Vertex3(1.0, 1.0, 5.0);
 
-            GL.End();
+            //GL.End();
+            
+            GL.PushMatrix();
+
+            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.LoadIdentity();
+            GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 1.0);
+            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.LoadIdentity();
+
+            //GL.Translate(0.7f, 1.0f, 0.0f);
+            //sans.Print(String.Format("{0:f1}", RenderFrequency));
+
+            GL.PopMatrix();
             
             SwapBuffers();
         }
@@ -183,7 +198,7 @@ namespace Examples.Tutorial
         {
             // Lock UpdateFrame rate at 30Hz and RenderFrame rate 85Hz.
             //Run(60.0, 85.0);
-            Run(30.0);
+            Run(30.0, 85.0);
         }
 
         #endregion
