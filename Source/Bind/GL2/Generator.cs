@@ -601,7 +601,7 @@ namespace Bind.GL2
         
         public virtual void WriteDelegates(BindStreamWriter sw, DelegateCollection delegates)
         {
-            Trace.WriteLine(String.Format("Writing delegates to {0}.{1}", Settings.OutputNamespace, Settings.DelegatesClass));
+            Trace.WriteLine(String.Format("Writing delegates to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.DelegatesClass));
 
             sw.WriteLine();
             sw.WriteLine("partial class {0}", Settings.OutputClass);
@@ -635,7 +635,7 @@ namespace Bind.GL2
 
         public virtual void WriteImports(BindStreamWriter sw, DelegateCollection delegates)
         {
-            Trace.WriteLine(String.Format("Writing imports to {0}.{1}", Settings.OutputNamespace, Settings.ImportsClass));
+            Trace.WriteLine(String.Format("Writing imports to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.ImportsClass));
 
             sw.WriteLine();
             sw.WriteLine("partial class {0}", Settings.OutputClass);
@@ -674,7 +674,7 @@ namespace Bind.GL2
 
         public void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers, Dictionary<string, string> CSTypes)
         {
-            Trace.WriteLine(String.Format("Writing wrappers to {0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
+            Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
 
             sw.WriteLine();
             sw.WriteLine("public static partial class {0}", Settings.OutputClass);
@@ -742,7 +742,7 @@ namespace Bind.GL2
 
         public void WriteEnums(BindStreamWriter sw, EnumCollection enums)
         {
-            Trace.WriteLine(String.Format("Writing enums to {0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
+            Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
 
             if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
             {
