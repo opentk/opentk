@@ -14,6 +14,8 @@ namespace Bind.Glu
 {
     class Generator : Bind.GL2.Generator
     {
+        string enumSpecAux = "GL2\\enum.spec";
+
         #region --- Constructors ---
 
         public Generator()
@@ -51,7 +53,7 @@ namespace Bind.Glu
         public override void Process()
         {
             Bind.Structures.Type.Initialize(glTypemap, csTypemap);
-            Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt);
+            Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt, enumSpecAux);
             Bind.Structures.Function.Initialize();
             Bind.Structures.Delegate.Initialize(glSpec, glSpecExt);
 
