@@ -24,11 +24,12 @@ namespace OpenTK.Platform.X11
         X11Mouse mouseDriver;
         X11.WindowInfo window;
 
-        XEvent e = new XEvent();
+        //XEvent e = new XEvent();
 
         Thread pollingThread;
 
-        bool disposed, disposing;
+        bool disposed;
+        bool disposing;
 
         #region --- Constructors ---
 
