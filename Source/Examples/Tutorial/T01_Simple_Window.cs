@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 using OpenTK;
 using OpenTK.OpenGL;
+using OpenTK.Fonts;
 
 namespace Examples.Tutorial
 {
@@ -23,6 +24,8 @@ namespace Examples.Tutorial
         public T01_Simple_Window() : base(new DisplayMode(800, 600), "OpenTK | Tutorial 1: Simple Window")
         {
         }
+
+        TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 16.0f));
 
         #region OnLoad
 
@@ -84,7 +87,7 @@ namespace Examples.Tutorial
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
-
+            /*
             GL.Begin(GL.Enums.BeginMode.TRIANGLES);
 
             GL.Color3(Color.SpringGreen);
@@ -95,6 +98,19 @@ namespace Examples.Tutorial
             GL.Vertex2(1.0f, 1.0f);
 
             GL.End();
+
+            GL.PushMatrix();
+            */
+            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.LoadIdentity();
+            GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 1.0);
+            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.LoadIdentity();
+            GL.Translate(0.7f, 1.0f, 0.0f);
+            
+            //sans.Print(RenderPeriod.ToString());
+
+            //GL.PopMatrix();
 
             this.SwapBuffers();
         }
