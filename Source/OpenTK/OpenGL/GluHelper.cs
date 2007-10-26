@@ -1,5 +1,6 @@
 ﻿#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * Contributions by Andy Gill.
  * See license.txt for license info
  */
 #endregion
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using OpenTK.Platform;
+using OpenTK.Math;
 
 namespace OpenTK.OpenGL
 {
@@ -208,6 +210,85 @@ namespace OpenTK.OpenGL
 
         public class GLUquadric
         {
-        }
-    }
+		}
+
+		#region Overloads using OpenTK.Math classes
+
+		public static
+		void LookAt(Vector3 eye, Vector3 center, Vector3 up)
+		{
+			Delegates.gluLookAt((double)eye.X, (double)eye.Y, (double)eye.Z, (double)center.X, (double)center.Y, (double)center.Z, (double)up.X, (double)up.Y, (double)up.Z);
+		}
+
+		// One token Project overload, I picked this one because it's CLS compliant, and it
+		// makes reasonably clear which args are inputs and which are outputs.
+		public static
+		Int32 Project(Vector3 obj, double[] model, double[] proj, Int32[] view, out Vector3 win)
+		{
+			unsafe
+			{
+				double winX, winY, winZ;
+				double* winX_ptr = &winX;
+				double* winY_ptr = &winY;
+				double* winZ_ptr = &winZ;
+				fixed (double* model_ptr = model)
+				fixed (double* proj_ptr = proj)
+				fixed (Int32* view_ptr = view)
+				{
+					Int32 retval = Delegates.gluProject((double)obj.X, (double)obj.Y, (double)obj.Z, (double*)model_ptr, (double*)proj_ptr, (Int32*)view_ptr, (double*)winX_ptr, (double*)winY_ptr, (double*)winZ_ptr);
+					win = new Vector3((float)*winX_ptr, (float)*winY_ptr, (float)*winZ_ptr);
+					return retval;
+				}
+			}
+		}
+
+		public static
+		void TessNormal(int tess, Vector3 normal)
+		{
+			Delegates.gluTessNormal((int)tess, (double)normal.X, (double)normal.Y, (double)normal.Z);
+		}
+
+		public static
+		Int32 UnProject(Vector3 win, double[] model, double[] proj, Int32[] view, out Vector3 obj)
+		{
+			unsafe
+			{
+				double objX, objY, objZ;
+				double* objX_ptr = &objX;
+				double* objY_ptr = &objY;
+				double* objZ_ptr = &objZ;
+				fixed (double* model_ptr = model)
+				fixed (double* proj_ptr = proj)
+				fixed (Int32* view_ptr = view)
+				{
+					Int32 retval = Delegates.gluUnProject((double)win.X, (double)win.Y, (double)win.Z, (double*)model_ptr, (double*)proj_ptr, (Int32*)view_ptr, (double*)objX_ptr, (double*)objY_ptr, (double*)objZ_ptr);
+					obj = new Vector3((float)*objX_ptr, (float)*objY_ptr, (float)*objZ_ptr);
+					return retval;
+				}
+			}
+		}
+
+		public static
+		Int32 UnProject4(Vector4 win, double[] model, double[] proj, Int32[] view, double near, double far, out Vector4 obj)
+		{
+			unsafe
+			{
+				double objX, objY, objZ, objW;
+				double* objX_ptr = &objX;
+				double* objY_ptr = &objY;
+				double* objZ_ptr = &objZ;
+				double* objW_ptr = &objW;
+				fixed (double* model_ptr = model)
+				fixed (double* proj_ptr = proj)
+				fixed (Int32* view_ptr = view)
+				{
+					Int32 retval = Delegates.gluUnProject4((double)win.X, (double)win.Y, (double)win.Z, (double)win.W, (double*)model_ptr, (double*)proj_ptr, (Int32*)view_ptr, (double)near, (double)far, (double*)objX_ptr, (double*)objY_ptr, (double*)objZ_ptr, (double*)objW_ptr);
+					obj = new Vector4((float)*objX_ptr, (float)*objY_ptr, (float)*objZ_ptr, (float)*objW_ptr);
+					return retval;
+				}
+			}
+		}
+
+		#endregion
+	}
 }

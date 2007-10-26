@@ -1,5 +1,6 @@
 #region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * Contributions by Andy Gill.
  * See license.txt for license info
  */
 #endregion
@@ -13,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 using System.Reflection.Emit;
+using OpenTK.Math;
 
 #endregion
 
@@ -325,29 +327,6 @@ namespace OpenTK.OpenGL
 
         #endregion
 
-        #region public static void Color[34]() overloads
-
-        public static void Color4(System.Drawing.Color color)
-        {
-            GL.Color4(color.R, color.G, color.B, color.A);
-        }
-
-        public static void Color3(System.Drawing.Color color)
-        {
-            GL.Color3(color.R, color.G, color.B);
-        }
-
-        #endregion
-
-        #region public static void ClearColor() overloads
-
-        public static void ClearColor(System.Drawing.Color color)
-        {
-            GL.ClearColor(color.R/255.0f, color.G/255.0f, color.B/255.0f, color.A/255.0f);
-        }
-
-        #endregion
-
         #region --- GetProcAddress ---
 
         private static IGetProcAddress getProcAddress;
@@ -478,6 +457,97 @@ namespace OpenTK.OpenGL
             {
                 return Marshal.GetDelegateForFunctionPointer(address, signature);
             }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- GL Overloads ---
+
+        #region public static void Color[34]() overloads
+
+        public static void Color4(System.Drawing.Color color)
+        {
+            GL.Color4(color.R, color.G, color.B, color.A);
+        }
+
+        public static void Color3(System.Drawing.Color color)
+        {
+            GL.Color3(color.R, color.G, color.B);
+        }
+
+        #endregion
+
+        #region public static void ClearColor() overloads
+
+        public static void ClearColor(System.Drawing.Color color)
+        {
+            GL.ClearColor(color.R/255.0f, color.G/255.0f, color.B/255.0f, color.A/255.0f);
+        }
+
+        #endregion
+
+        #region overloads using OpenTK.Math classes
+
+        public static
+        void Normal3(Vector3 normal)
+        {
+            Delegates.glNormal3f(normal.X, normal.Y, normal.Z);
+        }
+
+        public static
+        void RasterPos2(Vector2 pos)
+        {
+            Delegates.glRasterPos2f(pos.X, pos.Y);
+        }
+
+        public static
+        void RasterPos3(Vector3 pos)
+        {
+            Delegates.glRasterPos3f(pos.X, pos.Y, pos.Z);
+        }
+
+        public static
+        void RasterPos4(Vector4 pos)
+        {
+            Delegates.glRasterPos4f(pos.X, pos.Y, pos.Z, pos.W);
+        }
+
+        public static
+        void Vertex2(Vector2 v)
+        {
+            Delegates.glVertex2f(v.X, v.Y);
+        }
+
+        public static
+        void Vertex3(Vector3 v)
+        {
+            Delegates.glVertex3f(v.X, v.Y, v.Z);
+        }
+
+        public static
+        void Vertex4(Vector4 v)
+        {
+            Delegates.glVertex4f(v.X, v.Y, v.Z, v.W);
+        }
+
+        public static
+        void Rotate(Single angle, Vector3 axis)
+        {
+            Delegates.glRotatef((Single)angle, axis.X, axis.Y, axis.Z);
+        }
+
+        public static
+        void Scale(Vector3 scale)
+        {
+            Delegates.glScalef(scale.X, scale.Y, scale.Z);
+        }
+
+        public static
+        void Translate(Vector3 trans)
+        {
+            Delegates.glTranslatef(trans.X, trans.Y, trans.Z);
         }
 
         #endregion
