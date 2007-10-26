@@ -9,20 +9,20 @@ namespace OpenTK.OpenGL
                 TRUE = ((int)1),
                 FALSE = ((int)0),
             }
-            
+
             public enum Version
             {
                 VERSION_1_1 = ((int)1),
                 VERSION_1_2 = ((int)1),
                 VERSION_1_3 = ((int)1),
             }
-            
+
             public enum StringName
             {
                 VERSION = ((int)100800),
                 EXTENSIONS = ((int)100801),
             }
-            
+
             public enum ErrorCode
             {
                 INVALID_ENUM = ((int)100900),
@@ -30,20 +30,20 @@ namespace OpenTK.OpenGL
                 INVALID_OPERATION = ((int)100904),
                 INVALID_VALUE = ((int)100901),
             }
-            
+
             public enum Filter4TypeSGIS
             {
                 LAGRANGIAN_SGI = ((int)100300),
                 MITCHELL_NETRAVALI_SGI = ((int)100301),
             }
-            
+
             public enum NurbsDisplay
             {
                 FILL = ((int)QuadricDrawStyle.FILL),
                 OUTLINE_POLYGON = ((int)100240),
                 OUTLINE_PATCH = ((int)100241),
             }
-            
+
             public enum NurbsCallback
             {
                 NURBS_END_DATA_EXT = ((int)100175),
@@ -73,7 +73,7 @@ namespace OpenTK.OpenGL
                 NURBS_TEXTURE_COORD = ((int)100168),
                 NURBS_COLOR_EXT = ((int)100167),
             }
-            
+
             public enum NurbsError
             {
                 NURBS_ERROR3 = ((int)100253),
@@ -114,7 +114,7 @@ namespace OpenTK.OpenGL
                 NURBS_ERROR2 = ((int)100252),
                 NURBS_ERROR8 = ((int)100258),
             }
-            
+
             public enum NurbsProperty
             {
                 CULLING = ((int)100201),
@@ -132,7 +132,7 @@ namespace OpenTK.OpenGL
                 NURBS_MODE_EXT = ((int)100160),
                 NURBS_RENDERER = ((int)100162),
             }
-            
+
             public enum NurbsSampling
             {
                 OBJECT_PATH_LENGTH_EXT = ((int)100209),
@@ -143,13 +143,13 @@ namespace OpenTK.OpenGL
                 PARAMETRIC_ERROR = ((int)100216),
                 OBJECT_PARAMETRIC_ERROR_EXT = ((int)100208),
             }
-            
+
             public enum NurbsTrim
             {
                 MAP1_TRIM_3 = ((int)100211),
                 MAP1_TRIM_2 = ((int)100210),
             }
-            
+
             public enum QuadricDrawStyle
             {
                 FILL = ((int)100012),
@@ -157,25 +157,25 @@ namespace OpenTK.OpenGL
                 POINT = ((int)100010),
                 LINE = ((int)100011),
             }
-            
+
             public enum QuadricCallback
             {
                 ERROR = ((int)NurbsCallback.ERROR),
             }
-            
+
             public enum QuadricNormal
             {
                 FLAT = ((int)100001),
                 NONE = ((int)100002),
                 SMOOTH = ((int)100000),
             }
-            
+
             public enum QuadricOrientation
             {
                 INSIDE = ((int)100021),
                 OUTSIDE = ((int)100020),
             }
-            
+
             public enum TessCallback
             {
                 TESS_EDGE_FLAG_DATA = ((int)100110),
@@ -196,7 +196,7 @@ namespace OpenTK.OpenGL
                 TESS_END_DATA = ((int)100108),
                 TESS_COMBINE_DATA = ((int)100111),
             }
-            
+
             public enum TessContour
             {
                 CW = ((int)100120),
@@ -205,14 +205,14 @@ namespace OpenTK.OpenGL
                 UNKNOWN = ((int)100124),
                 CCW = ((int)100121),
             }
-            
+
             public enum TessProperty
             {
                 TESS_BOUNDARY_ONLY = ((int)100141),
                 TESS_TOLERANCE = ((int)100142),
                 TESS_WINDING_RULE = ((int)100140),
             }
-            
+
             public enum TessError
             {
                 TESS_MISSING_END_CONTOUR = ((int)100154),
@@ -230,7 +230,7 @@ namespace OpenTK.OpenGL
                 TESS_NEED_COMBINE_CALLBACK = ((int)100156),
                 TESS_MISSING_BEGIN_CONTOUR = ((int)100152),
             }
-            
+
             public enum TessWinding
             {
                 TESS_WINDING_NONZERO = ((int)100131),
@@ -239,7 +239,7 @@ namespace OpenTK.OpenGL
                 TESS_WINDING_ABS_GEQ_TWO = ((int)100134),
                 TESS_WINDING_NEGATIVE = ((int)100133),
             }
-            
+
             public enum All
             {
                 INTERIOR = ((int)100122),
@@ -396,7 +396,7 @@ namespace OpenTK.OpenGL
                 TESS_ERROR2 = ((int)100152),
                 TESS_WINDING_ODD = ((int)100130),
             }
-            
+
         }
     }
 }
