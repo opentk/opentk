@@ -205,6 +205,408 @@ namespace Bind.Structures
         }
 
         #endregion
+
+        #region public void WrapParameters(List<Function> wrappers)
+
+        public void WrapParameters(List<Function> wrappers)
+        {
+            Function f;
+
+            if (Parameters.HasPointerParameters)
+            {
+                // Array overloads
+                foreach (Parameter p in this.Parameters)
+                {
+                    if (p.WrapperType == WrapperTypes.ArrayParameter)
+                    {
+                        p.Reference = false;
+                        p.Array = 1;
+                        p.Pointer = false;
+                    }
+                }
+                f = new Function(this);
+                f.CreateBody(false);
+                wrappers.Add(f);
+                WrapVoidPointers(wrappers);
+
+                // Reference overloads
+                foreach (Parameter p in this.Parameters)
+                {
+                    if (p.WrapperType == WrapperTypes.ArrayParameter)
+                    {
+                        p.Reference = true;
+                        p.Array = 0;
+                        p.Pointer = false;
+                    }
+                }
+                f = new Function(this);
+                f.CreateBody(false);
+                wrappers.Add(f);
+                new Function(this).WrapVoidPointers(wrappers);
+
+                // Pointer overloads
+                foreach (Parameter p in this.Parameters)
+                {
+                    if (p.WrapperType == WrapperTypes.ArrayParameter)
+                    {
+                        p.Reference = false;
+                        p.Array = 0;
+                        p.Pointer = true;
+                    }
+                }
+                f = new Function(this);
+                f.CreateBody(false);
+                wrappers.Add(f);
+                WrapVoidPointers(wrappers);
+            }
+            else
+            {
+                //wrappers.Add(DefaultWrapper(new Function(this)));
+                f = new Function(this);
+                f.CreateBody(false);
+                wrappers.Add(f);
+            }
+        }
+
+        #endregion
+
+        #region public void WrapParametersComplete(List<Function> wrappers)
+
+        static int index = 0;
+
+        /// <summary>
+        /// Adds to the wrapper list all possible wrapper permutations for every possible parameter combination.
+        /// "void Delegates.f(IntPtr p, IntPtr q)" where p and q are pointers to void arrays needs the following wrappers:
+        /// "void f(IntPtr p, IntPtr q)"
+        /// "void f(IntPtr p, object q)"
+        /// "void f(object p, IntPtr q)"
+        /// "void f(object p, object q)"
+        /// </summary>
+        /// <param name="wrappers"></param>
+        public void WrapParametersComplete(List<Function> wrappers)
+        {
+            if (index == 0)
+            {
+                //if (this.Parameters.HasPointerParameters)
+                {
+                    Function f = new Function(this);
+                    f.CreateBody(false);
+                    wrappers.Add(f);
+                }
+                //else
+                //{
+                //    if (this.Body.Count == 0)
+                //        wrappers.Add(DefaultWrapper(this));
+                //    else
+                //        wrappers.Add(this);
+                //    return;
+                //}
+            }
+            
+            if (index >= 0 && index < this.Parameters.Count)
+            {
+                Function f;
+
+                switch (this.Parameters[index].WrapperType)
+                {
+                    case WrapperTypes.None:
+                        // No wrapper needed, visit the next parameter
+                        ++index;
+                        WrapParametersComplete(wrappers);
+                        --index;
+                        break;
+
+                    case WrapperTypes.ArrayParameter:
+                        // Recurse to the last parameter
+                        ++index;
+                        WrapParametersComplete(wrappers);
+                        --index;
+
+                        // On stack rewind, create array wrappers
+                        f = new Function(this);
+                        f.Parameters[index].Reference = false;
+                        f.Parameters[index].Array = 1;
+                        f.Parameters[index].Pointer = false;
+                        f.CreateBody(false);
+                        wrappers.Add(f);
+
+                        // Recurse to the last parameter again, keeping the Array wrappers
+                        ++index;
+                        f.WrapParametersComplete(wrappers);
+                        --index;
+
+                        // On stack rewind create reference wrappers.
+                        f = new Function(this);
+                        f.Parameters[index].Reference = true;
+                        f.Parameters[index].Array = 0;
+                        f.Parameters[index].Pointer = false;
+                        f.CreateBody(false);
+                        wrappers.Add(f);
+
+                        // Keeping the current reference wrapper, revisit all other parameters.
+                        ++index;
+                        f.WrapParametersComplete(wrappers);
+                        --index;
+
+                        break;
+
+                    case WrapperTypes.GenericParameter:
+                        // Recurse to the last parameter
+                        ++index;
+                        WrapParametersComplete(wrappers);
+                        --index;
+
+                        // On stack rewind, create object wrappers
+                        f = new Function(this);
+                        f.Parameters[index].Reference = false;
+                        f.Parameters[index].Array = 0;
+                        f.Parameters[index].Pointer = false;
+                        f.Parameters[index].CurrentType = "object";
+                        f.Parameters[index].Flow = Parameter.FlowDirection.Undefined;
+
+                        f.CreateBody(false);
+                        wrappers.Add(f);
+
+                        // Keeping the current Object wrapper, visit all other parameters once more
+                        ++index;
+                        f.WrapParametersComplete(wrappers);
+                        --index;
+
+                        break;
+
+                    //case WrapperTypes.ReferenceParameter:
+                    //    // Recurse to the last parameter
+                    //    ++index;
+                    //    WrapParameters(this, wrappers);
+                    //    --index;
+
+                    //    // On stack rewind, create reference wrappers
+                    //    f = new this(this);
+                    //    f.Parameters[index].Reference = true;
+                    //    f.Parameters[index].Array = 0;
+                    //    f.Parameters[index].Pointer = false;
+                    //    f.Body = CreateBody(f, false);
+                    //    //f = ReferenceWrapper(new this(this), index);
+                    //    wrappers.Add(f);
+
+                    //    // Keeping the current Object wrapper, visit all other parameters once more
+                    //    ++index;
+                    //    WrapParameters(f, wrappers);
+                    //    --index;
+
+                    //    break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region public void WrapVoidPointers(List<Function> wrappers)
+
+        public void WrapVoidPointers(List<Function> wrappers)
+        {
+            if (index >= 0 && index < Parameters.Count)
+            {
+                if (Parameters[index].WrapperType == WrapperTypes.GenericParameter)
+                {
+                    // Recurse to the last parameter
+                    ++index;
+                    WrapVoidPointers(wrappers);
+                    --index;
+
+                    // On stack rewind, create object wrappers
+                    Parameters[index].Reference = false;
+                    Parameters[index].Array = 0;
+                    Parameters[index].Pointer = false;
+                    Parameters[index].CurrentType = "object";
+                    Parameters[index].Flow = Parameter.FlowDirection.Undefined;
+
+                    CreateBody(false);
+                    wrappers.Add(this);
+
+                    // Keeping the current Object wrapper, visit all other parameters once more
+                    ++index;
+                    WrapParametersComplete(wrappers);
+                    --index;
+                }
+                else
+                {
+                    // Recurse to the last parameter
+                    ++index;
+                    WrapVoidPointers(wrappers);
+                    --index;
+                }
+            }
+        }
+
+        #endregion
+
+        #region public void WrapReturnType()
+
+        public void WrapReturnType()
+        {
+            switch (ReturnType.WrapperType)
+            {
+                case WrapperTypes.StringReturnType:
+                    ReturnType.CurrentType = "string";
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region public void CreateBody(bool wantCLSCompliance)
+
+        static List<string> handle_statements = new List<string>();
+        static List<string> handle_release_statements = new List<string>();
+        static List<string> fixed_statements = new List<string>();
+        static List<string> assign_statements = new List<string>();
+
+        public void CreateBody(bool wantCLSCompliance)
+        {
+            Function f = new Function(this);
+
+            f.Body.Clear();
+            handle_statements.Clear();
+            handle_release_statements.Clear();
+            fixed_statements.Clear();
+            assign_statements.Clear();
+
+            //if (f.Name == "CheckExtension")
+            { 
+            }
+
+            // Obtain pointers by pinning the parameters
+            foreach (Parameter p in f.Parameters)
+            {
+                if (p.NeedsPin)
+                {
+                    if (p.WrapperType == WrapperTypes.GenericParameter)
+                    {
+                        // Use GCHandle to obtain pointer to generic parameters and 'fixed' for arrays.
+                        // This is because fixed can only take the address of fields, not managed objects.
+                        handle_statements.Add(String.Format(
+                            "{0} {1}_ptr = {0}.Alloc({1}, System.Runtime.InteropServices.GCHandleType.Pinned);",
+                            "System.Runtime.InteropServices.GCHandle", p.Name));
+
+                        handle_release_statements.Add(String.Format("{0}_ptr.Free();", p.Name));
+
+                        if (p.Flow == Parameter.FlowDirection.Out)
+                        {
+                            assign_statements.Add(String.Format(
+                                "{0} = ({1}){0}_ptr.Target;",
+                                p.Name, p.CurrentType));
+                        }
+
+                        // Note! The following line modifies f.Parameters, *not* this.Parameters
+                        p.Name = "(IntPtr)" + p.Name + "_ptr.AddrOfPinnedObject()";
+                    }
+                    else if (p.WrapperType == WrapperTypes.PointerParameter ||
+                        p.WrapperType == WrapperTypes.ArrayParameter ||
+                        p.WrapperType == WrapperTypes.ReferenceParameter)
+                    {
+                        // A fixed statement is issued for all non-generic pointers, arrays and references.
+                        fixed_statements.Add(String.Format(
+                            "fixed ({0}* {1} = {2})",
+                            wantCLSCompliance && !p.CLSCompliant ? p.GetCLSCompliantType() : p.CurrentType,
+                            p.Name + "_ptr",
+                            p.Array > 0 ? p.Name : "&" + p.Name));
+
+                        if (p.Flow == Parameter.FlowDirection.Out && p.Array == 0)  // Fixed Arrays of blittable types don't need explicit assignment.
+                        {
+                            assign_statements.Add(String.Format("{0} = *{0}_ptr;", p.Name));
+                        }
+
+                        p.Name = p.Name + "_ptr";
+                    }
+                    else
+                    {
+                        throw new ApplicationException("Unknown parameter type");
+                    }
+                }
+            }
+
+            //if (!f.Unsafe && (fixed_statements.Count > 0 || fixed_statements.Count > 0))
+            if (fixed_statements.Count > 0)
+            {
+                f.Body.Add("unsafe");
+                f.Body.Add("{");
+                f.Body.Indent();
+            
+                f.Body.AddRange(fixed_statements);
+                f.Body.Add("{");
+                f.Body.Indent();
+            }
+
+            if (handle_statements.Count > 0)
+            {
+                f.Body.AddRange(handle_statements);
+                f.Body.Add("try");
+                f.Body.Add("{");
+                f.Body.Indent();
+            }
+
+            if (assign_statements.Count > 0)
+            {
+                // Call function
+                if (f.ReturnType.CurrentType.ToLower().Contains("void"))
+                    f.Body.Add(String.Format("{0};", f.CallString()));
+                else if (ReturnType.CurrentType.ToLower().Contains("string"))
+                    f.Body.Add(String.Format("{0} {1} = System.Runtime.InteropServices.Marshal.PtrToStringAnsi({2});",
+                        ReturnType.CurrentType, "retval", CallString()));
+                else
+                    f.Body.Add(String.Format("{0} {1} = {2};", f.ReturnType.CurrentType, "retval", f.CallString()));
+
+                // Assign out parameters
+                f.Body.AddRange(assign_statements);
+
+                // Return
+                if (!f.ReturnType.CurrentType.ToLower().Contains("void"))
+                {
+                    f.Body.Add("return retval;");
+                }
+            }
+            else
+            {
+                // Call function and return
+                if (f.ReturnType.CurrentType.ToLower().Contains("void"))
+                    f.Body.Add(String.Format("{0};", f.CallString()));
+                else if (ReturnType.CurrentType.ToLower().Contains("string"))
+                    f.Body.Add(String.Format("return System.Runtime.InteropServices.Marshal.PtrToStringAnsi({0});",
+                        CallString()));
+                else
+                    f.Body.Add(String.Format("return {0};", f.CallString()));
+            }
+
+
+            // Free all allocated GCHandles
+            if (handle_statements.Count > 0)
+            {
+                f.Body.Unindent();
+                f.Body.Add("}");
+                f.Body.Add("finally");
+                f.Body.Add("{");
+                f.Body.Indent();
+
+                f.Body.AddRange(handle_release_statements);
+
+                f.Body.Unindent();
+                f.Body.Add("}");
+            }
+
+            if (fixed_statements.Count > 0)
+            {
+                f.Body.Unindent();
+                f.Body.Add("}");
+
+                f.Body.Unindent();
+                f.Body.Add("}");
+            }
+
+            this.Body = f.Body;
+        }
+
+        #endregion
     }
 
     #region class FunctionBody : List<string>
