@@ -345,7 +345,7 @@ namespace Bind.Structures
             //    p.CurrentType = CSTypes[p.CurrentType];
 
             // Translate pointer parameters
-            if (p.Pointer || p.CurrentType == "IntPtr")
+            if (p.Pointer)/* || p.CurrentType == "IntPtr")*/
             {
                 p.WrapperType = WrapperTypes.ArrayParameter;
 
@@ -360,7 +360,7 @@ namespace Bind.Structures
                     p.Pointer = false;
                     p.WrapperType = WrapperTypes.None;
                 }
-                else if (p.CurrentType.ToLower().Contains("void") || p.CurrentType.Contains("IntPtr"))
+                else if (p.CurrentType.ToLower().Contains("void")) /*|| p.CurrentType.Contains("IntPtr"))*/
                 {
                     p.CurrentType = "IntPtr";
                     p.Pointer = false;
