@@ -20,6 +20,8 @@ GLdouble,           Double
 GLclampd,           Double
 GLstring,           String
 
+PixelInternalFormat,	PixelInternalFormat
+
 # ARB and NV types.
 GLsizeiptrARB,      IntPtr
 GLintptrARB,        IntPtr

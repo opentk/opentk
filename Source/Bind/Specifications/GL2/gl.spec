@@ -2000,11 +2000,12 @@ TexParameteriv(target, pname, params)
 	wglflags	small-data
 	offset		181
 
+# Revision 2
 TexImage1D(target, level, internalformat, width, border, format, type, pixels)
 	return		void
 	param		target		TextureTarget in value
 	param		level		CheckedInt32 in value
-	param		internalformat	TextureComponentCount in value
+	param		internalformat	PixelInternalFormat in value # TextureComponentCount in value
 	param		width		SizeI in value
 	param		border		CheckedInt32 in value
 	param		format		PixelFormat in value
@@ -2020,11 +2021,12 @@ TexImage1D(target, level, internalformat, width, border, format, type, pixels)
 	wglflags	client-handcode server-handcode
 	offset		182
 
+# Revision 2
 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels)
 	return		void
 	param		target		TextureTarget in value
 	param		level		CheckedInt32 in value
-	param		internalformat	TextureComponentCount in value
+	param		internalformat	PixelInternalFormat in value # TextureComponentCount in value
 	param		width		SizeI in value
 	param		height		SizeI in value
 	param		border		CheckedInt32 in value
@@ -4430,13 +4432,13 @@ ResetMinmax(target)
 	offset		370
 
 # OpenGL 1.2 (EXT_texture3D) commands
-
+# Revision 2
 # Arguably TexelInternalFormat, not PixelInternalFormat
 TexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels)
 	return		void
 	param		target		TextureTarget in value
 	param		level		CheckedInt32 in value
-	param		internalformat	TextureComponentCount in value
+	param		internalformat	PixelInternalFormat in value # TextureComponentCount in value
 	param		width		SizeI in value
 	param		height		SizeI in value
 	param		depth		SizeI in value
