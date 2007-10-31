@@ -3265,18 +3265,18 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void TexImage1D(GL.Enums.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr pixels)
+        void TexImage1D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glTexImage1D((GL.Enums.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels);
+            Delegates.glTexImage1D((GL.Enums.TextureTarget)target, (Int32)level, (GL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels);
         }
 
         public static 
-        void TexImage1D(GL.Enums.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [In, Out] object pixels)
+        void TexImage1D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [In, Out] object pixels)
         {
             System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage1D((GL.Enums.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexImage1D((GL.Enums.TextureTarget)target, (Int32)level, (GL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -3285,18 +3285,18 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void TexImage2D(GL.Enums.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr pixels)
+        void TexImage2D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glTexImage2D((GL.Enums.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels);
+            Delegates.glTexImage2D((GL.Enums.TextureTarget)target, (Int32)level, (GL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels);
         }
 
         public static 
-        void TexImage2D(GL.Enums.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [In, Out] object pixels)
+        void TexImage2D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [In, Out] object pixels)
         {
             System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage2D((GL.Enums.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexImage2D((GL.Enums.TextureTarget)target, (Int32)level, (GL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -6795,18 +6795,18 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void TexImage3D(GL.Enums.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr pixels)
+        void TexImage3D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glTexImage3D((GL.Enums.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels);
+            Delegates.glTexImage3D((GL.Enums.TextureTarget)target, (Int32)level, (GL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels);
         }
 
         public static 
-        void TexImage3D(GL.Enums.TextureTarget target, Int32 level, Int32 internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [In, Out] object pixels)
+        void TexImage3D(GL.Enums.TextureTarget target, Int32 level, GL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [In, Out] object pixels)
         {
             System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                Delegates.glTexImage3D((GL.Enums.TextureTarget)target, (Int32)level, (Int32)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                Delegates.glTexImage3D((GL.Enums.TextureTarget)target, (Int32)level, (GL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -9048,17 +9048,15 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void BufferData(GL.Enums.VERSION_1_5 target, [In, Out] object size, [In, Out] object data, GL.Enums.VERSION_1_5 usage)
+        void BufferData(GL.Enums.VERSION_1_5 target, IntPtr size, [In, Out] object data, GL.Enums.VERSION_1_5 usage)
         {
-            System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
             System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                Delegates.glBufferData((GL.Enums.VERSION_1_5)target, (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject(), (GL.Enums.VERSION_1_5)usage);
+                Delegates.glBufferData((GL.Enums.VERSION_1_5)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (GL.Enums.VERSION_1_5)usage);
             }
             finally
             {
-                size_ptr.Free();
                 data_ptr.Free();
             }
         }
@@ -9070,35 +9068,15 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void BufferSubData(GL.Enums.VERSION_1_5 target, IntPtr offset, [In, Out] object size, [In, Out] object data)
+        void BufferSubData(GL.Enums.VERSION_1_5 target, IntPtr offset, IntPtr size, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
             System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                Delegates.glBufferSubData((GL.Enums.VERSION_1_5)target, (IntPtr)offset, (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glBufferSubData((GL.Enums.VERSION_1_5)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
-                size_ptr.Free();
-                data_ptr.Free();
-            }
-        }
-
-        public static 
-        void BufferSubData(GL.Enums.VERSION_1_5 target, [In, Out] object offset, [In, Out] object size, [In, Out] object data)
-        {
-            System.Runtime.InteropServices.GCHandle offset_ptr = System.Runtime.InteropServices.GCHandle.Alloc(offset, System.Runtime.InteropServices.GCHandleType.Pinned);
-            System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
-            {
-                Delegates.glBufferSubData((GL.Enums.VERSION_1_5)target, (IntPtr)offset_ptr.AddrOfPinnedObject(), (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                offset_ptr.Free();
-                size_ptr.Free();
                 data_ptr.Free();
             }
         }
@@ -9110,35 +9088,15 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void GetBufferSubData(GL.Enums.VERSION_1_5 target, IntPtr offset, [In, Out] object size, [In, Out] object data)
+        void GetBufferSubData(GL.Enums.VERSION_1_5 target, IntPtr offset, IntPtr size, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
             System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                Delegates.glGetBufferSubData((GL.Enums.VERSION_1_5)target, (IntPtr)offset, (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject());
+                Delegates.glGetBufferSubData((GL.Enums.VERSION_1_5)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
-                size_ptr.Free();
-                data_ptr.Free();
-            }
-        }
-
-        public static 
-        void GetBufferSubData(GL.Enums.VERSION_1_5 target, [In, Out] object offset, [In, Out] object size, [In, Out] object data)
-        {
-            System.Runtime.InteropServices.GCHandle offset_ptr = System.Runtime.InteropServices.GCHandle.Alloc(offset, System.Runtime.InteropServices.GCHandleType.Pinned);
-            System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
-            {
-                Delegates.glGetBufferSubData((GL.Enums.VERSION_1_5)target, (IntPtr)offset_ptr.AddrOfPinnedObject(), (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                offset_ptr.Free();
-                size_ptr.Free();
                 data_ptr.Free();
             }
         }
@@ -16950,17 +16908,15 @@ namespace OpenTK.OpenGL
             }
 
             public static 
-            void BufferData(GL.Enums.ARB_vertex_buffer_object target, [In, Out] object size, [In, Out] object data, GL.Enums.ARB_vertex_buffer_object usage)
+            void BufferData(GL.Enums.ARB_vertex_buffer_object target, IntPtr size, [In, Out] object data, GL.Enums.ARB_vertex_buffer_object usage)
             {
-                System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
                 System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
                 try
                 {
-                    Delegates.glBufferDataARB((GL.Enums.ARB_vertex_buffer_object)target, (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject(), (GL.Enums.ARB_vertex_buffer_object)usage);
+                    Delegates.glBufferDataARB((GL.Enums.ARB_vertex_buffer_object)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (GL.Enums.ARB_vertex_buffer_object)usage);
                 }
                 finally
                 {
-                    size_ptr.Free();
                     data_ptr.Free();
                 }
             }
@@ -16972,35 +16928,15 @@ namespace OpenTK.OpenGL
             }
 
             public static 
-            void BufferSubData(GL.Enums.ARB_vertex_buffer_object target, IntPtr offset, [In, Out] object size, [In, Out] object data)
+            void BufferSubData(GL.Enums.ARB_vertex_buffer_object target, IntPtr offset, IntPtr size, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
                 System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
                 try
                 {
-                    Delegates.glBufferSubDataARB((GL.Enums.ARB_vertex_buffer_object)target, (IntPtr)offset, (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject());
+                    Delegates.glBufferSubDataARB((GL.Enums.ARB_vertex_buffer_object)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
                 }
                 finally
                 {
-                    size_ptr.Free();
-                    data_ptr.Free();
-                }
-            }
-
-            public static 
-            void BufferSubData(GL.Enums.ARB_vertex_buffer_object target, [In, Out] object offset, [In, Out] object size, [In, Out] object data)
-            {
-                System.Runtime.InteropServices.GCHandle offset_ptr = System.Runtime.InteropServices.GCHandle.Alloc(offset, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    Delegates.glBufferSubDataARB((GL.Enums.ARB_vertex_buffer_object)target, (IntPtr)offset_ptr.AddrOfPinnedObject(), (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    offset_ptr.Free();
-                    size_ptr.Free();
                     data_ptr.Free();
                 }
             }
@@ -17012,35 +16948,15 @@ namespace OpenTK.OpenGL
             }
 
             public static 
-            void GetBufferSubData(GL.Enums.ARB_vertex_buffer_object target, IntPtr offset, [In, Out] object size, [In, Out] object data)
+            void GetBufferSubData(GL.Enums.ARB_vertex_buffer_object target, IntPtr offset, IntPtr size, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
                 System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
                 try
                 {
-                    Delegates.glGetBufferSubDataARB((GL.Enums.ARB_vertex_buffer_object)target, (IntPtr)offset, (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject());
+                    Delegates.glGetBufferSubDataARB((GL.Enums.ARB_vertex_buffer_object)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
                 }
                 finally
                 {
-                    size_ptr.Free();
-                    data_ptr.Free();
-                }
-            }
-
-            public static 
-            void GetBufferSubData(GL.Enums.ARB_vertex_buffer_object target, [In, Out] object offset, [In, Out] object size, [In, Out] object data)
-            {
-                System.Runtime.InteropServices.GCHandle offset_ptr = System.Runtime.InteropServices.GCHandle.Alloc(offset, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    Delegates.glGetBufferSubDataARB((GL.Enums.ARB_vertex_buffer_object)target, (IntPtr)offset_ptr.AddrOfPinnedObject(), (IntPtr)size_ptr.AddrOfPinnedObject(), (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    offset_ptr.Free();
-                    size_ptr.Free();
                     data_ptr.Free();
                 }
             }
@@ -35937,39 +35853,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            void BindBufferRange(GL.Enums.NV_transform_feedback target, UInt32 index, UInt32 buffer, [In, Out] object offset, [In, Out] object size)
-            {
-                System.Runtime.InteropServices.GCHandle offset_ptr = System.Runtime.InteropServices.GCHandle.Alloc(offset, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    Delegates.glBindBufferRangeNV((GL.Enums.NV_transform_feedback)target, (UInt32)index, (UInt32)buffer, (IntPtr)offset_ptr.AddrOfPinnedObject(), (IntPtr)size_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    offset_ptr.Free();
-                    size_ptr.Free();
-                }
-            }
-
-            public static 
-            void BindBufferRange(GL.Enums.NV_transform_feedback target, Int32 index, Int32 buffer, [In, Out] object offset, [In, Out] object size)
-            {
-                System.Runtime.InteropServices.GCHandle offset_ptr = System.Runtime.InteropServices.GCHandle.Alloc(offset, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    Delegates.glBindBufferRangeNV((GL.Enums.NV_transform_feedback)target, (UInt32)index, (UInt32)buffer, (IntPtr)offset_ptr.AddrOfPinnedObject(), (IntPtr)size_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    offset_ptr.Free();
-                    size_ptr.Free();
-                }
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void BindBufferOffset(GL.Enums.NV_transform_feedback target, UInt32 index, UInt32 buffer, IntPtr offset)
             {
                 Delegates.glBindBufferOffsetNV((GL.Enums.NV_transform_feedback)target, (UInt32)index, (UInt32)buffer, (IntPtr)offset);
@@ -35979,35 +35862,6 @@ namespace OpenTK.OpenGL
             void BindBufferOffset(GL.Enums.NV_transform_feedback target, Int32 index, Int32 buffer, IntPtr offset)
             {
                 Delegates.glBindBufferOffsetNV((GL.Enums.NV_transform_feedback)target, (UInt32)index, (UInt32)buffer, (IntPtr)offset);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            void BindBufferOffset(GL.Enums.NV_transform_feedback target, UInt32 index, UInt32 buffer, [In, Out] object offset)
-            {
-                System.Runtime.InteropServices.GCHandle offset_ptr = System.Runtime.InteropServices.GCHandle.Alloc(offset, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    Delegates.glBindBufferOffsetNV((GL.Enums.NV_transform_feedback)target, (UInt32)index, (UInt32)buffer, (IntPtr)offset_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    offset_ptr.Free();
-                }
-            }
-
-            public static 
-            void BindBufferOffset(GL.Enums.NV_transform_feedback target, Int32 index, Int32 buffer, [In, Out] object offset)
-            {
-                System.Runtime.InteropServices.GCHandle offset_ptr = System.Runtime.InteropServices.GCHandle.Alloc(offset, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    Delegates.glBindBufferOffsetNV((GL.Enums.NV_transform_feedback)target, (UInt32)index, (UInt32)buffer, (IntPtr)offset_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    offset_ptr.Free();
-                }
             }
 
             [System.CLSCompliant(false)]
@@ -39419,22 +39273,6 @@ namespace OpenTK.OpenGL
             void FlushMappedBufferRange(GL.Enums.APPLE_flush_buffer_range target, IntPtr offset, IntPtr size)
             {
                 Delegates.glFlushMappedBufferRangeAPPLE((GL.Enums.APPLE_flush_buffer_range)target, (IntPtr)offset, (IntPtr)size);
-            }
-
-            public static 
-            void FlushMappedBufferRange(GL.Enums.APPLE_flush_buffer_range target, [In, Out] object offset, [In, Out] object size)
-            {
-                System.Runtime.InteropServices.GCHandle offset_ptr = System.Runtime.InteropServices.GCHandle.Alloc(offset, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle size_ptr = System.Runtime.InteropServices.GCHandle.Alloc(size, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    Delegates.glFlushMappedBufferRangeAPPLE((GL.Enums.APPLE_flush_buffer_range)target, (IntPtr)offset_ptr.AddrOfPinnedObject(), (IntPtr)size_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    offset_ptr.Free();
-                    size_ptr.Free();
-                }
             }
 
         }
