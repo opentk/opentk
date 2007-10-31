@@ -485,10 +485,8 @@ namespace Bind.Structures
 
         protected virtual void TranslateParameters()
         {
-            //if (this.Name.Contains("VertexPointer"))
-            //{
-                //	Console.WriteLine();
-            //}
+            // Iterates through all parameters, calling the Parameter.Translate() function.
+
             for (int i = 0; i < Parameters.Count; i++)
             {
                 Parameters[i] = Parameter.Translate(Parameters[i], this.Category);
