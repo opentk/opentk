@@ -1961,6 +1961,17 @@ PixelInternalFormat enum:
 	use SGIX_icc_texture INTENSITY16_ICC_SGIX
 	use SGIX_icc_texture LUMINANCE16_ALPHA8_ICC_SGIX
 
+	# Revision 2
+	ONE = 1
+	TWO = 2
+	THREE = 3
+	FOUR = 4
+	use PixelFormat ALPHA
+	use PixelFormat LUMINANCE
+	use PixelFormat LUMINANCE_ALPHA
+	use PixelFormat RGB
+	use PixelFormat RGBA
+
 ###############################################################################
 
 InterleavedArrayFormat enum:
