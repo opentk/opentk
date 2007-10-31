@@ -6,9 +6,8 @@ namespace OpenTK.Platform.Windows
     partial class Wgl
     {
 
-        internal static class Imports
+        internal static partial class Imports
         {
-            static Imports() { }
 
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglCreateContext", ExactSpelling = true)]

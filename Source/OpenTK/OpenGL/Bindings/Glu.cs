@@ -385,20 +385,6 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void NurbsCallback(int nurb, Glu.Enums.NurbsCallback which, [In, Out] object CallBackFunc)
-        {
-            System.Runtime.InteropServices.GCHandle CallBackFunc_ptr = System.Runtime.InteropServices.GCHandle.Alloc(CallBackFunc, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
-            {
-                Delegates.gluNurbsCallback((int)nurb, (Glu.Enums.NurbsCallback)which, (IntPtr)CallBackFunc_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                CallBackFunc_ptr.Free();
-            }
-        }
-
-        public static 
         void NurbsCallbackData(int nurb, IntPtr userData)
         {
             Delegates.gluNurbsCallbackData((int)nurb, (IntPtr)userData);
@@ -623,20 +609,6 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void QuadricCallback(int quad, Glu.Enums.QuadricCallback which, [In, Out] object CallBackFunc)
-        {
-            System.Runtime.InteropServices.GCHandle CallBackFunc_ptr = System.Runtime.InteropServices.GCHandle.Alloc(CallBackFunc, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
-            {
-                Delegates.gluQuadricCallback((int)quad, (Glu.Enums.QuadricCallback)which, (IntPtr)CallBackFunc_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                CallBackFunc_ptr.Free();
-            }
-        }
-
-        public static 
         void QuadricDrawStyle(int quad, Glu.Enums.QuadricDrawStyle draw)
         {
             Delegates.gluQuadricDrawStyle((int)quad, (Glu.Enums.QuadricDrawStyle)draw);
@@ -718,20 +690,6 @@ namespace OpenTK.OpenGL
         void TessCallback(int tess, Glu.Enums.TessCallback which, IntPtr CallBackFunc)
         {
             Delegates.gluTessCallback((int)tess, (Glu.Enums.TessCallback)which, (IntPtr)CallBackFunc);
-        }
-
-        public static 
-        void TessCallback(int tess, Glu.Enums.TessCallback which, [In, Out] object CallBackFunc)
-        {
-            System.Runtime.InteropServices.GCHandle CallBackFunc_ptr = System.Runtime.InteropServices.GCHandle.Alloc(CallBackFunc, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
-            {
-                Delegates.gluTessCallback((int)tess, (Glu.Enums.TessCallback)which, (IntPtr)CallBackFunc_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                CallBackFunc_ptr.Free();
-            }
         }
 
         public static 
