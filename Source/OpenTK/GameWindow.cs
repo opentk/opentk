@@ -17,18 +17,35 @@ using OpenTK.OpenGL;
 namespace OpenTK
 {
     /// <summary>
-    /// The GameWindow class contains cross-platform methods to create and render on an OpenGL window, handle input and load resources.
+    /// The GameWindow class contains cross-platform methods to create and render on an OpenGL
+    /// window, handle input and load resources.
     /// </summary>
     /// <remarks>
     /// GameWindow contains several events you can hook or override to add your custom logic:
     /// <list>
-    /// <item>OnLoad: Occurs after creating the OpenGL context, but before entering the main loop. Override to load resources.</item>
-    /// <item>OnUnload: Occurs after exiting the main loop, but before deleting the OpenGL context. Override to unload resources.</item>
-    /// <item>OnResize: Occurs whenever GameWindow is resized. You should update the OpenGL Viewport and Projection Matrix here.</item>
-    /// <item>OnUpdateFrame: Occurs at the specified logic update rate. Override to add your game logic.</item>
-    /// <item>OnRenderFrame: Occurs at the specified frame render rate. Override to add your rendering code.</item>
+    /// <item>
+    /// OnLoad: Occurs after creating the OpenGL context, but before entering the main loop.
+    /// Override to load resources.
+    /// </item>
+    /// <item>
+    /// OnUnload: Occurs after exiting the main loop, but before deleting the OpenGL context.
+    /// Override to unload resources.
+    /// </item>
+    /// <item>
+    /// OnResize: Occurs whenever GameWindow is resized. You should update the OpenGL Viewport
+    /// and Projection Matrix here.
+    /// </item>
+    /// <item>
+    /// OnUpdateFrame: Occurs at the specified logic update rate. Override to add your game
+    /// logic.
+    /// </item>
+    /// <item>
+    /// OnRenderFrame: Occurs at the specified frame render rate. Override to add your
+    /// rendering code.
+    /// </item>
     /// </list>
-    /// Call the Run() method to start the application's main loop. Run(double, double) takes two parameters that
+    /// Call the Run() method to start the application's main loop. Run(double, double) takes two
+    /// parameters that
     /// specify the logic update rate, and the render update rate.
     /// </remarks>
     public class GameWindow : INativeGLWindow
@@ -69,7 +86,8 @@ namespace OpenTK
         /// <summary>
         /// Constructs a new GameWindow using a safe DisplayMode.
         /// </summary>
-        public GameWindow() : this(new DisplayMode(640, 480, 0, 16, false), "OpenTK game window") { }
+        public GameWindow() : this(new DisplayMode(640, 480, 0, 16, false), "OpenTK game window")
+        { }
 
         /// <summary>
         /// Constructs a new GameWindow, and opens a render window with the specified DisplayMode.
@@ -78,7 +96,8 @@ namespace OpenTK
         public GameWindow(DisplayMode mode) : this(mode, "OpenTK game window") { }
 
         /// <summary>
-        /// Constructs a new GameWindow with the specified title, and opens a render window with the specified DisplayMode.
+        /// Constructs a new GameWindow with the specified title, and opens a render window with the
+        /// specified DisplayMode.
         /// </summary>
         /// <param name="mode">The DisplayMode of the GameWindow.</param>
         /// <param name="title">The Title of the GameWindow.</param>
