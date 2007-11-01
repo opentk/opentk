@@ -14,7 +14,7 @@ namespace OpenTK
 {
     class TexturePacker<T> where T : IPackable<T>
     {
-        Dictionary<T, Node> items = new Dictionary<T, Node>();
+        //Dictionary<T, Node> items = new Dictionary<T, Node>();
         
         Node root;
 
@@ -48,7 +48,7 @@ namespace OpenTK
                 throw new InvalidOperationException("The item is too large for this TexturePacker");
 
             Node node;
-            if (!items.ContainsKey(item))
+            //if (!items.ContainsKey(item))
             {
                 node = root.Insert(item);
 
@@ -56,7 +56,7 @@ namespace OpenTK
                 if (node == null)
                     throw new InvalidOperationException("There is not enough space to add this item. Consider calling the Clear() method.");
 
-                items.Add(item, node);
+                //items.Add(item, node);
                 return node.Rect;
             }
             throw new ArgumentException("The item already exists in the TexturePacker.", "item");
@@ -72,16 +72,16 @@ namespace OpenTK
         /// <param name="item">The item to search for.</param>
         /// <param name="rect">The bounding box of the item, if the item exists.</param>
         /// <returns>True if the item exists, false otherwise.</returns>
-        public bool Find(T item, out Rectangle rect)
-        {
-            Node node;
-            bool found = items.TryGetValue(item, out node);
-            if (found)
-                rect = node.Rect;
-            else
-                rect = new Rectangle();
-            return found;
-        }
+        //public bool Find(T item, out Rectangle rect)
+        //{
+        //    Node node;
+        //    bool found = items.TryGetValue(item, out node);
+        //    if (found)
+        //        rect = node.Rect;
+        //    else
+        //        rect = new Rectangle();
+        //    return found;
+        //}
 
         #endregion
 
@@ -92,7 +92,7 @@ namespace OpenTK
         /// </summary>
         public void Clear()
         {
-            items.Clear();
+            //items.Clear();
             root.Clear();
         }
 
