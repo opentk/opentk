@@ -24,65 +24,48 @@ namespace Examples.Tutorial
             this.VSync = VSyncMode.On;
         }
 
-        TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 16.0f));
+        TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 24.0f));
 
-        string[] poem = new StreamReader("Data/Poem.txt").ReadToEnd().Replace('\r', ' ').Split('\n');
+        //string[] poem = new StreamReader("Data/Poem.txt").ReadToEnd().Replace('\r', ' ').Split('\n');
+        string[] poem = new string[] { "AAA", "AAAAA" };
         float scroll_speed;
         float scroll_position;
         float initial_position;
         float warparound_position;
         float current_position;
 
-        int display_list;
-
         public override void OnLoad(EventArgs e)
         {
             GL.Enable(GL.Enums.EnableCap.TEXTURE_2D);
-            serif.LoadGlyphs("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz,.!?;()\'- ");
+            GL.Enable(GL.Enums.EnableCap.BLEND);
+            GL.BlendFunc(GL.Enums.BlendingFactorSrc.SRC_ALPHA, GL.Enums.BlendingFactorDest.ONE_MINUS_SRC_ALPHA);
+
+            //serif.LoadGlyphs("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz,.!?;()\'- ");
+            serif.LoadGlyphs("A");
+
+            GL.ClearColor(Color.Gray);
 
             current_position = initial_position;
             scroll_speed = -1.0f;
-
+            /*
             display_list = GL.GenLists(1);
             GL.NewList(1, GL.Enums.ListMode.COMPILE);
 
             GL.PushMatrix();
 
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
-            GL.LoadIdentity();
-            GL.Ortho(0.0, Width, Height, 0.0, 0.0, 1.0);
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
-            GL.LoadIdentity();
-            
-            int i = 0, line = 0;
-            float x_pos, accum_x_pos = 0.0f;
-            foreach (string str in poem)
-            {
-                GL.Translate(0.0f, serif.LineSpacing * line, 0.0f);
-                foreach (char c in str)
-                {
-                    serif.PrintFast(c);
-                    x_pos = serif.MeasureWidth(str.Substring(i++, 1));
-                    accum_x_pos += x_pos;
 
-                    GL.Translate((int)(x_pos + 0.5f), 0.0f, 0.0f);
-                }
-                GL.LoadIdentity();
-                i = 0;
-                ++line;
-            }
 
             GL.PopMatrix();
 
-            GL.EndList();
+            GL.EndList();*/
         }
 
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
         {
             GL.Viewport(0, 0, Width, Height);
 
-            initial_position = Height + serif.LineSpacing;
-            warparound_position = -(poem.Length + 1) * serif.LineSpacing;
+            initial_position = Height + serif.Height;
+            warparound_position = -(poem.Length + 1) * serif.Height;
         }
 
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
@@ -111,8 +94,84 @@ namespace Examples.Tutorial
 
             GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
 
-            //GL.Translate(0.0f, scroll_position, 0.0f);
-            GL.CallList(display_list);
+            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.LoadIdentity();
+            GL.Ortho(0.0, Width, Height, 0.0, 0.0, 1.0);
+
+            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.LoadIdentity();
+
+            GL.Translate(0.0f, scroll_position, 0.0f);
+
+            //RectangleF rect = serif.FindRectangle('A');
+
+            RectangleF rect = new RectangleF();
+            float width, height;
+            int texture;
+            serif.GlyphData('A', ref rect, out width, out height, out texture);
+
+            GL.BindTexture(GL.Enums.TextureTarget.TEXTURE_2D, texture);
+
+            GL.Enable(GL.Enums.EnableCap.BLEND);
+            GL.BlendFunc(GL.Enums.BlendingFactorSrc.SRC_ALPHA, GL.Enums.BlendingFactorDest.ONE_MINUS_SRC_ALPHA);
+
+            //GL.Color4(Color.White);
+            GL.Begin(GL.Enums.BeginMode.QUADS);
+            
+            GL.TexCoord2(rect.Left, rect.Top);
+            GL.Vertex2(0.0, 0.0);
+            GL.TexCoord2(rect.Right, rect.Top);
+            GL.Vertex2(width, 0.0);
+            GL.TexCoord2(rect.Right, rect.Bottom);
+            GL.Vertex2(width, height);
+            GL.TexCoord2(rect.Left, rect.Bottom);
+            GL.Vertex2(0.0, height);
+
+            GL.End();
+
+            serif.Draw();
+
+            /*
+            int i = 0, line = 0;
+            float x_pos, accum_x_pos = 0.0f;
+            foreach (string str in poem)
+            {
+                GL.Translate(0.0f, scroll_position + serif.Height * line, 0.0f);
+                foreach (char c in str)
+                {
+                    //serif.PrintFast(c);
+                    
+                    RectangleF rect = serif.FindRectangle(c);
+
+                    //GL.Color4(Color.White);
+                    GL.Begin(GL.Enums.BeginMode.QUADS);
+
+                    GL.TexCoord2(rect.Left, rect.Top);
+                    GL.Vertex2(0.0f, 0.0f);
+
+                    GL.TexCoord2(rect.Right, rect.Top);
+                    GL.Vertex2(rect.Width * 512, 0.0f);
+
+                    GL.TexCoord2(rect.Right, rect.Bottom);
+                    GL.Vertex2(rect.Width * 512, rect.Height * 512);
+
+                    GL.TexCoord2(rect.Left, rect.Bottom);
+                    GL.Vertex2(0.0f, rect.Height * 512);
+
+                    GL.End();
+                    
+
+                    x_pos = serif.MeasureWidth(str.Substring(i++, 1));
+                    accum_x_pos += x_pos;
+
+                    GL.Translate((int)(x_pos + 0.5f), 0.0f, 0.0f);
+                }
+                GL.LoadIdentity();
+                i = 0;
+                ++line;
+            }
+            */
+            //GL.CallList(display_list);
 
             SwapBuffers();
         }
