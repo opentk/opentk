@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using OpenTK.Platform;
+
 using OpenTK.Math;
+using OpenTK.OpenGL.Enums;
 
 namespace OpenTK.OpenGL
 {
@@ -153,7 +155,7 @@ namespace OpenTK.OpenGL
 
             AvailableExtensions.Clear();
 
-            string version_string = Glu.GetString(Enums.StringName.VERSION);
+            string version_string = Glu.GetString(GluStringName.Version);
             if (String.IsNullOrEmpty(version_string))
             {
                 throw new ApplicationException("Failed to build extension list. Is there an opengl context current?");
@@ -183,7 +185,7 @@ namespace OpenTK.OpenGL
                 AvailableExtensions.Add("VERSION_1_3", true);
             }
 
-            string extension_string = Glu.GetString(Enums.StringName.EXTENSIONS);
+            string extension_string = Glu.GetString(GluStringName.Extensions);
             if (String.IsNullOrEmpty(extension_string))
             {   // no extensions are available
                 return;               
