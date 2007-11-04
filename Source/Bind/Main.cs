@@ -58,7 +58,7 @@ namespace Bind
                         {
                             case "?":
                             case "help":
-                                Console.WriteLine("Help not implemented yet.");
+                                ShowHelp();
                                 return;
                             case "in":
                             case "input":
@@ -78,9 +78,7 @@ namespace Bind
                                     arg == "glu" ? GeneratorMode.Glu :
                                     arg == "glx" ? GeneratorMode.Glx : GeneratorMode.Unknown;
                                 if (mode == GeneratorMode.Unknown)
-                                {
                                     throw new ArgumentException(String.Format("Mode {0} unknown.", arg));
-                                }
                                 break;
                             case "namespace":
                             case "ns":
@@ -93,14 +91,14 @@ namespace Bind
                                 Settings.GLClass = b[1];
                                 break;
                             case "legacy":
+                            case "o":
+                            case "option":
                                 Settings.Compatibility |= b[1].ToLower().Contains("tao") ? Settings.Legacy.Tao : Settings.Legacy.None;
                                 Settings.Compatibility |= b[1].ToLower().Contains("enums") ? Settings.Legacy.NoAdvancedEnumProcessing : Settings.Legacy.None;
                                 Settings.Compatibility |= b[1].ToLower().Contains("safe") ? Settings.Legacy.NoPublicUnsafeFunctions : Settings.Legacy.None;
                                 //Settings.Compatibility |= b[1].ToLower().Contains("novoid") ? Settings.Legacy.TurnVoidPointersToIntPtr : Settings.Legacy.None;
                                 Settings.Compatibility |= b[1].ToLower().Contains("permutations") ? Settings.Legacy.GenerateAllPermutations : Settings.Legacy.None;
-                                break;
-                            case "enum":
-                                Settings.NestedEnumsClass = b[1];
+                                Settings.Compatibility |= b[1].ToLower().Contains("enums_in_class") ? Settings.Legacy.NestedEnums : Settings.Legacy.None;
                                 break;
                             default:
                                 throw new ArgumentException(
@@ -112,12 +110,12 @@ namespace Bind
             }
             catch (NullReferenceException e)
             {
-                Console.WriteLine("Argument error ({0}). Please use the '/?' switch for help.", e.ToString());
+                Console.WriteLine("Argument error ({0}). Please use the '-?' switch for help.", e.ToString());
                 return;
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine("Argument error ({0}). Please use the '/?' switch for help.", e.ToString());
+                Console.WriteLine("Argument error ({0}). Please use the '-?' switch for help.", e.ToString());
                 return;
             }
 
@@ -160,7 +158,7 @@ namespace Bind
                 Console.WriteLine();
                 Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
                 Console.WriteLine();
-                Console.WriteLine("Press any key to continue...");
+                //Console.WriteLine("Press any key to continue...");
                 Console.ReadKey(true);
             }
             catch (SecurityException e)
@@ -173,6 +171,30 @@ namespace Bind
                 Console.WriteLine(e.Message);
                 Console.WriteLine("The requested functionality is not implemented yet.");
             }
+        }
+
+        private static void ShowHelp()
+        {
+            Console.WriteLine(
+@"Usage: bind -mode:[gl/gl2/gl3/glu/wgl/glx] [switches]
+Available switches:
+-in:         Input directory (e.g. -in:../specs/)
+-out:        Output directory (e.g. -out:out)
+-ns:         Output namespace (e.g. -ns:OpenTK.OpenGL).
+             Default: OpenTK.OpenGL
+-namespace:  Same as -ns
+-class:      Output class (e.g. -class:GL3).
+             Default: GL/Wgl/Glu/Glx (depends on -mode)
+-o/-option:  Set advanced option. Available options:
+    -o:tao   Tao compatibility mode.
+    -o:enums Follow OpenGL instead .Net naming conventions.
+    -o:safe  Do not generate public unsafe functions.
+    -o:permutations
+             Generate all possible parameter permutations.
+    -o:enums_in_class
+             Place enums in a nested class (i.e. GL.Enums)
+             instead of a namespace (i.e. OpenTK.OpenGL.Enums)
+");
         }
     }
 }
