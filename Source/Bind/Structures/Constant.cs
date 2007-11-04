@@ -17,12 +17,15 @@ namespace Bind.Structures
     /// </summary>
     public class Constant
     {
+        static StringBuilder translator = new StringBuilder();
+
         #region public string Name
 
         string _name;
 
         /// <summary>
         /// Gets or sets the name of the opengl constant (eg. GL_LINES).
+        /// Undergoes processing unless the Settings.Legacy.NoAdvancedEnumProcessing flag is set.
         /// </summary>
         public string Name
         {
@@ -30,7 +33,7 @@ namespace Bind.Structures
             set 
             {
                 if (!String.IsNullOrEmpty(value))
-                    _name = value.Trim();
+                    _name = Translate(value.Trim());
             }
         }
 
@@ -49,7 +52,7 @@ namespace Bind.Structures
             set
             {
                 if (!String.IsNullOrEmpty(value))
-                    _value = value.Trim();
+                    _value = Translate(value.Trim());
             }
         }
 
@@ -60,7 +63,8 @@ namespace Bind.Structures
         string _reference;
 
         /// <summary>
-        /// Gets or sets the value of the opengl constant (eg. 0x00000001).
+        /// Gets or sets a string indicating the OpenGL enum reference by this constant.
+        /// Can be null.
         /// </summary>
         public string Reference
         {
@@ -68,7 +72,7 @@ namespace Bind.Structures
             set
             {
                 if (!String.IsNullOrEmpty(value))
-                    _reference = value.Trim();
+                    _reference = Enum.TranslateName(value.Trim());
             }
         }
 
@@ -104,6 +108,39 @@ namespace Bind.Structures
         {
             Name = name;
             Value = value;
+        }
+
+        #endregion
+
+        #region string Translate(string s)
+
+        string Translate(string s)
+        {
+            translator.Remove(0, translator.Length);
+
+            // Translate the constant's name to match .Net naming conventions
+            if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
+            {
+                bool next_char_uppercase = true;
+
+                foreach (char c in s)
+                {
+                    if (c != '_')
+                    {
+                        translator.Append(next_char_uppercase ? Char.ToUpper(c) : Char.ToLower(c));
+                        next_char_uppercase = false;
+                    }
+                    else
+                        next_char_uppercase = true;
+                }
+
+                translator[0] = Char.ToUpper(translator[0]);
+            }
+            else
+                translator.Append(s);
+
+
+            return translator.ToString();
         }
 
         #endregion
