@@ -12,6 +12,7 @@ using System.Drawing.Text;
 
 using OpenTK.Math;
 using OpenTK.OpenGL;
+using OpenTK.OpenGL.Enums;
 using System.Drawing.Imaging;
 using OpenTK.Platform;
 
@@ -68,12 +69,12 @@ namespace OpenTK.Fonts
             pack = new TexturePacker<Glyph>(texture_width, texture_height);
 
             GL.GenTextures(1, out texture);
-            GL.BindTexture(GL.Enums.TextureTarget.TEXTURE_2D, texture);
-            GL.TexParameter(GL.Enums.TextureTarget.TEXTURE_2D, GL.Enums.TextureParameterName.TEXTURE_MIN_FILTER, (int)GL.Enums.All.LINEAR);
-            GL.TexParameter(GL.Enums.TextureTarget.TEXTURE_2D, GL.Enums.TextureParameterName.TEXTURE_MAG_FILTER, (int)GL.Enums.All.LINEAR);
+            GL.BindTexture(TextureTarget.Texture2d, texture);
+            GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)All.Linear);
+            GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)All.Linear);
 
-            GL.TexImage2D(GL.Enums.TextureTarget.TEXTURE_2D, 0, GL.Enums.PixelInternalFormat.ALPHA, texture_width, texture_height, 0,
-                GL.Enums.PixelFormat.RGBA, GL.Enums.PixelType.UNSIGNED_BYTE, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, PixelInternalFormat.Alpha, texture_width, texture_height, 0,
+                OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
         }
 
         #endregion
@@ -105,11 +106,11 @@ namespace OpenTK.Fonts
             Glyph g = new Glyph(c, font);
             Rectangle rect = pack.Add(g);
 
-            using (Bitmap bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb))
+            using (Bitmap bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
             using (Graphics gfx = Graphics.FromImage(bmp))
             {
                 // Upload texture and create Display List:
-                GL.BindTexture(GL.Enums.TextureTarget.TEXTURE_2D, texture);
+                GL.BindTexture(TextureTarget.Texture2d, texture);
 
                 //gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
                 //gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
@@ -118,9 +119,10 @@ namespace OpenTK.Fonts
                 gfx.Clear(Color.Transparent);
                 gfx.DrawString(g.Character.ToString(), g.Font, Brushes.White, 0.0f, 0.0f);
 
-                BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-                GL.TexSubImage2D(GL.Enums.TextureTarget.TEXTURE_2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
-                    GL.Enums.PixelFormat.RGBA, GL.Enums.PixelType.UNSIGNED_BYTE, bmp_data.Scan0);
+                BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly,
+                    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                GL.TexSubImage2D(TextureTarget.Texture2d, 0, rect.Left, rect.Top, rect.Width, rect.Height,
+                    OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bmp_data.Scan0);
                 bmp.UnlockBits(bmp_data);
 
                 RectangleF f_rect = RectangleF.FromLTRB(
