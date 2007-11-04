@@ -24,34 +24,41 @@
 # OpenGL(R) version 1.2.1 Sample Implementation published by SGI, but has
 # not been independently verified as being compliant with the OpenGL(R)
 # version 1.2.1 Specification.
-
+###############################################################################
+#
+# Edited by StApostol. Revision 1
+#
+###############################################################################
 ###############################################################################
 Extensions define:
 	EXT_object_space_tess				       = 1
 	EXT_nurbs_tessellator				       = 1
 
 ###############################################################################
-
-Boolean enum:
-	FALSE							= 0
-	TRUE							= 1
+# Revision 1 (exists in GL enums)
+#Boolean enum:
+#	FALSE							= 0
+#	TRUE							= 1
 
 ###############################################################################
 
-Version enum:
+# Revision 1
+GluVersion enum:
 	VERSION_1_1						= 1
 	VERSION_1_2						= 1
 	VERSION_1_3						= 1
 
 ###############################################################################
 
-StringName enum:
+# Revision 1
+GluStringName enum:
 	VERSION							= 100800
 	EXTENSIONS						= 100801
 
 ###############################################################################
 
-ErrorCode enum:
+# Revision 1
+GluErrorCode enum:
 	INVALID_ENUM						= 100900
 	INVALID_VALUE						= 100901
 	OUT_OF_MEMORY						= 100902
