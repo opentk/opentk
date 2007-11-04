@@ -1,5 +1,6 @@
 ﻿#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * Contributions by Andy Gill.
  * See license.txt for license info
  */
 #endregion
@@ -38,6 +39,28 @@ namespace OpenTK.Math
                 return x;
             }
         }
+	
+		/// <summary>
+		/// Convert degrees to radians
+		/// </summary>
+		/// <param name="degrees">An angle in degrees</param>
+		/// <returns>The angle expressed in radians</returns>
+		public static float DegreesToRadians(float degrees)
+		{
+			const float degToRad = (float)System.Math.PI / 180.0f;
+			return degrees * degToRad;
+		}
+
+		/// <summary>
+		/// Convert radians to degrees
+		/// </summary>
+		/// <param name="degrees">An angle in radians</param>
+		/// <returns>The angle expressed in degrees</returns>
+		public static float RadiansToDegrees(float radians)
+		{
+			const float radToDeg = 180.0f / (float)System.Math.PI;
+			return radians * radToDeg;
+		}
     }
 
 #if false
