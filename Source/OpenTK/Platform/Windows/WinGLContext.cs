@@ -225,9 +225,7 @@ namespace OpenTK.Platform.Windows
             GL.LoadAll();
             Glu.LoadAll();
 
-            vsync_supported = 
-                (Wgl.ARB.SupportsExtension(this.deviceContext, "WGL_EXT_swap_control") ||
-                 Wgl.EXT.SupportsExtension(this.deviceContext, "WGL_EXT_swap_control")) &&
+            vsync_supported = Wgl.Arb.SupportsExtension(this.deviceContext, "WGL_EXT_swap_control") &&
                 Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
 
             if (source != null)
@@ -324,12 +322,12 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                //return vsync != 0;
-                return Wgl.EXT.GetSwapInterval() != 0;
+                return vsync_supported && Wgl.Ext.GetSwapInterval() != 0;
             }
             set
             {
-                Wgl.EXT.SwapInterval(value ? 1 : 0);
+                if (vsync_supported)
+                    Wgl.Ext.SwapInterval(value ? 1 : 0);
             }
         }
 
