@@ -21,3 +21,4 @@ TextureTarget   TextureTarget
 PixelFormat     PixelFormat
 PixelType       PixelType
 MapTarget       MapTarget
+Boolean			GLboolean
