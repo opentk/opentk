@@ -99,7 +99,7 @@ namespace Examples
                         FieldInfo info = type.GetField("order");
                         order = (int)info.GetValue(null);
                     }
-                    catch (NullReferenceException nre)
+                    catch (NullReferenceException)
                     {
                         Debug.Print("Example {0} does not have ordering info", type.FullName);
                         order = 0;
