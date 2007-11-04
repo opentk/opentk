@@ -253,22 +253,92 @@ namespace Bind.Structures
         }
         
         #endregion
-        
-        #region internal static Type Translate(Type type)
 
-        internal static Type Translate(Type type)
+        #region public virtual void Translate(string category)
+
+        public virtual void Translate(string category)
         {
-            Type t = new Type(type);
+            Enum @enum;
+            string s;
 
-            if (GLTypes.ContainsKey(t.CurrentType))
-                t.CurrentType = GLTypes[t.CurrentType];
+            if (this.CurrentType == "BlendEquationModeEXT")
+            {
+            }
 
-            if (CSTypes.ContainsKey(t.CurrentType))
-                t.CurrentType = CSTypes[t.CurrentType];
+            // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
+            // Otherwise, try to find it in the aux enums list. If it exists in neither, it is not an enum.
+            // Special case for Boolean - it is an enum, but it is dumb to use that instead of the 'bool' type.
+            bool normal = false;
+            bool aux = false;
+            normal = Enum.GLEnums.TryGetValue(CurrentType, out @enum);
+            if (!normal)
+                aux = Enum.AuxEnums != null && Enum.AuxEnums.TryGetValue(CurrentType, out @enum);
 
-            return t;
+            // Translate enum types
+            if ((normal || aux) && @enum.Name != "GLenum" && @enum.Name != "Boolean")
+            {
+                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
+                    CurrentType = "int";
+                else
+                {
+                    if (normal)
+                        CurrentType = Enum.TranslateName(CurrentType).Insert(0, String.Format("{0}.", Settings.EnumsOutput));
+                    else if (aux)
+                        CurrentType = Enum.TranslateName(CurrentType).Insert(0, String.Format("{0}.", Settings.EnumsAuxOutput));
+                }
+            }
+            else if (Bind.Structures.Type.GLTypes.TryGetValue(CurrentType, out s))
+            {
+                // Check if the parameter is a generic GLenum. If yes,
+                // check if a better match exists:
+                if (s.Contains("GLenum") && !String.IsNullOrEmpty(category))
+                {
+                    if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
+                        CurrentType = "int";
+                    else
+                        // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
+                        if (Enum.GLEnums.ContainsKey(category))
+                            CurrentType = String.Format("{0}.{1}", Settings.EnumsOutput, Enum.TranslateName(category));
+                        else
+                            CurrentType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
+                }
+                else
+                {
+                    // This is not enum, default translation:
+                    if (CurrentType == "PIXELFORMATDESCRIPTOR" || CurrentType == "LAYERPLANEDESCRIPTOR" ||
+                        CurrentType == "GLYPHMETRICSFLOAT")
+                    {
+                        if (Settings.Compatibility == Settings.Legacy.Tao)
+                            CurrentType = CurrentType.Insert(0, "Gdi.");
+                        else
+                        {
+                            if (CurrentType == "PIXELFORMATDESCRIPTOR")
+                                CurrentType = "PixelFormatDescriptor";
+                            else if (CurrentType == "LAYERPLANEDESCRIPTOR")
+                                CurrentType = "LayerPlaneDescriptor";
+                            else if (CurrentType == "GLYPHMETRICSFLOAT")
+                                CurrentType = "GlyphMetricsFloat";
+                        }
+                    }
+                    else if (CurrentType == "XVisualInfo")
+                    {
+                        //p.Pointer = false;
+                        //p.Reference = true;
+
+                    }
+                    else
+                        CurrentType = s;
+                }
+
+                CurrentType =
+                    Bind.Structures.Type.CSTypes.ContainsKey(CurrentType) ?
+                    Bind.Structures.Type.CSTypes[CurrentType] : CurrentType;
+
+                if (CurrentType == "IntPtr")
+                    Pointer = false;
+            }
         }
-        
+
         #endregion
     }
 }
