@@ -26,14 +26,17 @@ namespace Bind
         public static string ConstantPrefix = "GL_";
 
         // TODO: This code is too fragile.
-        private static string normalEnumsClassOverride;
+        // Old enums code:
+        public static string normalEnumsClassOverride;
         public static string NestedEnumsClass = "Enums";
         public static string NormalEnumsClass
         {
             get
             {
-                return String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass :
-                    OutputClass + "." + NestedEnumsClass;
+                return
+                    normalEnumsClassOverride == null ?
+                        String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + "." + NestedEnumsClass :
+                        normalEnumsClassOverride;
             }
         }
  
@@ -41,6 +44,31 @@ namespace Bind
         {
             get { return GLClass + "." + NestedEnumsClass; }
         }
+
+        public static string EnumsOutput
+        {
+            get
+            {
+                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+                    return OutputNamespace + "." + OutputClass + "." + NestedEnumsClass;
+                else
+                    return OutputNamespace + "." + EnumsNamespace;
+            }
+        }
+
+        public static string EnumsAuxOutput
+        {
+            get
+            {
+                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+                    return OutputNamespace + "." + GLClass + "." + NestedEnumsClass;
+                else
+                    return OutputNamespace + "." + EnumsNamespace;
+            }
+        }
+
+        // New enums namespace (no nested class).
+        public static string EnumsNamespace = "Enums";
 
         public static string DelegatesClass = "Delegates";
         public static string ImportsClass = "Imports";
@@ -64,6 +92,7 @@ namespace Bind
             NoSeparateFunctionNamespaces = 0x10,
             TurnVoidPointersToIntPtr = 0x20,
             GenerateAllPermutations = 0x40,
+            NestedEnums = 0x80,
             Tao = ConstIntEnums | NoAdvancedEnumProcessing | NoPublicUnsafeFunctions | NoTrimFunctionEnding | NoTrimFunctionPrefix | NoSeparateFunctionNamespaces | TurnVoidPointersToIntPtr | GenerateAllPermutations,
         }
         
