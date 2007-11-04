@@ -135,13 +135,13 @@ namespace OpenTK.Platform.Windows
             internal unsafe delegate Boolean SetPbufferAttribARB(IntPtr hPbuffer, int* piAttribList);
             internal unsafe static SetPbufferAttribARB wglSetPbufferAttribARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean CreateDisplayColorTableEXT(UInt16 id);
+            internal delegate bool CreateDisplayColorTableEXT(UInt16 id);
             internal static CreateDisplayColorTableEXT wglCreateDisplayColorTableEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean LoadDisplayColorTableEXT(UInt16* table, UInt32 length);
+            internal unsafe delegate bool LoadDisplayColorTableEXT(UInt16* table, UInt32 length);
             internal unsafe static LoadDisplayColorTableEXT wglLoadDisplayColorTableEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Boolean BindDisplayColorTableEXT(UInt16 id);
+            internal delegate bool BindDisplayColorTableEXT(UInt16 id);
             internal static BindDisplayColorTableEXT wglBindDisplayColorTableEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DestroyDisplayColorTableEXT(UInt16 id);
