@@ -19,6 +19,7 @@ using OpenTK.OpenGL;
 //using Enums = OpenTK.OpenGL.GL.Enums;
 using OpenTK.Platform;
 using System.Threading;
+using OpenTK.OpenGL.Enums;
 
 #endregion
 
@@ -48,12 +49,12 @@ namespace Examples.WinForms
             glControl.Paint += new PaintEventHandler(glControl_Paint);
 
             Text =
-                GL.GetString(GL.Enums.StringName.VENDOR) + " " +
-                GL.GetString(GL.Enums.StringName.RENDERER) + " " +
-                GL.GetString(GL.Enums.StringName.VERSION);
+                GL.GetString(StringName.Vendor) + " " +
+                GL.GetString(StringName.Renderer) + " " +
+                GL.GetString(StringName.Version);
 
             GL.ClearColor(Color.MidnightBlue);
-            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(EnableCap.DepthTest);
 
             Application.Idle += Application_Idle;
 
@@ -89,7 +90,7 @@ namespace Examples.WinForms
 
         private void Render()
         {
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
             Glu.LookAt(
                 0.0, 5.0, 5.0,
@@ -99,7 +100,7 @@ namespace Examples.WinForms
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
             angle += 0.5f;
 
-            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             DrawCube();
 
@@ -122,7 +123,7 @@ namespace Examples.WinForms
             double ratio = 0.0;
             ratio = c.ClientSize.Width / (double)c.ClientSize.Height;
 
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -156,7 +157,7 @@ namespace Examples.WinForms
 
         private void DrawCube()
         {
-            GL.Begin(GL.Enums.BeginMode.QUADS);
+            GL.Begin(BeginMode.Quads);
 
             GL.Color3(Color.Silver);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);

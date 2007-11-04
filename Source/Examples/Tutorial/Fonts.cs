@@ -14,6 +14,7 @@ using OpenTK.Fonts;
 using OpenTK.OpenGL;
 using OpenTK.Input;
 using System.IO;
+using OpenTK.OpenGL.Enums;
 
 namespace Examples.Tutorial
 {
@@ -36,9 +37,9 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
-            GL.Enable(GL.Enums.EnableCap.TEXTURE_2D);
-            GL.Enable(GL.Enums.EnableCap.BLEND);
-            GL.BlendFunc(GL.Enums.BlendingFactorSrc.SRC_ALPHA, GL.Enums.BlendingFactorDest.ONE_MINUS_SRC_ALPHA);
+            GL.Enable(EnableCap.Texture2d);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             //serif.LoadGlyphs("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz,.!?;()\'- ");
             serif.LoadGlyphs("A");
@@ -92,13 +93,13 @@ namespace Examples.Tutorial
                 current_position = initial_position;
             scroll_position = current_position;
 
-            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
+            GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             GL.Ortho(0.0, Width, Height, 0.0, 0.0, 1.0);
 
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
 
             GL.Translate(0.0f, scroll_position, 0.0f);
@@ -110,13 +111,13 @@ namespace Examples.Tutorial
             int texture;
             serif.GlyphData('A', ref rect, out width, out height, out texture);
 
-            GL.BindTexture(GL.Enums.TextureTarget.TEXTURE_2D, texture);
+            GL.BindTexture(TextureTarget.Texture2d, texture);
 
-            GL.Enable(GL.Enums.EnableCap.BLEND);
-            GL.BlendFunc(GL.Enums.BlendingFactorSrc.SRC_ALPHA, GL.Enums.BlendingFactorDest.ONE_MINUS_SRC_ALPHA);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             //GL.Color4(Color.White);
-            GL.Begin(GL.Enums.BeginMode.QUADS);
+            GL.Begin(BeginMode.Quads);
             
             GL.TexCoord2(rect.Left, rect.Top);
             GL.Vertex2(0.0, 0.0);

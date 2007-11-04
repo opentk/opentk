@@ -15,6 +15,7 @@ using OpenTK.OpenGL;
 using System.Diagnostics;
 using OpenTK.Input;
 using OpenTK.Fonts;
+using OpenTK.OpenGL.Enums;
 
 namespace Examples.Tutorial
 {
@@ -27,7 +28,8 @@ namespace Examples.Tutorial
         float angle = 0.0f;
 
         Shapes.Shape shape = new Examples.Shapes.Plane(16, 16, 2.0f, 2.0f);
-        TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 32, FontStyle.Regular, GraphicsUnit.Pixel));
+        TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 32, FontStyle.Regular,
+                                                    GraphicsUnit.Pixel));
 
         #region Constructor
 
@@ -57,14 +59,14 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
-            GL.Enable(GL.Enums.EnableCap.TEXTURE_2D);
+            GL.Enable(EnableCap.Texture2d);
 
             GL.ClearColor(Color.CadetBlue);
-            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(EnableCap.DepthTest);
             
-            GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
+            GL.EnableClientState(EnableCap.VertexArray);
             //GL.EnableClientState(GL.Enums.EnableCap.COLOR_ARRAY);
-            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, shape.Vertices);
+            GL.VertexPointer(3, VertexPointerType.Float, 0, shape.Vertices);
             //GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, shape.Colors);
         }
 
@@ -87,7 +89,7 @@ namespace Examples.Tutorial
 
             double ratio = e.Width / (double)e.Height;
 
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -139,9 +141,9 @@ namespace Examples.Tutorial
         /// </summary>
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
-            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
             Glu.LookAt(
                 0.0, 5.0, 5.0,
@@ -155,10 +157,8 @@ namespace Examples.Tutorial
                 angle -= 360.0f;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
-            GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, shape.Indices.Length,
-                GL.Enums.All.UNSIGNED_INT, shape.Indices);
-
-//            GL.DrawArrays(GL.Enums.BeginMode.LINES, 0, shape.Vertices.Length);
+            GL.DrawElements(BeginMode.Triangles, shape.Indices.Length,
+                All.UnsignedInt, shape.Indices);
 
             //GL.Begin(GL.Enums.BeginMode.TRIANGLES);
 
@@ -170,10 +170,10 @@ namespace Examples.Tutorial
             
             GL.PushMatrix();
 
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 1.0);
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
 
             //GL.Translate(0.7f, 1.0f, 0.0f);
