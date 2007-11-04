@@ -18,7 +18,11 @@ namespace Bind.Structures
         internal static EnumCollection GLEnums;
         internal static EnumCollection AuxEnums;
 
-        private static bool enumsLoaded;
+        static StringBuilder translator = new StringBuilder();
+        string _name;
+        static bool enumsLoaded;
+
+        #region Initialize
 
         internal static void Initialize(string enumFile, string enumextFile, string auxFile)
         {
@@ -56,7 +60,10 @@ namespace Bind.Structures
                 enumsLoaded = true;
             }
         }
-          
+
+        #endregion
+
+        #region Constructors
 
         public Enum()
         { }
@@ -66,7 +73,7 @@ namespace Bind.Structures
             Name = name;
         }
 
-        string _name;
+        #endregion
 
         public string Name
         {
@@ -79,7 +86,43 @@ namespace Bind.Structures
         public System.Collections.Hashtable ConstantCollection
         {
             get { return _constant_collection; }
-            set { _constant_collection = value; }
+            //set { _constant_collection = value; }
+        }
+
+        public static string TranslateName(string name)
+        {
+            translator.Remove(0, translator.Length);    // Trick to avoid allocating a new StringBuilder.
+
+            // Translate the constant's name to match .Net naming conventions
+            if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
+            {
+                bool is_after_underscore = true;    // Detect if we just passed a '_' and make the next char
+                                                    // uppercase.
+                bool is_previous_uppercase = false; // Detetc if previous character was uppercase, and turn
+                                                    // the current one to lowercase.
+
+                foreach (char c in name)
+                {
+                    char char_to_add;
+                    if (c != '_')
+                    {
+                        char_to_add = is_after_underscore ? Char.ToUpper(c) :
+                            is_previous_uppercase ? Char.ToLower(c) : c;
+                        is_previous_uppercase = Char.IsUpper(c);
+                        translator.Append(char_to_add);
+                        is_after_underscore = false;
+                    }
+                    else
+                        is_after_underscore = true;
+                }
+
+                translator[0] = Char.ToUpper(translator[0]);
+            }
+            else
+                translator.Append(name);
+
+            translator.Replace("Pname", "PName");
+            return translator.ToString();
         }
 
         public override string ToString()
@@ -117,6 +160,9 @@ namespace Bind.Structures
         internal void Translate()
         {
             foreach (Enum e in this.Values)
+                e.Name = Enum.TranslateName(e.Name);
+            
+            foreach (Enum e in this.Values)
             {
                 foreach (Constant c in e.ConstantCollection.Values)
                 {
@@ -139,12 +185,11 @@ namespace Bind.Structures
                     }
                 }
             }
+        }
 
-            // Obey .Net naming rules:
-            if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
-            {
-
-            }
+        new bool TryGetValue(string key, out Enum value)
+        {
+            return base.TryGetValue(key, out value);
         }
     }
 
