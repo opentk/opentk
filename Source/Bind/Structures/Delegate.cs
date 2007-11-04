@@ -182,7 +182,7 @@ namespace Bind.Structures
             get { return _return_type; }
             set
             {
-                _return_type = Type.Translate(value);
+                _return_type = value;
             }
         }
 
@@ -341,7 +341,7 @@ namespace Bind.Structures
 
         public void CreateWrappers()
         {
-            if (this.Name.Contains("EndList"))
+            if (this.Name.Contains("GetBoolean"))
             {
             }
 
@@ -425,11 +425,15 @@ namespace Bind.Structures
         /// </remarks>
         void TranslateReturnType()
         {
+            /*
             if (Bind.Structures.Type.GLTypes.ContainsKey(ReturnType.CurrentType))
                 ReturnType.CurrentType = Bind.Structures.Type.GLTypes[ReturnType.CurrentType];
 
             if (Bind.Structures.Type.CSTypes.ContainsKey(ReturnType.CurrentType))
                 ReturnType.CurrentType = Bind.Structures.Type.CSTypes[ReturnType.CurrentType];
+            */
+
+            ReturnType.Translate(this.Category);
 
             if (ReturnType.CurrentType.ToLower().Contains("void") && ReturnType.Pointer)
             {
@@ -451,11 +455,8 @@ namespace Bind.Structures
 
             if (ReturnType.CurrentType.Contains("GLenum"))
             {
-                if (Settings.Compatibility == Settings.Legacy.None)
-                    ReturnType.CurrentType =
-                        String.Format("{0}.{1}",
-                            Settings.NormalEnumsClass,
-                            Settings.CompleteEnumName);
+                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
+                    ReturnType.CurrentType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
                 else
                     ReturnType.CurrentType = "int";
             }
@@ -489,19 +490,14 @@ namespace Bind.Structures
 
             for (int i = 0; i < Parameters.Count; i++)
             {
-                Parameters[i] = Parameter.Translate(Parameters[i], this.Category);
+                Parameters[i].Translate(this.Category);
 
                 if (Parameters[i].CurrentType == "UInt16" && Name.Contains("LineStipple"))
-                {
                     Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
-                }
 
+                // Special case: these functions take a string[]
                 if (Name.Contains("ShaderSource") && Parameters[i].CurrentType.ToLower().Contains("string"))
-                {
-                    // Special case: these functions take a string[]
-                    //IsPointer = true;
                     Parameters[i].Array = 1;
-                }
             }
         }
 
@@ -509,7 +505,7 @@ namespace Bind.Structures
 
         internal void Translate()
         {
-            if (Name.Contains("String"))
+            if (Name.Contains("GetError"))
             {
             }
             TranslateReturnType();
