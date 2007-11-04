@@ -46,6 +46,8 @@ namespace Bind.Glu
             {
                 Settings.OutputNamespace = "OpenTK.OpenGL";
             }
+
+            Settings.CompleteEnumName = "AllGlu";
         }
 
         #endregion
