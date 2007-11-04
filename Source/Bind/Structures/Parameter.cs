@@ -242,146 +242,44 @@ namespace Bind.Structures
 
         #endregion
 
-        #region internal static Parameter Translate(Parameter par, string Category)
-        
-        internal static Parameter Translate(Parameter par, string Category)
+        #region override public void Translate(string category)
+
+        override public void Translate(string category)
         {
-            Enum @enum;
-            string s;
-            Parameter p = new Parameter(par);
+            base.Translate(category);
 
-            // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
-            // Otherwise, try to find it in the aux enums list. If it exists in neither, it is not an enum.
-            bool normal = false;
-            bool aux = false;
-            normal = Enum.GLEnums.TryGetValue(p.CurrentType, out @enum);
-            if (!normal)
-                aux = Enum.AuxEnums != null && Enum.AuxEnums.TryGetValue(p.CurrentType, out @enum);
-            
-            // Translate enum types
-            if ((normal || aux) && @enum.Name != "GLenum")
+            // Find out the necessary wrapper types.
+            if (Pointer)/* || CurrentType == "IntPtr")*/
             {
-                if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
-                {
-                    p.CurrentType = "int";
-                }
-                else
-                {
-                    if (normal)
-                    {
-                        p.CurrentType = p.CurrentType.Insert(0, String.Format("{0}.", Settings.NormalEnumsClass));
-                    }
-                    else if (aux)
-                    {
-                        p.CurrentType = p.CurrentType.Insert(0, String.Format("{0}.", Settings.AuxEnumsClass));
-                    }
-                }
-            }
-            else if (Bind.Structures.Type.GLTypes.TryGetValue(p.CurrentType, out s))
-            {
-                // Check if the parameter is a generic GLenum. If yes,
-                // check if a better match exists:
-                if (s.Contains("GLenum") && !String.IsNullOrEmpty(Category))
-                {
-                    if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
-                    {
-                        // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
-                        if (Enum.GLEnums.ContainsKey(Category))
-                        {
-                            p.CurrentType = String.Format("{0}.{1}", Settings.NormalEnumsClass, Category);
-                        }
-                        else
-                        {
-                            p.CurrentType = String.Format("{0}.{1}", Settings.NormalEnumsClass, Settings.CompleteEnumName);
-                        }
-                    }
-                    else
-                    {
-                        p.CurrentType = "int";
-                    }
-                }
-                else
-                {
-                    // This is not enum, default translation:
-                    if (p.CurrentType == "PIXELFORMATDESCRIPTOR" || p.CurrentType == "LAYERPLANEDESCRIPTOR" ||
-                        p.CurrentType == "GLYPHMETRICSFLOAT")
-                    {
-                        if (Settings.Compatibility == Settings.Legacy.Tao)
-                        {
-                            p.CurrentType = p.CurrentType.Insert(0, "Gdi.");
-                        }
-                        else
-                        {
-                            if (p.CurrentType == "PIXELFORMATDESCRIPTOR")
-                                p.CurrentType ="PixelFormatDescriptor";
-                            else if (p.CurrentType == "LAYERPLANEDESCRIPTOR")
-                                p.CurrentType = "LayerPlaneDescriptor";
-                            else if (p.CurrentType == "GLYPHMETRICSFLOAT")
-                                p.CurrentType = "GlyphMetricsFloat";
-                        }
-                    }
-                    else if (p.CurrentType == "XVisualInfo")
-                    {
-                        //p.Pointer = false;
-                        //p.Reference = true;
+                WrapperType = WrapperTypes.ArrayParameter;
 
-                    }
-                    else
-                    {
-                        p.CurrentType = s;
-                    }
-                    p.CurrentType =
-                        Bind.Structures.Type.CSTypes.ContainsKey(p.CurrentType) ?
-                        Bind.Structures.Type.CSTypes[p.CurrentType] : p.CurrentType;
-
-                    if (p.CurrentType == "IntPtr")
-                    {
-                        p.Pointer = false;
-                    }
-                }
-            }
-
-            //if (CSTypes.ContainsKey(p.CurrentType))
-            //    p.CurrentType = CSTypes[p.CurrentType];
-
-            // Translate pointer parameters
-            if (p.Pointer)/* || p.CurrentType == "IntPtr")*/
-            {
-                p.WrapperType = WrapperTypes.ArrayParameter;
-
-                if (p.CurrentType.ToLower().Contains("char") || p.CurrentType.ToLower().Contains("string"))
+                if (CurrentType.ToLower().Contains("char") || CurrentType.ToLower().Contains("string"))
                 {
                     // char* or string -> [In] String or [Out] StringBuilder
-                    p.CurrentType =
-                        p.Flow == Parameter.FlowDirection.Out ?
+                    CurrentType =
+                        Flow == Parameter.FlowDirection.Out ?
                         "System.Text.StringBuilder" :
                         "System.String";
 
-                    p.Pointer = false;
-                    p.WrapperType = WrapperTypes.None;
+                    Pointer = false;
+                    WrapperType = WrapperTypes.None;
                 }
-                else if (p.CurrentType.ToLower().Contains("void")) /*|| p.CurrentType.Contains("IntPtr"))*/
+                else if (CurrentType.ToLower().Contains("void")) /*|| CurrentType.Contains("IntPtr"))*/
                 {
-                    p.CurrentType = "IntPtr";
-                    p.Pointer = false;
-                    p.WrapperType = WrapperTypes.GenericParameter;
+                    CurrentType = "IntPtr";
+                    Pointer = false;
+                    WrapperType = WrapperTypes.GenericParameter;
                 }
             }
 
-            if (p.Reference)
-            {
-                p.WrapperType = WrapperTypes.ReferenceParameter;
-            }
+            if (Reference)
+                WrapperType = WrapperTypes.ReferenceParameter;
 
-            if (p.CurrentType.ToLower().Contains("bool"))
-            {
-                // Is this actually used anywhere?
-                p.WrapperType = WrapperTypes.BoolParameter;
-            }
-
-            return p;
+            // This causes problems with bool arrays
+            //if (CurrentType.ToLower().Contains("bool"))
+            //    WrapperType = WrapperTypes.BoolParameter;
         }
-        
+
         #endregion
     }
 
