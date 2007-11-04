@@ -24,7 +24,11 @@
 # OpenGL(R) version 1.2.1 Sample Implementation published by SGI, but has
 # not been independently verified as being compliant with the OpenGL(R)
 # version 1.2.1 Specification.
-
+###############################################################################
+#
+# Edited by StApostol. Revision 1
+#
+###############################################################################
 param: retval retained
 version: 1.0
 
@@ -165,11 +169,12 @@ EndTrim(nurb)
 
 ErrorString(error)
 	return		String
-	param		error		ErrorCode in value
+# Revision 1
+	param		error		GluErrorCode in value	# ErrorCode (clashes with OpenGL enum)
 
 GetString(name)
 	return		String
-	param		name		StringName in value
+	param		name		GluStringName in value
 
 GetNurbsProperty(nurb, property, data)
 	return		void
@@ -335,10 +340,11 @@ QuadricOrientation(quad, orientation)
 	param		quad		QuadricObj in value
 	param		orientation	QuadricOrientation in value
 
+# Revision 1
 QuadricTexture(quad, texture)
 	return		void
 	param		quad		QuadricObj in value
-	param		texture		Boolean in value
+	param		texture		bool in value # Boolean in value
 
 ScaleImage(format, wIn, hIn, typeIn, dataIn, wOut, hOut, typeOut, dataOut)
 	return		Int32
