@@ -14,7 +14,9 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
 using System.Reflection.Emit;
+
 using OpenTK.Math;
+using OpenTK.OpenGL.Enums;
 
 #endregion
 
@@ -141,7 +143,7 @@ namespace OpenTK.OpenGL
         {
             // Assumes there is an opengl context current.
             AvailableExtensions.Clear();
-            string version_string = GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.VERSION);
+            string version_string = GL.GetString(StringName.Version);
             if (String.IsNullOrEmpty(version_string))
             {
                 throw new ApplicationException("Failed to build extension list. Is there an opengl context current?");
@@ -189,7 +191,7 @@ namespace OpenTK.OpenGL
                 AvailableExtensions.Add("VERSION_2_1", true);
             }
 
-            string extension_string = GL.GetString(OpenTK.OpenGL.GL.Enums.StringName.EXTENSIONS);
+            string extension_string = GL.GetString(Enums.StringName.Extensions);
             if (String.IsNullOrEmpty(extension_string))
                 return;               // no extensions are available
 
