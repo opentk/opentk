@@ -29,57 +29,39 @@ namespace OpenTK.Platform.X11
 
         #region --- Constructors ---
 
-        internal X11GLContext() : this(new DisplayMode(), new WindowInfo())
-        {
-        }
-
-        internal X11GLContext(DisplayMode mode) : this(mode, new WindowInfo())
-        {
-        }
-
         public X11GLContext(DisplayMode mode, IWindowInfo info)
         {
             if (info == null)
                 throw new ArgumentNullException("IWindowInfo cannot be null.");
 
-            this.windowInfo = info as WindowInfo;
+            this.windowInfo = new WindowInfo(info);
+            if (this.windowInfo == null)
+                throw new Exception("Problem");
             this.mode = mode;
             this.ChooseContext();
         }
 
         #endregion
 
-        //#region private XVisualInfo VisualInfo
-
-        //private XVisualInfo VisualInfo
-        //{
-        //    get { return windowInfo.VisualInfo; }
-        //}
-
-        //#endregion
-
-        //#region private IntPtr Handle
-
-        //private IntPtr Handle
-        //{
-        //    get { return windowInfo.Handle; }
-        //    set { windowInfo.Handle = value; }
-        //}
-
-        //#endregion
-
-        #region private void PrepareContext()
+        #region private void ChooseContext()
 
         private void ChooseContext()
         {
             List<int> visualAttributes = new List<int>();
 
-            if (mode == null)
+            // TODO: Improve modesetting code.
+            if (mode == null || mode.Color.BitsPerPixel == 0)
             {
                 // Define the bare essentials - needed for compatibility with Mono's System.Windows.Forms
                 Debug.Print("Preparing visual for System.Windows.Forms (compatibility mode)");
             
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.RED_SIZE);
+                visualAttributes.Add((int)1);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.GREEN_SIZE);
+                visualAttributes.Add((int)1);
+                visualAttributes.Add((int)Glx.Enums.GLXAttribute.BLUE_SIZE);
+                visualAttributes.Add((int)1);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
                 visualAttributes.Add((int)1);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
@@ -107,12 +89,13 @@ namespace OpenTK.Platform.X11
             visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, visualAttributes.ToArray());
             if (visual == IntPtr.Zero)
             {
-                throw new ApplicationException(String.Format("Requested DisplayMode not available ({0}).", mode.ToString()));
+                throw new ApplicationException("Could not create requested DisplayMode.");
             }
             else
             {
-                windowInfo.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
-                Debug.Print("Prepared visual: {0}", windowInfo.VisualInfo.ToString());
+                windowInfo.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(visual,
+                                                                            typeof(XVisualInfo));
+                Debug.Print("Chose visual {0}", windowInfo.VisualInfo.ToString());
             }
         }
 
@@ -138,13 +121,9 @@ namespace OpenTK.Platform.X11
             private set
             {
                 if (context == IntPtr.Zero)
-                {
                     mode = value;
-                }
                 else
-                {
                     Debug.Print("Cannot change DisplayMode of an existing context.");
-                }
             }
         }
 
@@ -188,6 +167,11 @@ namespace OpenTK.Platform.X11
                 if (context != IntPtr.Zero)
                 {
                     Debug.Print("New opengl context created. (id: {0})", context);
+
+                    this.MakeCurrent(); 
+                    GL.LoadAll();
+                    Glu.LoadAll();
+                    
                     return;
                 }
                 // Context creation failed. Retry with a non-shared context with the
@@ -198,6 +182,11 @@ namespace OpenTK.Platform.X11
                 if (context != IntPtr.Zero)
                 {
                     Debug.Print("New opengl context created. (id: {0})", context);
+                    
+                    this.MakeCurrent(); 
+                    GL.LoadAll();
+                    Glu.LoadAll();
+
                     return;
                 }
                     
