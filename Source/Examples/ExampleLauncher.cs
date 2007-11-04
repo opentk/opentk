@@ -64,6 +64,8 @@ namespace Examples
 
         #endregion
 
+        #region public void ExampleLauncher_Load(object sender, EventArgs e)
+
         public void ExampleLauncher_Load(object sender, EventArgs e)
         {
             try
@@ -119,27 +121,7 @@ namespace Examples
                 this.listBox1.SelectedIndex = 0;
         }
 
-        void LaunchGameWindow(object example)
-        {
-            Type ex = example as Type;
-            try
-            {
-                using (GameWindow gw = (GameWindow)(ex.GetConstructor(Type.EmptyTypes).Invoke(null)))
-                {
-                    (gw as IExample).Launch();
-                }
-                
-            }
-            catch (Exception expt)
-            {
-                if (expt.InnerException != null)
-                    MessageBox.Show(expt.InnerException.ToString(), "An error has occured: \"" + expt.InnerException.Message + "\"",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else
-                    MessageBox.Show(expt.ToString(), "An error has occured: \"" + expt.Message + "\"",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
+        #endregion
 
         private void RunExample()
         {
@@ -150,36 +132,43 @@ namespace Examples
                 Debug.Print("Launching example: {0}", example.ToString());
                 this.Visible = false;
 
-                if (example.BaseType == typeof(GameWindow))
+                try
                 {
-                    LaunchGameWindow(example);
-                }
-                else if (example.BaseType == typeof(Form))
-                {
-                    try
+                    if (example.BaseType == typeof(GameWindow))
+                    {
+                        using (GameWindow gw = (GameWindow)(example.GetConstructor(Type.EmptyTypes).Invoke(null)))
+                        {
+                            (gw as IExample).Launch();
+                        }
+                    }
+                    else if (example.BaseType == typeof(Form))
                     {
                         using (Form f = (Form)example.GetConstructor(Type.EmptyTypes).Invoke(null))
                         {
                             f.ShowDialog(this);
                         }
                     }
-                    catch (Exception expt)
+                    else
                     {
-                        MessageBox.Show(
-                            String.Format(
-                                "Stacktrace:{0}{1}{0}{0}Inner exception:{0}{2}",
-                                System.Environment.NewLine,
-                                expt.StackTrace,
-                                expt.InnerException
-                            ),
-                            expt.Message);
+                        // Console application.
+                        IExample ex = (IExample)example.GetConstructor(Type.EmptyTypes).Invoke(null);
+                        ex.Launch();
                     }
+
                 }
-                else
+                catch (Exception expt)
                 {
-                    // Console application.
-                    IExample ex = (IExample)example.GetConstructor(Type.EmptyTypes).Invoke(null);
-                    ex.Launch();
+#if DEBUG
+                    throw;
+#else
+                    if (expt.InnerException != null)
+                        MessageBox.Show(expt.InnerException.ToString(), "An error has occured: \"" +
+                                        expt.InnerException.Message + "\"", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    else
+                        MessageBox.Show(expt.ToString(), "An error has occured: \"" + expt.Message + "\"",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+#endif
+
                 }
 
                 GC.Collect();

@@ -12,6 +12,7 @@ using System.Drawing;
 using OpenTK;
 using OpenTK.OpenGL;
 using Examples.Shapes;
+using OpenTK.OpenGL.Enums;
 
 namespace Examples.Tutorial
 {
@@ -38,31 +39,31 @@ namespace Examples.Tutorial
             base.OnLoad(e);
 
             GL.ClearColor(Color.MidnightBlue);
-            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(EnableCap.DepthTest);
             //GL.Enable(GL.Enums.EnableCap.CULL_FACE);
             
-            GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
-            GL.EnableClientState(GL.Enums.EnableCap.NORMAL_ARRAY);
-            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, shape.Vertices);
-            GL.NormalPointer(GL.Enums.NormalPointerType.FLOAT, 0, shape.Normals);
+            GL.EnableClientState(EnableCap.VertexArray);
+            GL.EnableClientState(EnableCap.NormalArray);
+            GL.VertexPointer(3, VertexPointerType.Float, 0, shape.Vertices);
+            GL.NormalPointer(NormalPointerType.Float, 0, shape.Normals);
 
             // Enable Light 0 and set its parameters.
-            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.POSITION, new float[] { 1.0f, 1.0f, -0.5f });
-            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.AMBIENT, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
-            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.DIFFUSE, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.SPECULAR, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            GL.Lightv(GL.Enums.LightName.LIGHT0, GL.Enums.LightParameter.SPOT_EXPONENT, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            GL.LightModelv(GL.Enums.LightModelParameter.LIGHT_MODEL_AMBIENT, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
-            GL.LightModel(GL.Enums.LightModelParameter.LIGHT_MODEL_TWO_SIDE, 1);
-            GL.LightModel(GL.Enums.LightModelParameter.LIGHT_MODEL_LOCAL_VIEWER, 1);
-            GL.Enable(GL.Enums.EnableCap.LIGHTING);
-            GL.Enable(GL.Enums.EnableCap.LIGHT0);
+            GL.Lightv(LightName.Light0, LightParameter.Position, new float[] { 1.0f, 1.0f, -0.5f });
+            GL.Lightv(LightName.Light0, LightParameter.Ambient, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
+            GL.Lightv(LightName.Light0, LightParameter.Diffuse, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
+            GL.Lightv(LightName.Light0, LightParameter.Specular, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
+            GL.Lightv(LightName.Light0, LightParameter.SpotExponent, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
+            GL.LightModelv(LightModelParameter.LightModelAmbient, new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
+            GL.LightModel(LightModelParameter.LightModelTwoSide, 1);
+            GL.LightModel(LightModelParameter.LightModelLocalViewer, 1);
+            GL.Enable(EnableCap.Lighting);
+            GL.Enable(EnableCap.Light0);
 
-            // Use GL.Material to set your object's material parameters..
-            GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.AMBIENT, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
-            GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.DIFFUSE, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.SPECULAR, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
-            GL.Materialv(GL.Enums.MaterialFace.FRONT, GL.Enums.MaterialParameter.EMISSION, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
+            // Use GL.Material to set your object's material parameters.
+            GL.Materialv(MaterialFace.Front, MaterialParameter.Ambient, new float[] { 0.3f, 0.3f, 0.3f, 1.0f });
+            GL.Materialv(MaterialFace.Front, MaterialParameter.Diffuse, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
+            GL.Materialv(MaterialFace.Front, MaterialParameter.Specular, new float[] { 1.0f, 1.0f, 1.0f, 1.0f });
+            GL.Materialv(MaterialFace.Front, MaterialParameter.Emission, new float[] { 0.0f, 0.0f, 0.0f, 1.0f });
         }
 
         #endregion
@@ -84,7 +85,7 @@ namespace Examples.Tutorial
 
             double ratio = e.Width / (double)e.Height;
 
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -139,18 +140,18 @@ namespace Examples.Tutorial
         /// </summary>
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
-            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 0.0, -7.5 + zoom,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0);
+            Glu.LookAt(0.0, 0.0, -7.5 + zoom,
+                       0.0, 0.0, 0.0, 
+                       0.0, 1.0, 0.0);
             GL.Rotate(x_angle, 0.0f, 1.0f, 0.0f);
 
-            GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, shape.Indices.Length,
-                GL.Enums.All.UNSIGNED_INT, shape.Indices);
+            //GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, shape.Indices.Length,
+            //    GL.Enums.All.UNSIGNED_INT, shape.Indices);
+            GL.DrawArrays(BeginMode.Points, 0, shape.Vertices.Length);
 
             SwapBuffers();
         }

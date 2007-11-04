@@ -16,6 +16,7 @@ using OpenTK;
 using System.Reflection;
 using OpenTK.OpenGL;
 using System.Threading;
+using OpenTK.OpenGL.Enums;
 
 namespace Examples.WinForms
 {
@@ -47,9 +48,9 @@ namespace Examples.WinForms
             Application.Idle += StartAsync;
 
             driver =
-                GL.GetString(GL.Enums.StringName.VENDOR) + " " +
-                GL.GetString(GL.Enums.StringName.RENDERER) + " " +
-                GL.GetString(GL.Enums.StringName.VERSION);
+                GL.GetString(StringName.Vendor) + " " +
+                GL.GetString(StringName.Renderer) + " " +
+                GL.GetString(StringName.Version);
 
             all = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic).Length;
             this.Text = String.Format("Loading {0} functions...", all);

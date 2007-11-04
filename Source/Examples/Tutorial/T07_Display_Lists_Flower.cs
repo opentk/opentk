@@ -13,11 +13,11 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-
-using OpenTK.OpenGL;
-using Enums = OpenTK.OpenGL.GL.Enums;
-using OpenTK;
 using System.Threading;
+
+using OpenTK;
+using OpenTK.OpenGL;
+using OpenTK.OpenGL.Enums;
 
 #endregion --- Using Directives ---
 
@@ -46,9 +46,9 @@ namespace Examples.Tutorial
         public override void OnLoad(EventArgs e)
         {
             GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
-            GL.Enable(Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(EnableCap.DepthTest);
 
-            GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
 
             // Build some display lists.
@@ -57,7 +57,7 @@ namespace Examples.Tutorial
             for (int i = 0; i < num_lists; i++)
             {
                 lists[i] = first_list + i;
-                GL.NewList(first_list + i, Enums.ListMode.COMPILE);
+                GL.NewList(first_list + i, ListMode.Compile);
 
                 GL.Color3(1.0, c, 1 - c);
 
@@ -66,7 +66,7 @@ namespace Examples.Tutorial
                 GL.Rotate(c * 360.0f, 0.0, 0.0, 1.0);
                 GL.Translate(5.0, 0.0, 0.0);
 
-                GL.Begin(Enums.BeginMode.QUADS);
+                GL.Begin(BeginMode.Quads);
 
                 GL.Vertex3(-1.0f, -1.0f, 1.0f);
                 GL.Vertex3(1.0f, -1.0f, 1.0f);
@@ -103,7 +103,7 @@ namespace Examples.Tutorial
             double ratio = 0.0;
             ratio = this.Width / (double)this.Height;
 
-            GL.MatrixMode(Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -126,15 +126,15 @@ namespace Examples.Tutorial
 
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
-            GL.MatrixMode(Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
             Glu.LookAt(
                 0.0, 0.0, 16.0,
                 0.0, 0.0, 0.0,
                 0.0, 1.0, 0.0);
 
-            GL.Clear(Enums.ClearBufferMask.COLOR_BUFFER_BIT | Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
-            GL.CallLists(num_lists, Enums.ListNameType.INT, lists);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.CallLists(num_lists, ListNameType.Int, lists);
 
             SwapBuffers();
         }

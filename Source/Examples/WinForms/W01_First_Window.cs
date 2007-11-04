@@ -16,6 +16,7 @@ using System.Windows.Forms;
 
 using OpenTK;
 using OpenTK.OpenGL;
+using OpenTK.OpenGL.Enums;
 
 #endregion
 
@@ -64,7 +65,7 @@ namespace Examples.WinForms
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
-            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT);
+            GL.Clear(ClearBufferMask.ColorBufferBit);
             glControl1.SwapBuffers();
         }
 

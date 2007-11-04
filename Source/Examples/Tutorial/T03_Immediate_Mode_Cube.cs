@@ -14,6 +14,7 @@ using System.Drawing;
 
 using OpenTK;
 using OpenTK.OpenGL;
+using OpenTK.OpenGL.Enums;
 using OpenTK.Platform;
 
 #endregion
@@ -36,13 +37,11 @@ namespace Examples.Tutorial
 
         #region --- Constructors ---
 
-        public T03_Immediate_Mode_Cube()
-        {
-            CreateWindow(new DisplayMode(800, 600));
-        }
+        public T03_Immediate_Mode_Cube() : base(new DisplayMode(800, 600), "OpenTK Tutorial: Immediate mode rendering")
+		{ } 
 
-        #endregion
-
+		#endregion	
+		
         #region OnLoad
 
         public override void OnLoad(EventArgs e)
@@ -50,7 +49,7 @@ namespace Examples.Tutorial
             base.OnLoad(e);
 
             GL.ClearColor(Color.MidnightBlue);
-            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(EnableCap.DepthTest);
         }
 
         #endregion
@@ -72,7 +71,7 @@ namespace Examples.Tutorial
 
             double ratio = e.Width / (double)e.Height;
 
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -117,15 +116,14 @@ namespace Examples.Tutorial
         /// </summary>
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
-            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 5.0, 5.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
+            Glu.LookAt(0.0, 5.0, 5.0,
+                       0.0, 0.0, 0.0,
+                       0.0, 1.0, 0.0);
+            
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
             DrawCube();
@@ -140,7 +138,7 @@ namespace Examples.Tutorial
 
         private void DrawCube()
         {
-            GL.Begin(GL.Enums.BeginMode.QUADS);
+            GL.Begin(BeginMode.Quads);
 
             GL.Color3(Color.Silver);
             GL.Vertex3(-1.0f, -1.0f, -1.0f);
