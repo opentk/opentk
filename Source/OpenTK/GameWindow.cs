@@ -13,6 +13,7 @@ using OpenTK.Platform;
 using OpenTK.Input;
 using System.Threading;
 using OpenTK.OpenGL;
+using OpenTK.OpenGL.Enums;
 
 namespace OpenTK
 {
@@ -721,9 +722,9 @@ namespace OpenTK
             }
 
             Debug.WriteLine(String.Format("OpenGL driver information: {0}, {1}, {2}",
-                GL.GetString(GL.Enums.StringName.RENDERER),
-                GL.GetString(GL.Enums.StringName.VENDOR),
-                GL.GetString(GL.Enums.StringName.VERSION)));
+                GL.GetString(StringName.Renderer),
+                GL.GetString(StringName.Vendor),
+                GL.GetString(StringName.Version)));
 
             if (this.Load != null)
             {
