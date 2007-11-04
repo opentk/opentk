@@ -23,8 +23,6 @@ namespace Bind
         {
         }
 
-        private string indent = "";
-
         public void Indent()
         {
             ++indent_level;
