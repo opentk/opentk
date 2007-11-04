@@ -16,6 +16,9 @@ using System.Threading;
 
 using OpenTK.OpenGL;
 using OpenTK;
+using System.Diagnostics;
+using System.IO;
+using OpenTK.OpenGL.Enums;
 
 #endregion --- Using Directives ---
 
@@ -28,31 +31,12 @@ namespace Examples.Tutorial
     {
         #region --- Fields ---
 
-        #region Shaders
-
-        string[] vertex_shader_source =
-{@"
-void main()
-{
-    gl_FrontColor = gl_Color;
-    gl_Position = ftransform();
-}
-"};
-
-        string[] fragment_shader_source =
-{@"
-void main()
-{
-    gl_FragColor = gl_Color;
-}
-"};
-
-        #endregion
-
-        static float angle;
+        static float angle = 0.0f, rotation_speed = 3.0f;
         int vertex_shader_object, fragment_shader_object, shader_program;
+        int vertex_buffer_object, color_buffer_object, element_buffer_object;
 
-        Shapes.Cube shape = new Examples.Shapes.Cube();
+        Shapes.Shape shape = //new Examples.Shapes.Plane(8, 8, 4.0f, 4.0f);
+            new Examples.Shapes.Cube();
 
         #endregion
 
@@ -74,8 +58,6 @@ void main()
         /// <param name="e">Not used.</param>
         public override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
-            
             // Check for necessary capabilities:
             if (!GL.SupportsExtension("VERSION_2_0"))
             {
@@ -86,43 +68,58 @@ void main()
             }
 
             GL.ClearColor(Color.MidnightBlue);
-            GL.Enable(GL.Enums.EnableCap.DEPTH_TEST);
+            GL.Enable(EnableCap.DepthTest);
 
-            GL.EnableClientState(GL.Enums.EnableCap.VERTEX_ARRAY);
-            GL.EnableClientState(GL.Enums.EnableCap.COLOR_ARRAY);
-            GL.VertexPointer(3, GL.Enums.VertexPointerType.FLOAT, 0, shape.Vertices);
-            GL.ColorPointer(4, GL.Enums.ColorPointerType.UNSIGNED_BYTE, 0, shape.Colors);
+            CreateVBO();
 
-            int status;
+            //CreateShader();
 
-            vertex_shader_object = GL.CreateShader(GL.Enums.VERSION_2_0.VERTEX_SHADER);
-            fragment_shader_object = GL.CreateShader(GL.Enums.VERSION_2_0.FRAGMENT_SHADER);
+            int status_code, status_text_length;
+            StringBuilder info = new StringBuilder();
 
-            unsafe { GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, (int*)null); }
+            vertex_shader_object = GL.CreateShader(Version20.VertexShader);
+            fragment_shader_object = GL.CreateShader(Version20.FragmentShader);
+
+            using (StreamReader sr = new StreamReader("Data/Shaders/Simple_VS.glsl"))
+            {
+                string[] code = new string[] { sr.ReadToEnd() };
+#if MONO
+                unsafe { GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, (int*)null); }
+#else
+                GL.ShaderSource(vertex_shader_object, code.Length, code, (int[])null);
+#endif
+            }
             GL.CompileShader(vertex_shader_object);
-            GL.GetShader(vertex_shader_object, GL.Enums.VERSION_2_0.COMPILE_STATUS, out status);
-            if (status != (int)GL.Enums.Boolean.TRUE)
-            {
-                int length = 0;
-                GL.GetShader(vertex_shader_object, GL.Enums.VERSION_2_0.INFO_LOG_LENGTH, out length);
-                StringBuilder info = new StringBuilder(length);
-                GL.GetShaderInfoLog(vertex_shader_object, info.Capacity, out length, info);
-
+            GL.GetShader(vertex_shader_object, Version20.CompileStatus, out status_code);
+            GL.GetShader(vertex_shader_object, Version20.InfoLogLength, out status_text_length);
+            info.Remove(0, info.Length);
+            info.EnsureCapacity(status_text_length);
+            GL.GetShaderInfoLog(vertex_shader_object, info.Capacity, out status_text_length, info);
+            Trace.WriteLine(info.ToString());
+            
+            if (status_code != 1)
                 throw new Exception(info.ToString());
-            }
 
-            unsafe { GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, (int*)null); }
+            using (StreamReader sr = new StreamReader("Data/Shaders/Simple_FS.glsl"))
+            {
+                string[] code = new string[] { sr.ReadToEnd() };
+#if MONO
+                unsafe { GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, (int*)null); }
+#else
+                GL.ShaderSource(fragment_shader_object, code.Length, code, (int[])null);
+#endif
+            }
+            
             GL.CompileShader(fragment_shader_object);
-            GL.GetShader(fragment_shader_object, GL.Enums.VERSION_2_0.COMPILE_STATUS, out status);
-            if (status != (int)GL.Enums.Boolean.TRUE)
-            {
-                int length;
-                GL.GetShader(vertex_shader_object, GL.Enums.VERSION_2_0.INFO_LOG_LENGTH, out length);
-                StringBuilder info = new StringBuilder(length);
-                GL.GetShaderInfoLog(fragment_shader_object, info.Capacity, out length, info);
+            GL.GetShader(fragment_shader_object, Version20.CompileStatus, out status_code);
+            GL.GetShader(vertex_shader_object, Version20.InfoLogLength, out status_text_length);
+            info.Remove(0, info.Length);
+            info.EnsureCapacity(status_text_length);
+            GL.GetShaderInfoLog(fragment_shader_object, info.Capacity, out status_text_length, info);
+            Trace.WriteLine(info.ToString());
 
+            if (status_code != 1)
                 throw new Exception(info.ToString());
-            }
 
             shader_program = GL.CreateProgram();
             GL.AttachShader(shader_program, fragment_shader_object);
@@ -130,8 +127,37 @@ void main()
 
             GL.LinkProgram(shader_program);
             GL.UseProgram(shader_program);
+        }
 
-            //OnResize(new OpenTK.Platform.ResizeEventArgs(this.Width, this.Height));
+        private void CreateVBO()
+        {
+            int size;
+
+            GL.GenBuffers(1, out vertex_buffer_object);
+            GL.GenBuffers(1, out color_buffer_object);
+            GL.GenBuffers(1, out element_buffer_object);
+
+            // Upload the vertex data.
+            GL.BindBuffer(Version15.ArrayBuffer, vertex_buffer_object);
+            GL.BufferData(Version15.ArrayBuffer, (IntPtr)(shape.Vertices.Length * 3 * sizeof(float)), shape.Vertices, Version15.StaticDraw);
+            GL.GetBufferParameter(Version15.ArrayBuffer, Version15.BufferSize, out size);
+            if (size != shape.Vertices.Length * 3 * sizeof(Single))
+                throw new ApplicationException("Problem uploading vertex data to VBO");
+
+            // Upload the color data.
+            GL.BindBuffer(Version15.ArrayBuffer, color_buffer_object);
+            GL.BufferData(Version15.ArrayBuffer, (IntPtr)(shape.Colors.Length * sizeof(int)), shape.Colors, Version15.StaticDraw);
+            GL.GetBufferParameter(Version15.ArrayBuffer, Version15.BufferSize, out size);
+            if (shape.Colors.Length * sizeof(int) != size)
+                throw new ApplicationException("Problem uploading color data to VBO");
+            
+            // Upload the index data (elements inside the vertex data, not color indices as per the IndexPointer function!)
+            GL.BindBuffer(Version15.ElementArrayBuffer, element_buffer_object);
+            GL.BufferData(Version15.ElementArrayBuffer, (IntPtr)(shape.Indices.Length * sizeof(Int32)), shape.Indices, Version15.StaticDraw);
+            GL.GetBufferParameter(Version15.ElementArrayBuffer, Version15.BufferSize, out size);
+            if (shape.Indices.Length * 4 != size)
+                throw new ApplicationException("Problem uploading index data to VBO");
+
         }
 
         #endregion
@@ -146,6 +172,10 @@ void main()
                 GL.DeleteShader(fragment_shader_object);
             if (vertex_shader_object != 0)
                 GL.DeleteShader(vertex_shader_object);
+            if (vertex_buffer_object != 0)
+                GL.DeleteBuffers(1, ref vertex_buffer_object);
+            if (element_buffer_object != 0)
+                GL.DeleteBuffers(1, ref element_buffer_object);
         }
 
         #endregion
@@ -161,13 +191,11 @@ void main()
         /// </remarks>
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
         {
-            base.OnResize(e);
-
             GL.Viewport(0, 0, Width, Height);
 
             double ratio = e.Width / (double)e.Height;
 
-            GL.MatrixMode(GL.Enums.MatrixMode.PROJECTION);
+            GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             Glu.Perspective(45.0, ratio, 1.0, 64.0);
         }
@@ -186,21 +214,11 @@ void main()
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
             if (Keyboard[OpenTK.Input.Key.Escape])
-            {
                 this.Exit();
-                return;
-            }
 
             if ((Keyboard[OpenTK.Input.Key.AltLeft] || Keyboard[OpenTK.Input.Key.AltRight]) &&
                 Keyboard[OpenTK.Input.Key.Enter])
-            {
                 Fullscreen = !Fullscreen;
-            }
-
-            //angle += 180.0f * (float)e.Time;
-            angle += 3.0f;
-            if (angle > 720.0f)
-                angle -= 720.0f;
         }
 
         #endregion
@@ -212,19 +230,39 @@ void main()
         /// </summary>
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
-            GL.Clear(GL.Enums.ClearBufferMask.COLOR_BUFFER_BIT | GL.Enums.ClearBufferMask.DEPTH_BUFFER_BIT);
+            GL.Clear(ClearBufferMask.ColorBufferBit |
+                     ClearBufferMask.DepthBufferBit);
 
-            GL.MatrixMode(GL.Enums.MatrixMode.MODELVIEW);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 5.0, 5.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
+            Glu.LookAt(0.0, 5.0, 5.0,
+                       0.0, 0.0, 0.0,
+                       0.0, 1.0, 0.0);
+
+            angle += rotation_speed * (float)e.ScaleFactor;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
-            GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, shape.Indices.Length,
-                GL.Enums.All.UNSIGNED_SHORT, shape.Indices);
+            GL.EnableClientState(EnableCap.VertexArray);
+            GL.EnableClientState(EnableCap.ColorArray);
+
+            GL.BindBuffer(Version15.ArrayBuffer, vertex_buffer_object);
+            GL.VertexPointer(3, VertexPointerType.Float, 0, IntPtr.Zero);
+            GL.BindBuffer(Version15.ArrayBuffer, color_buffer_object);
+            GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
+            GL.BindBuffer(Version15.ElementArrayBuffer, element_buffer_object);
+
+            GL.DrawElements(BeginMode.Triangles, shape.Indices.Length,
+                All.UnsignedInt, IntPtr.Zero);
+
+            //GL.DrawArrays(GL.Enums.BeginMode.POINTS, 0, shape.Vertices.Length);
+
+            GL.DisableClientState(EnableCap.VertexArray);
+            GL.DisableClientState(EnableCap.ColorArray);
+            
+
+            //int error = GL.GetError();
+            //if (error != 0)
+            //    Debug.Print(Glu.ErrorString(Glu.Enums.ErrorCode.INVALID_OPERATION));
 
             Context.SwapBuffers();
         }
@@ -243,8 +281,7 @@ void main()
         /// </remarks>
         public void Launch()
         {
-            // Lock UpdateFrame and RenderFrame at 60Hz.
-            Run(60.0, 60.0);
+            Run(30.0, 0.0);
         }
 
         #endregion

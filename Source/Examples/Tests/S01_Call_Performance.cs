@@ -13,6 +13,7 @@ using System.Windows.Forms;
 
 using OpenTK.OpenGL;
 using System.Security;
+using OpenTK.OpenGL.Enums;
 
 namespace Examples.Tests
 {
@@ -92,10 +93,7 @@ namespace Examples.Tests
                 Trace.Write("Timing OpenTK.OpenGL core functions (void*): ");
                 timer.Start();
                 for (int i = 0; ++i < num_calls; )
-                {
-                    GL.CallLists(v.Length, GL.Enums.ListNameType.FLOAT, v);
-
-                }
+                    GL.CallLists(v.Length, ListNameType.Float, v);
                 timer.Stop();
                 Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
                 timer.Reset();
@@ -103,9 +101,8 @@ namespace Examples.Tests
                 Trace.Write("Timing OpenTK.OpenGL extension functions: ");
                 timer.Start();
                 for (int i = 0; ++i < num_calls; )
-                {
-                    GL.ARB.ActiveTexture(GL.Enums.ARB_multitexture.TEXTURE0_ARB);
-                }
+                    GL.Arb.ActiveTexture(ArbMultitexture.Texture0Arb);
+
                 timer.Stop();
                 Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
                 timer.Reset();
@@ -139,7 +136,7 @@ namespace Examples.Tests
                 timer.Start();
                 for (int i = 0; ++i < num_calls; )
                 {
-                    glCallLists(v.Length, GL.Enums.ListNameType.FLOAT, v);
+                    glCallLists(v.Length, ListNameType.Float, v);
                 }
                 timer.Stop();
                 Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
@@ -168,7 +165,7 @@ namespace Examples.Tests
         extern static void glVertex2fv(float[] v);
 
         [DllImport("opengl32.dll", EntryPoint = "glCallLists"), SuppressUnmanagedCodeSecurity]
-        extern static void glCallLists(int count, GL.Enums.ListNameType type, object lists);
+        extern static void glCallLists(int count, ListNameType type, object lists);
 
     }
 }
