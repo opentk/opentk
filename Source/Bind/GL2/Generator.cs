@@ -65,6 +65,7 @@ namespace Bind.GL2
 
             Bind.Structures.Type.Initialize(glTypemap, csTypemap);
             Bind.Structures.Enum.Initialize(enumSpec, enumSpecExt);
+            Bind.Structures.Enum.GLEnums.Translate();
             Bind.Structures.Function.Initialize();
             Bind.Structures.Delegate.Initialize(glSpec, glSpecExt);
 
@@ -85,44 +86,6 @@ namespace Bind.GL2
         protected virtual void Translate()
         {
             Bind.Structures.Enum.GLEnums.Translate();
-
-            //foreach (Bind.Structures.Enum e in Bind.Structures.Enum.GLEnums.Values)
-            //{
-            //    TranslateEnum(e);
-            //}
-
-            //foreach (Bind.Structures.Delegate d in Bind.Structures.Delegate.Delegates.Values)
-            {
-                //wrappers.AddRange(d.CreateWrappers());
-            }
-        }
-
-        #endregion
-
-        #region private void TranslateEnum(Bind.Structures.Enum e)
-
-        private void TranslateEnum(Bind.Structures.Enum e)
-        {
-            foreach (Constant c in e.ConstantCollection.Values)
-            {
-                // There are cases when a value is an aliased constant, with no enum specified.
-                // (e.g. FOG_COORD_ARRAY_TYPE = GL_FOG_COORDINATE_ARRAY_TYPE)
-                // In this case try searching all enums for the correct constant to alias (stupid opengl specs).
-                if (String.IsNullOrEmpty(c.Reference) && !Char.IsDigit(c.Value[0]))
-                {
-                    foreach (Bind.Structures.Enum @enum in Bind.Structures.Enum.GLEnums.Values)
-                    {
-                        // Skip generic GLenum
-                        if (@enum.Name == "GLenum")
-                            continue;
-
-                        if (@enum.ConstantCollection.ContainsKey(c.Value))
-                        {
-                            c.Reference = @enum.Name;
-                        }
-                    }
-                }
-            }
         }
 
         #endregion
@@ -319,45 +282,14 @@ namespace Bind.GL2
                             c.Value = words[2];
                         }
 
-#if false
-                        // Translate the enum's name to match .Net naming conventions
-                        if ((Settings.Compatibility & Settings.Legacy.AllCapsEnums) == Settings.Legacy.None)
-                        {
-                            int pos;
-                            // e.Name = enumToDotNet.Replace(e.Name, 
-                            while ((pos = e.Name.IndexOf("_")) != -1)
-                            {
-                                e.Name = e.Name.Insert(pos, Char.ToUpper(e.Name[pos + 1]).ToString());
-                                e.Name = e.Name.Remove(pos + 1, 2);
-                            }
-                            //e.Name = e.Name.Replace("_", "");
-                        }
-#endif
-                        // Translate the constant's name to match .Net naming conventions
-                        if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
-                        {
-                            int pos;
-
-                            c.Name = c.Name[0] + c.Name.Substring(1).ToLower();
-                            while ((pos = c.Name.IndexOf("_")) != -1)
-                            {
-                                c.Name = c.Name.Insert(pos, Char.ToUpper(c.Name[pos + 1]).ToString());
-                                c.Name = c.Name.Remove(pos + 1, 2);
-                            }
-                        }
-
                         //if (!String.IsNullOrEmpty(c.Name) && !e.Members.Contains.Contains(c))
                         //SpecTranslator.Merge(e.Members, c);
                         if (!e.ConstantCollection.ContainsKey(c.Name))
-                        {
                             e.ConstantCollection.Add(c.Name, c);
-                        }
                         else
-                        {
                             Trace.WriteLine(String.Format(
                                 "Spec error: Constant {0} defined twice in enum {1}, discarding last definition.",
                                 c.Name, e.Name));
-                        }
 
                         // Insert the current constant in the list of all constants.
                         //SpecTranslator.Merge(complete_enum.Members, c);
@@ -373,6 +305,8 @@ namespace Bind.GL2
                     // (disabled) Hack - discard Boolean enum, it fsucks up the fragile translation code ahead.
                     //if (!e.Name.Contains("Bool"))
                     //Utilities.Merge(enums, e);
+
+                    //e.Translate();
 
                     if (!enums.ContainsKey(e.Name))
                     {
@@ -537,7 +471,11 @@ namespace Bind.GL2
                 sw.WriteLine("{");
                 
                 sw.Indent();
-                sw.WriteLine("public static partial class {0}", Settings.OutputClass);
+                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+                    sw.WriteLine("public static partial class {0}", Settings.OutputClass);
+                else
+                    sw.WriteLine("namespace {0}", Settings.EnumsNamespace);
+
                 sw.WriteLine("{");
                 
                 sw.Indent();
@@ -569,28 +507,28 @@ namespace Bind.GL2
             {
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
-
                 sw.Indent();
                 //specWriter.WriteTypes(sw, Bind.Structures.Type.CSTypes);
                 sw.WriteLine("using System;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
+                
                 WriteImports(sw, Bind.Structures.Delegate.Delegates);
-                sw.Unindent();
 
+                sw.Unindent();
                 sw.WriteLine("}");
             }
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, wrappersFile)))
             {
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
-
                 sw.Indent();
-                //specWriter.WriteTypes(sw, Bind.Structures.Type.CSTypes);
+
                 sw.WriteLine("using System;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
-                WriteWrappers(sw, Bind.Structures.Function.Wrappers, Bind.Structures.Type.CSTypes);
-                sw.Unindent();
 
+                WriteWrappers(sw, Bind.Structures.Function.Wrappers, Bind.Structures.Type.CSTypes);
+
+                sw.Unindent();
                 sw.WriteLine("}");
             }
         }
@@ -742,11 +680,15 @@ namespace Bind.GL2
 
         public void WriteEnums(BindStreamWriter sw, EnumCollection enums)
         {
-            Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
+            if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+                Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
+            else
+                Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}", Settings.OutputNamespace, Settings.EnumsNamespace));
 
             if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
             {
-                if (!String.IsNullOrEmpty(Settings.NestedEnumsClass))
+                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
+                    !String.IsNullOrEmpty(Settings.NestedEnumsClass))
                 {
                     sw.WriteLine("public class Enums");
                     sw.WriteLine("{");
@@ -759,7 +701,8 @@ namespace Bind.GL2
                     sw.WriteLine();
                 }
 
-                if (!String.IsNullOrEmpty(Settings.NestedEnumsClass))
+                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None &&
+                    !String.IsNullOrEmpty(Settings.NestedEnumsClass))
                 {
                     sw.Unindent();
                     sw.WriteLine("}");
