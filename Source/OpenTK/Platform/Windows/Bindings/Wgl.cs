@@ -430,7 +430,7 @@ namespace OpenTK.Platform.Windows
             return Delegates.wglUseFontOutlinesW((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (GlyphMetricsFloat*)glyphMetrics);
         }
 
-        public static partial class ARB
+        public static partial class Arb
         {
             [System.CLSCompliant(false)]
             public static 
@@ -834,24 +834,24 @@ namespace OpenTK.Platform.Windows
 
         }
 
-        public static partial class EXT
+        public static partial class Ext
         {
             [System.CLSCompliant(false)]
             public static 
-            Boolean CreateDisplayColorTable(UInt16 id)
+            bool CreateDisplayColorTable(UInt16 id)
             {
                 return Delegates.wglCreateDisplayColorTableEXT((UInt16)id);
             }
 
             public static 
-            Boolean CreateDisplayColorTable(Int16 id)
+            bool CreateDisplayColorTable(Int16 id)
             {
                 return Delegates.wglCreateDisplayColorTableEXT((UInt16)id);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            Boolean LoadDisplayColorTable(UInt16[] table, UInt32 length)
+            bool LoadDisplayColorTable(UInt16[] table, UInt32 length)
             {
                 unsafe
                 {
@@ -863,7 +863,7 @@ namespace OpenTK.Platform.Windows
             }
 
             public static 
-            Boolean LoadDisplayColorTable(Int16[] table, Int32 length)
+            bool LoadDisplayColorTable(Int16[] table, Int32 length)
             {
                 unsafe
                 {
@@ -876,7 +876,7 @@ namespace OpenTK.Platform.Windows
 
             [System.CLSCompliant(false)]
             public static 
-            Boolean LoadDisplayColorTable(ref UInt16 table, UInt32 length)
+            bool LoadDisplayColorTable(ref UInt16 table, UInt32 length)
             {
                 unsafe
                 {
@@ -888,7 +888,7 @@ namespace OpenTK.Platform.Windows
             }
 
             public static 
-            Boolean LoadDisplayColorTable(ref Int16 table, Int32 length)
+            bool LoadDisplayColorTable(ref Int16 table, Int32 length)
             {
                 unsafe
                 {
@@ -901,27 +901,27 @@ namespace OpenTK.Platform.Windows
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean LoadDisplayColorTable(UInt16* table, UInt32 length)
+            unsafe bool LoadDisplayColorTable(UInt16* table, UInt32 length)
             {
                 return Delegates.wglLoadDisplayColorTableEXT((UInt16*)table, (UInt32)length);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe Boolean LoadDisplayColorTable(Int16* table, Int32 length)
+            unsafe bool LoadDisplayColorTable(Int16* table, Int32 length)
             {
                 return Delegates.wglLoadDisplayColorTableEXT((UInt16*)table, (UInt32)length);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            Boolean BindDisplayColorTable(UInt16 id)
+            bool BindDisplayColorTable(UInt16 id)
             {
                 return Delegates.wglBindDisplayColorTableEXT((UInt16)id);
             }
 
             public static 
-            Boolean BindDisplayColorTable(Int16 id)
+            bool BindDisplayColorTable(Int16 id)
             {
                 return Delegates.wglBindDisplayColorTableEXT((UInt16)id);
             }
@@ -1314,7 +1314,7 @@ namespace OpenTK.Platform.Windows
 
         }
 
-        public static partial class OML
+        public static partial class Oml
         {
             public static 
             Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] Int64[] msc, [Out] Int64[] sbc)
@@ -1483,7 +1483,7 @@ namespace OpenTK.Platform.Windows
 
         }
 
-        public static partial class I3D
+        public static partial class I3d
         {
             public static 
             Boolean GetDigitalVideoParameters(IntPtr hDC, int iAttribute, [Out] int[] piValue)
@@ -1775,6 +1775,32 @@ namespace OpenTK.Platform.Windows
             Boolean DisableGenlock(IntPtr hDC)
             {
                 return Delegates.wglDisableGenlockI3D((IntPtr)hDC);
+            }
+
+            public static 
+            Boolean IsEnabledGenlock(IntPtr hDC, [Out] Boolean[] pFlag)
+            {
+                unsafe
+                {
+                    fixed (Boolean* pFlag_ptr = pFlag)
+                    {
+                        return Delegates.wglIsEnabledGenlockI3D((IntPtr)hDC, (Boolean*)pFlag_ptr);
+                    }
+                }
+            }
+
+            public static 
+            Boolean IsEnabledGenlock(IntPtr hDC, [Out] out Boolean pFlag)
+            {
+                unsafe
+                {
+                    fixed (Boolean* pFlag_ptr = &pFlag)
+                    {
+                        Boolean retval = Delegates.wglIsEnabledGenlockI3D((IntPtr)hDC, (Boolean*)pFlag_ptr);
+                        pFlag = *pFlag_ptr;
+                        return retval;
+                    }
+                }
             }
 
             [System.CLSCompliant(false)]
@@ -2407,11 +2433,63 @@ namespace OpenTK.Platform.Windows
                 return Delegates.wglDisableFrameLockI3D();
             }
 
+            public static 
+            Boolean IsEnabledFrameLock([Out] Boolean[] pFlag)
+            {
+                unsafe
+                {
+                    fixed (Boolean* pFlag_ptr = pFlag)
+                    {
+                        return Delegates.wglIsEnabledFrameLockI3D((Boolean*)pFlag_ptr);
+                    }
+                }
+            }
+
+            public static 
+            Boolean IsEnabledFrameLock([Out] out Boolean pFlag)
+            {
+                unsafe
+                {
+                    fixed (Boolean* pFlag_ptr = &pFlag)
+                    {
+                        Boolean retval = Delegates.wglIsEnabledFrameLockI3D((Boolean*)pFlag_ptr);
+                        pFlag = *pFlag_ptr;
+                        return retval;
+                    }
+                }
+            }
+
             [System.CLSCompliant(false)]
             public static 
             unsafe Boolean IsEnabledFrameLock([Out] Boolean* pFlag)
             {
                 return Delegates.wglIsEnabledFrameLockI3D((Boolean*)pFlag);
+            }
+
+            public static 
+            Boolean QueryFrameLockMaster([Out] Boolean[] pFlag)
+            {
+                unsafe
+                {
+                    fixed (Boolean* pFlag_ptr = pFlag)
+                    {
+                        return Delegates.wglQueryFrameLockMasterI3D((Boolean*)pFlag_ptr);
+                    }
+                }
+            }
+
+            public static 
+            Boolean QueryFrameLockMaster([Out] out Boolean pFlag)
+            {
+                unsafe
+                {
+                    fixed (Boolean* pFlag_ptr = &pFlag)
+                    {
+                        Boolean retval = Delegates.wglQueryFrameLockMasterI3D((Boolean*)pFlag_ptr);
+                        pFlag = *pFlag_ptr;
+                        return retval;
+                    }
+                }
             }
 
             [System.CLSCompliant(false)]

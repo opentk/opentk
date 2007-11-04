@@ -1,511 +1,508 @@
 namespace OpenTK.Platform.Windows
 {
-    public static partial class Wgl
+    namespace Enums
     {
-        public class Enums
+        public enum WglArbBufferRegion
         {
-            public enum WGL_ARB_buffer_region
-            {
-                STENCIL_BUFFER_BIT_ARB = ((int)0x00000008),
-                DEPTH_BUFFER_BIT_ARB = ((int)0x00000004),
-                BACK_COLOR_BUFFER_BIT_ARB = ((int)0x00000002),
-                FRONT_COLOR_BUFFER_BIT_ARB = ((int)0x00000001),
-            }
-
-            public enum WGL_EXT_pixel_format
-            {
-                SWAP_LAYER_BUFFERS_EXT = ((int)0x2006),
-                NUMBER_UNDERLAYS_EXT = ((int)0x2009),
-                SHARE_STENCIL_EXT = ((int)0x200D),
-                ACCELERATION_EXT = ((int)0x2003),
-                GREEN_SHIFT_EXT = ((int)0x2018),
-                TRANSPARENT_EXT = ((int)0x200A),
-                DRAW_TO_WINDOW_EXT = ((int)0x2001),
-                TYPE_COLORINDEX_EXT = ((int)0x202C),
-                PIXEL_TYPE_EXT = ((int)0x2013),
-                ACCUM_ALPHA_BITS_EXT = ((int)0x2021),
-                STEREO_EXT = ((int)0x2012),
-                BLUE_SHIFT_EXT = ((int)0x201A),
-                GENERIC_ACCELERATION_EXT = ((int)0x2026),
-                ACCUM_RED_BITS_EXT = ((int)0x201E),
-                STENCIL_BITS_EXT = ((int)0x2023),
-                FULL_ACCELERATION_EXT = ((int)0x2027),
-                NO_ACCELERATION_EXT = ((int)0x2025),
-                ALPHA_BITS_EXT = ((int)0x201B),
-                DRAW_TO_BITMAP_EXT = ((int)0x2002),
-                DEPTH_BITS_EXT = ((int)0x2022),
-                SWAP_METHOD_EXT = ((int)0x2007),
-                BLUE_BITS_EXT = ((int)0x2019),
-                SWAP_UNDEFINED_EXT = ((int)0x202A),
-                SUPPORT_OPENGL_EXT = ((int)0x2010),
-                NUMBER_OVERLAYS_EXT = ((int)0x2008),
-                AUX_BUFFERS_EXT = ((int)0x2024),
-                SHARE_DEPTH_EXT = ((int)0x200C),
-                TRANSPARENT_VALUE_EXT = ((int)0x200B),
-                SUPPORT_GDI_EXT = ((int)0x200F),
-                SWAP_COPY_EXT = ((int)0x2029),
-                TYPE_RGBA_EXT = ((int)0x202B),
-                SWAP_EXCHANGE_EXT = ((int)0x2028),
-                NEED_SYSTEM_PALETTE_EXT = ((int)0x2005),
-                DOUBLE_BUFFER_EXT = ((int)0x2011),
-                ACCUM_GREEN_BITS_EXT = ((int)0x201F),
-                RED_SHIFT_EXT = ((int)0x2016),
-                COLOR_BITS_EXT = ((int)0x2014),
-                ALPHA_SHIFT_EXT = ((int)0x201C),
-                SHARE_ACCUM_EXT = ((int)0x200E),
-                NUMBER_PIXEL_FORMATS_EXT = ((int)0x2000),
-                RED_BITS_EXT = ((int)0x2015),
-                GREEN_BITS_EXT = ((int)0x2017),
-                ACCUM_BITS_EXT = ((int)0x201D),
-                ACCUM_BLUE_BITS_EXT = ((int)0x2020),
-                NEED_PALETTE_EXT = ((int)0x2004),
-            }
-
-            public enum WGL_ARB_pixel_format
-            {
-                SHARE_DEPTH_ARB = ((int)0x200C),
-                RED_BITS_ARB = ((int)0x2015),
-                BLUE_BITS_ARB = ((int)0x2019),
-                BLUE_SHIFT_ARB = ((int)0x201A),
-                GREEN_BITS_ARB = ((int)0x2017),
-                MAX_PBUFFER_PIXELS_ARB = ((int)0x202E),
-                TYPE_COLORINDEX_ARB = ((int)0x202C),
-                NO_ACCELERATION_ARB = ((int)0x2025),
-                SWAP_COPY_ARB = ((int)0x2029),
-                PBUFFER_LARGEST_ARB = ((int)0x2033),
-                ACCUM_BITS_ARB = ((int)0x201D),
-                ACCUM_GREEN_BITS_ARB = ((int)0x201F),
-                ALPHA_SHIFT_ARB = ((int)0x201C),
-                FULL_ACCELERATION_ARB = ((int)0x2027),
-                SWAP_METHOD_ARB = ((int)0x2007),
-                STENCIL_BITS_ARB = ((int)0x2023),
-                STEREO_ARB = ((int)0x2012),
-                MAX_PBUFFER_WIDTH_ARB = ((int)0x202F),
-                DRAW_TO_PBUFFER_ARB = ((int)0x202D),
-                TYPE_RGBA_ARB = ((int)0x202B),
-                MAX_PBUFFER_HEIGHT_ARB = ((int)0x2030),
-                DRAW_TO_BITMAP_ARB = ((int)0x2002),
-                GREEN_SHIFT_ARB = ((int)0x2018),
-                SUPPORT_GDI_ARB = ((int)0x200F),
-                PBUFFER_WIDTH_ARB = ((int)0x2034),
-                DOUBLE_BUFFER_ARB = ((int)0x2011),
-                TRANSPARENT_ALPHA_VALUE_ARB = ((int)0x203A),
-                ACCUM_ALPHA_BITS_ARB = ((int)0x2021),
-                AUX_BUFFERS_ARB = ((int)0x2024),
-                ALPHA_BITS_ARB = ((int)0x201B),
-                NUMBER_OVERLAYS_ARB = ((int)0x2008),
-                SHARE_ACCUM_ARB = ((int)0x200E),
-                SWAP_EXCHANGE_ARB = ((int)0x2028),
-                ACCELERATION_ARB = ((int)0x2003),
-                TRANSPARENT_GREEN_VALUE_ARB = ((int)0x2038),
-                ACCUM_RED_BITS_ARB = ((int)0x201E),
-                TRANSPARENT_BLUE_VALUE_ARB = ((int)0x2039),
-                TRANSPARENT_INDEX_VALUE_ARB = ((int)0x203B),
-                GENERIC_ACCELERATION_ARB = ((int)0x2026),
-                TRANSPARENT_ARB = ((int)0x200A),
-                NUMBER_UNDERLAYS_ARB = ((int)0x2009),
-                SWAP_UNDEFINED_ARB = ((int)0x202A),
-                DEPTH_BITS_ARB = ((int)0x2022),
-                NUMBER_PIXEL_FORMATS_ARB = ((int)0x2000),
-                TRANSPARENT_RED_VALUE_ARB = ((int)0x2037),
-                SHARE_STENCIL_ARB = ((int)0x200D),
-                DRAW_TO_WINDOW_ARB = ((int)0x2001),
-                PBUFFER_HEIGHT_ARB = ((int)0x2035),
-                PIXEL_TYPE_ARB = ((int)0x2013),
-                COLOR_BITS_ARB = ((int)0x2014),
-                NEED_PALETTE_ARB = ((int)0x2004),
-                NEED_SYSTEM_PALETTE_ARB = ((int)0x2005),
-                SWAP_LAYER_BUFFERS_ARB = ((int)0x2006),
-                RED_SHIFT_ARB = ((int)0x2016),
-                SUPPORT_OPENGL_ARB = ((int)0x2010),
-                ACCUM_BLUE_BITS_ARB = ((int)0x2020),
-            }
-
-            public enum WGL_EXT_pbuffer
-            {
-                DRAW_TO_PBUFFER_EXT = ((int)0x202D),
-                OPTIMAL_PBUFFER_WIDTH_EXT = ((int)0x2031),
-                PBUFFER_LARGEST_EXT = ((int)0x2033),
-                PBUFFER_WIDTH_EXT = ((int)0x2034),
-                OPTIMAL_PBUFFER_HEIGHT_EXT = ((int)0x2032),
-                MAX_PBUFFER_HEIGHT_EXT = ((int)0x2030),
-                PBUFFER_HEIGHT_EXT = ((int)0x2035),
-                MAX_PBUFFER_WIDTH_EXT = ((int)0x202F),
-                MAX_PBUFFER_PIXELS_EXT = ((int)0x202E),
-            }
-
-            public enum WGL_ARB_pbuffer
-            {
-                MAX_PBUFFER_WIDTH_ARB = ((int)0x202F),
-                DRAW_TO_PBUFFER_ARB = ((int)0x202D),
-                PBUFFER_WIDTH_ARB = ((int)0x2034),
-                MAX_PBUFFER_HEIGHT_ARB = ((int)0x2030),
-                PBUFFER_HEIGHT_ARB = ((int)0x2035),
-                PBUFFER_LOST_ARB = ((int)0x2036),
-                PBUFFER_LARGEST_ARB = ((int)0x2033),
-                TRANSPARENT_BLUE_VALUE_ARB = ((int)0x2039),
-                TRANSPARENT_INDEX_VALUE_ARB = ((int)0x203B),
-                TRANSPARENT_ALPHA_VALUE_ARB = ((int)0x203A),
-                MAX_PBUFFER_PIXELS_ARB = ((int)0x202E),
-                TRANSPARENT_GREEN_VALUE_ARB = ((int)0x2038),
-                TRANSPARENT_RED_VALUE_ARB = ((int)0x2037),
-            }
-
-            public enum WGL_EXT_depth_float
-            {
-                DEPTH_FLOAT_EXT = ((int)0x2040),
-            }
-
-            public enum WGL_EXT_multisample
-            {
-                SAMPLE_BUFFERS_EXT = ((int)0x2041),
-                SAMPLES_EXT = ((int)0x2042),
-            }
-
-            public enum WGL_ARB_multisample
-            {
-                SAMPLE_BUFFERS_ARB = ((int)0x2041),
-                SAMPLES_ARB = ((int)0x2042),
-            }
-
-            public enum WGL_EXT_make_current_read
-            {
-                ERROR_INVALID_PIXEL_TYPE_EXT = ((int)0x2043),
-            }
-
-            public enum WGL_ARB_make_current_read
-            {
-                ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB = ((int)0x2054),
-                ERROR_INVALID_PIXEL_TYPE_ARB = ((int)0x2043),
-            }
-
-            public enum WGL_I3D_genlock
-            {
-                GENLOCK_SOURCE_EDGE_BOTH_I3D = ((int)0x204C),
-                GENLOCK_SOURCE_EXTENAL_SYNC_I3D = ((int)0x2045),
-                GENLOCK_SOURCE_DIGITAL_FIELD_I3D = ((int)0x2049),
-                GENLOCK_SOURCE_EDGE_FALLING_I3D = ((int)0x204A),
-                GENLOCK_SOURCE_EDGE_RISING_I3D = ((int)0x204B),
-                GENLOCK_SOURCE_DIGITAL_SYNC_I3D = ((int)0x2048),
-                GENLOCK_SOURCE_EXTENAL_TTL_I3D = ((int)0x2047),
-                GENLOCK_SOURCE_MULTIVIEW_I3D = ((int)0x2044),
-                GENLOCK_SOURCE_EXTENAL_FIELD_I3D = ((int)0x2046),
-            }
-
-            public enum WGL_I3D_gamma
-            {
-                GAMMA_TABLE_SIZE_I3D = ((int)0x204E),
-                GAMMA_EXCLUDE_DESKTOP_I3D = ((int)0x204F),
-            }
-
-            public enum WGL_I3D_digital_video_control
-            {
-                DIGITAL_VIDEO_GAMMA_CORRECTED_I3D = ((int)0x2053),
-                DIGITAL_VIDEO_CURSOR_ALPHA_FRAMEBUFFER_I3D = ((int)0x2050),
-                DIGITAL_VIDEO_CURSOR_INCLUDED_I3D = ((int)0x2052),
-                DIGITAL_VIDEO_CURSOR_ALPHA_VALUE_I3D = ((int)0x2051),
-            }
-
-            public enum WGL_3DFX_multisample
-            {
-                SAMPLES_3DFX = ((int)0x2061),
-                SAMPLE_BUFFERS_3DFX = ((int)0x2060),
-            }
-
-            public enum WGL_ARB_render_texture
-            {
-                CUBE_MAP_FACE_ARB = ((int)0x207C),
-                TEXTURE_CUBE_MAP_POSITIVE_Z_ARB = ((int)0x2081),
-                AUX0_ARB = ((int)0x2087),
-                TEXTURE_CUBE_MAP_ARB = ((int)0x2078),
-                TEXTURE_1D_ARB = ((int)0x2079),
-                AUX3_ARB = ((int)0x208A),
-                TEXTURE_CUBE_MAP_NEGATIVE_X_ARB = ((int)0x207E),
-                NO_TEXTURE_ARB = ((int)0x2077),
-                TEXTURE_CUBE_MAP_POSITIVE_Y_ARB = ((int)0x207F),
-                AUX1_ARB = ((int)0x2088),
-                BACK_LEFT_ARB = ((int)0x2085),
-                AUX7_ARB = ((int)0x208E),
-                FRONT_LEFT_ARB = ((int)0x2083),
-                TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB = ((int)0x2080),
-                BIND_TO_TEXTURE_RGB_ARB = ((int)0x2070),
-                AUX8_ARB = ((int)0x208F),
-                TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB = ((int)0x2082),
-                TEXTURE_CUBE_MAP_POSITIVE_X_ARB = ((int)0x207D),
-                BIND_TO_TEXTURE_RGBA_ARB = ((int)0x2071),
-                AUX6_ARB = ((int)0x208D),
-                TEXTURE_TARGET_ARB = ((int)0x2073),
-                AUX2_ARB = ((int)0x2089),
-                AUX5_ARB = ((int)0x208C),
-                TEXTURE_2D_ARB = ((int)0x207A),
-                AUX4_ARB = ((int)0x208B),
-                FRONT_RIGHT_ARB = ((int)0x2084),
-                TEXTURE_RGB_ARB = ((int)0x2075),
-                MIPMAP_TEXTURE_ARB = ((int)0x2074),
-                MIPMAP_LEVEL_ARB = ((int)0x207B),
-                TEXTURE_RGBA_ARB = ((int)0x2076),
-                AUX9_ARB = ((int)0x2090),
-                BACK_RIGHT_ARB = ((int)0x2086),
-                TEXTURE_FORMAT_ARB = ((int)0x2072),
-            }
-
-            public enum WGL_NV_render_texture_rectangle
-            {
-                BIND_TO_TEXTURE_RECTANGLE_RGBA_NV = ((int)0x20A1),
-                TEXTURE_RECTANGLE_NV = ((int)0x20A2),
-                BIND_TO_TEXTURE_RECTANGLE_RGB_NV = ((int)0x20A0),
-            }
-
-            public enum WGL_NV_render_depth_texture
-            {
-                BIND_TO_TEXTURE_RECTANGLE_DEPTH_NV = ((int)0x20A4),
-                TEXTURE_DEPTH_COMPONENT_NV = ((int)0x20A6),
-                DEPTH_COMPONENT_NV = ((int)0x20A7),
-                DEPTH_TEXTURE_FORMAT_NV = ((int)0x20A5),
-                BIND_TO_TEXTURE_DEPTH_NV = ((int)0x20A3),
-            }
-
-            public enum WGL_NV_float_buffer
-            {
-                TEXTURE_FLOAT_RG_NV = ((int)0x20B6),
-                BIND_TO_TEXTURE_RECTANGLE_FLOAT_RGBA_NV = ((int)0x20B4),
-                FLOAT_COMPONENTS_NV = ((int)0x20B0),
-                BIND_TO_TEXTURE_RECTANGLE_FLOAT_RG_NV = ((int)0x20B2),
-                TEXTURE_FLOAT_RGB_NV = ((int)0x20B7),
-                BIND_TO_TEXTURE_RECTANGLE_FLOAT_RGB_NV = ((int)0x20B3),
-                TEXTURE_FLOAT_R_NV = ((int)0x20B5),
-                TEXTURE_FLOAT_RGBA_NV = ((int)0x20B8),
-                BIND_TO_TEXTURE_RECTANGLE_FLOAT_R_NV = ((int)0x20B1),
-            }
-
-            public enum WGL_ARB_pixel_format_float
-            {
-                TYPE_RGBA_FLOAT_ARB = ((int)0x21A0),
-            }
-
-            public enum WGL_ATI_pixel_format_float
-            {
-                TYPE_RGBA_FLOAT_ATI = ((int)0x21A0),
-            }
-
-            public enum WGL_font_type
-            {
-                FONT_LINES = ((int)0),
-            }
-
-            public enum All
-            {
-                GENLOCK_SOURCE_EXTENAL_SYNC_I3D = ((int)0x2045),
-                NUMBER_PIXEL_FORMATS_EXT = ((int)0x2000),
-                SAMPLES_EXT = ((int)0x2042),
-                TYPE_RGBA_FLOAT_ARB = ((int)0x21A0),
-                NEED_SYSTEM_PALETTE_ARB = ((int)0x2005),
-                TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB = ((int)0x2082),
-                TEXTURE_1D_ARB = ((int)0x2079),
-                ACCELERATION_ARB = ((int)0x2003),
-                STEREO_ARB = ((int)0x2012),
-                SHARE_ACCUM_ARB = ((int)0x200E),
-                MAX_PBUFFER_PIXELS_ARB = ((int)0x202E),
-                BIND_TO_TEXTURE_RECTANGLE_FLOAT_RGB_NV = ((int)0x20B3),
-                DEPTH_COMPONENT_NV = ((int)0x20A7),
-                GAMMA_TABLE_SIZE_I3D = ((int)0x204E),
-                GENERIC_ACCELERATION_ARB = ((int)0x2026),
-                NEED_SYSTEM_PALETTE_EXT = ((int)0x2005),
-                MAX_PBUFFER_WIDTH_EXT = ((int)0x202F),
-                TEXTURE_CUBE_MAP_ARB = ((int)0x2078),
-                TEXTURE_2D_ARB = ((int)0x207A),
-                TEXTURE_DEPTH_COMPONENT_NV = ((int)0x20A6),
-                MIPMAP_LEVEL_ARB = ((int)0x207B),
-                ALPHA_BITS_ARB = ((int)0x201B),
-                TEXTURE_FLOAT_R_NV = ((int)0x20B5),
-                PBUFFER_WIDTH_EXT = ((int)0x2034),
-                BACK_LEFT_ARB = ((int)0x2085),
-                MAX_PBUFFER_HEIGHT_EXT = ((int)0x2030),
-                FULL_ACCELERATION_ARB = ((int)0x2027),
-                TYPE_RGBA_FLOAT_ATI = ((int)0x21A0),
-                SHARE_ACCUM_EXT = ((int)0x200E),
-                FRONT_RIGHT_ARB = ((int)0x2084),
-                ACCUM_BLUE_BITS_ARB = ((int)0x2020),
-                BIND_TO_TEXTURE_RECTANGLE_FLOAT_R_NV = ((int)0x20B1),
-                TRANSPARENT_BLUE_VALUE_ARB = ((int)0x2039),
-                SWAP_LAYER_BUFFERS_EXT = ((int)0x2006),
-                AUX8_ARB = ((int)0x208F),
-                RED_BITS_EXT = ((int)0x2015),
-                STENCIL_BITS_ARB = ((int)0x2023),
-                NUMBER_OVERLAYS_ARB = ((int)0x2008),
-                AUX4_ARB = ((int)0x208B),
-                STENCIL_BUFFER_BIT_ARB = ((int)0x00000008),
-                GREEN_BITS_ARB = ((int)0x2017),
-                ACCUM_GREEN_BITS_ARB = ((int)0x201F),
-                FULL_ACCELERATION_EXT = ((int)0x2027),
-                TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB = ((int)0x2080),
-                OPTIMAL_PBUFFER_HEIGHT_EXT = ((int)0x2032),
-                AUX_BUFFERS_ARB = ((int)0x2024),
-                DRAW_TO_BITMAP_EXT = ((int)0x2002),
-                AUX7_ARB = ((int)0x208E),
-                SUPPORT_OPENGL_ARB = ((int)0x2010),
-                TEXTURE_CUBE_MAP_NEGATIVE_X_ARB = ((int)0x207E),
-                PBUFFER_LARGEST_EXT = ((int)0x2033),
-                GREEN_SHIFT_EXT = ((int)0x2018),
-                BLUE_BITS_EXT = ((int)0x2019),
-                ACCUM_BITS_ARB = ((int)0x201D),
-                DIGITAL_VIDEO_CURSOR_ALPHA_FRAMEBUFFER_I3D = ((int)0x2050),
-                ACCUM_BITS_EXT = ((int)0x201D),
-                SHARE_DEPTH_EXT = ((int)0x200C),
-                STEREO_EXT = ((int)0x2012),
-                GREEN_SHIFT_ARB = ((int)0x2018),
-                SWAP_EXCHANGE_ARB = ((int)0x2028),
-                GENLOCK_SOURCE_EXTENAL_TTL_I3D = ((int)0x2047),
-                SUPPORT_GDI_EXT = ((int)0x200F),
-                PBUFFER_HEIGHT_ARB = ((int)0x2035),
-                TRANSPARENT_GREEN_VALUE_ARB = ((int)0x2038),
-                AUX6_ARB = ((int)0x208D),
-                FRONT_LEFT_ARB = ((int)0x2083),
-                NUMBER_UNDERLAYS_ARB = ((int)0x2009),
-                AUX2_ARB = ((int)0x2089),
-                SAMPLE_BUFFERS_ARB = ((int)0x2041),
-                RED_SHIFT_ARB = ((int)0x2016),
-                MAX_PBUFFER_HEIGHT_ARB = ((int)0x2030),
-                DIGITAL_VIDEO_CURSOR_ALPHA_VALUE_I3D = ((int)0x2051),
-                NUMBER_UNDERLAYS_EXT = ((int)0x2009),
-                TRANSPARENT_ALPHA_VALUE_ARB = ((int)0x203A),
-                SAMPLE_BUFFERS_3DFX = ((int)0x2060),
-                IMAGE_BUFFER_LOCK_I3D = ((int)0x00000002),
-                TRANSPARENT_RED_VALUE_ARB = ((int)0x2037),
-                ACCUM_ALPHA_BITS_ARB = ((int)0x2021),
-                SWAP_EXCHANGE_EXT = ((int)0x2028),
-                DEPTH_BUFFER_BIT_ARB = ((int)0x00000004),
-                ALPHA_BITS_EXT = ((int)0x201B),
-                ACCELERATION_EXT = ((int)0x2003),
-                GENLOCK_SOURCE_DIGITAL_SYNC_I3D = ((int)0x2048),
-                DOUBLE_BUFFER_EXT = ((int)0x2011),
-                BIND_TO_TEXTURE_RGBA_ARB = ((int)0x2071),
-                SWAP_COPY_EXT = ((int)0x2029),
-                FRONT_COLOR_BUFFER_BIT_ARB = ((int)0x00000001),
-                BIND_TO_TEXTURE_RECTANGLE_RGB_NV = ((int)0x20A0),
-                TYPE_COLORINDEX_EXT = ((int)0x202C),
-                TEXTURE_CUBE_MAP_POSITIVE_Y_ARB = ((int)0x207F),
-                SAMPLE_BUFFERS_EXT = ((int)0x2041),
-                IMAGE_BUFFER_MIN_ACCESS_I3D = ((int)0x00000001),
-                GENLOCK_SOURCE_EDGE_FALLING_I3D = ((int)0x204A),
-                BIND_TO_TEXTURE_RGB_ARB = ((int)0x2070),
-                DRAW_TO_WINDOW_ARB = ((int)0x2001),
-                AUX5_ARB = ((int)0x208C),
-                DRAW_TO_PBUFFER_EXT = ((int)0x202D),
-                GENLOCK_SOURCE_DIGITAL_FIELD_I3D = ((int)0x2049),
-                DRAW_TO_WINDOW_EXT = ((int)0x2001),
-                DEPTH_BITS_EXT = ((int)0x2022),
-                SHARE_STENCIL_ARB = ((int)0x200D),
-                TYPE_RGBA_EXT = ((int)0x202B),
-                DEPTH_BITS_ARB = ((int)0x2022),
-                TRANSPARENT_EXT = ((int)0x200A),
-                MIPMAP_TEXTURE_ARB = ((int)0x2074),
-                GENLOCK_SOURCE_EXTENAL_FIELD_I3D = ((int)0x2046),
-                SWAP_LAYER_BUFFERS_ARB = ((int)0x2006),
-                TEXTURE_TARGET_ARB = ((int)0x2073),
-                PBUFFER_HEIGHT_EXT = ((int)0x2035),
-                TRANSPARENT_ARB = ((int)0x200A),
-                BIND_TO_TEXTURE_DEPTH_NV = ((int)0x20A3),
-                SWAP_COPY_ARB = ((int)0x2029),
-                NO_ACCELERATION_EXT = ((int)0x2025),
-                TEXTURE_RECTANGLE_NV = ((int)0x20A2),
-                SAMPLES_ARB = ((int)0x2042),
-                BLUE_SHIFT_EXT = ((int)0x201A),
-                BLUE_BITS_ARB = ((int)0x2019),
-                BIND_TO_TEXTURE_RECTANGLE_RGBA_NV = ((int)0x20A1),
-                DRAW_TO_BITMAP_ARB = ((int)0x2002),
-                TEXTURE_CUBE_MAP_POSITIVE_X_ARB = ((int)0x207D),
-                NO_ACCELERATION_ARB = ((int)0x2025),
-                PIXEL_TYPE_ARB = ((int)0x2013),
-                ACCUM_ALPHA_BITS_EXT = ((int)0x2021),
-                NEED_PALETTE_EXT = ((int)0x2004),
-                BIND_TO_TEXTURE_RECTANGLE_DEPTH_NV = ((int)0x20A4),
-                BACK_COLOR_BUFFER_BIT_ARB = ((int)0x00000002),
-                DOUBLE_BUFFER_ARB = ((int)0x2011),
-                NEED_PALETTE_ARB = ((int)0x2004),
-                ALPHA_SHIFT_EXT = ((int)0x201C),
-                NO_TEXTURE_ARB = ((int)0x2077),
-                TEXTURE_FLOAT_RG_NV = ((int)0x20B6),
-                SHARE_STENCIL_EXT = ((int)0x200D),
-                TEXTURE_FLOAT_RGBA_NV = ((int)0x20B8),
-                PBUFFER_LARGEST_ARB = ((int)0x2033),
-                DIGITAL_VIDEO_CURSOR_INCLUDED_I3D = ((int)0x2052),
-                TYPE_RGBA_ARB = ((int)0x202B),
-                ACCUM_RED_BITS_ARB = ((int)0x201E),
-                GREEN_BITS_EXT = ((int)0x2017),
-                GENLOCK_SOURCE_MULTIVIEW_I3D = ((int)0x2044),
-                GENERIC_ACCELERATION_EXT = ((int)0x2026),
-                FONT_LINES = ((int)0),
-                ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB = ((int)0x2054),
-                SWAP_METHOD_EXT = ((int)0x2007),
-                PIXEL_TYPE_EXT = ((int)0x2013),
-                TEXTURE_FLOAT_RGB_NV = ((int)0x20B7),
-                NUMBER_OVERLAYS_EXT = ((int)0x2008),
-                GAMMA_EXCLUDE_DESKTOP_I3D = ((int)0x204F),
-                COLOR_BITS_EXT = ((int)0x2014),
-                DEPTH_FLOAT_EXT = ((int)0x2040),
-                BACK_RIGHT_ARB = ((int)0x2086),
-                MAX_PBUFFER_WIDTH_ARB = ((int)0x202F),
-                OPTIMAL_PBUFFER_WIDTH_EXT = ((int)0x2031),
-                AUX1_ARB = ((int)0x2088),
-                COLOR_BITS_ARB = ((int)0x2014),
-                ACCUM_BLUE_BITS_EXT = ((int)0x2020),
-                TEXTURE_RGBA_ARB = ((int)0x2076),
-                PBUFFER_LOST_ARB = ((int)0x2036),
-                GENLOCK_SOURCE_EDGE_RISING_I3D = ((int)0x204B),
-                AUX9_ARB = ((int)0x2090),
-                NUMBER_PIXEL_FORMATS_ARB = ((int)0x2000),
-                SWAP_METHOD_ARB = ((int)0x2007),
-                RED_SHIFT_EXT = ((int)0x2016),
-                MAX_PBUFFER_PIXELS_EXT = ((int)0x202E),
-                AUX0_ARB = ((int)0x2087),
-                TRANSPARENT_VALUE_EXT = ((int)0x200B),
-                FLOAT_COMPONENTS_NV = ((int)0x20B0),
-                BLUE_SHIFT_ARB = ((int)0x201A),
-                TEXTURE_RGB_ARB = ((int)0x2075),
-                BIND_TO_TEXTURE_RECTANGLE_FLOAT_RGBA_NV = ((int)0x20B4),
-                ACCUM_GREEN_BITS_EXT = ((int)0x201F),
-                ERROR_INVALID_PIXEL_TYPE_ARB = ((int)0x2043),
-                DIGITAL_VIDEO_GAMMA_CORRECTED_I3D = ((int)0x2053),
-                TEXTURE_CUBE_MAP_POSITIVE_Z_ARB = ((int)0x2081),
-                AUX_BUFFERS_EXT = ((int)0x2024),
-                CUBE_MAP_FACE_ARB = ((int)0x207C),
-                TYPE_COLORINDEX_ARB = ((int)0x202C),
-                ERROR_INVALID_PIXEL_TYPE_EXT = ((int)0x2043),
-                AUX3_ARB = ((int)0x208A),
-                SHARE_DEPTH_ARB = ((int)0x200C),
-                SAMPLES_3DFX = ((int)0x2061),
-                ALPHA_SHIFT_ARB = ((int)0x201C),
-                GENLOCK_SOURCE_EDGE_BOTH_I3D = ((int)0x204C),
-                SUPPORT_OPENGL_EXT = ((int)0x2010),
-                SWAP_UNDEFINED_ARB = ((int)0x202A),
-                RED_BITS_ARB = ((int)0x2015),
-                STENCIL_BITS_EXT = ((int)0x2023),
-                DEPTH_TEXTURE_FORMAT_NV = ((int)0x20A5),
-                ACCUM_RED_BITS_EXT = ((int)0x201E),
-                PBUFFER_WIDTH_ARB = ((int)0x2034),
-                SWAP_UNDEFINED_EXT = ((int)0x202A),
-                DRAW_TO_PBUFFER_ARB = ((int)0x202D),
-                BIND_TO_TEXTURE_RECTANGLE_FLOAT_RG_NV = ((int)0x20B2),
-                TEXTURE_FORMAT_ARB = ((int)0x2072),
-                TRANSPARENT_INDEX_VALUE_ARB = ((int)0x203B),
-                SUPPORT_GDI_ARB = ((int)0x200F),
-            }
-
-            public enum WGL_ARB_extensions_string
-            {
-            }
-
-            public enum WGL_I3D_image_buffer
-            {
-                IMAGE_BUFFER_LOCK_I3D = ((int)0x00000002),
-                IMAGE_BUFFER_MIN_ACCESS_I3D = ((int)0x00000001),
-            }
-
-            public enum WGL_I3D_swap_frame_lock
-            {
-            }
-
+            BackColorBufferBitArb = ((int)0x00000002),
+            StencilBufferBitArb = ((int)0x00000008),
+            FrontColorBufferBitArb = ((int)0x00000001),
+            DepthBufferBitArb = ((int)0x00000004),
         }
+
+        public enum WglExtPixelFormat
+        {
+            SupportGdiExt = ((int)0x200f),
+            TypeColorindexExt = ((int)0x202c),
+            AccelerationExt = ((int)0x2003),
+            GreenBitsExt = ((int)0x2017),
+            DrawToWindowExt = ((int)0x2001),
+            SwapCopyExt = ((int)0x2029),
+            DrawToBitmapExt = ((int)0x2002),
+            TransparentExt = ((int)0x200a),
+            SwapMethodExt = ((int)0x2007),
+            SwapLayerBuffersExt = ((int)0x2006),
+            PixelTypeExt = ((int)0x2013),
+            AlphaShiftExt = ((int)0x201c),
+            AccumRedBitsExt = ((int)0x201e),
+            FullAccelerationExt = ((int)0x2027),
+            SupportOpenglExt = ((int)0x2010),
+            BlueShiftExt = ((int)0x201a),
+            RedBitsExt = ((int)0x2015),
+            NoAccelerationExt = ((int)0x2025),
+            StereoExt = ((int)0x2012),
+            GreenShiftExt = ((int)0x2018),
+            BlueBitsExt = ((int)0x2019),
+            AlphaBitsExt = ((int)0x201b),
+            RedShiftExt = ((int)0x2016),
+            DepthBitsExt = ((int)0x2022),
+            TypeRgbaExt = ((int)0x202b),
+            GenericAccelerationExt = ((int)0x2026),
+            AccumAlphaBitsExt = ((int)0x2021),
+            AccumGreenBitsExt = ((int)0x201f),
+            TransparentValueExt = ((int)0x200b),
+            AccumBlueBitsExt = ((int)0x2020),
+            ShareDepthExt = ((int)0x200c),
+            ShareAccumExt = ((int)0x200e),
+            SwapExchangeExt = ((int)0x2028),
+            AccumBitsExt = ((int)0x201d),
+            NumberUnderlaysExt = ((int)0x2009),
+            StencilBitsExt = ((int)0x2023),
+            DoubleBufferExt = ((int)0x2011),
+            NeedPaletteExt = ((int)0x2004),
+            ColorBitsExt = ((int)0x2014),
+            SwapUndefinedExt = ((int)0x202a),
+            NeedSystemPaletteExt = ((int)0x2005),
+            NumberOverlaysExt = ((int)0x2008),
+            AuxBuffersExt = ((int)0x2024),
+            NumberPixelFormatsExt = ((int)0x2000),
+            ShareStencilExt = ((int)0x200d),
+        }
+
+        public enum WglArbPixelFormat
+        {
+            ShareStencilArb = ((int)0x200d),
+            AccumBitsArb = ((int)0x201d),
+            NumberUnderlaysArb = ((int)0x2009),
+            StereoArb = ((int)0x2012),
+            MaxPbufferHeightArb = ((int)0x2030),
+            TypeRgbaArb = ((int)0x202b),
+            SupportGdiArb = ((int)0x200f),
+            NeedSystemPaletteArb = ((int)0x2005),
+            AlphaBitsArb = ((int)0x201b),
+            ShareDepthArb = ((int)0x200c),
+            SupportOpenglArb = ((int)0x2010),
+            ColorBitsArb = ((int)0x2014),
+            AccumRedBitsArb = ((int)0x201e),
+            MaxPbufferWidthArb = ((int)0x202f),
+            NumberOverlaysArb = ((int)0x2008),
+            MaxPbufferPixelsArb = ((int)0x202e),
+            NeedPaletteArb = ((int)0x2004),
+            RedShiftArb = ((int)0x2016),
+            AccelerationArb = ((int)0x2003),
+            GreenBitsArb = ((int)0x2017),
+            TransparentGreenValueArb = ((int)0x2038),
+            PixelTypeArb = ((int)0x2013),
+            AuxBuffersArb = ((int)0x2024),
+            DrawToWindowArb = ((int)0x2001),
+            RedBitsArb = ((int)0x2015),
+            NumberPixelFormatsArb = ((int)0x2000),
+            GenericAccelerationArb = ((int)0x2026),
+            BlueBitsArb = ((int)0x2019),
+            PbufferLargestArb = ((int)0x2033),
+            AccumAlphaBitsArb = ((int)0x2021),
+            TransparentArb = ((int)0x200a),
+            FullAccelerationArb = ((int)0x2027),
+            ShareAccumArb = ((int)0x200e),
+            SwapExchangeArb = ((int)0x2028),
+            SwapUndefinedArb = ((int)0x202a),
+            TransparentAlphaValueArb = ((int)0x203a),
+            PbufferHeightArb = ((int)0x2035),
+            TransparentBlueValueArb = ((int)0x2039),
+            SwapMethodArb = ((int)0x2007),
+            StencilBitsArb = ((int)0x2023),
+            DepthBitsArb = ((int)0x2022),
+            GreenShiftArb = ((int)0x2018),
+            TransparentRedValueArb = ((int)0x2037),
+            DoubleBufferArb = ((int)0x2011),
+            NoAccelerationArb = ((int)0x2025),
+            TypeColorindexArb = ((int)0x202c),
+            SwapLayerBuffersArb = ((int)0x2006),
+            AccumBlueBitsArb = ((int)0x2020),
+            DrawToPbufferArb = ((int)0x202d),
+            AccumGreenBitsArb = ((int)0x201f),
+            PbufferWidthArb = ((int)0x2034),
+            TransparentIndexValueArb = ((int)0x203b),
+            AlphaShiftArb = ((int)0x201c),
+            DrawToBitmapArb = ((int)0x2002),
+            BlueShiftArb = ((int)0x201a),
+            SwapCopyArb = ((int)0x2029),
+        }
+
+        public enum WglExtPbuffer
+        {
+            DrawToPbufferExt = ((int)0x202d),
+            PbufferLargestExt = ((int)0x2033),
+            OptimalPbufferWidthExt = ((int)0x2031),
+            MaxPbufferPixelsExt = ((int)0x202e),
+            MaxPbufferHeightExt = ((int)0x2030),
+            PbufferWidthExt = ((int)0x2034),
+            MaxPbufferWidthExt = ((int)0x202f),
+            OptimalPbufferHeightExt = ((int)0x2032),
+            PbufferHeightExt = ((int)0x2035),
+        }
+
+        public enum WglArbPbuffer
+        {
+            PbufferWidthArb = ((int)0x2034),
+            TransparentGreenValueArb = ((int)0x2038),
+            PbufferHeightArb = ((int)0x2035),
+            PbufferLostArb = ((int)0x2036),
+            DrawToPbufferArb = ((int)0x202d),
+            TransparentIndexValueArb = ((int)0x203b),
+            TransparentRedValueArb = ((int)0x2037),
+            MaxPbufferPixelsArb = ((int)0x202e),
+            TransparentAlphaValueArb = ((int)0x203a),
+            MaxPbufferWidthArb = ((int)0x202f),
+            MaxPbufferHeightArb = ((int)0x2030),
+            TransparentBlueValueArb = ((int)0x2039),
+            PbufferLargestArb = ((int)0x2033),
+        }
+
+        public enum WglExtDepthFloat
+        {
+            DepthFloatExt = ((int)0x2040),
+        }
+
+        public enum WglExtMultisample
+        {
+            SampleBuffersExt = ((int)0x2041),
+            SamplesExt = ((int)0x2042),
+        }
+
+        public enum WglArbMultisample
+        {
+            SampleBuffersArb = ((int)0x2041),
+            SamplesArb = ((int)0x2042),
+        }
+
+        public enum WglExtMakeCurrentRead
+        {
+            ErrorInvalidPixelTypeExt = ((int)0x2043),
+        }
+
+        public enum WglArbMakeCurrentRead
+        {
+            ErrorInvalidPixelTypeArb = ((int)0x2043),
+            ErrorIncompatibleDeviceContextsArb = ((int)0x2054),
+        }
+
+        public enum WglI3DGenlock
+        {
+            GenlockSourceMultiviewI3d = ((int)0x2044),
+            GenlockSourceEdgeBothI3d = ((int)0x204c),
+            GenlockSourceEdgeRisingI3d = ((int)0x204b),
+            GenlockSourceDigitalSyncI3d = ((int)0x2048),
+            GenlockSourceExtenalFieldI3d = ((int)0x2046),
+            GenlockSourceDigitalFieldI3d = ((int)0x2049),
+            GenlockSourceExtenalSyncI3d = ((int)0x2045),
+            GenlockSourceEdgeFallingI3d = ((int)0x204a),
+            GenlockSourceExtenalTtlI3d = ((int)0x2047),
+        }
+
+        public enum WglI3DGamma
+        {
+            GammaExcludeDesktopI3d = ((int)0x204f),
+            GammaTableSizeI3d = ((int)0x204e),
+        }
+
+        public enum WglI3DDigitalVideoControl
+        {
+            DigitalVideoCursorAlphaFramebufferI3d = ((int)0x2050),
+            DigitalVideoGammaCorrectedI3d = ((int)0x2053),
+            DigitalVideoCursorAlphaValueI3d = ((int)0x2051),
+            DigitalVideoCursorIncludedI3d = ((int)0x2052),
+        }
+
+        public enum Wgl3DfxMultisample
+        {
+            SampleBuffers3dfx = ((int)0x2060),
+            Samples3dfx = ((int)0x2061),
+        }
+
+        public enum WglArbRenderTexture
+        {
+            TextureCubeMapPositiveXArb = ((int)0x207d),
+            TextureCubeMapPositiveYArb = ((int)0x207f),
+            Aux0Arb = ((int)0x2087),
+            Texture1dArb = ((int)0x2079),
+            Aux6Arb = ((int)0x208d),
+            TextureCubeMapArb = ((int)0x2078),
+            TextureFormatArb = ((int)0x2072),
+            BackRightArb = ((int)0x2086),
+            BindToTextureRgbArb = ((int)0x2070),
+            MipmapLevelArb = ((int)0x207b),
+            CubeMapFaceArb = ((int)0x207c),
+            TextureCubeMapNegativeXArb = ((int)0x207e),
+            Aux7Arb = ((int)0x208e),
+            Aux8Arb = ((int)0x208f),
+            MipmapTextureArb = ((int)0x2074),
+            NoTextureArb = ((int)0x2077),
+            Aux3Arb = ((int)0x208a),
+            Texture2dArb = ((int)0x207a),
+            Aux1Arb = ((int)0x2088),
+            TextureCubeMapPositiveZArb = ((int)0x2081),
+            BindToTextureRgbaArb = ((int)0x2071),
+            TextureCubeMapNegativeYArb = ((int)0x2080),
+            TextureRgbaArb = ((int)0x2076),
+            FrontRightArb = ((int)0x2084),
+            Aux5Arb = ((int)0x208c),
+            Aux4Arb = ((int)0x208b),
+            TextureTargetArb = ((int)0x2073),
+            FrontLeftArb = ((int)0x2083),
+            Aux9Arb = ((int)0x2090),
+            TextureRgbArb = ((int)0x2075),
+            BackLeftArb = ((int)0x2085),
+            TextureCubeMapNegativeZArb = ((int)0x2082),
+            Aux2Arb = ((int)0x2089),
+        }
+
+        public enum WglNvRenderTextureRectangle
+        {
+            BindToTextureRectangleRgbNv = ((int)0x20a0),
+            BindToTextureRectangleRgbaNv = ((int)0x20a1),
+            TextureRectangleNv = ((int)0x20a2),
+        }
+
+        public enum WglNvRenderDepthTexture
+        {
+            DepthTextureFormatNv = ((int)0x20a5),
+            TextureDepthComponentNv = ((int)0x20a6),
+            BindToTextureDepthNv = ((int)0x20a3),
+            DepthComponentNv = ((int)0x20a7),
+            BindToTextureRectangleDepthNv = ((int)0x20a4),
+        }
+
+        public enum WglNvFloatBuffer
+        {
+            BindToTextureRectangleFloatRNv = ((int)0x20b1),
+            TextureFloatRNv = ((int)0x20b5),
+            TextureFloatRgbNv = ((int)0x20b7),
+            TextureFloatRgNv = ((int)0x20b6),
+            TextureFloatRgbaNv = ((int)0x20b8),
+            BindToTextureRectangleFloatRgbaNv = ((int)0x20b4),
+            FloatComponentsNv = ((int)0x20b0),
+            BindToTextureRectangleFloatRgNv = ((int)0x20b2),
+            BindToTextureRectangleFloatRgbNv = ((int)0x20b3),
+        }
+
+        public enum WglArbPixelFormatFloat
+        {
+            TypeRgbaFloatArb = ((int)0x21a0),
+        }
+
+        public enum WglAtiPixelFormatFloat
+        {
+            TypeRgbaFloatAti = ((int)0x21a0),
+        }
+
+        public enum WglFontType
+        {
+            FontLines = ((int)0),
+        }
+
+        public enum All
+        {
+            SwapCopyExt = ((int)0x2029),
+            BackColorBufferBitArb = ((int)0x00000002),
+            FullAccelerationArb = ((int)0x2027),
+            AccelerationExt = ((int)0x2003),
+            GenlockSourceMultiviewI3d = ((int)0x2044),
+            Aux3Arb = ((int)0x208a),
+            TextureCubeMapNegativeYArb = ((int)0x2080),
+            DoubleBufferArb = ((int)0x2011),
+            SwapUndefinedExt = ((int)0x202a),
+            SupportGdiArb = ((int)0x200f),
+            Aux2Arb = ((int)0x2089),
+            TextureCubeMapArb = ((int)0x2078),
+            SwapLayerBuffersExt = ((int)0x2006),
+            SwapCopyArb = ((int)0x2029),
+            ErrorIncompatibleDeviceContextsArb = ((int)0x2054),
+            TypeColorindexArb = ((int)0x202c),
+            DigitalVideoCursorIncludedI3d = ((int)0x2052),
+            NeedPaletteExt = ((int)0x2004),
+            RedBitsArb = ((int)0x2015),
+            TextureCubeMapNegativeXArb = ((int)0x207e),
+            SampleBuffersExt = ((int)0x2041),
+            GenericAccelerationExt = ((int)0x2026),
+            BindToTextureRectangleRgbaNv = ((int)0x20a1),
+            NoTextureArb = ((int)0x2077),
+            FrontColorBufferBitArb = ((int)0x00000001),
+            TransparentValueExt = ((int)0x200b),
+            AlphaBitsArb = ((int)0x201b),
+            RedBitsExt = ((int)0x2015),
+            PbufferHeightArb = ((int)0x2035),
+            BindToTextureRectangleFloatRgbaNv = ((int)0x20b4),
+            SampleBuffersArb = ((int)0x2041),
+            MipmapLevelArb = ((int)0x207b),
+            NeedSystemPaletteExt = ((int)0x2005),
+            Aux4Arb = ((int)0x208b),
+            TextureFormatArb = ((int)0x2072),
+            AccumBitsExt = ((int)0x201d),
+            AccumBlueBitsExt = ((int)0x2020),
+            BackLeftArb = ((int)0x2085),
+            AlphaBitsExt = ((int)0x201b),
+            StencilBitsArb = ((int)0x2023),
+            DrawToPbufferExt = ((int)0x202d),
+            FullAccelerationExt = ((int)0x2027),
+            ColorBitsExt = ((int)0x2014),
+            BindToTextureRectangleFloatRgNv = ((int)0x20b2),
+            DepthBufferBitArb = ((int)0x00000004),
+            BindToTextureRgbaArb = ((int)0x2071),
+            AccumGreenBitsArb = ((int)0x201f),
+            AccumBitsArb = ((int)0x201d),
+            TypeRgbaFloatArb = ((int)0x21a0),
+            NeedPaletteArb = ((int)0x2004),
+            ShareAccumArb = ((int)0x200e),
+            TransparentArb = ((int)0x200a),
+            ShareStencilArb = ((int)0x200d),
+            Aux5Arb = ((int)0x208c),
+            ImageBufferLockI3d = ((int)0x00000002),
+            TextureFloatRNv = ((int)0x20b5),
+            DepthComponentNv = ((int)0x20a7),
+            FloatComponentsNv = ((int)0x20b0),
+            TransparentGreenValueArb = ((int)0x2038),
+            GenlockSourceExtenalTtlI3d = ((int)0x2047),
+            NeedSystemPaletteArb = ((int)0x2005),
+            BlueBitsExt = ((int)0x2019),
+            GreenShiftExt = ((int)0x2018),
+            OptimalPbufferWidthExt = ((int)0x2031),
+            AuxBuffersExt = ((int)0x2024),
+            TypeRgbaFloatAti = ((int)0x21a0),
+            FrontRightArb = ((int)0x2084),
+            DepthBitsExt = ((int)0x2022),
+            GammaTableSizeI3d = ((int)0x204e),
+            AccumAlphaBitsArb = ((int)0x2021),
+            Aux0Arb = ((int)0x2087),
+            TransparentIndexValueArb = ((int)0x203b),
+            AccumGreenBitsExt = ((int)0x201f),
+            TransparentBlueValueArb = ((int)0x2039),
+            NoAccelerationArb = ((int)0x2025),
+            MaxPbufferPixelsArb = ((int)0x202e),
+            GammaExcludeDesktopI3d = ((int)0x204f),
+            MaxPbufferPixelsExt = ((int)0x202e),
+            AccumBlueBitsArb = ((int)0x2020),
+            SwapUndefinedArb = ((int)0x202a),
+            ShareDepthExt = ((int)0x200c),
+            GenlockSourceEdgeBothI3d = ((int)0x204c),
+            Samples3dfx = ((int)0x2061),
+            DoubleBufferExt = ((int)0x2011),
+            BindToTextureRectangleFloatRgbNv = ((int)0x20b3),
+            SwapMethodExt = ((int)0x2007),
+            ErrorInvalidPixelTypeArb = ((int)0x2043),
+            GreenShiftArb = ((int)0x2018),
+            TextureFloatRgbaNv = ((int)0x20b8),
+            Aux1Arb = ((int)0x2088),
+            GreenBitsArb = ((int)0x2017),
+            NumberPixelFormatsExt = ((int)0x2000),
+            NumberOverlaysExt = ((int)0x2008),
+            PixelTypeArb = ((int)0x2013),
+            SwapLayerBuffersArb = ((int)0x2006),
+            DrawToBitmapArb = ((int)0x2002),
+            NumberPixelFormatsArb = ((int)0x2000),
+            PbufferLostArb = ((int)0x2036),
+            Aux9Arb = ((int)0x2090),
+            TextureCubeMapPositiveZArb = ((int)0x2081),
+            MaxPbufferHeightArb = ((int)0x2030),
+            TransparentExt = ((int)0x200a),
+            PbufferLargestArb = ((int)0x2033),
+            SwapMethodArb = ((int)0x2007),
+            TextureRgbaArb = ((int)0x2076),
+            PbufferWidthExt = ((int)0x2034),
+            OptimalPbufferHeightExt = ((int)0x2032),
+            StencilBitsExt = ((int)0x2023),
+            ShareStencilExt = ((int)0x200d),
+            DepthFloatExt = ((int)0x2040),
+            BindToTextureRgbArb = ((int)0x2070),
+            BindToTextureRectangleRgbNv = ((int)0x20a0),
+            GenlockSourceDigitalSyncI3d = ((int)0x2048),
+            AccumAlphaBitsExt = ((int)0x2021),
+            GenlockSourceExtenalSyncI3d = ((int)0x2045),
+            RedShiftExt = ((int)0x2016),
+            GenlockSourceDigitalFieldI3d = ((int)0x2049),
+            FrontLeftArb = ((int)0x2083),
+            BlueShiftArb = ((int)0x201a),
+            PbufferWidthArb = ((int)0x2034),
+            CubeMapFaceArb = ((int)0x207c),
+            StencilBufferBitArb = ((int)0x00000008),
+            NumberOverlaysArb = ((int)0x2008),
+            SwapExchangeExt = ((int)0x2028),
+            BackRightArb = ((int)0x2086),
+            DepthTextureFormatNv = ((int)0x20a5),
+            TextureFloatRgNv = ((int)0x20b6),
+            Texture1dArb = ((int)0x2079),
+            DepthBitsArb = ((int)0x2022),
+            BindToTextureDepthNv = ((int)0x20a3),
+            DrawToWindowArb = ((int)0x2001),
+            TypeRgbaExt = ((int)0x202b),
+            DigitalVideoCursorAlphaValueI3d = ((int)0x2051),
+            ErrorInvalidPixelTypeExt = ((int)0x2043),
+            AccumRedBitsExt = ((int)0x201e),
+            GreenBitsExt = ((int)0x2017),
+            TypeRgbaArb = ((int)0x202b),
+            DigitalVideoCursorAlphaFramebufferI3d = ((int)0x2050),
+            AuxBuffersArb = ((int)0x2024),
+            AccumRedBitsArb = ((int)0x201e),
+            TextureFloatRgbNv = ((int)0x20b7),
+            TypeColorindexExt = ((int)0x202c),
+            TransparentAlphaValueArb = ((int)0x203a),
+            BlueShiftExt = ((int)0x201a),
+            RedShiftArb = ((int)0x2016),
+            PbufferHeightExt = ((int)0x2035),
+            GenlockSourceEdgeRisingI3d = ((int)0x204b),
+            Texture2dArb = ((int)0x207a),
+            NumberUnderlaysArb = ((int)0x2009),
+            NumberUnderlaysExt = ((int)0x2009),
+            DrawToBitmapExt = ((int)0x2002),
+            ShareDepthArb = ((int)0x200c),
+            TextureDepthComponentNv = ((int)0x20a6),
+            NoAccelerationExt = ((int)0x2025),
+            PixelTypeExt = ((int)0x2013),
+            SupportOpenglArb = ((int)0x2010),
+            TextureCubeMapPositiveYArb = ((int)0x207f),
+            DrawToWindowExt = ((int)0x2001),
+            PbufferLargestExt = ((int)0x2033),
+            DrawToPbufferArb = ((int)0x202d),
+            SupportOpenglExt = ((int)0x2010),
+            SampleBuffers3dfx = ((int)0x2060),
+            GenlockSourceExtenalFieldI3d = ((int)0x2046),
+            MaxPbufferHeightExt = ((int)0x2030),
+            SupportGdiExt = ((int)0x200f),
+            Aux7Arb = ((int)0x208e),
+            DigitalVideoGammaCorrectedI3d = ((int)0x2053),
+            ColorBitsArb = ((int)0x2014),
+            Aux6Arb = ((int)0x208d),
+            ShareAccumExt = ((int)0x200e),
+            StereoArb = ((int)0x2012),
+            TextureRgbArb = ((int)0x2075),
+            AccelerationArb = ((int)0x2003),
+            TextureCubeMapPositiveXArb = ((int)0x207d),
+            TransparentRedValueArb = ((int)0x2037),
+            BlueBitsArb = ((int)0x2019),
+            SwapExchangeArb = ((int)0x2028),
+            SamplesExt = ((int)0x2042),
+            AlphaShiftExt = ((int)0x201c),
+            SamplesArb = ((int)0x2042),
+            TextureTargetArb = ((int)0x2073),
+            BindToTextureRectangleDepthNv = ((int)0x20a4),
+            AlphaShiftArb = ((int)0x201c),
+            Aux8Arb = ((int)0x208f),
+            MaxPbufferWidthExt = ((int)0x202f),
+            GenlockSourceEdgeFallingI3d = ((int)0x204a),
+            StereoExt = ((int)0x2012),
+            MaxPbufferWidthArb = ((int)0x202f),
+            TextureRectangleNv = ((int)0x20a2),
+            ImageBufferMinAccessI3d = ((int)0x00000001),
+            TextureCubeMapNegativeZArb = ((int)0x2082),
+            MipmapTextureArb = ((int)0x2074),
+            GenericAccelerationArb = ((int)0x2026),
+            BindToTextureRectangleFloatRNv = ((int)0x20b1),
+            FontLines = ((int)0),
+        }
+
+        public enum WglArbExtensionsString
+        {
+        }
+
+        public enum WglI3DImageBuffer
+        {
+            ImageBufferMinAccessI3d = ((int)0x00000001),
+            ImageBufferLockI3d = ((int)0x00000002),
+        }
+
+        public enum WglI3DSwapFrameLock
+        {
+        }
+
     }
 }
