@@ -31,18 +31,18 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        Int32 Build1DMipmapLevel(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data)
+        Int32 Build1DMipmapLevel(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data)
         {
-            return Delegates.gluBuild1DMipmapLevels((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data);
+            return Delegates.gluBuild1DMipmapLevels((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data);
         }
 
         public static 
-        Int32 Build1DMipmapLevel(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, [In, Out] object data)
+        Int32 Build1DMipmapLevel(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, [In, Out] object data)
         {
             System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                return Delegates.gluBuild1DMipmapLevels((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data_ptr.AddrOfPinnedObject());
+                return Delegates.gluBuild1DMipmapLevels((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -51,18 +51,18 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        Int32 Build1DMipmap(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr data)
+        Int32 Build1DMipmap(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr data)
         {
-            return Delegates.gluBuild1DMipmaps((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)data);
+            return Delegates.gluBuild1DMipmaps((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data);
         }
 
         public static 
-        Int32 Build1DMipmap(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [In, Out] object data)
+        Int32 Build1DMipmap(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object data)
         {
             System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                return Delegates.gluBuild1DMipmaps((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
+                return Delegates.gluBuild1DMipmaps((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -71,18 +71,18 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        Int32 Build2DMipmapLevel(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data)
+        Int32 Build2DMipmapLevel(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data)
         {
-            return Delegates.gluBuild2DMipmapLevels((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data);
+            return Delegates.gluBuild2DMipmapLevels((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data);
         }
 
         public static 
-        Int32 Build2DMipmapLevel(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, [In, Out] object data)
+        Int32 Build2DMipmapLevel(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, [In, Out] object data)
         {
             System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                return Delegates.gluBuild2DMipmapLevels((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data_ptr.AddrOfPinnedObject());
+                return Delegates.gluBuild2DMipmapLevels((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -91,18 +91,18 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        Int32 Build2DMipmap(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr data)
+        Int32 Build2DMipmap(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr data)
         {
-            return Delegates.gluBuild2DMipmaps((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)data);
+            return Delegates.gluBuild2DMipmaps((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data);
         }
 
         public static 
-        Int32 Build2DMipmap(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [In, Out] object data)
+        Int32 Build2DMipmap(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object data)
         {
             System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                return Delegates.gluBuild2DMipmaps((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
+                return Delegates.gluBuild2DMipmaps((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -111,18 +111,18 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        Int32 Build3DMipmapLevel(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data)
+        Int32 Build3DMipmapLevel(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data)
         {
-            return Delegates.gluBuild3DMipmapLevels((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (Int32)depth, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data);
+            return Delegates.gluBuild3DMipmapLevels((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data);
         }
 
         public static 
-        Int32 Build3DMipmapLevel(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, [In, Out] object data)
+        Int32 Build3DMipmapLevel(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, [In, Out] object data)
         {
             System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                return Delegates.gluBuild3DMipmapLevels((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (Int32)depth, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data_ptr.AddrOfPinnedObject());
+                return Delegates.gluBuild3DMipmapLevels((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (Int32)level, (Int32)@base, (Int32)max, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -131,18 +131,18 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        Int32 Build3DMipmap(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr data)
+        Int32 Build3DMipmap(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr data)
         {
-            return Delegates.gluBuild3DMipmaps((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (Int32)depth, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)data);
+            return Delegates.gluBuild3DMipmaps((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data);
         }
 
         public static 
-        Int32 Build3DMipmap(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, [In, Out] object data)
+        Int32 Build3DMipmap(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object data)
         {
             System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                return Delegates.gluBuild3DMipmaps((GL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (Int32)depth, (GL.Enums.PixelFormat)format, (GL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
+                return Delegates.gluBuild3DMipmaps((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)internalFormat, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -151,7 +151,7 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        Boolean CheckExtension(Byte[] extName, Byte[] extString)
+        bool CheckExtension(Byte[] extName, Byte[] extString)
         {
             unsafe
             {
@@ -164,7 +164,7 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        Boolean CheckExtension(ref Byte extName, ref Byte extString)
+        bool CheckExtension(ref Byte extName, ref Byte extString)
         {
             unsafe
             {
@@ -178,7 +178,7 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe Boolean CheckExtension(Byte* extName, Byte* extString)
+        unsafe bool CheckExtension(Byte* extName, Byte* extString)
         {
             return Delegates.gluCheckExtension((Byte*)extName, (Byte*)extString);
         }
@@ -238,37 +238,37 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        string ErrorString(Glu.Enums.ErrorCode error)
+        string ErrorString(OpenTK.OpenGL.Enums.GluErrorCode error)
         {
-            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.gluErrorString((Glu.Enums.ErrorCode)error));
+            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.gluErrorString((OpenTK.OpenGL.Enums.GluErrorCode)error));
         }
 
         public static 
-        string GetString(Glu.Enums.StringName name)
+        string GetString(OpenTK.OpenGL.Enums.GluStringName name)
         {
-            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.gluGetString((Glu.Enums.StringName)name));
+            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.gluGetString((OpenTK.OpenGL.Enums.GluStringName)name));
         }
 
         public static 
-        void GetNurbsProperty(int nurb, Glu.Enums.NurbsProperty property, [Out] float[] data)
+        void GetNurbsProperty(int nurb, OpenTK.OpenGL.Enums.NurbsProperty property, [Out] float[] data)
         {
             unsafe
             {
                 fixed (float* data_ptr = data)
                 {
-                    Delegates.gluGetNurbsProperty((int)nurb, (Glu.Enums.NurbsProperty)property, (float*)data_ptr);
+                    Delegates.gluGetNurbsProperty((int)nurb, (OpenTK.OpenGL.Enums.NurbsProperty)property, (float*)data_ptr);
                 }
             }
         }
 
         public static 
-        void GetNurbsProperty(int nurb, Glu.Enums.NurbsProperty property, [Out] out float data)
+        void GetNurbsProperty(int nurb, OpenTK.OpenGL.Enums.NurbsProperty property, [Out] out float data)
         {
             unsafe
             {
                 fixed (float* data_ptr = &data)
                 {
-                    Delegates.gluGetNurbsProperty((int)nurb, (Glu.Enums.NurbsProperty)property, (float*)data_ptr);
+                    Delegates.gluGetNurbsProperty((int)nurb, (OpenTK.OpenGL.Enums.NurbsProperty)property, (float*)data_ptr);
                     data = *data_ptr;
                 }
             }
@@ -276,31 +276,31 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetNurbsProperty(int nurb, Glu.Enums.NurbsProperty property, [Out] float* data)
+        unsafe void GetNurbsProperty(int nurb, OpenTK.OpenGL.Enums.NurbsProperty property, [Out] float* data)
         {
-            Delegates.gluGetNurbsProperty((int)nurb, (Glu.Enums.NurbsProperty)property, (float*)data);
+            Delegates.gluGetNurbsProperty((int)nurb, (OpenTK.OpenGL.Enums.NurbsProperty)property, (float*)data);
         }
 
         public static 
-        void GetTessProperty(int tess, Glu.Enums.TessProperty which, [Out] double[] data)
+        void GetTessProperty(int tess, OpenTK.OpenGL.Enums.TessProperty which, [Out] double[] data)
         {
             unsafe
             {
                 fixed (double* data_ptr = data)
                 {
-                    Delegates.gluGetTessProperty((int)tess, (Glu.Enums.TessProperty)which, (double*)data_ptr);
+                    Delegates.gluGetTessProperty((int)tess, (OpenTK.OpenGL.Enums.TessProperty)which, (double*)data_ptr);
                 }
             }
         }
 
         public static 
-        void GetTessProperty(int tess, Glu.Enums.TessProperty which, [Out] out double data)
+        void GetTessProperty(int tess, OpenTK.OpenGL.Enums.TessProperty which, [Out] out double data)
         {
             unsafe
             {
                 fixed (double* data_ptr = &data)
                 {
-                    Delegates.gluGetTessProperty((int)tess, (Glu.Enums.TessProperty)which, (double*)data_ptr);
+                    Delegates.gluGetTessProperty((int)tess, (OpenTK.OpenGL.Enums.TessProperty)which, (double*)data_ptr);
                     data = *data_ptr;
                 }
             }
@@ -308,9 +308,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTessProperty(int tess, Glu.Enums.TessProperty which, [Out] double* data)
+        unsafe void GetTessProperty(int tess, OpenTK.OpenGL.Enums.TessProperty which, [Out] double* data)
         {
-            Delegates.gluGetTessProperty((int)tess, (Glu.Enums.TessProperty)which, (double*)data);
+            Delegates.gluGetTessProperty((int)tess, (OpenTK.OpenGL.Enums.TessProperty)which, (double*)data);
         }
 
         public static 
@@ -373,15 +373,15 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void NextContour(int tess, Glu.Enums.TessContour type)
+        void NextContour(int tess, OpenTK.OpenGL.Enums.TessContour type)
         {
-            Delegates.gluNextContour((int)tess, (Glu.Enums.TessContour)type);
+            Delegates.gluNextContour((int)tess, (OpenTK.OpenGL.Enums.TessContour)type);
         }
 
         public static 
-        void NurbsCallback(int nurb, Glu.Enums.NurbsCallback which, IntPtr CallBackFunc)
+        void NurbsCallback(int nurb, OpenTK.OpenGL.Enums.NurbsCallback which, IntPtr CallBackFunc)
         {
-            Delegates.gluNurbsCallback((int)nurb, (Glu.Enums.NurbsCallback)which, (IntPtr)CallBackFunc);
+            Delegates.gluNurbsCallback((int)nurb, (OpenTK.OpenGL.Enums.NurbsCallback)which, (IntPtr)CallBackFunc);
         }
 
         public static 
@@ -405,27 +405,27 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void NurbsCurve(int nurb, Int32 knotCount, [Out] float[] knots, Int32 stride, [Out] float[] control, Int32 order, GL.Enums.MapTarget type)
+        void NurbsCurve(int nurb, Int32 knotCount, [Out] float[] knots, Int32 stride, [Out] float[] control, Int32 order, OpenTK.OpenGL.Enums.MapTarget type)
         {
             unsafe
             {
                 fixed (float* knots_ptr = knots)
                 fixed (float* control_ptr = control)
                 {
-                    Delegates.gluNurbsCurve((int)nurb, (Int32)knotCount, (float*)knots_ptr, (Int32)stride, (float*)control_ptr, (Int32)order, (GL.Enums.MapTarget)type);
+                    Delegates.gluNurbsCurve((int)nurb, (Int32)knotCount, (float*)knots_ptr, (Int32)stride, (float*)control_ptr, (Int32)order, (OpenTK.OpenGL.Enums.MapTarget)type);
                 }
             }
         }
 
         public static 
-        void NurbsCurve(int nurb, Int32 knotCount, [Out] out float knots, Int32 stride, [Out] out float control, Int32 order, GL.Enums.MapTarget type)
+        void NurbsCurve(int nurb, Int32 knotCount, [Out] out float knots, Int32 stride, [Out] out float control, Int32 order, OpenTK.OpenGL.Enums.MapTarget type)
         {
             unsafe
             {
                 fixed (float* knots_ptr = &knots)
                 fixed (float* control_ptr = &control)
                 {
-                    Delegates.gluNurbsCurve((int)nurb, (Int32)knotCount, (float*)knots_ptr, (Int32)stride, (float*)control_ptr, (Int32)order, (GL.Enums.MapTarget)type);
+                    Delegates.gluNurbsCurve((int)nurb, (Int32)knotCount, (float*)knots_ptr, (Int32)stride, (float*)control_ptr, (Int32)order, (OpenTK.OpenGL.Enums.MapTarget)type);
                     knots = *knots_ptr;
                     control = *control_ptr;
                 }
@@ -434,19 +434,19 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void NurbsCurve(int nurb, Int32 knotCount, [Out] float* knots, Int32 stride, [Out] float* control, Int32 order, GL.Enums.MapTarget type)
+        unsafe void NurbsCurve(int nurb, Int32 knotCount, [Out] float* knots, Int32 stride, [Out] float* control, Int32 order, OpenTK.OpenGL.Enums.MapTarget type)
         {
-            Delegates.gluNurbsCurve((int)nurb, (Int32)knotCount, (float*)knots, (Int32)stride, (float*)control, (Int32)order, (GL.Enums.MapTarget)type);
+            Delegates.gluNurbsCurve((int)nurb, (Int32)knotCount, (float*)knots, (Int32)stride, (float*)control, (Int32)order, (OpenTK.OpenGL.Enums.MapTarget)type);
         }
 
         public static 
-        void NurbsProperty(int nurb, Glu.Enums.NurbsProperty property, float value)
+        void NurbsProperty(int nurb, OpenTK.OpenGL.Enums.NurbsProperty property, float value)
         {
-            Delegates.gluNurbsProperty((int)nurb, (Glu.Enums.NurbsProperty)property, (float)value);
+            Delegates.gluNurbsProperty((int)nurb, (OpenTK.OpenGL.Enums.NurbsProperty)property, (float)value);
         }
 
         public static 
-        void NurbsSurface(int nurb, Int32 sKnotCount, float[] sKnots, Int32 tKnotCount, float[] tKnots, Int32 sStride, Int32 tStride, float[] control, Int32 sOrder, Int32 tOrder, GL.Enums.MapTarget type)
+        void NurbsSurface(int nurb, Int32 sKnotCount, float[] sKnots, Int32 tKnotCount, float[] tKnots, Int32 sStride, Int32 tStride, float[] control, Int32 sOrder, Int32 tOrder, OpenTK.OpenGL.Enums.MapTarget type)
         {
             unsafe
             {
@@ -454,13 +454,13 @@ namespace OpenTK.OpenGL
                 fixed (float* tKnots_ptr = tKnots)
                 fixed (float* control_ptr = control)
                 {
-                    Delegates.gluNurbsSurface((int)nurb, (Int32)sKnotCount, (float*)sKnots_ptr, (Int32)tKnotCount, (float*)tKnots_ptr, (Int32)sStride, (Int32)tStride, (float*)control_ptr, (Int32)sOrder, (Int32)tOrder, (GL.Enums.MapTarget)type);
+                    Delegates.gluNurbsSurface((int)nurb, (Int32)sKnotCount, (float*)sKnots_ptr, (Int32)tKnotCount, (float*)tKnots_ptr, (Int32)sStride, (Int32)tStride, (float*)control_ptr, (Int32)sOrder, (Int32)tOrder, (OpenTK.OpenGL.Enums.MapTarget)type);
                 }
             }
         }
 
         public static 
-        void NurbsSurface(int nurb, Int32 sKnotCount, ref float sKnots, Int32 tKnotCount, ref float tKnots, Int32 sStride, Int32 tStride, ref float control, Int32 sOrder, Int32 tOrder, GL.Enums.MapTarget type)
+        void NurbsSurface(int nurb, Int32 sKnotCount, ref float sKnots, Int32 tKnotCount, ref float tKnots, Int32 sStride, Int32 tStride, ref float control, Int32 sOrder, Int32 tOrder, OpenTK.OpenGL.Enums.MapTarget type)
         {
             unsafe
             {
@@ -468,16 +468,16 @@ namespace OpenTK.OpenGL
                 fixed (float* tKnots_ptr = &tKnots)
                 fixed (float* control_ptr = &control)
                 {
-                    Delegates.gluNurbsSurface((int)nurb, (Int32)sKnotCount, (float*)sKnots_ptr, (Int32)tKnotCount, (float*)tKnots_ptr, (Int32)sStride, (Int32)tStride, (float*)control_ptr, (Int32)sOrder, (Int32)tOrder, (GL.Enums.MapTarget)type);
+                    Delegates.gluNurbsSurface((int)nurb, (Int32)sKnotCount, (float*)sKnots_ptr, (Int32)tKnotCount, (float*)tKnots_ptr, (Int32)sStride, (Int32)tStride, (float*)control_ptr, (Int32)sOrder, (Int32)tOrder, (OpenTK.OpenGL.Enums.MapTarget)type);
                 }
             }
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void NurbsSurface(int nurb, Int32 sKnotCount, float* sKnots, Int32 tKnotCount, float* tKnots, Int32 sStride, Int32 tStride, float* control, Int32 sOrder, Int32 tOrder, GL.Enums.MapTarget type)
+        unsafe void NurbsSurface(int nurb, Int32 sKnotCount, float* sKnots, Int32 tKnotCount, float* tKnots, Int32 sStride, Int32 tStride, float* control, Int32 sOrder, Int32 tOrder, OpenTK.OpenGL.Enums.MapTarget type)
         {
-            Delegates.gluNurbsSurface((int)nurb, (Int32)sKnotCount, (float*)sKnots, (Int32)tKnotCount, (float*)tKnots, (Int32)sStride, (Int32)tStride, (float*)control, (Int32)sOrder, (Int32)tOrder, (GL.Enums.MapTarget)type);
+            Delegates.gluNurbsSurface((int)nurb, (Int32)sKnotCount, (float*)sKnots, (Int32)tKnotCount, (float*)tKnots, (Int32)sStride, (Int32)tStride, (float*)control, (Int32)sOrder, (Int32)tOrder, (OpenTK.OpenGL.Enums.MapTarget)type);
         }
 
         public static 
@@ -572,80 +572,80 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void PwlCurve(int nurb, Int32 count, float[] data, Int32 stride, Glu.Enums.NurbsTrim type)
+        void PwlCurve(int nurb, Int32 count, float[] data, Int32 stride, OpenTK.OpenGL.Enums.NurbsTrim type)
         {
             unsafe
             {
                 fixed (float* data_ptr = data)
                 {
-                    Delegates.gluPwlCurve((int)nurb, (Int32)count, (float*)data_ptr, (Int32)stride, (Glu.Enums.NurbsTrim)type);
+                    Delegates.gluPwlCurve((int)nurb, (Int32)count, (float*)data_ptr, (Int32)stride, (OpenTK.OpenGL.Enums.NurbsTrim)type);
                 }
             }
         }
 
         public static 
-        void PwlCurve(int nurb, Int32 count, ref float data, Int32 stride, Glu.Enums.NurbsTrim type)
+        void PwlCurve(int nurb, Int32 count, ref float data, Int32 stride, OpenTK.OpenGL.Enums.NurbsTrim type)
         {
             unsafe
             {
                 fixed (float* data_ptr = &data)
                 {
-                    Delegates.gluPwlCurve((int)nurb, (Int32)count, (float*)data_ptr, (Int32)stride, (Glu.Enums.NurbsTrim)type);
+                    Delegates.gluPwlCurve((int)nurb, (Int32)count, (float*)data_ptr, (Int32)stride, (OpenTK.OpenGL.Enums.NurbsTrim)type);
                 }
             }
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void PwlCurve(int nurb, Int32 count, float* data, Int32 stride, Glu.Enums.NurbsTrim type)
+        unsafe void PwlCurve(int nurb, Int32 count, float* data, Int32 stride, OpenTK.OpenGL.Enums.NurbsTrim type)
         {
-            Delegates.gluPwlCurve((int)nurb, (Int32)count, (float*)data, (Int32)stride, (Glu.Enums.NurbsTrim)type);
+            Delegates.gluPwlCurve((int)nurb, (Int32)count, (float*)data, (Int32)stride, (OpenTK.OpenGL.Enums.NurbsTrim)type);
         }
 
         public static 
-        void QuadricCallback(int quad, Glu.Enums.QuadricCallback which, IntPtr CallBackFunc)
+        void QuadricCallback(int quad, OpenTK.OpenGL.Enums.QuadricCallback which, IntPtr CallBackFunc)
         {
-            Delegates.gluQuadricCallback((int)quad, (Glu.Enums.QuadricCallback)which, (IntPtr)CallBackFunc);
+            Delegates.gluQuadricCallback((int)quad, (OpenTK.OpenGL.Enums.QuadricCallback)which, (IntPtr)CallBackFunc);
         }
 
         public static 
-        void QuadricDrawStyle(int quad, Glu.Enums.QuadricDrawStyle draw)
+        void QuadricDrawStyle(int quad, OpenTK.OpenGL.Enums.QuadricDrawStyle draw)
         {
-            Delegates.gluQuadricDrawStyle((int)quad, (Glu.Enums.QuadricDrawStyle)draw);
+            Delegates.gluQuadricDrawStyle((int)quad, (OpenTK.OpenGL.Enums.QuadricDrawStyle)draw);
         }
 
         public static 
-        void QuadricNormal(int quad, Glu.Enums.QuadricNormal normal)
+        void QuadricNormal(int quad, OpenTK.OpenGL.Enums.QuadricNormal normal)
         {
-            Delegates.gluQuadricNormals((int)quad, (Glu.Enums.QuadricNormal)normal);
+            Delegates.gluQuadricNormals((int)quad, (OpenTK.OpenGL.Enums.QuadricNormal)normal);
         }
 
         public static 
-        void QuadricOrientation(int quad, Glu.Enums.QuadricOrientation orientation)
+        void QuadricOrientation(int quad, OpenTK.OpenGL.Enums.QuadricOrientation orientation)
         {
-            Delegates.gluQuadricOrientation((int)quad, (Glu.Enums.QuadricOrientation)orientation);
+            Delegates.gluQuadricOrientation((int)quad, (OpenTK.OpenGL.Enums.QuadricOrientation)orientation);
         }
 
         public static 
-        void QuadricTexture(int quad, Glu.Enums.Boolean texture)
+        void QuadricTexture(int quad, bool texture)
         {
-            Delegates.gluQuadricTexture((int)quad, (Glu.Enums.Boolean)texture);
+            Delegates.gluQuadricTexture((int)quad, (bool)texture);
         }
 
         public static 
-        Int32 ScaleImage(GL.Enums.PixelFormat format, Int32 wIn, Int32 hIn, GL.Enums.PixelType typeIn, IntPtr dataIn, Int32 wOut, Int32 hOut, GL.Enums.PixelType typeOut, [Out] IntPtr dataOut)
+        Int32 ScaleImage(OpenTK.OpenGL.Enums.PixelFormat format, Int32 wIn, Int32 hIn, OpenTK.OpenGL.Enums.PixelType typeIn, IntPtr dataIn, Int32 wOut, Int32 hOut, OpenTK.OpenGL.Enums.PixelType typeOut, [Out] IntPtr dataOut)
         {
-            return Delegates.gluScaleImage((GL.Enums.PixelFormat)format, (Int32)wIn, (Int32)hIn, (GL.Enums.PixelType)typeIn, (IntPtr)dataIn, (Int32)wOut, (Int32)hOut, (GL.Enums.PixelType)typeOut, (IntPtr)dataOut);
+            return Delegates.gluScaleImage((OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)wIn, (Int32)hIn, (OpenTK.OpenGL.Enums.PixelType)typeIn, (IntPtr)dataIn, (Int32)wOut, (Int32)hOut, (OpenTK.OpenGL.Enums.PixelType)typeOut, (IntPtr)dataOut);
         }
 
         public static 
-        Int32 ScaleImage(GL.Enums.PixelFormat format, Int32 wIn, Int32 hIn, GL.Enums.PixelType typeIn, [In, Out] object dataIn, Int32 wOut, Int32 hOut, GL.Enums.PixelType typeOut, [In, Out] object dataOut)
+        Int32 ScaleImage(OpenTK.OpenGL.Enums.PixelFormat format, Int32 wIn, Int32 hIn, OpenTK.OpenGL.Enums.PixelType typeIn, [In, Out] object dataIn, Int32 wOut, Int32 hOut, OpenTK.OpenGL.Enums.PixelType typeOut, [In, Out] object dataOut)
         {
             System.Runtime.InteropServices.GCHandle dataIn_ptr = System.Runtime.InteropServices.GCHandle.Alloc(dataIn, System.Runtime.InteropServices.GCHandleType.Pinned);
             System.Runtime.InteropServices.GCHandle dataOut_ptr = System.Runtime.InteropServices.GCHandle.Alloc(dataOut, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                return Delegates.gluScaleImage((GL.Enums.PixelFormat)format, (Int32)wIn, (Int32)hIn, (GL.Enums.PixelType)typeIn, (IntPtr)dataIn_ptr.AddrOfPinnedObject(), (Int32)wOut, (Int32)hOut, (GL.Enums.PixelType)typeOut, (IntPtr)dataOut_ptr.AddrOfPinnedObject());
+                return Delegates.gluScaleImage((OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)wIn, (Int32)hIn, (OpenTK.OpenGL.Enums.PixelType)typeIn, (IntPtr)dataIn_ptr.AddrOfPinnedObject(), (Int32)wOut, (Int32)hOut, (OpenTK.OpenGL.Enums.PixelType)typeOut, (IntPtr)dataOut_ptr.AddrOfPinnedObject());
             }
             finally
             {
@@ -687,9 +687,9 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void TessCallback(int tess, Glu.Enums.TessCallback which, IntPtr CallBackFunc)
+        void TessCallback(int tess, OpenTK.OpenGL.Enums.TessCallback which, IntPtr CallBackFunc)
         {
-            Delegates.gluTessCallback((int)tess, (Glu.Enums.TessCallback)which, (IntPtr)CallBackFunc);
+            Delegates.gluTessCallback((int)tess, (OpenTK.OpenGL.Enums.TessCallback)which, (IntPtr)CallBackFunc);
         }
 
         public static 
@@ -711,9 +711,9 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void TessProperty(int tess, Glu.Enums.TessProperty which, double data)
+        void TessProperty(int tess, OpenTK.OpenGL.Enums.TessProperty which, double data)
         {
-            Delegates.gluTessProperty((int)tess, (Glu.Enums.TessProperty)which, (double)data);
+            Delegates.gluTessProperty((int)tess, (OpenTK.OpenGL.Enums.TessProperty)which, (double)data);
         }
 
         public static 
@@ -848,7 +848,7 @@ namespace OpenTK.OpenGL
             return Delegates.gluUnProject4((double)winX, (double)winY, (double)winZ, (double)clipW, (double*)model, (double*)proj, (Int32*)view, (double)near, (double)far, (double*)objX, (double*)objY, (double*)objZ, (double*)objW);
         }
 
-        public static partial class EXT
+        public static partial class Ext
         {
             public static 
             void NurbsCallbackData(int nurb, IntPtr userData)
@@ -872,30 +872,30 @@ namespace OpenTK.OpenGL
 
         }
 
-        public static partial class SGI
+        public static partial class Sgi
         {
             public static 
-            Int32 TexFilterFunc(GL.Enums.TextureTarget target, Glu.Enums.Filter4TypeSGIS filtertype, float[] parms, Int32 n, [Out] float[] weights)
+            Int32 TexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.Filter4TypeSgis filtertype, float[] parms, Int32 n, [Out] float[] weights)
             {
                 unsafe
                 {
                     fixed (float* parms_ptr = parms)
                     fixed (float* weights_ptr = weights)
                     {
-                        return Delegates.gluTexFilterFuncSGI((GL.Enums.TextureTarget)target, (Glu.Enums.Filter4TypeSGIS)filtertype, (float*)parms_ptr, (Int32)n, (float*)weights_ptr);
+                        return Delegates.gluTexFilterFuncSGI((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.Filter4TypeSgis)filtertype, (float*)parms_ptr, (Int32)n, (float*)weights_ptr);
                     }
                 }
             }
 
             public static 
-            Int32 TexFilterFunc(GL.Enums.TextureTarget target, Glu.Enums.Filter4TypeSGIS filtertype, ref float parms, Int32 n, [Out] out float weights)
+            Int32 TexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.Filter4TypeSgis filtertype, ref float parms, Int32 n, [Out] out float weights)
             {
                 unsafe
                 {
                     fixed (float* parms_ptr = &parms)
                     fixed (float* weights_ptr = &weights)
                     {
-                        Int32 retval = Delegates.gluTexFilterFuncSGI((GL.Enums.TextureTarget)target, (Glu.Enums.Filter4TypeSGIS)filtertype, (float*)parms_ptr, (Int32)n, (float*)weights_ptr);
+                        Int32 retval = Delegates.gluTexFilterFuncSGI((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.Filter4TypeSgis)filtertype, (float*)parms_ptr, (Int32)n, (float*)weights_ptr);
                         weights = *weights_ptr;
                         return retval;
                     }
@@ -904,9 +904,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe Int32 TexFilterFunc(GL.Enums.TextureTarget target, Glu.Enums.Filter4TypeSGIS filtertype, float* parms, Int32 n, [Out] float* weights)
+            unsafe Int32 TexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.Filter4TypeSgis filtertype, float* parms, Int32 n, [Out] float* weights)
             {
-                return Delegates.gluTexFilterFuncSGI((GL.Enums.TextureTarget)target, (Glu.Enums.Filter4TypeSGIS)filtertype, (float*)parms, (Int32)n, (float*)weights);
+                return Delegates.gluTexFilterFuncSGI((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.Filter4TypeSgis)filtertype, (float*)parms, (Int32)n, (float*)weights);
             }
 
         }

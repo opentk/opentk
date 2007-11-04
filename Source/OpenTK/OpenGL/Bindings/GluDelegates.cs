@@ -21,25 +21,25 @@ namespace OpenTK.OpenGL
             internal delegate void BeginTrim(int nurb);
             internal static BeginTrim gluBeginTrim;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 Build1DMipmapLevels(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data);
+            internal delegate Int32 Build1DMipmapLevels(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data);
             internal static Build1DMipmapLevels gluBuild1DMipmapLevels;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 Build1DMipmaps(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr data);
+            internal delegate Int32 Build1DMipmaps(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr data);
             internal static Build1DMipmaps gluBuild1DMipmaps;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 Build2DMipmapLevels(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data);
+            internal delegate Int32 Build2DMipmapLevels(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data);
             internal static Build2DMipmapLevels gluBuild2DMipmapLevels;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 Build2DMipmaps(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr data);
+            internal delegate Int32 Build2DMipmaps(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr data);
             internal static Build2DMipmaps gluBuild2DMipmaps;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 Build3DMipmapLevels(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data);
+            internal delegate Int32 Build3DMipmapLevels(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, Int32 level, Int32 @base, Int32 max, IntPtr data);
             internal static Build3DMipmapLevels gluBuild3DMipmapLevels;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 Build3DMipmaps(GL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, GL.Enums.PixelFormat format, GL.Enums.PixelType type, IntPtr data);
+            internal delegate Int32 Build3DMipmaps(OpenTK.OpenGL.Enums.TextureTarget target, Int32 internalFormat, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr data);
             internal static Build3DMipmaps gluBuild3DMipmaps;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean CheckExtension(Byte* extName, Byte* extString);
+            internal unsafe delegate bool CheckExtension(Byte* extName, Byte* extString);
             internal unsafe static CheckExtension gluCheckExtension;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Cylinder(int quad, double @base, double top, double height, Int32 slices, Int32 stacks);
@@ -69,16 +69,16 @@ namespace OpenTK.OpenGL
             internal delegate void EndTrim(int nurb);
             internal static EndTrim gluEndTrim;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr ErrorString(Glu.Enums.ErrorCode error);
+            internal delegate IntPtr ErrorString(OpenTK.OpenGL.Enums.GluErrorCode error);
             internal static ErrorString gluErrorString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr GetString(Glu.Enums.StringName name);
+            internal delegate IntPtr GetString(OpenTK.OpenGL.Enums.GluStringName name);
             internal static GetString gluGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetNurbsProperty(int nurb, Glu.Enums.NurbsProperty property, [Out] float* data);
+            internal unsafe delegate void GetNurbsProperty(int nurb, OpenTK.OpenGL.Enums.NurbsProperty property, [Out] float* data);
             internal unsafe static GetNurbsProperty gluGetNurbsProperty;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTessProperty(int tess, Glu.Enums.TessProperty which, [Out] double* data);
+            internal unsafe delegate void GetTessProperty(int tess, OpenTK.OpenGL.Enums.TessProperty which, [Out] double* data);
             internal unsafe static GetTessProperty gluGetTessProperty;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void LoadSamplingMatrices(int nurb, float* model, float* perspective, Int32* view);
@@ -96,10 +96,10 @@ namespace OpenTK.OpenGL
             internal delegate int NewTess();
             internal static NewTess gluNewTess;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void NextContour(int tess, Glu.Enums.TessContour type);
+            internal delegate void NextContour(int tess, OpenTK.OpenGL.Enums.TessContour type);
             internal static NextContour gluNextContour;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void NurbsCallback(int nurb, Glu.Enums.NurbsCallback which, IntPtr CallBackFunc);
+            internal delegate void NurbsCallback(int nurb, OpenTK.OpenGL.Enums.NurbsCallback which, IntPtr CallBackFunc);
             internal static NurbsCallback gluNurbsCallback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void NurbsCallbackData(int nurb, IntPtr userData);
@@ -108,13 +108,13 @@ namespace OpenTK.OpenGL
             internal delegate void NurbsCallbackDataEXT(int nurb, IntPtr userData);
             internal static NurbsCallbackDataEXT gluNurbsCallbackDataEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void NurbsCurve(int nurb, Int32 knotCount, [Out] float* knots, Int32 stride, [Out] float* control, Int32 order, GL.Enums.MapTarget type);
+            internal unsafe delegate void NurbsCurve(int nurb, Int32 knotCount, [Out] float* knots, Int32 stride, [Out] float* control, Int32 order, OpenTK.OpenGL.Enums.MapTarget type);
             internal unsafe static NurbsCurve gluNurbsCurve;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void NurbsProperty(int nurb, Glu.Enums.NurbsProperty property, float value);
+            internal delegate void NurbsProperty(int nurb, OpenTK.OpenGL.Enums.NurbsProperty property, float value);
             internal static NurbsProperty gluNurbsProperty;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void NurbsSurface(int nurb, Int32 sKnotCount, float* sKnots, Int32 tKnotCount, float* tKnots, Int32 sStride, Int32 tStride, float* control, Int32 sOrder, Int32 tOrder, GL.Enums.MapTarget type);
+            internal unsafe delegate void NurbsSurface(int nurb, Int32 sKnotCount, float* sKnots, Int32 tKnotCount, float* tKnots, Int32 sStride, Int32 tStride, float* control, Int32 sOrder, Int32 tOrder, OpenTK.OpenGL.Enums.MapTarget type);
             internal unsafe static NurbsSurface gluNurbsSurface;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Ortho2D(double left, double right, double bottom, double top);
@@ -132,25 +132,25 @@ namespace OpenTK.OpenGL
             internal unsafe delegate Int32 Project(double objX, double objY, double objZ, double* model, double* proj, Int32* view, double* winX, double* winY, double* winZ);
             internal unsafe static Project gluProject;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void PwlCurve(int nurb, Int32 count, float* data, Int32 stride, Glu.Enums.NurbsTrim type);
+            internal unsafe delegate void PwlCurve(int nurb, Int32 count, float* data, Int32 stride, OpenTK.OpenGL.Enums.NurbsTrim type);
             internal unsafe static PwlCurve gluPwlCurve;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void QuadricCallback(int quad, Glu.Enums.QuadricCallback which, IntPtr CallBackFunc);
+            internal delegate void QuadricCallback(int quad, OpenTK.OpenGL.Enums.QuadricCallback which, IntPtr CallBackFunc);
             internal static QuadricCallback gluQuadricCallback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void QuadricDrawStyle(int quad, Glu.Enums.QuadricDrawStyle draw);
+            internal delegate void QuadricDrawStyle(int quad, OpenTK.OpenGL.Enums.QuadricDrawStyle draw);
             internal static QuadricDrawStyle gluQuadricDrawStyle;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void QuadricNormals(int quad, Glu.Enums.QuadricNormal normal);
+            internal delegate void QuadricNormals(int quad, OpenTK.OpenGL.Enums.QuadricNormal normal);
             internal static QuadricNormals gluQuadricNormals;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void QuadricOrientation(int quad, Glu.Enums.QuadricOrientation orientation);
+            internal delegate void QuadricOrientation(int quad, OpenTK.OpenGL.Enums.QuadricOrientation orientation);
             internal static QuadricOrientation gluQuadricOrientation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void QuadricTexture(int quad, Glu.Enums.Boolean texture);
+            internal delegate void QuadricTexture(int quad, bool texture);
             internal static QuadricTexture gluQuadricTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 ScaleImage(GL.Enums.PixelFormat format, Int32 wIn, Int32 hIn, GL.Enums.PixelType typeIn, IntPtr dataIn, Int32 wOut, Int32 hOut, GL.Enums.PixelType typeOut, [Out] IntPtr dataOut);
+            internal delegate Int32 ScaleImage(OpenTK.OpenGL.Enums.PixelFormat format, Int32 wIn, Int32 hIn, OpenTK.OpenGL.Enums.PixelType typeIn, IntPtr dataIn, Int32 wOut, Int32 hOut, OpenTK.OpenGL.Enums.PixelType typeOut, [Out] IntPtr dataOut);
             internal static ScaleImage gluScaleImage;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Sphere(int quad, double radius, Int32 slices, Int32 stacks);
@@ -162,7 +162,7 @@ namespace OpenTK.OpenGL
             internal delegate void TessBeginPolygon(int tess, IntPtr data);
             internal static TessBeginPolygon gluTessBeginPolygon;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TessCallback(int tess, Glu.Enums.TessCallback which, IntPtr CallBackFunc);
+            internal delegate void TessCallback(int tess, OpenTK.OpenGL.Enums.TessCallback which, IntPtr CallBackFunc);
             internal static TessCallback gluTessCallback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TessEndContour(int tess);
@@ -174,13 +174,13 @@ namespace OpenTK.OpenGL
             internal delegate void TessNormal(int tess, double valueX, double valueY, double valueZ);
             internal static TessNormal gluTessNormal;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TessProperty(int tess, Glu.Enums.TessProperty which, double data);
+            internal delegate void TessProperty(int tess, OpenTK.OpenGL.Enums.TessProperty which, double data);
             internal static TessProperty gluTessProperty;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void TessVertex(int tess, [Out] double* location, IntPtr data);
             internal unsafe static TessVertex gluTessVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Int32 TexFilterFuncSGI(GL.Enums.TextureTarget target, Glu.Enums.Filter4TypeSGIS filtertype, float* parms, Int32 n, [Out] float* weights);
+            internal unsafe delegate Int32 TexFilterFuncSGI(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.Filter4TypeSgis filtertype, float* parms, Int32 n, [Out] float* weights);
             internal unsafe static TexFilterFuncSGI gluTexFilterFuncSGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate Int32 UnProject(double winX, double winY, double winZ, double* model, double* proj, Int32* view, double* objX, double* objY, double* objZ);
