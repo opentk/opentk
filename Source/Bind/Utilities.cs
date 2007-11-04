@@ -193,27 +193,27 @@ namespace Bind
 
         internal static string GetGL2Extension(string name)
         {
-            if (name.EndsWith("ARB")) { return "ARB"; }
-            if (name.EndsWith("EXT")) { return "EXT"; }
-            if (name.EndsWith("ATI")) { return "ATI"; }
-            if (name.EndsWith("ATIX")) { return "ATIX"; }
+            if (name.EndsWith("ARB")) { return "Arb"; }
+            if (name.EndsWith("EXT")) { return "Ext"; }
+            if (name.EndsWith("ATI")) { return "Ata"; }
+            if (name.EndsWith("ATIX")) { return "Atix"; }
             if (name.EndsWith("NV")) { return "NV"; }
-            if (name.EndsWith("SUN")) { return "SUN"; }
-            if (name.EndsWith("SUNX")) { return "SUNX"; }
-            if (name.EndsWith("SGI")) { return "SGI"; }
-            if (name.EndsWith("SGIS")) { return "SGIS"; }
-            if (name.EndsWith("SGIX")) { return "SGIX"; }
-            if (name.EndsWith("MESA")) { return "MESA"; }
-            if (name.EndsWith("3DFX")) { return "3DFX"; }
-            if (name.EndsWith("INTEL")) { return "INTEL"; }
-            if (name.EndsWith("IBM")) { return "IBM"; }
-            if (name.EndsWith("GREMEDY")) { return "GREMEDY"; }
+            if (name.EndsWith("SUN")) { return "Sun"; }
+            if (name.EndsWith("SUNX")) { return "Sunx"; }
+            if (name.EndsWith("SGI")) { return "Sgi"; }
+            if (name.EndsWith("SGIS")) { return "Sgis"; }
+            if (name.EndsWith("SGIX")) { return "Sgix"; }
+            if (name.EndsWith("MESA")) { return "Mesa"; }
+            if (name.EndsWith("3DFX")) { return "3dfx"; }
+            if (name.EndsWith("INTEL")) { return "Intel"; }
+            if (name.EndsWith("IBM")) { return "Ibm"; }
+            if (name.EndsWith("GREMEDY")) { return "Gremedy"; }
             if (name.EndsWith("HP")) { return "HP"; }
-            if (name.EndsWith("PGI")) { return "PGI"; }
-            if (name.EndsWith("INGR")) { return "INGR"; }
-            if (name.EndsWith("APPLE")) { return "APPLE"; }
-            if (name.EndsWith("OML")) { return "OML"; }
-            if (name.EndsWith("I3D")) { return "I3D"; }
+            if (name.EndsWith("PGI")) { return "Pgi"; }
+            if (name.EndsWith("INGR")) { return "Ingr"; }
+            if (name.EndsWith("APPLE")) { return "Apple"; }
+            if (name.EndsWith("OML")) { return "Oml"; }
+            if (name.EndsWith("I3D")) { return "I3d"; }
             return "";
         }
 
