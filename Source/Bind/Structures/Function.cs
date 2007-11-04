@@ -32,7 +32,7 @@ namespace Bind.Structures
         #endregion
 
         static Regex endings = new Regex(@"((([df]|u?[isb])v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-        static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|led)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|led|Flagv)", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
         /// <summary>
         /// Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
