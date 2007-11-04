@@ -177,7 +177,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.ButtonPress:
                     case XEventName.ButtonRelease:
                         //Functions.XPutBackEvent(window.Display, ref e);
-                        driver.ProcessEvent(ref e);
+                        //driver.ProcessEvent(ref e);
                         break;
 
                     default:
@@ -320,7 +320,7 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
-
+/*
         #region public IInputDriver InputDriver
 
         public IInputDriver InputDriver
@@ -332,7 +332,7 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
-
+*/
         #region public IWindowInfo WindowInfo
 
         public IWindowInfo WindowInfo
@@ -425,10 +425,10 @@ namespace OpenTK.Platform.X11
                 API.MapRaised(window.Display, window.Handle);
                 mapped = true;
 
-                driver = new X11Input(window);
+                // driver = new X11Input(window);
 
-                GL.LoadAll();
-                Glu.LoadAll();
+                //GL.LoadAll();
+                //Glu.LoadAll();
 
                 Debug.Unindent();
                 Debug.WriteLine("GameWindow creation completed successfully!");
