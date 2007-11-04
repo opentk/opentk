@@ -744,7 +744,7 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void EdgeFlag(bool[] flag)
+        void EdgeFlagv(bool[] flag)
         {
             unsafe
             {
@@ -756,7 +756,7 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void EdgeFlag(ref bool flag)
+        void EdgeFlagv(ref bool flag)
         {
             unsafe
             {
@@ -769,7 +769,7 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void EdgeFlag(bool* flag)
+        unsafe void EdgeFlagv(bool* flag)
         {
             Delegates.glEdgeFlagv((bool*)flag);
         }
