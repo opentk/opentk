@@ -154,9 +154,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public static partial class ARB
-
-        public static partial class ARB
+        #region public static partial class Ext
+#if false
+        public static partial class Ext
         {
             private static string[] extensions;
 
@@ -168,11 +168,12 @@ namespace OpenTK.Platform.Windows
             /// <returns>True if the extension is supported by the given context, false otherwise</returns>
             public static bool SupportsExtension(IntPtr deviceContext, string ext)
             {
-                if (Wgl.Delegates.wglGetExtensionsStringARB != null)
+                if (Wgl.Delegates.wglGetExtensionsStringEXT != null)
                 {
                     if (extensions == null || reload_arb_extension_strings)
                     {
-                        extensions = Wgl.ARB.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        // Defined wrong in wglext.spec...
+                        extensions = Wgl.Ext.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         Array.Sort(extensions);
                         reload_arb_extension_strings = false;
                     }
@@ -182,27 +183,25 @@ namespace OpenTK.Platform.Windows
                 return false;
             }
         }
-
+#endif
         #endregion
 
-        #region public static partial class EXT
-
-        public static partial class EXT
+        public static partial class Arb
         {
             private static string[] extensions;
             /// <summary>
-            /// Checks if an "EXT" extension is supported by the given context.
+            /// Checks if a Wgl extension is supported by the given context.
             /// </summary>
             /// <param name="deviceContext">The device context.</param>
             /// <param name="ext">The extension to check.</param>
             /// <returns>True if the extension is supported by the given context, false otherwise</returns>
             public static bool SupportsExtension(IntPtr deviceContext, string ext)
             {
-                if (Wgl.Delegates.wglGetExtensionsStringEXT != null)
+                if (Wgl.Delegates.wglGetExtensionsStringARB != null)
                 {
                     if (extensions == null || reload_ext_extension_strings)
                     {
-                        extensions = Wgl.ARB.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        extensions = Wgl.Arb.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         Array.Sort(extensions);
                         reload_ext_extension_strings = false;
                     }
@@ -212,7 +211,5 @@ namespace OpenTK.Platform.Windows
                 return false;
             }
         }
-
-        #endregion
     }
 }
