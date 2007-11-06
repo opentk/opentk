@@ -26,10 +26,10 @@ namespace OpenTK.Platform.X11
 
         //XEvent e = new XEvent();
 
-        Thread pollingThread;
+        Thread pollingThread = null;
 
         bool disposed;
-        bool disposing;
+        bool disposing = false;
 
         #region --- Constructors ---
 
