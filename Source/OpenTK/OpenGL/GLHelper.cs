@@ -68,6 +68,9 @@ namespace OpenTK.OpenGL
     /// </remarks>
     public static partial class GL
     {
+        static StringBuilder sb = new StringBuilder();
+        static object gl_lock = new object();
+
         static GL()
         {
             assembly = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.OpenGL");
@@ -117,19 +120,18 @@ namespace OpenTK.OpenGL
         public static bool SupportsExtension(string name)
         {
             if (rebuildExtensionList)
-            {
                 BuildExtensionList();
-            }
 
-            // Search the cache for the string. Note that the cache substitutes
-            // strings "1.0" to "2.1" with "GL_VERSION_1_0" to "GL_VERSION_2_1"
-            if (AvailableExtensions.ContainsKey(name))
+            lock (gl_lock)
             {
-                //return AvailableExtensions[name];
-                return true;
+                sb.Remove(0, sb.Length);
+                if (!name.StartsWith("GL_"))
+                    sb.Append("gl_");
+                sb.Append(name.ToLower());
+
+                // Search the cache for the string.
+                return AvailableExtensions.ContainsKey(sb.ToString());
             }
-                
-            return false;
         }
 
         #endregion
@@ -153,53 +155,57 @@ namespace OpenTK.OpenGL
 
             if (version.StartsWith("1.2"))
             {
-                AvailableExtensions.Add("VERSION_1_2", true);
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
             }
             else if (version.StartsWith("1.3"))
             {
-                AvailableExtensions.Add("VERSION_1_2", true);
-                AvailableExtensions.Add("VERSION_1_3", true);
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
             }
             else if (version.StartsWith("1.4"))
             {
-                AvailableExtensions.Add("VERSION_1_2", true);
-                AvailableExtensions.Add("VERSION_1_3", true);
-                AvailableExtensions.Add("VERSION_1_4", true);
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
+                AvailableExtensions.Add("gl_version_1_4", true);
             }
             else if (version.StartsWith("1.5"))
             {
-                AvailableExtensions.Add("VERSION_1_2", true);
-                AvailableExtensions.Add("VERSION_1_3", true);
-                AvailableExtensions.Add("VERSION_1_4", true);
-                AvailableExtensions.Add("VERSION_1_5", true);
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
+                AvailableExtensions.Add("gl_version_1_4", true);
+                AvailableExtensions.Add("gl_version_1_5", true);
             }
             else if (version.StartsWith("2.0"))
             {
-                AvailableExtensions.Add("VERSION_1_2", true);
-                AvailableExtensions.Add("VERSION_1_3", true);
-                AvailableExtensions.Add("VERSION_1_4", true);
-                AvailableExtensions.Add("VERSION_1_5", true);
-                AvailableExtensions.Add("VERSION_2_0", true);
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
+                AvailableExtensions.Add("gl_version_1_4", true);
+                AvailableExtensions.Add("gl_version_1_5", true);
+                AvailableExtensions.Add("gl_version_2_0", true);
             }
             else if (version.StartsWith("2.1"))
             {
-                AvailableExtensions.Add("VERSION_1_2", true);
-                AvailableExtensions.Add("VERSION_1_3", true);
-                AvailableExtensions.Add("VERSION_1_4", true);
-                AvailableExtensions.Add("VERSION_1_5", true);
-                AvailableExtensions.Add("VERSION_2_0", true);
-                AvailableExtensions.Add("VERSION_2_1", true);
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
+                AvailableExtensions.Add("gl_version_1_4", true);
+                AvailableExtensions.Add("gl_version_1_5", true);
+                AvailableExtensions.Add("gl_version_2_0", true);
+                AvailableExtensions.Add("gl_version_2_1", true);
             }
 
             string extension_string = GL.GetString(Enums.StringName.Extensions);
             if (String.IsNullOrEmpty(extension_string))
                 return;               // no extensions are available
 
-            string[] extensions = extension_string.Split(' ');
+            string[] extensions = extension_string.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string ext in extensions)
-            {
-                AvailableExtensions.Add(ext, true);
-            }
+                AvailableExtensions.Add(ext.ToLower(), true);
 
             rebuildExtensionList = false;
         }
@@ -325,6 +331,103 @@ namespace OpenTK.OpenGL
                 rebuildExtensionList = true;
             }
             return @new != null;
+        }
+
+        #endregion
+
+        #region public static bool SupportsFunction(string function)
+
+        /// <summary>
+        /// Checks if a given OpenGL function is supported by the current context
+        /// </summary>
+        /// <param name="function">The name of the OpenGL function (i.e. glShaderSource)</param>
+        /// <returns>True if the function is supported, false otherwise</returns>
+        public static bool SupportsFunction(string function)
+        {
+            lock (gl_lock)
+            {
+                if (function == null)
+                    throw new ArgumentNullException("function");
+
+                sb.Remove(0, sb.Length);
+                if (!function.StartsWith("gl"))
+                    sb.Append("gl");
+                sb.Append(function);
+                FieldInfo f = delegatesClass.GetField(sb.ToString(), BindingFlags.Static | BindingFlags.NonPublic);
+                if (f == null)
+                    return false;
+
+                return f.GetValue(null) != null;
+            }
+        }
+
+        #endregion
+
+        #region public static bool SupportsFunction(string function, string extension)
+
+        /// <summary>
+        /// Checks if a given OpenGL function is supported by the current context
+        /// </summary>
+        /// <param name="function">The name of the OpenGL function (e.g. glShaderSource)</param>
+        /// <param name="extension">The name of the extension catagory (e.g. ARB, EXT, ATI, ...)</param>
+        /// <returns>True if the function is supported, false otherwise</returns>
+        public static bool SupportsFunction(string function, string extension)
+        {
+            lock (gl_lock)
+            {
+                if (function == null)
+                    throw new ArgumentNullException("function");
+                if (extension == null)
+                    throw new ArgumentNullException("extension");
+
+                sb.Remove(0, sb.Length);
+                if (!function.StartsWith("gl"))
+                    sb.Append("gl");
+                sb.Append(function);
+                if (!function.EndsWith(extension))
+                    sb.Append(extension);
+
+                FieldInfo f = delegatesClass.GetField(sb.ToString(), BindingFlags.Static | BindingFlags.NonPublic);
+                if (f == null)
+                    return false;
+
+                return f.GetValue(null) != null;
+            }
+        }
+
+        #endregion
+
+        #region public static bool SupportsFunction(Type function)
+
+        /// <summary>
+        /// Checks if a given OpenGL function is supported by the current context
+        /// </summary>
+        /// <param name="function">The name of the OpenGL function (e.g. glShaderSource)</param>
+        /// <param name="extension">The name of the extension catagory (e.g. ARB, EXT, ATI, ...)</param>
+        /// <returns>True if the function is supported, false otherwise</returns>
+        public static bool SupportsFunction(MethodInfo method)
+        {
+            lock (gl_lock)
+            {
+                /*
+                if (function == null)
+                    throw new ArgumentNullException("function");
+
+                sb.Remove(0, sb.Length);
+                if (!function.Name.StartsWith("gl"))
+                    sb.Append("gl");
+                sb.Append(function);
+                //if (!function.EndsWith(extension))
+                //    sb.Append(extension);
+
+                FieldInfo f = delegatesClass.GetField(sb.ToString(), BindingFlags.Static | BindingFlags.NonPublic);
+                if (f == null)
+                    return false;
+
+                return f.GetValue(null) != null;
+                */
+                return false;
+            }
         }
 
         #endregion
