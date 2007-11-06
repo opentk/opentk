@@ -1,0 +1,136 @@
+﻿#region --- License ---
+/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
+#endregion
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+using System.Drawing;
+
+using OpenTK;
+using OpenTK.Fonts;
+using OpenTK.OpenGL;
+using OpenTK.Input;
+using OpenTK.OpenGL.Enums;
+
+namespace Examples.Tutorial
+{
+    public class Text : GameWindow, IExample
+    {
+        TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 24.0f));
+        TextHandle poem_handle;
+        ITextPrinter text = new TextPrinter();
+
+        public Text() : base(new DisplayMode(800, 600), String.Format("OpenTK | Tutorial {0}: Text", order))
+        { VSync = VSyncMode.Off; }
+
+        // Read some text to print. It's a good idea to ensure line-endings are all in the \n
+        // form and not \r\n or \n\r.
+ 	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd().Replace('\r', ' ');
+        int lines;  // How many lines the poem contains.
+        
+        float scroll_speed;
+        float initial_position;
+        float warparound_position;
+        float current_position;
+
+        #region OnLoad
+
+        public override void OnLoad(EventArgs e)
+        {
+            GL.ClearColor(Color.SteelBlue);
+
+            current_position = initial_position;
+            scroll_speed = -1.0f;
+
+            text.Prepare(poem, serif, out poem_handle);
+
+            foreach (char c in poem)
+                if (c == '\n')
+                    lines++;
+
+            warparound_position =
+                -(lines + 1) * serif.Height;
+        }
+
+        #endregion
+
+        #region OnResize
+
+        protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
+        {
+            GL.Viewport(0, 0, Width, Height);
+
+            initial_position = Height + serif.Height;   // Start one line below the screen.
+
+            warparound_position =
+                -(lines + 1) * serif.Height;
+        }
+
+        #endregion
+
+        #region OnUpdateFrame
+
+        public override void OnUpdateFrame(UpdateFrameEventArgs e)
+        {
+            if (Keyboard[Key.Space])
+                scroll_speed = 0.0f;
+            if (Keyboard[Key.Down])
+                scroll_speed += 1;
+            if (Keyboard[Key.Up])
+                scroll_speed -= 1;
+            if (Keyboard[Key.Escape])
+                this.Exit();
+        }
+
+        #endregion
+
+        #region OnRenderFrame
+
+        public override void OnRenderFrame(RenderFrameEventArgs e)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            // We'll start printing from the lower left corner of the screen. The text
+            // will slowly move updwards - the user can control the movement speed with
+            // the keyboard arrows and the space bar.
+            current_position += scroll_speed * (float)e.ScaleFactor;
+            if (scroll_speed > 0.0f && current_position > initial_position)
+                current_position = warparound_position;
+            else if (scroll_speed < 0.0f && current_position < warparound_position)
+                current_position = initial_position;
+
+            // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
+            // with size equal to the window (in pixels). 
+            // While we could also render text in 3D mode, it would be very hard to get
+            // pixel-perfect precision.
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(0.0, Width, Height, 0.0, 0.0, 1.0);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+
+            GL.Translate(0.0f, current_position, 0.0f);
+            text.Draw(poem_handle);
+
+            SwapBuffers();
+        }
+
+        #endregion
+
+        #region --- IExample Members ---
+
+        public static readonly int order = 7;
+
+        public void Launch()
+        {
+            Run(30.0, 0.0);
+        }
+
+        #endregion
+    }
+}
