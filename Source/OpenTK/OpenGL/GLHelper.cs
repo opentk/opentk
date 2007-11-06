@@ -151,7 +151,25 @@ namespace OpenTK.OpenGL
                 throw new ApplicationException("Failed to build extension list. Is there an opengl context current?");
             }
 
-            string version = version_string.Trim(' ');
+            string version;
+
+            // Most drivers return the version in the 3 first characters of the version string,
+            // (e.g. on Ati X1950 with Catalyst 7.10 -> "2.0.6956 Release"). However, Mesa seems
+            // to do something strange: "1.4 (2.1 Mesa 7.0.1).".
+            // We'll do some trickery to get the second number (2.1), but this may break on
+            // some implementations...
+            if (version_string.ToLower().Contains("mesa"))
+            {
+                int index = version_string.IndexOf('(');
+                if (index != -1)
+                    version = version_string.Substring(index + 1, 3);
+                else
+                    version = version_string.TrimStart(' ');
+            }
+            else
+               version = version_string.TrimStart(' ');
+
+            Debug.Print(version);
 
             if (version.StartsWith("1.2"))
             {
@@ -206,6 +224,11 @@ namespace OpenTK.OpenGL
             string[] extensions = extension_string.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string ext in extensions)
                 AvailableExtensions.Add(ext.ToLower(), true);
+
+            foreach (string s in AvailableExtensions.Keys)
+            {
+                Debug.Print(s);
+            }
 
             rebuildExtensionList = false;
         }
@@ -595,62 +618,67 @@ namespace OpenTK.OpenGL
 
         #region overloads using OpenTK.Math classes
 
-        public static
-        void Normal3(Vector3 normal)
+        public static void Normal3(Vector3 normal)
         {
             Delegates.glNormal3f(normal.X, normal.Y, normal.Z);
         }
 
-        public static
-        void RasterPos2(Vector2 pos)
+        public static void RasterPos2(Vector2 pos)
         {
             Delegates.glRasterPos2f(pos.X, pos.Y);
         }
 
-        public static
-        void RasterPos3(Vector3 pos)
+        public static void RasterPos3(Vector3 pos)
         {
             Delegates.glRasterPos3f(pos.X, pos.Y, pos.Z);
         }
 
-        public static
-        void RasterPos4(Vector4 pos)
+        public static void RasterPos4(Vector4 pos)
         {
             Delegates.glRasterPos4f(pos.X, pos.Y, pos.Z, pos.W);
         }
 
-        public static
-        void Vertex2(Vector2 v)
+        public static void Vertex2(Vector2 v)
         {
             Delegates.glVertex2f(v.X, v.Y);
         }
 
-        public static
-        void Vertex3(Vector3 v)
+        public static void Vertex3(Vector3 v)
         {
             Delegates.glVertex3f(v.X, v.Y, v.Z);
         }
 
-        public static
-        void Vertex4(Vector4 v)
+        public static void Vertex4(Vector4 v)
         {
             Delegates.glVertex4f(v.X, v.Y, v.Z, v.W);
         }
 
-        public static
-        void Rotate(Single angle, Vector3 axis)
+        public static void TexCoord2(Vector2 v)
+        {
+            Delegates.glTexCoord2f(v.X, v.Y);
+        }
+
+        public static void TexCoord3(Vector3 v)
+        {
+            Delegates.glTexCoord3f(v.X, v.Y, v.Z);
+        }
+
+        public static void TexCoord4(Vector4 v)
+        {
+            Delegates.glTexCoord4f(v.X, v.Y, v.Z, v.W);
+        }
+
+        public static void Rotate(Single angle, Vector3 axis)
         {
             Delegates.glRotatef((Single)angle, axis.X, axis.Y, axis.Z);
         }
 
-        public static
-        void Scale(Vector3 scale)
+        public static void Scale(Vector3 scale)
         {
             Delegates.glScalef(scale.X, scale.Y, scale.Z);
         }
 
-        public static
-        void Translate(Vector3 trans)
+        public static void Translate(Vector3 trans)
         {
             Delegates.glTranslatef(trans.X, trans.Y, trans.Z);
         }
