@@ -14,7 +14,7 @@ namespace OpenTK.Fonts
     /// <summary>
     /// Represents a single character of a specific Font.
     /// </summary>
-    public class Glyph : IPackable<Glyph>
+    class Glyph : IPackable<Glyph>
     {
         char character;
         Font font;
