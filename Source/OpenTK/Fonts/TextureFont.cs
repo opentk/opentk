@@ -15,15 +15,17 @@ using OpenTK.OpenGL;
 using OpenTK.OpenGL.Enums;
 using System.Drawing.Imaging;
 using OpenTK.Platform;
+using System.Drawing;
 
 namespace OpenTK.Fonts
 {
     public class TextureFont : IFont
     {
-        System.Drawing.Font font;
+        Font font;
         Dictionary<char, Box2> loaded_glyphs = new Dictionary<char, Box2>(64);
 
-        System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(new System.Drawing.Bitmap(1, 1));
+        Bitmap bmp;
+        Graphics gfx;
         static int texture;
         static TexturePacker<Glyph> pack;
         static int texture_width, texture_height;
@@ -41,6 +43,9 @@ namespace OpenTK.Fonts
                 throw new ArgumentNullException("font", "Argument to TextureFont constructor cannot be null.");
 
             this.font = font;
+
+            bmp = new Bitmap(font.Height * 2, font.Height * 2);
+            gfx = Graphics.FromImage(bmp);
         }
 
         #endregion
@@ -94,13 +99,28 @@ namespace OpenTK.Fonts
 
         #endregion
 
+        #region public void LoadGlyph(char glyph)
+
+        /// <summary>
+        /// Prepares the specified glyph for rendering.
+        /// </summary>
+        /// <param name="glyphs">The glyph to prepare for rendering.</param>
+        public void LoadGlyph(char glyph)
+        {
+            Box2 rect = new Box2();
+            if (!loaded_glyphs.ContainsKey(glyph))
+                LoadGlyph(glyph, out rect);
+        }
+
+        #endregion
+
         #region private void LoadGlyph(char c, out Box2 rectangle)
 
         /// <summary>
         /// Adds a glyph to the texture packer.
         /// </summary>
         /// <param name="c">The character of the glyph.</param>
-        /// <param name="rectangle">A RectangleF that will hold the data for this glyph.</param>
+        /// <param name="rectangle">An OpenTK.Math.Box2 that will hold the data for this glyph.</param>
         private void LoadGlyph(char c, out Box2 rectangle)
         {
             if (pack == null)
@@ -109,25 +129,48 @@ namespace OpenTK.Fonts
             Glyph g = new Glyph(c, font);
             System.Drawing.Rectangle rect = pack.Add(g);
 
-            using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(
-                rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
-            using (System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(bmp))
+            //using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+            //using (System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(bmp))
             {
-                // Upload texture data.
                 GL.BindTexture(TextureTarget.Texture2d, texture);
 
-                //gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-                //gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                gfx.TextContrast = 0;
+                // Set font rendering mode. Smal sizes look blurry without gridfitting, so turn
+                // that on. Increasing contrast also seems to help.
+                if (font.Size <= 18.0f)
+                {
+                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                    gfx.TextContrast = 1;
+                }
+                else
+                {
+                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                    gfx.TextContrast = 0;
+                }
+                
                 gfx.Clear(System.Drawing.Color.Transparent);
                 gfx.DrawString(g.Character.ToString(), g.Font, System.Drawing.Brushes.White, 0.0f, 0.0f);
-
+                /*
                 BitmapData bmp_data = bmp.LockBits(new System.Drawing.Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly,
                     System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 GL.TexSubImage2D(TextureTarget.Texture2d, 0, rect.Left, rect.Top, rect.Width, rect.Height,
                     OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bmp_data.Scan0);
                 bmp.UnlockBits(bmp_data);
+                */
+
+                int[] data = new int[rect.Width * rect.Height];
+                for (int y = 0; y < rect.Height; y++)
+                {
+                    for (int x = 0; x < rect.Width; x++)
+                    {
+                        data[y * rect.Width + x] = bmp.GetPixel(x, y).ToArgb();
+                    }
+                }
+                unsafe
+                {
+                    fixed (int* ptr = data)
+                        GL.TexSubImage2D(TextureTarget.Texture2d, 0, rect.Left, rect.Top, rect.Width, rect.Height,
+                        OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)ptr);
+                }
 
                 rectangle = new Box2(
                     rect.Left / (float)texture_width,
@@ -176,6 +219,18 @@ namespace OpenTK.Fonts
         public float Height
         {
             get { return font.Height; }
+        }
+
+        #endregion
+
+        #region public float Width
+
+        /// <summary>
+        /// Gets a float indicating the default line spacing of this font.
+        /// </summary>
+        public float Width
+        {
+            get { return font.SizeInPoints; }
         }
 
         #endregion
