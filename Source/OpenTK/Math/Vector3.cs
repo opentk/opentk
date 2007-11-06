@@ -254,18 +254,23 @@ namespace OpenTK.Math
 			return vec;
 		}
 
-        [CLSCompliant(false)]
-        unsafe public static explicit operator float*(Vector3 v)
+        public float get(int index)
         {
-            return &v.X;
-        }
-
-        public static explicit operator IntPtr(Vector3 v)
-        {
+            switch (index)
+            {
+                case 0: return X;
+                case 1: return Y;
+                case 2: return Z;
+                default: throw new ArgumentOutOfRangeException("index", index, "Should be 0, 1 or 2.");
+            }
+            /*
             unsafe
             {
-                return (IntPtr)(&v.X);
+                fixed (float* ptr = &this.X)
+                    return *(ptr + index);
             }
+
+            */
         }
 
         #endregion
