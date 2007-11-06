@@ -14,8 +14,6 @@ namespace OpenTK
 {
     class TexturePacker<T> where T : IPackable<T>
     {
-        //Dictionary<T, Node> items = new Dictionary<T, Node>();
-        
         Node root;
 
         #region --- Constructors ---
@@ -59,29 +57,8 @@ namespace OpenTK
                 //items.Add(item, node);
                 return node.Rect;
             }
-            throw new ArgumentException("The item already exists in the TexturePacker.", "item");
+            //throw new ArgumentException("The item already exists in the TexturePacker.", "item");
         }
-
-        #endregion
-
-        #region public bool Find(T item, out Rectangle rect)
-
-        /// <summary>
-        /// Searches for the item given and returns its bounding rectangle if it exists.
-        /// </summary>
-        /// <param name="item">The item to search for.</param>
-        /// <param name="rect">The bounding box of the item, if the item exists.</param>
-        /// <returns>True if the item exists, false otherwise.</returns>
-        //public bool Find(T item, out Rectangle rect)
-        //{
-        //    Node node;
-        //    bool found = items.TryGetValue(item, out node);
-        //    if (found)
-        //        rect = node.Rect;
-        //    else
-        //        rect = new Rectangle();
-        //    return found;
-        //}
 
         #endregion
 
@@ -109,8 +86,7 @@ namespace OpenTK
         /// <seealso cref="Clear"/>
         public void ChangeSize(int new_width, int new_height)
         {
-            Clear();
-            root.Rect = new Rectangle(0, 0, new_width, new_height);
+            throw new NotImplementedException();
         }
 
         #endregion
