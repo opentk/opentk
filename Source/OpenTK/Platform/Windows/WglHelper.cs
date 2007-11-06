@@ -199,11 +199,11 @@ namespace OpenTK.Platform.Windows
             {
                 if (Wgl.Delegates.wglGetExtensionsStringARB != null)
                 {
-                    if (extensions == null || reload_ext_extension_strings)
+                    if (extensions == null || reload_arb_extension_strings)
                     {
                         extensions = Wgl.Arb.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         Array.Sort(extensions);
-                        reload_ext_extension_strings = false;
+                        reload_arb_extension_strings = false;
                     }
 
                     return Array.BinarySearch(extensions, ext) != -1;

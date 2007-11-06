@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Windows
         private DisplayMode mode = new DisplayMode();
         //private WinRawInput driver;
 
-        private bool fullscreen;
+        //private bool fullscreen;
         private bool disposed;
         private bool isExiting;
         private bool exists;
@@ -195,8 +195,8 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
-                fullscreen = false;
                 throw new NotImplementedException();
+                //fullscreen = false;
             }
         }
 
