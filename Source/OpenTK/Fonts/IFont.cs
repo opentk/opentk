@@ -7,15 +7,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Drawing;
+
+using OpenTK.Math;
 
 namespace OpenTK.Fonts
 {
     public interface IFont : IDisposable
     {
         void LoadGlyphs(string glyphs);
-        RectangleF FindRectangle(char c);
         float Height { get; }
-        SizeF MeasureString(string str);
+        void MeasureString(string str, out float width, out float height);
     }
 }
