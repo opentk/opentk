@@ -250,12 +250,12 @@ namespace OpenTK
             get
             {
                 throw new NotImplementedException();
-                return glWindow.Visible;
+                //return glWindow.Visible;
             }
             set
             {
                 throw new NotImplementedException();
-                glWindow.Visible = value;
+                //glWindow.Visible = value;
             }
         }
 
