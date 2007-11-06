@@ -398,67 +398,97 @@ namespace OpenTK.Math
 
 		#endregion
 
-		#region Min
+        #region ComponentMin
 
-		/// <summary>
-		/// Calculate the component-wise minimum of two vectors
-		/// </summary>
-		/// <param name="a">First operand</param>
-		/// <param name="b">Second operand</param>
-		/// <returns>The component-wise minimum</returns>
-		public static Vector3 Min(Vector3 a, Vector3 b)
-		{
-			a.X = a.X < b.X ? a.X : b.X;
-			a.Y = a.Y < b.Y ? a.Y : b.Y;
-			a.Z = a.Z < b.Z ? a.Z : b.Z;
-			return a;
-		}
+        /// <summary>
+        /// Calculate the component-wise minimum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise minimum</returns>
+        public static Vector3 ComponentMin(Vector3 a, Vector3 b)
+        {
+            a.X = a.X < b.X ? a.X : b.X;
+            a.Y = a.Y < b.Y ? a.Y : b.Y;
+            a.Z = a.Z < b.Z ? a.Z : b.Z;
+            return a;
+        }
 
-		/// <summary>
-		/// Calculate the component-wise minimum of two vectors
-		/// </summary>
-		/// <param name="a">First operand</param>
-		/// <param name="b">Second operand</param>
-		/// <param name="result">The component-wise minimum</param>
-		public static void Min(ref Vector3 a, ref Vector3 b, out Vector3 result)
-		{
-			result.X = a.X < b.X ? a.X : b.X;
-			result.Y = a.Y < b.Y ? a.Y : b.Y;
-			result.Z = a.Z < b.Z ? a.Z : b.Z;
-		}
+        /// <summary>
+        /// Calculate the component-wise minimum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise minimum</param>
+        public static void ComponentMin(ref Vector3 a, ref Vector3 b, out Vector3 result)
+        {
+            result.X = a.X < b.X ? a.X : b.X;
+            result.Y = a.Y < b.Y ? a.Y : b.Y;
+            result.Z = a.Z < b.Z ? a.Z : b.Z;
+        }
 
-		#endregion
+        #endregion
 
-		#region Max
+        #region ComponentMax
 
-		/// <summary>
-		/// Calculate the component-wise maximum of two vectors
-		/// </summary>
-		/// <param name="a">First operand</param>
-		/// <param name="b">Second operand</param>
-		/// <returns>The component-wise maximum</returns>
-		public static Vector3 Max(Vector3 a, Vector3 b)
-		{
-			a.X = a.X > b.X ? a.X : b.X;
-			a.Y = a.Y > b.Y ? a.Y : b.Y;
-			a.Z = a.Z > b.Z ? a.Z : b.Z;
-			return a;
-		}
+        /// <summary>
+        /// Calculate the component-wise maximum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <returns>The component-wise maximum</returns>
+        public static Vector3 ComponentMax(Vector3 a, Vector3 b)
+        {
+            a.X = a.X > b.X ? a.X : b.X;
+            a.Y = a.Y > b.Y ? a.Y : b.Y;
+            a.Z = a.Z > b.Z ? a.Z : b.Z;
+            return a;
+        }
 
-		/// <summary>
-		/// Calculate the component-wise maximum of two vectors
-		/// </summary>
-		/// <param name="a">First operand</param>
-		/// <param name="b">Second operand</param>
-		/// <param name="result">The component-wise maximum</param>
-		public static void Max(ref Vector3 a, ref Vector3 b, out Vector3 result)
-		{
-			result.X = a.X > b.X ? a.X : b.X;
-			result.Y = a.Y > b.Y ? a.Y : b.Y;
-			result.Z = a.Z > b.Z ? a.Z : b.Z;
-		}
+        /// <summary>
+        /// Calculate the component-wise maximum of two vectors
+        /// </summary>
+        /// <param name="a">First operand</param>
+        /// <param name="b">Second operand</param>
+        /// <param name="result">The component-wise maximum</param>
+        public static void ComponentMax(ref Vector3 a, ref Vector3 b, out Vector3 result)
+        {
+            result.X = a.X > b.X ? a.X : b.X;
+            result.Y = a.Y > b.Y ? a.Y : b.Y;
+            result.Z = a.Z > b.Z ? a.Z : b.Z;
+        }
 
-		#endregion
+        #endregion
+
+        #region Min
+
+        /// <summary>
+        /// Returns the Vector3 with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector3</returns>
+        public static Vector3 Min(Vector3 left, Vector3 right)
+        {
+            return left.LengthSquared < right.LengthSquared ? left : right;
+        }
+
+        #endregion
+
+        #region Max
+
+        /// <summary>
+        /// Returns the Vector3 with the minimum magnitude
+        /// </summary>
+        /// <param name="left">Left operand</param>
+        /// <param name="right">Right operand</param>
+        /// <returns>The minimum Vector3</returns>
+        public static Vector3 Max(Vector3 left, Vector3 right)
+        {
+            return left.LengthSquared >= right.LengthSquared ? left : right;
+        }
+
+        #endregion
 
 		#region Clamp
 
