@@ -94,7 +94,8 @@ namespace OpenTK.Math
 		{
 			get
 			{
-				return Row0.X * Row1.Y * Row2.Z * Row3.W - Row0.X * Row1.Y * Row2.W * Row3.Z + Row0.X * Row1.Z * Row2.W * Row3.Y - Row0.X * Row1.Z * Row2.Y * Row3.W
+				return
+                    Row0.X * Row1.Y * Row2.Z * Row3.W - Row0.X * Row1.Y * Row2.W * Row3.Z + Row0.X * Row1.Z * Row2.W * Row3.Y - Row0.X * Row1.Z * Row2.Y * Row3.W
 				  + Row0.X * Row1.W * Row2.Y * Row3.Z - Row0.X * Row1.W * Row2.Z * Row3.Y - Row0.Y * Row1.Z * Row2.W * Row3.X + Row0.Y * Row1.Z * Row2.X * Row3.W
 				  - Row0.Y * Row1.W * Row2.X * Row3.Z + Row0.Y * Row1.W * Row2.Z * Row3.X - Row0.Y * Row1.X * Row2.Z * Row3.W + Row0.Y * Row1.X * Row2.W * Row3.Z
 				  + Row0.Z * Row1.W * Row2.X * Row3.Y - Row0.Z * Row1.W * Row2.Y * Row3.X + Row0.Z * Row1.X * Row2.Y * Row3.W - Row0.Z * Row1.X * Row2.W * Row3.Y
@@ -150,18 +151,9 @@ namespace OpenTK.Math
 			return Matrix4.Mult(left, right);
 		}
 
-		[CLSCompliant(false)]
-        unsafe public static explicit operator float*(Matrix4 mat)
+        public float get(int x, int y)
         {
-            return &mat.Row0.X;
-        }
-
-        public static explicit operator IntPtr(Matrix4 mat)
-        {
-			unsafe
-			{
-				return (IntPtr)(&mat.Row0.X);
-			}
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -373,6 +365,7 @@ namespace OpenTK.Math
 		/// </summary>
 		/// <param name="mat">The matrix to invert</param>
 		/// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
 		public static Matrix4 Invert(Matrix4 mat)
 		{
 			int[] colIdx = { 0, 0, 0, 0 };
@@ -434,7 +427,8 @@ namespace OpenTK.Math
 				// check for singular matrix
 				if (pivot == 0.0f)
 				{
-					return mat;
+                    throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+					//return mat;
 				}
 
 				// Scale row so it has a unit diagonal
