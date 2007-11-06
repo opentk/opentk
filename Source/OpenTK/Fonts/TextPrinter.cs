@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 using OpenTK.Math;
 using OpenTK.OpenGL;
 using OpenTK.OpenGL.Enums;
-using System.Runtime.InteropServices;
 
 
 namespace OpenTK.Fonts
@@ -27,7 +27,7 @@ namespace OpenTK.Fonts
         //static char[] split_chars = new char[] { ' ', '\n', '\t', ',', '.', '/', '?', '!', ';', '\\', '-', '+', '*', '=' };
         static bool use_vbo, use_arb_vbo, use_display_list;
         static bool functionality_checked = false;
-        static IPrinter printer;
+        static ITextPrinterImplementation printer;
 
         #region --- Constructor ---
 
@@ -43,11 +43,12 @@ namespace OpenTK.Fonts
         /// </summary>
         static void CheckNeededFunctionality()
         {
-            printer =
-                GL.SupportsExtension("VERSION_1_5") ? new VboPrinter() :
+            printer = new DisplayListTextPrinter();
+                /*
+                GL.SupportsExtension("VERSION_1_5") ? new VboTextPrinter() :
                 GL.SupportsExtension("ARB_vertex_buffer_object") ? null :
                 GL.SupportsExtension("VERSION_1_1") ? null : null;
-            
+                */
             if (printer == null)
                 throw new NotSupportedException("DefaultLayoutProvider requires at least OpenGL 1.1 support.");
             
@@ -79,8 +80,8 @@ namespace OpenTK.Fonts
             if (text == null)
                 throw new ArgumentNullException("Parameter cannot be null.", "text");
 
-            if (text.Length > 4096)
-                throw new ArgumentOutOfRangeException("text", text.Length, "Text length must be between 1 and 4096 characters");
+            if (text.Length > 8192)
+                throw new ArgumentOutOfRangeException("text", text.Length, "Text length must be between 1 and 8192 characters");
 
             Vector2[] vertices = new Vector2[8 * text.Length];  // Interleaved, vertex, texcoord, vertex, etc...
             ushort[] indices = new ushort[6 * text.Length];
@@ -89,6 +90,8 @@ namespace OpenTK.Fonts
             Box2 rect = new Box2();
             float char_width, char_height, measured_width, measured_height;
             int texture;
+
+            font.LoadGlyphs(text);
 
             // Every character comprises of 4 vertices, forming two triangles. We generate an index array which
             // indexes vertices in a triangle-strip fashion. To create a single strip for the whole string, we
@@ -168,87 +171,14 @@ namespace OpenTK.Fonts
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
-            GL.Enable(EnableCap.Blend);
+            //GL.Disable(EnableCap.Texture2d);
+
             GL.BindTexture(TextureTarget.Texture2d, handle.font.Texture);
             
             printer.Draw(handle);
 
             GL.PopAttrib();
             GL.PopAttrib();
-        }
-
-        #endregion
-    }
-
-    public class TextHandle
-    {
-        internal TextHandle(int handle)
-        {
-            Handle = handle;
-        }
-
-        public readonly int Handle;
-        internal TextureFont font;
-    }
-
-    class VboTextHandle : TextHandle
-    {
-        public VboTextHandle(int handle) : base(handle) { }
-
-        internal int vbo_id;    // vertex buffer object id.
-        internal int ebo_id;    // index buffer object id.
-        internal int element_count;     // Number of elements in the ebo.
-    }
-
-    interface IPrinter
-    {
-        TextHandle Load(Vector2[] vertices, ushort[] indices);
-        void Draw(TextHandle handle);
-    }
-
-    class VboPrinter : IPrinter
-    {
-        static int allocated_handles;
-        static int vector2_size = Marshal.SizeOf(new Vector2());
-
-        #region --- IPrinter Members ---
-
-        public TextHandle Load(Vector2[] vertices, ushort[] indices)
-        {
-            VboTextHandle handle = new VboTextHandle(++allocated_handles);
-            GL.GenBuffers(1, out handle.vbo_id);
-            GL.GenBuffers(1, out handle.ebo_id);
-
-            GL.BindBuffer(Version15.ArrayBuffer, handle.vbo_id);
-            GL.BufferData(Version15.ArrayBuffer, (IntPtr)(vertices.Length * vector2_size), vertices,
-                          Version15.StaticDraw);
-
-            GL.BindBuffer(Version15.ElementArrayBuffer, handle.ebo_id);
-            GL.BufferData(Version15.ElementArrayBuffer, (IntPtr)(indices.Length * sizeof(ushort)), indices,
-                          Version15.StaticDraw);
-            handle.element_count = indices.Length;
-
-            return handle;
-        }
-
-        public void Draw(TextHandle handle)
-        {
-            VboTextHandle vbo = (VboTextHandle)handle;
-
-            GL.PushClientAttrib(ClientAttribMask.ClientVertexArrayBit);
-
-            GL.BindBuffer(Version15.StaticDraw, vbo.vbo_id);
-            GL.BindBuffer(Version15.ElementArrayBuffer, vbo.ebo_id);
-
-            GL.EnableClientState(EnableCap.VertexArray);
-            GL.EnableClientState(EnableCap.TextureCoordArray);
-
-            GL.TexCoordPointer(2, TexCoordPointerType.Float, vector2_size, (IntPtr)vector2_size);
-            GL.VertexPointer(2, VertexPointerType.Float, vector2_size, IntPtr.Zero);
-
-            GL.DrawElements(BeginMode.Triangles, vbo.element_count, All.UnsignedShort, IntPtr.Zero);
-
-            GL.PopClientAttrib();
         }
 
         #endregion
