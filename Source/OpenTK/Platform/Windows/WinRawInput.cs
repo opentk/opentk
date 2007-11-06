@@ -147,7 +147,7 @@ namespace OpenTK.Platform.Windows
         public void Poll()
         {
             return;
-
+#if false
             // We will do a buffered read for all input devices and route the RawInput structures
             // to the correct 'ProcessData' handlers. First, we need to find out the size of the
             // buffer to allocate for the structures. Then we allocate the buffer and read the
@@ -206,6 +206,7 @@ namespace OpenTK.Platform.Windows
             }
 
             Marshal.FreeHGlobal(rin_data);
+#endif
         }
 
         #endregion
