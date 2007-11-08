@@ -125,7 +125,8 @@ namespace OpenTK
             glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
             
             CreateWindow(mode, title);
-            this.vsync = VSyncMode.Adaptive;
+            //this.vsync = VSyncMode.Adaptive;
+            this.VSync = VSyncMode.On;
         }
 
         void glWindow_Destroy(object sender, EventArgs e)
@@ -483,10 +484,20 @@ namespace OpenTK
                 //sleep_granularity = System.Math.Round(1000.0 * update_watch.Elapsed.TotalSeconds / test_times, MidpointRounding.AwayFromZero) / 1000.0;
                 //update_watch.Reset();       // We don't want to affect the first UpdateFrame!
 
-                OnLoadInternal(EventArgs.Empty);
+                try
+                {
+                    OnLoadInternal(EventArgs.Empty);
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(String.Format("OnLoad failed: {0}", e.ToString()));
+                    return;
+                }
 
+                Debug.Print("Elevating priority.");
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
-
+                
+                Debug.Print("Entering main loop.");
                 while (!isExiting)
                 {
                     // Process events
@@ -843,7 +854,7 @@ namespace OpenTK
             {
                 if (value == VSyncMode.Off)
                     Context.VSync = false;
-                else if (value == VSyncMode.On)
+                else
                     Context.VSync = true;
 
                 vsync = value;
