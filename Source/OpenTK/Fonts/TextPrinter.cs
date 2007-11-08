@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using OpenTK.Math;
 using OpenTK.OpenGL;
 using OpenTK.OpenGL.Enums;
+using System.Diagnostics;
 
 
 namespace OpenTK.Fonts
@@ -25,7 +26,6 @@ namespace OpenTK.Fonts
     {
         //static Regex break_point = new Regex("[ .,/*-+?\\!=]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         //static char[] split_chars = new char[] { ' ', '\n', '\t', ',', '.', '/', '?', '!', ';', '\\', '-', '+', '*', '=' };
-        static bool use_vbo, use_arb_vbo, use_display_list;
         static bool functionality_checked = false;
         static ITextPrinterImplementation printer;
 
@@ -37,6 +37,8 @@ namespace OpenTK.Fonts
         public TextPrinter() { }
 
         #endregion
+
+        #region static void CheckNeededFunctionality()
 
         /// <summary>
         /// Checks the machine's capabilities and selects the fastest method to print text.
@@ -53,7 +55,11 @@ namespace OpenTK.Fonts
                 throw new NotSupportedException("DefaultLayoutProvider requires at least OpenGL 1.1 support.");
             
             functionality_checked = true;
+
+            Debug.Print("Using {0} for font printing.", printer);
         }
+
+        #endregion
 
         #region --- ITextPrinter Members ---
 
@@ -106,13 +112,7 @@ namespace OpenTK.Fonts
                     if (Char.IsSeparator(c))
                         last_break_point = index_count;
 
-                    if (c == '\n' || c == '\r')
-                    {
-                        //x_pos = layoutRect.Left;
-                        x_pos = 0;
-                        y_pos += font.Height;
-                    }
-                    else
+                    if (c != '\n' && c != '\r')
                     {
                         font.GlyphData(c, out char_width, out char_height, out rect, out texture);
 
@@ -146,6 +146,12 @@ namespace OpenTK.Fonts
                         font.MeasureString(text.Substring(i, 1), out measured_width, out measured_height);
                         x_pos += measured_width;
                     }
+                    else if (c == '\n')
+                    {
+                        //x_pos = layoutRect.Left;
+                        x_pos = 0;
+                        y_pos += font.Height;
+                    }
                     ++i;
                 }
             }
@@ -171,7 +177,7 @@ namespace OpenTK.Fonts
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
-            //GL.Disable(EnableCap.Texture2d);
+            GL.Disable(EnableCap.DepthTest);
 
             GL.BindTexture(TextureTarget.Texture2d, handle.font.Texture);
             
