@@ -15,9 +15,13 @@ using OpenTK.Fonts;
 using OpenTK.OpenGL;
 using OpenTK.Input;
 using OpenTK.OpenGL.Enums;
+using System.Diagnostics;
 
 namespace Examples.Tutorial
 {
+    /// <summary>
+    /// Shows how to render and scroll large amounts of text.
+    /// </summary>
     public class Text : GameWindow, IExample
     {
         TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 24.0f));
@@ -25,11 +29,9 @@ namespace Examples.Tutorial
         ITextPrinter text = new TextPrinter();
 
         public Text() : base(new DisplayMode(800, 600), String.Format("OpenTK | Tutorial {0}: Text", order))
-        { VSync = VSyncMode.Off; }
+        { }
 
-        // Read some text to print. It's a good idea to ensure line-endings are all in the \n
-        // form and not \r\n or \n\r.
- 	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd().Replace('\r', ' ');
+ 	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
         int lines;  // How many lines the poem contains.
         
         float scroll_speed;
@@ -42,18 +44,32 @@ namespace Examples.Tutorial
         public override void OnLoad(EventArgs e)
         {
             GL.ClearColor(Color.SteelBlue);
-
+            
             current_position = initial_position;
             scroll_speed = -1.0f;
 
             text.Prepare(poem, serif, out poem_handle);
 
+            // Count the amount of lines in the text, to find out the correct
+            // warparound position. We want the text to scroll until the last
+            // line moves outside the screen, then warp it around from the
+            // other side of the screen.
             foreach (char c in poem)
                 if (c == '\n')
                     lines++;
 
             warparound_position =
                 -(lines + 1) * serif.Height;
+        }
+
+        #endregion
+
+        #region OnUnload
+
+        public override void OnUnload(EventArgs e)
+        {
+            poem_handle.Dispose();
+            serif.Dispose();
         }
 
         #endregion
