@@ -16,6 +16,8 @@ using OpenTK.OpenGL.Enums;
 using System.Drawing.Imaging;
 using OpenTK.Platform;
 using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace OpenTK.Fonts
 {
@@ -26,10 +28,14 @@ namespace OpenTK.Fonts
 
         Bitmap bmp;
         Graphics gfx;
+        // TODO: We need to be able to use multiple font sheets.
         static int texture;
         static TexturePacker<Glyph> pack;
         static int texture_width, texture_height;
-        float[] viewport = new float[6];
+
+        int[] data = new int[256];  // Used to upload glyph data to the OpenGL texture.
+        
+        object upload_lock = new object();
 
         #region --- Constructor ---
 
@@ -37,7 +43,7 @@ namespace OpenTK.Fonts
         /// Constructs a new TextureFont object, using the specified System.Drawing.Font.
         /// </summary>
         /// <param name="font">The System.Drawing.Font to use.</param>
-        public TextureFont(System.Drawing.Font font)
+        public TextureFont(Font font)
         {
             if (font == null)
                 throw new ArgumentNullException("font", "Argument to TextureFont constructor cannot be null.");
@@ -46,6 +52,19 @@ namespace OpenTK.Fonts
 
             bmp = new Bitmap(font.Height * 2, font.Height * 2);
             gfx = Graphics.FromImage(bmp);
+
+            // Adjust font rendering mode. Small sizes look blurry without gridfitting, so turn
+            // that on. Increasing contrast also seems to help.
+            if (font.Size <= 18.0f)
+            {
+                gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                gfx.TextContrast = 1;
+            }
+            else
+            {
+                gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
+                gfx.TextContrast = 0;
+            }
         }
 
         #endregion
@@ -127,59 +146,61 @@ namespace OpenTK.Fonts
                 PrepareTexturePacker();
 
             Glyph g = new Glyph(c, font);
-            System.Drawing.Rectangle rect = pack.Add(g);
+            Rectangle rect = new Rectangle();
 
-            //using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
-            //using (System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(bmp))
+            try
             {
-                GL.BindTexture(TextureTarget.Texture2d, texture);
+                pack.Add(g, out rect);
+            }
+            catch (InvalidOperationException expt)
+            {
+                // TODO: The TexturePacker is full, create a new font sheet.
+                Trace.WriteLine(expt);
+                throw;
+            }
 
-                // Set font rendering mode. Smal sizes look blurry without gridfitting, so turn
-                // that on. Increasing contrast also seems to help.
-                if (font.Size <= 18.0f)
-                {
-                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                    gfx.TextContrast = 1;
-                }
-                else
-                {
-                    gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                    gfx.TextContrast = 0;
-                }
-                
-                gfx.Clear(System.Drawing.Color.Transparent);
-                gfx.DrawString(g.Character.ToString(), g.Font, System.Drawing.Brushes.White, 0.0f, 0.0f);
-                /*
-                BitmapData bmp_data = bmp.LockBits(new System.Drawing.Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly,
-                    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                GL.TexSubImage2D(TextureTarget.Texture2d, 0, rect.Left, rect.Top, rect.Width, rect.Height,
-                    OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bmp_data.Scan0);
-                bmp.UnlockBits(bmp_data);
-                */
+            GL.BindTexture(TextureTarget.Texture2d, texture);
 
-                int[] data = new int[rect.Width * rect.Height];
+            gfx.Clear(System.Drawing.Color.Transparent);
+            gfx.DrawString(g.Character.ToString(), g.Font, System.Drawing.Brushes.White, 0.0f, 0.0f);
+
+            //BitmapData bitmap_data = bitmap.LockBits(new Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly,
+            //    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            //GL.TexSubImage2D(TextureTarget.Texture2d, 0, rect.Left, rect.Top, rect.Width, rect.Height,
+            //    OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bitmap_data.Scan0);
+            //bitmap.UnlockBits(bitmap_data);
+
+            BitmapData bitmap_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            int needed_size = rect.Width * rect.Height;
+            if (data.Length < needed_size)
+                Array.Resize<int>(ref data, needed_size);
+            Array.Clear(data, 0, needed_size);
+            unsafe
+            {
+                int* bitmap_data_ptr = (int*)bitmap_data.Scan0;
                 for (int y = 0; y < rect.Height; y++)
                 {
                     for (int x = 0; x < rect.Width; x++)
                     {
-                        data[y * rect.Width + x] = bmp.GetPixel(x, y).ToArgb();
+                        data[y * rect.Width + x] = *(bitmap_data_ptr + y * bmp.Width + x);
                     }
                 }
-                unsafe
-                {
-                    fixed (int* ptr = data)
-                        GL.TexSubImage2D(TextureTarget.Texture2d, 0, rect.Left, rect.Top, rect.Width, rect.Height,
-                        OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)ptr);
-                }
 
-                rectangle = new Box2(
-                    rect.Left / (float)texture_width,
-                    rect.Top / (float)texture_height,
-                    rect.Right / (float)texture_width,
-                    rect.Bottom / (float)texture_height);
-
-                loaded_glyphs.Add(g.Character, rectangle);
+                fixed (int* data_ptr = data)
+                    GL.TexSubImage2D(TextureTarget.Texture2d, 0, rect.Left, rect.Top, rect.Width, rect.Height,
+                                     OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)data_ptr);
             }
+            bmp.UnlockBits(bitmap_data);
+
+            rectangle = new Box2(
+                rect.Left / (float)texture_width,
+                rect.Top / (float)texture_height,
+                rect.Right / (float)texture_width,
+                rect.Bottom / (float)texture_height);
+
+            loaded_glyphs.Add(g.Character, rectangle);
+
         }
 
         #endregion
