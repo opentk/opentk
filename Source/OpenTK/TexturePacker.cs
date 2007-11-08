@@ -40,7 +40,7 @@ namespace OpenTK
         /// <returns>A System.Drawing.Rectangle containing the coordinates of the packed item.</returns>
         /// <exception cref="InvalidOperationException">Occurs if the item is larger than the available TexturePacker area</exception>
         /// <exception cref="ArgumentException">Occurs if the item already exists in the TexturePacker.</exception>
-        public Rectangle Add(T item)
+        public void Add(T item, out Rectangle rect)
         {
             if (item.Width > root.Rect.Width || item.Height > root.Rect.Height)
                 throw new InvalidOperationException("The item is too large for this TexturePacker");
@@ -55,7 +55,7 @@ namespace OpenTK
                     throw new InvalidOperationException("There is not enough space to add this item. Consider calling the Clear() method.");
 
                 //items.Add(item, node);
-                return node.Rect;
+                rect = node.Rect;
             }
             //throw new ArgumentException("The item already exists in the TexturePacker.", "item");
         }
