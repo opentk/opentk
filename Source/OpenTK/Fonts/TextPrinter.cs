@@ -16,7 +16,6 @@ using OpenTK.OpenGL;
 using OpenTK.OpenGL.Enums;
 using System.Diagnostics;
 
-
 namespace OpenTK.Fonts
 {
     /// <summary>
