@@ -45,9 +45,4 @@ namespace OpenTK.Fonts
 
         #endregion
     }
-
-    public class DisplayListTextHandle : TextHandle
-    {
-        public DisplayListTextHandle(int handle) : base(handle) { }
-    }
 }
