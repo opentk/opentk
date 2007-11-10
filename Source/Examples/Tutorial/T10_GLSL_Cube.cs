@@ -27,6 +27,7 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates how to load and use a simple OpenGL shader program. Example is incomplete (documentation).
     /// </summary>
+    [Example("OpenTK | GLSL Example 1", ExampleCategory.GLSL, 1)]
     public class T10_GLSL_Cube : GameWindow, IExample
     {
         #region --- Fields ---
@@ -35,15 +36,16 @@ namespace Examples.Tutorial
         int vertex_shader_object, fragment_shader_object, shader_program;
         int vertex_buffer_object, color_buffer_object, element_buffer_object;
 
-        Shapes.Shape shape = //new Examples.Shapes.Plane(8, 8, 4.0f, 4.0f);
-            new Examples.Shapes.Cube();
+        Shapes.Shape shape = new Examples.Shapes.Cube();
 
         #endregion
 
         #region --- Constructors ---
 
-        public T10_GLSL_Cube() : base(new DisplayMode(800, 600), "OpenTK | GLSL Example 1")
+        public T10_GLSL_Cube()
+            : base(new DisplayMode(800, 600), T10_GLSL_Cube.Title)
         {
+            
         }
 
         #endregion
@@ -67,69 +69,57 @@ namespace Examples.Tutorial
                 return;
             }
 
-            GL.ClearColor(Color.MidnightBlue);
+            GL.ClearColor(Color.SteelBlue);
             GL.Enable(EnableCap.DepthTest);
 
             CreateVBO();
 
-            //CreateShader();
-
-            int status_code, status_text_length;
-            StringBuilder info = new StringBuilder();
-
-            vertex_shader_object = GL.CreateShader(Version20.VertexShader);
-            fragment_shader_object = GL.CreateShader(Version20.FragmentShader);
-
-            using (StreamReader sr = new StreamReader("Data/Shaders/Simple_VS.glsl"))
-            {
-                string[] code = new string[] { sr.ReadToEnd() };
-#if MONO
-                unsafe { GL.ShaderSource(vertex_shader_object, vertex_shader_source.Length, vertex_shader_source, (int*)null); }
-#else
-                GL.ShaderSource(vertex_shader_object, code.Length, code, (int[])null);
-#endif
-            }
-            GL.CompileShader(vertex_shader_object);
-            GL.GetShader(vertex_shader_object, Version20.CompileStatus, out status_code);
-            GL.GetShader(vertex_shader_object, Version20.InfoLogLength, out status_text_length);
-            info.Remove(0, info.Length);
-            info.EnsureCapacity(status_text_length);
-            GL.GetShaderInfoLog(vertex_shader_object, info.Capacity, out status_text_length, info);
-            Trace.WriteLine(info.ToString());
-            
-            if (status_code != 1)
-                throw new Exception(info.ToString());
-
-            using (StreamReader sr = new StreamReader("Data/Shaders/Simple_FS.glsl"))
-            {
-                string[] code = new string[] { sr.ReadToEnd() };
-#if MONO
-                unsafe { GL.ShaderSource(fragment_shader_object, fragment_shader_source.Length, fragment_shader_source, (int*)null); }
-#else
-                GL.ShaderSource(fragment_shader_object, code.Length, code, (int[])null);
-#endif
-            }
-            
-            GL.CompileShader(fragment_shader_object);
-            GL.GetShader(fragment_shader_object, Version20.CompileStatus, out status_code);
-            GL.GetShader(vertex_shader_object, Version20.InfoLogLength, out status_text_length);
-            info.Remove(0, info.Length);
-            info.EnsureCapacity(status_text_length);
-            GL.GetShaderInfoLog(fragment_shader_object, info.Capacity, out status_text_length, info);
-            Trace.WriteLine(info.ToString());
-
-            if (status_code != 1)
-                throw new Exception(info.ToString());
-
-            shader_program = GL.CreateProgram();
-            GL.AttachShader(shader_program, fragment_shader_object);
-            GL.AttachShader(shader_program, vertex_shader_object);
-
-            GL.LinkProgram(shader_program);
-            GL.UseProgram(shader_program);
+            using (StreamReader vs = new StreamReader("Data/Shaders/Simple_VS.glsl"))
+            using (StreamReader fs = new StreamReader("Data/Shaders/Simple_FS.glsl"))
+                CreateShaders(vs.ReadToEnd(), fs.ReadToEnd(),
+                    out vertex_shader_object, out fragment_shader_object,
+                    out shader_program);
         }
 
-        private void CreateVBO()
+        void CreateShaders(string vs, string fs,
+            out int vertexObject, out int fragmentObject, 
+            out int program)
+        {
+            int status_code;
+            string info;
+
+            vertexObject = GL.CreateShader(Version20.VertexShader);
+            fragmentObject = GL.CreateShader(Version20.FragmentShader);
+
+            // Compile vertex shader
+            GL.ShaderSource(vertexObject, vs);
+            GL.CompileShader(vertexObject);
+            GL.GetShaderInfoLog(vertexObject, out info);
+            GL.GetShader(vertexObject, Version20.CompileStatus, out status_code);
+
+            if (status_code != 1)
+                throw new ApplicationException(info);
+
+            // Compile vertex shader
+            GL.ShaderSource(fragmentObject, fs);
+            GL.CompileShader(fragmentObject);
+            GL.GetShaderInfoLog(fragmentObject, out info);
+            GL.GetShader(fragmentObject, Version20.CompileStatus, out status_code);
+            
+            if (status_code != 1)
+                throw new ApplicationException(info);
+
+            program = GL.CreateProgram();
+            GL.AttachShader(program, fragmentObject);
+            GL.AttachShader(program, vertexObject);
+
+            GL.LinkProgram(program);
+            GL.UseProgram(program);
+        }
+
+        #region private void CreateVBO()
+
+        void CreateVBO()
         {
             int size;
 
@@ -157,8 +147,9 @@ namespace Examples.Tutorial
             GL.GetBufferParameter(Version15.ElementArrayBuffer, Version15.BufferSize, out size);
             if (shape.Indices.Length * 4 != size)
                 throw new ApplicationException("Problem uploading index data to VBO");
-
         }
+
+        #endregion
 
         #endregion
 
@@ -166,16 +157,11 @@ namespace Examples.Tutorial
 
         public override void OnUnload(EventArgs e)
         {
-            if (shader_program != 0)
-                GL.DeleteProgram(shader_program);
-            if (fragment_shader_object != 0)
-                GL.DeleteShader(fragment_shader_object);
-            if (vertex_shader_object != 0)
-                GL.DeleteShader(vertex_shader_object);
-            if (vertex_buffer_object != 0)
-                GL.DeleteBuffers(1, ref vertex_buffer_object);
-            if (element_buffer_object != 0)
-                GL.DeleteBuffers(1, ref element_buffer_object);
+            GL.DeleteProgram(shader_program);
+            GL.DeleteShader(fragment_shader_object);
+            GL.DeleteShader(vertex_shader_object);
+            GL.DeleteBuffers(1, ref vertex_buffer_object);
+            GL.DeleteBuffers(1, ref element_buffer_object);
         }
 
         #endregion
@@ -269,7 +255,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region IExample members
+        #region Example members
 
         #region public void Launch()
 
@@ -286,7 +272,8 @@ namespace Examples.Tutorial
 
         #endregion
 
-        public static readonly int order = 10;
+        static readonly ExampleAttribute info = typeof(T10_GLSL_Cube).GetCustomAttributes(false)[0] as ExampleAttribute;
+        static readonly string Title = info.Title;
 
         #endregion
     }

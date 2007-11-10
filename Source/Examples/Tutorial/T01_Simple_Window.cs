@@ -33,7 +33,7 @@ namespace Examples.Tutorial
         /// <param name="e">Not used.</param>
         public override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(Color.MidnightBlue);
+            GL.ClearColor(Color.SteelBlue);
         }
 
         #endregion
@@ -47,7 +47,7 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
         {
-            GL.Viewport(0, 0, e.Width, e.Height);
+            GL.Viewport(0, 0, Width, Height);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
@@ -88,11 +88,11 @@ namespace Examples.Tutorial
 
             GL.Begin(BeginMode.Triangles);
 
-            GL.Color3(Color.SpringGreen);
+            GL.Color3(Color.LightSteelBlue);
             GL.Vertex2(-1.0f, 1.0f);
-            GL.Color3(Color.SteelBlue);
+            GL.Color3(Color.SpringGreen);
             GL.Vertex2(0.0f, -1.0f);
-            GL.Color3(Color.PeachPuff);
+            GL.Color3(Color.Ivory);
             GL.Vertex2(1.0f, 1.0f);
 
             GL.End();
