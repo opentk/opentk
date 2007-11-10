@@ -51,29 +51,6 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region private static void RegisterAtoms()
-
-        /// <summary>
-        /// Not used yet.
-        /// Registers the necessary atoms for GameWindow.
-        /// </summary>
-        private static void RegisterAtoms(WindowInfo window)
-        {
-            string[] atom_names = new string[] 
-            {
-                "WM_TITLE",
-                "UTF8_STRING"
-            };
-            IntPtr[] atoms = new IntPtr[atom_names.Length];
-            //Functions.XInternAtoms(window.Display, atom_names, atom_names.Length, false, atoms);
-
-            int offset = 0;
-            WMTitle = atoms[offset++];
-            UTF8String = atoms[offset++];
-        }
-
-        #endregion
-
         #region --- Public Constructors ---
 
         /// <summary>
@@ -98,8 +75,30 @@ namespace OpenTK.Platform.X11
             Debug.Print("Display: {0}, Screen {1}, Root window: {2}",
                 window.Display, window.Screen, window.RootWindow);
 
-
             RegisterAtoms(window);
+        }
+
+        #endregion
+
+        #region private static void RegisterAtoms()
+
+        /// <summary>
+        /// Not used yet.
+        /// Registers the necessary atoms for GameWindow.
+        /// </summary>
+        private static void RegisterAtoms(WindowInfo window)
+        {
+            string[] atom_names = new string[] 
+            {
+                "WM_TITLE",
+                "UTF8_STRING"
+            };
+            IntPtr[] atoms = new IntPtr[atom_names.Length];
+            //Functions.XInternAtoms(window.Display, atom_names, atom_names.Length, false, atoms);
+
+            int offset = 0;
+            WMTitle = atoms[offset++];
+            UTF8String = atoms[offset++];
         }
 
         #endregion
@@ -117,10 +116,7 @@ namespace OpenTK.Platform.X11
                 pending = API.Pending(window.Display);
 
                 if (pending == 0)
-                {
-                    //Debug.Print("No events pending on display {0}", window.Display);
                     return;
-                }
 
                 Functions.XNextEvent(window.Display, ref e);
 
@@ -129,13 +125,6 @@ namespace OpenTK.Platform.X11
                 // Respond to the event e
                 switch (e.type)
                 {
-                    case XEventName.ReparentNotify:
-                        // TODO: Is there a more suitable place to raise the Create event?
-                        // ReparentNotify seems to be the first event raised on window creation.
-                        //this.OnCreate(EventArgs.Empty);
-                        break;
-
-
                     case XEventName.MapNotify:
                         Debug.WriteLine("Window mapped.");
                         return;
@@ -144,13 +133,15 @@ namespace OpenTK.Platform.X11
                         // A child was was created - nothing to do
                         break;
 
+                    case XEventName.ClientMessage:
                     case XEventName.DestroyNotify:
+                        // TODO: Check whether using ClientMessage here is 100% correct.
+
                         this.exists = false;
                         this.OnDestroy(EventArgs.Empty);
                         isExiting = true;
                         Debug.Print("X11 window {0} destroyed.", e.DestroyWindowEvent.window);
                         return;
-
 
                     case XEventName.ConfigureNotify:
                         // If the window size changed, raise the C# Resize event.
@@ -177,7 +168,7 @@ namespace OpenTK.Platform.X11
                     case XEventName.ButtonPress:
                     case XEventName.ButtonRelease:
                         //Functions.XPutBackEvent(window.Display, ref e);
-                        //driver.ProcessEvent(ref e);
+                        driver.ProcessEvent(ref e);
                         break;
 
                     default:
@@ -188,6 +179,18 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        #region public IInputDriver InputDriver
+
+        public IInputDriver InputDriver
+        {
+            get
+            {
+                return driver;
+            }
+        }
+
+        #endregion 
 
         #region public bool Exists
 
@@ -406,6 +409,12 @@ namespace OpenTK.Platform.X11
                 hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
                 Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
 
+                // Register for window destroy notification
+                IntPtr wm_destroy_atom = Functions.XInternAtom(window.Display,
+                    "WM_DELETE_WINDOW", true);
+                XWMHints hint = new XWMHints();
+                Functions.XSetWMProtocols(window.Display, window.Handle, new IntPtr[] { wm_destroy_atom }, 1);
+
                 Top = Left = 0;
                 Right = Width;
                 Bottom = Height;
@@ -425,7 +434,7 @@ namespace OpenTK.Platform.X11
                 API.MapRaised(window.Display, window.Handle);
                 mapped = true;
 
-                // driver = new X11Input(window);
+                driver = new X11Input(window);
 
                 //GL.LoadAll();
                 //Glu.LoadAll();
@@ -484,6 +493,8 @@ namespace OpenTK.Platform.X11
             {
                 this.Destroy(this, e);
             }
+
+            Functions.XUnmapWindow(window.Display, window.Handle);
         }
 
         #endregion
