@@ -49,7 +49,7 @@ namespace OpenTK
     /// parameters that
     /// specify the logic update rate, and the render update rate.
     /// </remarks>
-    public class GameWindow : INativeGLWindow
+    public class GameWindow : IDisposable/* : IGameWindow*/
     {
         #region --- Fields ---
 
@@ -69,7 +69,7 @@ namespace OpenTK
         int width, height;
         VSyncMode vsync;
 
-        InputDriver input_driver;
+        //InputDriver input_driver;
 
         #endregion
 
@@ -119,7 +119,8 @@ namespace OpenTK
                     break;
 
                 default:
-                    throw new PlatformNotSupportedException("Your platform is not supported currently. Please, refer to http://opentk.sourceforge.net for more information.");
+                    throw new PlatformNotSupportedException(
+                        "Your platform is not supported currently. Please, refer to http://opentk.sourceforge.net for more information.");
             }
 
             glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
@@ -408,7 +409,7 @@ namespace OpenTK
                 {
                     glWindow.CreateWindow(mode);
                     this.Title = title;
-                    input_driver = new InputDriver(this);
+                    //input_driver = new InputDriver(this);
                 }
                 catch (ApplicationException expt)
                 {
@@ -812,8 +813,13 @@ namespace OpenTK
         {
             get
             {
-                if (input_driver.Keyboard.Count > 0)
-                    return input_driver.Keyboard[0];
+                //if (input_driver.Keyboard.Count > 0)
+                //    return input_driver.Keyboard[0];
+                //else
+                //    return null;
+                
+                if (glWindow.InputDriver.Keyboard.Count > 0)
+                    return glWindow.InputDriver.Keyboard[0];
                 else
                     return null;
             }
@@ -830,8 +836,13 @@ namespace OpenTK
         {
             get
             {
-                if (input_driver.Mouse.Count > 0)
-                    return input_driver.Mouse[0];
+                //if (input_driver.Mouse.Count > 0)
+                //    return input_driver.Mouse[0];
+                //else
+                //    return null;
+
+                if (glWindow.InputDriver.Mouse.Count > 0)
+                    return glWindow.InputDriver.Mouse[0];
                 else
                     return null;
             }
@@ -1362,7 +1373,7 @@ namespace OpenTK
 
     #region --- GameWindow Exceptions ---
 
-    public class GameWindowExitException : ApplicationException
+    class GameWindowExitException : ApplicationException
     {
     }
 
