@@ -322,6 +322,72 @@ namespace OpenTK.Math
 
 		#endregion
 
+		#region Camera Helper Functions
+
+		/// <summary>
+		/// Build a world space to camera space matrix
+		/// </summary>
+		/// <param name="eye">Eye (camera) position in world space</param>
+		/// <param name="target">Target position in world space</param>
+		/// <param name="up">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
+		/// <returns>A Matrix that transforms world space to camera space</returns>
+		public static Matrix4 LookAt(Vector3 eye, Vector3 target, Vector3 up)
+		{
+			Vector3 z = Vector3.Normalize(eye - target);
+			Vector3 x = Vector3.Normalize(Vector3.Cross(up, z));
+			Vector3 y = Vector3.Normalize(Vector3.Cross(z, x));
+
+			Matrix4 rot = new Matrix4(new Vector4(x.X, y.X, z.X, 0.0f),
+										new Vector4(x.Y, y.Y, z.Y, 0.0f),
+										new Vector4(x.Z, y.Z, z.Z, 0.0f),
+										Vector4.UnitW);
+
+			Matrix4 trans = Matrix4.Translation(-eye);
+
+			return trans * rot;
+		}
+
+		/// <summary>
+		/// Build a projection matrix
+		/// </summary>
+		/// <param name="left">Left edge of the view frustum</param>
+		/// <param name="right">Right edge of the view frustum</param>
+		/// <param name="bottom">Bottom edge of the view frustum</param>
+		/// <param name="top">Top edge of the view frustum</param>
+		/// <param name="near">Distance to the near clip plane</param>
+		/// <param name="far">Distance to the far clip plane</param>
+		/// <returns>A projection matrix that transforms camera space to raster space</returns>
+		public static Matrix4 Frustum(float left, float right, float bottom, float top, float near, float far)
+		{
+			float invRL = 1.0f / (right - left);
+			float invTB = 1.0f / (top - bottom);
+			float invFN = 1.0f / (far - near);
+			return new Matrix4(new Vector4(2.0f * near * invRL, 0.0f, (right + left) * invRL, 0.0f),
+								new Vector4(0.0f, 2.0f * near * invTB, (top + bottom) * invTB, 0.0f),
+								new Vector4(0.0f, 0.0f, -(far + near) * invFN, -1.0f),
+								new Vector4(0.0f, 0.0f, -2.0f * far * near * invFN, 0.0f));
+		}
+
+		/// <summary>
+		/// Build a projection matrix
+		/// </summary>
+		/// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
+		/// <param name="aspect">Aspect ratio of the view (width / height)</param>
+		/// <param name="near">Distance to the near clip plane</param>
+		/// <param name="far">Distance to the far clip plane</param>
+		/// <returns>A projection matrix that transforms camera space to raster space</returns>
+		public static Matrix4 Perspective(float fovy, float aspect, float near, float far)
+		{
+			float yMax = near * (float)System.Math.Tan(fovy);
+			float yMin = -yMax;
+			float xMin = yMin * aspect;
+			float xMax = yMax * aspect;
+
+			return Frustum(xMin, xMax, yMin, yMax, near, far);
+		}
+
+		#endregion
+
 		#region Multiply Functions
 
 		/// <summary>
