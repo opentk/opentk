@@ -280,6 +280,10 @@ namespace Bind.Structures
 
         #endregion
 
+        /// <summary>
+        /// Returns a string representing the full non-delegate declaration without decorations.
+        /// (ie "(unsafe) void glXxxYyy(int a, float b, IntPtr c)"
+        /// </summary>
         #region public string DeclarationString()
 
         public string DeclarationString()
@@ -290,7 +294,7 @@ namespace Bind.Structures
             sb.Append(ReturnType);
             sb.Append(" ");
             sb.Append(Name);
-            sb.Append(Parameters.ToString());
+            sb.Append(Parameters.ToString(true));
 
             return sb.ToString();
         }
@@ -300,8 +304,8 @@ namespace Bind.Structures
         #region override public string ToString()
 
         /// <summary>
-        /// Gets the string representing the full function declaration without decorations
-        /// (ie "void glClearColor(float red, float green, float blue, float alpha)"
+        /// Returns a string representing the full delegate declaration without decorations.
+        /// (ie "(unsafe) void delegate glXxxYyy(int a, float b, IntPtr c)"
         /// </summary>
         override public string ToString()
         {
