@@ -41,20 +41,26 @@ namespace OpenTK.OpenGL
         public static 
         void CallLists(Int32 n, OpenTK.OpenGL.Enums.ListNameType type, IntPtr lists)
         {
-            Delegates.glCallLists((Int32)n, (OpenTK.OpenGL.Enums.ListNameType)type, (IntPtr)lists);
+            unsafe
+            {
+                Delegates.glCallLists((Int32)n, (OpenTK.OpenGL.Enums.ListNameType)type, (IntPtr)lists);
+            }
         }
 
         public static 
         void CallLists(Int32 n, OpenTK.OpenGL.Enums.ListNameType type, [In, Out] object lists)
         {
-            System.Runtime.InteropServices.GCHandle lists_ptr = System.Runtime.InteropServices.GCHandle.Alloc(lists, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glCallLists((Int32)n, (OpenTK.OpenGL.Enums.ListNameType)type, (IntPtr)lists_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                lists_ptr.Free();
+                System.Runtime.InteropServices.GCHandle lists_ptr = System.Runtime.InteropServices.GCHandle.Alloc(lists, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glCallLists((Int32)n, (OpenTK.OpenGL.Enums.ListNameType)type, (IntPtr)lists_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    lists_ptr.Free();
+                }
             }
         }
 
@@ -3070,13 +3076,19 @@ namespace OpenTK.OpenGL
         public static 
         void LineStipple(Int32 factor, UInt16 pattern)
         {
-            Delegates.glLineStipple((Int32)factor, (UInt16)pattern);
+            unsafe
+            {
+                Delegates.glLineStipple((Int32)factor, (UInt16)pattern);
+            }
         }
 
         public static 
         void LineStipple(Int32 factor, Int16 pattern)
         {
-            Delegates.glLineStipple((Int32)factor, (UInt16)pattern);
+            unsafe
+            {
+                Delegates.glLineStipple((Int32)factor, (UInt16)pattern);
+            }
         }
 
         public static 
@@ -3291,40 +3303,52 @@ namespace OpenTK.OpenGL
         public static 
         void TexImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glTexImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            unsafe
+            {
+                Delegates.glTexImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            }
         }
 
         public static 
         void TexImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
         {
-            System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glTexImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pixels_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glTexImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pixels_ptr.Free();
+                }
             }
         }
 
         public static 
         void TexImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glTexImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            unsafe
+            {
+                Delegates.glTexImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            }
         }
 
         public static 
         void TexImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
         {
-            System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glTexImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pixels_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glTexImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pixels_ptr.Free();
+                }
             }
         }
 
@@ -4350,40 +4374,52 @@ namespace OpenTK.OpenGL
         public static 
         void ReadPixel(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr pixels)
         {
-            Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            unsafe
+            {
+                Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            }
         }
 
         public static 
         void ReadPixel(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
         {
-            System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pixels_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glReadPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pixels_ptr.Free();
+                }
             }
         }
 
         public static 
         void DrawPixel(Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glDrawPixels((Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            unsafe
+            {
+                Delegates.glDrawPixels((Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            }
         }
 
         public static 
         void DrawPixel(Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
         {
-            System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glDrawPixels((Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pixels_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glDrawPixels((Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pixels_ptr.Free();
+                }
             }
         }
 
@@ -4976,7 +5012,10 @@ namespace OpenTK.OpenGL
         public static 
         string GetString(OpenTK.OpenGL.Enums.StringName name)
         {
-            return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.glGetString((OpenTK.OpenGL.Enums.StringName)name));
+            unsafe
+            {
+                return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.glGetString((OpenTK.OpenGL.Enums.StringName)name));
+            }
         }
 
         public static 
@@ -5142,20 +5181,26 @@ namespace OpenTK.OpenGL
         public static 
         void GetTexImage(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr pixels)
         {
-            Delegates.glGetTexImage((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            unsafe
+            {
+                Delegates.glGetTexImage((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            }
         }
 
         public static 
         void GetTexImage(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
         {
-            System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetTexImage((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pixels_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetTexImage((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pixels_ptr.Free();
+                }
             }
         }
 
@@ -5523,20 +5568,26 @@ namespace OpenTK.OpenGL
         public static 
         void ColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, IntPtr pointer)
         {
-            Delegates.glColorPointer((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glColorPointer((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void ColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glColorPointer((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glColorPointer((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
@@ -5555,40 +5606,52 @@ namespace OpenTK.OpenGL
         public static 
         void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices)
         {
-            Delegates.glDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices);
+            unsafe
+            {
+                Delegates.glDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices);
+            }
         }
 
         public static 
         void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices)
         {
-            System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                indices_ptr.Free();
+                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    indices_ptr.Free();
+                }
             }
         }
 
         public static 
         void EdgeFlagPointer(Int32 stride, IntPtr pointer)
         {
-            Delegates.glEdgeFlagPointer((Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glEdgeFlagPointer((Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void EdgeFlagPointer(Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glEdgeFlagPointer((Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glEdgeFlagPointer((Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
@@ -5601,120 +5664,156 @@ namespace OpenTK.OpenGL
         public static 
         void GetPointer(OpenTK.OpenGL.Enums.GetPointervPName pname, [Out] IntPtr @params)
         {
-            Delegates.glGetPointerv((OpenTK.OpenGL.Enums.GetPointervPName)pname, (IntPtr)@params);
+            unsafe
+            {
+                Delegates.glGetPointerv((OpenTK.OpenGL.Enums.GetPointervPName)pname, (IntPtr)@params);
+            }
         }
 
         public static 
         void GetPointer(OpenTK.OpenGL.Enums.GetPointervPName pname, [In, Out] object @params)
         {
-            System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetPointerv((OpenTK.OpenGL.Enums.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                @params_ptr.Free();
+                System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetPointerv((OpenTK.OpenGL.Enums.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    @params_ptr.Free();
+                }
             }
         }
 
         public static 
         void IndexPointer(OpenTK.OpenGL.Enums.IndexPointerType type, Int32 stride, IntPtr pointer)
         {
-            Delegates.glIndexPointer((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glIndexPointer((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void IndexPointer(OpenTK.OpenGL.Enums.IndexPointerType type, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glIndexPointer((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glIndexPointer((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
         public static 
         void InterleavedArrays(OpenTK.OpenGL.Enums.InterleavedArrayFormat format, Int32 stride, IntPtr pointer)
         {
-            Delegates.glInterleavedArrays((OpenTK.OpenGL.Enums.InterleavedArrayFormat)format, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glInterleavedArrays((OpenTK.OpenGL.Enums.InterleavedArrayFormat)format, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void InterleavedArrays(OpenTK.OpenGL.Enums.InterleavedArrayFormat format, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glInterleavedArrays((OpenTK.OpenGL.Enums.InterleavedArrayFormat)format, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glInterleavedArrays((OpenTK.OpenGL.Enums.InterleavedArrayFormat)format, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
         public static 
         void NormalPointer(OpenTK.OpenGL.Enums.NormalPointerType type, Int32 stride, IntPtr pointer)
         {
-            Delegates.glNormalPointer((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glNormalPointer((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void NormalPointer(OpenTK.OpenGL.Enums.NormalPointerType type, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glNormalPointer((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glNormalPointer((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
         public static 
         void TexCoordPointer(Int32 size, OpenTK.OpenGL.Enums.TexCoordPointerType type, Int32 stride, IntPtr pointer)
         {
-            Delegates.glTexCoordPointer((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glTexCoordPointer((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void TexCoordPointer(Int32 size, OpenTK.OpenGL.Enums.TexCoordPointerType type, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glTexCoordPointer((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glTexCoordPointer((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
         public static 
         void VertexPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, Int32 stride, IntPtr pointer)
         {
-            Delegates.glVertexPointer((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glVertexPointer((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void VertexPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glVertexPointer((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glVertexPointer((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
@@ -5751,40 +5850,52 @@ namespace OpenTK.OpenGL
         public static 
         void TexSubImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glTexSubImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            unsafe
+            {
+                Delegates.glTexSubImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            }
         }
 
         public static 
         void TexSubImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
         {
-            System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glTexSubImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pixels_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glTexSubImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pixels_ptr.Free();
+                }
             }
         }
 
         public static 
         void TexSubImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glTexSubImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            unsafe
+            {
+                Delegates.glTexSubImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            }
         }
 
         public static 
         void TexSubImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
         {
-            System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glTexSubImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pixels_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glTexSubImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pixels_ptr.Free();
+                }
             }
         }
 
@@ -6149,61 +6260,79 @@ namespace OpenTK.OpenGL
         public static 
         void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.Version12 type, IntPtr indices)
         {
-            Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.Version12)type, (IntPtr)indices);
+            unsafe
+            {
+                Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.Version12)type, (IntPtr)indices);
+            }
         }
 
         public static 
         void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.Version12 type, IntPtr indices)
         {
-            Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.Version12)type, (IntPtr)indices);
+            unsafe
+            {
+                Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.Version12)type, (IntPtr)indices);
+            }
         }
 
         [System.CLSCompliant(false)]
         public static 
         void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.Version12 type, [In, Out] object indices)
         {
-            System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.Version12)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                indices_ptr.Free();
+                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.Version12)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    indices_ptr.Free();
+                }
             }
         }
 
         public static 
         void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.Version12 type, [In, Out] object indices)
         {
-            System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.Version12)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                indices_ptr.Free();
+                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.Version12)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    indices_ptr.Free();
+                }
             }
         }
 
         public static 
         void ColorTable(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr table)
         {
-            Delegates.glColorTable((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+            unsafe
+            {
+                Delegates.glColorTable((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+            }
         }
 
         public static 
         void ColorTable(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object table)
         {
-            System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glColorTable((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                table_ptr.Free();
+                System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glColorTable((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    table_ptr.Free();
+                }
             }
         }
 
@@ -6278,20 +6407,26 @@ namespace OpenTK.OpenGL
         public static 
         void GetColorTable(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr table)
         {
-            Delegates.glGetColorTable((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+            unsafe
+            {
+                Delegates.glGetColorTable((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+            }
         }
 
         public static 
         void GetColorTable(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object table)
         {
-            System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetColorTable((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                table_ptr.Free();
+                System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetColorTable((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    table_ptr.Free();
+                }
             }
         }
 
@@ -6362,20 +6497,26 @@ namespace OpenTK.OpenGL
         public static 
         void ColorSubTable(OpenTK.OpenGL.Enums.Version12 target, Int32 start, Int32 count, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr data)
         {
-            Delegates.glColorSubTable((OpenTK.OpenGL.Enums.Version12)target, (Int32)start, (Int32)count, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data);
+            unsafe
+            {
+                Delegates.glColorSubTable((OpenTK.OpenGL.Enums.Version12)target, (Int32)start, (Int32)count, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data);
+            }
         }
 
         public static 
         void ColorSubTable(OpenTK.OpenGL.Enums.Version12 target, Int32 start, Int32 count, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glColorSubTable((OpenTK.OpenGL.Enums.Version12)target, (Int32)start, (Int32)count, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glColorSubTable((OpenTK.OpenGL.Enums.Version12)target, (Int32)start, (Int32)count, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
@@ -6388,40 +6529,52 @@ namespace OpenTK.OpenGL
         public static 
         void ConvolutionFilter1D(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr image)
         {
-            Delegates.glConvolutionFilter1D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+            unsafe
+            {
+                Delegates.glConvolutionFilter1D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+            }
         }
 
         public static 
         void ConvolutionFilter1D(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object image)
         {
-            System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glConvolutionFilter1D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                image_ptr.Free();
+                System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glConvolutionFilter1D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    image_ptr.Free();
+                }
             }
         }
 
         public static 
         void ConvolutionFilter2D(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr image)
         {
-            Delegates.glConvolutionFilter2D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+            unsafe
+            {
+                Delegates.glConvolutionFilter2D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+            }
         }
 
         public static 
         void ConvolutionFilter2D(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object image)
         {
-            System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glConvolutionFilter2D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                image_ptr.Free();
+                System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glConvolutionFilter2D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    image_ptr.Free();
+                }
             }
         }
 
@@ -6514,20 +6667,26 @@ namespace OpenTK.OpenGL
         public static 
         void GetConvolutionFilter(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr image)
         {
-            Delegates.glGetConvolutionFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+            unsafe
+            {
+                Delegates.glGetConvolutionFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+            }
         }
 
         public static 
         void GetConvolutionFilter(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object image)
         {
-            System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetConvolutionFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                image_ptr.Free();
+                System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetConvolutionFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    image_ptr.Free();
+                }
             }
         }
 
@@ -6598,82 +6757,103 @@ namespace OpenTK.OpenGL
         public static 
         void GetSeparableFilter(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr row, [Out] IntPtr column, [Out] IntPtr span)
         {
-            Delegates.glGetSeparableFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span);
+            unsafe
+            {
+                Delegates.glGetSeparableFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span);
+            }
         }
 
         public static 
         void GetSeparableFilter(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object row, [In, Out] object column, [In, Out] object span)
         {
-            System.Runtime.InteropServices.GCHandle row_ptr = System.Runtime.InteropServices.GCHandle.Alloc(row, System.Runtime.InteropServices.GCHandleType.Pinned);
-            System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
-            System.Runtime.InteropServices.GCHandle span_ptr = System.Runtime.InteropServices.GCHandle.Alloc(span, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetSeparableFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                row_ptr.Free();
-                column_ptr.Free();
-                span_ptr.Free();
+                System.Runtime.InteropServices.GCHandle row_ptr = System.Runtime.InteropServices.GCHandle.Alloc(row, System.Runtime.InteropServices.GCHandleType.Pinned);
+                System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
+                System.Runtime.InteropServices.GCHandle span_ptr = System.Runtime.InteropServices.GCHandle.Alloc(span, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetSeparableFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    row_ptr.Free();
+                    column_ptr.Free();
+                    span_ptr.Free();
+                }
             }
         }
 
         public static 
         void GetSeparableFilter(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr row, [In, Out] object column, [In, Out] object span)
         {
-            System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
-            System.Runtime.InteropServices.GCHandle span_ptr = System.Runtime.InteropServices.GCHandle.Alloc(span, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetSeparableFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                column_ptr.Free();
-                span_ptr.Free();
+                System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
+                System.Runtime.InteropServices.GCHandle span_ptr = System.Runtime.InteropServices.GCHandle.Alloc(span, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetSeparableFilter((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    column_ptr.Free();
+                    span_ptr.Free();
+                }
             }
         }
 
         public static 
         void SeparableFilter2D(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr row, IntPtr column)
         {
-            Delegates.glSeparableFilter2D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column);
+            unsafe
+            {
+                Delegates.glSeparableFilter2D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column);
+            }
         }
 
         public static 
         void SeparableFilter2D(OpenTK.OpenGL.Enums.Version12 target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object row, [In, Out] object column)
         {
-            System.Runtime.InteropServices.GCHandle row_ptr = System.Runtime.InteropServices.GCHandle.Alloc(row, System.Runtime.InteropServices.GCHandleType.Pinned);
-            System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glSeparableFilter2D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                row_ptr.Free();
-                column_ptr.Free();
+                System.Runtime.InteropServices.GCHandle row_ptr = System.Runtime.InteropServices.GCHandle.Alloc(row, System.Runtime.InteropServices.GCHandleType.Pinned);
+                System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glSeparableFilter2D((OpenTK.OpenGL.Enums.Version12)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    row_ptr.Free();
+                    column_ptr.Free();
+                }
             }
         }
 
         public static 
         void GetHistogram(OpenTK.OpenGL.Enums.Version12 target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr values)
         {
-            Delegates.glGetHistogram((OpenTK.OpenGL.Enums.Version12)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values);
+            unsafe
+            {
+                Delegates.glGetHistogram((OpenTK.OpenGL.Enums.Version12)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values);
+            }
         }
 
         public static 
         void GetHistogram(OpenTK.OpenGL.Enums.Version12 target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object values)
         {
-            System.Runtime.InteropServices.GCHandle values_ptr = System.Runtime.InteropServices.GCHandle.Alloc(values, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetHistogram((OpenTK.OpenGL.Enums.Version12)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                values_ptr.Free();
+                System.Runtime.InteropServices.GCHandle values_ptr = System.Runtime.InteropServices.GCHandle.Alloc(values, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetHistogram((OpenTK.OpenGL.Enums.Version12)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    values_ptr.Free();
+                }
             }
         }
 
@@ -6744,20 +6924,26 @@ namespace OpenTK.OpenGL
         public static 
         void GetMinmax(OpenTK.OpenGL.Enums.Version12 target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr values)
         {
-            Delegates.glGetMinmax((OpenTK.OpenGL.Enums.Version12)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values);
+            unsafe
+            {
+                Delegates.glGetMinmax((OpenTK.OpenGL.Enums.Version12)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values);
+            }
         }
 
         public static 
         void GetMinmax(OpenTK.OpenGL.Enums.Version12 target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object values)
         {
-            System.Runtime.InteropServices.GCHandle values_ptr = System.Runtime.InteropServices.GCHandle.Alloc(values, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetMinmax((OpenTK.OpenGL.Enums.Version12)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                values_ptr.Free();
+                System.Runtime.InteropServices.GCHandle values_ptr = System.Runtime.InteropServices.GCHandle.Alloc(values, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetMinmax((OpenTK.OpenGL.Enums.Version12)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    values_ptr.Free();
+                }
             }
         }
 
@@ -6852,40 +7038,52 @@ namespace OpenTK.OpenGL
         public static 
         void TexImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glTexImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            unsafe
+            {
+                Delegates.glTexImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            }
         }
 
         public static 
         void TexImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
         {
-            System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glTexImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pixels_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glTexImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pixels_ptr.Free();
+                }
             }
         }
 
         public static 
         void TexSubImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
         {
-            Delegates.glTexSubImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            unsafe
+            {
+                Delegates.glTexSubImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+            }
         }
 
         public static 
         void TexSubImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
         {
-            System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glTexSubImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pixels_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glTexSubImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pixels_ptr.Free();
+                }
             }
         }
 
@@ -7632,140 +7830,182 @@ namespace OpenTK.OpenGL
         public static 
         void CompressedTexImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data)
         {
-            Delegates.glCompressedTexImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            unsafe
+            {
+                Delegates.glCompressedTexImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            }
         }
 
         public static 
         void CompressedTexImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glCompressedTexImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glCompressedTexImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
         public static 
         void CompressedTexImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data)
         {
-            Delegates.glCompressedTexImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            unsafe
+            {
+                Delegates.glCompressedTexImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            }
         }
 
         public static 
         void CompressedTexImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glCompressedTexImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glCompressedTexImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
         public static 
         void CompressedTexImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 border, Int32 imageSize, IntPtr data)
         {
-            Delegates.glCompressedTexImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            unsafe
+            {
+                Delegates.glCompressedTexImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (Int32)imageSize, (IntPtr)data);
+            }
         }
 
         public static 
         void CompressedTexImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 border, Int32 imageSize, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glCompressedTexImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glCompressedTexImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
         public static 
         void CompressedTexSubImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, IntPtr data)
         {
-            Delegates.glCompressedTexSubImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+            unsafe
+            {
+                Delegates.glCompressedTexSubImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+            }
         }
 
         public static 
         void CompressedTexSubImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glCompressedTexSubImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glCompressedTexSubImage3D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
         public static 
         void CompressedTexSubImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, IntPtr data)
         {
-            Delegates.glCompressedTexSubImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+            unsafe
+            {
+                Delegates.glCompressedTexSubImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+            }
         }
 
         public static 
         void CompressedTexSubImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glCompressedTexSubImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glCompressedTexSubImage2D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
         public static 
         void CompressedTexSubImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, IntPtr data)
         {
-            Delegates.glCompressedTexSubImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+            unsafe
+            {
+                Delegates.glCompressedTexSubImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+            }
         }
 
         public static 
         void CompressedTexSubImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glCompressedTexSubImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glCompressedTexSubImage1D((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
         public static 
         void GetCompressedTexImage(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, [Out] IntPtr img)
         {
-            Delegates.glGetCompressedTexImage((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (IntPtr)img);
+            unsafe
+            {
+                Delegates.glGetCompressedTexImage((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (IntPtr)img);
+            }
         }
 
         public static 
         void GetCompressedTexImage(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, [In, Out] object img)
         {
-            System.Runtime.InteropServices.GCHandle img_ptr = System.Runtime.InteropServices.GCHandle.Alloc(img, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetCompressedTexImage((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (IntPtr)img_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                img_ptr.Free();
+                System.Runtime.InteropServices.GCHandle img_ptr = System.Runtime.InteropServices.GCHandle.Alloc(img, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetCompressedTexImage((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (IntPtr)img_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    img_ptr.Free();
+                }
             }
         }
 
@@ -7852,20 +8092,26 @@ namespace OpenTK.OpenGL
         public static 
         void FogCoordPointer(OpenTK.OpenGL.Enums.Version14 type, Int32 stride, IntPtr pointer)
         {
-            Delegates.glFogCoordPointer((OpenTK.OpenGL.Enums.Version14)type, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glFogCoordPointer((OpenTK.OpenGL.Enums.Version14)type, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void FogCoordPointer(OpenTK.OpenGL.Enums.Version14 type, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glFogCoordPointer((OpenTK.OpenGL.Enums.Version14)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glFogCoordPointer((OpenTK.OpenGL.Enums.Version14)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
@@ -8333,20 +8579,26 @@ namespace OpenTK.OpenGL
         public static 
         void SecondaryColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, IntPtr pointer)
         {
-            Delegates.glSecondaryColorPointer((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glSecondaryColorPointer((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void SecondaryColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glSecondaryColorPointer((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glSecondaryColorPointer((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
@@ -9099,60 +9351,78 @@ namespace OpenTK.OpenGL
         public static 
         void BufferData(OpenTK.OpenGL.Enums.Version15 target, IntPtr size, IntPtr data, OpenTK.OpenGL.Enums.Version15 usage)
         {
-            Delegates.glBufferData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)size, (IntPtr)data, (OpenTK.OpenGL.Enums.Version15)usage);
+            unsafe
+            {
+                Delegates.glBufferData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)size, (IntPtr)data, (OpenTK.OpenGL.Enums.Version15)usage);
+            }
         }
 
         public static 
         void BufferData(OpenTK.OpenGL.Enums.Version15 target, IntPtr size, [In, Out] object data, OpenTK.OpenGL.Enums.Version15 usage)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glBufferData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.Version15)usage);
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glBufferData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.Version15)usage);
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
         public static 
         void BufferSubData(OpenTK.OpenGL.Enums.Version15 target, IntPtr offset, IntPtr size, IntPtr data)
         {
-            Delegates.glBufferSubData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data);
+            unsafe
+            {
+                Delegates.glBufferSubData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data);
+            }
         }
 
         public static 
         void BufferSubData(OpenTK.OpenGL.Enums.Version15 target, IntPtr offset, IntPtr size, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glBufferSubData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glBufferSubData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
         public static 
         void GetBufferSubData(OpenTK.OpenGL.Enums.Version15 target, IntPtr offset, IntPtr size, [Out] IntPtr data)
         {
-            Delegates.glGetBufferSubData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data);
+            unsafe
+            {
+                Delegates.glGetBufferSubData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data);
+            }
         }
 
         public static 
         void GetBufferSubData(OpenTK.OpenGL.Enums.Version15 target, IntPtr offset, IntPtr size, [In, Out] object data)
         {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetBufferSubData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
+                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetBufferSubData((OpenTK.OpenGL.Enums.Version15)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    data_ptr.Free();
+                }
             }
         }
 
@@ -9204,20 +9474,26 @@ namespace OpenTK.OpenGL
         public static 
         void GetBufferPointer(OpenTK.OpenGL.Enums.Version15 target, OpenTK.OpenGL.Enums.Version15 pname, [Out] IntPtr @params)
         {
-            Delegates.glGetBufferPointerv((OpenTK.OpenGL.Enums.Version15)target, (OpenTK.OpenGL.Enums.Version15)pname, (IntPtr)@params);
+            unsafe
+            {
+                Delegates.glGetBufferPointerv((OpenTK.OpenGL.Enums.Version15)target, (OpenTK.OpenGL.Enums.Version15)pname, (IntPtr)@params);
+            }
         }
 
         public static 
         void GetBufferPointer(OpenTK.OpenGL.Enums.Version15 target, OpenTK.OpenGL.Enums.Version15 pname, [In, Out] object @params)
         {
-            System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetBufferPointerv((OpenTK.OpenGL.Enums.Version15)target, (OpenTK.OpenGL.Enums.Version15)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                @params_ptr.Free();
+                System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetBufferPointerv((OpenTK.OpenGL.Enums.Version15)target, (OpenTK.OpenGL.Enums.Version15)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    @params_ptr.Free();
+                }
             }
         }
 
@@ -10324,41 +10600,53 @@ namespace OpenTK.OpenGL
         public static 
         void GetVertexAttribPointer(UInt32 index, OpenTK.OpenGL.Enums.Version20 pname, [Out] IntPtr pointer)
         {
-            Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.OpenGL.Enums.Version20)pname, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.OpenGL.Enums.Version20)pname, (IntPtr)pointer);
+            }
         }
 
         public static 
         void GetVertexAttribPointer(Int32 index, OpenTK.OpenGL.Enums.Version20 pname, [Out] IntPtr pointer)
         {
-            Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.OpenGL.Enums.Version20)pname, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.OpenGL.Enums.Version20)pname, (IntPtr)pointer);
+            }
         }
 
         [System.CLSCompliant(false)]
         public static 
         void GetVertexAttribPointer(UInt32 index, OpenTK.OpenGL.Enums.Version20 pname, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.OpenGL.Enums.Version20)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.OpenGL.Enums.Version20)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
         public static 
         void GetVertexAttribPointer(Int32 index, OpenTK.OpenGL.Enums.Version20 pname, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.OpenGL.Enums.Version20)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glGetVertexAttribPointerv((UInt32)index, (OpenTK.OpenGL.Enums.Version20)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
@@ -12339,41 +12627,53 @@ namespace OpenTK.OpenGL
         public static 
         void VertexAttribPointer(UInt32 index, Int32 size, OpenTK.OpenGL.Enums.Version20 type, bool normalized, Int32 stride, IntPtr pointer)
         {
-            Delegates.glVertexAttribPointer((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.Version20)type, (bool)normalized, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glVertexAttribPointer((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.Version20)type, (bool)normalized, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         public static 
         void VertexAttribPointer(Int32 index, Int32 size, OpenTK.OpenGL.Enums.Version20 type, bool normalized, Int32 stride, IntPtr pointer)
         {
-            Delegates.glVertexAttribPointer((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.Version20)type, (bool)normalized, (Int32)stride, (IntPtr)pointer);
+            unsafe
+            {
+                Delegates.glVertexAttribPointer((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.Version20)type, (bool)normalized, (Int32)stride, (IntPtr)pointer);
+            }
         }
 
         [System.CLSCompliant(false)]
         public static 
         void VertexAttribPointer(UInt32 index, Int32 size, OpenTK.OpenGL.Enums.Version20 type, bool normalized, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glVertexAttribPointer((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.Version20)type, (bool)normalized, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glVertexAttribPointer((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.Version20)type, (bool)normalized, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
         public static 
         void VertexAttribPointer(Int32 index, Int32 size, OpenTK.OpenGL.Enums.Version20 type, bool normalized, Int32 stride, [In, Out] object pointer)
         {
-            System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
+            unsafe
             {
-                Delegates.glVertexAttribPointer((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.Version20)type, (bool)normalized, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                pointer_ptr.Free();
+                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glVertexAttribPointer((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.Version20)type, (bool)normalized, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                }
+                finally
+                {
+                    pointer_ptr.Free();
+                }
             }
         }
 
@@ -13302,140 +13602,182 @@ namespace OpenTK.OpenGL
             public static 
             void CompressedTexImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, IntPtr data)
             {
-                Delegates.glCompressedTexImage3DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (Int32)imageSize, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glCompressedTexImage3DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (Int32)imageSize, (IntPtr)data);
+                }
             }
 
             public static 
             void CompressedTexImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, Int32 imageSize, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glCompressedTexImage3DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glCompressedTexImage3DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void CompressedTexImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, IntPtr data)
             {
-                Delegates.glCompressedTexImage2DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glCompressedTexImage2DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data);
+                }
             }
 
             public static 
             void CompressedTexImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, Int32 imageSize, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glCompressedTexImage2DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glCompressedTexImage2DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void CompressedTexImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 border, Int32 imageSize, IntPtr data)
             {
-                Delegates.glCompressedTexImage1DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (Int32)imageSize, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glCompressedTexImage1DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (Int32)imageSize, (IntPtr)data);
+                }
             }
 
             public static 
             void CompressedTexImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 border, Int32 imageSize, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glCompressedTexImage1DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glCompressedTexImage1DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)border, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void CompressedTexSubImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, IntPtr data)
             {
-                Delegates.glCompressedTexSubImage3DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glCompressedTexSubImage3DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+                }
             }
 
             public static 
             void CompressedTexSubImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glCompressedTexSubImage3DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glCompressedTexSubImage3DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void CompressedTexSubImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, IntPtr data)
             {
-                Delegates.glCompressedTexSubImage2DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glCompressedTexSubImage2DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+                }
             }
 
             public static 
             void CompressedTexSubImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glCompressedTexSubImage2DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glCompressedTexSubImage2DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void CompressedTexSubImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, IntPtr data)
             {
-                Delegates.glCompressedTexSubImage1DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glCompressedTexSubImage1DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data);
+                }
             }
 
             public static 
             void CompressedTexSubImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, Int32 imageSize, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glCompressedTexSubImage1DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glCompressedTexSubImage1DARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (Int32)imageSize, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void GetCompressedTexImage(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, [Out] IntPtr img)
             {
-                Delegates.glGetCompressedTexImageARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (IntPtr)img);
+                unsafe
+                {
+                    Delegates.glGetCompressedTexImageARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (IntPtr)img);
+                }
             }
 
             public static 
             void GetCompressedTexImage(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, [In, Out] object img)
             {
-                System.Runtime.InteropServices.GCHandle img_ptr = System.Runtime.InteropServices.GCHandle.Alloc(img, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetCompressedTexImageARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (IntPtr)img_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    img_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle img_ptr = System.Runtime.InteropServices.GCHandle.Alloc(img, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetCompressedTexImageARB((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (IntPtr)img_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        img_ptr.Free();
+                    }
                 }
             }
 
@@ -13733,20 +14075,26 @@ namespace OpenTK.OpenGL
             public static 
             void WeightPointer(Int32 size, OpenTK.OpenGL.Enums.ArbVertexBlend type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glWeightPointerARB((Int32)size, (OpenTK.OpenGL.Enums.ArbVertexBlend)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glWeightPointerARB((Int32)size, (OpenTK.OpenGL.Enums.ArbVertexBlend)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void WeightPointer(Int32 size, OpenTK.OpenGL.Enums.ArbVertexBlend type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glWeightPointerARB((Int32)size, (OpenTK.OpenGL.Enums.ArbVertexBlend)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glWeightPointerARB((Int32)size, (OpenTK.OpenGL.Enums.ArbVertexBlend)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -13924,20 +14272,26 @@ namespace OpenTK.OpenGL
             public static 
             void MatrixIndexPointer(Int32 size, OpenTK.OpenGL.Enums.ArbMatrixPalette type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glMatrixIndexPointerARB((Int32)size, (OpenTK.OpenGL.Enums.ArbMatrixPalette)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glMatrixIndexPointerARB((Int32)size, (OpenTK.OpenGL.Enums.ArbMatrixPalette)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void MatrixIndexPointer(Int32 size, OpenTK.OpenGL.Enums.ArbMatrixPalette type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glMatrixIndexPointerARB((Int32)size, (OpenTK.OpenGL.Enums.ArbMatrixPalette)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glMatrixIndexPointerARB((Int32)size, (OpenTK.OpenGL.Enums.ArbMatrixPalette)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -15696,41 +16050,53 @@ namespace OpenTK.OpenGL
             public static 
             void VertexAttribPointer(UInt32 index, Int32 size, OpenTK.OpenGL.Enums.ArbVertexProgram type, bool normalized, Int32 stride, IntPtr pointer)
             {
-                Delegates.glVertexAttribPointerARB((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.ArbVertexProgram)type, (bool)normalized, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexAttribPointerARB((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.ArbVertexProgram)type, (bool)normalized, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void VertexAttribPointer(Int32 index, Int32 size, OpenTK.OpenGL.Enums.ArbVertexProgram type, bool normalized, Int32 stride, IntPtr pointer)
             {
-                Delegates.glVertexAttribPointerARB((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.ArbVertexProgram)type, (bool)normalized, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexAttribPointerARB((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.ArbVertexProgram)type, (bool)normalized, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void VertexAttribPointer(UInt32 index, Int32 size, OpenTK.OpenGL.Enums.ArbVertexProgram type, bool normalized, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexAttribPointerARB((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.ArbVertexProgram)type, (bool)normalized, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexAttribPointerARB((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.ArbVertexProgram)type, (bool)normalized, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void VertexAttribPointer(Int32 index, Int32 size, OpenTK.OpenGL.Enums.ArbVertexProgram type, bool normalized, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexAttribPointerARB((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.ArbVertexProgram)type, (bool)normalized, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexAttribPointerARB((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.ArbVertexProgram)type, (bool)normalized, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -15763,20 +16129,26 @@ namespace OpenTK.OpenGL
             public static 
             void ProgramString(OpenTK.OpenGL.Enums.ArbVertexProgram target, OpenTK.OpenGL.Enums.ArbVertexProgram format, Int32 len, IntPtr @string)
             {
-                Delegates.glProgramStringARB((OpenTK.OpenGL.Enums.ArbVertexProgram)target, (OpenTK.OpenGL.Enums.ArbVertexProgram)format, (Int32)len, (IntPtr)@string);
+                unsafe
+                {
+                    Delegates.glProgramStringARB((OpenTK.OpenGL.Enums.ArbVertexProgram)target, (OpenTK.OpenGL.Enums.ArbVertexProgram)format, (Int32)len, (IntPtr)@string);
+                }
             }
 
             public static 
             void ProgramString(OpenTK.OpenGL.Enums.ArbVertexProgram target, OpenTK.OpenGL.Enums.ArbVertexProgram format, Int32 len, [In, Out] object @string)
             {
-                System.Runtime.InteropServices.GCHandle @string_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@string, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glProgramStringARB((OpenTK.OpenGL.Enums.ArbVertexProgram)target, (OpenTK.OpenGL.Enums.ArbVertexProgram)format, (Int32)len, (IntPtr)@string_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    @string_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle @string_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@string, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glProgramStringARB((OpenTK.OpenGL.Enums.ArbVertexProgram)target, (OpenTK.OpenGL.Enums.ArbVertexProgram)format, (Int32)len, (IntPtr)@string_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        @string_ptr.Free();
+                    }
                 }
             }
 
@@ -16530,20 +16902,26 @@ namespace OpenTK.OpenGL
             public static 
             void GetProgramString(OpenTK.OpenGL.Enums.ArbVertexProgram target, OpenTK.OpenGL.Enums.ArbVertexProgram pname, [Out] IntPtr @string)
             {
-                Delegates.glGetProgramStringARB((OpenTK.OpenGL.Enums.ArbVertexProgram)target, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)@string);
+                unsafe
+                {
+                    Delegates.glGetProgramStringARB((OpenTK.OpenGL.Enums.ArbVertexProgram)target, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)@string);
+                }
             }
 
             public static 
             void GetProgramString(OpenTK.OpenGL.Enums.ArbVertexProgram target, OpenTK.OpenGL.Enums.ArbVertexProgram pname, [In, Out] object @string)
             {
-                System.Runtime.InteropServices.GCHandle @string_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@string, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetProgramStringARB((OpenTK.OpenGL.Enums.ArbVertexProgram)target, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)@string_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    @string_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle @string_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@string, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetProgramStringARB((OpenTK.OpenGL.Enums.ArbVertexProgram)target, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)@string_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        @string_ptr.Free();
+                    }
                 }
             }
 
@@ -16749,41 +17127,53 @@ namespace OpenTK.OpenGL
             public static 
             void GetVertexAttribPointer(UInt32 index, OpenTK.OpenGL.Enums.ArbVertexProgram pname, [Out] IntPtr pointer)
             {
-                Delegates.glGetVertexAttribPointervARB((UInt32)index, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glGetVertexAttribPointervARB((UInt32)index, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)pointer);
+                }
             }
 
             public static 
             void GetVertexAttribPointer(Int32 index, OpenTK.OpenGL.Enums.ArbVertexProgram pname, [Out] IntPtr pointer)
             {
-                Delegates.glGetVertexAttribPointervARB((UInt32)index, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glGetVertexAttribPointervARB((UInt32)index, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)pointer);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void GetVertexAttribPointer(UInt32 index, OpenTK.OpenGL.Enums.ArbVertexProgram pname, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetVertexAttribPointervARB((UInt32)index, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetVertexAttribPointervARB((UInt32)index, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void GetVertexAttribPointer(Int32 index, OpenTK.OpenGL.Enums.ArbVertexProgram pname, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetVertexAttribPointervARB((UInt32)index, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetVertexAttribPointervARB((UInt32)index, (OpenTK.OpenGL.Enums.ArbVertexProgram)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -16959,60 +17349,78 @@ namespace OpenTK.OpenGL
             public static 
             void BufferData(OpenTK.OpenGL.Enums.ArbVertexBufferObject target, IntPtr size, IntPtr data, OpenTK.OpenGL.Enums.ArbVertexBufferObject usage)
             {
-                Delegates.glBufferDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)size, (IntPtr)data, (OpenTK.OpenGL.Enums.ArbVertexBufferObject)usage);
+                unsafe
+                {
+                    Delegates.glBufferDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)size, (IntPtr)data, (OpenTK.OpenGL.Enums.ArbVertexBufferObject)usage);
+                }
             }
 
             public static 
             void BufferData(OpenTK.OpenGL.Enums.ArbVertexBufferObject target, IntPtr size, [In, Out] object data, OpenTK.OpenGL.Enums.ArbVertexBufferObject usage)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glBufferDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.ArbVertexBufferObject)usage);
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glBufferDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.ArbVertexBufferObject)usage);
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void BufferSubData(OpenTK.OpenGL.Enums.ArbVertexBufferObject target, IntPtr offset, IntPtr size, IntPtr data)
             {
-                Delegates.glBufferSubDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glBufferSubDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data);
+                }
             }
 
             public static 
             void BufferSubData(OpenTK.OpenGL.Enums.ArbVertexBufferObject target, IntPtr offset, IntPtr size, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glBufferSubDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glBufferSubDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void GetBufferSubData(OpenTK.OpenGL.Enums.ArbVertexBufferObject target, IntPtr offset, IntPtr size, [Out] IntPtr data)
             {
-                Delegates.glGetBufferSubDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glGetBufferSubDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data);
+                }
             }
 
             public static 
             void GetBufferSubData(OpenTK.OpenGL.Enums.ArbVertexBufferObject target, IntPtr offset, IntPtr size, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetBufferSubDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetBufferSubDataARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (IntPtr)offset, (IntPtr)size, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
@@ -17064,20 +17472,26 @@ namespace OpenTK.OpenGL
             public static 
             void GetBufferPointer(OpenTK.OpenGL.Enums.ArbVertexBufferObject target, OpenTK.OpenGL.Enums.ArbVertexBufferObject pname, [Out] IntPtr @params)
             {
-                Delegates.glGetBufferPointervARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (OpenTK.OpenGL.Enums.ArbVertexBufferObject)pname, (IntPtr)@params);
+                unsafe
+                {
+                    Delegates.glGetBufferPointervARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (OpenTK.OpenGL.Enums.ArbVertexBufferObject)pname, (IntPtr)@params);
+                }
             }
 
             public static 
             void GetBufferPointer(OpenTK.OpenGL.Enums.ArbVertexBufferObject target, OpenTK.OpenGL.Enums.ArbVertexBufferObject pname, [In, Out] object @params)
             {
-                System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetBufferPointervARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (OpenTK.OpenGL.Enums.ArbVertexBufferObject)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    @params_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetBufferPointervARB((OpenTK.OpenGL.Enums.ArbVertexBufferObject)target, (OpenTK.OpenGL.Enums.ArbVertexBufferObject)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        @params_ptr.Free();
+                    }
                 }
             }
 
@@ -18656,80 +19070,104 @@ namespace OpenTK.OpenGL
             public static 
             void TexImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
             {
-                Delegates.glTexImage3DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                unsafe
+                {
+                    Delegates.glTexImage3DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                }
             }
 
             public static 
             void TexImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
             {
-                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTexImage3DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pixels_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTexImage3DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pixels_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void TexSubImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
             {
-                Delegates.glTexSubImage3DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                unsafe
+                {
+                    Delegates.glTexSubImage3DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                }
             }
 
             public static 
             void TexSubImage3D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 width, Int32 height, Int32 depth, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
             {
-                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTexSubImage3DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pixels_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTexSubImage3DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)width, (Int32)height, (Int32)depth, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pixels_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void TexSubImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
             {
-                Delegates.glTexSubImage1DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                unsafe
+                {
+                    Delegates.glTexSubImage1DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                }
             }
 
             public static 
             void TexSubImage1D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
             {
-                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTexSubImage1DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pixels_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTexSubImage1DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pixels_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void TexSubImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
             {
-                Delegates.glTexSubImage2DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                unsafe
+                {
+                    Delegates.glTexSubImage2DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                }
             }
 
             public static 
             void TexSubImage2D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
             {
-                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTexSubImage2DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pixels_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTexSubImage2DEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pixels_ptr.Free();
+                    }
                 }
             }
 
@@ -18766,20 +19204,26 @@ namespace OpenTK.OpenGL
             public static 
             void GetHistogram(OpenTK.OpenGL.Enums.HistogramTargetExt target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr values)
             {
-                Delegates.glGetHistogramEXT((OpenTK.OpenGL.Enums.HistogramTargetExt)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values);
+                unsafe
+                {
+                    Delegates.glGetHistogramEXT((OpenTK.OpenGL.Enums.HistogramTargetExt)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values);
+                }
             }
 
             public static 
             void GetHistogram(OpenTK.OpenGL.Enums.HistogramTargetExt target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object values)
             {
-                System.Runtime.InteropServices.GCHandle values_ptr = System.Runtime.InteropServices.GCHandle.Alloc(values, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetHistogramEXT((OpenTK.OpenGL.Enums.HistogramTargetExt)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    values_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle values_ptr = System.Runtime.InteropServices.GCHandle.Alloc(values, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetHistogramEXT((OpenTK.OpenGL.Enums.HistogramTargetExt)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        values_ptr.Free();
+                    }
                 }
             }
 
@@ -18850,20 +19294,26 @@ namespace OpenTK.OpenGL
             public static 
             void GetMinmax(OpenTK.OpenGL.Enums.MinmaxTargetExt target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr values)
             {
-                Delegates.glGetMinmaxEXT((OpenTK.OpenGL.Enums.MinmaxTargetExt)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values);
+                unsafe
+                {
+                    Delegates.glGetMinmaxEXT((OpenTK.OpenGL.Enums.MinmaxTargetExt)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values);
+                }
             }
 
             public static 
             void GetMinmax(OpenTK.OpenGL.Enums.MinmaxTargetExt target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object values)
             {
-                System.Runtime.InteropServices.GCHandle values_ptr = System.Runtime.InteropServices.GCHandle.Alloc(values, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetMinmaxEXT((OpenTK.OpenGL.Enums.MinmaxTargetExt)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    values_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle values_ptr = System.Runtime.InteropServices.GCHandle.Alloc(values, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetMinmaxEXT((OpenTK.OpenGL.Enums.MinmaxTargetExt)target, (bool)reset, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)values_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        values_ptr.Free();
+                    }
                 }
             }
 
@@ -18958,40 +19408,52 @@ namespace OpenTK.OpenGL
             public static 
             void ConvolutionFilter1D(OpenTK.OpenGL.Enums.ConvolutionTargetExt target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr image)
             {
-                Delegates.glConvolutionFilter1DEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+                unsafe
+                {
+                    Delegates.glConvolutionFilter1DEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+                }
             }
 
             public static 
             void ConvolutionFilter1D(OpenTK.OpenGL.Enums.ConvolutionTargetExt target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object image)
             {
-                System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glConvolutionFilter1DEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    image_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glConvolutionFilter1DEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        image_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void ConvolutionFilter2D(OpenTK.OpenGL.Enums.ConvolutionTargetExt target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr image)
             {
-                Delegates.glConvolutionFilter2DEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+                unsafe
+                {
+                    Delegates.glConvolutionFilter2DEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+                }
             }
 
             public static 
             void ConvolutionFilter2D(OpenTK.OpenGL.Enums.ConvolutionTargetExt target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object image)
             {
-                System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glConvolutionFilter2DEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    image_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glConvolutionFilter2DEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        image_ptr.Free();
+                    }
                 }
             }
 
@@ -19084,20 +19546,26 @@ namespace OpenTK.OpenGL
             public static 
             void GetConvolutionFilter(OpenTK.OpenGL.Enums.ConvolutionTargetExt target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr image)
             {
-                Delegates.glGetConvolutionFilterEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+                unsafe
+                {
+                    Delegates.glGetConvolutionFilterEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image);
+                }
             }
 
             public static 
             void GetConvolutionFilter(OpenTK.OpenGL.Enums.ConvolutionTargetExt target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object image)
             {
-                System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetConvolutionFilterEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    image_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle image_ptr = System.Runtime.InteropServices.GCHandle.Alloc(image, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetConvolutionFilterEXT((OpenTK.OpenGL.Enums.ConvolutionTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)image_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        image_ptr.Free();
+                    }
                 }
             }
 
@@ -19168,62 +19636,77 @@ namespace OpenTK.OpenGL
             public static 
             void GetSeparableFilter(OpenTK.OpenGL.Enums.SeparableTargetExt target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr row, [Out] IntPtr column, [Out] IntPtr span)
             {
-                Delegates.glGetSeparableFilterEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span);
+                unsafe
+                {
+                    Delegates.glGetSeparableFilterEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column, (IntPtr)span);
+                }
             }
 
             public static 
             void GetSeparableFilter(OpenTK.OpenGL.Enums.SeparableTargetExt target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object row, [In, Out] object column, [In, Out] object span)
             {
-                System.Runtime.InteropServices.GCHandle row_ptr = System.Runtime.InteropServices.GCHandle.Alloc(row, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle span_ptr = System.Runtime.InteropServices.GCHandle.Alloc(span, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetSeparableFilterEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    row_ptr.Free();
-                    column_ptr.Free();
-                    span_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle row_ptr = System.Runtime.InteropServices.GCHandle.Alloc(row, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    System.Runtime.InteropServices.GCHandle span_ptr = System.Runtime.InteropServices.GCHandle.Alloc(span, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetSeparableFilterEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        row_ptr.Free();
+                        column_ptr.Free();
+                        span_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void GetSeparableFilter(OpenTK.OpenGL.Enums.SeparableTargetExt target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr row, [In, Out] object column, [In, Out] object span)
             {
-                System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle span_ptr = System.Runtime.InteropServices.GCHandle.Alloc(span, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetSeparableFilterEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    column_ptr.Free();
-                    span_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    System.Runtime.InteropServices.GCHandle span_ptr = System.Runtime.InteropServices.GCHandle.Alloc(span, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetSeparableFilterEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column_ptr.AddrOfPinnedObject(), (IntPtr)span_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        column_ptr.Free();
+                        span_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void SeparableFilter2D(OpenTK.OpenGL.Enums.SeparableTargetExt target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr row, IntPtr column)
             {
-                Delegates.glSeparableFilter2DEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column);
+                unsafe
+                {
+                    Delegates.glSeparableFilter2DEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row, (IntPtr)column);
+                }
             }
 
             public static 
             void SeparableFilter2D(OpenTK.OpenGL.Enums.SeparableTargetExt target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object row, [In, Out] object column)
             {
-                System.Runtime.InteropServices.GCHandle row_ptr = System.Runtime.InteropServices.GCHandle.Alloc(row, System.Runtime.InteropServices.GCHandleType.Pinned);
-                System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glSeparableFilter2DEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    row_ptr.Free();
-                    column_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle row_ptr = System.Runtime.InteropServices.GCHandle.Alloc(row, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    System.Runtime.InteropServices.GCHandle column_ptr = System.Runtime.InteropServices.GCHandle.Alloc(column, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glSeparableFilter2DEXT((OpenTK.OpenGL.Enums.SeparableTargetExt)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)row_ptr.AddrOfPinnedObject(), (IntPtr)column_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        row_ptr.Free();
+                        column_ptr.Free();
+                    }
                 }
             }
 
@@ -19532,20 +20015,26 @@ namespace OpenTK.OpenGL
             public static 
             void ColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, Int32 count, IntPtr pointer)
             {
-                Delegates.glColorPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glColorPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                }
             }
 
             public static 
             void ColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, Int32 count, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glColorPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glColorPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -19589,100 +20078,130 @@ namespace OpenTK.OpenGL
             public static 
             void GetPointer(OpenTK.OpenGL.Enums.GetPointervPName pname, [Out] IntPtr @params)
             {
-                Delegates.glGetPointervEXT((OpenTK.OpenGL.Enums.GetPointervPName)pname, (IntPtr)@params);
+                unsafe
+                {
+                    Delegates.glGetPointervEXT((OpenTK.OpenGL.Enums.GetPointervPName)pname, (IntPtr)@params);
+                }
             }
 
             public static 
             void GetPointer(OpenTK.OpenGL.Enums.GetPointervPName pname, [In, Out] object @params)
             {
-                System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetPointervEXT((OpenTK.OpenGL.Enums.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    @params_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetPointervEXT((OpenTK.OpenGL.Enums.GetPointervPName)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        @params_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void IndexPointer(OpenTK.OpenGL.Enums.IndexPointerType type, Int32 stride, Int32 count, IntPtr pointer)
             {
-                Delegates.glIndexPointerEXT((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glIndexPointerEXT((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                }
             }
 
             public static 
             void IndexPointer(OpenTK.OpenGL.Enums.IndexPointerType type, Int32 stride, Int32 count, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glIndexPointerEXT((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glIndexPointerEXT((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void NormalPointer(OpenTK.OpenGL.Enums.NormalPointerType type, Int32 stride, Int32 count, IntPtr pointer)
             {
-                Delegates.glNormalPointerEXT((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glNormalPointerEXT((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                }
             }
 
             public static 
             void NormalPointer(OpenTK.OpenGL.Enums.NormalPointerType type, Int32 stride, Int32 count, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glNormalPointerEXT((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glNormalPointerEXT((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void TexCoordPointer(Int32 size, OpenTK.OpenGL.Enums.TexCoordPointerType type, Int32 stride, Int32 count, IntPtr pointer)
             {
-                Delegates.glTexCoordPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glTexCoordPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                }
             }
 
             public static 
             void TexCoordPointer(Int32 size, OpenTK.OpenGL.Enums.TexCoordPointerType type, Int32 stride, Int32 count, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTexCoordPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTexCoordPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void VertexPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, Int32 stride, Int32 count, IntPtr pointer)
             {
-                Delegates.glVertexPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer);
+                }
             }
 
             public static 
             void VertexPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, Int32 stride, Int32 count, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (Int32)count, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -19732,20 +20251,26 @@ namespace OpenTK.OpenGL
             public static 
             void ColorSubTable(OpenTK.OpenGL.Enums.ExtColorSubtable target, Int32 start, Int32 count, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr data)
             {
-                Delegates.glColorSubTableEXT((OpenTK.OpenGL.Enums.ExtColorSubtable)target, (Int32)start, (Int32)count, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glColorSubTableEXT((OpenTK.OpenGL.Enums.ExtColorSubtable)target, (Int32)start, (Int32)count, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data);
+                }
             }
 
             public static 
             void ColorSubTable(OpenTK.OpenGL.Enums.ExtColorSubtable target, Int32 start, Int32 count, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glColorSubTableEXT((OpenTK.OpenGL.Enums.ExtColorSubtable)target, (Int32)start, (Int32)count, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glColorSubTableEXT((OpenTK.OpenGL.Enums.ExtColorSubtable)target, (Int32)start, (Int32)count, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
@@ -19758,40 +20283,52 @@ namespace OpenTK.OpenGL
             public static 
             void ColorTable(OpenTK.OpenGL.Enums.ExtPalettedTexture target, OpenTK.OpenGL.Enums.PixelInternalFormat internalFormat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr table)
             {
-                Delegates.glColorTableEXT((OpenTK.OpenGL.Enums.ExtPalettedTexture)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalFormat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+                unsafe
+                {
+                    Delegates.glColorTableEXT((OpenTK.OpenGL.Enums.ExtPalettedTexture)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalFormat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+                }
             }
 
             public static 
             void ColorTable(OpenTK.OpenGL.Enums.ExtPalettedTexture target, OpenTK.OpenGL.Enums.PixelInternalFormat internalFormat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object table)
             {
-                System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glColorTableEXT((OpenTK.OpenGL.Enums.ExtPalettedTexture)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalFormat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    table_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glColorTableEXT((OpenTK.OpenGL.Enums.ExtPalettedTexture)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalFormat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        table_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void GetColorTable(OpenTK.OpenGL.Enums.ExtPalettedTexture target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr data)
             {
-                Delegates.glGetColorTableEXT((OpenTK.OpenGL.Enums.ExtPalettedTexture)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glGetColorTableEXT((OpenTK.OpenGL.Enums.ExtPalettedTexture)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data);
+                }
             }
 
             public static 
             void GetColorTable(OpenTK.OpenGL.Enums.ExtPalettedTexture target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetColorTableEXT((OpenTK.OpenGL.Enums.ExtPalettedTexture)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetColorTableEXT((OpenTK.OpenGL.Enums.ExtPalettedTexture)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
@@ -19951,41 +20488,53 @@ namespace OpenTK.OpenGL
             public static 
             void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.ExtDrawRangeElements type, IntPtr indices)
             {
-                Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawRangeElements)type, (IntPtr)indices);
+                unsafe
+                {
+                    Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawRangeElements)type, (IntPtr)indices);
+                }
             }
 
             public static 
             void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.ExtDrawRangeElements type, IntPtr indices)
             {
-                Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawRangeElements)type, (IntPtr)indices);
+                unsafe
+                {
+                    Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawRangeElements)type, (IntPtr)indices);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.ExtDrawRangeElements type, [In, Out] object indices)
             {
-                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawRangeElements)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    indices_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawRangeElements)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        indices_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.ExtDrawRangeElements type, [In, Out] object indices)
             {
-                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawRangeElements)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    indices_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawRangeElements)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        indices_ptr.Free();
+                    }
                 }
             }
 
@@ -20389,20 +20938,26 @@ namespace OpenTK.OpenGL
             public static 
             void SecondaryColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glSecondaryColorPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glSecondaryColorPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void SecondaryColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glSecondaryColorPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glSecondaryColorPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -20571,20 +21126,26 @@ namespace OpenTK.OpenGL
             public static 
             void FogCoordPointer(OpenTK.OpenGL.Enums.ExtFogCoord type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glFogCoordPointerEXT((OpenTK.OpenGL.Enums.ExtFogCoord)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glFogCoordPointerEXT((OpenTK.OpenGL.Enums.ExtFogCoord)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void FogCoordPointer(OpenTK.OpenGL.Enums.ExtFogCoord type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glFogCoordPointerEXT((OpenTK.OpenGL.Enums.ExtFogCoord)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glFogCoordPointerEXT((OpenTK.OpenGL.Enums.ExtFogCoord)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -21041,40 +21602,52 @@ namespace OpenTK.OpenGL
             public static 
             void TangentPointer(OpenTK.OpenGL.Enums.ExtCoordinateFrame type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glTangentPointerEXT((OpenTK.OpenGL.Enums.ExtCoordinateFrame)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glTangentPointerEXT((OpenTK.OpenGL.Enums.ExtCoordinateFrame)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void TangentPointer(OpenTK.OpenGL.Enums.ExtCoordinateFrame type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTangentPointerEXT((OpenTK.OpenGL.Enums.ExtCoordinateFrame)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTangentPointerEXT((OpenTK.OpenGL.Enums.ExtCoordinateFrame)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void BinormalPointer(OpenTK.OpenGL.Enums.ExtCoordinateFrame type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glBinormalPointerEXT((OpenTK.OpenGL.Enums.ExtCoordinateFrame)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glBinormalPointerEXT((OpenTK.OpenGL.Enums.ExtCoordinateFrame)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void BinormalPointer(OpenTK.OpenGL.Enums.ExtCoordinateFrame type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glBinormalPointerEXT((OpenTK.OpenGL.Enums.ExtCoordinateFrame)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glBinormalPointerEXT((OpenTK.OpenGL.Enums.ExtCoordinateFrame)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -21124,20 +21697,26 @@ namespace OpenTK.OpenGL
             public static 
             void VertexWeightPointer(Int32 size, OpenTK.OpenGL.Enums.ExtVertexWeighting type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glVertexWeightPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ExtVertexWeighting)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexWeightPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ExtVertexWeighting)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void VertexWeightPointer(Int32 size, OpenTK.OpenGL.Enums.ExtVertexWeighting type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexWeightPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ExtVertexWeighting)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexWeightPointerEXT((Int32)size, (OpenTK.OpenGL.Enums.ExtVertexWeighting)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -21312,41 +21891,53 @@ namespace OpenTK.OpenGL
             public static 
             void SetInvariant(UInt32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, IntPtr addr)
             {
-                Delegates.glSetInvariantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr);
+                unsafe
+                {
+                    Delegates.glSetInvariantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr);
+                }
             }
 
             public static 
             void SetInvariant(Int32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, IntPtr addr)
             {
-                Delegates.glSetInvariantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr);
+                unsafe
+                {
+                    Delegates.glSetInvariantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void SetInvariant(UInt32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, [In, Out] object addr)
             {
-                System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glSetInvariantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    addr_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glSetInvariantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        addr_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void SetInvariant(Int32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, [In, Out] object addr)
             {
-                System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glSetInvariantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    addr_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glSetInvariantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        addr_ptr.Free();
+                    }
                 }
             }
 
@@ -21354,41 +21945,53 @@ namespace OpenTK.OpenGL
             public static 
             void SetLocalConstant(UInt32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, IntPtr addr)
             {
-                Delegates.glSetLocalConstantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr);
+                unsafe
+                {
+                    Delegates.glSetLocalConstantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr);
+                }
             }
 
             public static 
             void SetLocalConstant(Int32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, IntPtr addr)
             {
-                Delegates.glSetLocalConstantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr);
+                unsafe
+                {
+                    Delegates.glSetLocalConstantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void SetLocalConstant(UInt32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, [In, Out] object addr)
             {
-                System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glSetLocalConstantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    addr_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glSetLocalConstantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        addr_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void SetLocalConstant(Int32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, [In, Out] object addr)
             {
-                System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glSetLocalConstantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    addr_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glSetLocalConstantEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (IntPtr)addr_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        addr_ptr.Free();
+                    }
                 }
             }
 
@@ -21815,41 +22418,53 @@ namespace OpenTK.OpenGL
             public static 
             void VariantPointer(UInt32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, UInt32 stride, IntPtr addr)
             {
-                Delegates.glVariantPointerEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (UInt32)stride, (IntPtr)addr);
+                unsafe
+                {
+                    Delegates.glVariantPointerEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (UInt32)stride, (IntPtr)addr);
+                }
             }
 
             public static 
             void VariantPointer(Int32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, Int32 stride, IntPtr addr)
             {
-                Delegates.glVariantPointerEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (UInt32)stride, (IntPtr)addr);
+                unsafe
+                {
+                    Delegates.glVariantPointerEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (UInt32)stride, (IntPtr)addr);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void VariantPointer(UInt32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, UInt32 stride, [In, Out] object addr)
             {
-                System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVariantPointerEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (UInt32)stride, (IntPtr)addr_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    addr_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVariantPointerEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (UInt32)stride, (IntPtr)addr_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        addr_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void VariantPointer(Int32 id, OpenTK.OpenGL.Enums.ExtVertexShader type, Int32 stride, [In, Out] object addr)
             {
-                System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVariantPointerEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (UInt32)stride, (IntPtr)addr_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    addr_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle addr_ptr = System.Runtime.InteropServices.GCHandle.Alloc(addr, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVariantPointerEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)type, (UInt32)stride, (IntPtr)addr_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        addr_ptr.Free();
+                    }
                 }
             }
 
@@ -22124,41 +22739,53 @@ namespace OpenTK.OpenGL
             public static 
             void GetVariantPointer(UInt32 id, OpenTK.OpenGL.Enums.ExtVertexShader value, [Out] IntPtr data)
             {
-                Delegates.glGetVariantPointervEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)value, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glGetVariantPointervEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)value, (IntPtr)data);
+                }
             }
 
             public static 
             void GetVariantPointer(Int32 id, OpenTK.OpenGL.Enums.ExtVertexShader value, [Out] IntPtr data)
             {
-                Delegates.glGetVariantPointervEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)value, (IntPtr)data);
+                unsafe
+                {
+                    Delegates.glGetVariantPointervEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)value, (IntPtr)data);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void GetVariantPointer(UInt32 id, OpenTK.OpenGL.Enums.ExtVertexShader value, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetVariantPointervEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)value, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetVariantPointervEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)value, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void GetVariantPointer(Int32 id, OpenTK.OpenGL.Enums.ExtVertexShader value, [In, Out] object data)
             {
-                System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetVariantPointervEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)value, (IntPtr)data_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    data_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetVariantPointervEXT((UInt32)id, (OpenTK.OpenGL.Enums.ExtVertexShader)value, (IntPtr)data_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        data_ptr.Free();
+                    }
                 }
             }
 
@@ -22929,7 +23556,10 @@ namespace OpenTK.OpenGL
             public static 
             IntPtr CheckFramebufferStat(OpenTK.OpenGL.Enums.ExtFramebufferObject target)
             {
-                return Delegates.glCheckFramebufferStatusEXT((OpenTK.OpenGL.Enums.ExtFramebufferObject)target);
+                unsafe
+                {
+                    return Delegates.glCheckFramebufferStatusEXT((OpenTK.OpenGL.Enums.ExtFramebufferObject)target);
+                }
             }
 
             [System.CLSCompliant(false)]
@@ -24025,41 +24655,53 @@ namespace OpenTK.OpenGL
             public static 
             void VertexAttribIPointer(UInt32 index, Int32 size, OpenTK.OpenGL.Enums.NvVertexProgram4 type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glVertexAttribIPointerEXT((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.NvVertexProgram4)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexAttribIPointerEXT((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.NvVertexProgram4)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void VertexAttribIPointer(Int32 index, Int32 size, OpenTK.OpenGL.Enums.NvVertexProgram4 type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glVertexAttribIPointerEXT((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.NvVertexProgram4)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexAttribIPointerEXT((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.NvVertexProgram4)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void VertexAttribIPointer(UInt32 index, Int32 size, OpenTK.OpenGL.Enums.NvVertexProgram4 type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexAttribIPointerEXT((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.NvVertexProgram4)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexAttribIPointerEXT((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.NvVertexProgram4)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void VertexAttribIPointer(Int32 index, Int32 size, OpenTK.OpenGL.Enums.NvVertexProgram4 type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexAttribIPointerEXT((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.NvVertexProgram4)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexAttribIPointerEXT((UInt32)index, (Int32)size, (OpenTK.OpenGL.Enums.NvVertexProgram4)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -24572,20 +25214,26 @@ namespace OpenTK.OpenGL
             public static 
             void DrawElementsInstance(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.ExtDrawInstanced type, IntPtr indices, Int32 primcount)
             {
-                Delegates.glDrawElementsInstancedEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawInstanced)type, (IntPtr)indices, (Int32)primcount);
+                unsafe
+                {
+                    Delegates.glDrawElementsInstancedEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawInstanced)type, (IntPtr)indices, (Int32)primcount);
+                }
             }
 
             public static 
             void DrawElementsInstance(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.ExtDrawInstanced type, [In, Out] object indices, Int32 primcount)
             {
-                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glDrawElementsInstancedEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawInstanced)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
-                }
-                finally
-                {
-                    indices_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glDrawElementsInstancedEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.ExtDrawInstanced)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    }
+                    finally
+                    {
+                        indices_ptr.Free();
+                    }
                 }
             }
 
@@ -25176,40 +25824,52 @@ namespace OpenTK.OpenGL
             public static 
             void TexImage4D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 size4d, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
             {
-                Delegates.glTexImage4DSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)size4d, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                unsafe
+                {
+                    Delegates.glTexImage4DSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)size4d, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                }
             }
 
             public static 
             void TexImage4D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 size4d, Int32 border, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
             {
-                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTexImage4DSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)size4d, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pixels_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTexImage4DSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height, (Int32)depth, (Int32)size4d, (Int32)border, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pixels_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void TexSubImage4D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 woffset, Int32 width, Int32 height, Int32 depth, Int32 size4d, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr pixels)
             {
-                Delegates.glTexSubImage4DSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)woffset, (Int32)width, (Int32)height, (Int32)depth, (Int32)size4d, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                unsafe
+                {
+                    Delegates.glTexSubImage4DSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)woffset, (Int32)width, (Int32)height, (Int32)depth, (Int32)size4d, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels);
+                }
             }
 
             public static 
             void TexSubImage4D(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, Int32 xoffset, Int32 yoffset, Int32 zoffset, Int32 woffset, Int32 width, Int32 height, Int32 depth, Int32 size4d, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object pixels)
             {
-                System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTexSubImage4DSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)woffset, (Int32)width, (Int32)height, (Int32)depth, (Int32)size4d, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pixels_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pixels_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pixels, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTexSubImage4DSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (Int32)xoffset, (Int32)yoffset, (Int32)zoffset, (Int32)woffset, (Int32)width, (Int32)height, (Int32)depth, (Int32)size4d, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)pixels_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pixels_ptr.Free();
+                    }
                 }
             }
 
@@ -25464,20 +26124,26 @@ namespace OpenTK.OpenGL
             public static 
             void ColorTable(OpenTK.OpenGL.Enums.ColorTableTargetSgi target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr table)
             {
-                Delegates.glColorTableSGI((OpenTK.OpenGL.Enums.ColorTableTargetSgi)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+                unsafe
+                {
+                    Delegates.glColorTableSGI((OpenTK.OpenGL.Enums.ColorTableTargetSgi)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+                }
             }
 
             public static 
             void ColorTable(OpenTK.OpenGL.Enums.ColorTableTargetSgi target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object table)
             {
-                System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glColorTableSGI((OpenTK.OpenGL.Enums.ColorTableTargetSgi)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    table_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glColorTableSGI((OpenTK.OpenGL.Enums.ColorTableTargetSgi)target, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        table_ptr.Free();
+                    }
                 }
             }
 
@@ -25552,20 +26218,26 @@ namespace OpenTK.OpenGL
             public static 
             void GetColorTable(OpenTK.OpenGL.Enums.ColorTableTargetSgi target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr table)
             {
-                Delegates.glGetColorTableSGI((OpenTK.OpenGL.Enums.ColorTableTargetSgi)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+                unsafe
+                {
+                    Delegates.glGetColorTableSGI((OpenTK.OpenGL.Enums.ColorTableTargetSgi)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table);
+                }
             }
 
             public static 
             void GetColorTable(OpenTK.OpenGL.Enums.ColorTableTargetSgi target, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [In, Out] object table)
             {
-                System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetColorTableSGI((OpenTK.OpenGL.Enums.ColorTableTargetSgi)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    table_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle table_ptr = System.Runtime.InteropServices.GCHandle.Alloc(table, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetColorTableSGI((OpenTK.OpenGL.Enums.ColorTableTargetSgi)target, (OpenTK.OpenGL.Enums.PixelFormat)format, (OpenTK.OpenGL.Enums.PixelType)type, (IntPtr)table_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        table_ptr.Free();
+                    }
                 }
             }
 
@@ -26761,20 +27433,26 @@ namespace OpenTK.OpenGL
             public static 
             void IglooInterface(OpenTK.OpenGL.Enums.All pname, IntPtr @params)
             {
-                Delegates.glIglooInterfaceSGIX((OpenTK.OpenGL.Enums.All)pname, (IntPtr)@params);
+                unsafe
+                {
+                    Delegates.glIglooInterfaceSGIX((OpenTK.OpenGL.Enums.All)pname, (IntPtr)@params);
+                }
             }
 
             public static 
             void IglooInterface(OpenTK.OpenGL.Enums.All pname, [In, Out] object @params)
             {
-                System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glIglooInterfaceSGIX((OpenTK.OpenGL.Enums.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    @params_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle @params_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@params, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glIglooInterfaceSGIX((OpenTK.OpenGL.Enums.All)pname, (IntPtr)@params_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        @params_ptr.Free();
+                    }
                 }
             }
 
@@ -26937,80 +27615,104 @@ namespace OpenTK.OpenGL
             public static 
             void VertexPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, IntPtr pointer)
             {
-                Delegates.glVertexPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer);
+                }
             }
 
             public static 
             void VertexPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void NormalPointer(OpenTK.OpenGL.Enums.NormalPointerType type, IntPtr pointer)
             {
-                Delegates.glNormalPointervINTEL((OpenTK.OpenGL.Enums.NormalPointerType)type, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glNormalPointervINTEL((OpenTK.OpenGL.Enums.NormalPointerType)type, (IntPtr)pointer);
+                }
             }
 
             public static 
             void NormalPointer(OpenTK.OpenGL.Enums.NormalPointerType type, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glNormalPointervINTEL((OpenTK.OpenGL.Enums.NormalPointerType)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glNormalPointervINTEL((OpenTK.OpenGL.Enums.NormalPointerType)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void ColorPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, IntPtr pointer)
             {
-                Delegates.glColorPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glColorPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer);
+                }
             }
 
             public static 
             void ColorPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glColorPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glColorPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void TexCoordPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, IntPtr pointer)
             {
-                Delegates.glTexCoordPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glTexCoordPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer);
+                }
             }
 
             public static 
             void TexCoordPointer(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTexCoordPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTexCoordPointervINTEL((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -27279,20 +27981,26 @@ namespace OpenTK.OpenGL
             public static 
             void ReplacementCodePointer(OpenTK.OpenGL.Enums.SunTriangleList type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glReplacementCodePointerSUN((OpenTK.OpenGL.Enums.SunTriangleList)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glReplacementCodePointerSUN((OpenTK.OpenGL.Enums.SunTriangleList)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void ReplacementCodePointer(OpenTK.OpenGL.Enums.SunTriangleList type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glReplacementCodePointerSUN((OpenTK.OpenGL.Enums.SunTriangleList)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glReplacementCodePointerSUN((OpenTK.OpenGL.Enums.SunTriangleList)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -28501,20 +29209,26 @@ namespace OpenTK.OpenGL
             public static 
             void VertexArrayRange(Int32 length, IntPtr pointer)
             {
-                Delegates.glVertexArrayRangeNV((Int32)length, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexArrayRangeNV((Int32)length, (IntPtr)pointer);
+                }
             }
 
             public static 
             void VertexArrayRange(Int32 length, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexArrayRangeNV((Int32)length, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexArrayRangeNV((Int32)length, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -29054,41 +29768,53 @@ namespace OpenTK.OpenGL
             public static 
             void MapControlPoints(OpenTK.OpenGL.Enums.NvEvaluators target, UInt32 index, OpenTK.OpenGL.Enums.NvEvaluators type, Int32 ustride, Int32 vstride, Int32 uorder, Int32 vorder, bool packed, IntPtr points)
             {
-                Delegates.glMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (Int32)uorder, (Int32)vorder, (bool)packed, (IntPtr)points);
+                unsafe
+                {
+                    Delegates.glMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (Int32)uorder, (Int32)vorder, (bool)packed, (IntPtr)points);
+                }
             }
 
             public static 
             void MapControlPoints(OpenTK.OpenGL.Enums.NvEvaluators target, Int32 index, OpenTK.OpenGL.Enums.NvEvaluators type, Int32 ustride, Int32 vstride, Int32 uorder, Int32 vorder, bool packed, IntPtr points)
             {
-                Delegates.glMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (Int32)uorder, (Int32)vorder, (bool)packed, (IntPtr)points);
+                unsafe
+                {
+                    Delegates.glMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (Int32)uorder, (Int32)vorder, (bool)packed, (IntPtr)points);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void MapControlPoints(OpenTK.OpenGL.Enums.NvEvaluators target, UInt32 index, OpenTK.OpenGL.Enums.NvEvaluators type, Int32 ustride, Int32 vstride, Int32 uorder, Int32 vorder, bool packed, [In, Out] object points)
             {
-                System.Runtime.InteropServices.GCHandle points_ptr = System.Runtime.InteropServices.GCHandle.Alloc(points, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (Int32)uorder, (Int32)vorder, (bool)packed, (IntPtr)points_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    points_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle points_ptr = System.Runtime.InteropServices.GCHandle.Alloc(points, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (Int32)uorder, (Int32)vorder, (bool)packed, (IntPtr)points_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        points_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void MapControlPoints(OpenTK.OpenGL.Enums.NvEvaluators target, Int32 index, OpenTK.OpenGL.Enums.NvEvaluators type, Int32 ustride, Int32 vstride, Int32 uorder, Int32 vorder, bool packed, [In, Out] object points)
             {
-                System.Runtime.InteropServices.GCHandle points_ptr = System.Runtime.InteropServices.GCHandle.Alloc(points, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (Int32)uorder, (Int32)vorder, (bool)packed, (IntPtr)points_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    points_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle points_ptr = System.Runtime.InteropServices.GCHandle.Alloc(points, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (Int32)uorder, (Int32)vorder, (bool)packed, (IntPtr)points_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        points_ptr.Free();
+                    }
                 }
             }
 
@@ -29158,41 +29884,53 @@ namespace OpenTK.OpenGL
             public static 
             void GetMapControlPoints(OpenTK.OpenGL.Enums.NvEvaluators target, UInt32 index, OpenTK.OpenGL.Enums.NvEvaluators type, Int32 ustride, Int32 vstride, bool packed, [Out] IntPtr points)
             {
-                Delegates.glGetMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (bool)packed, (IntPtr)points);
+                unsafe
+                {
+                    Delegates.glGetMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (bool)packed, (IntPtr)points);
+                }
             }
 
             public static 
             void GetMapControlPoints(OpenTK.OpenGL.Enums.NvEvaluators target, Int32 index, OpenTK.OpenGL.Enums.NvEvaluators type, Int32 ustride, Int32 vstride, bool packed, [Out] IntPtr points)
             {
-                Delegates.glGetMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (bool)packed, (IntPtr)points);
+                unsafe
+                {
+                    Delegates.glGetMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (bool)packed, (IntPtr)points);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void GetMapControlPoints(OpenTK.OpenGL.Enums.NvEvaluators target, UInt32 index, OpenTK.OpenGL.Enums.NvEvaluators type, Int32 ustride, Int32 vstride, bool packed, [In, Out] object points)
             {
-                System.Runtime.InteropServices.GCHandle points_ptr = System.Runtime.InteropServices.GCHandle.Alloc(points, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (bool)packed, (IntPtr)points_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    points_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle points_ptr = System.Runtime.InteropServices.GCHandle.Alloc(points, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (bool)packed, (IntPtr)points_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        points_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void GetMapControlPoints(OpenTK.OpenGL.Enums.NvEvaluators target, Int32 index, OpenTK.OpenGL.Enums.NvEvaluators type, Int32 ustride, Int32 vstride, bool packed, [In, Out] object points)
             {
-                System.Runtime.InteropServices.GCHandle points_ptr = System.Runtime.InteropServices.GCHandle.Alloc(points, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (bool)packed, (IntPtr)points_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    points_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle points_ptr = System.Runtime.InteropServices.GCHandle.Alloc(points, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetMapControlPointsNV((OpenTK.OpenGL.Enums.NvEvaluators)target, (UInt32)index, (OpenTK.OpenGL.Enums.NvEvaluators)type, (Int32)ustride, (Int32)vstride, (bool)packed, (IntPtr)points_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        points_ptr.Free();
+                    }
                 }
             }
 
@@ -30272,41 +31010,53 @@ namespace OpenTK.OpenGL
             public static 
             void GetVertexAttribPointer(UInt32 index, OpenTK.OpenGL.Enums.NvVertexProgram pname, [Out] IntPtr pointer)
             {
-                Delegates.glGetVertexAttribPointervNV((UInt32)index, (OpenTK.OpenGL.Enums.NvVertexProgram)pname, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glGetVertexAttribPointervNV((UInt32)index, (OpenTK.OpenGL.Enums.NvVertexProgram)pname, (IntPtr)pointer);
+                }
             }
 
             public static 
             void GetVertexAttribPointer(Int32 index, OpenTK.OpenGL.Enums.NvVertexProgram pname, [Out] IntPtr pointer)
             {
-                Delegates.glGetVertexAttribPointervNV((UInt32)index, (OpenTK.OpenGL.Enums.NvVertexProgram)pname, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glGetVertexAttribPointervNV((UInt32)index, (OpenTK.OpenGL.Enums.NvVertexProgram)pname, (IntPtr)pointer);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void GetVertexAttribPointer(UInt32 index, OpenTK.OpenGL.Enums.NvVertexProgram pname, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetVertexAttribPointervNV((UInt32)index, (OpenTK.OpenGL.Enums.NvVertexProgram)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetVertexAttribPointervNV((UInt32)index, (OpenTK.OpenGL.Enums.NvVertexProgram)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void GetVertexAttribPointer(Int32 index, OpenTK.OpenGL.Enums.NvVertexProgram pname, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glGetVertexAttribPointervNV((UInt32)index, (OpenTK.OpenGL.Enums.NvVertexProgram)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glGetVertexAttribPointervNV((UInt32)index, (OpenTK.OpenGL.Enums.NvVertexProgram)pname, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -30750,41 +31500,53 @@ namespace OpenTK.OpenGL
             public static 
             void VertexAttribPointer(UInt32 index, Int32 fsize, OpenTK.OpenGL.Enums.NvVertexProgram type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glVertexAttribPointerNV((UInt32)index, (Int32)fsize, (OpenTK.OpenGL.Enums.NvVertexProgram)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexAttribPointerNV((UInt32)index, (Int32)fsize, (OpenTK.OpenGL.Enums.NvVertexProgram)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             public static 
             void VertexAttribPointer(Int32 index, Int32 fsize, OpenTK.OpenGL.Enums.NvVertexProgram type, Int32 stride, IntPtr pointer)
             {
-                Delegates.glVertexAttribPointerNV((UInt32)index, (Int32)fsize, (OpenTK.OpenGL.Enums.NvVertexProgram)type, (Int32)stride, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexAttribPointerNV((UInt32)index, (Int32)fsize, (OpenTK.OpenGL.Enums.NvVertexProgram)type, (Int32)stride, (IntPtr)pointer);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void VertexAttribPointer(UInt32 index, Int32 fsize, OpenTK.OpenGL.Enums.NvVertexProgram type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexAttribPointerNV((UInt32)index, (Int32)fsize, (OpenTK.OpenGL.Enums.NvVertexProgram)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexAttribPointerNV((UInt32)index, (Int32)fsize, (OpenTK.OpenGL.Enums.NvVertexProgram)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void VertexAttribPointer(Int32 index, Int32 fsize, OpenTK.OpenGL.Enums.NvVertexProgram type, Int32 stride, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexAttribPointerNV((UInt32)index, (Int32)fsize, (OpenTK.OpenGL.Enums.NvVertexProgram)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexAttribPointerNV((UInt32)index, (Int32)fsize, (OpenTK.OpenGL.Enums.NvVertexProgram)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -35200,20 +35962,26 @@ namespace OpenTK.OpenGL
             public static 
             void PixelDataRange(OpenTK.OpenGL.Enums.NvPixelDataRange target, Int32 length, [Out] IntPtr pointer)
             {
-                Delegates.glPixelDataRangeNV((OpenTK.OpenGL.Enums.NvPixelDataRange)target, (Int32)length, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glPixelDataRangeNV((OpenTK.OpenGL.Enums.NvPixelDataRange)target, (Int32)length, (IntPtr)pointer);
+                }
             }
 
             public static 
             void PixelDataRange(OpenTK.OpenGL.Enums.NvPixelDataRange target, Int32 length, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glPixelDataRangeNV((OpenTK.OpenGL.Enums.NvPixelDataRange)target, (Int32)length, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glPixelDataRangeNV((OpenTK.OpenGL.Enums.NvPixelDataRange)target, (Int32)length, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -36955,40 +37723,52 @@ namespace OpenTK.OpenGL
             public static 
             void ColorPointerList(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride)
             {
-                Delegates.glColorPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                unsafe
+                {
+                    Delegates.glColorPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                }
             }
 
             public static 
             void ColorPointerList(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, [In, Out] object pointer, Int32 ptrstride)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glColorPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glColorPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.ColorPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void SecondaryColorPointerList(Int32 size, OpenTK.OpenGL.Enums.IbmVertexArrayLists type, Int32 stride, IntPtr pointer, Int32 ptrstride)
             {
-                Delegates.glSecondaryColorPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.IbmVertexArrayLists)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                unsafe
+                {
+                    Delegates.glSecondaryColorPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.IbmVertexArrayLists)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                }
             }
 
             public static 
             void SecondaryColorPointerList(Int32 size, OpenTK.OpenGL.Enums.IbmVertexArrayLists type, Int32 stride, [In, Out] object pointer, Int32 ptrstride)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glSecondaryColorPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.IbmVertexArrayLists)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glSecondaryColorPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.IbmVertexArrayLists)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -37026,100 +37806,130 @@ namespace OpenTK.OpenGL
             public static 
             void FogCoordPointerList(OpenTK.OpenGL.Enums.IbmVertexArrayLists type, Int32 stride, IntPtr pointer, Int32 ptrstride)
             {
-                Delegates.glFogCoordPointerListIBM((OpenTK.OpenGL.Enums.IbmVertexArrayLists)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                unsafe
+                {
+                    Delegates.glFogCoordPointerListIBM((OpenTK.OpenGL.Enums.IbmVertexArrayLists)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                }
             }
 
             public static 
             void FogCoordPointerList(OpenTK.OpenGL.Enums.IbmVertexArrayLists type, Int32 stride, [In, Out] object pointer, Int32 ptrstride)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glFogCoordPointerListIBM((OpenTK.OpenGL.Enums.IbmVertexArrayLists)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glFogCoordPointerListIBM((OpenTK.OpenGL.Enums.IbmVertexArrayLists)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void IndexPointerList(OpenTK.OpenGL.Enums.IndexPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride)
             {
-                Delegates.glIndexPointerListIBM((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                unsafe
+                {
+                    Delegates.glIndexPointerListIBM((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                }
             }
 
             public static 
             void IndexPointerList(OpenTK.OpenGL.Enums.IndexPointerType type, Int32 stride, [In, Out] object pointer, Int32 ptrstride)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glIndexPointerListIBM((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glIndexPointerListIBM((OpenTK.OpenGL.Enums.IndexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void NormalPointerList(OpenTK.OpenGL.Enums.NormalPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride)
             {
-                Delegates.glNormalPointerListIBM((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                unsafe
+                {
+                    Delegates.glNormalPointerListIBM((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                }
             }
 
             public static 
             void NormalPointerList(OpenTK.OpenGL.Enums.NormalPointerType type, Int32 stride, [In, Out] object pointer, Int32 ptrstride)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glNormalPointerListIBM((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glNormalPointerListIBM((OpenTK.OpenGL.Enums.NormalPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void TexCoordPointerList(Int32 size, OpenTK.OpenGL.Enums.TexCoordPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride)
             {
-                Delegates.glTexCoordPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                unsafe
+                {
+                    Delegates.glTexCoordPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                }
             }
 
             public static 
             void TexCoordPointerList(Int32 size, OpenTK.OpenGL.Enums.TexCoordPointerType type, Int32 stride, [In, Out] object pointer, Int32 ptrstride)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glTexCoordPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glTexCoordPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.TexCoordPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void VertexPointerList(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride)
             {
-                Delegates.glVertexPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                unsafe
+                {
+                    Delegates.glVertexPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (IntPtr)pointer, (Int32)ptrstride);
+                }
             }
 
             public static 
             void VertexPointerList(Int32 size, OpenTK.OpenGL.Enums.VertexPointerType type, Int32 stride, [In, Out] object pointer, Int32 ptrstride)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexPointerListIBM((Int32)size, (OpenTK.OpenGL.Enums.VertexPointerType)type, (Int32)stride, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (Int32)ptrstride);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -37504,20 +38314,26 @@ namespace OpenTK.OpenGL
             public static 
             Int32 NewObjectBuffer(Int32 size, IntPtr pointer, OpenTK.OpenGL.Enums.AtiVertexArrayObject usage)
             {
-                return Delegates.glNewObjectBufferATI((Int32)size, (IntPtr)pointer, (OpenTK.OpenGL.Enums.AtiVertexArrayObject)usage);
+                unsafe
+                {
+                    return Delegates.glNewObjectBufferATI((Int32)size, (IntPtr)pointer, (OpenTK.OpenGL.Enums.AtiVertexArrayObject)usage);
+                }
             }
 
             public static 
             Int32 NewObjectBuffer(Int32 size, [In, Out] object pointer, OpenTK.OpenGL.Enums.AtiVertexArrayObject usage)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    return Delegates.glNewObjectBufferATI((Int32)size, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.AtiVertexArrayObject)usage);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        return Delegates.glNewObjectBufferATI((Int32)size, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.AtiVertexArrayObject)usage);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -37538,41 +38354,53 @@ namespace OpenTK.OpenGL
             public static 
             void UpdateObjectBuffer(UInt32 buffer, UInt32 offset, Int32 size, IntPtr pointer, OpenTK.OpenGL.Enums.AtiVertexArrayObject preserve)
             {
-                Delegates.glUpdateObjectBufferATI((UInt32)buffer, (UInt32)offset, (Int32)size, (IntPtr)pointer, (OpenTK.OpenGL.Enums.AtiVertexArrayObject)preserve);
+                unsafe
+                {
+                    Delegates.glUpdateObjectBufferATI((UInt32)buffer, (UInt32)offset, (Int32)size, (IntPtr)pointer, (OpenTK.OpenGL.Enums.AtiVertexArrayObject)preserve);
+                }
             }
 
             public static 
             void UpdateObjectBuffer(Int32 buffer, Int32 offset, Int32 size, IntPtr pointer, OpenTK.OpenGL.Enums.AtiVertexArrayObject preserve)
             {
-                Delegates.glUpdateObjectBufferATI((UInt32)buffer, (UInt32)offset, (Int32)size, (IntPtr)pointer, (OpenTK.OpenGL.Enums.AtiVertexArrayObject)preserve);
+                unsafe
+                {
+                    Delegates.glUpdateObjectBufferATI((UInt32)buffer, (UInt32)offset, (Int32)size, (IntPtr)pointer, (OpenTK.OpenGL.Enums.AtiVertexArrayObject)preserve);
+                }
             }
 
             [System.CLSCompliant(false)]
             public static 
             void UpdateObjectBuffer(UInt32 buffer, UInt32 offset, Int32 size, [In, Out] object pointer, OpenTK.OpenGL.Enums.AtiVertexArrayObject preserve)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glUpdateObjectBufferATI((UInt32)buffer, (UInt32)offset, (Int32)size, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.AtiVertexArrayObject)preserve);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glUpdateObjectBufferATI((UInt32)buffer, (UInt32)offset, (Int32)size, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.AtiVertexArrayObject)preserve);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void UpdateObjectBuffer(Int32 buffer, Int32 offset, Int32 size, [In, Out] object pointer, OpenTK.OpenGL.Enums.AtiVertexArrayObject preserve)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glUpdateObjectBufferATI((UInt32)buffer, (UInt32)offset, (Int32)size, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.AtiVertexArrayObject)preserve);
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glUpdateObjectBufferATI((UInt32)buffer, (UInt32)offset, (Int32)size, (IntPtr)pointer_ptr.AddrOfPinnedObject(), (OpenTK.OpenGL.Enums.AtiVertexArrayObject)preserve);
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -38781,20 +39609,26 @@ namespace OpenTK.OpenGL
             public static 
             void ElementPointer(OpenTK.OpenGL.Enums.AtiElementArray type, IntPtr pointer)
             {
-                Delegates.glElementPointerATI((OpenTK.OpenGL.Enums.AtiElementArray)type, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glElementPointerATI((OpenTK.OpenGL.Enums.AtiElementArray)type, (IntPtr)pointer);
+                }
             }
 
             public static 
             void ElementPointer(OpenTK.OpenGL.Enums.AtiElementArray type, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glElementPointerATI((OpenTK.OpenGL.Enums.AtiElementArray)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glElementPointerATI((OpenTK.OpenGL.Enums.AtiElementArray)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -39046,20 +39880,26 @@ namespace OpenTK.OpenGL
             public static 
             void ElementPointer(OpenTK.OpenGL.Enums.AppleElementArray type, IntPtr pointer)
             {
-                Delegates.glElementPointerAPPLE((OpenTK.OpenGL.Enums.AppleElementArray)type, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glElementPointerAPPLE((OpenTK.OpenGL.Enums.AppleElementArray)type, (IntPtr)pointer);
+                }
             }
 
             public static 
             void ElementPointer(OpenTK.OpenGL.Enums.AppleElementArray type, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glElementPointerAPPLE((OpenTK.OpenGL.Enums.AppleElementArray)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glElementPointerAPPLE((OpenTK.OpenGL.Enums.AppleElementArray)type, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -39543,40 +40383,52 @@ namespace OpenTK.OpenGL
             public static 
             void VertexArrayRange(Int32 length, [Out] IntPtr pointer)
             {
-                Delegates.glVertexArrayRangeAPPLE((Int32)length, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glVertexArrayRangeAPPLE((Int32)length, (IntPtr)pointer);
+                }
             }
 
             public static 
             void VertexArrayRange(Int32 length, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glVertexArrayRangeAPPLE((Int32)length, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glVertexArrayRangeAPPLE((Int32)length, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
             public static 
             void FlushVertexArrayRange(Int32 length, [Out] IntPtr pointer)
             {
-                Delegates.glFlushVertexArrayRangeAPPLE((Int32)length, (IntPtr)pointer);
+                unsafe
+                {
+                    Delegates.glFlushVertexArrayRangeAPPLE((Int32)length, (IntPtr)pointer);
+                }
             }
 
             public static 
             void FlushVertexArrayRange(Int32 length, [In, Out] object pointer)
             {
-                System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glFlushVertexArrayRangeAPPLE((Int32)length, (IntPtr)pointer_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    pointer_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glFlushVertexArrayRangeAPPLE((Int32)length, (IntPtr)pointer_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        pointer_ptr.Free();
+                    }
                 }
             }
 
@@ -39605,20 +40457,26 @@ namespace OpenTK.OpenGL
             public static 
             void StringMarker(Int32 len, IntPtr @string)
             {
-                Delegates.glStringMarkerGREMEDY((Int32)len, (IntPtr)@string);
+                unsafe
+                {
+                    Delegates.glStringMarkerGREMEDY((Int32)len, (IntPtr)@string);
+                }
             }
 
             public static 
             void StringMarker(Int32 len, [In, Out] object @string)
             {
-                System.Runtime.InteropServices.GCHandle @string_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@string, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    Delegates.glStringMarkerGREMEDY((Int32)len, (IntPtr)@string_ptr.AddrOfPinnedObject());
-                }
-                finally
-                {
-                    @string_ptr.Free();
+                    System.Runtime.InteropServices.GCHandle @string_ptr = System.Runtime.InteropServices.GCHandle.Alloc(@string, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
+                    {
+                        Delegates.glStringMarkerGREMEDY((Int32)len, (IntPtr)@string_ptr.AddrOfPinnedObject());
+                    }
+                    finally
+                    {
+                        @string_ptr.Free();
+                    }
                 }
             }
 
