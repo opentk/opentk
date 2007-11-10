@@ -765,6 +765,18 @@ namespace OpenTK.Math
 			return result;
 		}
 
+		/// <summary>
+		/// Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3
+		/// </summary>
+		/// <param name="pos">The vector to transform</param>
+		/// <param name="mat">The desired transformation</param>
+		/// <returns>The transformed vector</returns>
+		public static Vector3 TransformPerspective(Vector3 vec, Matrix4 mat)
+		{
+			Vector4 h = Transform(vec, mat);
+			return new Vector3(h.X / h.W, h.Y / h.W, h.Z / h.W);
+		}
+
 		#endregion
 
 		#endregion
