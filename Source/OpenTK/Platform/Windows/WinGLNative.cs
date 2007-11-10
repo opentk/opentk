@@ -23,13 +23,13 @@ namespace OpenTK.Platform.Windows
     /// Drives GameWindow on Windows.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    sealed class WinGLNative : NativeWindow, INativeGLWindow
+    sealed class WinGLNative : System.Windows.Forms.NativeWindow, INativeGLWindow
     {
         #region --- Fields ---
 
         private WinGLContext glContext;
         private DisplayMode mode = new DisplayMode();
-        //private WinRawInput driver;
+        private WinRawInput driver;
 
         //private bool fullscreen;
         private bool disposed;
@@ -149,6 +149,18 @@ namespace OpenTK.Platform.Windows
                 }
                 Functions.DispatchMessage(ref msg);
                 //WndProc(ref msg);
+            }
+        }
+
+        #endregion
+
+        #region public IInputDriver InputDriver
+
+        public IInputDriver InputDriver
+        {
+            get
+            {
+                return driver;
             }
         }
 
@@ -340,7 +352,7 @@ namespace OpenTK.Platform.Windows
         public void OnCreate(EventArgs e)
         {
             this.window = new WindowInfo(this);
-            //driver = new WinRawInput(this.window);
+            driver = new WinRawInput(this.window);
 
             Debug.Print("Window created: {0}", window);
 
