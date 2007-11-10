@@ -20,7 +20,7 @@ namespace OpenTK.Platform.X11
         WindowInfo window;
         List<MouseDevice> mice = new List<MouseDevice>();
 
-        #region Constructor
+        #region --- Constructor ---
 
         public X11Mouse(WindowInfo window)
         {
@@ -28,6 +28,7 @@ namespace OpenTK.Platform.X11
 
             // Just create one mouse now.
             // TODO: support for multiple devices through evdev.
+            // TODO: Should call XSelectInput for mouse pointer events.
             MouseDevice m = new MouseDevice();
             m.Description = "Default X11 mouse";
             m.DeviceID = IntPtr.Zero;

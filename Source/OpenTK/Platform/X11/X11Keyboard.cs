@@ -161,12 +161,12 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region Constructor
+        #region --- Constructor ---
 
         internal X11Keyboard(WindowInfo window)
         {
             if (window == null)
-                throw new ArgumentException("Window cannot be null.");
+                throw new ArgumentNullException("window");
 
             this.window = window;
             Initialize();
@@ -250,6 +250,8 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public void Poll()
+
         public void Poll()
         {
             //Keymap map = new Keymap();
@@ -273,5 +275,7 @@ namespace OpenTK.Platform.X11
             }
             */
         }
+
+        #endregion
     }
 }
