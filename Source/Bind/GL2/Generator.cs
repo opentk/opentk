@@ -71,7 +71,7 @@ namespace Bind.GL2
 
             // Process enums and delegates - create wrappers.
             Trace.WriteLine("Processing specs, please wait...");
-            this.Translate();
+            //this.Translate();
             
             this.WriteBindings(
             	Bind.Structures.Delegate.Delegates,
@@ -82,12 +82,12 @@ namespace Bind.GL2
         #endregion
 
         #region private void Translate()
-
+#if false
         protected virtual void Translate()
         {
             Bind.Structures.Enum.GLEnums.Translate();
         }
-
+#endif
         #endregion
 
         #region ISpecReader Members
@@ -403,6 +403,9 @@ namespace Bind.GL2
                 string[] words = line.Split(" ,\t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 if (words.Length < 2)
                     continue;
+
+                if (((Settings.Compatibility & Settings.Legacy.NoBoolParameters) != Settings.Legacy.None) && words[1] == "bool")
+                    words[1] = "Int32";
 
                 CSTypes.Add(words[0], words[1]);
             }
