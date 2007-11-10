@@ -122,6 +122,7 @@ namespace Bind.Structures
                 translator.Append(name);
 
             translator.Replace("Pname", "PName");
+            translator.Replace("SRgb", "Srgb");
             return translator.ToString();
         }
 
