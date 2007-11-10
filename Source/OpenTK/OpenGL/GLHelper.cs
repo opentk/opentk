@@ -680,6 +680,12 @@ namespace OpenTK.OpenGL
             Delegates.glTranslatef(trans.X, trans.Y, trans.Z);
         }
 
+		public static
+		void MultMatrix(Matrix4 mat)
+		{
+			MultMatrix(ref mat.Row0.X);
+		}
+
         #endregion
 
         #endregion
