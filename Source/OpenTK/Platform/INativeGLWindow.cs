@@ -28,6 +28,7 @@ namespace OpenTK.Platform
         bool Visible { get; set; }
         bool IsIdle { get; }
         IGLContext Context { get; }
+        IInputDriver InputDriver { get; }
 
         event CreateEvent Create;
         event DestroyEvent Destroy;
