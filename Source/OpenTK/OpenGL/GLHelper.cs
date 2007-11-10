@@ -29,31 +29,21 @@ namespace OpenTK.OpenGL
     /// </summary>
     /// <remarks>
     /// <para>
-    /// OpenTK.OpenGL.GL contains all OpenGL enums and functions defined in the 2.1 specification.
+    /// This class contains all OpenGL enums and functions defined in the 2.1 specification.
     /// The official .spec files can be found at: http://opengl.org/registry/.
     /// </para>
     /// <para>
-    /// OpenTK.OpenGL.GL relies on static initialization to obtain the entry points for OpenGL functions.
-    /// Please ensure that a valid OpenGL context has been made current in the pertinent thread <b>before</b>
-    /// any OpenGL functions are called (toolkits like GLUT, SDL or GLFW will automatically take care of
-    /// the context initialization process). Without a valid OpenGL context, OpenTK.OpenGL.GL will only be able
-    /// to retrieve statically exported entry points (typically corresponding to OpenGL version 1.1 under Windows,
-    /// 1.3 under Linux and 1.4 under Windows Vista), and extension methods will need to be loaded manually.
+    /// A valid OpenGL context must be created before calling any OpenGL function.
     /// </para>
     /// <para>
-    /// If you prefer not to rely on static initialisation for the Gl class, you can use the
-    /// ReloadFunctions or ReloadFunction methods to manually force the initialisation of OpenGL entry points.
-    /// The ReloadFunctions method should be called whenever you change an existing visual or pixelformat. This
-    /// generally happens when you change the color/stencil/depth buffer associated with a window (but probably
-    /// not the resolution). This may or may not be necessary under Linux/MacOS, but is generally required for
-    /// Windows.
-    /// </para>
+    /// Use the GL.Load and GL.LoadAll methods to prepare function entry points prior to use. To maintain
+    /// cross-platform compatibility, this must be done for both core and extension functions. The GameWindow
+    /// and the GLControl class will take care of this automatically.
     /// <para>
-    /// You can use the Gl.IsExtensionSupported method to check whether any given category of extension functions
-    /// exists in the current OpenGL context. The results can be cached to speed up future searches.
-    /// Keep in mind that different OpenGL contexts may support different extensions, and under different entry
-    /// points. Always check if all required extensions are still supported when changing visuals or pixel
-    /// formats.
+    /// You can use the GL.SupportsExtension method to check whether any given category of extension functions
+    /// exists in the current OpenGL context. Keep in mind that different OpenGL contexts may support different
+    /// extensions, and under different entry points. Always check if all required extensions are still supported
+    /// when changing visuals or pixel formats.
     /// </para>
     /// <para>
     /// You may retrieve the entry point for an OpenGL function using the GL.GetDelegate method.
@@ -68,46 +58,53 @@ namespace OpenTK.OpenGL
     /// </remarks>
     public static partial class GL
     {
-        static StringBuilder sb = new StringBuilder();
-        static object gl_lock = new object();
-
-        static GL()
-        {
-            assembly = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.OpenGL");
-            glClass = assembly.GetType("OpenTK.OpenGL.GL");
-            delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
-            importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
-        }
-
-        internal static partial class Imports
-        {
-            internal static SortedList<string, MethodInfo> import;  // This is faster than either Dictionary or SortedDictionary
-            static Imports()
-            {
-                MethodInfo[] methods = importsClass.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
-                import = new SortedList<string, MethodInfo>(methods.Length);
-                foreach (MethodInfo m in methods)
-                {
-                    import.Add(m.Name, m);
-                }
-            }
-        }
-
         #region --- Fields ---
 
         internal const string Library = "opengl32.dll";
-        
-        //private static Dictionary<string, bool> AvailableExtensions = new Dictionary<string, bool>();
+
+        static StringBuilder sb = new StringBuilder();
+        static object gl_lock = new object();
+
         private static SortedList<string, bool> AvailableExtensions = new SortedList<string, bool>();
         private static bool rebuildExtensionList;
 
-        private static Assembly assembly;
         private static Type glClass;
         private static Type delegatesClass;
         private static Type importsClass;
         private static FieldInfo[] delegates;
-        
+
         #endregion
+
+        #region --- Constructor ---
+
+        static GL()
+        {
+            glClass = typeof(GL);
+            delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
+            importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
+        }
+
+        #endregion
+
+        #region --- Imports ---
+
+        internal static partial class Imports
+        {
+            internal static SortedList<string, MethodInfo> FunctionMap;  // This is faster than either Dictionary or SortedDictionary
+            static Imports()
+            {
+                MethodInfo[] methods = importsClass.GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
+                FunctionMap = new SortedList<string, MethodInfo>(methods.Length);
+                foreach (MethodInfo m in methods)
+                {
+                    FunctionMap.Add(m.Name, m);
+                }
+            }
+        }
+
+        #endregion
+
+        #region --- Methods ---
 
         #region public static bool SupportsExtension(string name)
 
@@ -136,105 +133,6 @@ namespace OpenTK.OpenGL
 
         #endregion
 
-        #region private static void BuildExtensionList()
-
-        /// <summary>
-        /// Builds a cache of the supported extensions to speed up searches.
-        /// </summary>
-        private static void BuildExtensionList()
-        {
-            // Assumes there is an opengl context current.
-            AvailableExtensions.Clear();
-            string version_string = GL.GetString(StringName.Version);
-            if (String.IsNullOrEmpty(version_string))
-            {
-                throw new ApplicationException("Failed to build extension list. Is there an opengl context current?");
-            }
-
-            string version;
-
-            // Most drivers return the version in the 3 first characters of the version string,
-            // (e.g. on Ati X1950 with Catalyst 7.10 -> "2.0.6956 Release"). However, Mesa seems
-            // to do something strange: "1.4 (2.1 Mesa 7.0.1).".
-            // We'll do some trickery to get the second number (2.1), but this may break on
-            // some implementations...
-            if (version_string.ToLower().Contains("mesa"))
-            {
-                int index = version_string.IndexOf('(');
-                if (index != -1)
-                    version = version_string.Substring(index + 1, 3);
-                else
-                    version = version_string.TrimStart(' ');
-            }
-            else
-               version = version_string.TrimStart(' ');
-
-            Debug.Print(version);
-
-            if (version.StartsWith("1.2"))
-            {
-                AvailableExtensions.Add("gl_version_1_1", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-            }
-            else if (version.StartsWith("1.3"))
-            {
-                AvailableExtensions.Add("gl_version_1_1", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
-            }
-            else if (version.StartsWith("1.4"))
-            {
-                AvailableExtensions.Add("gl_version_1_1", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
-                AvailableExtensions.Add("gl_version_1_4", true);
-            }
-            else if (version.StartsWith("1.5"))
-            {
-                AvailableExtensions.Add("gl_version_1_1", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
-                AvailableExtensions.Add("gl_version_1_4", true);
-                AvailableExtensions.Add("gl_version_1_5", true);
-            }
-            else if (version.StartsWith("2.0"))
-            {
-                AvailableExtensions.Add("gl_version_1_1", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
-                AvailableExtensions.Add("gl_version_1_4", true);
-                AvailableExtensions.Add("gl_version_1_5", true);
-                AvailableExtensions.Add("gl_version_2_0", true);
-            }
-            else if (version.StartsWith("2.1"))
-            {
-                AvailableExtensions.Add("gl_version_1_1", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
-                AvailableExtensions.Add("gl_version_1_4", true);
-                AvailableExtensions.Add("gl_version_1_5", true);
-                AvailableExtensions.Add("gl_version_2_0", true);
-                AvailableExtensions.Add("gl_version_2_1", true);
-            }
-
-            string extension_string = GL.GetString(Enums.StringName.Extensions);
-            if (String.IsNullOrEmpty(extension_string))
-                return;               // no extensions are available
-
-            string[] extensions = extension_string.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string ext in extensions)
-                AvailableExtensions.Add(ext.ToLower(), true);
-
-            foreach (string s in AvailableExtensions.Keys)
-            {
-                Debug.Print(s);
-            }
-
-            rebuildExtensionList = false;
-        }
-
-        #endregion
-
         #region public static Delegate GetDelegate(string name, Type signature)
 
         /// <summary>
@@ -252,7 +150,7 @@ namespace OpenTK.OpenGL
             return
                 GetExtensionDelegate(name, signature) ??
                 /*((m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic)) != null ?*/
-                (Imports.import.TryGetValue((name.Substring(2)), out m) ?
+                (Imports.FunctionMap.TryGetValue((name.Substring(2)), out m) ?
                 Delegate.CreateDelegate(signature, m) : null);
         }
 
@@ -452,6 +350,105 @@ namespace OpenTK.OpenGL
                 return false;
             }
         }
+
+        #endregion
+
+        #region private static void BuildExtensionList()
+
+        /// <summary>
+        /// Builds a cache of the supported extensions to speed up searches.
+        /// </summary>
+        private static void BuildExtensionList()
+        {
+            // Assumes there is an opengl context current.
+            AvailableExtensions.Clear();
+            string version_string = GL.GetString(StringName.Version);
+            if (String.IsNullOrEmpty(version_string))
+            {
+                throw new ApplicationException("Failed to build extension list. Is there an opengl context current?");
+            }
+
+            string version;
+
+            // Most drivers return the version in the 3 first characters of the version string,
+            // (e.g. on Ati X1950 with Catalyst 7.10 -> "2.0.6956 Release"). However, Mesa seems
+            // to do something strange: "1.4 (2.1 Mesa 7.0.1).".
+            // We'll do some trickery to get the second number (2.1), but this may break on
+            // some implementations...
+            if (version_string.ToLower().Contains("mesa"))
+            {
+                int index = version_string.IndexOf('(');
+                if (index != -1)
+                    version = version_string.Substring(index + 1, 3);
+                else
+                    version = version_string.TrimStart(' ');
+            }
+            else
+                version = version_string.TrimStart(' ');
+
+            Debug.Print(version);
+
+            if (version.StartsWith("1.2"))
+            {
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+            }
+            else if (version.StartsWith("1.3"))
+            {
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
+            }
+            else if (version.StartsWith("1.4"))
+            {
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
+                AvailableExtensions.Add("gl_version_1_4", true);
+            }
+            else if (version.StartsWith("1.5"))
+            {
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
+                AvailableExtensions.Add("gl_version_1_4", true);
+                AvailableExtensions.Add("gl_version_1_5", true);
+            }
+            else if (version.StartsWith("2.0"))
+            {
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
+                AvailableExtensions.Add("gl_version_1_4", true);
+                AvailableExtensions.Add("gl_version_1_5", true);
+                AvailableExtensions.Add("gl_version_2_0", true);
+            }
+            else if (version.StartsWith("2.1"))
+            {
+                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("gl_version_1_3", true);
+                AvailableExtensions.Add("gl_version_1_4", true);
+                AvailableExtensions.Add("gl_version_1_5", true);
+                AvailableExtensions.Add("gl_version_2_0", true);
+                AvailableExtensions.Add("gl_version_2_1", true);
+            }
+
+            string extension_string = GL.GetString(Enums.StringName.Extensions);
+            if (String.IsNullOrEmpty(extension_string))
+                return;               // no extensions are available
+
+            string[] extensions = extension_string.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string ext in extensions)
+                AvailableExtensions.Add(ext.ToLower(), true);
+
+            foreach (string s in AvailableExtensions.Keys)
+                Debug.Print(s);
+
+            rebuildExtensionList = false;
+        }
+
+        #endregion
 
         #endregion
 
