@@ -58,7 +58,7 @@ namespace Bind.Wgl
             
             // Process enums and delegates - create wrappers.
             Trace.WriteLine("Processing specs, please wait...");
-            this.Translate();
+            //this.Translate();
 
             this.WriteBindings(
             	Bind.Structures.Delegate.Delegates,
