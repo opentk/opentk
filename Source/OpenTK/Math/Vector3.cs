@@ -1,7 +1,8 @@
 ﻿#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * Contributions by Andy Gill.
  * See license.txt for license info
+ * 
+ * Contributions by Andy Gill.
  */
 #endregion
 

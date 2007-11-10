@@ -1,7 +1,8 @@
 #region --- License ---
 /* Copyright (c) 2006, 2007 the OpenTK team
- * Implemented by Andy Gill
  * See license.txt for license info
+ * 
+ * Implemented by Andy Gill
  */
 #endregion
 

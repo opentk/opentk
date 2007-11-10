@@ -1,7 +1,8 @@
 #region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * Contributions by Andy Gill.
  * See license.txt for license info
+ * 
+ * Contributions by Andy Gill.
  */
 #endregion
 
@@ -685,6 +686,40 @@ namespace OpenTK.OpenGL
 		{
 			MultMatrix(ref mat.Row0.X);
 		}
+
+        #endregion
+
+        #region public static void ShaderSource(Int32 shader, System.String @string)
+
+        public static void ShaderSource(Int32 shader, System.String @string)
+        {
+            unsafe
+            {
+                int length = @string.Length;
+                Delegates.glShaderSource((UInt32)shader, 1, new string[] { @string }, &length);
+            }
+        }
+
+        #endregion
+
+        #region public static void GetShaderInfoLog(Int32 shader, out string info)
+
+        public static void GetShaderInfoLog(Int32 shader, out string info)
+        {
+            unsafe
+            {
+                int length;
+                GL.GetShader(shader, Version20.InfoLogLength, out length);
+                if (length == 0)
+                {
+                    info = "";
+                    return;
+                }
+                StringBuilder sb = new StringBuilder(length);
+                Delegates.glGetShaderInfoLog((UInt32)shader, sb.Capacity, &length, sb);
+                info = sb.ToString();
+            }
+        }
 
         #endregion
 
