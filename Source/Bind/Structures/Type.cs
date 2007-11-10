@@ -156,7 +156,14 @@ namespace Bind.Structures
             get
             {
                 bool compliant = !(CurrentType.Contains("UInt") || CurrentType.Contains("SByte"));
-                return compliant && (!Pointer || CurrentType.Contains("IntPtr"));
+                if (Pointer)
+                {
+                    compliant &= CurrentType.Contains("IntPtr");    // IntPtr's are CLSCompliant.
+                    // If the NoPublicUnsageFunctions is set, the pointer will be CLSCompliant.
+                    compliant |= (Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None;
+                }
+                return compliant;
+                //return compliant && (!Pointer || CurrentType.Contains("IntPtr"));
                 //return compliant && !(Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) == Settings.Legacy.None));
                 
                 /*
@@ -334,7 +341,7 @@ namespace Bind.Structures
                     Bind.Structures.Type.CSTypes.ContainsKey(CurrentType) ?
                     Bind.Structures.Type.CSTypes[CurrentType] : CurrentType;
 
-                if (CurrentType == "IntPtr")
+                if (CurrentType == "IntPtr" && String.IsNullOrEmpty(PreviousType))
                     Pointer = false;
             }
         }
