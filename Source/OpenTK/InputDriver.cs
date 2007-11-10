@@ -13,7 +13,7 @@ using OpenTK.Platform;
 
 namespace OpenTK
 {
-    public class InputDriver : IInputDriver
+    internal class InputDriver : IInputDriver
     {
         private IInputDriver inputDriver;
 
@@ -31,7 +31,7 @@ namespace OpenTK
                 case PlatformID.Win32S:
                 case PlatformID.WinCE:
                     if (Environment.OSVersion.Version.Major > 5 ||
-    (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
+                        (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
                     {
                         inputDriver = new OpenTK.Platform.Windows.WinRawInput(parent.WindowInfo);
                     }
@@ -43,7 +43,9 @@ namespace OpenTK
                     break;
 
                 case PlatformID.Unix:
-                    inputDriver = new OpenTK.Platform.X11.X11Input(parent.WindowInfo);
+                    // TODO: Input is currently handled asychronously by the driver in X11GLNative.
+                    //inputDriver = new OpenTK.Platform.X11.X11Input(parent.WindowInfo);
+                    
                     break;
 
                 default:
