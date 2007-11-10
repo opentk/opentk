@@ -56,9 +56,9 @@ namespace Examples.Tutorial
                 OpenTK.OpenGL.Enums.PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
             
             bitmap.UnlockBits(data);
-            
-            GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)All.Linear);
-            GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)All.Linear);
+
+            GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
         }
 
         #endregion
