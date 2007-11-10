@@ -60,14 +60,14 @@ namespace Examples.Shapes
 
             Colors = new int[]
             {
-                Color.Firebrick.ToArgb(),
-                Color.Honeydew.ToArgb(),
-                Color.Moccasin.ToArgb(),
-                Color.Yellow.ToArgb(),
-                Color.Crimson.ToArgb(),
-                Color.DarkGoldenrod.ToArgb(),
-                Color.ForestGreen.ToArgb(),
-                Color.Sienna.ToArgb(),
+                Utilities.ColorToRgba32(Color.DarkRed),
+                Utilities.ColorToRgba32(Color.DarkRed),
+                Utilities.ColorToRgba32(Color.Gold),
+                Utilities.ColorToRgba32(Color.Gold),
+                Utilities.ColorToRgba32(Color.DarkRed),
+                Utilities.ColorToRgba32(Color.DarkRed),
+                Utilities.ColorToRgba32(Color.Gold),
+                Utilities.ColorToRgba32(Color.Gold),
             };
         }
     }
