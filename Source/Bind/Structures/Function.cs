@@ -81,8 +81,8 @@ namespace Bind.Structures
         {
             get
             {
-                //if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
-                //    return false;
+                if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
+                    return false;
 
                 return base.Unsafe;
             }
@@ -526,18 +526,20 @@ namespace Bind.Structures
                 }
             }
 
-            //if (!f.Unsafe && (fixed_statements.Count > 0 || fixed_statements.Count > 0))
-            if (fixed_statements.Count > 0)
+            if (!f.Unsafe || fixed_statements.Count > 0)
             {
                 f.Body.Add("unsafe");
                 f.Body.Add("{");
                 f.Body.Indent();
+            }
             
+            if (fixed_statements.Count > 0)
+            {
                 f.Body.AddRange(fixed_statements);
                 f.Body.Add("{");
                 f.Body.Indent();
             }
-
+            
             if (handle_statements.Count > 0)
             {
                 f.Body.AddRange(handle_statements);
@@ -594,11 +596,14 @@ namespace Bind.Structures
                 f.Body.Add("}");
             }
 
-            if (fixed_statements.Count > 0)
+            if (!f.Unsafe || fixed_statements.Count > 0)
             {
                 f.Body.Unindent();
                 f.Body.Add("}");
+            }
 
+            if (fixed_statements.Count > 0)
+            {
                 f.Body.Unindent();
                 f.Body.Add("}");
             }
@@ -705,6 +710,10 @@ namespace Bind.Structures
         /// <param name="f">The Function to add.</param>
         public void AddChecked(Function f)
         {
+            if (f.Name.Contains("Bitmap"))
+            {
+            }
+
             if (Bind.Structures.Function.Wrappers.ContainsKey(f.Extension))
             {
                 int index = Bind.Structures.Function.Wrappers[f.Extension].IndexOf(f);

@@ -76,7 +76,7 @@ namespace Bind.Structures
         /// <summary>
         ///  Gets the CLSCompliant property. True if the delegate is not CLSCompliant.
         /// </summary>
-        public bool CLSCompliant
+        public virtual bool CLSCompliant
         {
             get
             {
@@ -341,7 +341,7 @@ namespace Bind.Structures
 
         public void CreateWrappers()
         {
-            if (this.Name.Contains("GetBoolean"))
+            if (this.Name.Contains("ReadPixels"))
             {
             }
 

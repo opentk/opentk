@@ -264,7 +264,7 @@ namespace Bind.Structures
                     Pointer = false;
                     WrapperType = WrapperTypes.None;
                 }
-                else if (CurrentType.ToLower().Contains("void")) /*|| CurrentType.Contains("IntPtr"))*/
+                else if (CurrentType.ToLower().Contains("void") || PreviousType.ToLower().Contains("void")) /*|| CurrentType.Contains("IntPtr"))*/
                 {
                     CurrentType = "IntPtr";
                     Pointer = false;
@@ -407,7 +407,9 @@ namespace Bind.Structures
         /// <summary>
         /// Gets the parameter declaration string.
         /// </summary>
-        /// <param name="override_unsafe_setting">If true, unsafe types will be used even if the Settings.Compatibility.NoPublicUnsafeFunctions flag is set.</param>
+        /// <param name="override_unsafe_setting">
+        /// If true, unsafe types will be used even if the Settings.Compatibility.NoPublicUnsafeFunctions flag is set.
+        /// </param>
         /// <returns>The parameter list of an opengl function in the form ( [parameters] )</returns>
         public string ToString(bool override_unsafe_setting)
         {
