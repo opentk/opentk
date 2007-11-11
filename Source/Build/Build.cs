@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 #endregion
 
@@ -30,6 +31,8 @@ namespace OpenTK.Build
         static string DataPath;
 
         static string PrebuildXml = Path.Combine(ToolPath, "Prebuild.xml");
+
+        static Regex DataFiles = new Regex(@"(\.jpg|\.txt|\.glsl)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         enum BuildMode
         {
@@ -251,11 +254,6 @@ namespace OpenTK.Build
             Directory.CreateDirectory(ExamplePath);
             Directory.CreateDirectory(DataPath);
             
-            // Handled by Prebuild.exe now.
-            // Copy Data files for the Examples.
-            //foreach (string file in Directory.GetFiles(DataSourcePath))
-            //    File.Copy(file, Path.Combine(DataPath, Path.GetFileName(file)));
-
             // Move the libraries and the config files.
             FindFiles(SourcePath, "*.dll", dll_matches);
             foreach (string m in dll_matches)
@@ -282,6 +280,9 @@ namespace OpenTK.Build
                 File.Delete(Path.Combine(ExamplePath, Path.GetFileName(m)));
                 File.Move(m, Path.Combine(ExamplePath, Path.GetFileName(m)));
             }
+
+            // Copy example data.
+            FileCopy(DataSourcePath, DataPath, DataFiles);
 
             // Then the rest of the exes.
             FindFiles(SourcePath, "*.exe", exe_matches);
@@ -362,7 +363,7 @@ namespace OpenTK.Build
 
                     p.WaitForExit();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine("Failed to execute process: {0}", p.ProcessName);
                 }
@@ -379,5 +380,34 @@ namespace OpenTK.Build
                 Console.WriteLine(e.Data.TrimEnd('\n'));
             }
         }
+
+        static void FileCopy(string srcdir, string destdir, Regex match)
+        {
+            //DirectoryInfo dir;
+            //FileInfo[] files;
+            //DirectoryInfo[] dirs;
+            string tmppath;
+
+            //determine if the destination directory exists, if not create it
+            if (!Directory.Exists(destdir))
+                Directory.CreateDirectory(destdir);
+
+            if (!Directory.Exists(srcdir))
+                throw new ArgumentException("source dir doesn't exist -> " + srcdir);
+
+            string[] files = Directory.GetFiles(srcdir);
+            foreach (string f in files)
+                //if (Path.GetExtension(f).ToLower() == ext.ToLower())
+                if (match.IsMatch(Path.GetExtension(f)))
+                    File.Copy(f, Path.Combine(destdir, Path.GetFileName(f)), true);
+
+            foreach (string dir in Directory.GetDirectories(srcdir))
+            {
+                string name = dir.Substring(dir.LastIndexOf(Path.DirectorySeparatorChar)+1);
+                if (!name.StartsWith("."))
+                    FileCopy(dir, Path.Combine(destdir, name), match);
+            }
+        }
     }
 }
+
