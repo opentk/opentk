@@ -104,7 +104,7 @@
 
     </Project>
 
-    <Project name="Examples" path="../Source/Examples" language="C#" type="WinExe">
+    <Project name="Examples" path="../Source/Examples" language="C#" type="WinExe" startupObject="Examples.ExampleLauncher">
 
       <Configuration name="Debug">
         <Options>
