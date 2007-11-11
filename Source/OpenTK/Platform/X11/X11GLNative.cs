@@ -138,8 +138,7 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.DestroyNotify:
-                        this.exists = false;
-                        //this.OnDestroy(EventArgs.Empty);
+                        exists = false;
                         isExiting = true;
                         Debug.Print("X11 window {0} destroyed.", e.DestroyWindowEvent.window);
                         return;
