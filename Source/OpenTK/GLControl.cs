@@ -27,11 +27,18 @@ namespace OpenTK
 
         #region --- Constructor ---
 
+        /// <summary>
+        /// Constructs a new GLControl.
+        /// </summary>
         public GLControl()
             : this(null)
         {
         }
 
+        /// <summary>
+        /// Constructs a new GLControl with the specified DisplayMode.
+        /// </summary>
+        /// <param name="mode"></param>
         public GLControl(DisplayMode mode)
         {
             InitializeComponent();
@@ -232,11 +239,11 @@ namespace OpenTK
     {
         OpenTK.Platform.Windows.MSG msg = new OpenTK.Platform.Windows.MSG();
         object get_lock = new object();
-        IntPtr handle;
+        //IntPtr handle;
 
-        public WinPlatformIdle(IWindowInfo info)
+        public WinPlatformIdle(WindowInfo info)
         {
-            handle = info.Handle;
+            //handle = info.Handle;
         }
 
         #region IPlatformIdle Members
@@ -260,9 +267,9 @@ namespace OpenTK
         object get_lock = new object();
         IntPtr display;
 
-        public X11PlatformIdle(IWindowInfo info)
+        public X11PlatformIdle(WindowInfo info)
         {
-            display = (info as OpenTK.Platform.X11.WindowInfo).Display;
+            display = ((OpenTK.Platform.X11.WindowInfo)info).Display;
         }
 
         #region IPlatformIdle Members
@@ -285,7 +292,7 @@ namespace OpenTK
     {
         IPlatformIdle implementation;
 
-        public PlatformIdle(IWindowInfo info)
+        public PlatformIdle(WindowInfo info)
         {
             switch (System.Environment.OSVersion.Platform)
             {
