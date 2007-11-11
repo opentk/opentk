@@ -22,7 +22,8 @@ using OpenTK.OpenGL.Enums;
 
 namespace Examples.WinForms
 {
-    public partial class W01_First_Window : Form, IExample
+    [Example("Simple GLControl", ExampleCategory.WinForms, 1)]
+    public partial class W01_First_Window : Form
     {
         public W01_First_Window()
         {
@@ -37,6 +38,8 @@ namespace Examples.WinForms
                 return;
             }
         }
+
+        #region Events
 
         protected override void OnLoad(EventArgs e)
         {
@@ -87,14 +90,24 @@ namespace Examples.WinForms
             }
         }
 
-        #region IExample Members
+        #endregion
 
-        public void Launch()
+        #region public static void Main()
+
+        /// <summary>
+        /// Entry point of this example.
+        /// </summary>
+        [STAThread]
+        public static void Main()
         {
-            
+            using (W01_First_Window example = new W01_First_Window())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Text = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.ShowDialog();
+            }
         }
-
-        public static readonly int order = 1;
 
         #endregion
     }

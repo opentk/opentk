@@ -27,8 +27,8 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates how to load and use a simple OpenGL shader program. Example is incomplete (documentation).
     /// </summary>
-    [Example("OpenTK | GLSL Example 1", ExampleCategory.GLSL, 1)]
-    public class T10_GLSL_Cube : GameWindow, IExample
+    [Example("First shader", ExampleCategory.GLSL, 1)]
+    public class T10_GLSL_Cube : GameWindow
     {
         #region --- Fields ---
 
@@ -43,10 +43,8 @@ namespace Examples.Tutorial
         #region --- Constructors ---
 
         public T10_GLSL_Cube()
-            : base(new DisplayMode(800, 600), T10_GLSL_Cube.Title)
-        {
-            
-        }
+            : base(new DisplayMode(800, 600))
+        { }
 
         #endregion
 
@@ -80,6 +78,10 @@ namespace Examples.Tutorial
                     out vertex_shader_object, out fragment_shader_object,
                     out shader_program);
         }
+
+        #endregion
+
+        #region CreateShaders
 
         void CreateShaders(string vs, string fs,
             out int vertexObject, out int fragmentObject, 
@@ -117,6 +119,8 @@ namespace Examples.Tutorial
             GL.UseProgram(program);
         }
 
+        #endregion
+
         #region private void CreateVBO()
 
         void CreateVBO()
@@ -148,8 +152,6 @@ namespace Examples.Tutorial
             if (shape.Indices.Length * 4 != size)
                 throw new ApplicationException("Problem uploading index data to VBO");
         }
-
-        #endregion
 
         #endregion
 
@@ -255,25 +257,22 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region Example members
-
-        #region public void Launch()
+        #region public static void Main()
 
         /// <summary>
-        /// Launches this example.
+        /// Entry point of this example.
         /// </summary>
-        /// <remarks>
-        /// Provides a simple way for the example launcher to launch the examples.
-        /// </remarks>
-        public void Launch()
+        [STAThread]
+        public static void Main()
         {
-            Run(30.0, 0.0);
+            using (T10_GLSL_Cube example = new T10_GLSL_Cube())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.Run(30.0, 0.0);
+            }
         }
-
-        #endregion
-
-        static readonly ExampleAttribute info = typeof(T10_GLSL_Cube).GetCustomAttributes(false)[0] as ExampleAttribute;
-        static readonly string Title = info.Title;
 
         #endregion
     }

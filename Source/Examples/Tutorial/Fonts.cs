@@ -22,15 +22,22 @@ namespace Examples.Tutorial
     /// <summary>
     /// Tests Font loading and rendering.
     /// </summary>
-    class Fonts : GameWindow, IExample
+    [Example("Fonts", ExampleCategory.Tutorial, 3)]
+    class Fonts : GameWindow
     {
-        public Fonts() : base(new DisplayMode(800, 600), String.Format("OpenTK | Tutorial {0}: Fonts", order))
+        public Fonts() : base(new DisplayMode(800, 600))
         { }
+
+        #region --- Fields ---
 
         ITextPrinter printer = new TextPrinter();
         const string text = "Hello, world!";
 
+        TextHandle[] handles;       // Used to cache the strings we want to print.
+
         // Load some different TextureFont sizes to compare their quality.
+        // You'll never need to load that many fonts in your application,
+        // 3 or 4 should be more than enough.
         TextureFont[] fonts = new TextureFont[]
         {
             new TextureFont(new Font(FontFamily.GenericSerif, 8.0f)),
@@ -73,7 +80,10 @@ namespace Examples.Tutorial
             new TextureFont(new Font(FontFamily.GenericSansSerif, 36.0f)),
             new TextureFont(new Font(FontFamily.GenericSansSerif, 38.0f)),
         };
-        TextHandle[] handles;       // Used to cache the strings we want to print.
+
+        #endregion
+
+        #region OnLoad
 
         /// <summary>
         /// To maintain high rendering performance, we need to cache the text
@@ -95,6 +105,10 @@ namespace Examples.Tutorial
                 printer.Prepare(text, fonts[i], out handles[i]);
         }
 
+        #endregion
+
+        #region OnUnload
+
         /// <summary>
         /// It is important that we need to call the Dispose() methods to reclaim of
         /// each and every TextHandle and TextureFont to reclaim the unamanged
@@ -109,16 +123,28 @@ namespace Examples.Tutorial
                 f.Dispose();
         }
 
+        #endregion
+
+        #region OnResize
+
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
         {
             GL.Viewport(0, 0, Width, Height);
         }
+
+        #endregion
+
+        #region OnUpdateFrame
 
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
             if (Keyboard[Key.Escape])
                 this.Exit();
         }
+
+        #endregion
+
+        #region OnRenderFrame
 
         /// <summary>
         /// To render pixel-perfect text, we have to setup a 2d display projection
@@ -167,14 +193,23 @@ namespace Examples.Tutorial
             SwapBuffers();
         }
 
+        #endregion
 
-        #region IExample Members
+        #region public static void Main()
 
-        public static readonly int order = 6;
-
-        public void Launch() 
+        /// <summary>
+        /// Entry point of this example.
+        /// </summary>
+        [STAThread]
+        public static void Main() 
         {
-            Run(30.0, 0.0);
+            using (Fonts example = new Fonts())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.Run(30.0, 0.0);
+            }
         }
 
         #endregion

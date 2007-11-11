@@ -15,13 +15,27 @@ namespace Examples
     {
         public readonly string Title;
         public readonly ExampleCategory Category;
-        public readonly int Order;
+        public readonly int Difficulty;
+        public readonly bool Visible = true;
 
-        public ExampleAttribute(string title, ExampleCategory category, int order)
+        public ExampleAttribute(string title, ExampleCategory category, int difficulty)
         {
             this.Title = title;
             this.Category = category;
-            this.Order = order;
+            this.Difficulty = difficulty;
+        }
+
+        public ExampleAttribute(string title, ExampleCategory category, int difficulty, bool visible)
+        {
+            this.Title = title;
+            this.Category = category;
+            this.Difficulty = difficulty;
+            this.Visible = visible;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0} {1}: {2}", Category, Difficulty, Title);
         }
     }
 
@@ -29,7 +43,7 @@ namespace Examples
     {
         OpenGL,
         OpenAL,
-        OpenTK,
+        Tutorial,
         GLSL,
         WinForms,
         Test,
