@@ -23,13 +23,13 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates simple OpenGL Texturing.
     /// </summary>
-    public class Textures : GameWindow, IExample
+    [Example("Texture mapping", ExampleCategory.Tutorial, 5)]
+    public class Textures : GameWindow
     {
-        Bitmap bitmap = new Bitmap("Data\\metal.jpg");
+        Bitmap bitmap = new Bitmap("Data\\logo-dark.jpg");
         int texture;
-        TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 24.0f));
 
-        public Textures() : base(new DisplayMode(800, 600), "OpenTK | Tutorial 5: Texturing") { }
+        public Textures() : base(new DisplayMode(800, 600)) { }
 
         #region OnLoad
 
@@ -39,18 +39,16 @@ namespace Examples.Tutorial
         /// <param name="e">Not used.</param>
         public override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(Color.MidnightBlue);
+            GL.ClearColor(Color.SteelBlue);
             GL.Enable(EnableCap.Texture2d);
 
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
             
-            //bitmap = new OpenTK.Fonts.Renderer().bmp;
-            //bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
             GL.GenTextures(1, out texture);
             GL.BindTexture(TextureTarget.Texture2d, texture);
             
             BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                ImageLockMode.ReadOnly, bitmap.PixelFormat);
 
             GL.TexImage2D(TextureTarget.Texture2d, 0, PixelInternalFormat.Three, bitmap.Width, bitmap.Height, 0,
                 OpenTK.OpenGL.Enums.PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
@@ -59,6 +57,15 @@ namespace Examples.Tutorial
 
             GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+        }
+
+        #endregion
+
+        #region OnUnload
+
+        public override void OnUnload(EventArgs e)
+        {
+            GL.DeleteTextures(1, ref texture);
         }
 
         #endregion
@@ -72,7 +79,7 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
         {
-            GL.Viewport(0, 0, e.Width, e.Height);
+            GL.Viewport(0, 0, Width, Height);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
@@ -107,40 +114,41 @@ namespace Examples.Tutorial
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
             GL.BindTexture(TextureTarget.Texture2d, texture);
 
             GL.Begin(BeginMode.Quads);
 
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(-0.8f + 0.0375f, -0.8f + 0.0375f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(0.8f + 0.0375f, -0.8f + 0.0375f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex2(0.8f + 0.0375f, 0.8f + 0.0375f);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(-0.8f + 0.0375f, 0.8f + 0.0375f);
+            GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(-0.6f, -0.4f);
+            GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(0.6f, -0.4f);
+            GL.TexCoord2(1.0f, 0.0f); GL.Vertex2(0.6f, 0.4f);
+            GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(-0.6f, 0.4f);
 
             GL.End();
-
-            //sans.
-            GL.Scale(2.0f / Width, 2.0f / Height, 1.0f);
-            //sans.Print('A');
 
             SwapBuffers();
         }
 
         #endregion
 
-        #region IExample Members
+        #region public static void Main()
 
         /// <summary>
-        /// Only used by the ExampleLauncher application, no need to add a Launch() method in your code.
-        /// Add a call to Run() in your Main() function instead.
+        /// Entry point of this example.
         /// </summary>
-        public void Launch()
+        [STAThread]
+        public static void Main()
         {
-            this.Run(10.0, 5.0);
+            using (Textures example = new Textures())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)typeof(Textures).GetCustomAttributes(false)[0]);
+                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.Run(30.0, 0.0);
+            }
         }
 
         #endregion
-
-        public static readonly int order = 5;
     }
 }

@@ -36,20 +36,18 @@ namespace Examples
         /// </summary>
         class ExampleInfo
         {
-            public string Name;
-            public string Description;
             public Type Example;
+            public ExampleAttribute Attributes;
 
-            public ExampleInfo(string name, string description, Type example)
+            public ExampleInfo(Type example, ExampleAttribute attr)
             {
-                Name = name;
-                Description = description;
                 Example = example;
+                Attributes = attr;
             }
 
             public override string ToString()
             {
- 	             return Name;
+                return Attributes.ToString();
             }
         }
 
@@ -88,29 +86,24 @@ namespace Examples
             StringBuilder sb = new StringBuilder();
             foreach (Type type in types)
             {
-                if (type.GetInterface("IExample") != null)
-                {
-                    sb.Append(type.Namespace);
-                    sb.Replace("Examples.", String.Empty);
-                    sb.Append(" ");
-                    int order;
-                    try
-                    {
-                        FieldInfo info = type.GetField("order");
-                        order = (int)info.GetValue(null);
-                    }
-                    catch (NullReferenceException)
-                    {
-                        Debug.Print("Example {0} does not have ordering info", type.FullName);
-                        order = 0;
-                    }
-                    if (order < 10)
-                        sb.Append("0"); // To keep items sorted nicely.
-                    sb.Append(order.ToString());
-                    sb.Append(": ");
-                    sb.Append(type.Name);
+                object[] attributes = type.GetCustomAttributes(false);
+                ExampleAttribute example = null;
+                foreach (object attr in attributes)
+                    if (attr is ExampleAttribute)
+                        example = (ExampleAttribute)attr;
 
-                    listBox1.Items.Add(new ExampleInfo(sb.ToString(), "", type));
+                if (example != null && example.Visible == true)
+                {
+                    sb.Append(example.Category);
+                    sb.Append(" ");
+                    if (example.Difficulty < 10)
+                        sb.Append("0");         // To keep items nicely sorted.
+                    sb.Append(example.Difficulty);
+                    sb.Append(": ");
+                    //sb.Append(type.Name);
+                    sb.Append(example.Title);
+
+                    listBox1.Items.Add(new ExampleInfo(type, example));
                     
                     // Clean the StringBuilder for the next pass.
                     sb.Remove(0, sb.Length);
@@ -123,61 +116,57 @@ namespace Examples
 
         #endregion
 
+        #region private void RunExample()
+
         private void RunExample()
         {
             if (listBox1.SelectedItem != null)
             {
-                Type example = (listBox1.SelectedItem as ExampleInfo).Example;
-
-                Debug.Print("Launching example: {0}", example.ToString());
-                this.Visible = false;
-
                 try
                 {
-                    if (example.BaseType == typeof(GameWindow))
-                    {
-                        using (GameWindow gw = (GameWindow)(example.GetConstructor(Type.EmptyTypes).Invoke(null)))
-                        {
-                            (gw as IExample).Launch();
-                        }
-                    }
-                    else if (example.BaseType == typeof(Form))
-                    {
-                        using (Form f = (Form)example.GetConstructor(Type.EmptyTypes).Invoke(null))
-                        {
-                            f.ShowDialog(this);
-                        }
-                    }
-                    else
-                    {
-                        // Console application.
-                        IExample ex = (IExample)example.GetConstructor(Type.EmptyTypes).Invoke(null);
-                        ex.Launch();
-                    }
+                    ExampleInfo info = (ExampleInfo)listBox1.SelectedItem;
+                    Type example = info.Example;
+
+                    Debug.Print("Launching example: {0}", example.ToString());
+                    this.Visible = false;
+
+                    example.GetMethod("Main").Invoke(null, null);
+
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
 
                 }
-                catch (Exception expt)
+                catch (TargetInvocationException expt)
                 {
+                    string ex_info;
+                    if (expt.InnerException != null)
+                        ex_info = expt.InnerException.ToString();
+                    else
+                        ex_info = expt.ToString();
+                    MessageBox.Show(ex_info, "An OpenTK example encountered an error.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    Debug.Print(expt.ToString());
 #if DEBUG
                     throw;
-#else
-                    if (expt.InnerException != null)
-                        MessageBox.Show(expt.InnerException.ToString(), "An error has occured: \"" +
-                                        expt.InnerException.Message + "\"", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    else
-                        MessageBox.Show(expt.ToString(), "An error has occured: \"" + expt.Message + "\"",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
 #endif
-
                 }
-
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
-
-                this.Visible = true;
+                catch (NullReferenceException expt)
+                {
+                    MessageBox.Show(expt.ToString(), "The Example launcher failed to load the example.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                finally
+                {
+                    this.Visible = true;
+                    this.TopMost = true;    // Bring the ExampleLauncher window to front
+                    this.TopMost = false;   // but don't allow the user to cover it with other windows.
+                }
             }
         }
+
+        #endregion
+
+        #region Launcher events
 
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
@@ -199,6 +188,16 @@ namespace Examples
             RunExample();
         }
 
+        private void ExampleLauncher_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Debug.Flush();
+            Debug.Close();
+            Trace.Flush();
+            Trace.Close();
+        }
+
+        #endregion
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -210,14 +209,6 @@ namespace Examples
                 Application.EnableVisualStyles();
                 Application.Run(exampleLauncher);
             }
-        }
-
-        private void ExampleLauncher_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Debug.Flush();
-            Debug.Close();
-            Trace.Flush();
-            Trace.Close();
         }
     }
 }

@@ -20,9 +20,10 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates the GameWindow class.
     /// </summary>
-    public class T01_Simple_Window : GameWindow, IExample
+    [Example("Simple Window", ExampleCategory.Tutorial, 1)]
+    public class T01_Simple_Window : GameWindow
     {
-        public T01_Simple_Window() : base(new DisplayMode(800, 600), "OpenTK | Tutorial 1: Simple Window")
+        public T01_Simple_Window() : base(new DisplayMode(800, 600))
         { }
 
         #region OnLoad
@@ -101,19 +102,23 @@ namespace Examples.Tutorial
         }
 
         #endregion
-
-        #region IExample Members
+        
+        #region public static void Main()
 
         /// <summary>
-        /// Only used by the ExampleLauncher application, no need to add a Launch() method in your code.
-        /// Add a call to Run() in your Main() function instead.
+        /// Entry point of this example.
         /// </summary>
-        public void Launch()
+        [STAThread]
+        public static void Main()
         {
-            this.Run(30.0, 5.0);
+            using (T01_Simple_Window example = new T01_Simple_Window())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.Run(30.0, 0.0);
+            }
         }
-
-        public static readonly int order = 1;
 
         #endregion
     }

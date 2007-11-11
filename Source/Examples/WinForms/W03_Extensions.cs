@@ -20,10 +20,11 @@ using OpenTK.OpenGL.Enums;
 
 namespace Examples.WinForms
 {
-    public partial class W03_Extensions : Form, IExample
+    [Example("Extensions", ExampleCategory.WinForms, 3)]
+    public partial class W03_Extensions : Form
     {
-        GLControl glControl = new GLControl();
-        Assembly assembly;
+        //GLControl glControl = new GLControl();
+        GLContext context;
         Type glClass;
         Type delegatesClass;
         Type importsClass;
@@ -34,18 +35,22 @@ namespace Examples.WinForms
         {
             InitializeComponent();
 
-            assembly = Assembly.Load("OpenTK");
-            glClass = assembly.GetType("OpenTK.OpenGL.GL");
+            glClass = typeof(GL);
             delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
 
-            glControl.Load += new EventHandler(glControl_Load);
-            glControl.CreateControl();
+            //glControl.CreateControl();
+            Application.Idle += StartAsync;
         }
 
-        void glControl_Load(object sender, EventArgs e)
+        void StartAsync(object sender, EventArgs e)
         {
-            Application.Idle += StartAsync;
+            Application.Idle -= StartAsync;
+
+            context = new GLContext(new DisplayMode(), new OpenTK.Platform.WindowInfo(this));
+            context.CreateContext();
+
+            //while (!glControl.Created)
 
             driver =
                 GL.GetString(StringName.Vendor) + " " +
@@ -54,11 +59,6 @@ namespace Examples.WinForms
 
             all = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic).Length;
             this.Text = String.Format("Loading {0} functions...", all);
-        }
-
-        void StartAsync(object sender, EventArgs e)
-        {
-            Application.Idle -= StartAsync;
 
             this.backgroundWorker1.RunWorkerAsync();
         }
@@ -74,9 +74,7 @@ namespace Examples.WinForms
                 {
                     object d = f.GetValue(delegatesClass);
                     if (d != null)
-                    {
                         ++supported;
-                    }
 
                     backgroundWorker1.ReportProgress((int)(((float)i / all) * 100.0f),
                         String.Format("({0}/{1}) {2}:\t{3}", (++i).ToString(), all, d != null ? "ok" : "failed", f.Name));
@@ -88,6 +86,7 @@ namespace Examples.WinForms
                 throw;
             }
         }
+
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             listBox1.Items.Add(e.UserState as string);
@@ -105,18 +104,29 @@ namespace Examples.WinForms
             */
         }
 
-        #region IExample Members
-
-        public void Launch() { }
-
-        public static readonly int order = 3;
-
-        #endregion
-
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.Text = String.Format("{0}: {1}/{2} OpenGL functions supported.",
                 driver, supported, all);
         }
+
+        #region public static void Main()
+
+        /// <summary>
+        /// Entry point of this example.
+        /// </summary>
+        [STAThread]
+        public static void Main()
+        {
+            using (W03_Extensions example = new W03_Extensions())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Text = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.ShowDialog();
+            }
+        }
+
+        #endregion
     }
 }
