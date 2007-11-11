@@ -128,7 +128,9 @@
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
-        <Match path="./Data" pattern="*.*" buildAction="None" copyToOutput="Always"/>
+        <Match path="../Examples/Data" pattern="*.*" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="./Data" pattern="*.txt" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="./Data" pattern="*.glsl" recurse="true" buildAction="None" copyToOutput="Always"/>
         <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
       </Files>
 
