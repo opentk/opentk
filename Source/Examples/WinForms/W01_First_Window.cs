@@ -45,6 +45,7 @@ namespace Examples.WinForms
         {
             base.OnLoad(e);
 
+            glControl1_Resize(this, EventArgs.Empty);   // Ensure the Viewport is set up correctly
             GL.ClearColor(Color.Crimson);
         }
 
@@ -72,7 +73,7 @@ namespace Examples.WinForms
             glControl1.SwapBuffers();
         }
 
-        private void glControl1_Resize(object sender, OpenTK.Platform.ResizeEventArgs e)
+        private void glControl1_Resize(object sender, EventArgs e)
         {
             if (glControl1.ClientSize.Height == 0)
                 glControl1.ClientSize = new System.Drawing.Size(glControl1.ClientSize.Width, 1);
