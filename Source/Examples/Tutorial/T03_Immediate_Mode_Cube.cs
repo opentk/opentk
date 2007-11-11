@@ -24,20 +24,19 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates immediate mode rendering. Example is incomplete, and will probably go away in the future.
     /// </summary>
-    public class T03_Immediate_Mode_Cube : OpenTK.GameWindow, IExample
+    [Example("Immediate mode", ExampleCategory.Tutorial, 2)]
+    public class T03_Immediate_Mode_Cube : GameWindow
     {
         #region --- Fields ---
 
-        /// <summary>
-        /// Denotes the cube rotation.
-        /// </summary>
-        float angle = 0.0f;
+        float rotation_speed = 3.0f;
+        float angle;
 
         #endregion
 
-        #region --- Constructors ---
+        #region --- Constructor ---
 
-        public T03_Immediate_Mode_Cube() : base(new DisplayMode(800, 600), "OpenTK Tutorial: Immediate mode rendering")
+        public T03_Immediate_Mode_Cube() : base(new DisplayMode(800, 600))
 		{ } 
 
 		#endregion	
@@ -48,7 +47,7 @@ namespace Examples.Tutorial
         {
             base.OnLoad(e);
 
-            GL.ClearColor(Color.MidnightBlue);
+            GL.ClearColor(Color.SteelBlue);
             GL.Enable(EnableCap.DepthTest);
         }
 
@@ -89,22 +88,11 @@ namespace Examples.Tutorial
         /// </remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            /*
             if (Keyboard[OpenTK.Input.Key.Escape])
             {
                 this.Exit();
                 return;
             }
-
-            if ((Keyboard[OpenTK.Input.Key.AltLeft] || Keyboard[OpenTK.Input.Key.AltRight]) &&
-                Keyboard[OpenTK.Input.Key.Enter])
-            {
-                Fullscreen = !Fullscreen;
-            }
-            */
-            angle += 3.0f;
-            if (angle > 720.0f)
-                angle -= 720.0f;
         }
 
         #endregion
@@ -124,12 +112,12 @@ namespace Examples.Tutorial
                        0.0, 0.0, 0.0,
                        0.0, 1.0, 0.0);
             
+            angle += rotation_speed * (float)e.ScaleFactor;
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
             DrawCube();
 
-            Context.SwapBuffers();
-            Thread.Sleep(0);
+            this.SwapBuffers();
         }
 
         #endregion
@@ -182,21 +170,23 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region public void Launch()
+        #region public static void Main()
 
         /// <summary>
-        /// Launches this example.
+        /// Entry point of this example.
         /// </summary>
-        /// <remarks>
-        /// Provides a simple way for the example launcher to launch the examples.
-        /// </remarks>
-        public void Launch()
+        [STAThread]
+        public static void Main()
         {
-            Run(85.0, 0.0);
+            using (T03_Immediate_Mode_Cube example = new T03_Immediate_Mode_Cube())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.Run(30.0, 0.0);
+            }
         }
 
         #endregion
-
-        public static readonly int order = 3;
     }
 }

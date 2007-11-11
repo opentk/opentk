@@ -23,7 +23,8 @@ using OpenTK.OpenGL.Enums;
 
 namespace Examples.Tutorial
 {
-    public class T07_Display_Lists_Flower : GameWindow, IExample
+    [Example("Display Lists", ExampleCategory.Tutorial, 3)]
+    public class T07_Display_Lists_Flower : GameWindow
     {
         #region --- Fields ---
 
@@ -35,7 +36,7 @@ namespace Examples.Tutorial
         #region --- Constructors ---
 
         public T07_Display_Lists_Flower()
-            : base(new DisplayMode(800, 600), "OpenTK | T07: Display Lists")
+            : base(new DisplayMode(800, 600))
         {
         }
 
@@ -141,21 +142,23 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region public void Launch()
+        #region public static void Main()
 
         /// <summary>
-        /// Launches this example.
+        /// Entry point of this example.
         /// </summary>
-        /// <remarks>
-        /// Provides a simple way for the example launcher to launch the examples.
-        /// </remarks>
-        public void Launch()
+        [STAThread]
+        public static void Main()
         {
-            this.Run(30.0, 5.0);
+            using (T07_Display_Lists_Flower example = new T07_Display_Lists_Flower())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.Run(30.0, 0.0);
+            }
         }
 
         #endregion
-
-        public static readonly int order = 7;
     }
 }

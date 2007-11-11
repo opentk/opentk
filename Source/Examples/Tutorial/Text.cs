@@ -22,13 +22,14 @@ namespace Examples.Tutorial
     /// <summary>
     /// Shows how to render and scroll large amounts of text.
     /// </summary>
-    public class Text : GameWindow, IExample
+    [Example("Text", ExampleCategory.Tutorial, 4)]
+    public class Text : GameWindow
     {
         TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 24.0f));
         TextHandle poem_handle;
         ITextPrinter text = new TextPrinter();
 
-        public Text() : base(new DisplayMode(800, 600), String.Format("OpenTK | Tutorial {0}: Text", order))
+        public Text() : base(new DisplayMode(800, 600))
         { }
 
  	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
@@ -138,13 +139,21 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region --- IExample Members ---
+        #region public static void Main()
 
-        public static readonly int order = 7;
-
-        public void Launch()
+        /// <summary>
+        /// Entry point of this example.
+        /// </summary>
+        [STAThread]
+        public static void Main()
         {
-            Run(30.0, 0.0);
+            using (Text example = new Text())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.Run(30.0, 0.0);
+            }
         }
 
         #endregion

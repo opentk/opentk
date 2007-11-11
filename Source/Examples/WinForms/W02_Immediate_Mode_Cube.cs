@@ -25,7 +25,8 @@ using OpenTK.OpenGL.Enums;
 
 namespace Examples.WinForms
 {
-    public partial class W02_Immediate_Mode_Cube : Form, IExample
+    [Example("GLControl game loop", ExampleCategory.WinForms, 2)]
+    public partial class W02_Immediate_Mode_Cube : Form
     {
         static float angle = 0.0f;
 
@@ -86,29 +87,6 @@ namespace Examples.WinForms
 
         #endregion
 
-        #region private void Render()
-
-        private void Render()
-        {
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-            Glu.LookAt(
-                0.0, 5.0, 5.0,
-                0.0, 0.0, 0.0,
-                0.0, 1.0, 0.0
-            );
-            GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
-            angle += 0.5f;
-
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            DrawCube();
-
-            glControl.SwapBuffers();
-        }
-
-        #endregion
-
         #region GLControl.Resize event handler
 
         void glControl_Resize(object sender, EventArgs e)
@@ -149,6 +127,29 @@ namespace Examples.WinForms
         void glControl_Paint(object sender, PaintEventArgs e)
         {
             Render();
+        }
+
+        #endregion
+
+        #region private void Render()
+
+        private void Render()
+        {
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            Glu.LookAt(
+                0.0, 5.0, 5.0,
+                0.0, 0.0, 0.0,
+                0.0, 1.0, 0.0
+            );
+            GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
+            angle += 0.5f;
+
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            DrawCube();
+
+            glControl.SwapBuffers();
         }
 
         #endregion
@@ -200,21 +201,29 @@ namespace Examples.WinForms
         }
 
         #endregion
-        
-        #region IExample Members
-
-        public void Launch()
-        {
-            
-        }
-
-        public static readonly int order = 2;
-
-        #endregion
 
         private void glControl_Layout(object sender, LayoutEventArgs e)
         {
             glControl_Resize(sender, EventArgs.Empty);
         }
+
+        #region public static void Main()
+
+        /// <summary>
+        /// Entry point of this example.
+        /// </summary>
+        [STAThread]
+        public static void Main()
+        {
+            using (W02_Immediate_Mode_Cube example = new W02_Immediate_Mode_Cube())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Text = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.ShowDialog();
+            }
+        }
+
+        #endregion
     }
 }
