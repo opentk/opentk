@@ -28,12 +28,12 @@ namespace Examples.Tutorial
     {
         #region --- Fields ---
 
-        const int num_lists = 9;
+        const int num_lists = 13;
         int[] lists = new int[num_lists];
 
         #endregion
 
-        #region --- Constructors ---
+        #region --- Constructor ---
 
         public T07_Display_Lists_Flower()
             : base(new DisplayMode(800, 600))
@@ -46,7 +46,7 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(0.1f, 0.1f, 0.5f, 0.0f);
+            GL.ClearColor(Color.SteelBlue);
             GL.Enable(EnableCap.DepthTest);
 
             GL.MatrixMode(MatrixMode.Modelview);
@@ -60,7 +60,8 @@ namespace Examples.Tutorial
                 lists[i] = first_list + i;
                 GL.NewList(first_list + i, ListMode.Compile);
 
-                GL.Color3(1.0, c, 1 - c);
+                GL.Color3(0.3 + 0.7 * c * c, 0.3 + 1.4 * c * c, 0.7 - 0.7 * c * c);
+                c += 1 / (float)num_lists;
 
                 GL.PushMatrix();
 
@@ -79,8 +80,6 @@ namespace Examples.Tutorial
                 GL.PopMatrix();
 
                 GL.EndList();
-
-                c += 1 / (float)num_lists;
             }
         }
 

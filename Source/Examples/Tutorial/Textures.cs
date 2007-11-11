@@ -26,7 +26,7 @@ namespace Examples.Tutorial
     [Example("Texture mapping", ExampleCategory.Tutorial, 5)]
     public class Textures : GameWindow
     {
-        Bitmap bitmap = new Bitmap("Data/logo-dark.jpg");
+        Bitmap bitmap = new Bitmap("Data/logo.jpg");
         int texture;
 
         public Textures() : base(new DisplayMode(800, 600)) { }
@@ -48,10 +48,10 @@ namespace Examples.Tutorial
             GL.BindTexture(TextureTarget.Texture2d, texture);
 
             BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadOnly, bitmap.PixelFormat);
+                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, PixelInternalFormat.Three, bitmap.Width, bitmap.Height, 0,
-                OpenTK.OpenGL.Enums.PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
+                OpenTK.OpenGL.Enums.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
             
             bitmap.UnlockBits(data);
 
