@@ -154,9 +154,7 @@ namespace OpenTK
         public virtual void Exit()
         {
             isExiting = true;
-            //throw new GameWindowExitException();
-            //glWindow.Exit();
-            //this.Dispose();
+            throw new GameWindowExitException();
         }
 
         #endregion
@@ -543,8 +541,8 @@ namespace OpenTK
                         update_time_counter = 0.0;
                     }
 
-                    if (isExiting)
-                        break;
+                    //if (isExiting)
+                    //    break;
 
                     // Raise RenderFrame event
                     time = render_watch.Elapsed.TotalSeconds;
@@ -584,10 +582,10 @@ namespace OpenTK
                     //}
                 }
             }
-            //catch (GameWindowExitException e)
-            //{
-
-            //}
+            catch (GameWindowExitException)
+            {
+                Trace.WriteLine("GameWindow.Exit() request");
+            }
             finally
             {
                 Thread.CurrentThread.Priority = ThreadPriority.Normal;
