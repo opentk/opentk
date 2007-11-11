@@ -550,9 +550,7 @@ namespace OpenTK
                     if (Exists)
                         glWindow.DestroyWindow();
                     while (this.Exists)
-                    {
                         this.ProcessEvents();
-                    }
                 }
             }
         }
@@ -1327,6 +1325,13 @@ namespace OpenTK
 
     class GameWindowExitException : ApplicationException
     {
+        public override string Message
+        {
+            get
+            {
+                return "GameWindow exit event. If this is caught in Visual Studio, don't worry - this is perfectly normal.";
+            }
+        }
     }
 
     #endregion

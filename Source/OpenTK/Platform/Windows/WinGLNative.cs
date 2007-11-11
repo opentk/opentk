@@ -110,11 +110,14 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 case WindowMessage.CLOSE:
-                    this.DestroyWindow();
+                    //this.DestroyWindow();
+                    this.OnDestroy(EventArgs.Empty);
                     return;
 
                 case WindowMessage.DESTROY:
-                    this.OnDestroy(EventArgs.Empty);
+                    //this.OnDestroy(EventArgs.Empty);
+                    exists = false;
+                    isExiting = true;
                     break;
 
                 case WindowMessage.QUIT:
@@ -368,9 +371,7 @@ namespace OpenTK.Platform.Windows
             }
 
             if (this.Create != null)
-            {
                 this.Create(this, e);
-            }
         }
 
         #endregion
@@ -392,11 +393,10 @@ namespace OpenTK.Platform.Windows
 
         public void OnDestroy(EventArgs e)
         {
+            Debug.Print("Destroy event fired from window: {0}", window.ToString());
             if (this.Destroy != null)
-            {
                 this.Destroy(this, e);
-            }
-            
+            /*
             if (this.Handle != IntPtr.Zero)
             {
                 Debug.Print("Window handle {0} destroyed.", this.Handle);
@@ -404,6 +404,7 @@ namespace OpenTK.Platform.Windows
                 //this.Dispose();
                 exists = false;
             }
+            */
             //API.PostQuitMessage(0);
         }
 
