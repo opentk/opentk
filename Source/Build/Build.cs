@@ -73,7 +73,7 @@ namespace OpenTK.Build
                 Directory.GetCurrentDirectory().LastIndexOf("Build"));
             Directory.SetCurrentDirectory(RootPath);
             SourcePath = Path.Combine(RootPath, "Source");
-            DataSourcePath = Path.Combine(SourcePath, "Examples\\Data");
+            DataSourcePath = Path.Combine(SourcePath, Path.Combine("Examples", "Data"));
 
             // Workaroung for nant on x64 windows (safe for other platforms too, as this affects
             // only the current process).
