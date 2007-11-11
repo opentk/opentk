@@ -35,8 +35,6 @@ namespace OpenTK.Platform.X11
                 throw new ArgumentNullException("IWindowInfo cannot be null.");
 
             this.windowInfo = new WindowInfo(info);
-            if (this.windowInfo == null)
-                throw new Exception("Problem");
             this.mode = mode;
             this.ChooseContext();
         }
@@ -56,12 +54,12 @@ namespace OpenTK.Platform.X11
                 Debug.Print("Preparing visual for System.Windows.Forms (compatibility mode)");
             
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.RGBA);
-                visualAttributes.Add((int)Glx.Enums.GLXAttribute.RED_SIZE);
+                /*visualAttributes.Add((int)Glx.Enums.GLXAttribute.RED_SIZE);
                 visualAttributes.Add((int)1);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.GREEN_SIZE);
                 visualAttributes.Add((int)1);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.BLUE_SIZE);
-                visualAttributes.Add((int)1);
+                visualAttributes.Add((int)1);*/
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
                 visualAttributes.Add((int)1);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
