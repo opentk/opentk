@@ -133,10 +133,7 @@ namespace OpenTK
         void glWindow_Destroy(object sender, EventArgs e)
         {
             glWindow.Destroy -= glWindow_Destroy;
-
-            Debug.Print("GameWindow destruction imminent.");
-            this.isExiting = true;
-            //this.OnDestroy(EventArgs.Empty);
+            this.Exit();
         }
 
         #endregion
@@ -322,27 +319,6 @@ namespace OpenTK
 
         #endregion
 
-        #region OnCreate
-
-        [Obsolete("The Create event is obsolete and will be removed on later versions. Use the Load event instead.")]
-        public event CreateEvent Create;
-
-        /// <summary>
-        /// Raises the Create event. Override in derived classes to initialize resources.
-        /// </summary>
-        /// <param name="e"></param>
-        [Obsolete("The OnCreate method is obsolete and will be removed on later versions. Use the OnLoad method instead.")]
-        public virtual void OnCreate(EventArgs e)
-        {
-            Debug.WriteLine("Firing GameWindow.Create event");
-            if (this.Create != null)
-            {
-                this.Create(this, e);
-            }
-        }
-
-        #endregion
-
         #region public void DestroyWindow()
 
         /// <summary>
@@ -352,34 +328,10 @@ namespace OpenTK
         public void DestroyWindow()
         {
             if (Exists)
-            {
                 glWindow.DestroyWindow();
-            }
             else
-            {
-                throw new ApplicationException("Tried to destroy inexistent window.");
-            }
+                throw new ApplicationException("Tried to destroy non-existent window.");
         }
-
-        #endregion
-
-        #region OnDestroy
-
-        /// <summary>
-        /// Raises the Destroy event. Override in derived classes, to modify the shutdown
-        /// sequence (e.g. to release resources before shutdown).
-        /// </summary>
-        /// <param name="e"></param>
-        public virtual void OnDestroy(EventArgs e)
-        {
-            Debug.WriteLine("Firing GameWindow.Destroy event");
-            if (this.Destroy != null)
-            {
-                this.Destroy(this, e);
-            }
-        }
-
-        public event DestroyEvent Destroy;
 
         #endregion
 
@@ -584,17 +536,19 @@ namespace OpenTK
             }
             catch (GameWindowExitException)
             {
-                Trace.WriteLine("GameWindow.Exit() request");
+                Trace.WriteLine("Exiting main loop.");
             }
             finally
             {
+                Debug.Print("Restoring priority.");
                 Thread.CurrentThread.Priority = ThreadPriority.Normal;
 
                 OnUnloadInternal(EventArgs.Empty);
 
                 if (this.Exists)
                 {
-                    glWindow.DestroyWindow();
+                    if (Exists)
+                        glWindow.DestroyWindow();
                     while (this.Exists)
                     {
                         this.ProcessEvents();

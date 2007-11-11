@@ -134,11 +134,12 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.ClientMessage:
-                    case XEventName.DestroyNotify:
-                        // TODO: Check whether using ClientMessage here is 100% correct.
-
-                        this.exists = false;
                         this.OnDestroy(EventArgs.Empty);
+                        break;
+
+                    case XEventName.DestroyNotify:
+                        this.exists = false;
+                        //this.OnDestroy(EventArgs.Empty);
                         isExiting = true;
                         Debug.Print("X11 window {0} destroyed.", e.DestroyWindowEvent.window);
                         return;
@@ -476,7 +477,6 @@ namespace OpenTK.Platform.X11
         public void DestroyWindow()
         {
             Debug.WriteLine("X11GLNative shutdown sequence initiated.");
-//            Functions.XUnmapWindow(window.Display, window.Handle);
             Functions.XDestroyWindow(window.Display, window.Handle);
         }
 
@@ -490,11 +490,7 @@ namespace OpenTK.Platform.X11
         {
             Debug.Print("Destroy event fired from window: {0}", window.ToString());
             if (this.Destroy != null)
-            {
                 this.Destroy(this, e);
-            }
-
-            Functions.XUnmapWindow(window.Display, window.Handle);
         }
 
         #endregion
@@ -615,17 +611,19 @@ namespace OpenTK.Platform.X11
         {
             if (!disposed)
             {
-                if (Exists)
-                    Functions.XDestroyWindow(window.Display, window.Handle);
-                // Kills connection to the X-Server. We don't want that,
-                // 'cause it kills the ExampleLauncher too.
-                //API.CloseDisplay(display);
-
                 if (manuallyCalled)
                 {
                     if (glContext != null)
                         glContext.Dispose();
+
+                    // Kills connection to the X-Server. We don't want that,
+                    // 'cause it kills the ExampleLauncher too.
+                    //Functions.XCloseDisplay(window.Display);
                 }
+
+                Functions.XUnmapWindow(window.Display, window.Handle);
+                Functions.XDestroyWindow(window.Display, window.Handle);
+
                 disposed = true;
             }
         }
