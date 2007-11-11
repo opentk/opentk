@@ -26,7 +26,7 @@ namespace Examples.Tutorial
     [Example("Texture mapping", ExampleCategory.Tutorial, 5)]
     public class Textures : GameWindow
     {
-        Bitmap bitmap = new Bitmap("Data\\logo-dark.jpg");
+        Bitmap bitmap = new Bitmap("Data/logo-dark.jpg");
         int texture;
 
         public Textures() : base(new DisplayMode(800, 600)) { }
@@ -46,7 +46,7 @@ namespace Examples.Tutorial
             
             GL.GenTextures(1, out texture);
             GL.BindTexture(TextureTarget.Texture2d, texture);
-            
+
             BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadOnly, bitmap.PixelFormat);
 
