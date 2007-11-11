@@ -419,6 +419,9 @@ namespace OpenTK
                 UpdateFrameEventArgs update_args = new UpdateFrameEventArgs();
                 RenderFrameEventArgs render_args = new RenderFrameEventArgs();
 
+                update_watch.Reset();
+                render_watch.Reset();
+
                 //double sleep_granularity;      // In seconds.
 
                 //GC.Collect(2);
