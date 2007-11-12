@@ -21,6 +21,7 @@ namespace OpenTK.Fonts
         void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment);
         void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft);
         void Draw(TextHandle handle);
+        void Draw(string text, TextureFont font);
         void Begin();
         void End();
     }

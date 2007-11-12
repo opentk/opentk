@@ -239,7 +239,17 @@ namespace OpenTK.Fonts
 
         #endregion
 
-        #region public void Draw(string text)
+        #region public void Draw(string text, TextureFont font)
+
+        /// <summary>
+        /// Draws dynamic text without caching. Not implemented yet!
+        /// </summary>
+        /// <param name="text">The System.String to draw.</param>
+        /// <param name="font">The OpenTK.Fonts.TextureFont to draw the text in.</param>
+        public void Draw(string text, TextureFont font)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 
