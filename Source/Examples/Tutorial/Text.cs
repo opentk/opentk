@@ -120,19 +120,17 @@ namespace Examples.Tutorial
             else if (scroll_speed < 0.0f && current_position < warparound_position)
                 current_position = initial_position;
 
-            // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
-            // with size equal to the window (in pixels). 
-            // While we could also render text in 3D mode, it would be very hard to get
-            // pixel-perfect precision.
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(0.0, Width, Height, 0.0, 0.0, 1.0);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
+            // TextPrinter.Begin() sets up a 2d orthographic projection, with the x axis
+            // moving from 0 to viewport.Width (left to right) and the y axis from
+            // 0 to viewport.Height (top to bottom). This is the typical coordinate system
+            // used in 2d graphics, and is necessary for achieving pixel-perfect glyph rendering.
+            // TextPrinter.End() restores your previous projection/modelview matrices.
+            text.Begin();
 
             GL.Translate(0.0f, current_position, 0.0f);
             text.Draw(poem_handle);
+
+            text.End();
 
             SwapBuffers();
         }

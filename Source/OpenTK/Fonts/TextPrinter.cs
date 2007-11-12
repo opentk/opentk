@@ -27,6 +27,7 @@ namespace OpenTK.Fonts
         //static char[] split_chars = new char[] { ' ', '\n', '\t', ',', '.', '/', '?', '!', ';', '\\', '-', '+', '*', '=' };
         static bool functionality_checked = false;
         static ITextPrinterImplementation printer;
+        float[] viewport = new float[6];
 
         #region --- Constructor ---
 
@@ -62,21 +63,72 @@ namespace OpenTK.Fonts
 
         #region --- ITextPrinter Members ---
 
+        #region public void Prepare(string text, TextureFont font, out TextHandle handle)
+
+        /// <summary>
+        /// Prepares text for drawing.
+        /// </summary>
+        /// <param name="text">The string to draw.</param>
+        /// <param name="font">The font to use for drawing.</param>
+        /// <param name="handle">The handle to the cached text. Use this to draw the text with the Draw() function.</param>
+        /// <see cref="TextPrinter.Draw()"/>
         public void Prepare(string text, TextureFont font, out TextHandle handle)
         {
             this.Prepare(text, font, out handle, 0, false, StringAlignment.Near, false);
         }
 
+        #endregion
+
+        #region public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp)
+
+        /// <summary>
+        /// Prepares text for drawing.
+        /// </summary>
+        /// <param name="text">The string to draw.</param>
+        /// <param name="font">The font to use for drawing.</param>
+        /// <param name="handle">The handle to the cached text. Use this to draw the text with the Draw() function.</param>
+        /// <param name="width">Not implemented.</param>
+        /// <param name="wordWarp">Not implemented.</param>
+        /// <see cref="TextPrinter.Draw()"/>
         public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp)
         {
             this.Prepare(text, font, out handle, width, wordWarp, StringAlignment.Near, false);
         }
 
+        #endregion
+
+        #region public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment)
+
+        /// <summary>
+        /// Prepares text for drawing.
+        /// </summary>
+        /// <param name="text">The string to draw.</param>
+        /// <param name="font">The font to use for drawing.</param>
+        /// <param name="handle">The handle to the cached text. Use this to draw the text with the Draw() function.</param>
+        /// <param name="width">Not implemented.</param>
+        /// <param name="wordWarp">Not implemented.</param>
+        /// <param name="alignment">Not implemented.</param>
+        /// <see cref="TextPrinter.Draw()"/>
         public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment)
         {
             this.Prepare(text, font, out handle, width, wordWarp, alignment, false);
         }
 
+        #endregion
+
+        #region public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft)
+
+        /// <summary>
+        /// Prepares text for drawing.
+        /// </summary>
+        /// <param name="text">The string to draw.</param>
+        /// <param name="font">The font to use for drawing.</param>
+        /// <param name="handle">The handle to the cached text. Use this to draw the text with the Draw() function.</param>
+        /// <param name="width">Not implemented.</param>
+        /// <param name="wordWarp">Not implemented.</param>
+        /// <param name="alignment">Not implemented.</param>
+        /// <param name="rightToLeft">Not implemented.</param>
+        /// <see cref="TextPrinter.Draw()"/>
         public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft)
         {
             if (!functionality_checked)
@@ -87,6 +139,9 @@ namespace OpenTK.Fonts
 
             if (text.Length > 8192)
                 throw new ArgumentOutOfRangeException("text", text.Length, "Text length must be between 1 and 8192 characters");
+
+            if (wordWarp || rightToLeft || alignment != StringAlignment.Near)
+                throw new NotImplementedException();
 
             Vector2[] vertices = new Vector2[8 * text.Length];  // Interleaved, vertex, texcoord, vertex, etc...
             ushort[] indices = new ushort[6 * text.Length];
@@ -167,8 +222,49 @@ namespace OpenTK.Fonts
             handle.font = font;
         }
 
+        #endregion
+
+        #region public void Draw(TextHandle handle)
+
+        /// <summary>
+        /// Draws the cached text referred to by the TextHandle.
+        /// </summary>
+        /// <param name="handle">The TextHandle to the cached text.</param>
         public void Draw(TextHandle handle)
         {
+            GL.BindTexture(TextureTarget.Texture2d, handle.font.Texture);
+            
+            printer.Draw(handle);
+        }
+
+        #endregion
+
+        #region public void Draw(string text)
+
+        #endregion
+
+        #region public void Begin()
+
+        /// <summary>
+        /// Sets up OpenGL state for drawing text.
+        /// </summary>
+        public void Begin()
+        {
+            GL.PushMatrix();
+
+            GL.GetFloat(GetPName.Viewport, viewport);
+
+            // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
+            // with size equal to the window (in pixels). 
+            // While we could also render text in 3D mode, it would be very hard to get
+            // pixel-perfect precision.
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(viewport[0], viewport[2], viewport[3], viewport[1], 0.0, 1.0);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+
             GL.PushAttrib(AttribMask.TextureBit);
             GL.PushAttrib(AttribMask.EnableBit);
 
@@ -177,14 +273,23 @@ namespace OpenTK.Fonts
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             GL.Disable(EnableCap.DepthTest);
-
-            GL.BindTexture(TextureTarget.Texture2d, handle.font.Texture);
-            
-            printer.Draw(handle);
-
-            GL.PopAttrib();
-            GL.PopAttrib();
         }
+
+        #endregion
+
+        #region public void End()
+
+        /// <summary>
+        /// Restores OpenGL state.
+        /// </summary>
+        public void End()
+        {
+            GL.PopAttrib();
+            GL.PopAttrib();
+            GL.PopMatrix();
+        }
+
+        #endregion
 
         #endregion
     }
