@@ -18,7 +18,8 @@ OpenTK 0.3.12 -> 0.3.13
 	+ Platform
 		+ Improved [..]GLNative shutdown sequence for all platforms. Fixes shutdown crash under Linux.
 		+ Removed X11GLControl, WinGLControl. The platform specific code is handled in the WindowInfo and GLContext classes.
-		+ Added VSync support to Windows. Linux will obtain this on next release.
+		+ Fixed issue with flickering GLControls.
+		* Added VSync support to Windows. Linux will obtain this on next release.
 	+ GameWindow
 		+ Improved timing precision.
 		+ More detailed timing information available.
@@ -37,6 +38,7 @@ OpenTK 0.3.12 -> 0.3.13
 		+ .Net naming conventions.
 		+ Many, many more function overloads.
 		+ Smaller and faster.
+		+ Even better startup performance.
 
 + Examples
 	+ Improved example layout. Now every example contains a Main() method, exactly like it would be if it wasn't launched by the ExampleLauncher.
