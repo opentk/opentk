@@ -1,0 +1,15 @@
+Many thanks to the people who have contributed to OpenTK:
+
+* Erik Ylvisaker
+	Linux support (GLContext on linux)
+	Glx bindings.
+* James Talton
+	GTK GLWidget
+* Per
+	Fix for flickering GLControl
+* Beau Gunderson
+	Windows FSAA patch.
+* Kostas Soulakellis
+	OpenTK logo
+* Andy Gill			(andyggill@gmail.com)
+	Math toolkit: Vector2/3/4, Matrix4, Quaternions
