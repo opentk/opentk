@@ -1,36 +1,42 @@
 ================================================================================
 
-OpenTK 0.3.12.4 WIP Release notes
+OpenTK 0.3.13.3 Alpha Release notes
 
 IMPORTANT: This release is intended for testing and experimentation only. Use at your own risk!
 
 --------------------------------------------------------------------------------
 
-Highlights:
+0.3.13 Highlights:
 
- * Feature: Mouse input support.
- * Feature: Two new tutorials (T02: Vertex Arrays) and (T04: Vertex Lighting) showcase the relevant OpenGL features.
- * Feature: A new Test (S03: Extensions) uses reflection to obtain a list of extensions supported by your hardware. See known issues!
- * Feature: GameWindow.Title property to retrieve or set the title of the GameWindow.
- * Feature: GameWindow.Run() can now set a target update and render frequency.
- * Feature: Improved GameWindow events. No need to call base functions on inheriting classes (i.e. base.OnRenderFrame inside the OnRenderFrame override).
- * Feature: Optimized GL.LoadAll().
- * Feature: Vector2, Vector3 and Vector4 structs, with associated math functions. NOT READY FOR USE YET, INTERFACE WILL CHANGE.
+ * Feature: Math toolkit (Vector2/3/4, Matrix4, Quaternion and Box2 structs). Implemented by Andy Gill.
+ * Feature: Texture font support. Cross-platform, high quality, high speed.
+ * Feature: Size of OpenTK.dll cut down by a factor of two. Build speed improved by a factor of ten.
 
- * Bug fix: Missing Key mapping in Windows and Linux in Keyboard drivers.
- * Bug fix: Resize event was raised twice during GameWindow startup.
+ * Feature: Two new examples show the use of fonts ("Fonts" and "Text" examples).
+ * Feature: "Textures" example shows how to load a texture with the System.Drawing.Bitmap class.
+ * Feature: Improved GameWindow.Run() timing. New timing-related properties.
 
- * Known issue (Windows): GameWindow may become unstable after extended mouse movements on Windows. Probably due to an (unknown) OpenTK MouseDevice driver bug.
- * Known issue (Linux): ExampleLauncher abruptly shuts down when closing a GameWindow through the 'X' (close) button.
+ * Feature: VSync support for GameWindow, GLControl, GLContext.
+ * Feature: Improved GameWindow.Exit() behavior. Now immediately starts the shutdown sequence (no need to return from OnUpdateFrame/OnRenderFrame/etc, first).
+
+ * Feature: OpenTK logo by Kostas Soulakellis.
+
+ * Bug fix (Linux): GameWindow no longer crashes on exit under Linux, when closed with the 'X' button.
+ * Bug fix (Linux): GLSL example no longer crashes with a glibc error when shutting down.
+ * Bug fix (all): IntPtr's passed to void* parameters called the object overload, not the void* one.
+
+ * Known issue (Windows): WinRawMouse MouseDriver generates garbage.
+ * Known issue (Windows): A first chance GameWindowExitException may be caught by the Visual Studio debugger. This is harmless and does not indicate an error - just continue the debugging session normally.
  * Known issue (Linux): OpenTK programs may exhibit instability under Mesa3d 6.5.x and/or Mono 1.2.4. Update to Mesa3d 7.0.x and Mono 1.2.5 to resolve this.
  * Known issue (Linux): DisplayModes with 32-bit bit-depths exhibit flashing under Mesa3d 6.5.x. Is a Mesa3d problem, update to Mesa3d 7.0.x or request a 24-bit depth.
- * Known issue (Linux): Example T10: "GLSL Cube" may report a glibc error when shutting down.
- * Known issue (Linux): Example S03: "Extensions" crashes under Mono 1.2.x
- * Known issue (Linux): Example T04: "Vertex Lighting" may exhibit incorrect lighting under some circumstances (Mesa3d 7.0.x)
+ * Known issue (Linux): "Extensions" example crashes under Mono 1.2.x, where x < 6.
+ * Known issue (Linux): "Textures" example displays corrupt texture under linux. Investigating.
+ * Known issue (All): TextureFont's are currently limited to one font sheet and new glyphs will fail when the sheet becomes full. This limitation will be lifted in later versions. For now mitigate the issue by loading the largest-sized fonts first.
+ * Known issue (All): Some commandline arguments in "Bind" do not work.
 
 --------------------------------------------------------------------------------
 
-For support, bug reports, feature requests and flames, visit the OpenTK site: http://opentk.sourceforge.net/
+OpenTK homepage: http://opentk.sourceforge.net/
 
 The latest version is always available at http://sourceforge.net/projects/opentk
 
