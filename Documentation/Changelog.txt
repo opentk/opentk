@@ -1,5 +1,54 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
+
+-----------------------
+OpenTK 0.3.12 -> 0.3.13
+-----------------------
+
++ Bind
+	+ New transformation to OpenGL enums follows .Net naming conventions (PascalCase, no_underscores).
+	+ Void* parameters are turned to IntPtr, to improve interop with .Net BCL methods (e.g. BitmapData.Scan0).
+	+ Now generates only one ref/array/pointer overload for each function, not all possible permutations. Brings Glu down to ~40KB of code (was ~3MB before). Improves compilation times.
+	+ Improved layout of generated code. Removed some generated local variables (improves speed).
+
++ Build
+	+ Now copies example data to output directory.
+
++ OpenTK
+	+ Platform
+		+ Improved [..]GLNative shutdown sequence for all platforms. Fixes shutdown crash under Linux.
+		+ Removed X11GLControl, WinGLControl. The platform specific code is handled in the WindowInfo and GLContext classes.
+		+ Added VSync support to Windows. Linux will obtain this on next release.
+	+ GameWindow
+		+ Improved timing precision.
+		+ More detailed timing information available.
+		+ Can now set target UpdateFrame and RenderFrame periods during runtime.
+		+ VSync support.
+		+ Improved GameWindow.Exit() handling.
+		+ Removed obsolete GameWindow.Create and GameWindow.Destroy events.
+	+ Math
+		+ Andy Gill implemented Vector2/3/4, Matrix4 and Quaternion methods for OpenTK.Math.
+		+ Added Box2 struct which defines a rectangular region. Used in OpenTK.Fonts (see below).
+		- Removed (float*) and (IntPtr) cast operators from Vector234. Added this[] operator.
+	+ Fonts
+		+ High quality Texture fonts on all supported platforms (TextureFont class).
+		+ TextPrinter to draw text on all supported platform (TextPrinter class).
+	+ OpenGL
+		+ .Net naming conventions.
+		+ Many, many more function overloads.
+		+ Smaller and faster.
+
++ Examples
+	+ Improved example layout. Now every example contains a Main() method, exactly like it would be if it wasn't launched by the ExampleLauncher.
+	+ Added ExampleAttribute.
+	+ Added Fonts, Textures and Text examples.
+	+ Improved GLSL example (now loads the shader from disk, uses VBO).
+	- Disabled Vertex Array and Lighting examples, as they were seriously broken.
+	+ Background changed to Color.SteelBlue for all examples.
+	+ Kostas Soulakellis created a logo for the OpenTK library. A scaled-down image of the first version is used in the Textures example.
+
+
+
 -----------------------
 OpenTK 0.3.11 -> 0.3.12
 -----------------------
