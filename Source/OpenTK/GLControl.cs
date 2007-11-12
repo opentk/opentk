@@ -43,6 +43,7 @@ namespace OpenTK
         {
             InitializeComponent();
 
+            this.SetStyle(ControlStyles.Opaque, true);
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 
