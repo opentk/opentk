@@ -165,12 +165,7 @@ namespace Examples.Tutorial
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(0.0, Width, Height, 0.0, 0.0, 1.0);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
+            printer.Begin();
 
             // Print using the first font.
             for (int i = 0; i < handles.Length / 2; i++)
@@ -189,6 +184,8 @@ namespace Examples.Tutorial
                 printer.Draw(handles[i]);
                 GL.Translate(0, fonts[i].Height, 0);
             }
+
+            printer.End();
 
             SwapBuffers();
         }
