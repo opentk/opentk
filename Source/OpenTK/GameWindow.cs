@@ -450,7 +450,11 @@ namespace OpenTK
 
                 Debug.Print("Elevating priority.");
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
-                
+
+                //ProcessEvents();
+                //OnUpdateFrameInternal(update_args);
+                //OnRenderFrameInternal(render_args);
+
                 Debug.Print("Entering main loop.");
                 while (!isExiting)
                 {
@@ -495,9 +499,6 @@ namespace OpenTK
                         num_updates = 0;
                         update_time_counter = 0.0;
                     }
-
-                    //if (isExiting)
-                    //    break;
 
                     // Raise RenderFrame event
                     time = render_watch.Elapsed.TotalSeconds;
