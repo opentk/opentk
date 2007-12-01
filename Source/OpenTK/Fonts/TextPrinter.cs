@@ -260,8 +260,6 @@ namespace OpenTK.Fonts
         /// </summary>
         public void Begin()
         {
-            GL.PushMatrix();
-
             GL.GetFloat(GetPName.Viewport, viewport);
 
             // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
@@ -269,10 +267,12 @@ namespace OpenTK.Fonts
             // While we could also render text in 3D mode, it would be very hard to get
             // pixel-perfect precision.
             GL.MatrixMode(MatrixMode.Projection);
+            GL.PushMatrix();
             GL.LoadIdentity();
             GL.Ortho(viewport[0], viewport[2], viewport[3], viewport[1], 0.0, 1.0);
 
             GL.MatrixMode(MatrixMode.Modelview);
+            GL.PushMatrix();
             GL.LoadIdentity();
 
             GL.PushAttrib(AttribMask.TextureBit);
@@ -296,6 +296,11 @@ namespace OpenTK.Fonts
         {
             GL.PopAttrib();
             GL.PopAttrib();
+
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PopMatrix();
+
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.PopMatrix();
         }
 
