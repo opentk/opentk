@@ -27,7 +27,6 @@ namespace OpenTK.Platform.Windows
     {
         #region --- Fields ---
 
-        private WinGLContext glContext;
         private DisplayMode mode = new DisplayMode();
         private WinRawInput driver;
 
@@ -190,15 +189,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public IGLContext Context
-
-        public IGLContext Context
-        {
-            get { return glContext; }
-        }
-
-        #endregion
-
         #region public bool Fullscreen
 
         public bool Fullscreen
@@ -286,7 +276,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region private void CreateWindow(DisplayMode mode)
+        #region public void CreateWindow(DisplayMode mode)
 
         public void CreateWindow(DisplayMode windowMode)
         {
@@ -322,7 +312,7 @@ namespace OpenTK.Platform.Windows
             left_border = -rect.left;
             bottom_border = rect.bottom - windowMode.Height;
             right_border = rect.right - windowMode.Width;
-            
+
             cp.Width = rect.right - rect.left;
             cp.Height = rect.bottom - rect.top;
             cp.Caption = "OpenTK Game Window";
@@ -331,17 +321,14 @@ namespace OpenTK.Platform.Windows
             // which is raised CreateHandle()
             CreateHandle(cp);
 
-            if (this.Handle != IntPtr.Zero && glContext != null)
+            if (this.Handle != IntPtr.Zero)
             {
                 Debug.WriteLine("Window creation was succesful.");
                 exists = true;
             }
-            else
-            {
-                throw new ApplicationException(String.Format(
-                    "Could not create native window and/or context. Handle: {0}, Context {1}",
-                    this.Handle, this.Context.ToString()));
-            }
+            else throw new ApplicationException(String.Format(
+                    "Could not create native window and/or context. Handle: {0}",
+                    this.Handle));
 
             Debug.Unindent();
         }
@@ -358,17 +345,6 @@ namespace OpenTK.Platform.Windows
             driver = new WinRawInput(this.window);
 
             Debug.Print("Window created: {0}", window);
-
-            try
-            {
-                glContext = new WinGLContext(this.mode, this.WindowInfo);
-                glContext.CreateContext();
-            }
-            catch (ApplicationException expt)
-            {
-                Debug.Print("Could not create opengl context, error: {0}", expt.ToString());
-                throw;
-            }
 
             if (this.Create != null)
                 this.Create(this, e);
@@ -510,7 +486,6 @@ namespace OpenTK.Platform.Windows
                 if (calledManually)
                 {
                     // Safe to clean managed resources
-                    glContext.Dispose();
                     //base.DestroyHandle();
                 }
                 disposed = true;

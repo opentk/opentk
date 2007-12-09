@@ -71,6 +71,8 @@ namespace OpenTK
 
         //InputDriver input_driver;
 
+        GLContext glContext;
+
         #endregion
 
         #region --- Internal Properties ---
@@ -126,6 +128,9 @@ namespace OpenTK
             glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
             
             CreateWindow(mode, title);
+
+            glContext = new GLContext(mode, glWindow.WindowInfo);
+            glContext.CreateContext();
             //this.vsync = VSyncMode.Adaptive;
             this.VSync = VSyncMode.On;
         }
@@ -199,7 +204,8 @@ namespace OpenTK
 				    mode = new DisplayMode(640, 480);
 				    this.CreateWindow(mode);
 				}
-				return glWindow.Context;
+				//return glWindow.Context;
+                return glContext;
 			}
         }
 
@@ -355,22 +361,11 @@ namespace OpenTK
         {
             if (!Exists)
             {
-                try
-                {
-                    glWindow.CreateWindow(mode);
-                    this.Title = title;
-                    //input_driver = new InputDriver(this);
-                }
-                catch (ApplicationException expt)
-                {
-                    Debug.Print(expt.ToString());
-                    throw;
-                }
+                glWindow.CreateWindow(mode);
+                this.Title = title;
             }
             else
-            {
                 throw new InvalidOperationException("A render window already exists for this GameWindow.");
-            }
         }
 
         #endregion

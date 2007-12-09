@@ -17,10 +17,16 @@ namespace OpenTK
     /// </summary>
     public class GLContext : IGLContext
     {
-        /// <summary>
-        /// The actual render context implementation for the underlying platform.
-        /// </summary>
-        private IGLContext implementation;
+        IGLContext implementation;  // The actual render context implementation for the underlying platform.
+        List<IDisposable> dispose_queue = new List<IDisposable>();
+        
+        static SortedList<long, WeakReference> available_contexts =
+            new SortedList<long, WeakReference>();   // Contains all available OpenGL contexts.
+
+        delegate IntPtr GetCurrentContextDelegate();
+        static GetCurrentContextDelegate StaticGetCurrentContext;
+
+        #region public GLContext(DisplayMode mode, IWindowInfo window)
 
         /// <summary>
         /// Constructs a new GLContext with the specified DisplayMode, and bound to the specified IWindowInfo.
@@ -29,6 +35,9 @@ namespace OpenTK
         /// <param name="window"></param>
         public GLContext(DisplayMode mode, IWindowInfo window)
         {
+            if (available_contexts.Count == 0)
+                available_contexts.Add(0, new WeakReference(null));
+
             switch (Environment.OSVersion.Platform)
             {
                 case PlatformID.Unix:
@@ -47,6 +56,17 @@ namespace OpenTK
                     throw new PlatformNotSupportedException("Your platform is not supported currently. Please, refer to http://opentk.sourceforge.net for more information.");
             }
         }
+
+        #endregion
+
+        #region public static IGLContext CurrentContext
+
+        public static GLContext CurrentContext
+        {
+            get { return (GLContext)available_contexts[StaticGetCurrentContext().ToInt64()].Target; }
+        }
+
+        #endregion
 
         #region --- IGLContext Members ---
 
@@ -79,7 +99,7 @@ namespace OpenTK
         /// </summary>
         public void CreateContext()
         {
-            implementation.CreateContext();
+            CreateContext(true, null);
         }
 
         /// <summary>
@@ -99,7 +119,7 @@ namespace OpenTK
         /// </remarks>
         public void CreateContext(bool direct)
         {
-            implementation.CreateContext(direct);
+            CreateContext(direct, null);
         }
 
         /// <summary>
@@ -112,6 +132,10 @@ namespace OpenTK
         public void CreateContext(bool direct, IGLContext source)
         {
             implementation.CreateContext(direct, source);
+
+            available_contexts.Add(Context.ToInt64(), new WeakReference(this));
+            if (StaticGetCurrentContext == null)
+                StaticGetCurrentContext = implementation.GetCurrentContext;
         }
 
         /// <summary>
@@ -128,6 +152,33 @@ namespace OpenTK
         public void MakeCurrent()
         {
             implementation.MakeCurrent();
+        }
+
+        /// <summary>
+        /// Gets a System.Boolean indicating whether this Context is current in the calling thread.
+        /// </summary>
+        public bool IsCurrent
+        {
+            get { return implementation.IsCurrent; }
+        }
+
+        /// <summary>
+        /// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
+        /// calling thread, or IntPtr.Zero if no OpenGL context is current.
+        /// </summary>
+        /// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
+        public IntPtr GetCurrentContext()
+        {
+            return implementation.GetCurrentContext();
+        }
+
+        /// <summary>
+        /// Raised when a Context is destroyed.
+        /// </summary>
+        public event DestroyEvent<IGLContext> Destroy
+        {
+            add { implementation.Destroy += value; }
+            remove { implementation.Destroy -= value; }
         }
 
         /// <summary>
@@ -162,6 +213,28 @@ namespace OpenTK
             set { implementation.VSync = value;  }
         }
 
+        /// <summary>
+        /// Registers an OpenGL resource for disposal.
+        /// </summary>
+        /// <param name="resource">The OpenGL resource to dispose.</param>
+        public void RegisterForDisposal(IDisposable resource)
+        {
+            GC.KeepAlive(resource);
+            dispose_queue.Add(resource);
+        }
+
+        /// <summary>
+        /// Disposes all registered OpenGL resources.
+        /// </summary>
+        public void DisposeResources()
+        {
+            foreach (IDisposable resource in dispose_queue)
+            {
+                resource.Dispose();
+            }
+            dispose_queue.Clear();
+        }
+
         #endregion
 
         #region IDisposable Members
@@ -171,6 +244,7 @@ namespace OpenTK
         /// </summary>
         public void Dispose()
         {
+            available_contexts.Remove(Context.ToInt64());
             implementation.Dispose();
         }
 

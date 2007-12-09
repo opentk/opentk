@@ -16,9 +16,9 @@ namespace OpenTK.Platform.X11
 {
     /// <summary>
     /// Provides methods to create and control an opengl context on the X11 platform.
-    /// This class supports OpenTK, and is not intended for use by OpenTK programs. 
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class X11GLContext : OpenTK.Platform.IGLContext
+    internal sealed class X11GLContext : IGLContext
     {
         private IntPtr context;
         private DisplayMode mode;
@@ -235,10 +235,19 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        public bool IsCurrent()
+        public bool IsCurrent
         {
+            //return GetCurrentContext() == context;
+            get { throw new NotImplementedException(); }
+        }
+
+        public IntPtr GetCurrentContext()
+        {
+            //return Glx.GetCurrentContext();
             throw new NotImplementedException();
         }
+
+        public event DestroyEvent<IGLContext> Destroy;
 
         #region public IntPtr GetAddress(string function)
 
@@ -248,6 +257,16 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        public void RegisterForDisposal(IDisposable resource)
+        {
+            throw new NotImplementedException("Use the general GLContext class instead.");
+        }
+
+        public void DisposeResources()
+        {
+            throw new NotImplementedException("Use the general GLContext class instead.");
+        }
 
         public IEnumerable<DisplayMode> GetDisplayModes()
         {
