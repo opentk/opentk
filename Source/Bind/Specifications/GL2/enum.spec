@@ -90,7 +90,7 @@
 ###############################################################################
 ###############################################################################
 #
-# Edited by StApostol. Revision 1
+# Edited by Stefanos Apostolopoulos for OpenTK. Revision 2
 #
 ###############################################################################
 
@@ -1235,6 +1235,9 @@ GetTextureParameter enum:
 	use SGIX_texture_lod_bias TEXTURE_LOD_BIAS_R_SGIX
 	use SGIX_texture_scale_bias POST_TEXTURE_FILTER_BIAS_SGIX
 	use SGIX_texture_scale_bias POST_TEXTURE_FILTER_SCALE_SGIX
+	
+# Revision 2
+	use VERSION_1_3 TEXTURE_COMPRESSED
 
 ###############################################################################
 
