@@ -214,18 +214,16 @@ namespace OpenTK.OpenGL
         {
 		}
 
-		#region Overloads using OpenTK.Math classes
+		#region Overloads
 
-		public static
-		void LookAt(Vector3 eye, Vector3 center, Vector3 up)
+		public static void LookAt(Vector3 eye, Vector3 center, Vector3 up)
 		{
 			Delegates.gluLookAt((double)eye.X, (double)eye.Y, (double)eye.Z, (double)center.X, (double)center.Y, (double)center.Z, (double)up.X, (double)up.Y, (double)up.Z);
 		}
 
 		// One token Project overload, I picked this one because it's CLS compliant, and it
 		// makes reasonably clear which args are inputs and which are outputs.
-		public static
-		Int32 Project(Vector3 obj, double[] model, double[] proj, Int32[] view, out Vector3 win)
+		public static Int32 Project(Vector3 obj, double[] model, double[] proj, Int32[] view, out Vector3 win)
 		{
 			unsafe
 			{
@@ -244,14 +242,12 @@ namespace OpenTK.OpenGL
 			}
 		}
 
-		public static
-		void TessNormal(int tess, Vector3 normal)
+		public static void TessNormal(int tess, Vector3 normal)
 		{
 			Delegates.gluTessNormal((int)tess, (double)normal.X, (double)normal.Y, (double)normal.Z);
 		}
 
-		public static
-		Int32 UnProject(Vector3 win, double[] model, double[] proj, Int32[] view, out Vector3 obj)
+		public static Int32 UnProject(Vector3 win, double[] model, double[] proj, Int32[] view, out Vector3 obj)
 		{
 			unsafe
 			{
@@ -270,8 +266,7 @@ namespace OpenTK.OpenGL
 			}
 		}
 
-		public static
-		Int32 UnProject4(Vector4 win, double[] model, double[] proj, Int32[] view, double near, double far, out Vector4 obj)
+		public static Int32 UnProject4(Vector4 win, double[] model, double[] proj, Int32[] view, double near, double far, out Vector4 obj)
 		{
 			unsafe
 			{
@@ -290,6 +285,11 @@ namespace OpenTK.OpenGL
 				}
 			}
 		}
+
+        public static string ErrorString(ErrorCode error)
+        {
+            return ErrorString((GluErrorCode)error);
+        }
 
 		#endregion
 	}
