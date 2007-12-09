@@ -593,15 +593,26 @@ namespace OpenTK.OpenGL
 
         #region public static void Color[34]() overloads
 
+        public static void Color3(System.Drawing.Color color)
+        {
+            GL.Color3(color.R, color.G, color.B);
+        }
+
         public static void Color4(System.Drawing.Color color)
         {
             GL.Color4(color.R, color.G, color.B, color.A);
         }
 
-        public static void Color3(System.Drawing.Color color)
+        public static void Color3(Vector3 color)
         {
-            GL.Color3(color.R, color.G, color.B);
+            GL.Color3(color.X, color.Y, color.Z);
         }
+
+        public static void Color4(Vector4 color)
+        {
+            GL.Color4(color.X, color.Y, color.Z, color.W);
+        }
+
 
         #endregion
 
@@ -681,11 +692,18 @@ namespace OpenTK.OpenGL
             Delegates.glTranslatef(trans.X, trans.Y, trans.Z);
         }
 
-		public static
-		void MultMatrix(Matrix4 mat)
+		public static void MultMatrix(Matrix4 mat)
 		{
 			MultMatrix(ref mat.Row0.X);
 		}
+
+        public static void Materialv(MaterialFace face, MaterialParameter pname, Vector4 @params)
+        {
+            unsafe
+            {
+                Materialv(face, pname, &@params.X);
+            }
+        }
 
         #endregion
 
