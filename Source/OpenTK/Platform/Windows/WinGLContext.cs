@@ -21,9 +21,9 @@ namespace OpenTK.Platform.Windows
 {
     /// <summary>
     /// Provides methods to create and control an opengl context on the Windows platform.
-    /// This class supports OpenTK, and is not intended for use by OpenTK programs. 
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WinGLContext : OpenTK.Platform.IGLContext, IDisposable
+    internal sealed class WinGLContext : IGLContext
     {
         private IntPtr deviceContext;
         private IntPtr renderContext;
@@ -153,7 +153,7 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
-        
+
         #region --- IGLContext Members ---
 
         #region public IntPtr Context
@@ -212,14 +212,11 @@ namespace OpenTK.Platform.Windows
             // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
             // and Wgl extensions will fail to load.
             renderContext = Wgl.Imports.CreateContext(deviceContext);
-            if (renderContext != IntPtr.Zero)
-            {
-                Debug.WriteLine(String.Format("done! (id: {0})", renderContext));
-            }
-            else
-            {
+            if (renderContext == IntPtr.Zero)
                 throw new ApplicationException("Could not create OpenGL render context (Wgl.CreateContext() return 0).");
-            }
+            
+            Debug.WriteLine(String.Format("done! (id: {0})", renderContext));
+
             Wgl.Imports.MakeCurrent(deviceContext, renderContext);
             Wgl.LoadAll();
             GL.LoadAll();
@@ -266,6 +263,36 @@ namespace OpenTK.Platform.Windows
         }
 
 	    #endregion
+
+        #region public bool IsCurrent
+
+        public bool IsCurrent
+        {
+            get { return Wgl.GetCurrentContext() == this.renderContext; }
+        }
+
+        #endregion
+
+        #region public IntPtr GetCurrentContext()
+
+        public IntPtr GetCurrentContext()
+        {
+            return Wgl.GetCurrentContext();
+        }
+
+        #endregion
+
+        public event DestroyEvent<IGLContext> Destroy;
+
+        public void RegisterForDisposal(IDisposable resource)
+        {
+            throw new NotImplementedException("Use the general GLContext class instead.");
+        }
+
+        public void DisposeResources()
+        {
+            throw new NotImplementedException("Use the general GLContext class instead.");
+        }
 
         #region public DisplayMode[] GetDisplayModes()
 
@@ -337,7 +364,6 @@ namespace OpenTK.Platform.Windows
 
         public void Dispose()
         {
-            //Debug.Print("Manually disposing WinGLContext {0}.", this.renderContext);
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -346,9 +372,7 @@ namespace OpenTK.Platform.Windows
         {
             if (!disposed)
             {
-                // Clean unmanaged resources here
-                // The following call uses the Debug and Wgl classes, making it unsafe?
-                ReleaseResources();
+                DestroyContext();
 
                 if (calledManually)
                 {
@@ -363,10 +387,13 @@ namespace OpenTK.Platform.Windows
             Dispose(false);
         }
 
-        #region private void ReleaseResources()
+        #region private void DestroyContext()
 
-        private void ReleaseResources()
+        private void DestroyContext()
         {
+            if (Destroy != null)
+                Destroy(this, EventArgs.Empty);
+
             if (renderContext != IntPtr.Zero)
             {
                 Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
@@ -387,6 +414,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
+            /*
             if (opengl32Handle != IntPtr.Zero)
             {
                 if (!Functions.FreeLibrary(opengl32Handle))
@@ -396,6 +424,7 @@ namespace OpenTK.Platform.Windows
                 }
                 opengl32Handle = IntPtr.Zero;
             }
+            */
         }
 
         #endregion
