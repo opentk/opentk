@@ -12,6 +12,7 @@ namespace OpenTK.Platform
 {
     /// <summary>
     /// An empty IGLContext implementation to be used inside the Visual Studio designer.
+    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
     internal sealed class DummyGLContext : IGLContext
     {
@@ -37,6 +38,20 @@ namespace OpenTK.Platform
 
         public void SwapBuffers() { }
         public void MakeCurrent() { }
+        public bool IsCurrent { get { return true; } }
+        public IntPtr GetCurrentContext() { return IntPtr.Zero; }
+
+        public event DestroyEvent<IGLContext> Destroy;
+
+        public void RegisterForDisposal(IDisposable resource)
+        {
+            throw new NotImplementedException("Use the general GLContext class instead.");
+        }
+
+        public void DisposeResources()
+        {
+            throw new NotImplementedException("Use the general GLContext class instead.");
+        }
 
         public IntPtr GetAddress(string function) { return IntPtr.Zero; }
         public IEnumerable<DisplayMode> GetDisplayModes() { return null; }

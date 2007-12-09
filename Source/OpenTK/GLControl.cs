@@ -200,7 +200,7 @@ namespace OpenTK
                 // specific depth for the DisplayMode - we let the driver select one instead.
                 display_mode.Color = new ColorMode(0);
                 context = new GLContext(display_mode, info);
-                context.CreateContext();
+                context.CreateContext(true, null);
                 idle = new PlatformIdle(info);
             }
             else

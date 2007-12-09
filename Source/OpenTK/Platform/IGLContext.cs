@@ -31,28 +31,6 @@ namespace OpenTK.Platform
         DisplayMode Mode { get; }
 
         /// <summary>
-        /// Creates an OpenGL context.
-        /// </summary>
-        void CreateContext();
-
-        /// <summary>
-        /// Creates an OpenGL context with a direct or indirect rendering mode. This parameter is ignored
-        /// on Windows platforms (direct mode only).
-        /// </summary>
-        /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
-        /// <remarks>
-        /// <para>
-        /// Direct rendering is the default rendering mode for OpenTK, since it can provide higher performance
-        /// in some circumastances.
-        /// </para>
-        /// <para>
-        /// The 'direct' parameter is a hint, and will ignored if the specified mode is not supported (e.g. setting
-        /// indirect rendering on Windows platforms).
-        /// </para>
-        /// </remarks>
-        void CreateContext(bool direct);
-
-        /// <summary>
         /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
         /// specified IGLContext.
         /// </summary>
@@ -70,6 +48,23 @@ namespace OpenTK.Platform
         /// Makes the Context current in the calling thread, i.e. future OpenGL commands will affect this Context.
         /// </summary>
         void MakeCurrent();
+
+        /// <summary>
+        /// Gets a System.Boolean indicating whether this Context is current in the calling thread.
+        /// </summary>
+        bool IsCurrent { get; }
+
+        /// <summary>
+        /// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
+        /// calling thread, or IntPtr.Zero if no OpenGL context is current.
+        /// </summary>
+        /// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
+        IntPtr GetCurrentContext();
+
+        /// <summary>
+        /// Raised when a Context is destroyed.
+        /// </summary>
+        event DestroyEvent<IGLContext> Destroy;
 
         /// <summary>
         /// Gets the address of an OpenGL extension function.
@@ -92,5 +87,24 @@ namespace OpenTK.Platform
         /// Gets or sets a value indicating whether VSyncing is enabled.
         /// </summary>
         bool VSync { get; set; }
+
+        /// <summary>
+        /// Registers an OpenGL resource for disposal.
+        /// </summary>
+        /// <param name="resource">The OpenGL resource to dispose.</param>
+        /// <remarks>
+        /// You may not destroy OpenGL resources in finalizers, since they run in
+        /// a different thread. To avoid this problem, use this method to register
+        /// a resource for disposal during the finalizer call, and call DisposeResources()
+        /// from the main thread to dispose it.
+        /// </remarks>
+        void RegisterForDisposal(IDisposable resource);
+
+        /// <summary>
+        /// Disposes all registered OpenGL resources.
+        /// </summary>
+        void DisposeResources();
     }
+
+    public delegate void DestroyEvent<T>(T sender, EventArgs e);
 }

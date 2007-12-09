@@ -120,12 +120,22 @@ namespace Examples.Tutorial
             else if (scroll_speed < 0.0f && current_position < warparound_position)
                 current_position = initial_position;
 
+            TextHandle t = null;
+            text.Prepare((1.0 / e.Time).ToString(), serif, out t);
+
             // TextPrinter.Begin() sets up a 2d orthographic projection, with the x axis
             // moving from 0 to viewport.Width (left to right) and the y axis from
             // 0 to viewport.Height (top to bottom). This is the typical coordinate system
             // used in 2d graphics, and is necessary for achieving pixel-perfect glyph rendering.
             // TextPrinter.End() restores your previous projection/modelview matrices.
             text.Begin();
+
+            using (t)
+            {
+                //text.Begin();
+                text.Draw(t);
+                //text.End();
+            }
 
             GL.Translate(0.0f, current_position, 0.0f);
             text.Draw(poem_handle);

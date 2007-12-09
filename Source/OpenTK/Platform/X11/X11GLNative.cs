@@ -25,7 +25,6 @@ namespace OpenTK.Platform.X11
     {
         #region --- Fields ---
 
-        private X11GLContext glContext;
         private WindowInfo window = new WindowInfo();
         private DisplayMode mode = new DisplayMode();
         private X11Input driver;
@@ -66,9 +65,8 @@ namespace OpenTK.Platform.X11
             // Open the display to the X server, and obtain the screen and root window.
             window.Display = API.OpenDisplay(null); // null == default display
             if (window.Display == IntPtr.Zero)
-            {
                 throw new Exception("Could not open connection to X");
-            }
+
             window.Screen = API.DefaultScreen(window.Display);
             window.RootWindow = API.RootWindow(window.Display, window.Screen);
 
@@ -240,15 +238,6 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public IGLContext Context
-
-        public OpenTK.Platform.IGLContext Context
-        {
-            get { return glContext; }
-        }
-
-        #endregion
-
         #region public IntPtr Handle
 
         /// <summary>
@@ -361,88 +350,83 @@ namespace OpenTK.Platform.X11
         public void CreateWindow(DisplayMode mode)
         {
             if (exists)
-            {
                 throw new ApplicationException("Render window already exists!");
-            }
-            else
-            {
-                Debug.Print("Creating GameWindow with mode: {0}", mode.ToString());
-                Debug.Indent();
 
-                glContext = new X11GLContext(mode, window);
-                //glContext.PrepareContext(window);
-                window.VisualInfo = (glContext.Info as X11.WindowInfo).VisualInfo;
+            Debug.Print("Creating GameWindow with mode: {0}", mode.ToString());
+            Debug.Indent();
 
-                // Create a window on this display using the visual above
-                Debug.Write("Opening render window... ");
-                
-                XSetWindowAttributes attributes = new XSetWindowAttributes();
-                attributes.background_pixel = IntPtr.Zero;
-                attributes.border_pixel = IntPtr.Zero;
-                attributes.colormap =
-                    API.CreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
-                window.EventMask = 
-                    EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
-                    EventMask.KeyReleaseMask | EventMask.KeyPressMask;/* |
+            //glContext = new X11GLContext(mode, window);
+            //glContext.PrepareContext(window);
+            //window.VisualInfo = (glContext.Info as X11.WindowInfo).VisualInfo;
+            //window.VisualInfo = Marshal.PtrToStructure(Glx.ChooseVisual(window.Display, window.Screen, 
+
+            // Create a window on this display using the visual above
+            Debug.Write("Opening render window... ");
+
+            XSetWindowAttributes attributes = new XSetWindowAttributes();
+            attributes.background_pixel = IntPtr.Zero;
+            attributes.border_pixel = IntPtr.Zero;
+            attributes.colormap =
+                API.CreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
+            window.EventMask =
+                EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
+                EventMask.KeyReleaseMask | EventMask.KeyPressMask;/* |
                     EventMask.PointerMotionMask | /* Bad! EventMask.PointerMotionHintMask | 
                     EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;*/
-                attributes.event_mask = (IntPtr)window.EventMask;
+            attributes.event_mask = (IntPtr)window.EventMask;
 
-                uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
-                    (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
+            uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
+                (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
 
-                window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
-                    0, 0, mode.Width, mode.Height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
-                    (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask, ref attributes);
+            window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
+                0, 0, mode.Width, mode.Height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
+                (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask, ref attributes);
 
-                if (window.Handle == IntPtr.Zero)
-                {
-                    throw new ApplicationException("XCreateWindow call failed (returned 0).");
-                }
-                
-                // Set the window hints
-                XSizeHints hints = new XSizeHints();
-                hints.x = 0;
-                hints.y = 0;
-                hints.width = mode.Width;
-                hints.height = mode.Height;
-                hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
-                Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
+            if (window.Handle == IntPtr.Zero)
+                throw new ApplicationException("XCreateWindow call failed (returned 0).");
 
-                // Register for window destroy notification
-                IntPtr wm_destroy_atom = Functions.XInternAtom(window.Display,
-                    "WM_DELETE_WINDOW", true);
-                XWMHints hint = new XWMHints();
-                Functions.XSetWMProtocols(window.Display, window.Handle, new IntPtr[] { wm_destroy_atom }, 1);
+            // Set the window hints
+            XSizeHints hints = new XSizeHints();
+            hints.x = 0;
+            hints.y = 0;
+            hints.width = mode.Width;
+            hints.height = mode.Height;
+            hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
+            Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
 
-                Top = Left = 0;
-                Right = Width;
-                Bottom = Height;
+            // Register for window destroy notification
+            IntPtr wm_destroy_atom = Functions.XInternAtom(window.Display,
+                "WM_DELETE_WINDOW", true);
+            XWMHints hint = new XWMHints();
+            Functions.XSetWMProtocols(window.Display, window.Handle, new IntPtr[] { wm_destroy_atom }, 1);
 
-                //XTextProperty text = new XTextProperty();
-                //text.value = "OpenTK Game Window";
-                //text.format = 8;
-                //Functions.XSetWMName(window.Display, window.Handle, ref text);
-                //Functions.XSetWMProperties(display, window, name, name, 0,  /*None*/ null, 0, hints);
+            Top = Left = 0;
+            Right = Width;
+            Bottom = Height;
 
-                Debug.Print("done! (id: {0})", window.Handle);
+            //XTextProperty text = new XTextProperty();
+            //text.value = "OpenTK Game Window";
+            //text.format = 8;
+            //Functions.XSetWMName(window.Display, window.Handle, ref text);
+            //Functions.XSetWMProperties(display, window, name, name, 0,  /*None*/ null, 0, hints);
 
-                (glContext.Info as X11.WindowInfo).Handle = window.Handle;
-                glContext.CreateContext(true, null);
-                glContext.MakeCurrent();
+            Debug.Print("done! (id: {0})", window.Handle);
 
-                API.MapRaised(window.Display, window.Handle);
-                mapped = true;
+            //(glContext.Info as X11.WindowInfo).Handle = window.Handle;
+            //glContext.CreateContext(true, null);
+            //glContext.MakeCurrent();
 
-                driver = new X11Input(window);
+            API.MapRaised(window.Display, window.Handle);
+            mapped = true;
 
-                //GL.LoadAll();
-                //Glu.LoadAll();
+            driver = new X11Input(window);
 
-                Debug.Unindent();
-                Debug.WriteLine("GameWindow creation completed successfully!");
-                exists = true;
-            }
+            //GL.LoadAll();
+            //Glu.LoadAll();
+
+            Debug.Unindent();
+            Debug.WriteLine("GameWindow creation completed successfully!");
+            exists = true;
         }
 
         #endregion
@@ -612,8 +596,8 @@ namespace OpenTK.Platform.X11
             {
                 if (manuallyCalled)
                 {
-                    if (glContext != null)
-                        glContext.Dispose();
+                    //if (glContext != null)
+                    //    glContext.Dispose();
 
                     // Kills connection to the X-Server. We don't want that,
                     // 'cause it kills the ExampleLauncher too.
