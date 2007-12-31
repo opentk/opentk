@@ -379,7 +379,7 @@ namespace OpenTK.Math
 		/// <returns>A projection matrix that transforms camera space to raster space</returns>
 		public static Matrix4 Perspective(float fovy, float aspect, float near, float far)
 		{
-			float yMax = near * (float)System.Math.Tan(fovy);
+			float yMax = near * (float)System.Math.Tan(0.5f * fovy);
 			float yMin = -yMax;
 			float xMin = yMin * aspect;
 			float xMax = yMax * aspect;
