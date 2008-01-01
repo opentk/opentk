@@ -268,10 +268,10 @@ VERSION_1_4 enum:
 	BLEND_SRC_RGB					= 0x80C9
 	BLEND_DST_ALPHA					= 0x80CA
 	BLEND_SRC_ALPHA					= 0x80CB
-	POINT_SIZE_MIN					= 0x8126 # 1 F
-	POINT_SIZE_MAX					= 0x8127 # 1 F
-	POINT_FADE_THRESHOLD_SIZE			= 0x8128 # 1 F
-	POINT_DISTANCE_ATTENUATION			= 0x8129 # 3 F
+#	POINT_SIZE_MIN					= 0x8126 # 1 F
+#	POINT_SIZE_MAX					= 0x8127 # 1 F
+#	POINT_FADE_THRESHOLD_SIZE			= 0x8128 # 1 F
+#	POINT_DISTANCE_ATTENUATION			= 0x8129 # 3 F
 	GENERATE_MIPMAP					= 0x8191
 	GENERATE_MIPMAP_HINT				= 0x8192 # 1 I
 #	DEPTH_COMPONENT16				= 0x81A5	# PixelInternalFormat
@@ -375,6 +375,19 @@ GetPName enum:
 	
 GetPointervPName enum:
 	SECONDARY_COLOR_ARRAY_POINTER			= 0x845D
+	
+# Point Parameters (http://www.opengl.org/registry/specs/ARB/point_parameters.txt)
+PointParameterName enum:
+	POINT_SIZE_MIN					= 0x8126
+	POINT_SIZE_MAX					= 0x8127
+	POINT_FADE_THRESHOLD_SIZE		= 0x8128
+	POINT_DISTANCE_ATTENUATION		= 0x8129	# this token is only accepted by GL.PointParameterv not GL.PointParameter
+
+GetPName enum:
+	POINT_SIZE_MIN					= 0x8126
+	POINT_SIZE_MAX					= 0x8127
+	POINT_FADE_THRESHOLD_SIZE		= 0x8128
+	POINT_DISTANCE_ATTENUATION		= 0x8129	# this token is only accepted by GL.PointParameterv not GL.PointParameter
 
 
 ###############################################################################
@@ -470,26 +483,26 @@ VERSION_2_0 enum:
 	STENCIL_BACK_FAIL				= 0x8801    # ARB_stencil_two_side
 	STENCIL_BACK_PASS_DEPTH_FAIL			= 0x8802    # ARB_stencil_two_side
 	STENCIL_BACK_PASS_DEPTH_PASS			= 0x8803    # ARB_stencil_two_side
-	MAX_DRAW_BUFFERS				= 0x8824    # ARB_draw_buffers
-	DRAW_BUFFER0					= 0x8825    # ARB_draw_buffers
-	DRAW_BUFFER1					= 0x8826    # ARB_draw_buffers
-	DRAW_BUFFER2					= 0x8827    # ARB_draw_buffers
-	DRAW_BUFFER3					= 0x8828    # ARB_draw_buffers
-	DRAW_BUFFER4					= 0x8829    # ARB_draw_buffers
-	DRAW_BUFFER5					= 0x882A    # ARB_draw_buffers
-	DRAW_BUFFER6					= 0x882B    # ARB_draw_buffers
-	DRAW_BUFFER7					= 0x882C    # ARB_draw_buffers
-	DRAW_BUFFER8					= 0x882D    # ARB_draw_buffers
-	DRAW_BUFFER9					= 0x882E    # ARB_draw_buffers
-	DRAW_BUFFER10					= 0x882F    # ARB_draw_buffers
-	DRAW_BUFFER11					= 0x8830    # ARB_draw_buffers
-	DRAW_BUFFER12					= 0x8831    # ARB_draw_buffers
-	DRAW_BUFFER13					= 0x8832    # ARB_draw_buffers
-	DRAW_BUFFER14					= 0x8833    # ARB_draw_buffers
-	DRAW_BUFFER15					= 0x8834    # ARB_draw_buffers
+#	MAX_DRAW_BUFFERS				= 0x8824    # ARB_draw_buffers
+#	DRAW_BUFFER0					= 0x8825    # ARB_draw_buffers
+#	DRAW_BUFFER1					= 0x8826    # ARB_draw_buffers
+#	DRAW_BUFFER2					= 0x8827    # ARB_draw_buffers
+#	DRAW_BUFFER3					= 0x8828    # ARB_draw_buffers
+#	DRAW_BUFFER4					= 0x8829    # ARB_draw_buffers
+#	DRAW_BUFFER5					= 0x882A    # ARB_draw_buffers
+#	DRAW_BUFFER6					= 0x882B    # ARB_draw_buffers
+#	DRAW_BUFFER7					= 0x882C    # ARB_draw_buffers
+#	DRAW_BUFFER8					= 0x882D    # ARB_draw_buffers
+#	DRAW_BUFFER9					= 0x882E    # ARB_draw_buffers
+#	DRAW_BUFFER10					= 0x882F    # ARB_draw_buffers
+#	DRAW_BUFFER11					= 0x8830    # ARB_draw_buffers
+#	DRAW_BUFFER12					= 0x8831    # ARB_draw_buffers
+#	DRAW_BUFFER13					= 0x8832    # ARB_draw_buffers
+#	DRAW_BUFFER14					= 0x8833    # ARB_draw_buffers
+#	DRAW_BUFFER15					= 0x8834    # ARB_draw_buffers
 	BLEND_EQUATION_ALPHA				= 0x883D    # EXT_blend_equation_separate
-	POINT_SPRITE					= 0x8861    # ARB_point_sprite
-	COORD_REPLACE					= 0x8862    # ARB_point_sprite
+#	POINT_SPRITE					= 0x8861    # ARB_point_sprite
+#	COORD_REPLACE					= 0x8862    # ARB_point_sprite
 	MAX_VERTEX_ATTRIBS				= 0x8869    # ARB_vertex_shader
 	VERTEX_ATTRIB_ARRAY_NORMALIZED			= 0x886A    # ARB_vertex_shader
 	MAX_TEXTURE_COORDS				= 0x8871    # ARB_vertex_shader, ARB_fragment_shader
@@ -546,7 +559,55 @@ VERSION_2_0 enum:
 PixelType enum:
 	HALF_FLOAT					= 0x140B
 
+# Draw Buffers (http://www.opengl.org/registry/specs/ARB/draw_buffers.txt)
+# <summary>Monoscopic contexts include only left buffers, while stereoscopic contexts include both left and right buffers.  Likewise, single buffered contexts include only front buffers, while double buffered contexts include both front and back buffers.</summary>
+DrawBuffersEnum enum:
+	use DrawBufferMode NONE
+	use DrawBufferMode FRONT_LEFT
+	use DrawBufferMode FRONT_RIGHT
+	use DrawBufferMode BACK_LEFT
+	use DrawBufferMode BACK_RIGHT
+	use DrawBufferMode AUX0
+	use DrawBufferMode AUX1
+	use DrawBufferMode AUX2
+	use DrawBufferMode AUX3
+	
+GetPName enum:
+	MAX_DRAW_BUFFERS				= 0x8824
+	DRAW_BUFFER0					= 0x8825
+	DRAW_BUFFER1					= 0x8826
+	DRAW_BUFFER2					= 0x8827
+	DRAW_BUFFER3					= 0x8828
+	DRAW_BUFFER4					= 0x8829
+	DRAW_BUFFER5					= 0x882A
+	DRAW_BUFFER6					= 0x882B
+	DRAW_BUFFER7					= 0x882C
+	DRAW_BUFFER8					= 0x882D
+	DRAW_BUFFER9					= 0x882E
+	DRAW_BUFFER10					= 0x882F
+	DRAW_BUFFER11					= 0x8830
+	DRAW_BUFFER12					= 0x8831
+	DRAW_BUFFER13					= 0x8832
+	DRAW_BUFFER14					= 0x8833
+	DRAW_BUFFER15					= 0x8834
 
+# Point Sprites (http://opengl.org/registry/specs/ARB/point_sprite.txt)
+EnableCap enum:
+	POINT_SPRITE					= 0x8861
+
+TextureEnvTarget enum:
+	POINT_SPRITE					= 0x8861
+
+TextureEnvParameter enum:
+	COORD_REPLACE					= 0x8862
+
+# <summary>This Enum may only be used with GL.TexEnv if target is PointSprite and pname is CoordReplace.</summary>
+TextureEnvModePointSprite enum:
+	use Boolean TRUE
+	use Boolean FALSE
+
+GetPName enum:
+	POINT_SPRITE					= 0x8861
 
 ###############################################################################
 #
