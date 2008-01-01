@@ -5185,7 +5185,7 @@ MultiDrawElements(mode, count, type, indices, primcount)
 
 PointParameterf(pname, param)
 	return		void
-	param		pname		PointParameterNameARB in value
+	param		pname		PointParameterName in value		# PointParameterNameARB in value
 	param		param		CheckedFloat32 in value
 	category	VERSION_1_4
 	version		1.4
@@ -5196,7 +5196,7 @@ PointParameterf(pname, param)
 
 PointParameterfv(pname, params)
 	return		void
-	param		pname		PointParameterNameARB in value
+	param		pname		PointParameterName in value		# PointParameterNameARB in value
 	param		params		CheckedFloat32 in array [COMPSIZE(pname)]
 	category	VERSION_1_4
 	version		1.4
@@ -5207,7 +5207,7 @@ PointParameterfv(pname, params)
 
 PointParameteri(pname, param)
 	return		void
-	param		pname		PointParameterNameARB in value
+	param		pname		PointParameterName in value		# PointParameterNameARB in value
 	param		param		Int32 in value
 	category	VERSION_1_4
 	version		1.4
@@ -5218,7 +5218,7 @@ PointParameteri(pname, param)
 
 PointParameteriv(pname, params)
 	return		void
-	param		pname		PointParameterNameARB in value
+	param		pname		PointParameterName in value		# PointParameterNameARB in value
 	param		params		Int32 in array [COMPSIZE(pname)]
 	category	VERSION_1_4
 	version		1.4
@@ -5231,7 +5231,7 @@ PointParameteriv(pname, params)
 
 SecondaryColor3b(red, green, blue)
 	return		void
-	param		red		ColorB in value
+	param		red			ColorB in value
 	param		green		ColorB in value
 	param		blue		ColorB in value
 	category	VERSION_1_4
@@ -5250,7 +5250,7 @@ SecondaryColor3bv(v)
 
 SecondaryColor3d(red, green, blue)
 	return		void
-	param		red		ColorD in value
+	param		red			ColorD in value
 	param		green		ColorD in value
 	param		blue		ColorD in value
 	category	VERSION_1_4
@@ -5842,8 +5842,8 @@ BlendEquationSeparate(modeRGB, modeAlpha)
 
 DrawBuffers(n, bufs)
 	return		void
-	param		n		SizeI in value
-	param		bufs		DrawBufferModeATI in array [n]
+	param		n			SizeI in value
+	param		bufs		DrawBuffersEnum in array [n] # DrawBufferModeATI in array [n]
 	category	VERSION_2_0
 	version		2.0
 	extension
