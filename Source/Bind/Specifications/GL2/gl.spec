@@ -5142,7 +5142,7 @@ FogCoorddv(coord)
 
 FogCoordPointer(type, stride, pointer)
 	return		void
-	param		type		FogPointerTypeEXT in value
+	param		type		FogPointerType in value	# FogPointerTypeEXT in value
 	param		stride		SizeI in value
 	param		pointer		Void in array [COMPSIZE(type/stride)] retained
 	category	VERSION_1_4
