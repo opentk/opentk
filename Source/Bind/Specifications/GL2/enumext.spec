@@ -154,7 +154,7 @@ ARB_imaging enum:
 
 ###############################################################################
 #
-# OpenGL 1.3 enums
+# OpenGL 1.3 enums (edited for OpenTK)
 #
 ###############################################################################
 
@@ -194,10 +194,10 @@ VERSION_1_3 enum:
 	ACTIVE_TEXTURE					= 0x84E0 # 1 I
 	CLIENT_ACTIVE_TEXTURE				= 0x84E1 # 1 I
 	MAX_TEXTURE_UNITS				= 0x84E2 # 1 I
-	TRANSPOSE_MODELVIEW_MATRIX			= 0x84E3 # 16 F # Promoted from ARB_transpose_matrix
-	TRANSPOSE_PROJECTION_MATRIX			= 0x84E4 # 16 F
-	TRANSPOSE_TEXTURE_MATRIX			= 0x84E5 # 16 F
-	TRANSPOSE_COLOR_MATRIX				= 0x84E6 # 16 F
+#	TRANSPOSE_MODELVIEW_MATRIX			= 0x84E3 # 16 F # Promoted from ARB_transpose_matrix
+#	TRANSPOSE_PROJECTION_MATRIX			= 0x84E4 # 16 F
+#	TRANSPOSE_TEXTURE_MATRIX			= 0x84E5 # 16 F
+#	TRANSPOSE_COLOR_MATRIX				= 0x84E6 # 16 F
 	MULTISAMPLE					= 0x809D	# Promoted from ARB_multisample
 	SAMPLE_ALPHA_TO_COVERAGE			= 0x809E
 	SAMPLE_ALPHA_TO_ONE				= 0x809F
@@ -207,18 +207,18 @@ VERSION_1_3 enum:
 	SAMPLE_COVERAGE_VALUE				= 0x80AA
 	SAMPLE_COVERAGE_INVERT				= 0x80AB
 	MULTISAMPLE_BIT					= 0x20000000
-	NORMAL_MAP					= 0x8511	# Promoted from ARB_texture_cube_map
-	REFLECTION_MAP					= 0x8512
-	TEXTURE_CUBE_MAP				= 0x8513
-	TEXTURE_BINDING_CUBE_MAP			= 0x8514
-	TEXTURE_CUBE_MAP_POSITIVE_X			= 0x8515
-	TEXTURE_CUBE_MAP_NEGATIVE_X			= 0x8516
-	TEXTURE_CUBE_MAP_POSITIVE_Y			= 0x8517
-	TEXTURE_CUBE_MAP_NEGATIVE_Y			= 0x8518
-	TEXTURE_CUBE_MAP_POSITIVE_Z			= 0x8519
-	TEXTURE_CUBE_MAP_NEGATIVE_Z			= 0x851A
-	PROXY_TEXTURE_CUBE_MAP				= 0x851B
-	MAX_CUBE_MAP_TEXTURE_SIZE			= 0x851C
+#	NORMAL_MAP					= 0x8511	# Promoted from ARB_texture_cube_map
+#	REFLECTION_MAP					= 0x8512
+#	TEXTURE_CUBE_MAP				= 0x8513
+#	TEXTURE_BINDING_CUBE_MAP			= 0x8514
+#	TEXTURE_CUBE_MAP_POSITIVE_X			= 0x8515
+#	TEXTURE_CUBE_MAP_NEGATIVE_X			= 0x8516
+#	TEXTURE_CUBE_MAP_POSITIVE_Y			= 0x8517
+#	TEXTURE_CUBE_MAP_NEGATIVE_Y			= 0x8518
+#	TEXTURE_CUBE_MAP_POSITIVE_Z			= 0x8519
+#	TEXTURE_CUBE_MAP_NEGATIVE_Z			= 0x851A
+#	PROXY_TEXTURE_CUBE_MAP				= 0x851B
+#	MAX_CUBE_MAP_TEXTURE_SIZE			= 0x851C
 	COMPRESSED_ALPHA				= 0x84E9	# Promoted from ARB_texture_compression
 	COMPRESSED_LUMINANCE				= 0x84EA
 	COMPRESSED_LUMINANCE_ALPHA			= 0x84EB
@@ -256,6 +256,36 @@ VERSION_1_3 enum:
 	DOT3_RGB					= 0x86AE	# Promoted from ARB_texture_env_dot3
 	DOT3_RGBA					= 0x86AF
 
+# Transpose Matrix (http://www.opengl.org/registry/specs/ARB/transpose_matrix.txt)
+GetPName enum:
+	TRANSPOSE_MODELVIEW_MATRIX			= 0x84E3 # 16 F # Promoted from ARB_transpose_matrix
+	TRANSPOSE_PROJECTION_MATRIX			= 0x84E4 # 16 F
+	TRANSPOSE_TEXTURE_MATRIX			= 0x84E5 # 16 F
+	TRANSPOSE_COLOR_MATRIX				= 0x84E6 # 16 F
+	
+# Cube Maps (http://www.opengl.org/registry/specs/ARB/texture_cube_map.txt)
+TextureGenMode:
+	NORMAL_MAP							= 0x8511	# Promoted from ARB_texture_cube_map
+	REFLECTION_MAP						= 0x8512
+
+EnableCap enum:
+	TEXTURE_CUBE_MAP					= 0x8513
+	
+TextureTarget enum:
+	TEXTURE_CUBE_MAP					= 0x8513
+	TEXTURE_BINDING_CUBE_MAP			= 0x8514
+	TEXTURE_CUBE_MAP_POSITIVE_X			= 0x8515
+	TEXTURE_CUBE_MAP_NEGATIVE_X			= 0x8516
+	TEXTURE_CUBE_MAP_POSITIVE_Y			= 0x8517
+	TEXTURE_CUBE_MAP_NEGATIVE_Y			= 0x8518
+	TEXTURE_CUBE_MAP_POSITIVE_Z			= 0x8519
+	TEXTURE_CUBE_MAP_NEGATIVE_Z			= 0x851A
+	PROXY_TEXTURE_CUBE_MAP				= 0x851B
+
+GetPName enum:
+	TEXTURE_CUBE_MAP					= 0x8513
+	TEXTURE_BINDING_CUBE_MAP			= 0x8514
+	MAX_CUBE_MAP_TEXTURE_SIZE			= 0x851C
 
 ###############################################################################
 #
