@@ -274,9 +274,9 @@ VERSION_1_4 enum:
 	POINT_DISTANCE_ATTENUATION			= 0x8129 # 3 F
 	GENERATE_MIPMAP					= 0x8191
 	GENERATE_MIPMAP_HINT				= 0x8192 # 1 I
-	DEPTH_COMPONENT16				= 0x81A5
-	DEPTH_COMPONENT24				= 0x81A6
-	DEPTH_COMPONENT32				= 0x81A7
+#	DEPTH_COMPONENT16				= 0x81A5	# PixelInternalFormat
+#	DEPTH_COMPONENT24				= 0x81A6	# PixelInternalFormat
+#	DEPTH_COMPONENT32				= 0x81A7	# PixelInternalFormat
 	MIRRORED_REPEAT					= 0x8370
 	FOG_COORDINATE_SOURCE				= 0x8450 # 1 I
 	FOG_COORDINATE					= 0x8451
@@ -298,11 +298,26 @@ VERSION_1_4 enum:
 	TEXTURE_LOD_BIAS				= 0x8501
 	INCR_WRAP					= 0x8507
 	DECR_WRAP					= 0x8508
-	TEXTURE_DEPTH_SIZE				= 0x884A
-	DEPTH_TEXTURE_MODE				= 0x884B
+#	TEXTURE_DEPTH_SIZE				= 0x884A
+#	DEPTH_TEXTURE_MODE				= 0x884B
 	TEXTURE_COMPARE_MODE				= 0x884C
 	TEXTURE_COMPARE_FUNC				= 0x884D
 	COMPARE_R_TO_TEXTURE				= 0x884E
+	
+# Depth Texture
+
+PixelInternalFormat enum:
+    use PixelFormat DEPTH_COMPONENT
+    DEPTH_COMPONENT16 = 0x81a5
+    DEPTH_COMPONENT24 = 0x81a6
+    DEPTH_COMPONENT32 = 0x81a7
+    
+GetTextureParameter enum:
+    TEXTURE_DEPTH_SIZE				= 0x884A
+    DEPTH_TEXTURE_MODE				= 0x884B
+	
+TextureParameterName enum:
+    DEPTH_TEXTURE_MODE				= 0x884B
 
 
 ###############################################################################
@@ -364,18 +379,18 @@ VERSION_1_5 enum:
 	SRC1_ALPHA					= GL_SOURCE1_ALPHA
 	SRC2_ALPHA					= GL_SOURCE2_ALPHA
 
-# Occlusion Query:
+# Occlusion Query
 
 QueryTarget enum:
-	Samples_Passed				= 0x8914
+	SAMPLES_PASSED				= 0x8914
 
 GetQueryParam enum:
-	Query_Counter_Bits			= 0x8864
-	Current_Query				= 0x8865
+	QUERY_COUNTER_BITS			= 0x8864
+	CURRENT_QUERY				= 0x8865
 	
 GetQueryObjectParam enum:
-    Query_Result				= 0x8866
-	Query_Result_Available		= 0x8867
+    QUERY_RESULT				= 0x8866
+	QUERY_RESULT_AVAILABLE		= 0x8867
 
 
 ###############################################################################
