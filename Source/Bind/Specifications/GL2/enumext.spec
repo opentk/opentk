@@ -452,7 +452,7 @@ GetQueryObjectParam enum:
 
 ###############################################################################
 #
-# OpenGL 2.0 enums
+# OpenGL 2.0 enums (edited for OpenTK)
 #
 ###############################################################################
 
@@ -541,6 +541,12 @@ VERSION_2_0 enum:
 	STENCIL_BACK_REF				= 0x8CA3    # ARB_stencil_two_side
 	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
 	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
+
+# Half Float (http://www.opengl.org/registry/specs/ARB/half_float_pixel.txt)
+PixelType enum:
+	HALF_FLOAT					= 0x140B
+
+
 
 ###############################################################################
 #
