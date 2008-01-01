@@ -5603,7 +5603,7 @@ IsQuery(id)
 
 BeginQuery(target, id)
 	return		void
-	param		target		GLenum in value
+	param		target	QueryTarget in value		# GLenum in value
 	param		id		UInt32 in value
 	category	VERSION_1_5
 	version		1.5
@@ -5615,7 +5615,7 @@ BeginQuery(target, id)
 
 EndQuery(target)
 	return		void
-	param		target		GLenum in value
+	param		target	QueryTarget in value		# GLenum in value
 	category	VERSION_1_5
 	version		1.5
 	extension
@@ -5626,8 +5626,8 @@ EndQuery(target)
 
 GetQueryiv(target, pname, params)
 	return		void
-	param		target		GLenum in value
-	param		pname		GLenum in value
+	param		target		QueryTarget in value		# GLenum in value
+	param		pname		GetQueryParam in value		# GLenum in value
 	param		params		Int32 out array [pname]
 	category	VERSION_1_5
 	dlflags		notlistable
@@ -5641,8 +5641,8 @@ GetQueryiv(target, pname, params)
 
 GetQueryObjectiv(id, pname, params)
 	return		void
-	param		id		UInt32 in value
-	param		pname		GLenum in value
+	param		id			UInt32 in value
+	param		pname		GetQueryObjectParam in value	# GLenum in value
 	param		params		Int32 out array [pname]
 	category	VERSION_1_5
 	dlflags		notlistable
@@ -5656,8 +5656,8 @@ GetQueryObjectiv(id, pname, params)
 
 GetQueryObjectuiv(id, pname, params)
 	return		void
-	param		id		UInt32 in value
-	param		pname		GLenum in value
+	param		id			UInt32 in value
+	param		pname		GetQueryObjectParam in value	# GLenum in value
 	param		params		UInt32 out array [pname]
 	category	VERSION_1_5
 	dlflags		notlistable
