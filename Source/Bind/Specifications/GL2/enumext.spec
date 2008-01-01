@@ -264,7 +264,7 @@ GetPName enum:
 	TRANSPOSE_COLOR_MATRIX				= 0x84E6 # 16 F
 	
 # Cube Maps (http://www.opengl.org/registry/specs/ARB/texture_cube_map.txt)
-TextureGenMode:
+TextureGenMode enum:
 	NORMAL_MAP							= 0x8511	# Promoted from ARB_texture_cube_map
 	REFLECTION_MAP						= 0x8512
 
@@ -641,7 +641,7 @@ GetPName enum:
 
 ###############################################################################
 #
-# OpenGL 2.1 enums
+# OpenGL 2.1 enums (edited for OpenTK)
 #
 ###############################################################################
 
@@ -657,6 +657,21 @@ VERSION_2_1 enum:
 	FLOAT_MAT3x4					= 0x8B68    # New for 2.1
 	FLOAT_MAT4x2					= 0x8B69    # New for 2.1
 	FLOAT_MAT4x3					= 0x8B6A    # New for 2.1
+#	SRGB						= 0x8C40    # EXT_texture_sRGB
+#	SRGB8						= 0x8C41    # EXT_texture_sRGB
+#	SRGB_ALPHA					= 0x8C42    # EXT_texture_sRGB
+#	SRGB8_ALPHA8					= 0x8C43    # EXT_texture_sRGB
+#	SLUMINANCE_ALPHA				= 0x8C44    # EXT_texture_sRGB
+#	SLUMINANCE8_ALPHA8				= 0x8C45    # EXT_texture_sRGB
+#	SLUMINANCE					= 0x8C46    # EXT_texture_sRGB
+#	SLUMINANCE8					= 0x8C47    # EXT_texture_sRGB
+#	COMPRESSED_SRGB					= 0x8C48    # EXT_texture_sRGB
+#	COMPRESSED_SRGB_ALPHA				= 0x8C49    # EXT_texture_sRGB
+#	COMPRESSED_SLUMINANCE				= 0x8C4A    # EXT_texture_sRGB
+#	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # EXT_texture_sRGB
+
+# sRGB textures (http://www.opengl.org/registry/specs/EXT/texture_sRGB.txt)
+PixelInternalFormat enum:
 	SRGB						= 0x8C40    # EXT_texture_sRGB
 	SRGB8						= 0x8C41    # EXT_texture_sRGB
 	SRGB_ALPHA					= 0x8C42    # EXT_texture_sRGB
@@ -670,6 +685,14 @@ VERSION_2_1 enum:
 	COMPRESSED_SLUMINANCE				= 0x8C4A    # EXT_texture_sRGB
 	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # EXT_texture_sRGB
 
+	# <summary>Format only valid for 2D Textures</summary>
+	COMPRESSED_SRGB_S3TC_DXT1_EXT			= 0x8C4C
+	# <summary>Format only valid for 2D Textures</summary>
+	COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT		= 0x8C4D
+	# <summary>Format only valid for 2D Textures</summary>
+	COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT		= 0x8C4E
+	# <summary>Format only valid for 2D Textures</summary>
+	COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT		= 0x8C4F
 
 ###############################################################################
 #
