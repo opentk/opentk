@@ -15,7 +15,9 @@
 # glext.h version number - this should be automatically updated,
 #   when changing either enum or template spec files.
 
-# Edited by StApostol: Revision 1
+#
+# Edited for OpenTK
+#
 
 passthru:
 passthru: /* Header file version number, required by OpenGL ABI for Linux */
@@ -257,7 +259,7 @@ VERSION_1_3 enum:
 
 ###############################################################################
 #
-# OpenGL 1.4 enums
+# OpenGL 1.4 enums (edited for OpenTK)
 #
 ###############################################################################
 
@@ -305,17 +307,17 @@ VERSION_1_4 enum:
 
 ###############################################################################
 #
-# OpenGL 1.5 enums
+# OpenGL 1.5 enums (edited for OpenTK)
 #
 ###############################################################################
 
 VERSION_1_5 enum:
 	BUFFER_SIZE					= 0x8764 # ARB_vertex_buffer_object
 	BUFFER_USAGE					= 0x8765 # ARB_vertex_buffer_object
-	QUERY_COUNTER_BITS				= 0x8864 # ARB_occlusion_query
-	CURRENT_QUERY					= 0x8865 # ARB_occlusion_query
-	QUERY_RESULT					= 0x8866 # ARB_occlusion_query
-	QUERY_RESULT_AVAILABLE				= 0x8867 # ARB_occlusion_query
+#	QUERY_COUNTER_BITS				= 0x8864 # ARB_occlusion_query
+#	CURRENT_QUERY					= 0x8865 # ARB_occlusion_query
+#	QUERY_RESULT					= 0x8866 # ARB_occlusion_query
+#	QUERY_RESULT_AVAILABLE				= 0x8867 # ARB_occlusion_query
 	ARRAY_BUFFER					= 0x8892 # ARB_vertex_buffer_object
 	ELEMENT_ARRAY_BUFFER				= 0x8893 # ARB_vertex_buffer_object
 	ARRAY_BUFFER_BINDING				= 0x8894 # ARB_vertex_buffer_object
@@ -345,7 +347,7 @@ VERSION_1_5 enum:
 	DYNAMIC_DRAW					= 0x88E8 # ARB_vertex_buffer_object
 	DYNAMIC_READ					= 0x88E9 # ARB_vertex_buffer_object
 	DYNAMIC_COPY					= 0x88EA # ARB_vertex_buffer_object
-	SAMPLES_PASSED					= 0x8914 # ARB_occlusion_query
+#	SAMPLES_PASSED					= 0x8914 # ARB_occlusion_query
 # New naming scheme
 	FOG_COORD_SRC					= GL_FOG_COORDINATE_SOURCE
 	FOG_COORD					= GL_FOG_COORDINATE
@@ -361,6 +363,19 @@ VERSION_1_5 enum:
 	SRC0_ALPHA					= GL_SOURCE0_ALPHA
 	SRC1_ALPHA					= GL_SOURCE1_ALPHA
 	SRC2_ALPHA					= GL_SOURCE2_ALPHA
+
+# Occlusion Query:
+
+QueryTarget enum:
+	Samples_Passed				= 0x8914
+
+GetQueryParam enum:
+	Query_Counter_Bits			= 0x8864
+	Current_Query				= 0x8865
+	
+GetQueryObjectParam enum:
+    Query_Result				= 0x8866
+	Query_Result_Available		= 0x8867
 
 
 ###############################################################################
