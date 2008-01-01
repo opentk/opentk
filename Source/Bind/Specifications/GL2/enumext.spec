@@ -277,7 +277,7 @@ VERSION_1_4 enum:
 #	DEPTH_COMPONENT16				= 0x81A5	# PixelInternalFormat
 #	DEPTH_COMPONENT24				= 0x81A6	# PixelInternalFormat
 #	DEPTH_COMPONENT32				= 0x81A7	# PixelInternalFormat
-	MIRRORED_REPEAT					= 0x8370
+#	MIRRORED_REPEAT					= 0x8370
 	FOG_COORDINATE_SOURCE				= 0x8450 # 1 I
 	FOG_COORDINATE					= 0x8451
 	FRAGMENT_DEPTH					= 0x8452
@@ -300,12 +300,11 @@ VERSION_1_4 enum:
 	DECR_WRAP					= 0x8508
 #	TEXTURE_DEPTH_SIZE				= 0x884A
 #	DEPTH_TEXTURE_MODE				= 0x884B
-	TEXTURE_COMPARE_MODE				= 0x884C
-	TEXTURE_COMPARE_FUNC				= 0x884D
-	COMPARE_R_TO_TEXTURE				= 0x884E
+#	TEXTURE_COMPARE_MODE				= 0x884C
+#	TEXTURE_COMPARE_FUNC				= 0x884D
+#	COMPARE_R_TO_TEXTURE				= 0x884E
 	
 # Depth Texture
-
 PixelInternalFormat enum:
     use PixelFormat DEPTH_COMPONENT
     DEPTH_COMPONENT16 = 0x81a5
@@ -318,6 +317,27 @@ GetTextureParameter enum:
 	
 TextureParameterName enum:
     DEPTH_TEXTURE_MODE				= 0x884B
+    
+# Texture Wrap Mode
+TextureWrapMode enum:
+	MIRRORED_REPEAT					= 0x8370
+	
+# Shadow (http://opengl.org/registry/specs/ARB/shadow.txt)
+TextureParameterName enum:
+	TEXTURE_COMPARE_MODE				= 0x884C
+	TEXTURE_COMPARE_FUNC				= 0x884D
+	
+GetTextureParameter enum:
+	TEXTURE_COMPARE_MODE				= 0x884C
+	TEXTURE_COMPARE_FUNC				= 0x884D
+	
+TextureCompareMode enum:
+	COMPARE_R_TO_TEXTURE				= 0x884E
+
+# Shadow Ambient (http://opengl.org/registry/specs/ARB/shadow_ambient.txt)
+TextureParameterName enum:
+	TEXTURE_COMPARE_FAIL_VALUE			= 0x80BF
+	
 
 
 ###############################################################################
