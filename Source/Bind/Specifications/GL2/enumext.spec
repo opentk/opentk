@@ -537,33 +537,33 @@ VERSION_2_0 enum:
 	VERTEX_ATTRIB_ARRAY_NORMALIZED			= 0x886A    # ARB_vertex_shader
 	MAX_TEXTURE_COORDS				= 0x8871    # ARB_vertex_shader, ARB_fragment_shader
 	MAX_TEXTURE_IMAGE_UNITS				= 0x8872    # ARB_vertex_shader, ARB_fragment_shader
-	FRAGMENT_SHADER					= 0x8B30    # ARB_fragment_shader
-	VERTEX_SHADER					= 0x8B31    # ARB_vertex_shader
+#	FRAGMENT_SHADER					= 0x8B30    # ARB_fragment_shader
+#	VERTEX_SHADER					= 0x8B31    # ARB_vertex_shader
 	MAX_FRAGMENT_UNIFORM_COMPONENTS			= 0x8B49    # ARB_fragment_shader
 	MAX_VERTEX_UNIFORM_COMPONENTS			= 0x8B4A    # ARB_vertex_shader
 	MAX_VARYING_FLOATS				= 0x8B4B    # ARB_vertex_shader
 	MAX_VERTEX_TEXTURE_IMAGE_UNITS			= 0x8B4C    # ARB_vertex_shader
 	MAX_COMBINED_TEXTURE_IMAGE_UNITS		= 0x8B4D    # ARB_vertex_shader
 	SHADER_TYPE					= 0x8B4F    # ARB_shader_objects
-	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
-	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
-	FLOAT_VEC4					= 0x8B52    # ARB_shader_objects
-	INT_VEC2					= 0x8B53    # ARB_shader_objects
-	INT_VEC3					= 0x8B54    # ARB_shader_objects
-	INT_VEC4					= 0x8B55    # ARB_shader_objects
-	BOOL						= 0x8B56    # ARB_shader_objects
-	BOOL_VEC2					= 0x8B57    # ARB_shader_objects
-	BOOL_VEC3					= 0x8B58    # ARB_shader_objects
-	BOOL_VEC4					= 0x8B59    # ARB_shader_objects
-	FLOAT_MAT2					= 0x8B5A    # ARB_shader_objects
-	FLOAT_MAT3					= 0x8B5B    # ARB_shader_objects
-	FLOAT_MAT4					= 0x8B5C    # ARB_shader_objects
-	SAMPLER_1D					= 0x8B5D    # ARB_shader_objects
-	SAMPLER_2D					= 0x8B5E    # ARB_shader_objects
-	SAMPLER_3D					= 0x8B5F    # ARB_shader_objects
-	SAMPLER_CUBE					= 0x8B60    # ARB_shader_objects
-	SAMPLER_1D_SHADOW				= 0x8B61    # ARB_shader_objects
-	SAMPLER_2D_SHADOW				= 0x8B62    # ARB_shader_objects
+#	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
+#	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
+#	FLOAT_VEC4					= 0x8B52    # ARB_shader_objects
+#	INT_VEC2					= 0x8B53    # ARB_shader_objects
+#	INT_VEC3					= 0x8B54    # ARB_shader_objects
+#	INT_VEC4					= 0x8B55    # ARB_shader_objects
+#	BOOL						= 0x8B56    # ARB_shader_objects
+#	BOOL_VEC2					= 0x8B57    # ARB_shader_objects
+#	BOOL_VEC3					= 0x8B58    # ARB_shader_objects
+#	BOOL_VEC4					= 0x8B59    # ARB_shader_objects
+#	FLOAT_MAT2					= 0x8B5A    # ARB_shader_objects
+#	FLOAT_MAT3					= 0x8B5B    # ARB_shader_objects
+#	FLOAT_MAT4					= 0x8B5C    # ARB_shader_objects
+#	SAMPLER_1D					= 0x8B5D    # ARB_shader_objects
+#	SAMPLER_2D					= 0x8B5E    # ARB_shader_objects
+#	SAMPLER_3D					= 0x8B5F    # ARB_shader_objects
+#	SAMPLER_CUBE					= 0x8B60    # ARB_shader_objects
+#	SAMPLER_1D_SHADOW				= 0x8B61    # ARB_shader_objects
+#	SAMPLER_2D_SHADOW				= 0x8B62    # ARB_shader_objects
 	DELETE_STATUS					= 0x8B80    # ARB_shader_objects
 	COMPILE_STATUS					= 0x8B81    # ARB_shader_objects
 	LINK_STATUS					= 0x8B82    # ARB_shader_objects
@@ -638,6 +638,37 @@ TextureEnvModePointSprite enum:
 
 GetPName enum:
 	POINT_SPRITE					= 0x8861
+	
+# Shader Objects
+# http://www.opengl.org/sdk/docs/man/xhtml/glCreateShader.xml
+# http://www.opengl.org/sdk/docs/man/xhtml/glGetActiveUniform.xml
+ShaderObjectType enum:
+	FRAGMENT_SHADER					= 0x8B30    # ARB_fragment_shader
+	VERTEX_SHADER					= 0x8B31    # ARB_vertex_shader
+#	GEOMETRY_SHADER_EXT				= 0x8DD9	# EXT_geometry_shader4 -- not core
+
+ActiveUniformType enum:
+	use DataType FLOAT
+	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
+	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
+	FLOAT_VEC4					= 0x8B52    # ARB_shader_objects
+	use DataType INT
+	INT_VEC2					= 0x8B53    # ARB_shader_objects
+	INT_VEC3					= 0x8B54    # ARB_shader_objects
+	INT_VEC4					= 0x8B55    # ARB_shader_objects
+	BOOL						= 0x8B56    # ARB_shader_objects
+	BOOL_VEC2					= 0x8B57    # ARB_shader_objects
+	BOOL_VEC3					= 0x8B58    # ARB_shader_objects
+	BOOL_VEC4					= 0x8B59    # ARB_shader_objects
+	FLOAT_MAT2					= 0x8B5A    # ARB_shader_objects
+	FLOAT_MAT3					= 0x8B5B    # ARB_shader_objects
+	FLOAT_MAT4					= 0x8B5C    # ARB_shader_objects
+	SAMPLER_1D					= 0x8B5D    # ARB_shader_objects
+	SAMPLER_2D					= 0x8B5E    # ARB_shader_objects
+	SAMPLER_3D					= 0x8B5F    # ARB_shader_objects
+	SAMPLER_CUBE					= 0x8B60    # ARB_shader_objects
+	SAMPLER_1D_SHADOW				= 0x8B61    # ARB_shader_objects
+	SAMPLER_2D_SHADOW				= 0x8B62    # ARB_shader_objects
 
 ###############################################################################
 #
