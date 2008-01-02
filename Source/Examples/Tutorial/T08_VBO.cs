@@ -22,7 +22,8 @@ using OpenTK.Math;
 
 namespace Examples.Tutorial
 {
-    public class T08_VBO : GameWindow, IExample
+    [Example("Vertex Buffer Objects", ExampleCategory.Tutorial, 8)]
+    public class T08_VBO : GameWindow
     {
         #region --- Private Fields ---
 
@@ -127,40 +128,25 @@ namespace Examples.Tutorial
 
         #endregion
 
-        #region public void Launch()
-
-        /// <summary>
-        /// Launches this example.
-        /// </summary>
-        /// <remarks>
-        /// Provides a simple way for the example launcher to launch the examples.
-        /// </remarks>
-        public void Launch()
-        {
-            Run(60.0, 60.0);
-        }
-
-        #endregion
-
         Vbo Load(Vector3[] vertices, int[] indices)
         {
             Vbo handle = new Vbo();
             int size;
 
             GL.GenBuffers(1, out handle.VboID);
-            GL.BindBuffer(Version15.ArrayBuffer, handle.VboID);
-            GL.BufferData(Version15.ArrayBuffer, (IntPtr)(vertices.Length * Vector3.SizeInBytes), vertices,
-                          Version15.StaticDraw);
-            GL.GetBufferParameter(Version15.ArrayBuffer, Version15.BufferSize, out size);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, handle.VboID);
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(vertices.Length * Vector3.SizeInBytes), vertices,
+                          BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out size);
             if (vertices.Length * Vector3.SizeInBytes != size)
                 throw new ApplicationException("Vertex array not uploaded correctly");
             //GL.BindBuffer(Version15.ArrayBuffer, 0);
 
             GL.GenBuffers(1, out handle.EboID);
-            GL.BindBuffer(Version15.ElementArrayBuffer, handle.EboID);
-            GL.BufferData(Version15.ElementArrayBuffer, (IntPtr)(indices.Length * sizeof(int)), indices,
-                          Version15.StaticDraw);
-            GL.GetBufferParameter(Version15.ElementArrayBuffer, Version15.BufferSize, out size);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, handle.EboID);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(indices.Length * sizeof(int)), indices,
+                          BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out size);
             if (indices.Length * sizeof(int) != size)
                 throw new ApplicationException("Element array not uploaded correctly");
             //GL.BindBuffer(Version15.ElementArrayBuffer, 0);
@@ -176,8 +162,8 @@ namespace Examples.Tutorial
             //GL.EnableClientState(EnableCap.TextureCoordArray);
             GL.EnableClientState(EnableCap.VertexArray);
 
-            GL.BindBuffer(Version15.StaticDraw, handle.VboID);
-            GL.BindBuffer(Version15.ElementArrayBuffer, handle.EboID);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, handle.VboID);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, handle.EboID);
 
             //GL.TexCoordPointer(2, TexCoordPointerType.Float, vector2_size, (IntPtr)vector2_size);
             GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, IntPtr.Zero);
@@ -185,13 +171,32 @@ namespace Examples.Tutorial
             GL.DrawElements(BeginMode.Triangles, handle.NumElements, All.UnsignedInt, IntPtr.Zero);
             //GL.DrawArrays(BeginMode.LineLoop, 0, vbo.element_count);
 
-            GL.BindBuffer(Version15.ArrayBuffer, 0);
-            GL.BindBuffer(Version15.ElementArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
             GL.DisableClientState(EnableCap.VertexArray);
             //GL.DisableClientState(EnableCap.TextureCoordArray);
 
             //GL.PopClientAttrib();
         }
+
+        #region public static void Main()
+
+        /// <summary>
+        /// Entry point of this example.
+        /// </summary>
+        [STAThread]
+        public static void Main()
+        {
+            using (T08_VBO example = new T08_VBO())
+            {
+                // Get the title and category  of this example using reflection.
+                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
+                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                example.Run(30.0, 0.0);
+            }
+        }
+
+        #endregion
     }
 }
