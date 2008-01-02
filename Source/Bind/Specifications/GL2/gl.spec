@@ -5944,7 +5944,7 @@ CreateProgram()
 
 CreateShader(type)
 	return		UInt32
-	param		type		GLenum in value
+	param		type		ShaderObjectType in value		# GLenum in value
 	category	VERSION_2_0
 	version		2.0
 	extension
@@ -6035,7 +6035,7 @@ GetActiveUniform(program, index, bufSize, length, size, type, name)
 	param		bufSize		SizeI in value
 	param		length		SizeI out array [1]
 	param		size		Int32 out array [1]
-	param		type		GLenum out array [1]
+	param		type		ActiveUniformType out array [1]		# GLenum out array [1]
 	param		name		Char out array []
 	category	VERSION_2_0
 	dlflags		notlistable
