@@ -30,16 +30,16 @@ namespace OpenTK.Fonts
             VboTextHandle handle = new VboTextHandle(++allocated_handles);
 
             GL.GenBuffers(1, out handle.vbo_id);
-            GL.BindBuffer(Version15.ArrayBuffer, handle.vbo_id);
-            GL.BufferData(Version15.ArrayBuffer, (IntPtr)(vertices.Length * vector2_size), vertices,
-                          Version15.StaticDraw);
-            GL.BindBuffer(Version15.ArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, handle.vbo_id);
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(vertices.Length * vector2_size), vertices,
+                          BufferUsageHint.StaticDraw);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
             GL.GenBuffers(1, out handle.ebo_id);
-            GL.BindBuffer(Version15.ElementArrayBuffer, handle.ebo_id);
-            GL.BufferData(Version15.ElementArrayBuffer, (IntPtr)(indices.Length * sizeof(ushort)), indices,
-                          Version15.StaticDraw);
-            GL.BindBuffer(Version15.ElementArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, handle.ebo_id);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(indices.Length * sizeof(ushort)), indices,
+                          BufferUsageHint.StaticDraw);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
             handle.element_count = indices.Length;
             return handle;
@@ -54,8 +54,8 @@ namespace OpenTK.Fonts
             //GL.EnableClientState(EnableCap.TextureCoordArray);
             GL.EnableClientState(EnableCap.VertexArray);
 
-            GL.BindBuffer(Version15.StaticDraw, vbo.vbo_id);
-            GL.BindBuffer(Version15.ElementArrayBuffer, vbo.ebo_id);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo.vbo_id);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, vbo.ebo_id);
 
             GL.TexCoordPointer(2, TexCoordPointerType.Float, vector2_size, (IntPtr)vector2_size);
             GL.VertexPointer(2, VertexPointerType.Float, vector2_size, IntPtr.Zero);
@@ -63,8 +63,8 @@ namespace OpenTK.Fonts
             GL.DrawElements(BeginMode.Triangles, vbo.element_count, All.UnsignedShort, IntPtr.Zero);
             //GL.DrawArrays(BeginMode.LineLoop, 0, vbo.element_count);
 
-            GL.BindBuffer(Version15.ArrayBuffer, 0);
-            GL.BindBuffer(Version15.ElementArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
 
             GL.DisableClientState(EnableCap.VertexArray);
             //GL.DisableClientState(EnableCap.TextureCoordArray);
