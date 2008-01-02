@@ -45,9 +45,10 @@ namespace OpenTK.Fonts
         /// </summary>
         static void CheckNeededFunctionality()
         {
-            printer = new DisplayListTextPrinter();
+            printer = (ITextPrinterImplementation)new DisplayListTextPrinter();
                 /*
-                GL.SupportsExtension("VERSION_1_5") ? new VboTextPrinter() :
+                GL.SupportsExtension("VERSION_1_5") ?
+                (ITextPrinterImplementation)new VboTextPrinter() :
                 GL.SupportsExtension("ARB_vertex_buffer_object") ? null :
                 GL.SupportsExtension("VERSION_1_1") ? null : null;
                 */
