@@ -411,13 +411,15 @@ PointParameterName enum:
 	POINT_SIZE_MIN					= 0x8126
 	POINT_SIZE_MAX					= 0x8127
 	POINT_FADE_THRESHOLD_SIZE		= 0x8128
-	POINT_DISTANCE_ATTENUATION		= 0x8129	# this token is only accepted by GL.PointParameterv not GL.PointParameter
+	# <summary>this token is only accepted by GL.PointParameterv not GL.PointParameter</summary>
+	POINT_DISTANCE_ATTENUATION		= 0x8129
 
 GetPName enum:
 	POINT_SIZE_MIN					= 0x8126
 	POINT_SIZE_MAX					= 0x8127
 	POINT_FADE_THRESHOLD_SIZE		= 0x8128
-	POINT_DISTANCE_ATTENUATION		= 0x8129	# this token is only accepted by GL.PointParameterv not GL.PointParameter
+	# <summary>this token is only accepted by GL.PointParameterv not GL.PointParameter</summary>
+	POINT_DISTANCE_ATTENUATION		= 0x8129
 
 
 ###############################################################################
@@ -426,7 +428,7 @@ GetPName enum:
 #
 ###############################################################################
 
-VERSION_1_5 enum:
+#VERSION_1_5 enum:
 #	BUFFER_SIZE					= 0x8764 # ARB_vertex_buffer_object
 #	BUFFER_USAGE					= 0x8765 # ARB_vertex_buffer_object
 #	QUERY_COUNTER_BITS				= 0x8864 # ARB_occlusion_query
@@ -472,12 +474,12 @@ VERSION_1_5 enum:
 #	FOG_COORD_ARRAY_POINTER				= GL_FOG_COORDINATE_ARRAY_POINTER
 #	FOG_COORD_ARRAY					= GL_FOG_COORDINATE_ARRAY
 #	FOG_COORD_ARRAY_BUFFER_BINDING			= GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING
-	SRC0_RGB					= GL_SOURCE0_RGB
-	SRC1_RGB					= GL_SOURCE1_RGB
-	SRC2_RGB					= GL_SOURCE2_RGB
-	SRC0_ALPHA					= GL_SOURCE0_ALPHA
-	SRC1_ALPHA					= GL_SOURCE1_ALPHA
-	SRC2_ALPHA					= GL_SOURCE2_ALPHA
+#	SRC0_RGB					= GL_SOURCE0_RGB
+#	SRC1_RGB					= GL_SOURCE1_RGB
+#	SRC2_RGB					= GL_SOURCE2_RGB
+#	SRC0_ALPHA					= GL_SOURCE0_ALPHA
+#	SRC1_ALPHA					= GL_SOURCE1_ALPHA
+#	SRC2_ALPHA					= GL_SOURCE2_ALPHA
 
 # Occlusion Query
 QueryTarget enum:
