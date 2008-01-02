@@ -5673,7 +5673,7 @@ GetQueryObjectuiv(id, pname, params)
 
 BindBuffer(target, buffer)
 	return		void
-	param		target		BufferTargetARB in value
+	param		target		BufferTarget in value			# BufferTargetARB in value
 	param		buffer		UInt32 in value
 	category	VERSION_1_5
 	version		1.5
@@ -5720,10 +5720,10 @@ IsBuffer(buffer)
 
 BufferData(target, size, data, usage)
 	return		void
-	param		target		BufferTargetARB in value
+	param		target		BufferTarget in value		# BufferTargetARB in value
 	param		size		BufferSize in value
 	param		data		ConstVoid in array [size]
-	param		usage		BufferUsageARB in value
+	param		usage		BufferUsageHint in value		# BufferUsageARB in value
 	category	VERSION_1_5
 	version		1.5
 	extension
@@ -5734,7 +5734,7 @@ BufferData(target, size, data, usage)
 
 BufferSubData(target, offset, size, data)
 	return		void
-	param		target		BufferTargetARB in value
+	param		target		BufferTarget in value		# BufferTargetARB in value
 	param		offset		BufferOffset in value
 	param		size		BufferSize in value
 	param		data		ConstVoid in array [size]
@@ -5748,7 +5748,7 @@ BufferSubData(target, offset, size, data)
 
 GetBufferSubData(target, offset, size, data)
 	return		void
-	param		target		BufferTargetARB in value
+	param		target		BufferTarget in value		# BufferTargetARB in value
 	param		offset		BufferOffset in value
 	param		size		BufferSize in value
 	param		data		Void out array [size]
@@ -5764,8 +5764,8 @@ GetBufferSubData(target, offset, size, data)
 
 MapBuffer(target, access)
 	return		VoidPointer
-	param		target		BufferTargetARB in value
-	param		access		BufferAccessARB in value
+	param		target		BufferTarget in value		# BufferTargetARB in value
+	param		access		BufferAccess in value		# BufferAccessARB in value
 	category	VERSION_1_5
 	version		1.5
 	extension
@@ -5776,7 +5776,7 @@ MapBuffer(target, access)
 
 UnmapBuffer(target)
 	return		Boolean
-	param		target		BufferTargetARB in value
+	param		target		BufferTarget in value		# BufferTargetARB in value
 	category	VERSION_1_5
 	version		1.5
 	extension
@@ -5787,8 +5787,8 @@ UnmapBuffer(target)
 
 GetBufferParameteriv(target, pname, params)
 	return		void
-	param		target		BufferTargetARB in value
-	param		pname		BufferPNameARB in value
+	param		target		BufferTarget in value			# BufferTargetARB in value
+	param		pname		BufferParameterName in value	# BufferPNameARB in value
 	param		params		Int32 out array [COMPSIZE(pname)]
 	category	VERSION_1_5
 	dlflags		notlistable
@@ -5802,8 +5802,8 @@ GetBufferParameteriv(target, pname, params)
 
 GetBufferPointerv(target, pname, params)
 	return		void
-	param		target		BufferTargetARB in value
-	param		pname		BufferPointerNameARB in value
+	param		target		BufferTarget in value		# BufferTargetARB in value
+	param		pname		BufferPointer in value		# BufferPointerNameARB in value
 	param		params		VoidPointer out array [1]
 	category	VERSION_1_5
 	dlflags		notlistable

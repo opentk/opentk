@@ -427,41 +427,41 @@ GetPName enum:
 ###############################################################################
 
 VERSION_1_5 enum:
-	BUFFER_SIZE					= 0x8764 # ARB_vertex_buffer_object
-	BUFFER_USAGE					= 0x8765 # ARB_vertex_buffer_object
+#	BUFFER_SIZE					= 0x8764 # ARB_vertex_buffer_object
+#	BUFFER_USAGE					= 0x8765 # ARB_vertex_buffer_object
 #	QUERY_COUNTER_BITS				= 0x8864 # ARB_occlusion_query
 #	CURRENT_QUERY					= 0x8865 # ARB_occlusion_query
 #	QUERY_RESULT					= 0x8866 # ARB_occlusion_query
 #	QUERY_RESULT_AVAILABLE				= 0x8867 # ARB_occlusion_query
-	ARRAY_BUFFER					= 0x8892 # ARB_vertex_buffer_object
-	ELEMENT_ARRAY_BUFFER				= 0x8893 # ARB_vertex_buffer_object
-	ARRAY_BUFFER_BINDING				= 0x8894 # ARB_vertex_buffer_object
-	ELEMENT_ARRAY_BUFFER_BINDING			= 0x8895 # ARB_vertex_buffer_object
-	VERTEX_ARRAY_BUFFER_BINDING			= 0x8896 # ARB_vertex_buffer_object
-	NORMAL_ARRAY_BUFFER_BINDING			= 0x8897 # ARB_vertex_buffer_object
-	COLOR_ARRAY_BUFFER_BINDING			= 0x8898 # ARB_vertex_buffer_object
-	INDEX_ARRAY_BUFFER_BINDING			= 0x8899 # ARB_vertex_buffer_object
-	TEXTURE_COORD_ARRAY_BUFFER_BINDING		= 0x889A # ARB_vertex_buffer_object
-	EDGE_FLAG_ARRAY_BUFFER_BINDING			= 0x889B # ARB_vertex_buffer_object
-	SECONDARY_COLOR_ARRAY_BUFFER_BINDING		= 0x889C # ARB_vertex_buffer_object
-	FOG_COORDINATE_ARRAY_BUFFER_BINDING		= 0x889D # ARB_vertex_buffer_object
-	WEIGHT_ARRAY_BUFFER_BINDING			= 0x889E # ARB_vertex_buffer_object
-	VERTEX_ATTRIB_ARRAY_BUFFER_BINDING		= 0x889F # ARB_vertex_buffer_object
-	READ_ONLY					= 0x88B8 # ARB_vertex_buffer_object
-	WRITE_ONLY					= 0x88B9 # ARB_vertex_buffer_object
-	READ_WRITE					= 0x88BA # ARB_vertex_buffer_object
-	BUFFER_ACCESS					= 0x88BB # ARB_vertex_buffer_object
-	BUFFER_MAPPED					= 0x88BC # ARB_vertex_buffer_object
-	BUFFER_MAP_POINTER				= 0x88BD # ARB_vertex_buffer_object
-	STREAM_DRAW					= 0x88E0 # ARB_vertex_buffer_object
-	STREAM_READ					= 0x88E1 # ARB_vertex_buffer_object
-	STREAM_COPY					= 0x88E2 # ARB_vertex_buffer_object
-	STATIC_DRAW					= 0x88E4 # ARB_vertex_buffer_object
-	STATIC_READ					= 0x88E5 # ARB_vertex_buffer_object
-	STATIC_COPY					= 0x88E6 # ARB_vertex_buffer_object
-	DYNAMIC_DRAW					= 0x88E8 # ARB_vertex_buffer_object
-	DYNAMIC_READ					= 0x88E9 # ARB_vertex_buffer_object
-	DYNAMIC_COPY					= 0x88EA # ARB_vertex_buffer_object
+#	ARRAY_BUFFER					= 0x8892 # ARB_vertex_buffer_object
+#	ELEMENT_ARRAY_BUFFER				= 0x8893 # ARB_vertex_buffer_object
+#	ARRAY_BUFFER_BINDING				= 0x8894 # ARB_vertex_buffer_object
+#	ELEMENT_ARRAY_BUFFER_BINDING			= 0x8895 # ARB_vertex_buffer_object
+#	VERTEX_ARRAY_BUFFER_BINDING			= 0x8896 # ARB_vertex_buffer_object
+#	NORMAL_ARRAY_BUFFER_BINDING			= 0x8897 # ARB_vertex_buffer_object
+#	COLOR_ARRAY_BUFFER_BINDING			= 0x8898 # ARB_vertex_buffer_object
+#	INDEX_ARRAY_BUFFER_BINDING			= 0x8899 # ARB_vertex_buffer_object
+#	TEXTURE_COORD_ARRAY_BUFFER_BINDING		= 0x889A # ARB_vertex_buffer_object
+#	EDGE_FLAG_ARRAY_BUFFER_BINDING			= 0x889B # ARB_vertex_buffer_object
+#	SECONDARY_COLOR_ARRAY_BUFFER_BINDING		= 0x889C # ARB_vertex_buffer_object
+#	FOG_COORDINATE_ARRAY_BUFFER_BINDING		= 0x889D # ARB_vertex_buffer_object
+#	WEIGHT_ARRAY_BUFFER_BINDING			= 0x889E # ARB_vertex_buffer_object
+#	VERTEX_ATTRIB_ARRAY_BUFFER_BINDING		= 0x889F # ARB_vertex_buffer_object
+#	READ_ONLY					= 0x88B8 # ARB_vertex_buffer_object
+#	WRITE_ONLY					= 0x88B9 # ARB_vertex_buffer_object
+#	READ_WRITE					= 0x88BA # ARB_vertex_buffer_object
+#	BUFFER_ACCESS					= 0x88BB # ARB_vertex_buffer_object
+#	BUFFER_MAPPED					= 0x88BC # ARB_vertex_buffer_object
+#	BUFFER_MAP_POINTER				= 0x88BD # ARB_vertex_buffer_object
+#	STREAM_DRAW					= 0x88E0 # ARB_vertex_buffer_object
+#	STREAM_READ					= 0x88E1 # ARB_vertex_buffer_object
+#	STREAM_COPY					= 0x88E2 # ARB_vertex_buffer_object
+#	STATIC_DRAW					= 0x88E4 # ARB_vertex_buffer_object
+#	STATIC_READ					= 0x88E5 # ARB_vertex_buffer_object
+#	STATIC_COPY					= 0x88E6 # ARB_vertex_buffer_object
+#	DYNAMIC_DRAW					= 0x88E8 # ARB_vertex_buffer_object
+#	DYNAMIC_READ					= 0x88E9 # ARB_vertex_buffer_object
+#	DYNAMIC_COPY					= 0x88EA # ARB_vertex_buffer_object
 #	SAMPLES_PASSED					= 0x8914 # ARB_occlusion_query
 # New naming scheme
 #	FOG_COORD_SRC					= GL_FOG_COORDINATE_SOURCE
@@ -480,7 +480,6 @@ VERSION_1_5 enum:
 	SRC2_ALPHA					= GL_SOURCE2_ALPHA
 
 # Occlusion Query
-
 QueryTarget enum:
 	SAMPLES_PASSED				= 0x8914
 
@@ -492,6 +491,50 @@ GetQueryObjectParam enum:
     QUERY_RESULT				= 0x8866
 	QUERY_RESULT_AVAILABLE		= 0x8867
 
+
+# Buffer Objects (http://www.opengl.org/sdk/docs/man/xhtml/glBindBuffer.xml)
+BufferTarget enum:
+	ARRAY_BUFFER				= 0x8892 # ARB_vertex_buffer_object
+	ELEMENT_ARRAY_BUFFER		= 0x8893 # ARB_vertex_buffer_object
+
+BufferUsageHint enum:
+	STREAM_DRAW					= 0x88E0 # ARB_vertex_buffer_object
+	STREAM_READ					= 0x88E1 # ARB_vertex_buffer_object
+	STREAM_COPY					= 0x88E2 # ARB_vertex_buffer_object
+	STATIC_DRAW					= 0x88E4 # ARB_vertex_buffer_object
+	STATIC_READ					= 0x88E5 # ARB_vertex_buffer_object
+	STATIC_COPY					= 0x88E6 # ARB_vertex_buffer_object
+	DYNAMIC_DRAW				= 0x88E8 # ARB_vertex_buffer_object
+	DYNAMIC_READ				= 0x88E9 # ARB_vertex_buffer_object
+	DYNAMIC_COPY				= 0x88EA # ARB_vertex_buffer_object
+	
+BufferAccess enum:
+	READ_ONLY					= 0x88B8 # ARB_vertex_buffer_object
+	WRITE_ONLY					= 0x88B9 # ARB_vertex_buffer_object
+	READ_WRITE					= 0x88BA # ARB_vertex_buffer_object
+	
+BufferParameterName enum:
+	BUFFER_SIZE					= 0x8764 # ARB_vertex_buffer_object
+	BUFFER_USAGE				= 0x8765 # ARB_vertex_buffer_object
+	BUFFER_ACCESS				= 0x88BB # ARB_vertex_buffer_object
+	BUFFER_MAPPED				= 0x88BC # ARB_vertex_buffer_object
+
+BufferPointer enum:
+	BUFFER_MAP_POINTER			= 0x88BD # ARB_vertex_buffer_object
+
+GetPName enum:
+	ARRAY_BUFFER_BINDING				= 0x8894 # ARB_vertex_buffer_object
+	ELEMENT_ARRAY_BUFFER_BINDING		= 0x8895 # ARB_vertex_buffer_object
+	VERTEX_ARRAY_BUFFER_BINDING			= 0x8896 # ARB_vertex_buffer_object
+	NORMAL_ARRAY_BUFFER_BINDING			= 0x8897 # ARB_vertex_buffer_object
+	COLOR_ARRAY_BUFFER_BINDING			= 0x8898 # ARB_vertex_buffer_object
+	INDEX_ARRAY_BUFFER_BINDING			= 0x8899 # ARB_vertex_buffer_object
+	TEXTURE_COORD_ARRAY_BUFFER_BINDING	= 0x889A # ARB_vertex_buffer_object
+	EDGE_FLAG_ARRAY_BUFFER_BINDING		= 0x889B # ARB_vertex_buffer_object
+	SECONDARY_COLOR_ARRAY_BUFFER_BINDING	= 0x889C # ARB_vertex_buffer_object
+	FOG_COORD_ARRAY_BUFFER_BINDING		= 0x889D # ARB_vertex_buffer_object
+	WEIGHT_ARRAY_BUFFER_BINDING			= 0x889E # ARB_vertex_buffer_object
+	VERTEX_ATTRIB_ARRAY_BUFFER_BINDING	= 0x889F # ARB_vertex_buffer_object
 
 ###############################################################################
 #
@@ -576,7 +619,7 @@ VERSION_2_0 enum:
 	ACTIVE_ATTRIBUTES				= 0x8B89    # ARB_vertex_shader
 	ACTIVE_ATTRIBUTE_MAX_LENGTH			= 0x8B8A    # ARB_vertex_shader
 	FRAGMENT_SHADER_DERIVATIVE_HINT			= 0x8B8B    # ARB_fragment_shader
-	SHADING_LANGUAGE_VERSION			= 0x8B8C    # ARB_shading_language_100
+#	SHADING_LANGUAGE_VERSION			= 0x8B8C    # ARB_shading_language_100
 	CURRENT_PROGRAM					= 0x8B8D    # ARB_shader_objects (added for 2.0)
 	POINT_SPRITE_COORD_ORIGIN			= 0x8CA0    # ARB_point_sprite (added for 2.0)
 	LOWER_LEFT					= 0x8CA1    # ARB_point_sprite (added for 2.0)
@@ -666,9 +709,13 @@ ActiveUniformType enum:
 	SAMPLER_1D					= 0x8B5D    # ARB_shader_objects
 	SAMPLER_2D					= 0x8B5E    # ARB_shader_objects
 	SAMPLER_3D					= 0x8B5F    # ARB_shader_objects
-	SAMPLER_CUBE					= 0x8B60    # ARB_shader_objects
-	SAMPLER_1D_SHADOW				= 0x8B61    # ARB_shader_objects
-	SAMPLER_2D_SHADOW				= 0x8B62    # ARB_shader_objects
+	SAMPLER_CUBE				= 0x8B60    # ARB_shader_objects
+	SAMPLER_1D_SHADOW			= 0x8B61    # ARB_shader_objects
+	SAMPLER_2D_SHADOW			= 0x8B62    # ARB_shader_objects
+	
+# Shading Language
+StringName enum:
+	SHADING_LANGUAGE_VERSION	= 0x8B8C
 
 ###############################################################################
 #
@@ -678,8 +725,8 @@ ActiveUniformType enum:
 
 VERSION_2_1 enum:
 	CURRENT_RASTER_SECONDARY_COLOR			= 0x845F    # New for 2.1
-	PIXEL_PACK_BUFFER				= 0x88EB    # ARB_pixel_buffer_object
-	PIXEL_UNPACK_BUFFER				= 0x88EC    # ARB_pixel_buffer_object
+#	PIXEL_PACK_BUFFER				= 0x88EB    # ARB_pixel_buffer_object
+#	PIXEL_UNPACK_BUFFER				= 0x88EC    # ARB_pixel_buffer_object
 	PIXEL_PACK_BUFFER_BINDING			= 0x88ED    # ARB_pixel_buffer_object
 	PIXEL_UNPACK_BUFFER_BINDING			= 0x88EF    # ARB_pixel_buffer_object
 	FLOAT_MAT2x3					= 0x8B65    # New for 2.1
@@ -701,20 +748,29 @@ VERSION_2_1 enum:
 #	COMPRESSED_SLUMINANCE				= 0x8C4A    # EXT_texture_sRGB
 #	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # EXT_texture_sRGB
 
+# Pixel Buffer Objects http://www.opengl.org/sdk/docs/man/xhtml/glBindBuffer.xml
+BufferTarget enum:
+	PIXEL_PACK_BUFFER				= 0x88EB    # ARB_pixel_buffer_object
+	PIXEL_UNPACK_BUFFER				= 0x88EC    # ARB_pixel_buffer_object
+	
+GetPName enum:
+	PIXEL_PACK_BUFFER_BINDING		= 0x88ED    # ARB_pixel_buffer_object
+	PIXEL_UNPACK_BUFFER_BINDING		= 0x88EF    # ARB_pixel_buffer_object
+	
 # sRGB textures (http://www.opengl.org/registry/specs/EXT/texture_sRGB.txt)
 PixelInternalFormat enum:
-	SRGB						= 0x8C40    # EXT_texture_sRGB
-	SRGB8						= 0x8C41    # EXT_texture_sRGB
-	SRGB_ALPHA					= 0x8C42    # EXT_texture_sRGB
+	SRGB							= 0x8C40    # EXT_texture_sRGB
+	SRGB8							= 0x8C41    # EXT_texture_sRGB
+	SRGB_ALPHA						= 0x8C42    # EXT_texture_sRGB
 	SRGB8_ALPHA8					= 0x8C43    # EXT_texture_sRGB
 	SLUMINANCE_ALPHA				= 0x8C44    # EXT_texture_sRGB
 	SLUMINANCE8_ALPHA8				= 0x8C45    # EXT_texture_sRGB
-	SLUMINANCE					= 0x8C46    # EXT_texture_sRGB
-	SLUMINANCE8					= 0x8C47    # EXT_texture_sRGB
+	SLUMINANCE						= 0x8C46    # EXT_texture_sRGB
+	SLUMINANCE8						= 0x8C47    # EXT_texture_sRGB
 	COMPRESSED_SRGB					= 0x8C48    # EXT_texture_sRGB
-	COMPRESSED_SRGB_ALPHA				= 0x8C49    # EXT_texture_sRGB
-	COMPRESSED_SLUMINANCE				= 0x8C4A    # EXT_texture_sRGB
-	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # EXT_texture_sRGB
+	COMPRESSED_SRGB_ALPHA			= 0x8C49    # EXT_texture_sRGB
+	COMPRESSED_SLUMINANCE			= 0x8C4A    # EXT_texture_sRGB
+	COMPRESSED_SLUMINANCE_ALPHA		= 0x8C4B    # EXT_texture_sRGB
 
 	# <summary>Format only valid for 2D Textures</summary>
 	COMPRESSED_SRGB_S3TC_DXT1_EXT			= 0x8C4C
