@@ -90,8 +90,8 @@ namespace Examples.Tutorial
             int status_code;
             string info;
 
-            vertexObject = GL.CreateShader(Version20.VertexShader);
-            fragmentObject = GL.CreateShader(Version20.FragmentShader);
+            vertexObject = GL.CreateShader(ShaderObjectType.VertexShader);
+            fragmentObject = GL.CreateShader(ShaderObjectType.FragmentShader);
 
             // Compile vertex shader
             GL.ShaderSource(vertexObject, vs);
@@ -132,23 +132,23 @@ namespace Examples.Tutorial
             GL.GenBuffers(1, out element_buffer_object);
 
             // Upload the vertex data.
-            GL.BindBuffer(Version15.ArrayBuffer, vertex_buffer_object);
-            GL.BufferData(Version15.ArrayBuffer, (IntPtr)(shape.Vertices.Length * 3 * sizeof(float)), shape.Vertices, Version15.StaticDraw);
-            GL.GetBufferParameter(Version15.ArrayBuffer, Version15.BufferSize, out size);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertex_buffer_object);
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(shape.Vertices.Length * 3 * sizeof(float)), shape.Vertices, BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out size);
             if (size != shape.Vertices.Length * 3 * sizeof(Single))
                 throw new ApplicationException("Problem uploading vertex data to VBO");
 
             // Upload the color data.
-            GL.BindBuffer(Version15.ArrayBuffer, color_buffer_object);
-            GL.BufferData(Version15.ArrayBuffer, (IntPtr)(shape.Colors.Length * sizeof(int)), shape.Colors, Version15.StaticDraw);
-            GL.GetBufferParameter(Version15.ArrayBuffer, Version15.BufferSize, out size);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, color_buffer_object);
+            GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(shape.Colors.Length * sizeof(int)), shape.Colors, BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out size);
             if (shape.Colors.Length * sizeof(int) != size)
                 throw new ApplicationException("Problem uploading color data to VBO");
             
             // Upload the index data (elements inside the vertex data, not color indices as per the IndexPointer function!)
-            GL.BindBuffer(Version15.ElementArrayBuffer, element_buffer_object);
-            GL.BufferData(Version15.ElementArrayBuffer, (IntPtr)(shape.Indices.Length * sizeof(Int32)), shape.Indices, Version15.StaticDraw);
-            GL.GetBufferParameter(Version15.ElementArrayBuffer, Version15.BufferSize, out size);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, element_buffer_object);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(shape.Indices.Length * sizeof(Int32)), shape.Indices, BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out size);
             if (shape.Indices.Length * 4 != size)
                 throw new ApplicationException("Problem uploading index data to VBO");
         }
@@ -233,11 +233,11 @@ namespace Examples.Tutorial
             GL.EnableClientState(EnableCap.VertexArray);
             GL.EnableClientState(EnableCap.ColorArray);
 
-            GL.BindBuffer(Version15.ArrayBuffer, vertex_buffer_object);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertex_buffer_object);
             GL.VertexPointer(3, VertexPointerType.Float, 0, IntPtr.Zero);
-            GL.BindBuffer(Version15.ArrayBuffer, color_buffer_object);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, color_buffer_object);
             GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, IntPtr.Zero);
-            GL.BindBuffer(Version15.ElementArrayBuffer, element_buffer_object);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, element_buffer_object);
 
             GL.DrawElements(BeginMode.Triangles, shape.Indices.Length,
                 All.UnsignedInt, IntPtr.Zero);
