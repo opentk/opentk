@@ -159,41 +159,41 @@ ARB_imaging enum:
 ###############################################################################
 
 VERSION_1_3 enum:
-	TEXTURE0					= 0x84C0	# Promoted from ARB_multitexture
-	TEXTURE1					= 0x84C1
-	TEXTURE2					= 0x84C2
-	TEXTURE3					= 0x84C3
-	TEXTURE4					= 0x84C4
-	TEXTURE5					= 0x84C5
-	TEXTURE6					= 0x84C6
-	TEXTURE7					= 0x84C7
-	TEXTURE8					= 0x84C8
-	TEXTURE9					= 0x84C9
-	TEXTURE10					= 0x84CA
-	TEXTURE11					= 0x84CB
-	TEXTURE12					= 0x84CC
-	TEXTURE13					= 0x84CD
-	TEXTURE14					= 0x84CE
-	TEXTURE15					= 0x84CF
-	TEXTURE16					= 0x84D0
-	TEXTURE17					= 0x84D1
-	TEXTURE18					= 0x84D2
-	TEXTURE19					= 0x84D3
-	TEXTURE20					= 0x84D4
-	TEXTURE21					= 0x84D5
-	TEXTURE22					= 0x84D6
-	TEXTURE23					= 0x84D7
-	TEXTURE24					= 0x84D8
-	TEXTURE25					= 0x84D9
-	TEXTURE26					= 0x84DA
-	TEXTURE27					= 0x84DB
-	TEXTURE28					= 0x84DC
-	TEXTURE29					= 0x84DD
-	TEXTURE30					= 0x84DE
-	TEXTURE31					= 0x84DF
-	ACTIVE_TEXTURE					= 0x84E0 # 1 I
-	CLIENT_ACTIVE_TEXTURE				= 0x84E1 # 1 I
-	MAX_TEXTURE_UNITS				= 0x84E2 # 1 I
+#	TEXTURE0					= 0x84C0	# Promoted from ARB_multitexture
+#	TEXTURE1					= 0x84C1
+#	TEXTURE2					= 0x84C2
+#	TEXTURE3					= 0x84C3
+#	TEXTURE4					= 0x84C4
+#	TEXTURE5					= 0x84C5
+#	TEXTURE6					= 0x84C6
+#	TEXTURE7					= 0x84C7
+#	TEXTURE8					= 0x84C8
+#	TEXTURE9					= 0x84C9
+#	TEXTURE10					= 0x84CA
+#	TEXTURE11					= 0x84CB
+#	TEXTURE12					= 0x84CC
+#	TEXTURE13					= 0x84CD
+#	TEXTURE14					= 0x84CE
+#	TEXTURE15					= 0x84CF
+#	TEXTURE16					= 0x84D0
+#	TEXTURE17					= 0x84D1
+#	TEXTURE18					= 0x84D2
+#	TEXTURE19					= 0x84D3
+#	TEXTURE20					= 0x84D4
+#	TEXTURE21					= 0x84D5
+#	TEXTURE22					= 0x84D6
+#	TEXTURE23					= 0x84D7
+#	TEXTURE24					= 0x84D8
+#	TEXTURE25					= 0x84D9
+#	TEXTURE26					= 0x84DA
+#	TEXTURE27					= 0x84DB
+#	TEXTURE28					= 0x84DC
+#	TEXTURE29					= 0x84DD
+#	TEXTURE30					= 0x84DE
+#	TEXTURE31					= 0x84DF
+#	ACTIVE_TEXTURE					= 0x84E0 # 1 I
+#	CLIENT_ACTIVE_TEXTURE				= 0x84E1 # 1 I
+#	MAX_TEXTURE_UNITS				= 0x84E2 # 1 I
 #	TRANSPOSE_MODELVIEW_MATRIX			= 0x84E3 # 16 F # Promoted from ARB_transpose_matrix
 #	TRANSPOSE_PROJECTION_MATRIX			= 0x84E4 # 16 F
 #	TRANSPOSE_TEXTURE_MATRIX			= 0x84E5 # 16 F
@@ -286,6 +286,46 @@ GetPName enum:
 	TEXTURE_CUBE_MAP					= 0x8513
 	TEXTURE_BINDING_CUBE_MAP			= 0x8514
 	MAX_CUBE_MAP_TEXTURE_SIZE			= 0x851C
+	
+# Multitexture (http://www.opengl.org/documentation/specs/version1.2/opengl1.2.1.pdf)
+GetPName enum:
+	ACTIVE_TEXTURE					= 0x84E0 # 1 I
+	CLIENT_ACTIVE_TEXTURE			= 0x84E1 # 1 I
+	MAX_TEXTURE_UNITS				= 0x84E2 # 1 I
+
+TextureUnit enum:
+	TEXTURE0					= 0x84C0	# Promoted from ARB_multitexture
+	TEXTURE1					= 0x84C1
+	TEXTURE2					= 0x84C2
+	TEXTURE3					= 0x84C3
+	TEXTURE4					= 0x84C4
+	TEXTURE5					= 0x84C5
+	TEXTURE6					= 0x84C6
+	TEXTURE7					= 0x84C7
+	TEXTURE8					= 0x84C8
+	TEXTURE9					= 0x84C9
+	TEXTURE10					= 0x84CA
+	TEXTURE11					= 0x84CB
+	TEXTURE12					= 0x84CC
+	TEXTURE13					= 0x84CD
+	TEXTURE14					= 0x84CE
+	TEXTURE15					= 0x84CF
+	TEXTURE16					= 0x84D0
+	TEXTURE17					= 0x84D1
+	TEXTURE18					= 0x84D2
+	TEXTURE19					= 0x84D3
+	TEXTURE20					= 0x84D4
+	TEXTURE21					= 0x84D5
+	TEXTURE22					= 0x84D6
+	TEXTURE23					= 0x84D7
+	TEXTURE24					= 0x84D8
+	TEXTURE25					= 0x84D9
+	TEXTURE26					= 0x84DA
+	TEXTURE27					= 0x84DB
+	TEXTURE28					= 0x84DC
+	TEXTURE29					= 0x84DD
+	TEXTURE30					= 0x84DE
+	TEXTURE31					= 0x84DF
 
 ###############################################################################
 #
