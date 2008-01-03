@@ -34,6 +34,7 @@ namespace Bind.Structures
             {
                 if (!String.IsNullOrEmpty(value))
                     _name = Translate(value.Trim());
+                else _name = value;
             }
         }
 
@@ -48,11 +49,25 @@ namespace Bind.Structures
         /// </summary>
         public string Value
         {
-            get { return _value; }
+            get 
+            {
+                //if (String.IsNullOrEmpty(Reference))
+                //    return _value;
+                //else
+                //{
+                //    Enum @ref;
+                //    if (Enum.GLEnums.TryGetValue(Reference, out @ref) || Enum.AuxEnums.TryGetValue(Reference, out @ref))
+                //        if (@ref.ConstantCollection.ContainsKey(_value))
+                //            return (@ref.ConstantCollection[_value] as Constant).Value;
+                //}
+
+                return _value;
+            }
             set
             {
                 if (!String.IsNullOrEmpty(value))
                     _value = Translate(value.Trim());
+                else _value = value;
             }
         }
 
@@ -73,6 +88,7 @@ namespace Bind.Structures
             {
                 if (!String.IsNullOrEmpty(value))
                     _reference = Enum.TranslateName(value.Trim());
+                else _reference = value;
             }
         }
 
@@ -112,9 +128,9 @@ namespace Bind.Structures
 
         #endregion
 
-        #region string Translate(string s)
+        #region public static string Translate(string s)
 
-        string Translate(string s)
+        public static string Translate(string s)
         {
             translator.Remove(0, translator.Length);
 
@@ -139,11 +155,40 @@ namespace Bind.Structures
             else
                 translator.Append(s);
 
-
             return translator.ToString();
         }
 
         #endregion
+
+        /// <summary>
+        /// Replces the Value of the given constant with the value referenced by the [c.Reference, c.Value] pair.
+        /// </summary>
+        /// <param name="c">The Constant to translate</param>
+        /// <param name="enums">The list of enums to check.</param>
+        /// <param name="auxEnums">The list of auxilliary enums to check.</param>
+        public static void TranslateConstantWithReference(Constant c, EnumCollection enums, EnumCollection auxEnums)
+        {
+            if (!String.IsNullOrEmpty(c.Reference))
+            {
+                string value;
+
+                if (enums[c.Reference].ConstantCollection.ContainsKey(c.Value))
+                {
+                    TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
+                    value = (enums[c.Reference].ConstantCollection[c.Value] as Constant).Value;
+                }
+                else if (auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
+                {
+                    TranslateConstantWithReference(auxEnums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
+                    value = (auxEnums[c.Reference].ConstantCollection[c.Value] as Constant).Value;
+                }
+                else throw new InvalidOperationException(String.Format("Unknown Enum \"{0}\" referenced by Constant \"{1}\"",
+                                                                       c.Reference, c.ToString()));
+
+                c.Value = value;
+                c.Reference = null;
+            }
+        }
 
         #region public override string ToString()
 
@@ -154,13 +199,13 @@ namespace Bind.Structures
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format(
-                "{0} = {1}((int){2}{3})",
-                Name,
-                Unchecked ? "unchecked" : "",
-                !String.IsNullOrEmpty(Reference) ? Reference + "." : "",
-                Value
-            );
+            if (String.IsNullOrEmpty(Name))
+                return "";
+            return String.Format("{0} = {1}((int){2}{3})",
+                Name, Unchecked ? "unchecked" : "",
+                !String.IsNullOrEmpty(Reference) ? Reference + "." : "", Value);
+
+            //return String.Format("{0} = {1}((int){2})", Name, Unchecked ? "unchecked" : "", Value);
         }
 
         #endregion
