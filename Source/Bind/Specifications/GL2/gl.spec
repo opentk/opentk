@@ -8241,6 +8241,7 @@ WindowPos3svARB(v)
 #
 # ARB Extension #26
 # ARB_vertex_program commands
+# Edited for OpenTK
 #
 ###############################################################################
 
@@ -8667,7 +8668,7 @@ VertexAttribPointerARB(index, size, type, normalized, stride, pointer)
 	return		void
 	param		index		UInt32 in value
 	param		size		Int32 in value
-	param		type		VertexAttribPointerTypeARB in value
+	param		type		VertexAttribPointerTypeArb in value		# VertexAttribPointerTypeARB in value
 	param		normalized	Boolean in value
 	param		stride		SizeI in value
 	param		pointer		Void in array [COMPSIZE(size/type/stride)] retained
@@ -8700,8 +8701,8 @@ DisableVertexAttribArrayARB(index)
 
 ProgramStringARB(target, format, len, string)
 	return		void
-	param		target		ProgramTargetARB in value
-	param		format		ProgramFormatARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
+	param		format		AssemblyProgramFormatArb in value	# AssemblyProgramFormatARB in value
 	param		len		SizeI in value
 	param		string		Void in array [len]
 	category	ARB_vertex_program
@@ -8713,7 +8714,7 @@ ProgramStringARB(target, format, len, string)
 
 BindProgramARB(target, program)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		program		UInt32 in value
 	category	ARB_vertex_program
 	version		1.3
@@ -8748,7 +8749,7 @@ GenProgramsARB(n, programs)
 
 ProgramEnvParameter4dARB(target, index, x, y, z, w)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		x		Float64 in value
 	param		y		Float64 in value
@@ -8764,7 +8765,7 @@ ProgramEnvParameter4dARB(target, index, x, y, z, w)
 
 ProgramEnvParameter4dvARB(target, index, params)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		params		Float64 in array [4]
 	category	ARB_vertex_program
@@ -8776,7 +8777,7 @@ ProgramEnvParameter4dvARB(target, index, params)
 
 ProgramEnvParameter4fARB(target, index, x, y, z, w)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		x		Float32 in value
 	param		y		Float32 in value
@@ -8792,7 +8793,7 @@ ProgramEnvParameter4fARB(target, index, x, y, z, w)
 
 ProgramEnvParameter4fvARB(target, index, params)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		params		Float32 in array [4]
 	category	ARB_vertex_program
@@ -8804,7 +8805,7 @@ ProgramEnvParameter4fvARB(target, index, params)
 
 ProgramLocalParameter4dARB(target, index, x, y, z, w)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		x		Float64 in value
 	param		y		Float64 in value
@@ -8820,7 +8821,7 @@ ProgramLocalParameter4dARB(target, index, x, y, z, w)
 
 ProgramLocalParameter4dvARB(target, index, params)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		params		Float64 in array [4]
 	category	ARB_vertex_program
@@ -8832,7 +8833,7 @@ ProgramLocalParameter4dvARB(target, index, params)
 
 ProgramLocalParameter4fARB(target, index, x, y, z, w)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		x		Float32 in value
 	param		y		Float32 in value
@@ -8848,7 +8849,7 @@ ProgramLocalParameter4fARB(target, index, x, y, z, w)
 
 ProgramLocalParameter4fvARB(target, index, params)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		params		Float32 in array [4]
 	category	ARB_vertex_program
@@ -8860,7 +8861,7 @@ ProgramLocalParameter4fvARB(target, index, params)
 
 GetProgramEnvParameterdvARB(target, index, params)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		params		Float64 out array [4]
 	dlflags		notlistable
@@ -8873,7 +8874,7 @@ GetProgramEnvParameterdvARB(target, index, params)
 
 GetProgramEnvParameterfvARB(target, index, params)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		params		Float32 out array [4]
 	dlflags		notlistable
@@ -8886,7 +8887,7 @@ GetProgramEnvParameterfvARB(target, index, params)
 
 GetProgramLocalParameterdvARB(target, index, params)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		params		Float64 out array [4]
 	dlflags		notlistable
@@ -8899,7 +8900,7 @@ GetProgramLocalParameterdvARB(target, index, params)
 
 GetProgramLocalParameterfvARB(target, index, params)
 	return		void
-	param		target		ProgramTargetARB in value
+	param		target		AssemblyProgramTargetArb in value	# ProgramTargetARB in value
 	param		index		UInt32 in value
 	param		params		Float32 out array [4]
 	dlflags		notlistable
@@ -8912,8 +8913,8 @@ GetProgramLocalParameterfvARB(target, index, params)
 
 GetProgramivARB(target, pname, params)
 	return		void
-	param		target		ProgramTargetARB in value
-	param		pname		ProgramPropertyARB in value
+	param		target		AssemblyProgramTargetArb in value		# ProgramTargetARB in value
+	param		pname		AssemblyProgramParameterArb in value	# ProgramPropertyARB in value
 	param		params		Int32 out array [1]
 	dlflags		notlistable
 	category	ARB_vertex_program
@@ -8925,8 +8926,8 @@ GetProgramivARB(target, pname, params)
 
 GetProgramStringARB(target, pname, string)
 	return		void
-	param		target		ProgramTargetARB in value
-	param		pname		ProgramStringPropertyARB in value
+	param		target		AssemblyProgramTargetArb in value			# ProgramTargetARB in value
+	param		pname		AssemblyProgramStringParameterArb in value	 # ProgramStringPropertyARB in value
 	param		string		Void out array [COMPSIZE(target,pname)]
 	dlflags		notlistable
 	category	ARB_vertex_program
@@ -8939,7 +8940,7 @@ GetProgramStringARB(target, pname, string)
 GetVertexAttribdvARB(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribPropertyARB in value
+	param		pname		VertexAttribParameterArb in value	# VertexAttribPropertyARB in value
 	param		params		Float64 out array [4]
 	dlflags		notlistable
 	category	ARB_vertex_program
@@ -8954,7 +8955,7 @@ GetVertexAttribdvARB(index, pname, params)
 GetVertexAttribfvARB(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribPropertyARB in value
+	param		pname		VertexAttribParameterArb in value	# VertexAttribPropertyARB in value
 	param		params		Float32 out array [4]
 	dlflags		notlistable
 	category	ARB_vertex_program
@@ -8969,7 +8970,7 @@ GetVertexAttribfvARB(index, pname, params)
 GetVertexAttribivARB(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribPropertyARB in value
+	param		pname		VertexAttribParameterArb in value	# VertexAttribPropertyARB in value
 	param		params		Int32 out array [4]
 	dlflags		notlistable
 	category	ARB_vertex_program
@@ -8984,7 +8985,7 @@ GetVertexAttribivARB(index, pname, params)
 GetVertexAttribPointervARB(index, pname, pointer)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribPointerPropertyARB in value
+	param		pname		VertexAttribPointerParameterArb in value	# VertexAttribPointerPropertyARB in value
 	param		pointer		VoidPointer out array [1]
 	dlflags		notlistable
 	category	ARB_vertex_program
@@ -9025,12 +9026,13 @@ passthru: /* All ARB_fragment_program entry points are shared with ARB_vertex_pr
 #
 # ARB Extension #28
 # ARB_vertex_buffer_object commands
+# Edited for OpenTK
 #
 ###############################################################################
 
 BindBufferARB(target, buffer)
 	return		void
-	param		target		BufferTargetARB in value
+	param		target		BufferTargetArb in value			# BufferTargetARB in value
 	param		buffer		UInt32 in value
 	category	ARB_vertex_buffer_object
 	version		1.2
@@ -9069,10 +9071,10 @@ IsBufferARB(buffer)
 
 BufferDataARB(target, size, data, usage)
 	return		void
-	param		target		BufferTargetARB in value
+	param		target		BufferTargetArb in value			# BufferTargetARB in value
 	param		size		BufferSizeARB in value
 	param		data		ConstVoid in array [size]
-	param		usage		BufferUsageARB in value
+	param		usage		BufferUsageArb in value				# BufferUsageARB in value
 	category	ARB_vertex_buffer_object
 	version		1.2
 	extension
@@ -9081,7 +9083,7 @@ BufferDataARB(target, size, data, usage)
 
 BufferSubDataARB(target, offset, size, data)
 	return		void
-	param		target		BufferTargetARB in value
+	param		target		BufferTargetArb in value			# BufferTargetARB in value
 	param		offset		BufferOffsetARB in value
 	param		size		BufferSizeARB in value
 	param		data		ConstVoid in array [size]
@@ -9093,7 +9095,7 @@ BufferSubDataARB(target, offset, size, data)
 
 GetBufferSubDataARB(target, offset, size, data)
 	return		void
-	param		target		BufferTargetARB in value
+	param		target		BufferTargetArb in value			# BufferTargetARB in value
 	param		offset		BufferOffsetARB in value
 	param		size		BufferSizeARB in value
 	param		data		Void out array [size]
@@ -9106,8 +9108,8 @@ GetBufferSubDataARB(target, offset, size, data)
 
 MapBufferARB(target, access)
 	return		VoidPointer
-	param		target		BufferTargetARB in value
-	param		access		BufferAccessARB in value
+	param		target		BufferTargetArb in value			# BufferTargetARB in value
+	param		access		BufferAccessArb in value			# BufferAccessAARB in value
 	category	ARB_vertex_buffer_object
 	version		1.2
 	extension
@@ -9116,7 +9118,7 @@ MapBufferARB(target, access)
 
 UnmapBufferARB(target)
 	return		Boolean
-	param		target		BufferTargetARB in value
+	param		target		BufferTargetArb in value			# BufferTargetARB in value
 	category	ARB_vertex_buffer_object
 	version		1.2
 	extension
@@ -9126,7 +9128,7 @@ UnmapBufferARB(target)
 GetBufferParameterivARB(target, pname, params)
 	return		void
 	param		target		BufferTargetARB in value
-	param		pname		BufferPNameARB in value
+	param		pname		BufferParameterNameArb in value		# BufferPNameARB in value
 	param		params		Int32 out array [COMPSIZE(pname)]
 	category	ARB_vertex_buffer_object
 	dlflags		notlistable
@@ -9138,7 +9140,7 @@ GetBufferParameterivARB(target, pname, params)
 GetBufferPointervARB(target, pname, params)
 	return		void
 	param		target		BufferTargetARB in value
-	param		pname		BufferPointerNameARB in value
+	param		pname		BufferPointerNameArb in value		# BufferPointerNameARB in value
 	param		params		VoidPointer out array [1]
 	category	ARB_vertex_buffer_object
 	dlflags		notlistable
