@@ -836,7 +836,7 @@ GetPName enum:
 #
 ###############################################################################
 
-VERSION_2_0 enum:
+#VERSION_2_0 enum:
 #	BLEND_EQUATION_RGB				= GL_BLEND_EQUATION # EXT_blend_equation_separate
 #	VERTEX_ATTRIB_ARRAY_ENABLED			= 0x8622    # ARB_vertex_shader
 #	VERTEX_ATTRIB_ARRAY_SIZE			= 0x8623    # ARB_vertex_shader
