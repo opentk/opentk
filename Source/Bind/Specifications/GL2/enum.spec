@@ -725,12 +725,12 @@ GetPName enum:
 	LINE_STIPPLE					= 0x0B24 # 1 I
 	LINE_STIPPLE_PATTERN				= 0x0B25 # 1 I
 	LINE_STIPPLE_REPEAT				= 0x0B26 # 1 I
-	use VERSION_1_2 SMOOTH_POINT_SIZE_RANGE
-	use VERSION_1_2 SMOOTH_POINT_SIZE_GRANULARITY
-	use VERSION_1_2 SMOOTH_LINE_WIDTH_RANGE
-	use VERSION_1_2 SMOOTH_LINE_WIDTH_GRANULARITY
-	use VERSION_1_2 ALIASED_POINT_SIZE_RANGE
-	use VERSION_1_2 ALIASED_LINE_WIDTH_RANGE
+#	use VERSION_1_2 SMOOTH_POINT_SIZE_RANGE
+#	use VERSION_1_2 SMOOTH_POINT_SIZE_GRANULARITY
+#	use VERSION_1_2 SMOOTH_LINE_WIDTH_RANGE
+#	use VERSION_1_2 SMOOTH_LINE_WIDTH_GRANULARITY
+#	use VERSION_1_2 ALIASED_POINT_SIZE_RANGE
+#	use VERSION_1_2 ALIASED_LINE_WIDTH_RANGE
 
 	LIST_MODE					= 0x0B30 # 1 I
 	MAX_LIST_NESTING				= 0x0B31 # 1 I
@@ -1001,7 +1001,7 @@ GetPName enum:
 #	 use ARB_transpose_matrix TRANSPOSE_TEXTURE_MATRIX_ARB
 #	 use ARB_transpose_matrix TRANSPOSE_COLOR_MATRIX_ARB
 
-	use VERSION_1_2 LIGHT_MODEL_COLOR_CONTROL
+#	use VERSION_1_2 LIGHT_MODEL_COLOR_CONTROL
 
 	use EXT_blend_color BLEND_COLOR_EXT
 
@@ -1290,8 +1290,8 @@ LightEnvParameterSGIX enum:
 ###############################################################################
 
 LightModelColorControl enum:
-	use VERSION_1_2 SINGLE_COLOR
-	use VERSION_1_2 SEPARATE_SPECULAR_COLOR
+#	use VERSION_1_2 SINGLE_COLOR
+#	use VERSION_1_2 SEPARATE_SPECULAR_COLOR
 
 ###############################################################################
 
@@ -1299,7 +1299,7 @@ LightModelParameter enum:
 	use GetPName LIGHT_MODEL_AMBIENT
 	use GetPName LIGHT_MODEL_LOCAL_VIEWER
 	use GetPName LIGHT_MODEL_TWO_SIDE
-	use VERSION_1_2 LIGHT_MODEL_COLOR_CONTROL
+#	use VERSION_1_2 LIGHT_MODEL_COLOR_CONTROL
 
 ###############################################################################
 
@@ -1498,10 +1498,6 @@ PixelFormat enum:
 	use SGIX_icc_texture LUMINANCE16_ALPHA8_ICC_SGIX
 	use SGIX_ycrcb YCRCB_422_SGIX
 	use SGIX_ycrcb YCRCB_444_SGIX
-	
-	# Revision 1
-	use EXT_bgra BGR 
-	use EXT_bgra BGRA
 
 ###############################################################################
 
@@ -1888,8 +1884,8 @@ TextureWrapMode enum:
 	# use SGIS_texture_border_clamp CLAMP_TO_BORDER_SGIS
 	# use SGIS_texture_edge_clamp CLAMP_TO_EDGE_SGIS
 	
-	use VERSION_1_3 CLAMP_TO_BORDER
-	use VERSION_1_2 CLAMP_TO_EDGE
+	# use VERSION_1_3 CLAMP_TO_BORDER
+	# use VERSION_1_2 CLAMP_TO_EDGE
 
 ###############################################################################
 
@@ -3492,13 +3488,13 @@ SGIX_icc_texture enum:
 ###############################################################################
 
 # SMOOTH_* enums are new names for pre-1.2 enums.
-VERSION_1_2 enum:
-	SMOOTH_POINT_SIZE_RANGE				= 0x0B12 # 2 F
-	SMOOTH_POINT_SIZE_GRANULARITY			= 0x0B13 # 1 F
-	SMOOTH_LINE_WIDTH_RANGE				= 0x0B22 # 2 F
-	SMOOTH_LINE_WIDTH_GRANULARITY			= 0x0B23 # 1 F
-	ALIASED_POINT_SIZE_RANGE			= 0x846D # 2 F
-	ALIASED_LINE_WIDTH_RANGE			= 0x846E # 2 F
+#VERSION_1_2 enum:
+#	SMOOTH_POINT_SIZE_RANGE				= 0x0B12 # 2 F
+#	SMOOTH_POINT_SIZE_GRANULARITY			= 0x0B13 # 1 F
+#	SMOOTH_LINE_WIDTH_RANGE				= 0x0B22 # 2 F
+#	SMOOTH_LINE_WIDTH_GRANULARITY			= 0x0B23 # 1 F
+#	ALIASED_POINT_SIZE_RANGE			= 0x846D # 2 F
+#	ALIASED_LINE_WIDTH_RANGE			= 0x846E # 2 F
 
 ###############################################################################
 
