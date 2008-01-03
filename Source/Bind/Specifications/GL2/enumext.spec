@@ -539,7 +539,7 @@ GetPName enum:
 #
 ###############################################################################
 
-VERSION_1_4 enum:
+#VERSION_1_4 enum:
 #	BLEND_DST_RGB					= 0x80C8
 #	BLEND_SRC_RGB					= 0x80C9
 #	BLEND_DST_ALPHA					= 0x80CA
@@ -548,8 +548,8 @@ VERSION_1_4 enum:
 #	POINT_SIZE_MAX					= 0x8127 # 1 F
 #	POINT_FADE_THRESHOLD_SIZE			= 0x8128 # 1 F
 #	POINT_DISTANCE_ATTENUATION			= 0x8129 # 3 F
-	GENERATE_MIPMAP					= 0x8191
-	GENERATE_MIPMAP_HINT				= 0x8192 # 1 I
+#	GENERATE_MIPMAP					= 0x8191
+#	GENERATE_MIPMAP_HINT				= 0x8192 # 1 I
 #	DEPTH_COMPONENT16				= 0x81A5	# PixelInternalFormat
 #	DEPTH_COMPONENT24				= 0x81A6	# PixelInternalFormat
 #	DEPTH_COMPONENT32				= 0x81A7	# PixelInternalFormat
@@ -572,13 +572,31 @@ VERSION_1_4 enum:
 #	MAX_TEXTURE_LOD_BIAS				= 0x84FD
 #	TEXTURE_FILTER_CONTROL				= 0x8500
 #	TEXTURE_LOD_BIAS				= 0x8501
-	INCR_WRAP					= 0x8507
-	DECR_WRAP					= 0x8508
+#	INCR_WRAP					= 0x8507
+#	DECR_WRAP					= 0x8508
 #	TEXTURE_DEPTH_SIZE				= 0x884A
 #	DEPTH_TEXTURE_MODE				= 0x884B
 #	TEXTURE_COMPARE_MODE				= 0x884C
 #	TEXTURE_COMPARE_FUNC				= 0x884D
 #	COMPARE_R_TO_TEXTURE				= 0x884E
+
+# Generate Mipmap (http://www.opengl.org/registry/specs/SGIS/generate_mipmap.txt)
+TextureParameterName enum:
+	GENERATE_MIPMAP				= 0x8191
+	
+GetPName enum:
+	GENERATE_MIPMAP_HINT		= 0x8192 # 1 I
+	
+GetTextureParameter enum:
+	GENERATE_MIPMAP				= 0x8191
+
+HintTarget enum:
+	GENERATE_MIPMAP_HINT		= 0x8192 # 1 I
+
+# Stencil Wrap (http://www.opengl.org/registry/specs/EXT/stencil_wrap.txt)
+StencilOp enum:
+	INCR_WRAP					= 0x8507
+	DECR_WRAP					= 0x8508	
 
 # Texture LOD Bias (http://www.opengl.org/registry/specs/EXT/texture_lod_bias.txt)
 TextureEnvTarget enum:
