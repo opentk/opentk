@@ -193,6 +193,7 @@ namespace Bind
 
         internal static string GetGL2Extension(string name)
         {
+            name = name.ToUpper();
             if (name.EndsWith("ARB")) { return "Arb"; }
             if (name.EndsWith("EXT")) { return "Ext"; }
             if (name.EndsWith("ATI")) { return "Ata"; }
