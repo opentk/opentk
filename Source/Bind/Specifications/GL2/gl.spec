@@ -5093,10 +5093,10 @@ GetCompressedTexImage(target, level, img)
 
 BlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha)
 	return		void
-	param		sfactorRGB	BlendFuncSeparateParameterEXT in value
-	param		dfactorRGB	BlendFuncSeparateParameterEXT in value
-	param		sfactorAlpha	BlendFuncSeparateParameterEXT in value
-	param		dfactorAlpha	BlendFuncSeparateParameterEXT in value
+	param		sfactorRGB		BlendingFactorSrc in value # BlendFuncSeparateParameterEXT in value
+	param		dfactorRGB		BlendingFactorDest in value # BlendFuncSeparateParameterEXT in value
+	param		sfactorAlpha	BlendingFactorSrc in value # BlendFuncSeparateParameterEXT in value
+	param		dfactorAlpha	BlendingFactorDest in value # BlendFuncSeparateParameterEXT in value
 	category	VERSION_1_4
 	glxropcode	4134
 	version		1.4
