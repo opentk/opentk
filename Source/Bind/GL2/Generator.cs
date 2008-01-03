@@ -247,9 +247,7 @@ namespace Bind.GL2
                             {
                                 // The value is a number, check if it should be unchecked.
                                 if (number > 0x7FFFFFFF)
-                                {
                                     c.Unchecked = true;
-                                }
                             }
                             else
                             {
@@ -309,22 +307,15 @@ namespace Bind.GL2
                     //e.Translate();
 
                     if (!enums.ContainsKey(e.Name))
-                    {
                         enums.Add(e.Name, e);
-                    }
                     else
                     {
                         // The enum already exists, merge constants.
-                        Trace.WriteLine(String.Format("Conflict: Enum {0} already exists, merging constants.", e.Name));
+                        Trace.WriteLine(String.Format("Enum {0} already defined, merging constants.", e.Name));
                         foreach (Constant t in e.ConstantCollection.Values)
-                        {
                             Utilities.Merge(enums[e.Name], t);
-                        }
                     }
-
-                    //enums.Add(e);
                 }
-                //SpecTranslator.Merge(enums, complete_enum);
             }
             while (!specFile.EndOfStream);
 
