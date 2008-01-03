@@ -1119,7 +1119,7 @@ GetPName enum:
 ###############################################################################
 
 VERSION_2_1 enum:
-	CURRENT_RASTER_SECONDARY_COLOR			= 0x845F    # New for 2.1
+#	CURRENT_RASTER_SECONDARY_COLOR			= 0x845F    # New for 2.1
 #	PIXEL_PACK_BUFFER				= 0x88EB    # ARB_pixel_buffer_object
 #	PIXEL_UNPACK_BUFFER				= 0x88EC    # ARB_pixel_buffer_object
 #	PIXEL_PACK_BUFFER_BINDING			= 0x88ED    # ARB_pixel_buffer_object
@@ -1143,7 +1143,11 @@ VERSION_2_1 enum:
 #	COMPRESSED_SLUMINANCE				= 0x8C4A    # EXT_texture_sRGB
 #	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # EXT_texture_sRGB
 
-# Shader Uniforms
+# Raster Secondary Color (http://www.opengl.org/sdk/docs/man/xhtml/glGet.xml)
+GetPName enum:
+	CURRENT_RASTER_SECONDARY_COLOR	= 0x845F    # New for 2.1
+
+# Shader Uniforms (http://www.opengl.org/sdk/docs/man/xhtml/glGetActiveUniform.xml)
 ActiveUniformType enum:
 	FLOAT_MAT2x3					= 0x8B65    # New for 2.1
 	FLOAT_MAT2x4					= 0x8B66    # New for 2.1
