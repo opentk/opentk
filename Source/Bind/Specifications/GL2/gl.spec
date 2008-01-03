@@ -6111,7 +6111,7 @@ GetProgramInfoLog(program, bufSize, length, infoLog)
 GetShaderiv(shader, pname, params)
 	return		void
 	param		shader		UInt32 in value
-	param		pname		GLenum in value
+	param		pname		Version20 in value
 	param		params		Int32 out array [pname]
 	category	VERSION_2_0
 	dlflags		notlistable
