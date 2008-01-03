@@ -301,30 +301,124 @@ VERSION_1_3 enum:
 #	NUM_COMPRESSED_TEXTURE_FORMATS			= 0x86A2
 #	COMPRESSED_TEXTURE_FORMATS			= 0x86A3
 	CLAMP_TO_BORDER					= 0x812D	# Promoted from ARB_texture_border_clamp
+#	COMBINE						= 0x8570	# Promoted from ARB_texture_env_combine
+#	COMBINE_RGB					= 0x8571
+#	COMBINE_ALPHA					= 0x8572
+#	SOURCE0_RGB					= 0x8580
+#	SOURCE1_RGB					= 0x8581
+#	SOURCE2_RGB					= 0x8582
+#	SOURCE0_ALPHA					= 0x8588
+#	SOURCE1_ALPHA					= 0x8589
+#	SOURCE2_ALPHA					= 0x858A
+#	OPERAND0_RGB					= 0x8590
+#	OPERAND1_RGB					= 0x8591
+#	OPERAND2_RGB					= 0x8592
+#	OPERAND0_ALPHA					= 0x8598
+#	OPERAND1_ALPHA					= 0x8599
+#	OPERAND2_ALPHA					= 0x859A
+#	RGB_SCALE					= 0x8573
+#	ADD_SIGNED					= 0x8574
+#	INTERPOLATE					= 0x8575
+#	SUBTRACT					= 0x84E7
+#	CONSTANT					= 0x8576
+#	PRIMARY_COLOR					= 0x8577
+#	PREVIOUS					= 0x8578
+#	DOT3_RGB					= 0x86AE	# Promoted from ARB_texture_env_dot3
+#	DOT3_RGBA					= 0x86AF
+
+# Texture Environment Combine
+# http://www.opengl.org/sdk/docs/man/xhtml/glTexEnv.xml
+# http://www.opengl.org/registry/specs/ARB/texture_env_combine.txt
+# http://www.opengl.org/registry/specs/ARB/texture_env_crossbar.txt
+# http://www.opengl.org/registry/specs/ARB/texture_env_dot3.txt
+TextureEnvMode enum:
 	COMBINE						= 0x8570	# Promoted from ARB_texture_env_combine
+
+TextureEnvParameter enum:
 	COMBINE_RGB					= 0x8571
-	COMBINE_ALPHA					= 0x8572
+	COMBINE_ALPHA				= 0x8572
 	SOURCE0_RGB					= 0x8580
-	SOURCE1_RGB					= 0x8581
-	SOURCE2_RGB					= 0x8582
-	SOURCE0_ALPHA					= 0x8588
-	SOURCE1_ALPHA					= 0x8589
-	SOURCE2_ALPHA					= 0x858A
-	OPERAND0_RGB					= 0x8590
-	OPERAND1_RGB					= 0x8591
-	OPERAND2_RGB					= 0x8592
-	OPERAND0_ALPHA					= 0x8598
-	OPERAND1_ALPHA					= 0x8599
-	OPERAND2_ALPHA					= 0x859A
+	SRC1_RGB					= 0x8581
+	SRC2_RGB					= 0x8582
+	SRC0_ALPHA					= 0x8588
+	SRC1_ALPHA					= 0x8589
+	SRC2_ALPHA					= 0x858A
+	OPERAND0_RGB				= 0x8590
+	OPERAND1_RGB				= 0x8591
+	OPERAND2_RGB				= 0x8592
+	OPERAND0_ALPHA				= 0x8598
+	OPERAND1_ALPHA				= 0x8599
+	OPERAND2_ALPHA				= 0x859A
 	RGB_SCALE					= 0x8573
+	use GetPName ALPHA_SCALE
+
+# <summary>Accepted by GL.TexGen when the pname parameter value is CombineRgb or CombineAlpha.</summary>
+TextureEnvModeCombine enum:
+	use StencilOp  REPLACE
+	use TextureEnvMode MODULATE
+	use AccumOp    ADD
 	ADD_SIGNED					= 0x8574
 	INTERPOLATE					= 0x8575
 	SUBTRACT					= 0x84E7
-	CONSTANT					= 0x8576
-	PRIMARY_COLOR					= 0x8577
-	PREVIOUS					= 0x8578
 	DOT3_RGB					= 0x86AE	# Promoted from ARB_texture_env_dot3
 	DOT3_RGBA					= 0x86AF
+
+# <summary>Accepted by GL.TexGen when the pname parameter value is Source0Rgb, Source1Rgb, Source2Rgb, Source0Alpha, Source1Alpha, or Source2Alpha.</summary>
+TextureEnvModeSource enum:
+	use MatrixMode TEXTURE
+	CONSTANT					= 0x8576
+	PRIMARY_COLOR				= 0x8577
+	PREVIOUS					= 0x8578
+	TEXTURE0					= 0x84C0	# Promoted from ARB_multitexture
+	TEXTURE1					= 0x84C1
+	TEXTURE2					= 0x84C2
+	TEXTURE3					= 0x84C3
+	TEXTURE4					= 0x84C4
+	TEXTURE5					= 0x84C5
+	TEXTURE6					= 0x84C6
+	TEXTURE7					= 0x84C7
+	TEXTURE8					= 0x84C8
+	TEXTURE9					= 0x84C9
+	TEXTURE10					= 0x84CA
+	TEXTURE11					= 0x84CB
+	TEXTURE12					= 0x84CC
+	TEXTURE13					= 0x84CD
+	TEXTURE14					= 0x84CE
+	TEXTURE15					= 0x84CF
+	TEXTURE16					= 0x84D0
+	TEXTURE17					= 0x84D1
+	TEXTURE18					= 0x84D2
+	TEXTURE19					= 0x84D3
+	TEXTURE20					= 0x84D4
+	TEXTURE21					= 0x84D5
+	TEXTURE22					= 0x84D6
+	TEXTURE23					= 0x84D7
+	TEXTURE24					= 0x84D8
+	TEXTURE25					= 0x84D9
+	TEXTURE26					= 0x84DA
+	TEXTURE27					= 0x84DB
+	TEXTURE28					= 0x84DC
+	TEXTURE29					= 0x84DD
+	TEXTURE30					= 0x84DE
+	TEXTURE31					= 0x84DF
+
+# <summary>Accepted by GL.TexGen when the pname parameter value is Operand0Rgb, Operand1Rgb, or Operand2Rgb.</summary>
+TextureEnvModeOperandRgb enum:
+	use BlendingFactorDest SRC_COLOR
+	use BlendingFactorDest ONE_MINUS_SRC_COLOR
+	use BlendingFactorDest SRC_ALPHA
+	use BlendingFactorDest ONE_MINUS_SRC_ALPHA
+
+# <summary>Accepted by GL.TexGen when the pname parameter value is Operand0Alpha, Operand1Alpha, or Operand2Alpha.</summary>
+TextureEnvModeOperandAlpha enum:
+	use BlendingFactorDest SRC_ALPHA
+	use BlendingFactorDest ONE_MINUS_SRC_ALPHA
+	
+# <summary>Accepted by GL.TexGen when the pname parameter value is RgbScale or AlphaScale.</summary>
+TextureEnvModeScale enum:
+	ONE							= 1
+	TWO							= 2
+	FOUR						= 4
 
 # Transpose Matrix (http://www.opengl.org/registry/specs/ARB/transpose_matrix.txt)
 GetPName enum:
@@ -465,7 +559,11 @@ VERSION_1_4 enum:
 #	TEXTURE_COMPARE_MODE				= 0x884C
 #	TEXTURE_COMPARE_FUNC				= 0x884D
 #	COMPARE_R_TO_TEXTURE				= 0x884E
-	
+
+# Texture Filter Control
+TextureEnvTarget enum:
+	TEXTURE_FILTER_CONTROL				= 0x8500
+
 # Depth Texture
 PixelInternalFormat enum:
     use PixelFormat DEPTH_COMPONENT
