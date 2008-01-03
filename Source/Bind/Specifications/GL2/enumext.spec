@@ -846,10 +846,10 @@ VERSION_2_0 enum:
 #	VERTEX_PROGRAM_POINT_SIZE			= 0x8642    # ARB_vertex_shader
 #	VERTEX_PROGRAM_TWO_SIDE				= 0x8643    # ARB_vertex_shader
 #	VERTEX_ATTRIB_ARRAY_POINTER			= 0x8645    # ARB_vertex_shader
-	STENCIL_BACK_FUNC				= 0x8800    # ARB_stencil_two_side
-	STENCIL_BACK_FAIL				= 0x8801    # ARB_stencil_two_side
-	STENCIL_BACK_PASS_DEPTH_FAIL			= 0x8802    # ARB_stencil_two_side
-	STENCIL_BACK_PASS_DEPTH_PASS			= 0x8803    # ARB_stencil_two_side
+#	STENCIL_BACK_FUNC				= 0x8800    # ARB_stencil_two_side
+#	STENCIL_BACK_FAIL				= 0x8801    # ARB_stencil_two_side
+#	STENCIL_BACK_PASS_DEPTH_FAIL			= 0x8802    # ARB_stencil_two_side
+#	STENCIL_BACK_PASS_DEPTH_PASS			= 0x8803    # ARB_stencil_two_side
 #	MAX_DRAW_BUFFERS				= 0x8824    # ARB_draw_buffers
 #	DRAW_BUFFER0					= 0x8825    # ARB_draw_buffers
 #	DRAW_BUFFER1					= 0x8826    # ARB_draw_buffers
@@ -918,9 +918,22 @@ VERSION_2_0 enum:
 	POINT_SPRITE_COORD_ORIGIN			= 0x8CA0    # ARB_point_sprite (added for 2.0)
 	LOWER_LEFT					= 0x8CA1    # ARB_point_sprite (added for 2.0)
 	UPPER_LEFT					= 0x8CA2    # ARB_point_sprite (added for 2.0)
+#	STENCIL_BACK_REF				= 0x8CA3    # ARB_stencil_two_side
+#	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
+#	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
+
+# Two Side Stencil
+# http://www.opengl.org/sdk/docs/man/xhtml/glStencilFuncSeparate.xml
+# http://www.opengl.org/sdk/docs/man/xhtml/glStencilMaskSeparate.xml
+# http://www.opengl.org/sdk/docs/man/xhtml/glStencilOpSeparate.xml
+GetPName enum:
+	STENCIL_BACK_FUNC				= 0x8800    # ARB_stencil_two_side
+	STENCIL_BACK_FAIL				= 0x8801    # ARB_stencil_two_side
+	STENCIL_BACK_PASS_DEPTH_FAIL	= 0x8802    # ARB_stencil_two_side
+	STENCIL_BACK_PASS_DEPTH_PASS	= 0x8803    # ARB_stencil_two_side
 	STENCIL_BACK_REF				= 0x8CA3    # ARB_stencil_two_side
-	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
-	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
+	STENCIL_BACK_VALUE_MASK			= 0x8CA4    # ARB_stencil_two_side
+	STENCIL_BACK_WRITEMASK			= 0x8CA5    # ARB_stencil_two_side
 
 # Blend equation separate (http://www.opengl.org/registry/specs/EXT/blend_equation_separate.txt)
 GetPName enum:
