@@ -1122,14 +1122,14 @@ VERSION_2_1 enum:
 	CURRENT_RASTER_SECONDARY_COLOR			= 0x845F    # New for 2.1
 #	PIXEL_PACK_BUFFER				= 0x88EB    # ARB_pixel_buffer_object
 #	PIXEL_UNPACK_BUFFER				= 0x88EC    # ARB_pixel_buffer_object
-	PIXEL_PACK_BUFFER_BINDING			= 0x88ED    # ARB_pixel_buffer_object
-	PIXEL_UNPACK_BUFFER_BINDING			= 0x88EF    # ARB_pixel_buffer_object
-	FLOAT_MAT2x3					= 0x8B65    # New for 2.1
-	FLOAT_MAT2x4					= 0x8B66    # New for 2.1
-	FLOAT_MAT3x2					= 0x8B67    # New for 2.1
-	FLOAT_MAT3x4					= 0x8B68    # New for 2.1
-	FLOAT_MAT4x2					= 0x8B69    # New for 2.1
-	FLOAT_MAT4x3					= 0x8B6A    # New for 2.1
+#	PIXEL_PACK_BUFFER_BINDING			= 0x88ED    # ARB_pixel_buffer_object
+#	PIXEL_UNPACK_BUFFER_BINDING			= 0x88EF    # ARB_pixel_buffer_object
+#	FLOAT_MAT2x3					= 0x8B65    # New for 2.1
+#	FLOAT_MAT2x4					= 0x8B66    # New for 2.1
+#	FLOAT_MAT3x2					= 0x8B67    # New for 2.1
+#	FLOAT_MAT3x4					= 0x8B68    # New for 2.1
+#	FLOAT_MAT4x2					= 0x8B69    # New for 2.1
+#	FLOAT_MAT4x3					= 0x8B6A    # New for 2.1
 #	SRGB						= 0x8C40    # EXT_texture_sRGB
 #	SRGB8						= 0x8C41    # EXT_texture_sRGB
 #	SRGB_ALPHA					= 0x8C42    # EXT_texture_sRGB
@@ -1142,6 +1142,15 @@ VERSION_2_1 enum:
 #	COMPRESSED_SRGB_ALPHA				= 0x8C49    # EXT_texture_sRGB
 #	COMPRESSED_SLUMINANCE				= 0x8C4A    # EXT_texture_sRGB
 #	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # EXT_texture_sRGB
+
+# Shader Uniforms
+ActiveUniformType enum:
+	FLOAT_MAT2x3					= 0x8B65    # New for 2.1
+	FLOAT_MAT2x4					= 0x8B66    # New for 2.1
+	FLOAT_MAT3x2					= 0x8B67    # New for 2.1
+	FLOAT_MAT3x4					= 0x8B68    # New for 2.1
+	FLOAT_MAT4x2					= 0x8B69    # New for 2.1
+	FLOAT_MAT4x3					= 0x8B6A    # New for 2.1
 
 # Pixel Buffer Objects http://www.opengl.org/sdk/docs/man/xhtml/glBindBuffer.xml
 BufferTarget enum:
