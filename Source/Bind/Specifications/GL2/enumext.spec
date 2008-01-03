@@ -1118,7 +1118,7 @@ GetPName enum:
 #
 ###############################################################################
 
-VERSION_2_1 enum:
+#VERSION_2_1 enum:
 #	CURRENT_RASTER_SECONDARY_COLOR			= 0x845F    # New for 2.1
 #	PIXEL_PACK_BUFFER				= 0x88EB    # ARB_pixel_buffer_object
 #	PIXEL_UNPACK_BUFFER				= 0x88EC    # ARB_pixel_buffer_object
