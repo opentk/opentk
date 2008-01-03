@@ -540,10 +540,10 @@ GetPName enum:
 ###############################################################################
 
 VERSION_1_4 enum:
-	BLEND_DST_RGB					= 0x80C8
-	BLEND_SRC_RGB					= 0x80C9
-	BLEND_DST_ALPHA					= 0x80CA
-	BLEND_SRC_ALPHA					= 0x80CB
+#	BLEND_DST_RGB					= 0x80C8
+#	BLEND_SRC_RGB					= 0x80C9
+#	BLEND_DST_ALPHA					= 0x80CA
+#	BLEND_SRC_ALPHA					= 0x80CB
 #	POINT_SIZE_MIN					= 0x8126 # 1 F
 #	POINT_SIZE_MAX					= 0x8127 # 1 F
 #	POINT_FADE_THRESHOLD_SIZE			= 0x8128 # 1 F
@@ -579,6 +579,13 @@ VERSION_1_4 enum:
 #	TEXTURE_COMPARE_MODE				= 0x884C
 #	TEXTURE_COMPARE_FUNC				= 0x884D
 #	COMPARE_R_TO_TEXTURE				= 0x884E
+
+# Blendfunc Separate (http://www.opengl.org/registry/specs/EXT/blend_func_separate.txt)
+GetPName enum:
+	BLEND_DST_RGB					= 0x80C8
+	BLEND_SRC_RGB					= 0x80C9
+	BLEND_DST_ALPHA					= 0x80CA
+	BLEND_SRC_ALPHA					= 0x80CB
 
 # Texture Filter Control
 TextureEnvTarget enum:
