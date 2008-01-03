@@ -15,8 +15,8 @@ namespace Bind.Structures
 
     public class Enum
     {
-        internal static EnumCollection GLEnums;
-        internal static EnumCollection AuxEnums;
+        internal static EnumCollection GLEnums = new EnumCollection();
+        internal static EnumCollection AuxEnums = new EnumCollection();
 
         static StringBuilder translator = new StringBuilder();
         string _name;
@@ -57,6 +57,7 @@ namespace Bind.Structures
                         }
                     }
                 }
+
                 enumsLoaded = true;
             }
         }
@@ -75,11 +76,15 @@ namespace Bind.Structures
 
         #endregion
 
+        #region public string Name
+
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
+
+        #endregion
 
         System.Collections.Hashtable _constant_collection = new System.Collections.Hashtable();
 
@@ -98,7 +103,7 @@ namespace Bind.Structures
             {
                 bool is_after_underscore = true;    // Detect if we just passed a '_' and make the next char
                                                     // uppercase.
-                bool is_previous_uppercase = false; // Detetc if previous character was uppercase, and turn
+                bool is_previous_uppercase = false; // Detect if previous character was uppercase, and turn
                                                     // the current one to lowercase.
 
                 foreach (char c in name)
@@ -136,7 +141,8 @@ namespace Bind.Structures
             {
                 sb.Append("    ");
                 sb.Append(c.ToString());
-                sb.AppendLine(",");
+                if (!String.IsNullOrEmpty(c.ToString()))
+                    sb.AppendLine(",");
             }
             sb.Append("}");
 
@@ -148,21 +154,39 @@ namespace Bind.Structures
 
     #region class EnumCollection
 
-    class EnumCollection : Dictionary<string, Enum>
+    public class EnumCollection : Dictionary<string, Enum>
     {
         internal void AddRange(EnumCollection enums)
         {
             foreach (Enum e in enums.Values)
-            {
                 Utilities.Merge(this, e);
-            }
         }
 
         internal void Translate()
         {
-            foreach (Enum e in this.Values)
-                e.Name = Enum.TranslateName(e.Name);
-            
+            // Translate enum names.
+            {
+                List<string> keys_to_update = new List<string>();
+                foreach (Enum e in this.Values)
+                {
+                    string name = Enum.TranslateName(e.Name);
+                    if (name != e.Name)
+                    {
+                        keys_to_update.Add(e.Name);
+                        e.Name = name;
+                    }
+                }
+
+                foreach (string name in keys_to_update)
+                {
+                    Enum e = this[name];
+                    this.Remove(name);
+                    this.Add(e.Name, e);
+                }
+
+                keys_to_update = null;
+            }
+
             foreach (Enum e in this.Values)
             {
                 foreach (Constant c in e.ConstantCollection.Values)
@@ -181,11 +205,76 @@ namespace Bind.Structures
                             if (@enum.ConstantCollection.ContainsKey(c.Value))
                             {
                                 c.Reference = @enum.Name;
+                                break;
                             }
                         }
                     }
                 }
             }
+
+            foreach (Enum e in this.Values)
+                foreach (Constant c in e.ConstantCollection.Values)
+                    Constant.TranslateConstantWithReference(c, Enum.GLEnums, Enum.AuxEnums);
+
+            // When there are multiple tokens with the same value but different extension
+            // drop the duplicates. Order of preference: core > ARB > EXT > vendor specific
+            foreach (Enum e in this.Values)
+            {
+                if (e.Name == "All")
+                    continue;
+
+                foreach (Constant c in e.ConstantCollection.Values)
+                    foreach (Constant c2 in e.ConstantCollection.Values)
+                    {
+                        if (c.Name != c2.Name && c.Value == c2.Value)
+                        {
+                            if (c.Name.Contains(Constant.Translate("TEXTURE_DEFORMATION_BIT_SGIX")) ||
+                                c2.Name.Contains(Constant.Translate("TEXTURE_DEFORMATION_BIT_SGIX")))
+                            {
+                            }
+
+                            int prefer = OrderOfPreference(Utilities.GetGL2Extension(c.Name), Utilities.GetGL2Extension(c2.Name));
+                            if (prefer == -1)
+                            {
+                                c2.Name = "";
+                                c2.Value = "";
+                            }
+                            else if (prefer == 1)
+                            {
+                                c.Name = "";
+                                c.Value = "";
+                            }
+                        }
+                    }
+            }
+        }
+
+        // Return -1 for ext1, 1 for ext2 or 0 if no preference.
+        int OrderOfPreference(string ext1, string ext2)
+        {
+            // If one is empty and the other note, prefer the empty one.
+            // (empty == core)
+            // Otherwise check for Arb and Ext. To reuse the logic for the
+            // empty check, let's try to remove first Arb, then Ext from the strings.
+            int ret;
+            ret = OrderOfPreferenceInternal(ext1, ext2);
+            if (ret != 0) return ret;
+            ext1 = ext1.Replace("Arb", ""); ext2 = ext2.Replace("Arb", "");
+            ret = OrderOfPreferenceInternal(ext1, ext2);
+            if (ret != 0) return ret;
+            ext1 = ext1.Replace("Ext", ""); ext2 = ext2.Replace("Ext", "");
+            return ret;
+        }
+
+        // Prefer the empty string over the non-empty.
+        int OrderOfPreferenceInternal(string ext1, string ext2)
+        {
+            if (String.IsNullOrEmpty(ext1) && !String.IsNullOrEmpty(ext2))
+                return -1;
+            else if (String.IsNullOrEmpty(ext2) && !String.IsNullOrEmpty(ext1))
+                return 1;
+            else
+                return 0;
         }
 
         new bool TryGetValue(string key, out Enum value)
