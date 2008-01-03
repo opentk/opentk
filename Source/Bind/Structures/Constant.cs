@@ -177,7 +177,7 @@ namespace Bind.Structures
                     TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
                     value = (enums[c.Reference].ConstantCollection[c.Value] as Constant).Value;
                 }
-                else if (auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
+                else if (auxEnums.Count > 0 && auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
                 {
                     TranslateConstantWithReference(auxEnums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
                     value = (auxEnums[c.Reference].ConstantCollection[c.Value] as Constant).Value;
