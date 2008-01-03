@@ -922,15 +922,6 @@ GetPName enum:
 #	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
 #	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
 
-# Point Sprites (http://www.opengl.org/sdk/docs/man/xhtml/glPointParameter.xml)
-PointParameterName enum:
-	POINT_SPRITE_COORD_ORIGIN		= 0x8CA0    # ARB_point_sprite (added for 2.0)
-
-# <summary>Specifies the coordinate origin of the Point Sprite.</summary>
-PointSpriteCoordOriginParameter enum:
-	LOWER_LEFT						= 0x8CA1    # ARB_point_sprite (added for 2.0)
-	UPPER_LEFT						= 0x8CA2    # ARB_point_sprite (added for 2.0)
-
 # Two Side Stencil
 # http://www.opengl.org/sdk/docs/man/xhtml/glStencilFuncSeparate.xml
 # http://www.opengl.org/sdk/docs/man/xhtml/glStencilMaskSeparate.xml
@@ -1093,7 +1084,17 @@ GetPName enum:
 	DRAW_BUFFER14					= 0x8833
 	DRAW_BUFFER15					= 0x8834
 
-# Point Sprites (http://opengl.org/registry/specs/ARB/point_sprite.txt)
+# Point Sprites
+# http://opengl.org/registry/specs/ARB/point_sprite.txt
+# http://www.opengl.org/sdk/docs/man/xhtml/glPointParameter.xml
+PointParameterName enum:
+	POINT_SPRITE_COORD_ORIGIN		= 0x8CA0    # ARB_point_sprite (added for 2.0)
+
+# <summary>Specifies the coordinate origin of the Point Sprite.</summary>
+PointSpriteCoordOriginParameter enum:
+	LOWER_LEFT						= 0x8CA1    # ARB_point_sprite (added for 2.0)
+	UPPER_LEFT						= 0x8CA2    # ARB_point_sprite (added for 2.0)
+	
 EnableCap enum:
 	POINT_SPRITE					= 0x8861
 
