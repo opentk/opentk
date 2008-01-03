@@ -5944,7 +5944,7 @@ CreateProgram()
 
 CreateShader(type)
 	return		UInt32
-	param		type		ShaderObjectType in value		# GLenum in value
+	param		type		ShaderType in value		# GLenum in value
 	category	VERSION_2_0
 	version		2.0
 	extension
@@ -6016,7 +6016,7 @@ GetActiveAttrib(program, index, bufSize, length, size, type, name)
 	param		bufSize		SizeI in value
 	param		length		SizeI out array [1]
 	param		size		Int32 out array [1]
-	param		type		GLenum out array [1]
+	param		type		ActiveAttribType out array [1] # GLenum out array [1]
 	param		name		Char out array []
 	category	VERSION_2_0
 	dlflags		notlistable
@@ -6202,7 +6202,7 @@ GetUniformiv(program, location, params)
 GetVertexAttribdv(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribPropertyARB in value
+	param		pname		VertexAttribParameter in value		# VertexAttribPropertyARB in value
 	param		params		Float64 out array [4]
 	dlflags		notlistable
 	category	VERSION_2_0
@@ -6216,7 +6216,7 @@ GetVertexAttribdv(index, pname, params)
 GetVertexAttribfv(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribPropertyARB in value
+	param		pname		VertexAttribParameter in value		# VertexAttribPropertyARB in value
 	param		params		Float32 out array [4]
 	dlflags		notlistable
 	category	VERSION_2_0
@@ -6230,7 +6230,7 @@ GetVertexAttribfv(index, pname, params)
 GetVertexAttribiv(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribPropertyARB in value
+	param		pname		VertexAttribParameter in value		# VertexAttribPropertyARB in value
 	param		params		Int32 out array [4]
 	dlflags		notlistable
 	category	VERSION_2_0
@@ -6244,7 +6244,7 @@ GetVertexAttribiv(index, pname, params)
 GetVertexAttribPointerv(index, pname, pointer)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribPointerPropertyARB in value
+	param		pname		VertexAttribPointerParameter in value # VertexAttribPointerPropertyARB in value
 	param		pointer		VoidPointer out array [1]
 	dlflags		notlistable
 	category	VERSION_2_0
@@ -7017,7 +7017,7 @@ VertexAttribPointer(index, size, type, normalized, stride, pointer)
 	return		void
 	param		index		UInt32 in value
 	param		size		Int32 in value
-	param		type		VertexAttribPointerTypeARB in value
+	param		type		VertexAttribPointerType in value # VertexAttribPointerTypeARB in value
 	param		normalized	Boolean in value
 	param		stride		SizeI in value
 	param		pointer		Void in array [COMPSIZE(size/type/stride)] retained

@@ -221,6 +221,9 @@ ARB_imaging enum:
 	CONSTANT_BORDER					= 0x8151
 	REPLICATE_BORDER				= 0x8153
 	CONVOLUTION_BORDER_COLOR			= 0x8154
+	
+MatrixMode enum:
+	use PixelCopyType COLOR		# <summary>Supported by the ARB_imaging extension</summary>
 
 ###############################################################################
 #
@@ -835,14 +838,14 @@ GetPName enum:
 
 VERSION_2_0 enum:
 	BLEND_EQUATION_RGB				= GL_BLEND_EQUATION # EXT_blend_equation_separate
-	VERTEX_ATTRIB_ARRAY_ENABLED			= 0x8622    # ARB_vertex_shader
-	VERTEX_ATTRIB_ARRAY_SIZE			= 0x8623    # ARB_vertex_shader
-	VERTEX_ATTRIB_ARRAY_STRIDE			= 0x8624    # ARB_vertex_shader
-	VERTEX_ATTRIB_ARRAY_TYPE			= 0x8625    # ARB_vertex_shader
-	CURRENT_VERTEX_ATTRIB				= 0x8626    # ARB_vertex_shader
-	VERTEX_PROGRAM_POINT_SIZE			= 0x8642    # ARB_vertex_shader
-	VERTEX_PROGRAM_TWO_SIDE				= 0x8643    # ARB_vertex_shader
-	VERTEX_ATTRIB_ARRAY_POINTER			= 0x8645    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_ENABLED			= 0x8622    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_SIZE			= 0x8623    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_STRIDE			= 0x8624    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_TYPE			= 0x8625    # ARB_vertex_shader
+#	CURRENT_VERTEX_ATTRIB				= 0x8626    # ARB_vertex_shader
+#	VERTEX_PROGRAM_POINT_SIZE			= 0x8642    # ARB_vertex_shader
+#	VERTEX_PROGRAM_TWO_SIDE				= 0x8643    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_POINTER			= 0x8645    # ARB_vertex_shader
 	STENCIL_BACK_FUNC				= 0x8800    # ARB_stencil_two_side
 	STENCIL_BACK_FAIL				= 0x8801    # ARB_stencil_two_side
 	STENCIL_BACK_PASS_DEPTH_FAIL			= 0x8802    # ARB_stencil_two_side
@@ -867,17 +870,17 @@ VERSION_2_0 enum:
 	BLEND_EQUATION_ALPHA				= 0x883D    # EXT_blend_equation_separate
 #	POINT_SPRITE					= 0x8861    # ARB_point_sprite
 #	COORD_REPLACE					= 0x8862    # ARB_point_sprite
-	MAX_VERTEX_ATTRIBS				= 0x8869    # ARB_vertex_shader
-	VERTEX_ATTRIB_ARRAY_NORMALIZED			= 0x886A    # ARB_vertex_shader
-	MAX_TEXTURE_COORDS				= 0x8871    # ARB_vertex_shader, ARB_fragment_shader
-	MAX_TEXTURE_IMAGE_UNITS				= 0x8872    # ARB_vertex_shader, ARB_fragment_shader
+#	MAX_VERTEX_ATTRIBS				= 0x8869    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_NORMALIZED			= 0x886A    # ARB_vertex_shader
+#	MAX_TEXTURE_COORDS				= 0x8871    # ARB_vertex_shader, ARB_fragment_shader
+#	MAX_TEXTURE_IMAGE_UNITS				= 0x8872    # ARB_vertex_shader, ARB_fragment_shader
 #	FRAGMENT_SHADER					= 0x8B30    # ARB_fragment_shader
 #	VERTEX_SHADER					= 0x8B31    # ARB_vertex_shader
-	MAX_FRAGMENT_UNIFORM_COMPONENTS			= 0x8B49    # ARB_fragment_shader
-	MAX_VERTEX_UNIFORM_COMPONENTS			= 0x8B4A    # ARB_vertex_shader
-	MAX_VARYING_FLOATS				= 0x8B4B    # ARB_vertex_shader
-	MAX_VERTEX_TEXTURE_IMAGE_UNITS			= 0x8B4C    # ARB_vertex_shader
-	MAX_COMBINED_TEXTURE_IMAGE_UNITS		= 0x8B4D    # ARB_vertex_shader
+#	MAX_FRAGMENT_UNIFORM_COMPONENTS			= 0x8B49    # ARB_fragment_shader
+#	MAX_VERTEX_UNIFORM_COMPONENTS			= 0x8B4A    # ARB_vertex_shader
+#	MAX_VARYING_FLOATS				= 0x8B4B    # ARB_vertex_shader
+#	MAX_VERTEX_TEXTURE_IMAGE_UNITS			= 0x8B4C    # ARB_vertex_shader
+#	MAX_COMBINED_TEXTURE_IMAGE_UNITS		= 0x8B4D    # ARB_vertex_shader
 	SHADER_TYPE					= 0x8B4F    # ARB_shader_objects
 #	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
 #	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
@@ -898,20 +901,20 @@ VERSION_2_0 enum:
 #	SAMPLER_CUBE					= 0x8B60    # ARB_shader_objects
 #	SAMPLER_1D_SHADOW				= 0x8B61    # ARB_shader_objects
 #	SAMPLER_2D_SHADOW				= 0x8B62    # ARB_shader_objects
-	DELETE_STATUS					= 0x8B80    # ARB_shader_objects
-	COMPILE_STATUS					= 0x8B81    # ARB_shader_objects
-	LINK_STATUS					= 0x8B82    # ARB_shader_objects
-	VALIDATE_STATUS					= 0x8B83    # ARB_shader_objects
-	INFO_LOG_LENGTH					= 0x8B84    # ARB_shader_objects
-	ATTACHED_SHADERS				= 0x8B85    # ARB_shader_objects
-	ACTIVE_UNIFORMS					= 0x8B86    # ARB_shader_objects
-	ACTIVE_UNIFORM_MAX_LENGTH			= 0x8B87    # ARB_shader_objects
-	SHADER_SOURCE_LENGTH				= 0x8B88    # ARB_shader_objects
-	ACTIVE_ATTRIBUTES				= 0x8B89    # ARB_vertex_shader
-	ACTIVE_ATTRIBUTE_MAX_LENGTH			= 0x8B8A    # ARB_vertex_shader
-	FRAGMENT_SHADER_DERIVATIVE_HINT			= 0x8B8B    # ARB_fragment_shader
+#	DELETE_STATUS					= 0x8B80    # ARB_shader_objects
+#	COMPILE_STATUS					= 0x8B81    # ARB_shader_objects
+#	LINK_STATUS					= 0x8B82    # ARB_shader_objects
+#	VALIDATE_STATUS					= 0x8B83    # ARB_shader_objects
+#	INFO_LOG_LENGTH					= 0x8B84    # ARB_shader_objects
+#	ATTACHED_SHADERS				= 0x8B85    # ARB_shader_objects
+#	ACTIVE_UNIFORMS					= 0x8B86    # ARB_shader_objects
+#	ACTIVE_UNIFORM_MAX_LENGTH			= 0x8B87    # ARB_shader_objects
+#	SHADER_SOURCE_LENGTH				= 0x8B88    # ARB_shader_objects
+#	ACTIVE_ATTRIBUTES				= 0x8B89    # ARB_vertex_shader
+#	ACTIVE_ATTRIBUTE_MAX_LENGTH			= 0x8B8A    # ARB_vertex_shader
+#	FRAGMENT_SHADER_DERIVATIVE_HINT			= 0x8B8B    # ARB_fragment_shader
 #	SHADING_LANGUAGE_VERSION			= 0x8B8C    # ARB_shading_language_100
-	CURRENT_PROGRAM					= 0x8B8D    # ARB_shader_objects (added for 2.0)
+#	CURRENT_PROGRAM					= 0x8B8D    # ARB_shader_objects (added for 2.0)
 	POINT_SPRITE_COORD_ORIGIN			= 0x8CA0    # ARB_point_sprite (added for 2.0)
 	LOWER_LEFT					= 0x8CA1    # ARB_point_sprite (added for 2.0)
 	UPPER_LEFT					= 0x8CA2    # ARB_point_sprite (added for 2.0)
@@ -919,6 +922,107 @@ VERSION_2_0 enum:
 	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
 	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
 
+# Shader Objects
+# http://www.opengl.org/sdk/docs/man/xhtml/glCreateShader.xml
+# http://www.opengl.org/sdk/docs/man/xhtml/glGetActiveUniform.xml
+ShaderType enum:
+	FRAGMENT_SHADER					= 0x8B30    # ARB_fragment_shader
+	VERTEX_SHADER					= 0x8B31    # ARB_vertex_shader
+	GEOMETRY_SHADER_EXT				= 0x8DD9	# EXT_geometry_shader4 -- not core
+
+EnableCap enum:
+	VERTEX_PROGRAM_POINT_SIZE		= 0x8642    # ARB_vertex_shader
+	VERTEX_PROGRAM_TWO_SIDE			= 0x8643    # ARB_vertex_shader
+
+GetPName enum:
+	FRAGMENT_SHADER_DERIVATIVE_HINT	= 0x8B8B    # ARB_fragment_shader
+	MAX_FRAGMENT_UNIFORM_COMPONENTS	= 0x8B49    # ARB_fragment_shader
+	MAX_VERTEX_UNIFORM_COMPONENTS	= 0x8B4A    # ARB_vertex_shader
+	MAX_VARYING_FLOATS				= 0x8B4B    # ARB_vertex_shader
+	MAX_VERTEX_TEXTURE_IMAGE_UNITS	= 0x8B4C    # ARB_vertex_shader
+	MAX_COMBINED_TEXTURE_IMAGE_UNITS	= 0x8B4D    # ARB_vertex_shader
+	MAX_TEXTURE_COORDS				= 0x8871    # ARB_vertex_shader, ARB_fragment_shader
+	MAX_TEXTURE_IMAGE_UNITS			= 0x8872    # ARB_vertex_shader, ARB_fragment_shader
+	MAX_VERTEX_ATTRIBS				= 0x8869    # ARB_vertex_shader
+	CURRENT_PROGRAM					= 0x8B8D    # ARB_shader_objects (added for 2.0)
+	
+ActiveUniformType enum:
+	use DataType FLOAT
+	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
+	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
+	FLOAT_VEC4					= 0x8B52    # ARB_shader_objects
+	use DataType INT
+	INT_VEC2					= 0x8B53    # ARB_shader_objects
+	INT_VEC3					= 0x8B54    # ARB_shader_objects
+	INT_VEC4					= 0x8B55    # ARB_shader_objects
+	BOOL						= 0x8B56    # ARB_shader_objects
+	BOOL_VEC2					= 0x8B57    # ARB_shader_objects
+	BOOL_VEC3					= 0x8B58    # ARB_shader_objects
+	BOOL_VEC4					= 0x8B59    # ARB_shader_objects
+	FLOAT_MAT2					= 0x8B5A    # ARB_shader_objects
+	FLOAT_MAT3					= 0x8B5B    # ARB_shader_objects
+	FLOAT_MAT4					= 0x8B5C    # ARB_shader_objects
+	SAMPLER_1D					= 0x8B5D    # ARB_shader_objects
+	SAMPLER_2D					= 0x8B5E    # ARB_shader_objects
+	SAMPLER_3D					= 0x8B5F    # ARB_shader_objects
+	SAMPLER_CUBE				= 0x8B60    # ARB_shader_objects
+	SAMPLER_1D_SHADOW			= 0x8B61    # ARB_shader_objects
+	SAMPLER_2D_SHADOW			= 0x8B62    # ARB_shader_objects
+	
+ActiveAttribType enum:
+	use DataType FLOAT
+	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
+	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
+	FLOAT_VEC4					= 0x8B52    # ARB_shader_objects
+	FLOAT_MAT2					= 0x8B5A    # ARB_shader_objects
+	FLOAT_MAT3					= 0x8B5B    # ARB_shader_objects
+	FLOAT_MAT4					= 0x8B5C    # ARB_shader_objects
+	
+VertexAttribPointerType enum:
+	use DataType BYTE
+	use DataType UNSIGNED_BYTE
+	use DataType SHORT
+	use DataType UNSIGNED_SHORT
+	use DataType INT
+	use DataType UNSIGNED_INT
+	use DataType FLOAT
+	use DataType DOUBLE
+	
+# Shading Language
+StringName enum:
+	SHADING_LANGUAGE_VERSION	= 0x8B8C
+	
+ObjectParameterName enum:
+	DELETE_STATUS				= 0x8B80    # ARB_shader_objects
+	COMPILE_STATUS				= 0x8B81    # ARB_shader_objects
+	LINK_STATUS					= 0x8B82    # ARB_shader_objects
+	VALIDATE_STATUS				= 0x8B83    # ARB_shader_objects
+	INFO_LOG_LENGTH				= 0x8B84    # ARB_shader_objects
+	ATTACHED_SHADERS			= 0x8B85    # ARB_shader_objects
+	ACTIVE_UNIFORMS				= 0x8B86    # ARB_shader_objects
+	ACTIVE_UNIFORM_MAX_LENGTH	= 0x8B87    # ARB_shader_objects
+	SHADER_SOURCE_LENGTH		= 0x8B88    # ARB_shader_objects
+	ACTIVE_ATTRIBUTES			= 0x8B89    # ARB_vertex_shader
+	ACTIVE_ATTRIBUTE_MAX_LENGTH	= 0x8B8A    # ARB_vertex_shader
+
+VertexAttribParameter enum:
+#	VERTEX_ATTRIB_ARRAY_ENABLED	= 0x8622    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_SIZE	= 0x8623    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_STRIDE	= 0x8624    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_TYPE	= 0x8625    # ARB_vertex_shader
+#	CURRENT_VERTEX_ATTRIB		= 0x8626    # ARB_vertex_shader
+#	VERTEX_ATTRIB_ARRAY_NORMALIZED	= 0x886A    # ARB_vertex_shader
+	ARRAY_ENABLED				= 0x8622    # ARB_vertex_shader
+	ARRAY_SIZE					= 0x8623    # ARB_vertex_shader
+	ARRAY_STRIDE				= 0x8624    # ARB_vertex_shader
+	ARRAY_TYPE					= 0x8625    # ARB_vertex_shader
+	CURRENT_VERTEX_ATTRIB		= 0x8626    # ARB_vertex_shader
+	ARRAY_NORMALIZED			= 0x886A    # ARB_vertex_shader
+
+VertexAttribPointerParameter enum:
+#	VERTEX_ATTRIB_ARRAY_POINTER	= 0x8645    # ARB_vertex_shader
+	ARRAY_POINTER				= 0x8645    # ARB_vertex_shader
+	
 # Half Float (http://www.opengl.org/registry/specs/ARB/half_float_pixel.txt)
 PixelType enum:
 	HALF_FLOAT					= 0x140B
@@ -973,41 +1077,6 @@ TextureEnvModePointSprite enum:
 GetPName enum:
 	POINT_SPRITE					= 0x8861
 	
-# Shader Objects
-# http://www.opengl.org/sdk/docs/man/xhtml/glCreateShader.xml
-# http://www.opengl.org/sdk/docs/man/xhtml/glGetActiveUniform.xml
-ShaderObjectType enum:
-	FRAGMENT_SHADER					= 0x8B30    # ARB_fragment_shader
-	VERTEX_SHADER					= 0x8B31    # ARB_vertex_shader
-#	GEOMETRY_SHADER_EXT				= 0x8DD9	# EXT_geometry_shader4 -- not core
-
-ActiveUniformType enum:
-	use DataType FLOAT
-	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
-	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
-	FLOAT_VEC4					= 0x8B52    # ARB_shader_objects
-	use DataType INT
-	INT_VEC2					= 0x8B53    # ARB_shader_objects
-	INT_VEC3					= 0x8B54    # ARB_shader_objects
-	INT_VEC4					= 0x8B55    # ARB_shader_objects
-	BOOL						= 0x8B56    # ARB_shader_objects
-	BOOL_VEC2					= 0x8B57    # ARB_shader_objects
-	BOOL_VEC3					= 0x8B58    # ARB_shader_objects
-	BOOL_VEC4					= 0x8B59    # ARB_shader_objects
-	FLOAT_MAT2					= 0x8B5A    # ARB_shader_objects
-	FLOAT_MAT3					= 0x8B5B    # ARB_shader_objects
-	FLOAT_MAT4					= 0x8B5C    # ARB_shader_objects
-	SAMPLER_1D					= 0x8B5D    # ARB_shader_objects
-	SAMPLER_2D					= 0x8B5E    # ARB_shader_objects
-	SAMPLER_3D					= 0x8B5F    # ARB_shader_objects
-	SAMPLER_CUBE				= 0x8B60    # ARB_shader_objects
-	SAMPLER_1D_SHADOW			= 0x8B61    # ARB_shader_objects
-	SAMPLER_2D_SHADOW			= 0x8B62    # ARB_shader_objects
-	
-# Shading Language
-StringName enum:
-	SHADING_LANGUAGE_VERSION	= 0x8B8C
-
 ###############################################################################
 #
 # OpenGL 2.1 enums (edited for OpenTK)
