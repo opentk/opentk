@@ -837,7 +837,7 @@ GetPName enum:
 ###############################################################################
 
 VERSION_2_0 enum:
-	BLEND_EQUATION_RGB				= GL_BLEND_EQUATION # EXT_blend_equation_separate
+#	BLEND_EQUATION_RGB				= GL_BLEND_EQUATION # EXT_blend_equation_separate
 #	VERTEX_ATTRIB_ARRAY_ENABLED			= 0x8622    # ARB_vertex_shader
 #	VERTEX_ATTRIB_ARRAY_SIZE			= 0x8623    # ARB_vertex_shader
 #	VERTEX_ATTRIB_ARRAY_STRIDE			= 0x8624    # ARB_vertex_shader
@@ -867,7 +867,7 @@ VERSION_2_0 enum:
 #	DRAW_BUFFER13					= 0x8832    # ARB_draw_buffers
 #	DRAW_BUFFER14					= 0x8833    # ARB_draw_buffers
 #	DRAW_BUFFER15					= 0x8834    # ARB_draw_buffers
-	BLEND_EQUATION_ALPHA				= 0x883D    # EXT_blend_equation_separate
+#	BLEND_EQUATION_ALPHA				= 0x883D    # EXT_blend_equation_separate
 #	POINT_SPRITE					= 0x8861    # ARB_point_sprite
 #	COORD_REPLACE					= 0x8862    # ARB_point_sprite
 #	MAX_VERTEX_ATTRIBS				= 0x8869    # ARB_vertex_shader
@@ -881,7 +881,7 @@ VERSION_2_0 enum:
 #	MAX_VARYING_FLOATS				= 0x8B4B    # ARB_vertex_shader
 #	MAX_VERTEX_TEXTURE_IMAGE_UNITS			= 0x8B4C    # ARB_vertex_shader
 #	MAX_COMBINED_TEXTURE_IMAGE_UNITS		= 0x8B4D    # ARB_vertex_shader
-	SHADER_TYPE					= 0x8B4F    # ARB_shader_objects
+#	SHADER_TYPE					= 0x8B4F    # ARB_shader_objects
 #	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
 #	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
 #	FLOAT_VEC4					= 0x8B52    # ARB_shader_objects
@@ -921,6 +921,11 @@ VERSION_2_0 enum:
 	STENCIL_BACK_REF				= 0x8CA3    # ARB_stencil_two_side
 	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
 	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
+
+# Blend equation separate (http://www.opengl.org/registry/specs/EXT/blend_equation_separate.txt)
+GetPName enum:
+	BLEND_EQUATION_RGB				= 0x8009    # EXT_blend_equation_separate
+	BLEND_EQUATION_ALPHA			= 0x883D    # EXT_blend_equation_separate
 
 # Shader Objects
 # http://www.opengl.org/sdk/docs/man/xhtml/glCreateShader.xml
@@ -991,17 +996,24 @@ VertexAttribPointerType enum:
 # Shading Language
 StringName enum:
 	SHADING_LANGUAGE_VERSION	= 0x8B8C
-	
-ObjectParameterName enum:
+
+# Used in GetShader (http://www.opengl.org/sdk/docs/man/xhtml/glGetShader.xml)
+ShaderParameter enum:
 	DELETE_STATUS				= 0x8B80    # ARB_shader_objects
 	COMPILE_STATUS				= 0x8B81    # ARB_shader_objects
+	INFO_LOG_LENGTH				= 0x8B84    # ARB_shader_objects
+	SHADER_SOURCE_LENGTH		= 0x8B88    # ARB_shader_objects
+	SHADER_TYPE					= 0x8B4F    # ARB_shader_objects
+
+# Used in GetProgram (http://www.opengl.org/sdk/docs/man/xhtml/glGetProgram.xml)
+ProgramParameter enum:
+	DELETE_STATUS				= 0x8B80    # ARB_shader_objects
 	LINK_STATUS					= 0x8B82    # ARB_shader_objects
 	VALIDATE_STATUS				= 0x8B83    # ARB_shader_objects
 	INFO_LOG_LENGTH				= 0x8B84    # ARB_shader_objects
 	ATTACHED_SHADERS			= 0x8B85    # ARB_shader_objects
 	ACTIVE_UNIFORMS				= 0x8B86    # ARB_shader_objects
 	ACTIVE_UNIFORM_MAX_LENGTH	= 0x8B87    # ARB_shader_objects
-	SHADER_SOURCE_LENGTH		= 0x8B88    # ARB_shader_objects
 	ACTIVE_ATTRIBUTES			= 0x8B89    # ARB_vertex_shader
 	ACTIVE_ATTRIBUTE_MAX_LENGTH	= 0x8B8A    # ARB_vertex_shader
 
