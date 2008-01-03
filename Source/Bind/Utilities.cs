@@ -196,7 +196,7 @@ namespace Bind
             name = name.ToUpper();
             if (name.EndsWith("ARB")) { return "Arb"; }
             if (name.EndsWith("EXT")) { return "Ext"; }
-            if (name.EndsWith("ATI")) { return "Ata"; }
+            if (name.EndsWith("ATI")) { return "Ati"; }
             if (name.EndsWith("ATIX")) { return "Atix"; }
             if (name.EndsWith("NV")) { return "NV"; }
             if (name.EndsWith("SUN")) { return "Sun"; }
