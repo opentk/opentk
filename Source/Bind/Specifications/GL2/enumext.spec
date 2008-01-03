@@ -915,12 +915,21 @@ VERSION_2_0 enum:
 #	FRAGMENT_SHADER_DERIVATIVE_HINT			= 0x8B8B    # ARB_fragment_shader
 #	SHADING_LANGUAGE_VERSION			= 0x8B8C    # ARB_shading_language_100
 #	CURRENT_PROGRAM					= 0x8B8D    # ARB_shader_objects (added for 2.0)
-	POINT_SPRITE_COORD_ORIGIN			= 0x8CA0    # ARB_point_sprite (added for 2.0)
-	LOWER_LEFT					= 0x8CA1    # ARB_point_sprite (added for 2.0)
-	UPPER_LEFT					= 0x8CA2    # ARB_point_sprite (added for 2.0)
+#	POINT_SPRITE_COORD_ORIGIN			= 0x8CA0    # ARB_point_sprite (added for 2.0)
+#	LOWER_LEFT					= 0x8CA1    # ARB_point_sprite (added for 2.0)
+#	UPPER_LEFT					= 0x8CA2    # ARB_point_sprite (added for 2.0)
 #	STENCIL_BACK_REF				= 0x8CA3    # ARB_stencil_two_side
 #	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
 #	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
+
+# Point Sprites (http://www.opengl.org/sdk/docs/man/xhtml/glPointParameter.xml)
+PointParameterName enum:
+	POINT_SPRITE_COORD_ORIGIN		= 0x8CA0    # ARB_point_sprite (added for 2.0)
+
+# <summary>Specifies the coordinate origin of the Point Sprite.</summary>
+PointSpriteCoordOriginParameter enum:
+	LOWER_LEFT						= 0x8CA1    # ARB_point_sprite (added for 2.0)
+	UPPER_LEFT						= 0x8CA2    # ARB_point_sprite (added for 2.0)
 
 # Two Side Stencil
 # http://www.opengl.org/sdk/docs/man/xhtml/glStencilFuncSeparate.xml
