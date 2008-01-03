@@ -31,48 +31,119 @@ passthru: #define GL_GLEXT_VERSION 39
 #
 ###############################################################################
 
-VERSION_1_2 enum:
-	UNSIGNED_BYTE_3_3_2				= 0x8032 # Equivalent to EXT_packed_pixels
-	UNSIGNED_SHORT_4_4_4_4				= 0x8033
-	UNSIGNED_SHORT_5_5_5_1				= 0x8034
-	UNSIGNED_INT_8_8_8_8				= 0x8035
-	UNSIGNED_INT_10_10_10_2				= 0x8036
-	RESCALE_NORMAL					= 0x803A # 1 I # Equivalent to EXT_rescale_normal
-	TEXTURE_BINDING_3D				= 0x806A # 1 I
-	PACK_SKIP_IMAGES				= 0x806B # 1 I
-	PACK_IMAGE_HEIGHT				= 0x806C # 1 F
-	UNPACK_SKIP_IMAGES				= 0x806D # 1 I
-	UNPACK_IMAGE_HEIGHT				= 0x806E # 1 F
+#VERSION_1_2 enum:
+#	UNSIGNED_BYTE_3_3_2				= 0x8032 # Equivalent to EXT_packed_pixels
+#	UNSIGNED_SHORT_4_4_4_4				= 0x8033
+#	UNSIGNED_SHORT_5_5_5_1				= 0x8034
+#	UNSIGNED_INT_8_8_8_8				= 0x8035
+#	UNSIGNED_INT_10_10_10_2				= 0x8036
+#	RESCALE_NORMAL					= 0x803A # 1 I # Equivalent to EXT_rescale_normal
+#	TEXTURE_BINDING_3D				= 0x806A # 1 I
+#	PACK_SKIP_IMAGES				= 0x806B # 1 I
+#	PACK_IMAGE_HEIGHT				= 0x806C # 1 F
+#	UNPACK_SKIP_IMAGES				= 0x806D # 1 I
+#	UNPACK_IMAGE_HEIGHT				= 0x806E # 1 F
+#	TEXTURE_3D					= 0x806F # 1 I
+#	PROXY_TEXTURE_3D				= 0x8070
+#	TEXTURE_DEPTH					= 0x8071
+#	TEXTURE_WRAP_R					= 0x8072
+#	MAX_3D_TEXTURE_SIZE				= 0x8073 # 1 I
+#	UNSIGNED_BYTE_2_3_3_REV				= 0x8362 # New for OpenGL 1.2
+#	UNSIGNED_SHORT_5_6_5				= 0x8363
+#	UNSIGNED_SHORT_5_6_5_REV			= 0x8364
+#	UNSIGNED_SHORT_4_4_4_4_REV			= 0x8365
+#	UNSIGNED_SHORT_1_5_5_5_REV			= 0x8366
+#	UNSIGNED_INT_8_8_8_8_REV			= 0x8367
+#	UNSIGNED_INT_2_10_10_10_REV			= 0x8368
+#	BGR						= 0x80E0
+#	BGRA						= 0x80E1
+#	MAX_ELEMENTS_VERTICES				= 0x80E8
+#	MAX_ELEMENTS_INDICES				= 0x80E9
+#	CLAMP_TO_EDGE					= 0x812F # Equivalent to SGIS_texture_edge_clamp
+#	TEXTURE_MIN_LOD					= 0x813A # Equivalent to SGIS_texture_lod
+#	TEXTURE_MAX_LOD					= 0x813B
+#	TEXTURE_BASE_LEVEL				= 0x813C
+#	TEXTURE_MAX_LEVEL				= 0x813D
+#	LIGHT_MODEL_COLOR_CONTROL			= 0x81F8 # 1 I
+#	SINGLE_COLOR					= 0x81F9
+#	SEPARATE_SPECULAR_COLOR				= 0x81FA
+#	SMOOTH_POINT_SIZE_RANGE				= 0x0B12 # 2 F
+#	SMOOTH_POINT_SIZE_GRANULARITY			= 0x0B13 # 1 F
+#	SMOOTH_LINE_WIDTH_RANGE				= 0x0B22 # 2 F
+#	SMOOTH_LINE_WIDTH_GRANULARITY			= 0x0B23 # 1 F
+#	ALIASED_POINT_SIZE_RANGE			= 0x846D # 2 F
+#	ALIASED_LINE_WIDTH_RANGE			= 0x846E # 2 F
+
+# Light Model (http://www.opengl.org/sdk/docs/man/xhtml/glLightModel.xml)
+LightModelParameter enum:
+	LIGHT_MODEL_COLOR_CONTROL		= 0x81F8 # 1 I
+
+LightModelColorControl enum:
+	SINGLE_COLOR					= 0x81F9
+	SEPARATE_SPECULAR_COLOR			= 0x81FA
+	
+GetPName enum:
+	LIGHT_MODEL_COLOR_CONTROL		= 0x81F8
+	
+# Rescale Normal (http://www.opengl.org/registry/specs/EXT/rescale_normal.txt)
+EnableCap enum:
+	RESCALE_NORMAL				= 0x803A # 1 I # Equivalent to EXT_rescale_normal
+
+# Draw Range Elements (http://www.opengl.org/sdk/docs/man/xhtml/glGet.xml)
+GetPName enum:
+	MAX_ELEMENTS_VERTICES			= 0x80E8
+	MAX_ELEMENTS_INDICES			= 0x80E9
+
+# 3d textures (http://www.opengl.org/sdk/docs/man/xhtml/glTexImage3D.xml)
+# http://www.opengl.org/sdk/docs/man/xhtml/glPixelStore.xml
+TextureTarget enum:
 	TEXTURE_3D					= 0x806F # 1 I
-	PROXY_TEXTURE_3D				= 0x8070
-	TEXTURE_DEPTH					= 0x8071
-	TEXTURE_WRAP_R					= 0x8072
-	MAX_3D_TEXTURE_SIZE				= 0x8073 # 1 I
-	UNSIGNED_BYTE_2_3_3_REV				= 0x8362 # New for OpenGL 1.2
-	UNSIGNED_SHORT_5_6_5				= 0x8363
-	UNSIGNED_SHORT_5_6_5_REV			= 0x8364
-	UNSIGNED_SHORT_4_4_4_4_REV			= 0x8365
-	UNSIGNED_SHORT_1_5_5_5_REV			= 0x8366
-	UNSIGNED_INT_8_8_8_8_REV			= 0x8367
-	UNSIGNED_INT_2_10_10_10_REV			= 0x8368
-	BGR						= 0x80E0
+	PROXY_TEXTURE_3D			= 0x8070
+	
+PixelType enum:
+	UNSIGNED_BYTE_3_3_2			= 0x8032 # Equivalent to EXT_packed_pixels
+	UNSIGNED_SHORT_4_4_4_4		= 0x8033
+	UNSIGNED_SHORT_5_5_5_1		= 0x8034
+	UNSIGNED_INT_8_8_8_8		= 0x8035
+	UNSIGNED_INT_10_10_10_2		= 0x8036
+	UNSIGNED_BYTE_2_3_3_REVERSED	= 0x8362 # New for OpenGL 1.2
+	UNSIGNED_SHORT_5_6_5		= 0x8363
+	UNSIGNED_SHORT_5_6_5_REVERSED	= 0x8364
+	UNSIGNED_SHORT_4_4_4_4_REVERSED	= 0x8365
+	UNSIGNED_SHORT_1_5_5_5_REVERSED	= 0x8366
+	UNSIGNED_INT_8_8_8_8_REVERSED	= 0x8367
+	UNSIGNED_INT_2_10_10_10_REVERSED	= 0x8368
+
+PixelFormat enum:
+	BGR							= 0x80E0
 	BGRA						= 0x80E1
-	MAX_ELEMENTS_VERTICES				= 0x80E8
-	MAX_ELEMENTS_INDICES				= 0x80E9
-	CLAMP_TO_EDGE					= 0x812F # Equivalent to SGIS_texture_edge_clamp
+
+GetPName enum:
+	TEXTURE_BINDING_3D			= 0x806A # 1 I
+	SMOOTH_POINT_SIZE_RANGE		= 0x0B12 # 2 F
+	SMOOTH_POINT_SIZE_GRANULARITY	= 0x0B13 # 1 F
+	SMOOTH_LINE_WIDTH_RANGE		= 0x0B22 # 2 F
+	SMOOTH_LINE_WIDTH_GRANULARITY	= 0x0B23 # 1 F
+	ALIASED_POINT_SIZE_RANGE	= 0x846D # 2 F
+	ALIASED_LINE_WIDTH_RANGE	= 0x846E # 2 F
+	MAX_3D_TEXTURE_SIZE			= 0x8073 # 1 I
+
+GetTextureParameter enum:
 	TEXTURE_MIN_LOD					= 0x813A # Equivalent to SGIS_texture_lod
 	TEXTURE_MAX_LOD					= 0x813B
 	TEXTURE_BASE_LEVEL				= 0x813C
 	TEXTURE_MAX_LEVEL				= 0x813D
-	LIGHT_MODEL_COLOR_CONTROL			= 0x81F8 # 1 I
-	SINGLE_COLOR					= 0x81F9
-	SEPARATE_SPECULAR_COLOR				= 0x81FA
-	SMOOTH_POINT_SIZE_RANGE				= 0x0B12 # 2 F
-	SMOOTH_POINT_SIZE_GRANULARITY			= 0x0B13 # 1 F
-	SMOOTH_LINE_WIDTH_RANGE				= 0x0B22 # 2 F
-	SMOOTH_LINE_WIDTH_GRANULARITY			= 0x0B23 # 1 F
-	ALIASED_POINT_SIZE_RANGE			= 0x846D # 2 F
-	ALIASED_LINE_WIDTH_RANGE			= 0x846E # 2 F
+	TEXTURE_DEPTH					= 0x8071
+	TEXTURE_WRAP_R					= 0x8072
+	
+TextureParameterName enum:
+	CLAMP_TO_EDGE					= 0x812F # Equivalent to SGIS_texture_edge_clamp
+
+PixelStoreParameter enum:
+	PACK_SKIP_IMAGES				= 0x806B # 1 I
+	PACK_IMAGE_HEIGHT				= 0x806C # 1 F
+	UNPACK_SKIP_IMAGES				= 0x806D # 1 I
+	UNPACK_IMAGE_HEIGHT				= 0x806E # 1 F
 
 ARB_imaging enum:
 	CONSTANT_COLOR					= 0x8001 # Equivalent to EXT_blend_color
@@ -150,7 +221,6 @@ ARB_imaging enum:
 	CONSTANT_BORDER					= 0x8151
 	REPLICATE_BORDER				= 0x8153
 	CONVOLUTION_BORDER_COLOR			= 0x8154
-
 
 ###############################################################################
 #
@@ -347,7 +417,8 @@ GetPName enum:
 	TEXTURE_COMPRESSION_HINT	= 0x84EF
 	NUM_COMPRESSED_TEXTURE_FORMATS	= 0x86A2
 	COMPRESSED_TEXTURE_FORMATS	= 0x86A3
-	
+
+
 ###############################################################################
 #
 # OpenGL 1.4 enums (edited for OpenTK)
