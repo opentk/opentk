@@ -569,9 +569,9 @@ VERSION_1_4 enum:
 #	SECONDARY_COLOR_ARRAY_STRIDE			= 0x845C # 1 I
 #	SECONDARY_COLOR_ARRAY_POINTER			= 0x845D
 #	SECONDARY_COLOR_ARRAY				= 0x845E # 1 I
-	MAX_TEXTURE_LOD_BIAS				= 0x84FD
-	TEXTURE_FILTER_CONTROL				= 0x8500
-	TEXTURE_LOD_BIAS				= 0x8501
+#	MAX_TEXTURE_LOD_BIAS				= 0x84FD
+#	TEXTURE_FILTER_CONTROL				= 0x8500
+#	TEXTURE_LOD_BIAS				= 0x8501
 	INCR_WRAP					= 0x8507
 	DECR_WRAP					= 0x8508
 #	TEXTURE_DEPTH_SIZE				= 0x884A
@@ -579,6 +579,16 @@ VERSION_1_4 enum:
 #	TEXTURE_COMPARE_MODE				= 0x884C
 #	TEXTURE_COMPARE_FUNC				= 0x884D
 #	COMPARE_R_TO_TEXTURE				= 0x884E
+
+# Texture LOD Bias (http://www.opengl.org/registry/specs/EXT/texture_lod_bias.txt)
+TextureEnvTarget enum:
+	TEXTURE_FILTER_CONTROL				= 0x8500
+	
+TextureEnvParameter enum:
+	TEXTURE_LOD_BIAS				= 0x8501
+
+GetPName enum:
+	MAX_TEXTURE_LOD_BIAS				= 0x84FD
 
 # Blendfunc Separate (http://www.opengl.org/registry/specs/EXT/blend_func_separate.txt)
 GetPName enum:
