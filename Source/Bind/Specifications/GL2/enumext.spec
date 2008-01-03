@@ -228,7 +228,7 @@ ARB_imaging enum:
 #
 ###############################################################################
 
-VERSION_1_3 enum:
+#VERSION_1_3 enum:
 #	TEXTURE0					= 0x84C0	# Promoted from ARB_multitexture
 #	TEXTURE1					= 0x84C1
 #	TEXTURE2					= 0x84C2
@@ -300,7 +300,7 @@ VERSION_1_3 enum:
 #	TEXTURE_COMPRESSED				= 0x86A1
 #	NUM_COMPRESSED_TEXTURE_FORMATS			= 0x86A2
 #	COMPRESSED_TEXTURE_FORMATS			= 0x86A3
-	CLAMP_TO_BORDER					= 0x812D	# Promoted from ARB_texture_border_clamp
+#	CLAMP_TO_BORDER					= 0x812D	# Promoted from ARB_texture_border_clamp
 #	COMBINE						= 0x8570	# Promoted from ARB_texture_env_combine
 #	COMBINE_RGB					= 0x8571
 #	COMBINE_ALPHA					= 0x8572
@@ -325,6 +325,10 @@ VERSION_1_3 enum:
 #	PREVIOUS					= 0x8578
 #	DOT3_RGB					= 0x86AE	# Promoted from ARB_texture_env_dot3
 #	DOT3_RGBA					= 0x86AF
+
+# Texture Parameter (http://www.opengl.org/sdk/docs/man/xhtml/glTexParameter.xml)
+TextureParameterName enum:
+	CLAMP_TO_BORDER				= 0x812D	# Promoted from ARB_texture_border_clamp
 
 # Multisample (http://www.opengl.org/registry/specs/ARB/multisample.txt)
 EnableCap enum:
