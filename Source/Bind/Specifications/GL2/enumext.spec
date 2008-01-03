@@ -268,15 +268,15 @@ VERSION_1_3 enum:
 #	TRANSPOSE_PROJECTION_MATRIX			= 0x84E4 # 16 F
 #	TRANSPOSE_TEXTURE_MATRIX			= 0x84E5 # 16 F
 #	TRANSPOSE_COLOR_MATRIX				= 0x84E6 # 16 F
-	MULTISAMPLE					= 0x809D	# Promoted from ARB_multisample
-	SAMPLE_ALPHA_TO_COVERAGE			= 0x809E
-	SAMPLE_ALPHA_TO_ONE				= 0x809F
-	SAMPLE_COVERAGE					= 0x80A0
-	SAMPLE_BUFFERS					= 0x80A8
-	SAMPLES						= 0x80A9
-	SAMPLE_COVERAGE_VALUE				= 0x80AA
-	SAMPLE_COVERAGE_INVERT				= 0x80AB
-	MULTISAMPLE_BIT					= 0x20000000
+#	MULTISAMPLE					= 0x809D	# Promoted from ARB_multisample
+#	SAMPLE_ALPHA_TO_COVERAGE			= 0x809E
+#	SAMPLE_ALPHA_TO_ONE				= 0x809F
+#	SAMPLE_COVERAGE					= 0x80A0
+#	SAMPLE_BUFFERS					= 0x80A8
+#	SAMPLES						= 0x80A9
+#	SAMPLE_COVERAGE_VALUE				= 0x80AA
+#	SAMPLE_COVERAGE_INVERT				= 0x80AB
+#	MULTISAMPLE_BIT					= 0x20000000
 #	NORMAL_MAP					= 0x8511	# Promoted from ARB_texture_cube_map
 #	REFLECTION_MAP					= 0x8512
 #	TEXTURE_CUBE_MAP				= 0x8513
@@ -326,7 +326,27 @@ VERSION_1_3 enum:
 #	DOT3_RGB					= 0x86AE	# Promoted from ARB_texture_env_dot3
 #	DOT3_RGBA					= 0x86AF
 
-# Texture Environment Combine
+# Multisample (http://www.opengl.org/registry/specs/ARB/multisample.txt)
+EnableCap enum:
+	MULTISAMPLE					= 0x809D	# Promoted from ARB_multisample
+	SAMPLE_ALPHA_TO_COVERAGE	= 0x809E
+	SAMPLE_ALPHA_TO_ONE			= 0x809F
+	SAMPLE_COVERAGE				= 0x80A0
+	
+GetPName enum:
+	MULTISAMPLE					= 0x809D	# Promoted from ARB_multisample
+	SAMPLE_ALPHA_TO_COVERAGE	= 0x809E
+	SAMPLE_ALPHA_TO_ONE			= 0x809F
+	SAMPLE_COVERAGE				= 0x80A0
+	SAMPLE_BUFFERS				= 0x80A8
+	SAMPLES						= 0x80A9
+	SAMPLE_COVERAGE_VALUE		= 0x80AA
+	SAMPLE_COVERAGE_INVERT		= 0x80AB
+
+AttribMask enum:
+	MULTISAMPLE_BIT				= 0x20000000
+
+# Texture Environment Combine, Crossbar and Dot3
 # http://www.opengl.org/sdk/docs/man/xhtml/glTexEnv.xml
 # http://www.opengl.org/registry/specs/ARB/texture_env_combine.txt
 # http://www.opengl.org/registry/specs/ARB/texture_env_crossbar.txt
