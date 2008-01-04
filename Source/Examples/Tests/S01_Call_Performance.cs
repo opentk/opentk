@@ -101,7 +101,7 @@ namespace Examples.Tests
                 Trace.Write("Timing OpenTK.OpenGL extension functions: ");
                 timer.Start();
                 for (int i = 0; ++i < num_calls; )
-                    GL.Arb.ActiveTexture(ArbMultitexture.Texture0Arb);
+                    GL.ActiveTexture(TextureUnit.Texture0);
 
                 timer.Stop();
                 Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
