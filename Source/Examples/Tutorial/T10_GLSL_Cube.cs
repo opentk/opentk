@@ -90,14 +90,14 @@ namespace Examples.Tutorial
             int status_code;
             string info;
 
-            vertexObject = GL.CreateShader(ShaderObjectType.VertexShader);
-            fragmentObject = GL.CreateShader(ShaderObjectType.FragmentShader);
+            vertexObject = GL.CreateShader(ShaderType.VertexShader);
+            fragmentObject = GL.CreateShader(ShaderType.FragmentShader);
 
             // Compile vertex shader
             GL.ShaderSource(vertexObject, vs);
             GL.CompileShader(vertexObject);
             GL.GetShaderInfoLog(vertexObject, out info);
-            GL.GetShader(vertexObject, Version20.CompileStatus, out status_code);
+            GL.GetShader(vertexObject, ShaderParameter.CompileStatus, out status_code);
 
             if (status_code != 1)
                 throw new ApplicationException(info);
@@ -106,7 +106,7 @@ namespace Examples.Tutorial
             GL.ShaderSource(fragmentObject, fs);
             GL.CompileShader(fragmentObject);
             GL.GetShaderInfoLog(fragmentObject, out info);
-            GL.GetShader(fragmentObject, Version20.CompileStatus, out status_code);
+            GL.GetShader(fragmentObject, ShaderParameter.CompileStatus, out status_code);
             
             if (status_code != 1)
                 throw new ApplicationException(info);
