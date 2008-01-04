@@ -727,7 +727,7 @@ namespace OpenTK.OpenGL
             unsafe
             {
                 int length;
-                GL.GetShader(shader, Version20.InfoLogLength, out length);
+                GL.GetShader(shader, ShaderParameter.InfoLogLength, out length);
                 if (length == 0)
                 {
                     info = "";
@@ -737,6 +737,22 @@ namespace OpenTK.OpenGL
                 Delegates.glGetShaderInfoLog((UInt32)shader, sb.Capacity, &length, sb);
                 info = sb.ToString();
             }
+        }
+
+        #endregion
+
+        #region public static void PointParameter(PointSpriteCoordOriginParameter param)
+
+        /// <summary>
+        /// Helper function that defines the coordinate origin of the Point Sprite.
+        /// </summary>
+        /// <param name="param">
+        /// A OpenTK.OpenGL.GL.PointSpriteCoordOriginParameter token,
+        /// denoting the origin of the Point Sprite.
+        /// </param>
+        public static void PointParameter(PointSpriteCoordOriginParameter param)
+        {
+            GL.PointParameter(PointParameterName.PointSpriteCoordOrigin, (int)param);
         }
 
         #endregion
