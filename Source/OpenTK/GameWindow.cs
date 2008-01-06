@@ -145,18 +145,38 @@ namespace OpenTK
 
         #region --- INativeGLWindow Members ---
 
-        #region public void Exit()
+        #region public virtual void Exit()
 
         /// <summary>
-        /// Gracefully exits the current GameWindow.
-        /// Override if you want to provide yor own exit sequence.
-        /// If you override this method, place a call to base.Exit(), to ensure
-        /// proper OpenTK shutdown.
+        /// Gracefully exits the GameWindow. May be called from any thread.
         /// </summary>
+        /// <remarks>
+        /// <para>Override if you want to provide yor own exit sequence.</para>
+        /// <para>If you override this method, place a call to base.Exit(), to ensure
+        /// proper OpenTK shutdown.</para>
+        /// </remarks>
         public virtual void Exit()
         {
             isExiting = true;
+            UpdateFrame += GameWindow_UpdateFrame;
+        }
+
+        #endregion
+
+        #region void ExitInternal()
+
+        /// <summary>
+        /// Stops the main loop.
+        /// </summary>
+        void ExitInternal()
+        {
             throw new GameWindowExitException();
+        }
+
+        void GameWindow_UpdateFrame(GameWindow sender, UpdateFrameEventArgs e)
+        {
+            UpdateFrame -= GameWindow_UpdateFrame;
+            sender.ExitInternal();
         }
 
         #endregion
@@ -433,15 +453,15 @@ namespace OpenTK
                 //sleep_granularity = System.Math.Round(1000.0 * update_watch.Elapsed.TotalSeconds / test_times, MidpointRounding.AwayFromZero) / 1000.0;
                 //update_watch.Reset();       // We don't want to affect the first UpdateFrame!
 
-                try
-                {
+                //try
+                //{
                     OnLoadInternal(EventArgs.Empty);
-                }
-                catch (Exception e)
-                {
-                    Trace.WriteLine(String.Format("OnLoad failed: {0}", e.ToString()));
-                    return;
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    Trace.WriteLine(String.Format("OnLoad failed: {0}", e.ToString()));
+                //    return;
+                //}
 
                 Debug.Print("Elevating priority.");
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
@@ -1200,6 +1220,36 @@ namespace OpenTK
         */
         #endregion
 
+        #region PointToClient
+
+        /// <summary>
+        /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
+        /// </summary>
+        /// <param name="p">A System.Drawing.Point structure that specifies the screen coordinates to be converted</param>
+        /// <returns>The client-area coordinates of the point. The new coordinates are relative to the upper-left corner of the GameWindow's client area.</returns>
+        public System.Drawing.Point PointToClient(System.Drawing.Point p)
+        {
+            glWindow.PointToClient(ref p);
+            return p;
+        }
+
+        #endregion
+
+        #region PointToScreen
+
+        /// <summary>
+        /// Converts the client-area coordinates of a specified point to screen coordinates.
+        /// </summary>
+        /// <param name="p">A System.Drawing.Point structure that specifies the client-area coordinates to be converted</param>
+        /// <returns>The screen coordinates of the point, relative to the upper-left corner of the screen. Note, a screen-coordinate point that is above the window's client area has a negative y-coordinate. Similarly, a screen coordinate to the left of a client area has a negative x-coordinate.</returns>
+        public System.Drawing.Point PointToScreen(System.Drawing.Point p)
+        {
+            glWindow.PointToScreen(ref p);
+            return p;
+        }
+
+        #endregion
+
         #region --- IDisposable Members ---
 
         /// <summary>
@@ -1247,7 +1297,7 @@ namespace OpenTK
     #region public enum VSyncMode
 
     /// <summary>
-    /// Enumerates the available VSync modes.
+    /// Enumerates available VSync modes.
     /// </summary>
     public enum VSyncMode
     {
