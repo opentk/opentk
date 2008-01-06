@@ -20,6 +20,8 @@ namespace OpenTK.Platform
         void CreateWindow(DisplayMode mode);
         void DestroyWindow();
         void ProcessEvents();
+        void PointToClient(ref System.Drawing.Point p);
+        void PointToScreen(ref System.Drawing.Point p);
 
         bool Exists { get; }
         IWindowInfo WindowInfo { get; }
