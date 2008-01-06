@@ -352,7 +352,7 @@ namespace OpenTK.Platform.X11
             if (exists)
                 throw new ApplicationException("Render window already exists!");
 
-            Debug.Print("Creating GameWindow with mode: {0}", mode.ToString());
+            Debug.Print("Creating GameWindow with mode: {0}", mode != null ? mode.ToString() : "default");
             Debug.Indent();
 
             //glContext = new X11GLContext(mode, window);
