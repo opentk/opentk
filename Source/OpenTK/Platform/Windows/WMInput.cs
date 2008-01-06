@@ -62,7 +62,6 @@ namespace OpenTK.Platform.Windows
                 //case WindowMessage.NCMOUSEMOVE:
                     mouse.X = msg.LParam.ToInt32() & 0x0000FFFF;
                     mouse.Y = (int)(msg.LParam.ToInt32() & 0xFFFF0000) >> 16;
-
                     return;
 
                 case WindowMessage.MOUSEWHEEL:
