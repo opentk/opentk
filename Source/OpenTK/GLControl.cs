@@ -46,6 +46,7 @@ namespace OpenTK
             this.SetStyle(ControlStyles.Opaque, true);
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            DoubleBuffered = false;
 
             this.display_mode = mode;
 
