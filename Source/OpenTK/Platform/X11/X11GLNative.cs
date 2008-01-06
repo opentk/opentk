@@ -478,6 +478,29 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region PointToClient
+
+        public void PointToClient(ref System.Drawing.Point p)
+        {
+            /*
+            if (!Functions.ScreenToClient(this.Handle, p))
+                throw new InvalidOperationException(String.Format(
+                    "Could not convert point {0} from client to screen coordinates. Windows error: {1}",
+                    p.ToString(), Marshal.GetLastWin32Error()));
+            */
+        }
+
+        #endregion
+
+        #region PointToScreen
+
+        public void PointToScreen(ref System.Drawing.Point p)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #endregion
 
         #region --- IResizable Members ---
