@@ -40,6 +40,10 @@
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.Mouse = new System.Windows.Forms.TabPage();
+            this.WindowY = new System.Windows.Forms.Label();
+            this.WindowX = new System.Windows.Forms.Label();
+            this.MouseYWindow = new System.Windows.Forms.TextBox();
+            this.MouseXWindow = new System.Windows.Forms.TextBox();
             this.MouseWheelDelta = new System.Windows.Forms.TextBox();
             this.WheelDelta = new System.Windows.Forms.Label();
             this.MouseWheelText = new System.Windows.Forms.TextBox();
@@ -52,14 +56,10 @@
             this.MouseDXText = new System.Windows.Forms.TextBox();
             this.MouseYText = new System.Windows.Forms.TextBox();
             this.MouseXText = new System.Windows.Forms.TextBox();
-            this.MouseButtons = new System.Windows.Forms.ListBox();
+            this.MouseButtonsBox = new System.Windows.Forms.ListBox();
             this.ChooseMouse = new System.Windows.Forms.ComboBox();
             this.HID = new System.Windows.Forms.TabPage();
             this.PollTimer = new System.Windows.Forms.Timer(this.components);
-            this.MouseXWindow = new System.Windows.Forms.TextBox();
-            this.MouseYWindow = new System.Windows.Forms.TextBox();
-            this.WindowX = new System.Windows.Forms.Label();
-            this.WindowY = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.Keyboard.SuspendLayout();
             this.Mouse.SuspendLayout();
@@ -182,7 +182,7 @@
             this.Mouse.Controls.Add(this.MouseDXText);
             this.Mouse.Controls.Add(this.MouseYText);
             this.Mouse.Controls.Add(this.MouseXText);
-            this.Mouse.Controls.Add(this.MouseButtons);
+            this.Mouse.Controls.Add(this.MouseButtonsBox);
             this.Mouse.Controls.Add(this.ChooseMouse);
             this.Mouse.Location = new System.Drawing.Point(4, 22);
             this.Mouse.Name = "Mouse";
@@ -190,6 +190,40 @@
             this.Mouse.Size = new System.Drawing.Size(424, 352);
             this.Mouse.TabIndex = 1;
             this.Mouse.Text = "Mouse";
+            // 
+            // WindowY
+            // 
+            this.WindowY.AutoSize = true;
+            this.WindowY.Location = new System.Drawing.Point(4, 239);
+            this.WindowY.Name = "WindowY";
+            this.WindowY.Size = new System.Drawing.Size(59, 13);
+            this.WindowY.TabIndex = 17;
+            this.WindowY.Text = "Window Y:";
+            // 
+            // WindowX
+            // 
+            this.WindowX.AutoSize = true;
+            this.WindowX.Location = new System.Drawing.Point(4, 212);
+            this.WindowX.Name = "WindowX";
+            this.WindowX.Size = new System.Drawing.Size(59, 13);
+            this.WindowX.TabIndex = 16;
+            this.WindowX.Text = "Window X:";
+            // 
+            // MouseYWindow
+            // 
+            this.MouseYWindow.Location = new System.Drawing.Point(80, 232);
+            this.MouseYWindow.Name = "MouseYWindow";
+            this.MouseYWindow.ReadOnly = true;
+            this.MouseYWindow.Size = new System.Drawing.Size(73, 20);
+            this.MouseYWindow.TabIndex = 15;
+            // 
+            // MouseXWindow
+            // 
+            this.MouseXWindow.Location = new System.Drawing.Point(80, 205);
+            this.MouseXWindow.Name = "MouseXWindow";
+            this.MouseXWindow.ReadOnly = true;
+            this.MouseXWindow.Size = new System.Drawing.Size(73, 20);
+            this.MouseXWindow.TabIndex = 14;
             // 
             // MouseWheelDelta
             // 
@@ -293,13 +327,13 @@
             this.MouseXText.Size = new System.Drawing.Size(73, 20);
             this.MouseXText.TabIndex = 2;
             // 
-            // MouseButtons
+            // MouseButtonsBox
             // 
-            this.MouseButtons.FormattingEnabled = true;
-            this.MouseButtons.Location = new System.Drawing.Point(256, 44);
-            this.MouseButtons.Name = "MouseButtons";
-            this.MouseButtons.Size = new System.Drawing.Size(160, 134);
-            this.MouseButtons.TabIndex = 1;
+            this.MouseButtonsBox.FormattingEnabled = true;
+            this.MouseButtonsBox.Location = new System.Drawing.Point(256, 44);
+            this.MouseButtonsBox.Name = "MouseButtonsBox";
+            this.MouseButtonsBox.Size = new System.Drawing.Size(160, 134);
+            this.MouseButtonsBox.TabIndex = 1;
             // 
             // ChooseMouse
             // 
@@ -324,40 +358,6 @@
             // PollTimer
             // 
             this.PollTimer.Interval = 10;
-            // 
-            // MouseXWindow
-            // 
-            this.MouseXWindow.Location = new System.Drawing.Point(80, 205);
-            this.MouseXWindow.Name = "MouseXWindow";
-            this.MouseXWindow.ReadOnly = true;
-            this.MouseXWindow.Size = new System.Drawing.Size(73, 20);
-            this.MouseXWindow.TabIndex = 14;
-            // 
-            // MouseYWindow
-            // 
-            this.MouseYWindow.Location = new System.Drawing.Point(80, 232);
-            this.MouseYWindow.Name = "MouseYWindow";
-            this.MouseYWindow.ReadOnly = true;
-            this.MouseYWindow.Size = new System.Drawing.Size(73, 20);
-            this.MouseYWindow.TabIndex = 15;
-            // 
-            // WindowX
-            // 
-            this.WindowX.AutoSize = true;
-            this.WindowX.Location = new System.Drawing.Point(4, 212);
-            this.WindowX.Name = "WindowX";
-            this.WindowX.Size = new System.Drawing.Size(59, 13);
-            this.WindowX.TabIndex = 16;
-            this.WindowX.Text = "Window X:";
-            // 
-            // WindowY
-            // 
-            this.WindowY.AutoSize = true;
-            this.WindowY.Location = new System.Drawing.Point(4, 239);
-            this.WindowY.Name = "WindowY";
-            this.WindowY.Size = new System.Drawing.Size(59, 13);
-            this.WindowY.TabIndex = 17;
-            this.WindowY.Text = "Window Y:";
             // 
             // S04_Input_Logger
             // 
@@ -392,7 +392,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox ChooseMouse;
-        private System.Windows.Forms.ListBox MouseButtons;
+        private System.Windows.Forms.ListBox MouseButtonsBox;
         private System.Windows.Forms.Label MouseDeltaY;
         private System.Windows.Forms.Label MouseDeltaX;
         private System.Windows.Forms.Label MouseY;
