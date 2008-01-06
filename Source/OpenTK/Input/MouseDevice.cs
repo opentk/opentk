@@ -12,7 +12,7 @@ using System.Drawing;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// The MouseDevice class represents a mouse device and provides methods to query its status.
+    /// Represents a mouse device and provides methods to query its status.
     /// </summary>
     public sealed class MouseDevice : IInputDevice
     {
