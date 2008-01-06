@@ -16,7 +16,7 @@ namespace OpenTK.Platform.Windows
 	/// <summary>
 	/// 
 	/// </summary>
-	public partial class Wgl
+	internal partial class Wgl
     {
         #region --- Constructors ---
 
@@ -186,7 +186,7 @@ namespace OpenTK.Platform.Windows
 #endif
         #endregion
 
-        public static partial class Arb
+        internal static partial class Arb
         {
             private static string[] extensions;
             /// <summary>
