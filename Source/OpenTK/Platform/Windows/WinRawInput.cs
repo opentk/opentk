@@ -86,7 +86,7 @@ namespace OpenTK.Platform.Windows
                     //    throw new ApplicationException("Critical error when processing raw windows input.");
                     //}
                     if (size == Functions.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
-                            data, ref size, API.RawInputHeaderSize))
+                            out data, ref size, API.RawInputHeaderSize))
                     {
                         switch (data.Header.Type)
                         {
