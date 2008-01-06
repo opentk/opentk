@@ -20,6 +20,18 @@ using System.Threading;
 
 namespace Examples.Tests
 {
+    [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    struct TryMouse
+    {
+        ushort usFlags;
+        ushort usButtonFlags;
+        ushort usButtonData;
+        uint ulRawButtons;
+        int lLastX;
+        int lLastY;
+        uint ulExtraInformation;
+    }
+
     [Example("Input Logger", ExampleCategory.Test, 4)]
     public partial class S04_Input_Logger : Form
     {
@@ -30,6 +42,8 @@ namespace Examples.Tests
 
         public S04_Input_Logger()
         {
+            //Console.WriteLine(sizeof(TryMouse));
+            Console.WriteLine(System.Runtime.InteropServices.Marshal.SizeOf(typeof(TryMouse)));
             InitializeComponent();
         }
 
@@ -37,14 +51,22 @@ namespace Examples.Tests
         {
             hidden = new GameWindow(new DisplayMode(30, 30), "OpenTK | Hidden input window");
             hidden.Load += hidden_Load;
+            hidden.Unload += hidden_Unload;
             hidden.Run(60.0, 1.0);
         }
 
-        void hidden_Load(object sender, EventArgs e)
+        void hidden_Load(GameWindow sender, EventArgs e)
         {
             start = true;
         }
 
+        void hidden_Unload(GameWindow sender, EventArgs e)
+        {
+            this.BeginInvoke(on_hidden_unload, sender, e, this);
+        }
+
+        delegate void CloseTrigger(GameWindow sender, EventArgs e, Form f);
+        CloseTrigger on_hidden_unload = delegate(GameWindow sender, EventArgs e, Form f) { f.Close(); };
 
         protected override void OnLoad(EventArgs e)
         {
@@ -84,21 +106,21 @@ namespace Examples.Tests
         }
 
         delegate void ControlLogMouseKey(GameWindow input_window, S04_Input_Logger control, MouseDevice sender, MouseButton button);
-        ControlLogMouseKey ControlLogMouseKeyDown = new ControlLogMouseKey(
+        ControlLogMouseKey ControlLogMouseKeyDown =
             delegate(GameWindow input_window, S04_Input_Logger control, MouseDevice sender, MouseButton button)
             {
                 if (sender.DeviceID == input_window.Mouse.DeviceID)
                     control.MouseButtons.Items.Add(button);
-            });
-        ControlLogMouseKey ControlLogMouseKeyUp = new ControlLogMouseKey(
+            };
+        ControlLogMouseKey ControlLogMouseKeyUp = 
             delegate(GameWindow input_window, S04_Input_Logger control, MouseDevice sender, MouseButton button)
             {
                 if (sender.DeviceID == input_window.Mouse.DeviceID)
                     control.MouseButtons.Items.Remove(button);
-            });
+            };
 
         delegate void ControlLogMousePosition(GameWindow input_window, S04_Input_Logger control);
-        ControlLogMousePosition ControlLogMousePositionChanges = new ControlLogMousePosition(
+        ControlLogMousePosition ControlLogMousePositionChanges =
             delegate(GameWindow input_window, S04_Input_Logger control)
             {
                 // Update mouse coordinates.
@@ -107,20 +129,24 @@ namespace Examples.Tests
                 control.MouseDXText.Text = input_window.Mouse.XDelta.ToString();
                 control.MouseDYText.Text = input_window.Mouse.YDelta.ToString();
                 control.MouseWheelText.Text = input_window.Mouse.Wheel.ToString();
+                //System.Drawing.Point p = input_window.PointToClient(input_window.Mouse.Position);
+                //System.Drawing.Point p = control.PointToClient(input_window.Mouse.Position);
+                //control.MouseXWindow.Text = p.X.ToString();
+                //control.MouseYWindow.Text = p.Y.ToString();
                 //MouseWheelDelta.Text = driver.Mouse[ChooseMouse.SelectedIndex].WheelDelta.ToString();
-            });
+            };
 
         delegate void ControlLogKeyboard(GameWindow input_window, S04_Input_Logger control, KeyboardDevice sender, Key key);
-        ControlLogKeyboard ControlLogKeyboardDown = new ControlLogKeyboard(
+        ControlLogKeyboard ControlLogKeyboardDown =
             delegate(GameWindow input_window, S04_Input_Logger control, KeyboardDevice sender, Key key)
             {
                 control.keyboardListBoxes[(sender as KeyboardDevice).DeviceID].Items.Add(key);
-            });
-        ControlLogKeyboard ControlLogKeyboardUp = new ControlLogKeyboard(
+            };
+        ControlLogKeyboard ControlLogKeyboardUp =
             delegate(GameWindow input_window, S04_Input_Logger control, KeyboardDevice sender, Key key)
             {
                 control.keyboardListBoxes[(sender as KeyboardDevice).DeviceID].Items.Remove(key);
-            });
+            };
 
         void hidden_UpdateFrame(object sender, UpdateFrameEventArgs e)
         {
