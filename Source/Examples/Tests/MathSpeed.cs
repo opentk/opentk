@@ -12,7 +12,7 @@ using OpenTK.Math;
 
 namespace Examples.Tests
 {
-    [Example("Math speed test", ExampleCategory.Test, 2/*, false*/)]
+    [Example("Math speed test", ExampleCategory.Test, 2, false)]
     public class MathSpeed
     {
         public static void Main()
@@ -64,6 +64,7 @@ namespace Examples.Tests
             res += res;         // To make sure the whole for-loop isn't optimized-out
             Trace.WriteLine(String.Format("Vector3.Add(ref a, ref b, out res)\t{0}ns", (watch.Elapsed.TotalSeconds / 10.0).ToString()));
 */
+            /*
             a = Vector3.UnitX;
             b = Vector3.UnitY;
             res = Vector3.Add(ref a, ref b);
@@ -78,6 +79,7 @@ namespace Examples.Tests
             Vector2Im p = new Vector2(2.0f, 3.0f);
             Vector2Im s = Vector2.Add(p, q);
             p = s + q;
+            */
         }
 
         static Vector3 pos = new Vector3();
