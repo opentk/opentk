@@ -15,6 +15,9 @@ using System.Diagnostics;
 
 namespace OpenTK.Input
 {
+    /// <summary>
+    /// Represents a keyboard device and provides methods to query its status. 
+    /// </summary>
     public sealed class KeyboardDevice : IInputDevice
     {
         //private IKeyboard keyboard;
