@@ -25,7 +25,7 @@ namespace OpenTK.Fonts
 
         #region --- IPrinter Members ---
 
-        public TextHandle Load(Vector2[] vertices, ushort[] indices)
+        public TextHandle Load(Vector2[] vertices, ushort[] indices, int index_count)
         {
             VboTextHandle handle = new VboTextHandle(++allocated_handles);
 

@@ -28,6 +28,9 @@ namespace OpenTK.Fonts
         static bool functionality_checked = false;
         static ITextPrinterImplementation printer;
         float[] viewport = new float[6];
+        // 8 chars by default
+        Vector2[] vertices = new Vector2[8 * 8];  // Interleaved, vertex, texcoord, vertex, etc...
+        ushort[] indices = new ushort[6 * 8];
 
         #region --- Constructor ---
 
@@ -53,7 +56,7 @@ namespace OpenTK.Fonts
                 GL.SupportsExtension("VERSION_1_1") ? null : null;
                 */
             if (printer == null)
-                throw new NotSupportedException("DefaultLayoutProvider requires at least OpenGL 1.1 support.");
+                throw new NotSupportedException("TextPrinter requires at least OpenGL 1.1 support.");
             
             functionality_checked = true;
 
@@ -130,11 +133,29 @@ namespace OpenTK.Fonts
         /// <param name="alignment">Not implemented.</param>
         /// <param name="rightToLeft">Not implemented.</param>
         /// <see cref="TextPrinter.Draw()"/>
+        /// <exception cref="NotSupportedException">Occurs when OpenGL 1.1 is not supported.</exception>
         public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft)
         {
             if (!functionality_checked)
                 CheckNeededFunctionality();
 
+            int num_indices;
+
+            PerformLayout(text, font, width, wordWarp, alignment, rightToLeft, ref vertices, ref indices, out num_indices);
+
+            handle = printer.Load(vertices, indices, num_indices);
+            handle.font = font;
+        }
+
+        #endregion
+
+
+        #region void PerformLayout(string text, TextureFont font, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft, ref Vector2[] vertices, ref ushort[] indices, out int num_indices)
+
+        // Performs layout on the given string.
+        void PerformLayout(string text, TextureFont font, float width, bool wordWarp, StringAlignment alignment,
+                           bool rightToLeft, ref Vector2[] vertices, ref ushort[] indices, out int num_indices)
+        {
             if (text == null)
                 throw new ArgumentNullException("Parameter cannot be null.", "text");
 
@@ -144,8 +165,16 @@ namespace OpenTK.Fonts
             if (wordWarp || rightToLeft || alignment != StringAlignment.Near)
                 throw new NotImplementedException();
 
-            Vector2[] vertices = new Vector2[8 * text.Length];  // Interleaved, vertex, texcoord, vertex, etc...
-            ushort[] indices = new ushort[6 * text.Length];
+            while (8 * text.Length > vertices.Length)
+                vertices = new Vector2[vertices.Length << 1];
+
+            while (6 * text.Length > indices.Length)
+                indices = new ushort[indices.Length << 1];
+
+            num_indices = 6 * text.Length;
+
+            //Vector2[] vertices = new Vector2[8 * text.Length];  // Interleaved, vertex, texcoord, vertex, etc...
+            //ushort[] indices = new ushort[6 * text.Length];
             float x_pos = 0, y_pos = 0;
             ushort i = 0, index_count = 0, vertex_count = 0, last_break_point = 0;
             Box2 rect = new Box2();
@@ -171,23 +200,23 @@ namespace OpenTK.Fonts
                     {
                         font.GlyphData(c, out char_width, out char_height, out rect, out texture);
 
-                        vertices[vertex_count].X    = x_pos;                // Vertex
-                        vertices[vertex_count++].Y  = y_pos;
-                        vertices[vertex_count].X    = rect.Left;            // Texcoord
-                        vertices[vertex_count++].Y  = rect.Top;
-                        vertices[vertex_count].X    = x_pos;                // Vertex
-                        vertices[vertex_count++].Y  = y_pos + char_height;
-                        vertices[vertex_count].X    = rect.Left;            // Texcoord
-                        vertices[vertex_count++].Y  = rect.Bottom;
-
-                        vertices[vertex_count].X    = x_pos + char_width;   // Vertex
+                        vertices[vertex_count].X = x_pos;                // Vertex
+                        vertices[vertex_count++].Y = y_pos;
+                        vertices[vertex_count].X = rect.Left;            // Texcoord
+                        vertices[vertex_count++].Y = rect.Top;
+                        vertices[vertex_count].X = x_pos;                // Vertex
                         vertices[vertex_count++].Y = y_pos + char_height;
-                        vertices[vertex_count].X    = rect.Right;           // Texcoord
-                        vertices[vertex_count++].Y  = rect.Bottom;
-                        vertices[vertex_count].X    = x_pos + char_width;   // Vertex
-                        vertices[vertex_count++].Y  = y_pos;
-                        vertices[vertex_count].X    = rect.Right;           // Texcoord
-                        vertices[vertex_count++].Y  = rect.Top;
+                        vertices[vertex_count].X = rect.Left;            // Texcoord
+                        vertices[vertex_count++].Y = rect.Bottom;
+
+                        vertices[vertex_count].X = x_pos + char_width;   // Vertex
+                        vertices[vertex_count++].Y = y_pos + char_height;
+                        vertices[vertex_count].X = rect.Right;           // Texcoord
+                        vertices[vertex_count++].Y = rect.Bottom;
+                        vertices[vertex_count].X = x_pos + char_width;   // Vertex
+                        vertices[vertex_count++].Y = y_pos;
+                        vertices[vertex_count].X = rect.Right;           // Texcoord
+                        vertices[vertex_count++].Y = rect.Top;
 
                         indices[index_count++] = (ushort)(vertex_count - 8);
                         indices[index_count++] = (ushort)(vertex_count - 6);
@@ -218,9 +247,6 @@ namespace OpenTK.Fonts
             {
                 throw new NotImplementedException("This feature is not yet implemented. Sorry for the inconvenience.");
             }
-
-            handle = printer.Load(vertices, indices);
-            handle.font = font;
         }
 
         #endregion
@@ -249,7 +275,7 @@ namespace OpenTK.Fonts
         /// <param name="font">The OpenTK.Fonts.TextureFont to draw the text in.</param>
         public void Draw(string text, TextureFont font)
         {
-            throw new NotImplementedException();
+            //printer.Draw(text);
         }
 
         #endregion
