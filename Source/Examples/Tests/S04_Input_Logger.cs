@@ -110,13 +110,13 @@ namespace Examples.Tests
             delegate(GameWindow input_window, S04_Input_Logger control, MouseDevice sender, MouseButton button)
             {
                 if (sender.DeviceID == input_window.Mouse.DeviceID)
-                    control.MouseButtons.Items.Add(button);
+                    control.MouseButtonsBox.Items.Add(button);
             };
         ControlLogMouseKey ControlLogMouseKeyUp = 
             delegate(GameWindow input_window, S04_Input_Logger control, MouseDevice sender, MouseButton button)
             {
                 if (sender.DeviceID == input_window.Mouse.DeviceID)
-                    control.MouseButtons.Items.Remove(button);
+                    control.MouseButtonsBox.Items.Remove(button);
             };
 
         delegate void ControlLogMousePosition(GameWindow input_window, S04_Input_Logger control);
@@ -136,7 +136,7 @@ namespace Examples.Tests
                 //MouseWheelDelta.Text = driver.Mouse[ChooseMouse.SelectedIndex].WheelDelta.ToString();
             };
 
-        delegate void ControlLogKeyboard(GameWindow input_window, S04_Input_Logger control, KeyboardDevice sender, Key key);
+        delegate void ControlLogKeyboard(GameWindow input_window, S04_Input_Logger control, OpenTK.Input.KeyboardDevice sender, Key key);
         ControlLogKeyboard ControlLogKeyboardDown =
             delegate(GameWindow input_window, S04_Input_Logger control, KeyboardDevice sender, Key key)
             {
@@ -175,7 +175,7 @@ namespace Examples.Tests
 
         private void ChooseMouse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MouseButtons.Items.Clear();
+            MouseButtonsBox.Items.Clear();
         }
 
         #region public static void Main()
