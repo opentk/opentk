@@ -3,47 +3,47 @@ namespace OpenTK.Platform.Windows
     using System;
     using System.Runtime.InteropServices;
 
-    public static partial class Wgl
+    internal static partial class Wgl
     {
 
-        public static 
+        internal static 
         IntPtr CreateContext(IntPtr hDc)
         {
             return Delegates.wglCreateContext((IntPtr)hDc);
         }
 
-        public static 
+        internal static 
         Boolean DeleteContext(IntPtr oldContext)
         {
             return Delegates.wglDeleteContext((IntPtr)oldContext);
         }
 
-        public static 
+        internal static 
         IntPtr GetCurrentContext()
         {
             return Delegates.wglGetCurrentContext();
         }
 
-        public static 
+        internal static 
         Boolean MakeCurrent(IntPtr hDc, IntPtr newContext)
         {
             return Delegates.wglMakeCurrent((IntPtr)hDc, (IntPtr)newContext);
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         Boolean CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, UInt32 mask)
         {
             return Delegates.wglCopyContext((IntPtr)hglrcSrc, (IntPtr)hglrcDst, (UInt32)mask);
         }
 
-        public static 
+        internal static 
         Boolean CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, Int32 mask)
         {
             return Delegates.wglCopyContext((IntPtr)hglrcSrc, (IntPtr)hglrcDst, (UInt32)mask);
         }
 
-        public static 
+        internal static 
         int ChoosePixelFormat(IntPtr hDc, PixelFormatDescriptor[] pPfd)
         {
             unsafe
@@ -55,7 +55,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         int ChoosePixelFormat(IntPtr hDc, ref PixelFormatDescriptor pPfd)
         {
             unsafe
@@ -68,14 +68,14 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe int ChoosePixelFormat(IntPtr hDc, PixelFormatDescriptor* pPfd)
         {
             return Delegates.wglChoosePixelFormat((IntPtr)hDc, (PixelFormatDescriptor*)pPfd);
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, PixelFormatDescriptor[] ppfd)
         {
             unsafe
@@ -87,7 +87,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, PixelFormatDescriptor[] ppfd)
         {
             unsafe
@@ -100,7 +100,7 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, ref PixelFormatDescriptor ppfd)
         {
             unsafe
@@ -112,7 +112,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, ref PixelFormatDescriptor ppfd)
         {
             unsafe
@@ -125,44 +125,44 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, UInt32 cjpfd, PixelFormatDescriptor* ppfd)
         {
             return Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (PixelFormatDescriptor*)ppfd);
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe int DescribePixelFormat(IntPtr hdc, int ipfd, Int32 cjpfd, PixelFormatDescriptor* ppfd)
         {
             return Delegates.wglDescribePixelFormat((IntPtr)hdc, (int)ipfd, (UInt32)cjpfd, (PixelFormatDescriptor*)ppfd);
         }
 
-        public static 
+        internal static 
         IntPtr GetCurrentDC()
         {
             return Delegates.wglGetCurrentDC();
         }
 
-        public static 
+        internal static 
         IntPtr GetDefaultProcAddres(String lpszProc)
         {
             return Delegates.wglGetDefaultProcAddress((String)lpszProc);
         }
 
-        public static 
+        internal static 
         IntPtr GetProcAddres(String lpszProc)
         {
             return Delegates.wglGetProcAddress((String)lpszProc);
         }
 
-        public static 
+        internal static 
         int GetPixelFormat(IntPtr hdc)
         {
             return Delegates.wglGetPixelFormat((IntPtr)hdc);
         }
 
-        public static 
+        internal static 
         Boolean SetPixelFormat(IntPtr hdc, int ipfd, PixelFormatDescriptor[] ppfd)
         {
             unsafe
@@ -174,7 +174,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         Boolean SetPixelFormat(IntPtr hdc, int ipfd, ref PixelFormatDescriptor ppfd)
         {
             unsafe
@@ -187,32 +187,32 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe Boolean SetPixelFormat(IntPtr hdc, int ipfd, PixelFormatDescriptor* ppfd)
         {
             return Delegates.wglSetPixelFormat((IntPtr)hdc, (int)ipfd, (PixelFormatDescriptor*)ppfd);
         }
 
-        public static 
+        internal static 
         Boolean SwapBuffers(IntPtr hdc)
         {
             return Delegates.wglSwapBuffers((IntPtr)hdc);
         }
 
-        public static 
+        internal static 
         Boolean ShareLists(IntPtr hrcSrvShare, IntPtr hrcSrvSource)
         {
             return Delegates.wglShareLists((IntPtr)hrcSrvShare, (IntPtr)hrcSrvSource);
         }
 
-        public static 
+        internal static 
         IntPtr CreateLayerContext(IntPtr hDc, int level)
         {
             return Delegates.wglCreateLayerContext((IntPtr)hDc, (int)level);
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, LayerPlaneDescriptor[] plpd)
         {
             unsafe
@@ -224,7 +224,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, LayerPlaneDescriptor[] plpd)
         {
             unsafe
@@ -237,7 +237,7 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, ref LayerPlaneDescriptor plpd)
         {
             unsafe
@@ -249,7 +249,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, ref LayerPlaneDescriptor plpd)
         {
             unsafe
@@ -262,20 +262,20 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, UInt32 nBytes, LayerPlaneDescriptor* plpd)
         {
             return Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (LayerPlaneDescriptor*)plpd);
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe Boolean DescribeLayerPlane(IntPtr hDc, int pixelFormat, int layerPlane, Int32 nBytes, LayerPlaneDescriptor* plpd)
         {
             return Delegates.wglDescribeLayerPlane((IntPtr)hDc, (int)pixelFormat, (int)layerPlane, (UInt32)nBytes, (LayerPlaneDescriptor*)plpd);
         }
 
-        public static 
+        internal static 
         int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32[] pcr)
         {
             unsafe
@@ -287,7 +287,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, ref Int32 pcr)
         {
             unsafe
@@ -300,13 +300,13 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe int SetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr)
         {
             return Delegates.wglSetLayerPaletteEntries((IntPtr)hdc, (int)iLayerPlane, (int)iStart, (int)cEntries, (Int32*)pcr);
         }
 
-        public static 
+        internal static 
         int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32[] pcr)
         {
             unsafe
@@ -318,7 +318,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, ref Int32 pcr)
         {
             unsafe
@@ -331,44 +331,44 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe int GetLayerPaletteEntries(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, Int32* pcr)
         {
             return Delegates.wglGetLayerPaletteEntries((IntPtr)hdc, (int)iLayerPlane, (int)iStart, (int)cEntries, (Int32*)pcr);
         }
 
-        public static 
+        internal static 
         Boolean RealizeLayerPalette(IntPtr hdc, int iLayerPlane, Boolean bRealize)
         {
             return Delegates.wglRealizeLayerPalette((IntPtr)hdc, (int)iLayerPlane, (Boolean)bRealize);
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         Boolean SwapLayerBuffers(IntPtr hdc, UInt32 fuFlags)
         {
             return Delegates.wglSwapLayerBuffers((IntPtr)hdc, (UInt32)fuFlags);
         }
 
-        public static 
+        internal static 
         Boolean SwapLayerBuffers(IntPtr hdc, Int32 fuFlags)
         {
             return Delegates.wglSwapLayerBuffers((IntPtr)hdc, (UInt32)fuFlags);
         }
 
-        public static 
+        internal static 
         Boolean UseFontBitmapsA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase)
         {
             return Delegates.wglUseFontBitmapsA((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase);
         }
 
-        public static 
+        internal static 
         Boolean UseFontBitmapsW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase)
         {
             return Delegates.wglUseFontBitmapsW((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase);
         }
 
-        public static 
+        internal static 
         Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat[] glyphMetrics)
         {
             unsafe
@@ -380,7 +380,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, ref GlyphMetricsFloat glyphMetrics)
         {
             unsafe
@@ -393,13 +393,13 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe Boolean UseFontOutlinesA(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics)
         {
             return Delegates.wglUseFontOutlinesA((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (GlyphMetricsFloat*)glyphMetrics);
         }
 
-        public static 
+        internal static 
         Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat[] glyphMetrics)
         {
             unsafe
@@ -411,7 +411,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public static 
+        internal static 
         Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, ref GlyphMetricsFloat glyphMetrics)
         {
             unsafe
@@ -424,53 +424,53 @@ namespace OpenTK.Platform.Windows
         }
 
         [System.CLSCompliant(false)]
-        public static 
+        internal static 
         unsafe Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics)
         {
             return Delegates.wglUseFontOutlinesW((IntPtr)hDC, (Int32)first, (Int32)count, (Int32)listBase, (float)thickness, (float)deviation, (Int32)fontMode, (GlyphMetricsFloat*)glyphMetrics);
         }
 
-        public static partial class Arb
+        internal static partial class Arb
         {
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             IntPtr CreateBufferRegion(IntPtr hDC, int iLayerPlane, UInt32 uType)
             {
                 return Delegates.wglCreateBufferRegionARB((IntPtr)hDC, (int)iLayerPlane, (UInt32)uType);
             }
 
-            public static 
+            internal static 
             IntPtr CreateBufferRegion(IntPtr hDC, int iLayerPlane, Int32 uType)
             {
                 return Delegates.wglCreateBufferRegionARB((IntPtr)hDC, (int)iLayerPlane, (UInt32)uType);
             }
 
-            public static 
+            internal static 
             void DeleteBufferRegion(IntPtr hRegion)
             {
                 Delegates.wglDeleteBufferRegionARB((IntPtr)hRegion);
             }
 
-            public static 
+            internal static 
             Boolean SaveBufferRegion(IntPtr hRegion, int x, int y, int width, int height)
             {
                 return Delegates.wglSaveBufferRegionARB((IntPtr)hRegion, (int)x, (int)y, (int)width, (int)height);
             }
 
-            public static 
+            internal static 
             Boolean RestoreBufferRegion(IntPtr hRegion, int x, int y, int width, int height, int xSrc, int ySrc)
             {
                 return Delegates.wglRestoreBufferRegionARB((IntPtr)hRegion, (int)x, (int)y, (int)width, (int)height, (int)xSrc, (int)ySrc);
             }
 
-            public static 
+            internal static 
             string GetExtensionsString(IntPtr hdc)
             {
                 return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.wglGetExtensionsStringARB((IntPtr)hdc));
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
@@ -483,7 +483,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
@@ -497,7 +497,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] out int piValues)
             {
                 unsafe
@@ -512,7 +512,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] out int piValues)
             {
                 unsafe
@@ -528,21 +528,21 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] int* piValues)
             {
                 return Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] int* piValues)
             {
                 return Delegates.wglGetPixelFormatAttribivARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
@@ -555,7 +555,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
@@ -569,7 +569,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, ref int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
@@ -584,7 +584,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, ref int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
@@ -600,21 +600,21 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, int* piAttributes, [Out] Single* pfValues)
             {
                 return Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, int* piAttributes, [Out] Single* pfValues)
             {
                 return Delegates.wglGetPixelFormatAttribfvARB((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32[] nNumFormats)
             {
                 unsafe
@@ -629,7 +629,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
             {
                 unsafe
@@ -645,7 +645,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -663,7 +663,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
             {
                 unsafe
@@ -682,32 +682,32 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
             {
                 return Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 return Delegates.wglChoosePixelFormatARB((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
             }
 
-            public static 
+            internal static 
             Boolean MakeContextCurrent(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
             {
                 return Delegates.wglMakeContextCurrentARB((IntPtr)hDrawDC, (IntPtr)hReadDC, (IntPtr)hglrc);
             }
 
-            public static 
+            internal static 
             IntPtr GetCurrentReadDC()
             {
                 return Delegates.wglGetCurrentReadDCARB();
             }
 
-            public static 
+            internal static 
             IntPtr CreatePbuffer(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int[] piAttribList)
             {
                 unsafe
@@ -719,7 +719,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             IntPtr CreatePbuffer(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, ref int piAttribList)
             {
                 unsafe
@@ -732,31 +732,31 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe IntPtr CreatePbuffer(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int* piAttribList)
             {
                 return Delegates.wglCreatePbufferARB((IntPtr)hDC, (int)iPixelFormat, (int)iWidth, (int)iHeight, (int*)piAttribList);
             }
 
-            public static 
+            internal static 
             IntPtr GetPbufferDC(IntPtr hPbuffer)
             {
                 return Delegates.wglGetPbufferDCARB((IntPtr)hPbuffer);
             }
 
-            public static 
+            internal static 
             int ReleasePbufferDC(IntPtr hPbuffer, IntPtr hDC)
             {
                 return Delegates.wglReleasePbufferDCARB((IntPtr)hPbuffer, (IntPtr)hDC);
             }
 
-            public static 
+            internal static 
             Boolean DestroyPbuffer(IntPtr hPbuffer)
             {
                 return Delegates.wglDestroyPbufferARB((IntPtr)hPbuffer);
             }
 
-            public static 
+            internal static 
             Boolean QueryPbuffer(IntPtr hPbuffer, int iAttribute, [Out] int[] piValue)
             {
                 unsafe
@@ -768,7 +768,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean QueryPbuffer(IntPtr hPbuffer, int iAttribute, [Out] out int piValue)
             {
                 unsafe
@@ -783,25 +783,25 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean QueryPbuffer(IntPtr hPbuffer, int iAttribute, [Out] int* piValue)
             {
                 return Delegates.wglQueryPbufferARB((IntPtr)hPbuffer, (int)iAttribute, (int*)piValue);
             }
 
-            public static 
+            internal static 
             Boolean BindTexImage(IntPtr hPbuffer, int iBuffer)
             {
                 return Delegates.wglBindTexImageARB((IntPtr)hPbuffer, (int)iBuffer);
             }
 
-            public static 
+            internal static 
             Boolean ReleaseTexImage(IntPtr hPbuffer, int iBuffer)
             {
                 return Delegates.wglReleaseTexImageARB((IntPtr)hPbuffer, (int)iBuffer);
             }
 
-            public static 
+            internal static 
             Boolean SetPbufferAttrib(IntPtr hPbuffer, int[] piAttribList)
             {
                 unsafe
@@ -813,7 +813,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean SetPbufferAttrib(IntPtr hPbuffer, ref int piAttribList)
             {
                 unsafe
@@ -826,7 +826,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean SetPbufferAttrib(IntPtr hPbuffer, int* piAttribList)
             {
                 return Delegates.wglSetPbufferAttribARB((IntPtr)hPbuffer, (int*)piAttribList);
@@ -834,23 +834,23 @@ namespace OpenTK.Platform.Windows
 
         }
 
-        public static partial class Ext
+        internal static partial class Ext
         {
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             bool CreateDisplayColorTable(UInt16 id)
             {
                 return Delegates.wglCreateDisplayColorTableEXT((UInt16)id);
             }
 
-            public static 
+            internal static 
             bool CreateDisplayColorTable(Int16 id)
             {
                 return Delegates.wglCreateDisplayColorTableEXT((UInt16)id);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             bool LoadDisplayColorTable(UInt16[] table, UInt32 length)
             {
                 unsafe
@@ -862,7 +862,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             bool LoadDisplayColorTable(Int16[] table, Int32 length)
             {
                 unsafe
@@ -875,7 +875,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             bool LoadDisplayColorTable(ref UInt16 table, UInt32 length)
             {
                 unsafe
@@ -887,7 +887,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             bool LoadDisplayColorTable(ref Int16 table, Int32 length)
             {
                 unsafe
@@ -900,64 +900,64 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe bool LoadDisplayColorTable(UInt16* table, UInt32 length)
             {
                 return Delegates.wglLoadDisplayColorTableEXT((UInt16*)table, (UInt32)length);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe bool LoadDisplayColorTable(Int16* table, Int32 length)
             {
                 return Delegates.wglLoadDisplayColorTableEXT((UInt16*)table, (UInt32)length);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             bool BindDisplayColorTable(UInt16 id)
             {
                 return Delegates.wglBindDisplayColorTableEXT((UInt16)id);
             }
 
-            public static 
+            internal static 
             bool BindDisplayColorTable(Int16 id)
             {
                 return Delegates.wglBindDisplayColorTableEXT((UInt16)id);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             void DestroyDisplayColorTable(UInt16 id)
             {
                 Delegates.wglDestroyDisplayColorTableEXT((UInt16)id);
             }
 
-            public static 
+            internal static 
             void DestroyDisplayColorTable(Int16 id)
             {
                 Delegates.wglDestroyDisplayColorTableEXT((UInt16)id);
             }
 
-            public static 
+            internal static 
             string GetExtensionsString()
             {
                 return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.wglGetExtensionsStringEXT());
             }
 
-            public static 
+            internal static 
             Boolean MakeContextCurrent(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
             {
                 return Delegates.wglMakeContextCurrentEXT((IntPtr)hDrawDC, (IntPtr)hReadDC, (IntPtr)hglrc);
             }
 
-            public static 
+            internal static 
             IntPtr GetCurrentReadDC()
             {
                 return Delegates.wglGetCurrentReadDCEXT();
             }
 
-            public static 
+            internal static 
             IntPtr CreatePbuffer(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int[] piAttribList)
             {
                 unsafe
@@ -969,7 +969,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             IntPtr CreatePbuffer(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, ref int piAttribList)
             {
                 unsafe
@@ -982,31 +982,31 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe IntPtr CreatePbuffer(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int* piAttribList)
             {
                 return Delegates.wglCreatePbufferEXT((IntPtr)hDC, (int)iPixelFormat, (int)iWidth, (int)iHeight, (int*)piAttribList);
             }
 
-            public static 
+            internal static 
             IntPtr GetPbufferDC(IntPtr hPbuffer)
             {
                 return Delegates.wglGetPbufferDCEXT((IntPtr)hPbuffer);
             }
 
-            public static 
+            internal static 
             int ReleasePbufferDC(IntPtr hPbuffer, IntPtr hDC)
             {
                 return Delegates.wglReleasePbufferDCEXT((IntPtr)hPbuffer, (IntPtr)hDC);
             }
 
-            public static 
+            internal static 
             Boolean DestroyPbuffer(IntPtr hPbuffer)
             {
                 return Delegates.wglDestroyPbufferEXT((IntPtr)hPbuffer);
             }
 
-            public static 
+            internal static 
             Boolean QueryPbuffer(IntPtr hPbuffer, int iAttribute, [Out] int[] piValue)
             {
                 unsafe
@@ -1018,7 +1018,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean QueryPbuffer(IntPtr hPbuffer, int iAttribute, [Out] out int piValue)
             {
                 unsafe
@@ -1033,14 +1033,14 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean QueryPbuffer(IntPtr hPbuffer, int iAttribute, [Out] int* piValue)
             {
                 return Delegates.wglQueryPbufferEXT((IntPtr)hPbuffer, (int)iAttribute, (int*)piValue);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
@@ -1053,7 +1053,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] int[] piValues)
             {
                 unsafe
@@ -1067,7 +1067,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] out int piValues)
             {
                 unsafe
@@ -1083,7 +1083,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] out int piValues)
             {
                 unsafe
@@ -1100,21 +1100,21 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] int* piValues)
             {
                 return Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] int* piValues)
             {
                 return Delegates.wglGetPixelFormatAttribivEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (int*)piValues);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
@@ -1127,7 +1127,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int[] piAttributes, [Out] Single[] pfValues)
             {
                 unsafe
@@ -1141,7 +1141,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] out int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
@@ -1157,7 +1157,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] out int piAttributes, [Out] out Single pfValues)
             {
                 unsafe
@@ -1174,21 +1174,21 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, UInt32 nAttributes, [Out] int* piAttributes, [Out] Single* pfValues)
             {
                 return Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetPixelFormatAttrib(IntPtr hdc, int iPixelFormat, int iLayerPlane, Int32 nAttributes, [Out] int* piAttributes, [Out] Single* pfValues)
             {
                 return Delegates.wglGetPixelFormatAttribfvEXT((IntPtr)hdc, (int)iPixelFormat, (int)iLayerPlane, (UInt32)nAttributes, (int*)piAttributes, (Single*)pfValues);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, UInt32 nMaxFormats, [Out] int[] piFormats, [Out] UInt32[] nNumFormats)
             {
                 unsafe
@@ -1203,7 +1203,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean ChoosePixelFormat(IntPtr hdc, int[] piAttribIList, Single[] pfAttribFList, Int32 nMaxFormats, [Out] int[] piFormats, [Out] Int32[] nNumFormats)
             {
                 unsafe
@@ -1219,7 +1219,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, UInt32 nMaxFormats, [Out] out int piFormats, [Out] out UInt32 nNumFormats)
             {
                 unsafe
@@ -1237,7 +1237,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean ChoosePixelFormat(IntPtr hdc, ref int piAttribIList, ref Single pfAttribFList, Int32 nMaxFormats, [Out] out int piFormats, [Out] out Int32 nNumFormats)
             {
                 unsafe
@@ -1256,26 +1256,26 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats)
             {
                 return Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean ChoosePixelFormat(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, Int32 nMaxFormats, [Out] int* piFormats, [Out] Int32* nNumFormats)
             {
                 return Delegates.wglChoosePixelFormatEXT((IntPtr)hdc, (int*)piAttribIList, (Single*)pfAttribFList, (UInt32)nMaxFormats, (int*)piFormats, (UInt32*)nNumFormats);
             }
 
-            public static 
+            internal static 
             Boolean SwapInterval(int interval)
             {
                 return Delegates.wglSwapIntervalEXT((int)interval);
             }
 
-            public static 
+            internal static 
             int GetSwapInterval()
             {
                 return Delegates.wglGetSwapIntervalEXT();
@@ -1283,22 +1283,22 @@ namespace OpenTK.Platform.Windows
 
         }
 
-        public static partial class NV
+        internal static partial class NV
         {
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe IntPtr AllocateMemory(Int32 size, Single readfreq, Single writefreq, Single priority)
             {
                 return Delegates.wglAllocateMemoryNV((Int32)size, (Single)readfreq, (Single)writefreq, (Single)priority);
             }
 
-            public static 
+            internal static 
             void FreeMemory([Out] IntPtr pointer)
             {
                 Delegates.wglFreeMemoryNV((IntPtr)pointer);
             }
 
-            public static 
+            internal static 
             void FreeMemory([In, Out] object pointer)
             {
                 System.Runtime.InteropServices.GCHandle pointer_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pointer, System.Runtime.InteropServices.GCHandleType.Pinned);
@@ -1314,9 +1314,9 @@ namespace OpenTK.Platform.Windows
 
         }
 
-        public static partial class Oml
+        internal static partial class Oml
         {
-            public static 
+            internal static 
             Boolean GetSyncValues(IntPtr hdc, [Out] Int64[] ust, [Out] Int64[] msc, [Out] Int64[] sbc)
             {
                 unsafe
@@ -1330,7 +1330,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetSyncValues(IntPtr hdc, [Out] out Int64 ust, [Out] out Int64 msc, [Out] out Int64 sbc)
             {
                 unsafe
@@ -1349,13 +1349,13 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetSyncValues(IntPtr hdc, [Out] Int64* ust, [Out] Int64* msc, [Out] Int64* sbc)
             {
                 return Delegates.wglGetSyncValuesOML((IntPtr)hdc, (Int64*)ust, (Int64*)msc, (Int64*)sbc);
             }
 
-            public static 
+            internal static 
             Boolean GetMscRate(IntPtr hdc, [Out] Int32[] numerator, [Out] Int32[] denominator)
             {
                 unsafe
@@ -1368,7 +1368,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetMscRate(IntPtr hdc, [Out] out Int32 numerator, [Out] out Int32 denominator)
             {
                 unsafe
@@ -1385,25 +1385,25 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetMscRate(IntPtr hdc, [Out] Int32* numerator, [Out] Int32* denominator)
             {
                 return Delegates.wglGetMscRateOML((IntPtr)hdc, (Int32*)numerator, (Int32*)denominator);
             }
 
-            public static 
+            internal static 
             Int64 SwapBuffersMsc(IntPtr hdc, Int64 target_msc, Int64 divisor, Int64 remainder)
             {
                 return Delegates.wglSwapBuffersMscOML((IntPtr)hdc, (Int64)target_msc, (Int64)divisor, (Int64)remainder);
             }
 
-            public static 
+            internal static 
             Int64 SwapLayerBuffersMsc(IntPtr hdc, int fuPlanes, Int64 target_msc, Int64 divisor, Int64 remainder)
             {
                 return Delegates.wglSwapLayerBuffersMscOML((IntPtr)hdc, (int)fuPlanes, (Int64)target_msc, (Int64)divisor, (Int64)remainder);
             }
 
-            public static 
+            internal static 
             Boolean WaitForMsc(IntPtr hdc, Int64 target_msc, Int64 divisor, Int64 remainder, [Out] Int64[] ust, [Out] Int64[] msc, [Out] Int64[] sbc)
             {
                 unsafe
@@ -1417,7 +1417,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean WaitForMsc(IntPtr hdc, Int64 target_msc, Int64 divisor, Int64 remainder, [Out] out Int64 ust, [Out] out Int64 msc, [Out] out Int64 sbc)
             {
                 unsafe
@@ -1436,13 +1436,13 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean WaitForMsc(IntPtr hdc, Int64 target_msc, Int64 divisor, Int64 remainder, [Out] Int64* ust, [Out] Int64* msc, [Out] Int64* sbc)
             {
                 return Delegates.wglWaitForMscOML((IntPtr)hdc, (Int64)target_msc, (Int64)divisor, (Int64)remainder, (Int64*)ust, (Int64*)msc, (Int64*)sbc);
             }
 
-            public static 
+            internal static 
             Boolean WaitForSbc(IntPtr hdc, Int64 target_sbc, [Out] Int64[] ust, [Out] Int64[] msc, [Out] Int64[] sbc)
             {
                 unsafe
@@ -1456,7 +1456,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean WaitForSbc(IntPtr hdc, Int64 target_sbc, [Out] out Int64 ust, [Out] out Int64 msc, [Out] out Int64 sbc)
             {
                 unsafe
@@ -1475,7 +1475,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean WaitForSbc(IntPtr hdc, Int64 target_sbc, [Out] Int64* ust, [Out] Int64* msc, [Out] Int64* sbc)
             {
                 return Delegates.wglWaitForSbcOML((IntPtr)hdc, (Int64)target_sbc, (Int64*)ust, (Int64*)msc, (Int64*)sbc);
@@ -1483,9 +1483,9 @@ namespace OpenTK.Platform.Windows
 
         }
 
-        public static partial class I3d
+        internal static partial class I3d
         {
-            public static 
+            internal static 
             Boolean GetDigitalVideoParameters(IntPtr hDC, int iAttribute, [Out] int[] piValue)
             {
                 unsafe
@@ -1497,7 +1497,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetDigitalVideoParameters(IntPtr hDC, int iAttribute, [Out] out int piValue)
             {
                 unsafe
@@ -1512,13 +1512,13 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetDigitalVideoParameters(IntPtr hDC, int iAttribute, [Out] int* piValue)
             {
                 return Delegates.wglGetDigitalVideoParametersI3D((IntPtr)hDC, (int)iAttribute, (int*)piValue);
             }
 
-            public static 
+            internal static 
             Boolean SetDigitalVideoParameters(IntPtr hDC, int iAttribute, int[] piValue)
             {
                 unsafe
@@ -1530,7 +1530,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean SetDigitalVideoParameters(IntPtr hDC, int iAttribute, ref int piValue)
             {
                 unsafe
@@ -1543,13 +1543,13 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean SetDigitalVideoParameters(IntPtr hDC, int iAttribute, int* piValue)
             {
                 return Delegates.wglSetDigitalVideoParametersI3D((IntPtr)hDC, (int)iAttribute, (int*)piValue);
             }
 
-            public static 
+            internal static 
             Boolean GetGammaTableParameters(IntPtr hDC, int iAttribute, [Out] int[] piValue)
             {
                 unsafe
@@ -1561,7 +1561,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGammaTableParameters(IntPtr hDC, int iAttribute, [Out] out int piValue)
             {
                 unsafe
@@ -1576,13 +1576,13 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGammaTableParameters(IntPtr hDC, int iAttribute, [Out] int* piValue)
             {
                 return Delegates.wglGetGammaTableParametersI3D((IntPtr)hDC, (int)iAttribute, (int*)piValue);
             }
 
-            public static 
+            internal static 
             Boolean SetGammaTableParameters(IntPtr hDC, int iAttribute, int[] piValue)
             {
                 unsafe
@@ -1594,7 +1594,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean SetGammaTableParameters(IntPtr hDC, int iAttribute, ref int piValue)
             {
                 unsafe
@@ -1607,14 +1607,14 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean SetGammaTableParameters(IntPtr hDC, int iAttribute, int* piValue)
             {
                 return Delegates.wglSetGammaTableParametersI3D((IntPtr)hDC, (int)iAttribute, (int*)piValue);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] UInt16[] puRed, [Out] UInt16[] puGreen, [Out] UInt16[] puBlue)
             {
                 unsafe
@@ -1628,7 +1628,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16[] puRed, [Out] Int16[] puGreen, [Out] Int16[] puBlue)
             {
                 unsafe
@@ -1643,7 +1643,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out UInt16 puRed, [Out] out UInt16 puGreen, [Out] out UInt16 puBlue)
             {
                 unsafe
@@ -1661,7 +1661,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] out Int16 puRed, [Out] out Int16 puGreen, [Out] out Int16 puBlue)
             {
                 unsafe
@@ -1680,21 +1680,21 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] UInt16* puRed, [Out] UInt16* puGreen, [Out] UInt16* puBlue)
             {
                 return Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen, (UInt16*)puBlue);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGammaTable(IntPtr hDC, int iEntries, [Out] Int16* puRed, [Out] Int16* puGreen, [Out] Int16* puBlue)
             {
                 return Delegates.wglGetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen, (UInt16*)puBlue);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16[] puRed, UInt16[] puGreen, UInt16[] puBlue)
             {
                 unsafe
@@ -1708,7 +1708,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16[] puRed, Int16[] puGreen, Int16[] puBlue)
             {
                 unsafe
@@ -1723,7 +1723,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean SetGammaTable(IntPtr hDC, int iEntries, ref UInt16 puRed, ref UInt16 puGreen, ref UInt16 puBlue)
             {
                 unsafe
@@ -1737,7 +1737,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean SetGammaTable(IntPtr hDC, int iEntries, ref Int16 puRed, ref Int16 puGreen, ref Int16 puBlue)
             {
                 unsafe
@@ -1752,32 +1752,32 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, UInt16* puRed, UInt16* puGreen, UInt16* puBlue)
             {
                 return Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen, (UInt16*)puBlue);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean SetGammaTable(IntPtr hDC, int iEntries, Int16* puRed, Int16* puGreen, Int16* puBlue)
             {
                 return Delegates.wglSetGammaTableI3D((IntPtr)hDC, (int)iEntries, (UInt16*)puRed, (UInt16*)puGreen, (UInt16*)puBlue);
             }
 
-            public static 
+            internal static 
             Boolean EnableGenlock(IntPtr hDC)
             {
                 return Delegates.wglEnableGenlockI3D((IntPtr)hDC);
             }
 
-            public static 
+            internal static 
             Boolean DisableGenlock(IntPtr hDC)
             {
                 return Delegates.wglDisableGenlockI3D((IntPtr)hDC);
             }
 
-            public static 
+            internal static 
             Boolean IsEnabledGenlock(IntPtr hDC, [Out] Boolean[] pFlag)
             {
                 unsafe
@@ -1789,7 +1789,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean IsEnabledGenlock(IntPtr hDC, [Out] out Boolean pFlag)
             {
                 unsafe
@@ -1804,27 +1804,27 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean IsEnabledGenlock(IntPtr hDC, [Out] Boolean* pFlag)
             {
                 return Delegates.wglIsEnabledGenlockI3D((IntPtr)hDC, (Boolean*)pFlag);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GenlockSource(IntPtr hDC, UInt32 uSource)
             {
                 return Delegates.wglGenlockSourceI3D((IntPtr)hDC, (UInt32)uSource);
             }
 
-            public static 
+            internal static 
             Boolean GenlockSource(IntPtr hDC, Int32 uSource)
             {
                 return Delegates.wglGenlockSourceI3D((IntPtr)hDC, (UInt32)uSource);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGenlockSource(IntPtr hDC, [Out] UInt32[] uSource)
             {
                 unsafe
@@ -1836,7 +1836,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGenlockSource(IntPtr hDC, [Out] Int32[] uSource)
             {
                 unsafe
@@ -1849,7 +1849,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGenlockSource(IntPtr hDC, [Out] out UInt32 uSource)
             {
                 unsafe
@@ -1863,7 +1863,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGenlockSource(IntPtr hDC, [Out] out Int32 uSource)
             {
                 unsafe
@@ -1878,34 +1878,34 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGenlockSource(IntPtr hDC, [Out] UInt32* uSource)
             {
                 return Delegates.wglGetGenlockSourceI3D((IntPtr)hDC, (UInt32*)uSource);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGenlockSource(IntPtr hDC, [Out] Int32* uSource)
             {
                 return Delegates.wglGetGenlockSourceI3D((IntPtr)hDC, (UInt32*)uSource);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GenlockSourceEdge(IntPtr hDC, UInt32 uEdge)
             {
                 return Delegates.wglGenlockSourceEdgeI3D((IntPtr)hDC, (UInt32)uEdge);
             }
 
-            public static 
+            internal static 
             Boolean GenlockSourceEdge(IntPtr hDC, Int32 uEdge)
             {
                 return Delegates.wglGenlockSourceEdgeI3D((IntPtr)hDC, (UInt32)uEdge);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGenlockSourceEdge(IntPtr hDC, [Out] UInt32[] uEdge)
             {
                 unsafe
@@ -1917,7 +1917,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGenlockSourceEdge(IntPtr hDC, [Out] Int32[] uEdge)
             {
                 unsafe
@@ -1930,7 +1930,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGenlockSourceEdge(IntPtr hDC, [Out] out UInt32 uEdge)
             {
                 unsafe
@@ -1944,7 +1944,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGenlockSourceEdge(IntPtr hDC, [Out] out Int32 uEdge)
             {
                 unsafe
@@ -1959,34 +1959,34 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGenlockSourceEdge(IntPtr hDC, [Out] UInt32* uEdge)
             {
                 return Delegates.wglGetGenlockSourceEdgeI3D((IntPtr)hDC, (UInt32*)uEdge);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGenlockSourceEdge(IntPtr hDC, [Out] Int32* uEdge)
             {
                 return Delegates.wglGetGenlockSourceEdgeI3D((IntPtr)hDC, (UInt32*)uEdge);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GenlockSampleRate(IntPtr hDC, UInt32 uRate)
             {
                 return Delegates.wglGenlockSampleRateI3D((IntPtr)hDC, (UInt32)uRate);
             }
 
-            public static 
+            internal static 
             Boolean GenlockSampleRate(IntPtr hDC, Int32 uRate)
             {
                 return Delegates.wglGenlockSampleRateI3D((IntPtr)hDC, (UInt32)uRate);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGenlockSampleRate(IntPtr hDC, [Out] UInt32[] uRate)
             {
                 unsafe
@@ -1998,7 +1998,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGenlockSampleRate(IntPtr hDC, [Out] Int32[] uRate)
             {
                 unsafe
@@ -2011,7 +2011,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGenlockSampleRate(IntPtr hDC, [Out] out UInt32 uRate)
             {
                 unsafe
@@ -2025,7 +2025,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGenlockSampleRate(IntPtr hDC, [Out] out Int32 uRate)
             {
                 unsafe
@@ -2040,34 +2040,34 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGenlockSampleRate(IntPtr hDC, [Out] UInt32* uRate)
             {
                 return Delegates.wglGetGenlockSampleRateI3D((IntPtr)hDC, (UInt32*)uRate);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGenlockSampleRate(IntPtr hDC, [Out] Int32* uRate)
             {
                 return Delegates.wglGetGenlockSampleRateI3D((IntPtr)hDC, (UInt32*)uRate);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GenlockSourceDelay(IntPtr hDC, UInt32 uDelay)
             {
                 return Delegates.wglGenlockSourceDelayI3D((IntPtr)hDC, (UInt32)uDelay);
             }
 
-            public static 
+            internal static 
             Boolean GenlockSourceDelay(IntPtr hDC, Int32 uDelay)
             {
                 return Delegates.wglGenlockSourceDelayI3D((IntPtr)hDC, (UInt32)uDelay);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGenlockSourceDelay(IntPtr hDC, [Out] UInt32[] uDelay)
             {
                 unsafe
@@ -2079,7 +2079,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGenlockSourceDelay(IntPtr hDC, [Out] Int32[] uDelay)
             {
                 unsafe
@@ -2092,7 +2092,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean GetGenlockSourceDelay(IntPtr hDC, [Out] out UInt32 uDelay)
             {
                 unsafe
@@ -2106,7 +2106,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetGenlockSourceDelay(IntPtr hDC, [Out] out Int32 uDelay)
             {
                 unsafe
@@ -2121,21 +2121,21 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGenlockSourceDelay(IntPtr hDC, [Out] UInt32* uDelay)
             {
                 return Delegates.wglGetGenlockSourceDelayI3D((IntPtr)hDC, (UInt32*)uDelay);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetGenlockSourceDelay(IntPtr hDC, [Out] Int32* uDelay)
             {
                 return Delegates.wglGetGenlockSourceDelayI3D((IntPtr)hDC, (UInt32*)uDelay);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] UInt32[] uMaxLineDelay, [Out] UInt32[] uMaxPixelDelay)
             {
                 unsafe
@@ -2148,7 +2148,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] Int32[] uMaxLineDelay, [Out] Int32[] uMaxPixelDelay)
             {
                 unsafe
@@ -2162,7 +2162,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] out UInt32 uMaxLineDelay, [Out] out UInt32 uMaxPixelDelay)
             {
                 unsafe
@@ -2178,7 +2178,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] out Int32 uMaxLineDelay, [Out] out Int32 uMaxPixelDelay)
             {
                 unsafe
@@ -2195,40 +2195,40 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] UInt32* uMaxLineDelay, [Out] UInt32* uMaxPixelDelay)
             {
                 return Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay, (UInt32*)uMaxPixelDelay);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean QueryGenlockMaxSourceDelay(IntPtr hDC, [Out] Int32* uMaxLineDelay, [Out] Int32* uMaxPixelDelay)
             {
                 return Delegates.wglQueryGenlockMaxSourceDelayI3D((IntPtr)hDC, (UInt32*)uMaxLineDelay, (UInt32*)uMaxPixelDelay);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe IntPtr CreateImageBuffer(IntPtr hDC, Int32 dwSize, UInt32 uFlags)
             {
                 return Delegates.wglCreateImageBufferI3D((IntPtr)hDC, (Int32)dwSize, (UInt32)uFlags);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe IntPtr CreateImageBuffer(IntPtr hDC, Int32 dwSize, Int32 uFlags)
             {
                 return Delegates.wglCreateImageBufferI3D((IntPtr)hDC, (Int32)dwSize, (UInt32)uFlags);
             }
 
-            public static 
+            internal static 
             Boolean DestroyImageBuffer(IntPtr hDC, IntPtr pAddress)
             {
                 return Delegates.wglDestroyImageBufferI3D((IntPtr)hDC, (IntPtr)pAddress);
             }
 
-            public static 
+            internal static 
             Boolean DestroyImageBuffer(IntPtr hDC, [In, Out] object pAddress)
             {
                 System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
@@ -2243,7 +2243,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, IntPtr pAddress, Int32[] pSize, UInt32 count)
             {
                 unsafe
@@ -2255,7 +2255,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, IntPtr pAddress, Int32[] pSize, Int32 count)
             {
                 unsafe
@@ -2268,7 +2268,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, Int32* pSize, UInt32 count)
             {
                 System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
@@ -2283,7 +2283,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, Int32* pSize, Int32 count)
             {
                 System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
@@ -2298,7 +2298,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, Int32[] pSize, UInt32 count)
             {
                 unsafe
@@ -2318,7 +2318,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, Int32[] pSize, Int32 count)
             {
                 unsafe
@@ -2339,7 +2339,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, ref Int32 pSize, UInt32 count)
             {
                 unsafe
@@ -2359,7 +2359,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean AssociateImageBufferEvents(IntPtr hDC, IntPtr pEvent, [In, Out] object pAddress, ref Int32 pSize, Int32 count)
             {
                 unsafe
@@ -2380,20 +2380,20 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean ReleaseImageBufferEvents(IntPtr hDC, IntPtr pAddress, UInt32 count)
             {
                 return Delegates.wglReleaseImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pAddress, (UInt32)count);
             }
 
-            public static 
+            internal static 
             Boolean ReleaseImageBufferEvents(IntPtr hDC, IntPtr pAddress, Int32 count)
             {
                 return Delegates.wglReleaseImageBufferEventsI3D((IntPtr)hDC, (IntPtr)pAddress, (UInt32)count);
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             Boolean ReleaseImageBufferEvents(IntPtr hDC, [In, Out] object pAddress, UInt32 count)
             {
                 System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
@@ -2407,7 +2407,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean ReleaseImageBufferEvents(IntPtr hDC, [In, Out] object pAddress, Int32 count)
             {
                 System.Runtime.InteropServices.GCHandle pAddress_ptr = System.Runtime.InteropServices.GCHandle.Alloc(pAddress, System.Runtime.InteropServices.GCHandleType.Pinned);
@@ -2421,19 +2421,19 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean EnableFrameLock()
             {
                 return Delegates.wglEnableFrameLockI3D();
             }
 
-            public static 
+            internal static 
             Boolean DisableFrameLock()
             {
                 return Delegates.wglDisableFrameLockI3D();
             }
 
-            public static 
+            internal static 
             Boolean IsEnabledFrameLock([Out] Boolean[] pFlag)
             {
                 unsafe
@@ -2445,7 +2445,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean IsEnabledFrameLock([Out] out Boolean pFlag)
             {
                 unsafe
@@ -2460,13 +2460,13 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean IsEnabledFrameLock([Out] Boolean* pFlag)
             {
                 return Delegates.wglIsEnabledFrameLockI3D((Boolean*)pFlag);
             }
 
-            public static 
+            internal static 
             Boolean QueryFrameLockMaster([Out] Boolean[] pFlag)
             {
                 unsafe
@@ -2478,7 +2478,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean QueryFrameLockMaster([Out] out Boolean pFlag)
             {
                 unsafe
@@ -2493,13 +2493,13 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean QueryFrameLockMaster([Out] Boolean* pFlag)
             {
                 return Delegates.wglQueryFrameLockMasterI3D((Boolean*)pFlag);
             }
 
-            public static 
+            internal static 
             Boolean GetFrameUsage([Out] float[] pUsage)
             {
                 unsafe
@@ -2511,7 +2511,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean GetFrameUsage([Out] out float pUsage)
             {
                 unsafe
@@ -2526,25 +2526,25 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean GetFrameUsage([Out] float* pUsage)
             {
                 return Delegates.wglGetFrameUsageI3D((float*)pUsage);
             }
 
-            public static 
+            internal static 
             Boolean BeginFrameTracking()
             {
                 return Delegates.wglBeginFrameTrackingI3D();
             }
 
-            public static 
+            internal static 
             Boolean EndFrameTracking()
             {
                 return Delegates.wglEndFrameTrackingI3D();
             }
 
-            public static 
+            internal static 
             Boolean QueryFrameTracking([Out] Int32[] pFrameCount, [Out] Int32[] pMissedFrames, [Out] float[] pLastMissedUsage)
             {
                 unsafe
@@ -2558,7 +2558,7 @@ namespace OpenTK.Platform.Windows
                 }
             }
 
-            public static 
+            internal static 
             Boolean QueryFrameTracking([Out] out Int32 pFrameCount, [Out] out Int32 pMissedFrames, [Out] out float pLastMissedUsage)
             {
                 unsafe
@@ -2577,7 +2577,7 @@ namespace OpenTK.Platform.Windows
             }
 
             [System.CLSCompliant(false)]
-            public static 
+            internal static 
             unsafe Boolean QueryFrameTracking([Out] Int32* pFrameCount, [Out] Int32* pMissedFrames, [Out] float* pLastMissedUsage)
             {
                 return Delegates.wglQueryFrameTrackingI3D((Int32*)pFrameCount, (Int32*)pMissedFrames, (float*)pLastMissedUsage);
