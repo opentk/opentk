@@ -28,7 +28,7 @@ namespace OpenTK.Platform.Windows
         #region --- Fields ---
 
         private DisplayMode mode = new DisplayMode();
-        private WinRawInput driver;
+        private IInputDriver driver;
 
         //private bool fullscreen;
         private bool disposed;
@@ -342,7 +342,8 @@ namespace OpenTK.Platform.Windows
         public void OnCreate(EventArgs e)
         {
             this.window = new WindowInfo(this);
-            driver = new WinRawInput(this.window);
+            //driver = new WinRawInput(this.window);    // Disabled until the mouse issues are resolved.
+            driver = new WMInput(this.window);
 
             Debug.Print("Window created: {0}", window);
 
@@ -385,6 +386,27 @@ namespace OpenTK.Platform.Windows
         }
 
         public event DestroyEvent Destroy;
+
+        #endregion
+
+        #region PointToClient
+
+        public void PointToClient(ref System.Drawing.Point p)
+        {
+            if (!Functions.ScreenToClient(this.Handle, ref p))
+                throw new InvalidOperationException(String.Format(
+                    "Could not convert point {0} from client to screen coordinates. Windows error: {1}",
+                    p.ToString(), Marshal.GetLastWin32Error()));
+        }
+
+        #endregion
+
+        #region PointToScreen
+
+        public void PointToScreen(ref System.Drawing.Point p)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 
