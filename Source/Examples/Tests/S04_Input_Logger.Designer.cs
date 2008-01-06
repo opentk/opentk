@@ -40,6 +40,8 @@
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.Mouse = new System.Windows.Forms.TabPage();
+            this.MouseWheelDelta = new System.Windows.Forms.TextBox();
+            this.WheelDelta = new System.Windows.Forms.Label();
             this.MouseWheelText = new System.Windows.Forms.TextBox();
             this.MouseWheel = new System.Windows.Forms.Label();
             this.MouseDeltaY = new System.Windows.Forms.Label();
@@ -53,9 +55,11 @@
             this.MouseButtons = new System.Windows.Forms.ListBox();
             this.ChooseMouse = new System.Windows.Forms.ComboBox();
             this.HID = new System.Windows.Forms.TabPage();
-            this.WheelDelta = new System.Windows.Forms.Label();
-            this.MouseWheelDelta = new System.Windows.Forms.TextBox();
             this.PollTimer = new System.Windows.Forms.Timer(this.components);
+            this.MouseXWindow = new System.Windows.Forms.TextBox();
+            this.MouseYWindow = new System.Windows.Forms.TextBox();
+            this.WindowX = new System.Windows.Forms.Label();
+            this.WindowY = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.Keyboard.SuspendLayout();
             this.Mouse.SuspendLayout();
@@ -162,6 +166,10 @@
             // Mouse
             // 
             this.Mouse.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.Mouse.Controls.Add(this.WindowY);
+            this.Mouse.Controls.Add(this.WindowX);
+            this.Mouse.Controls.Add(this.MouseYWindow);
+            this.Mouse.Controls.Add(this.MouseXWindow);
             this.Mouse.Controls.Add(this.MouseWheelDelta);
             this.Mouse.Controls.Add(this.WheelDelta);
             this.Mouse.Controls.Add(this.MouseWheelText);
@@ -183,6 +191,23 @@
             this.Mouse.TabIndex = 1;
             this.Mouse.Text = "Mouse";
             // 
+            // MouseWheelDelta
+            // 
+            this.MouseWheelDelta.Location = new System.Drawing.Point(80, 178);
+            this.MouseWheelDelta.Name = "MouseWheelDelta";
+            this.MouseWheelDelta.ReadOnly = true;
+            this.MouseWheelDelta.Size = new System.Drawing.Size(73, 20);
+            this.MouseWheelDelta.TabIndex = 13;
+            // 
+            // WheelDelta
+            // 
+            this.WheelDelta.AutoSize = true;
+            this.WheelDelta.Location = new System.Drawing.Point(4, 185);
+            this.WheelDelta.Name = "WheelDelta";
+            this.WheelDelta.Size = new System.Drawing.Size(69, 13);
+            this.WheelDelta.TabIndex = 12;
+            this.WheelDelta.Text = "Wheel Delta:";
+            // 
             // MouseWheelText
             // 
             this.MouseWheelText.Location = new System.Drawing.Point(80, 152);
@@ -196,9 +221,9 @@
             this.MouseWheel.AutoSize = true;
             this.MouseWheel.Location = new System.Drawing.Point(4, 159);
             this.MouseWheel.Name = "MouseWheel";
-            this.MouseWheel.Size = new System.Drawing.Size(38, 13);
+            this.MouseWheel.Size = new System.Drawing.Size(41, 13);
             this.MouseWheel.TabIndex = 10;
-            this.MouseWheel.Text = "Wheel";
+            this.MouseWheel.Text = "Wheel:";
             // 
             // MouseDeltaY
             // 
@@ -296,26 +321,43 @@
             this.HID.Text = "HID";
             this.HID.UseVisualStyleBackColor = true;
             // 
-            // WheelDelta
-            // 
-            this.WheelDelta.AutoSize = true;
-            this.WheelDelta.Location = new System.Drawing.Point(4, 185);
-            this.WheelDelta.Name = "WheelDelta";
-            this.WheelDelta.Size = new System.Drawing.Size(69, 13);
-            this.WheelDelta.TabIndex = 12;
-            this.WheelDelta.Text = "Wheel Delta:";
-            // 
-            // MouseWheelDelta
-            // 
-            this.MouseWheelDelta.Location = new System.Drawing.Point(80, 178);
-            this.MouseWheelDelta.Name = "MouseWheelDelta";
-            this.MouseWheelDelta.ReadOnly = true;
-            this.MouseWheelDelta.Size = new System.Drawing.Size(73, 20);
-            this.MouseWheelDelta.TabIndex = 13;
-            // 
             // PollTimer
             // 
             this.PollTimer.Interval = 10;
+            // 
+            // MouseXWindow
+            // 
+            this.MouseXWindow.Location = new System.Drawing.Point(80, 205);
+            this.MouseXWindow.Name = "MouseXWindow";
+            this.MouseXWindow.ReadOnly = true;
+            this.MouseXWindow.Size = new System.Drawing.Size(73, 20);
+            this.MouseXWindow.TabIndex = 14;
+            // 
+            // MouseYWindow
+            // 
+            this.MouseYWindow.Location = new System.Drawing.Point(80, 232);
+            this.MouseYWindow.Name = "MouseYWindow";
+            this.MouseYWindow.ReadOnly = true;
+            this.MouseYWindow.Size = new System.Drawing.Size(73, 20);
+            this.MouseYWindow.TabIndex = 15;
+            // 
+            // WindowX
+            // 
+            this.WindowX.AutoSize = true;
+            this.WindowX.Location = new System.Drawing.Point(4, 212);
+            this.WindowX.Name = "WindowX";
+            this.WindowX.Size = new System.Drawing.Size(59, 13);
+            this.WindowX.TabIndex = 16;
+            this.WindowX.Text = "Window X:";
+            // 
+            // WindowY
+            // 
+            this.WindowY.AutoSize = true;
+            this.WindowY.Location = new System.Drawing.Point(4, 239);
+            this.WindowY.Name = "WindowY";
+            this.WindowY.Size = new System.Drawing.Size(59, 13);
+            this.WindowY.TabIndex = 17;
+            this.WindowY.Text = "Window Y:";
             // 
             // S04_Input_Logger
             // 
@@ -364,6 +406,10 @@
         private System.Windows.Forms.TextBox MouseWheelDelta;
         private System.Windows.Forms.Label WheelDelta;
         private System.Windows.Forms.Timer PollTimer;
+        private System.Windows.Forms.TextBox MouseXWindow;
+        private System.Windows.Forms.Label WindowY;
+        private System.Windows.Forms.Label WindowX;
+        private System.Windows.Forms.TextBox MouseYWindow;
 
     }
 }
