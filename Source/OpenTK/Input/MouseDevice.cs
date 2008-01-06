@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace OpenTK.Input
 {
@@ -19,8 +20,9 @@ namespace OpenTK.Input
         private int numButtons, numWheels;
         private IntPtr id;
         private bool[] button = new bool[(int)MouseButton.LastButton];
-        private int wheel, x, y; //, wheel_delta , delta_x, delta_y;
-        internal int last_x, last_y, last_wheel;
+        private int wheel, last_wheel;
+        private Point pos = new Point();
+        internal int last_x, last_y;
 
         #region --- IInputDevice Members ---
 
@@ -43,7 +45,7 @@ namespace OpenTK.Input
 
         #endregion
 
-        #region --- Public Methods ---
+        #region --- Public Members ---
 
         /// <summary>
         /// Gets an integer representing the number of buttons on this MouseDevice.
@@ -102,11 +104,11 @@ namespace OpenTK.Input
         /// </summary>
         public int X
         {
-            get { return x; }
+            get { return pos.X; }
             internal set
             {
-                last_x = x;
-                x = value;
+                last_x = pos.X;
+                pos.X = value;
             }
         }
 
@@ -115,11 +117,11 @@ namespace OpenTK.Input
         /// </summary>
         public int Y
         {
-            get { return y; }
+            get { return pos.Y; }
             internal set
             {
-                last_y = y;
-                y = value;
+                last_y = pos.Y;
+                pos.Y = value;
             }
         }
 
@@ -131,7 +133,7 @@ namespace OpenTK.Input
             get
             {
                 //return delta_x;
-                return x - last_x;
+                return pos.X - last_x;
             }
             //internal set { delta_x = value; }
         }
@@ -144,10 +146,22 @@ namespace OpenTK.Input
             get
             {
                 //return delta_y;
-                return y - last_y;
+                return pos.Y - last_y;
             }
             //internal set { delta_y = value; }
         }
+
+        #region public Point Position
+
+        /// <summary>
+        /// Gets a System.Drawing.Point representing the absolute position of the pointer, in screen pixel coordinates.
+        /// </summary>
+        public Point Position
+        {
+            get { return pos; }
+        }
+
+        #endregion
 
         //public event MouseMoveEvent Move;
 
