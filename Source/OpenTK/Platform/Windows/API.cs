@@ -53,16 +53,17 @@ namespace OpenTK.Platform.Windows
     #endregion
 
     /// <summary>
-    /// For public use by OpenTK only!
+    /// For internal use by OpenTK only!
     /// Exposes useful native WINAPI methods and structures.
     /// </summary>
-    public static class API
+    internal static class API
     {
         // Prevent BeforeFieldInit optimization, and initialize 'size' fields.
         static API()
         {
             RawInputHeaderSize = Marshal.SizeOf(typeof(RawInputHeader));
             RawInputSize = Marshal.SizeOf(typeof(RawInput));
+            RawMouseSize = Marshal.SizeOf(typeof(RawMouse));
             RawInputDeviceSize = Marshal.SizeOf(typeof(RawInputDevice));
             RawInputDeviceListSize = Marshal.SizeOf(typeof(RawInputDeviceList));
             RawInputDeviceInfoSize = Marshal.SizeOf(typeof(RawInputDeviceInfo));
@@ -72,14 +73,15 @@ namespace OpenTK.Platform.Windows
 
         internal static readonly short PixelFormatDescriptorSize;
         internal static readonly short PixelFormatDescriptorVersion;
-        internal static int RawInputSize;
+        internal static readonly int RawInputSize;
         internal static readonly int RawInputDeviceSize;
         internal static readonly int RawInputHeaderSize;
         internal static readonly int RawInputDeviceListSize;
         internal static readonly int RawInputDeviceInfoSize;
+        internal static readonly int RawMouseSize;
     }
 
-    public static class Functions
+    internal static class Functions
     {
         #region --- Functions ---
 
@@ -92,7 +94,7 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetWindowPos(
+        internal static extern bool SetWindowPos(
             IntPtr handle,
             WindowPlacementOptions placement,
             int x, int y, int cx, int cy,
@@ -120,14 +122,14 @@ namespace OpenTK.Platform.Windows
         /// Found Winuser.h, user32.dll
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        public static extern BOOL AdjustWindowRect([In, Out] ref RECT lpRect, WindowStyle dwStyle, BOOL bMenu);
+        internal static extern BOOL AdjustWindowRect([In, Out] ref RECT lpRect, WindowStyle dwStyle, BOOL bMenu);
 
         #endregion
 
         #region CreateWindowEx
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern IntPtr CreateWindowEx(
+        internal static extern IntPtr CreateWindowEx(
             [In]ExtendedWindowStyle ExStyle,
             [In]string className,
             [In]string windowName,
@@ -140,7 +142,7 @@ namespace OpenTK.Platform.Windows
             [In]IntPtr Param);
         /*
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern int CreateWindowEx(
+        internal static extern int CreateWindowEx(
             [In]ExtendedWindowStyle ExStyle,
             [In]IntPtr ClassName,
             [In]IntPtr WindowName,
@@ -153,7 +155,7 @@ namespace OpenTK.Platform.Windows
             [In]IntPtr Param);
         */
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern IntPtr CreateWindowEx(
+        internal static extern IntPtr CreateWindowEx(
             ExtendedWindowStyle ExStyle,
             IntPtr ClassName,
             IntPtr WindowName,
@@ -169,31 +171,31 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool DestroyWindow(IntPtr windowHandle);
+        internal static extern bool DestroyWindow(IntPtr windowHandle);
 
         #endregion
 
         #region RegisterClass
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern short RegisterClass(WindowClass window_class);
+        internal static extern short RegisterClass(WindowClass window_class);
 
         #endregion
 
         #region UnregisterClass
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern short UnregisterClass(string className, IntPtr instance);
+        internal static extern short UnregisterClass(string className, IntPtr instance);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern short UnregisterClass(IntPtr className, IntPtr instance);
+        internal static extern short UnregisterClass(IntPtr className, IntPtr instance);
 
         #endregion
 
         [CLSCompliant(false)]
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern LRESULT CallWindowProc(
+        internal static extern LRESULT CallWindowProc(
             WNDPROC lpPrevWndFunc,
             HWND hWnd,
             UINT Msg,
@@ -203,7 +205,7 @@ namespace OpenTK.Platform.Windows
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern LRESULT CallWindowProc(
+        internal static extern LRESULT CallWindowProc(
             WNDPROC lpPrevWndFunc,
             HWND hWnd,
             INT Msg,
@@ -213,7 +215,7 @@ namespace OpenTK.Platform.Windows
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern LONG_PTR SetWindowLongPtr(
+        internal static extern LONG_PTR SetWindowLongPtr(
             HWND hWnd,
             GetWindowLongOffsets nIndex,
             LONG_PTR dwNewLong
@@ -221,7 +223,7 @@ namespace OpenTK.Platform.Windows
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern LONG_PTR GetWindowLongPtr(
+        internal static extern LONG_PTR GetWindowLongPtr(
             HWND hWnd,
             GetWindowLongOffsets nIndex
         );
@@ -244,7 +246,7 @@ namespace OpenTK.Platform.Windows
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll"), CLSCompliant(false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
+        internal static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
 
         #endregion
 
@@ -267,7 +269,7 @@ namespace OpenTK.Platform.Windows
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll"), CLSCompliant(false)]
         //[return: MarshalAs(UnmanagedType.Bool)]
-        public static extern INT GetMessage(ref MSG msg,
+        internal static extern INT GetMessage(ref MSG msg,
             IntPtr windowHandle, int messageFilterMin, int messageFilterMax);
 
         #endregion
@@ -278,7 +280,7 @@ namespace OpenTK.Platform.Windows
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL PostMessage(
+        internal static extern BOOL PostMessage(
             HWND hWnd,
             WindowMessage Msg,
             WPARAM wParam,
@@ -290,7 +292,7 @@ namespace OpenTK.Platform.Windows
         #region PostQuitMessage
 
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern void PostQuitMessage(int exitCode);
+        internal static extern void PostQuitMessage(int exitCode);
 
         #endregion
 
@@ -298,7 +300,7 @@ namespace OpenTK.Platform.Windows
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll"), CLSCompliant(false)]
-        public static extern LRESULT DispatchMessage(ref MSG msg);
+        internal static extern LRESULT DispatchMessage(ref MSG msg);
 
         #endregion
 
@@ -329,7 +331,7 @@ namespace OpenTK.Platform.Windows
         /// </remarks>
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern DWORD GetQueueStatus([MarshalAs(UnmanagedType.U4)] QueueStatusFlags flags);
+        internal static extern DWORD GetQueueStatus([MarshalAs(UnmanagedType.U4)] QueueStatusFlags flags);
 
         #endregion
 
@@ -346,7 +348,7 @@ namespace OpenTK.Platform.Windows
         /// <returns>(?)</returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("winmm.dll")]
-        public static extern IntPtr TimeBeginPeriod(int period);
+        internal static extern IntPtr TimeBeginPeriod(int period);
 
         #endregion
 
@@ -360,7 +362,7 @@ namespace OpenTK.Platform.Windows
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool QueryPerformanceFrequency(ref long PerformanceFrequency);
+        internal static extern bool QueryPerformanceFrequency(ref long PerformanceFrequency);
 
         #endregion
 
@@ -374,7 +376,7 @@ namespace OpenTK.Platform.Windows
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool QueryPerformanceCounter(ref long PerformanceCount);
+        internal static extern bool QueryPerformanceCounter(ref long PerformanceCount);
 
         #endregion
 
@@ -390,7 +392,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="hwnd"></param>
         /// <returns></returns>
         [DllImport("user32.dll")]
-        public static extern IntPtr GetDC(IntPtr hwnd);
+        internal static extern IntPtr GetDC(IntPtr hwnd);
 
         #endregion
 
@@ -404,7 +406,7 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool ReleaseDC(IntPtr hwnd, IntPtr DC);
+        internal static extern bool ReleaseDC(IntPtr hwnd, IntPtr DC);
 
         #endregion
 
@@ -417,7 +419,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="pfd"></param>
         /// <returns></returns>
         [DllImport("gdi32.dll")]
-        public static extern int ChoosePixelFormat(IntPtr dc, ref PixelFormatDescriptor pfd);
+        internal static extern int ChoosePixelFormat(IntPtr dc, ref PixelFormatDescriptor pfd);
 
         #endregion
 
@@ -432,7 +434,7 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         [DllImport("gdi32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetPixelFormat(IntPtr dc, int format, ref PixelFormatDescriptor pfd);
+        internal static extern bool SetPixelFormat(IntPtr dc, int format, ref PixelFormatDescriptor pfd);
 
         #endregion
 
@@ -444,7 +446,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="dc"></param>
         [DllImport("gdi32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SwapBuffers(IntPtr dc);
+        internal static extern bool SwapBuffers(IntPtr dc);
 
         #endregion
 
@@ -457,7 +459,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="funcname"></param>
         /// <returns></returns>
         [DllImport("kernel32.dll")]
-        public static extern IntPtr GetProcAddress(IntPtr handle, string funcname);
+        internal static extern IntPtr GetProcAddress(IntPtr handle, string funcname);
 
         #endregion
 
@@ -468,7 +470,7 @@ namespace OpenTK.Platform.Windows
         #region GetModuleHandle
 
         [DllImport("kernel32.dll")]
-        public static extern IntPtr GetModuleHandle([MarshalAs(UnmanagedType.LPTStr)]string module_name);
+        internal static extern IntPtr GetModuleHandle([MarshalAs(UnmanagedType.LPTStr)]string module_name);
 
         #endregion
 
@@ -480,7 +482,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="funcname"></param>
         /// <returns></returns>
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr LoadLibrary(string dllName);
+        internal static extern IntPtr LoadLibrary(string dllName);
 
         #endregion
 
@@ -493,7 +495,7 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool FreeLibrary(IntPtr handle);
+        internal static extern bool FreeLibrary(IntPtr handle);
 
         #endregion
 
@@ -509,13 +511,13 @@ namespace OpenTK.Platform.Windows
         /// <param name="flags"></param>
         /// <returns></returns>
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern int ChangeDisplaySettings(DeviceMode device_mode, int flags);
+        internal static extern int ChangeDisplaySettings(DeviceMode device_mode, int flags);
         #endregion int ChangeDisplaySettings(ref Gdi.DEVMODE devMode, int flags)
 
         #region EnumDisplaySettings
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern int EnumDisplaySettings([MarshalAs(UnmanagedType.LPTStr)] string device_name,
+        internal static extern int EnumDisplaySettings([MarshalAs(UnmanagedType.LPTStr)] string device_name,
             int graphics_mode, IntPtr device_mode);
 
         #endregion
@@ -526,7 +528,7 @@ namespace OpenTK.Platform.Windows
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern SHORT GetAsyncKeyState(int vKey);
+        internal static extern SHORT GetAsyncKeyState(int vKey);
 
         #endregion
 
@@ -548,7 +550,7 @@ namespace OpenTK.Platform.Windows
         /// </list>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        public static extern BOOL ShowWindow(HWND hWnd, ShowWindowCommand nCmdShow);
+        internal static extern BOOL ShowWindow(HWND hWnd, ShowWindowCommand nCmdShow);
 
         #endregion
 
@@ -570,7 +572,7 @@ namespace OpenTK.Platform.Windows
         /// <para>Windows 95/98/Me: SetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me Systems .</para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        public static extern BOOL SetWindowText(HWND hWnd, LPCTSTR lpString);
+        internal static extern BOOL SetWindowText(HWND hWnd, LPCTSTR lpString);
 
         #endregion
 
@@ -592,12 +594,62 @@ namespace OpenTK.Platform.Windows
         /// <para>Windows 95/98/Me: GetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me</para>
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        public static extern int GetWindowText(HWND hWnd,
+        internal static extern int GetWindowText(HWND hWnd,
             [MarshalAs(UnmanagedType.LPTStr), Out] StringBuilder lpString, int nMaxCount);
 
         #endregion
 
+        #region ScreenToClient
+
+        /// <summary>
+        /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
+        /// </summary>
+        /// <param name="hWnd">Handle to the window whose client area will be used for the conversion.</param>
+        /// <param name="lpPoint">Pointer to a POINT structure that specifies the screen coordinates to be converted.</param>
+        /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. Windows NT/2000/XP: To get extended error information, call GetLastError.</returns>
+        /// <remarks>
+        /// <para>The function uses the window identified by the hWnd parameter and the screen coordinates given in the POINT structure to compute client coordinates. It then replaces the screen coordinates with the client coordinates. The new coordinates are relative to the upper-left corner of the specified window's client area. </para>
+        /// <para>The ScreenToClient function assumes the specified point is in screen coordinates. </para>
+        /// <para>All coordinates are in device units.</para>
+        /// <para>Do not use ScreenToClient when in a mirroring situation, that is, when changing from left-to-right layout to right-to-left layout. Instead, use MapWindowPoints. For more information, see "Window Layout and Mirroring" in Window Features.</para>
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
+        //internal static extern BOOL ScreenToClient(HWND hWnd, ref POINT point);
+        internal static extern BOOL ScreenToClient(HWND hWnd, ref System.Drawing.Point point);
+
         #endregion
+
+        #region ClientToScreen
+
+        /// <summary>
+        /// Converts the client-area coordinates of a specified point to screen coordinates.
+        /// </summary>
+        /// <param name="hWnd">Handle to the window whose client area will be used for the conversion.</param>
+        /// <param name="lpPoint">Pointer to a POINT structure that contains the client coordinates to be converted. The new screen coordinates are copied into this structure if the function succeeds.</param>
+        /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero. Windows NT/2000/XP: To get extended error information, call GetLastError.</returns>
+        /// <remarks>
+        /// <para>The ClientToScreen function replaces the client-area coordinates in the POINT structure with the screen coordinates. The screen coordinates are relative to the upper-left corner of the screen. Note, a screen-coordinate point that is above the window's client area has a negative y-coordinate. Similarly, a screen coordinate to the left of a client area has a negative x-coordinate.</para>
+        /// <para>All coordinates are device coordinates.</para>
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
+        internal static extern BOOL ClientToScreen(HWND hWnd, ref System.Drawing.Point point);
+
+        #endregion
+
+        #endregion
+
+        /// <summary>
+        /// Retrieves the cursor's position, in screen coordinates.
+        /// </summary>
+        /// <param name="point">Pointer to a POINT structure that receives the screen coordinates of the cursor.</param>
+        /// <returns>Returns nonzero if successful or zero otherwise. To get extended error information, call GetLastError.</returns>
+        /// <remarks>
+        /// <para>The cursor position is always specified in screen coordinates and is not affected by the mapping mode of the window that contains the cursor.</para>
+        /// <para>The calling process must have WINSTA_READATTRIBUTES access to the window station.</para>
+        /// <para>The input desktop must be the current desktop when you call GetCursorPos. Call OpenInputDesktop to determine whether the current desktop is the input desktop. If it is not, call SetThreadDesktop with the HDESK returned by OpenInputDesktop to switch to that desktop.</para>
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
+        internal static extern BOOL GetCursorPos(ref System.Drawing.Point point);
 
         #region Raw Input
 
@@ -616,17 +668,17 @@ namespace OpenTK.Platform.Windows
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern LRESULT DefRawInputProc(RawInput[] RawInput, INT Input, UINT SizeHeader);
+        internal static extern LRESULT DefRawInputProc(RawInput[] RawInput, INT Input, UINT SizeHeader);
 
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        unsafe public static extern LRESULT DefRawInputProc(ref RawInput RawInput, INT Input, UINT SizeHeader);
+        unsafe internal static extern LRESULT DefRawInputProc(ref RawInput RawInput, INT Input, UINT SizeHeader);
 
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        unsafe public static extern LRESULT DefRawInputProc(IntPtr RawInput, INT Input, UINT SizeHeader);
+        unsafe internal static extern LRESULT DefRawInputProc(IntPtr RawInput, INT Input, UINT SizeHeader);
 
         #endregion
 
@@ -650,7 +702,7 @@ namespace OpenTK.Platform.Windows
         [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL RegisterRawInputDevices(
+        internal static extern BOOL RegisterRawInputDevices(
             RawInputDevice[] RawInputDevices,
             UINT NumDevices,
             UINT Size
@@ -658,7 +710,7 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL RegisterRawInputDevices(
+        internal static extern BOOL RegisterRawInputDevices(
             RawInputDevice[] RawInputDevices,
             INT NumDevices,
             INT Size
@@ -686,7 +738,7 @@ namespace OpenTK.Platform.Windows
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern UINT GetRawInputBuffer(
+        internal static extern UINT GetRawInputBuffer(
             [Out] RawInput[] Data,
             [In, Out] ref UINT Size,
             [In] UINT SizeHeader
@@ -694,7 +746,7 @@ namespace OpenTK.Platform.Windows
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern INT GetRawInputBuffer(
+        internal static extern INT GetRawInputBuffer(
             [Out] RawInput[] Data,
             [In, Out] ref INT Size,
             [In] INT SizeHeader
@@ -702,7 +754,7 @@ namespace OpenTK.Platform.Windows
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern INT GetRawInputBuffer(
+        internal static extern INT GetRawInputBuffer(
             [Out] IntPtr Data,
             [In, Out] ref INT Size,
             [In] INT SizeHeader
@@ -740,14 +792,14 @@ namespace OpenTK.Platform.Windows
         /// </returns>
         [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern UINT GetRegisteredRawInputDevices(
+        internal static extern UINT GetRegisteredRawInputDevices(
             [Out] RawInput[] RawInputDevices,
             [In, Out] ref UINT NumDevices,
             UINT cbSize
         );
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern INT GetRegisteredRawInputDevices(
+        internal static extern INT GetRegisteredRawInputDevices(
             [Out] RawInput[] RawInputDevices,
             [In, Out] ref INT NumDevices,
             INT cbSize
@@ -786,14 +838,14 @@ namespace OpenTK.Platform.Windows
         /// </returns>
         [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern UINT GetRawInputDeviceList(
+        internal static extern UINT GetRawInputDeviceList(
             [In, Out] RawInputDeviceList[] RawInputDeviceList,
             [In, Out] ref UINT NumDevices,
             UINT Size
         );
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern INT GetRawInputDeviceList(
+        internal static extern INT GetRawInputDeviceList(
             [In, Out] RawInputDeviceList[] RawInputDeviceList,
             [In, Out] ref INT NumDevices,
             INT Size
@@ -828,14 +880,14 @@ namespace OpenTK.Platform.Windows
         /// </returns>
         [CLSCompliant(false)]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern UINT GetRawInputDeviceList(
+        internal static extern UINT GetRawInputDeviceList(
             [In, Out] IntPtr RawInputDeviceList,
             [In, Out] ref UINT NumDevices,
             UINT Size
         );
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern INT GetRawInputDeviceList(
+        internal static extern INT GetRawInputDeviceList(
             [In, Out] IntPtr RawInputDeviceList,
             [In, Out] ref INT NumDevices,
             INT Size
@@ -879,7 +931,7 @@ namespace OpenTK.Platform.Windows
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern UINT GetRawInputDeviceInfo(
+        internal static extern UINT GetRawInputDeviceInfo(
             HANDLE Device,
             [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
             [In, Out] LPVOID Data,
@@ -888,7 +940,7 @@ namespace OpenTK.Platform.Windows
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern INT GetRawInputDeviceInfo(
+        internal static extern INT GetRawInputDeviceInfo(
             HANDLE Device,
             [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
             [In, Out] LPVOID Data,
@@ -929,7 +981,7 @@ namespace OpenTK.Platform.Windows
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern UINT GetRawInputDeviceInfo(
+        internal static extern UINT GetRawInputDeviceInfo(
             HANDLE Device,
             [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
             [In, Out] RawInputDeviceInfo Data,
@@ -938,7 +990,7 @@ namespace OpenTK.Platform.Windows
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern INT GetRawInputDeviceInfo(
+        internal static extern INT GetRawInputDeviceInfo(
             HANDLE Device,
             [MarshalAs(UnmanagedType.U4)] RawInputDeviceInfoEnum Command,
             [In, Out] RawInputDeviceInfo Data,
@@ -974,7 +1026,7 @@ namespace OpenTK.Platform.Windows
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern UINT GetRawInputData(
+        internal static extern UINT GetRawInputData(
             HRAWINPUT RawInput,
             GetRawInputDataEnum Command,
             [Out] LPVOID Data,
@@ -984,7 +1036,7 @@ namespace OpenTK.Platform.Windows
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern INT GetRawInputData(
+        internal static extern INT GetRawInputData(
             HRAWINPUT RawInput,
             GetRawInputDataEnum Command,
             [Out] LPVOID Data,
@@ -1016,20 +1068,20 @@ namespace OpenTK.Platform.Windows
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern UINT GetRawInputData(
+        internal static extern UINT GetRawInputData(
             HRAWINPUT RawInput,
             GetRawInputDataEnum Command,
-            [MarshalAs(UnmanagedType.LPStruct)] [Out] RawInput Data,
+            /*[MarshalAs(UnmanagedType.LPStruct)]*/ [Out] out RawInput Data,
             [In, Out] ref UINT Size,
             UINT SizeHeader
         );
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern INT GetRawInputData(
+        internal static extern INT GetRawInputData(
             HRAWINPUT RawInput,
             GetRawInputDataEnum Command,
-            [MarshalAs(UnmanagedType.LPStruct)] [Out] RawInput Data,
+            /*[MarshalAs(UnmanagedType.LPStruct)]*/ [Out] out RawInput Data,
             [In, Out] ref INT Size,
             INT SizeHeader
         );
@@ -1048,7 +1100,7 @@ namespace OpenTK.Platform.Windows
         #define NEXTRAWINPUTBLOCK(ptr) ((PRAWINPUT)RAWINPUT_ALIGN((ULONG_PTR)((PBYTE)(ptr) + (ptr)->header.dwSize)))
         */
 
-        public static IntPtr NextRawInputStructure(IntPtr data)
+        internal static IntPtr NextRawInputStructure(IntPtr data)
         {
             unsafe
             {
@@ -1074,1059 +1126,1136 @@ namespace OpenTK.Platform.Windows
 
     #region --- Constants ---
 
-        public struct Constants
+        internal struct Constants
         {
             // Found in winuser.h
-            public const int KEYBOARD_OVERRUN_MAKE_CODE = 0xFF;
+            internal const int KEYBOARD_OVERRUN_MAKE_CODE = 0xFF;
 
             // WM_ACTIVATE state values (found in winuser.h)
-            public const int WA_INACTIVE    = 0;
-            public const int WA_ACTIVE      = 1;
-            public const int WA_CLICKACTIVE = 2;
+            internal const int WA_INACTIVE    = 0;
+            internal const int WA_ACTIVE      = 1;
+            internal const int WA_CLICKACTIVE = 2;
 
             // Window Messages (found in winuser.h)
-            public const int WM_NULL = 0x0000;
-            public const int WM_CREATE = 0x0001;
-            public const int WM_DESTROY = 0x0002;
-            public const int WM_MOVE = 0x0003;
-            public const int WM_SIZE = 0x0005;
-            public const int WM_ACTIVATE = 0x0006;
-            public const int WM_SETFOCUS = 0x0007;
-            public const int WM_KILLFOCUS = 0x0008;
-            public const int WM_ENABLE = 0x000A;
-            public const int WM_SETREDRAW = 0x000B;
-            public const int WM_SETTEXT = 0x000C;
-            public const int WM_GETTEXT = 0x000D;
-            public const int WM_GETTEXTLENGTH = 0x000E;
-            public const int WM_PAINT = 0x000F;
-            public const int WM_CLOSE = 0x0010;
+            internal const int WM_NULL = 0x0000;
+            internal const int WM_CREATE = 0x0001;
+            internal const int WM_DESTROY = 0x0002;
+            internal const int WM_MOVE = 0x0003;
+            internal const int WM_SIZE = 0x0005;
+            internal const int WM_ACTIVATE = 0x0006;
+            internal const int WM_SETFOCUS = 0x0007;
+            internal const int WM_KILLFOCUS = 0x0008;
+            internal const int WM_ENABLE = 0x000A;
+            internal const int WM_SETREDRAW = 0x000B;
+            internal const int WM_SETTEXT = 0x000C;
+            internal const int WM_GETTEXT = 0x000D;
+            internal const int WM_GETTEXTLENGTH = 0x000E;
+            internal const int WM_PAINT = 0x000F;
+            internal const int WM_CLOSE = 0x0010;
             // _WIN32_WCE
-            public const int WM_QUERYENDSESSION = 0x0011;
-            public const int WM_QUERYOPEN = 0x0013;
-            public const int WM_ENDSESSION = 0x0016;
-            public const int WM_QUIT = 0x0012;
-            public const int WM_ERASEBKGND = 0x0014;
-            public const int WM_SYSCOLORCHANGE = 0x0015;
-            public const int WM_SHOWWINDOW = 0x0018;
-            public const int WM_WININICHANGE = 0x001A;
+            internal const int WM_QUERYENDSESSION = 0x0011;
+            internal const int WM_QUERYOPEN = 0x0013;
+            internal const int WM_ENDSESSION = 0x0016;
+            internal const int WM_QUIT = 0x0012;
+            internal const int WM_ERASEBKGND = 0x0014;
+            internal const int WM_SYSCOLORCHANGE = 0x0015;
+            internal const int WM_SHOWWINDOW = 0x0018;
+            internal const int WM_WININICHANGE = 0x001A;
             // WINVER >= 0x400
-            public const int WM_SETTINGCHANGE = WM_WININICHANGE;
+            internal const int WM_SETTINGCHANGE = WM_WININICHANGE;
 
-            public const int WM_DEVMODECHANGE = 0x001B;
-            public const int WM_ACTIVATEAPP = 0x001C;
-            public const int WM_FONTCHANGE = 0x001D;
-            public const int WM_TIMECHANGE = 0x001E;
-            public const int WM_CANCELMODE = 0x001F;
-            public const int WM_SETCURSOR = 0x0020;
-            public const int WM_MOUSEACTIVATE = 0x0021;
-            public const int WM_CHILDACTIVATE = 0x0022;
-            public const int WM_QUEUESYNC = 0x0023;
+            internal const int WM_DEVMODECHANGE = 0x001B;
+            internal const int WM_ACTIVATEAPP = 0x001C;
+            internal const int WM_FONTCHANGE = 0x001D;
+            internal const int WM_TIMECHANGE = 0x001E;
+            internal const int WM_CANCELMODE = 0x001F;
+            internal const int WM_SETCURSOR = 0x0020;
+            internal const int WM_MOUSEACTIVATE = 0x0021;
+            internal const int WM_CHILDACTIVATE = 0x0022;
+            internal const int WM_QUEUESYNC = 0x0023;
 
-            public const int WM_GETMINMAXINFO = 0x0024;
+            internal const int WM_GETMINMAXINFO = 0x0024;
 
-            public const int WM_WINDOWPOSCHANGING = 0x0046;
-            public const int WM_WINDOWPOSCHANGED = 0x0047;
+            internal const int WM_WINDOWPOSCHANGING = 0x0046;
+            internal const int WM_WINDOWPOSCHANGED = 0x0047;
 
             // Keyboard events (found in winuser.h)
-            public const int WM_INPUT = 0x00FF;       // Raw input. XP and higher only.
-            public const int WM_KEYDOWN = 0x0100;
-            public const int WM_KEYUP = 0x101;
-            public const int WM_SYSKEYDOWN = 0x0104;
-            public const int WM_SYSKEYUP = 0x0105;
-            public const int WM_COMMAND = 0x0111;
-            public const int WM_SYSCOMMAND = 0x0112;
-            public const int WM_ENTERIDLE = 0x121;
+            internal const int WM_INPUT = 0x00FF;       // Raw input. XP and higher only.
+            internal const int WM_KEYDOWN = 0x0100;
+            internal const int WM_KEYUP = 0x101;
+            internal const int WM_SYSKEYDOWN = 0x0104;
+            internal const int WM_SYSKEYUP = 0x0105;
+            internal const int WM_COMMAND = 0x0111;
+            internal const int WM_SYSCOMMAND = 0x0112;
+            internal const int WM_ENTERIDLE = 0x121;
 
             // Pixel types (found in wingdi.h)
-            public const byte PFD_TYPE_RGBA = 0;
-            public const byte PFD_TYPE_COLORINDEX = 1;
+            internal const byte PFD_TYPE_RGBA = 0;
+            internal const byte PFD_TYPE_COLORINDEX = 1;
 
             // Layer types (found in wingdi.h)
-            public const byte PFD_MAIN_PLANE = 0;
-            public const byte PFD_OVERLAY_PLANE = 1;
-            public const byte PFD_UNDERLAY_PLANE = unchecked((byte)-1);
+            internal const byte PFD_MAIN_PLANE = 0;
+            internal const byte PFD_OVERLAY_PLANE = 1;
+            internal const byte PFD_UNDERLAY_PLANE = unchecked((byte)-1);
 
             // Device mode types (found in wingdi.h)
-            public const int DM_BITSPERPEL = 0x00040000;
-            public const int DM_PELSWIDTH = 0x00080000;
-            public const int DM_PELSHEIGHT = 0x00100000;
-            public const int DM_DISPLAYFLAGS = 0x00200000;
-            public const int DM_DISPLAYFREQUENCY = 0x00400000;
+            internal const int DM_BITSPERPEL = 0x00040000;
+            internal const int DM_PELSWIDTH = 0x00080000;
+            internal const int DM_PELSHEIGHT = 0x00100000;
+            internal const int DM_DISPLAYFLAGS = 0x00200000;
+            internal const int DM_DISPLAYFREQUENCY = 0x00400000;
 
             // ChangeDisplaySettings types (found in winuser.h)
-            public const int CDS_UPDATEREGISTRY = 0x00000001;
-            public const int CDS_TEST = 0x00000002;
-            public const int CDS_FULLSCREEN = 0x00000004;
+            internal const int CDS_UPDATEREGISTRY = 0x00000001;
+            internal const int CDS_TEST = 0x00000002;
+            internal const int CDS_FULLSCREEN = 0x00000004;
 
             // ChangeDisplaySettings results (found in winuser.h)
-            public const int DISP_CHANGE_SUCCESSFUL = 0;
-            public const int DISP_CHANGE_RESTART = 1;
-            public const int DISP_CHANGE_FAILED = -1;
+            internal const int DISP_CHANGE_SUCCESSFUL = 0;
+            internal const int DISP_CHANGE_RESTART = 1;
+            internal const int DISP_CHANGE_FAILED = -1;
 
             // (found in winuser.h)
-            public const int ENUM_REGISTRY_SETTINGS = -2;
-            public const int ENUM_CURRENT_SETTINGS = -1;
+            internal const int ENUM_REGISTRY_SETTINGS = -2;
+            internal const int ENUM_CURRENT_SETTINGS = -1;
         }
 
         #endregion
 
     #region --- Structures ---
 
-        #region CreateStruct
+    #region CreateStruct
 
-        public struct CreateStruct
-        {
-            /// <summary>
-            /// Contains additional data which may be used to create the window.
-            /// </summary>
-            /// <remarks>
-            ///  If the window is being created as a result of a call to the CreateWindow
-            ///  or CreateWindowEx function, this member contains the value of the lpParam 
-            ///  parameter specified in the function call.
-            ///  <para>
-            /// If the window being created is a multiple-document interface (MDI) client window,
-            /// this member contains a pointer to a CLIENTCREATESTRUCT structure. If the window
-            /// being created is a MDI child window, this member contains a pointer to an 
-            /// MDICREATESTRUCT structure.
-            ///  </para>
-            /// <para>
-            /// Windows NT/2000/XP: If the window is being created from a dialog template,
-            /// this member is the address of a SHORT value that specifies the size, in bytes,
-            /// of the window creation data. The value is immediately followed by the creation data.
-            /// </para>
-            /// <para>
-            /// Windows NT/2000/XP: You should access the data represented by the lpCreateParams member
-            /// using a pointer that has been declared using the UNALIGNED type, because the pointer
-            /// may not be DWORD aligned.
-            /// </para>
-            /// </remarks>
-            public LPVOID lpCreateParams;
-            /// <summary>
-            /// Handle to the module that owns the new window.
-            /// </summary>
-            public HINSTANCE hInstance;
-            /// <summary>
-            /// Handle to the menu to be used by the new window.
-            /// </summary>
-            public HMENU hMenu;
-            /// <summary>
-            /// Handle to the parent window, if the window is a child window.
-            /// If the window is owned, this member identifies the owner window.
-            /// If the window is not a child or owned window, this member is NULL.
-            /// </summary>
-            public HWND hwndParent;
-            /// <summary>
-            /// Specifies the height of the new window, in pixels.
-            /// </summary>
-            public int cy;
-            /// <summary>
-            /// Specifies the width of the new window, in pixels.
-            /// </summary>
-            public int cx;
-            /// <summary>
-            /// Specifies the y-coordinate of the upper left corner of the new window.
-            /// If the new window is a child window, coordinates are relative to the parent window.
-            /// Otherwise, the coordinates are relative to the screen origin.
-            /// </summary>
-            public int y;
-            /// <summary>
-            /// Specifies the x-coordinate of the upper left corner of the new window.
-            /// If the new window is a child window, coordinates are relative to the parent window.
-            /// Otherwise, the coordinates are relative to the screen origin.
-            /// </summary>
-            public int x;
-            /// <summary>
-            /// Specifies the style for the new window.
-            /// </summary>
-            public LONG style;
-            /// <summary>
-            /// Pointer to a null-terminated string that specifies the name of the new window.
-            /// </summary>
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public LPCTSTR lpszName;
-            /// <summary>
-            /// Either a pointer to a null-terminated string or an atom that specifies the class name
-            /// of the new window.
-            /// <remarks>
-            /// Note  Because the lpszClass member can contain a pointer to a local (and thus inaccessable) atom,
-            /// do not obtain the class name by using this member. Use the GetClassName function instead.
-            /// </remarks>
-            /// </summary>
-            [MarshalAs(UnmanagedType.LPTStr)]
-            public LPCTSTR lpszClass;
-            /// <summary>
-            /// Specifies the extended window style for the new window.
-            /// </summary>
-            public DWORD dwExStyle;
-        }
-
-        #endregion
-
-        #region PixelFormatDescriptor
-
+    internal struct CreateStruct
+    {
         /// <summary>
-        /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
-        /// Found in WinGDI.h
+        /// Contains additional data which may be used to create the window.
         /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct PixelFormatDescriptor
-        {
-            internal short Size;
-            internal short Version;
-            public PixelFormatDescriptorFlags Flags;
-            public PixelType PixelType;
-            public byte ColorBits;
-            public byte RedBits;
-            public byte RedShift;
-            public byte GreenBits;
-            public byte GreenShift;
-            public byte BlueBits;
-            public byte BlueShift;
-            public byte AlphaBits;
-            public byte AlphaShift;
-            public byte AccumBits;
-            public byte AccumRedBits;
-            public byte AccumGreenBits;
-            public byte AccumBlueBits;
-            public byte AccumAlphaBits;
-            public byte DepthBits;
-            public byte StencilBits;
-            public byte AuxBuffers;
-            public byte LayerType;
-            private byte Reserved;
-            public int LayerMask;
-            public int VisibleMask;
-            public int DamageMask;
-        }
-
-        #endregion
-        
-        #region public class LayerPlaneDescriptor
-
+        /// <remarks>
+        ///  If the window is being created as a result of a call to the CreateWindow
+        ///  or CreateWindowEx function, this member contains the value of the lpParam 
+        ///  parameter specified in the function call.
+        ///  <para>
+        /// If the window being created is a multiple-document interface (MDI) client window,
+        /// this member contains a pointer to a CLIENTCREATESTRUCT structure. If the window
+        /// being created is a MDI child window, this member contains a pointer to an 
+        /// MDICREATESTRUCT structure.
+        ///  </para>
+        /// <para>
+        /// Windows NT/2000/XP: If the window is being created from a dialog template,
+        /// this member is the address of a SHORT value that specifies the size, in bytes,
+        /// of the window creation data. The value is immediately followed by the creation data.
+        /// </para>
+        /// <para>
+        /// Windows NT/2000/XP: You should access the data represented by the lpCreateParams member
+        /// using a pointer that has been declared using the UNALIGNED type, because the pointer
+        /// may not be DWORD aligned.
+        /// </para>
+        /// </remarks>
+        internal LPVOID lpCreateParams;
         /// <summary>
-        /// Describes the pixel format of a drawing surface.
+        /// Handle to the module that owns the new window.
         /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct LayerPlaneDescriptor
-        {
-            public static readonly WORD Size = (WORD)Marshal.SizeOf(typeof(LayerPlaneDescriptor)); 
-			public WORD  Version; 
-			public DWORD Flags; 
-			public BYTE  PixelType; 
-			public BYTE  ColorBits; 
-			public BYTE  RedBits; 
-			public BYTE  RedShift; 
-			public BYTE  GreenBits; 
-			public BYTE  GreenShift; 
-			public BYTE  BlueBits; 
-			public BYTE  BlueShift; 
-			public BYTE  AlphaBits; 
-			public BYTE  AlphaShift; 
-			public BYTE  AccumBits; 
-			public BYTE  AccumRedBits; 
-			public BYTE  AccumGreenBits; 
-			public BYTE  AccumBlueBits; 
-			public BYTE  AccumAlphaBits; 
-			public BYTE  DepthBits; 
-			public BYTE  StencilBits; 
-			public BYTE  AuxBuffers; 
-			public BYTE  LayerPlane; 
-			BYTE  Reserved; 
-			public COLORREF crTransparent; 
-		}
-        
-        #endregion
-
-        #region GlyphMetricsFloat
-
+        internal HINSTANCE hInstance;
         /// <summary>
-        /// The <b>GlyphMetricsFloat</b> structure contains information about the placement and orientation of a glyph in a
-        /// character cell.
+        /// Handle to the menu to be used by the new window.
         /// </summary>
-        /// <remarks>The values of <b>GlyphMetricsFloat</b> are specified as notional units.</remarks>
-        /// <seealso cref="POINTFLOAT" />
-        /// <seealso cref="Wgl.wglUseFontOutlines" />
-        [StructLayout(LayoutKind.Sequential)]
-        public struct GlyphMetricsFloat
-        {
-            /// <summary>
-            /// Specifies the width of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
-            /// </summary>
-            public float BlackBoxX;
-            /// <summary>
-            /// Specifies the height of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
-            /// </summary>
-            public float BlackBoxY;
-            /// <summary>
-            /// Specifies the x and y coordinates of the upper-left corner of the smallest rectangle that completely encloses the glyph.
-            /// </summary>
-            public PointFloat GlyphOrigin;
-            /// <summary>
-            /// Specifies the horizontal distance from the origin of the current character cell to the origin of the next character cell.
-            /// </summary>
-            public float CellIncX;
-            /// <summary>
-            /// Specifies the vertical distance from the origin of the current character cell to the origin of the next character cell.
-            /// </summary>
-            public float CellIncY;
-        }
-
-        #endregion
-
-        #region PointFloat
-
+        internal HMENU hMenu;
         /// <summary>
-        /// The <b>POINTFLOAT</b> structure contains the x and y coordinates of a point.
+        /// Handle to the parent window, if the window is a child window.
+        /// If the window is owned, this member identifies the owner window.
+        /// If the window is not a child or owned window, this member is NULL.
         /// </summary>
-        /// <seealso cref="GLYPHMETRICSFLOAT" />
-        [StructLayout(LayoutKind.Sequential)]
-        public struct PointFloat
-        {
-            /// <summary>
-            /// Specifies the horizontal (x) coordinate of a point.
-            /// </summary>
-            public float X;
-            /// <summary>
-            /// Specifies the vertical (y) coordinate of a point.
-            /// </summary>
-            public float Y;
+        internal HWND hwndParent;
+        /// <summary>
+        /// Specifies the height of the new window, in pixels.
+        /// </summary>
+        internal int cy;
+        /// <summary>
+        /// Specifies the width of the new window, in pixels.
+        /// </summary>
+        internal int cx;
+        /// <summary>
+        /// Specifies the y-coordinate of the upper left corner of the new window.
+        /// If the new window is a child window, coordinates are relative to the parent window.
+        /// Otherwise, the coordinates are relative to the screen origin.
+        /// </summary>
+        internal int y;
+        /// <summary>
+        /// Specifies the x-coordinate of the upper left corner of the new window.
+        /// If the new window is a child window, coordinates are relative to the parent window.
+        /// Otherwise, the coordinates are relative to the screen origin.
+        /// </summary>
+        internal int x;
+        /// <summary>
+        /// Specifies the style for the new window.
+        /// </summary>
+        internal LONG style;
+        /// <summary>
+        /// Pointer to a null-terminated string that specifies the name of the new window.
+        /// </summary>
+        [MarshalAs(UnmanagedType.LPTStr)]
+        internal LPCTSTR lpszName;
+        /// <summary>
+        /// Either a pointer to a null-terminated string or an atom that specifies the class name
+        /// of the new window.
+        /// <remarks>
+        /// Note  Because the lpszClass member can contain a pointer to a local (and thus inaccessable) atom,
+        /// do not obtain the class name by using this member. Use the GetClassName function instead.
+        /// </remarks>
+        /// </summary>
+        [MarshalAs(UnmanagedType.LPTStr)]
+        internal LPCTSTR lpszClass;
+        /// <summary>
+        /// Specifies the extended window style for the new window.
+        /// </summary>
+        internal DWORD dwExStyle;
+    }
+
+    #endregion
+
+    #region PixelFormatDescriptor
+
+    /// <summary>
+    /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
+    /// Found in WinGDI.h
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct PixelFormatDescriptor
+    {
+        internal short Size;
+        internal short Version;
+        internal PixelFormatDescriptorFlags Flags;
+        internal PixelType PixelType;
+        internal byte ColorBits;
+        internal byte RedBits;
+        internal byte RedShift;
+        internal byte GreenBits;
+        internal byte GreenShift;
+        internal byte BlueBits;
+        internal byte BlueShift;
+        internal byte AlphaBits;
+        internal byte AlphaShift;
+        internal byte AccumBits;
+        internal byte AccumRedBits;
+        internal byte AccumGreenBits;
+        internal byte AccumBlueBits;
+        internal byte AccumAlphaBits;
+        internal byte DepthBits;
+        internal byte StencilBits;
+        internal byte AuxBuffers;
+        internal byte LayerType;
+        private byte Reserved;
+        internal int LayerMask;
+        internal int VisibleMask;
+        internal int DamageMask;
+    }
+
+    #endregion
+    
+    #region internal class LayerPlaneDescriptor
+
+    /// <summary>
+    /// Describes the pixel format of a drawing surface.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct LayerPlaneDescriptor
+    {
+        internal static readonly WORD Size = (WORD)Marshal.SizeOf(typeof(LayerPlaneDescriptor)); 
+		internal WORD  Version; 
+		internal DWORD Flags; 
+		internal BYTE  PixelType; 
+		internal BYTE  ColorBits; 
+		internal BYTE  RedBits; 
+		internal BYTE  RedShift; 
+		internal BYTE  GreenBits; 
+		internal BYTE  GreenShift; 
+		internal BYTE  BlueBits; 
+		internal BYTE  BlueShift; 
+		internal BYTE  AlphaBits; 
+		internal BYTE  AlphaShift; 
+		internal BYTE  AccumBits; 
+		internal BYTE  AccumRedBits; 
+		internal BYTE  AccumGreenBits; 
+		internal BYTE  AccumBlueBits; 
+		internal BYTE  AccumAlphaBits; 
+		internal BYTE  DepthBits; 
+		internal BYTE  StencilBits; 
+		internal BYTE  AuxBuffers; 
+		internal BYTE  LayerPlane; 
+		BYTE  Reserved; 
+		internal COLORREF crTransparent; 
+	}
+    
+    #endregion
+
+    #region GlyphMetricsFloat
+
+    /// <summary>
+    /// The <b>GlyphMetricsFloat</b> structure contains information about the placement and orientation of a glyph in a
+    /// character cell.
+    /// </summary>
+    /// <remarks>The values of <b>GlyphMetricsFloat</b> are specified as notional units.</remarks>
+    /// <seealso cref="POINTFLOAT" />
+    /// <seealso cref="Wgl.wglUseFontOutlines" />
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct GlyphMetricsFloat
+    {
+        /// <summary>
+        /// Specifies the width of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
+        /// </summary>
+        internal float BlackBoxX;
+        /// <summary>
+        /// Specifies the height of the smallest rectangle (the glyph's black box) that completely encloses the glyph.
+        /// </summary>
+        internal float BlackBoxY;
+        /// <summary>
+        /// Specifies the x and y coordinates of the upper-left corner of the smallest rectangle that completely encloses the glyph.
+        /// </summary>
+        internal PointFloat GlyphOrigin;
+        /// <summary>
+        /// Specifies the horizontal distance from the origin of the current character cell to the origin of the next character cell.
+        /// </summary>
+        internal float CellIncX;
+        /// <summary>
+        /// Specifies the vertical distance from the origin of the current character cell to the origin of the next character cell.
+        /// </summary>
+        internal float CellIncY;
+    }
+
+    #endregion
+
+    #region PointFloat
+
+    /// <summary>
+    /// The <b>POINTFLOAT</b> structure contains the x and y coordinates of a point.
+    /// </summary>
+    /// <seealso cref="GLYPHMETRICSFLOAT" />
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct PointFloat
+    {
+        /// <summary>
+        /// Specifies the horizontal (x) coordinate of a point.
+        /// </summary>
+        internal float X;
+        /// <summary>
+        /// Specifies the vertical (y) coordinate of a point.
+        /// </summary>
+        internal float Y;
+    };
+
+    #endregion
+
+    #region DeviceMode
+    /*
+    typedef struct _devicemode { 
+      BCHAR  dmDeviceName[CCHDEVICENAME]; 
+      WORD   dmSpecVersion; 
+      WORD   dmDriverVersion; 
+      WORD   dmSize; 
+      WORD   dmDriverExtra; 
+      DWORD  dmFields; 
+      union {
+        struct {
+          short dmOrientation;
+          short dmPaperSize;
+          short dmPaperLength;
+          short dmPaperWidth;
+          short dmScale; 
+          short dmCopies; 
+          short dmDefaultSource; 
+          short dmPrintQuality; 
         };
+        POINTL dmPosition;
+        DWORD  dmDisplayOrientation;
+        DWORD  dmDisplayFixedOutput;
+      };
 
-        #endregion
-
-        #region DeviceMode
-        /*
-        typedef struct _devicemode { 
-          BCHAR  dmDeviceName[CCHDEVICENAME]; 
-          WORD   dmSpecVersion; 
-          WORD   dmDriverVersion; 
-          WORD   dmSize; 
-          WORD   dmDriverExtra; 
-          DWORD  dmFields; 
-          union {
-            struct {
-              short dmOrientation;
-              short dmPaperSize;
-              short dmPaperLength;
-              short dmPaperWidth;
-              short dmScale; 
-              short dmCopies; 
-              short dmDefaultSource; 
-              short dmPrintQuality; 
-            };
-            POINTL dmPosition;
-            DWORD  dmDisplayOrientation;
-            DWORD  dmDisplayFixedOutput;
-          };
-
-          short  dmColor; 
-          short  dmDuplex; 
-          short  dmYResolution; 
-          short  dmTTOption; 
-          short  dmCollate; 
-          BYTE  dmFormName[CCHFORMNAME]; 
-          WORD  dmLogPixels; 
-          DWORD  dmBitsPerPel; 
-          DWORD  dmPelsWidth; 
-          DWORD  dmPelsHeight; 
-          union {
-            DWORD  dmDisplayFlags; 
-            DWORD  dmNup;
-          }
-          DWORD  dmDisplayFrequency; 
-        #if(WINVER >= 0x0400) 
-          DWORD  dmICMMethod;
-          DWORD  dmICMIntent;
-          DWORD  dmMediaType;
-          DWORD  dmDitherType;
-          DWORD  dmReserved1;
-          DWORD  dmReserved2;
-        #if (WINVER >= 0x0500) || (_WIN32_WINNT >= 0x0400)
-          DWORD  dmPanningWidth;
-          DWORD  dmPanningHeight;
-        #endif
-        #endif 
-        } DEVMODE; 
-        */
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-        public class DeviceMode
+      short  dmColor; 
+      short  dmDuplex; 
+      short  dmYResolution; 
+      short  dmTTOption; 
+      short  dmCollate; 
+      BYTE  dmFormName[CCHFORMNAME]; 
+      WORD  dmLogPixels; 
+      DWORD  dmBitsPerPel; 
+      DWORD  dmPelsWidth; 
+      DWORD  dmPelsHeight; 
+      union {
+        DWORD  dmDisplayFlags; 
+        DWORD  dmNup;
+      }
+      DWORD  dmDisplayFrequency; 
+    #if(WINVER >= 0x0400) 
+      DWORD  dmICMMethod;
+      DWORD  dmICMIntent;
+      DWORD  dmMediaType;
+      DWORD  dmDitherType;
+      DWORD  dmReserved1;
+      DWORD  dmReserved2;
+    #if (WINVER >= 0x0500) || (_WIN32_WINNT >= 0x0400)
+      DWORD  dmPanningWidth;
+      DWORD  dmPanningHeight;
+    #endif
+    #endif 
+    } DEVMODE; 
+    */
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    internal class DeviceMode
+    {
+        internal DeviceMode()
         {
-            public DeviceMode()
+            Size = (short)Marshal.SizeOf(this);
+        }
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        internal string DeviceName;
+        internal short SpecVersion;
+        internal short DriverVersion;
+        private short Size;
+        internal short DriverExtra;
+        internal int Fields;
+
+        internal short Orientation;
+        internal short PaperSize;
+        internal short PaperLength;
+        internal short PaperWidth;
+        internal short Scale;
+        internal short Copies;
+        internal short DefaultSource;
+        internal short PrintQuality;
+
+        internal short Color;
+        internal short Duplex;
+        internal short YResolution;
+        internal short TTOption;
+        internal short Collate;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        internal string FormName;
+        internal short LogPixels;
+        internal int BitsPerPel;
+        internal int PelsWidth;
+        internal int PelsHeight;
+        internal int DisplayFlags;
+        internal int DisplayFrequency;
+        internal int ICMMethod;
+        internal int ICMIntent;
+        internal int MediaType;
+        internal int DitherType;
+        internal int Reserved1;
+        internal int Reserved2;
+        internal int PanningWidth;
+        internal int PanningHeight;
+    }
+
+    #endregion DeviceMode class
+
+    #region Window Handling
+
+    #region WindowClass
+    [StructLayout(LayoutKind.Sequential)]
+    internal class WindowClass
+    {
+        internal WindowClassStyle style = WindowClassStyle.VRedraw | WindowClassStyle.HRedraw | WindowClassStyle.OwnDC;
+        [MarshalAs(UnmanagedType.FunctionPtr)]
+        internal WindowProcedureEventHandler WindowProcedure;
+        internal int ClassExtraBytes;
+        internal int WindowExtraBytes;
+        //[MarshalAs(UnmanagedType.
+        internal IntPtr Instance;
+        internal IntPtr Icon;
+        internal IntPtr Cursor;
+        internal IntPtr BackgroundBrush;
+        //[MarshalAs(UnmanagedType.LPStr)]
+        internal IntPtr MenuName;
+        //[MarshalAs(UnmanagedType.LPStr)]
+        internal IntPtr ClassName;
+        //internal string ClassName;
+    }
+    #endregion
+
+    #region internal struct MinMaxInfo
+
+    /// <summary>
+    /// Struct pointed to by WM_GETMINMAXINFO lParam
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct MINMAXINFO
+    {
+        System.Drawing.Point ptReserved;
+        System.Drawing.Point ptMaxSize;
+        System.Drawing.Point ptMaxPosition;
+        System.Drawing.Point ptMinTrackSize;
+        System.Drawing.Point ptMaxTrackSize;
+    }
+
+    #endregion
+
+    #region internal struct WindowPosition
+
+    /// <summary>
+    /// The WindowPosition structure contains information about the size and position of a window.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct WindowPosition
+    {
+        /// <summary>
+        /// Handle to the window.
+        /// </summary>
+        internal HWND hwnd;
+        /// <summary>
+        /// Specifies the position of the window in Z order (front-to-back position).
+        /// This member can be a handle to the window behind which this window is placed,
+        /// or can be one of the special values listed with the SetWindowPos function.
+        /// </summary>
+        internal HWND hwndInsertAfter;
+        /// <summary>
+        /// Specifies the position of the left edge of the window.
+        /// </summary>
+        internal int x;
+        /// <summary>
+        /// Specifies the position of the top edge of the window.
+        /// </summary>
+        internal int y;
+        /// <summary>
+        /// Specifies the window width, in pixels.
+        /// </summary>
+        internal int cx;
+        /// <summary>
+        /// Specifies the window height, in pixels.
+        /// </summary>
+        internal int cy;
+        /// <summary>
+        /// Specifies the window position.
+        /// </summary>
+        [MarshalAs(UnmanagedType.U4)]
+        internal SetWindowPosFlags flags;
+    }
+
+    #region internal enum SetWindowPosFlags
+
+    [Flags]
+    internal enum SetWindowPosFlags : int
+    {
+        /// <summary>
+        /// Retains the current size (ignores the cx and cy parameters).
+        /// </summary>
+        NOSIZE          = 0x0001,
+        /// <summary>
+        /// Retains the current position (ignores the x and y parameters).
+        /// </summary>
+        NOMOVE          = 0x0002,
+        /// <summary>
+        /// Retains the current Z order (ignores the hwndInsertAfter parameter).
+        /// </summary>
+        NOZORDER        = 0x0004,
+        /// <summary>
+        /// Does not redraw changes. If this flag is set, no repainting of any kind occurs.
+        /// This applies to the client area, the nonclient area (including the title bar and scroll bars),
+        /// and any part of the parent window uncovered as a result of the window being moved.
+        /// When this flag is set, the application must explicitly invalidate or redraw any parts
+        /// of the window and parent window that need redrawing.
+        /// </summary>
+        NOREDRAW        = 0x0008,
+        /// <summary>
+        /// Does not activate the window. If this flag is not set,
+        /// the window is activated and moved to the top of either the topmost or non-topmost group
+        /// (depending on the setting of the hwndInsertAfter member).
+        /// </summary>
+        NOACTIVATE      = 0x0010,
+        /// <summary>
+        /// Sends a WM_NCCALCSIZE message to the window, even if the window's size is not being changed.
+        /// If this flag is not specified, WM_NCCALCSIZE is sent only when the window's size is being changed.
+        /// </summary>
+        FRAMECHANGED    = 0x0020, /* The frame changed: send WM_NCCALCSIZE */
+        /// <summary>
+        /// Displays the window.
+        /// </summary>
+        SHOWWINDOW      = 0x0040,
+        /// <summary>
+        /// Hides the window.
+        /// </summary>
+        HIDEWINDOW      = 0x0080,
+        /// <summary>
+        /// Discards the entire contents of the client area. If this flag is not specified,
+        /// the valid contents of the client area are saved and copied back into the client area 
+        /// after the window is sized or repositioned.
+        /// </summary>
+        NOCOPYBITS      = 0x0100,
+        /// <summary>
+        /// Does not change the owner window's position in the Z order.
+        /// </summary>
+        NOOWNERZORDER   = 0x0200, /* Don't do owner Z ordering */
+        /// <summary>
+        /// Prevents the window from receiving the WM_WINDOWPOSCHANGING message.
+        /// </summary>
+        NOSENDCHANGING  = 0x0400, /* Don't send WM_WINDOWPOSCHANGING */
+
+        /// <summary>
+        /// Draws a frame (defined in the window's class description) around the window.
+        /// </summary>
+        DRAWFRAME       = FRAMECHANGED,
+        /// <summary>
+        /// Same as the NOOWNERZORDER flag.
+        /// </summary>
+        NOREPOSITION    = NOOWNERZORDER,
+
+        DEFERERASE      = 0x2000,
+        ASYNCWINDOWPOS  = 0x4000
+    }
+
+    #endregion
+
+    #endregion
+
+    #endregion
+
+    #region Raw Input structures
+
+    #region RawInputDevice
+
+    /// <summary>
+    /// Defines information for the raw input devices.
+    /// </summary>
+    /// <remarks>
+    /// If RIDEV_NOLEGACY is set for a mouse or a keyboard, the system does not generate any legacy message for that device for the application. For example, if the mouse TLC is set with RIDEV_NOLEGACY, WM_LBUTTONDOWN and related legacy mouse messages are not generated. Likewise, if the keyboard TLC is set with RIDEV_NOLEGACY, WM_KEYDOWN and related legacy keyboard messages are not generated.
+    /// </remarks>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawInputDevice
+    {
+        /// <summary>
+        /// Top level collection Usage page for the raw input device.
+        /// </summary>
+        //internal USHORT UsagePage;
+        internal SHORT UsagePage;
+        /// <summary>
+        /// Top level collection Usage for the raw input device.
+        /// </summary>
+        //internal USHORT Usage;
+        internal SHORT Usage;
+        /// <summary>
+        /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
+        /// It can be zero (the default) or one of the following values.
+        /// By default, the operating system sends raw input from devices with the specified top level collection (TLC)
+        /// to the registered application as long as it has the window focus. 
+        /// </summary>
+        internal RawInputDeviceFlags Flags;
+        /// <summary>
+        /// Handle to the target window. If NULL it follows the keyboard focus.
+        /// </summary>
+        internal HWND Target;
+
+        public override string ToString()
+        {
+            return String.Format("{0}/{1}, flags: {2}, window: {3}", UsagePage, Usage, Flags, Target);
+        }
+    }
+
+    #endregion
+
+    #region RawInputDeviceList
+
+    /// <summary>
+    /// Contains information about a raw input device.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawInputDeviceList
+    {
+        /// <summary>
+        /// Handle to the raw input device.
+        /// </summary>
+        internal HANDLE Device;
+        /// <summary>
+        /// Type of device.
+        /// </summary>
+        internal RawInputDeviceType Type;
+
+        public override string ToString()
+        {
+            return String.Format("{0}, Handle: {1}", Type, Device);
+        }
+    }
+
+    #endregion
+
+    #region RawInput
+
+    /// <summary>
+    /// Contains the raw input from a device.
+    /// </summary>
+    /// <remarks>
+    /// <para>The handle to this structure is passed in the lParam parameter of WM_INPUT.</para>
+    /// <para>To get detailed information -- such as the header and the content of the raw input -- call GetRawInputData.</para>
+    /// <para>To get device specific information, call GetRawInputDeviceInfo with the hDevice from RAWINPUTHEADER.</para>
+    /// <para>Raw input is available only when the application calls RegisterRawInputDevices with valid device specifications.</para>
+    /// </remarks>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawInput
+    {
+        internal RawInputHeader Header;
+        internal RawInputData Data;
+
+        internal byte[] ToByteArray()
+        {
+            unsafe
             {
-                Size = (short)Marshal.SizeOf(this);
-            }
-
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-            public string DeviceName;
-            public short SpecVersion;
-            public short DriverVersion;
-            private short Size;
-            public short DriverExtra;
-            public int Fields;
-
-            public short Orientation;
-            public short PaperSize;
-            public short PaperLength;
-            public short PaperWidth;
-            public short Scale;
-            public short Copies;
-            public short DefaultSource;
-            public short PrintQuality;
-
-            public short Color;
-            public short Duplex;
-            public short YResolution;
-            public short TTOption;
-            public short Collate;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-            public string FormName;
-            public short LogPixels;
-            public int BitsPerPel;
-            public int PelsWidth;
-            public int PelsHeight;
-            public int DisplayFlags;
-            public int DisplayFrequency;
-            public int ICMMethod;
-            public int ICMIntent;
-            public int MediaType;
-            public int DitherType;
-            public int Reserved1;
-            public int Reserved2;
-            public int PanningWidth;
-            public int PanningHeight;
-        }
-
-        #endregion DeviceMode class
-
-        #region Window Handling
-
-        #region WindowClass
-        [StructLayout(LayoutKind.Sequential)]
-        public class WindowClass
-        {
-            public WindowClassStyle style = WindowClassStyle.VRedraw | WindowClassStyle.HRedraw | WindowClassStyle.OwnDC;
-            [MarshalAs(UnmanagedType.FunctionPtr)]
-            public WindowProcedureEventHandler WindowProcedure;
-            public int ClassExtraBytes;
-            public int WindowExtraBytes;
-            //[MarshalAs(UnmanagedType.
-            public IntPtr Instance;
-            public IntPtr Icon;
-            public IntPtr Cursor;
-            public IntPtr BackgroundBrush;
-            //[MarshalAs(UnmanagedType.LPStr)]
-            public IntPtr MenuName;
-            //[MarshalAs(UnmanagedType.LPStr)]
-            public IntPtr ClassName;
-            //public string ClassName;
-        }
-        #endregion
-
-        #region public struct MinMaxInfo
-
-        /// <summary>
-        /// Struct pointed to by WM_GETMINMAXINFO lParam
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct MINMAXINFO
-        {
-            System.Drawing.Point ptReserved;
-            System.Drawing.Point ptMaxSize;
-            System.Drawing.Point ptMaxPosition;
-            System.Drawing.Point ptMinTrackSize;
-            System.Drawing.Point ptMaxTrackSize;
-        }
-
-        #endregion
-
-        #region public struct WindowPosition
-
-        /// <summary>
-        /// The WindowPosition structure contains information about the size and position of a window.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct WindowPosition
-        {
-            /// <summary>
-            /// Handle to the window.
-            /// </summary>
-            public HWND hwnd;
-            /// <summary>
-            /// Specifies the position of the window in Z order (front-to-back position).
-            /// This member can be a handle to the window behind which this window is placed,
-            /// or can be one of the special values listed with the SetWindowPos function.
-            /// </summary>
-            public HWND hwndInsertAfter;
-            /// <summary>
-            /// Specifies the position of the left edge of the window.
-            /// </summary>
-            public int x;
-            /// <summary>
-            /// Specifies the position of the top edge of the window.
-            /// </summary>
-            public int y;
-            /// <summary>
-            /// Specifies the window width, in pixels.
-            /// </summary>
-            public int cx;
-            /// <summary>
-            /// Specifies the window height, in pixels.
-            /// </summary>
-            public int cy;
-            /// <summary>
-            /// Specifies the window position.
-            /// </summary>
-            [MarshalAs(UnmanagedType.U4)]
-            public SetWindowPosFlags flags;
-        }
-
-        #region public enum SetWindowPosFlags
-
-        [Flags]
-        public enum SetWindowPosFlags : int
-        {
-            /// <summary>
-            /// Retains the current size (ignores the cx and cy parameters).
-            /// </summary>
-            NOSIZE          = 0x0001,
-            /// <summary>
-            /// Retains the current position (ignores the x and y parameters).
-            /// </summary>
-            NOMOVE          = 0x0002,
-            /// <summary>
-            /// Retains the current Z order (ignores the hwndInsertAfter parameter).
-            /// </summary>
-            NOZORDER        = 0x0004,
-            /// <summary>
-            /// Does not redraw changes. If this flag is set, no repainting of any kind occurs.
-            /// This applies to the client area, the nonclient area (including the title bar and scroll bars),
-            /// and any part of the parent window uncovered as a result of the window being moved.
-            /// When this flag is set, the application must explicitly invalidate or redraw any parts
-            /// of the window and parent window that need redrawing.
-            /// </summary>
-            NOREDRAW        = 0x0008,
-            /// <summary>
-            /// Does not activate the window. If this flag is not set,
-            /// the window is activated and moved to the top of either the topmost or non-topmost group
-            /// (depending on the setting of the hwndInsertAfter member).
-            /// </summary>
-            NOACTIVATE      = 0x0010,
-            /// <summary>
-            /// Sends a WM_NCCALCSIZE message to the window, even if the window's size is not being changed.
-            /// If this flag is not specified, WM_NCCALCSIZE is sent only when the window's size is being changed.
-            /// </summary>
-            FRAMECHANGED    = 0x0020, /* The frame changed: send WM_NCCALCSIZE */
-            /// <summary>
-            /// Displays the window.
-            /// </summary>
-            SHOWWINDOW      = 0x0040,
-            /// <summary>
-            /// Hides the window.
-            /// </summary>
-            HIDEWINDOW      = 0x0080,
-            /// <summary>
-            /// Discards the entire contents of the client area. If this flag is not specified,
-            /// the valid contents of the client area are saved and copied back into the client area 
-            /// after the window is sized or repositioned.
-            /// </summary>
-            NOCOPYBITS      = 0x0100,
-            /// <summary>
-            /// Does not change the owner window's position in the Z order.
-            /// </summary>
-            NOOWNERZORDER   = 0x0200, /* Don't do owner Z ordering */
-            /// <summary>
-            /// Prevents the window from receiving the WM_WINDOWPOSCHANGING message.
-            /// </summary>
-            NOSENDCHANGING  = 0x0400, /* Don't send WM_WINDOWPOSCHANGING */
-
-            /// <summary>
-            /// Draws a frame (defined in the window's class description) around the window.
-            /// </summary>
-            DRAWFRAME       = FRAMECHANGED,
-            /// <summary>
-            /// Same as the NOOWNERZORDER flag.
-            /// </summary>
-            NOREPOSITION    = NOOWNERZORDER,
-
-            DEFERERASE      = 0x2000,
-            ASYNCWINDOWPOS  = 0x4000
-        }
-
-        #endregion
-
-        #endregion
-
-        #endregion
-
-        #region Raw Input structures
-
-        #region RawInputDevice
-
-        /// <summary>
-        /// Defines information for the raw input devices.
-        /// </summary>
-        /// <remarks>
-        /// If RIDEV_NOLEGACY is set for a mouse or a keyboard, the system does not generate any legacy message for that device for the application. For example, if the mouse TLC is set with RIDEV_NOLEGACY, WM_LBUTTONDOWN and related legacy mouse messages are not generated. Likewise, if the keyboard TLC is set with RIDEV_NOLEGACY, WM_KEYDOWN and related legacy keyboard messages are not generated.
-        /// </remarks>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RawInputDevice
-        {
-            /// <summary>
-            /// Top level collection Usage page for the raw input device.
-            /// </summary>
-            //public USHORT UsagePage;
-            public SHORT UsagePage;
-            /// <summary>
-            /// Top level collection Usage for the raw input device.
-            /// </summary>
-            //public USHORT Usage;
-            public SHORT Usage;
-            /// <summary>
-            /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
-            /// It can be zero (the default) or one of the following values.
-            /// By default, the operating system sends raw input from devices with the specified top level collection (TLC)
-            /// to the registered application as long as it has the window focus. 
-            /// </summary>
-            public RawInputDeviceFlags Flags;
-            /// <summary>
-            /// Handle to the target window. If NULL it follows the keyboard focus.
-            /// </summary>
-            public HWND Target;
-
-            public override string ToString()
-            {
-                return String.Format("{0}/{1}, flags: {2}, window: {3}", UsagePage, Usage, Flags, Target);
-            }
-        }
-
-        #endregion
-
-        #region RawInputDeviceList
-
-        /// <summary>
-        /// Contains information about a raw input device.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RawInputDeviceList
-        {
-            /// <summary>
-            /// Handle to the raw input device.
-            /// </summary>
-            public HANDLE Device;
-            /// <summary>
-            /// Type of device.
-            /// </summary>
-            public RawInputDeviceType Type;
-
-            public override string ToString()
-            {
-                return String.Format("{0}, Handle: {1}", Type, Device);
-            }
-        }
-
-        #endregion
-
-        #region RawInput
-
-        /// <summary>
-        /// Contains the raw input from a device.
-        /// </summary>
-        /// <remarks>
-        /// <para>The handle to this structure is passed in the lParam parameter of WM_INPUT.</para>
-        /// <para>To get detailed information -- such as the header and the content of the raw input -- call GetRawInputData.</para>
-        /// <para>To get device specific information, call GetRawInputDeviceInfo with the hDevice from RAWINPUTHEADER.</para>
-        /// <para>Raw input is available only when the application calls RegisterRawInputDevices with valid device specifications.</para>
-        /// </remarks>
-        [StructLayout(LayoutKind.Sequential)]
-        public class RawInput
-        {
-            public RawInputHeader Header;
-            public RawInputData Data;
-        }
-
-        [StructLayout(LayoutKind.Explicit)]
-        public struct RawInputData
-        {
-            [FieldOffset(0)]
-            public RawMouse Mouse;
-            [FieldOffset(0)]
-            public RawKeyboard Keyboard;
-            [FieldOffset(0)]
-            public RawHID HID;
-        }
-
-        #endregion
-
-        #region RawInputHeader
-
-        /// <summary>
-        /// Contains the header information that is part of the raw input data.
-        /// </summary>
-        /// <remarks>
-        /// To get more information on the device, use hDevice in a call to GetRawInputDeviceInfo.
-        /// </remarks>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RawInputHeader
-        {
-            /// <summary>
-            /// Type of raw input.
-            /// </summary>
-            public RawInputDeviceType Type;
-            /// <summary>
-            /// Size, in bytes, of the entire input packet of data. This includesRAWINPUT plus possible extra input reports in the RAWHID variable length array.
-            /// </summary>
-            public DWORD Size;
-            /// <summary>
-            /// Handle to the device generating the raw input data.
-            /// </summary>
-            public HANDLE Device;
-            /// <summary>
-            /// Value passed in the wParam parameter of the WM_INPUT message.
-            /// </summary>
-            public WPARAM Param;
-        }
-
-        #endregion
-
-        #region RawKeyboard
-
-        /// <summary>
-        /// Contains information about the state of the keyboard.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RawKeyboard
-        {
-            /// <summary>
-            /// Scan code from the key depression. The scan code for keyboard overrun is KEYBOARD_OVERRUN_MAKE_CODE.
-            /// </summary>
-            //public USHORT MakeCode;
-            public SHORT MakeCode;
-            /// <summary>
-            /// Flags for scan code information. It can be one or more of the following.
-            /// RI_KEY_MAKE
-            /// RI_KEY_BREAK
-            /// RI_KEY_E0
-            /// RI_KEY_E1
-            /// RI_KEY_TERMSRV_SET_LED
-            /// RI_KEY_TERMSRV_SHADOW
-            /// </summary>
-            public RawInputKeyboardDataFlags Flags;
-            /// <summary>
-            /// Reserved; must be zero.
-            /// </summary>
-            USHORT Reserved;
-            /// <summary>
-            /// Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
-            /// </summary>
-            //public USHORT VKey;
-            public VirtualKeys VKey;
-            /// <summary>
-            /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.
-            /// </summary>
-            //public UINT Message;
-            public INT Message;
-            /// <summary>
-            /// Device-specific additional information for the event.
-            /// </summary>
-            //public ULONG ExtraInformation;
-            public LONG ExtraInformation;
-        }
-
-        #endregion
-
-        #region RawMouse
-
-        /// <summary>
-        /// Contains information about the state of the mouse.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RawMouse
-        {
-            /// <summary>
-            /// Mouse state. This member can be any reasonable combination of the following. 
-            /// MOUSE_ATTRIBUTES_CHANGED
-            /// Mouse attributes changed; application needs to query the mouse attributes.
-            /// MOUSE_MOVE_RELATIVE
-            /// Mouse movement data is relative to the last mouse position.
-            /// MOUSE_MOVE_ABSOLUTE
-            /// Mouse movement data is based on absolute position.
-            /// MOUSE_VIRTUAL_DESKTOP
-            /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
-            /// </summary>
-            public RawMouseFlags Flags;     // USHORT in winuser.h, but only INT works -- USHORT returns 0.
-            // /// <summary>
-            // /// Reserved.
-            // /// </summary>
-            // ULONG Buttons;
-            /// <summary>
-            /// Transition state of the mouse buttons.
-            /// </summary>
-            public RawInputMouseState ButtonFlags;
-            /// <summary>
-            /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
-            /// </summary>
-            public SHORT ButtonData;
-            /// <summary>
-            /// Raw state of the mouse buttons.
-            /// </summary>
-            public LONG RawButtons;
-            /// <summary>
-            /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
-            /// </summary>
-            public LONG LastX;
-            /// <summary>
-            /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
-            /// </summary>
-            public LONG LastY;
-            /// <summary>
-            /// Device-specific additional information for the event.
-            /// </summary>
-            public LONG ExtraInformation;
-        }
-
-        #endregion
-
-        #region RawHID
-
-        /// <summary>
-        /// The RawHID structure describes the format of the raw input
-        /// from a Human Interface Device (HID).
-        /// </summary>
-        /// <remarks>
-        /// Each WM_INPUT can indicate several inputs, but all of the inputs
-        /// come from the same HID. The size of the bRawData array is
-        /// dwSizeHid * dwCount.
-        /// </remarks>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RawHID
-        {
-            /// <summary>
-            /// Size, in bytes, of each HID input in bRawData.
-            /// </summary>
-            public DWORD SizeHid;
-            /// <summary>
-            /// Number of HID inputs in bRawData.
-            /// </summary>
-            public DWORD Count;
-            /// <summary>
-            /// Raw input data as an array of bytes.
-            /// </summary>
-            public BYTE RawData;
-        }
-
-        #endregion
-
-        #region RawInputDeviceInfo
-
-        /// <summary>
-        /// Defines the raw input data coming from any device.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public class RawInputDeviceInfo
-        {
-            /// <summary>
-            /// Size, in bytes, of the RawInputDeviceInfo structure.
-            /// </summary>
-            DWORD Size = Marshal.SizeOf(typeof(RawInputDeviceInfo)); 
-            /// <summary>
-            /// Type of raw input data.
-            /// </summary>
-            public RawInputDeviceType Type;
-            public DeviceStruct Device;
-            [StructLayout(LayoutKind.Explicit)]
-            public struct DeviceStruct
-            {
-                [FieldOffset(0)]
-                public RawInputMouseDeviceInfo Mouse;
-                [FieldOffset(0)]
-                public RawInputKeyboardDeviceInfo Keyboard;
-                [FieldOffset(0)]
-                public RawInputHIDDeviceInfo HID; 
-            };
-        }
-
-        #endregion
-
-        #region RawInputHIDDeviceInfo
-
-        /// <summary>
-        /// Defines the raw input data coming from the specified Human Interface Device (HID).
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RawInputHIDDeviceInfo
-        {
-            /// <summary>
-            /// Vendor ID for the HID.
-            /// </summary>
-            public DWORD VendorId;
-            /// <summary>
-            /// Product ID for the HID.
-            /// </summary>
-            public DWORD ProductId;
-            /// <summary>
-            /// Version number for the HID.
-            /// </summary>
-            public DWORD VersionNumber;
-            /// <summary>
-            /// Top-level collection Usage Page for the device.
-            /// </summary>
-            //public USHORT UsagePage;
-            public SHORT UsagePage;
-            /// <summary>
-            /// Top-level collection Usage for the device.
-            /// </summary>
-            //public USHORT Usage;
-            public SHORT Usage;
-        }
-
-        #endregion
-
-        #region RawInputKeyboardDeviceInfo
-
-        /// <summary>
-        /// Defines the raw input data coming from the specified keyboard.
-        /// </summary>
-        /// <remarks>
-        /// For the keyboard, the Usage Page is 1 and the Usage is 6.
-        /// </remarks>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RawInputKeyboardDeviceInfo
-        {
-            /// <summary>
-            /// Type of the keyboard.
-            /// </summary>
-            public DWORD Type;
-            /// <summary>
-            /// Subtype of the keyboard.
-            /// </summary>
-            public DWORD SubType;
-            /// <summary>
-            /// Scan code mode.
-            /// </summary>
-            public DWORD KeyboardMode;
-            /// <summary>
-            /// Number of function keys on the keyboard.
-            /// </summary>
-            public DWORD NumberOfFunctionKeys;
-            /// <summary>
-            /// Number of LED indicators on the keyboard.
-            /// </summary>
-            public DWORD NumberOfIndicators;
-            /// <summary>
-            /// Total number of keys on the keyboard.
-            /// </summary>
-            public DWORD NumberOfKeysTotal;
-        }
-
-        #endregion
-
-        #region RawInputMouseDeviceInfo
-
-        /// <summary>
-        /// Defines the raw input data coming from the specified mouse.
-        /// </summary>
-        /// <remarks>
-        /// For the keyboard, the Usage Page is 1 and the Usage is 2.
-        /// </remarks>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RawInputMouseDeviceInfo
-        {
-            /// <summary>
-            /// ID for the mouse device.
-            /// </summary>
-            public DWORD Id;
-            /// <summary>
-            /// Number of buttons for the mouse.
-            /// </summary>
-            public DWORD NumberOfButtons;
-            /// <summary>
-            /// Number of data points per second. This information may not be applicable for every mouse device.
-            /// </summary>
-            public DWORD SampleRate;
-            /// <summary>
-            /// TRUE if the mouse has a wheel for horizontal scrolling; otherwise, FALSE.
-            /// </summary>
-            /// <remarks>
-            /// This member is only supported under Microsoft Windows Vista and later versions.
-            /// </remarks>
-            public BOOL HasHorizontalWheel;
-        }
-
-        #endregion
-
-        #endregion
-
-        #region GetWindowLongOffsets
-
-        /// <summary>
-        /// Window field offsets for GetWindowLong() and GetWindowLongPtr().
-        /// </summary>
-        public static class GWL
-        {
-            private static bool x64;
-            static GWL()
-            {
-                unsafe
+                byte[] dump = new byte[API.RawInputSize];
+                fixed (RawInputDeviceType* ptr = &Header.Type)
                 {
-                    x64 = sizeof(void*) == 8;
+                    for (int i = 0; i < API.RawInputSize; i++)
+                        dump[i] = *((byte*)ptr + i);
+                    return dump;
                 }
-
             }
-
-            public static readonly int WNDPROC       = (-4);
-            public static readonly int HINSTANCE     = (-6);
-            public static readonly int HWNDPARENT    = (-8);
-            public static readonly int STYLE         = (-16);
-            public static readonly int EXSTYLE       = (-20);
-            public static readonly int USERDATA      = (-21);
-            public static readonly int ID            = (-12);
         }
+    }
 
-        #endregion
+    [StructLayout(LayoutKind.Explicit)]
+    internal struct RawInputData
+    {
+        [FieldOffset(0)]
+        internal RawMouse Mouse;
+        [FieldOffset(0)]
+        internal RawKeyboard Keyboard;
+        [FieldOffset(0)]
+        internal RawHID HID;
+    }
 
-        #region Rectangle
+    #endregion
+
+    #region RawInputHeader
+
+    /// <summary>
+    /// Contains the header information that is part of the raw input data.
+    /// </summary>
+    /// <remarks>
+    /// To get more information on the device, use hDevice in a call to GetRawInputDeviceInfo.
+    /// </remarks>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawInputHeader
+    {
+        /// <summary>
+        /// Type of raw input.
+        /// </summary>
+        internal RawInputDeviceType Type;
+        /// <summary>
+        /// Size, in bytes, of the entire input packet of data. This includes the RawInput struct plus possible extra input reports in the RAWHID variable length array.
+        /// </summary>
+        internal DWORD Size;
+        /// <summary>
+        /// Handle to the device generating the raw input data.
+        /// </summary>
+        internal HANDLE Device;
+        /// <summary>
+        /// Value passed in the wParam parameter of the WM_INPUT message.
+        /// </summary>
+        internal WPARAM Param;
+    }
+
+    #endregion
+
+    #region RawKeyboard
+
+    /// <summary>
+    /// Contains information about the state of the keyboard.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawKeyboard
+    {
+        /// <summary>
+        /// Scan code from the key depression. The scan code for keyboard overrun is KEYBOARD_OVERRUN_MAKE_CODE.
+        /// </summary>
+        //internal USHORT MakeCode;
+        internal SHORT MakeCode;
+        /// <summary>
+        /// Flags for scan code information. It can be one or more of the following.
+        /// RI_KEY_MAKE
+        /// RI_KEY_BREAK
+        /// RI_KEY_E0
+        /// RI_KEY_E1
+        /// RI_KEY_TERMSRV_SET_LED
+        /// RI_KEY_TERMSRV_SHADOW
+        /// </summary>
+        internal RawInputKeyboardDataFlags Flags;
+        /// <summary>
+        /// Reserved; must be zero.
+        /// </summary>
+        USHORT Reserved;
+        /// <summary>
+        /// Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes.
+        /// </summary>
+        //internal USHORT VKey;
+        internal VirtualKeys VKey;
+        /// <summary>
+        /// Corresponding window message, for example WM_KEYDOWN, WM_SYSKEYDOWN, and so forth.
+        /// </summary>
+        //internal UINT Message;
+        internal INT Message;
+        /// <summary>
+        /// Device-specific additional information for the event.
+        /// </summary>
+        //internal ULONG ExtraInformation;
+        internal LONG ExtraInformation;
+    }
+
+    #endregion
+
+    #region RawMouse
+
+    /// <summary>
+    /// Contains information about the state of the mouse.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack=1)]
+    internal struct RawMouse
+    {
+        //internal RawMouseFlags Flags;   // USHORT in winuser.h, but only INT works -- USHORT returns 0.
+        USHORT flags;
+        byte for_alignment;            // Not used -- used for alignment
+        /// <summary>
+        /// Reserved.
+        /// </summary>
+        //ULONG Buttons;
+        internal USHORT buttonFlags;
+        /// <summary>
+        /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
+        /// </summary>
+        internal USHORT ButtonData;// { get { return (USHORT)((Buttons & 0xFFFF0000) >> 16); } }
+        /// <summary>
+        /// Raw state of the mouse buttons.
+        /// </summary>
+        internal ULONG RawButtons;
+        /// <summary>
+        /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// </summary>
+        internal LONG LastX;
+        /// <summary>
+        /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// </summary>
+        internal LONG LastY;
+        /// <summary>
+        /// Device-specific additional information for the event.
+        /// </summary>
+        internal ULONG ExtraInformation;
 
         /// <summary>
-        /// Defines the coordinates of the upper-left and lower-right corners of a rectangle.
+        /// Mouse state. This member can be any reasonable combination of the following. 
+        /// MOUSE_ATTRIBUTES_CHANGED
+        /// Mouse attributes changed; application needs to query the mouse attributes.
+        /// MOUSE_MOVE_RELATIVE
+        /// Mouse movement data is relative to the last mouse position.
+        /// MOUSE_MOVE_ABSOLUTE
+        /// Mouse movement data is based on absolute position.
+        /// MOUSE_VIRTUAL_DESKTOP
+        /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
+        /// </summary>
+        internal RawMouseFlags Flags { get { return (RawMouseFlags)(flags); } }
+
+        /// <summary>
+        /// Transition state of the mouse buttons.
+        /// </summary>
+        internal RawInputMouseState ButtonFlags { get { return (RawInputMouseState)(buttonFlags); } }
+    }
+
+    #endregion
+
+    #region RawMouse (second try)
+#if false
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawMouse
+    {
+        byte b00, b01, b02, b03, b04, b05, b06, b07,
+             b08, b09, b10, b11, b12, b13, b14, b15,
+             b16, b17, b18, b19, b20, b21, b22, b23;
+
+        unsafe private byte* this[int i] { get { fixed (byte* ptr = &b00) { return ptr + i; } } }
+
+        /// <summary>
+        /// Mouse state. This member can be any reasonable combination of the following. 
+        /// MOUSE_ATTRIBUTES_CHANGED
+        /// Mouse attributes changed; application needs to query the mouse attributes.
+        /// MOUSE_MOVE_RELATIVE
+        /// Mouse movement data is relative to the last mouse position.
+        /// MOUSE_MOVE_ABSOLUTE
+        /// Mouse movement data is based on absolute position.
+        /// MOUSE_VIRTUAL_DESKTOP
+        /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).
+        /// </summary>
+        internal RawMouseFlags Flags { get { unsafe { return *(RawMouseFlags*)this[0]; } } } 
+
+        /// <summary>
+        /// Transition state of the mouse buttons.
+        /// </summary>
+        internal RawInputMouseState ButtonFlags { get { unsafe { return *(RawInputMouseState*)this[4]; } } }
+
+        /// <summary>
+        /// If usButtonFlags is RI_MOUSE_WHEEL, this member is a signed value that specifies the wheel delta.
+        /// </summary>
+        internal USHORT ButtonData { get { unsafe { return *(USHORT*)this[6]; } } }
+
+        /// <summary>
+        /// Raw state of the mouse buttons.
+        /// </summary>
+        internal ULONG RawButtons { get { unsafe { return *(ULONG*)this[8]; } } }
+
+        /// <summary>
+        /// Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// </summary>
+        internal LONG LastX { get { unsafe { return *(LONG*)this[12]; } } }
+
+        /// <summary>
+        /// Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of usFlags.
+        /// </summary>
+        internal LONG LastY { get { unsafe { return *(LONG*)this[16]; } } }
+
+        /// <summary>
+        /// Device-specific additional information for the event.
+        /// </summary>
+        internal ULONG ExtraInformation { get { unsafe { return *(ULONG*)this[20]; } } }
+    }
+#endif
+    #endregion
+
+    #region RawHID
+
+    /// <summary>
+    /// The RawHID structure describes the format of the raw input
+    /// from a Human Interface Device (HID).
+    /// </summary>
+    /// <remarks>
+    /// Each WM_INPUT can indicate several inputs, but all of the inputs
+    /// come from the same HID. The size of the bRawData array is
+    /// dwSizeHid * dwCount.
+    /// </remarks>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawHID
+    {
+        /// <summary>
+        /// Size, in bytes, of each HID input in bRawData.
+        /// </summary>
+        internal DWORD SizeHid;
+        /// <summary>
+        /// Number of HID inputs in bRawData.
+        /// </summary>
+        internal DWORD Count;
+        /// <summary>
+        /// Raw input data as an array of bytes.
+        /// </summary>
+        internal BYTE RawData;
+    }
+
+    #endregion
+
+    #region RawInputDeviceInfo
+
+    /// <summary>
+    /// Defines the raw input data coming from any device.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal class RawInputDeviceInfo
+    {
+        /// <summary>
+        /// Size, in bytes, of the RawInputDeviceInfo structure.
+        /// </summary>
+        DWORD Size = Marshal.SizeOf(typeof(RawInputDeviceInfo)); 
+        /// <summary>
+        /// Type of raw input data.
+        /// </summary>
+        internal RawInputDeviceType Type;
+        internal DeviceStruct Device;
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct DeviceStruct
+        {
+            [FieldOffset(0)]
+            internal RawInputMouseDeviceInfo Mouse;
+            [FieldOffset(0)]
+            internal RawInputKeyboardDeviceInfo Keyboard;
+            [FieldOffset(0)]
+            internal RawInputHIDDeviceInfo HID; 
+        };
+    }
+
+    #endregion
+
+    #region RawInputHIDDeviceInfo
+
+    /// <summary>
+    /// Defines the raw input data coming from the specified Human Interface Device (HID).
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawInputHIDDeviceInfo
+    {
+        /// <summary>
+        /// Vendor ID for the HID.
+        /// </summary>
+        internal DWORD VendorId;
+        /// <summary>
+        /// Product ID for the HID.
+        /// </summary>
+        internal DWORD ProductId;
+        /// <summary>
+        /// Version number for the HID.
+        /// </summary>
+        internal DWORD VersionNumber;
+        /// <summary>
+        /// Top-level collection Usage Page for the device.
+        /// </summary>
+        //internal USHORT UsagePage;
+        internal SHORT UsagePage;
+        /// <summary>
+        /// Top-level collection Usage for the device.
+        /// </summary>
+        //internal USHORT Usage;
+        internal SHORT Usage;
+    }
+
+    #endregion
+
+    #region RawInputKeyboardDeviceInfo
+
+    /// <summary>
+    /// Defines the raw input data coming from the specified keyboard.
+    /// </summary>
+    /// <remarks>
+    /// For the keyboard, the Usage Page is 1 and the Usage is 6.
+    /// </remarks>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawInputKeyboardDeviceInfo
+    {
+        /// <summary>
+        /// Type of the keyboard.
+        /// </summary>
+        internal DWORD Type;
+        /// <summary>
+        /// Subtype of the keyboard.
+        /// </summary>
+        internal DWORD SubType;
+        /// <summary>
+        /// Scan code mode.
+        /// </summary>
+        internal DWORD KeyboardMode;
+        /// <summary>
+        /// Number of function keys on the keyboard.
+        /// </summary>
+        internal DWORD NumberOfFunctionKeys;
+        /// <summary>
+        /// Number of LED indicators on the keyboard.
+        /// </summary>
+        internal DWORD NumberOfIndicators;
+        /// <summary>
+        /// Total number of keys on the keyboard.
+        /// </summary>
+        internal DWORD NumberOfKeysTotal;
+    }
+
+    #endregion
+
+    #region RawInputMouseDeviceInfo
+
+    /// <summary>
+    /// Defines the raw input data coming from the specified mouse.
+    /// </summary>
+    /// <remarks>
+    /// For the keyboard, the Usage Page is 1 and the Usage is 2.
+    /// </remarks>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct RawInputMouseDeviceInfo
+    {
+        /// <summary>
+        /// ID for the mouse device.
+        /// </summary>
+        internal DWORD Id;
+        /// <summary>
+        /// Number of buttons for the mouse.
+        /// </summary>
+        internal DWORD NumberOfButtons;
+        /// <summary>
+        /// Number of data points per second. This information may not be applicable for every mouse device.
+        /// </summary>
+        internal DWORD SampleRate;
+        /// <summary>
+        /// TRUE if the mouse has a wheel for horizontal scrolling; otherwise, FALSE.
         /// </summary>
         /// <remarks>
-        /// By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom row of pixels. This structure is identical to the RECTL structure.
+        /// This member is only supported under Microsoft Windows Vista and later versions.
         /// </remarks>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Rectangle
-        {
-            /// <summary>
-            /// Specifies the x-coordinate of the upper-left corner of the rectangle.
-            /// </summary>
-            public LONG left;
-            /// <summary>
-            /// Specifies the y-coordinate of the upper-left corner of the rectangle.
-            /// </summary>
-            public LONG top;
-            /// <summary>
-            /// Specifies the x-coordinate of the lower-right corner of the rectangle.
-            /// </summary>
-            public LONG right;
-            /// <summary>
-            /// Specifies the y-coordinate of the lower-right corner of the rectangle.
-            /// </summary>
-            public LONG bottom;
+        internal BOOL HasHorizontalWheel;
+    }
 
-            public override string ToString()
+    #endregion
+
+    #endregion
+
+    #region GetWindowLongOffsets
+
+    /// <summary>
+    /// Window field offsets for GetWindowLong() and GetWindowLongPtr().
+    /// </summary>
+    internal static class GWL
+    {
+        private static bool x64;
+        static GWL()
+        {
+            unsafe
             {
-                return String.Format("({0},{1})-({2},{3})", left, top, right, bottom);
+                x64 = sizeof(void*) == 8;
             }
+
         }
 
-        #endregion
+        internal static readonly int WNDPROC       = (-4);
+        internal static readonly int HINSTANCE     = (-6);
+        internal static readonly int HWNDPARENT    = (-8);
+        internal static readonly int STYLE         = (-16);
+        internal static readonly int EXSTYLE       = (-20);
+        internal static readonly int USERDATA      = (-21);
+        internal static readonly int ID            = (-12);
+    }
 
-        #endregion
+    #endregion
+
+    #region Rectangle
+
+    /// <summary>
+    /// Defines the coordinates of the upper-left and lower-right corners of a rectangle.
+    /// </summary>
+    /// <remarks>
+    /// By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom row of pixels. This structure is identical to the RECTL structure.
+    /// </remarks>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct Rectangle
+    {
+        /// <summary>
+        /// Specifies the x-coordinate of the upper-left corner of the rectangle.
+        /// </summary>
+        internal LONG left;
+        /// <summary>
+        /// Specifies the y-coordinate of the upper-left corner of the rectangle.
+        /// </summary>
+        internal LONG top;
+        /// <summary>
+        /// Specifies the x-coordinate of the lower-right corner of the rectangle.
+        /// </summary>
+        internal LONG right;
+        /// <summary>
+        /// Specifies the y-coordinate of the lower-right corner of the rectangle.
+        /// </summary>
+        internal LONG bottom;
+
+        public override string ToString()
+        {
+            return String.Format("({0},{1})-({2},{3})", left, top, right, bottom);
+        }
+    }
+
+    #endregion
+
+    #endregion
 
     #region --- Enums ---
 
-    #region public enum WindowStyle : int
+    #region internal enum WindowStyle : int
         
-    public enum WindowStyle : int
+    internal enum WindowStyle : int
     {
         Overlapped = 0x00000000,
         Popup = unchecked((int)0x80000000),
@@ -2163,10 +2292,10 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
-    #region public enum ExtendedWindowStyle : int
+    #region internal enum ExtendedWindowStyle : int
 
     [Flags]
-    public enum ExtendedWindowStyle : int
+    internal enum ExtendedWindowStyle : int
     {
         DialogModalFrame = 0x00000001,
         NoParentNotify = 0x00000004,
@@ -2220,7 +2349,7 @@ namespace OpenTK.Platform.Windows
 
     #region GetWindowLongOffsets enum
 
-    public enum GetWindowLongOffsets : int
+    internal enum GetWindowLongOffsets : int
     {
         WNDPROC       = (-4),
         HINSTANCE     = (-6),
@@ -2235,7 +2364,7 @@ namespace OpenTK.Platform.Windows
 
     #region PixelFormatDescriptorFlags enum
     [Flags]
-    public enum PixelFormatDescriptorFlags : int
+    internal enum PixelFormatDescriptorFlags : int
     {
         // PixelFormatDescriptor flags
         DOUBLEBUFFER,
@@ -2262,7 +2391,7 @@ namespace OpenTK.Platform.Windows
 
     #region PixelType
 
-    public enum PixelType : byte
+    internal enum PixelType : byte
     {
         RGBA = 0,
         INDEXED = 1
@@ -2272,7 +2401,7 @@ namespace OpenTK.Platform.Windows
 
     #region WindowPlacementOptions enum
 
-    public enum WindowPlacementOptions
+    internal enum WindowPlacementOptions
     {
         TOP = 0,
         BOTTOM = 1,
@@ -2284,7 +2413,7 @@ namespace OpenTK.Platform.Windows
 
     #region WindowClassStyle enum
     [Flags]
-    public enum WindowClassStyle
+    internal enum WindowClassStyle
     {
         //None            = 0x0000,
         VRedraw = 0x0001,
@@ -2310,7 +2439,7 @@ namespace OpenTK.Platform.Windows
     #region RawInputDeviceFlags enum
 
     [Flags]
-    public enum RawInputDeviceFlags : int
+    internal enum RawInputDeviceFlags : int
     {
         /// <summary>
         /// If set, this removes the top level collection from the inclusion list.
@@ -2366,7 +2495,7 @@ namespace OpenTK.Platform.Windows
 
     #region GetRawInputDataEnum
 
-    public enum GetRawInputDataEnum
+    internal enum GetRawInputDataEnum
     {
         INPUT             = 0x10000003,
         HEADER            = 0x10000005
@@ -2376,7 +2505,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputDeviceInfoEnum
 
-    public enum RawInputDeviceInfoEnum
+    internal enum RawInputDeviceInfoEnum
     {
         PREPARSEDDATA    = 0x20000005,
         DEVICENAME       = 0x20000007,  // the return valus is the character length, not the byte size
@@ -2387,7 +2516,8 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputMouseState
 
-    public enum RawInputMouseState : short// : ushort
+    [Flags]
+    internal enum RawInputMouseState : ushort
     {
         LEFT_BUTTON_DOWN = 0x0001,  // Left Button changed to down.
         LEFT_BUTTON_UP   = 0x0002,  // Left Button changed to up.
@@ -2415,7 +2545,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputKeyboardDataFlags
 
-    public enum RawInputKeyboardDataFlags : short //: ushort
+    internal enum RawInputKeyboardDataFlags : short //: ushort
     {
         MAKE            = 0,
         BREAK           = 1,
@@ -2429,7 +2559,7 @@ namespace OpenTK.Platform.Windows
 
     #region RawInputDeviceType
 
-    public enum RawInputDeviceType : int
+    internal enum RawInputDeviceType : int
     {
         MOUSE    = 0,
         KEYBOARD = 1,
@@ -2443,7 +2573,7 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Mouse indicator flags (found in winuser.h).
     /// </summary>
-    public enum RawMouseFlags : int//short
+    internal enum RawMouseFlags : ushort
     {
         /// <summary>
         /// LastX/Y indicate relative motion.
@@ -2467,7 +2597,7 @@ namespace OpenTK.Platform.Windows
 
     #region VirtualKeys
 
-    public enum VirtualKeys : short
+    internal enum VirtualKeys : short
     {
         /*
          * Virtual Key, Standard Set
@@ -2727,13 +2857,47 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    #region MouseKeys
+
+    /// <summary>
+    /// Enumerates available mouse keys (suitable for use in WM_MOUSEMOVE messages).
+    /// </summary>
+    enum MouseKeys
+    {
+        // Summary:
+        //     No mouse button was pressed.
+        None = 0,
+        //
+        // Summary:
+        //     The left mouse button was pressed.
+        Left = 0x0001,
+        //
+        // Summary:
+        //     The right mouse button was pressed.
+        Right = 0x0002,
+        //
+        // Summary:
+        //     The middle mouse button was pressed.
+        Middle = 0x0010,
+        //
+        // Summary:
+        //     The first XButton was pressed.
+        XButton1 = 0x0020,
+        //
+        // Summary:
+        //     The second XButton was pressed.
+        XButton2 = 0x0040,
+    }
+
+    #endregion
+
     #region QueueStatusFlags
 
     [Flags]
     /// <summary>
     /// Queue status flags for GetQueueStatus() and MsgWaitForMultipleObjects()
     /// </summary>
-    public enum QueueStatusFlags
+    internal enum QueueStatusFlags
     {
         /// <summary>
         /// A WM_KEYUP, WM_KEYDOWN, WM_SYSKEYUP, or WM_SYSKEYDOWN message is in the queue.
@@ -2804,7 +2968,7 @@ namespace OpenTK.Platform.Windows
 
     #region WindowMessage
 
-    public enum WindowMessage
+    internal enum WindowMessage
     {
         NULL = 0x0000,
         CREATE = 0x0001,
@@ -2814,7 +2978,7 @@ namespace OpenTK.Platform.Windows
         ACTIVATE = 0x0006,
         SETFOCUS = 0x0007,
         KILLFOCUS = 0x0008,
-        //              public const uint SETVISIBLE           = 0x0009;
+        //              internal const uint SETVISIBLE           = 0x0009;
         ENABLE = 0x000A,
         SETREDRAW = 0x000B,
         SETTEXT = 0x000C,
@@ -2828,7 +2992,7 @@ namespace OpenTK.Platform.Windows
         ERASEBKGND = 0x0014,
         SYSCOLORCHANGE = 0x0015,
         ENDSESSION = 0x0016,
-        //              public const uint SYSTEMERROR          = 0x0017;
+        //              internal const uint SYSTEMERROR          = 0x0017;
         SHOWWINDOW = 0x0018,
         CTLCOLOR = 0x0019,
         WININICHANGE = 0x001A,
@@ -2846,7 +3010,7 @@ namespace OpenTK.Platform.Windows
         PAINTICON = 0x0026,
         ICONERASEBKGND = 0x0027,
         NEXTDLGCTL = 0x0028,
-        //              public const uint ALTTABACTIVE         = 0x0029;
+        //              internal const uint ALTTABACTIVE         = 0x0029;
         SPOOLERSTATUS = 0x002A,
         DRAWITEM = 0x002B,
         MEASUREITEM = 0x002C,
@@ -2857,15 +3021,15 @@ namespace OpenTK.Platform.Windows
         GETFONT = 0x0031,
         SETHOTKEY = 0x0032,
         GETHOTKEY = 0x0033,
-        //              public const uint FILESYSCHANGE        = 0x0034;
-        //              public const uint ISACTIVEICON         = 0x0035;
-        //              public const uint QUERYPARKICON        = 0x0036;
+        //              internal const uint FILESYSCHANGE        = 0x0034;
+        //              internal const uint ISACTIVEICON         = 0x0035;
+        //              internal const uint QUERYPARKICON        = 0x0036;
         QUERYDRAGICON = 0x0037,
         COMPAREITEM = 0x0039,
-        //              public const uint TESTING              = 0x003a;
-        //              public const uint OTHERWINDOWCREATED = 0x003c;
+        //              internal const uint TESTING              = 0x003a;
+        //              internal const uint OTHERWINDOWCREATED = 0x003c;
         GETOBJECT = 0x003D,
-        //                      public const uint ACTIVATESHELLWINDOW        = 0x003e;
+        //                      internal const uint ACTIVATESHELLWINDOW        = 0x003e;
         COMPACTING = 0x0041,
         COMMNOTIFY = 0x0044,
         WINDOWPOSCHANGING = 0x0046,
@@ -2896,7 +3060,7 @@ namespace OpenTK.Platform.Windows
         NCACTIVATE = 0x0086,
         GETDLGCODE = 0x0087,
         SYNCPAINT = 0x0088,
-        //              public const uint SYNCTASK       = 0x0089;
+        //              internal const uint SYNCTASK       = 0x0089;
         NCMOUSEMOVE = 0x00A0,
         NCLBUTTONDOWN = 0x00A1,
         NCLBUTTONUP = 0x00A2,
@@ -2907,10 +3071,19 @@ namespace OpenTK.Platform.Windows
         NCMBUTTONDOWN = 0x00A7,
         NCMBUTTONUP = 0x00A8,
         NCMBUTTONDBLCLK = 0x00A9,
-        //              public const uint NCXBUTTONDOWN    = 0x00ab;
-        //              public const uint NCXBUTTONUP      = 0x00ac;
-        //              public const uint NCXBUTTONDBLCLK  = 0x00ad;
-        
+        /// <summary>
+        /// Windows 2000 and higher only.
+        /// </summary>
+        NCXBUTTONDOWN    = 0x00ab,
+        /// <summary>
+        /// Windows 2000 and higher only.
+        /// </summary>
+        NCXBUTTONUP      = 0x00ac,
+        /// <summary>
+        /// Windows 2000 and higher only.
+        /// </summary>
+        NCXBUTTONDBLCLK  = 0x00ad,
+
         INPUT = 0x00FF,
         
         KEYDOWN = 0x0100,
@@ -2935,7 +3108,7 @@ namespace OpenTK.Platform.Windows
         VSCROLL = 0x0115,
         INITMENU = 0x0116,
         INITMENUPOPUP = 0x0117,
-        //              public const uint SYSTIMER       = 0x0118;
+        //              internal const uint SYSTIMER       = 0x0118;
         MENUSELECT = 0x011F,
         MENUCHAR = 0x0120,
         ENTERIDLE = 0x0121,
@@ -2949,7 +3122,7 @@ namespace OpenTK.Platform.Windows
         UPDATEUISTATE = 0x0128,
         QUERYUISTATE = 0x0129,
 
-        //              public const uint LBTRACKPOINT     = 0x0131;
+        //              internal const uint LBTRACKPOINT     = 0x0131;
         CTLCOLORMSGBOX = 0x0132,
         CTLCOLOREDIT = 0x0133,
         CTLCOLORLISTBOX = 0x0134,
@@ -2970,9 +3143,18 @@ namespace OpenTK.Platform.Windows
         MBUTTONDBLCLK = 0x0209,
         MOUSEWHEEL = 0x020A,
         MOUSELAST = 0x020D,
-        //              public const uint XBUTTONDOWN      = 0x020B;
-        //              public const uint XBUTTONUP        = 0x020C;
-        //              public const uint XBUTTONDBLCLK    = 0x020D;
+        /// <summary>
+        /// Windows 2000 and higher only.
+        /// </summary>
+	    XBUTTONDOWN		= 0x020B,
+        /// <summary>
+        /// Windows 2000 and higher only.
+        /// </summary>
+	    XBUTTONUP		= 0x020C,
+        /// <summary>
+        /// Windows 2000 and higher only.
+        /// </summary>
+	    XBUTTONDBLCLK	= 0x020D,
         PARENTNOTIFY = 0x0210,
         ENTERMENULOOP = 0x0211,
         EXITMENULOOP = 0x0212,
@@ -2980,7 +3162,7 @@ namespace OpenTK.Platform.Windows
         SIZING = 0x0214,
         CAPTURECHANGED = 0x0215,
         MOVING = 0x0216,
-        //              public const uint POWERBROADCAST   = 0x0218;
+        //              internal const uint POWERBROADCAST   = 0x0218;
         DEVICECHANGE = 0x0219,
         MDICREATE = 0x0220,
         MDIDESTROY = 0x0221,
@@ -2993,12 +3175,12 @@ namespace OpenTK.Platform.Windows
         MDIICONARRANGE = 0x0228,
         MDIGETACTIVE = 0x0229,
         /* D&D messages */
-        //              public const uint DROPOBJECT     = 0x022A;
-        //              public const uint QUERYDROPOBJECT  = 0x022B;
-        //              public const uint BEGINDRAG      = 0x022C;
-        //              public const uint DRAGLOOP       = 0x022D;
-        //              public const uint DRAGSELECT     = 0x022E;
-        //              public const uint DRAGMOVE       = 0x022F;
+        //              internal const uint DROPOBJECT     = 0x022A;
+        //              internal const uint QUERYDROPOBJECT  = 0x022B;
+        //              internal const uint BEGINDRAG      = 0x022C;
+        //              internal const uint DRAGLOOP       = 0x022D;
+        //              internal const uint DRAGSELECT     = 0x022E;
+        //              internal const uint DRAGMOVE       = 0x022F;
         MDISETMENU = 0x0230,
         ENTERSIZEMOVE = 0x0231,
         EXITSIZEMOVE = 0x0232,
@@ -3067,7 +3249,7 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     // ShowWindow() Commands
     /// </summary>
-    public enum ShowWindowCommand
+    internal enum ShowWindowCommand
     {
         /// <summary>
         /// Hides the window and activates another window.
@@ -3136,7 +3318,7 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Identifiers for the WM_SHOWWINDOW message
     /// </summary>
-    public enum ShowWindowMessageIdentifiers
+    internal enum ShowWindowMessageIdentifiers
     {
         PARENTCLOSING = 1,
         OTHERZOOM = 2,
@@ -3151,7 +3333,7 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// Enumerates the available character sets.
     /// </summary>
-    public enum GdiCharset
+    internal enum GdiCharset
     {
         Ansi = 0,
         Default = 1,
@@ -3182,15 +3364,15 @@ namespace OpenTK.Platform.Windows
 
     #region --- Callbacks ---
 
-    public delegate void WindowProcedure(ref System.Windows.Forms.Message msg);
+    internal delegate void WindowProcedure(ref System.Windows.Forms.Message msg);
 
         [UnmanagedFunctionPointerAttribute(CallingConvention.Winapi)]
-        public delegate void WindowProcedureEventHandler(object sender, WindowProcedureEventArgs e);
+        internal delegate void WindowProcedureEventHandler(object sender, WindowProcedureEventArgs e);
 
-        public class WindowProcedureEventArgs : EventArgs
+        internal class WindowProcedureEventArgs : EventArgs
         {
             private System.Windows.Forms.Message msg;
-            public System.Windows.Forms.Message Message
+            internal System.Windows.Forms.Message Message
             {
                 get { return msg; }
                 set { msg = value; }
@@ -3200,15 +3382,15 @@ namespace OpenTK.Platform.Windows
     #region Message
 
     [StructLayout(LayoutKind.Sequential), CLSCompliant(false)]
-    public struct MSG
+    internal struct MSG
     {
-        public IntPtr HWnd;
-        public WindowMessage Message;
-        public IntPtr WParam;
-        public IntPtr LParam;
-        public uint Time;
-        public POINT Point;
-        //public object RefObject;
+        internal IntPtr HWnd;
+        internal WindowMessage Message;
+        internal IntPtr WParam;
+        internal IntPtr LParam;
+        internal uint Time;
+        internal POINT Point;
+        //internal object RefObject;
 
         public override string ToString()
         {
@@ -3221,18 +3403,18 @@ namespace OpenTK.Platform.Windows
     #region Point
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct POINT
+    internal struct POINT
     {
-        public int X;
-        public int Y;
+        internal int X;
+        internal int Y;
 
-        public POINT(int x, int y)
+        internal POINT(int x, int y)
         {
             this.X = x;
             this.Y = y;
         }
 
-        public System.Drawing.Point ToPoint()
+        internal System.Drawing.Point ToPoint()
         {
             return new System.Drawing.Point(X, Y);
         }
