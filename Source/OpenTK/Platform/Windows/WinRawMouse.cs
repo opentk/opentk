@@ -153,6 +153,12 @@ namespace OpenTK.Platform.Windows
             else
             {
                 Debug.Print("Registered mouse {0}", mouse.ToString());
+                System.Drawing.Point p = new System.Drawing.Point();
+                if (Functions.GetCursorPos(ref p))
+                {
+                    mouse.X = p.X;
+                    mouse.Y = p.Y;
+                }
             }
         }
 
@@ -189,32 +195,27 @@ namespace OpenTK.Platform.Windows
                     if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_DOWN) != 0) mouse[MouseButton.Button2] = true;
                     if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.BUTTON_5_UP) != 0) mouse[MouseButton.Button2] = false;
 
-                    if (rin.Data.Mouse.ButtonFlags == RawInputMouseState.WHEEL)
-                    {
-                        mouse.Wheel += rin.Data.Mouse.ButtonData / 120;
-                    }
+                    if ((rin.Data.Mouse.ButtonFlags & RawInputMouseState.WHEEL) != 0)
+                        mouse.Wheel += (short)rin.Data.Mouse.ButtonData / 120;
 
-                    if (rin.Data.Mouse.Flags == RawMouseFlags.MOUSE_MOVE_ABSOLUTE)
+                    if ((rin.Data.Mouse.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
                     {
-                        //mouse.XDelta = rin.Data.Mouse.LastX - mouse.X;
-                        //mouse.YDelta = rin.Data.Mouse.LastY - mouse.Y;
                         mouse.X = rin.Data.Mouse.LastX;
                         mouse.Y = rin.Data.Mouse.LastY;
                     }
-                    else if (rin.Data.Mouse.Flags == RawMouseFlags.MOUSE_MOVE_RELATIVE)
-                    {
-                        //mouse.XDelta = rin.Data.Mouse.LastX;
-                        //mouse.YDelta = rin.Data.Mouse.LastY;
-                        //mouse.X += mouse.XDelta;
-                        //mouse.Y += mouse.YDelta;
+                    else
+                    {   // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
                         mouse.X += rin.Data.Mouse.LastX;
                         mouse.Y += rin.Data.Mouse.LastY;
                     }
 
-                    return false;
+                    if ((rin.Data.Mouse.Flags & RawMouseFlags.MOUSE_VIRTUAL_DESKTOP) != 0)
+                        Trace.WriteLine(String.Format("Mouse {0} defines MOUSE_VIRTUAL_DESKTOP flag, please report at http://www.opentk.com", mouse.ToString()));
+                    
+                    return true;
 
                 default:
-                    throw new ApplicationException("WinRawMouse driver received keyboard data.");
+                    throw new ApplicationException("WinRawMouse driver received invalid data.");
             }
         }
 
