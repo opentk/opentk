@@ -120,9 +120,9 @@ namespace OpenTK.Platform
         }
 
         /// <summary>
-        /// Updates the WindowInfo using the specified WindowInfo.
+        /// Updates the WindowInfo using the specified IWindowInfo.
         /// </summary>
-        /// <param name="window">The OpenTK.Platform.Window to get information from.</param>
+        /// <param name="window">The OpenTK.Platform.IWindowInfo to get information from.</param>
         public IWindowInfo GetInfoFrom(IWindowInfo info)
         {
             return implementation.GetInfoFrom(info);
