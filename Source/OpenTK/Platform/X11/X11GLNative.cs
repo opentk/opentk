@@ -334,7 +334,7 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public void CreateWindow(DisplayMode mode)
+        #region public void CreateWindow(DisplayMode mode, GLContext glContext)
 
         /// <summary>
         /// Opens a new render window with the given DisplayMode.
@@ -347,7 +347,7 @@ namespace OpenTK.Platform.X11
         /// Colormap creation is currently disabled.
         /// </para>
         /// </remarks>
-        public void CreateWindow(DisplayMode mode)
+        public void CreateWindow(DisplayMode mode, GLContext glContext)
         {
             if (exists)
                 throw new ApplicationException("Render window already exists!");
@@ -357,7 +357,7 @@ namespace OpenTK.Platform.X11
 
             //glContext = new X11GLContext(mode, window);
             //glContext.PrepareContext(window);
-            //window.VisualInfo = (glContext.Info as X11.WindowInfo).VisualInfo;
+            window.VisualInfo = ((glContext as IGLContextInternal).Info as X11.WindowInfo).VisualInfo;
             //window.VisualInfo = Marshal.PtrToStructure(Glx.ChooseVisual(window.Display, window.Screen, 
 
             // Create a window on this display using the visual above
