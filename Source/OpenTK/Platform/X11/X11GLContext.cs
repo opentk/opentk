@@ -18,7 +18,7 @@ namespace OpenTK.Platform.X11
     /// Provides methods to create and control an opengl context on the X11 platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class X11GLContext : IGLContext
+    internal sealed class X11GLContext : IGLContext, IGLContextCreationHack
     {
         private IntPtr context;
         private DisplayMode mode;
@@ -29,21 +29,25 @@ namespace OpenTK.Platform.X11
 
         #region --- Constructors ---
 
-        public X11GLContext(DisplayMode mode, IWindowInfo info)
-        {
-            if (info == null)
-                throw new ArgumentNullException("IWindowInfo cannot be null.");
-
-            this.windowInfo = new WindowInfo(info);
-            this.mode = mode;
-            this.ChooseContext();
-        }
+        /// <summary>
+        /// Constructs a new X11GLContext object.
+        /// </summary>
+        public X11GLContext() { }
 
         #endregion
 
-        #region private void ChooseContext()
+        #region --- IGLContextCreationHack Members ---
 
-        private void ChooseContext()
+        #region bool IGLContextCreationHack.SelectDisplayMode(DisplayMode mode, IWindowInfo info)
+
+        /// <summary>
+        /// HACK! This function will be removed in 0.3.15
+        /// Checks if the specified OpenTK.Platform.DisplayMode is available, and selects it if it is.
+        /// </summary>
+        /// <param name="mode">The OpenTK.Platform.DisplayMode to select.</param>
+        /// <param name="info">The OpenTK.Platform.IWindowInfo that describes the display to use. Note: a window handle is not necessary for this function!</param>
+        /// <returns>True if the DisplayMode is available, false otherwise.</returns>
+        bool IGLContextCreationHack.SelectDisplayMode(DisplayMode mode, IWindowInfo info)
         {
             List<int> visualAttributes = new List<int>();
 
@@ -86,15 +90,21 @@ namespace OpenTK.Platform.X11
             
             visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, visualAttributes.ToArray());
             if (visual == IntPtr.Zero)
-            {
-                throw new ApplicationException("Could not create requested DisplayMode.");
-            }
+                return false;
             else
             {
                 windowInfo.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(visual,
                                                                             typeof(XVisualInfo));
                 Debug.Print("Chose visual {0}", windowInfo.VisualInfo.ToString());
             }
+            return true;
+        }
+
+        #endregion
+
+        void IGLContextCreationHack.SetWindowHandle(IntPtr handle)
+        {
+            this.windowInfo.Handle = handle;
         }
 
         #endregion
