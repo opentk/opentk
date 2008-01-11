@@ -76,8 +76,10 @@ namespace Examples.WinForms
                     if (d != null)
                         ++supported;
 
-                    backgroundWorker1.ReportProgress((int)(((float)i / all) * 100.0f),
-                        String.Format("({0}/{1}) {2}:\t{3}", (++i).ToString(), all, d != null ? "ok" : "failed", f.Name));
+                    //if (i % 500 != 0)
+                        backgroundWorker1.ReportProgress((int)(((float)i / all) * 100.0f),
+                            String.Format("({0}/{1}) {2}:\t{3}", i.ToString(), all, d != null ? "ok" : "failed", f.Name));
+                    ++i;
                 }
             }
             catch (Exception expt)
@@ -87,9 +89,11 @@ namespace Examples.WinForms
             }
         }
 
+        List<string> items = new List<string>();
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            listBox1.Items.Add(e.UserState as string);
+            items.Add(e.UserState as string);
+            //listBox1.Items.Add(e.UserState as string);
             /*
             if ((e.UserState as string).Contains("failed"))
             {
@@ -106,6 +110,7 @@ namespace Examples.WinForms
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            listBox1.Items.AddRange(items.ToArray());
             this.Text = String.Format("{0}: {1}/{2} OpenGL functions supported.",
                 driver, supported, all);
         }
