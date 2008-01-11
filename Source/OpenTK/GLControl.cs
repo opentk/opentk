@@ -141,6 +141,8 @@ namespace OpenTK
 
         #region public DisplayMode Mode
 
+        // TODO: Remove for 0.3.15
+
         /// <summary>
         /// Gets the DisplayMode of the GLContext attached to this GLControl.
         /// </summary>
@@ -149,7 +151,7 @@ namespace OpenTK
         /// </remarks>
         public DisplayMode Mode
         {
-            get { return Context.Mode; }
+            get { return (Context as IGLContextInternal).Mode; }
         }
 
         #endregion
