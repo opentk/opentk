@@ -68,8 +68,8 @@ namespace Examples.Tutorial
             // 2) Bind the Vertex Buffer and upload your vertex data. Check that the data was uploaded correctly.
             // 3) Bind the Index Buffer and upload your index data. Check that the data was uploaded correctly.
 
-            vbo[0] = Load(cube.Vertices, cube.Indices);
-            vbo[1] = Load(cube.Vertices, cube.Indices);
+            vbo[0] = LoadVBO(cube.Vertices, cube.Indices);
+            vbo[1] = LoadVBO(cube.Vertices, cube.Indices);
         }
 
         #endregion
@@ -128,7 +128,7 @@ namespace Examples.Tutorial
 
         #endregion
 
-        Vbo Load(Vector3[] vertices, int[] indices)
+        Vbo LoadVBO(Vector3[] vertices, int[] indices)
         {
             Vbo handle = new Vbo();
             int size;

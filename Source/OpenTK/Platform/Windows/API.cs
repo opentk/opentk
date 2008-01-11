@@ -16,6 +16,9 @@ using System.Security;
 
 /* TODO: Update the description of TimeBeginPeriod and other native methods. Update Timer. */
 
+#pragma warning disable 3019    // CLS-compliance checking
+#pragma warning disable 0649    // struct members not explicitly initialized
+
 namespace OpenTK.Platform.Windows
 {
     #region Type aliases

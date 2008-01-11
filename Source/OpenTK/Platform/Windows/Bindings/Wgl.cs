@@ -1,3 +1,5 @@
+#pragma warning disable 3019
+
 namespace OpenTK.Platform.Windows
 {
     using System;
