@@ -16,21 +16,6 @@ namespace OpenTK.Platform
     public interface IGLContext : IDisposable
     {
         /// <summary>
-        /// Gets a handle to the OpenGL rendering context.
-        /// </summary>
-        IntPtr Context { get; }
-
-        /// <summary>
-        /// Gets the IWindowInfo describing the window associated with this context.
-        /// </summary>
-        IWindowInfo Info { get; }
-
-        /// <summary>
-        /// Gets the DisplayMode of the context.
-        /// </summary>
-        DisplayMode Mode { get; }
-
-        /// <summary>
         /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
         /// specified IGLContext.
         /// </summary>
@@ -55,38 +40,51 @@ namespace OpenTK.Platform
         bool IsCurrent { get; }
 
         /// <summary>
-        /// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
-        /// calling thread, or IntPtr.Zero if no OpenGL context is current.
-        /// </summary>
-        /// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
-        IntPtr GetCurrentContext();
-
-        /// <summary>
         /// Raised when a Context is destroyed.
         /// </summary>
         event DestroyEvent<IGLContext> Destroy;
 
         /// <summary>
-        /// Gets the address of an OpenGL extension function.
-        /// </summary>
-        /// <param name="function">The name of the OpenGL function (e.g. "glGetString")</param>
-        /// <returns>
-        /// A pointer to the specified function or IntPtr.Zero if the function isn't
-        /// available in the current opengl context.
-        /// </returns>
-        /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
-        IntPtr GetAddress(string function);
-
-        /// <summary>
-        /// Returns the display modes supported by the current opengl context.
-        /// </summary>
-        /// <returns>An IEnumerable containing all supported display modes.</returns>
-        IEnumerable<DisplayMode> GetDisplayModes();
-
-        /// <summary>
         /// Gets or sets a value indicating whether VSyncing is enabled.
         /// </summary>
         bool VSync { get; set; }
+    }
+
+    public delegate void DestroyEvent<T>(T sender, EventArgs e);
+
+    // TODO: Remove in 0.3.15
+    internal interface IGLContextCreationHack
+    {
+        bool SelectDisplayMode(DisplayMode mode, IWindowInfo info);
+        void SetWindowHandle(IntPtr handle);
+    }
+
+    // Functions for internal use by OpenTK.
+    // TODO: RegisterForDisposal/DisposeResources for 0.3.15 (GC & OpenGL)
+    // TODO: Remove or move GetDisplayModes to another class.
+    internal interface IGLContextInternal
+    {
+        /// <summary>
+        /// Gets a handle to the OpenGL rendering context.
+        /// </summary>
+        ContextHandle Context { get; }
+
+        /// <summary>
+        /// Gets the IWindowInfo describing the window associated with this context.
+        /// </summary>
+        IWindowInfo Info { get; }
+
+        /// <summary>
+        /// Gets the DisplayMode of the context.
+        /// </summary>
+        DisplayMode Mode { get; }
+
+        /// <summary>
+        /// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
+        /// calling thread, or IntPtr.Zero if no OpenGL context is current.
+        /// </summary>
+        /// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
+        ContextHandle GetCurrentContext();
 
         /// <summary>
         /// Registers an OpenGL resource for disposal.
@@ -104,7 +102,22 @@ namespace OpenTK.Platform
         /// Disposes all registered OpenGL resources.
         /// </summary>
         void DisposeResources();
-    }
 
-    public delegate void DestroyEvent<T>(T sender, EventArgs e);
+        /// <summary>
+        /// Returns the display modes supported by the current opengl context.
+        /// </summary>
+        /// <returns>An IEnumerable containing all supported display modes.</returns>
+        IEnumerable<DisplayMode> GetDisplayModes();
+
+        /// <summary>
+        /// Gets the address of an OpenGL extension function.
+        /// </summary>
+        /// <param name="function">The name of the OpenGL function (e.g. "glGetString")</param>
+        /// <returns>
+        /// A pointer to the specified function or IntPtr.Zero if the function isn't
+        /// available in the current opengl context.
+        /// </returns>
+        /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
+        IntPtr GetAddress(string function);
+    }
 }
