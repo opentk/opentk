@@ -23,13 +23,13 @@ namespace OpenTK.Platform.Windows
     /// Provides methods to create and control an opengl context on the Windows platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WinGLContext : IGLContext
+    internal sealed class WinGLContext : IGLContext, IGLContextInternal, IGLContextCreationHack
     {
         private IntPtr deviceContext;
-        private IntPtr renderContext;
+        private ContextHandle renderContext;
         static private IntPtr opengl32Handle;
         private const string opengl32Name = "OPENGL32.DLL";
-        private WindowInfo windowInfo;
+        private WindowInfo windowInfo = new WindowInfo();
 
         private DisplayMode mode;
         private bool vsync_supported;
@@ -38,24 +38,247 @@ namespace OpenTK.Platform.Windows
 
         #region --- Contructors ---
 
-        public WinGLContext(DisplayMode mode, IWindowInfo info)
+        /// <summary>
+        /// Constructs a new WinGLContext object.
+        /// </summary>
+        public WinGLContext()
         {
-            //this.windowInfo = info is Platform.WindowInfo ? (WindowInfo)(Platform.WindowInfo)info : (WindowInfo)info;
-            this.windowInfo = new WindowInfo(info);
-            this.mode = mode;
+            if (GLContext.GetCurrentContext == null)
+                GLContext.GetCurrentContext = this.GetCurrentContext;
         }
 
         #endregion
 
-        #region private void PrepareContext()
+        #region --- IGLContext Members ---
 
-        private void PrepareContext()
+        #region public void CreateContext()
+
+        public void CreateContext()
         {
-            if (this.windowInfo.Handle == IntPtr.Zero)
-                throw new ApplicationException("No Window Handle specified for opengl context.");
+            this.CreateContext(true, null);
+        }
 
+        #endregion
+
+        #region public void CreateContext(bool direct)
+
+        public void CreateContext(bool direct)
+        {
+            this.CreateContext(direct, null);
+        }
+
+        #endregion
+
+        #region public void CreateContext(bool direct, IGLContext source)
+
+        public void CreateContext(bool direct, IGLContext source)
+        {
             Debug.WriteLine(String.Format("OpenGL context is bound to handle: {0}", this.windowInfo.Handle));
 
+            Debug.Write("Creating render context... ");
+            // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
+            // and Wgl extensions will fail to load.
+            renderContext = new ContextHandle(Wgl.Imports.CreateContext(deviceContext));
+            if (renderContext == IntPtr.Zero)
+                throw new ApplicationException("Could not create OpenGL render context (Wgl.CreateContext() return 0).");
+            
+            Debug.WriteLine(String.Format("done! (id: {0})", renderContext));
+
+            Wgl.Imports.MakeCurrent(deviceContext, renderContext);
+            Wgl.LoadAll();
+            GL.LoadAll();
+            Glu.LoadAll();
+
+            vsync_supported = Wgl.Arb.SupportsExtension(this.deviceContext, "WGL_EXT_swap_control") &&
+                Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
+
+            if (source != null)
+            {
+                Debug.Print("Sharing state with context {0}", (source as IGLContextInternal).Context);
+                Wgl.Imports.ShareLists(renderContext, (source as IGLContextInternal).Context);
+            }
+        }
+
+        #endregion
+
+        #region public void SwapBuffers()
+
+        public void SwapBuffers()
+        {
+            Functions.SwapBuffers(deviceContext);
+        }
+
+        #endregion
+
+        #region public void MakeCurrent()
+        
+        public void MakeCurrent()
+        {
+            if (!Wgl.Imports.MakeCurrent(deviceContext, renderContext))
+            {
+                Debug.Print("WinGLContext.MakeCurrent() call failed. Error: {0}", Marshal.GetLastWin32Error());
+            }
+        }
+
+	    #endregion
+
+        #region public bool IsCurrent
+
+        public bool IsCurrent
+        {
+            get { return Wgl.GetCurrentContext() == this.renderContext; }
+        }
+
+        #endregion
+
+        #region public ContextHandle GetCurrentContext()
+
+        public ContextHandle GetCurrentContext()
+        {
+            return Wgl.GetCurrentContext();
+        }
+
+        #endregion
+
+        #region public bool VSync
+
+        /// <summary>
+        /// Gets or sets a System.Boolean indicating whether SwapBuffer calls are synced to the screen refresh rate.
+        /// </summary>
+        public bool VSync
+        {
+            get
+            {
+                return vsync_supported && Wgl.Ext.GetSwapInterval() != 0;
+            }
+            set
+            {
+                if (vsync_supported)
+                    Wgl.Ext.SwapInterval(value ? 1 : 0);
+            }
+        }
+
+        #endregion
+
+        public event DestroyEvent<IGLContext> Destroy;
+
+        #endregion
+
+        #region --- IGLContextInternal Members ---
+
+        #region public IntPtr Context
+
+        ContextHandle IGLContextInternal.Context
+        {
+            get { return renderContext; }
+        }
+
+        #endregion
+
+        #region public IWindowInfo Info
+
+        IWindowInfo IGLContextInternal.Info
+        {
+            get { return windowInfo; }
+        }
+
+        #endregion
+
+        #region public DisplayMode Mode
+
+        DisplayMode IGLContextInternal.Mode
+        {
+            get { return new DisplayMode(mode); }
+        }
+
+        #endregion
+
+        #region public IntPtr GetAddress(string function_string)
+
+        public IntPtr GetAddress(string function_string)
+        {
+            return Wgl.Imports.GetProcAddress(function_string);
+        }
+
+        #endregion
+
+        #region public DisplayMode[] GetDisplayModes()
+
+        public IEnumerable<DisplayMode> GetDisplayModes()
+        {
+            List<DisplayMode> modes = new List<DisplayMode>();
+            bool done = false;
+            int index = 0;
+
+            while (!done)
+            {
+                DeviceMode currentMode = new DeviceMode();
+                IntPtr handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DeviceMode)));
+                Marshal.StructureToPtr(currentMode, handle, true);
+
+                done = (Functions.EnumDisplaySettings(null, index++, handle) != 0) ? false : true;
+                int error = Marshal.GetLastWin32Error();
+
+                Marshal.PtrToStructure(handle, currentMode);
+                Marshal.FreeHGlobal(handle);
+
+                if (error != 0)
+                {
+                    Console.WriteLine("Error: {0}", error);
+                    continue;
+                }
+                if (done)
+                    break;
+
+                //DisplayMode mode = new DisplayMode(currentMode.PelsWidth, currentMode.PelsHeight);
+                DisplayMode mode = new DisplayMode(
+                    currentMode.PelsWidth,
+                    currentMode.PelsHeight,
+                    new ColorMode(currentMode.BitsPerPel),
+                    0,
+                    0,
+                    0,
+                    0,
+                    false,
+                    false,
+                    false,
+                    currentMode.DisplayFrequency
+                );
+
+                modes.Add(mode);
+            }
+
+            return modes.ToArray();
+        }
+
+        #endregion
+
+        void IGLContextInternal.RegisterForDisposal(IDisposable resource)
+        {
+            throw new NotImplementedException("Use the general GLContext class instead.");
+        }
+
+        void IGLContextInternal.DisposeResources()
+        {
+            throw new NotImplementedException("Use the general GLContext class instead.");
+        }
+
+
+        #endregion
+
+        #region --- IGLContextCreationHack Members ---
+
+        #region bool IGLContextCreationHack.SelectDisplayMode(DisplayMode mode, IWindowInfo info)
+
+        /// <summary>
+        /// HACK! This function will be removed in 0.3.15
+        /// Checks if the specified OpenTK.Platform.DisplayMode is available, and selects it if it is.
+        /// </summary>
+        /// <param name="mode">The OpenTK.Platform.DisplayMode to select.</param>
+        /// <param name="info">The OpenTK.Platform.IWindowInfo that describes the display to use. Note: a window handle is not necessary for this function!</param>
+        /// <returns>True if the DisplayMode is available, false otherwise.</returns>
+        bool IGLContextCreationHack.SelectDisplayMode(DisplayMode mode, IWindowInfo info)
+        {
             // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.
             if (opengl32Handle == IntPtr.Zero)
             {
@@ -63,13 +286,8 @@ namespace OpenTK.Platform.Windows
                 if (opengl32Handle == IntPtr.Zero)
                 {
                     //System.Diagnostics.Debug.WriteLine("LoadLibrary({0}) set error code: {1}. Will not load extensions.", _dll_name, error_code);
-                    throw new ApplicationException(
-                        String.Format(
-                            "LoadLibrary(\"{0}\") call failed with code {1}",
-                            opengl32Name,
-                            Marshal.GetLastWin32Error()
-                        )
-                    );
+                    throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
+                                                                 opengl32Name, Marshal.GetLastWin32Error()));
                 }
                 Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
             }
@@ -145,217 +363,21 @@ namespace OpenTK.Platform.Windows
             int pixel = Functions.ChoosePixelFormat(deviceContext, ref pixelFormat);
             if (pixel == 0)
             {
-                throw new ApplicationException("The requested pixel format is not supported by the hardware configuration.");
+                Debug.Print("format not available...");
+                return false;
             }
             Functions.SetPixelFormat(deviceContext, pixel, ref pixelFormat);
 
             Debug.Print("done! (format: {0})", pixel);
+
+            return true;
         }
 
         #endregion
 
-        #region --- IGLContext Members ---
-
-        #region public IntPtr Context
-
-        public IntPtr Context
+        void IGLContextCreationHack.SetWindowHandle(IntPtr handle)
         {
-            get { return renderContext; }
-            private set { renderContext = value; }
-        }
-
-        #endregion
-
-        #region public IWindowInfo Info
-
-        public IWindowInfo Info
-        {
-            get { return windowInfo; }
-        }
-
-        #endregion
-
-        #region public DisplayMode Mode
-
-        public DisplayMode Mode
-        {
-            get { return new DisplayMode(mode); }
-        }
-
-        #endregion
-
-        #region public void CreateContext()
-
-        public void CreateContext()
-        {
-            this.CreateContext(true, null);
-        }
-
-        #endregion
-
-        #region public void CreateContext(bool direct)
-
-        public void CreateContext(bool direct)
-        {
-            this.CreateContext(direct, null);
-        }
-
-        #endregion
-
-        #region public void CreateContext(bool direct, IGLContext source)
-
-        public void CreateContext(bool direct, IGLContext source)
-        {
-            this.PrepareContext();
-
-            Debug.Write("Creating render context... ");
-            // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
-            // and Wgl extensions will fail to load.
-            renderContext = Wgl.Imports.CreateContext(deviceContext);
-            if (renderContext == IntPtr.Zero)
-                throw new ApplicationException("Could not create OpenGL render context (Wgl.CreateContext() return 0).");
-            
-            Debug.WriteLine(String.Format("done! (id: {0})", renderContext));
-
-            Wgl.Imports.MakeCurrent(deviceContext, renderContext);
-            Wgl.LoadAll();
-            GL.LoadAll();
-            Glu.LoadAll();
-
-            vsync_supported = Wgl.Arb.SupportsExtension(this.deviceContext, "WGL_EXT_swap_control") &&
-                Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
-
-            if (source != null)
-            {
-                Debug.Print("Sharing state with context {0}", (source as WinGLContext).Context);
-                Wgl.Imports.ShareLists(renderContext, (source as WinGLContext).Context);
-            }
-        }
-
-        #endregion
-
-        #region public void SwapBuffers()
-
-        public void SwapBuffers()
-        {
-            Functions.SwapBuffers(deviceContext);
-        }
-
-        #endregion
-
-        #region public IntPtr GetAddress(string function_string)
-
-        public IntPtr GetAddress(string function_string)
-        {
-            return Wgl.Imports.GetProcAddress(function_string);
-        }
-
-        #endregion
-
-        #region public void MakeCurrent()
-        
-        public void MakeCurrent()
-        {
-            if (!Wgl.Imports.MakeCurrent(deviceContext, renderContext))
-            {
-                Debug.Print("WinGLContext.MakeCurrent() call failed. Error: {0}", Marshal.GetLastWin32Error());
-            }
-        }
-
-	    #endregion
-
-        #region public bool IsCurrent
-
-        public bool IsCurrent
-        {
-            get { return Wgl.GetCurrentContext() == this.renderContext; }
-        }
-
-        #endregion
-
-        #region public IntPtr GetCurrentContext()
-
-        public IntPtr GetCurrentContext()
-        {
-            return Wgl.GetCurrentContext();
-        }
-
-        #endregion
-
-        public event DestroyEvent<IGLContext> Destroy;
-
-        public void RegisterForDisposal(IDisposable resource)
-        {
-            throw new NotImplementedException("Use the general GLContext class instead.");
-        }
-
-        public void DisposeResources()
-        {
-            throw new NotImplementedException("Use the general GLContext class instead.");
-        }
-
-        #region public DisplayMode[] GetDisplayModes()
-
-        public IEnumerable<DisplayMode> GetDisplayModes()
-        {
-            List<DisplayMode> modes = new List<DisplayMode>();
-            bool done = false;
-            int index = 0;
-
-            while (!done)
-            {
-                DeviceMode currentMode = new DeviceMode();
-                IntPtr handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DeviceMode)));
-                Marshal.StructureToPtr(currentMode, handle, true);
-
-                done = (Functions.EnumDisplaySettings(null, index++, handle) != 0) ? false : true;
-                int error = Marshal.GetLastWin32Error();
-
-                Marshal.PtrToStructure(handle, currentMode);
-                Marshal.FreeHGlobal(handle);
-
-                if (error != 0)
-                {
-                    Console.WriteLine("Error: {0}", error);
-                    continue;
-                }
-                if (done)
-                    break;
-
-                //DisplayMode mode = new DisplayMode(currentMode.PelsWidth, currentMode.PelsHeight);
-                DisplayMode mode = new DisplayMode(
-                    currentMode.PelsWidth,
-                    currentMode.PelsHeight,
-                    new ColorMode(currentMode.BitsPerPel),
-                    0,
-                    0,
-                    0,
-                    0,
-                    false,
-                    false,
-                    false,
-                    currentMode.DisplayFrequency
-                );
-
-                modes.Add(mode);
-            }
-
-            return modes.ToArray();
-        }
-
-        #endregion
-
-        public bool VSync
-        {
-            get
-            {
-                return vsync_supported && Wgl.Ext.GetSwapInterval() != 0;
-            }
-            set
-            {
-                if (vsync_supported)
-                    Wgl.Ext.SwapInterval(value ? 1 : 0);
-            }
+            this.windowInfo.Handle = handle;
         }
 
         #endregion
@@ -402,7 +424,7 @@ namespace OpenTK.Platform.Windows
                     //throw new ApplicationException("Could not destroy the OpenGL render context. Error: " + Marshal.GetLastWin32Error());
                     //Debug.Print("Could not destroy the OpenGL render context. Error: {0}", Marshal.GetLastWin32Error());
                 }
-                renderContext = IntPtr.Zero;
+                renderContext = null;
             }
 
             if (deviceContext != IntPtr.Zero)
