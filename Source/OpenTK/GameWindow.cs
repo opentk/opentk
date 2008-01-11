@@ -129,8 +129,6 @@ namespace OpenTK
             
             CreateWindow(mode, title);
 
-            glContext = new GLContext(mode, glWindow.WindowInfo);
-            glContext.CreateContext();
             //this.vsync = VSyncMode.Adaptive;
             this.VSync = VSyncMode.On;
         }
@@ -214,7 +212,7 @@ namespace OpenTK
         /// Returns the opengl IGLontext associated with the current GameWindow.
         /// Forces window creation.
         /// </summary>
-        public IGLContext Context
+        public GLContext Context
         {
             get
             {
@@ -329,7 +327,7 @@ namespace OpenTK
             {
                 try
                 {
-                    glWindow.CreateWindow(mode);
+                    glWindow.CreateWindow(mode, Context);
                 }
                 catch (ApplicationException expt)
                 {
@@ -381,7 +379,11 @@ namespace OpenTK
         {
             if (!Exists)
             {
-                glWindow.CreateWindow(mode);
+                glWindow.CreateWindow(mode, glContext);
+                glContext = new GLContext(mode, glWindow.WindowInfo);
+                (glContext as IGLContextCreationHack).SetWindowHandle(glWindow.WindowInfo.Handle);
+                (glContext as IGLContextCreationHack).SelectDisplayMode(mode, glWindow.WindowInfo);
+                glContext.CreateContext();
                 this.Title = title;
             }
             else
@@ -1278,6 +1280,7 @@ namespace OpenTK
                 {
                     if (glWindow != null)
                     {
+                        glContext.Dispose();
                         glWindow.Dispose();
                         glWindow = null;
                     }
