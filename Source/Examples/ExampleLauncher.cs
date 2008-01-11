@@ -29,6 +29,9 @@ namespace Examples
 {
     public partial class ExampleLauncher : Form
     {
+        bool show_hidden;
+        List<ExampleInfo> hidden_items = new List<ExampleInfo>();
+
         #region class ExampleInfo
 
         /// <summary>
@@ -92,7 +95,7 @@ namespace Examples
                     if (attr is ExampleAttribute)
                         example = (ExampleAttribute)attr;
 
-                if (example != null && example.Visible == true)
+                if (example != null)
                 {
                     sb.Append(example.Category);
                     sb.Append(" ");
@@ -103,7 +106,10 @@ namespace Examples
                     //sb.Append(type.Name);
                     sb.Append(example.Title);
 
-                    listBox1.Items.Add(new ExampleInfo(type, example));
+                    if (example.Visible && example.Category != ExampleCategory.Test)
+                        listBox1.Items.Add(new ExampleInfo(type, example));
+                    else
+                        hidden_items.Add(new ExampleInfo(type, example));
                     
                     // Clean the StringBuilder for the next pass.
                     sb.Remove(0, sb.Length);
@@ -179,6 +185,19 @@ namespace Examples
             {
                 case Keys.Enter:
                     RunExample();
+                    break;
+
+                // On Ctrl+F1 enable hidden items (for debugging/testing OpenTK)
+                case Keys.F1:
+                    if (e.Control)
+                        show_hidden = !show_hidden;
+
+                    if (show_hidden)
+                        listBox1.Items.AddRange(hidden_items.ToArray());
+                    else
+                        foreach (ExampleInfo item in hidden_items)
+                            listBox1.Items.Remove(item);
+
                     break;
             }
         }
