@@ -23,7 +23,7 @@ namespace OpenTK.Platform.Windows
     /// Drives GameWindow on Windows.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    sealed class WinGLNative : System.Windows.Forms.NativeWindow, INativeGLWindow
+    internal sealed class WinGLNative : System.Windows.Forms.NativeWindow, INativeGLWindow
     {
         #region --- Fields ---
 
@@ -34,7 +34,7 @@ namespace OpenTK.Platform.Windows
         private bool disposed;
         private bool isExiting;
         private bool exists;
-        private WindowInfo window;
+        private WindowInfo window = new WindowInfo();
         private int top, bottom, left, right;
 
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
@@ -276,9 +276,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public void CreateWindow(DisplayMode mode)
+        #region public void CreateWindow(DisplayMode mode, GLContext context)
 
-        public void CreateWindow(DisplayMode windowMode)
+        public void CreateWindow(DisplayMode windowMode, GLContext context)
         {
             Debug.Print("Creating native window with mode: {0}", windowMode.ToString());
             Debug.Indent();
@@ -323,7 +323,10 @@ namespace OpenTK.Platform.Windows
 
             if (this.Handle != IntPtr.Zero)
             {
-                Debug.WriteLine("Window creation was succesful.");
+                Debug.WriteLine("Window creation succesful.");
+                //context.Info = new OpenTK.Platform.WindowInfo(this);
+                //context.CreateContext();
+                //Debug.WriteLine("Context creation successful.");
                 exists = true;
             }
             else throw new ApplicationException(String.Format(
@@ -341,7 +344,10 @@ namespace OpenTK.Platform.Windows
 
         public void OnCreate(EventArgs e)
         {
-            this.window = new WindowInfo(this);
+            this.window.Handle = this.Handle;
+            this.window.Parent = null;
+            //this.window = new WindowInfo(this);
+
             //driver = new WinRawInput(this.window);    // Disabled until the mouse issues are resolved.
             driver = new WMInput(this.window);
 
