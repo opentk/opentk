@@ -119,7 +119,7 @@ namespace OpenTK.OpenGL
         {
             if (rebuildExtensionList)
                 BuildExtensionList();
-
+            
             lock (gl_lock)
             {
                 sb.Remove(0, sb.Length);
