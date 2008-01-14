@@ -57,6 +57,9 @@ namespace OpenTK
                 default:
                     throw new PlatformNotSupportedException("Your platform is not supported currently. Please, refer to http://www.opentk.com for more information.");
             }
+
+            (this as IGLContextCreationHack).SetWindowHandle(window.Handle);
+            (this as IGLContextCreationHack).SelectDisplayMode(mode, window);
         }
 
         #endregion

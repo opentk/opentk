@@ -125,8 +125,6 @@ namespace OpenTK
                         "Your platform is not supported currently. Please, refer to http://opentk.sourceforge.net for more information.");
             }
 
-            glWindow.Destroy += new DestroyEvent(glWindow_Destroy);
-            
             CreateWindow(mode, title);
 
             //this.vsync = VSyncMode.Adaptive;
@@ -381,8 +379,6 @@ namespace OpenTK
             {
                 glWindow.CreateWindow(mode, glContext);
                 glContext = new GLContext(mode, glWindow.WindowInfo);
-                (glContext as IGLContextCreationHack).SetWindowHandle(glWindow.WindowInfo.Handle);
-                (glContext as IGLContextCreationHack).SelectDisplayMode(mode, glWindow.WindowInfo);
                 glContext.CreateContext();
                 this.Title = title;
             }
@@ -1221,7 +1217,7 @@ namespace OpenTK
         }
         */
         #endregion
-
+#if false       // TODO: 0.3.15 (Linux support missing)
         #region PointToClient
 
         /// <summary>
@@ -1251,7 +1247,7 @@ namespace OpenTK
         }
 
         #endregion
-
+#endif
         #region --- IDisposable Members ---
 
         /// <summary>
