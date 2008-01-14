@@ -73,39 +73,27 @@ namespace Bind
         public static string DelegatesClass = "Delegates";
         public static string ImportsClass = "Imports";
 
-        public static Legacy Compatibility = Legacy.None;
+        // TODO: Remove legacy for for 0.3.15.
+        public static Legacy Compatibility = Legacy.NoDropMultipleTokens;
 
         /// <summary>
         /// The name of the C# enum which holds every single OpenGL enum (for compatibility purposes).
         /// </summary>
         public static string CompleteEnumName = "All";
-        
         [Flags]
         public enum Legacy
         {
-            /// <summary>
-            /// Default value.
-            /// </summary>
+            /// <summary>Default value.</summary>
             None = 0x00,
-            /// <summary>
-            /// Leave enums as plain const ints.
-            /// </summary>
+            /// <summary>Leave enums as plain const ints.</summary>
             ConstIntEnums = 0x01,
-            /// <summary>
-            /// Leave enums in the default STRANGE_capitalization.ALL_CAPS form.
-            /// </summary>
+            /// <summary>Leave enums in the default STRANGE_capitalization.ALL_CAPS form.</summary>
             NoAdvancedEnumProcessing = 0x02,
-            /// <summary>
-            /// Don't allow unsafe wrappers in the interface.
-            /// </summary>
+            /// <summary>Don't allow unsafe wrappers in the interface.</summary>
             NoPublicUnsafeFunctions = 0x04,
-            /// <summary>
-            /// Don't trim the [fdisub]v? endings from functions.
-            /// </summary>
+            /// <summary>Don't trim the [fdisub]v? endings from functions.</summary>
             NoTrimFunctionEnding = NoPublicUnsafeFunctions,
-            /// <summary>
-            /// Don't trim the [gl|wgl|glx|glu] prefixes from functions.
-            /// </summary>
+            /// <summary>Don't trim the [gl|wgl|glx|glu] prefixes from functions.</summary>
             NoTrimFunctionPrefix = 0x08,
             /// <summary>
             /// Don't spearate functions in different namespaces, according to their extension category
@@ -118,18 +106,14 @@ namespace Bind
             /// explicitly, to avoid the 'object' overload from being called.)
             /// </summary>
             TurnVoidPointersToIntPtr = 0x20,
-            /// <summary>
-            /// Generate all possible permutations for ref/array/pointer parameters.
-            /// </summary>
+            /// <summary>Generate all possible permutations for ref/array/pointer parameters.</summary>
             GenerateAllPermutations = 0x40,
-            /// <summary>
-            /// Nest enums inside the GL class.
-            /// </summary>
+            /// <summary>Nest enums inside the GL class.</summary>
             NestedEnums = 0x80,
-            /// <summary>
-            /// Turn GLboolean to int (Boolean enum), not bool.
-            /// </summary>
-            NoBoolParameters = 0100,
+            /// <summary>Turn GLboolean to int (Boolean enum), not bool.</summary>
+            NoBoolParameters = 0x100,
+            /// <summary>Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).</summary>
+            NoDropMultipleTokens = 0x200,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |
@@ -138,8 +122,16 @@ namespace Bind
                   NoSeparateFunctionNamespaces |
                   TurnVoidPointersToIntPtr |
                   NestedEnums |
-                  NoBoolParameters,
+                  NoBoolParameters |
+                  NoDropMultipleTokens,
                   /*GenerateAllPermutations,*/
+        }
+
+        /// <summary>True if multiple tokens should be dropped (e.g. FooARB, FooEXT and FooSGI).</summary>
+        public static bool DropMultipleTokens
+        { 
+            get { return (Settings.Compatibility & Legacy.NoDropMultipleTokens) == Legacy.None; } 
+            set { if (value) Settings.Compatibility |= Legacy.NoDropMultipleTokens; else Settings.Compatibility &= ~Legacy.NoDropMultipleTokens; }
         }
         
         public static string WindowsGDI = "OpenTK.Platform.Windows.API";
