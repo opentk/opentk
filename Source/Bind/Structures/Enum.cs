@@ -216,36 +216,42 @@ namespace Bind.Structures
                 foreach (Constant c in e.ConstantCollection.Values)
                     Constant.TranslateConstantWithReference(c, Enum.GLEnums, Enum.AuxEnums);
 
-            // When there are multiple tokens with the same value but different extension
-            // drop the duplicates. Order of preference: core > ARB > EXT > vendor specific
-            foreach (Enum e in this.Values)
+            if (Settings.DropMultipleTokens)
             {
-                if (e.Name == "All")
-                    continue;
 
-                foreach (Constant c in e.ConstantCollection.Values)
-                    foreach (Constant c2 in e.ConstantCollection.Values)
+                // When there are multiple tokens with the same value but different extension
+                // drop the duplicates. Order of preference: core > ARB > EXT > vendor specific
+                foreach (Enum e in this.Values)
+                {
+                    if (e.Name == "All")
+                        continue;
+
+                    foreach (Constant c in e.ConstantCollection.Values)
                     {
-                        if (c.Name != c2.Name && c.Value == c2.Value)
+                        foreach (Constant c2 in e.ConstantCollection.Values)
                         {
-                            if (c.Name.Contains(Constant.Translate("TEXTURE_DEFORMATION_BIT_SGIX")) ||
-                                c2.Name.Contains(Constant.Translate("TEXTURE_DEFORMATION_BIT_SGIX")))
+                            if (c.Name != c2.Name && c.Value == c2.Value)
                             {
-                            }
+                                if (c.Name.Contains(Constant.Translate("TEXTURE_DEFORMATION_BIT_SGIX")) ||
+                                    c2.Name.Contains(Constant.Translate("TEXTURE_DEFORMATION_BIT_SGIX")))
+                                {
+                                }
 
-                            int prefer = OrderOfPreference(Utilities.GetGL2Extension(c.Name), Utilities.GetGL2Extension(c2.Name));
-                            if (prefer == -1)
-                            {
-                                c2.Name = "";
-                                c2.Value = "";
-                            }
-                            else if (prefer == 1)
-                            {
-                                c.Name = "";
-                                c.Value = "";
+                                int prefer = OrderOfPreference(Utilities.GetGL2Extension(c.Name), Utilities.GetGL2Extension(c2.Name));
+                                if (prefer == -1)
+                                {
+                                    c2.Name = "";
+                                    c2.Value = "";
+                                }
+                                else if (prefer == 1)
+                                {
+                                    c.Name = "";
+                                    c.Value = "";
+                                }
                             }
                         }
                     }
+                }
             }
         }
 
