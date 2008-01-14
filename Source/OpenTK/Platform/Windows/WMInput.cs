@@ -134,6 +134,16 @@ namespace OpenTK.Platform.Windows
                             }
                     }
                     break;
+
+                case WindowMessage.DESTROY:
+                    Debug.Print("Input window detached from parent {0}.", Handle);
+                    ReleaseHandle();
+                    break;
+
+                case WindowMessage.QUIT:
+                    Debug.WriteLine("Input window quit.");
+                    this.Dispose();
+                    break;
             }
 
             base.WndProc(ref msg);
