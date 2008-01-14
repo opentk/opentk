@@ -939,7 +939,7 @@ namespace OpenTK.OpenGL
             internal delegate void DrawArrays(OpenTK.OpenGL.Enums.BeginMode mode, Int32 first, Int32 count);
             internal static DrawArrays glDrawArrays;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices);
+            internal delegate void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices);
             internal static DrawElements glDrawElements;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void EdgeFlagPointer(Int32 stride, IntPtr pointer);
@@ -1020,10 +1020,10 @@ namespace OpenTK.OpenGL
             internal delegate void BlendColor(Single red, Single green, Single blue, Single alpha);
             internal static BlendColor glBlendColor;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BlendEquation(OpenTK.OpenGL.Enums.All mode);
+            internal delegate void BlendEquation(OpenTK.OpenGL.Enums.BlendEquationMode mode);
             internal static BlendEquation glBlendEquation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices);
+            internal delegate void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices);
             internal static DrawRangeElements glDrawRangeElements;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ColorTable(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr table);
@@ -1290,7 +1290,7 @@ namespace OpenTK.OpenGL
             internal unsafe delegate void MultiDrawArrays(OpenTK.OpenGL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount);
             internal unsafe static MultiDrawArrays glMultiDrawArrays;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.All type, IntPtr indices, Int32 primcount);
+            internal unsafe delegate void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal unsafe static MultiDrawElements glMultiDrawElements;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void PointParameterf(OpenTK.OpenGL.Enums.PointParameterName pname, Single param);
@@ -2793,7 +2793,7 @@ namespace OpenTK.OpenGL
             internal delegate void LightEnviSGIX(OpenTK.OpenGL.Enums.All pname, Int32 param);
             internal static LightEnviSGIX glLightEnviSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawRangeElementsEXT(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices);
+            internal delegate void DrawRangeElementsEXT(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices);
             internal static DrawRangeElementsEXT glDrawRangeElementsEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ApplyTextureEXT(OpenTK.OpenGL.Enums.All mode);
@@ -2904,7 +2904,7 @@ namespace OpenTK.OpenGL
             internal unsafe delegate void MultiDrawArraysEXT(OpenTK.OpenGL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount);
             internal unsafe static MultiDrawArraysEXT glMultiDrawArraysEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiDrawElementsEXT(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.All type, IntPtr indices, Int32 primcount);
+            internal unsafe delegate void MultiDrawElementsEXT(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal unsafe static MultiDrawElementsEXT glMultiDrawElementsEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FogCoordfEXT(Single coord);
@@ -3294,7 +3294,7 @@ namespace OpenTK.OpenGL
             internal unsafe delegate void MultiModeDrawArraysIBM(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* first, Int32* count, Int32 primcount, Int32 modestride);
             internal unsafe static MultiModeDrawArraysIBM glMultiModeDrawArraysIBM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void MultiModeDrawElementsIBM(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* count, OpenTK.OpenGL.Enums.All type, IntPtr indices, Int32 primcount, Int32 modestride);
+            internal unsafe delegate void MultiModeDrawElementsIBM(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount, Int32 modestride);
             internal unsafe static MultiModeDrawElementsIBM glMultiModeDrawElementsIBM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ColorPointerListIBM(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride);
@@ -4488,7 +4488,7 @@ namespace OpenTK.OpenGL
             internal delegate void DrawArraysInstancedEXT(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 count, Int32 primcount);
             internal static DrawArraysInstancedEXT glDrawArraysInstancedEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void DrawElementsInstancedEXT(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices, Int32 primcount);
+            internal delegate void DrawElementsInstancedEXT(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal static DrawElementsInstancedEXT glDrawElementsInstancedEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexBufferEXT(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.All internalformat, UInt32 buffer);
