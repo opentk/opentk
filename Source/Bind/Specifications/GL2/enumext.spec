@@ -151,12 +151,12 @@ ARB_imaging enum:
 	CONSTANT_ALPHA					= 0x8003
 	ONE_MINUS_CONSTANT_ALPHA			= 0x8004
 	BLEND_COLOR					= 0x8005 # 4 F
-	FUNC_ADD					= 0x8006 # Equivalent to EXT_blend_minmax
-	MIN						= 0x8007
-	MAX						= 0x8008
+#	FUNC_ADD					= 0x8006 # Equivalent to EXT_blend_minmax
+#	MIN						= 0x8007
+#	MAX						= 0x8008
 	BLEND_EQUATION					= 0x8009 # 1 I
-	FUNC_SUBTRACT					= 0x800A # Equivalent to EXT_blend_subtract
-	FUNC_REVERSE_SUBTRACT				= 0x800B
+#	FUNC_SUBTRACT					= 0x800A # Equivalent to EXT_blend_subtract
+#	FUNC_REVERSE_SUBTRACT				= 0x800B
 	CONVOLUTION_1D					= 0x8010 # 1 I # Equivalent to EXT_convolution
 	CONVOLUTION_2D					= 0x8011 # 1 I
 	SEPARABLE_2D					= 0x8012 # 1 I
@@ -224,7 +224,14 @@ ARB_imaging enum:
 	
 MatrixMode enum:
 	use PixelCopyType COLOR		# <summary>Supported by the ARB_imaging extension</summary>
-
+	
+BlendEquationMode enum:
+	FUNC_ADD					= 0x8006 # Equivalent to EXT_blend_minmax
+	MIN							= 0x8007
+	MAX							= 0x8008
+	FUNC_SUBTRACT				= 0x800A # Equivalent to EXT_blend_subtract
+	FUNC_REVERSE_SUBTRACT		= 0x800B
+	
 ###############################################################################
 #
 # OpenGL 1.3 enums (edited for OpenTK)
