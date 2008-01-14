@@ -88,11 +88,6 @@
 #	no new allocations will be made there in the forseeable future.
 #
 ###############################################################################
-###############################################################################
-#
-# Edited by Stefanos Apostolopoulos for OpenTK. Revision 2
-#
-###############################################################################
 
 Extensions define:
 	VERSION_1_1					= 1
@@ -173,6 +168,19 @@ Extensions define:
 	SGI_color_matrix				= 1
 	SGI_color_table					= 1
 	SGI_texture_color_table				= 1
+
+###############################################################################
+
+###############################################################################
+#
+# Edited by Stefanos Apostolopoulos for OpenTK. Revision 2
+#
+###############################################################################
+
+DrawElementsType enum:
+	use DataType UNSIGNED_BYTE
+	use DataType UNSIGNED_SHORT
+	use DataType UNSIGNED_INT
 
 ###############################################################################
 
