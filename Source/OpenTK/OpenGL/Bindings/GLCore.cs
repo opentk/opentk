@@ -938,7 +938,7 @@ namespace OpenTK.OpenGL
             internal extern static void DrawArrays(OpenTK.OpenGL.Enums.BeginMode mode, Int32 first, Int32 count);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawElements", ExactSpelling = true)]
-            internal extern static void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices);
+            internal extern static void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEdgeFlagPointer", ExactSpelling = true)]
             internal extern static void EdgeFlagPointer(Int32 stride, IntPtr pointer);
@@ -1019,10 +1019,10 @@ namespace OpenTK.OpenGL
             internal extern static void BlendColor(Single red, Single green, Single blue, Single alpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquation", ExactSpelling = true)]
-            internal extern static void BlendEquation(OpenTK.OpenGL.Enums.All mode);
+            internal extern static void BlendEquation(OpenTK.OpenGL.Enums.BlendEquationMode mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawRangeElements", ExactSpelling = true)]
-            internal extern static void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices);
+            internal extern static void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorTable", ExactSpelling = true)]
             internal extern static void ColorTable(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, IntPtr table);
@@ -1289,7 +1289,7 @@ namespace OpenTK.OpenGL
             internal extern static unsafe void MultiDrawArrays(OpenTK.OpenGL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMultiDrawElements", ExactSpelling = true)]
-            internal extern static unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.All type, IntPtr indices, Int32 primcount);
+            internal extern static unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glPointParameterf", ExactSpelling = true)]
             internal extern static void PointParameterf(OpenTK.OpenGL.Enums.PointParameterName pname, Single param);

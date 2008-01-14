@@ -5572,23 +5572,23 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices)
+        void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices)
         {
             unsafe
             {
-                Delegates.glDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices);
+                Delegates.glDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices);
             }
         }
 
         public static 
-        void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices)
+        void DrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices)
         {
             unsafe
             {
                 System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                 try
                 {
-                    Delegates.glDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                    Delegates.glDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
                 }
                 finally
                 {
@@ -6219,40 +6219,40 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void BlendEquation(OpenTK.OpenGL.Enums.All mode)
+        void BlendEquation(OpenTK.OpenGL.Enums.BlendEquationMode mode)
         {
-            Delegates.glBlendEquation((OpenTK.OpenGL.Enums.All)mode);
+            Delegates.glBlendEquation((OpenTK.OpenGL.Enums.BlendEquationMode)mode);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices)
+        void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices)
         {
             unsafe
             {
-                Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices);
+                Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices);
             }
         }
 
         public static 
-        void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices)
+        void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices)
         {
             unsafe
             {
-                Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices);
+                Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices);
             }
         }
 
         [System.CLSCompliant(false)]
         public static 
-        void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices)
+        void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices)
         {
             unsafe
             {
                 System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                 try
                 {
-                    Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                    Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
                 }
                 finally
                 {
@@ -6262,14 +6262,14 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices)
+        void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices)
         {
             unsafe
             {
                 System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                 try
                 {
-                    Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                    Delegates.glDrawRangeElements((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
                 }
                 finally
                 {
@@ -8119,25 +8119,25 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32[] count, OpenTK.OpenGL.Enums.All type, IntPtr indices, Int32 primcount)
+        void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32[] count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount)
         {
             unsafe
             {
                 fixed (Int32* count_ptr = count)
                 {
-                    Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices, (Int32)primcount);
+                    Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount);
                 }
             }
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices, Int32 primcount)
+        unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount)
         {
             System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
             try
             {
-                Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
             }
             finally
             {
@@ -8146,7 +8146,7 @@ namespace OpenTK.OpenGL
         }
 
         public static 
-        void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, ref Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices, Int32 primcount)
+        void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, ref Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount)
         {
             unsafe
             {
@@ -8155,7 +8155,7 @@ namespace OpenTK.OpenGL
                     System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                     try
                     {
-                        Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                        Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
                     }
                     finally
                     {
@@ -28468,33 +28468,33 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices)
+            void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices)
             {
                 unsafe
                 {
-                    Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices);
+                    Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices);
                 }
             }
 
             public static 
-            void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices)
+            void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices)
             {
                 unsafe
                 {
-                    Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices);
+                    Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices);
                 }
             }
 
             [System.CLSCompliant(false)]
             public static 
-            void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices)
+            void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices)
             {
                 unsafe
                 {
                     System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                     try
                     {
-                        Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                        Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
                     }
                     finally
                     {
@@ -28504,14 +28504,14 @@ namespace OpenTK.OpenGL
             }
 
             public static 
-            void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices)
+            void DrawRangeElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices)
             {
                 unsafe
                 {
                     System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                     try
                     {
-                        Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
+                        Delegates.glDrawRangeElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject());
                     }
                     finally
                     {
@@ -28985,25 +28985,25 @@ namespace OpenTK.OpenGL
             }
 
             public static 
-            void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32[] count, OpenTK.OpenGL.Enums.All type, IntPtr indices, Int32 primcount)
+            void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32[] count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount)
             {
                 unsafe
                 {
                     fixed (Int32* count_ptr = count)
                     {
-                        Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices, (Int32)primcount);
+                        Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount);
                     }
                 }
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices, Int32 primcount)
+            unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount)
             {
                 System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                 try
                 {
-                    Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                    Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
                 }
                 finally
                 {
@@ -29012,7 +29012,7 @@ namespace OpenTK.OpenGL
             }
 
             public static 
-            void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, ref Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices, Int32 primcount)
+            void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, ref Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount)
             {
                 unsafe
                 {
@@ -29021,7 +29021,7 @@ namespace OpenTK.OpenGL
                         System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                         try
                         {
-                            Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                            Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
                         }
                         finally
                         {
@@ -33191,23 +33191,23 @@ namespace OpenTK.OpenGL
             }
 
             public static 
-            void DrawElementsInstance(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.All type, IntPtr indices, Int32 primcount)
+            void DrawElementsInstance(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount)
             {
                 unsafe
                 {
-                    Delegates.glDrawElementsInstancedEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices, (Int32)primcount);
+                    Delegates.glDrawElementsInstancedEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount);
                 }
             }
 
             public static 
-            void DrawElementsInstance(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices, Int32 primcount)
+            void DrawElementsInstance(OpenTK.OpenGL.Enums.BeginMode mode, Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount)
             {
                 unsafe
                 {
                     System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                     try
                     {
-                        Delegates.glDrawElementsInstancedEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                        Delegates.glDrawElementsInstancedEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
                     }
                     finally
                     {
@@ -37683,26 +37683,26 @@ namespace OpenTK.OpenGL
             }
 
             public static 
-            void MultiModeDrawElements(OpenTK.OpenGL.Enums.BeginMode[] mode, Int32[] count, OpenTK.OpenGL.Enums.All type, IntPtr indices, Int32 primcount, Int32 modestride)
+            void MultiModeDrawElements(OpenTK.OpenGL.Enums.BeginMode[] mode, Int32[] count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
                     fixed (OpenTK.OpenGL.Enums.BeginMode* mode_ptr = mode)
                     fixed (Int32* count_ptr = count)
                     {
-                        Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode_ptr, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices, (Int32)primcount, (Int32)modestride);
+                        Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode_ptr, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount, (Int32)modestride);
                     }
                 }
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawElements(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawElements(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount, Int32 modestride)
             {
                 System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                 try
                 {
-                    Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode, (Int32*)count, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, (Int32)modestride);
+                    Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, (Int32)modestride);
                 }
                 finally
                 {
@@ -37711,7 +37711,7 @@ namespace OpenTK.OpenGL
             }
 
             public static 
-            void MultiModeDrawElements(ref OpenTK.OpenGL.Enums.BeginMode mode, ref Int32 count, OpenTK.OpenGL.Enums.All type, [In, Out] object indices, Int32 primcount, Int32 modestride)
+            void MultiModeDrawElements(ref OpenTK.OpenGL.Enums.BeginMode mode, ref Int32 count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount, Int32 modestride)
             {
                 unsafe
                 {
@@ -37721,7 +37721,7 @@ namespace OpenTK.OpenGL
                         System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
                         try
                         {
-                            Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode_ptr, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.All)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, (Int32)modestride);
+                            Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode_ptr, (Int32*)count_ptr, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, (Int32)modestride);
                         }
                         finally
                         {
