@@ -202,12 +202,21 @@ namespace OpenTK.OpenAL
         /// </remarks>
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">an attribute to be retrieved: ALC_DEFAULT_DEVICE_SPECIFIER, ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER, ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_EXTENSIONS</param>
-        /// <returns></returns>
+        /// <returns>A string containing the name of the Device.</returns>
         public static string GetString(IntPtr device, Enums.AlcGetString param)
         {
             return Marshal.PtrToStringAnsi(GetStringPrivate(device, param));
         }
 
+        /// <summary>This function returns a List of strings related to the context.</summary>
+        /// <remarks>
+        /// ALC_DEVICE_SPECIFIER will return the name of the specified output device if a pointer is supplied, or will return a list of all available devices if a NULL device pointer is supplied. A list is a pointer to a series of strings separated by NULL characters, with the list terminated by two NULL characters. See Enumeration Extension for more details.
+        /// ALC_CAPTURE_DEVICE_SPECIFIER will return the name of the specified capture device if a pointer is supplied, or will return a list of all available devices if a NULL device pointer is supplied.
+        /// ALC_EXTENSIONS returns a list of available context extensions, with each extension separated by a space and the list terminated by a NULL character.
+        /// </remarks>
+        /// <param name="device">a pointer to the device to be queried.</param>
+        /// <param name="param">an attribute to be retrieved: ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_ALL_DEVICES_SPECIFIER</param>
+        /// <returns>A List of strings containing the names of the Devices.</returns>
         public static List<string> GetString(IntPtr device, Enums.AlcGetStringList param)
         {
             List<string> result = new List<string>();
@@ -218,14 +227,18 @@ namespace OpenTK.OpenAL
             do
             {
                 b = Marshal.ReadByte(t, offset++);
-                if (b != 0) sb.Append((char)b);
-                else
+                if (b != 0)
+                    sb.Append((char)b);
+                if (b == 0)
                 {
                     if (Marshal.ReadByte(t, offset + 1) == 0)
+                    {
+                        result.Add(sb.ToString());
                         break;
+                    }
                     else
                     {
-                        if (sb.Length > 1) result.Add(sb.ToString());
+                        if (sb.Length > 0) result.Add(sb.ToString());
                         sb.Remove(0, sb.Length);
                     }
                 }

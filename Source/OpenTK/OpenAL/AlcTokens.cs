@@ -56,9 +56,6 @@ namespace OpenTK.OpenAL.Enums
         ///<summary>The specifier string for the default device.</summary>
         DefaultDeviceSpecifier = 0x1004,
 
-        ///<summary>The specifier strings for all available devices.</summary>
-        DeviceSpecifier = 0x1005,
-
         ///<summary>A list of available context extensions separated by spaces.</summary>
         Extensions = 0x1006,
 
@@ -67,17 +64,28 @@ namespace OpenTK.OpenAL.Enums
 
         /// <summary>a list of the default devices.</summary>
         DefaultAllDevicesSpecifier = 0x1012,
+
+        // duplicates from AlcGetStringList:
+
+        ///<summary>Will only return the first Device, not a list. Use AlcGetStringList.CaptureDeviceSpecifier. ALC_EXT_CAPTURE_EXT </summary>
+        CaptureDeviceSpecifier = 0x310,
+
+        ///<summary>Will only return the first Device, not a list. Use AlcGetStringList.DeviceSpecifier</summary>
+        DeviceSpecifier = 0x1005,
+
+        /// <summary>Will only return the first Device, not a list. Use AlcGetStringList.AllDevicesSpecifier</summary>
+        AllDevicesSpecifier = 0x1013,
     }
 
     public enum AlcGetStringList : int
     {
-        ///<summary>The name of the specified capture device, or a list of all available capture devices if no capture device is specified.</summary>
-        CaptureDeviceSpecifier = 0x310, // ALC_EXT_CAPTURE extension. 
+        ///<summary>The name of the specified capture device, or a list of all available capture devices if no capture device is specified. ALC_EXT_CAPTURE_EXT </summary>
+        CaptureDeviceSpecifier = 0x310,
 
-        ///<summary>The specifier string for the device.</summary>
+        ///<summary>The specifier strings for all available devices. ALC_ENUMERATION_EXT</summary>
         DeviceSpecifier = 0x1005,
 
-        /// <summary>A list of all available devices.</summary>
+        /// <summary>The specifier strings for all available devices. ALC_ENUMERATE_ALL_EXT</summary>
         AllDevicesSpecifier = 0x1013,
     }
 
@@ -98,6 +106,4 @@ namespace OpenTK.OpenAL.Enums
         ///<summary>The number of capture samples available. NULL is an invalid device.</summary>
         CaptureSamples = 0x312,
     }
-
-
 }
