@@ -111,8 +111,8 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.CLOSE:
                     //this.DestroyWindow();
                     this.OnDestroy(EventArgs.Empty);
-                    //return;
-                    break;
+                    return;
+                    //break;
 
                 case WindowMessage.DESTROY:
                     //this.OnDestroy(EventArgs.Empty);
