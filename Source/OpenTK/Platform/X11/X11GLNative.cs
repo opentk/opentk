@@ -373,9 +373,9 @@ namespace OpenTK.Platform.X11
                 API.CreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
             window.EventMask =
                 EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
-                EventMask.KeyReleaseMask | EventMask.KeyPressMask;/* |
-                    EventMask.PointerMotionMask | /* Bad! EventMask.PointerMotionHintMask | 
-                    EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;*/
+                EventMask.KeyReleaseMask | EventMask.KeyPressMask |
+                    EventMask.PointerMotionMask | /* Bad! EventMask.PointerMotionHintMask | */
+                    EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
             attributes.event_mask = (IntPtr)window.EventMask;
 
             uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
