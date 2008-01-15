@@ -65,10 +65,5 @@ namespace Bind.Wgl
             	Bind.Structures.Function.Wrappers,
             	Bind.Structures.Enum.GLEnums);
         }
-        
-		public override Bind.Structures.DelegateCollection ReadDelegates(System.IO.StreamReader specFile)
-		{
-			return base.ReadDelegates(specFile);
-		}
     }
 }
