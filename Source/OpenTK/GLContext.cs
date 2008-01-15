@@ -60,6 +60,7 @@ namespace OpenTK
 
             (this as IGLContextCreationHack).SetWindowHandle(window.Handle);
             (this as IGLContextCreationHack).SelectDisplayMode(mode, window);
+            this.CreateContext(true, null);
         }
 
         #endregion
