@@ -1,3 +1,5 @@
+#pragma warning disable 3019
+#pragma warning disable 1591
 namespace OpenTK.OpenGL
 {
     namespace Enums
