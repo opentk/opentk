@@ -587,8 +587,8 @@ namespace OpenTK
         /// </remarks>
         public void ProcessEvents()
         {
-            //if (!isExiting)
-            //    InputDriver.Poll();
+            if (!isExiting)
+                glWindow.InputDriver.Poll();
             glWindow.ProcessEvents();
 
             if (MustResize)
