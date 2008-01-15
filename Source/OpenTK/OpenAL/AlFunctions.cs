@@ -326,7 +326,7 @@ namespace OpenTK.OpenAL
         /// <summary>This function retrieves a floating point-vector property of the listener. You must pin it manually.</summary>
         /// <param name="param">the name of the attribute to be retrieved: AL_POSITION, AL_VELOCITY, AL_ORIENTATION</param>
         /// <param name="values">A pointer to the floating point-vector value being retrieved.</param>
-        [DllImport(AL.Lib, EntryPoint = "alGetListenerfv", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
+        [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alGetListenerfv", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
         unsafe public static extern void GetListener(Enums.ALListenerfv param, float* values);
         // AL_API void AL_APIENTRY alGetListenerfv( ALenum param, ALfloat* values );
 
@@ -401,7 +401,7 @@ namespace OpenTK.OpenAL
         #region Create Source objects
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alGenSources", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        unsafe private static extern void GenSourcesPrivate(int n, [Out] uint* sources);
+        unsafe public static extern void GenSources(int n, [Out] uint* sources);
         // AL_API void AL_APIENTRY alGenSources( ALsizei n, ALuint* Sources );
 
         /// <summary>This function generates one or more sources. References to sources are ALuint values, which are used wherever a source reference is needed (in calls such as alDeleteSources and alSourcei).</summary>
@@ -414,7 +414,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = &sources)
                 {
-                    GenSourcesPrivate(n, (uint*)ptr);
+                    GenSources(n, (uint*)ptr);
                     sources = *ptr;
                 }
             }
@@ -429,7 +429,7 @@ namespace OpenTK.OpenAL
         }
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alDeleteSources", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        unsafe private static extern void DeleteSourcesPrivate(int n, [In] uint* sources); // Delete Source objects 
+        unsafe public static extern void DeleteSources(int n, [In] uint* sources); // Delete Source objects 
         // AL_API void AL_APIENTRY alDeleteSources( ALsizei n, const ALuint* Sources );
 
         /// <summary>This function deletes one or more sources.</summary>
@@ -442,7 +442,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = sources)
                 {
-                    DeleteSourcesPrivate(n, (uint*)ptr);
+                    DeleteSources(n, (uint*)ptr);
                 }
             }
         }
@@ -582,7 +582,7 @@ namespace OpenTK.OpenAL
         #region Source vector based playback calls
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourcePlayv"), SuppressUnmanagedCodeSecurity]
-        unsafe private static extern void SourcePlayPrivate(int ns, [In] uint* sids);
+        unsafe public static extern void SourcePlay(int ns, [In] uint* sids);
         // AL_API void AL_APIENTRY alSourcePlayv( ALsizei ns, const ALuint *sids );
 
         /// <summary>This function plays a set of sources. The playing sources will have their state changed to AL_PLAYING. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the AL_STOPPED state.</summary>
@@ -595,7 +595,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = sids)
                 {
-                    SourcePlayPrivate(ns, ptr);
+                    SourcePlay(ns, ptr);
                 }
             }
         }
@@ -610,13 +610,13 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = &sids)
                 {
-                    SourcePlayPrivate(ns, ptr);
+                    SourcePlay(ns, ptr);
                 }
             }
         }
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourceStopv"), SuppressUnmanagedCodeSecurity]
-        unsafe private static extern void SourceStopPrivate(int ns, [In] uint* sids);
+        unsafe public static extern void SourceStop(int ns, [In] uint* sids);
         // AL_API void AL_APIENTRY alSourceStopv( ALsizei ns, const ALuint *sids );
 
         /// <summary>This function stops a set of sources. The stopped sources will have their state changed to AL_STOPPED.</summary>
@@ -629,7 +629,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = sids)
                 {
-                    SourceStopPrivate(ns, ptr);
+                    SourceStop(ns, ptr);
                 }
             }
         }
@@ -644,13 +644,13 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = &sids)
                 {
-                    SourceStopPrivate(ns, ptr);
+                    SourceStop(ns, ptr);
                 }
             }
         }
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourceRewindv"), SuppressUnmanagedCodeSecurity]
-        unsafe private static extern void SourceRewindPrivate(int ns, [In] uint* sids);
+        unsafe public static extern void SourceRewind(int ns, [In] uint* sids);
         // AL_API void AL_APIENTRY alSourceRewindv( ALsizei ns, const ALuint *sids );
 
         /// <summary>This function stops a set of sources and sets all their states to AL_INITIAL.</summary>
@@ -663,7 +663,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = sids)
                 {
-                    SourceRewindPrivate(ns, ptr);
+                    SourceRewind(ns, ptr);
                 }
             }
         }
@@ -678,13 +678,13 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = &sids)
                 {
-                    SourceRewindPrivate(ns, ptr);
+                    SourceRewind(ns, ptr);
                 }
             }
         }
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourcePausev"), SuppressUnmanagedCodeSecurity]
-        unsafe private static extern void SourcePausePrivate(int ns, [In] uint* sids);
+        unsafe public static extern void SourcePause(int ns, [In] uint* sids);
         // AL_API void AL_APIENTRY alSourcePausev( ALsizei ns, const ALuint *sids );
 
         /// <summary>This function pauses a set of sources. The paused sources will have their state changed to AL_PAUSED.</summary>
@@ -697,7 +697,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = sids)
                 {
-                    SourcePausePrivate(ns, ptr);
+                    SourcePause(ns, ptr);
                 }
             }
         }
@@ -712,7 +712,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = &sids)
                 {
-                    SourcePausePrivate(ns, ptr);
+                    SourcePause(ns, ptr);
                 }
             }
         }
@@ -750,7 +750,7 @@ namespace OpenTK.OpenAL
         #region Source Queuing
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourceQueueBuffers"), SuppressUnmanagedCodeSecurity]
-        unsafe private static extern void SourceQueueBuffers(uint sid, int numEntries, [In] uint* bids);
+        unsafe public static extern void SourceQueueBuffers(uint sid, int numEntries, [In] uint* bids);
         // AL_API void AL_APIENTRY alSourceQueueBuffers( ALuint sid, ALsizei numEntries, const ALuint *bids );
 
         /// <summary>This function queues a set of buffers on a source. All buffers attached to a source will be played in sequence, and the number of processed buffers can be detected using an alSourcei call to retrieve AL_BUFFERS_PROCESSED. When first created, a source will be of type AL_UNDETERMINED. A successful alSourceQueueBuffers call will change the source type to AL_STREAMING.</summary>
@@ -786,7 +786,7 @@ namespace OpenTK.OpenAL
         }
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alSourceUnqueueBuffers"), SuppressUnmanagedCodeSecurity]
-        unsafe private static extern void SourceUnqueueBuffers(uint sid, int numEntries, [In] uint* bids);
+        unsafe public static extern void SourceUnqueueBuffers(uint sid, int numEntries, [In] uint* bids);
         // AL_API void AL_APIENTRY alSourceUnqueueBuffers( ALuint sid, ALsizei numEntries, ALuint *bids );
 
         /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using an alSourcei call to retrieve AL_BUFFERS_PROCESSED, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
@@ -840,7 +840,7 @@ namespace OpenTK.OpenAL
         #region Buffer objects
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alGenBuffers", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        unsafe private static extern void GenBuffersPrivate(int n, [Out] uint* buffers);
+        unsafe public static extern void GenBuffers(int n, [Out] uint* buffers);
         // AL_API void AL_APIENTRY alGenBuffers( ALsizei n, ALuint* Buffers );
 
         /// <summary>This function generates one or more buffers, which contain audio data (see alBufferData). References to buffers are ALuint values, which are used wherever a buffer reference is needed (in calls such as alDeleteBuffers, alSourcei, alSourceQueueBuffers, and alSourceUnqueueBuffers).</summary>
@@ -853,7 +853,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = &buffers)
                 {
-                    GenBuffersPrivate(n, (uint*)ptr);
+                    GenBuffers(n, (uint*)ptr);
                     buffers = *ptr;
                 }
             }
@@ -868,7 +868,7 @@ namespace OpenTK.OpenAL
         }
 
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alDeleteBuffers", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        unsafe private static extern void DeleteBuffersPrivate(int n, [In] uint* buffers);  // Delete Buffer objects
+        unsafe public static extern void DeleteBuffers(int n, [In] uint* buffers);  // Delete Buffer objects
         // AL_API void AL_APIENTRY alDeleteBuffers( ALsizei n, const ALuint* Buffers );
 
         /// <summary>This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See alSourcei and alSourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
@@ -881,7 +881,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = buffers)
                 {
-                    DeleteBuffersPrivate(n, (uint*)ptr);
+                    DeleteBuffers(n, (uint*)ptr);
                 }
             }
         }
@@ -895,7 +895,7 @@ namespace OpenTK.OpenAL
             {
                 fixed (uint* ptr = &buffer)
                 {
-                    DeleteBuffersPrivate(1, (uint*)ptr);
+                    DeleteBuffers(1, (uint*)ptr);
                 }
             }
         }
