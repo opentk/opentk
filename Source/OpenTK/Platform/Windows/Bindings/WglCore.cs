@@ -2,6 +2,8 @@ namespace OpenTK.Platform.Windows
 {
     using System;
     using System.Runtime.InteropServices;
+    #pragma warning disable 3019
+    #pragma warning disable 1591
 
     partial class Wgl
     {
@@ -81,6 +83,12 @@ namespace OpenTK.Platform.Windows
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglUseFontOutlinesW", CharSet = CharSet.Auto)]
             internal extern static unsafe Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglMakeContextCurrentEXT", ExactSpelling = true)]
+            internal extern static Boolean MakeContextCurrentEXT(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglChoosePixelFormatEXT", ExactSpelling = true)]
+            internal extern static unsafe Boolean ChoosePixelFormatEXT(IntPtr hdc, int* piAttribIList, Single* pfAttribFList, UInt32 nMaxFormats, [Out] int* piFormats, [Out] UInt32* nNumFormats);
         }
     }
 }
