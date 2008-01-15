@@ -168,7 +168,7 @@ namespace Examples.Tutorial
             //GL.TexCoordPointer(2, TexCoordPointerType.Float, vector2_size, (IntPtr)vector2_size);
             GL.VertexPointer(3, VertexPointerType.Float, Vector3.SizeInBytes, IntPtr.Zero);
 
-            GL.DrawElements(BeginMode.Triangles, handle.NumElements, All.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(BeginMode.Triangles, handle.NumElements, DrawElementsType.UnsignedInt, IntPtr.Zero);
             //GL.DrawArrays(BeginMode.LineLoop, 0, vbo.element_count);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
