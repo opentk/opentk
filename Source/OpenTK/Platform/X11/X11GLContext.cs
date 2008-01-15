@@ -89,7 +89,7 @@ namespace OpenTK.Platform.X11
             }
 
             windowInfo.CopyInfoFrom(info);
-            visual = Glx.ChooseVisual(((X11.WindowInfo)info).Display, ((X11.WindowInfo)info).Screen, visualAttributes.ToArray());
+            visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, visualAttributes.ToArray());
             if (visual == IntPtr.Zero)
                 return false;
             else
