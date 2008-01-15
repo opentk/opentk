@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OpenTK.OpenGL.Bind")]
-[assembly: AssemblyCopyright("Copyright ©  2006-2007 Stefanos Apostolopoulos")]
+[assembly: AssemblyCopyright("Copyright ©  2006-2008 the OpenTK team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

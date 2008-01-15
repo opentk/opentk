@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OpenTK")]
-[assembly: AssemblyCopyright("Copyright ©  2006-2007 Stefanos Apostolopoulos")]
+[assembly: AssemblyCopyright("Copyright ©  2006-2008 the OpenTK team")]
 [assembly: AssemblyTrademark("OpenTK")]
 [assembly: AssemblyCulture("")]
 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.3.14.1")]
-[assembly: AssemblyFileVersion("0.3.14.1")]
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
