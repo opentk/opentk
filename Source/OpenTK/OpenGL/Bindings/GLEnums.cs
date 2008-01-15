@@ -1,9 +1,9 @@
-#pragma warning disable 3019
-#pragma warning disable 1591
 namespace OpenTK.OpenGL
 {
     namespace Enums
     {
+        #pragma warning disable 3019
+        #pragma warning disable 1591
         public enum DrawElementsType
         {
             UnsignedByte = ((int)0x1401),
