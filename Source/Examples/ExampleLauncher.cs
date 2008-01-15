@@ -165,7 +165,7 @@ namespace Examples
                 {
                     this.Visible = true;
                     this.TopMost = true;    // Bring the ExampleLauncher window to front
-                    this.TopMost = false;   // but don't allow the user to cover it with other windows.
+                    this.TopMost = false;   // but allow the user to cover it with other windows.
                 }
             }
         }
