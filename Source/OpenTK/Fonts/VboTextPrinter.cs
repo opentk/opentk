@@ -60,7 +60,7 @@ namespace OpenTK.Fonts
             GL.TexCoordPointer(2, TexCoordPointerType.Float, vector2_size, (IntPtr)vector2_size);
             GL.VertexPointer(2, VertexPointerType.Float, vector2_size, IntPtr.Zero);
 
-            GL.DrawElements(BeginMode.Triangles, vbo.element_count, All.UnsignedShort, IntPtr.Zero);
+            GL.DrawElements(BeginMode.Triangles, vbo.element_count, DrawElementsType.UnsignedShort, IntPtr.Zero);
             //GL.DrawArrays(BeginMode.LineLoop, 0, vbo.element_count);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
