@@ -47,7 +47,7 @@
             this.MouseWheelDelta = new System.Windows.Forms.TextBox();
             this.WheelDelta = new System.Windows.Forms.Label();
             this.MouseWheelText = new System.Windows.Forms.TextBox();
-            this.MouseWheel = new System.Windows.Forms.Label();
+            this.MouseWheelLabel = new System.Windows.Forms.Label();
             this.MouseDeltaY = new System.Windows.Forms.Label();
             this.MouseDeltaX = new System.Windows.Forms.Label();
             this.MouseY = new System.Windows.Forms.Label();
@@ -173,7 +173,7 @@
             this.Mouse.Controls.Add(this.MouseWheelDelta);
             this.Mouse.Controls.Add(this.WheelDelta);
             this.Mouse.Controls.Add(this.MouseWheelText);
-            this.Mouse.Controls.Add(this.MouseWheel);
+            this.Mouse.Controls.Add(this.MouseWheelLabel);
             this.Mouse.Controls.Add(this.MouseDeltaY);
             this.Mouse.Controls.Add(this.MouseDeltaX);
             this.Mouse.Controls.Add(this.MouseY);
@@ -250,14 +250,14 @@
             this.MouseWheelText.Size = new System.Drawing.Size(73, 20);
             this.MouseWheelText.TabIndex = 11;
             // 
-            // MouseWheel
+            // MouseWheelLabel
             // 
-            this.MouseWheel.AutoSize = true;
-            this.MouseWheel.Location = new System.Drawing.Point(4, 159);
-            this.MouseWheel.Name = "MouseWheel";
-            this.MouseWheel.Size = new System.Drawing.Size(41, 13);
-            this.MouseWheel.TabIndex = 10;
-            this.MouseWheel.Text = "Wheel:";
+            this.MouseWheelLabel.AutoSize = true;
+            this.MouseWheelLabel.Location = new System.Drawing.Point(4, 159);
+            this.MouseWheelLabel.Name = "MouseWheelLabel";
+            this.MouseWheelLabel.Size = new System.Drawing.Size(41, 13);
+            this.MouseWheelLabel.TabIndex = 10;
+            this.MouseWheelLabel.Text = "Wheel:";
             // 
             // MouseDeltaY
             // 
@@ -402,7 +402,7 @@
         private System.Windows.Forms.TextBox MouseYText;
         private System.Windows.Forms.TextBox MouseXText;
         private System.Windows.Forms.TextBox MouseWheelText;
-        private System.Windows.Forms.Label MouseWheel;
+        private System.Windows.Forms.Label MouseWheelLabel;
         private System.Windows.Forms.TextBox MouseWheelDelta;
         private System.Windows.Forms.Label WheelDelta;
         private System.Windows.Forms.Timer PollTimer;
