@@ -186,7 +186,7 @@ namespace OpenTK.Platform.Windows
 #endif
         #endregion
 
-        internal static partial class Arb
+        public static partial class Arb
         {
             private static string[] extensions;
             /// <summary>
