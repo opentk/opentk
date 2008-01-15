@@ -2,7 +2,9 @@ namespace OpenTK.Platform.Windows
 {
     namespace Enums
     {
-        public enum WglArbBufferRegion
+        #pragma warning disable 3019
+        #pragma warning disable 1591
+        public enum WGL_ARB_buffer_region
         {
             BackColorBufferBitArb = ((int)0x00000002),
             StencilBufferBitArb = ((int)0x00000008),
@@ -10,7 +12,7 @@ namespace OpenTK.Platform.Windows
             DepthBufferBitArb = ((int)0x00000004),
         }
 
-        public enum WglExtPixelFormat
+        public enum WGL_EXT_pixel_format
         {
             SupportGdiExt = ((int)0x200f),
             TypeColorindexExt = ((int)0x202c),
@@ -59,7 +61,7 @@ namespace OpenTK.Platform.Windows
             ShareStencilExt = ((int)0x200d),
         }
 
-        public enum WglArbPixelFormat
+        public enum WGL_ARB_pixel_format
         {
             ShareStencilArb = ((int)0x200d),
             AccumBitsArb = ((int)0x201d),
@@ -119,7 +121,7 @@ namespace OpenTK.Platform.Windows
             SwapCopyArb = ((int)0x2029),
         }
 
-        public enum WglExtPbuffer
+        public enum WGL_EXT_pbuffer
         {
             DrawToPbufferExt = ((int)0x202d),
             PbufferLargestExt = ((int)0x2033),
@@ -132,7 +134,7 @@ namespace OpenTK.Platform.Windows
             PbufferHeightExt = ((int)0x2035),
         }
 
-        public enum WglArbPbuffer
+        public enum WGL_ARB_pbuffer
         {
             PbufferWidthArb = ((int)0x2034),
             TransparentGreenValueArb = ((int)0x2038),
@@ -149,35 +151,35 @@ namespace OpenTK.Platform.Windows
             PbufferLargestArb = ((int)0x2033),
         }
 
-        public enum WglExtDepthFloat
+        public enum WGL_EXT_depth_float
         {
             DepthFloatExt = ((int)0x2040),
         }
 
-        public enum WglExtMultisample
+        public enum WGL_EXT_multisample
         {
             SampleBuffersExt = ((int)0x2041),
             SamplesExt = ((int)0x2042),
         }
 
-        public enum WglArbMultisample
+        public enum WGL_ARB_multisample
         {
             SampleBuffersArb = ((int)0x2041),
             SamplesArb = ((int)0x2042),
         }
 
-        public enum WglExtMakeCurrentRead
+        public enum WGL_EXT_make_current_read
         {
             ErrorInvalidPixelTypeExt = ((int)0x2043),
         }
 
-        public enum WglArbMakeCurrentRead
+        public enum WGL_ARB_make_current_read
         {
             ErrorInvalidPixelTypeArb = ((int)0x2043),
             ErrorIncompatibleDeviceContextsArb = ((int)0x2054),
         }
 
-        public enum WglI3DGenlock
+        public enum WGL_I3D_genlock
         {
             GenlockSourceMultiviewI3d = ((int)0x2044),
             GenlockSourceEdgeBothI3d = ((int)0x204c),
@@ -190,13 +192,13 @@ namespace OpenTK.Platform.Windows
             GenlockSourceExtenalTtlI3d = ((int)0x2047),
         }
 
-        public enum WglI3DGamma
+        public enum WGL_I3D_gamma
         {
             GammaExcludeDesktopI3d = ((int)0x204f),
             GammaTableSizeI3d = ((int)0x204e),
         }
 
-        public enum WglI3DDigitalVideoControl
+        public enum WGL_I3D_digital_video_control
         {
             DigitalVideoCursorAlphaFramebufferI3d = ((int)0x2050),
             DigitalVideoGammaCorrectedI3d = ((int)0x2053),
@@ -204,13 +206,13 @@ namespace OpenTK.Platform.Windows
             DigitalVideoCursorIncludedI3d = ((int)0x2052),
         }
 
-        public enum Wgl3DfxMultisample
+        public enum WGL_3DFX_multisample
         {
             SampleBuffers3dfx = ((int)0x2060),
             Samples3dfx = ((int)0x2061),
         }
 
-        public enum WglArbRenderTexture
+        public enum WGL_ARB_render_texture
         {
             TextureCubeMapPositiveXArb = ((int)0x207d),
             TextureCubeMapPositiveYArb = ((int)0x207f),
@@ -247,14 +249,14 @@ namespace OpenTK.Platform.Windows
             Aux2Arb = ((int)0x2089),
         }
 
-        public enum WglNvRenderTextureRectangle
+        public enum WGL_NV_render_texture_rectangle
         {
             BindToTextureRectangleRgbNv = ((int)0x20a0),
             BindToTextureRectangleRgbaNv = ((int)0x20a1),
             TextureRectangleNv = ((int)0x20a2),
         }
 
-        public enum WglNvRenderDepthTexture
+        public enum WGL_NV_render_depth_texture
         {
             DepthTextureFormatNv = ((int)0x20a5),
             TextureDepthComponentNv = ((int)0x20a6),
@@ -263,7 +265,7 @@ namespace OpenTK.Platform.Windows
             BindToTextureRectangleDepthNv = ((int)0x20a4),
         }
 
-        public enum WglNvFloatBuffer
+        public enum WGL_NV_float_buffer
         {
             BindToTextureRectangleFloatRNv = ((int)0x20b1),
             TextureFloatRNv = ((int)0x20b5),
@@ -276,17 +278,17 @@ namespace OpenTK.Platform.Windows
             BindToTextureRectangleFloatRgbNv = ((int)0x20b3),
         }
 
-        public enum WglArbPixelFormatFloat
+        public enum WGL_ARB_pixel_format_float
         {
             TypeRgbaFloatArb = ((int)0x21a0),
         }
 
-        public enum WglAtiPixelFormatFloat
+        public enum WGL_ATI_pixel_format_float
         {
             TypeRgbaFloatAti = ((int)0x21a0),
         }
 
-        public enum WglFontType
+        public enum WGL_font_type
         {
             FontLines = ((int)0),
         }
@@ -490,17 +492,17 @@ namespace OpenTK.Platform.Windows
             FontLines = ((int)0),
         }
 
-        public enum WglArbExtensionsString
+        public enum WGL_ARB_extensions_string
         {
         }
 
-        public enum WglI3DImageBuffer
+        public enum WGL_I3D_image_buffer
         {
             ImageBufferMinAccessI3d = ((int)0x00000001),
             ImageBufferLockI3d = ((int)0x00000002),
         }
 
-        public enum WglI3DSwapFrameLock
+        public enum WGL_I3D_swap_frame_lock
         {
         }
 

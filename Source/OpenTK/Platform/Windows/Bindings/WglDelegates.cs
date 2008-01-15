@@ -3,6 +3,8 @@ namespace OpenTK.Platform.Windows
     using System;
     using System.Runtime.InteropServices;
     #pragma warning disable 0649
+    #pragma warning disable 3019
+    #pragma warning disable 1591
 
     partial class Wgl
     {
@@ -270,7 +272,7 @@ namespace OpenTK.Platform.Windows
             internal delegate Boolean DestroyImageBufferI3D(IntPtr hDC, IntPtr pAddress);
             internal static DestroyImageBufferI3D wglDestroyImageBufferI3D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Boolean AssociateImageBufferEventsI3D(IntPtr hDC, IntPtr pEvent, IntPtr pAddress, Int32* pSize, UInt32 count);
+            internal unsafe delegate Boolean AssociateImageBufferEventsI3D(IntPtr hDC, IntPtr* pEvent, IntPtr pAddress, Int32* pSize, UInt32 count);
             internal unsafe static AssociateImageBufferEventsI3D wglAssociateImageBufferEventsI3D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate Boolean ReleaseImageBufferEventsI3D(IntPtr hDC, IntPtr pAddress, UInt32 count);
@@ -301,5 +303,4 @@ namespace OpenTK.Platform.Windows
             internal unsafe static QueryFrameTrackingI3D wglQueryFrameTrackingI3D;
         }
     }
-    #pragma warning restore 0649
 }
