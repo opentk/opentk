@@ -420,10 +420,9 @@ namespace OpenTK.Platform.X11
             API.MapRaised(window.Display, window.Handle);
             mapped = true;
 
-            driver = new X11Input(window);
+            glContext.CreateContext(true, null);
 
-            //GL.LoadAll();
-            //Glu.LoadAll();
+            driver = new X11Input(window);
 
             Debug.Unindent();
             Debug.WriteLine("GameWindow creation completed successfully!");
