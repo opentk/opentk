@@ -140,12 +140,12 @@ namespace Examples.Tests
         ControlLogKeyboard ControlLogKeyboardDown =
             delegate(GameWindow input_window, S04_Input_Logger control, KeyboardDevice sender, Key key)
             {
-                control.keyboardListBoxes[(sender as KeyboardDevice).DeviceID].Items.Add(key);
+                control.keyboardListBoxes[sender.DeviceID].Items.Add(key);
             };
         ControlLogKeyboard ControlLogKeyboardUp =
             delegate(GameWindow input_window, S04_Input_Logger control, KeyboardDevice sender, Key key)
             {
-                control.keyboardListBoxes[(sender as KeyboardDevice).DeviceID].Items.Remove(key);
+                control.keyboardListBoxes[sender.DeviceID].Items.Remove(key);
             };
 
         void hidden_UpdateFrame(object sender, UpdateFrameEventArgs e)
