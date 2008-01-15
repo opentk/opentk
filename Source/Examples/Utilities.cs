@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using OpenTK;
 
 namespace Examples
 {
@@ -16,6 +17,28 @@ namespace Examples
         public static int ColorToRgba32(Color c)
         {
             return (int)((c.A << 24) | (c.B << 16) | (c.G << 8) | c.R);
+        }
+
+        public static void SetWindowTitle(GameWindow window)
+        {
+            ExampleAttribute info = GetExampleAttribute(window.GetType());
+            window.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+        }
+
+        public static void SetWindowTitle(System.Windows.Forms.Form window)
+        {
+            ExampleAttribute info = GetExampleAttribute(window.GetType());
+            window.Text = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+        }
+
+        static ExampleAttribute GetExampleAttribute(Type type)
+        {
+            object[] attributes = type.GetCustomAttributes(false);
+            foreach (object attr in attributes)
+                if (attr is ExampleAttribute)
+                    return attr as ExampleAttribute;
+
+            return null;
         }
     }
 }
