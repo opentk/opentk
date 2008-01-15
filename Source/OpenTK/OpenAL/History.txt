@@ -1,0 +1,47 @@
+Version History:
+ 
+0.1 Initial
+- Tokens AL_TRUE and AL_FALSE removed, created new type. see AL.Bool
+  Tokens ALC_TRUE and ALC_FALSE removed, created new type. see AL.Bool
+- Added AL.Null for convenience when working with C Manuals.  
+- Alut: The following functions are not bound/imported. Issue of undoing C malloc to prevent memory leaks.
+        "alutLoadMemoryFromFile, alutLoadMemoryFromFileImage, alutLoadMemoryHelloWorld, alutLoadMemoryWaveform"
+  Please use Alut.CreateBuffer* functions instead, which have similar functionality and return a Buffer Handle instead.
+- AL: Functions not imported:
+      alListeneri, alListener3i, alListeneriv
+      alGetListeneri, alGetListener3i, alGetListeneriv
+      alGetBooleanv, alGetIntegerv, alGetFloatv, alGetDoublev 
+      imported, but currently disabled: alGetBoolean, alGetDouble
+      alBufferf, alBufferfv, alBufferi, alBuffer3i, alBufferiv
+      imported, but currently disabled: alBuffer3f
+      alGetBufferf, alGetBuffer3f, alGetBufferfv, alGetBuffer3i, alGetBufferiv
+
+0.2
+- Largely improved documentation, found homes for previously orphaned Tokens.
+- The Token AL_DATA is hidden now, as it returns a pointer to unmanaged memory
+   where the buffer was located previously to calling AL.BufferData(). (It is usually freed after buffering)
+- Added Function AL.GetErrorString()
+- Added overloads for requesting/deleting a single buffer/source at a time.
+- Added Vector3 overloads where applicable.
+
+0.3 - breaks former written examples.
+- Using a single changelog now, as the number of issues per file has significantly shrunk.
+- Refactored -i -fv -3f functions to be overloads e.g AL.GetSource, AL.GetListener
+- Added XRam Extension prototype. Untested, as it requires special hardware.
+- Refactored extensively to match OpenTK naming conventions.
+- Moved functions into overloads
+- Removed all C prototype comments from AL/ALC/ALUT
+- Documented Alc properly
+
+0.4
+- changed Alc enum GetString/GetStringList
+- disabled Alut.Sleep, rather use Thread.Sleep
+- DopplerVelocity, ChannelMask  are deprecated and marked.
+- functions with ushort, uint, ulong marked 
+
+0.5 vanilla complete
+- Fix Alc.GetString( Enums.AlcGetStringList ) to terminate with 2 null, and split at 1 null
+
+Next Version:
+- EFX Extension 
+- Enums themselves require summaries (do EFX 1st)
