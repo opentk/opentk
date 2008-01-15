@@ -22,7 +22,7 @@ using OpenTK.Math;
 
 namespace Examples.Tutorial
 {
-    [Example("Vertex Buffer Objects", ExampleCategory.Tutorial, 8)]
+    [Example("Vertex Buffer Objects", ExampleCategory.Tutorial, 8, false)]
     public class T08_VBO : GameWindow
     {
         #region --- Private Fields ---
