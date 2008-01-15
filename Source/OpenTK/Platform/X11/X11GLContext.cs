@@ -18,7 +18,7 @@ namespace OpenTK.Platform.X11
     /// Provides methods to create and control an opengl context on the X11 platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class X11GLContext : IGLContext, IGLContextCreationHack
+    internal sealed class X11GLContext : IGLContext, IGLContextInternal, IGLContextCreationHack
     {
         private IntPtr context;
         private DisplayMode mode;
@@ -112,16 +112,6 @@ namespace OpenTK.Platform.X11
 
         #region --- IGLContext Members ---
 
-        #region public IntPtr Context
-
-        public IntPtr Context
-        {
-            get { return context; }
-            private set { context = value; }
-        }
-
-        #endregion
-
         #region public DisplayMode Mode
 
         public DisplayMode Mode
@@ -135,12 +125,6 @@ namespace OpenTK.Platform.X11
                     Debug.Print("Cannot change DisplayMode of an existing context.");
             }
         }
-
-        #endregion
-
-        #region public IWindowInfo Info
-
-        public IWindowInfo Info { get { return windowInfo; } }
 
         #endregion
 
@@ -163,14 +147,14 @@ namespace OpenTK.Platform.X11
                 Debug.WriteLine("Creating opengl context.");
                 Debug.Indent();
 
-                IntPtr shareHandle = shareContext != null ? (shareContext as X11GLContext).Context: IntPtr.Zero;
+                ContextHandle shareHandle = shareContext != null ? (shareContext as IGLContextInternal).Context : (ContextHandle)IntPtr.Zero;
 
                 Debug.Write(direct ? "Context is direct, " : "Context is indirect, ");
-                Debug.WriteLine(shareHandle == IntPtr.Zero ? "not shared." :
+                Debug.WriteLine(shareHandle.Handle == IntPtr.Zero ? "not shared." :
                     String.Format("shared with ({0}).", shareHandle));
 
                 // Try to call Glx.CreateContext with the specified parameters.
-                context = Glx.CreateContext(windowInfo.Display, visual, shareHandle, direct);
+                context = Glx.CreateContext(windowInfo.Display, visual, shareHandle.Handle, direct);
 
                 // Context creation succeeded, return.
                 if (context != IntPtr.Zero)
@@ -246,17 +230,14 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public bool IsCurrent
+
         public bool IsCurrent
         {
-            //return GetCurrentContext() == context;
-            get { throw new NotImplementedException(); }
+            get { return Glx.GetCurrentContext() == this.context; }
         }
 
-        public IntPtr GetCurrentContext()
-        {
-            //return Glx.GetCurrentContext();
-            throw new NotImplementedException();
-        }
+        #endregion
 
         public event DestroyEvent<IGLContext> Destroy;
 
@@ -295,6 +276,35 @@ namespace OpenTK.Platform.X11
 
             }
         }
+
+        #endregion
+
+        #region --- IGLContextInternal Members ---
+
+        #region IntPtr IGLContextInternal.Context
+
+        ContextHandle IGLContextInternal.Context
+        {
+            get { return context; }
+            /*private set { context = value; }*/
+        }
+
+        #endregion
+
+        #region IWindowInfo IGLContextInternal.Info
+
+        IWindowInfo IGLContextInternal.Info { get { return windowInfo; } }
+
+        #endregion
+
+        #region ContextHandle IGLContextInternal.GetCurrentContext()
+
+        ContextHandle IGLContextInternal.GetCurrentContext()
+        {
+            return (ContextHandle)Glx.GetCurrentContext();
+        }
+
+        #endregion
 
         #endregion
 
