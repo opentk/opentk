@@ -327,7 +327,7 @@ namespace OpenTK
             {
                 try
                 {
-                    glWindow.CreateWindow(mode, Context);
+                    glWindow.CreateWindow(mode, out glContext);
                 }
                 catch (ApplicationException expt)
                 {
@@ -379,9 +379,9 @@ namespace OpenTK
         {
             if (!Exists)
             {
-                glWindow.CreateWindow(mode, glContext);
-                glContext = new GLContext(mode, glWindow.WindowInfo);
-                glContext.CreateContext();
+                // TODO: This is a hack - reslove in 0.3.15 once and for all!
+                // GLContext is created inside the CreateWindow call.
+                glWindow.CreateWindow(mode, out glContext);
                 this.Title = title;
             }
             else
