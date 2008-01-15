@@ -21,6 +21,8 @@ using System.Security;
 
 namespace OpenTK.Platform.Windows
 {
+    #pragma warning disable 3019
+
     #region Type aliases
 
     using HWND = System.IntPtr;
