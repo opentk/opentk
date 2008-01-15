@@ -22,7 +22,7 @@ namespace OpenTK.Platform.X11
     {
         private IntPtr context;
         private DisplayMode mode;
-        private WindowInfo windowInfo;
+        private WindowInfo windowInfo = new WindowInfo();
         private IntPtr visual;
 
         private bool disposed;
@@ -88,6 +88,7 @@ namespace OpenTK.Platform.X11
                 visualAttributes.Add((int)0);
             }
 
+            windowInfo.CopyInfoFrom(info);
             visual = Glx.ChooseVisual(((X11.WindowInfo)info).Display, ((X11.WindowInfo)info).Screen, visualAttributes.ToArray());
             if (visual == IntPtr.Zero)
                 return false;
