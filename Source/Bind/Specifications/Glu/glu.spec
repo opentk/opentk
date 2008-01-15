@@ -407,10 +407,11 @@ TessVertex(tess, location, data)
 	param		location	Float64 out array [3]
 	param		data		VoidPointer in value
 
+# Edited for OpenTK
 TexFilterFuncSGI(target, filtertype, parms, n, weights)
 	return		Int32 out value
 	param		target		TextureTarget in value
-	param		filtertype	Filter4TypeSGIS in value
+	param		filtertype	SGIS_texture_filter4 in value		# Filter4TypeSGIS in value
 	param		parms		Float32 in array [2]
 	param		n		Int32 in value
 	param		weights		Float32Pointer out value
