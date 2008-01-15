@@ -264,7 +264,8 @@ namespace Bind.Structures
                     Pointer = false;
                     WrapperType = WrapperTypes.None;
                 }
-                else if (CurrentType.ToLower().Contains("void") || PreviousType.ToLower().Contains("void")) /*|| CurrentType.Contains("IntPtr"))*/
+                else if (CurrentType.ToLower().Contains("void") ||
+                         (!String.IsNullOrEmpty(PreviousType) && PreviousType.ToLower().Contains("void"))) /*|| CurrentType.Contains("IntPtr"))*/
                 {
                     CurrentType = "IntPtr";
                     Pointer = false;
@@ -273,7 +274,7 @@ namespace Bind.Structures
             }
 
             if (Reference)
-                WrapperType = WrapperTypes.ReferenceParameter;
+                WrapperType |= WrapperTypes.ReferenceParameter;
 
             // This causes problems with bool arrays
             //if (CurrentType.ToLower().Contains("bool"))
