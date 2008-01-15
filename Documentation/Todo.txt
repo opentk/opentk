@@ -47,7 +47,6 @@ OpenTK.Input todos:
 + Implement Joystick input.
 
 
-
 Examples:
 + Add more Tutorials and WinForms examples.
 
@@ -57,5 +56,4 @@ OpenTK.Math todos:
 
 
 OpenTK.OpenAL todos:
-+ Start researching the OpenAL module.
-+ Take a look at the OpenALDotNet wrapper.
++ Audio format loaders.
