@@ -466,7 +466,7 @@ namespace Bind.GL2
                 
                 sw.Indent();
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
-                    sw.WriteLine("public static partial class {0}", Settings.OutputClass);
+                    sw.WriteLine("static partial class {0}", Settings.OutputClass);
                 else
                     sw.WriteLine("namespace {0}", Settings.EnumsNamespace);
 
@@ -492,7 +492,6 @@ namespace Bind.GL2
 
                 sw.WriteLine("#pragma warning disable 0649");
                 WriteDelegates(sw, Bind.Structures.Delegate.Delegates);
-                sw.WriteLine("#pragma warning restore 0649");
 
                 sw.Unindent();
                 sw.WriteLine("}");
@@ -535,6 +534,9 @@ namespace Bind.GL2
         {
             Trace.WriteLine(String.Format("Writing delegates to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.DelegatesClass));
 
+            sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
+            sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
+
             sw.WriteLine();
             sw.WriteLine("partial class {0}", Settings.OutputClass);
             sw.WriteLine("{");
@@ -568,6 +570,9 @@ namespace Bind.GL2
         public virtual void WriteImports(BindStreamWriter sw, DelegateCollection delegates)
         {
             Trace.WriteLine(String.Format("Writing imports to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.ImportsClass));
+
+            sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
+            sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
 
             sw.WriteLine();
             sw.WriteLine("partial class {0}", Settings.OutputClass);
@@ -608,8 +613,11 @@ namespace Bind.GL2
         {
             Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
 
+            sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
+            sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
+
             sw.WriteLine();
-            sw.WriteLine("public static partial class {0}", Settings.OutputClass);
+            sw.WriteLine("static partial class {0}", Settings.OutputClass);
             sw.WriteLine("{");
 
             sw.Indent();
@@ -674,6 +682,9 @@ namespace Bind.GL2
 
         public void WriteEnums(BindStreamWriter sw, EnumCollection enums)
         {
+            sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
+            sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
+
             if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
                 Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
             else
