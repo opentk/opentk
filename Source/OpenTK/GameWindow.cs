@@ -156,7 +156,7 @@ namespace OpenTK
         public virtual void Exit()
         {
             isExiting = true;
-            UpdateFrame += CallExitInternal;
+            //UpdateFrame += CallExitInternal;
         }
 
         #endregion
@@ -464,17 +464,12 @@ namespace OpenTK
                 //    return;
                 //}
 
-                Debug.Print("Elevating priority.");
-                Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
-
-                //ProcessEvents();
-                //OnUpdateFrameInternal(update_args);
-                //OnRenderFrameInternal(render_args);
+                //Debug.Print("Elevating priority.");
+                //Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
 
                 Debug.Print("Entering main loop.");
                 while (!isExiting)
                 {
-                    // Process events
                     ProcessEvents();
 
                     // Raise UpdateFrame events
