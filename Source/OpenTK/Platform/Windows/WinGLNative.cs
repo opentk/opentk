@@ -334,6 +334,8 @@ namespace OpenTK.Platform.Windows
                     "Could not create native window and/or context. Handle: {0}",
                     this.Handle));
 
+            Functions.SetWindowPos(this.Handle, WindowPlacementOptions.TOP, Left, Top, cp.Width, cp.Height, SetWindowPosFlags.SHOWWINDOW);
+
             Debug.Unindent();
         }
 
