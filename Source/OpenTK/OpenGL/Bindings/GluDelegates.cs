@@ -3,6 +3,8 @@ namespace OpenTK.OpenGL
     using System;
     using System.Runtime.InteropServices;
     #pragma warning disable 0649
+    #pragma warning disable 3019
+    #pragma warning disable 1591
 
     partial class Glu
     {
@@ -180,7 +182,7 @@ namespace OpenTK.OpenGL
             internal unsafe delegate void TessVertex(int tess, [Out] double* location, IntPtr data);
             internal unsafe static TessVertex gluTessVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate Int32 TexFilterFuncSGI(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.Filter4TypeSgis filtertype, float* parms, Int32 n, [Out] float* weights);
+            internal unsafe delegate Int32 TexFilterFuncSGI(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.SgisTextureFilter4 filtertype, float* parms, Int32 n, [Out] float* weights);
             internal unsafe static TexFilterFuncSGI gluTexFilterFuncSGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate Int32 UnProject(double winX, double winY, double winZ, double* model, double* proj, Int32* view, double* objX, double* objY, double* objZ);
@@ -190,5 +192,4 @@ namespace OpenTK.OpenGL
             internal unsafe static UnProject4 gluUnProject4;
         }
     }
-    #pragma warning restore 0649
 }
