@@ -156,7 +156,7 @@ namespace OpenTK
         public virtual void Exit()
         {
             isExiting = true;
-            UpdateFrame += GameWindow_UpdateFrame;
+            UpdateFrame += CallExitInternal;
         }
 
         #endregion
@@ -168,12 +168,13 @@ namespace OpenTK
         /// </summary>
         void ExitInternal()
         {
+            Debug.Print("Firing GameWindowExitException");  
             throw new GameWindowExitException();
         }
 
-        void GameWindow_UpdateFrame(GameWindow sender, UpdateFrameEventArgs e)
+        void CallExitInternal(GameWindow sender, UpdateFrameEventArgs e)
         {
-            UpdateFrame -= GameWindow_UpdateFrame;
+            UpdateFrame -= CallExitInternal;
             sender.ExitInternal();
         }
 
@@ -555,7 +556,7 @@ namespace OpenTK
             }
             catch (GameWindowExitException)
             {
-                Trace.WriteLine("Exiting main loop.");
+                Trace.WriteLine("GameWindowExitException caught - exiting main loop.");
             }
             finally
             {
