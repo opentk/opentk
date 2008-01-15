@@ -240,7 +240,7 @@ namespace Examples.Tutorial
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, element_buffer_object);
 
             GL.DrawElements(BeginMode.Triangles, shape.Indices.Length,
-                All.UnsignedInt, IntPtr.Zero);
+                DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             //GL.DrawArrays(GL.Enums.BeginMode.POINTS, 0, shape.Vertices.Length);
 

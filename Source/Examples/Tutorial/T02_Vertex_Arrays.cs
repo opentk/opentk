@@ -160,7 +160,7 @@ namespace Examples.Tutorial
             GL.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
             GL.DrawElements(BeginMode.Triangles, shape.Indices.Length,
-                All.UnsignedInt, shape.Indices);
+                DrawElementsType.UnsignedInt, shape.Indices);
 
             //GL.Begin(GL.Enums.BeginMode.TRIANGLES);
 
