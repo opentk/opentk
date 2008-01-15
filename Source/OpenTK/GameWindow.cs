@@ -125,6 +125,8 @@ namespace OpenTK
                         "Your platform is not supported currently. Please, refer to http://opentk.sourceforge.net for more information.");
             }
 
+            glWindow.Destroy += glWindow_Destroy;
+
             CreateWindow(mode, title);
 
             //this.vsync = VSyncMode.Adaptive;
