@@ -151,7 +151,7 @@ namespace OpenTK.Platform.X11
                     //Debug.Print("Keyboard press");
                     keyboardDriver.ProcessKeyboardEvent(ref e.KeyEvent);
                     break;
-                    /* See MouseDriver.Poll() instead.
+                // See MouseDriver.Poll() instead.
                 case XEventName.ButtonPress:
                 case XEventName.ButtonRelease:
                     //Debug.Print("Button");
@@ -162,7 +162,6 @@ namespace OpenTK.Platform.X11
                     //Debug.Print("Mouse move");
                     mouseDriver.ProcessMotion(ref e.MotionEvent);
                     break;
-                    */
             }
         }
 
@@ -204,7 +203,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public void Poll()
         {
-            mouseDriver.Poll();
+            //mouseDriver.Poll();
 
         }
 
