@@ -2,6 +2,8 @@ namespace OpenTK.OpenGL
 {
     namespace Enums
     {
+        #pragma warning disable 3019
+        #pragma warning disable 1591
         public enum GluVersion
         {
             Version11 = ((int)1),
@@ -23,7 +25,7 @@ namespace OpenTK.OpenGL
             InvalidOperation = ((int)100904),
         }
 
-        public enum Filter4TypeSgis
+        public enum Filter4TypeSGIS
         {
             MitchellNetravaliSgi = ((int)100301),
             LagrangianSgi = ((int)100300),
