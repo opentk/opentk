@@ -18,7 +18,7 @@
         <OptimizeCode>true</OptimizeCode>
         <!--<OutputPath>../../Binaries/Release/Libraries</OutputPath>-->
         <DebugInformation>false</DebugInformation>
-        <XmlDocFile>true</XmlDocFile>
+        <XmlDocFile>OpenTK.xml</XmlDocFile>
       </Options>
     </Configuration>
 
