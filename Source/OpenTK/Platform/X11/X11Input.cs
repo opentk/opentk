@@ -204,7 +204,6 @@ namespace OpenTK.Platform.X11
         public void Poll()
         {
             //mouseDriver.Poll();
-
         }
 
         #endregion
