@@ -1,5 +1,42 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
+-----------------------
+OpenTK 0.3.13 -> 0.9.0
+-----------------------
+Minor version changed to reflect current progress.
+
++ Bind
+	+ Improved token matching rule. More tokens will reference actual enums now, instead of referencing Enums.All.
+	+ Initial work on duplicate enum removal (still disabled).
+	+ 'Public' specifier not specified on the generated classes anymore. This is now controlled in the *Helper.cs files.
+	+ Fixed a couple of possible NRE exceptions.
+
++ Build
+	+ Now generates xml documentation on release builds.
+
++ OpenTK
+	+ Fonts
+		+ Fixed a bug in the VboTextPrinter implementation (still disabled).
+	+ OpenAL
+		+ AL, Alc, Alu and Alut bindings.
+		+ Inline documentation.
+	+ OpenGL
+		+ Version12-Version21 enums removed in favour of specific tokens.
+		+ A few new function overloads.
+	+ Platform
+		+ Added several new functions to the Windows and X11 namespaces (mouse handling, coordinate transformations, current context query)
+		+ Initial support for garbage collection of OpenGL resources (disabled).
+		+ Support for Win 9x and 2000 platforms through new WMInput InputDriver implementation.
+		+ Fixes to WinRawInput driver (disabled due to memory leaks).
+	+ GameWindow
+		+ Now uses GLContext instead of Win/X11GLContext.
+	+ Math
+		+ Fix to Vector4.Perspective()
+
++ Examples
+	+ Hidden examples now displayed on Ctrl+F1.
+	+ Bugfixes to GLSL and VBO examples.
+	+ Input logger works again (hidden example).
 
 -----------------------
 OpenTK 0.3.12 -> 0.3.13
