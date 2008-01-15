@@ -277,9 +277,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public void CreateWindow(DisplayMode mode, GLContext context)
+        #region public void CreateWindow(DisplayMode mode, out GLContext context)
 
-        public void CreateWindow(DisplayMode windowMode, GLContext context)
+        public void CreateWindow(DisplayMode windowMode, out GLContext context)
         {
             Debug.Print("Creating native window with mode: {0}", windowMode.ToString());
             Debug.Indent();
@@ -335,6 +335,9 @@ namespace OpenTK.Platform.Windows
                     this.Handle));
 
             Functions.SetWindowPos(this.Handle, WindowPlacementOptions.TOP, Left, Top, cp.Width, cp.Height, SetWindowPosFlags.SHOWWINDOW);
+
+            context = new GLContext(mode, window);
+            context.CreateContext();
 
             Debug.Unindent();
         }
