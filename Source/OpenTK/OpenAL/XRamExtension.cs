@@ -29,13 +29,17 @@ namespace OpenTK.OpenAL
 
         #region X-RAM Function pointer definitions
 
+        [CLSCompliant(false)]
         public unsafe delegate AL.Bool SetBufferMode(int n, ref uint buffers, int value);
         //typedef ALboolean (__cdecl *EAXSetBufferMode)(ALsizei n, ALuint *buffers, ALint value);
 
+        [CLSCompliant(false)]
         public delegate int GetBufferMode(uint buffer, out int value);
         //typedef ALenum    (__cdecl *EAXGetBufferMode)(ALuint buffer, ALint *value);
 
+        [CLSCompliant(false)]
         public SetBufferMode EAXSetBufferMode;
+        [CLSCompliant(false)]
         public GetBufferMode EAXGetBufferMode;
 
         #endregion X-RAM Function pointer definitions
@@ -127,7 +131,7 @@ namespace OpenTK.OpenAL
             Acessible = 2,
 
         }
-
+        [CLSCompliant(false)]
         public void _SetBufferMode(ref uint buffer, XRamStorage mode)
         {
             switch (mode)
