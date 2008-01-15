@@ -231,16 +231,11 @@ namespace OpenTK.OpenAL
                     sb.Append((char)b);
                 if (b == 0)
                 {
-                    if (Marshal.ReadByte(t, offset + 1) == 0)
-                    {
-                        result.Add(sb.ToString());
-                        break;
-                    }
-                    else
-                    {
-                        if (sb.Length > 0) result.Add(sb.ToString());
-                        sb.Remove(0, sb.Length);
-                    }
+                    result.Add(sb.ToString());
+                    if (Marshal.ReadByte(t, offset) == 0) // offset already properly increased through ++
+                        break; // 2x null
+                    else 
+                        sb.Remove(0, sb.Length); // 1x null
                 }
             } while (true);
 
