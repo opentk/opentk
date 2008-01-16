@@ -42,7 +42,12 @@ Version History:
 0.5 vanilla complete
 - Fix Alc.GetString( Enums.AlcGetStringList ) to terminate with 2 null, and split at 1 null
 
+0.6
+- Begun working on Efx
+- X-Ram changed, must be tested properly. verify parameters of GetBufferMode()
+
 Next Version:
 - EFX Extension 
 - Enums themselves require summaries (do EFX 1st)
+- use [MarshalAs(UnmanagedType)] attribute, instead of AL.Bool? investigate
 - AL.BindBuffer helper function ala GL.BindBuffer? (Wraps AL.Source, better consistency)
