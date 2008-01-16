@@ -14,28 +14,30 @@ namespace OpenTK.OpenAL
 {
     public partial class Efx
     {
-        /**
-             * Effect object functions.
-             */
+
+        //Effect object functions.
+          
 
         /* Create Effect objects. */
         // typedef void (__cdecl *LPALGENEFFECTS)( ALsizei n, ALuint* effects );
-        unsafe private delegate void alGenEffects(int n, [Out] uint* effects);
+        unsafe private delegate void DelegatealGenEffects(int n, [Out] uint* effects);
 
         /* Delete Effect objects. */
         // typedef void (__cdecl *LPALDELETEEFFECTS)( ALsizei n, ALuint* effects );
-        unsafe private delegate void alDeleteEffects(int n, [In] uint* effects);
+        unsafe private delegate void DelegatealDeleteEffects(int n, [In] uint* effects);
 
         /* Verify a handle is a valid Effect. */
         // typedef ALboolean (__cdecl *LPALISEFFECT)( ALuint eid );
-        public delegate AL.Bool alIsEffect(uint eid);
+        private delegate AL.Bool DelegatealIsEffect(uint eid);
 
         /* Set an integer parameter for an Effect object. */
         // typedef void (__cdecl *LPALEFFECTI)( ALuint eid, ALenum param, ALint value); 
+        private delegate void DelegateAlEffecti( uint eid, EfxEffecti param, int value);
         // typedef void (__cdecl *LPALEFFECTIV)( ALuint eid, ALenum param, ALint* values ); 
 
         /* Set a floating point parameter for an Effect object. */
-        // typedef void (__cdecl *LPALEFFECTF)( ALuint eid, ALenum param, ALfloat value); 
+        // typedef void (__cdecl *LPALEFFECTF)( ALuint eid, ALenum param, ALfloat value);
+        private delegate void DelegateAlEffectf( uint eid, EfxEffectf param, float value);
         // typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
 
         /* Get an integer parameter for an Effect object. */
@@ -47,9 +49,8 @@ namespace OpenTK.OpenAL
         // typedef void (__cdecl *LPALGETEFFECTFV)( ALuint eid, ALenum pname, ALfloat* values );
 
 
-        /**
-         * Filter object functions
-         */
+        // Filter object functions
+         
 
         /* Create Filter objects. */
         // typedef void (__cdecl *LPALGENFILTERS)( ALsizei n, ALuint* filters ); 
@@ -77,9 +78,8 @@ namespace OpenTK.OpenAL
         // typedef void (__cdecl *LPALGETFILTERFV)( ALuint fid, ALenum pname, ALfloat* values );
 
 
-        /**
-         * Auxiliary Slot object functions
-         */
+        // Auxiliary Slot object functions
+
 
         /* Create Auxiliary Slot objects. */
         // typedef void (__cdecl *LPALGENAUXILIARYEFFECTSLOTS)( ALsizei n, ALuint* slots ); 

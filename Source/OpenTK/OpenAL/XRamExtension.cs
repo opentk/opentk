@@ -30,17 +30,17 @@ namespace OpenTK.OpenAL
         #region X-RAM Function pointer definitions
 
         [CLSCompliant(false)]
-        public unsafe delegate AL.Bool SetBufferMode(int n, ref uint buffers, int value);
+        public unsafe delegate AL.Bool DelegateSetBufferMode(int n, ref uint buffers, int value);
         //typedef ALboolean (__cdecl *EAXSetBufferMode)(ALsizei n, ALuint *buffers, ALint value);
 
         [CLSCompliant(false)]
-        public delegate int GetBufferMode(uint buffer, out int value);
+        public delegate int DelegateGetBufferMode(uint buffer, out int value);
         //typedef ALenum    (__cdecl *EAXGetBufferMode)(ALuint buffer, ALint *value);
 
         [CLSCompliant(false)]
-        public SetBufferMode EAXSetBufferMode;
+        private DelegateSetBufferMode ImportedSetBufferMode;
         [CLSCompliant(false)]
-        public GetBufferMode EAXGetBufferMode;
+        private DelegateGetBufferMode ImportedGetBufferMode;
 
         #endregion X-RAM Function pointer definitions
 
@@ -81,8 +81,8 @@ namespace OpenTK.OpenAL
 
             try
             {
-                EAXGetBufferMode = (GetBufferMode)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("EAXGetBufferMode"), typeof(GetBufferMode));
-                EAXSetBufferMode = (SetBufferMode)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("EAXSetBufferMode"), typeof(SetBufferMode));
+                ImportedGetBufferMode = (DelegateGetBufferMode)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("EAXGetBufferMode"), typeof(DelegateGetBufferMode));
+                ImportedSetBufferMode = (DelegateSetBufferMode)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("EAXSetBufferMode"), typeof(DelegateSetBufferMode));
             }
             catch (Exception e)
             {
@@ -132,20 +132,26 @@ namespace OpenTK.OpenAL
 
         }
         [CLSCompliant(false)]
-        public void _SetBufferMode(ref uint buffer, XRamStorage mode)
+        public void SetBufferMode(int n,  ref uint buffer, XRamStorage mode)
         {
             switch (mode)
             {
                 case XRamStorage.Acessible:
-                    EAXSetBufferMode(1, ref buffer, AL_STORAGE_ACCESSIBLE);
+                    ImportedSetBufferMode(1, ref buffer, AL_STORAGE_ACCESSIBLE);
                     break;
                 case XRamStorage.Hardware:
-                    EAXSetBufferMode(1, ref buffer, AL_STORAGE_HARDWARE);
+                    ImportedSetBufferMode(1, ref buffer, AL_STORAGE_HARDWARE);
                     break;
                 default:
-                    EAXSetBufferMode(1, ref buffer, AL_STORAGE_AUTOMATIC);
+                    ImportedSetBufferMode(1, ref buffer, AL_STORAGE_AUTOMATIC);
                     break;
             }
+        }
+
+        public XRamStorage GetBufferMode(ref uint buffer)
+        {
+            int t; // this is improper, find sample codes using it and figure out what 2nd param does.
+            return  (XRamStorage)ImportedGetBufferMode(buffer, out t);
         }
 
         #endregion Public Methods
