@@ -14,19 +14,19 @@ namespace OpenTK.OpenAL.Enums
 
     public enum AlcContextAttributes : int
     {
-        ///<summary>followed by <int> Hz</summary>
+        ///<summary>Followed by System.Int32 Hz</summary>
         Frequency = 0x1007,
 
-        ///<summary>followed by <int> Hz</summary>
+        ///<summary>Followed by System.Int32 Hz</summary>
         Refresh = 0x1008,
 
-        ///<summary>followed by AlBoolean.True, or AlBoolean.False</summary>
+        ///<summary>Followed by AlBoolean.True, or AlBoolean.False</summary>
         Sync = 0x1009,
 
-        ///<summary>followed by <int> Num of requested Mono (3D) Sources</summary>
+        ///<summary>Followed by System.Int32 Num of requested Mono (3D) Sources</summary>
         MonoSources = 0x1010,
 
-        ///<summary>followed by <int> Num of requested Stereo Sources</summary>
+        ///<summary>Followed by System.Int32 Num of requested Stereo Sources</summary>
         StereoSources = 0x1011,
     }
 
