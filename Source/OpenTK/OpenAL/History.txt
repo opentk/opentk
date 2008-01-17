@@ -49,5 +49,8 @@ Version History:
 Next Version:
 - EFX Extension 
 - Enums themselves require summaries (do EFX 1st)
+
+- Identify: AL_FILTER_FIRST_PARAMETER, AL_FILTER_LAST_PARAMETER
+            AL_EFFECT_FIRST_PARAMETER, AL_EFFECT_LAST_PARAMETER
 - use [MarshalAs(UnmanagedType)] attribute, instead of AL.Bool? investigate
 - AL.BindBuffer helper function ala GL.BindBuffer? (Wraps AL.Source, better consistency)

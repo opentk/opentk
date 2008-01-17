@@ -14,9 +14,7 @@ namespace OpenTK.OpenAL
 {
     public partial class Efx
     {
-
         //Effect object functions.
-          
 
         /* Create Effect objects. */
         // typedef void (__cdecl *LPALGENEFFECTS)( ALsizei n, ALuint* effects );
@@ -32,25 +30,29 @@ namespace OpenTK.OpenAL
 
         /* Set an integer parameter for an Effect object. */
         // typedef void (__cdecl *LPALEFFECTI)( ALuint eid, ALenum param, ALint value); 
-        private delegate void DelegateAlEffecti( uint eid, EfxEffecti param, int value);
-        // typedef void (__cdecl *LPALEFFECTIV)( ALuint eid, ALenum param, ALint* values ); 
+        private delegate void DelegateAlEffecti(uint eid, EfxEffecti param, int value);
+
 
         /* Set a floating point parameter for an Effect object. */
         // typedef void (__cdecl *LPALEFFECTF)( ALuint eid, ALenum param, ALfloat value);
-        private delegate void DelegateAlEffectf( uint eid, EfxEffectf param, float value);
-        // typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
+        private delegate void DelegateAlEffectf(uint eid, EfxEffectf param, float value);
+
 
         /* Get an integer parameter for an Effect object. */
         // typedef void (__cdecl *LPALGETEFFECTI)( ALuint eid, ALenum pname, ALint* value );
-        // typedef void (__cdecl *LPALGETEFFECTIV)( ALuint eid, ALenum pname, ALint* values );
+
 
         /* Get a floating point parameter for an Effect object. */
         // typedef void (__cdecl *LPALGETEFFECTF)( ALuint eid, ALenum pname, ALfloat* value );
-        // typedef void (__cdecl *LPALGETEFFECTFV)( ALuint eid, ALenum pname, ALfloat* values );
+
+        // Not used: typedef void (__cdecl *LPALEFFECTIV)( ALuint eid, ALenum param, ALint* values ); 
+        // Not used: typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
+        // Not used: typedef void (__cdecl *LPALGETEFFECTIV)( ALuint eid, ALenum pname, ALint* values );
+        // Not used: typedef void (__cdecl *LPALGETEFFECTFV)( ALuint eid, ALenum pname, ALfloat* values );
 
 
         // Filter object functions
-         
+
 
         /* Create Filter objects. */
         // typedef void (__cdecl *LPALGENFILTERS)( ALsizei n, ALuint* filters ); 
