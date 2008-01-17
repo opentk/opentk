@@ -13,7 +13,8 @@ namespace Examples
     [AttributeUsage(AttributeTargets.Class)]
     public class ExampleAttribute : System.Attribute
     {
-        public readonly string Title;
+        string title;
+        public string Title { get { return title; } internal set { title = value; } }
         public readonly ExampleCategory Category;
         public readonly int Difficulty;
         public readonly bool Visible = true;
