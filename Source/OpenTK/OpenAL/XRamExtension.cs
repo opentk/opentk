@@ -114,23 +114,20 @@ namespace OpenTK.OpenAL
             /// <summary>Put an Open AL Buffer into X-RAM if memory is available, otherwise use host RAM.  This is the default mode.
             /// alGenBuffers(1, &uiBuffer);
             /// eaxSetBufferMode(1, &uiBuffer, alGetEnumValue("AL_STORAGE_AUTOMATIC"));
-            /// alBufferData(...);
-            /// </summary>
+            /// alBufferData(...);</summary>
             Automatic,
             /// <summary>Force an Open AL Buffer into X-RAM (good for non-streaming buffers)
             // alGenBuffers(1, &uiBuffer);
             // eaxSetBufferMode(1, &uiBuffer, alGetEnumValue("AL_STORAGE_HARDWARE"));
-            // alBufferData(...);
-            /// </summary>
+            // alBufferData(...);</summary>
             Hardware = 1,
             /// <summary>Force an Open AL Buffer into 'accessible' (currently host) RAM (good for streaming buffers)
             /// alGenBuffers(1, &uiBuffer);
             /// eaxSetBufferMode(1, &uiBuffer, alGetEnumValue("AL_STORAGE_ACCESSIBLE"));
-            /// alBufferData(...);
-            /// </summary>
+            /// alBufferData(...);</summary>
             Acessible = 2,
-
         }
+
         [CLSCompliant(false)]
         public void SetBufferMode(int n,  ref uint buffer, XRamStorage mode)
         {
@@ -148,6 +145,7 @@ namespace OpenTK.OpenAL
             }
         }
 
+        [CLSCompliant(false)]
         public XRamStorage GetBufferMode(ref uint buffer)
         {
             int t; // this is improper, find sample codes using it and figure out what 2nd param does.

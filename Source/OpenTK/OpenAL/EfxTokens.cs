@@ -359,18 +359,23 @@ namespace OpenTK.OpenAL
 
         #region Auxiliary Effect Slot
 
-        public enum EfxAuxiliarySlot : int
+        public enum EfxAuxiliaryi : int
         {
             // Auxiliary Slot object definitions to be used with alAuxiliaryEffectSlot functions.
             /// <summary>This property is used to attach an Effect object to the Auxiliary Effect Slot object. After the attachment, the Auxiliary Effect Slot object will contain the effect type and have the same effect parameters that were stored in the Effect object. Any Sources feeding the Auxiliary Effect Slot will immediate feed the new effect type and new effect parameters.</summary>
             AL_EFFECTSLOT_EFFECT = 0x0001,
-            /// <summary>This property is used to specify an output level for the Auxiliary Effect Slot. Setting the gain to 0.0f mutes the output. Range [0.0f .. 1.0f] Default: 1.0f</summary>
-            AL_EFFECTSLOT_GAIN = 0x0002,
+
             /// <summary>This property is used to enable or disable automatic send adjustments based on the physical positions of the sources and the listener. This property should be enabled when an application wishes to use a reverb effect to simulate the environment surrounding a listener or a collection of Sources. Range [False .. True] Default: True </summary>
             AL_EFFECTSLOT_AUXILIARY_SEND_AUTO = 0x0003,
 
             // Value to be used as an Auxiliary Slot ID to disable a source send..
-            AL_EFFECTSLOT_NULL = 0x0000,
+            //  AL_EFFECTSLOT_NULL = 0x0000, // remove, seems not to belong here. it's a target, not a token
+        }
+
+        public enum EfxAuxiliaryf : int
+        {
+            /// <summary>This property is used to specify an output level for the Auxiliary Effect Slot. Setting the gain to 0.0f mutes the output. Range [0.0f .. 1.0f] Default: 1.0f</summary>
+            AL_EFFECTSLOT_GAIN = 0x0002,
         }
 
         #endregion Auxiliary Effect Slot
@@ -401,12 +406,14 @@ namespace OpenTK.OpenAL
         // Filter type 
         public enum EfxFilteri : int
         {
-            AL_FILTER_FIRST_PARAMETER = 0x0000,
+            AL_FILTER_FIRST_PARAMETER = 0x0000, // deprecated?
             AL_FILTER_LAST_PARAMETER = 0x8000, // deprecated?
+
+            /// <summary>Used with the enum EfxFilterType as Parameter.</summary>
             AL_FILTER_TYPE = 0x8001,
         }
 
-        // Filter type definitions to be used with AL_FILTER_TYPE. 
+        ///<summary>Filter type definitions to be used with AL_FILTER_TYPE.</summary>
         public enum EfxFilterType : int
         {
             AL_FILTER_NULL = 0x0000, // Can also be used as a Filter Object ID
