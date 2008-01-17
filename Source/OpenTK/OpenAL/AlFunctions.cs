@@ -81,15 +81,6 @@ namespace OpenTK.OpenAL
         /// <summary>An IntPtr.Zero that can be used as Al.Null, for convenience.</summary>
         public static readonly IntPtr Null = IntPtr.Zero; // do NOT touch.
 
-        /// <summary>OpenAL 8-Bit Boolean char, can either be True or False.</summary>
-        public enum Bool : byte
-        {
-            ///<summary>Boolean False.</summary>
-            False = 0,
-            ///<summary>Boolean True.</summary>
-            True = 1,
-        }
-
         #endregion Type Helpers
 
         #region Renderer State management
@@ -110,7 +101,7 @@ namespace OpenTK.OpenAL
         /// <param name="capability">The name of a capability to enable.</param>
         /// <returns>True if enabled, False if disabled.</returns>
         [DllImport(AL.Lib, EntryPoint = "alIsEnabled", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool IsEnabled(Enums.ALCapability capability);
+        public static extern bool IsEnabled(Enums.ALCapability capability);
         // AL_API ALboolean AL_APIENTRY alIsEnabled( ALenum capability ); 
 
         #endregion Renderer State management
@@ -186,11 +177,11 @@ namespace OpenTK.OpenAL
 
         #region Extension support.
 
-        /// <summary>This function tests if a specific extension is available for the OpenAL driver.</summary>
+       ///<summary>This function tests if a specific extension is available for the OpenAL driver.</summary>
         /// <param name="extname">A null-terminated string describing the desired extension.</param>
         /// <returns>Returns AL_TRUE if the extension is available, AL_FALSE if the extension is not available.</returns>
         [DllImport(AL.Lib, EntryPoint = "alIsExtensionPresent", ExactSpelling = true, CallingConvention = AL.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool IsExtensionPresent([In] string extname);
+        public static extern bool IsExtensionPresent([In] string extname);
         // AL_API ALboolean AL_APIENTRY alIsExtensionPresent( const ALchar* extname );
 
         /// <summary>This function returns the address of an OpenAL extension function. Handle with care.</summary>
@@ -461,7 +452,7 @@ namespace OpenTK.OpenAL
         /// <param name="sid">A source name to be tested for validity</param>
         /// <returns>Success.</returns>
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alIsSource", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool IsSource(uint sid); // Verify a handle is a valid Source 
+        public static extern bool IsSource(uint sid); // Verify a handle is a valid Source 
         // AL_API ALboolean AL_APIENTRY alIsSource( ALuint sid );
 
         #endregion Create Source objects
@@ -904,7 +895,7 @@ namespace OpenTK.OpenAL
         /// <param name="bid">A buffer Handle previously allocated with <see cref="Al.GenBuffers"/>.</param>
         /// <returns>Success.</returns>
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alIsBuffer", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool IsBuffer(uint bid);
+        public static extern bool IsBuffer(uint bid);
         // AL_API ALboolean AL_APIENTRY alIsBuffer( ALuint bid );
 
         /// <summary>This function fills a buffer with audio data. All the pre-defined formats are PCM data, but this function may be used by extensions to load other data types as well.</summary>
