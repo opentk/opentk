@@ -81,13 +81,34 @@ namespace OpenTK.OpenAL
 
         #region Context Management
 
+        #region CreateContext
+
         /// <summary>This function creates a context using a specified device.</summary>
         /// <param name="device">a pointer to a device</param>
         /// <param name="attrlist">a pointer to a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC</param>
         /// <returns>Returns a pointer to the new context (NULL on failure). The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</returns>
-        [DllImport(Alc.Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern IntPtr CreateContext([In] IntPtr device, [In] IntPtr attrlist);
+        [DllImport(Alc.Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity]
+        [CLSCompliant(false)]
+        unsafe public static extern IntPtr CreateContext([In] IntPtr device, [In] int* attrlist);
         // ALC_API ALCcontext *    ALC_APIENTRY alcCreateContext( ALCdevice *device, const ALCint* attrlist );
+
+        /// <summary>This function creates a context using a specified device.</summary>
+        /// <param name="device">a pointer to a device</param>
+        /// <param name="attrlist">an array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC</param>
+        /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
+        /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
+        public static IntPtr CreateContext(IntPtr device, int[] attriblist)
+        {
+            unsafe
+            {
+                fixed (int* attriblist_ptr = attriblist)
+                {
+                    return CreateContext(device, attriblist_ptr);
+                }
+            }
+        }
+
+        #endregion
 
         /// <summary>This function makes a specified context the current context.</summary>
         /// <param name="context">A pointer to the new context.</param>
@@ -217,7 +238,7 @@ namespace OpenTK.OpenAL
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">an attribute to be retrieved: ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_ALL_DEVICES_SPECIFIER</param>
         /// <returns>A List of strings containing the names of the Devices.</returns>
-        public static List<string> GetString(IntPtr device, Enums.AlcGetStringList param)
+        public static IList<string> GetString(IntPtr device, Enums.AlcGetStringList param)
         {
             List<string> result = new List<string>();
             IntPtr t = GetStringPrivate(AL.Null, (Enums.AlcGetString)Enums.AlcGetStringList.DeviceSpecifier);
@@ -239,7 +260,7 @@ namespace OpenTK.OpenAL
                 }
             } while (true);
 
-            return result;
+            return (IList<string>)result;
         }
 
         /// <summary>This function returns integers related to the context.</summary>
