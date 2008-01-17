@@ -9,10 +9,10 @@
 
 using System;
 
-namespace OpenTK.OpenAL
+namespace OpenTK.OpenAL.Enums
+    
 {
-    public partial class Efx
-    {
+  
         // AL chorus effect parameter ranges and defaults
         // AL_CHORUS_WAVEFORM_SINUSOID                        0
         // AL_CHORUS_WAVEFORM_TRIANGLE                        1    
@@ -36,7 +36,7 @@ namespace OpenTK.OpenAL
         // AL_FREQUENCY_SHIFTER_DIRECTION_UP                  1
         // AL_FREQUENCY_SHIFTER_DIRECTION_OFF                 2
 
-        private const string ALC_EXT_EFX_NAME = "ALC_EXT_EFX";
+    
 
         /**
          * Context definitions to be used with alcCreateContext.
@@ -423,5 +423,5 @@ namespace OpenTK.OpenAL
         }
 
         #endregion Filter Object
-    }
+    
 }

@@ -114,7 +114,7 @@ namespace OpenTK.OpenAL
         /// <param name="context">A pointer to the new context.</param>
         /// <returns>Returns True on success, or False on failure.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcMakeContextCurrent", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool MakeContextCurrent([In] IntPtr context);
+        public static extern bool MakeContextCurrent([In] IntPtr context);
         // ALC_API ALCboolean      ALC_APIENTRY alcMakeContextCurrent( ALCcontext *context );
 
         /// <summary>This function tells a context to begin processing. When a context is suspended, changes in OpenAL state will be accepted but will not be processed. alcSuspendContext can be used to suspend a context, and then all the OpenAL state changes can be applied at once, followed by a call to alcProcessContext to apply all the state changes immediately. In some cases, this procedure may be more efficient than application of properties in a non-suspended state. In some implementations, process and suspend calls are each a NOP.</summary>
@@ -163,7 +163,7 @@ namespace OpenTK.OpenAL
         /// <param name="device">a pointer to an opened device</param>
         /// <returns>True will be returned on success or False on failure. Closing a device will fail if the device contains any contexts or buffers.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcCloseDevice", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool CloseDevice([In] IntPtr device);
+        public static extern bool CloseDevice([In] IntPtr device);
         // ALC_API ALCboolean      ALC_APIENTRY alcCloseDevice( ALCdevice *device );
 
         #endregion Device Management
@@ -186,7 +186,7 @@ namespace OpenTK.OpenAL
         /// <param name="extname">a null-terminated string describing the extension.</param>
         /// <returns>Returns True if the extension is available, False if the extension is not available.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcIsExtensionPresent", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool IsExtensionPresent([In] IntPtr device, [In] string extname);
+        public static extern bool IsExtensionPresent([In] IntPtr device, [In] string extname);
         // ALC_API ALCboolean      ALC_APIENTRY alcIsExtensionPresent( ALCdevice *device, const ALCchar *extname );
 
         /// <summary>This function retrieves the address of a specified context extension function.</summary>
@@ -290,7 +290,7 @@ namespace OpenTK.OpenAL
         /// <param name="device">a pointer to a capture device.</param>
         /// <returns>Returns True if the close operation was successful, False on failure.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcCaptureCloseDevice", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool CaptureCloseDevice([In] IntPtr device);
+        public static extern bool CaptureCloseDevice([In] IntPtr device);
         // ALC_API ALCboolean      ALC_APIENTRY alcCaptureCloseDevice( ALCdevice *device );
 
         /// <summary>This function begins a capture operation.</summary>
