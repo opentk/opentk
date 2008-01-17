@@ -44,7 +44,6 @@ namespace OpenTK.OpenAL
         }
         _EAXREVERBPROPERTIES EAXREVERBPROPERTIES; //, *LPEAXREVERBPROPERTIES;
 
-
         public struct _EFXEAXREVERBPROPERTIES
         {
             float flDensity;
@@ -73,14 +72,12 @@ namespace OpenTK.OpenAL
         }
         _EFXEAXREVERBPROPERTIES EFXEAXREVERBPROPERTIES;//, *LPEFXEAXREVERBPROPERTIES;
 
-
         public struct _EAXOBSTRUCTIONPROPERTIES
         {
             int lObstruction;
             float flObstructionLFRatio;
         }
         _EAXOBSTRUCTIONPROPERTIES EAXOBSTRUCTIONPROPERTIES;//, *LPEAXOBSTRUCTIONPROPERTIES;
-
 
         public struct _EAXOCCLUSIONPROPERTIES
         {
@@ -91,14 +88,12 @@ namespace OpenTK.OpenAL
         }
         _EAXOCCLUSIONPROPERTIES EAXOCCLUSIONPROPERTIES;//, *LPEAXOCCLUSIONPROPERTIES;
 
-
         public struct _EAXEXCLUSIONPROPERTIES
         {
             int lExclusion;
             float flExclusionLFRatio;
         }
         _EAXEXCLUSIONPROPERTIES EAXEXCLUSIONPROPERTIES;//, *LPEAXEXCLUSIONPROPERTIES;
-
 
         public struct _EFXLOWPASSFILTER
         {

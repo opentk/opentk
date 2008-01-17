@@ -14,98 +14,97 @@ namespace OpenTK.OpenAL
 {
     public partial class Efx
     {
-        //Effect object functions.
+        #region Effect object functions.
 
-        /* Create Effect objects. */
         // typedef void (__cdecl *LPALGENEFFECTS)( ALsizei n, ALuint* effects );
-        unsafe private delegate void DelegatealGenEffects(int n, [Out] uint* effects);
+        unsafe private delegate void Delegateal_GenEffects(int n, [Out] uint* effects);
 
-        /* Delete Effect objects. */
         // typedef void (__cdecl *LPALDELETEEFFECTS)( ALsizei n, ALuint* effects );
-        unsafe private delegate void DelegatealDeleteEffects(int n, [In] uint* effects);
+        unsafe private delegate void Delegate_alDeleteEffects(int n, [In] uint* effects);
 
-        /* Verify a handle is a valid Effect. */
         // typedef ALboolean (__cdecl *LPALISEFFECT)( ALuint eid );
-        private delegate AL.Bool DelegatealIsEffect(uint eid);
+        private delegate bool Delegate_alIsEffect(uint eid);
 
-        /* Set an integer parameter for an Effect object. */
         // typedef void (__cdecl *LPALEFFECTI)( ALuint eid, ALenum param, ALint value); 
-        private delegate void DelegateAlEffecti(uint eid, EfxEffecti param, int value);
+        private delegate void Delegate_alEffecti(uint eid, EfxEffecti param, int value);
 
-
-        /* Set a floating point parameter for an Effect object. */
         // typedef void (__cdecl *LPALEFFECTF)( ALuint eid, ALenum param, ALfloat value);
-        private delegate void DelegateAlEffectf(uint eid, EfxEffectf param, float value);
+        private delegate void Delegate_alEffectf(uint eid, EfxEffectf param, float value);
 
-
-        /* Get an integer parameter for an Effect object. */
         // typedef void (__cdecl *LPALGETEFFECTI)( ALuint eid, ALenum pname, ALint* value );
+        unsafe private delegate void Delegate_alGetEffecti(uint eid, EfxEffecti pname, [Out] int* value);
 
-
-        /* Get a floating point parameter for an Effect object. */
         // typedef void (__cdecl *LPALGETEFFECTF)( ALuint eid, ALenum pname, ALfloat* value );
+        unsafe private delegate void Delegate_alGetEffectf(uint eid, EfxEffectf pname, [Out]float* value);
 
-        // Not used: typedef void (__cdecl *LPALEFFECTIV)( ALuint eid, ALenum param, ALint* values ); 
-        // Not used: typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
-        // Not used: typedef void (__cdecl *LPALGETEFFECTIV)( ALuint eid, ALenum pname, ALint* values );
-        // Not used: typedef void (__cdecl *LPALGETEFFECTFV)( ALuint eid, ALenum pname, ALfloat* values );
+        // Not used:
+        // typedef void (__cdecl *LPALEFFECTIV)( ALuint eid, ALenum param, ALint* values ); 
+        // typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
+        // typedef void (__cdecl *LPALGETEFFECTIV)( ALuint eid, ALenum pname, ALint* values );
+        // typedef void (__cdecl *LPALGETEFFECTFV)( ALuint eid, ALenum pname, ALfloat* values );
 
+        #endregion Effect object functions.
 
-        // Filter object functions
+        #region Filter object functions
 
-
-        /* Create Filter objects. */
         // typedef void (__cdecl *LPALGENFILTERS)( ALsizei n, ALuint* filters ); 
+        unsafe private delegate void Delegate_alGenFilters(int n, [Out] uint* filters);
 
-        /* Delete Filter objects. */
         // typedef void (__cdecl *LPALDELETEFILTERS)( ALsizei n, ALuint* filters );
+        unsafe private delegate void Delegate_alDeleteFilters(int n, [In] uint* filters);
 
-        /* Verify a handle is a valid Filter. */
         // typedef ALboolean (__cdecl *LPALISFILTER)( ALuint fid );
+        private delegate bool Delegate_alIsFilter(uint fid);
 
-        /* Set an integer parameter for a Filter object. */
-        // typedef void (__cdecl *LPALFILTERI)( ALuint fid, ALenum param, ALint value ); 
-        // typedef void (__cdecl *LPALFILTERIV)( ALuint fid, ALenum param, ALint* values ); 
+        // typedef void (__cdecl *LPALFILTERI)( ALuint fid, ALenum param, ALint value );
+        private delegate void Delegate_alFilteri(uint fid, EfxFilteri param, int value);
 
-        /* Set a floating point parameter for an Filter object. */
         // typedef void (__cdecl *LPALFILTERF)( ALuint fid, ALenum param, ALfloat value); 
-        // typedef void (__cdecl *LPALFILTERFV)( ALuint fid, ALenum param, ALfloat* values ); 
+        private delegate void Delegate_alFilterf(uint fid, EfxFilterf param, float value);
 
-        /* Get an integer parameter for a Filter object. */
         // typedef void (__cdecl *LPALGETFILTERI)( ALuint fid, ALenum pname, ALint* value );
-        // typedef void (__cdecl *LPALGETFILTERIV)( ALuint fid, ALenum pname, ALint* values );
+        unsafe private delegate void Delegate_alGetFilteri(uint fid, EfxFilteri pname, [Out] int* value);
 
-        /* Get a floating point parameter for a Filter object. */
         // typedef void (__cdecl *LPALGETFILTERF)( ALuint fid, ALenum pname, ALfloat* value );
+        unsafe private delegate void Delegate_alGetFilterf(uint fid, EfxFilterf pname, [Out] float* value);
+
+        // Not used:
+        // typedef void (__cdecl *LPALFILTERIV)( ALuint fid, ALenum param, ALint* values ); 
+        // typedef void (__cdecl *LPALFILTERFV)( ALuint fid, ALenum param, ALfloat* values ); 
+        // typedef void (__cdecl *LPALGETFILTERIV)( ALuint fid, ALenum pname, ALint* values );
         // typedef void (__cdecl *LPALGETFILTERFV)( ALuint fid, ALenum pname, ALfloat* values );
 
+        #endregion Filter object functions
 
-        // Auxiliary Slot object functions
+        #region Auxiliary Slot object functions
 
+        // typedef void (__cdecl *LPALGENAUXILIARYEFFECTSLOTS)( ALsizei n, ALuint* slots );
+        unsafe private delegate void Delegate_alGenAuxiliaryEffectSlots(int n, [Out] uint* slots);
 
-        /* Create Auxiliary Slot objects. */
-        // typedef void (__cdecl *LPALGENAUXILIARYEFFECTSLOTS)( ALsizei n, ALuint* slots ); 
-
-        /* Delete Auxiliary Slot objects. */
         // typedef void (__cdecl *LPALDELETEAUXILIARYEFFECTSLOTS)( ALsizei n, ALuint* slots );
+        unsafe private delegate void Delegate_alDeleteAuxiliaryEffectSlots(int n, [In] uint* slots);
 
-        /* Verify a handle is a valid Auxiliary Slot. */
         // typedef ALboolean (__cdecl *LPALISAUXILIARYEFFECTSLOT)( ALuint slot ); 
+        private delegate bool Delegate_alIsAuxiliaryEffectSlot(uint slot);
 
-        /* Set an integer parameter for a Auxiliary Slot object. */
         // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTI)( ALuint asid, ALenum param, ALint value ); 
-        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum param, ALint* values ); 
+        private delegate void Delegate_alAuxiliaryEffectSloti(uint asid, EfxAuxiliaryi param, int value);
 
-        /* Set a floating point parameter for an Auxiliary Slot object. */
         // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTF)( ALuint asid, ALenum param, ALfloat value ); 
-        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum param, ALfloat* values ); 
+        private delegate void Delegate_alAuxiliaryEffectSlotf(uint asid, EfxAuxiliaryf param, float value);
 
-        /* Get an integer parameter for a Auxiliary Slot object. */
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTI)( ALuint asid, ALenum pname, ALint* value );
-        // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum pname, ALint* values );
+        unsafe private delegate void Delegate_alGetAuxiliaryEffectSloti(uint asid, EfxAuxiliaryi pname, [Out] int* value);
 
-        /* Get a floating point parameter for a Auxiliary Slot object. */
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTF)( ALuint asid, ALenum pname, ALfloat* value );
+        unsafe private delegate void Delegate_alGetAuxiliaryEffectSlotf(uint asid, EfxAuxiliaryf pname, [Out] float* value);
+
+        // Not used:
+        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum param, ALint* values ); 
+        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum param, ALfloat* values ); 
+        // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum pname, ALint* values );
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum pname, ALfloat* values );
+
+        #endregion Auxiliary Slot object functions
     }
 }
