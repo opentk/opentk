@@ -31,12 +31,12 @@ namespace OpenTK.OpenAL
         /// <param name="argv">Application Main Parameters. Can be IntPtr.Zero.</param>
         /// <returns>Success.</returns>
         [DllImport(Alut.Lib, EntryPoint = "alutInit", ExactSpelling = true, CallingConvention = Alut.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool Init([In] IntPtr argcp, [In] IntPtr argv);
+        public static extern bool Init([In] IntPtr argcp, [In] IntPtr argv);
         // ALUT_API ALboolean ALUT_APIENTRY alutInit (int *argcp, char **argv);
 
         /// <summary>Parameterless function for convenience. Internally passes IntPtr.Zero as parameters.</summary>
         /// <returns>Success.</returns>
-        public static AL.Bool Init() // overload for convenience
+        public static bool Init() // overload for convenience
         {
             return Init(IntPtr.Zero, IntPtr.Zero);
         }
@@ -46,12 +46,12 @@ namespace OpenTK.OpenAL
         /// <param name="argv">Application Main Parameters</param>
         /// <returns>Success.</returns>
         [DllImport(Alut.Lib, EntryPoint = "alutInitWithoutContext", ExactSpelling = true, CallingConvention = Alut.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool InitWithoutContext([In] IntPtr argcp, [In] IntPtr argv);
+        public static extern bool InitWithoutContext([In] IntPtr argcp, [In] IntPtr argv);
         // ALUT_API ALboolean ALUT_APIENTRY alutInitWithoutContext (int *argcp, char **argv);
 
         /// <summary>Alut.InitWithoutContext initializes the ALUT internals. It does not create any OpenAL context or device, so this has to be done via the usual ALC calls. alutInitWithoutContext examines the commandline arguments passed to it and remove those it recognizes. It is acceptable to pass two NULL pointers in settings where no useful information can be obtained from argc and argv.</summary>
         /// <returns>Success.</returns>
-        public static AL.Bool InitWithoutContext() // overload for convenience
+        public static bool InitWithoutContext() // overload for convenience
         {
             return InitWithoutContext(IntPtr.Zero, IntPtr.Zero);
         }
@@ -59,7 +59,7 @@ namespace OpenTK.OpenAL
         /// <summary>When the application has finished playing audio, it should shut down ALUT using Alut.Exit. This closes any OpenAL device/context that ALUT may have created in alutInit (but not any that the application created using ALC). After calling alutExit, you may subsequently call alutInit or alutInitWithoutContext again. Note that under well-behaved operating systems, it should be acceptable to simply exit from your program without bothering to call alutExit, relying on the OS to clean up after you. However, it is dangerous to rely on this behavior if portable operation is expected.</summary>
         /// <returns>Success.</returns>
         [DllImport(Alut.Lib, EntryPoint = "alutExit", ExactSpelling = true, CallingConvention = Alut.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern AL.Bool Exit();
+        public static extern bool Exit();
         // ALUT_API ALboolean ALUT_APIENTRY alutExit (void);
 
         #endregion Init/Exit

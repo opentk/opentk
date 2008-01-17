@@ -30,17 +30,17 @@ namespace OpenTK.OpenAL
         #region X-RAM Function pointer definitions
 
         [CLSCompliant(false)]
-        public unsafe delegate AL.Bool DelegateSetBufferMode(int n, ref uint buffers, int value);
+        public unsafe delegate bool Delegate_SetBufferMode(int n, ref uint buffers, int value);
         //typedef ALboolean (__cdecl *EAXSetBufferMode)(ALsizei n, ALuint *buffers, ALint value);
 
         [CLSCompliant(false)]
-        public delegate int DelegateGetBufferMode(uint buffer, out int value);
+        public delegate int Delegate_GetBufferMode(uint buffer, out int value);
         //typedef ALenum    (__cdecl *EAXGetBufferMode)(ALuint buffer, ALint *value);
 
         [CLSCompliant(false)]
-        private DelegateSetBufferMode ImportedSetBufferMode;
+        private Delegate_SetBufferMode Imported_SetBufferMode;
         [CLSCompliant(false)]
-        private DelegateGetBufferMode ImportedGetBufferMode;
+        private Delegate_GetBufferMode Imported_GetBufferMode;
 
         #endregion X-RAM Function pointer definitions
 
@@ -56,7 +56,7 @@ namespace OpenTK.OpenAL
         public XRamExtension()
         { // Query if Extension supported and retrieve Tokens/Pointers if it is.
             _valid = false;
-            if (AL.IsExtensionPresent("EAX-RAM") == AL.Bool.False)
+            if (AL.IsExtensionPresent("EAX-RAM") == false)
                 return;
 
             AL_EAX_RAM_SIZE = AL.GetEnumValue("AL_EAX_RAM_SIZE");
@@ -81,8 +81,8 @@ namespace OpenTK.OpenAL
 
             try
             {
-                ImportedGetBufferMode = (DelegateGetBufferMode)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("EAXGetBufferMode"), typeof(DelegateGetBufferMode));
-                ImportedSetBufferMode = (DelegateSetBufferMode)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("EAXSetBufferMode"), typeof(DelegateSetBufferMode));
+                Imported_GetBufferMode = (Delegate_GetBufferMode)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("EAXGetBufferMode"), typeof(Delegate_GetBufferMode));
+                Imported_SetBufferMode = (Delegate_SetBufferMode)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("EAXSetBufferMode"), typeof(Delegate_SetBufferMode));
             }
             catch (Exception e)
             {
@@ -134,13 +134,13 @@ namespace OpenTK.OpenAL
             switch (mode)
             {
                 case XRamStorage.Acessible:
-                    ImportedSetBufferMode(1, ref buffer, AL_STORAGE_ACCESSIBLE);
+                    Imported_SetBufferMode(1, ref buffer, AL_STORAGE_ACCESSIBLE);
                     break;
                 case XRamStorage.Hardware:
-                    ImportedSetBufferMode(1, ref buffer, AL_STORAGE_HARDWARE);
+                    Imported_SetBufferMode(1, ref buffer, AL_STORAGE_HARDWARE);
                     break;
                 default:
-                    ImportedSetBufferMode(1, ref buffer, AL_STORAGE_AUTOMATIC);
+                    Imported_SetBufferMode(1, ref buffer, AL_STORAGE_AUTOMATIC);
                     break;
             }
         }
@@ -149,7 +149,7 @@ namespace OpenTK.OpenAL
         public XRamStorage GetBufferMode(ref uint buffer)
         {
             int t; // this is improper, find sample codes using it and figure out what 2nd param does.
-            return  (XRamStorage)ImportedGetBufferMode(buffer, out t);
+            return  (XRamStorage)Imported_GetBufferMode(buffer, out t);
         }
 
         #endregion Public Methods

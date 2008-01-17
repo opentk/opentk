@@ -46,6 +46,10 @@ Version History:
 - Begun working on Efx
 - X-Ram changed, must be tested properly. verify parameters of GetBufferMode()
 
+0.7
+- Efx continued.
+- removed AL.Bool, replaced with System.Boolean. Seems to work so far.
+
 Next Version:
 - EFX Extension 
 - Enums themselves require summaries (do EFX 1st)
