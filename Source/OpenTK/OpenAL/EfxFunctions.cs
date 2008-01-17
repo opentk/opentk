@@ -203,6 +203,7 @@ namespace OpenTK.OpenAL
                 Console.WriteLine("Extension unknown.");
                 return;
             }
+            Console.WriteLine("ALC_EXT_EFX found.");
 
             try
             {
@@ -219,6 +220,7 @@ namespace OpenTK.OpenAL
                 Console.WriteLine("Failed to marshal Effect functions. " + e.ToString());
                 return;
             }
+            Console.WriteLine("Effect functions appear to be ok.");
 
             try
             {
@@ -235,22 +237,7 @@ namespace OpenTK.OpenAL
                 Console.WriteLine("Failed to marshal Filter functions. " + e.ToString());
                 return;
             }
-
-            try
-            {
-                Imported_alGenFilters = (Delegate_alGenFilters)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGenFilters"), typeof(Delegate_alGenFilters));
-                Imported_alDeleteFilters = (Delegate_alDeleteFilters)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alFilters"), typeof(Delegate_alDeleteFilters));
-                Imported_alIsFilter = (Delegate_alIsFilter)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsFilter"), typeof(Delegate_alIsFilter));
-                Imported_alFilteri = (Delegate_alFilteri)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alFilteri"), typeof(Delegate_alFilteri));
-                Imported_alFilterf = (Delegate_alFilterf)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alFilterf"), typeof(Delegate_alFilterf));
-                Imported_alGetFilteri = (Delegate_alGetFilteri)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetFilteri"), typeof(Delegate_alGetFilteri));
-                Imported_alGetFilterf = (Delegate_alGetFilterf)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetFilterf"), typeof(Delegate_alGetFilterf));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Failed to marshal Filter functions. " + e.ToString());
-                return;
-            }
+            Console.WriteLine("Filter functions appear to be ok.");
 
             try
             {
@@ -267,6 +254,7 @@ namespace OpenTK.OpenAL
                 Console.WriteLine("Failed to marshal AuxiliaryEffectSlot functions. " + e.ToString());
                 return;
             }
+            Console.WriteLine("Auxiliary Effect Slot functions appear to be ok.");
 
             // not early return, everything went fine.
             _valid = true;
