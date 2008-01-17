@@ -97,21 +97,27 @@ namespace Examples
 
                 if (example != null)
                 {
-                    sb.Append(example.Category);
-                    sb.Append(" ");
-                    if (example.Difficulty < 10)
-                        sb.Append("0");         // To keep items nicely sorted.
-                    sb.Append(example.Difficulty);
-                    sb.Append(": ");
-                    //sb.Append(type.Name);
-                    sb.Append(example.Title);
+                    //sb.Append(example.Category);
+                    //sb.Append(" ");
+                    //if (example.Difficulty < 10)
+                    //    sb.Append("0");         // To keep items nicely sorted.
+                    //sb.Append(example.Difficulty);
+                    //sb.Append(": ");
+                    ////sb.Append(type.Name);
+                    //sb.Append(example.Title);
 
                     if (example.Visible && example.Category != ExampleCategory.Test)
                         listBox1.Items.Add(new ExampleInfo(type, example));
                     else
+                    {
+#if DEBUG
+                        example.Title += " (hidden)";
+                        listBox1.Items.Add(new ExampleInfo(type, example));
+#else
                         hidden_items.Add(new ExampleInfo(type, example));
-                    
-                    // Clean the StringBuilder for the next pass.
+#endif
+                    }
+                        // Clean the StringBuilder for the next pass.
                     sb.Remove(0, sb.Length);
                 }
             }
