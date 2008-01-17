@@ -1,34 +1,35 @@
 ﻿using System;
 
 using OpenTK.OpenAL;
+using OpenTK.OpenAL.Enums;
+using OpenTK.Audio;
 
 using AlContext = System.IntPtr;
 using AlDevice = System.IntPtr;
-using Examples;
 
-namespace OpenALTestProgram
+namespace Examples
 {
-#if false
-    [Example("OpenAL Context Test", ExampleCategory.OpenAL, 101, false)]
+    [Example("AudioContext Test", ExampleCategory.Test, 101, false)]
     class TestApp
     {
         public static void GetOpenALErrors( IntPtr device )
         {
-            Enums.AlError AlErr = Al.GetError( );
-            Enums.AlcError AlcErr = Alc.GetError( device );
-            Enums.AlutError AlutErr = Alut.GetError( );
+            ALError AlErr = AL.GetError( );
+            AlcError AlcErr = Alc.GetError( device );
+            AlutError AlutErr = Alut.GetError( );
             Console.WriteLine( " Al: " + AlErr + "  Alc: " + AlcErr + "  Alut: " + AlcErr + " " + Alut.GetErrorString( AlutErr ) );
         }
 
-        static void Main( string[] args )
+        public static void Main()
         {
-            AlcUnitTestFunc( );
+            AlcUnitTestFunc();
         }
 
         public static void AlcUnitTestFunc()
         {
-            Console.WriteLine("Found Devices: "+ Alc.GetString( Al.Null, Enums.AlcGetString.DeviceSpecifier ));
+            AudioContext context = new AudioContext();
 
+            /*
             AlDevice MyDevice;
             AlContext MyContext;
 
@@ -99,6 +100,7 @@ namespace OpenALTestProgram
             {
                 Console.WriteLine( "Failed to find suitable Device." );
             }
+            */
             /*
 include <stdlib.h>
 include <AL/alut.h>
@@ -147,5 +149,4 @@ alListenerfv(AL_ORIENTATION, directionvect);
             */
         }
     }
-#endif
 }
