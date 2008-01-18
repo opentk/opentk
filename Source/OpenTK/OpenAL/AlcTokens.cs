@@ -28,6 +28,9 @@ namespace OpenTK.OpenAL.Enums
 
         ///<summary>Followed by System.Int32 Num of requested Stereo Sources</summary>
         StereoSources = 0x1011,
+
+        /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2</summary>
+        EfxMaxAuxiliarySends = 0x20003,
     }
 
     public enum AlcError : int
@@ -105,5 +108,14 @@ namespace OpenTK.OpenAL.Enums
 
         ///<summary>The number of capture samples available. NULL is an invalid device.</summary>
         CaptureSamples = 0x312,
+
+        /// <summary>(EFX Extension) This property can be used by the application to retrieve the Major version number of the Effects Extension supported by this OpenAL implementation. As this is a Context property is should be retrieved using alcGetIntegerv.</summary>
+        EfxMajorVersion = 0x20001,
+
+        /// <summary>(EFX Extension) This property can be used by the application to retrieve the Minor version number of the Effects Extension supported by this OpenAL implementation. As this is a Context property is should be retrieved using alcGetIntegerv.</summary>
+        EfxMinorVersion = 0x20002,
+
+        /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2</summary>
+        EfxMaxAuxiliarySends = 0x20003,
     }
 }

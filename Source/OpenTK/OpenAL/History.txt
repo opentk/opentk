@@ -1,12 +1,12 @@
 Version History:
  
-0.1 Initial
-- Tokens AL_TRUE and AL_FALSE removed, created new type. see AL.Bool
-  Tokens ALC_TRUE and ALC_FALSE removed, created new type. see AL.Bool
+ v0.1-0.7
 - Added AL.Null for convenience when working with C Manuals.  
 - Alut: The following functions are not bound/imported. Issue of undoing C malloc to prevent memory leaks.
         "alutLoadMemoryFromFile, alutLoadMemoryFromFileImage, alutLoadMemoryHelloWorld, alutLoadMemoryWaveform"
-  Please use Alut.CreateBuffer* functions instead, which have similar functionality and return a Buffer Handle instead.
+        Please use Alut.CreateBuffer* functions instead, which have similar functionality and return a Buffer Handle instead.
+        Disabled Alut.Sleep, rather use Thread.Sleep
+- Alc: All functions imported, Bool and Double functions disabled.
 - AL: Functions not imported:
       alListeneri, alListener3i, alListeneriv
       alGetListeneri, alGetListener3i, alGetListeneriv
@@ -15,46 +15,26 @@ Version History:
       alBufferf, alBufferfv, alBufferi, alBuffer3i, alBufferiv
       imported, but currently disabled: alBuffer3f
       alGetBufferf, alGetBuffer3f, alGetBufferfv, alGetBuffer3i, alGetBufferiv
-
-0.2
-- Largely improved documentation, found homes for previously orphaned Tokens.
-- The Token AL_DATA is hidden now, as it returns a pointer to unmanaged memory
-   where the buffer was located previously to calling AL.BufferData(). (It is usually freed after buffering)
+      DopplerVelocity, ChannelMask are deprecated and marked.
+      The Token AL_DATA is hidden now, as it returns a pointer to unmanaged memory
+         where the buffer was located previously to calling AL.BufferData(). (It is usually freed after buffering)
 - Added Function AL.GetErrorString()
 - Added overloads for requesting/deleting a single buffer/source at a time.
-- Added Vector3 overloads where applicable.
-
-0.3 - breaks former written examples.
-- Using a single changelog now, as the number of issues per file has significantly shrunk.
 - Refactored -i -fv -3f functions to be overloads e.g AL.GetSource, AL.GetListener
-- Added XRam Extension prototype. Untested, as it requires special hardware.
-- Refactored extensively to match OpenTK naming conventions.
-- Moved functions into overloads
-- Removed all C prototype comments from AL/ALC/ALUT
-- Documented Alc properly
+- X-Ram Extension untested, as it requires special hardware. !verify parameters of GetBufferMode()!
+- functions with ushort, uint, ulong marked as not CLS compliant.
 
-0.4
-- changed Alc enum GetString/GetStringList
-- disabled Alut.Sleep, rather use Thread.Sleep
-- DopplerVelocity, ChannelMask  are deprecated and marked.
-- functions with ushort, uint, ulong marked 
+v0.8
+-added Efx tokens to AL/Alc enums.
+-All Efx Effect functions imported. Filter and Auxiliary missing public methods.
 
-0.5 vanilla complete
-- Fix Alc.GetString( Enums.AlcGetStringList ) to terminate with 2 null, and split at 1 null
 
-0.6
-- Begun working on Efx
-- X-Ram changed, must be tested properly. verify parameters of GetBufferMode()
-
-0.7
-- Efx continued.
-- removed AL.Bool, replaced with System.Boolean. Seems to work so far.
-
-Next Version:
+Todo:
 - EFX Extension 
 - Enums themselves require summaries (do EFX 1st)
 
 - Identify: AL_FILTER_FIRST_PARAMETER, AL_FILTER_LAST_PARAMETER
             AL_EFFECT_FIRST_PARAMETER, AL_EFFECT_LAST_PARAMETER
-- use [MarshalAs(UnmanagedType)] attribute, instead of AL.Bool? investigate
+- use [MarshalAs(UnmanagedType)] attribute, instead of bool? investigate
 - AL.BindBuffer helper function ala GL.BindBuffer? (Wraps AL.Source, better consistency)
+- change all "name" into "handle" to avoid confusion?

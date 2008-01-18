@@ -22,6 +22,9 @@ namespace OpenTK.OpenAL.Enums
     {
         ///<summary>Indicate the gain (volume amplification) applied. Type: float. Range: [0.0f - ? ] A value of 1.0 means un-attenuated/unchanged. Each division by 2 equals an attenuation of -6dB. Each multiplicaton with 2 equals an amplification of +6dB. A value of 0.0f is meaningless with respect to a logarithmic scale; it is interpreted as zero volume - the channel is effectively disabled.</summary>
         Gain = 0x100A,
+
+        ///<summary>(EFX Extension) This setting is critical if Air Absorption effects are enabled because the amount of Air Absorption applied is directly related to the real-world distance between the Source and the Listener. centimeters 0.01f meters 1.0f kilometers 1000.0f Range [float.MinValue .. float.MaxValue] Default: 1.0f</summary>
+        EfxMetersPerUnit = 0x20004,
     }
 
     public enum ALListener3f : int
@@ -73,6 +76,16 @@ namespace OpenTK.OpenAL.Enums
 
         /// <summary>The playback position, expressed in seconds.</summary>
         SecOffset = 0x1024, // AL_EXT_OFFSET extension.
+
+        ///<summary>(EFX Extension) This property is a multiplier on the amount of Air Absorption applied to the Source. The AL_AIR_ABSORPTION_FACTOR is multiplied by an internal Air Absorption Gain HF value of 0.994 (-0.05dB) per meter which represents normal atmospheric humidity and temperature. Range [0.0f .. 10.0f] Default: 0.0f</summary>
+        EfxAirAbsorptionFactor = 0x20007,
+
+        ///<summary>(EFX Extension) This property is defined the same way as the Reverb Room Rolloff property: it is one of two methods available in the Effect Extension to attenuate the reflected sound (early reflections and reverberation) according to source-listener distance. Range [0.0f .. 10.0f] Default: 0.0f</summary>
+        EfxRoomRolloffFactor = 0x20008,
+
+        ///<summary>(EFX Extension) A directed Source points in a specified direction. The Source sounds at full volume when the listener is directly in front of the source; it is attenuated as the listener circles the Source away from the front. Range [0.0f .. 1.0f] Default: 1.0f</summary>
+        EfxConeOuterGainHighFrequency = 0x20009,
+
     }
 
     public enum ALSource3f : int
@@ -94,6 +107,15 @@ namespace OpenTK.OpenAL.Enums
 
         ///<summary>Indicate whether Source is looping. Type: Al.Bool Range: [True, False] Default: False.</summary>
         Looping = 0x1007,
+
+        ///<summary>(EFX Extension)If this Source property is set to AL_TRUE (its default value), this Source’s direct-path is automatically filtered according to the orientation of the source relative to the listener and the setting of the Source property AL_CONE_OUTER_GAINHF. Range [AL_FALSE .. AL_TRUE] Default: AL_TRUE</summary>
+        EfxDirectFilterGainHighFrequencyAuto = 0x2000A,
+
+        ///<summary>(EFX Extension)If this Source property is set to AL_TRUE (its default value), the intensity of this Source’s reflected sound is automatically attenuated according to source-listener distance and source directivity (as determined by the cone parameters). If it is AL_FALSE, the reflected sound is not attenuated according to distance and directivity. Range [AL_FALSE .. AL_TRUE] Default: AL_TRUE</summary>
+        EfxAuxiliarySendFilterGainAuto = 0x2000B,
+
+        ///<summary>(EFX Extension)If this Source property is AL_TRUE (its default value), the intensity of this Source’s reflected sound at high frequencies will be automatically attenuated according to the high-frequency source directivity as set by the AL_CONE_OUTER_GAINHF property. If this property is AL_FALSE, the Source’s reflected sound is not filtered at all according to the Source’s directivity. Range [AL_FALSE .. AL_TRUE] Default: AL_TRUE</summary>
+        EfxAuxiliarySendFilterGainHighFrequencyAuto = 0x2000C,
     }
 
     public enum ALSourcei : int
@@ -109,6 +131,15 @@ namespace OpenTK.OpenAL.Enums
 
         ///<summary>Source type (Static, Streaming or undetermined). Use enum AlSourceType for comparison</summary>
         SourceType = 0x1027,
+
+        ///<summary>(EFX Extension)This Source property is used to apply filtering on the direct-path (dry signal) of a Source.</summary>
+        EfxDirectFilter = 0x20005,
+    }
+
+    public enum ALSource3i : int
+    {
+        ///<summary>(EFX Extension) This Source property is used to establish connections between Sources and Auxiliary Effect Slots. For a Source to feed an Effect that has been loaded into an Auxiliary Effect Slot the application must configure one of the Source’s auxiliary sends. This process involves setting 3 variables – the destination Auxiliary Effect Slot ID, the Auxiliary Send number, and an optional Filter ID.</summary>
+        EfxAuxiliarySendFilter = 0x20006,
     }
 
     public enum ALSourceiGet : int
@@ -159,8 +190,10 @@ namespace OpenTK.OpenAL.Enums
     {
         ///<summary>Source is Static if a Buffer has been attached using AL_Buffer</summary>
         Static = 0x1028,
+
         ///<summary>Source is Streaming if one or more Buffers have been attached using alSourceQueueBuffers</summary>
         Streaming = 0x1029,
+
         ///<summary>Source is undetermined when it has the NULL Buffer attached</summary>
         Undetermined = 0x1030,
     }
@@ -185,10 +218,13 @@ namespace OpenTK.OpenAL.Enums
     {
         ///<summary>Sound sample's frequency, in units of Hertz [Hz]. This is the number of samples per second. Half of the sample frequency marks the maximum significant frequency component.</summary>
         Frequency = 0x2001,
+
         /// <summary>Bit depth of buffer. Should be 8 or 16.</summary>
         Bits = 0x2002,
+
         /// <summary>Number of channels in buffer. > 1 is valid, but buffer won’t be positioned when played. 1 for Mono, 2 for Stereo.</summary>
         Channels = 0x2003,
+
         /// <summary>size of buffer in bytes</summary>
         Size = 0x2004,
 
@@ -200,8 +236,10 @@ namespace OpenTK.OpenAL.Enums
     {
         ///<summary>Buffer state. Not supported for public use (yet).</summary>
         Unused = 0x2010,
+
         ///<summary>Buffer state. Not supported for public use (yet).</summary>
         Pending = 0x2011,
+
         ///<summary>Buffer state. Not supported for public use (yet).</summary>
         Processed = 0x2012,
     }
@@ -271,16 +309,21 @@ namespace OpenTK.OpenAL.Enums
 
         ///<summary>InverseDistance is equivalent to the IASIG I3DL2 model with the exception that AL_REFERENCE_DISTANCE does not imply any clamping.</summary>
         InverseDistance = 0xD001,
+
         ///<summary>InverseDistanceClamped is the IASIG I3DL2 model, with AL_REFERENCE_DISTANCE indicating both the reference distance and the distance below which gain will be clamped.</summary>
         InverseDistanceClamped = 0xD002,
-        ///<summary></summary>
-        LinearDistance = 0xD003, // AL_EXT_LINEAR_DISTANCE extension.
-        ///<summary></summary>
-        LinearDistanceClamped = 0xD004, // AL_EXT_LINEAR_DISTANCE extension.
-        ///<summary></summary>
-        ExponentDistance = 0xD005, // AL_EXT_EXPONENT_DISTANCE extension.
-        ///<summary></summary>
-        ExponentDistanceClamped = 0xD006, // AL_EXT_EXPONENT_DISTANCE extension.
+
+        ///<summary>AL_EXT_LINEAR_DISTANCE extension.</summary>
+        LinearDistance = 0xD003,
+
+        ///<summary>AL_EXT_LINEAR_DISTANCE extension.</summary>
+        LinearDistanceClamped = 0xD004,
+
+        ///<summary>AL_EXT_EXPONENT_DISTANCE extension.</summary>
+        ExponentDistance = 0xD005,
+
+        ///<summary>AL_EXT_EXPONENT_DISTANCE extension.</summary>
+        ExponentDistanceClamped = 0xD006,
     }
 
 }
