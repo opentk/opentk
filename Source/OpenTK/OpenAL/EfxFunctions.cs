@@ -243,6 +243,7 @@ namespace OpenTK.OpenAL
         private Delegate_alGenFilters Imported_alGenFilters;
 
         /// <summary>The alGenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or Auxiliary Send Filters.</summary>
+        /// <remarks>After creation a Filter has no type (AL_FILTER_NULL), so before it can be used to store a set of parameters, the application must specify what type of filter should be stored in the object, using alFilteri.</remarks>
         /// <param name="n">Number of Filters to be created.</param>
         /// <param name="filters">Pointer addressing sufficient memory to store n Filter object identifiers.</param>
         [CLSCompliant(false)]
@@ -713,7 +714,7 @@ namespace OpenTK.OpenAL
             }
             Console.WriteLine("Auxiliary Effect Slot functions appear to be ok.");
 
-            // not early return, everything went fine.
+            // didn't return so far, everything went fine.
             _valid = true;
         }
 
