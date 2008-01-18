@@ -555,7 +555,7 @@ namespace OpenTK.OpenAL
         /// <param name="param">The name of the attribute to retrieve: AL_SOURCE_RELATIVE, AL_BUFFER, AL_SOURCE_STATE, AL_BUFFERS_QUEUED, AL_BUFFERS_PROCESSED</param>
         /// <param name="value">A pointer to the integer value being retrieved.</param>
         [CLSCompliant(false),DllImport(AL.Lib,EntryPoint = "alGetSourcei",ExactSpelling = true,CallingConvention = AL.Style),SuppressUnmanagedCodeSecurity( )]
-        public static extern void GetSource( uint sid,Enums.ALSourceiGet param,[Out] out int value );
+        public static extern void GetSource( uint sid,Enums.ALGetSourcei param,[Out] out int value );
         // AL_API void AL_APIENTRY alGetSourcei( ALuint sid,  ALenum param, ALint* value );
 
         /// <summary>This function retrieves a bool property of a source.</summary>
@@ -566,7 +566,7 @@ namespace OpenTK.OpenAL
         public static void GetSource( uint sid,Enums.ALSourceb param,[Out] out bool value )
         {
             int result;
-            GetSource(sid,(Enums.ALSourceiGet) param,out result);
+            GetSource(sid,(Enums.ALGetSourcei) param,out result);
             if ( result == 1 )
                 value = true;
             else
