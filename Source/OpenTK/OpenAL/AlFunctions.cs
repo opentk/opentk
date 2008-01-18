@@ -412,7 +412,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function generates one source only. References to sources are ALuint values, which are used wherever a source reference is needed (in calls such as alDeleteSources and alSourcei).</summary>
-        /// <param name="sources">Pointer to an uint value which will store the name of the new source.</param>
+        /// <param name="source">Pointer to an uint value which will store the name of the new source.</param>
         [CLSCompliant(false)]
         public static void GenSources( out uint source )
         {
@@ -439,7 +439,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function deletes one source only.</summary>
-        /// <param name="sources">Pointer to a source name identifying the source to be deleted.</param>
+        /// <param name="source">Pointer to a source name identifying the source to be deleted.</param>
         [CLSCompliant(false)]
         public static void DeleteSources( ref uint source )
         {
@@ -861,7 +861,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function generates one buffer only, which contain audio data (see alBufferData). References to buffers are ALuint values, which are used wherever a buffer reference is needed (in calls such as alDeleteBuffers, alSourcei, alSourceQueueBuffers, and alSourceUnqueueBuffers).</summary>
-        /// <param name="buffers">Pointer to an uint value which will store the name of the new buffer.</param>
+        /// <param name="buffer">Pointer to an uint value which will store the name of the new buffer.</param>
         [CLSCompliant(false)]
         public static void GenBuffers( out uint buffer )
         {
@@ -888,7 +888,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
-        /// <param name="buffers">Pointer to a buffer name identifying the buffer to be deleted.</param>
+        /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
         [CLSCompliant(false)]
         public static void DeleteBuffers( ref uint buffer )
         {
