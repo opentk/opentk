@@ -142,7 +142,7 @@ namespace OpenTK.OpenAL.Enums
         EfxAuxiliarySendFilter = 0x20006,
     }
 
-    public enum ALSourceiGet : int
+    public enum ALGetSourcei : int
     {
         ///<summary>The playback position, expressed in bytes.</summary>
         ByteOffset = 0x1026,  // AL_EXT_OFFSET extension.

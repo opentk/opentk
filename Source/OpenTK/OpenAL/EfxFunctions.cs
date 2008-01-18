@@ -10,6 +10,8 @@
 using System;
 using System.Runtime.InteropServices;
 
+using OpenTK.Math;
+
 namespace OpenTK.OpenAL
 {
 
@@ -169,6 +171,29 @@ namespace OpenTK.OpenAL
 
         #endregion alEffectf
 
+        #region alEffectfv
+
+        [CLSCompliant(false)]
+        unsafe private delegate void Delegate_alEffectfv(uint eid, Enums.EfxEffect3f param, [In] float* values);
+ // typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
+
+        [CLSCompliant(false)]
+        private Delegate_alEffectfv Imported_alEffectfv;
+
+        [CLSCompliant(false)]
+        public void Effect( uint eid,Enums.EfxEffect3f param,ref Vector3 values )
+        {
+            unsafe
+            {
+                fixed ( float* ptr = &values.X )
+                {
+                    Imported_alEffectfv(eid,param,ptr);
+                }
+            }
+        }
+
+        #endregion alEffectfv
+
         #region alGetEffecti
 
         // typedef void (__cdecl *LPALGETEFFECTI)( ALuint eid, ALenum pname, ALint* value );
@@ -223,11 +248,36 @@ namespace OpenTK.OpenAL
 
         #endregion alGetEffectf
 
+        #region alGetEffectfv
+       
+      
+        [CLSCompliant(false)]
+        unsafe private delegate void Delegate_alGetEffectfv( uint eid,Enums.EfxEffect3f param,[Out] float* values );
+        // typedef void (__cdecl *LPALGETEFFECTFV)( ALuint eid, ALenum pname, ALfloat* values );
+
+        [CLSCompliant(false)]
+        private Delegate_alGetEffectfv Imported_alGetEffectfv;
+
+        [CLSCompliant(false)]
+        public void GetEffect( uint eid,Enums.EfxEffect3f param,out Vector3 values )
+        {
+            unsafe
+            {
+                fixed ( float* ptr = &values.X )
+                {
+                    Imported_alGetEffectfv(eid,param,ptr);
+                    values.X = ptr[0];
+                    values.Y = ptr[1];
+                    values.Z = ptr[2];
+                }
+            }
+        }
+
+        #endregion alGetEffectfv
+
         // Not used:
         // typedef void (__cdecl *LPALEFFECTIV)( ALuint eid, ALenum param, ALint* values ); 
-        // typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
         // typedef void (__cdecl *LPALGETEFFECTIV)( ALuint eid, ALenum pname, ALint* values );
-        // typedef void (__cdecl *LPALGETEFFECTFV)( ALuint eid, ALenum pname, ALfloat* values );
 
         #endregion Effect Object
 
@@ -673,8 +723,10 @@ namespace OpenTK.OpenAL
                 Imported_alIsEffect = (Delegate_alIsEffect) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsEffect"),typeof(Delegate_alIsEffect));
                 Imported_alEffecti = (Delegate_alEffecti) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffecti"),typeof(Delegate_alEffecti));
                 Imported_alEffectf = (Delegate_alEffectf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffectf"),typeof(Delegate_alEffectf));
+                Imported_alEffectfv = (Delegate_alEffectfv) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffectfv"),typeof(Delegate_alEffectfv));
                 Imported_alGetEffecti = (Delegate_alGetEffecti) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetEffecti"),typeof(Delegate_alGetEffecti));
                 Imported_alGetEffectf = (Delegate_alGetEffectf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetEffectf"),typeof(Delegate_alGetEffectf));
+                Imported_alGetEffectfv = (Delegate_alGetEffectfv) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetEffectfv"),typeof(Delegate_alGetEffectfv));
             } catch ( Exception e )
             {
                 Console.WriteLine("Failed to marshal Effect functions. " + e.ToString( ));

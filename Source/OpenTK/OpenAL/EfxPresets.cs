@@ -99,71 +99,71 @@ namespace OpenTK.OpenAL
             }
         }
 
+
+        public struct EfxEaxReverb
+        {
+            public float flDensity;
+            public float flDiffusion;
+            public float flGain;
+            public float flGainHF;
+            public float flGainLF;
+            public float flDecayTime;
+            public float flDecayHFRatio;
+            public float flDecayLFRatio;
+            public float flReflectionsGain;
+            public float flReflectionsDelay;
+            public Vector3 flReflectionsPan;
+            public float flLateReverbGain;
+            public float flLateReverbDelay;
+            public Vector3 flLateReverbPan;
+            public float flEchoTime;
+            public float flEchoDepth;
+            public float flModulationTime;
+            public float flModulationDepth;
+            public float flAirAbsorptionGainHF;
+            public float flHFReference;
+            public float flLFReference;
+            public float flRoomRolloffFactor;
+            public int iDecayHFLimit;
+        }
+
         /*
-               public struct _EFXEAXREVERBPROPERTIES
-               {
-                   public float flDensity;
-                   public float flDiffusion;
-                   public float flGain;
-                   public float flGainHF;
-                   public float flGainLF;
-                   public float flDecayTime;
-                   public float flDecayHFRatio;
-                   public float flDecayLFRatio;
-                   public float flReflectionsGain;
-                   public float flReflectionsDelay;
-                   public Vector3 flReflectionsPan;
-                   public float flLateReverbGain;
-                   public float flLateReverbDelay;
-                   public Vector3 flLateReverbPan;
-                   public float flEchoTime;
-                   public float flEchoDepth;
-                   public float flModulationTime;
-                   public float flModulationDepth;
-                   public float flAirAbsorptionGainHF;
-                   public float flHFReference;
-                   public float flLFReference;
-                   public float flRoomRolloffFactor;
-                   public int iDecayHFLimit;
-               }
-               _EFXEAXREVERBPROPERTIES EFXEAXREVERBPROPERTIES;//, *LPEFXEAXREVERBPROPERTIES;
+                     public struct _EAXOBSTRUCTIONPROPERTIES
+                     {
+                         public int lObstruction;
+                         public float flObstructionLFRatio;
+                     }
+                     _EAXOBSTRUCTIONPROPERTIES EAXOBSTRUCTIONPROPERTIES;//, *LPEAXOBSTRUCTIONPROPERTIES;
 
-               public struct _EAXOBSTRUCTIONPROPERTIES
-               {
-                   public int lObstruction;
-                   public float flObstructionLFRatio;
-               }
-               _EAXOBSTRUCTIONPROPERTIES EAXOBSTRUCTIONPROPERTIES;//, *LPEAXOBSTRUCTIONPROPERTIES;
+                     public struct _EAXOCCLUSIONPROPERTIES
+                     {
+                         public int lOcclusion;
+                         public float flOcclusionLFRatio;
+                         public float flOcclusionRoomRatio;
+                         public float flOcclusionDirectRatio;
+                     }
+                     _EAXOCCLUSIONPROPERTIES EAXOCCLUSIONPROPERTIES;//, *LPEAXOCCLUSIONPROPERTIES;
 
-               public struct _EAXOCCLUSIONPROPERTIES
-               {
-                   public int lOcclusion;
-                   public float flOcclusionLFRatio;
-                   public float flOcclusionRoomRatio;
-                   public float flOcclusionDirectRatio;
-               }
-               _EAXOCCLUSIONPROPERTIES EAXOCCLUSIONPROPERTIES;//, *LPEAXOCCLUSIONPROPERTIES;
+                     public struct _EAXEXCLUSIONPROPERTIES
+                     {
+                         public int lExclusion;
+                         public float flExclusionLFRatio;
+                     }
+                     _EAXEXCLUSIONPROPERTIES EAXEXCLUSIONPROPERTIES;//, *LPEAXEXCLUSIONPROPERTIES;
 
-               public struct _EAXEXCLUSIONPROPERTIES
-               {
-                   public int lExclusion;
-                   public float flExclusionLFRatio;
-               }
-               _EAXEXCLUSIONPROPERTIES EAXEXCLUSIONPROPERTIES;//, *LPEAXEXCLUSIONPROPERTIES;
-
-               public struct _EFXLOWPASSFILTER
-               {
-                   public float flGain;
-                   public float flGainHF;
-               }
-               _EFXLOWPASSFILTER EFXLOWPASSFILTER;//, *LPEFXLOWPASSFILTER;
+                     public struct _EFXLOWPASSFILTER
+                     {
+                         public float flGain;
+                         public float flGainHF;
+                     }
+                     _EFXLOWPASSFILTER EFXLOWPASSFILTER;//, *LPEFXLOWPASSFILTER;
 
        
-               void ConvertReverbParameters(EAXREVERBPROPERTIES *pEAXProp, EFXEAXREVERBPROPERTIES *pEFXEAXReverb);
-               void ConvertObstructionParameters(EAXOBSTRUCTIONPROPERTIES *pObProp, EFXLOWPASSFILTER *pDirectLowPassFilter);
-               void ConvertExclusionParameters(EAXEXCLUSIONPROPERTIES *pExProp, EFXLOWPASSFILTER *pSendLowPassFilter);
-               void ConvertOcclusionParameters(EAXOCCLUSIONPROPERTIES *pOcProp, EFXLOWPASSFILTER *pDirectLowPassFilter, EFXLOWPASSFILTER *pSendLowPassFilter);
-                       */
+                     void ConvertReverbParameters(EAXREVERBPROPERTIES *pEAXProp, EFXEAXREVERBPROPERTIES *pEFXEAXReverb);
+                     void ConvertObstructionParameters(EAXOBSTRUCTIONPROPERTIES *pObProp, EFXLOWPASSFILTER *pDirectLowPassFilter);
+                     void ConvertExclusionParameters(EAXEXCLUSIONPROPERTIES *pExProp, EFXLOWPASSFILTER *pSendLowPassFilter);
+                     void ConvertOcclusionParameters(EAXOCCLUSIONPROPERTIES *pOcProp, EFXLOWPASSFILTER *pDirectLowPassFilter, EFXLOWPASSFILTER *pSendLowPassFilter);
+                             */
 
 
         ///<summary>EAX Reverb Presets in legacy format - use ConvertReverbParameters() to convert to EFX EAX Reverb Presets for use with the OpenAL Effects Extension.</summary>

@@ -1,7 +1,7 @@
 Version History:
  
  v0.1-0.7
-- Added AL.Null for convenience when working with C Manuals.  
+
 - Alut: The following functions are not bound/imported. Issue of undoing C malloc to prevent memory leaks.
         "alutLoadMemoryFromFile, alutLoadMemoryFromFileImage, alutLoadMemoryHelloWorld, alutLoadMemoryWaveform"
         Please use Alut.CreateBuffer* functions instead, which have similar functionality and return a Buffer Handle instead.
@@ -18,6 +18,12 @@ Version History:
       DopplerVelocity, ChannelMask are deprecated and marked.
       The Token AL_DATA is hidden now, as it returns a pointer to unmanaged memory
          where the buffer was located previously to calling AL.BufferData(). (It is usually freed after buffering)
+Efx: Functions not imported:
+     alEffectiv, alGetEffectiv
+     alFilteriv, alFilterfv, alGetFilteriv, alGetFilterfv
+     alAuxiliaryEffectSlotiv, alAuxiliaryEffectSlotfv, alGetAuxiliaryEffectSlotiv, alGetAuxiliaryEffectSlotfv
+     
+- Added AL.Null for convenience when working with C Manuals.       
 - Added Function AL.GetErrorString()
 - Added overloads for requesting/deleting a single buffer/source at a time.
 - Refactored -i -fv -3f functions to be overloads e.g AL.GetSource, AL.GetListener
@@ -28,6 +34,9 @@ v0.8
 -added Efx tokens to AL/Alc enums.
 -All Efx Effect functions imported. Filter and Auxiliary missing public methods.
 
+v0.9
+-added docu
+-added alEffectfv and alGetEffectfv
 
 Todo:
 - EFX Extension 

@@ -144,7 +144,6 @@ namespace OpenTK.OpenAL.Enums
         AL_EQUALIZER_HIGH_GAIN = 0x0009,
         ///<summary>Equalizer Parameter. Unit: Hz Range [4000.0f .. 16000.0f] Default: 6000.0f</summary>
         AL_EQUALIZER_HIGH_CUTOFF = 0x000A,
-
         ///<summary>EAXReverb effect parameters. Range [0.0f .. 1.0f] Default: 1.0f</summary>
         AL_EAXREVERB_DENSITY = 0x0001,
         ///<summary>EAXReverb effect parameters. Range [0.0f .. 1.0f] Default: 1.0f</summary>
@@ -165,14 +164,11 @@ namespace OpenTK.OpenAL.Enums
         AL_EAXREVERB_REFLECTIONS_GAIN = 0x0009,
         ///<summary>EAXReverb effect parameters. Unit: Seconds Range [0.0f .. 0.3f] Default: 0.007f</summary>
         AL_EAXREVERB_REFLECTIONS_DELAY = 0x000A,
-        /// <summary>EAXReverb effect parameters. Unit: Vector3 Default: {0.0f, 0.0f, 0.0f}</summary>          
-        AL_EAXREVERB_REFLECTIONS_PAN = 0x000B,
         ///<summary>EAXReverb effect parameters. Range [0.0f .. 10.0f] Default: 1.26f</summary>
         AL_EAXREVERB_LATE_REVERB_GAIN = 0x000C,
         ///<summary>EAXReverb effect parameters. Unit: Seconds Range [0.0f .. 0.1f] Default: 0.011f</summary>
         AL_EAXREVERB_LATE_REVERB_DELAY = 0x000D,
-        /// <summary>EAXReverb effect parameters. Unit: Vector3 Default: {0.0f, 0.0f, 0.0f}</summary>  
-        AL_EAXREVERB_LATE_REVERB_PAN = 0x000E,
+   
         ///<summary>EAXReverb effect parameters. Range [0.075f .. 0.25f] Default: 0.25f</summary>
         AL_EAXREVERB_ECHO_TIME = 0x000F,
         ///<summary>EAXReverb effect parameters. Range [0.0f .. 1.0f] Default: 0.0f</summary>
@@ -189,6 +185,14 @@ namespace OpenTK.OpenAL.Enums
         AL_EAXREVERB_LFREFERENCE = 0x0015,
         ///<summary>EAXReverb effect parameters. Range [0.0f .. 10.0f] Default: 0.0f</summary>
         AL_EAXREVERB_ROOM_ROLLOFF_FACTOR = 0x0016,
+    }
+
+    public enum EfxEffect3f : int
+    {
+        /// <summary>EAXReverb effect parameters. Unit: Vector3 Default: {0.0f, 0.0f, 0.0f}</summary>  
+        EaxReverbLateReverbPan = 0x000E,
+        /// <summary>EAXReverb effect parameters. Unit: Vector3 Default: {0.0f, 0.0f, 0.0f}</summary>          
+        EaxReverbReflectionsPan = 0x000B,
     }
 
     public enum EfxEffecti : int
@@ -306,10 +310,10 @@ namespace OpenTK.OpenAL.Enums
     {
         // Auxiliary Slot object definitions to be used with alAuxiliaryEffectSlot functions.
         /// <summary>This property is used to attach an Effect object to the Auxiliary Effect Slot object. After the attachment, the Auxiliary Effect Slot object will contain the effect type and have the same effect parameters that were stored in the Effect object. Any Sources feeding the Auxiliary Effect Slot will immediate feed the new effect type and new effect parameters.</summary>
-        AL_EFFECTSLOT_EFFECT = 0x0001,
+        EffectslotEffect = 0x0001,
 
         /// <summary>This property is used to enable or disable automatic send adjustments based on the physical positions of the sources and the listener. This property should be enabled when an application wishes to use a reverb effect to simulate the environment surrounding a listener or a collection of Sources. Range [False .. True] Default: True </summary>
-        AL_EFFECTSLOT_AUXILIARY_SEND_AUTO = 0x0003,
+        EffectslotAuxiliarySendAuto = 0x0003,
 
         // Value to be used as an Auxiliary Slot ID to disable a source send..
         //  AL_EFFECTSLOT_NULL = 0x0000, // remove, seems not to belong here. it's a target, not a token
@@ -318,7 +322,7 @@ namespace OpenTK.OpenAL.Enums
     public enum EfxAuxiliaryf : int
     {
         /// <summary>This property is used to specify an output level for the Auxiliary Effect Slot. Setting the gain to 0.0f mutes the output. Range [0.0f .. 1.0f] Default: 1.0f</summary>
-        AL_EFFECTSLOT_GAIN = 0x0002,
+        EffectslotGain = 0x0002,
     }
 
     #endregion Auxiliary Effect Slot
