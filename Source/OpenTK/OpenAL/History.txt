@@ -35,6 +35,6 @@ Todo:
 
 - Identify: AL_FILTER_FIRST_PARAMETER, AL_FILTER_LAST_PARAMETER
             AL_EFFECT_FIRST_PARAMETER, AL_EFFECT_LAST_PARAMETER
-- use [MarshalAs(UnmanagedType)] attribute, instead of bool? investigate
+
 - AL.BindBuffer helper function ala GL.BindBuffer? (Wraps AL.Source, better consistency)
 - change all "name" into "handle" to avoid confusion?
