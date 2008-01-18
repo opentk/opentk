@@ -23,6 +23,7 @@ namespace OpenTK.Audio
         #region --- Fields ---
 
         bool disposed;
+        bool is_processing;
         ContextHandle device_handle, context_handle;
         string device_name;
         static object audio_context_lock = new object();
@@ -249,6 +250,10 @@ namespace OpenTK.Audio
 
             MakeCurrent();
 
+            AlcError err = Alc.GetError(device_handle);
+            if (err != AlcError.NoError)
+                throw new AudioContextException(err.ToString());
+
             //device_name = Alc.GetString(device_handle, AlcGetString.DeviceSpecifier);
             //Debug.Print(device_name);
             lock (audio_context_lock)
@@ -355,6 +360,22 @@ namespace OpenTK.Audio
 
         #endregion
 
+        #region public bool IsProcessing
+
+        /// <summary>
+        /// Gets a System.Boolean indicating whether the AudioContext is
+        /// currently processing audio events.
+        /// </summary>
+        /// <seealso cref="Process"/>
+        /// <seealso cref="Suspend"/>
+        public bool IsProcessing
+        {
+            get { return is_processing; }
+            private set { is_processing = value; }
+        }
+
+        #endregion
+
         #region public void Process
 
         /// <summary>
@@ -379,6 +400,7 @@ namespace OpenTK.Audio
         {
             if (disposed) throw new ObjectDisposedException(this.ToString());
             Alc.ProcessContext(this.context_handle);
+            IsProcessing = true;
         }
 
         #endregion
@@ -409,6 +431,7 @@ namespace OpenTK.Audio
         {
             if (disposed) throw new ObjectDisposedException(this.ToString());
             Alc.SuspendContext(this.context_handle);
+            IsProcessing = false;
         }
 
         #endregion
