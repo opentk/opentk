@@ -140,7 +140,7 @@ namespace OpenTK.OpenAL
         /// <param name="param">the state to be queried: AL_DOPPLER_FACTOR, AL_SPEED_OF_SOUND, AL_DISTANCE_MODEL</param>
         /// <returns>The boolean state described by param will be returned.</returns>
         [DllImport( AL.Lib, EntryPoint = "alGetBoolean", ExactSpelling = true, CallingConvention = AL.Style ), SuppressUnmanagedCodeSecurity( )]
-        public static extern AL.Bool Get( Enums.ALGetBoolean param );
+        public static extern bool Get( Enums.ALGetBoolean param );
         // AL_API ALboolean AL_APIENTRY alGetBoolean( ALenum param );
         */
 
