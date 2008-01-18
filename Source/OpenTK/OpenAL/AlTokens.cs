@@ -105,7 +105,7 @@ namespace OpenTK.OpenAL.Enums
         ///<summary>Indicate Source has relative coordinates.</summary>
         SourceRelative = 0x202,
 
-        ///<summary>Indicate whether Source is looping. Type: Al.Bool Range: [True, False] Default: False.</summary>
+        ///<summary>Indicate whether Source is looping. Type: bool Range: [True, False] Default: False.</summary>
         Looping = 0x1007,
 
         ///<summary>(EFX Extension)If this Source property is set to AL_TRUE (its default value), this Source’s direct-path is automatically filtered according to the orientation of the source relative to the listener and the setting of the Source property AL_CONE_OUTER_GAINHF. Range [AL_FALSE .. AL_TRUE] Default: AL_TRUE</summary>
