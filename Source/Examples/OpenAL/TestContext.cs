@@ -9,7 +9,7 @@ using AlDevice = System.IntPtr;
 
 namespace Examples
 {
-    [Example("AudioContext Test", ExampleCategory.Test, 101, false)]
+    [Example("AudioContext Test", ExampleCategory.Test)]
     class TestApp
     {
         public static void GetOpenALErrors( IntPtr device )
@@ -27,8 +27,17 @@ namespace Examples
 
         public static void AlcUnitTestFunc()
         {
-            AudioContext context = new AudioContext();
+            /*
+            AudioContext[] context = new AudioContext[]
+            { 
+                new AudioContext(),
+                new AudioContext(),
+                new AudioContext("Generic Software"),
+                new AudioContext("Spelling mistake")
+            };
+            */
 
+            AudioContext audio = new AudioContext();
             /*
             AlDevice MyDevice;
             AlContext MyContext;
@@ -110,8 +119,7 @@ main (int argc, char **argv)
 {
   ALuint helloBuffer, helloSource;
   alutInit (&argc, argv);
-  helloBuffer = alutCreateBufferHelloWorld ();
-  alGenSources (1, &helloSource);
+  helloBuffer = alutCreateBufferHelloWorld ();  alGenSources (1, &helloSource);
   alSourcei (helloSource, AL_Buffer, helloBuffer);
   alSourcePlay (helloSource);
   alutSleep (1);
