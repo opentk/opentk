@@ -162,7 +162,7 @@ namespace OpenTK.OpenAL
         /// <param name="duration">Number of seconds. May not be negative.</param>
         /// <returns>Success.</returns>
         [DllImport( Alut.Lib, EntryPoint = "alutSleep", ExactSpelling = true, CallingConvention = Alut.Style ), SuppressUnmanagedCodeSecurity( )]
-        public static extern AL.Bool Sleep( float duration );
+        public static extern bool Sleep( float duration );
         // ALUT_API ALboolean ALUT_APIENTRY alutSleep (ALfloat duration);
         */
         #endregion Misc
