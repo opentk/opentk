@@ -186,35 +186,159 @@ namespace OpenTK.OpenAL
 
         #region Filter Object
 
-        #region Filter object delegates
+        #region alGenFilters
 
         // typedef void (__cdecl *LPALGENFILTERS)( ALsizei n, ALuint* filters ); 
         [CLSCompliant(false)]
         unsafe private delegate void Delegate_alGenFilters( int n,[Out] uint* filters );
 
+        [CLSCompliant(false)]
+        private Delegate_alGenFilters Imported_alGenFilters;
+
+        [CLSCompliant(false)]
+        public void GenFilters( int n,out uint filters )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &filters )
+                {
+                    Imported_alGenFilters(n,ptr);
+                    filters = *ptr;
+                }
+            }
+        }
+
+        [CLSCompliant(false)]
+        /// <summary>This function generates only one Filter.</summary>
+        /// <param name="sources">Storage UInt32 for the new filter name/handle.</param>
+        public void GenFilters( out uint filter )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &filter )
+                {
+                    Imported_alGenFilters(1,ptr);
+                }
+            }
+        }
+
+        #endregion alGenFilters
+
+        #region alDeleteFilters
+
         // typedef void (__cdecl *LPALDELETEFILTERS)( ALsizei n, ALuint* filters );
         [CLSCompliant(false)]
         unsafe private delegate void Delegate_alDeleteFilters( int n,[In] uint* filters );
+
+        [CLSCompliant(false)]
+        private Delegate_alDeleteFilters Imported_alDeleteFilters;
+
+        [CLSCompliant(false)]
+        public void DeleteFilters( int n,ref uint[] filters )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = filters )
+                {
+                    Imported_alDeleteEffects(n,ptr);
+                }
+            }
+        }
+
+        /// <summary>This function deletes one Filter only.</summary>
+        /// <param name="sources">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
+        [CLSCompliant(false)]
+        public void DeleteFilters( ref uint filter )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &filter )
+                {
+                    Imported_alDeleteEffects(1,ptr);
+                }
+            }
+        }
+
+        #endregion alDeleteFilters
+
+        #region alIsFilter
 
         // typedef ALboolean (__cdecl *LPALISFILTER)( ALuint fid );
         [CLSCompliant(false)]
         public delegate bool Delegate_alIsFilter( uint fid );
 
+        [CLSCompliant(false)]
+        public Delegate_alIsFilter IsFilter;
+
+        #endregion alIsFilter
+
+        #region alFilteri
+
         // typedef void (__cdecl *LPALFILTERI)( ALuint fid, ALenum param, ALint value );
         [CLSCompliant(false)]
         public delegate void Delegate_alFilteri( uint fid,Enums.EfxFilteri param,int value );
+
+        [CLSCompliant(false)]
+        public Delegate_alFilteri Filteri;
+
+        #endregion alFilteri
+
+        #region alFilterf
 
         // typedef void (__cdecl *LPALFILTERF)( ALuint fid, ALenum param, ALfloat value); 
         [CLSCompliant(false)]
         public delegate void Delegate_alFilterf( uint fid,Enums.EfxFilterf param,float value );
 
+        [CLSCompliant(false)]
+        public Delegate_alFilterf Filterf;
+
+        #endregion alFilterf
+
+        #region alGetFilteri
+
         // typedef void (__cdecl *LPALGETFILTERI)( ALuint fid, ALenum pname, ALint* value );
         [CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetFilteri( uint fid,Enums.EfxFilteri pname,[Out] int* value );
 
+        [CLSCompliant(false)]
+        private Delegate_alGetFilteri Imported_alGetFilteri;
+
+        [CLSCompliant(false)]
+        public void GetFilter( uint fid,Enums.EfxFilteri pname,out int value )
+        {
+            unsafe
+            {
+                fixed ( int* ptr = &value )
+                {
+                    Imported_alGetFilteri(fid,pname,ptr);
+                }
+            }
+        }
+
+        #endregion alGetFilteri
+
+        #region alGetFilterf
+
         // typedef void (__cdecl *LPALGETFILTERF)( ALuint fid, ALenum pname, ALfloat* value );
         [CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetFilterf( uint fid,Enums.EfxFilterf pname,[Out] float* value );
+
+        [CLSCompliant(false)]
+        private Delegate_alGetFilterf Imported_alGetFilterf;
+
+        [CLSCompliant(false)]
+        public void GetFilter( uint fid,Enums.EfxFilterf pname,out float value )
+        {
+            unsafe
+            {
+                fixed ( float* ptr = &value )
+                {
+                    Imported_alGetFilterf(fid,pname,ptr);
+                }
+            }
+        }
+
+        #endregion alGetFilterf
 
         // Not used:
         // typedef void (__cdecl *LPALFILTERIV)( ALuint fid, ALenum param, ALint* values ); 
@@ -222,59 +346,163 @@ namespace OpenTK.OpenAL
         // typedef void (__cdecl *LPALGETFILTERIV)( ALuint fid, ALenum pname, ALint* values );
         // typedef void (__cdecl *LPALGETFILTERFV)( ALuint fid, ALenum pname, ALfloat* values );
 
-        #endregion Filter object delegates
-
-        #region Filter object functions
-
-        [CLSCompliant(false)]
-        private Delegate_alGenFilters Imported_alGenFilters;
-        [CLSCompliant(false)]
-        private Delegate_alDeleteFilters Imported_alDeleteFilters;
-        [CLSCompliant(false)]
-        public Delegate_alIsFilter IsFilter;
-        [CLSCompliant(false)]
-        public Delegate_alFilteri Filteri;
-        [CLSCompliant(false)]
-        public Delegate_alFilterf Filterf;
-        [CLSCompliant(false)]
-        private Delegate_alGetFilteri Imported_alGetFilteri;
-        [CLSCompliant(false)]
-        private Delegate_alGetFilterf Imported_alGetFilterf;
-
-        #endregion Filter object functions
-
         #endregion Filter Object
 
+        #region Auxiliary Effect Slot Object
 
-        #region Auxiliary Slot object delegates
+        #region alGenAuxiliaryEffectSlots
 
         // typedef void (__cdecl *LPALGENAUXILIARYEFFECTSLOTS)( ALsizei n, ALuint* slots );
         [CLSCompliant(false)]
         unsafe private delegate void Delegate_alGenAuxiliaryEffectSlots( int n,[Out] uint* slots );
 
+        [CLSCompliant(false)]
+        private Delegate_alGenAuxiliaryEffectSlots Imported_alGenAuxiliaryEffectSlots;
+
+        [CLSCompliant(false)]
+        public void GenAuxiliaryEffectSlots( int n,out uint slots )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &slots )
+                {
+                    Imported_alGenAuxiliaryEffectSlots(n,ptr);
+                    slots = *ptr;
+                }
+            }
+        }
+
+        [CLSCompliant(false)]
+        /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
+        /// <param name="sources">Storage UInt32 for the new auxiliary effect slot name/handle.</param>
+        public void GenAuxiliaryEffectSlots( out uint slot )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &slot )
+                {
+                    Imported_alGenAuxiliaryEffectSlots(1,ptr);
+                }
+            }
+        }
+
+        #endregion alGenAuxiliaryEffectSlots
+
+        #region alDeleteAuxiliaryEffectSlots
+
         // typedef void (__cdecl *LPALDELETEAUXILIARYEFFECTSLOTS)( ALsizei n, ALuint* slots );
         [CLSCompliant(false)]
         unsafe private delegate void Delegate_alDeleteAuxiliaryEffectSlots( int n,[In] uint* slots );
+
+        [CLSCompliant(false)]
+        private Delegate_alDeleteAuxiliaryEffectSlots Imported_alDeleteAuxiliaryEffectSlots;
+
+        [CLSCompliant(false)]
+        public void DeleteAuxiliaryEffectSlots( int n,ref uint[] slots )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = slots )
+                {
+                    Imported_alDeleteAuxiliaryEffectSlots(n,ptr);
+                }
+            }
+        }
+
+        /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
+        /// <param name="sources">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
+        [CLSCompliant(false)]
+        public void DeleteAuxiliaryEffectSlots( ref uint slot )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &slot )
+                {
+                    Imported_alDeleteAuxiliaryEffectSlots(1,ptr);
+                }
+            }
+        }
+
+        #endregion alDeleteAuxiliaryEffectSlots
+
+        #region alIsAuxiliaryEffectSlot
 
         // typedef ALboolean (__cdecl *LPALISAUXILIARYEFFECTSLOT)( ALuint slot ); 
         [CLSCompliant(false)]
         public delegate bool Delegate_alIsAuxiliaryEffectSlot( uint slot );
 
+        [CLSCompliant(false)]
+        public Delegate_alIsAuxiliaryEffectSlot IsAuxiliaryEffectSlot;
+
+        #endregion alIsAuxiliaryEffectSlot
+
+        #region alAuxiliaryEffectSloti
+
         // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTI)( ALuint asid, ALenum param, ALint value ); 
         [CLSCompliant(false)]
         public delegate void Delegate_alAuxiliaryEffectSloti( uint asid,Enums.EfxAuxiliaryi param,int value );
+
+        [CLSCompliant(false)]
+        public Delegate_alAuxiliaryEffectSloti AuxiliaryEffectSloti;
+
+        #endregion alAuxiliaryEffectSloti
+
+        #region alAuxiliaryEffectSlotf
 
         // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTF)( ALuint asid, ALenum param, ALfloat value ); 
         [CLSCompliant(false)]
         public delegate void Delegate_alAuxiliaryEffectSlotf( uint asid,Enums.EfxAuxiliaryf param,float value );
 
+        [CLSCompliant(false)]
+        public Delegate_alAuxiliaryEffectSlotf AuxiliaryEffectSlotf;
+
+        #endregion alAuxiliaryEffectSlotf
+
+        #region alGetAuxiliaryEffectSloti
+
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTI)( ALuint asid, ALenum pname, ALint* value );
         [CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetAuxiliaryEffectSloti( uint asid,Enums.EfxAuxiliaryi pname,[Out] int* value );
 
+        [CLSCompliant(false)]
+        private Delegate_alGetAuxiliaryEffectSloti Imported_alGetAuxiliaryEffectSloti;
+
+        [CLSCompliant(false)]
+        public void GetAuxiliaryEffectSlot( uint asid,Enums.EfxAuxiliaryi pname,out int value )
+        {
+            unsafe
+            {
+                fixed ( int* ptr = &value )
+                {
+                    Imported_alGetAuxiliaryEffectSloti(asid,pname,ptr);
+                }
+            }
+        }
+
+        #endregion alGetAuxiliaryEffectSloti
+
+        #region alGetAuxiliaryEffectSlotf
+
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTF)( ALuint asid, ALenum pname, ALfloat* value );
         [CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetAuxiliaryEffectSlotf( uint asid,Enums.EfxAuxiliaryf pname,[Out] float* value );
+
+        [CLSCompliant(false)]
+        private Delegate_alGetAuxiliaryEffectSlotf Imported_alGetAuxiliaryEffectSlotf;
+
+        [CLSCompliant(false)]
+        public void GetAuxiliaryEffectSlot( uint asid,Enums.EfxAuxiliaryf pname,out float value )
+        {
+            unsafe
+            {
+                fixed ( float* ptr = &value )
+                {
+                    Imported_alGetAuxiliaryEffectSlotf(asid,pname,ptr);
+                }
+            }
+        }
+
+        #endregion alGetAuxiliaryEffectSlotf
 
         // Not used:
         // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum param, ALint* values ); 
@@ -282,26 +510,7 @@ namespace OpenTK.OpenAL
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum pname, ALint* values );
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum pname, ALfloat* values );
 
-        #endregion Auxiliary Slot object delegates
-
-        #region Auxiliary Effect Slot functions
-
-        [CLSCompliant(false)]
-        private Delegate_alGenAuxiliaryEffectSlots Imported_alGenAuxiliaryEffectSlots;
-        [CLSCompliant(false)]
-        private Delegate_alDeleteAuxiliaryEffectSlots Imported_alDeleteAuxiliaryEffectSlots;
-        [CLSCompliant(false)]
-        public Delegate_alIsAuxiliaryEffectSlot IsAuxiliaryEffectSlot;
-        [CLSCompliant(false)]
-        public Delegate_alAuxiliaryEffectSloti AuxiliaryEffectSloti;
-        [CLSCompliant(false)]
-        public Delegate_alAuxiliaryEffectSlotf AuxiliaryEffectSlotf;
-        [CLSCompliant(false)]
-        private Delegate_alGetAuxiliaryEffectSloti Imported_alGetAuxiliaryEffectSloti;
-        [CLSCompliant(false)]
-        private Delegate_alGetAuxiliaryEffectSlotf Imported_alGetAuxiliaryEffectSlotf;
-
-        #endregion Auxiliary Effect Slot functions
+        #endregion Auxiliary Effect Slot Object
 
         #region Constructor / Extension Loading
 
