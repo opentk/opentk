@@ -6,18 +6,20 @@ using OpenTK.Audio;
 
 using AlContext = System.IntPtr;
 using AlDevice = System.IntPtr;
+using System.Diagnostics;
 
 namespace Examples
 {
     [Example("AudioContext Test", ExampleCategory.Test)]
     class TestApp
     {
-        public static void GetOpenALErrors( IntPtr device )
+        public static void PrintOpenALErrors( IntPtr device )
         {
-            ALError AlErr = AL.GetError( );
-            AlcError AlcErr = Alc.GetError( device );
-            AlutError AlutErr = Alut.GetError( );
-            Console.WriteLine( " Al: " + AlErr + "  Alc: " + AlcErr + "  Alut: " + AlcErr + " " + Alut.GetErrorString( AlutErr ) );
+            ALError AlErr = AL.GetError();
+            // AudioContext should throw on errors, so no need to test them manually.
+            //AlcError AlcErr = Alc.GetError(device);
+            AlutError AlutErr = Alut.GetError();
+            Console.WriteLine("Al: " + AlErr + " Alut: " + Alut.GetErrorString(AlutErr));
         }
 
         public static void Main()
@@ -29,7 +31,26 @@ namespace Examples
         {
             AudioContext context = new AudioContext();
 
-            /*
+            Trace.WriteLine("Testing AudioContext functions.");
+            Trace.Indent();
+
+            Trace.WriteLine("Suspend()...");
+            context.Suspend();
+            Trace.Assert(!context.IsProcessing);
+
+            Trace.WriteLine("Process()...");
+            context.Process();
+            Trace.Assert(context.IsProcessing);
+
+            Trace.WriteLine("MakeCurrent()...");
+            context.MakeCurrent();
+            Trace.Assert(context.IsCurrent);
+
+            Trace.WriteLine("IsCurrent = false...");
+            context.IsCurrent = false;
+            Trace.Assert(!context.IsCurrent);
+
+#if false
             AlDevice MyDevice;
             AlContext MyContext;
 
@@ -100,7 +121,7 @@ namespace Examples
             {
                 Console.WriteLine( "Failed to find suitable Device." );
             }
-            */
+#endif
             /*
 include <stdlib.h>
 include <AL/alut.h>

@@ -348,7 +348,9 @@ namespace OpenTK.Audio
                     if (available_contexts.Count == 0)
                         return false;
                     else
-                        return AudioContext.available_contexts[(ContextHandle)Alc.GetCurrentContext()] == this;
+                    {
+                        return AudioContext.CurrentContext == this;
+                    }
                 }
             }
             set
