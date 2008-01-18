@@ -27,17 +27,8 @@ namespace Examples
 
         public static void AlcUnitTestFunc()
         {
-            /*
-            AudioContext[] context = new AudioContext[]
-            { 
-                new AudioContext(),
-                new AudioContext(),
-                new AudioContext("Generic Software"),
-                new AudioContext("Spelling mistake")
-            };
-            */
+            AudioContext context = new AudioContext();
 
-            AudioContext audio = new AudioContext();
             /*
             AlDevice MyDevice;
             AlContext MyContext;
