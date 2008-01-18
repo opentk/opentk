@@ -20,19 +20,7 @@ using System.Threading;
 
 namespace Examples.Tests
 {
-    [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    struct TryMouse
-    {
-        ushort usFlags;
-        ushort usButtonFlags;
-        ushort usButtonData;
-        uint ulRawButtons;
-        int lLastX;
-        int lLastY;
-        uint ulExtraInformation;
-    }
-
-    [Example("Input Logger", ExampleCategory.Test, 4)]
+    [Example("Input Logger", ExampleCategory.Test)]
     public partial class S04_Input_Logger : Form
     {
         Thread thread;
@@ -42,8 +30,6 @@ namespace Examples.Tests
 
         public S04_Input_Logger()
         {
-            //Console.WriteLine(sizeof(TryMouse));
-            Console.WriteLine(System.Runtime.InteropServices.Marshal.SizeOf(typeof(TryMouse)));
             InitializeComponent();
         }
 
