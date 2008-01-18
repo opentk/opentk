@@ -26,27 +26,31 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alGenEffects Imported_alGenEffects;
 
+        /// <summary>The alGenEffects function is used to create one or more Effect objects. An Effect object stores an effect type and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary Effect Slot object</summary>
+        /// <remarks>After creation an Effect has no type (AL_EFFECT_NULL), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using alEffecti.</remarks>
+        /// <param name="n">Number of Effects to be created.</param>
+        /// <param name="effects">Pointer addressing sufficient memory to store n Effect object identifiers.</param>
         [CLSCompliant(false)]
-        public void GenEffects( int n,out uint sources )
+        public void GenEffects( int n,out uint effects )
         {
             unsafe
             {
-                fixed ( uint* ptr = &sources )
+                fixed ( uint* ptr = &effects )
                 {
                     Imported_alGenEffects(n,ptr);
-                    sources = *ptr;
+                    effects = *ptr;
                 }
             }
         }
 
         [CLSCompliant(false)]
         /// <summary>This function generates only one Effect.</summary>
-        /// <param name="sources">Storage UInt32 for the new effect name/handle.</param>
-        public void GenEffects( out uint source )
+        /// <param name="effect">Storage UInt32 for the new effect name/handle.</param>
+        public void GenEffects( out uint effect )
         {
             unsafe
             {
-                fixed ( uint* ptr = &source )
+                fixed ( uint* ptr = &effect )
                 {
                     Imported_alGenEffects(1,ptr);
                 }
@@ -64,12 +68,15 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alDeleteEffects Imported_alDeleteEffects;
 
+        /// <summary>The alDeleteEffects function is used to delete and free resources for Effect objects previously created with alGenEffects.</summary>
+        /// <param name="n">Number of Effects to be deleted.</param>
+        /// <param name="effects">Pointer to n Effect object identifiers.</param>
         [CLSCompliant(false)]
-        public void DeleteEffects( int n,ref uint[] sources )
+        public void DeleteEffects( int n,ref uint[] effects )
         {
             unsafe
             {
-                fixed ( uint* ptr = sources )
+                fixed ( uint* ptr = effects )
                 {
                     Imported_alDeleteEffects(n,ptr);
                 }
@@ -77,13 +84,13 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function deletes one Effect only.</summary>
-        /// <param name="sources">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
+        /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
         [CLSCompliant(false)]
-        public void DeleteEffects( ref uint source )
+        public void DeleteEffects( ref uint effect )
         {
             unsafe
             {
-                fixed ( uint* ptr = &source )
+                fixed ( uint* ptr = &effect )
                 {
                     Imported_alDeleteEffects(1,ptr);
                 }
@@ -96,10 +103,18 @@ namespace OpenTK.OpenAL
 
         // typedef ALboolean (__cdecl *LPALISEFFECT)( ALuint eid );
         [CLSCompliant(false)]
-        public delegate bool Delegate_alIsEffect( uint eid );
+        private delegate bool Delegate_alIsEffect( uint eid );
 
         [CLSCompliant(false)]
-        public Delegate_alIsEffect IsEffect;
+        private Delegate_alIsEffect Imported_alIsEffect;
+
+        /// <summary>The alIsEffect function is used to determine if an object identifier is a valid Effect object.</summary>
+        /// <param name="eid">Effect identifier to validate.</param>
+        /// <returns>True if the identifier is a valid Effect, False otherwise.</returns>
+        public bool IsEffect( uint eid )
+        {
+            return Imported_alIsEffect(eid);
+        }
 
         #endregion alIsEffect
 
@@ -107,14 +122,28 @@ namespace OpenTK.OpenAL
 
         // typedef void (__cdecl *LPALEFFECTI)( ALuint eid, ALenum param, ALint value); 
         [CLSCompliant(false)]
-        public delegate void Delegate_alEffecti( uint eid,Enums.EfxEffecti param,int value );
+        private delegate void Delegate_alEffecti( uint eid,Enums.EfxEffecti param,int value );
 
         [CLSCompliant(false)]
-        public Delegate_alEffecti Effecti;
+        private Delegate_alEffecti Imported_alEffecti;
 
+        /// <summary>This function is used to set integer properties on Effect objects.</summary>
+        /// <param name="eid">Effect object identifier.</param>
+        /// <param name="param">Effect property to set.</param>
+        /// <param name="value">Integer value.</param>
+        [CLSCompliant(false)]
+        public void Effect( uint eid,Enums.EfxEffecti param,int value )
+        {
+            Imported_alEffecti(eid,param,value);
+        }
+
+        /// <summary>(Helper) internally calls alEffecti(eid,Enums.EfxEffecti.EffectType,(int) type)</summary>
+        /// <param name="eid">Effect id.</param>
+        /// <param name="type">Effect type.</param>
+        [CLSCompliant(false)]
         public void BindEffect( uint eid,Enums.EfxEffectType type )
         {
-            Effecti(eid,Enums.EfxEffecti.EffectType,(int) type);
+            Imported_alEffecti(eid,Enums.EfxEffecti.EffectType,(int) type);
         }
 
         #endregion alEffecti
@@ -123,10 +152,20 @@ namespace OpenTK.OpenAL
 
         // typedef void (__cdecl *LPALEFFECTF)( ALuint eid, ALenum param, ALfloat value);
         [CLSCompliant(false)]
-        public delegate void Delegate_alEffectf( uint eid,Enums.EfxEffectf param,float value );
+        private delegate void Delegate_alEffectf( uint eid,Enums.EfxEffectf param,float value );
 
         [CLSCompliant(false)]
-        public Delegate_alEffectf Effectf;
+        private Delegate_alEffectf Imported_alEffectf;
+
+        /// <summary>This function is used to set floating point properties on Effect objects.</summary>
+        /// <param name="eid">Effect object identifier.</param>
+        /// <param name="param">Effect property to set.</param>
+        /// <param name="value">Floating point value.</param>
+        [CLSCompliant(false)]
+        public void Effect( uint eid,Enums.EfxEffectf param,float value )
+        {
+            Imported_alEffectf(eid,param,value);
+        }
 
         #endregion alEffectf
 
@@ -139,6 +178,10 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alGetEffecti Imported_alGetEffecti;
 
+        /// <summary>This function is used to retrieve integer properties from Effect objects.</summary>
+        /// <param name="eid">Effect object identifier.</param>
+        /// <param name="pname">Effect property to retrieve.</param>
+        /// <param name="value">Address where integer value will be stored.</param>
         [CLSCompliant(false)]
         public void GetEffect( uint eid,Enums.EfxEffecti pname,out int value )
         {
@@ -162,6 +205,10 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alGetEffectf Imported_alGetEffectf;
 
+        /// <summary>This function is used to retrieve floating point properties from Effect objects.</summary>
+        /// <param name="eid">Effect object identifier.</param>
+        /// <param name="pname">Effect property to retrieve.</param>
+        /// <param name="value">Address where floating point value will be stored.</param>
         [CLSCompliant(false)]
         public void GetEffect( uint eid,Enums.EfxEffectf pname,out float value )
         {
@@ -195,6 +242,9 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alGenFilters Imported_alGenFilters;
 
+        /// <summary>The alGenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or Auxiliary Send Filters.</summary>
+        /// <param name="n">Number of Filters to be created.</param>
+        /// <param name="filters">Pointer addressing sufficient memory to store n Filter object identifiers.</param>
         [CLSCompliant(false)]
         public void GenFilters( int n,out uint filters )
         {
@@ -210,7 +260,7 @@ namespace OpenTK.OpenAL
 
         [CLSCompliant(false)]
         /// <summary>This function generates only one Filter.</summary>
-        /// <param name="sources">Storage UInt32 for the new filter name/handle.</param>
+        /// <param name="filter">Storage UInt32 for the new filter name/handle.</param>
         public void GenFilters( out uint filter )
         {
             unsafe
@@ -233,6 +283,9 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alDeleteFilters Imported_alDeleteFilters;
 
+        /// <summary>The alDeleteFilters function is used to delete and free resources for Filter objects previously created with alGenFilters.</summary>
+        /// <param name="n">Number of Filters to be deleted.</param>
+        /// <param name="filters">Pointer to n Filter object identifiers.</param>
         [CLSCompliant(false)]
         public void DeleteFilters( int n,ref uint[] filters )
         {
@@ -246,7 +299,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function deletes one Filter only.</summary>
-        /// <param name="sources">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
+        /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         [CLSCompliant(false)]
         public void DeleteFilters( ref uint filter )
         {
@@ -265,10 +318,19 @@ namespace OpenTK.OpenAL
 
         // typedef ALboolean (__cdecl *LPALISFILTER)( ALuint fid );
         [CLSCompliant(false)]
-        public delegate bool Delegate_alIsFilter( uint fid );
+        private delegate bool Delegate_alIsFilter( uint fid );
 
         [CLSCompliant(false)]
-        public Delegate_alIsFilter IsFilter;
+        private Delegate_alIsFilter Imported_alIsFilter;
+
+        /// <summary>The alIsFilter function is used to determine if an object identifier is a valid Filter object.</summary>
+        /// <param name="fid">Effect identifier to validate.</param>
+        /// <returns>True if the identifier is a valid Filter, False otherwise.</returns>
+        [CLSCompliant(false)]
+        public bool IsFilter( uint fid )
+        {
+            return Imported_alIsFilter(fid);
+        }
 
         #endregion alIsFilter
 
@@ -276,21 +338,41 @@ namespace OpenTK.OpenAL
 
         // typedef void (__cdecl *LPALFILTERI)( ALuint fid, ALenum param, ALint value );
         [CLSCompliant(false)]
-        public delegate void Delegate_alFilteri( uint fid,Enums.EfxFilteri param,int value );
+        private delegate void Delegate_alFilteri( uint fid,Enums.EfxFilteri param,int value );
 
         [CLSCompliant(false)]
-        public Delegate_alFilteri Filteri;
+        private Delegate_alFilteri Imported_alFilteri;
 
-        #endregion alFilteri
+        /// <summary>This function is used to set integer properties on Filter objects.</summary>
+        /// <param name="fid">Filter object identifier.</param>
+        /// <param name="param">Effect property to set.</param>
+        /// <param name="value">Integer value.</param>
+        [CLSCompliant(false)]
+        public void Filter( uint fid,Enums.EfxFilteri param,int value )
+        {
+            Imported_alFilteri(fid,param,value);
+        }
+
+        #endregion alFilteri( uint fid,Enums.EfxFilteri param,int value )
 
         #region alFilterf
 
         // typedef void (__cdecl *LPALFILTERF)( ALuint fid, ALenum param, ALfloat value); 
         [CLSCompliant(false)]
-        public delegate void Delegate_alFilterf( uint fid,Enums.EfxFilterf param,float value );
+        private delegate void Delegate_alFilterf( uint fid,Enums.EfxFilterf param,float value );
 
         [CLSCompliant(false)]
-        public Delegate_alFilterf Filterf;
+        private Delegate_alFilterf Imported_alFilterf;
+
+        /// <summary>This function is used to set floating point properties on Filter objects.</summary>
+        /// <param name="fid">Filter object identifier.</param>
+        /// <param name="param">Effect property to set.</param>
+        /// <param name="value">Floating point value.</param>
+        [CLSCompliant(false)]
+        public void Filter( uint fid,Enums.EfxFilterf param,float value )
+        {
+            Imported_alFilterf(fid,param,value);
+        }
 
         #endregion alFilterf
 
@@ -303,6 +385,10 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alGetFilteri Imported_alGetFilteri;
 
+        /// <summary>This function is used to retrieve integer properties from Filter objects.</summary>
+        /// <param name="fid">Filter object identifier.</param>
+        /// <param name="pname">Effect property to retrieve.</param>
+        /// <param name="value">Address where integer value will be stored.</param>
         [CLSCompliant(false)]
         public void GetFilter( uint fid,Enums.EfxFilteri pname,out int value )
         {
@@ -326,6 +412,10 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alGetFilterf Imported_alGetFilterf;
 
+        /// <summary>This function is used to retrieve floating point properties from Filter objects.</summary>
+        /// <param name="fid">Filter object identifier.</param>
+        /// <param name="pname">Effect property to retrieve.</param>
+        /// <param name="value">Address where floating point value will be stored.</param>
         [CLSCompliant(false)]
         public void GetFilter( uint fid,Enums.EfxFilterf pname,out float value )
         {
@@ -359,6 +449,10 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alGenAuxiliaryEffectSlots Imported_alGenAuxiliaryEffectSlots;
 
+        /// <summary>The alGenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots that can be created will be dependant upon the Open AL device used.</summary>
+        /// <remarks>An application should check the OpenAL error state after making this call to determine if the Effect Slot was successfully created. If the function call fails then none of the requested Effect Slots are created. A good strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then check for an error condition. If an error is set then the loop can be broken and the application can determine if sufficient resources are available.</remarks>
+        /// <param name="n">Number of Auxiliary Effect Slots to be created.</param>
+        /// <param name="slots">Pointer addressing sufficient memory to store n Effect Slot object identifiers.</param>
         [CLSCompliant(false)]
         public void GenAuxiliaryEffectSlots( int n,out uint slots )
         {
@@ -374,7 +468,7 @@ namespace OpenTK.OpenAL
 
         [CLSCompliant(false)]
         /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
-        /// <param name="sources">Storage UInt32 for the new auxiliary effect slot name/handle.</param>
+        /// <param name="slot">Storage UInt32 for the new auxiliary effect slot name/handle.</param>
         public void GenAuxiliaryEffectSlots( out uint slot )
         {
             unsafe
@@ -397,6 +491,9 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alDeleteAuxiliaryEffectSlots Imported_alDeleteAuxiliaryEffectSlots;
 
+        /// <summary>The alDeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots previously created with alGenAuxiliaryEffectSlots.</summary>
+        /// <param name="n">Number of Auxiliary Effect Slots to be deleted.</param>
+        /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
         [CLSCompliant(false)]
         public void DeleteAuxiliaryEffectSlots( int n,ref uint[] slots )
         {
@@ -410,7 +507,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
-        /// <param name="sources">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
+        /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
         [CLSCompliant(false)]
         public void DeleteAuxiliaryEffectSlots( ref uint slot )
         {
@@ -429,10 +526,19 @@ namespace OpenTK.OpenAL
 
         // typedef ALboolean (__cdecl *LPALISAUXILIARYEFFECTSLOT)( ALuint slot ); 
         [CLSCompliant(false)]
-        public delegate bool Delegate_alIsAuxiliaryEffectSlot( uint slot );
+        private delegate bool Delegate_alIsAuxiliaryEffectSlot( uint slot );
 
         [CLSCompliant(false)]
-        public Delegate_alIsAuxiliaryEffectSlot IsAuxiliaryEffectSlot;
+        private Delegate_alIsAuxiliaryEffectSlot Imported_alIsAuxiliaryEffectSlot;
+
+        /// <summary>The alIsAuxiliaryEffectSlot function is used to determine if an object identifier is a valid Auxiliary Effect Slot object.</summary>
+        /// <param name="slot">Effect Slot object identifier to validate.</param>
+        /// <returns>True if the identifier is a valid Auxiliary Effect Slot, False otherwise.</returns>
+        [CLSCompliant(false)]
+        public bool IsAuxiliaryEffectSlot( uint slot )
+        {
+            return Imported_alIsAuxiliaryEffectSlot(slot);
+        }
 
         #endregion alIsAuxiliaryEffectSlot
 
@@ -440,10 +546,20 @@ namespace OpenTK.OpenAL
 
         // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTI)( ALuint asid, ALenum param, ALint value ); 
         [CLSCompliant(false)]
-        public delegate void Delegate_alAuxiliaryEffectSloti( uint asid,Enums.EfxAuxiliaryi param,int value );
+        private delegate void Delegate_alAuxiliaryEffectSloti( uint asid,Enums.EfxAuxiliaryi param,int value );
 
         [CLSCompliant(false)]
-        public Delegate_alAuxiliaryEffectSloti AuxiliaryEffectSloti;
+        private Delegate_alAuxiliaryEffectSloti Imported_alAuxiliaryEffectSloti;
+
+        /// <summary>This function is used to set integer properties on Auxiliary Effect Slot objects.</summary>
+        /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
+        /// <param name="param">Auxiliary Effect Slot property to set.</param>
+        /// <param name="value">Integer value.</param>
+        [CLSCompliant(false)]
+        public void AuxiliaryEffectSlot( uint asid,Enums.EfxAuxiliaryi param,int value )
+        {
+            Imported_alAuxiliaryEffectSloti(asid,param,value);
+        }
 
         #endregion alAuxiliaryEffectSloti
 
@@ -451,10 +567,20 @@ namespace OpenTK.OpenAL
 
         // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTF)( ALuint asid, ALenum param, ALfloat value ); 
         [CLSCompliant(false)]
-        public delegate void Delegate_alAuxiliaryEffectSlotf( uint asid,Enums.EfxAuxiliaryf param,float value );
+        private delegate void Delegate_alAuxiliaryEffectSlotf( uint asid,Enums.EfxAuxiliaryf param,float value );
 
         [CLSCompliant(false)]
-        public Delegate_alAuxiliaryEffectSlotf AuxiliaryEffectSlotf;
+        private Delegate_alAuxiliaryEffectSlotf Imported_alAuxiliaryEffectSlotf;
+
+        /// <summary>This function is used to set floating point properties on Auxiliary Effect Slot objects.</summary>
+        /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
+        /// <param name="param">Auxiliary Effect Slot property to set.</param>
+        /// <param name="value">Floating point value.</param>
+        [CLSCompliant(false)]
+        public void AuxiliaryEffectSlot( uint asid,Enums.EfxAuxiliaryf param,float value )
+        {
+            Imported_alAuxiliaryEffectSlotf(asid,param,value);
+        }
 
         #endregion alAuxiliaryEffectSlotf
 
@@ -467,6 +593,10 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alGetAuxiliaryEffectSloti Imported_alGetAuxiliaryEffectSloti;
 
+        /// <summary>This function is used to retrieve integer properties on Auxiliary Effect Slot objects.</summary>
+        /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
+        /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
+        /// <param name="value">Address where integer value will be stored.</param>
         [CLSCompliant(false)]
         public void GetAuxiliaryEffectSlot( uint asid,Enums.EfxAuxiliaryi pname,out int value )
         {
@@ -490,6 +620,10 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false)]
         private Delegate_alGetAuxiliaryEffectSlotf Imported_alGetAuxiliaryEffectSlotf;
 
+        /// <summary>This function is used to retrieve floating properties on Auxiliary Effect Slot objects.</summary>
+        /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
+        /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
+        /// <param name="value">Address where floating point value will be stored.</param>
         [CLSCompliant(false)]
         public void GetAuxiliaryEffectSlot( uint asid,Enums.EfxAuxiliaryf pname,out float value )
         {
@@ -535,9 +669,9 @@ namespace OpenTK.OpenAL
             {
                 Imported_alGenEffects = (Delegate_alGenEffects) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGenEffects"),typeof(Delegate_alGenEffects));
                 Imported_alDeleteEffects = (Delegate_alDeleteEffects) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alDeleteEffects"),typeof(Delegate_alDeleteEffects));
-                IsEffect = (Delegate_alIsEffect) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsEffect"),typeof(Delegate_alIsEffect));
-                Effecti = (Delegate_alEffecti) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffecti"),typeof(Delegate_alEffecti));
-                Effectf = (Delegate_alEffectf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffectf"),typeof(Delegate_alEffectf));
+                Imported_alIsEffect = (Delegate_alIsEffect) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsEffect"),typeof(Delegate_alIsEffect));
+                Imported_alEffecti = (Delegate_alEffecti) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffecti"),typeof(Delegate_alEffecti));
+                Imported_alEffectf = (Delegate_alEffectf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffectf"),typeof(Delegate_alEffectf));
                 Imported_alGetEffecti = (Delegate_alGetEffecti) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetEffecti"),typeof(Delegate_alGetEffecti));
                 Imported_alGetEffectf = (Delegate_alGetEffectf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetEffectf"),typeof(Delegate_alGetEffectf));
             } catch ( Exception e )
@@ -551,9 +685,9 @@ namespace OpenTK.OpenAL
             {
                 Imported_alGenFilters = (Delegate_alGenFilters) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGenFilters"),typeof(Delegate_alGenFilters));
                 Imported_alDeleteFilters = (Delegate_alDeleteFilters) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alDeleteFilters"),typeof(Delegate_alDeleteFilters));
-                IsFilter = (Delegate_alIsFilter) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsFilter"),typeof(Delegate_alIsFilter));
-                Filteri = (Delegate_alFilteri) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alFilteri"),typeof(Delegate_alFilteri));
-                Filterf = (Delegate_alFilterf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alFilterf"),typeof(Delegate_alFilterf));
+                Imported_alIsFilter = (Delegate_alIsFilter) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsFilter"),typeof(Delegate_alIsFilter));
+                Imported_alFilteri = (Delegate_alFilteri) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alFilteri"),typeof(Delegate_alFilteri));
+                Imported_alFilterf = (Delegate_alFilterf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alFilterf"),typeof(Delegate_alFilterf));
                 Imported_alGetFilteri = (Delegate_alGetFilteri) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetFilteri"),typeof(Delegate_alGetFilteri));
                 Imported_alGetFilterf = (Delegate_alGetFilterf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetFilterf"),typeof(Delegate_alGetFilterf));
             } catch ( Exception e )
@@ -567,9 +701,9 @@ namespace OpenTK.OpenAL
             {
                 Imported_alGenAuxiliaryEffectSlots = (Delegate_alGenAuxiliaryEffectSlots) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGenAuxiliaryEffectSlots"),typeof(Delegate_alGenAuxiliaryEffectSlots));
                 Imported_alDeleteAuxiliaryEffectSlots = (Delegate_alDeleteAuxiliaryEffectSlots) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alDeleteAuxiliaryEffectSlots"),typeof(Delegate_alDeleteAuxiliaryEffectSlots));
-                IsAuxiliaryEffectSlot = (Delegate_alIsAuxiliaryEffectSlot) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsAuxiliaryEffectSlot"),typeof(Delegate_alIsAuxiliaryEffectSlot));
-                AuxiliaryEffectSloti = (Delegate_alAuxiliaryEffectSloti) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alAuxiliaryEffectSloti"),typeof(Delegate_alAuxiliaryEffectSloti));
-                AuxiliaryEffectSlotf = (Delegate_alAuxiliaryEffectSlotf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alAuxiliaryEffectSlotf"),typeof(Delegate_alAuxiliaryEffectSlotf));
+                Imported_alIsAuxiliaryEffectSlot = (Delegate_alIsAuxiliaryEffectSlot) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsAuxiliaryEffectSlot"),typeof(Delegate_alIsAuxiliaryEffectSlot));
+                Imported_alAuxiliaryEffectSloti = (Delegate_alAuxiliaryEffectSloti) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alAuxiliaryEffectSloti"),typeof(Delegate_alAuxiliaryEffectSloti));
+                Imported_alAuxiliaryEffectSlotf = (Delegate_alAuxiliaryEffectSlotf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alAuxiliaryEffectSlotf"),typeof(Delegate_alAuxiliaryEffectSlotf));
                 Imported_alGetAuxiliaryEffectSloti = (Delegate_alGetAuxiliaryEffectSloti) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetAuxiliaryEffectSloti"),typeof(Delegate_alGetAuxiliaryEffectSloti));
                 Imported_alGetAuxiliaryEffectSlotf = (Delegate_alGetAuxiliaryEffectSlotf) Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetAuxiliaryEffectSlotf"),typeof(Delegate_alGetAuxiliaryEffectSlotf));
             } catch ( Exception e )
