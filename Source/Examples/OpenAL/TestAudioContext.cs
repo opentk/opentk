@@ -1,4 +1,10 @@
-﻿using System;
+﻿#region --- License ---
+/* Copyright (c) 2006-2008 the OpenTK team
+ * See license.txt for licensing details
+ */
+#endregion
+
+using System;
 
 using OpenTK.OpenAL;
 using OpenTK.OpenAL.Enums;
@@ -49,6 +55,33 @@ namespace Examples
             Trace.WriteLine("IsCurrent = false...");
             context.IsCurrent = false;
             Trace.Assert(!context.IsCurrent);
+
+            Trace.WriteLine("IsCurrent = true...");
+            context.IsCurrent = true;
+            Trace.Assert(!context.IsCurrent);
+
+            Trace.WriteLine("AudioContext.CurrentContext...");
+            Trace.Assert(AudioContext.CurrentContext == context);
+
+            #region Get Attribs
+
+            int AttribCount;
+            Alc.GetInteger(context.Device, AlcGetInteger.AttributesSize, sizeof(int), out AttribCount);
+            Console.WriteLine("AttributeSize: " + AttribCount);
+
+            if (AttribCount > 0)
+            {
+                int[] Attribs = new int[AttribCount];
+                Alc.GetInteger(context.Device, AlcGetInteger.AllAttributes, AttribCount, out Attribs[0]);
+                for (int i = 0; i < Attribs.Length; i++)
+                {
+                    Console.Write(Attribs[i]);
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+            
+            #endregion Get Attribs
 
 #if false
             AlDevice MyDevice;
