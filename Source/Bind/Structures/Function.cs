@@ -32,7 +32,7 @@ namespace Bind.Structures
         #endregion
 
         static Regex endings = new Regex(@"((([df]|u?[isb])v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-        static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flagv)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flagv|Tess)", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
         /// <summary>
         /// Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
@@ -212,8 +212,27 @@ namespace Bind.Structures
         {
             Function f;
 
+            if (this.Name.Contains("TessVertex"))
+            {
+            }
+
             if (Parameters.HasPointerParameters)
             {
+                // Pointer overloads
+                foreach (Parameter p in this.Parameters)
+                {
+                    if (p.WrapperType == WrapperTypes.ArrayParameter)
+                    {
+                        p.Reference = false;
+                        p.Array = 0;
+                        p.Pointer = true;
+                    }
+                }
+                f = new Function(this);
+                f.CreateBody(false);
+                wrappers.Add(f);
+                new Function(f).WrapVoidPointers(wrappers);
+
                 // Array overloads
                 foreach (Parameter p in this.Parameters)
                 {
@@ -227,7 +246,7 @@ namespace Bind.Structures
                 f = new Function(this);
                 f.CreateBody(false);
                 wrappers.Add(f);
-                WrapVoidPointers(wrappers);
+                new Function(f).WrapVoidPointers(wrappers);
 
                 // Reference overloads
                 foreach (Parameter p in this.Parameters)
@@ -242,22 +261,7 @@ namespace Bind.Structures
                 f = new Function(this);
                 f.CreateBody(false);
                 wrappers.Add(f);
-                new Function(this).WrapVoidPointers(wrappers);
-
-                // Pointer overloads
-                foreach (Parameter p in this.Parameters)
-                {
-                    if (p.WrapperType == WrapperTypes.ArrayParameter)
-                    {
-                        p.Reference = false;
-                        p.Array = 0;
-                        p.Pointer = true;
-                    }
-                }
-                f = new Function(this);
-                f.CreateBody(false);
-                wrappers.Add(f);
-                WrapVoidPointers(wrappers);
+                new Function(f).WrapVoidPointers(wrappers);
             }
             else
             {
@@ -405,6 +409,10 @@ namespace Bind.Structures
 
         public void WrapVoidPointers(List<Function> wrappers)
         {
+            if (this.Name.Contains("TessVertex"))
+            {
+            }
+
             if (index >= 0 && index < Parameters.Count)
             {
                 if (Parameters[index].WrapperType == WrapperTypes.GenericParameter)
@@ -420,13 +428,16 @@ namespace Bind.Structures
                     Parameters[index].Pointer = false;
                     Parameters[index].CurrentType = "object";
                     Parameters[index].Flow = Parameter.FlowDirection.Undefined;
-
+                    Parameters.Rebuild = true;
                     CreateBody(false);
                     wrappers.Add(this);
 
                     // Keeping the current Object wrapper, visit all other parameters once more
                     ++index;
-                    WrapParametersComplete(wrappers);
+                    //if ((Settings.Compatibility & Settings.Legacy.GenerateAllPermutations) == Settings.Legacy.None)
+                    //    WrapParameters(wrappers);
+                    //else
+                    //    WrapParametersComplete(wrappers);
                     --index;
                 }
                 else
@@ -472,7 +483,7 @@ namespace Bind.Structures
             fixed_statements.Clear();
             assign_statements.Clear();
 
-            //if (f.Name == "CheckExtension")
+            if (f.Name == "TessVertex")
             { 
             }
 
