@@ -1,14 +1,14 @@
-GLUnurbs        Glu.GLUnurbs
-GLUTesselator   Glu.GLUTesselator
-GLUquadric      Glu.GLUquadric
+#GLUnurbs        GLUnurbs
+#GLUTesselator   GLUTesselator
+#GLUquadric      GLUquadric
 
 # Unknown types (try to infer!)
-NurbsObj        int
-QuadricObj      int
-TesselatorObj   int
-FunctionPointer IntPtr
+NurbsObj        IntPtr		# Nurbs
+QuadricObj      IntPtr		# Quadric
+TesselatorObj   IntPtr		# Tesselator
+FunctionPointer Delegate #IntPtr
 
-VoidPointer     VoidPointer
+VoidPointer     GLvoid*		# VoidPointer
 Float64         Float64
 Float64Pointer  Float64Pointer
 Float32         Float32
