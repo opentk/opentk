@@ -1,6 +1,6 @@
 Version History:
  
- v0.1-0.7
+Alpha v0.1 - 0.8
 
 - Alut: The following functions are not bound/imported. Issue of undoing C malloc to prevent memory leaks.
         "alutLoadMemoryFromFile, alutLoadMemoryFromFileImage, alutLoadMemoryHelloWorld, alutLoadMemoryWaveform"
@@ -30,20 +30,18 @@ Efx: Functions not imported:
 - X-Ram Extension untested, as it requires special hardware. !verify parameters of GetBufferMode()!
 - functions with ushort, uint, ulong marked as not CLS compliant.
 
-v0.8
--added Efx tokens to AL/Alc enums.
--All Efx Effect functions imported. Filter and Auxiliary missing public methods.
-
-v0.9
+Alpha v0.9
 -added docu
 -added alEffectfv and alGetEffectfv
+-ported samples from SDK
 
-Todo:
-- EFX Extension 
-- Enums themselves require summaries (do EFX 1st)
 
+
+Todo for beta:
 - Identify: AL_FILTER_FIRST_PARAMETER, AL_FILTER_LAST_PARAMETER
             AL_EFFECT_FIRST_PARAMETER, AL_EFFECT_LAST_PARAMETER
-
 - AL.BindBuffer helper function ala GL.BindBuffer? (Wraps AL.Source, better consistency)
 - change all "name" into "handle" to avoid confusion?
+
+Todo for final:
+- Enums themselves require summaries (do after some more serious tests)
