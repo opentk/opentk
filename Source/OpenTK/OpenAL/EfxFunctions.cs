@@ -344,7 +344,7 @@ namespace OpenTK.OpenAL
             {
                 fixed ( uint* ptr = filters )
                 {
-                    Imported_alDeleteEffects(n,ptr);
+                    Imported_alDeleteFilters(n,ptr);
                 }
             }
         }
@@ -358,7 +358,7 @@ namespace OpenTK.OpenAL
             {
                 fixed ( uint* ptr = &filter )
                 {
-                    Imported_alDeleteEffects(1,ptr);
+                    Imported_alDeleteFilters(1,ptr);
                 }
             }
         }
