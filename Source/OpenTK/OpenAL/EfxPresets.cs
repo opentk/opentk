@@ -18,113 +18,142 @@ namespace OpenTK.OpenAL
     {
         public struct EaxReverb
         {
-            public uint ulEnvironment;
-            public float flEnvironmentSize;
-            public float flEnvironmentDiffusion;
-            public int lRoom;
-            public int lRoomHF;
-            public int lRoomLF;
-            public float flDecayTime;
-            public float flDecayHFRatio;
-            public float flDecayLFRatio;
-            public int lReflections;
-            public float flReflectionsDelay;
-            public Vector3 vReflectionsPan;
-            public int lReverb;
-            public float flReverbDelay;
-            public Vector3 vReverbPan;
-            public float flEchoTime;
-            public float flEchoDepth;
-            public float flModulationTime;
-            public float flModulationDepth;
-            public float flAirAbsorptionHF;
-            public float flHFReference;
-            public float flLFReference;
-            public float flRoomRolloffFactor;
-            public uint ulFlags;
+            public uint _Environment;
+            public float _EnvironmentSize;
+            public float _EnvironmentDiffusion;
+            public int _Room;
+            public int _RoomHF;
+            public int _RoomLF;
+            public float DecayTime;
+            public float DecayHFRatio;
+            public float DecayLFRatio;
+            public int _Reflections;
+            public float ReflectionsDelay;
+            public Vector3 ReflectionsPan;
+            public int _Reverb;
+            public float ReverbDelay;
+            public Vector3 ReverbPan;
+            public float EchoTime;
+            public float EchoDepth;
+            public float ModulationTime;
+            public float ModulationDepth;
+            public float AirAbsorptionHF;
+            public float HFReference;
+            public float LFReference;
+            public float RoomRolloffFactor;
+            public uint _Flags;
 
-            public EaxReverb( uint Environment,
-                              float EnvironmentSize,
-                              float EnvironmentDiffusion,
-                              int Room,
-                              int RoomHF,
-                              int RoomLF,
-                              float DecayTime,
-                              float DecayHFRatio,
-                              float DecayLFRatio,
-                              int Reflections,
-                              float ReflectionsDelay,
-                              float ReflectionsPanX,
-                              float ReflectionsPanY,
-                              float ReflectionsPanZ,
-                              int Reverb,
-                              float ReverbDelay,
-                              float ReverbPanX,
-                              float ReverbPanY,
-                              float ReverbPanZ,
-                              float EchoTime,
-                              float EchoDepth,
-                              float ModulationTime,
-                              float ModulationDepth,
-                              float AirAbsorptionHF,
-                              float HFReference,
-                              float LFReference,
-                              float RoomRolloffFactor,
-                              uint Flags )
+            public EaxReverb( uint environment,
+                              float environmentSize,
+                              float environmentDiffusion,
+                              int room,
+                              int roomHF,
+                              int roomLF,
+                              float decayTime,
+                              float decayHFRatio,
+                              float decayLFRatio,
+                              int reflections,
+                              float reflectionsDelay,
+                              float reflectionsPanX,
+                              float reflectionsPanY,
+                              float reflectionsPanZ,
+                              int reverb,
+                              float reverbDelay,
+                              float reverbPanX,
+                              float reverbPanY,
+                              float reverbPanZ,
+                              float echoTime,
+                              float echoDepth,
+                              float modulationTime,
+                              float modulationDepth,
+                              float airAbsorptionHF,
+                              float hfReference,
+                              float lfReference,
+                              float roomRolloffFactor,
+                              uint flags )
             {
-                ulEnvironment = Environment;
-                flEnvironmentSize = EnvironmentSize;
-                flEnvironmentDiffusion = EnvironmentDiffusion;
-                lRoom = Room;
-                lRoomHF = RoomHF;
-                lRoomLF = RoomLF;
-                flDecayTime = DecayTime;
-                flDecayHFRatio = DecayHFRatio;
-                flDecayLFRatio = DecayLFRatio;
-                lReflections = Reflections;
-                flReflectionsDelay = ReflectionsDelay;
-                vReflectionsPan = new Vector3(ReflectionsPanX,ReflectionsPanY,ReflectionsPanZ);
-                lReverb = Reverb;
-                flReverbDelay = ReverbDelay;
-                vReverbPan = new Vector3(ReverbPanX,ReverbPanY,ReverbPanZ);
-                flEchoTime = EchoTime;
-                flEchoDepth = EchoDepth;
-                flModulationTime = ModulationTime;
-                flModulationDepth = ModulationDepth;
-                flAirAbsorptionHF = AirAbsorptionHF;
-                flHFReference = HFReference;
-                flLFReference = LFReference;
-                flRoomRolloffFactor = RoomRolloffFactor;
-                ulFlags = Flags;
+                _Environment = environment;
+                _EnvironmentSize = environmentSize;
+                _EnvironmentDiffusion = environmentDiffusion;
+                _Room = room;
+                _RoomHF = roomHF;
+                _RoomLF = roomLF;
+                DecayTime = decayTime;
+                DecayHFRatio = decayHFRatio;
+                DecayLFRatio = decayLFRatio;
+                _Reflections = reflections;
+                ReflectionsDelay = reflectionsDelay;
+                ReflectionsPan = new Vector3(reflectionsPanX,reflectionsPanY,reflectionsPanZ);
+                _Reverb = reverb;
+                ReverbDelay = reverbDelay;
+                ReverbPan = new Vector3(reverbPanX,reverbPanY,reverbPanZ);
+                EchoTime = echoTime;
+                EchoDepth = echoDepth;
+                ModulationTime = modulationTime;
+                ModulationDepth = modulationDepth;
+                AirAbsorptionHF = airAbsorptionHF;
+                HFReference = hfReference;
+                LFReference = lfReference;
+                RoomRolloffFactor = roomRolloffFactor;
+                _Flags = flags;
             }
+            
         }
 
+        public static void GetEaxFromEfxEax( ref EaxReverb a,out EfxEaxReverb b )
+        {
+            b.AirAbsorptionGainHF = 0.995f; // a.AirAbsorptionHF; // * gain?
+
+            b.Density = 1f; // todo
+            b.Diffusion = 1f; // todo
+            b.EchoDepth = a.EchoDepth;
+            b.EchoTime = a.EchoTime;
+            b.Gain = 1f; // todo
+            b.GainHF = 1f; // todo
+            b.GainLF = 1f; // todo
+            b.HFReference = a.HFReference;
+            b.LateReverbDelay = a.ReverbDelay;
+            b.LateReverbGain = 1f; // todo
+            b.LateReverbPan = a.ReverbPan;
+            b.LFReference = a.LFReference;
+            b.ModulationDepth = a.ModulationDepth;
+            b.ModulationTime = a.ModulationTime;
+            b.ReflectionsDelay = a.ReflectionsDelay;
+            b.ReflectionsGain = 1f; // todo
+            b.ReflectionsPan = a.ReflectionsPan;
+            b.RoomRolloffFactor = a.RoomRolloffFactor;
+
+            b.DecayTime = a.DecayTime;
+            b.DecayHFLimit = 0; // todo
+            b.DecayHFRatio = a.DecayHFRatio;
+            b.DecayLFRatio = a.DecayLFRatio;
+        }
 
         public struct EfxEaxReverb
         {
-            public float flDensity;
-            public float flDiffusion;
-            public float flGain;
-            public float flGainHF;
-            public float flGainLF;
-            public float flDecayTime;
-            public float flDecayHFRatio;
-            public float flDecayLFRatio;
-            public float flReflectionsGain;
-            public float flReflectionsDelay;
-            public Vector3 flReflectionsPan;
-            public float flLateReverbGain;
-            public float flLateReverbDelay;
-            public Vector3 flLateReverbPan;
-            public float flEchoTime;
-            public float flEchoDepth;
-            public float flModulationTime;
-            public float flModulationDepth;
-            public float flAirAbsorptionGainHF;
-            public float flHFReference;
-            public float flLFReference;
-            public float flRoomRolloffFactor;
-            public int iDecayHFLimit;
+            public float Density;
+            public float Diffusion;
+            public float Gain;
+            public float GainHF;
+            public float GainLF;
+            public float DecayTime;
+            public float DecayHFRatio;
+            public float DecayLFRatio;
+            public float ReflectionsGain;
+            public float ReflectionsDelay;
+            public Vector3 ReflectionsPan;
+            public float LateReverbGain;
+            public float LateReverbDelay;
+            public Vector3 LateReverbPan;
+            public float EchoTime;
+            public float EchoDepth;
+            public float ModulationTime;
+            public float ModulationDepth;
+            public float AirAbsorptionGainHF;
+            public float HFReference;
+            public float LFReference;
+            public float RoomRolloffFactor;
+            public int DecayHFLimit;
         }
 
         /*
