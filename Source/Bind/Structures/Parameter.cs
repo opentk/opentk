@@ -295,13 +295,10 @@ namespace Bind.Structures
         bool hasPointerParameters;
         bool hasReferenceParameters;
         bool unsafe_types_allowed;
-        private bool Rebuild
+        public bool Rebuild
         {
-            get { return rebuild; }
-            set
-            {
-                rebuild = value;
-            }
+            private get { return rebuild; }
+            set { rebuild = true;/*value;*/ }
         }
 
         #region Constructors
