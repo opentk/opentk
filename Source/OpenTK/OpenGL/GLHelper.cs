@@ -33,13 +33,12 @@ namespace OpenTK.OpenGL
     /// This class contains all OpenGL enums and functions defined in the 2.1 specification.
     /// The official .spec files can be found at: http://opengl.org/registry/.
     /// </para>
-    /// <para>
-    /// A valid OpenGL context must be created before calling any OpenGL function.
-    /// </para>
+    /// <para> A valid OpenGL context must be created before calling any OpenGL function.</para>
     /// <para>
     /// Use the GL.Load and GL.LoadAll methods to prepare function entry points prior to use. To maintain
     /// cross-platform compatibility, this must be done for both core and extension functions. The GameWindow
     /// and the GLControl class will take care of this automatically.
+    /// </para>
     /// <para>
     /// You can use the GL.SupportsExtension method to check whether any given category of extension functions
     /// exists in the current OpenGL context. Keep in mind that different OpenGL contexts may support different
@@ -49,16 +48,17 @@ namespace OpenTK.OpenGL
     /// <para>
     /// You may retrieve the entry point for an OpenGL function using the GL.GetDelegate method.
     /// </para>
-    /// <para>
+    /// </remarks>
     /// <see href="http://opengl.org/registry/"/>
     /// <seealso cref="GL.SupportsExtension"/>
     /// <seealso cref="GL.GetDelegate"/>
     /// <seealso cref="GL.LoadAll"/>
     /// <seealso cref="GL.Load"/>
-    /// </para>
-    /// </remarks>
     public static partial class GL
     {
+        delegate void VoidGLDelegate(object @class, object[] parameters);
+        delegate object ObjectGLDelegate(object @class, object[] parameters);
+
         #region --- Fields ---
 
         internal const string Library = "opengl32.dll";
@@ -134,10 +134,33 @@ namespace OpenTK.OpenGL
 
         #endregion
 
+        #region public static Delegate GetDelegate(string name)
+
+        /// <summary>
+        /// Returns a System.Delegate wrapping the specified OpenGL function. You must use the
+        /// base OpenGL name of the function (e.g. "glVertex3fv" instead of "Vertex3").
+        /// </summary>
+        /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
+        /// <param name="signature">The signature of the OpenGL function.</param>
+        /// <returns>
+        /// A System.Delegate that can be used to call this OpenGL function or null, if the specified
+        /// function name does not correspond to an OpenGL function or if the function is not
+        /// supported by the video drivers.
+        /// </returns>
+        public static Delegate GetDelegate(string name)
+        {
+            FieldInfo info = typeof(Delegates).GetField(name, BindingFlags.Static | BindingFlags.NonPublic);
+            if (info == null)
+                return null;
+            return (Delegate)info.GetValue(null);
+        }
+
+        #endregion
+
         #region public static Delegate GetDelegate(string name, Type signature)
 
         /// <summary>
-        /// Creates a System.Delegate that can be used to call an OpenGL function, core or extension.
+        /// Returns a System.Delegate wrapping an OpenGL function.
         /// </summary>
         /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
         /// <param name="signature">The signature of the OpenGL function.</param>
@@ -145,14 +168,10 @@ namespace OpenTK.OpenGL
         /// A System.Delegate that can be used to call this OpenGL function, or null if the specified
         /// function name did not correspond to an OpenGL function.
         /// </returns>
+        [Obsolete("Use GetDelegate(string name) instead.")]
         public static Delegate GetDelegate(string name, Type signature)
         {
-            MethodInfo m;
-            return
-                GetExtensionDelegate(name, signature) ??
-                /*((m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic)) != null ?*/
-                (Imports.FunctionMap.TryGetValue((name.Substring(2)), out m) ?
-                Delegate.CreateDelegate(signature, m) : null);
+            return LoadDelegate(name, signature);
         }
 
         #endregion
@@ -192,7 +211,7 @@ namespace OpenTK.OpenGL
 
             foreach (FieldInfo f in delegates)
             {
-                Delegate d = GetDelegate(f.Name, f.FieldType);
+                Delegate d = LoadDelegate(f.Name, f.FieldType);
                 if (d != null)
                 {
                     ++supported;
@@ -246,13 +265,37 @@ namespace OpenTK.OpenGL
                 return false;
 
             Delegate old = f.GetValue(null) as Delegate;
-            Delegate @new = GetDelegate(f.Name, f.FieldType);
+            Delegate @new = LoadDelegate(f.Name, f.FieldType);
             if (old.Target != @new.Target)
             {
                 f.SetValue(null, @new);
                 rebuildExtensionList = true;
             }
             return @new != null;
+        }
+
+        #endregion
+
+        #region static Delegate LoadDelegate(string name, Type signature)
+
+        /// <private />
+        /// <summary>
+        /// Loads an OpenGL function into a type-safe System.Delegate.
+        /// </summary>
+        /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
+        /// <param name="signature">The signature of the OpenGL function.</param>
+        /// <returns>
+        /// A System.Delegate that can be used to call this OpenGL function, or null if the specified
+        /// function name did not correspond to an OpenGL function.
+        /// </returns>
+        static Delegate LoadDelegate(string name, Type signature)
+        {
+            MethodInfo m;
+            return
+                GetExtensionDelegate(name, signature) ??
+                /*((m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic)) != null ?*/
+                (Imports.FunctionMap.TryGetValue((name.Substring(2)), out m) ?
+                Delegate.CreateDelegate(signature, m) : null);
         }
 
         #endregion
