@@ -97,36 +97,42 @@ namespace OpenTK.OpenAL
                 RoomRolloffFactor = roomRolloffFactor;
                 _Flags = flags;
             }
-            
+
         }
 
-        public static void GetEaxFromEfxEax( ref EaxReverb a,out EfxEaxReverb b )
+        public static void GetEaxFromEfxEax( ref EaxReverb input,out EfxEaxReverb output )
         {
-            b.AirAbsorptionGainHF = 0.995f; // a.AirAbsorptionHF; // * gain?
+            output.AirAbsorptionGainHF = 0.995f; // input.AirAbsorptionHF  * somegain?
+            output.RoomRolloffFactor = input.RoomRolloffFactor;
 
-            b.Density = 1f; // todo
-            b.Diffusion = 1f; // todo
-            b.EchoDepth = a.EchoDepth;
-            b.EchoTime = a.EchoTime;
-            b.Gain = 1f; // todo
-            b.GainHF = 1f; // todo
-            b.GainLF = 1f; // todo
-            b.HFReference = a.HFReference;
-            b.LateReverbDelay = a.ReverbDelay;
-            b.LateReverbGain = 1f; // todo
-            b.LateReverbPan = a.ReverbPan;
-            b.LFReference = a.LFReference;
-            b.ModulationDepth = a.ModulationDepth;
-            b.ModulationTime = a.ModulationTime;
-            b.ReflectionsDelay = a.ReflectionsDelay;
-            b.ReflectionsGain = 1f; // todo
-            b.ReflectionsPan = a.ReflectionsPan;
-            b.RoomRolloffFactor = a.RoomRolloffFactor;
+            output.Density = 1f; // todo, currently default
+            output.Diffusion = 1f; // todo, currently default
 
-            b.DecayTime = a.DecayTime;
-            b.DecayHFLimit = 0; // todo
-            b.DecayHFRatio = a.DecayHFRatio;
-            b.DecayLFRatio = a.DecayLFRatio;
+            output.DecayTime = input.DecayTime;
+            output.DecayHFLimit = 1; // todo, currently default
+            output.DecayHFRatio = input.DecayHFRatio;
+            output.DecayLFRatio = input.DecayLFRatio;
+
+            output.EchoDepth = input.EchoDepth;
+            output.EchoTime = input.EchoTime;
+
+            output.Gain = 0.32f; // todo, currently default
+            output.GainHF = 0.89f; // todo, currently default
+            output.GainLF = 1f;// todo, currently default
+
+            output.LFReference = input.LFReference;
+            output.HFReference = input.HFReference;
+
+            output.LateReverbDelay = input.ReverbDelay;
+            output.LateReverbGain = 1.26f; // todo, currently default
+            output.LateReverbPan = input.ReverbPan;
+
+            output.ModulationDepth = input.ModulationDepth;
+            output.ModulationTime = input.ModulationTime;
+
+            output.ReflectionsDelay = input.ReflectionsDelay;
+            output.ReflectionsGain = 0.05f; // todo, currently default
+            output.ReflectionsPan = input.ReflectionsPan;
         }
 
         public struct EfxEaxReverb
