@@ -252,12 +252,12 @@ namespace OpenTK.Platform.X11
 
         public void RegisterForDisposal(IDisposable resource)
         {
-            throw new NotImplementedException("Use the general GLContext class instead.");
+            throw new NotSupportedException("Use OpenTK.GLContext instead.");
         }
 
         public void DisposeResources()
         {
-            throw new NotImplementedException("Use the general GLContext class instead.");
+            throw new NotSupportedException("Use OpenTK.GLContext instead.");
         }
 
         public IEnumerable<DisplayMode> GetDisplayModes()
