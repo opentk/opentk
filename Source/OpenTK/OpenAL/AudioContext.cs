@@ -169,9 +169,9 @@ namespace OpenTK.Audio
                 if (available_devices.Count == 0)
                 {
                     if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATION_EXT"))
-                    {
                         available_devices.AddRange(Alc.GetString(IntPtr.Zero, AlcGetStringList.AllDevicesSpecifier));
-                    }
+                    else
+                        Debug.Print("Device enumeration extension not available. Failed to enumerate devices.");
                 }
             }
         }
@@ -207,7 +207,6 @@ namespace OpenTK.Audio
             if (refresh < 0) throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
             if (maxEfxSends < 0) throw new ArgumentOutOfRangeException("maxEfxSends", maxEfxSends, "Should be greater than zero.");
             //if (available_devices.Count == 0) throw new NotSupportedException("No audio hardware is available.");
-            if (available_contexts.Count == 0) Debug.Print("Failed to enumerate devices.");
 
             device_handle = Alc.OpenDevice(device);
             if (device_handle == IntPtr.Zero)
