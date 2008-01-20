@@ -218,21 +218,6 @@ namespace Bind.Structures
 
             if (Parameters.HasPointerParameters)
             {
-                // Pointer overloads
-                foreach (Parameter p in this.Parameters)
-                {
-                    if (p.WrapperType == WrapperTypes.ArrayParameter)
-                    {
-                        p.Reference = false;
-                        p.Array = 0;
-                        p.Pointer = true;
-                    }
-                }
-                f = new Function(this);
-                f.CreateBody(false);
-                wrappers.Add(f);
-                new Function(f).WrapVoidPointers(wrappers);
-
                 // Array overloads
                 foreach (Parameter p in this.Parameters)
                 {
@@ -256,6 +241,23 @@ namespace Bind.Structures
                         p.Reference = true;
                         p.Array = 0;
                         p.Pointer = false;
+                    }
+                }
+                f = new Function(this);
+                f.CreateBody(false);
+                wrappers.Add(f);
+                new Function(f).WrapVoidPointers(wrappers);
+
+                // Pointer overloads
+                // Should be last to work around Intellisense bug, where
+                // array overloads are not reported if there is a pointer overload.
+                foreach (Parameter p in this.Parameters)
+                {
+                    if (p.WrapperType == WrapperTypes.ArrayParameter)
+                    {
+                        p.Reference = false;
+                        p.Array = 0;
+                        p.Pointer = true;
                     }
                 }
                 f = new Function(this);
