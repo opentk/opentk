@@ -213,7 +213,7 @@ namespace OpenTK.Audio
                 throw new AudioDeviceException("The specified audio device does not exist or is tied up by another application.");
 
             device_name = device;
-
+            /*
             // Build the attribute list
             List<int> attributes = new List<int>();
             
@@ -241,6 +241,8 @@ namespace OpenTK.Audio
             }
 
             context_handle = Alc.CreateContext(device_handle, attributes.ToArray());
+            */
+            context_handle = Alc.CreateContext(device_handle, (int[])null);
             if (context_handle == IntPtr.Zero)
             {
                 Alc.CloseDevice(device_handle);
