@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 
 namespace Examples
 {
-    [Example("GLU Tesselation Functions Test", ExampleCategory.Test)]
+    [Example("GLU Tesselation Functions Test", ExampleCategory.OpenGL)]
     public class Test : GameWindow
     {
         int startList;
@@ -43,9 +43,12 @@ namespace Examples
         unsafe delegate void VertexCallbackDelegate(IntPtr v);
         VertexCallbackDelegate tessVertex;
 
-        //Delegate tessBegin, tessEnd, tessVertex;
+        public Test() : base()
+        {
+            Keyboard.KeyDown += KeyDownHandler;
+        }
 
-        public Test() : base() { }
+        #region --- GLU Tessellation callbacks ---
 
         #region BeginHandler
 
@@ -114,6 +117,18 @@ namespace Examples
 
         #endregion
 
+        #endregion
+
+        #region KeyDownHandler
+
+        public void KeyDownHandler(KeyboardDevice sender, Key key)
+        {
+            if (Keyboard[Key.Escape])
+                this.Exit();
+        }
+
+        #endregion
+
         #region OnResize
 
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
@@ -121,7 +136,7 @@ namespace Examples
             GL.Viewport(0, 0, Width, Height);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            Glu.Ortho2D(0.0, (double)Width, (double)Height, 0.0);
+            Glu.Ortho2D(0.0, (double)Width, 0.0, (double)Height);
         }
 
         #endregion
@@ -268,16 +283,6 @@ namespace Examples
                 unsafe { Marshal.FreeHGlobal((IntPtr)combineData[data_index--]); }
             }
             
-        }
-
-        #endregion
-
-        #region OnUpdateFrame
-
-        public override void OnUpdateFrame(UpdateFrameEventArgs e)
-        {
-            if (Keyboard[Key.Escape])
-                this.Exit();
         }
 
         #endregion
