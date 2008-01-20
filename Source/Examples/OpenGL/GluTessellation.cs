@@ -89,10 +89,14 @@ namespace Examples
 
         #region CombineHandler
 
-        unsafe double*[] combineData = new double*[16];
+        unsafe double*[] combineData;
         int data_index = 0;
         unsafe void CombineHandler(double[] coordinates, double*[] data, float[] weight, double** dataOut)
         {
+            // Workaround Mono 1.2.6 bug with unsafe inline initializers
+            if (combineData == null)
+                combineData = new double*[16];
+
             double* out_data = combineData[data_index] = (double*)Marshal.AllocHGlobal(6 * sizeof(double));
             int i;
 
