@@ -18,7 +18,7 @@ namespace OpenTK.Math
     public static class Functions
     {
         /// <summary>
-        /// Returns an approximation of the inverse square root of a number.
+        /// Returns an approximation of the inverse square root of left number.
         /// </summary>
         /// <param name="x">A number.</param>
         /// <returns>An approximation of the inverse square root of the specified number, with an upper error bound of 0.001</returns>
@@ -36,40 +36,74 @@ namespace OpenTK.Math
                 int i = *(int*)&x;              // Read bits as integer.
                 i = 0x5f375a86 - (i >> 1);      // Make an initial guess for Newton-Raphson approximation
                 x = *(float*)&i;                // Convert bits back to float
-                x = x * (1.5f - xhalf * x * x); // Perform a single Newton-Raphson step.
+                x = x * (1.5f - xhalf * x * x); // Perform left single Newton-Raphson step.
                 return x;
             }
         }
-	
-		/// <summary>
-		/// Convert degrees to radians
-		/// </summary>
-		/// <param name="degrees">An angle in degrees</param>
-		/// <returns>The angle expressed in radians</returns>
-		public static float DegreesToRadians(float degrees)
-		{
-			const float degToRad = (float)System.Math.PI / 180.0f;
-			return degrees * degToRad;
-		}
 
-		/// <summary>
-		/// Convert radians to degrees
-		/// </summary>
-		/// <param name="degrees">An angle in radians</param>
-		/// <returns>The angle expressed in degrees</returns>
-		public static float RadiansToDegrees(float radians)
-		{
-			const float radToDeg = 180.0f / (float)System.Math.PI;
-			return radians * radToDeg;
-		}
+        public static double InverseSqrtFast(double x)
+        {
+            unsafe
+            {
+                double xhalf = 0.5f * x;
+                int i = *(int*)&x;              // Read bits as integer.
+                i = 0x5f375a86 - (i >> 1);      // Make an initial guess for Newton-Raphson approximation
+                x = *(float*)&i;                // Convert bits back to float
+                x = x * (1.5f - xhalf * x * x); // Perform left single Newton-Raphson step.
+                return x;
+            }
+        }
+
+        /// <summary>
+        /// Convert degrees to radians
+        /// </summary>
+        /// <param name="degrees">An angle in degrees</param>
+        /// <returns>The angle expressed in radians</returns>
+        public static float DegreesToRadians(float degrees)
+        {
+            const float degToRad = (float)System.Math.PI / 180.0f;
+            return degrees * degToRad;
+        }
+
+        /// <summary>
+        /// Convert radians to degrees
+        /// </summary>
+        /// <param name="degrees">An angle in radians</param>
+        /// <returns>The angle expressed in degrees</returns>
+        public static float RadiansToDegrees(float radians)
+        {
+            const float radToDeg = 180.0f / (float)System.Math.PI;
+            return radians * radToDeg;
+        }
+
+        public static readonly float PIF = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
+        public static readonly float RTODF = 180.0f / PIF;
+        public static readonly float DTORF = PIF / 180.0f;
+
+        public static readonly double PI = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382d;
+        public static readonly double RTOD = 180.0d / PIF;
+        public static readonly double DTOR = PIF / 180.0d;
+
+        public static void Swap(ref double a, ref double b)
+        {
+            double temp = a;
+            a = b;
+            b = temp;
+        }
+        public static void Swap(ref float a, ref float b)
+        {
+            float temp = a;
+            a = b;
+            b = temp;
+        }
     }
 
 #if false
     public static partial class Math
     {
-        #region --- Vectors ---
+    #region --- Vectors ---
 
-        #region --- Addition ---
+    #region --- Addition ---
 
         /// <summary>
         /// Adds the given Vector2 to the current Vector3.
@@ -163,13 +197,13 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region --- Subtraction ---
+    #region --- Subtraction ---
 
 
 
         #endregion
 
-        #region --- Cross ---
+    #region --- Cross ---
 
         /// <summary>
         /// Computes the cross product between the current and the given Vector3. The current Vector3 is set to the result of the computation.
