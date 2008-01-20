@@ -52,7 +52,7 @@ namespace OpenTK.Audio
 
         /// <summary>Constructs a new AudioContext, using the default audio device.</summary>
         /// <exception cref="NotSupportedException">Occurs when no audio devices are available.</exception>
-        public AudioContext() : this(available_devices[0], 0, 0, false, 0) { }
+        public AudioContext() : this(available_devices.Count > 0 ? available_devices[0] : "", 0, 0, false, 0) { }
 
         #endregion
 
