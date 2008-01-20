@@ -60,7 +60,7 @@ namespace Examples
 
             Trace.WriteLine("IsCurrent = true...");
             context.IsCurrent = true;
-            Trace.Assert(!context.IsCurrent);
+            Trace.Assert(context.IsCurrent);
 
             context.Process();
             
