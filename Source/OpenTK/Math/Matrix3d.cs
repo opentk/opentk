@@ -192,7 +192,6 @@ namespace OpenTK.Math
 
         #endregion
 
-
         #region Constructors
 
         /// <summary>Constructs left matrix with the same components as the given matrix.</summary>
@@ -293,12 +292,12 @@ namespace OpenTK.Math
 
         #endregion
 
-
         #region Equality
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
-        /// <param name="matrix">An matrix to compare with this matrix.</param>
+        /// <param name="matrix">The OpenTK.Math.Matrix3d structure to compare with.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
+        [CLSCompliant(false)]
         public bool Equals(Matrix3d matrix)
         {
             return
@@ -313,6 +312,9 @@ namespace OpenTK.Math
                 R2C2 == matrix.R2C2;
         }
 
+        /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
+        /// <param name="matrix">The OpenTK.Math.Matrix3d structure to compare to.</param>
+        /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(ref Matrix3d matrix)
         {
             return
@@ -327,6 +329,10 @@ namespace OpenTK.Math
                 R2C2 == matrix.R2C2;
         }
 
+        /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
+        /// <param name="left">The left-hand operand.</param>
+        /// <param name="right">The right-hand operand.</param>
+        /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public static bool Equals(ref Matrix3d left, ref Matrix3d right)
         {
             return
@@ -341,6 +347,10 @@ namespace OpenTK.Math
                 left.R2C2 == right.R2C2;
         }
 
+        /// <summary>Indicates whether the current matrix is approximately equal to another matrix.</summary>
+        /// <param name="matrix">The OpenTK.Math.Matrix3d structure to compare with.</param>
+        /// <param name="tolerance">The limit below which the matrices are considered equal.</param>
+        /// <returns>true if the current matrix is approximately equal to the matrix parameter; otherwise, false.</returns>
         public bool EqualsApprox(ref Matrix3d matrix, double tolerance)
         {
             return
@@ -355,6 +365,11 @@ namespace OpenTK.Math
                 System.Math.Abs(R2C2 - matrix.R2C2) <= tolerance;
         }
 
+        /// <summary>Indicates whether the current matrix is approximately equal to another matrix.</summary>
+        /// <param name="left">The left-hand operand.</param>
+        /// <param name="right">The right-hand operand.</param>
+        /// <param name="tolerance">The limit below which the matrices are considered equal.</param>
+        /// <returns>true if the current matrix is approximately equal to the matrix parameter; otherwise, false.</returns>
         public static bool EqualsApprox(ref Matrix3d left, ref Matrix3d right, double tolerance)
         {
             return
@@ -370,7 +385,6 @@ namespace OpenTK.Math
         }
 
         #endregion
-
 
         #region Arithmetic Operators
 
@@ -584,7 +598,6 @@ namespace OpenTK.Math
 
         #endregion
 
-
         #region Functions
 
         public double Determinant
@@ -627,7 +640,6 @@ namespace OpenTK.Math
         }
 
         #endregion
-
 
         #region Transformation Functions
 
@@ -734,7 +746,6 @@ namespace OpenTK.Math
 
         #endregion
 
-
         #region Constants
 
         /// <summary>The identity matrix.</summary>
@@ -755,7 +766,6 @@ namespace OpenTK.Math
 
         #endregion
 
-
         #region HashCode
 
         /// <summary>Returns the hash code for this instance.</summary>
@@ -769,7 +779,6 @@ namespace OpenTK.Math
         }
 
         #endregion
-
 
         #region String
 

@@ -35,7 +35,7 @@ namespace Examples.Tutorial
             public int VboID, EboID, NumElements;
         }
         Vbo[] vbo = new Vbo[2];
-        float angle;
+        //float angle;
 
         public static readonly int order = 8;
 
