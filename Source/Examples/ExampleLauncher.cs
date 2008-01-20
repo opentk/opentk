@@ -160,7 +160,7 @@ namespace Examples
 
                     Debug.Print(expt.ToString());
 #if DEBUG
-                    throw;
+                    //throw;
 #endif
                 }
                 catch (NullReferenceException expt)

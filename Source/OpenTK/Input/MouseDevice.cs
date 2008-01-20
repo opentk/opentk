@@ -220,7 +220,7 @@ namespace OpenTK.Input
         #endregion
     }
 
-    //public delegate void MouseMoveEvent(MouseDevice sender, MouseMoveData key);
+    public delegate void MouseMoveEvent(MouseDevice sender);
     public delegate void MouseButtonDownEvent(MouseDevice sender, MouseButton button);
     public delegate void MouseButtonUpEvent(MouseDevice sender, MouseButton button);
 
@@ -244,67 +244,6 @@ namespace OpenTK.Input
         Button8,
         Button9,
         LastButton
-    }
-
-    #endregion
-
-    #region internal class MouseMoveData
-
-    /// <summary>
-    /// Not used yet.
-    /// </summary>
-    internal class MouseMoveData
-    {
-        private int x;
-        private int y;
-        private int deltaX;
-        private int deltaY;
-        private int wheel, deltaWheel;
-
-        /// <summary>
-        /// Gets the absolute X position of the mouse in screen pixel coordinates.
-        /// </summary>
-        public int X
-        {
-            get { return x; }
-            internal set { x = value; }
-        }
-
-        /// <summary>
-        /// Gets the absolute Y position of the mouse in screen pixel coordinates.
-        /// </summary>
-        public int Y
-        {
-            get { return y; }
-            internal set { y = value; }
-        }
-
-        /// <summary>
-        /// Gets the relative movement of the mouse in the X direction, in pixels.
-        /// </summary>
-        public int DeltaX
-        {
-            get { return deltaX; }
-            internal set { deltaX = value; }
-        }
-
-        /// <summary>
-        /// Gets the relative movement of the mouse in the Y direction, in pixels.
-        /// </summary>
-        public int DeltaY
-        {
-            get { return deltaY; }
-            internal set { deltaY = value; }
-        }
-
-        /// <summary>
-        /// Gets data relevant to the mouse wheel.
-        /// </summary>
-        //public MouseWheel Wheel
-        //{
-        //    get { return wheel; }
-        //    internal set { wheel = value; }
-        //}
     }
 
     #endregion

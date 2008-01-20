@@ -21,7 +21,7 @@ namespace OpenTK.OpenAL
         #region alGenEffects
 
         // typedef void (__cdecl *LPALGENEFFECTS)( ALsizei n, ALuint* effects );
-        [CLSCompliant(false)]
+        //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGenEffects( int n,[Out] uint* effects );
 
         //[CLSCompliant(false)]
@@ -63,7 +63,7 @@ namespace OpenTK.OpenAL
         #region alDeleteEffects
 
         // typedef void (__cdecl *LPALDELETEEFFECTS)( ALsizei n, ALuint* effects );
-        [CLSCompliant(false)]
+        //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alDeleteEffects( int n,[In] uint* effects );
 
         //[CLSCompliant(false)]
@@ -173,11 +173,11 @@ namespace OpenTK.OpenAL
 
         #region alEffectfv
 
-        [CLSCompliant(false)]
+        //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alEffectfv(uint eid, Enums.EfxEffect3f param, [In] float* values);
  // typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
 
-        [CLSCompliant(false)]
+        //[CLSCompliant(false)]
         private Delegate_alEffectfv Imported_alEffectfv;
 
         [CLSCompliant(false)]
@@ -665,10 +665,10 @@ namespace OpenTK.OpenAL
         #region alGetAuxiliaryEffectSlotf
 
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTF)( ALuint asid, ALenum pname, ALfloat* value );
-        [CLSCompliant(false)]
+        //[CLSCompliant(false)]
         unsafe private delegate void Delegate_alGetAuxiliaryEffectSlotf( uint asid,Enums.EfxAuxiliaryf pname,[Out] float* value );
 
-        [CLSCompliant(false)]
+        //[CLSCompliant(false)]
         private Delegate_alGetAuxiliaryEffectSlotf Imported_alGetAuxiliaryEffectSlotf;
 
         /// <summary>This function is used to retrieve floating properties on Auxiliary Effect Slot objects.</summary>

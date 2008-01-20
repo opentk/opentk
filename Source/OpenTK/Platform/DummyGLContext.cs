@@ -42,6 +42,7 @@ namespace OpenTK.Platform
         public IntPtr GetCurrentContext() { return IntPtr.Zero; }
 
         public event DestroyEvent<IGLContext> Destroy;
+        void OnDestroy() { if (Destroy != null) Destroy(this, EventArgs.Empty); }
 
         public void RegisterForDisposal(IDisposable resource)
         {
