@@ -291,6 +291,9 @@ namespace OpenTK.Audio
 
         #endregion
 
+        // TODO: Remove before release!
+        public IntPtr Device { get { return device_handle.Handle; } }
+
         #region --- Public Members ---
 
         #region public static string[] AvailableDevices
