@@ -147,8 +147,6 @@ namespace Examples
 
         public override void OnLoad(EventArgs e)
         {
-            IntPtr tess;
-
             double[][] rect = new double[4][] {
                 new double[] {50.0, 50.0, 0.0},
                 new double[] {200.0, 50.0, 0.0},

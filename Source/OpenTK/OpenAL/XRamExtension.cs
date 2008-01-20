@@ -37,9 +37,9 @@ namespace OpenTK.OpenAL
         public delegate int Delegate_GetBufferMode( uint buffer,out int value );
         //typedef ALenum    (__cdecl *EAXGetBufferMode)(ALuint buffer, ALint *value);
 
-        [CLSCompliant(false)]
+        //[CLSCompliant(false)]
         private Delegate_SetBufferMode Imported_SetBufferMode;
-        [CLSCompliant(false)]
+        //[CLSCompliant(false)]
         private Delegate_GetBufferMode Imported_GetBufferMode;
 
         #endregion X-RAM Function pointer definitions
