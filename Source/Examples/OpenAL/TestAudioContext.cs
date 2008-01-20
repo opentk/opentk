@@ -56,10 +56,14 @@ namespace Examples
             context.IsCurrent = false;
             Trace.Assert(!context.IsCurrent);
 
+            context.Suspend();
+
             Trace.WriteLine("IsCurrent = true...");
             context.IsCurrent = true;
             Trace.Assert(!context.IsCurrent);
 
+            context.Process();
+            
             Trace.WriteLine("AudioContext.CurrentContext...");
             Trace.Assert(AudioContext.CurrentContext == context);
 
