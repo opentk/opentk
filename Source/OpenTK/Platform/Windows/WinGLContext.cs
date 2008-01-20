@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Windows
         private const string opengl32Name = "OPENGL32.DLL";
         private WindowInfo windowInfo = new WindowInfo();
 
-        private DisplayMode mode;
+        private DisplayMode mode = null;
         private bool vsync_supported;
 
         private bool disposed;
@@ -186,6 +186,7 @@ namespace OpenTK.Platform.Windows
 
         #region public DisplayMode Mode
 
+        [Obsolete]
         DisplayMode IGLContextInternal.Mode
         {
             get { return new DisplayMode(mode); }

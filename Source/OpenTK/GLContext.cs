@@ -314,6 +314,7 @@ namespace OpenTK
                 {
                     implementation.Dispose();
                 }
+                disposed = true;
             }
         }
 
