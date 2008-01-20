@@ -188,13 +188,6 @@ namespace OpenTK.OpenGL
             }
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe bool CheckExtension(Byte* extName, Byte* extString)
-        {
-            return Delegates.gluCheckExtension((Byte*)extName, (Byte*)extString);
-        }
-
         public static 
         bool CheckExtension(Byte[] extName, Byte[] extString)
         {
@@ -219,6 +212,13 @@ namespace OpenTK.OpenGL
                     return Delegates.gluCheckExtension((Byte*)extName_ptr, (Byte*)extString_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe bool CheckExtension(Byte* extName, Byte* extString)
+        {
+            return Delegates.gluCheckExtension((Byte*)extName, (Byte*)extString);
         }
 
         public static 
@@ -293,13 +293,6 @@ namespace OpenTK.OpenGL
             }
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetNurbsProperty(IntPtr nurb, OpenTK.OpenGL.Enums.NurbsProperty property, [Out] float* data)
-        {
-            Delegates.gluGetNurbsProperty((IntPtr)nurb, (OpenTK.OpenGL.Enums.NurbsProperty)property, (float*)data);
-        }
-
         public static 
         void GetNurbsProperty(IntPtr nurb, OpenTK.OpenGL.Enums.NurbsProperty property, [Out] float[] data)
         {
@@ -327,9 +320,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTessProperty(IntPtr tess, OpenTK.OpenGL.Enums.TessProperty which, [Out] double* data)
+        unsafe void GetNurbsProperty(IntPtr nurb, OpenTK.OpenGL.Enums.NurbsProperty property, [Out] float* data)
         {
-            Delegates.gluGetTessProperty((IntPtr)tess, (OpenTK.OpenGL.Enums.TessProperty)which, (double*)data);
+            Delegates.gluGetNurbsProperty((IntPtr)nurb, (OpenTK.OpenGL.Enums.NurbsProperty)property, (float*)data);
         }
 
         public static 
@@ -359,9 +352,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void LoadSamplingMatrices(IntPtr nurb, float* model, float* perspective, Int32* view)
+        unsafe void GetTessProperty(IntPtr tess, OpenTK.OpenGL.Enums.TessProperty which, [Out] double* data)
         {
-            Delegates.gluLoadSamplingMatrices((IntPtr)nurb, (float*)model, (float*)perspective, (Int32*)view);
+            Delegates.gluGetTessProperty((IntPtr)tess, (OpenTK.OpenGL.Enums.TessProperty)which, (double*)data);
         }
 
         public static 
@@ -390,6 +383,13 @@ namespace OpenTK.OpenGL
                     Delegates.gluLoadSamplingMatrices((IntPtr)nurb, (float*)model_ptr, (float*)perspective_ptr, (Int32*)view_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void LoadSamplingMatrices(IntPtr nurb, float* model, float* perspective, Int32* view)
+        {
+            Delegates.gluLoadSamplingMatrices((IntPtr)nurb, (float*)model, (float*)perspective, (Int32*)view);
         }
 
         public static 
@@ -454,13 +454,6 @@ namespace OpenTK.OpenGL
             }
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void NurbsCurve(IntPtr nurb, Int32 knotCount, [Out] float* knots, Int32 stride, [Out] float* control, Int32 order, OpenTK.OpenGL.Enums.MapTarget type)
-        {
-            Delegates.gluNurbsCurve((IntPtr)nurb, (Int32)knotCount, (float*)knots, (Int32)stride, (float*)control, (Int32)order, (OpenTK.OpenGL.Enums.MapTarget)type);
-        }
-
         public static 
         void NurbsCurve(IntPtr nurb, Int32 knotCount, [Out] float[] knots, Int32 stride, [Out] float[] control, Int32 order, OpenTK.OpenGL.Enums.MapTarget type)
         {
@@ -489,17 +482,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void NurbsCurve(IntPtr nurb, Int32 knotCount, [Out] float* knots, Int32 stride, [Out] float* control, Int32 order, OpenTK.OpenGL.Enums.MapTarget type)
+        {
+            Delegates.gluNurbsCurve((IntPtr)nurb, (Int32)knotCount, (float*)knots, (Int32)stride, (float*)control, (Int32)order, (OpenTK.OpenGL.Enums.MapTarget)type);
+        }
+
         public static 
         void NurbsProperty(IntPtr nurb, OpenTK.OpenGL.Enums.NurbsProperty property, float value)
         {
             Delegates.gluNurbsProperty((IntPtr)nurb, (OpenTK.OpenGL.Enums.NurbsProperty)property, (float)value);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void NurbsSurface(IntPtr nurb, Int32 sKnotCount, float* sKnots, Int32 tKnotCount, float* tKnots, Int32 sStride, Int32 tStride, float* control, Int32 sOrder, Int32 tOrder, OpenTK.OpenGL.Enums.MapTarget type)
-        {
-            Delegates.gluNurbsSurface((IntPtr)nurb, (Int32)sKnotCount, (float*)sKnots, (Int32)tKnotCount, (float*)tKnots, (Int32)sStride, (Int32)tStride, (float*)control, (Int32)sOrder, (Int32)tOrder, (OpenTK.OpenGL.Enums.MapTarget)type);
         }
 
         public static 
@@ -530,6 +523,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void NurbsSurface(IntPtr nurb, Int32 sKnotCount, float* sKnots, Int32 tKnotCount, float* tKnots, Int32 sStride, Int32 tStride, float* control, Int32 sOrder, Int32 tOrder, OpenTK.OpenGL.Enums.MapTarget type)
+        {
+            Delegates.gluNurbsSurface((IntPtr)nurb, (Int32)sKnotCount, (float*)sKnots, (Int32)tKnotCount, (float*)tKnots, (Int32)sStride, (Int32)tStride, (float*)control, (Int32)sOrder, (Int32)tOrder, (OpenTK.OpenGL.Enums.MapTarget)type);
+        }
+
         public static 
         void Ortho2D(double left, double right, double bottom, double top)
         {
@@ -546,13 +546,6 @@ namespace OpenTK.OpenGL
         void Perspective(double fovy, double aspect, double zNear, double zFar)
         {
             Delegates.gluPerspective((double)fovy, (double)aspect, (double)zNear, (double)zFar);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void PickMatrix(double x, double y, double delX, double delY, [Out] Int32* viewport)
-        {
-            Delegates.gluPickMatrix((double)x, (double)y, (double)delX, (double)delY, (Int32*)viewport);
         }
 
         public static 
@@ -582,9 +575,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe Int32 Project(double objX, double objY, double objZ, double* model, double* proj, Int32* view, double* winX, double* winY, double* winZ)
+        unsafe void PickMatrix(double x, double y, double delX, double delY, [Out] Int32* viewport)
         {
-            return Delegates.gluProject((double)objX, (double)objY, (double)objZ, (double*)model, (double*)proj, (Int32*)view, (double*)winX, (double*)winY, (double*)winZ);
+            Delegates.gluPickMatrix((double)x, (double)y, (double)delX, (double)delY, (Int32*)viewport);
         }
 
         public static 
@@ -623,9 +616,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void PwlCurve(IntPtr nurb, Int32 count, float* data, Int32 stride, OpenTK.OpenGL.Enums.NurbsTrim type)
+        unsafe Int32 Project(double objX, double objY, double objZ, double* model, double* proj, Int32* view, double* winX, double* winY, double* winZ)
         {
-            Delegates.gluPwlCurve((IntPtr)nurb, (Int32)count, (float*)data, (Int32)stride, (OpenTK.OpenGL.Enums.NurbsTrim)type);
+            return Delegates.gluProject((double)objX, (double)objY, (double)objZ, (double*)model, (double*)proj, (Int32*)view, (double*)winX, (double*)winY, (double*)winZ);
         }
 
         public static 
@@ -650,6 +643,13 @@ namespace OpenTK.OpenGL
                     Delegates.gluPwlCurve((IntPtr)nurb, (Int32)count, (float*)data_ptr, (Int32)stride, (OpenTK.OpenGL.Enums.NurbsTrim)type);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void PwlCurve(IntPtr nurb, Int32 count, float* data, Int32 stride, OpenTK.OpenGL.Enums.NurbsTrim type)
+        {
+            Delegates.gluPwlCurve((IntPtr)nurb, (Int32)count, (float*)data, (Int32)stride, (OpenTK.OpenGL.Enums.NurbsTrim)type);
         }
 
         public static 
@@ -778,28 +778,6 @@ namespace OpenTK.OpenGL
             Delegates.gluTessProperty((IntPtr)tess, (OpenTK.OpenGL.Enums.TessProperty)which, (double)data);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TessVertex(IntPtr tess, double* location, IntPtr data)
-        {
-            Delegates.gluTessVertex((IntPtr)tess, (double*)location, (IntPtr)data);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TessVertex(IntPtr tess, double* location, [In, Out] object data)
-        {
-            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
-            {
-                Delegates.gluTessVertex((IntPtr)tess, (double*)location, (IntPtr)data_ptr.AddrOfPinnedObject());
-            }
-            finally
-            {
-                data_ptr.Free();
-            }
-        }
-
         public static 
         void TessVertex(IntPtr tess, double[] location, IntPtr data)
         {
@@ -851,24 +829,14 @@ namespace OpenTK.OpenGL
             {
                 fixed (double* location_ptr = &location)
                 {
-                    if (data is System.Array)
+                    System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+                    try
                     {
-                        fixed (byte* data_ptr = (object[])data)
-                        {
-                            Delegates.gluTessVertex((IntPtr)tess, (double*)location_ptr, (IntPtr)data_ptr);
-                        }
+                        Delegates.gluTessVertex((IntPtr)tess, (double*)location_ptr, (IntPtr)data_ptr.AddrOfPinnedObject());
                     }
-                    else
+                    finally
                     {
-                        System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
-                        try
-                        {
-                            Delegates.gluTessVertex((IntPtr)tess, (double*)location_ptr, (IntPtr)data_ptr.AddrOfPinnedObject());
-                        }
-                        finally
-                        {
-                            data_ptr.Free();
-                        }
+                        data_ptr.Free();
                     }
                 }
             }
@@ -876,9 +844,24 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe Int32 UnProject(double winX, double winY, double winZ, double* model, double* proj, Int32* view, double* objX, double* objY, double* objZ)
+        unsafe void TessVertex(IntPtr tess, double* location, IntPtr data)
         {
-            return Delegates.gluUnProject((double)winX, (double)winY, (double)winZ, (double*)model, (double*)proj, (Int32*)view, (double*)objX, (double*)objY, (double*)objZ);
+            Delegates.gluTessVertex((IntPtr)tess, (double*)location, (IntPtr)data);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TessVertex(IntPtr tess, double* location, [In, Out] object data)
+        {
+            System.Runtime.InteropServices.GCHandle data_ptr = System.Runtime.InteropServices.GCHandle.Alloc(data, System.Runtime.InteropServices.GCHandleType.Pinned);
+            try
+            {
+                Delegates.gluTessVertex((IntPtr)tess, (double*)location, (IntPtr)data_ptr.AddrOfPinnedObject());
+            }
+            finally
+            {
+                data_ptr.Free();
+            }
         }
 
         public static 
@@ -917,9 +900,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe Int32 UnProject4(double winX, double winY, double winZ, double clipW, double* model, double* proj, Int32* view, double near, double far, double* objX, double* objY, double* objZ, double* objW)
+        unsafe Int32 UnProject(double winX, double winY, double winZ, double* model, double* proj, Int32* view, double* objX, double* objY, double* objZ)
         {
-            return Delegates.gluUnProject4((double)winX, (double)winY, (double)winZ, (double)clipW, (double*)model, (double*)proj, (Int32*)view, (double)near, (double)far, (double*)objX, (double*)objY, (double*)objZ, (double*)objW);
+            return Delegates.gluUnProject((double)winX, (double)winY, (double)winZ, (double*)model, (double*)proj, (Int32*)view, (double*)objX, (double*)objY, (double*)objZ);
         }
 
         public static 
@@ -958,6 +941,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe Int32 UnProject4(double winX, double winY, double winZ, double clipW, double* model, double* proj, Int32* view, double near, double far, double* objX, double* objY, double* objZ, double* objW)
+        {
+            return Delegates.gluUnProject4((double)winX, (double)winY, (double)winZ, (double)clipW, (double*)model, (double*)proj, (Int32*)view, (double)near, (double)far, (double*)objX, (double*)objY, (double*)objZ, (double*)objW);
+        }
+
         public static partial class Ext
         {
             public static 
@@ -990,13 +980,6 @@ namespace OpenTK.OpenGL
 
         public static partial class Sgi
         {
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Int32 TexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.SgisTextureFilter4 filtertype, float* parms, Int32 n, [Out] float* weights)
-            {
-                return Delegates.gluTexFilterFuncSGI((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.SgisTextureFilter4)filtertype, (float*)parms, (Int32)n, (float*)weights);
-            }
-
             public static 
             Int32 TexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.SgisTextureFilter4 filtertype, float[] parms, Int32 n, [Out] float[] weights)
             {
@@ -1023,6 +1006,13 @@ namespace OpenTK.OpenGL
                         return retval;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Int32 TexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.SgisTextureFilter4 filtertype, float* parms, Int32 n, [Out] float* weights)
+            {
+                return Delegates.gluTexFilterFuncSGI((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.SgisTextureFilter4)filtertype, (float*)parms, (Int32)n, (float*)weights);
             }
 
         }
