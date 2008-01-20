@@ -400,7 +400,7 @@ namespace OpenTK.Platform.X11
             // Register for window destroy notification
             IntPtr wm_destroy_atom = Functions.XInternAtom(window.Display,
                 "WM_DELETE_WINDOW", true);
-            XWMHints hint = new XWMHints();
+            //XWMHints hint = new XWMHints();
             Functions.XSetWMProtocols(window.Display, window.Handle, new IntPtr[] { wm_destroy_atom }, 1);
 
             Top = Left = 0;

@@ -254,16 +254,23 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region void IGLContextInternal.RegisterForDisposal(IDisposable resource)
+
         void IGLContextInternal.RegisterForDisposal(IDisposable resource)
         {
-            throw new NotImplementedException("Use the general GLContext class instead.");
+            throw new NotSupportedException("Use OpenTK.GLContext instead.");
         }
+
+        #endregion
+
+        #region void IGLContextInternal.DisposeResources()
 
         void IGLContextInternal.DisposeResources()
         {
-            throw new NotImplementedException("Use the general GLContext class instead.");
+            throw new NotSupportedException("Use OpenTK.GLContext instead.");
         }
 
+        #endregion
 
         #endregion
 

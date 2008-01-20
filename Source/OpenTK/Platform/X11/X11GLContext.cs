@@ -308,6 +308,16 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region --- Public Methods ---
+
+        void OnDestroy()
+        {
+            if (Destroy != null)
+                Destroy(this, EventArgs.Empty);
+        }
+
+        #endregion
+
         #region --- IDisposable Members ---
 
         public void Dispose()

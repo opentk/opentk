@@ -64,7 +64,7 @@ namespace OpenTK
         double update_period, render_period;
         double target_update_period, target_render_period, target_render_period_doubled;
         // TODO: Implement these:
-        double update_time, render_time, event_time;
+        double update_time, render_time;//, event_time;
         //bool allow_sleep = true;    // If true, GameWindow will call Timer.Sleep() if there is enough time.
         int width, height;
         VSyncMode vsync;

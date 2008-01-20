@@ -27,7 +27,7 @@ namespace Bind
 
         // TODO: This code is too fragile.
         // Old enums code:
-        public static string normalEnumsClassOverride;
+        public static string normalEnumsClassOverride = null;
         public static string NestedEnumsClass = "Enums";
         public static string NormalEnumsClass
         {

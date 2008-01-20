@@ -386,7 +386,7 @@ namespace OpenTK.Build
             //DirectoryInfo dir;
             //FileInfo[] files;
             //DirectoryInfo[] dirs;
-            string tmppath;
+            //string tmppath;
 
             //determine if the destination directory exists, if not create it
             if (!Directory.Exists(destdir))

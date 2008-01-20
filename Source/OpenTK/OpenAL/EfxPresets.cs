@@ -16,21 +16,23 @@ namespace OpenTK.OpenAL
 
     public partial class EfxExtension
     {
+        // TODO: CLS compliance.
+        [CLSCompliant(false)]
         public struct EaxReverb
         {
-            public uint _Environment;
-            public float _EnvironmentSize;
-            public float _EnvironmentDiffusion;
-            public int _Room;
-            public int _RoomHF;
-            public int _RoomLF;
+            public uint Environment;            // TODO: EAX-EFX conversion
+            public float EnvironmentSize;       // TODO: EAX-EFX conversion
+            public float EnvironmentDiffusion;  // TODO: EAX-EFX conversion
+            public int Room;                    // TODO: EAX-EFX conversion
+            public int RoomHF;                  // TODO: EAX-EFX conversion
+            public int RoomLF;                  // TODO: EAX-EFX conversion
             public float DecayTime;
             public float DecayHFRatio;
             public float DecayLFRatio;
-            public int _Reflections;
+            public int Reflections;             // TODO: EAX-EFX conversion
             public float ReflectionsDelay;
             public Vector3 ReflectionsPan;
-            public int _Reverb;
+            public int Reverb;                  // TODO: EAX-EFX conversion
             public float ReverbDelay;
             public Vector3 ReverbPan;
             public float EchoTime;
@@ -41,7 +43,7 @@ namespace OpenTK.OpenAL
             public float HFReference;
             public float LFReference;
             public float RoomRolloffFactor;
-            public uint _Flags;
+            public uint Flags;                  // TODO: EAX-EFX conversion
 
             public EaxReverb( uint environment,
                               float environmentSize,
@@ -72,19 +74,19 @@ namespace OpenTK.OpenAL
                               float roomRolloffFactor,
                               uint flags )
             {
-                _Environment = environment;
-                _EnvironmentSize = environmentSize;
-                _EnvironmentDiffusion = environmentDiffusion;
-                _Room = room;
-                _RoomHF = roomHF;
-                _RoomLF = roomLF;
+                Environment = environment;
+                EnvironmentSize = environmentSize;
+                EnvironmentDiffusion = environmentDiffusion;
+                Room = room;
+                RoomHF = roomHF;
+                RoomLF = roomLF;
                 DecayTime = decayTime;
                 DecayHFRatio = decayHFRatio;
                 DecayLFRatio = decayLFRatio;
-                _Reflections = reflections;
+                Reflections = reflections;
                 ReflectionsDelay = reflectionsDelay;
                 ReflectionsPan = new Vector3(reflectionsPanX,reflectionsPanY,reflectionsPanZ);
-                _Reverb = reverb;
+                Reverb = reverb;
                 ReverbDelay = reverbDelay;
                 ReverbPan = new Vector3(reverbPanX,reverbPanY,reverbPanZ);
                 EchoTime = echoTime;
@@ -95,11 +97,13 @@ namespace OpenTK.OpenAL
                 HFReference = hfReference;
                 LFReference = lfReference;
                 RoomRolloffFactor = roomRolloffFactor;
-                _Flags = flags;
+                Flags = flags;
             }
 
         }
 
+        // TODO: CLS compliance.
+        [CLSCompliant(false)]
         public static void GetEaxFromEfxEax( ref EaxReverb input,out EfxEaxReverb output )
         {
             output.AirAbsorptionGainHF = 0.995f; // input.AirAbsorptionHF  * somegain?
@@ -200,8 +204,9 @@ namespace OpenTK.OpenAL
                      void ConvertOcclusionParameters(EAXOCCLUSIONPROPERTIES *pOcProp, EFXLOWPASSFILTER *pDirectLowPassFilter, EFXLOWPASSFILTER *pSendLowPassFilter);
                              */
 
-
+        // TODO: CLS compliance.
         ///<summary>EAX Reverb Presets in legacy format - use ConvertReverbParameters() to convert to EFX EAX Reverb Presets for use with the OpenAL Effects Extension.</summary>
+        [CLSCompliant(false)]
         public static class ReverbPresets
         {
             // CASTLE PRESETS

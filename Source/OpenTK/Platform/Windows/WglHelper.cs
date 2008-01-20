@@ -186,6 +186,7 @@ namespace OpenTK.Platform.Windows
 #endif
         #endregion
 
+        /// <summary>Contains ARB extensions for WGL.</summary>
         public static partial class Arb
         {
             private static string[] extensions;
@@ -204,6 +205,33 @@ namespace OpenTK.Platform.Windows
                         extensions = Wgl.Arb.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         Array.Sort(extensions);
                         reload_arb_extension_strings = false;
+                    }
+
+                    return Array.BinarySearch(extensions, ext) != -1;
+                }
+                return false;
+            }
+        }
+
+        /// <summary>Contains EXT extensions for WGL.</summary>
+        public static partial class Ext
+        {
+            private static string[] extensions;
+            /// <summary>
+            /// Checks if a Wgl extension is supported by the given context.
+            /// </summary>
+            /// <param name="deviceContext">The device context.</param>
+            /// <param name="ext">The extension to check.</param>
+            /// <returns>True if the extension is supported by the given context, false otherwise</returns>
+            public static bool SupportsExtension(IntPtr deviceContext, string ext)
+            {
+                if (Wgl.Delegates.wglGetExtensionsStringEXT != null)
+                {
+                    if (extensions == null || reload_ext_extension_strings)
+                    {
+                        extensions = Wgl.Ext.GetExtensionsString().Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        Array.Sort(extensions);
+                        reload_ext_extension_strings = false;
                     }
 
                     return Array.BinarySearch(extensions, ext) != -1;
