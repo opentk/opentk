@@ -114,7 +114,6 @@ namespace OpenTK.OpenAL
         /// <param name="context">A pointer to the new context.</param>
         /// <returns>Returns True on success, or False on failure.</returns>
         [DllImport(Alc.Lib,EntryPoint = "alcMakeContextCurrent",ExactSpelling = true,CallingConvention = Alc.Style),SuppressUnmanagedCodeSecurity( )]
-        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool MakeContextCurrent( [In] IntPtr context );
         // ALC_API ALCboolean      ALC_APIENTRY alcMakeContextCurrent( ALCcontext *context );
 
