@@ -7,9 +7,13 @@ OpenTK 0.9.0 -> 0.9.1
 	+ Corrected Glu.NewTess and Glu.DeleteTess (were NewTes and DeleteTes respectively).
 	+ Corrected typemaping for NurbsObj, QuadricObj, TesselatorObj and FunctionPointer.
 	+ Fixed a bug that resulted in missing overloads in functions with both pointers and generic parameters (like Glu.TessVertex).
+	+ Worked around an Intellisense bug, where some overloads might not be reported if the pointer overload was the first one encountered.
 	
 + OpenTK
-	+ Implemented Glu.TessCallback, Glu.NurbsCallback and Glu.QuadricsCallback.
+	+ Fixed Glu tessellation.
+	
++ Examples
+	+ Added GluTessellator example.
 
 -----------------------
 OpenTK 0.3.13 -> 0.9.0
