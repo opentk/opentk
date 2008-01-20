@@ -123,8 +123,12 @@ namespace Examples
 
         public void KeyDownHandler(KeyboardDevice sender, Key key)
         {
-            if (Keyboard[Key.Escape])
-                this.Exit();
+            switch (key)
+            {
+                case Key.Escape:
+                    this.Exit();
+                    return;
+            }
         }
 
         #endregion
@@ -171,10 +175,7 @@ namespace Examples
             tess = Glu.NewTess();
             startList = GL.GenLists(3);
 
-            //tessVertex = GL.GetDelegate("glVertex3fv");
-            //tessBegin = GL.GetDelegate("glBegin");
-            //tessEnd = GL.GetDelegate("glEnd");
-            unsafe { tessVertex = this.VertexHandler; }
+            tessVertex = this.VertexHandler;
             tessBegin = this.BeginHandler;
             tessEnd = this.EndHandler;
             tessError = this.ErrorHandler;
@@ -229,7 +230,7 @@ namespace Examples
             Glu.TessEndPolygon(tess);
             GL.EndList();
             
-            /*
+            
             double[][] v = new double[][]
             {
                 new double[] {50.0, 50.0, 0.0},
@@ -240,33 +241,6 @@ namespace Examples
                 new double[] {150.0, 150.0, 0.0},
                 new double[] {100.0, 150.0, 0.0}
             };
-
-            tess = Glu.NewTess();
-
-            GL.NewList(startList, ListMode.Compile);
-            Glu.TessBeginPolygon(tess, IntPtr.Zero);
-            Glu.TessBeginContour(tess);
-            Glu.TessVertex(tess, v[0], v[0]);
-            Glu.TessVertex(tess, v[1], v[1]);
-            Glu.TessVertex(tess, v[2], v[2]);
-            Glu.TessVertex(tess, v[3], v[3]);
-            Glu.TessEndContour(tess);
-            Glu.TessBeginContour(tess);
-            Glu.TessVertex(tess, v[4], v[4]);
-            Glu.TessVertex(tess, v[5], v[5]);
-            Glu.TessVertex(tess, v[6], v[6]);
-            Glu.TessEndContour(tess);
-            Glu.TessEndPolygon(tess);
-            GL.EndList();
-
-            GL.NewList(startList + 2, ListMode.Compile);
-            GL.Begin(BeginMode.Triangles);
-            GL.Vertex2(0, 0);
-            GL.Vertex2(Width/16, Height/16);
-            GL.Vertex2(0, Height/16);
-            GL.End();
-            GL.EndList();
-            */
         }
 
         #endregion
@@ -296,7 +270,6 @@ namespace Examples
             GL.Color3(1.0f, 1.0f, 1.0f);
             GL.CallList(startList);
             GL.CallList(startList + 1);
-            //GL.CallList(startList + 2);
             GL.Flush();
 
             this.SwapBuffers();
