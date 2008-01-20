@@ -63,21 +63,21 @@ namespace OpenTK.Math
         /// <summary>Converts the vector into left double-precision floating point number pointer.</summary>
         /// <param name="vector">The vector being converted.</param>
         /// <returns>A double-precision floating point number pointer to the vector coordinates.</returns>
-        unsafe public static explicit operator double*(Vector2d vector)
-        {
-            return &vector.X;
-        }
+        //unsafe public static explicit operator double*(Vector2d vector)
+        //{
+        //    return &vector.X;
+        //}
 
         /// <summary>Converts the vector into an IntPtr.</summary>
         /// <param name="vector">The vector being converted.</param>
         /// <returns>An IntPtr to the vector coordinates.</returns>
-        public static explicit operator IntPtr(Vector2d vector)
-        {
-            unsafe
-            {
-                return (IntPtr)(&vector.X);
-            }
-        }
+        //public static explicit operator IntPtr(Vector2d vector)
+        //{
+        //    unsafe
+        //    {
+        //        return (IntPtr)(&vector.X);
+        //    }
+        //}
 
         #endregion
 
@@ -119,6 +119,7 @@ namespace OpenTK.Math
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>
         /// <param name="vector">An vector to compare with this vector.</param>
         /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
+        [CLSCompliant(false)]
         public bool Equals(Vector2d vector)
         {
             return

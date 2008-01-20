@@ -391,7 +391,7 @@ namespace OpenTK.OpenAL
 
         #region Create Source objects
 
-        [CLSCompliant(false),DllImport(AL.Lib,EntryPoint = "alGenSources",ExactSpelling = true,CallingConvention = AL.Style),SuppressUnmanagedCodeSecurity( )]
+        [DllImport(AL.Lib,EntryPoint = "alGenSources",ExactSpelling = true,CallingConvention = AL.Style),SuppressUnmanagedCodeSecurity( )]
         unsafe private static extern void GenSourcesPrivate( int n,[Out] uint* sources );
         // AL_API void AL_APIENTRY alGenSources( ALsizei n, ALuint* Sources );
 
