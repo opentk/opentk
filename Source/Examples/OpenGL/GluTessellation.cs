@@ -18,30 +18,28 @@ using System.Runtime.InteropServices;
 
 namespace Examples
 {
-    [Example("GLU Tesselation Functions Test", ExampleCategory.OpenGL)]
+    [Example("GLU Tesselation Functions Test", ExampleCategory.OpenGL, 10)]
     public class Test : GameWindow
     {
         int startList;
         IntPtr tess;
 
+        // Define the signatures for the callback functions, and declare the callbacks.
+        delegate void BeginCallbackDelegate(BeginMode mode);
+        delegate void EndCallbackDelegate();
+        delegate void VertexCallbackDelegate(IntPtr v);
         delegate void ErrorCallbackDelegate(GluErrorCode code);
-        ErrorCallbackDelegate tessError;
-
         unsafe delegate void CombineCallbackDelegate(
             [MarshalAs(UnmanagedType.LPArray, SizeConst = 3)]double[] coordinates,
-            [MarshalAs(UnmanagedType.LPArray, SizeConst = 4)]IntPtr[] vertexData,
+            [MarshalAs(UnmanagedType.LPArray, SizeConst = 4)]double*[] vertexData,
             [MarshalAs(UnmanagedType.LPArray, SizeConst = 4)]float[] weight,
-            void** dataOut);
-        CombineCallbackDelegate tessCombine;
+            double** dataOut);
 
-        delegate void BeginCallbackDelegate(BeginMode mode);
         BeginCallbackDelegate tessBegin;
-
-        delegate void EndCallbackDelegate();
         EndCallbackDelegate tessEnd;
-
-        unsafe delegate void VertexCallbackDelegate(IntPtr v);
+        ErrorCallbackDelegate tessError;
         VertexCallbackDelegate tessVertex;
+        CombineCallbackDelegate tessCombine;
 
         public Test() : base()
         {
@@ -93,7 +91,7 @@ namespace Examples
 
         unsafe double*[] combineData = new double*[16];
         int data_index = 0;
-        unsafe void CombineHandler(double[] coordinates, IntPtr[] data, float[] weight, void** dataOut)
+        unsafe void CombineHandler(double[] coordinates, double*[] data, float[] weight, double** dataOut)
         {
             double* out_data = combineData[data_index] = (double*)Marshal.AllocHGlobal(6 * sizeof(double));
             int i;
@@ -170,7 +168,7 @@ namespace Examples
                 new double[] {400.0, 150.0, 0.0, 0.0, 1.0, 0.0}
             };
 
-            GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            GL.ClearColor(System.Drawing.Color.SteelBlue);
 
             tess = Glu.NewTess();
             startList = GL.GenLists(3);
@@ -229,18 +227,6 @@ namespace Examples
             Glu.TessEndContour(tess);
             Glu.TessEndPolygon(tess);
             GL.EndList();
-            
-            
-            double[][] v = new double[][]
-            {
-                new double[] {50.0, 50.0, 0.0},
-                new double[] {200.0, 50.0, 0.0},
-                new double[] {200.0, 200.0, 0.0},
-                new double[] {100.0, 100.0, 0.0},
-                new double[] {150.0, 100.0, 0.0},
-                new double[] {150.0, 150.0, 0.0},
-                new double[] {100.0, 150.0, 0.0}
-            };
         }
 
         #endregion
@@ -253,10 +239,7 @@ namespace Examples
                 Glu.DeleteTess(tess);
             GL.DeleteLists(startList, 3);
             while (data_index != 0)
-            {
                 unsafe { Marshal.FreeHGlobal((IntPtr)combineData[data_index--]); }
-            }
-            
         }
 
         #endregion
