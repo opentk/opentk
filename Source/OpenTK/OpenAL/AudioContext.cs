@@ -212,6 +212,8 @@ namespace OpenTK.Audio
             if (device_handle == IntPtr.Zero)
                 throw new AudioDeviceException("The specified audio device does not exist or is tied up by another application.");
 
+            CheckForAlcErrors();
+
             device_name = device;
             /*
             // Build the attribute list
@@ -249,18 +251,29 @@ namespace OpenTK.Audio
                 throw new AudioContextException("The audio context could not be created with the specified parameters.");
             }
 
-            //MakeCurrent();
+            CheckForAlcErrors();
 
-            AlcError err = Alc.GetError(device_handle);
-            if (err != AlcError.NoError)
-                throw new AudioContextException(err.ToString());
+            MakeCurrent();
 
+            CheckForAlcErrors();
+            
             //device_name = Alc.GetString(device_handle, AlcGetString.DeviceSpecifier);
             //Debug.Print(device_name);
             lock (audio_context_lock)
             {
                 available_contexts.Add(this.context_handle, this);
             }
+        }
+
+        #endregion
+
+        #region void CheckForAlcErrors()
+
+        void CheckForAlcErrors()
+        {
+            AlcError err = Alc.GetError(device_handle);
+            if (err != AlcError.NoError)
+                throw new AudioContextException(err.ToString());
         }
 
         #endregion
@@ -278,7 +291,7 @@ namespace OpenTK.Audio
         /// </exception>
         static void MakeCurrent(AudioContext context)
         {
-            //lock (audio_context_lock)
+            lock (audio_context_lock)
             {
                 if (!Alc.MakeContextCurrent(context != null ? (IntPtr)context.context_handle : IntPtr.Zero))
                     throw new AudioContextException(Alc.GetError(
