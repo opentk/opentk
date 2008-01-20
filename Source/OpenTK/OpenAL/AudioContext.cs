@@ -278,13 +278,11 @@ namespace OpenTK.Audio
         /// </exception>
         static void MakeCurrent(AudioContext context)
         {
-            lock (audio_context_lock)
+            //lock (audio_context_lock)
             {
-                //if (context != null && context.disposed)
-                //    throw new ObjectDisposedException("OpenTK.Audio.AudioContext");
                 if (!Alc.MakeContextCurrent(context != null ? (IntPtr)context.context_handle : IntPtr.Zero))
-                    throw new AudioContextException(
-                        Alc.GetError(context != null ? (IntPtr)context.context_handle : IntPtr.Zero).ToString());
+                    throw new AudioContextException(Alc.GetError(
+                        context != null ? (IntPtr)context.context_handle : IntPtr.Zero).ToString());
             }
         }
 
