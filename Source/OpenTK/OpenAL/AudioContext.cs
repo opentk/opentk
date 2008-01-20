@@ -247,7 +247,7 @@ namespace OpenTK.Audio
                 throw new AudioContextException("The audio context could not be created with the specified parameters.");
             }
 
-            MakeCurrent();
+            //MakeCurrent();
 
             AlcError err = Alc.GetError(device_handle);
             if (err != AlcError.NoError)
