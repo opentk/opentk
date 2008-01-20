@@ -52,7 +52,7 @@ namespace OpenTK.Audio
 
         /// <summary>Constructs a new AudioContext, using the default audio device.</summary>
         /// <exception cref="NotSupportedException">Occurs when no audio devices are available.</exception>
-        public AudioContext() : this(available_devices.Count > 0 ? available_devices[0] : "", 0, 0, false, 0) { }
+        public AudioContext() : this(available_devices.Count > 0 ? available_devices[0] : null, 0, 0, false, 0) { }
 
         #endregion
 
@@ -183,7 +183,7 @@ namespace OpenTK.Audio
 
         /// <private />
         /// <summary>Creates the audio context using the specified device.</summary>
-        /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices.</param>
+        /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices, or null for the default device.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="refresh">Refresh intervals, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="sync">Flag, indicating a synchronous context.</param>
@@ -203,7 +203,7 @@ namespace OpenTK.Audio
         /// </remarks>
         void CreateContext(string device, int freq, int refresh, bool sync, int maxEfxSends)
         {
-            if (String.IsNullOrEmpty(device)) throw new ArgumentNullException("device");
+            //if (String.IsNullOrEmpty(device)) throw new ArgumentNullException("device");
             if (freq < 0) throw new ArgumentOutOfRangeException("freq", freq, "Should be greater than zero.");
             if (refresh < 0) throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
             if (maxEfxSends < 0) throw new ArgumentOutOfRangeException("maxEfxSends", maxEfxSends, "Should be greater than zero.");
