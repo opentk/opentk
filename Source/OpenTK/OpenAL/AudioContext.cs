@@ -169,7 +169,7 @@ namespace OpenTK.Audio
                 if (available_devices.Count == 0)
                 {
                     if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATION_EXT"))
-                        available_devices.AddRange(Alc.GetString(IntPtr.Zero, AlcGetStringList.AllDevicesSpecifier));
+                        available_devices.AddRange(Alc.GetString(IntPtr.Zero, AlcGetStringList.DeviceSpecifier));
                     else
                         Debug.Print("Device enumeration extension not available. Failed to enumerate devices.");
                 }
