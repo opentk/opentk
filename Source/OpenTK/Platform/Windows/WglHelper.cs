@@ -41,12 +41,11 @@ namespace OpenTK.Platform.Windows
         private static Type delegatesClass;
         private static Type importsClass;
 
-        private static bool reload_ext_extension_strings = true;
-        private static bool reload_arb_extension_strings = true;
+        private static bool rebuildExtensionList = true;
 
         #endregion
 
-        #region public static Delegate GetDelegate(string name, Type signature)
+        #region static Delegate LoadDelegate(string name, Type signature)
 
         /// <summary>
         /// Creates a System.Delegate that can be used to call an OpenGL function, core or extension.
@@ -57,21 +56,17 @@ namespace OpenTK.Platform.Windows
         /// A System.Delegate that can be used to call this OpenGL function, or null if the specified
         /// function name did not correspond to an OpenGL function.
         /// </returns>
-        public static Delegate GetDelegate(string name, Type signature)
+        static Delegate LoadDelegate(string name, Type signature)
         {
             Delegate d;
             string realName = name.StartsWith("wgl") ? name.Substring(3) : name;
 
             if (importsClass.GetMethod(realName,
                 BindingFlags.NonPublic | BindingFlags.Static) != null)
-            {
                 d = GetExtensionDelegate(name, signature) ??
                     Delegate.CreateDelegate(signature, typeof(Imports), realName);
-            }
             else
-            {
                 d = GetExtensionDelegate(name, signature);
-            }
 
             return d;
         }
@@ -114,13 +109,7 @@ namespace OpenTK.Platform.Windows
         /// </summary>
         public static void LoadAll()
         {
-            FieldInfo[] v = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
-            foreach (FieldInfo f in v)
-            {
-                f.SetValue(null, GetDelegate(f.Name, f.FieldType));
-            }
-            reload_ext_extension_strings = true;
-            reload_arb_extension_strings = true;
+            OpenTK.Platform.Utilities.LoadExtensions(typeof(Wgl));
         }
 
         #endregion
@@ -134,22 +123,7 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         public static bool Load(string function)
         {
-            FieldInfo f = delegatesClass.GetField(function, BindingFlags.Static | BindingFlags.NonPublic);
-            if (f == null)
-                return false;
-
-            Delegate old = f.GetValue(null) as Delegate;
-            Delegate @new = GetDelegate(f.Name, f.FieldType);
-
-            if (old.Target != @new.Target)
-            {
-                f.SetValue(null, @new);
-                if (function.EndsWith("EXT"))
-                    reload_ext_extension_strings = true; 
-                else if (function.EndsWith("ARB"))
-                    reload_arb_extension_strings = true; 
-            }
-            return @new != null;
+            return OpenTK.Platform.Utilities.TryLoadExtension(typeof(Wgl), function);
         }
 
         #endregion
@@ -200,11 +174,11 @@ namespace OpenTK.Platform.Windows
             {
                 if (Wgl.Delegates.wglGetExtensionsStringARB != null)
                 {
-                    if (extensions == null || reload_arb_extension_strings)
+                    if (extensions == null || rebuildExtensionList)
                     {
                         extensions = Wgl.Arb.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         Array.Sort(extensions);
-                        reload_arb_extension_strings = false;
+                        rebuildExtensionList = false;
                     }
 
                     return Array.BinarySearch(extensions, ext) != -1;
@@ -227,11 +201,11 @@ namespace OpenTK.Platform.Windows
             {
                 if (Wgl.Delegates.wglGetExtensionsStringEXT != null)
                 {
-                    if (extensions == null || reload_ext_extension_strings)
+                    if (extensions == null || rebuildExtensionList)
                     {
                         extensions = Wgl.Ext.GetExtensionsString().Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         Array.Sort(extensions);
-                        reload_ext_extension_strings = false;
+                        rebuildExtensionList = false;
                     }
 
                     return Array.BinarySearch(extensions, ext) != -1;

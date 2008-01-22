@@ -117,7 +117,7 @@ namespace OpenTK.Platform
         /// A pointer to the specified function or IntPtr.Zero if the function isn't
         /// available in the current opengl context.
         /// </returns>
-        /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
+        // /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
         IntPtr GetAddress(string function);
     }
 }

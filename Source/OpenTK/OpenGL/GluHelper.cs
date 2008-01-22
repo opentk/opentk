@@ -25,20 +25,20 @@ namespace OpenTK.OpenGL
         private static Dictionary<string, bool> AvailableExtensions = new Dictionary<string, bool>();
         private static bool rebuildExtensionList = true;
 
-        private static Assembly assembly;
-        private static Type glClass;
-        private static Type delegatesClass;
-        private static Type importsClass;
+        //private static Assembly assembly;
+        //private static Type glClass;
+        //private static Type delegatesClass;
+        private static Type importsClass = typeof(Imports);
 
         static Glu()
         {
-            assembly = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.OpenGL");
-            glClass = assembly.GetType("OpenTK.OpenGL.Glu");
-            delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
-            importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
+            //assembly = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.OpenGL");
+            //glClass = assembly.GetType("OpenTK.OpenGL.Glu");
+            //delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
+            //importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
         }
 
-        #region private static Delegate GetDelegate(string name, Type signature)
+        #region private static Delegate LoadDelegate(string name, Type signature)
 
         /// <summary>
         /// Creates a System.Delegate that can be used to call a GLU function, core or extension.
@@ -49,7 +49,7 @@ namespace OpenTK.OpenGL
         /// A System.Delegate that can be used to call this GLU function, or null if the specified
         /// function name did not correspond to an GLU function.
         /// </returns>
-        private static Delegate GetDelegate(string name, Type signature)
+        private static Delegate LoadDelegate(string name, Type signature)
         {
             MethodInfo m = importsClass.GetMethod(name.Substring(3), BindingFlags.Static | BindingFlags.NonPublic);
             return
@@ -72,14 +72,7 @@ namespace OpenTK.OpenGL
         /// </remarks>
         public static void LoadAll()
         {
-            FieldInfo[] v = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
-            foreach (FieldInfo f in v)
-            {
-                f.SetValue(null, GetDelegate(f.Name, f.FieldType));
-            }
-
-            AvailableExtensions.Clear();
-            rebuildExtensionList = true;
+            OpenTK.Platform.Utilities.LoadExtensions(typeof(Glu));
         }
 
         #endregion
@@ -107,14 +100,7 @@ namespace OpenTK.OpenGL
         /// </remarks>
         public static bool Load(string function)
         {
-            FieldInfo f = delegatesClass.GetField(function);
-            if (f == null)
-                return false;
-
-            f.SetValue(null, GetDelegate(f.Name, f.FieldType));
-
-            rebuildExtensionList = true;
-            return f.GetValue(null) != null;
+            return OpenTK.Platform.Utilities.TryLoadExtension(typeof(Glu), function);
         }
 
         #endregion
