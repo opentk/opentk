@@ -19,14 +19,16 @@ namespace OpenTK
     {
         IGLContext implementation;  // The actual render context implementation for the underlying platform.
         List<IDisposable> dispose_queue = new List<IDisposable>();
-
         bool disposed;
-        
+
+        static bool share_contexts = true;
+        static object context_lock = new object();        
         static Dictionary<ContextHandle, WeakReference> available_contexts =
             new Dictionary<ContextHandle, WeakReference>();   // Contains all available OpenGL contexts.
 
         //delegate IntPtr GetCurrentContextDelegate();
         //static GetCurrentContextDelegate StaticGetCurrentContext;
+
 
         #region public GLContext(DisplayMode mode, IWindowInfo window)
 
@@ -60,6 +62,20 @@ namespace OpenTK
 
             (this as IGLContextCreationHack).SetWindowHandle(window.Handle);
             (this as IGLContextCreationHack).SelectDisplayMode(mode, window);
+            if (GLContext.ShareContexts)
+            {
+                lock (context_lock)
+                {
+                    // A small hack to create a shared context with the first available context.
+                    foreach (WeakReference r in GLContext.available_contexts.Values)
+                    {
+                        this.CreateContext(true, (GLContext)r.Target);
+                        return;
+                    }
+                }
+            }
+            // Only reached if a shared context was not created above, or if this is the first
+            // context ever constructed.
             this.CreateContext(true, null);
         }
 
@@ -101,6 +117,18 @@ namespace OpenTK
                 //return (GLContext)available_contexts[StaticGetCurrentContext().ToInt64()].Target;
             }
         }
+
+        #endregion
+
+        #region public static bool ShareContexts
+
+        /// <summary>Gets or sets a System.Boolean, indicating whether GLContexts are shared</summary>
+        /// <remarks>
+        /// <para>If ShareContexts is true, new GLContexts will share resources. If this value is
+        /// false, new GLContexts will not share resources.</para>
+        /// <para>Changing this value will not affect already created GLContexts.</para>
+        /// </remarks>
+        public static bool ShareContexts { get { return share_contexts; } set { share_contexts = value; } }
 
         #endregion
 
