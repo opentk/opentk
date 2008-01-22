@@ -52,13 +52,13 @@ namespace Examples
             context.MakeCurrent();
             Trace.Assert(context.IsCurrent);
 
-            Trace.WriteLine("IsCurrent = false...");
-            context.IsCurrent = false;
-            Trace.Assert(!context.IsCurrent);
+            //Trace.WriteLine("IsCurrent = false...");
+            //context.IsCurrent = false;
+            //Trace.Assert(!context.IsCurrent);
 
-            Trace.WriteLine("IsCurrent = true...");
-            context.IsCurrent = true;
-            Trace.Assert(context.IsCurrent);
+            //Trace.WriteLine("IsCurrent = true...");
+            //context.IsCurrent = true;
+            //Trace.Assert(context.IsCurrent);
 
             Trace.WriteLine("AudioContext.CurrentContext...");
             Trace.Assert(AudioContext.CurrentContext == context);

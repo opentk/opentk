@@ -41,10 +41,10 @@ namespace OpenTK.Audio
         /// <summary>
         /// Runs before the actual class constructor, to load available devices.
         /// </summary>
-        static AudioContext()
-        {
-            LoadAvailableDevices();
-        }
+        //static AudioContext()
+        //{
+        //    LoadAvailableDevices();
+        //}
 
         #endregion
 
@@ -208,6 +208,13 @@ namespace OpenTK.Audio
             if (maxEfxSends < 0) throw new ArgumentOutOfRangeException("maxEfxSends", maxEfxSends, "Should be greater than zero.");
             //if (available_devices.Count == 0) throw new NotSupportedException("No audio hardware is available.");
 
+            if (available_devices.Count == 0)
+                LoadAvailableDevices();
+
+            // HACK: Do not allow multiple contexts under linux (crashes under Ubuntu 7.04 and 7.10)
+            if (available_contexts.Count > 0)
+                throw new NotSupportedException("Multiple AudioContexts are not supported under Linux.");
+
             device_handle = Alc.OpenDevice(device);
             if (device_handle == IntPtr.Zero)
                 throw new AudioDeviceException("The specified audio device does not exist or is tied up by another application.");
@@ -215,7 +222,7 @@ namespace OpenTK.Audio
             CheckForAlcErrors();
 
             device_name = device;
-            /*
+
             // Build the attribute list
             List<int> attributes = new List<int>();
             
@@ -243,8 +250,7 @@ namespace OpenTK.Audio
             }
 
             context_handle = Alc.CreateContext(device_handle, attributes.ToArray());
-            */
-            context_handle = Alc.CreateContext(device_handle, (int[])null);
+
             if (context_handle == IntPtr.Zero)
             {
                 Alc.CloseDevice(device_handle);
@@ -318,6 +324,8 @@ namespace OpenTK.Audio
         {
             get
             {
+                if (available_devices.Count == 0)
+                    LoadAvailableDevices();
                 return available_devices.ToArray();
             }
         }
