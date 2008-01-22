@@ -138,6 +138,13 @@ GetTextureParameter enum:
 	
 TextureParameterName enum:
 	CLAMP_TO_EDGE					= 0x812F # Equivalent to SGIS_texture_edge_clamp
+	use GetTextureParameter TEXTURE_MIN_LOD
+	use GetTextureParameter TEXTURE_MAX_LOD
+	use GetTextureParameter TEXTURE_BASE_LEVEL
+	use GetTextureParameter TEXTURE_MAX_LEVEL
+	use GetTextureParameter TEXTURE_DEPTH
+	use GetTextureParameter TEXTURE_WRAP_R
+	
 
 PixelStoreParameter enum:
 	PACK_SKIP_IMAGES				= 0x806B # 1 I
