@@ -104,13 +104,6 @@ namespace OpenTK.OpenGL
             Delegates.glBegin((OpenTK.OpenGL.Enums.BeginMode)mode);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Bitmap(Int32 width, Int32 height, Single xorig, Single yorig, Single xmove, Single ymove, Byte* bitmap)
-        {
-            Delegates.glBitmap((Int32)width, (Int32)height, (Single)xorig, (Single)yorig, (Single)xmove, (Single)ymove, (Byte*)bitmap);
-        }
-
         public static 
         void Bitmap(Int32 width, Int32 height, Single xorig, Single yorig, Single xmove, Single ymove, Byte[] bitmap)
         {
@@ -137,16 +130,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        void Color3(SByte red, SByte green, SByte blue)
+        unsafe void Bitmap(Int32 width, Int32 height, Single xorig, Single yorig, Single xmove, Single ymove, Byte* bitmap)
         {
-            Delegates.glColor3b((SByte)red, (SByte)green, (SByte)blue);
+            Delegates.glBitmap((Int32)width, (Int32)height, (Single)xorig, (Single)yorig, (Single)xmove, (Single)ymove, (Byte*)bitmap);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Color3(SByte* v)
+        void Color3(SByte red, SByte green, SByte blue)
         {
-            Delegates.glColor3bv((SByte*)v);
+            Delegates.glColor3b((SByte)red, (SByte)green, (SByte)blue);
         }
 
         [System.CLSCompliant(false)]
@@ -175,17 +168,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Color3(SByte* v)
+        {
+            Delegates.glColor3bv((SByte*)v);
+        }
+
         public static 
         void Color3(Double red, Double green, Double blue)
         {
             Delegates.glColor3d((Double)red, (Double)green, (Double)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color3(Double* v)
-        {
-            Delegates.glColor3dv((Double*)v);
         }
 
         public static 
@@ -212,17 +205,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Color3(Double* v)
+        {
+            Delegates.glColor3dv((Double*)v);
+        }
+
         public static 
         void Color3(Single red, Single green, Single blue)
         {
             Delegates.glColor3f((Single)red, (Single)green, (Single)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color3(Single* v)
-        {
-            Delegates.glColor3fv((Single*)v);
         }
 
         public static 
@@ -249,17 +242,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Color3(Single* v)
+        {
+            Delegates.glColor3fv((Single*)v);
+        }
+
         public static 
         void Color3(Byte red, Byte green, Byte blue)
         {
             Delegates.glColor3ub((Byte)red, (Byte)green, (Byte)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color3(Byte* v)
-        {
-            Delegates.glColor3ubv((Byte*)v);
         }
 
         public static 
@@ -288,6 +281,13 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void Color3(Byte* v)
+        {
+            Delegates.glColor3ubv((Byte*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void Color3(UInt32 red, UInt32 green, UInt32 blue)
         {
             Delegates.glColor3ui((UInt32)red, (UInt32)green, (UInt32)blue);
@@ -297,20 +297,6 @@ namespace OpenTK.OpenGL
         void Color3(Int32 red, Int32 green, Int32 blue)
         {
             Delegates.glColor3ui((UInt32)red, (UInt32)green, (UInt32)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color3(UInt32* v)
-        {
-            Delegates.glColor3uiv((UInt32*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color3(Int32* v)
-        {
-            Delegates.glColor3uiv((UInt32*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -365,6 +351,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void Color3(UInt32* v)
+        {
+            Delegates.glColor3uiv((UInt32*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Color3(Int32* v)
+        {
+            Delegates.glColor3uiv((UInt32*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void Color3(UInt16 red, UInt16 green, UInt16 blue)
         {
             Delegates.glColor3us((UInt16)red, (UInt16)green, (UInt16)blue);
@@ -374,20 +374,6 @@ namespace OpenTK.OpenGL
         void Color3(Int16 red, Int16 green, Int16 blue)
         {
             Delegates.glColor3us((UInt16)red, (UInt16)green, (UInt16)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color3(UInt16* v)
-        {
-            Delegates.glColor3usv((UInt16*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color3(Int16* v)
-        {
-            Delegates.glColor3usv((UInt16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -442,16 +428,23 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        void Color4(SByte red, SByte green, SByte blue, SByte alpha)
+        unsafe void Color3(UInt16* v)
         {
-            Delegates.glColor4b((SByte)red, (SByte)green, (SByte)blue, (SByte)alpha);
+            Delegates.glColor3usv((UInt16*)v);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Color4(SByte* v)
+        unsafe void Color3(Int16* v)
         {
-            Delegates.glColor4bv((SByte*)v);
+            Delegates.glColor3usv((UInt16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        void Color4(SByte red, SByte green, SByte blue, SByte alpha)
+        {
+            Delegates.glColor4b((SByte)red, (SByte)green, (SByte)blue, (SByte)alpha);
         }
 
         [System.CLSCompliant(false)]
@@ -480,17 +473,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Color4(SByte* v)
+        {
+            Delegates.glColor4bv((SByte*)v);
+        }
+
         public static 
         void Color4(Double red, Double green, Double blue, Double alpha)
         {
             Delegates.glColor4d((Double)red, (Double)green, (Double)blue, (Double)alpha);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color4(Double* v)
-        {
-            Delegates.glColor4dv((Double*)v);
         }
 
         public static 
@@ -517,17 +510,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Color4(Double* v)
+        {
+            Delegates.glColor4dv((Double*)v);
+        }
+
         public static 
         void Color4(Single red, Single green, Single blue, Single alpha)
         {
             Delegates.glColor4f((Single)red, (Single)green, (Single)blue, (Single)alpha);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color4(Single* v)
-        {
-            Delegates.glColor4fv((Single*)v);
         }
 
         public static 
@@ -554,17 +547,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Color4(Single* v)
+        {
+            Delegates.glColor4fv((Single*)v);
+        }
+
         public static 
         void Color4(Byte red, Byte green, Byte blue, Byte alpha)
         {
             Delegates.glColor4ub((Byte)red, (Byte)green, (Byte)blue, (Byte)alpha);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color4(Byte* v)
-        {
-            Delegates.glColor4ubv((Byte*)v);
         }
 
         public static 
@@ -593,6 +586,13 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void Color4(Byte* v)
+        {
+            Delegates.glColor4ubv((Byte*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void Color4(UInt32 red, UInt32 green, UInt32 blue, UInt32 alpha)
         {
             Delegates.glColor4ui((UInt32)red, (UInt32)green, (UInt32)blue, (UInt32)alpha);
@@ -602,20 +602,6 @@ namespace OpenTK.OpenGL
         void Color4(Int32 red, Int32 green, Int32 blue, Int32 alpha)
         {
             Delegates.glColor4ui((UInt32)red, (UInt32)green, (UInt32)blue, (UInt32)alpha);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color4(UInt32* v)
-        {
-            Delegates.glColor4uiv((UInt32*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color4(Int32* v)
-        {
-            Delegates.glColor4uiv((UInt32*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -670,6 +656,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void Color4(UInt32* v)
+        {
+            Delegates.glColor4uiv((UInt32*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Color4(Int32* v)
+        {
+            Delegates.glColor4uiv((UInt32*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void Color4(UInt16 red, UInt16 green, UInt16 blue, UInt16 alpha)
         {
             Delegates.glColor4us((UInt16)red, (UInt16)green, (UInt16)blue, (UInt16)alpha);
@@ -679,20 +679,6 @@ namespace OpenTK.OpenGL
         void Color4(Int16 red, Int16 green, Int16 blue, Int16 alpha)
         {
             Delegates.glColor4us((UInt16)red, (UInt16)green, (UInt16)blue, (UInt16)alpha);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color4(UInt16* v)
-        {
-            Delegates.glColor4usv((UInt16*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Color4(Int16* v)
-        {
-            Delegates.glColor4usv((UInt16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -745,17 +731,24 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
         public static 
-        void EdgeFlag(bool flag)
+        unsafe void Color4(UInt16* v)
         {
-            Delegates.glEdgeFlag((bool)flag);
+            Delegates.glColor4usv((UInt16*)v);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void EdgeFlagv(bool* flag)
+        unsafe void Color4(Int16* v)
         {
-            Delegates.glEdgeFlagv((bool*)flag);
+            Delegates.glColor4usv((UInt16*)v);
+        }
+
+        public static 
+        void EdgeFlag(bool flag)
+        {
+            Delegates.glEdgeFlag((bool)flag);
         }
 
         public static 
@@ -782,6 +775,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void EdgeFlagv(bool* flag)
+        {
+            Delegates.glEdgeFlagv((bool*)flag);
+        }
+
         public static 
         void End()
         {
@@ -792,13 +792,6 @@ namespace OpenTK.OpenGL
         void Index(Double c)
         {
             Delegates.glIndexd((Double)c);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Indexv(Double* c)
-        {
-            Delegates.glIndexdv((Double*)c);
         }
 
         public static 
@@ -825,17 +818,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Indexv(Double* c)
+        {
+            Delegates.glIndexdv((Double*)c);
+        }
+
         public static 
         void Index(Single c)
         {
             Delegates.glIndexf((Single)c);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Indexv(Single* c)
-        {
-            Delegates.glIndexfv((Single*)c);
         }
 
         public static 
@@ -862,17 +855,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Indexv(Single* c)
+        {
+            Delegates.glIndexfv((Single*)c);
+        }
+
         public static 
         void Index(Int32 c)
         {
             Delegates.glIndexi((Int32)c);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Indexv(Int32* c)
-        {
-            Delegates.glIndexiv((Int32*)c);
         }
 
         public static 
@@ -899,17 +892,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Indexv(Int32* c)
+        {
+            Delegates.glIndexiv((Int32*)c);
+        }
+
         public static 
         void Index(Int16 c)
         {
             Delegates.glIndexs((Int16)c);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Indexv(Int16* c)
-        {
-            Delegates.glIndexsv((Int16*)c);
         }
 
         public static 
@@ -938,6 +931,13 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void Indexv(Int16* c)
+        {
+            Delegates.glIndexsv((Int16*)c);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void Normal3(SByte nx, SByte ny, SByte nz)
         {
             Delegates.glNormal3b((SByte)nx, (SByte)ny, (SByte)nz);
@@ -947,20 +947,6 @@ namespace OpenTK.OpenGL
         void Normal3(Byte nx, Byte ny, Byte nz)
         {
             Delegates.glNormal3b((SByte)nx, (SByte)ny, (SByte)nz);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Normal3(SByte* v)
-        {
-            Delegates.glNormal3bv((SByte*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Normal3(Byte* v)
-        {
-            Delegates.glNormal3bv((SByte*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -1013,17 +999,24 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
         public static 
-        void Normal3(Double nx, Double ny, Double nz)
+        unsafe void Normal3(SByte* v)
         {
-            Delegates.glNormal3d((Double)nx, (Double)ny, (Double)nz);
+            Delegates.glNormal3bv((SByte*)v);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Normal3(Double* v)
+        unsafe void Normal3(Byte* v)
         {
-            Delegates.glNormal3dv((Double*)v);
+            Delegates.glNormal3bv((SByte*)v);
+        }
+
+        public static 
+        void Normal3(Double nx, Double ny, Double nz)
+        {
+            Delegates.glNormal3d((Double)nx, (Double)ny, (Double)nz);
         }
 
         public static 
@@ -1050,17 +1043,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Normal3(Double* v)
+        {
+            Delegates.glNormal3dv((Double*)v);
+        }
+
         public static 
         void Normal3(Single nx, Single ny, Single nz)
         {
             Delegates.glNormal3f((Single)nx, (Single)ny, (Single)nz);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Normal3(Single* v)
-        {
-            Delegates.glNormal3fv((Single*)v);
         }
 
         public static 
@@ -1087,17 +1080,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Normal3(Single* v)
+        {
+            Delegates.glNormal3fv((Single*)v);
+        }
+
         public static 
         void Normal3(Int32 nx, Int32 ny, Int32 nz)
         {
             Delegates.glNormal3i((Int32)nx, (Int32)ny, (Int32)nz);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Normal3(Int32* v)
-        {
-            Delegates.glNormal3iv((Int32*)v);
         }
 
         public static 
@@ -1124,17 +1117,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Normal3(Int32* v)
+        {
+            Delegates.glNormal3iv((Int32*)v);
+        }
+
         public static 
         void Normal3(Int16 nx, Int16 ny, Int16 nz)
         {
             Delegates.glNormal3s((Int16)nx, (Int16)ny, (Int16)nz);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Normal3(Int16* v)
-        {
-            Delegates.glNormal3sv((Int16*)v);
         }
 
         public static 
@@ -1161,17 +1154,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Normal3(Int16* v)
+        {
+            Delegates.glNormal3sv((Int16*)v);
+        }
+
         public static 
         void RasterPos2(Double x, Double y)
         {
             Delegates.glRasterPos2d((Double)x, (Double)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos2(Double* v)
-        {
-            Delegates.glRasterPos2dv((Double*)v);
         }
 
         public static 
@@ -1198,17 +1191,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos2(Double* v)
+        {
+            Delegates.glRasterPos2dv((Double*)v);
+        }
+
         public static 
         void RasterPos2(Single x, Single y)
         {
             Delegates.glRasterPos2f((Single)x, (Single)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos2(Single* v)
-        {
-            Delegates.glRasterPos2fv((Single*)v);
         }
 
         public static 
@@ -1235,17 +1228,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos2(Single* v)
+        {
+            Delegates.glRasterPos2fv((Single*)v);
+        }
+
         public static 
         void RasterPos2(Int32 x, Int32 y)
         {
             Delegates.glRasterPos2i((Int32)x, (Int32)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos2(Int32* v)
-        {
-            Delegates.glRasterPos2iv((Int32*)v);
         }
 
         public static 
@@ -1272,17 +1265,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos2(Int32* v)
+        {
+            Delegates.glRasterPos2iv((Int32*)v);
+        }
+
         public static 
         void RasterPos2(Int16 x, Int16 y)
         {
             Delegates.glRasterPos2s((Int16)x, (Int16)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos2(Int16* v)
-        {
-            Delegates.glRasterPos2sv((Int16*)v);
         }
 
         public static 
@@ -1309,17 +1302,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos2(Int16* v)
+        {
+            Delegates.glRasterPos2sv((Int16*)v);
+        }
+
         public static 
         void RasterPos3(Double x, Double y, Double z)
         {
             Delegates.glRasterPos3d((Double)x, (Double)y, (Double)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos3(Double* v)
-        {
-            Delegates.glRasterPos3dv((Double*)v);
         }
 
         public static 
@@ -1346,17 +1339,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos3(Double* v)
+        {
+            Delegates.glRasterPos3dv((Double*)v);
+        }
+
         public static 
         void RasterPos3(Single x, Single y, Single z)
         {
             Delegates.glRasterPos3f((Single)x, (Single)y, (Single)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos3(Single* v)
-        {
-            Delegates.glRasterPos3fv((Single*)v);
         }
 
         public static 
@@ -1383,17 +1376,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos3(Single* v)
+        {
+            Delegates.glRasterPos3fv((Single*)v);
+        }
+
         public static 
         void RasterPos3(Int32 x, Int32 y, Int32 z)
         {
             Delegates.glRasterPos3i((Int32)x, (Int32)y, (Int32)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos3(Int32* v)
-        {
-            Delegates.glRasterPos3iv((Int32*)v);
         }
 
         public static 
@@ -1420,17 +1413,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos3(Int32* v)
+        {
+            Delegates.glRasterPos3iv((Int32*)v);
+        }
+
         public static 
         void RasterPos3(Int16 x, Int16 y, Int16 z)
         {
             Delegates.glRasterPos3s((Int16)x, (Int16)y, (Int16)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos3(Int16* v)
-        {
-            Delegates.glRasterPos3sv((Int16*)v);
         }
 
         public static 
@@ -1457,17 +1450,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos3(Int16* v)
+        {
+            Delegates.glRasterPos3sv((Int16*)v);
+        }
+
         public static 
         void RasterPos4(Double x, Double y, Double z, Double w)
         {
             Delegates.glRasterPos4d((Double)x, (Double)y, (Double)z, (Double)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos4(Double* v)
-        {
-            Delegates.glRasterPos4dv((Double*)v);
         }
 
         public static 
@@ -1494,17 +1487,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos4(Double* v)
+        {
+            Delegates.glRasterPos4dv((Double*)v);
+        }
+
         public static 
         void RasterPos4(Single x, Single y, Single z, Single w)
         {
             Delegates.glRasterPos4f((Single)x, (Single)y, (Single)z, (Single)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos4(Single* v)
-        {
-            Delegates.glRasterPos4fv((Single*)v);
         }
 
         public static 
@@ -1531,17 +1524,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos4(Single* v)
+        {
+            Delegates.glRasterPos4fv((Single*)v);
+        }
+
         public static 
         void RasterPos4(Int32 x, Int32 y, Int32 z, Int32 w)
         {
             Delegates.glRasterPos4i((Int32)x, (Int32)y, (Int32)z, (Int32)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos4(Int32* v)
-        {
-            Delegates.glRasterPos4iv((Int32*)v);
         }
 
         public static 
@@ -1568,17 +1561,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos4(Int32* v)
+        {
+            Delegates.glRasterPos4iv((Int32*)v);
+        }
+
         public static 
         void RasterPos4(Int16 x, Int16 y, Int16 z, Int16 w)
         {
             Delegates.glRasterPos4s((Int16)x, (Int16)y, (Int16)z, (Int16)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void RasterPos4(Int16* v)
-        {
-            Delegates.glRasterPos4sv((Int16*)v);
         }
 
         public static 
@@ -1605,17 +1598,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void RasterPos4(Int16* v)
+        {
+            Delegates.glRasterPos4sv((Int16*)v);
+        }
+
         public static 
         void Rect(Double x1, Double y1, Double x2, Double y2)
         {
             Delegates.glRectd((Double)x1, (Double)y1, (Double)x2, (Double)y2);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Rect(Double* v1, Double* v2)
-        {
-            Delegates.glRectdv((Double*)v1, (Double*)v2);
         }
 
         public static 
@@ -1644,17 +1637,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Rect(Double* v1, Double* v2)
+        {
+            Delegates.glRectdv((Double*)v1, (Double*)v2);
+        }
+
         public static 
         void Rect(Single x1, Single y1, Single x2, Single y2)
         {
             Delegates.glRectf((Single)x1, (Single)y1, (Single)x2, (Single)y2);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Rect(Single* v1, Single* v2)
-        {
-            Delegates.glRectfv((Single*)v1, (Single*)v2);
         }
 
         public static 
@@ -1683,17 +1676,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Rect(Single* v1, Single* v2)
+        {
+            Delegates.glRectfv((Single*)v1, (Single*)v2);
+        }
+
         public static 
         void Rect(Int32 x1, Int32 y1, Int32 x2, Int32 y2)
         {
             Delegates.glRecti((Int32)x1, (Int32)y1, (Int32)x2, (Int32)y2);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Rect(Int32* v1, Int32* v2)
-        {
-            Delegates.glRectiv((Int32*)v1, (Int32*)v2);
         }
 
         public static 
@@ -1722,17 +1715,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Rect(Int32* v1, Int32* v2)
+        {
+            Delegates.glRectiv((Int32*)v1, (Int32*)v2);
+        }
+
         public static 
         void Rects(Int16 x1, Int16 y1, Int16 x2, Int16 y2)
         {
             Delegates.glRects((Int16)x1, (Int16)y1, (Int16)x2, (Int16)y2);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Rect(Int16* v1, Int16* v2)
-        {
-            Delegates.glRectsv((Int16*)v1, (Int16*)v2);
         }
 
         public static 
@@ -1761,17 +1754,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Rect(Int16* v1, Int16* v2)
+        {
+            Delegates.glRectsv((Int16*)v1, (Int16*)v2);
+        }
+
         public static 
         void TexCoord1(Double s)
         {
             Delegates.glTexCoord1d((Double)s);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord1v(Double* v)
-        {
-            Delegates.glTexCoord1dv((Double*)v);
         }
 
         public static 
@@ -1798,17 +1791,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord1v(Double* v)
+        {
+            Delegates.glTexCoord1dv((Double*)v);
+        }
+
         public static 
         void TexCoord1(Single s)
         {
             Delegates.glTexCoord1f((Single)s);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord1v(Single* v)
-        {
-            Delegates.glTexCoord1fv((Single*)v);
         }
 
         public static 
@@ -1835,17 +1828,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord1v(Single* v)
+        {
+            Delegates.glTexCoord1fv((Single*)v);
+        }
+
         public static 
         void TexCoord1(Int32 s)
         {
             Delegates.glTexCoord1i((Int32)s);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord1v(Int32* v)
-        {
-            Delegates.glTexCoord1iv((Int32*)v);
         }
 
         public static 
@@ -1872,17 +1865,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord1v(Int32* v)
+        {
+            Delegates.glTexCoord1iv((Int32*)v);
+        }
+
         public static 
         void TexCoord1(Int16 s)
         {
             Delegates.glTexCoord1s((Int16)s);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord1v(Int16* v)
-        {
-            Delegates.glTexCoord1sv((Int16*)v);
         }
 
         public static 
@@ -1909,17 +1902,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord1v(Int16* v)
+        {
+            Delegates.glTexCoord1sv((Int16*)v);
+        }
+
         public static 
         void TexCoord2(Double s, Double t)
         {
             Delegates.glTexCoord2d((Double)s, (Double)t);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord2(Double* v)
-        {
-            Delegates.glTexCoord2dv((Double*)v);
         }
 
         public static 
@@ -1946,17 +1939,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord2(Double* v)
+        {
+            Delegates.glTexCoord2dv((Double*)v);
+        }
+
         public static 
         void TexCoord2(Single s, Single t)
         {
             Delegates.glTexCoord2f((Single)s, (Single)t);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord2(Single* v)
-        {
-            Delegates.glTexCoord2fv((Single*)v);
         }
 
         public static 
@@ -1983,17 +1976,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord2(Single* v)
+        {
+            Delegates.glTexCoord2fv((Single*)v);
+        }
+
         public static 
         void TexCoord2(Int32 s, Int32 t)
         {
             Delegates.glTexCoord2i((Int32)s, (Int32)t);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord2(Int32* v)
-        {
-            Delegates.glTexCoord2iv((Int32*)v);
         }
 
         public static 
@@ -2020,17 +2013,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord2(Int32* v)
+        {
+            Delegates.glTexCoord2iv((Int32*)v);
+        }
+
         public static 
         void TexCoord2(Int16 s, Int16 t)
         {
             Delegates.glTexCoord2s((Int16)s, (Int16)t);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord2(Int16* v)
-        {
-            Delegates.glTexCoord2sv((Int16*)v);
         }
 
         public static 
@@ -2057,17 +2050,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord2(Int16* v)
+        {
+            Delegates.glTexCoord2sv((Int16*)v);
+        }
+
         public static 
         void TexCoord3(Double s, Double t, Double r)
         {
             Delegates.glTexCoord3d((Double)s, (Double)t, (Double)r);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord3(Double* v)
-        {
-            Delegates.glTexCoord3dv((Double*)v);
         }
 
         public static 
@@ -2094,17 +2087,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord3(Double* v)
+        {
+            Delegates.glTexCoord3dv((Double*)v);
+        }
+
         public static 
         void TexCoord3(Single s, Single t, Single r)
         {
             Delegates.glTexCoord3f((Single)s, (Single)t, (Single)r);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord3(Single* v)
-        {
-            Delegates.glTexCoord3fv((Single*)v);
         }
 
         public static 
@@ -2131,17 +2124,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord3(Single* v)
+        {
+            Delegates.glTexCoord3fv((Single*)v);
+        }
+
         public static 
         void TexCoord3(Int32 s, Int32 t, Int32 r)
         {
             Delegates.glTexCoord3i((Int32)s, (Int32)t, (Int32)r);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord3(Int32* v)
-        {
-            Delegates.glTexCoord3iv((Int32*)v);
         }
 
         public static 
@@ -2168,17 +2161,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord3(Int32* v)
+        {
+            Delegates.glTexCoord3iv((Int32*)v);
+        }
+
         public static 
         void TexCoord3(Int16 s, Int16 t, Int16 r)
         {
             Delegates.glTexCoord3s((Int16)s, (Int16)t, (Int16)r);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord3(Int16* v)
-        {
-            Delegates.glTexCoord3sv((Int16*)v);
         }
 
         public static 
@@ -2205,17 +2198,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord3(Int16* v)
+        {
+            Delegates.glTexCoord3sv((Int16*)v);
+        }
+
         public static 
         void TexCoord4(Double s, Double t, Double r, Double q)
         {
             Delegates.glTexCoord4d((Double)s, (Double)t, (Double)r, (Double)q);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord4(Double* v)
-        {
-            Delegates.glTexCoord4dv((Double*)v);
         }
 
         public static 
@@ -2242,17 +2235,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord4(Double* v)
+        {
+            Delegates.glTexCoord4dv((Double*)v);
+        }
+
         public static 
         void TexCoord4(Single s, Single t, Single r, Single q)
         {
             Delegates.glTexCoord4f((Single)s, (Single)t, (Single)r, (Single)q);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord4(Single* v)
-        {
-            Delegates.glTexCoord4fv((Single*)v);
         }
 
         public static 
@@ -2279,17 +2272,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord4(Single* v)
+        {
+            Delegates.glTexCoord4fv((Single*)v);
+        }
+
         public static 
         void TexCoord4(Int32 s, Int32 t, Int32 r, Int32 q)
         {
             Delegates.glTexCoord4i((Int32)s, (Int32)t, (Int32)r, (Int32)q);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord4(Int32* v)
-        {
-            Delegates.glTexCoord4iv((Int32*)v);
         }
 
         public static 
@@ -2316,17 +2309,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord4(Int32* v)
+        {
+            Delegates.glTexCoord4iv((Int32*)v);
+        }
+
         public static 
         void TexCoord4(Int16 s, Int16 t, Int16 r, Int16 q)
         {
             Delegates.glTexCoord4s((Int16)s, (Int16)t, (Int16)r, (Int16)q);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexCoord4(Int16* v)
-        {
-            Delegates.glTexCoord4sv((Int16*)v);
         }
 
         public static 
@@ -2353,17 +2346,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexCoord4(Int16* v)
+        {
+            Delegates.glTexCoord4sv((Int16*)v);
+        }
+
         public static 
         void Vertex2(Double x, Double y)
         {
             Delegates.glVertex2d((Double)x, (Double)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex2(Double* v)
-        {
-            Delegates.glVertex2dv((Double*)v);
         }
 
         public static 
@@ -2390,17 +2383,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex2(Double* v)
+        {
+            Delegates.glVertex2dv((Double*)v);
+        }
+
         public static 
         void Vertex2(Single x, Single y)
         {
             Delegates.glVertex2f((Single)x, (Single)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex2(Single* v)
-        {
-            Delegates.glVertex2fv((Single*)v);
         }
 
         public static 
@@ -2427,17 +2420,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex2(Single* v)
+        {
+            Delegates.glVertex2fv((Single*)v);
+        }
+
         public static 
         void Vertex2(Int32 x, Int32 y)
         {
             Delegates.glVertex2i((Int32)x, (Int32)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex2(Int32* v)
-        {
-            Delegates.glVertex2iv((Int32*)v);
         }
 
         public static 
@@ -2464,17 +2457,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex2(Int32* v)
+        {
+            Delegates.glVertex2iv((Int32*)v);
+        }
+
         public static 
         void Vertex2(Int16 x, Int16 y)
         {
             Delegates.glVertex2s((Int16)x, (Int16)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex2(Int16* v)
-        {
-            Delegates.glVertex2sv((Int16*)v);
         }
 
         public static 
@@ -2501,17 +2494,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex2(Int16* v)
+        {
+            Delegates.glVertex2sv((Int16*)v);
+        }
+
         public static 
         void Vertex3(Double x, Double y, Double z)
         {
             Delegates.glVertex3d((Double)x, (Double)y, (Double)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex3(Double* v)
-        {
-            Delegates.glVertex3dv((Double*)v);
         }
 
         public static 
@@ -2538,17 +2531,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex3(Double* v)
+        {
+            Delegates.glVertex3dv((Double*)v);
+        }
+
         public static 
         void Vertex3(Single x, Single y, Single z)
         {
             Delegates.glVertex3f((Single)x, (Single)y, (Single)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex3(Single* v)
-        {
-            Delegates.glVertex3fv((Single*)v);
         }
 
         public static 
@@ -2575,17 +2568,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex3(Single* v)
+        {
+            Delegates.glVertex3fv((Single*)v);
+        }
+
         public static 
         void Vertex3(Int32 x, Int32 y, Int32 z)
         {
             Delegates.glVertex3i((Int32)x, (Int32)y, (Int32)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex3(Int32* v)
-        {
-            Delegates.glVertex3iv((Int32*)v);
         }
 
         public static 
@@ -2612,17 +2605,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex3(Int32* v)
+        {
+            Delegates.glVertex3iv((Int32*)v);
+        }
+
         public static 
         void Vertex3(Int16 x, Int16 y, Int16 z)
         {
             Delegates.glVertex3s((Int16)x, (Int16)y, (Int16)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex3(Int16* v)
-        {
-            Delegates.glVertex3sv((Int16*)v);
         }
 
         public static 
@@ -2649,17 +2642,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex3(Int16* v)
+        {
+            Delegates.glVertex3sv((Int16*)v);
+        }
+
         public static 
         void Vertex4(Double x, Double y, Double z, Double w)
         {
             Delegates.glVertex4d((Double)x, (Double)y, (Double)z, (Double)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex4(Double* v)
-        {
-            Delegates.glVertex4dv((Double*)v);
         }
 
         public static 
@@ -2686,17 +2679,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex4(Double* v)
+        {
+            Delegates.glVertex4dv((Double*)v);
+        }
+
         public static 
         void Vertex4(Single x, Single y, Single z, Single w)
         {
             Delegates.glVertex4f((Single)x, (Single)y, (Single)z, (Single)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex4(Single* v)
-        {
-            Delegates.glVertex4fv((Single*)v);
         }
 
         public static 
@@ -2723,17 +2716,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex4(Single* v)
+        {
+            Delegates.glVertex4fv((Single*)v);
+        }
+
         public static 
         void Vertex4(Int32 x, Int32 y, Int32 z, Int32 w)
         {
             Delegates.glVertex4i((Int32)x, (Int32)y, (Int32)z, (Int32)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex4(Int32* v)
-        {
-            Delegates.glVertex4iv((Int32*)v);
         }
 
         public static 
@@ -2760,17 +2753,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Vertex4(Int32* v)
+        {
+            Delegates.glVertex4iv((Int32*)v);
+        }
+
         public static 
         void Vertex4(Int16 x, Int16 y, Int16 z, Int16 w)
         {
             Delegates.glVertex4s((Int16)x, (Int16)y, (Int16)z, (Int16)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Vertex4(Int16* v)
-        {
-            Delegates.glVertex4sv((Int16*)v);
         }
 
         public static 
@@ -2799,9 +2792,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void ClipPlane(OpenTK.OpenGL.Enums.ClipPlaneName plane, Double* equation)
+        unsafe void Vertex4(Int16* v)
         {
-            Delegates.glClipPlane((OpenTK.OpenGL.Enums.ClipPlaneName)plane, (Double*)equation);
+            Delegates.glVertex4sv((Int16*)v);
         }
 
         public static 
@@ -2828,6 +2821,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void ClipPlane(OpenTK.OpenGL.Enums.ClipPlaneName plane, Double* equation)
+        {
+            Delegates.glClipPlane((OpenTK.OpenGL.Enums.ClipPlaneName)plane, (Double*)equation);
+        }
+
         public static 
         void ColorMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.ColorMaterialParameter mode)
         {
@@ -2844,13 +2844,6 @@ namespace OpenTK.OpenGL
         void Fog(OpenTK.OpenGL.Enums.FogParameter pname, Single param)
         {
             Delegates.glFogf((OpenTK.OpenGL.Enums.FogParameter)pname, (Single)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Fogv(OpenTK.OpenGL.Enums.FogParameter pname, Single* @params)
-        {
-            Delegates.glFogfv((OpenTK.OpenGL.Enums.FogParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -2877,17 +2870,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Fogv(OpenTK.OpenGL.Enums.FogParameter pname, Single* @params)
+        {
+            Delegates.glFogfv((OpenTK.OpenGL.Enums.FogParameter)pname, (Single*)@params);
+        }
+
         public static 
         void Fog(OpenTK.OpenGL.Enums.FogParameter pname, Int32 param)
         {
             Delegates.glFogi((OpenTK.OpenGL.Enums.FogParameter)pname, (Int32)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Fogv(OpenTK.OpenGL.Enums.FogParameter pname, Int32* @params)
-        {
-            Delegates.glFogiv((OpenTK.OpenGL.Enums.FogParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -2914,6 +2907,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Fogv(OpenTK.OpenGL.Enums.FogParameter pname, Int32* @params)
+        {
+            Delegates.glFogiv((OpenTK.OpenGL.Enums.FogParameter)pname, (Int32*)@params);
+        }
+
         public static 
         void FrontFace(OpenTK.OpenGL.Enums.FrontFaceDirection mode)
         {
@@ -2930,13 +2930,6 @@ namespace OpenTK.OpenGL
         void Light(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, Single param)
         {
             Delegates.glLightf((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Single)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Lightv(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, Single* @params)
-        {
-            Delegates.glLightfv((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -2963,17 +2956,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Lightv(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, Single* @params)
+        {
+            Delegates.glLightfv((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Single*)@params);
+        }
+
         public static 
         void Light(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, Int32 param)
         {
             Delegates.glLighti((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Int32)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Lightv(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, Int32* @params)
-        {
-            Delegates.glLightiv((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -3000,17 +2993,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Lightv(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, Int32* @params)
+        {
+            Delegates.glLightiv((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Int32*)@params);
+        }
+
         public static 
         void LightModel(OpenTK.OpenGL.Enums.LightModelParameter pname, Single param)
         {
             Delegates.glLightModelf((OpenTK.OpenGL.Enums.LightModelParameter)pname, (Single)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void LightModelv(OpenTK.OpenGL.Enums.LightModelParameter pname, Single* @params)
-        {
-            Delegates.glLightModelfv((OpenTK.OpenGL.Enums.LightModelParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -3037,17 +3030,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void LightModelv(OpenTK.OpenGL.Enums.LightModelParameter pname, Single* @params)
+        {
+            Delegates.glLightModelfv((OpenTK.OpenGL.Enums.LightModelParameter)pname, (Single*)@params);
+        }
+
         public static 
         void LightModel(OpenTK.OpenGL.Enums.LightModelParameter pname, Int32 param)
         {
             Delegates.glLightModeli((OpenTK.OpenGL.Enums.LightModelParameter)pname, (Int32)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void LightModelv(OpenTK.OpenGL.Enums.LightModelParameter pname, Int32* @params)
-        {
-            Delegates.glLightModeliv((OpenTK.OpenGL.Enums.LightModelParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -3072,6 +3065,13 @@ namespace OpenTK.OpenGL
                     Delegates.glLightModeliv((OpenTK.OpenGL.Enums.LightModelParameter)pname, (Int32*)@params_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void LightModelv(OpenTK.OpenGL.Enums.LightModelParameter pname, Int32* @params)
+        {
+            Delegates.glLightModeliv((OpenTK.OpenGL.Enums.LightModelParameter)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -3105,13 +3105,6 @@ namespace OpenTK.OpenGL
             Delegates.glMaterialf((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single)param);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Materialv(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Single* @params)
-        {
-            Delegates.glMaterialfv((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single*)@params);
-        }
-
         public static 
         void Materialv(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Single[] @params)
         {
@@ -3136,17 +3129,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Materialv(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Single* @params)
+        {
+            Delegates.glMaterialfv((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single*)@params);
+        }
+
         public static 
         void Material(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Int32 param)
         {
             Delegates.glMateriali((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Materialv(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Int32* @params)
-        {
-            Delegates.glMaterialiv((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -3173,6 +3166,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Materialv(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Int32* @params)
+        {
+            Delegates.glMaterialiv((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32*)@params);
+        }
+
         public static 
         void PointSize(Single size)
         {
@@ -3183,13 +3183,6 @@ namespace OpenTK.OpenGL
         void PolygonMode(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.PolygonMode mode)
         {
             Delegates.glPolygonMode((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.PolygonMode)mode);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void PolygonStipple(Byte* mask)
-        {
-            Delegates.glPolygonStipple((Byte*)mask);
         }
 
         public static 
@@ -3216,6 +3209,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void PolygonStipple(Byte* mask)
+        {
+            Delegates.glPolygonStipple((Byte*)mask);
+        }
+
         public static 
         void Scissor(Int32 x, Int32 y, Int32 width, Int32 height)
         {
@@ -3232,13 +3232,6 @@ namespace OpenTK.OpenGL
         void TexParameter(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, Single param)
         {
             Delegates.glTexParameterf((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (Single)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexParameterv(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, Single* @params)
-        {
-            Delegates.glTexParameterfv((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (Single*)@params);
         }
 
         public static 
@@ -3265,17 +3258,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexParameterv(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, Single* @params)
+        {
+            Delegates.glTexParameterfv((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (Single*)@params);
+        }
+
         public static 
         void TexParameter(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, Int32 param)
         {
             Delegates.glTexParameteri((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (Int32)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexParameterv(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, Int32* @params)
-        {
-            Delegates.glTexParameteriv((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (Int32*)@params);
         }
 
         public static 
@@ -3300,6 +3293,13 @@ namespace OpenTK.OpenGL
                     Delegates.glTexParameteriv((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (Int32*)@params_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexParameterv(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, Int32* @params)
+        {
+            Delegates.glTexParameteriv((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (Int32*)@params);
         }
 
         public static 
@@ -3360,13 +3360,6 @@ namespace OpenTK.OpenGL
             Delegates.glTexEnvf((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Single)param);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexEnvv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, Single* @params)
-        {
-            Delegates.glTexEnvfv((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Single*)@params);
-        }
-
         public static 
         void TexEnvv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, Single[] @params)
         {
@@ -3391,17 +3384,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexEnvv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, Single* @params)
+        {
+            Delegates.glTexEnvfv((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Single*)@params);
+        }
+
         public static 
         void TexEnv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, Int32 param)
         {
             Delegates.glTexEnvi((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Int32)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexEnvv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, Int32* @params)
-        {
-            Delegates.glTexEnviv((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -3428,17 +3421,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexEnvv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, Int32* @params)
+        {
+            Delegates.glTexEnviv((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Int32*)@params);
+        }
+
         public static 
         void TexGend(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, Double param)
         {
             Delegates.glTexGend((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Double)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexGenv(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, Double* @params)
-        {
-            Delegates.glTexGendv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Double*)@params);
         }
 
         public static 
@@ -3465,17 +3458,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexGenv(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, Double* @params)
+        {
+            Delegates.glTexGendv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Double*)@params);
+        }
+
         public static 
         void TexGen(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, Single param)
         {
             Delegates.glTexGenf((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Single)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexGenv(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, Single* @params)
-        {
-            Delegates.glTexGenfv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -3502,17 +3495,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void TexGenv(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, Single* @params)
+        {
+            Delegates.glTexGenfv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Single*)@params);
+        }
+
         public static 
         void TexGen(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, Int32 param)
         {
             Delegates.glTexGeni((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Int32)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void TexGenv(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, Int32* @params)
-        {
-            Delegates.glTexGeniv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -3541,9 +3534,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void FeedbackBuffer(Int32 size, OpenTK.OpenGL.Enums.FeedbackType type, [Out] Single* buffer)
+        unsafe void TexGenv(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, Int32* @params)
         {
-            Delegates.glFeedbackBuffer((Int32)size, (OpenTK.OpenGL.Enums.FeedbackType)type, (Single*)buffer);
+            Delegates.glTexGeniv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -3573,16 +3566,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void SelectBuffer(Int32 size, [Out] UInt32* buffer)
+        unsafe void FeedbackBuffer(Int32 size, OpenTK.OpenGL.Enums.FeedbackType type, [Out] Single* buffer)
         {
-            Delegates.glSelectBuffer((Int32)size, (UInt32*)buffer);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void SelectBuffer(Int32 size, [Out] Int32* buffer)
-        {
-            Delegates.glSelectBuffer((Int32)size, (UInt32*)buffer);
+            Delegates.glFeedbackBuffer((Int32)size, (OpenTK.OpenGL.Enums.FeedbackType)type, (Single*)buffer);
         }
 
         [System.CLSCompliant(false)]
@@ -3635,6 +3621,20 @@ namespace OpenTK.OpenGL
                     buffer = *buffer_ptr;
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void SelectBuffer(Int32 size, [Out] UInt32* buffer)
+        {
+            Delegates.glSelectBuffer((Int32)size, (UInt32*)buffer);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void SelectBuffer(Int32 size, [Out] Int32* buffer)
+        {
+            Delegates.glSelectBuffer((Int32)size, (UInt32*)buffer);
         }
 
         public static 
@@ -3809,13 +3809,6 @@ namespace OpenTK.OpenGL
             Delegates.glPushAttrib((OpenTK.OpenGL.Enums.AttribMask)mask);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Map1(OpenTK.OpenGL.Enums.MapTarget target, Double u1, Double u2, Int32 stride, Int32 order, Double* points)
-        {
-            Delegates.glMap1d((OpenTK.OpenGL.Enums.MapTarget)target, (Double)u1, (Double)u2, (Int32)stride, (Int32)order, (Double*)points);
-        }
-
         public static 
         void Map1(OpenTK.OpenGL.Enums.MapTarget target, Double u1, Double u2, Int32 stride, Int32 order, Double[] points)
         {
@@ -3842,9 +3835,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Map1(OpenTK.OpenGL.Enums.MapTarget target, Single u1, Single u2, Int32 stride, Int32 order, Single* points)
+        unsafe void Map1(OpenTK.OpenGL.Enums.MapTarget target, Double u1, Double u2, Int32 stride, Int32 order, Double* points)
         {
-            Delegates.glMap1f((OpenTK.OpenGL.Enums.MapTarget)target, (Single)u1, (Single)u2, (Int32)stride, (Int32)order, (Single*)points);
+            Delegates.glMap1d((OpenTK.OpenGL.Enums.MapTarget)target, (Double)u1, (Double)u2, (Int32)stride, (Int32)order, (Double*)points);
         }
 
         public static 
@@ -3873,9 +3866,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Map2(OpenTK.OpenGL.Enums.MapTarget target, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double* points)
+        unsafe void Map1(OpenTK.OpenGL.Enums.MapTarget target, Single u1, Single u2, Int32 stride, Int32 order, Single* points)
         {
-            Delegates.glMap2d((OpenTK.OpenGL.Enums.MapTarget)target, (Double)u1, (Double)u2, (Int32)ustride, (Int32)uorder, (Double)v1, (Double)v2, (Int32)vstride, (Int32)vorder, (Double*)points);
+            Delegates.glMap1f((OpenTK.OpenGL.Enums.MapTarget)target, (Single)u1, (Single)u2, (Int32)stride, (Int32)order, (Single*)points);
         }
 
         public static 
@@ -3904,9 +3897,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Map2(OpenTK.OpenGL.Enums.MapTarget target, Single u1, Single u2, Int32 ustride, Int32 uorder, Single v1, Single v2, Int32 vstride, Int32 vorder, Single* points)
+        unsafe void Map2(OpenTK.OpenGL.Enums.MapTarget target, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double* points)
         {
-            Delegates.glMap2f((OpenTK.OpenGL.Enums.MapTarget)target, (Single)u1, (Single)u2, (Int32)ustride, (Int32)uorder, (Single)v1, (Single)v2, (Int32)vstride, (Int32)vorder, (Single*)points);
+            Delegates.glMap2d((OpenTK.OpenGL.Enums.MapTarget)target, (Double)u1, (Double)u2, (Int32)ustride, (Int32)uorder, (Double)v1, (Double)v2, (Int32)vstride, (Int32)vorder, (Double*)points);
         }
 
         public static 
@@ -3931,6 +3924,13 @@ namespace OpenTK.OpenGL
                     Delegates.glMap2f((OpenTK.OpenGL.Enums.MapTarget)target, (Single)u1, (Single)u2, (Int32)ustride, (Int32)uorder, (Single)v1, (Single)v2, (Int32)vstride, (Int32)vorder, (Single*)points_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Map2(OpenTK.OpenGL.Enums.MapTarget target, Single u1, Single u2, Int32 ustride, Int32 uorder, Single v1, Single v2, Int32 vstride, Int32 vorder, Single* points)
+        {
+            Delegates.glMap2f((OpenTK.OpenGL.Enums.MapTarget)target, (Single)u1, (Single)u2, (Int32)ustride, (Int32)uorder, (Single)v1, (Single)v2, (Int32)vstride, (Int32)vorder, (Single*)points);
         }
 
         public static 
@@ -3963,13 +3963,6 @@ namespace OpenTK.OpenGL
             Delegates.glEvalCoord1d((Double)u);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void EvalCoord1v(Double* u)
-        {
-            Delegates.glEvalCoord1dv((Double*)u);
-        }
-
         public static 
         void EvalCoord1v(Double[] u)
         {
@@ -3994,17 +3987,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void EvalCoord1v(Double* u)
+        {
+            Delegates.glEvalCoord1dv((Double*)u);
+        }
+
         public static 
         void EvalCoord1(Single u)
         {
             Delegates.glEvalCoord1f((Single)u);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void EvalCoord1v(Single* u)
-        {
-            Delegates.glEvalCoord1fv((Single*)u);
         }
 
         public static 
@@ -4031,17 +4024,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void EvalCoord1v(Single* u)
+        {
+            Delegates.glEvalCoord1fv((Single*)u);
+        }
+
         public static 
         void EvalCoord2(Double u, Double v)
         {
             Delegates.glEvalCoord2d((Double)u, (Double)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void EvalCoord2(Double* u)
-        {
-            Delegates.glEvalCoord2dv((Double*)u);
         }
 
         public static 
@@ -4068,17 +4061,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void EvalCoord2(Double* u)
+        {
+            Delegates.glEvalCoord2dv((Double*)u);
+        }
+
         public static 
         void EvalCoord2(Single u, Single v)
         {
             Delegates.glEvalCoord2f((Single)u, (Single)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void EvalCoord2(Single* u)
-        {
-            Delegates.glEvalCoord2fv((Single*)u);
         }
 
         public static 
@@ -4103,6 +4096,13 @@ namespace OpenTK.OpenGL
                     Delegates.glEvalCoord2fv((Single*)u_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void EvalCoord2(Single* u)
+        {
+            Delegates.glEvalCoord2fv((Single*)u);
         }
 
         public static 
@@ -4202,13 +4202,6 @@ namespace OpenTK.OpenGL
             Delegates.glPixelStorei((OpenTK.OpenGL.Enums.PixelStoreParameter)pname, (Int32)param);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, Single* values)
-        {
-            Delegates.glPixelMapfv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (Single*)values);
-        }
-
         public static 
         void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, Single[] values)
         {
@@ -4235,16 +4228,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, UInt32* values)
+        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, Single* values)
         {
-            Delegates.glPixelMapuiv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (UInt32*)values);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, Int32* values)
-        {
-            Delegates.glPixelMapuiv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (UInt32*)values);
+            Delegates.glPixelMapfv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (Single*)values);
         }
 
         [System.CLSCompliant(false)]
@@ -4299,16 +4285,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, UInt16* values)
+        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, UInt32* values)
         {
-            Delegates.glPixelMapusv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (UInt16*)values);
+            Delegates.glPixelMapuiv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (UInt32*)values);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, Int16* values)
+        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, Int32* values)
         {
-            Delegates.glPixelMapusv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (UInt16*)values);
+            Delegates.glPixelMapuiv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (UInt32*)values);
         }
 
         [System.CLSCompliant(false)]
@@ -4359,6 +4345,20 @@ namespace OpenTK.OpenGL
                     Delegates.glPixelMapusv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (UInt16*)values_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, UInt16* values)
+        {
+            Delegates.glPixelMapusv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (UInt16*)values);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void PixelMap(OpenTK.OpenGL.Enums.PixelMap map, Int32 mapsize, Int16* values)
+        {
+            Delegates.glPixelMapusv((OpenTK.OpenGL.Enums.PixelMap)map, (Int32)mapsize, (UInt16*)values);
         }
 
         public static 
@@ -4425,13 +4425,6 @@ namespace OpenTK.OpenGL
             }
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetClipPlane(OpenTK.OpenGL.Enums.ClipPlaneName plane, [Out] Double* equation)
-        {
-            Delegates.glGetClipPlane((OpenTK.OpenGL.Enums.ClipPlaneName)plane, (Double*)equation);
-        }
-
         public static 
         void GetClipPlane(OpenTK.OpenGL.Enums.ClipPlaneName plane, [Out] Double[] equation)
         {
@@ -4459,9 +4452,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetDouble(OpenTK.OpenGL.Enums.GetPName pname, [Out] Double* @params)
+        unsafe void GetClipPlane(OpenTK.OpenGL.Enums.ClipPlaneName plane, [Out] Double* equation)
         {
-            Delegates.glGetDoublev((OpenTK.OpenGL.Enums.GetPName)pname, (Double*)@params);
+            Delegates.glGetClipPlane((OpenTK.OpenGL.Enums.ClipPlaneName)plane, (Double*)equation);
         }
 
         public static 
@@ -4489,17 +4482,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetDouble(OpenTK.OpenGL.Enums.GetPName pname, [Out] Double* @params)
+        {
+            Delegates.glGetDoublev((OpenTK.OpenGL.Enums.GetPName)pname, (Double*)@params);
+        }
+
         public static 
         OpenTK.OpenGL.Enums.ErrorCode GetError()
         {
             return Delegates.glGetError();
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetFloat(OpenTK.OpenGL.Enums.GetPName pname, [Out] Single* @params)
-        {
-            Delegates.glGetFloatv((OpenTK.OpenGL.Enums.GetPName)pname, (Single*)@params);
         }
 
         public static 
@@ -4529,9 +4522,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetInteger(OpenTK.OpenGL.Enums.GetPName pname, [Out] Int32* @params)
+        unsafe void GetFloat(OpenTK.OpenGL.Enums.GetPName pname, [Out] Single* @params)
         {
-            Delegates.glGetIntegerv((OpenTK.OpenGL.Enums.GetPName)pname, (Int32*)@params);
+            Delegates.glGetFloatv((OpenTK.OpenGL.Enums.GetPName)pname, (Single*)@params);
         }
 
         public static 
@@ -4561,9 +4554,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetLight(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, [Out] Single* @params)
+        unsafe void GetInteger(OpenTK.OpenGL.Enums.GetPName pname, [Out] Int32* @params)
         {
-            Delegates.glGetLightfv((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Single*)@params);
+            Delegates.glGetIntegerv((OpenTK.OpenGL.Enums.GetPName)pname, (Int32*)@params);
         }
 
         public static 
@@ -4593,9 +4586,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetLight(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, [Out] Int32* @params)
+        unsafe void GetLight(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, [Out] Single* @params)
         {
-            Delegates.glGetLightiv((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Int32*)@params);
+            Delegates.glGetLightfv((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -4625,9 +4618,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetMap(OpenTK.OpenGL.Enums.MapTarget target, OpenTK.OpenGL.Enums.GetMapQuery query, [Out] Double* v)
+        unsafe void GetLight(OpenTK.OpenGL.Enums.LightName light, OpenTK.OpenGL.Enums.LightParameter pname, [Out] Int32* @params)
         {
-            Delegates.glGetMapdv((OpenTK.OpenGL.Enums.MapTarget)target, (OpenTK.OpenGL.Enums.GetMapQuery)query, (Double*)v);
+            Delegates.glGetLightiv((OpenTK.OpenGL.Enums.LightName)light, (OpenTK.OpenGL.Enums.LightParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -4657,9 +4650,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetMap(OpenTK.OpenGL.Enums.MapTarget target, OpenTK.OpenGL.Enums.GetMapQuery query, [Out] Single* v)
+        unsafe void GetMap(OpenTK.OpenGL.Enums.MapTarget target, OpenTK.OpenGL.Enums.GetMapQuery query, [Out] Double* v)
         {
-            Delegates.glGetMapfv((OpenTK.OpenGL.Enums.MapTarget)target, (OpenTK.OpenGL.Enums.GetMapQuery)query, (Single*)v);
+            Delegates.glGetMapdv((OpenTK.OpenGL.Enums.MapTarget)target, (OpenTK.OpenGL.Enums.GetMapQuery)query, (Double*)v);
         }
 
         public static 
@@ -4689,9 +4682,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetMap(OpenTK.OpenGL.Enums.MapTarget target, OpenTK.OpenGL.Enums.GetMapQuery query, [Out] Int32* v)
+        unsafe void GetMap(OpenTK.OpenGL.Enums.MapTarget target, OpenTK.OpenGL.Enums.GetMapQuery query, [Out] Single* v)
         {
-            Delegates.glGetMapiv((OpenTK.OpenGL.Enums.MapTarget)target, (OpenTK.OpenGL.Enums.GetMapQuery)query, (Int32*)v);
+            Delegates.glGetMapfv((OpenTK.OpenGL.Enums.MapTarget)target, (OpenTK.OpenGL.Enums.GetMapQuery)query, (Single*)v);
         }
 
         public static 
@@ -4721,9 +4714,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, [Out] Single* @params)
+        unsafe void GetMap(OpenTK.OpenGL.Enums.MapTarget target, OpenTK.OpenGL.Enums.GetMapQuery query, [Out] Int32* v)
         {
-            Delegates.glGetMaterialfv((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single*)@params);
+            Delegates.glGetMapiv((OpenTK.OpenGL.Enums.MapTarget)target, (OpenTK.OpenGL.Enums.GetMapQuery)query, (Int32*)v);
         }
 
         public static 
@@ -4753,9 +4746,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, [Out] Int32* @params)
+        unsafe void GetMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, [Out] Single* @params)
         {
-            Delegates.glGetMaterialiv((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32*)@params);
+            Delegates.glGetMaterialfv((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -4785,9 +4778,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] Single* values)
+        unsafe void GetMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, [Out] Int32* @params)
         {
-            Delegates.glGetPixelMapfv((OpenTK.OpenGL.Enums.PixelMap)map, (Single*)values);
+            Delegates.glGetMaterialiv((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -4817,16 +4810,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] UInt32* values)
+        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] Single* values)
         {
-            Delegates.glGetPixelMapuiv((OpenTK.OpenGL.Enums.PixelMap)map, (UInt32*)values);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] Int32* values)
-        {
-            Delegates.glGetPixelMapuiv((OpenTK.OpenGL.Enums.PixelMap)map, (UInt32*)values);
+            Delegates.glGetPixelMapfv((OpenTK.OpenGL.Enums.PixelMap)map, (Single*)values);
         }
 
         [System.CLSCompliant(false)]
@@ -4883,16 +4869,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] UInt16* values)
+        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] UInt32* values)
         {
-            Delegates.glGetPixelMapusv((OpenTK.OpenGL.Enums.PixelMap)map, (UInt16*)values);
+            Delegates.glGetPixelMapuiv((OpenTK.OpenGL.Enums.PixelMap)map, (UInt32*)values);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] Int16* values)
+        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] Int32* values)
         {
-            Delegates.glGetPixelMapusv((OpenTK.OpenGL.Enums.PixelMap)map, (UInt16*)values);
+            Delegates.glGetPixelMapuiv((OpenTK.OpenGL.Enums.PixelMap)map, (UInt32*)values);
         }
 
         [System.CLSCompliant(false)]
@@ -4949,9 +4935,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetPolygonStipple([Out] Byte* mask)
+        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] UInt16* values)
         {
-            Delegates.glGetPolygonStipple((Byte*)mask);
+            Delegates.glGetPixelMapusv((OpenTK.OpenGL.Enums.PixelMap)map, (UInt16*)values);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetPixelMap(OpenTK.OpenGL.Enums.PixelMap map, [Out] Int16* values)
+        {
+            Delegates.glGetPixelMapusv((OpenTK.OpenGL.Enums.PixelMap)map, (UInt16*)values);
         }
 
         public static 
@@ -4979,6 +4972,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetPolygonStipple([Out] Byte* mask)
+        {
+            Delegates.glGetPolygonStipple((Byte*)mask);
+        }
+
         public static 
         string GetString(OpenTK.OpenGL.Enums.StringName name)
         {
@@ -4986,13 +4986,6 @@ namespace OpenTK.OpenGL
             {
                 return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.glGetString((OpenTK.OpenGL.Enums.StringName)name));
             }
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetTexEnv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, [Out] Single* @params)
-        {
-            Delegates.glGetTexEnvfv((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -5022,9 +5015,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTexEnv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, [Out] Int32* @params)
+        unsafe void GetTexEnv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, [Out] Single* @params)
         {
-            Delegates.glGetTexEnviv((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Int32*)@params);
+            Delegates.glGetTexEnvfv((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -5054,9 +5047,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTexGen(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, [Out] Double* @params)
+        unsafe void GetTexEnv(OpenTK.OpenGL.Enums.TextureEnvTarget target, OpenTK.OpenGL.Enums.TextureEnvParameter pname, [Out] Int32* @params)
         {
-            Delegates.glGetTexGendv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Double*)@params);
+            Delegates.glGetTexEnviv((OpenTK.OpenGL.Enums.TextureEnvTarget)target, (OpenTK.OpenGL.Enums.TextureEnvParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -5086,9 +5079,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTexGen(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, [Out] Single* @params)
+        unsafe void GetTexGen(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, [Out] Double* @params)
         {
-            Delegates.glGetTexGenfv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Single*)@params);
+            Delegates.glGetTexGendv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Double*)@params);
         }
 
         public static 
@@ -5118,9 +5111,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTexGen(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, [Out] Int32* @params)
+        unsafe void GetTexGen(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, [Out] Single* @params)
         {
-            Delegates.glGetTexGeniv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Int32*)@params);
+            Delegates.glGetTexGenfv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -5148,6 +5141,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetTexGen(OpenTK.OpenGL.Enums.TextureCoordName coord, OpenTK.OpenGL.Enums.TextureGenParameter pname, [Out] Int32* @params)
+        {
+            Delegates.glGetTexGeniv((OpenTK.OpenGL.Enums.TextureCoordName)coord, (OpenTK.OpenGL.Enums.TextureGenParameter)pname, (Int32*)@params);
+        }
+
         public static 
         void GetTexImage(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr pixels)
         {
@@ -5172,13 +5172,6 @@ namespace OpenTK.OpenGL
                     pixels_ptr.Free();
                 }
             }
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetTexParameter(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Single* @params)
-        {
-            Delegates.glGetTexParameterfv((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -5208,9 +5201,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTexParameter(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Int32* @params)
+        unsafe void GetTexParameter(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Single* @params)
         {
-            Delegates.glGetTexParameteriv((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (Int32*)@params);
+            Delegates.glGetTexParameterfv((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -5240,9 +5233,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTexLevelParameter(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Single* @params)
+        unsafe void GetTexParameter(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Int32* @params)
         {
-            Delegates.glGetTexLevelParameterfv((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (Single*)@params);
+            Delegates.glGetTexParameteriv((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -5272,9 +5265,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTexLevelParameter(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Int32* @params)
+        unsafe void GetTexLevelParameter(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Single* @params)
         {
-            Delegates.glGetTexLevelParameteriv((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (Int32*)@params);
+            Delegates.glGetTexLevelParameterfv((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (Single*)@params);
         }
 
         public static 
@@ -5300,6 +5293,13 @@ namespace OpenTK.OpenGL
                     @params = *@params_ptr;
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetTexLevelParameter(OpenTK.OpenGL.Enums.TextureTarget target, Int32 level, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Int32* @params)
+        {
+            Delegates.glGetTexLevelParameteriv((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)level, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (Int32*)@params);
         }
 
         public static 
@@ -5339,13 +5339,6 @@ namespace OpenTK.OpenGL
             Delegates.glLoadIdentity();
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void LoadMatrix(Single* m)
-        {
-            Delegates.glLoadMatrixf((Single*)m);
-        }
-
         public static 
         void LoadMatrix(Single[] m)
         {
@@ -5372,9 +5365,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void LoadMatrix(Double* m)
+        unsafe void LoadMatrix(Single* m)
         {
-            Delegates.glLoadMatrixd((Double*)m);
+            Delegates.glLoadMatrixf((Single*)m);
         }
 
         public static 
@@ -5401,17 +5394,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void LoadMatrix(Double* m)
+        {
+            Delegates.glLoadMatrixd((Double*)m);
+        }
+
         public static 
         void MatrixMode(OpenTK.OpenGL.Enums.MatrixMode mode)
         {
             Delegates.glMatrixMode((OpenTK.OpenGL.Enums.MatrixMode)mode);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultMatrix(Single* m)
-        {
-            Delegates.glMultMatrixf((Single*)m);
         }
 
         public static 
@@ -5440,9 +5433,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultMatrix(Double* m)
+        unsafe void MultMatrix(Single* m)
         {
-            Delegates.glMultMatrixd((Double*)m);
+            Delegates.glMultMatrixf((Single*)m);
         }
 
         public static 
@@ -5467,6 +5460,13 @@ namespace OpenTK.OpenGL
                     Delegates.glMultMatrixd((Double*)m_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultMatrix(Double* m)
+        {
+            Delegates.glMultMatrixd((Double*)m);
         }
 
         public static 
@@ -5871,20 +5871,6 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe bool AreTexturesResident(Int32 n, UInt32* textures, [Out] bool* residences)
-        {
-            return Delegates.glAreTexturesResident((Int32)n, (UInt32*)textures, (bool*)residences);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe bool AreTexturesResident(Int32 n, Int32* textures, [Out] bool* residences)
-        {
-            return Delegates.glAreTexturesResident((Int32)n, (UInt32*)textures, (bool*)residences);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
         bool AreTexturesResident(Int32 n, UInt32[] textures, [Out] bool[] residences)
         {
             unsafe
@@ -5943,6 +5929,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe bool AreTexturesResident(Int32 n, UInt32* textures, [Out] bool* residences)
+        {
+            return Delegates.glAreTexturesResident((Int32)n, (UInt32*)textures, (bool*)residences);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe bool AreTexturesResident(Int32 n, Int32* textures, [Out] bool* residences)
+        {
+            return Delegates.glAreTexturesResident((Int32)n, (UInt32*)textures, (bool*)residences);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void BindTexture(OpenTK.OpenGL.Enums.TextureTarget target, UInt32 texture)
         {
             Delegates.glBindTexture((OpenTK.OpenGL.Enums.TextureTarget)target, (UInt32)texture);
@@ -5952,20 +5952,6 @@ namespace OpenTK.OpenGL
         void BindTexture(OpenTK.OpenGL.Enums.TextureTarget target, Int32 texture)
         {
             Delegates.glBindTexture((OpenTK.OpenGL.Enums.TextureTarget)target, (UInt32)texture);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void DeleteTextures(Int32 n, UInt32* textures)
-        {
-            Delegates.glDeleteTextures((Int32)n, (UInt32*)textures);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void DeleteTextures(Int32 n, Int32* textures)
-        {
-            Delegates.glDeleteTextures((Int32)n, (UInt32*)textures);
         }
 
         [System.CLSCompliant(false)]
@@ -6020,16 +6006,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GenTextures(Int32 n, [Out] UInt32* textures)
+        unsafe void DeleteTextures(Int32 n, UInt32* textures)
         {
-            Delegates.glGenTextures((Int32)n, (UInt32*)textures);
+            Delegates.glDeleteTextures((Int32)n, (UInt32*)textures);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GenTextures(Int32 n, [Out] Int32* textures)
+        unsafe void DeleteTextures(Int32 n, Int32* textures)
         {
-            Delegates.glGenTextures((Int32)n, (UInt32*)textures);
+            Delegates.glDeleteTextures((Int32)n, (UInt32*)textures);
         }
 
         [System.CLSCompliant(false)]
@@ -6086,6 +6072,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void GenTextures(Int32 n, [Out] UInt32* textures)
+        {
+            Delegates.glGenTextures((Int32)n, (UInt32*)textures);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GenTextures(Int32 n, [Out] Int32* textures)
+        {
+            Delegates.glGenTextures((Int32)n, (UInt32*)textures);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         bool IsTexture(UInt32 texture)
         {
             return Delegates.glIsTexture((UInt32)texture);
@@ -6095,20 +6095,6 @@ namespace OpenTK.OpenGL
         bool IsTexture(Int32 texture)
         {
             return Delegates.glIsTexture((UInt32)texture);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void PrioritizeTextures(Int32 n, UInt32* textures, Single* priorities)
-        {
-            Delegates.glPrioritizeTextures((Int32)n, (UInt32*)textures, (Single*)priorities);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void PrioritizeTextures(Int32 n, Int32* textures, Single* priorities)
-        {
-            Delegates.glPrioritizeTextures((Int32)n, (UInt32*)textures, (Single*)priorities);
         }
 
         [System.CLSCompliant(false)]
@@ -6165,17 +6151,24 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
         public static 
-        void Index(Byte c)
+        unsafe void PrioritizeTextures(Int32 n, UInt32* textures, Single* priorities)
         {
-            Delegates.glIndexub((Byte)c);
+            Delegates.glPrioritizeTextures((Int32)n, (UInt32*)textures, (Single*)priorities);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Indexv(Byte* c)
+        unsafe void PrioritizeTextures(Int32 n, Int32* textures, Single* priorities)
         {
-            Delegates.glIndexubv((Byte*)c);
+            Delegates.glPrioritizeTextures((Int32)n, (UInt32*)textures, (Single*)priorities);
+        }
+
+        public static 
+        void Index(Byte c)
+        {
+            Delegates.glIndexub((Byte)c);
         }
 
         public static 
@@ -6200,6 +6193,13 @@ namespace OpenTK.OpenGL
                     Delegates.glIndexubv((Byte*)c_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void Indexv(Byte* c)
+        {
+            Delegates.glIndexubv((Byte*)c);
         }
 
         public static 
@@ -6306,13 +6306,6 @@ namespace OpenTK.OpenGL
             }
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
-        {
-            Delegates.glColorTableParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-        }
-
         public static 
         void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single[] @params)
         {
@@ -6339,9 +6332,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
+        unsafe void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
         {
-            Delegates.glColorTableParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            Delegates.glColorTableParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
         }
 
         public static 
@@ -6366,6 +6359,13 @@ namespace OpenTK.OpenGL
                     Delegates.glColorTableParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
+        {
+            Delegates.glColorTableParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
         }
 
         public static 
@@ -6400,13 +6400,6 @@ namespace OpenTK.OpenGL
             }
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-        {
-            Delegates.glGetColorTableParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-        }
-
         public static 
         void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single[] @params)
         {
@@ -6434,9 +6427,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+        unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
         {
-            Delegates.glGetColorTableParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            Delegates.glGetColorTableParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
         }
 
         public static 
@@ -6462,6 +6455,13 @@ namespace OpenTK.OpenGL
                     @params = *@params_ptr;
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+        {
+            Delegates.glGetColorTableParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
         }
 
         public static 
@@ -6554,13 +6554,6 @@ namespace OpenTK.OpenGL
             Delegates.glConvolutionParameterf((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single)@params);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
-        {
-            Delegates.glConvolutionParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-        }
-
         public static 
         void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single[] @params)
         {
@@ -6585,17 +6578,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
+        {
+            Delegates.glConvolutionParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+        }
+
         public static 
         void ConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32 @params)
         {
             Delegates.glConvolutionParameteri((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32)@params);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
-        {
-            Delegates.glConvolutionParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
         }
 
         public static 
@@ -6620,6 +6613,13 @@ namespace OpenTK.OpenGL
                     Delegates.glConvolutionParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
+        {
+            Delegates.glConvolutionParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
         }
 
         public static 
@@ -6660,13 +6660,6 @@ namespace OpenTK.OpenGL
             }
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-        {
-            Delegates.glGetConvolutionParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-        }
-
         public static 
         void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single[] @params)
         {
@@ -6694,9 +6687,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+        unsafe void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
         {
-            Delegates.glGetConvolutionParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            Delegates.glGetConvolutionParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
         }
 
         public static 
@@ -6722,6 +6715,13 @@ namespace OpenTK.OpenGL
                     @params = *@params_ptr;
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+        {
+            Delegates.glGetConvolutionParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
         }
 
         public static 
@@ -6808,13 +6808,6 @@ namespace OpenTK.OpenGL
             }
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-        {
-            Delegates.glGetHistogramParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-        }
-
         public static 
         void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single[] @params)
         {
@@ -6842,9 +6835,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+        unsafe void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
         {
-            Delegates.glGetHistogramParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            Delegates.glGetHistogramParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
         }
 
         public static 
@@ -6872,6 +6865,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+        {
+            Delegates.glGetHistogramParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+        }
+
         public static 
         void GetMinmax(OpenTK.OpenGL.Enums.All target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr values)
         {
@@ -6896,13 +6896,6 @@ namespace OpenTK.OpenGL
                     values_ptr.Free();
                 }
             }
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetMinmaxParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-        {
-            Delegates.glGetMinmaxParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
         }
 
         public static 
@@ -6932,9 +6925,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetMinmaxParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+        unsafe void GetMinmaxParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
         {
-            Delegates.glGetMinmaxParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            Delegates.glGetMinmaxParameterfv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
         }
 
         public static 
@@ -6960,6 +6953,13 @@ namespace OpenTK.OpenGL
                     @params = *@params_ptr;
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetMinmaxParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+        {
+            Delegates.glGetMinmaxParameteriv((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
         }
 
         public static 
@@ -7062,13 +7062,6 @@ namespace OpenTK.OpenGL
             Delegates.glMultiTexCoord1d((OpenTK.OpenGL.Enums.TextureUnit)target, (Double)s);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
-        {
-            Delegates.glMultiTexCoord1dv((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
-        }
-
         public static 
         void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Double[] v)
         {
@@ -7093,17 +7086,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
+        {
+            Delegates.glMultiTexCoord1dv((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
+        }
+
         public static 
         void MultiTexCoord1(OpenTK.OpenGL.Enums.TextureUnit target, Single s)
         {
             Delegates.glMultiTexCoord1f((OpenTK.OpenGL.Enums.TextureUnit)target, (Single)s);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
-        {
-            Delegates.glMultiTexCoord1fv((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
         }
 
         public static 
@@ -7130,17 +7123,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
+        {
+            Delegates.glMultiTexCoord1fv((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
+        }
+
         public static 
         void MultiTexCoord1(OpenTK.OpenGL.Enums.TextureUnit target, Int32 s)
         {
             Delegates.glMultiTexCoord1i((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32)s);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
-        {
-            Delegates.glMultiTexCoord1iv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
         }
 
         public static 
@@ -7167,17 +7160,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
+        {
+            Delegates.glMultiTexCoord1iv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
+        }
+
         public static 
         void MultiTexCoord1(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s)
         {
             Delegates.glMultiTexCoord1s((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16)s);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-        {
-            Delegates.glMultiTexCoord1sv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
         }
 
         public static 
@@ -7204,17 +7197,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+        {
+            Delegates.glMultiTexCoord1sv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
+        }
+
         public static 
         void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Double s, Double t)
         {
             Delegates.glMultiTexCoord2d((OpenTK.OpenGL.Enums.TextureUnit)target, (Double)s, (Double)t);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
-        {
-            Delegates.glMultiTexCoord2dv((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
         }
 
         public static 
@@ -7241,17 +7234,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
+        {
+            Delegates.glMultiTexCoord2dv((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
+        }
+
         public static 
         void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Single s, Single t)
         {
             Delegates.glMultiTexCoord2f((OpenTK.OpenGL.Enums.TextureUnit)target, (Single)s, (Single)t);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
-        {
-            Delegates.glMultiTexCoord2fv((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
         }
 
         public static 
@@ -7278,17 +7271,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
+        {
+            Delegates.glMultiTexCoord2fv((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
+        }
+
         public static 
         void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int32 s, Int32 t)
         {
             Delegates.glMultiTexCoord2i((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32)s, (Int32)t);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
-        {
-            Delegates.glMultiTexCoord2iv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
         }
 
         public static 
@@ -7315,17 +7308,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
+        {
+            Delegates.glMultiTexCoord2iv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
+        }
+
         public static 
         void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s, Int16 t)
         {
             Delegates.glMultiTexCoord2s((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16)s, (Int16)t);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-        {
-            Delegates.glMultiTexCoord2sv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
         }
 
         public static 
@@ -7352,17 +7345,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+        {
+            Delegates.glMultiTexCoord2sv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
+        }
+
         public static 
         void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Double s, Double t, Double r)
         {
             Delegates.glMultiTexCoord3d((OpenTK.OpenGL.Enums.TextureUnit)target, (Double)s, (Double)t, (Double)r);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
-        {
-            Delegates.glMultiTexCoord3dv((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
         }
 
         public static 
@@ -7389,17 +7382,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
+        {
+            Delegates.glMultiTexCoord3dv((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
+        }
+
         public static 
         void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Single s, Single t, Single r)
         {
             Delegates.glMultiTexCoord3f((OpenTK.OpenGL.Enums.TextureUnit)target, (Single)s, (Single)t, (Single)r);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
-        {
-            Delegates.glMultiTexCoord3fv((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
         }
 
         public static 
@@ -7426,17 +7419,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
+        {
+            Delegates.glMultiTexCoord3fv((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
+        }
+
         public static 
         void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int32 s, Int32 t, Int32 r)
         {
             Delegates.glMultiTexCoord3i((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32)s, (Int32)t, (Int32)r);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
-        {
-            Delegates.glMultiTexCoord3iv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
         }
 
         public static 
@@ -7463,17 +7456,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
+        {
+            Delegates.glMultiTexCoord3iv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
+        }
+
         public static 
         void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s, Int16 t, Int16 r)
         {
             Delegates.glMultiTexCoord3s((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16)s, (Int16)t, (Int16)r);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-        {
-            Delegates.glMultiTexCoord3sv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
         }
 
         public static 
@@ -7500,17 +7493,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+        {
+            Delegates.glMultiTexCoord3sv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
+        }
+
         public static 
         void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Double s, Double t, Double r, Double q)
         {
             Delegates.glMultiTexCoord4d((OpenTK.OpenGL.Enums.TextureUnit)target, (Double)s, (Double)t, (Double)r, (Double)q);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
-        {
-            Delegates.glMultiTexCoord4dv((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
         }
 
         public static 
@@ -7537,17 +7530,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
+        {
+            Delegates.glMultiTexCoord4dv((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
+        }
+
         public static 
         void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Single s, Single t, Single r, Single q)
         {
             Delegates.glMultiTexCoord4f((OpenTK.OpenGL.Enums.TextureUnit)target, (Single)s, (Single)t, (Single)r, (Single)q);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
-        {
-            Delegates.glMultiTexCoord4fv((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
         }
 
         public static 
@@ -7574,17 +7567,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
+        {
+            Delegates.glMultiTexCoord4fv((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
+        }
+
         public static 
         void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int32 s, Int32 t, Int32 r, Int32 q)
         {
             Delegates.glMultiTexCoord4i((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32)s, (Int32)t, (Int32)r, (Int32)q);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
-        {
-            Delegates.glMultiTexCoord4iv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
         }
 
         public static 
@@ -7611,17 +7604,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
+        {
+            Delegates.glMultiTexCoord4iv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
+        }
+
         public static 
         void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s, Int16 t, Int16 r, Int16 q)
         {
             Delegates.glMultiTexCoord4s((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16)s, (Int16)t, (Int16)r, (Int16)q);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-        {
-            Delegates.glMultiTexCoord4sv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
         }
 
         public static 
@@ -7650,9 +7643,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void LoadTransposeMatrix(Single* m)
+        unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
         {
-            Delegates.glLoadTransposeMatrixf((Single*)m);
+            Delegates.glMultiTexCoord4sv((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
         }
 
         public static 
@@ -7681,9 +7674,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void LoadTransposeMatrix(Double* m)
+        unsafe void LoadTransposeMatrix(Single* m)
         {
-            Delegates.glLoadTransposeMatrixd((Double*)m);
+            Delegates.glLoadTransposeMatrixf((Single*)m);
         }
 
         public static 
@@ -7712,9 +7705,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultTransposeMatrix(Single* m)
+        unsafe void LoadTransposeMatrix(Double* m)
         {
-            Delegates.glMultTransposeMatrixf((Single*)m);
+            Delegates.glLoadTransposeMatrixd((Double*)m);
         }
 
         public static 
@@ -7743,9 +7736,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultTransposeMatrix(Double* m)
+        unsafe void MultTransposeMatrix(Single* m)
         {
-            Delegates.glMultTransposeMatrixd((Double*)m);
+            Delegates.glMultTransposeMatrixf((Single*)m);
         }
 
         public static 
@@ -7770,6 +7763,13 @@ namespace OpenTK.OpenGL
                     Delegates.glMultTransposeMatrixd((Double*)m_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void MultTransposeMatrix(Double* m)
+        {
+            Delegates.glMultTransposeMatrixd((Double*)m);
         }
 
         public static 
@@ -7972,13 +7972,6 @@ namespace OpenTK.OpenGL
             Delegates.glFogCoordf((Single)coord);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void FogCoordv(Single* coord)
-        {
-            Delegates.glFogCoordfv((Single*)coord);
-        }
-
         public static 
         void FogCoordv(Single[] coord)
         {
@@ -8003,17 +7996,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void FogCoordv(Single* coord)
+        {
+            Delegates.glFogCoordfv((Single*)coord);
+        }
+
         public static 
         void FogCoord(Double coord)
         {
             Delegates.glFogCoordd((Double)coord);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void FogCoordv(Double* coord)
-        {
-            Delegates.glFogCoorddv((Double*)coord);
         }
 
         public static 
@@ -8040,6 +8033,13 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void FogCoordv(Double* coord)
+        {
+            Delegates.glFogCoorddv((Double*)coord);
+        }
+
         public static 
         void FogCoordPointer(OpenTK.OpenGL.Enums.FogPointerType type, Int32 stride, IntPtr pointer)
         {
@@ -8064,13 +8064,6 @@ namespace OpenTK.OpenGL
                     pointer_ptr.Free();
                 }
             }
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiDrawArrays(OpenTK.OpenGL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount)
-        {
-            Delegates.glMultiDrawArrays((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)first, (Int32*)count, (Int32)primcount);
         }
 
         public static 
@@ -8103,24 +8096,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount)
+        unsafe void MultiDrawArrays(OpenTK.OpenGL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount)
         {
-            Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount)
-        {
-            System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
-            try
-            {
-                Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
-            }
-            finally
-            {
-                indices_ptr.Free();
-            }
+            Delegates.glMultiDrawArrays((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)first, (Int32*)count, (Int32)primcount);
         }
 
         public static 
@@ -8187,17 +8165,32 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
         public static 
-        void PointParameter(OpenTK.OpenGL.Enums.PointParameterName pname, Single param)
+        unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount)
         {
-            Delegates.glPointParameterf((OpenTK.OpenGL.Enums.PointParameterName)pname, (Single)param);
+            Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void PointParameterv(OpenTK.OpenGL.Enums.PointParameterName pname, Single* @params)
+        unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount)
         {
-            Delegates.glPointParameterfv((OpenTK.OpenGL.Enums.PointParameterName)pname, (Single*)@params);
+            System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
+            try
+            {
+                Delegates.glMultiDrawElements((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+            }
+            finally
+            {
+                indices_ptr.Free();
+            }
+        }
+
+        public static 
+        void PointParameter(OpenTK.OpenGL.Enums.PointParameterName pname, Single param)
+        {
+            Delegates.glPointParameterf((OpenTK.OpenGL.Enums.PointParameterName)pname, (Single)param);
         }
 
         public static 
@@ -8224,17 +8217,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void PointParameterv(OpenTK.OpenGL.Enums.PointParameterName pname, Single* @params)
+        {
+            Delegates.glPointParameterfv((OpenTK.OpenGL.Enums.PointParameterName)pname, (Single*)@params);
+        }
+
         public static 
         void PointParameter(OpenTK.OpenGL.Enums.PointParameterName pname, Int32 param)
         {
             Delegates.glPointParameteri((OpenTK.OpenGL.Enums.PointParameterName)pname, (Int32)param);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void PointParameterv(OpenTK.OpenGL.Enums.PointParameterName pname, Int32* @params)
-        {
-            Delegates.glPointParameteriv((OpenTK.OpenGL.Enums.PointParameterName)pname, (Int32*)@params);
         }
 
         public static 
@@ -8263,16 +8256,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        void SecondaryColor3(SByte red, SByte green, SByte blue)
+        unsafe void PointParameterv(OpenTK.OpenGL.Enums.PointParameterName pname, Int32* @params)
         {
-            Delegates.glSecondaryColor3b((SByte)red, (SByte)green, (SByte)blue);
+            Delegates.glPointParameteriv((OpenTK.OpenGL.Enums.PointParameterName)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void SecondaryColor3(SByte* v)
+        void SecondaryColor3(SByte red, SByte green, SByte blue)
         {
-            Delegates.glSecondaryColor3bv((SByte*)v);
+            Delegates.glSecondaryColor3b((SByte)red, (SByte)green, (SByte)blue);
         }
 
         [System.CLSCompliant(false)]
@@ -8301,17 +8294,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void SecondaryColor3(SByte* v)
+        {
+            Delegates.glSecondaryColor3bv((SByte*)v);
+        }
+
         public static 
         void SecondaryColor3(Double red, Double green, Double blue)
         {
             Delegates.glSecondaryColor3d((Double)red, (Double)green, (Double)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void SecondaryColor3(Double* v)
-        {
-            Delegates.glSecondaryColor3dv((Double*)v);
         }
 
         public static 
@@ -8338,17 +8331,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void SecondaryColor3(Double* v)
+        {
+            Delegates.glSecondaryColor3dv((Double*)v);
+        }
+
         public static 
         void SecondaryColor3(Single red, Single green, Single blue)
         {
             Delegates.glSecondaryColor3f((Single)red, (Single)green, (Single)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void SecondaryColor3(Single* v)
-        {
-            Delegates.glSecondaryColor3fv((Single*)v);
         }
 
         public static 
@@ -8375,17 +8368,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void SecondaryColor3(Single* v)
+        {
+            Delegates.glSecondaryColor3fv((Single*)v);
+        }
+
         public static 
         void SecondaryColor3(Byte red, Byte green, Byte blue)
         {
             Delegates.glSecondaryColor3ub((Byte)red, (Byte)green, (Byte)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void SecondaryColor3(Byte* v)
-        {
-            Delegates.glSecondaryColor3ubv((Byte*)v);
         }
 
         public static 
@@ -8414,6 +8407,13 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void SecondaryColor3(Byte* v)
+        {
+            Delegates.glSecondaryColor3ubv((Byte*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void SecondaryColor3(UInt32 red, UInt32 green, UInt32 blue)
         {
             Delegates.glSecondaryColor3ui((UInt32)red, (UInt32)green, (UInt32)blue);
@@ -8423,20 +8423,6 @@ namespace OpenTK.OpenGL
         void SecondaryColor3(Int32 red, Int32 green, Int32 blue)
         {
             Delegates.glSecondaryColor3ui((UInt32)red, (UInt32)green, (UInt32)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void SecondaryColor3(UInt32* v)
-        {
-            Delegates.glSecondaryColor3uiv((UInt32*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void SecondaryColor3(Int32* v)
-        {
-            Delegates.glSecondaryColor3uiv((UInt32*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -8491,6 +8477,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void SecondaryColor3(UInt32* v)
+        {
+            Delegates.glSecondaryColor3uiv((UInt32*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void SecondaryColor3(Int32* v)
+        {
+            Delegates.glSecondaryColor3uiv((UInt32*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void SecondaryColor3(UInt16 red, UInt16 green, UInt16 blue)
         {
             Delegates.glSecondaryColor3us((UInt16)red, (UInt16)green, (UInt16)blue);
@@ -8500,20 +8500,6 @@ namespace OpenTK.OpenGL
         void SecondaryColor3(Int16 red, Int16 green, Int16 blue)
         {
             Delegates.glSecondaryColor3us((UInt16)red, (UInt16)green, (UInt16)blue);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void SecondaryColor3(UInt16* v)
-        {
-            Delegates.glSecondaryColor3usv((UInt16*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void SecondaryColor3(Int16* v)
-        {
-            Delegates.glSecondaryColor3usv((UInt16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -8566,6 +8552,20 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void SecondaryColor3(UInt16* v)
+        {
+            Delegates.glSecondaryColor3usv((UInt16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void SecondaryColor3(Int16* v)
+        {
+            Delegates.glSecondaryColor3usv((UInt16*)v);
+        }
+
         public static 
         void SecondaryColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, IntPtr pointer)
         {
@@ -8598,13 +8598,6 @@ namespace OpenTK.OpenGL
             Delegates.glWindowPos2d((Double)x, (Double)y);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void WindowPos2(Double* v)
-        {
-            Delegates.glWindowPos2dv((Double*)v);
-        }
-
         public static 
         void WindowPos2(Double[] v)
         {
@@ -8629,17 +8622,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void WindowPos2(Double* v)
+        {
+            Delegates.glWindowPos2dv((Double*)v);
+        }
+
         public static 
         void WindowPos2(Single x, Single y)
         {
             Delegates.glWindowPos2f((Single)x, (Single)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void WindowPos2(Single* v)
-        {
-            Delegates.glWindowPos2fv((Single*)v);
         }
 
         public static 
@@ -8666,17 +8659,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void WindowPos2(Single* v)
+        {
+            Delegates.glWindowPos2fv((Single*)v);
+        }
+
         public static 
         void WindowPos2(Int32 x, Int32 y)
         {
             Delegates.glWindowPos2i((Int32)x, (Int32)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void WindowPos2(Int32* v)
-        {
-            Delegates.glWindowPos2iv((Int32*)v);
         }
 
         public static 
@@ -8703,17 +8696,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void WindowPos2(Int32* v)
+        {
+            Delegates.glWindowPos2iv((Int32*)v);
+        }
+
         public static 
         void WindowPos2(Int16 x, Int16 y)
         {
             Delegates.glWindowPos2s((Int16)x, (Int16)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void WindowPos2(Int16* v)
-        {
-            Delegates.glWindowPos2sv((Int16*)v);
         }
 
         public static 
@@ -8740,17 +8733,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void WindowPos2(Int16* v)
+        {
+            Delegates.glWindowPos2sv((Int16*)v);
+        }
+
         public static 
         void WindowPos3(Double x, Double y, Double z)
         {
             Delegates.glWindowPos3d((Double)x, (Double)y, (Double)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void WindowPos3(Double* v)
-        {
-            Delegates.glWindowPos3dv((Double*)v);
         }
 
         public static 
@@ -8777,17 +8770,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void WindowPos3(Double* v)
+        {
+            Delegates.glWindowPos3dv((Double*)v);
+        }
+
         public static 
         void WindowPos3(Single x, Single y, Single z)
         {
             Delegates.glWindowPos3f((Single)x, (Single)y, (Single)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void WindowPos3(Single* v)
-        {
-            Delegates.glWindowPos3fv((Single*)v);
         }
 
         public static 
@@ -8814,17 +8807,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void WindowPos3(Single* v)
+        {
+            Delegates.glWindowPos3fv((Single*)v);
+        }
+
         public static 
         void WindowPos3(Int32 x, Int32 y, Int32 z)
         {
             Delegates.glWindowPos3i((Int32)x, (Int32)y, (Int32)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void WindowPos3(Int32* v)
-        {
-            Delegates.glWindowPos3iv((Int32*)v);
         }
 
         public static 
@@ -8851,17 +8844,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void WindowPos3(Int32* v)
+        {
+            Delegates.glWindowPos3iv((Int32*)v);
+        }
+
         public static 
         void WindowPos3(Int16 x, Int16 y, Int16 z)
         {
             Delegates.glWindowPos3s((Int16)x, (Int16)y, (Int16)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void WindowPos3(Int16* v)
-        {
-            Delegates.glWindowPos3sv((Int16*)v);
         }
 
         public static 
@@ -8890,16 +8883,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GenQueries(Int32 n, [Out] UInt32* ids)
+        unsafe void WindowPos3(Int16* v)
         {
-            Delegates.glGenQueries((Int32)n, (UInt32*)ids);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GenQueries(Int32 n, [Out] Int32* ids)
-        {
-            Delegates.glGenQueries((Int32)n, (UInt32*)ids);
+            Delegates.glWindowPos3sv((Int16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -8956,16 +8942,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void DeleteQueries(Int32 n, UInt32* ids)
+        unsafe void GenQueries(Int32 n, [Out] UInt32* ids)
         {
-            Delegates.glDeleteQueries((Int32)n, (UInt32*)ids);
+            Delegates.glGenQueries((Int32)n, (UInt32*)ids);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void DeleteQueries(Int32 n, Int32* ids)
+        unsafe void GenQueries(Int32 n, [Out] Int32* ids)
         {
-            Delegates.glDeleteQueries((Int32)n, (UInt32*)ids);
+            Delegates.glGenQueries((Int32)n, (UInt32*)ids);
         }
 
         [System.CLSCompliant(false)]
@@ -9020,6 +9006,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void DeleteQueries(Int32 n, UInt32* ids)
+        {
+            Delegates.glDeleteQueries((Int32)n, (UInt32*)ids);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void DeleteQueries(Int32 n, Int32* ids)
+        {
+            Delegates.glDeleteQueries((Int32)n, (UInt32*)ids);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         bool IsQuery(UInt32 id)
         {
             return Delegates.glIsQuery((UInt32)id);
@@ -9050,13 +9050,6 @@ namespace OpenTK.OpenGL
             Delegates.glEndQuery((OpenTK.OpenGL.Enums.QueryTarget)target);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetQuery(OpenTK.OpenGL.Enums.QueryTarget target, OpenTK.OpenGL.Enums.GetQueryParam pname, [Out] Int32* @params)
-        {
-            Delegates.glGetQueryiv((OpenTK.OpenGL.Enums.QueryTarget)target, (OpenTK.OpenGL.Enums.GetQueryParam)pname, (Int32*)@params);
-        }
-
         public static 
         void GetQuery(OpenTK.OpenGL.Enums.QueryTarget target, OpenTK.OpenGL.Enums.GetQueryParam pname, [Out] Int32[] @params)
         {
@@ -9084,9 +9077,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetQueryObject(UInt32 id, OpenTK.OpenGL.Enums.GetQueryObjectParam pname, [Out] Int32* @params)
+        unsafe void GetQuery(OpenTK.OpenGL.Enums.QueryTarget target, OpenTK.OpenGL.Enums.GetQueryParam pname, [Out] Int32* @params)
         {
-            Delegates.glGetQueryObjectiv((UInt32)id, (OpenTK.OpenGL.Enums.GetQueryObjectParam)pname, (Int32*)@params);
+            Delegates.glGetQueryiv((OpenTK.OpenGL.Enums.QueryTarget)target, (OpenTK.OpenGL.Enums.GetQueryParam)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -9118,16 +9111,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetQueryObject(UInt32 id, OpenTK.OpenGL.Enums.GetQueryObjectParam pname, [Out] UInt32* @params)
+        unsafe void GetQueryObject(UInt32 id, OpenTK.OpenGL.Enums.GetQueryObjectParam pname, [Out] Int32* @params)
         {
-            Delegates.glGetQueryObjectuiv((UInt32)id, (OpenTK.OpenGL.Enums.GetQueryObjectParam)pname, (UInt32*)@params);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetQueryObject(Int32 id, OpenTK.OpenGL.Enums.GetQueryObjectParam pname, [Out] Int32* @params)
-        {
-            Delegates.glGetQueryObjectuiv((UInt32)id, (OpenTK.OpenGL.Enums.GetQueryObjectParam)pname, (UInt32*)@params);
+            Delegates.glGetQueryObjectiv((UInt32)id, (OpenTK.OpenGL.Enums.GetQueryObjectParam)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -9184,6 +9170,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void GetQueryObject(UInt32 id, OpenTK.OpenGL.Enums.GetQueryObjectParam pname, [Out] UInt32* @params)
+        {
+            Delegates.glGetQueryObjectuiv((UInt32)id, (OpenTK.OpenGL.Enums.GetQueryObjectParam)pname, (UInt32*)@params);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetQueryObject(Int32 id, OpenTK.OpenGL.Enums.GetQueryObjectParam pname, [Out] Int32* @params)
+        {
+            Delegates.glGetQueryObjectuiv((UInt32)id, (OpenTK.OpenGL.Enums.GetQueryObjectParam)pname, (UInt32*)@params);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void BindBuffer(OpenTK.OpenGL.Enums.BufferTarget target, UInt32 buffer)
         {
             Delegates.glBindBuffer((OpenTK.OpenGL.Enums.BufferTarget)target, (UInt32)buffer);
@@ -9193,20 +9193,6 @@ namespace OpenTK.OpenGL
         void BindBuffer(OpenTK.OpenGL.Enums.BufferTarget target, Int32 buffer)
         {
             Delegates.glBindBuffer((OpenTK.OpenGL.Enums.BufferTarget)target, (UInt32)buffer);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void DeleteBuffers(Int32 n, UInt32* buffers)
-        {
-            Delegates.glDeleteBuffers((Int32)n, (UInt32*)buffers);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void DeleteBuffers(Int32 n, Int32* buffers)
-        {
-            Delegates.glDeleteBuffers((Int32)n, (UInt32*)buffers);
         }
 
         [System.CLSCompliant(false)]
@@ -9261,16 +9247,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GenBuffers(Int32 n, [Out] UInt32* buffers)
+        unsafe void DeleteBuffers(Int32 n, UInt32* buffers)
         {
-            Delegates.glGenBuffers((Int32)n, (UInt32*)buffers);
+            Delegates.glDeleteBuffers((Int32)n, (UInt32*)buffers);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GenBuffers(Int32 n, [Out] Int32* buffers)
+        unsafe void DeleteBuffers(Int32 n, Int32* buffers)
         {
-            Delegates.glGenBuffers((Int32)n, (UInt32*)buffers);
+            Delegates.glDeleteBuffers((Int32)n, (UInt32*)buffers);
         }
 
         [System.CLSCompliant(false)]
@@ -9323,6 +9309,20 @@ namespace OpenTK.OpenGL
                     buffers = *buffers_ptr;
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GenBuffers(Int32 n, [Out] UInt32* buffers)
+        {
+            Delegates.glGenBuffers((Int32)n, (UInt32*)buffers);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GenBuffers(Int32 n, [Out] Int32* buffers)
+        {
+            Delegates.glGenBuffers((Int32)n, (UInt32*)buffers);
         }
 
         [System.CLSCompliant(false)]
@@ -9429,13 +9429,6 @@ namespace OpenTK.OpenGL
             return Delegates.glUnmapBuffer((OpenTK.OpenGL.Enums.BufferTarget)target);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetBufferParameter(OpenTK.OpenGL.Enums.BufferTarget target, OpenTK.OpenGL.Enums.BufferParameterName pname, [Out] Int32* @params)
-        {
-            Delegates.glGetBufferParameteriv((OpenTK.OpenGL.Enums.BufferTarget)target, (OpenTK.OpenGL.Enums.BufferParameterName)pname, (Int32*)@params);
-        }
-
         public static 
         void GetBufferParameter(OpenTK.OpenGL.Enums.BufferTarget target, OpenTK.OpenGL.Enums.BufferParameterName pname, [Out] Int32[] @params)
         {
@@ -9459,6 +9452,13 @@ namespace OpenTK.OpenGL
                     @params = *@params_ptr;
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetBufferParameter(OpenTK.OpenGL.Enums.BufferTarget target, OpenTK.OpenGL.Enums.BufferParameterName pname, [Out] Int32* @params)
+        {
+            Delegates.glGetBufferParameteriv((OpenTK.OpenGL.Enums.BufferTarget)target, (OpenTK.OpenGL.Enums.BufferParameterName)pname, (Int32*)@params);
         }
 
         public static 
@@ -9493,13 +9493,6 @@ namespace OpenTK.OpenGL
             Delegates.glBlendEquationSeparate((OpenTK.OpenGL.Enums.All)modeRGB, (OpenTK.OpenGL.Enums.All)modeAlpha);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void DrawBuffers(Int32 n, OpenTK.OpenGL.Enums.DrawBuffersEnum* bufs)
-        {
-            Delegates.glDrawBuffers((Int32)n, (OpenTK.OpenGL.Enums.DrawBuffersEnum*)bufs);
-        }
-
         public static 
         void DrawBuffers(Int32 n, OpenTK.OpenGL.Enums.DrawBuffersEnum[] bufs)
         {
@@ -9522,6 +9515,13 @@ namespace OpenTK.OpenGL
                     Delegates.glDrawBuffers((Int32)n, (OpenTK.OpenGL.Enums.DrawBuffersEnum*)bufs_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void DrawBuffers(Int32 n, OpenTK.OpenGL.Enums.DrawBuffersEnum* bufs)
+        {
+            Delegates.glDrawBuffers((Int32)n, (OpenTK.OpenGL.Enums.DrawBuffersEnum*)bufs);
         }
 
         public static 
@@ -9674,20 +9674,6 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.ActiveAttribType* type, [Out] System.Text.StringBuilder name)
-        {
-            Delegates.glGetActiveAttrib((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.ActiveAttribType*)type, (System.Text.StringBuilder)name);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetActiveAttrib(Int32 program, Int32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.ActiveAttribType* type, [Out] System.Text.StringBuilder name)
-        {
-            Delegates.glGetActiveAttrib((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.ActiveAttribType*)type, (System.Text.StringBuilder)name);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
         void GetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32[] length, [Out] Int32[] size, [Out] OpenTK.OpenGL.Enums.ActiveAttribType[] type, [Out] System.Text.StringBuilder name)
         {
             unsafe
@@ -9752,16 +9738,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.ActiveUniformType* type, [Out] System.Text.StringBuilder name)
+        unsafe void GetActiveAttrib(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.ActiveAttribType* type, [Out] System.Text.StringBuilder name)
         {
-            Delegates.glGetActiveUniform((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.ActiveUniformType*)type, (System.Text.StringBuilder)name);
+            Delegates.glGetActiveAttrib((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.ActiveAttribType*)type, (System.Text.StringBuilder)name);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetActiveUniform(Int32 program, Int32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.ActiveUniformType* type, [Out] System.Text.StringBuilder name)
+        unsafe void GetActiveAttrib(Int32 program, Int32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.ActiveAttribType* type, [Out] System.Text.StringBuilder name)
         {
-            Delegates.glGetActiveUniform((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.ActiveUniformType*)type, (System.Text.StringBuilder)name);
+            Delegates.glGetActiveAttrib((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.ActiveAttribType*)type, (System.Text.StringBuilder)name);
         }
 
         [System.CLSCompliant(false)]
@@ -9830,16 +9816,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetAttachedShaders(UInt32 program, Int32 maxCount, [Out] Int32* count, [Out] UInt32* obj)
+        unsafe void GetActiveUniform(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.ActiveUniformType* type, [Out] System.Text.StringBuilder name)
         {
-            Delegates.glGetAttachedShaders((UInt32)program, (Int32)maxCount, (Int32*)count, (UInt32*)obj);
+            Delegates.glGetActiveUniform((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.ActiveUniformType*)type, (System.Text.StringBuilder)name);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetAttachedShaders(Int32 program, Int32 maxCount, [Out] Int32* count, [Out] Int32* obj)
+        unsafe void GetActiveUniform(Int32 program, Int32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.ActiveUniformType* type, [Out] System.Text.StringBuilder name)
         {
-            Delegates.glGetAttachedShaders((UInt32)program, (Int32)maxCount, (Int32*)count, (UInt32*)obj);
+            Delegates.glGetActiveUniform((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.ActiveUniformType*)type, (System.Text.StringBuilder)name);
         }
 
         [System.CLSCompliant(false)]
@@ -9902,6 +9888,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void GetAttachedShaders(UInt32 program, Int32 maxCount, [Out] Int32* count, [Out] UInt32* obj)
+        {
+            Delegates.glGetAttachedShaders((UInt32)program, (Int32)maxCount, (Int32*)count, (UInt32*)obj);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetAttachedShaders(Int32 program, Int32 maxCount, [Out] Int32* count, [Out] Int32* obj)
+        {
+            Delegates.glGetAttachedShaders((UInt32)program, (Int32)maxCount, (Int32*)count, (UInt32*)obj);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         Int32 GetAttribLocation(UInt32 program, System.String name)
         {
             return Delegates.glGetAttribLocation((UInt32)program, (System.String)name);
@@ -9911,20 +9911,6 @@ namespace OpenTK.OpenGL
         Int32 GetAttribLocation(Int32 program, System.String name)
         {
             return Delegates.glGetAttribLocation((UInt32)program, (System.String)name);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetProgram(UInt32 program, OpenTK.OpenGL.Enums.ProgramParameter pname, [Out] Int32* @params)
-        {
-            Delegates.glGetProgramiv((UInt32)program, (OpenTK.OpenGL.Enums.ProgramParameter)pname, (Int32*)@params);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetProgram(Int32 program, OpenTK.OpenGL.Enums.ProgramParameter pname, [Out] Int32* @params)
-        {
-            Delegates.glGetProgramiv((UInt32)program, (OpenTK.OpenGL.Enums.ProgramParameter)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -9981,16 +9967,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetProgramInfoLog(UInt32 program, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
+        unsafe void GetProgram(UInt32 program, OpenTK.OpenGL.Enums.ProgramParameter pname, [Out] Int32* @params)
         {
-            Delegates.glGetProgramInfoLog((UInt32)program, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder)infoLog);
+            Delegates.glGetProgramiv((UInt32)program, (OpenTK.OpenGL.Enums.ProgramParameter)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetProgramInfoLog(Int32 program, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
+        unsafe void GetProgram(Int32 program, OpenTK.OpenGL.Enums.ProgramParameter pname, [Out] Int32* @params)
         {
-            Delegates.glGetProgramInfoLog((UInt32)program, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder)infoLog);
+            Delegates.glGetProgramiv((UInt32)program, (OpenTK.OpenGL.Enums.ProgramParameter)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -10047,16 +10033,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetShader(UInt32 shader, OpenTK.OpenGL.Enums.ShaderParameter pname, [Out] Int32* @params)
+        unsafe void GetProgramInfoLog(UInt32 program, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
         {
-            Delegates.glGetShaderiv((UInt32)shader, (OpenTK.OpenGL.Enums.ShaderParameter)pname, (Int32*)@params);
+            Delegates.glGetProgramInfoLog((UInt32)program, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder)infoLog);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetShader(Int32 shader, OpenTK.OpenGL.Enums.ShaderParameter pname, [Out] Int32* @params)
+        unsafe void GetProgramInfoLog(Int32 program, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
         {
-            Delegates.glGetShaderiv((UInt32)shader, (OpenTK.OpenGL.Enums.ShaderParameter)pname, (Int32*)@params);
+            Delegates.glGetProgramInfoLog((UInt32)program, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder)infoLog);
         }
 
         [System.CLSCompliant(false)]
@@ -10113,16 +10099,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetShaderInfoLog(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
+        unsafe void GetShader(UInt32 shader, OpenTK.OpenGL.Enums.ShaderParameter pname, [Out] Int32* @params)
         {
-            Delegates.glGetShaderInfoLog((UInt32)shader, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder)infoLog);
+            Delegates.glGetShaderiv((UInt32)shader, (OpenTK.OpenGL.Enums.ShaderParameter)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetShaderInfoLog(Int32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
+        unsafe void GetShader(Int32 shader, OpenTK.OpenGL.Enums.ShaderParameter pname, [Out] Int32* @params)
         {
-            Delegates.glGetShaderInfoLog((UInt32)shader, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder)infoLog);
+            Delegates.glGetShaderiv((UInt32)shader, (OpenTK.OpenGL.Enums.ShaderParameter)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -10179,16 +10165,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetShaderSource(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder[] source)
+        unsafe void GetShaderInfoLog(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
         {
-            Delegates.glGetShaderSource((UInt32)shader, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder[])source);
+            Delegates.glGetShaderInfoLog((UInt32)shader, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder)infoLog);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetShaderSource(Int32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder[] source)
+        unsafe void GetShaderInfoLog(Int32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
         {
-            Delegates.glGetShaderSource((UInt32)shader, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder[])source);
+            Delegates.glGetShaderInfoLog((UInt32)shader, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder)infoLog);
         }
 
         [System.CLSCompliant(false)]
@@ -10245,6 +10231,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void GetShaderSource(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder[] source)
+        {
+            Delegates.glGetShaderSource((UInt32)shader, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder[])source);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetShaderSource(Int32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder[] source)
+        {
+            Delegates.glGetShaderSource((UInt32)shader, (Int32)bufSize, (Int32*)length, (System.Text.StringBuilder[])source);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         Int32 GetUniformLocation(UInt32 program, System.String name)
         {
             return Delegates.glGetUniformLocation((UInt32)program, (System.String)name);
@@ -10254,20 +10254,6 @@ namespace OpenTK.OpenGL
         Int32 GetUniformLocation(Int32 program, System.String name)
         {
             return Delegates.glGetUniformLocation((UInt32)program, (System.String)name);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetUniform(UInt32 program, Int32 location, [Out] Single* @params)
-        {
-            Delegates.glGetUniformfv((UInt32)program, (Int32)location, (Single*)@params);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void GetUniform(Int32 program, Int32 location, [Out] Single* @params)
-        {
-            Delegates.glGetUniformfv((UInt32)program, (Int32)location, (Single*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -10324,16 +10310,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetUniform(UInt32 program, Int32 location, [Out] Int32* @params)
+        unsafe void GetUniform(UInt32 program, Int32 location, [Out] Single* @params)
         {
-            Delegates.glGetUniformiv((UInt32)program, (Int32)location, (Int32*)@params);
+            Delegates.glGetUniformfv((UInt32)program, (Int32)location, (Single*)@params);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetUniform(Int32 program, Int32 location, [Out] Int32* @params)
+        unsafe void GetUniform(Int32 program, Int32 location, [Out] Single* @params)
         {
-            Delegates.glGetUniformiv((UInt32)program, (Int32)location, (Int32*)@params);
+            Delegates.glGetUniformfv((UInt32)program, (Int32)location, (Single*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -10390,16 +10376,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Double* @params)
+        unsafe void GetUniform(UInt32 program, Int32 location, [Out] Int32* @params)
         {
-            Delegates.glGetVertexAttribdv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Double*)@params);
+            Delegates.glGetUniformiv((UInt32)program, (Int32)location, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Double* @params)
+        unsafe void GetUniform(Int32 program, Int32 location, [Out] Int32* @params)
         {
-            Delegates.glGetVertexAttribdv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Double*)@params);
+            Delegates.glGetUniformiv((UInt32)program, (Int32)location, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -10456,16 +10442,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Single* @params)
+        unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Double* @params)
         {
-            Delegates.glGetVertexAttribfv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Single*)@params);
+            Delegates.glGetVertexAttribdv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Double*)@params);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Single* @params)
+        unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Double* @params)
         {
-            Delegates.glGetVertexAttribfv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Single*)@params);
+            Delegates.glGetVertexAttribdv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Double*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -10522,16 +10508,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Int32* @params)
+        unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Single* @params)
         {
-            Delegates.glGetVertexAttribiv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Int32*)@params);
+            Delegates.glGetVertexAttribfv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Single*)@params);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Int32* @params)
+        unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Single* @params)
         {
-            Delegates.glGetVertexAttribiv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Int32*)@params);
+            Delegates.glGetVertexAttribfv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Single*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -10584,6 +10570,20 @@ namespace OpenTK.OpenGL
                     @params = *@params_ptr;
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Int32* @params)
+        {
+            Delegates.glGetVertexAttribiv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Int32*)@params);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameter pname, [Out] Int32* @params)
+        {
+            Delegates.glGetVertexAttribiv((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameter)pname, (Int32*)@params);
         }
 
         [System.CLSCompliant(false)]
@@ -10681,20 +10681,6 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void ShaderSource(UInt32 shader, Int32 count, System.String[] @string, Int32* length)
-        {
-            Delegates.glShaderSource((UInt32)shader, (Int32)count, (System.String[])@string, (Int32*)length);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void ShaderSource(Int32 shader, Int32 count, System.String[] @string, Int32* length)
-        {
-            Delegates.glShaderSource((UInt32)shader, (Int32)count, (System.String[])@string, (Int32*)length);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
         void ShaderSource(UInt32 shader, Int32 count, System.String[] @string, Int32[] length)
         {
             unsafe
@@ -10741,6 +10727,20 @@ namespace OpenTK.OpenGL
                     Delegates.glShaderSource((UInt32)shader, (Int32)count, (System.String[])@string, (Int32*)length_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void ShaderSource(UInt32 shader, Int32 count, System.String[] @string, Int32* length)
+        {
+            Delegates.glShaderSource((UInt32)shader, (Int32)count, (System.String[])@string, (Int32*)length);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void ShaderSource(Int32 shader, Int32 count, System.String[] @string, Int32* length)
+        {
+            Delegates.glShaderSource((UInt32)shader, (Int32)count, (System.String[])@string, (Int32*)length);
         }
 
         [System.CLSCompliant(false)]
@@ -10804,13 +10804,6 @@ namespace OpenTK.OpenGL
             Delegates.glUniform4i((Int32)location, (Int32)v0, (Int32)v1, (Int32)v2, (Int32)v3);
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void Uniform1(Int32 location, Int32 count, Single* value)
-        {
-            Delegates.glUniform1fv((Int32)location, (Int32)count, (Single*)value);
-        }
-
         public static 
         void Uniform1(Int32 location, Int32 count, Single[] value)
         {
@@ -10837,9 +10830,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Uniform2v(Int32 location, Int32 count, Single* value)
+        unsafe void Uniform1(Int32 location, Int32 count, Single* value)
         {
-            Delegates.glUniform2fv((Int32)location, (Int32)count, (Single*)value);
+            Delegates.glUniform1fv((Int32)location, (Int32)count, (Single*)value);
         }
 
         public static 
@@ -10868,9 +10861,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Uniform3(Int32 location, Int32 count, Single* value)
+        unsafe void Uniform2v(Int32 location, Int32 count, Single* value)
         {
-            Delegates.glUniform3fv((Int32)location, (Int32)count, (Single*)value);
+            Delegates.glUniform2fv((Int32)location, (Int32)count, (Single*)value);
         }
 
         public static 
@@ -10899,9 +10892,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Uniform4(Int32 location, Int32 count, Single* value)
+        unsafe void Uniform3(Int32 location, Int32 count, Single* value)
         {
-            Delegates.glUniform4fv((Int32)location, (Int32)count, (Single*)value);
+            Delegates.glUniform3fv((Int32)location, (Int32)count, (Single*)value);
         }
 
         public static 
@@ -10930,9 +10923,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Uniform1(Int32 location, Int32 count, Int32* value)
+        unsafe void Uniform4(Int32 location, Int32 count, Single* value)
         {
-            Delegates.glUniform1iv((Int32)location, (Int32)count, (Int32*)value);
+            Delegates.glUniform4fv((Int32)location, (Int32)count, (Single*)value);
         }
 
         public static 
@@ -10961,9 +10954,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Uniform2v(Int32 location, Int32 count, Int32* value)
+        unsafe void Uniform1(Int32 location, Int32 count, Int32* value)
         {
-            Delegates.glUniform2iv((Int32)location, (Int32)count, (Int32*)value);
+            Delegates.glUniform1iv((Int32)location, (Int32)count, (Int32*)value);
         }
 
         public static 
@@ -10992,9 +10985,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Uniform3(Int32 location, Int32 count, Int32* value)
+        unsafe void Uniform2v(Int32 location, Int32 count, Int32* value)
         {
-            Delegates.glUniform3iv((Int32)location, (Int32)count, (Int32*)value);
+            Delegates.glUniform2iv((Int32)location, (Int32)count, (Int32*)value);
         }
 
         public static 
@@ -11023,9 +11016,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void Uniform4(Int32 location, Int32 count, Int32* value)
+        unsafe void Uniform3(Int32 location, Int32 count, Int32* value)
         {
-            Delegates.glUniform4iv((Int32)location, (Int32)count, (Int32*)value);
+            Delegates.glUniform3iv((Int32)location, (Int32)count, (Int32*)value);
         }
 
         public static 
@@ -11054,9 +11047,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void UniformMatrix2(Int32 location, Int32 count, bool transpose, Single* value)
+        unsafe void Uniform4(Int32 location, Int32 count, Int32* value)
         {
-            Delegates.glUniformMatrix2fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+            Delegates.glUniform4iv((Int32)location, (Int32)count, (Int32*)value);
         }
 
         public static 
@@ -11085,9 +11078,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void UniformMatrix3(Int32 location, Int32 count, bool transpose, Single* value)
+        unsafe void UniformMatrix2(Int32 location, Int32 count, bool transpose, Single* value)
         {
-            Delegates.glUniformMatrix3fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+            Delegates.glUniformMatrix2fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
         }
 
         public static 
@@ -11116,9 +11109,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void UniformMatrix4(Int32 location, Int32 count, bool transpose, Single* value)
+        unsafe void UniformMatrix3(Int32 location, Int32 count, bool transpose, Single* value)
         {
-            Delegates.glUniformMatrix4fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+            Delegates.glUniformMatrix3fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
         }
 
         public static 
@@ -11147,6 +11140,13 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void UniformMatrix4(Int32 location, Int32 count, bool transpose, Single* value)
+        {
+            Delegates.glUniformMatrix4fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void ValidateProgram(UInt32 program)
         {
             Delegates.glValidateProgram((UInt32)program);
@@ -11169,20 +11169,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib1(Int32 index, Double x)
         {
             Delegates.glVertexAttrib1d((UInt32)index, (Double)x);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib1v(UInt32 index, Double* v)
-        {
-            Delegates.glVertexAttrib1dv((UInt32)index, (Double*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib1v(Int32 index, Double* v)
-        {
-            Delegates.glVertexAttrib1dv((UInt32)index, (Double*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11237,6 +11223,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib1v(UInt32 index, Double* v)
+        {
+            Delegates.glVertexAttrib1dv((UInt32)index, (Double*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib1v(Int32 index, Double* v)
+        {
+            Delegates.glVertexAttrib1dv((UInt32)index, (Double*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib1(UInt32 index, Single x)
         {
             Delegates.glVertexAttrib1f((UInt32)index, (Single)x);
@@ -11246,20 +11246,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib1(Int32 index, Single x)
         {
             Delegates.glVertexAttrib1f((UInt32)index, (Single)x);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib1v(UInt32 index, Single* v)
-        {
-            Delegates.glVertexAttrib1fv((UInt32)index, (Single*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib1v(Int32 index, Single* v)
-        {
-            Delegates.glVertexAttrib1fv((UInt32)index, (Single*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11314,6 +11300,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib1v(UInt32 index, Single* v)
+        {
+            Delegates.glVertexAttrib1fv((UInt32)index, (Single*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib1v(Int32 index, Single* v)
+        {
+            Delegates.glVertexAttrib1fv((UInt32)index, (Single*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib1(UInt32 index, Int16 x)
         {
             Delegates.glVertexAttrib1s((UInt32)index, (Int16)x);
@@ -11323,20 +11323,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib1(Int32 index, Int16 x)
         {
             Delegates.glVertexAttrib1s((UInt32)index, (Int16)x);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib1v(UInt32 index, Int16* v)
-        {
-            Delegates.glVertexAttrib1sv((UInt32)index, (Int16*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib1v(Int32 index, Int16* v)
-        {
-            Delegates.glVertexAttrib1sv((UInt32)index, (Int16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11391,6 +11377,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib1v(UInt32 index, Int16* v)
+        {
+            Delegates.glVertexAttrib1sv((UInt32)index, (Int16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib1v(Int32 index, Int16* v)
+        {
+            Delegates.glVertexAttrib1sv((UInt32)index, (Int16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib2(UInt32 index, Double x, Double y)
         {
             Delegates.glVertexAttrib2d((UInt32)index, (Double)x, (Double)y);
@@ -11400,20 +11400,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib2(Int32 index, Double x, Double y)
         {
             Delegates.glVertexAttrib2d((UInt32)index, (Double)x, (Double)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib2(UInt32 index, Double* v)
-        {
-            Delegates.glVertexAttrib2dv((UInt32)index, (Double*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib2(Int32 index, Double* v)
-        {
-            Delegates.glVertexAttrib2dv((UInt32)index, (Double*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11468,6 +11454,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib2(UInt32 index, Double* v)
+        {
+            Delegates.glVertexAttrib2dv((UInt32)index, (Double*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib2(Int32 index, Double* v)
+        {
+            Delegates.glVertexAttrib2dv((UInt32)index, (Double*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib2(UInt32 index, Single x, Single y)
         {
             Delegates.glVertexAttrib2f((UInt32)index, (Single)x, (Single)y);
@@ -11477,20 +11477,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib2(Int32 index, Single x, Single y)
         {
             Delegates.glVertexAttrib2f((UInt32)index, (Single)x, (Single)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib2(UInt32 index, Single* v)
-        {
-            Delegates.glVertexAttrib2fv((UInt32)index, (Single*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib2(Int32 index, Single* v)
-        {
-            Delegates.glVertexAttrib2fv((UInt32)index, (Single*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11545,6 +11531,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib2(UInt32 index, Single* v)
+        {
+            Delegates.glVertexAttrib2fv((UInt32)index, (Single*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib2(Int32 index, Single* v)
+        {
+            Delegates.glVertexAttrib2fv((UInt32)index, (Single*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib2(UInt32 index, Int16 x, Int16 y)
         {
             Delegates.glVertexAttrib2s((UInt32)index, (Int16)x, (Int16)y);
@@ -11554,20 +11554,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib2(Int32 index, Int16 x, Int16 y)
         {
             Delegates.glVertexAttrib2s((UInt32)index, (Int16)x, (Int16)y);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib2(UInt32 index, Int16* v)
-        {
-            Delegates.glVertexAttrib2sv((UInt32)index, (Int16*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib2(Int32 index, Int16* v)
-        {
-            Delegates.glVertexAttrib2sv((UInt32)index, (Int16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11622,6 +11608,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib2(UInt32 index, Int16* v)
+        {
+            Delegates.glVertexAttrib2sv((UInt32)index, (Int16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib2(Int32 index, Int16* v)
+        {
+            Delegates.glVertexAttrib2sv((UInt32)index, (Int16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib3(UInt32 index, Double x, Double y, Double z)
         {
             Delegates.glVertexAttrib3d((UInt32)index, (Double)x, (Double)y, (Double)z);
@@ -11631,20 +11631,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib3(Int32 index, Double x, Double y, Double z)
         {
             Delegates.glVertexAttrib3d((UInt32)index, (Double)x, (Double)y, (Double)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib3(UInt32 index, Double* v)
-        {
-            Delegates.glVertexAttrib3dv((UInt32)index, (Double*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib3(Int32 index, Double* v)
-        {
-            Delegates.glVertexAttrib3dv((UInt32)index, (Double*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11699,6 +11685,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib3(UInt32 index, Double* v)
+        {
+            Delegates.glVertexAttrib3dv((UInt32)index, (Double*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib3(Int32 index, Double* v)
+        {
+            Delegates.glVertexAttrib3dv((UInt32)index, (Double*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib3(UInt32 index, Single x, Single y, Single z)
         {
             Delegates.glVertexAttrib3f((UInt32)index, (Single)x, (Single)y, (Single)z);
@@ -11708,20 +11708,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib3(Int32 index, Single x, Single y, Single z)
         {
             Delegates.glVertexAttrib3f((UInt32)index, (Single)x, (Single)y, (Single)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib3(UInt32 index, Single* v)
-        {
-            Delegates.glVertexAttrib3fv((UInt32)index, (Single*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib3(Int32 index, Single* v)
-        {
-            Delegates.glVertexAttrib3fv((UInt32)index, (Single*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11776,6 +11762,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib3(UInt32 index, Single* v)
+        {
+            Delegates.glVertexAttrib3fv((UInt32)index, (Single*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib3(Int32 index, Single* v)
+        {
+            Delegates.glVertexAttrib3fv((UInt32)index, (Single*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib3(UInt32 index, Int16 x, Int16 y, Int16 z)
         {
             Delegates.glVertexAttrib3s((UInt32)index, (Int16)x, (Int16)y, (Int16)z);
@@ -11785,20 +11785,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib3(Int32 index, Int16 x, Int16 y, Int16 z)
         {
             Delegates.glVertexAttrib3s((UInt32)index, (Int16)x, (Int16)y, (Int16)z);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib3(UInt32 index, Int16* v)
-        {
-            Delegates.glVertexAttrib3sv((UInt32)index, (Int16*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib3(Int32 index, Int16* v)
-        {
-            Delegates.glVertexAttrib3sv((UInt32)index, (Int16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11853,9 +11839,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4N(UInt32 index, SByte* v)
+        unsafe void VertexAttrib3(UInt32 index, Int16* v)
         {
-            Delegates.glVertexAttrib4Nbv((UInt32)index, (SByte*)v);
+            Delegates.glVertexAttrib3sv((UInt32)index, (Int16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib3(Int32 index, Int16* v)
+        {
+            Delegates.glVertexAttrib3sv((UInt32)index, (Int16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11886,9 +11879,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4N(UInt32 index, Int32* v)
+        unsafe void VertexAttrib4N(UInt32 index, SByte* v)
         {
-            Delegates.glVertexAttrib4Niv((UInt32)index, (Int32*)v);
+            Delegates.glVertexAttrib4Nbv((UInt32)index, (SByte*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11919,9 +11912,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4N(UInt32 index, Int16* v)
+        unsafe void VertexAttrib4N(UInt32 index, Int32* v)
         {
-            Delegates.glVertexAttrib4Nsv((UInt32)index, (Int16*)v);
+            Delegates.glVertexAttrib4Niv((UInt32)index, (Int32*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -11952,6 +11945,13 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib4N(UInt32 index, Int16* v)
+        {
+            Delegates.glVertexAttrib4Nsv((UInt32)index, (Int16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib4N(UInt32 index, Byte x, Byte y, Byte z, Byte w)
         {
             Delegates.glVertexAttrib4Nub((UInt32)index, (Byte)x, (Byte)y, (Byte)z, (Byte)w);
@@ -11961,20 +11961,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib4N(Int32 index, Byte x, Byte y, Byte z, Byte w)
         {
             Delegates.glVertexAttrib4Nub((UInt32)index, (Byte)x, (Byte)y, (Byte)z, (Byte)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib4N(UInt32 index, Byte* v)
-        {
-            Delegates.glVertexAttrib4Nubv((UInt32)index, (Byte*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib4N(Int32 index, Byte* v)
-        {
-            Delegates.glVertexAttrib4Nubv((UInt32)index, (Byte*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12029,16 +12015,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4N(UInt32 index, UInt32* v)
+        unsafe void VertexAttrib4N(UInt32 index, Byte* v)
         {
-            Delegates.glVertexAttrib4Nuiv((UInt32)index, (UInt32*)v);
+            Delegates.glVertexAttrib4Nubv((UInt32)index, (Byte*)v);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4N(Int32 index, Int32* v)
+        unsafe void VertexAttrib4N(Int32 index, Byte* v)
         {
-            Delegates.glVertexAttrib4Nuiv((UInt32)index, (UInt32*)v);
+            Delegates.glVertexAttrib4Nubv((UInt32)index, (Byte*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12093,16 +12079,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4N(UInt32 index, UInt16* v)
+        unsafe void VertexAttrib4N(UInt32 index, UInt32* v)
         {
-            Delegates.glVertexAttrib4Nusv((UInt32)index, (UInt16*)v);
+            Delegates.glVertexAttrib4Nuiv((UInt32)index, (UInt32*)v);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4N(Int32 index, Int16* v)
+        unsafe void VertexAttrib4N(Int32 index, Int32* v)
         {
-            Delegates.glVertexAttrib4Nusv((UInt32)index, (UInt16*)v);
+            Delegates.glVertexAttrib4Nuiv((UInt32)index, (UInt32*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12157,9 +12143,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4(UInt32 index, SByte* v)
+        unsafe void VertexAttrib4N(UInt32 index, UInt16* v)
         {
-            Delegates.glVertexAttrib4bv((UInt32)index, (SByte*)v);
+            Delegates.glVertexAttrib4Nusv((UInt32)index, (UInt16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib4N(Int32 index, Int16* v)
+        {
+            Delegates.glVertexAttrib4Nusv((UInt32)index, (UInt16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12190,6 +12183,13 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib4(UInt32 index, SByte* v)
+        {
+            Delegates.glVertexAttrib4bv((UInt32)index, (SByte*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib4(UInt32 index, Double x, Double y, Double z, Double w)
         {
             Delegates.glVertexAttrib4d((UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
@@ -12199,20 +12199,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib4(Int32 index, Double x, Double y, Double z, Double w)
         {
             Delegates.glVertexAttrib4d((UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib4(UInt32 index, Double* v)
-        {
-            Delegates.glVertexAttrib4dv((UInt32)index, (Double*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib4(Int32 index, Double* v)
-        {
-            Delegates.glVertexAttrib4dv((UInt32)index, (Double*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12267,6 +12253,20 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib4(UInt32 index, Double* v)
+        {
+            Delegates.glVertexAttrib4dv((UInt32)index, (Double*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib4(Int32 index, Double* v)
+        {
+            Delegates.glVertexAttrib4dv((UInt32)index, (Double*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib4(UInt32 index, Single x, Single y, Single z, Single w)
         {
             Delegates.glVertexAttrib4f((UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
@@ -12276,20 +12276,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib4(Int32 index, Single x, Single y, Single z, Single w)
         {
             Delegates.glVertexAttrib4f((UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib4(UInt32 index, Single* v)
-        {
-            Delegates.glVertexAttrib4fv((UInt32)index, (Single*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib4(Int32 index, Single* v)
-        {
-            Delegates.glVertexAttrib4fv((UInt32)index, (Single*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12344,9 +12330,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4(UInt32 index, Int32* v)
+        unsafe void VertexAttrib4(UInt32 index, Single* v)
         {
-            Delegates.glVertexAttrib4iv((UInt32)index, (Int32*)v);
+            Delegates.glVertexAttrib4fv((UInt32)index, (Single*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib4(Int32 index, Single* v)
+        {
+            Delegates.glVertexAttrib4fv((UInt32)index, (Single*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12377,6 +12370,13 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
+        unsafe void VertexAttrib4(UInt32 index, Int32* v)
+        {
+            Delegates.glVertexAttrib4iv((UInt32)index, (Int32*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
         void VertexAttrib4(UInt32 index, Int16 x, Int16 y, Int16 z, Int16 w)
         {
             Delegates.glVertexAttrib4s((UInt32)index, (Int16)x, (Int16)y, (Int16)z, (Int16)w);
@@ -12386,13 +12386,6 @@ namespace OpenTK.OpenGL
         void VertexAttrib4(Int32 index, Int16 x, Int16 y, Int16 z, Int16 w)
         {
             Delegates.glVertexAttrib4s((UInt32)index, (Int16)x, (Int16)y, (Int16)z, (Int16)w);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib4(UInt32 index, Int16* v)
-        {
-            Delegates.glVertexAttrib4sv((UInt32)index, (Int16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12423,16 +12416,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4(UInt32 index, Byte* v)
+        unsafe void VertexAttrib4(UInt32 index, Int16* v)
         {
-            Delegates.glVertexAttrib4ubv((UInt32)index, (Byte*)v);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void VertexAttrib4(Int32 index, Byte* v)
-        {
-            Delegates.glVertexAttrib4ubv((UInt32)index, (Byte*)v);
+            Delegates.glVertexAttrib4sv((UInt32)index, (Int16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12487,16 +12473,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4(UInt32 index, UInt32* v)
+        unsafe void VertexAttrib4(UInt32 index, Byte* v)
         {
-            Delegates.glVertexAttrib4uiv((UInt32)index, (UInt32*)v);
+            Delegates.glVertexAttrib4ubv((UInt32)index, (Byte*)v);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4(Int32 index, Int32* v)
+        unsafe void VertexAttrib4(Int32 index, Byte* v)
         {
-            Delegates.glVertexAttrib4uiv((UInt32)index, (UInt32*)v);
+            Delegates.glVertexAttrib4ubv((UInt32)index, (Byte*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12551,16 +12537,16 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4(UInt32 index, UInt16* v)
+        unsafe void VertexAttrib4(UInt32 index, UInt32* v)
         {
-            Delegates.glVertexAttrib4usv((UInt32)index, (UInt16*)v);
+            Delegates.glVertexAttrib4uiv((UInt32)index, (UInt32*)v);
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void VertexAttrib4(Int32 index, Int16* v)
+        unsafe void VertexAttrib4(Int32 index, Int32* v)
         {
-            Delegates.glVertexAttrib4usv((UInt32)index, (UInt16*)v);
+            Delegates.glVertexAttrib4uiv((UInt32)index, (UInt32*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12611,6 +12597,20 @@ namespace OpenTK.OpenGL
                     Delegates.glVertexAttrib4usv((UInt32)index, (UInt16*)v_ptr);
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib4(UInt32 index, UInt16* v)
+        {
+            Delegates.glVertexAttrib4usv((UInt32)index, (UInt16*)v);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void VertexAttrib4(Int32 index, Int16* v)
+        {
+            Delegates.glVertexAttrib4usv((UInt32)index, (UInt16*)v);
         }
 
         [System.CLSCompliant(false)]
@@ -12667,13 +12667,6 @@ namespace OpenTK.OpenGL
             }
         }
 
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe void UniformMatrix2x3(Int32 location, Int32 count, bool transpose, Single* value)
-        {
-            Delegates.glUniformMatrix2x3fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
-        }
-
         public static 
         void UniformMatrix2x3(Int32 location, Int32 count, bool transpose, Single[] value)
         {
@@ -12700,9 +12693,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void UniformMatrix3x2(Int32 location, Int32 count, bool transpose, Single* value)
+        unsafe void UniformMatrix2x3(Int32 location, Int32 count, bool transpose, Single* value)
         {
-            Delegates.glUniformMatrix3x2fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+            Delegates.glUniformMatrix2x3fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
         }
 
         public static 
@@ -12731,9 +12724,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void UniformMatrix2x4(Int32 location, Int32 count, bool transpose, Single* value)
+        unsafe void UniformMatrix3x2(Int32 location, Int32 count, bool transpose, Single* value)
         {
-            Delegates.glUniformMatrix2x4fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+            Delegates.glUniformMatrix3x2fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
         }
 
         public static 
@@ -12762,9 +12755,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void UniformMatrix4x2(Int32 location, Int32 count, bool transpose, Single* value)
+        unsafe void UniformMatrix2x4(Int32 location, Int32 count, bool transpose, Single* value)
         {
-            Delegates.glUniformMatrix4x2fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+            Delegates.glUniformMatrix2x4fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
         }
 
         public static 
@@ -12793,9 +12786,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void UniformMatrix3x4(Int32 location, Int32 count, bool transpose, Single* value)
+        unsafe void UniformMatrix4x2(Int32 location, Int32 count, bool transpose, Single* value)
         {
-            Delegates.glUniformMatrix3x4fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+            Delegates.glUniformMatrix4x2fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
         }
 
         public static 
@@ -12824,9 +12817,9 @@ namespace OpenTK.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void UniformMatrix4x3(Int32 location, Int32 count, bool transpose, Single* value)
+        unsafe void UniformMatrix3x4(Int32 location, Int32 count, bool transpose, Single* value)
         {
-            Delegates.glUniformMatrix4x3fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+            Delegates.glUniformMatrix3x4fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
         }
 
         public static 
@@ -12853,24 +12846,17 @@ namespace OpenTK.OpenGL
             }
         }
 
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe void UniformMatrix4x3(Int32 location, Int32 count, bool transpose, Single* value)
+        {
+            Delegates.glUniformMatrix4x3fv((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+        }
+
         public static 
         void PolygonOffsetEXT(Single factor, Single bias)
         {
             Delegates.glPolygonOffsetEXT((Single)factor, (Single)bias);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe bool AreTexturesResidentEXT(Int32 n, UInt32* textures, [Out] bool* residences)
-        {
-            return Delegates.glAreTexturesResidentEXT((Int32)n, (UInt32*)textures, (bool*)residences);
-        }
-
-        [System.CLSCompliant(false)]
-        public static 
-        unsafe bool AreTexturesResidentEXT(Int32 n, Int32* textures, [Out] bool* residences)
-        {
-            return Delegates.glAreTexturesResidentEXT((Int32)n, (UInt32*)textures, (bool*)residences);
         }
 
         [System.CLSCompliant(false)]
@@ -12929,6 +12915,20 @@ namespace OpenTK.OpenGL
                     return retval;
                 }
             }
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe bool AreTexturesResidentEXT(Int32 n, UInt32* textures, [Out] bool* residences)
+        {
+            return Delegates.glAreTexturesResidentEXT((Int32)n, (UInt32*)textures, (bool*)residences);
+        }
+
+        [System.CLSCompliant(false)]
+        public static 
+        unsafe bool AreTexturesResidentEXT(Int32 n, Int32* textures, [Out] bool* residences)
+        {
+            return Delegates.glAreTexturesResidentEXT((Int32)n, (UInt32*)textures, (bool*)residences);
         }
 
         public static 
@@ -13092,13 +13092,6 @@ namespace OpenTK.OpenGL
 
         public static partial class NV
         {
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetBoolea(OpenTK.OpenGL.Enums.GetPName pname, [Out] bool* @params)
-            {
-                Delegates.glGetBooleanv((OpenTK.OpenGL.Enums.GetPName)pname, (bool*)@params);
-            }
-
             public static 
             void GetBoolea(OpenTK.OpenGL.Enums.GetPName pname, [Out] bool[] @params)
             {
@@ -13122,6 +13115,13 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetBoolea(OpenTK.OpenGL.Enums.GetPName pname, [Out] bool* @params)
+            {
+                Delegates.glGetBooleanv((OpenTK.OpenGL.Enums.GetPName)pname, (bool*)@params);
             }
 
             public static 
@@ -13156,13 +13156,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void CombinerParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glCombinerParameterfvNV((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
             public static 
             void CombinerParameterv(OpenTK.OpenGL.Enums.All pname, Single[] @params)
             {
@@ -13187,17 +13180,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void CombinerParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
+            {
+                Delegates.glCombinerParameterfvNV((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+            }
+
             public static 
             void CombinerParameter(OpenTK.OpenGL.Enums.All pname, Single param)
             {
                 Delegates.glCombinerParameterfNV((OpenTK.OpenGL.Enums.All)pname, (Single)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void CombinerParameterv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
-            {
-                Delegates.glCombinerParameterivNV((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -13224,6 +13217,13 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void CombinerParameterv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
+            {
+                Delegates.glCombinerParameterivNV((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
             public static 
             void CombinerParameter(OpenTK.OpenGL.Enums.All pname, Int32 param)
             {
@@ -13246,13 +13246,6 @@ namespace OpenTK.OpenGL
             void FinalCombinerInput(OpenTK.OpenGL.Enums.All variable, OpenTK.OpenGL.Enums.All input, OpenTK.OpenGL.Enums.All mapping, OpenTK.OpenGL.Enums.All componentUsage)
             {
                 Delegates.glFinalCombinerInputNV((OpenTK.OpenGL.Enums.All)variable, (OpenTK.OpenGL.Enums.All)input, (OpenTK.OpenGL.Enums.All)mapping, (OpenTK.OpenGL.Enums.All)componentUsage);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetCombinerInputParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All portion, OpenTK.OpenGL.Enums.All variable, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetCombinerInputParameterfvNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)portion, (OpenTK.OpenGL.Enums.All)variable, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -13282,9 +13275,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetCombinerInputParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All portion, OpenTK.OpenGL.Enums.All variable, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetCombinerInputParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All portion, OpenTK.OpenGL.Enums.All variable, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetCombinerInputParameterivNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)portion, (OpenTK.OpenGL.Enums.All)variable, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetCombinerInputParameterfvNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)portion, (OpenTK.OpenGL.Enums.All)variable, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -13314,9 +13307,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetCombinerOutputParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All portion, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetCombinerInputParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All portion, OpenTK.OpenGL.Enums.All variable, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetCombinerOutputParameterfvNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)portion, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetCombinerInputParameterivNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)portion, (OpenTK.OpenGL.Enums.All)variable, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -13346,9 +13339,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetCombinerOutputParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All portion, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetCombinerOutputParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All portion, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetCombinerOutputParameterivNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)portion, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetCombinerOutputParameterfvNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)portion, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -13378,9 +13371,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetFinalCombinerInputParameter(OpenTK.OpenGL.Enums.All variable, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetCombinerOutputParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All portion, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetFinalCombinerInputParameterfvNV((OpenTK.OpenGL.Enums.All)variable, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetCombinerOutputParameterivNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)portion, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -13410,9 +13403,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetFinalCombinerInputParameter(OpenTK.OpenGL.Enums.All variable, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetFinalCombinerInputParameter(OpenTK.OpenGL.Enums.All variable, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetFinalCombinerInputParameterivNV((OpenTK.OpenGL.Enums.All)variable, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetFinalCombinerInputParameterfvNV((OpenTK.OpenGL.Enums.All)variable, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -13442,16 +13435,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteFences(Int32 n, UInt32* fences)
+            unsafe void GetFinalCombinerInputParameter(OpenTK.OpenGL.Enums.All variable, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glDeleteFencesNV((Int32)n, (UInt32*)fences);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteFences(Int32 n, Int32* fences)
-            {
-                Delegates.glDeleteFencesNV((Int32)n, (UInt32*)fences);
+                Delegates.glGetFinalCombinerInputParameterivNV((OpenTK.OpenGL.Enums.All)variable, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -13506,16 +13492,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenFences(Int32 n, [Out] UInt32* fences)
+            unsafe void DeleteFences(Int32 n, UInt32* fences)
             {
-                Delegates.glGenFencesNV((Int32)n, (UInt32*)fences);
+                Delegates.glDeleteFencesNV((Int32)n, (UInt32*)fences);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenFences(Int32 n, [Out] Int32* fences)
+            unsafe void DeleteFences(Int32 n, Int32* fences)
             {
-                Delegates.glGenFencesNV((Int32)n, (UInt32*)fences);
+                Delegates.glDeleteFencesNV((Int32)n, (UInt32*)fences);
             }
 
             [System.CLSCompliant(false)]
@@ -13572,6 +13558,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GenFences(Int32 n, [Out] UInt32* fences)
+            {
+                Delegates.glGenFencesNV((Int32)n, (UInt32*)fences);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GenFences(Int32 n, [Out] Int32* fences)
+            {
+                Delegates.glGenFencesNV((Int32)n, (UInt32*)fences);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             bool IsFence(UInt32 fence)
             {
                 return Delegates.glIsFenceNV((UInt32)fence);
@@ -13594,20 +13594,6 @@ namespace OpenTK.OpenGL
             bool TestFence(Int32 fence)
             {
                 return Delegates.glTestFenceNV((UInt32)fence);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetFence(UInt32 fence, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetFenceivNV((UInt32)fence, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetFence(Int32 fence, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetFenceivNV((UInt32)fence, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -13660,6 +13646,20 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetFence(UInt32 fence, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetFenceivNV((UInt32)fence, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetFence(Int32 fence, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetFenceivNV((UInt32)fence, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -13742,13 +13742,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
-            {
-                Delegates.glMapParameterivNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
             public static 
             void MapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32[] @params)
             {
@@ -13775,9 +13768,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
+            unsafe void MapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
             {
-                Delegates.glMapParameterfvNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glMapParameterivNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -13802,6 +13795,13 @@ namespace OpenTK.OpenGL
                         Delegates.glMapParameterfvNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
+            {
+                Delegates.glMapParameterfvNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -13858,13 +13858,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetMapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetMapParameterivNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
             public static 
             void GetMapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32[] @params)
             {
@@ -13892,9 +13885,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetMapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetMapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetMapParameterfvNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetMapParameterivNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -13924,16 +13917,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetMapAttribParameter(OpenTK.OpenGL.Enums.All target, UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetMapParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetMapAttribParameterivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetMapAttribParameter(OpenTK.OpenGL.Enums.All target, Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetMapAttribParameterivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetMapParameterfvNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -13990,16 +13976,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetMapAttribParameter(OpenTK.OpenGL.Enums.All target, UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetMapAttribParameter(OpenTK.OpenGL.Enums.All target, UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetMapAttribParameterfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetMapAttribParameterivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetMapAttribParameter(OpenTK.OpenGL.Enums.All target, Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetMapAttribParameter(OpenTK.OpenGL.Enums.All target, Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetMapAttribParameterfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetMapAttribParameterivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14054,17 +14040,24 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
             public static 
-            void EvalMap(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All mode)
+            unsafe void GetMapAttribParameter(OpenTK.OpenGL.Enums.All target, UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glEvalMapsNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)mode);
+                Delegates.glGetMapAttribParameterfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void CombinerStageParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All pname, Single* @params)
+            unsafe void GetMapAttribParameter(OpenTK.OpenGL.Enums.All target, Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glCombinerStageParameterfvNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetMapAttribParameterfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+            }
+
+            public static 
+            void EvalMap(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All mode)
+            {
+                Delegates.glEvalMapsNV((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)mode);
             }
 
             public static 
@@ -14093,9 +14086,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetCombinerStageParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void CombinerStageParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All pname, Single* @params)
             {
-                Delegates.glGetCombinerStageParameterfvNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glCombinerStageParameterfvNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -14125,16 +14118,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe bool AreProgramsResident(Int32 n, UInt32* programs, [Out] bool* residences)
+            unsafe void GetCombinerStageParameter(OpenTK.OpenGL.Enums.All stage, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                return Delegates.glAreProgramsResidentNV((Int32)n, (UInt32*)programs, (bool*)residences);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe bool AreProgramsResident(Int32 n, Int32* programs, [Out] bool* residences)
-            {
-                return Delegates.glAreProgramsResidentNV((Int32)n, (UInt32*)programs, (bool*)residences);
+                Delegates.glGetCombinerStageParameterfvNV((OpenTK.OpenGL.Enums.All)stage, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14197,6 +14183,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe bool AreProgramsResident(Int32 n, UInt32* programs, [Out] bool* residences)
+            {
+                return Delegates.glAreProgramsResidentNV((Int32)n, (UInt32*)programs, (bool*)residences);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe bool AreProgramsResident(Int32 n, Int32* programs, [Out] bool* residences)
+            {
+                return Delegates.glAreProgramsResidentNV((Int32)n, (UInt32*)programs, (bool*)residences);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void BindProgram(OpenTK.OpenGL.Enums.All target, UInt32 id)
             {
                 Delegates.glBindProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id);
@@ -14206,20 +14206,6 @@ namespace OpenTK.OpenGL
             void BindProgram(OpenTK.OpenGL.Enums.All target, Int32 id)
             {
                 Delegates.glBindProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteProgram(Int32 n, UInt32* programs)
-            {
-                Delegates.glDeleteProgramsNV((Int32)n, (UInt32*)programs);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteProgram(Int32 n, Int32* programs)
-            {
-                Delegates.glDeleteProgramsNV((Int32)n, (UInt32*)programs);
             }
 
             [System.CLSCompliant(false)]
@@ -14274,16 +14260,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ExecuteProgram(OpenTK.OpenGL.Enums.All target, UInt32 id, Single* @params)
+            unsafe void DeleteProgram(Int32 n, UInt32* programs)
             {
-                Delegates.glExecuteProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id, (Single*)@params);
+                Delegates.glDeleteProgramsNV((Int32)n, (UInt32*)programs);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ExecuteProgram(OpenTK.OpenGL.Enums.All target, Int32 id, Single* @params)
+            unsafe void DeleteProgram(Int32 n, Int32* programs)
             {
-                Delegates.glExecuteProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id, (Single*)@params);
+                Delegates.glDeleteProgramsNV((Int32)n, (UInt32*)programs);
             }
 
             [System.CLSCompliant(false)]
@@ -14338,16 +14324,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenProgram(Int32 n, [Out] UInt32* programs)
+            unsafe void ExecuteProgram(OpenTK.OpenGL.Enums.All target, UInt32 id, Single* @params)
             {
-                Delegates.glGenProgramsNV((Int32)n, (UInt32*)programs);
+                Delegates.glExecuteProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenProgram(Int32 n, [Out] Int32* programs)
+            unsafe void ExecuteProgram(OpenTK.OpenGL.Enums.All target, Int32 id, Single* @params)
             {
-                Delegates.glGenProgramsNV((Int32)n, (UInt32*)programs);
+                Delegates.glExecuteProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14404,16 +14390,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramParameter(OpenTK.OpenGL.Enums.All target, UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
+            unsafe void GenProgram(Int32 n, [Out] UInt32* programs)
             {
-                Delegates.glGetProgramParameterdvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
+                Delegates.glGenProgramsNV((Int32)n, (UInt32*)programs);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramParameter(OpenTK.OpenGL.Enums.All target, Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
+            unsafe void GenProgram(Int32 n, [Out] Int32* programs)
             {
-                Delegates.glGetProgramParameterdvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
+                Delegates.glGenProgramsNV((Int32)n, (UInt32*)programs);
             }
 
             [System.CLSCompliant(false)]
@@ -14470,16 +14456,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramParameter(OpenTK.OpenGL.Enums.All target, UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetProgramParameter(OpenTK.OpenGL.Enums.All target, UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
             {
-                Delegates.glGetProgramParameterfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetProgramParameterdvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramParameter(OpenTK.OpenGL.Enums.All target, Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetProgramParameter(OpenTK.OpenGL.Enums.All target, Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
             {
-                Delegates.glGetProgramParameterfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetProgramParameterdvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14536,16 +14522,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgram(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetProgramParameter(OpenTK.OpenGL.Enums.All target, UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetProgramivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetProgramParameterfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgram(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetProgramParameter(OpenTK.OpenGL.Enums.All target, Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetProgramivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetProgramParameterfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14602,16 +14588,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramString(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Byte* program)
+            unsafe void GetProgram(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetProgramStringNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Byte*)program);
+                Delegates.glGetProgramivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramString(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Byte* program)
+            unsafe void GetProgram(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetProgramStringNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Byte*)program);
+                Delegates.glGetProgramivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14668,16 +14654,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetTrackMatrix(OpenTK.OpenGL.Enums.All target, UInt32 address, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetProgramString(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Byte* program)
             {
-                Delegates.glGetTrackMatrixivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)address, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetProgramStringNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Byte*)program);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetTrackMatrix(OpenTK.OpenGL.Enums.All target, Int32 address, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetProgramString(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Byte* program)
             {
-                Delegates.glGetTrackMatrixivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)address, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetProgramStringNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Byte*)program);
             }
 
             [System.CLSCompliant(false)]
@@ -14734,16 +14720,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
+            unsafe void GetTrackMatrix(OpenTK.OpenGL.Enums.All target, UInt32 address, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetVertexAttribdvNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
+                Delegates.glGetTrackMatrixivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)address, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
+            unsafe void GetTrackMatrix(OpenTK.OpenGL.Enums.All target, Int32 address, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetVertexAttribdvNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
+                Delegates.glGetTrackMatrixivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)address, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14800,16 +14786,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
             {
-                Delegates.glGetVertexAttribfvNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetVertexAttribdvNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
             {
-                Delegates.glGetVertexAttribfvNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetVertexAttribdvNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14866,16 +14852,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetVertexAttribivNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetVertexAttribfvNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetVertexAttribivNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetVertexAttribfvNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14928,6 +14914,20 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetVertexAttribivNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetVertexAttribivNV((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -14999,20 +14999,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void LoadProgram(OpenTK.OpenGL.Enums.All target, UInt32 id, Int32 len, Byte* program)
-            {
-                Delegates.glLoadProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id, (Int32)len, (Byte*)program);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void LoadProgram(OpenTK.OpenGL.Enums.All target, Int32 id, Int32 len, Byte* program)
-            {
-                Delegates.glLoadProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id, (Int32)len, (Byte*)program);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void LoadProgram(OpenTK.OpenGL.Enums.All target, UInt32 id, Int32 len, Byte[] program)
             {
                 unsafe
@@ -15063,6 +15049,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void LoadProgram(OpenTK.OpenGL.Enums.All target, UInt32 id, Int32 len, Byte* program)
+            {
+                Delegates.glLoadProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id, (Int32)len, (Byte*)program);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void LoadProgram(OpenTK.OpenGL.Enums.All target, Int32 id, Int32 len, Byte* program)
+            {
+                Delegates.glLoadProgramNV((OpenTK.OpenGL.Enums.All)target, (UInt32)id, (Int32)len, (Byte*)program);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ProgramParameter4(OpenTK.OpenGL.Enums.All target, UInt32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glProgramParameter4dNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
@@ -15072,20 +15072,6 @@ namespace OpenTK.OpenGL
             void ProgramParameter4(OpenTK.OpenGL.Enums.All target, Int32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glProgramParameter4dNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramParameter4(OpenTK.OpenGL.Enums.All target, UInt32 index, Double* v)
-            {
-                Delegates.glProgramParameter4dvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramParameter4(OpenTK.OpenGL.Enums.All target, Int32 index, Double* v)
-            {
-                Delegates.glProgramParameter4dvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15140,6 +15126,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ProgramParameter4(OpenTK.OpenGL.Enums.All target, UInt32 index, Double* v)
+            {
+                Delegates.glProgramParameter4dvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramParameter4(OpenTK.OpenGL.Enums.All target, Int32 index, Double* v)
+            {
+                Delegates.glProgramParameter4dvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ProgramParameter4(OpenTK.OpenGL.Enums.All target, UInt32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glProgramParameter4fNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
@@ -15149,20 +15149,6 @@ namespace OpenTK.OpenGL
             void ProgramParameter4(OpenTK.OpenGL.Enums.All target, Int32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glProgramParameter4fNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramParameter4(OpenTK.OpenGL.Enums.All target, UInt32 index, Single* v)
-            {
-                Delegates.glProgramParameter4fvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramParameter4(OpenTK.OpenGL.Enums.All target, Int32 index, Single* v)
-            {
-                Delegates.glProgramParameter4fvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15217,16 +15203,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramParameters4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32 count, Double* v)
+            unsafe void ProgramParameter4(OpenTK.OpenGL.Enums.All target, UInt32 index, Single* v)
             {
-                Delegates.glProgramParameters4dvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)count, (Double*)v);
+                Delegates.glProgramParameter4fvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramParameters4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Double* v)
+            unsafe void ProgramParameter4(OpenTK.OpenGL.Enums.All target, Int32 index, Single* v)
             {
-                Delegates.glProgramParameters4dvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)count, (Double*)v);
+                Delegates.glProgramParameter4fvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15281,16 +15267,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramParameters4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32 count, Single* v)
+            unsafe void ProgramParameters4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32 count, Double* v)
             {
-                Delegates.glProgramParameters4fvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)count, (Single*)v);
+                Delegates.glProgramParameters4dvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramParameters4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Single* v)
+            unsafe void ProgramParameters4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Double* v)
             {
-                Delegates.glProgramParameters4fvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)count, (Single*)v);
+                Delegates.glProgramParameters4dvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15345,16 +15331,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void RequestResidentProgram(Int32 n, UInt32* programs)
+            unsafe void ProgramParameters4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32 count, Single* v)
             {
-                Delegates.glRequestResidentProgramsNV((Int32)n, (UInt32*)programs);
+                Delegates.glProgramParameters4fvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void RequestResidentProgram(Int32 n, Int32* programs)
+            unsafe void ProgramParameters4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Single* v)
             {
-                Delegates.glRequestResidentProgramsNV((Int32)n, (UInt32*)programs);
+                Delegates.glProgramParameters4fvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15405,6 +15391,20 @@ namespace OpenTK.OpenGL
                         Delegates.glRequestResidentProgramsNV((Int32)n, (UInt32*)programs_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void RequestResidentProgram(Int32 n, UInt32* programs)
+            {
+                Delegates.glRequestResidentProgramsNV((Int32)n, (UInt32*)programs);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void RequestResidentProgram(Int32 n, Int32* programs)
+            {
+                Delegates.glRequestResidentProgramsNV((Int32)n, (UInt32*)programs);
             }
 
             [System.CLSCompliant(false)]
@@ -15489,20 +15489,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib1v(UInt32 index, Double* v)
-            {
-                Delegates.glVertexAttrib1dvNV((UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(Int32 index, Double* v)
-            {
-                Delegates.glVertexAttrib1dvNV((UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void VertexAttrib1v(UInt32 index, Double[] v)
             {
                 unsafe
@@ -15553,6 +15539,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib1v(UInt32 index, Double* v)
+            {
+                Delegates.glVertexAttrib1dvNV((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib1v(Int32 index, Double* v)
+            {
+                Delegates.glVertexAttrib1dvNV((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib1(UInt32 index, Single x)
             {
                 Delegates.glVertexAttrib1fNV((UInt32)index, (Single)x);
@@ -15562,20 +15562,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib1(Int32 index, Single x)
             {
                 Delegates.glVertexAttrib1fNV((UInt32)index, (Single)x);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(UInt32 index, Single* v)
-            {
-                Delegates.glVertexAttrib1fvNV((UInt32)index, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(Int32 index, Single* v)
-            {
-                Delegates.glVertexAttrib1fvNV((UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15630,6 +15616,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib1v(UInt32 index, Single* v)
+            {
+                Delegates.glVertexAttrib1fvNV((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib1v(Int32 index, Single* v)
+            {
+                Delegates.glVertexAttrib1fvNV((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib1(UInt32 index, Int16 x)
             {
                 Delegates.glVertexAttrib1sNV((UInt32)index, (Int16)x);
@@ -15639,20 +15639,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib1(Int32 index, Int16 x)
             {
                 Delegates.glVertexAttrib1sNV((UInt32)index, (Int16)x);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(UInt32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib1svNV((UInt32)index, (Int16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib1svNV((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15707,6 +15693,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib1v(UInt32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib1svNV((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib1v(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib1svNV((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib2(UInt32 index, Double x, Double y)
             {
                 Delegates.glVertexAttrib2dNV((UInt32)index, (Double)x, (Double)y);
@@ -15716,20 +15716,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib2(Int32 index, Double x, Double y)
             {
                 Delegates.glVertexAttrib2dNV((UInt32)index, (Double)x, (Double)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(UInt32 index, Double* v)
-            {
-                Delegates.glVertexAttrib2dvNV((UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(Int32 index, Double* v)
-            {
-                Delegates.glVertexAttrib2dvNV((UInt32)index, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15784,6 +15770,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib2(UInt32 index, Double* v)
+            {
+                Delegates.glVertexAttrib2dvNV((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib2(Int32 index, Double* v)
+            {
+                Delegates.glVertexAttrib2dvNV((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib2(UInt32 index, Single x, Single y)
             {
                 Delegates.glVertexAttrib2fNV((UInt32)index, (Single)x, (Single)y);
@@ -15793,20 +15793,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib2(Int32 index, Single x, Single y)
             {
                 Delegates.glVertexAttrib2fNV((UInt32)index, (Single)x, (Single)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(UInt32 index, Single* v)
-            {
-                Delegates.glVertexAttrib2fvNV((UInt32)index, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(Int32 index, Single* v)
-            {
-                Delegates.glVertexAttrib2fvNV((UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15861,6 +15847,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib2(UInt32 index, Single* v)
+            {
+                Delegates.glVertexAttrib2fvNV((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib2(Int32 index, Single* v)
+            {
+                Delegates.glVertexAttrib2fvNV((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib2(UInt32 index, Int16 x, Int16 y)
             {
                 Delegates.glVertexAttrib2sNV((UInt32)index, (Int16)x, (Int16)y);
@@ -15870,20 +15870,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib2(Int32 index, Int16 x, Int16 y)
             {
                 Delegates.glVertexAttrib2sNV((UInt32)index, (Int16)x, (Int16)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(UInt32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib2svNV((UInt32)index, (Int16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib2svNV((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -15938,6 +15924,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib2(UInt32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib2svNV((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib2(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib2svNV((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib3(UInt32 index, Double x, Double y, Double z)
             {
                 Delegates.glVertexAttrib3dNV((UInt32)index, (Double)x, (Double)y, (Double)z);
@@ -15947,20 +15947,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib3(Int32 index, Double x, Double y, Double z)
             {
                 Delegates.glVertexAttrib3dNV((UInt32)index, (Double)x, (Double)y, (Double)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(UInt32 index, Double* v)
-            {
-                Delegates.glVertexAttrib3dvNV((UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(Int32 index, Double* v)
-            {
-                Delegates.glVertexAttrib3dvNV((UInt32)index, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16015,6 +16001,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib3(UInt32 index, Double* v)
+            {
+                Delegates.glVertexAttrib3dvNV((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib3(Int32 index, Double* v)
+            {
+                Delegates.glVertexAttrib3dvNV((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib3(UInt32 index, Single x, Single y, Single z)
             {
                 Delegates.glVertexAttrib3fNV((UInt32)index, (Single)x, (Single)y, (Single)z);
@@ -16024,20 +16024,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib3(Int32 index, Single x, Single y, Single z)
             {
                 Delegates.glVertexAttrib3fNV((UInt32)index, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(UInt32 index, Single* v)
-            {
-                Delegates.glVertexAttrib3fvNV((UInt32)index, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(Int32 index, Single* v)
-            {
-                Delegates.glVertexAttrib3fvNV((UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16092,6 +16078,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib3(UInt32 index, Single* v)
+            {
+                Delegates.glVertexAttrib3fvNV((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib3(Int32 index, Single* v)
+            {
+                Delegates.glVertexAttrib3fvNV((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib3(UInt32 index, Int16 x, Int16 y, Int16 z)
             {
                 Delegates.glVertexAttrib3sNV((UInt32)index, (Int16)x, (Int16)y, (Int16)z);
@@ -16101,20 +16101,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib3(Int32 index, Int16 x, Int16 y, Int16 z)
             {
                 Delegates.glVertexAttrib3sNV((UInt32)index, (Int16)x, (Int16)y, (Int16)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(UInt32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib3svNV((UInt32)index, (Int16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib3svNV((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16169,6 +16155,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib3(UInt32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib3svNV((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib3(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib3svNV((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib4(UInt32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glVertexAttrib4dNV((UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
@@ -16178,20 +16178,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib4(Int32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glVertexAttrib4dNV((UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(UInt32 index, Double* v)
-            {
-                Delegates.glVertexAttrib4dvNV((UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(Int32 index, Double* v)
-            {
-                Delegates.glVertexAttrib4dvNV((UInt32)index, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16246,6 +16232,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib4(UInt32 index, Double* v)
+            {
+                Delegates.glVertexAttrib4dvNV((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib4(Int32 index, Double* v)
+            {
+                Delegates.glVertexAttrib4dvNV((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib4(UInt32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glVertexAttrib4fNV((UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
@@ -16255,20 +16255,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib4(Int32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glVertexAttrib4fNV((UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(UInt32 index, Single* v)
-            {
-                Delegates.glVertexAttrib4fvNV((UInt32)index, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(Int32 index, Single* v)
-            {
-                Delegates.glVertexAttrib4fvNV((UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16323,6 +16309,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib4(UInt32 index, Single* v)
+            {
+                Delegates.glVertexAttrib4fvNV((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib4(Int32 index, Single* v)
+            {
+                Delegates.glVertexAttrib4fvNV((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib4(UInt32 index, Int16 x, Int16 y, Int16 z, Int16 w)
             {
                 Delegates.glVertexAttrib4sNV((UInt32)index, (Int16)x, (Int16)y, (Int16)z, (Int16)w);
@@ -16332,20 +16332,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib4(Int32 index, Int16 x, Int16 y, Int16 z, Int16 w)
             {
                 Delegates.glVertexAttrib4sNV((UInt32)index, (Int16)x, (Int16)y, (Int16)z, (Int16)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(UInt32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib4svNV((UInt32)index, (Int16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib4svNV((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16400,6 +16386,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib4(UInt32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib4svNV((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib4(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib4svNV((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib4(UInt32 index, Byte x, Byte y, Byte z, Byte w)
             {
                 Delegates.glVertexAttrib4ubNV((UInt32)index, (Byte)x, (Byte)y, (Byte)z, (Byte)w);
@@ -16409,20 +16409,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib4(Int32 index, Byte x, Byte y, Byte z, Byte w)
             {
                 Delegates.glVertexAttrib4ubNV((UInt32)index, (Byte)x, (Byte)y, (Byte)z, (Byte)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(UInt32 index, Byte* v)
-            {
-                Delegates.glVertexAttrib4ubvNV((UInt32)index, (Byte*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(Int32 index, Byte* v)
-            {
-                Delegates.glVertexAttrib4ubvNV((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16477,16 +16463,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs1(UInt32 index, Int32 count, Double* v)
+            unsafe void VertexAttrib4(UInt32 index, Byte* v)
             {
-                Delegates.glVertexAttribs1dvNV((UInt32)index, (Int32)count, (Double*)v);
+                Delegates.glVertexAttrib4ubvNV((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs1(Int32 index, Int32 count, Double* v)
+            unsafe void VertexAttrib4(Int32 index, Byte* v)
             {
-                Delegates.glVertexAttribs1dvNV((UInt32)index, (Int32)count, (Double*)v);
+                Delegates.glVertexAttrib4ubvNV((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16541,16 +16527,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs1(UInt32 index, Int32 count, Single* v)
+            unsafe void VertexAttribs1(UInt32 index, Int32 count, Double* v)
             {
-                Delegates.glVertexAttribs1fvNV((UInt32)index, (Int32)count, (Single*)v);
+                Delegates.glVertexAttribs1dvNV((UInt32)index, (Int32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs1(Int32 index, Int32 count, Single* v)
+            unsafe void VertexAttribs1(Int32 index, Int32 count, Double* v)
             {
-                Delegates.glVertexAttribs1fvNV((UInt32)index, (Int32)count, (Single*)v);
+                Delegates.glVertexAttribs1dvNV((UInt32)index, (Int32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16605,16 +16591,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs1(UInt32 index, Int32 count, Int16* v)
+            unsafe void VertexAttribs1(UInt32 index, Int32 count, Single* v)
             {
-                Delegates.glVertexAttribs1svNV((UInt32)index, (Int32)count, (Int16*)v);
+                Delegates.glVertexAttribs1fvNV((UInt32)index, (Int32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs1(Int32 index, Int32 count, Int16* v)
+            unsafe void VertexAttribs1(Int32 index, Int32 count, Single* v)
             {
-                Delegates.glVertexAttribs1svNV((UInt32)index, (Int32)count, (Int16*)v);
+                Delegates.glVertexAttribs1fvNV((UInt32)index, (Int32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16669,16 +16655,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs2(UInt32 index, Int32 count, Double* v)
+            unsafe void VertexAttribs1(UInt32 index, Int32 count, Int16* v)
             {
-                Delegates.glVertexAttribs2dvNV((UInt32)index, (Int32)count, (Double*)v);
+                Delegates.glVertexAttribs1svNV((UInt32)index, (Int32)count, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs2(Int32 index, Int32 count, Double* v)
+            unsafe void VertexAttribs1(Int32 index, Int32 count, Int16* v)
             {
-                Delegates.glVertexAttribs2dvNV((UInt32)index, (Int32)count, (Double*)v);
+                Delegates.glVertexAttribs1svNV((UInt32)index, (Int32)count, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16733,16 +16719,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs2(UInt32 index, Int32 count, Single* v)
+            unsafe void VertexAttribs2(UInt32 index, Int32 count, Double* v)
             {
-                Delegates.glVertexAttribs2fvNV((UInt32)index, (Int32)count, (Single*)v);
+                Delegates.glVertexAttribs2dvNV((UInt32)index, (Int32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs2(Int32 index, Int32 count, Single* v)
+            unsafe void VertexAttribs2(Int32 index, Int32 count, Double* v)
             {
-                Delegates.glVertexAttribs2fvNV((UInt32)index, (Int32)count, (Single*)v);
+                Delegates.glVertexAttribs2dvNV((UInt32)index, (Int32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16797,16 +16783,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs2(UInt32 index, Int32 count, Int16* v)
+            unsafe void VertexAttribs2(UInt32 index, Int32 count, Single* v)
             {
-                Delegates.glVertexAttribs2svNV((UInt32)index, (Int32)count, (Int16*)v);
+                Delegates.glVertexAttribs2fvNV((UInt32)index, (Int32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs2(Int32 index, Int32 count, Int16* v)
+            unsafe void VertexAttribs2(Int32 index, Int32 count, Single* v)
             {
-                Delegates.glVertexAttribs2svNV((UInt32)index, (Int32)count, (Int16*)v);
+                Delegates.glVertexAttribs2fvNV((UInt32)index, (Int32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16861,16 +16847,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs3(UInt32 index, Int32 count, Double* v)
+            unsafe void VertexAttribs2(UInt32 index, Int32 count, Int16* v)
             {
-                Delegates.glVertexAttribs3dvNV((UInt32)index, (Int32)count, (Double*)v);
+                Delegates.glVertexAttribs2svNV((UInt32)index, (Int32)count, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs3(Int32 index, Int32 count, Double* v)
+            unsafe void VertexAttribs2(Int32 index, Int32 count, Int16* v)
             {
-                Delegates.glVertexAttribs3dvNV((UInt32)index, (Int32)count, (Double*)v);
+                Delegates.glVertexAttribs2svNV((UInt32)index, (Int32)count, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16925,16 +16911,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs3(UInt32 index, Int32 count, Single* v)
+            unsafe void VertexAttribs3(UInt32 index, Int32 count, Double* v)
             {
-                Delegates.glVertexAttribs3fvNV((UInt32)index, (Int32)count, (Single*)v);
+                Delegates.glVertexAttribs3dvNV((UInt32)index, (Int32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs3(Int32 index, Int32 count, Single* v)
+            unsafe void VertexAttribs3(Int32 index, Int32 count, Double* v)
             {
-                Delegates.glVertexAttribs3fvNV((UInt32)index, (Int32)count, (Single*)v);
+                Delegates.glVertexAttribs3dvNV((UInt32)index, (Int32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -16989,16 +16975,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs3(UInt32 index, Int32 count, Int16* v)
+            unsafe void VertexAttribs3(UInt32 index, Int32 count, Single* v)
             {
-                Delegates.glVertexAttribs3svNV((UInt32)index, (Int32)count, (Int16*)v);
+                Delegates.glVertexAttribs3fvNV((UInt32)index, (Int32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs3(Int32 index, Int32 count, Int16* v)
+            unsafe void VertexAttribs3(Int32 index, Int32 count, Single* v)
             {
-                Delegates.glVertexAttribs3svNV((UInt32)index, (Int32)count, (Int16*)v);
+                Delegates.glVertexAttribs3fvNV((UInt32)index, (Int32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -17053,16 +17039,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4(UInt32 index, Int32 count, Double* v)
+            unsafe void VertexAttribs3(UInt32 index, Int32 count, Int16* v)
             {
-                Delegates.glVertexAttribs4dvNV((UInt32)index, (Int32)count, (Double*)v);
+                Delegates.glVertexAttribs3svNV((UInt32)index, (Int32)count, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4(Int32 index, Int32 count, Double* v)
+            unsafe void VertexAttribs3(Int32 index, Int32 count, Int16* v)
             {
-                Delegates.glVertexAttribs4dvNV((UInt32)index, (Int32)count, (Double*)v);
+                Delegates.glVertexAttribs3svNV((UInt32)index, (Int32)count, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -17117,16 +17103,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4(UInt32 index, Int32 count, Single* v)
+            unsafe void VertexAttribs4(UInt32 index, Int32 count, Double* v)
             {
-                Delegates.glVertexAttribs4fvNV((UInt32)index, (Int32)count, (Single*)v);
+                Delegates.glVertexAttribs4dvNV((UInt32)index, (Int32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4(Int32 index, Int32 count, Single* v)
+            unsafe void VertexAttribs4(Int32 index, Int32 count, Double* v)
             {
-                Delegates.glVertexAttribs4fvNV((UInt32)index, (Int32)count, (Single*)v);
+                Delegates.glVertexAttribs4dvNV((UInt32)index, (Int32)count, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -17181,16 +17167,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4(UInt32 index, Int32 count, Int16* v)
+            unsafe void VertexAttribs4(UInt32 index, Int32 count, Single* v)
             {
-                Delegates.glVertexAttribs4svNV((UInt32)index, (Int32)count, (Int16*)v);
+                Delegates.glVertexAttribs4fvNV((UInt32)index, (Int32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4(Int32 index, Int32 count, Int16* v)
+            unsafe void VertexAttribs4(Int32 index, Int32 count, Single* v)
             {
-                Delegates.glVertexAttribs4svNV((UInt32)index, (Int32)count, (Int16*)v);
+                Delegates.glVertexAttribs4fvNV((UInt32)index, (Int32)count, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -17245,16 +17231,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4(UInt32 index, Int32 count, Byte* v)
+            unsafe void VertexAttribs4(UInt32 index, Int32 count, Int16* v)
             {
-                Delegates.glVertexAttribs4ubvNV((UInt32)index, (Int32)count, (Byte*)v);
+                Delegates.glVertexAttribs4svNV((UInt32)index, (Int32)count, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4(Int32 index, Int32 count, Byte* v)
+            unsafe void VertexAttribs4(Int32 index, Int32 count, Int16* v)
             {
-                Delegates.glVertexAttribs4ubvNV((UInt32)index, (Int32)count, (Byte*)v);
+                Delegates.glVertexAttribs4svNV((UInt32)index, (Int32)count, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -17309,16 +17295,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenOcclusionQueries(Int32 n, [Out] UInt32* ids)
+            unsafe void VertexAttribs4(UInt32 index, Int32 count, Byte* v)
             {
-                Delegates.glGenOcclusionQueriesNV((Int32)n, (UInt32*)ids);
+                Delegates.glVertexAttribs4ubvNV((UInt32)index, (Int32)count, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenOcclusionQueries(Int32 n, [Out] Int32* ids)
+            unsafe void VertexAttribs4(Int32 index, Int32 count, Byte* v)
             {
-                Delegates.glGenOcclusionQueriesNV((Int32)n, (UInt32*)ids);
+                Delegates.glVertexAttribs4ubvNV((UInt32)index, (Int32)count, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -17375,16 +17361,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteOcclusionQueries(Int32 n, UInt32* ids)
+            unsafe void GenOcclusionQueries(Int32 n, [Out] UInt32* ids)
             {
-                Delegates.glDeleteOcclusionQueriesNV((Int32)n, (UInt32*)ids);
+                Delegates.glGenOcclusionQueriesNV((Int32)n, (UInt32*)ids);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteOcclusionQueries(Int32 n, Int32* ids)
+            unsafe void GenOcclusionQueries(Int32 n, [Out] Int32* ids)
             {
-                Delegates.glDeleteOcclusionQueriesNV((Int32)n, (UInt32*)ids);
+                Delegates.glGenOcclusionQueriesNV((Int32)n, (UInt32*)ids);
             }
 
             [System.CLSCompliant(false)]
@@ -17439,6 +17425,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void DeleteOcclusionQueries(Int32 n, UInt32* ids)
+            {
+                Delegates.glDeleteOcclusionQueriesNV((Int32)n, (UInt32*)ids);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void DeleteOcclusionQueries(Int32 n, Int32* ids)
+            {
+                Delegates.glDeleteOcclusionQueriesNV((Int32)n, (UInt32*)ids);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             bool IsOcclusionQuery(UInt32 id)
             {
                 return Delegates.glIsOcclusionQueryNV((UInt32)id);
@@ -17471,13 +17471,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetOcclusionQuery(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetOcclusionQueryivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void GetOcclusionQuery(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32[] @params)
             {
                 unsafe
@@ -17505,16 +17498,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetOcclusionQuery(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] UInt32* @params)
+            unsafe void GetOcclusionQuery(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetOcclusionQueryuivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetOcclusionQuery(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetOcclusionQueryuivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
+                Delegates.glGetOcclusionQueryivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -17569,17 +17555,24 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
             public static 
-            void PointParameter(OpenTK.OpenGL.Enums.All pname, Int32 param)
+            unsafe void GetOcclusionQuery(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] UInt32* @params)
             {
-                Delegates.glPointParameteriNV((OpenTK.OpenGL.Enums.All)pname, (Int32)param);
+                Delegates.glGetOcclusionQueryuivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void PointParameterv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
+            unsafe void GetOcclusionQuery(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glPointParameterivNV((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetOcclusionQueryuivNV((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
+            }
+
+            public static 
+            void PointParameter(OpenTK.OpenGL.Enums.All pname, Int32 param)
+            {
+                Delegates.glPointParameteriNV((OpenTK.OpenGL.Enums.All)pname, (Int32)param);
             }
 
             public static 
@@ -17608,16 +17601,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramNamedParameter4(UInt32 id, Int32 len, Byte* name, Single x, Single y, Single z, Single w)
+            unsafe void PointParameterv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
             {
-                Delegates.glProgramNamedParameter4fNV((UInt32)id, (Int32)len, (Byte*)name, (Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramNamedParameter4(Int32 id, Int32 len, Byte* name, Single x, Single y, Single z, Single w)
-            {
-                Delegates.glProgramNamedParameter4fNV((UInt32)id, (Int32)len, (Byte*)name, (Single)x, (Single)y, (Single)z, (Single)w);
+                Delegates.glPointParameterivNV((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -17672,16 +17658,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramNamedParameter4(UInt32 id, Int32 len, Byte* name, Double x, Double y, Double z, Double w)
+            unsafe void ProgramNamedParameter4(UInt32 id, Int32 len, Byte* name, Single x, Single y, Single z, Single w)
             {
-                Delegates.glProgramNamedParameter4dNV((UInt32)id, (Int32)len, (Byte*)name, (Double)x, (Double)y, (Double)z, (Double)w);
+                Delegates.glProgramNamedParameter4fNV((UInt32)id, (Int32)len, (Byte*)name, (Single)x, (Single)y, (Single)z, (Single)w);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramNamedParameter4(Int32 id, Int32 len, Byte* name, Double x, Double y, Double z, Double w)
+            unsafe void ProgramNamedParameter4(Int32 id, Int32 len, Byte* name, Single x, Single y, Single z, Single w)
             {
-                Delegates.glProgramNamedParameter4dNV((UInt32)id, (Int32)len, (Byte*)name, (Double)x, (Double)y, (Double)z, (Double)w);
+                Delegates.glProgramNamedParameter4fNV((UInt32)id, (Int32)len, (Byte*)name, (Single)x, (Single)y, (Single)z, (Single)w);
             }
 
             [System.CLSCompliant(false)]
@@ -17736,16 +17722,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramNamedParameter4(UInt32 id, Int32 len, Byte* name, Single* v)
+            unsafe void ProgramNamedParameter4(UInt32 id, Int32 len, Byte* name, Double x, Double y, Double z, Double w)
             {
-                Delegates.glProgramNamedParameter4fvNV((UInt32)id, (Int32)len, (Byte*)name, (Single*)v);
+                Delegates.glProgramNamedParameter4dNV((UInt32)id, (Int32)len, (Byte*)name, (Double)x, (Double)y, (Double)z, (Double)w);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramNamedParameter4(Int32 id, Int32 len, Byte* name, Single* v)
+            unsafe void ProgramNamedParameter4(Int32 id, Int32 len, Byte* name, Double x, Double y, Double z, Double w)
             {
-                Delegates.glProgramNamedParameter4fvNV((UInt32)id, (Int32)len, (Byte*)name, (Single*)v);
+                Delegates.glProgramNamedParameter4dNV((UInt32)id, (Int32)len, (Byte*)name, (Double)x, (Double)y, (Double)z, (Double)w);
             }
 
             [System.CLSCompliant(false)]
@@ -17804,16 +17790,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramNamedParameter4(UInt32 id, Int32 len, Byte* name, Double* v)
+            unsafe void ProgramNamedParameter4(UInt32 id, Int32 len, Byte* name, Single* v)
             {
-                Delegates.glProgramNamedParameter4dvNV((UInt32)id, (Int32)len, (Byte*)name, (Double*)v);
+                Delegates.glProgramNamedParameter4fvNV((UInt32)id, (Int32)len, (Byte*)name, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramNamedParameter4(Int32 id, Int32 len, Byte* name, Double* v)
+            unsafe void ProgramNamedParameter4(Int32 id, Int32 len, Byte* name, Single* v)
             {
-                Delegates.glProgramNamedParameter4dvNV((UInt32)id, (Int32)len, (Byte*)name, (Double*)v);
+                Delegates.glProgramNamedParameter4fvNV((UInt32)id, (Int32)len, (Byte*)name, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -17872,16 +17858,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramNamedParameter(UInt32 id, Int32 len, Byte* name, [Out] Single* @params)
+            unsafe void ProgramNamedParameter4(UInt32 id, Int32 len, Byte* name, Double* v)
             {
-                Delegates.glGetProgramNamedParameterfvNV((UInt32)id, (Int32)len, (Byte*)name, (Single*)@params);
+                Delegates.glProgramNamedParameter4dvNV((UInt32)id, (Int32)len, (Byte*)name, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramNamedParameter(Int32 id, Int32 len, Byte* name, [Out] Single* @params)
+            unsafe void ProgramNamedParameter4(Int32 id, Int32 len, Byte* name, Double* v)
             {
-                Delegates.glGetProgramNamedParameterfvNV((UInt32)id, (Int32)len, (Byte*)name, (Single*)@params);
+                Delegates.glProgramNamedParameter4dvNV((UInt32)id, (Int32)len, (Byte*)name, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -17942,16 +17928,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramNamedParameter(UInt32 id, Int32 len, Byte* name, [Out] Double* @params)
+            unsafe void GetProgramNamedParameter(UInt32 id, Int32 len, Byte* name, [Out] Single* @params)
             {
-                Delegates.glGetProgramNamedParameterdvNV((UInt32)id, (Int32)len, (Byte*)name, (Double*)@params);
+                Delegates.glGetProgramNamedParameterfvNV((UInt32)id, (Int32)len, (Byte*)name, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramNamedParameter(Int32 id, Int32 len, Byte* name, [Out] Double* @params)
+            unsafe void GetProgramNamedParameter(Int32 id, Int32 len, Byte* name, [Out] Single* @params)
             {
-                Delegates.glGetProgramNamedParameterdvNV((UInt32)id, (Int32)len, (Byte*)name, (Double*)@params);
+                Delegates.glGetProgramNamedParameterfvNV((UInt32)id, (Int32)len, (Byte*)name, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -18012,6 +17998,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetProgramNamedParameter(UInt32 id, Int32 len, Byte* name, [Out] Double* @params)
+            {
+                Delegates.glGetProgramNamedParameterdvNV((UInt32)id, (Int32)len, (Byte*)name, (Double*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetProgramNamedParameter(Int32 id, Int32 len, Byte* name, [Out] Double* @params)
+            {
+                Delegates.glGetProgramNamedParameterdvNV((UInt32)id, (Int32)len, (Byte*)name, (Double*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void Vertex2h(UInt16 x, UInt16 y)
             {
                 Delegates.glVertex2hNV((UInt16)x, (UInt16)y);
@@ -18021,20 +18021,6 @@ namespace OpenTK.OpenGL
             void Vertex2h(Int16 x, Int16 y)
             {
                 Delegates.glVertex2hNV((UInt16)x, (UInt16)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Vertex2h(UInt16* v)
-            {
-                Delegates.glVertex2hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Vertex2h(Int16* v)
-            {
-                Delegates.glVertex2hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18089,6 +18075,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void Vertex2h(UInt16* v)
+            {
+                Delegates.glVertex2hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Vertex2h(Int16* v)
+            {
+                Delegates.glVertex2hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void Vertex3h(UInt16 x, UInt16 y, UInt16 z)
             {
                 Delegates.glVertex3hNV((UInt16)x, (UInt16)y, (UInt16)z);
@@ -18098,20 +18098,6 @@ namespace OpenTK.OpenGL
             void Vertex3h(Int16 x, Int16 y, Int16 z)
             {
                 Delegates.glVertex3hNV((UInt16)x, (UInt16)y, (UInt16)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Vertex3h(UInt16* v)
-            {
-                Delegates.glVertex3hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Vertex3h(Int16* v)
-            {
-                Delegates.glVertex3hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18166,6 +18152,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void Vertex3h(UInt16* v)
+            {
+                Delegates.glVertex3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Vertex3h(Int16* v)
+            {
+                Delegates.glVertex3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void Vertex4h(UInt16 x, UInt16 y, UInt16 z, UInt16 w)
             {
                 Delegates.glVertex4hNV((UInt16)x, (UInt16)y, (UInt16)z, (UInt16)w);
@@ -18175,20 +18175,6 @@ namespace OpenTK.OpenGL
             void Vertex4h(Int16 x, Int16 y, Int16 z, Int16 w)
             {
                 Delegates.glVertex4hNV((UInt16)x, (UInt16)y, (UInt16)z, (UInt16)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Vertex4h(UInt16* v)
-            {
-                Delegates.glVertex4hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Vertex4h(Int16* v)
-            {
-                Delegates.glVertex4hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18243,6 +18229,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void Vertex4h(UInt16* v)
+            {
+                Delegates.glVertex4hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Vertex4h(Int16* v)
+            {
+                Delegates.glVertex4hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void Normal3h(UInt16 nx, UInt16 ny, UInt16 nz)
             {
                 Delegates.glNormal3hNV((UInt16)nx, (UInt16)ny, (UInt16)nz);
@@ -18252,20 +18252,6 @@ namespace OpenTK.OpenGL
             void Normal3h(Int16 nx, Int16 ny, Int16 nz)
             {
                 Delegates.glNormal3hNV((UInt16)nx, (UInt16)ny, (UInt16)nz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Normal3h(UInt16* v)
-            {
-                Delegates.glNormal3hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Normal3h(Int16* v)
-            {
-                Delegates.glNormal3hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18320,6 +18306,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void Normal3h(UInt16* v)
+            {
+                Delegates.glNormal3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Normal3h(Int16* v)
+            {
+                Delegates.glNormal3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void Color3h(UInt16 red, UInt16 green, UInt16 blue)
             {
                 Delegates.glColor3hNV((UInt16)red, (UInt16)green, (UInt16)blue);
@@ -18329,20 +18329,6 @@ namespace OpenTK.OpenGL
             void Color3h(Int16 red, Int16 green, Int16 blue)
             {
                 Delegates.glColor3hNV((UInt16)red, (UInt16)green, (UInt16)blue);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Color3h(UInt16* v)
-            {
-                Delegates.glColor3hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Color3h(Int16* v)
-            {
-                Delegates.glColor3hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18397,6 +18383,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void Color3h(UInt16* v)
+            {
+                Delegates.glColor3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Color3h(Int16* v)
+            {
+                Delegates.glColor3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void Color4h(UInt16 red, UInt16 green, UInt16 blue, UInt16 alpha)
             {
                 Delegates.glColor4hNV((UInt16)red, (UInt16)green, (UInt16)blue, (UInt16)alpha);
@@ -18406,20 +18406,6 @@ namespace OpenTK.OpenGL
             void Color4h(Int16 red, Int16 green, Int16 blue, Int16 alpha)
             {
                 Delegates.glColor4hNV((UInt16)red, (UInt16)green, (UInt16)blue, (UInt16)alpha);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Color4h(UInt16* v)
-            {
-                Delegates.glColor4hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Color4h(Int16* v)
-            {
-                Delegates.glColor4hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18474,6 +18460,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void Color4h(UInt16* v)
+            {
+                Delegates.glColor4hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Color4h(Int16* v)
+            {
+                Delegates.glColor4hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void TexCoord1h(UInt16 s)
             {
                 Delegates.glTexCoord1hNV((UInt16)s);
@@ -18483,20 +18483,6 @@ namespace OpenTK.OpenGL
             void TexCoord1h(Int16 s)
             {
                 Delegates.glTexCoord1hNV((UInt16)s);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord1hv(UInt16* v)
-            {
-                Delegates.glTexCoord1hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord1hv(Int16* v)
-            {
-                Delegates.glTexCoord1hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18551,6 +18537,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void TexCoord1hv(UInt16* v)
+            {
+                Delegates.glTexCoord1hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord1hv(Int16* v)
+            {
+                Delegates.glTexCoord1hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void TexCoord2h(UInt16 s, UInt16 t)
             {
                 Delegates.glTexCoord2hNV((UInt16)s, (UInt16)t);
@@ -18560,20 +18560,6 @@ namespace OpenTK.OpenGL
             void TexCoord2h(Int16 s, Int16 t)
             {
                 Delegates.glTexCoord2hNV((UInt16)s, (UInt16)t);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord2h(UInt16* v)
-            {
-                Delegates.glTexCoord2hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord2h(Int16* v)
-            {
-                Delegates.glTexCoord2hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18628,6 +18614,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void TexCoord2h(UInt16* v)
+            {
+                Delegates.glTexCoord2hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord2h(Int16* v)
+            {
+                Delegates.glTexCoord2hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void TexCoord3h(UInt16 s, UInt16 t, UInt16 r)
             {
                 Delegates.glTexCoord3hNV((UInt16)s, (UInt16)t, (UInt16)r);
@@ -18637,20 +18637,6 @@ namespace OpenTK.OpenGL
             void TexCoord3h(Int16 s, Int16 t, Int16 r)
             {
                 Delegates.glTexCoord3hNV((UInt16)s, (UInt16)t, (UInt16)r);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord3h(UInt16* v)
-            {
-                Delegates.glTexCoord3hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord3h(Int16* v)
-            {
-                Delegates.glTexCoord3hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18705,6 +18691,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void TexCoord3h(UInt16* v)
+            {
+                Delegates.glTexCoord3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord3h(Int16* v)
+            {
+                Delegates.glTexCoord3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void TexCoord4h(UInt16 s, UInt16 t, UInt16 r, UInt16 q)
             {
                 Delegates.glTexCoord4hNV((UInt16)s, (UInt16)t, (UInt16)r, (UInt16)q);
@@ -18714,20 +18714,6 @@ namespace OpenTK.OpenGL
             void TexCoord4h(Int16 s, Int16 t, Int16 r, Int16 q)
             {
                 Delegates.glTexCoord4hNV((UInt16)s, (UInt16)t, (UInt16)r, (UInt16)q);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord4h(UInt16* v)
-            {
-                Delegates.glTexCoord4hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord4h(Int16* v)
-            {
-                Delegates.glTexCoord4hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18782,6 +18768,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void TexCoord4h(UInt16* v)
+            {
+                Delegates.glTexCoord4hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord4h(Int16* v)
+            {
+                Delegates.glTexCoord4hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void MultiTexCoord1h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16 s)
             {
                 Delegates.glMultiTexCoord1hNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16)s);
@@ -18791,20 +18791,6 @@ namespace OpenTK.OpenGL
             void MultiTexCoord1h(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s)
             {
                 Delegates.glMultiTexCoord1hNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16)s);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord1hv(OpenTK.OpenGL.Enums.TextureUnit target, UInt16* v)
-            {
-                Delegates.glMultiTexCoord1hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord1hv(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-            {
-                Delegates.glMultiTexCoord1hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18859,6 +18845,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void MultiTexCoord1hv(OpenTK.OpenGL.Enums.TextureUnit target, UInt16* v)
+            {
+                Delegates.glMultiTexCoord1hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord1hv(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+            {
+                Delegates.glMultiTexCoord1hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void MultiTexCoord2h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16 s, UInt16 t)
             {
                 Delegates.glMultiTexCoord2hNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16)s, (UInt16)t);
@@ -18868,20 +18868,6 @@ namespace OpenTK.OpenGL
             void MultiTexCoord2h(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s, Int16 t)
             {
                 Delegates.glMultiTexCoord2hNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16)s, (UInt16)t);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord2h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16* v)
-            {
-                Delegates.glMultiTexCoord2hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord2h(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-            {
-                Delegates.glMultiTexCoord2hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -18936,6 +18922,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void MultiTexCoord2h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16* v)
+            {
+                Delegates.glMultiTexCoord2hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord2h(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+            {
+                Delegates.glMultiTexCoord2hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void MultiTexCoord3h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16 s, UInt16 t, UInt16 r)
             {
                 Delegates.glMultiTexCoord3hNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16)s, (UInt16)t, (UInt16)r);
@@ -18945,20 +18945,6 @@ namespace OpenTK.OpenGL
             void MultiTexCoord3h(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s, Int16 t, Int16 r)
             {
                 Delegates.glMultiTexCoord3hNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16)s, (UInt16)t, (UInt16)r);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord3h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16* v)
-            {
-                Delegates.glMultiTexCoord3hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord3h(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-            {
-                Delegates.glMultiTexCoord3hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19013,6 +18999,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void MultiTexCoord3h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16* v)
+            {
+                Delegates.glMultiTexCoord3hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord3h(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+            {
+                Delegates.glMultiTexCoord3hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void MultiTexCoord4h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16 s, UInt16 t, UInt16 r, UInt16 q)
             {
                 Delegates.glMultiTexCoord4hNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16)s, (UInt16)t, (UInt16)r, (UInt16)q);
@@ -19022,20 +19022,6 @@ namespace OpenTK.OpenGL
             void MultiTexCoord4h(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s, Int16 t, Int16 r, Int16 q)
             {
                 Delegates.glMultiTexCoord4hNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16)s, (UInt16)t, (UInt16)r, (UInt16)q);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord4h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16* v)
-            {
-                Delegates.glMultiTexCoord4hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord4h(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-            {
-                Delegates.glMultiTexCoord4hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19090,6 +19076,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void MultiTexCoord4h(OpenTK.OpenGL.Enums.TextureUnit target, UInt16* v)
+            {
+                Delegates.glMultiTexCoord4hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord4h(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+            {
+                Delegates.glMultiTexCoord4hvNV((OpenTK.OpenGL.Enums.TextureUnit)target, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void FogCoordh(UInt16 fog)
             {
                 Delegates.glFogCoordhNV((UInt16)fog);
@@ -19099,20 +19099,6 @@ namespace OpenTK.OpenGL
             void FogCoordh(Int16 fog)
             {
                 Delegates.glFogCoordhNV((UInt16)fog);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void FogCoordhv(UInt16* fog)
-            {
-                Delegates.glFogCoordhvNV((UInt16*)fog);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void FogCoordhv(Int16* fog)
-            {
-                Delegates.glFogCoordhvNV((UInt16*)fog);
             }
 
             [System.CLSCompliant(false)]
@@ -19167,6 +19153,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void FogCoordhv(UInt16* fog)
+            {
+                Delegates.glFogCoordhvNV((UInt16*)fog);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void FogCoordhv(Int16* fog)
+            {
+                Delegates.glFogCoordhvNV((UInt16*)fog);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void SecondaryColor3h(UInt16 red, UInt16 green, UInt16 blue)
             {
                 Delegates.glSecondaryColor3hNV((UInt16)red, (UInt16)green, (UInt16)blue);
@@ -19176,20 +19176,6 @@ namespace OpenTK.OpenGL
             void SecondaryColor3h(Int16 red, Int16 green, Int16 blue)
             {
                 Delegates.glSecondaryColor3hNV((UInt16)red, (UInt16)green, (UInt16)blue);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SecondaryColor3h(UInt16* v)
-            {
-                Delegates.glSecondaryColor3hvNV((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SecondaryColor3h(Int16* v)
-            {
-                Delegates.glSecondaryColor3hvNV((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19244,6 +19230,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void SecondaryColor3h(UInt16* v)
+            {
+                Delegates.glSecondaryColor3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SecondaryColor3h(Int16* v)
+            {
+                Delegates.glSecondaryColor3hvNV((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexWeighth(UInt16 weight)
             {
                 Delegates.glVertexWeighthNV((UInt16)weight);
@@ -19253,20 +19253,6 @@ namespace OpenTK.OpenGL
             void VertexWeighth(Int16 weight)
             {
                 Delegates.glVertexWeighthNV((UInt16)weight);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexWeighthv(UInt16* weight)
-            {
-                Delegates.glVertexWeighthvNV((UInt16*)weight);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexWeighthv(Int16* weight)
-            {
-                Delegates.glVertexWeighthvNV((UInt16*)weight);
             }
 
             [System.CLSCompliant(false)]
@@ -19321,6 +19307,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexWeighthv(UInt16* weight)
+            {
+                Delegates.glVertexWeighthvNV((UInt16*)weight);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexWeighthv(Int16* weight)
+            {
+                Delegates.glVertexWeighthvNV((UInt16*)weight);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib1h(UInt32 index, UInt16 x)
             {
                 Delegates.glVertexAttrib1hNV((UInt32)index, (UInt16)x);
@@ -19330,20 +19330,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib1h(Int32 index, Int16 x)
             {
                 Delegates.glVertexAttrib1hNV((UInt32)index, (UInt16)x);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1hv(UInt32 index, UInt16* v)
-            {
-                Delegates.glVertexAttrib1hvNV((UInt32)index, (UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1hv(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib1hvNV((UInt32)index, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19398,6 +19384,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib1hv(UInt32 index, UInt16* v)
+            {
+                Delegates.glVertexAttrib1hvNV((UInt32)index, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib1hv(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib1hvNV((UInt32)index, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib2h(UInt32 index, UInt16 x, UInt16 y)
             {
                 Delegates.glVertexAttrib2hNV((UInt32)index, (UInt16)x, (UInt16)y);
@@ -19407,20 +19407,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib2h(Int32 index, Int16 x, Int16 y)
             {
                 Delegates.glVertexAttrib2hNV((UInt32)index, (UInt16)x, (UInt16)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2h(UInt32 index, UInt16* v)
-            {
-                Delegates.glVertexAttrib2hvNV((UInt32)index, (UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2h(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib2hvNV((UInt32)index, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19475,6 +19461,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib2h(UInt32 index, UInt16* v)
+            {
+                Delegates.glVertexAttrib2hvNV((UInt32)index, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib2h(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib2hvNV((UInt32)index, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib3h(UInt32 index, UInt16 x, UInt16 y, UInt16 z)
             {
                 Delegates.glVertexAttrib3hNV((UInt32)index, (UInt16)x, (UInt16)y, (UInt16)z);
@@ -19484,20 +19484,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib3h(Int32 index, Int16 x, Int16 y, Int16 z)
             {
                 Delegates.glVertexAttrib3hNV((UInt32)index, (UInt16)x, (UInt16)y, (UInt16)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3h(UInt32 index, UInt16* v)
-            {
-                Delegates.glVertexAttrib3hvNV((UInt32)index, (UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3h(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib3hvNV((UInt32)index, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19552,6 +19538,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib3h(UInt32 index, UInt16* v)
+            {
+                Delegates.glVertexAttrib3hvNV((UInt32)index, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib3h(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib3hvNV((UInt32)index, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib4h(UInt32 index, UInt16 x, UInt16 y, UInt16 z, UInt16 w)
             {
                 Delegates.glVertexAttrib4hNV((UInt32)index, (UInt16)x, (UInt16)y, (UInt16)z, (UInt16)w);
@@ -19561,20 +19561,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib4h(Int32 index, Int16 x, Int16 y, Int16 z, Int16 w)
             {
                 Delegates.glVertexAttrib4hNV((UInt32)index, (UInt16)x, (UInt16)y, (UInt16)z, (UInt16)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4h(UInt32 index, UInt16* v)
-            {
-                Delegates.glVertexAttrib4hvNV((UInt32)index, (UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4h(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib4hvNV((UInt32)index, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19629,16 +19615,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs1h(UInt32 index, Int32 n, UInt16* v)
+            unsafe void VertexAttrib4h(UInt32 index, UInt16* v)
             {
-                Delegates.glVertexAttribs1hvNV((UInt32)index, (Int32)n, (UInt16*)v);
+                Delegates.glVertexAttrib4hvNV((UInt32)index, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs1h(Int32 index, Int32 n, Int16* v)
+            unsafe void VertexAttrib4h(Int32 index, Int16* v)
             {
-                Delegates.glVertexAttribs1hvNV((UInt32)index, (Int32)n, (UInt16*)v);
+                Delegates.glVertexAttrib4hvNV((UInt32)index, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19693,16 +19679,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs2h(UInt32 index, Int32 n, UInt16* v)
+            unsafe void VertexAttribs1h(UInt32 index, Int32 n, UInt16* v)
             {
-                Delegates.glVertexAttribs2hvNV((UInt32)index, (Int32)n, (UInt16*)v);
+                Delegates.glVertexAttribs1hvNV((UInt32)index, (Int32)n, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs2h(Int32 index, Int32 n, Int16* v)
+            unsafe void VertexAttribs1h(Int32 index, Int32 n, Int16* v)
             {
-                Delegates.glVertexAttribs2hvNV((UInt32)index, (Int32)n, (UInt16*)v);
+                Delegates.glVertexAttribs1hvNV((UInt32)index, (Int32)n, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19757,16 +19743,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs3h(UInt32 index, Int32 n, UInt16* v)
+            unsafe void VertexAttribs2h(UInt32 index, Int32 n, UInt16* v)
             {
-                Delegates.glVertexAttribs3hvNV((UInt32)index, (Int32)n, (UInt16*)v);
+                Delegates.glVertexAttribs2hvNV((UInt32)index, (Int32)n, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs3h(Int32 index, Int32 n, Int16* v)
+            unsafe void VertexAttribs2h(Int32 index, Int32 n, Int16* v)
             {
-                Delegates.glVertexAttribs3hvNV((UInt32)index, (Int32)n, (UInt16*)v);
+                Delegates.glVertexAttribs2hvNV((UInt32)index, (Int32)n, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19821,16 +19807,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4h(UInt32 index, Int32 n, UInt16* v)
+            unsafe void VertexAttribs3h(UInt32 index, Int32 n, UInt16* v)
             {
-                Delegates.glVertexAttribs4hvNV((UInt32)index, (Int32)n, (UInt16*)v);
+                Delegates.glVertexAttribs3hvNV((UInt32)index, (Int32)n, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribs4h(Int32 index, Int32 n, Int16* v)
+            unsafe void VertexAttribs3h(Int32 index, Int32 n, Int16* v)
             {
-                Delegates.glVertexAttribs4hvNV((UInt32)index, (Int32)n, (UInt16*)v);
+                Delegates.glVertexAttribs3hvNV((UInt32)index, (Int32)n, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -19881,6 +19867,20 @@ namespace OpenTK.OpenGL
                         Delegates.glVertexAttribs4hvNV((UInt32)index, (Int32)n, (UInt16*)v_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttribs4h(UInt32 index, Int32 n, UInt16* v)
+            {
+                Delegates.glVertexAttribs4hvNV((UInt32)index, (Int32)n, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttribs4h(Int32 index, Int32 n, Int16* v)
+            {
+                Delegates.glVertexAttribs4hvNV((UInt32)index, (Int32)n, (UInt16*)v);
             }
 
             public static 
@@ -19943,13 +19943,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramLocalParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32* @params)
-            {
-                Delegates.glProgramLocalParameterI4ivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void ProgramLocalParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32[] @params)
             {
                 unsafe
@@ -19976,9 +19969,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramLocalParametersI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, Int32* @params)
+            unsafe void ProgramLocalParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32* @params)
             {
-                Delegates.glProgramLocalParametersI4ivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Int32*)@params);
+                Delegates.glProgramLocalParameterI4ivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20009,6 +20002,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ProgramLocalParametersI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, Int32* @params)
+            {
+                Delegates.glProgramLocalParametersI4ivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ProgramLocalParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32 x, UInt32 y, UInt32 z, UInt32 w)
             {
                 Delegates.glProgramLocalParameterI4uiNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)x, (UInt32)y, (UInt32)z, (UInt32)w);
@@ -20018,20 +20018,6 @@ namespace OpenTK.OpenGL
             void ProgramLocalParameterI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 x, Int32 y, Int32 z, Int32 w)
             {
                 Delegates.glProgramLocalParameterI4uiNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)x, (UInt32)y, (UInt32)z, (UInt32)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramLocalParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32* @params)
-            {
-                Delegates.glProgramLocalParameterI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramLocalParameterI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32* @params)
-            {
-                Delegates.glProgramLocalParameterI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20086,16 +20072,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramLocalParametersI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, UInt32* @params)
+            unsafe void ProgramLocalParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32* @params)
             {
-                Delegates.glProgramLocalParametersI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (UInt32*)@params);
+                Delegates.glProgramLocalParameterI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramLocalParametersI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Int32* @params)
+            unsafe void ProgramLocalParameterI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32* @params)
             {
-                Delegates.glProgramLocalParametersI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (UInt32*)@params);
+                Delegates.glProgramLocalParameterI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20150,16 +20136,23 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 x, Int32 y, Int32 z, Int32 w)
+            unsafe void ProgramLocalParametersI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, UInt32* @params)
             {
-                Delegates.glProgramEnvParameterI4iNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)x, (Int32)y, (Int32)z, (Int32)w);
+                Delegates.glProgramLocalParametersI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32* @params)
+            unsafe void ProgramLocalParametersI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Int32* @params)
             {
-                Delegates.glProgramEnvParameterI4ivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)@params);
+                Delegates.glProgramLocalParametersI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 x, Int32 y, Int32 z, Int32 w)
+            {
+                Delegates.glProgramEnvParameterI4iNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)x, (Int32)y, (Int32)z, (Int32)w);
             }
 
             [System.CLSCompliant(false)]
@@ -20190,9 +20183,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramEnvParametersI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, Int32* @params)
+            unsafe void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32* @params)
             {
-                Delegates.glProgramEnvParametersI4ivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Int32*)@params);
+                Delegates.glProgramEnvParameterI4ivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20223,6 +20216,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ProgramEnvParametersI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, Int32* @params)
+            {
+                Delegates.glProgramEnvParametersI4ivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32 x, UInt32 y, UInt32 z, UInt32 w)
             {
                 Delegates.glProgramEnvParameterI4uiNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)x, (UInt32)y, (UInt32)z, (UInt32)w);
@@ -20232,20 +20232,6 @@ namespace OpenTK.OpenGL
             void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 x, Int32 y, Int32 z, Int32 w)
             {
                 Delegates.glProgramEnvParameterI4uiNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)x, (UInt32)y, (UInt32)z, (UInt32)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32* @params)
-            {
-                Delegates.glProgramEnvParameterI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32* @params)
-            {
-                Delegates.glProgramEnvParameterI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20300,16 +20286,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramEnvParametersI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, UInt32* @params)
+            unsafe void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32* @params)
             {
-                Delegates.glProgramEnvParametersI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (UInt32*)@params);
+                Delegates.glProgramEnvParameterI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramEnvParametersI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Int32* @params)
+            unsafe void ProgramEnvParameterI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32* @params)
             {
-                Delegates.glProgramEnvParametersI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (UInt32*)@params);
+                Delegates.glProgramEnvParameterI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20364,9 +20350,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramLocalParameterI(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] Int32* @params)
+            unsafe void ProgramEnvParametersI4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, UInt32* @params)
             {
-                Delegates.glGetProgramLocalParameterIivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)@params);
+                Delegates.glProgramEnvParametersI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramEnvParametersI4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Int32* @params)
+            {
+                Delegates.glProgramEnvParametersI4uivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20398,16 +20391,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramLocalParameterI(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] UInt32* @params)
+            unsafe void GetProgramLocalParameterI(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] Int32* @params)
             {
-                Delegates.glGetProgramLocalParameterIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetProgramLocalParameterI(OpenTK.OpenGL.Enums.All target, Int32 index, [Out] Int32* @params)
-            {
-                Delegates.glGetProgramLocalParameterIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
+                Delegates.glGetProgramLocalParameterIivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20464,9 +20450,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramEnvParameterI(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] Int32* @params)
+            unsafe void GetProgramLocalParameterI(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] UInt32* @params)
             {
-                Delegates.glGetProgramEnvParameterIivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)@params);
+                Delegates.glGetProgramLocalParameterIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetProgramLocalParameterI(OpenTK.OpenGL.Enums.All target, Int32 index, [Out] Int32* @params)
+            {
+                Delegates.glGetProgramLocalParameterIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20498,16 +20491,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramEnvParameterI(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] UInt32* @params)
+            unsafe void GetProgramEnvParameterI(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] Int32* @params)
             {
-                Delegates.glGetProgramEnvParameterIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetProgramEnvParameterI(OpenTK.OpenGL.Enums.All target, Int32 index, [Out] Int32* @params)
-            {
-                Delegates.glGetProgramEnvParameterIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
+                Delegates.glGetProgramEnvParameterIivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20562,6 +20548,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetProgramEnvParameterI(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] UInt32* @params)
+            {
+                Delegates.glGetProgramEnvParameterIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetProgramEnvParameterI(OpenTK.OpenGL.Enums.All target, Int32 index, [Out] Int32* @params)
+            {
+                Delegates.glGetProgramEnvParameterIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32*)@params);
+            }
+
             public static 
             void ProgramVertexLimit(OpenTK.OpenGL.Enums.All target, Int32 limit)
             {
@@ -20590,20 +20590,6 @@ namespace OpenTK.OpenGL
             void RenderbufferStorageMultisampleCoverage(OpenTK.OpenGL.Enums.All target, Int32 coverageSamples, Int32 colorSamples, OpenTK.OpenGL.Enums.PixelInternalFormat internalformat, Int32 width, Int32 height)
             {
                 Delegates.glRenderbufferStorageMultisampleCoverageNV((OpenTK.OpenGL.Enums.All)target, (Int32)coverageSamples, (Int32)colorSamples, (OpenTK.OpenGL.Enums.PixelInternalFormat)internalformat, (Int32)width, (Int32)height);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramBufferParameters(OpenTK.OpenGL.Enums.All target, UInt32 buffer, UInt32 index, Int32 count, Single* @params)
-            {
-                Delegates.glProgramBufferParametersfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramBufferParameters(OpenTK.OpenGL.Enums.All target, Int32 buffer, Int32 index, Int32 count, Single* @params)
-            {
-                Delegates.glProgramBufferParametersfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20658,9 +20644,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramBufferParametersI(OpenTK.OpenGL.Enums.All target, UInt32 buffer, UInt32 index, Int32 count, Int32* @params)
+            unsafe void ProgramBufferParameters(OpenTK.OpenGL.Enums.All target, UInt32 buffer, UInt32 index, Int32 count, Single* @params)
             {
-                Delegates.glProgramBufferParametersIivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (Int32*)@params);
+                Delegates.glProgramBufferParametersfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (Single*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramBufferParameters(OpenTK.OpenGL.Enums.All target, Int32 buffer, Int32 index, Int32 count, Single* @params)
+            {
+                Delegates.glProgramBufferParametersfvNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20691,16 +20684,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramBufferParametersI(OpenTK.OpenGL.Enums.All target, UInt32 buffer, UInt32 index, Int32 count, UInt32* @params)
+            unsafe void ProgramBufferParametersI(OpenTK.OpenGL.Enums.All target, UInt32 buffer, UInt32 index, Int32 count, Int32* @params)
             {
-                Delegates.glProgramBufferParametersIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramBufferParametersI(OpenTK.OpenGL.Enums.All target, Int32 buffer, Int32 index, Int32 count, Int32* @params)
-            {
-                Delegates.glProgramBufferParametersIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (UInt32*)@params);
+                Delegates.glProgramBufferParametersIivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -20753,6 +20739,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramBufferParametersI(OpenTK.OpenGL.Enums.All target, UInt32 buffer, UInt32 index, Int32 count, UInt32* @params)
+            {
+                Delegates.glProgramBufferParametersIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramBufferParametersI(OpenTK.OpenGL.Enums.All target, Int32 buffer, Int32 index, Int32 count, Int32* @params)
+            {
+                Delegates.glProgramBufferParametersIuivNV((OpenTK.OpenGL.Enums.All)target, (UInt32)buffer, (UInt32)index, (Int32)count, (UInt32*)@params);
+            }
+
             public static 
             void BeginTransformFeedback(OpenTK.OpenGL.Enums.All primitiveMode)
             {
@@ -20763,20 +20763,6 @@ namespace OpenTK.OpenGL
             void EndTransformFeedback()
             {
                 Delegates.glEndTransformFeedbackNV();
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TransformFeedbackAttrib(UInt32 count, Int32* attribs, OpenTK.OpenGL.Enums.All bufferMode)
-            {
-                Delegates.glTransformFeedbackAttribsNV((UInt32)count, (Int32*)attribs, (OpenTK.OpenGL.Enums.All)bufferMode);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TransformFeedbackAttrib(Int32 count, Int32* attribs, OpenTK.OpenGL.Enums.All bufferMode)
-            {
-                Delegates.glTransformFeedbackAttribsNV((UInt32)count, (Int32*)attribs, (OpenTK.OpenGL.Enums.All)bufferMode);
             }
 
             [System.CLSCompliant(false)]
@@ -20831,6 +20817,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void TransformFeedbackAttrib(UInt32 count, Int32* attribs, OpenTK.OpenGL.Enums.All bufferMode)
+            {
+                Delegates.glTransformFeedbackAttribsNV((UInt32)count, (Int32*)attribs, (OpenTK.OpenGL.Enums.All)bufferMode);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TransformFeedbackAttrib(Int32 count, Int32* attribs, OpenTK.OpenGL.Enums.All bufferMode)
+            {
+                Delegates.glTransformFeedbackAttribsNV((UInt32)count, (Int32*)attribs, (OpenTK.OpenGL.Enums.All)bufferMode);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void BindBufferRange(OpenTK.OpenGL.Enums.All target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size)
             {
                 Delegates.glBindBufferRangeNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)buffer, (IntPtr)offset, (IntPtr)size);
@@ -20866,20 +20866,6 @@ namespace OpenTK.OpenGL
             void BindBufferBase(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 buffer)
             {
                 Delegates.glBindBufferBaseNV((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (UInt32)buffer);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TransformFeedbackVarying(UInt32 program, Int32 count, Int32* locations, OpenTK.OpenGL.Enums.All bufferMode)
-            {
-                Delegates.glTransformFeedbackVaryingsNV((UInt32)program, (Int32)count, (Int32*)locations, (OpenTK.OpenGL.Enums.All)bufferMode);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TransformFeedbackVarying(Int32 program, Int32 count, Int32* locations, OpenTK.OpenGL.Enums.All bufferMode)
-            {
-                Delegates.glTransformFeedbackVaryingsNV((UInt32)program, (Int32)count, (Int32*)locations, (OpenTK.OpenGL.Enums.All)bufferMode);
             }
 
             [System.CLSCompliant(false)]
@@ -20934,6 +20920,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void TransformFeedbackVarying(UInt32 program, Int32 count, Int32* locations, OpenTK.OpenGL.Enums.All bufferMode)
+            {
+                Delegates.glTransformFeedbackVaryingsNV((UInt32)program, (Int32)count, (Int32*)locations, (OpenTK.OpenGL.Enums.All)bufferMode);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TransformFeedbackVarying(Int32 program, Int32 count, Int32* locations, OpenTK.OpenGL.Enums.All bufferMode)
+            {
+                Delegates.glTransformFeedbackVaryingsNV((UInt32)program, (Int32)count, (Int32*)locations, (OpenTK.OpenGL.Enums.All)bufferMode);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ActiveVarying(UInt32 program, System.String name)
             {
                 Delegates.glActiveVaryingNV((UInt32)program, (System.String)name);
@@ -20956,20 +20956,6 @@ namespace OpenTK.OpenGL
             Int32 GetVaryingLocation(Int32 program, System.String name)
             {
                 return Delegates.glGetVaryingLocationNV((UInt32)program, (System.String)name);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetActiveVarying(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
-            {
-                Delegates.glGetActiveVaryingNV((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetActiveVarying(Int32 program, Int32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
-            {
-                Delegates.glGetActiveVaryingNV((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
             }
 
             [System.CLSCompliant(false)]
@@ -21038,16 +21024,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetTransformFeedbackVarying(UInt32 program, UInt32 index, [Out] Int32* location)
+            unsafe void GetActiveVarying(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
             {
-                Delegates.glGetTransformFeedbackVaryingNV((UInt32)program, (UInt32)index, (Int32*)location);
+                Delegates.glGetActiveVaryingNV((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetTransformFeedbackVarying(Int32 program, Int32 index, [Out] Int32* location)
+            unsafe void GetActiveVarying(Int32 program, Int32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
             {
-                Delegates.glGetTransformFeedbackVaryingNV((UInt32)program, (UInt32)index, (Int32*)location);
+                Delegates.glGetActiveVaryingNV((UInt32)program, (UInt32)index, (Int32)bufSize, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
             }
 
             [System.CLSCompliant(false)]
@@ -21102,6 +21088,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetTransformFeedbackVarying(UInt32 program, UInt32 index, [Out] Int32* location)
+            {
+                Delegates.glGetTransformFeedbackVaryingNV((UInt32)program, (UInt32)index, (Int32*)location);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetTransformFeedbackVarying(Int32 program, Int32 index, [Out] Int32* location)
+            {
+                Delegates.glGetTransformFeedbackVaryingNV((UInt32)program, (UInt32)index, (Int32*)location);
+            }
+
         }
 
         public static partial class Arb
@@ -21122,13 +21122,6 @@ namespace OpenTK.OpenGL
             void MultiTexCoord1(OpenTK.OpenGL.Enums.TextureUnit target, Double s)
             {
                 Delegates.glMultiTexCoord1dARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double)s);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
-            {
-                Delegates.glMultiTexCoord1dvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
             }
 
             public static 
@@ -21155,17 +21148,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
+            {
+                Delegates.glMultiTexCoord1dvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
+            }
+
             public static 
             void MultiTexCoord1(OpenTK.OpenGL.Enums.TextureUnit target, Single s)
             {
                 Delegates.glMultiTexCoord1fARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single)s);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
-            {
-                Delegates.glMultiTexCoord1fvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
             }
 
             public static 
@@ -21192,17 +21185,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
+            {
+                Delegates.glMultiTexCoord1fvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
+            }
+
             public static 
             void MultiTexCoord1(OpenTK.OpenGL.Enums.TextureUnit target, Int32 s)
             {
                 Delegates.glMultiTexCoord1iARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32)s);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
-            {
-                Delegates.glMultiTexCoord1ivARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
             }
 
             public static 
@@ -21229,17 +21222,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
+            {
+                Delegates.glMultiTexCoord1ivARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
+            }
+
             public static 
             void MultiTexCoord1(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s)
             {
                 Delegates.glMultiTexCoord1sARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16)s);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-            {
-                Delegates.glMultiTexCoord1svARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
             }
 
             public static 
@@ -21266,17 +21259,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord1v(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+            {
+                Delegates.glMultiTexCoord1svARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
+            }
+
             public static 
             void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Double s, Double t)
             {
                 Delegates.glMultiTexCoord2dARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double)s, (Double)t);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
-            {
-                Delegates.glMultiTexCoord2dvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
             }
 
             public static 
@@ -21303,17 +21296,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
+            {
+                Delegates.glMultiTexCoord2dvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
+            }
+
             public static 
             void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Single s, Single t)
             {
                 Delegates.glMultiTexCoord2fARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single)s, (Single)t);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
-            {
-                Delegates.glMultiTexCoord2fvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
             }
 
             public static 
@@ -21340,17 +21333,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
+            {
+                Delegates.glMultiTexCoord2fvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
+            }
+
             public static 
             void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int32 s, Int32 t)
             {
                 Delegates.glMultiTexCoord2iARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32)s, (Int32)t);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
-            {
-                Delegates.glMultiTexCoord2ivARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
             }
 
             public static 
@@ -21377,17 +21370,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
+            {
+                Delegates.glMultiTexCoord2ivARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
+            }
+
             public static 
             void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s, Int16 t)
             {
                 Delegates.glMultiTexCoord2sARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16)s, (Int16)t);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-            {
-                Delegates.glMultiTexCoord2svARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
             }
 
             public static 
@@ -21414,17 +21407,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord2(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+            {
+                Delegates.glMultiTexCoord2svARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
+            }
+
             public static 
             void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Double s, Double t, Double r)
             {
                 Delegates.glMultiTexCoord3dARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double)s, (Double)t, (Double)r);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
-            {
-                Delegates.glMultiTexCoord3dvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
             }
 
             public static 
@@ -21451,17 +21444,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
+            {
+                Delegates.glMultiTexCoord3dvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
+            }
+
             public static 
             void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Single s, Single t, Single r)
             {
                 Delegates.glMultiTexCoord3fARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single)s, (Single)t, (Single)r);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
-            {
-                Delegates.glMultiTexCoord3fvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
             }
 
             public static 
@@ -21488,17 +21481,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
+            {
+                Delegates.glMultiTexCoord3fvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
+            }
+
             public static 
             void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int32 s, Int32 t, Int32 r)
             {
                 Delegates.glMultiTexCoord3iARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32)s, (Int32)t, (Int32)r);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
-            {
-                Delegates.glMultiTexCoord3ivARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
             }
 
             public static 
@@ -21525,17 +21518,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
+            {
+                Delegates.glMultiTexCoord3ivARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
+            }
+
             public static 
             void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s, Int16 t, Int16 r)
             {
                 Delegates.glMultiTexCoord3sARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16)s, (Int16)t, (Int16)r);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-            {
-                Delegates.glMultiTexCoord3svARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
             }
 
             public static 
@@ -21562,17 +21555,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord3(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
+            {
+                Delegates.glMultiTexCoord3svARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
+            }
+
             public static 
             void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Double s, Double t, Double r, Double q)
             {
                 Delegates.glMultiTexCoord4dARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double)s, (Double)t, (Double)r, (Double)q);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
-            {
-                Delegates.glMultiTexCoord4dvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
             }
 
             public static 
@@ -21599,17 +21592,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Double* v)
+            {
+                Delegates.glMultiTexCoord4dvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Double*)v);
+            }
+
             public static 
             void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Single s, Single t, Single r, Single q)
             {
                 Delegates.glMultiTexCoord4fARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single)s, (Single)t, (Single)r, (Single)q);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
-            {
-                Delegates.glMultiTexCoord4fvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
             }
 
             public static 
@@ -21636,17 +21629,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Single* v)
+            {
+                Delegates.glMultiTexCoord4fvARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Single*)v);
+            }
+
             public static 
             void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int32 s, Int32 t, Int32 r, Int32 q)
             {
                 Delegates.glMultiTexCoord4iARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32)s, (Int32)t, (Int32)r, (Int32)q);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
-            {
-                Delegates.glMultiTexCoord4ivARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
             }
 
             public static 
@@ -21673,17 +21666,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int32* v)
+            {
+                Delegates.glMultiTexCoord4ivARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int32*)v);
+            }
+
             public static 
             void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int16 s, Int16 t, Int16 r, Int16 q)
             {
                 Delegates.glMultiTexCoord4sARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16)s, (Int16)t, (Int16)r, (Int16)q);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
-            {
-                Delegates.glMultiTexCoord4svARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
             }
 
             public static 
@@ -21712,9 +21705,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void LoadTransposeMatrix(Single* m)
+            unsafe void MultiTexCoord4(OpenTK.OpenGL.Enums.TextureUnit target, Int16* v)
             {
-                Delegates.glLoadTransposeMatrixfARB((Single*)m);
+                Delegates.glMultiTexCoord4svARB((OpenTK.OpenGL.Enums.TextureUnit)target, (Int16*)v);
             }
 
             public static 
@@ -21743,9 +21736,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void LoadTransposeMatrix(Double* m)
+            unsafe void LoadTransposeMatrix(Single* m)
             {
-                Delegates.glLoadTransposeMatrixdARB((Double*)m);
+                Delegates.glLoadTransposeMatrixfARB((Single*)m);
             }
 
             public static 
@@ -21774,9 +21767,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultTransposeMatrix(Single* m)
+            unsafe void LoadTransposeMatrix(Double* m)
             {
-                Delegates.glMultTransposeMatrixfARB((Single*)m);
+                Delegates.glLoadTransposeMatrixdARB((Double*)m);
             }
 
             public static 
@@ -21805,9 +21798,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultTransposeMatrix(Double* m)
+            unsafe void MultTransposeMatrix(Single* m)
             {
-                Delegates.glMultTransposeMatrixdARB((Double*)m);
+                Delegates.glMultTransposeMatrixfARB((Single*)m);
             }
 
             public static 
@@ -21832,6 +21825,13 @@ namespace OpenTK.OpenGL
                         Delegates.glMultTransposeMatrixdARB((Double*)m_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultTransposeMatrix(Double* m)
+            {
+                Delegates.glMultTransposeMatrixdARB((Double*)m);
             }
 
             public static 
@@ -22028,13 +22028,6 @@ namespace OpenTK.OpenGL
                 Delegates.glPointParameterfARB((OpenTK.OpenGL.Enums.All)pname, (Single)param);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void PointParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glPointParameterfvARB((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
             public static 
             void PointParameterv(OpenTK.OpenGL.Enums.All pname, Single[] @params)
             {
@@ -22061,9 +22054,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Weight(Int32 size, SByte* weights)
+            unsafe void PointParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
             {
-                Delegates.glWeightbvARB((Int32)size, (SByte*)weights);
+                Delegates.glPointParameterfvARB((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -22094,9 +22087,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Weight(Int32 size, Single* weights)
+            unsafe void Weight(Int32 size, SByte* weights)
             {
-                Delegates.glWeightfvARB((Int32)size, (Single*)weights);
+                Delegates.glWeightbvARB((Int32)size, (SByte*)weights);
             }
 
             public static 
@@ -22125,9 +22118,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Weight(Int32 size, Double* weights)
+            unsafe void Weight(Int32 size, Single* weights)
             {
-                Delegates.glWeightdvARB((Int32)size, (Double*)weights);
+                Delegates.glWeightfvARB((Int32)size, (Single*)weights);
             }
 
             public static 
@@ -22156,9 +22149,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Weight(Int32 size, Byte* weights)
+            unsafe void Weight(Int32 size, Double* weights)
             {
-                Delegates.glWeightubvARB((Int32)size, (Byte*)weights);
+                Delegates.glWeightdvARB((Int32)size, (Double*)weights);
             }
 
             public static 
@@ -22187,16 +22180,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Weight(Int32 size, UInt16* weights)
+            unsafe void Weight(Int32 size, Byte* weights)
             {
-                Delegates.glWeightusvARB((Int32)size, (UInt16*)weights);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Weight(Int32 size, Int16* weights)
-            {
-                Delegates.glWeightusvARB((Int32)size, (UInt16*)weights);
+                Delegates.glWeightubvARB((Int32)size, (Byte*)weights);
             }
 
             [System.CLSCompliant(false)]
@@ -22251,16 +22237,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Weight(Int32 size, UInt32* weights)
+            unsafe void Weight(Int32 size, UInt16* weights)
             {
-                Delegates.glWeightuivARB((Int32)size, (UInt32*)weights);
+                Delegates.glWeightusvARB((Int32)size, (UInt16*)weights);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Weight(Int32 size, Int32* weights)
+            unsafe void Weight(Int32 size, Int16* weights)
             {
-                Delegates.glWeightuivARB((Int32)size, (UInt32*)weights);
+                Delegates.glWeightusvARB((Int32)size, (UInt16*)weights);
             }
 
             [System.CLSCompliant(false)]
@@ -22313,6 +22299,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Weight(Int32 size, UInt32* weights)
+            {
+                Delegates.glWeightuivARB((Int32)size, (UInt32*)weights);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Weight(Int32 size, Int32* weights)
+            {
+                Delegates.glWeightuivARB((Int32)size, (UInt32*)weights);
+            }
+
             public static 
             void WeightPointer(Int32 size, OpenTK.OpenGL.Enums.All type, Int32 stride, IntPtr pointer)
             {
@@ -22351,13 +22351,6 @@ namespace OpenTK.OpenGL
                 Delegates.glCurrentPaletteMatrixARB((Int32)index);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MatrixIndex(Int32 size, Byte* indices)
-            {
-                Delegates.glMatrixIndexubvARB((Int32)size, (Byte*)indices);
-            }
-
             public static 
             void MatrixIndex(Int32 size, Byte[] indices)
             {
@@ -22384,16 +22377,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MatrixIndex(Int32 size, UInt16* indices)
+            unsafe void MatrixIndex(Int32 size, Byte* indices)
             {
-                Delegates.glMatrixIndexusvARB((Int32)size, (UInt16*)indices);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MatrixIndex(Int32 size, Int16* indices)
-            {
-                Delegates.glMatrixIndexusvARB((Int32)size, (UInt16*)indices);
+                Delegates.glMatrixIndexubvARB((Int32)size, (Byte*)indices);
             }
 
             [System.CLSCompliant(false)]
@@ -22448,16 +22434,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MatrixIndex(Int32 size, UInt32* indices)
+            unsafe void MatrixIndex(Int32 size, UInt16* indices)
             {
-                Delegates.glMatrixIndexuivARB((Int32)size, (UInt32*)indices);
+                Delegates.glMatrixIndexusvARB((Int32)size, (UInt16*)indices);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MatrixIndex(Int32 size, Int32* indices)
+            unsafe void MatrixIndex(Int32 size, Int16* indices)
             {
-                Delegates.glMatrixIndexuivARB((Int32)size, (UInt32*)indices);
+                Delegates.glMatrixIndexusvARB((Int32)size, (UInt16*)indices);
             }
 
             [System.CLSCompliant(false)]
@@ -22510,6 +22496,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MatrixIndex(Int32 size, UInt32* indices)
+            {
+                Delegates.glMatrixIndexuivARB((Int32)size, (UInt32*)indices);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MatrixIndex(Int32 size, Int32* indices)
+            {
+                Delegates.glMatrixIndexuivARB((Int32)size, (UInt32*)indices);
+            }
+
             public static 
             void MatrixIndexPointer(Int32 size, OpenTK.OpenGL.Enums.All type, Int32 stride, IntPtr pointer)
             {
@@ -22542,13 +22542,6 @@ namespace OpenTK.OpenGL
                 Delegates.glWindowPos2dARB((Double)x, (Double)y);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos2(Double* v)
-            {
-                Delegates.glWindowPos2dvARB((Double*)v);
-            }
-
             public static 
             void WindowPos2(Double[] v)
             {
@@ -22573,17 +22566,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos2(Double* v)
+            {
+                Delegates.glWindowPos2dvARB((Double*)v);
+            }
+
             public static 
             void WindowPos2(Single x, Single y)
             {
                 Delegates.glWindowPos2fARB((Single)x, (Single)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos2(Single* v)
-            {
-                Delegates.glWindowPos2fvARB((Single*)v);
             }
 
             public static 
@@ -22610,17 +22603,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos2(Single* v)
+            {
+                Delegates.glWindowPos2fvARB((Single*)v);
+            }
+
             public static 
             void WindowPos2(Int32 x, Int32 y)
             {
                 Delegates.glWindowPos2iARB((Int32)x, (Int32)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos2(Int32* v)
-            {
-                Delegates.glWindowPos2ivARB((Int32*)v);
             }
 
             public static 
@@ -22647,17 +22640,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos2(Int32* v)
+            {
+                Delegates.glWindowPos2ivARB((Int32*)v);
+            }
+
             public static 
             void WindowPos2(Int16 x, Int16 y)
             {
                 Delegates.glWindowPos2sARB((Int16)x, (Int16)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos2(Int16* v)
-            {
-                Delegates.glWindowPos2svARB((Int16*)v);
             }
 
             public static 
@@ -22684,17 +22677,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos2(Int16* v)
+            {
+                Delegates.glWindowPos2svARB((Int16*)v);
+            }
+
             public static 
             void WindowPos3(Double x, Double y, Double z)
             {
                 Delegates.glWindowPos3dARB((Double)x, (Double)y, (Double)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos3(Double* v)
-            {
-                Delegates.glWindowPos3dvARB((Double*)v);
             }
 
             public static 
@@ -22721,17 +22714,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos3(Double* v)
+            {
+                Delegates.glWindowPos3dvARB((Double*)v);
+            }
+
             public static 
             void WindowPos3(Single x, Single y, Single z)
             {
                 Delegates.glWindowPos3fARB((Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos3(Single* v)
-            {
-                Delegates.glWindowPos3fvARB((Single*)v);
             }
 
             public static 
@@ -22758,17 +22751,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos3(Single* v)
+            {
+                Delegates.glWindowPos3fvARB((Single*)v);
+            }
+
             public static 
             void WindowPos3(Int32 x, Int32 y, Int32 z)
             {
                 Delegates.glWindowPos3iARB((Int32)x, (Int32)y, (Int32)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos3(Int32* v)
-            {
-                Delegates.glWindowPos3ivARB((Int32*)v);
             }
 
             public static 
@@ -22795,17 +22788,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos3(Int32* v)
+            {
+                Delegates.glWindowPos3ivARB((Int32*)v);
+            }
+
             public static 
             void WindowPos3(Int16 x, Int16 y, Int16 z)
             {
                 Delegates.glWindowPos3sARB((Int16)x, (Int16)y, (Int16)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos3(Int16* v)
-            {
-                Delegates.glWindowPos3svARB((Int16*)v);
             }
 
             public static 
@@ -22834,6 +22827,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void WindowPos3(Int16* v)
+            {
+                Delegates.glWindowPos3svARB((Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib1(UInt32 index, Double x)
             {
                 Delegates.glVertexAttrib1dARB((UInt32)index, (Double)x);
@@ -22843,20 +22843,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib1(Int32 index, Double x)
             {
                 Delegates.glVertexAttrib1dARB((UInt32)index, (Double)x);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(UInt32 index, Double* v)
-            {
-                Delegates.glVertexAttrib1dvARB((UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(Int32 index, Double* v)
-            {
-                Delegates.glVertexAttrib1dvARB((UInt32)index, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -22911,6 +22897,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib1v(UInt32 index, Double* v)
+            {
+                Delegates.glVertexAttrib1dvARB((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib1v(Int32 index, Double* v)
+            {
+                Delegates.glVertexAttrib1dvARB((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib1(UInt32 index, Single x)
             {
                 Delegates.glVertexAttrib1fARB((UInt32)index, (Single)x);
@@ -22920,20 +22920,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib1(Int32 index, Single x)
             {
                 Delegates.glVertexAttrib1fARB((UInt32)index, (Single)x);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(UInt32 index, Single* v)
-            {
-                Delegates.glVertexAttrib1fvARB((UInt32)index, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(Int32 index, Single* v)
-            {
-                Delegates.glVertexAttrib1fvARB((UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -22988,6 +22974,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib1v(UInt32 index, Single* v)
+            {
+                Delegates.glVertexAttrib1fvARB((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib1v(Int32 index, Single* v)
+            {
+                Delegates.glVertexAttrib1fvARB((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib1(UInt32 index, Int16 x)
             {
                 Delegates.glVertexAttrib1sARB((UInt32)index, (Int16)x);
@@ -22997,20 +22997,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib1(Int32 index, Int16 x)
             {
                 Delegates.glVertexAttrib1sARB((UInt32)index, (Int16)x);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(UInt32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib1svARB((UInt32)index, (Int16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib1v(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib1svARB((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23065,6 +23051,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib1v(UInt32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib1svARB((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib1v(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib1svARB((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib2(UInt32 index, Double x, Double y)
             {
                 Delegates.glVertexAttrib2dARB((UInt32)index, (Double)x, (Double)y);
@@ -23074,20 +23074,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib2(Int32 index, Double x, Double y)
             {
                 Delegates.glVertexAttrib2dARB((UInt32)index, (Double)x, (Double)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(UInt32 index, Double* v)
-            {
-                Delegates.glVertexAttrib2dvARB((UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(Int32 index, Double* v)
-            {
-                Delegates.glVertexAttrib2dvARB((UInt32)index, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23142,6 +23128,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib2(UInt32 index, Double* v)
+            {
+                Delegates.glVertexAttrib2dvARB((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib2(Int32 index, Double* v)
+            {
+                Delegates.glVertexAttrib2dvARB((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib2(UInt32 index, Single x, Single y)
             {
                 Delegates.glVertexAttrib2fARB((UInt32)index, (Single)x, (Single)y);
@@ -23151,20 +23151,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib2(Int32 index, Single x, Single y)
             {
                 Delegates.glVertexAttrib2fARB((UInt32)index, (Single)x, (Single)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(UInt32 index, Single* v)
-            {
-                Delegates.glVertexAttrib2fvARB((UInt32)index, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(Int32 index, Single* v)
-            {
-                Delegates.glVertexAttrib2fvARB((UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23219,6 +23205,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib2(UInt32 index, Single* v)
+            {
+                Delegates.glVertexAttrib2fvARB((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib2(Int32 index, Single* v)
+            {
+                Delegates.glVertexAttrib2fvARB((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib2(UInt32 index, Int16 x, Int16 y)
             {
                 Delegates.glVertexAttrib2sARB((UInt32)index, (Int16)x, (Int16)y);
@@ -23228,20 +23228,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib2(Int32 index, Int16 x, Int16 y)
             {
                 Delegates.glVertexAttrib2sARB((UInt32)index, (Int16)x, (Int16)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(UInt32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib2svARB((UInt32)index, (Int16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib2(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib2svARB((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23296,6 +23282,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib2(UInt32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib2svARB((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib2(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib2svARB((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib3(UInt32 index, Double x, Double y, Double z)
             {
                 Delegates.glVertexAttrib3dARB((UInt32)index, (Double)x, (Double)y, (Double)z);
@@ -23305,20 +23305,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib3(Int32 index, Double x, Double y, Double z)
             {
                 Delegates.glVertexAttrib3dARB((UInt32)index, (Double)x, (Double)y, (Double)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(UInt32 index, Double* v)
-            {
-                Delegates.glVertexAttrib3dvARB((UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(Int32 index, Double* v)
-            {
-                Delegates.glVertexAttrib3dvARB((UInt32)index, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23373,6 +23359,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib3(UInt32 index, Double* v)
+            {
+                Delegates.glVertexAttrib3dvARB((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib3(Int32 index, Double* v)
+            {
+                Delegates.glVertexAttrib3dvARB((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib3(UInt32 index, Single x, Single y, Single z)
             {
                 Delegates.glVertexAttrib3fARB((UInt32)index, (Single)x, (Single)y, (Single)z);
@@ -23382,20 +23382,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib3(Int32 index, Single x, Single y, Single z)
             {
                 Delegates.glVertexAttrib3fARB((UInt32)index, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(UInt32 index, Single* v)
-            {
-                Delegates.glVertexAttrib3fvARB((UInt32)index, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(Int32 index, Single* v)
-            {
-                Delegates.glVertexAttrib3fvARB((UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23450,6 +23436,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib3(UInt32 index, Single* v)
+            {
+                Delegates.glVertexAttrib3fvARB((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib3(Int32 index, Single* v)
+            {
+                Delegates.glVertexAttrib3fvARB((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib3(UInt32 index, Int16 x, Int16 y, Int16 z)
             {
                 Delegates.glVertexAttrib3sARB((UInt32)index, (Int16)x, (Int16)y, (Int16)z);
@@ -23459,20 +23459,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib3(Int32 index, Int16 x, Int16 y, Int16 z)
             {
                 Delegates.glVertexAttrib3sARB((UInt32)index, (Int16)x, (Int16)y, (Int16)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(UInt32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib3svARB((UInt32)index, (Int16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib3(Int32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib3svARB((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23527,9 +23513,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4N(UInt32 index, SByte* v)
+            unsafe void VertexAttrib3(UInt32 index, Int16* v)
             {
-                Delegates.glVertexAttrib4NbvARB((UInt32)index, (SByte*)v);
+                Delegates.glVertexAttrib3svARB((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib3(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib3svARB((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23560,9 +23553,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4N(UInt32 index, Int32* v)
+            unsafe void VertexAttrib4N(UInt32 index, SByte* v)
             {
-                Delegates.glVertexAttrib4NivARB((UInt32)index, (Int32*)v);
+                Delegates.glVertexAttrib4NbvARB((UInt32)index, (SByte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23593,9 +23586,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4N(UInt32 index, Int16* v)
+            unsafe void VertexAttrib4N(UInt32 index, Int32* v)
             {
-                Delegates.glVertexAttrib4NsvARB((UInt32)index, (Int16*)v);
+                Delegates.glVertexAttrib4NivARB((UInt32)index, (Int32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23626,6 +23619,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib4N(UInt32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib4NsvARB((UInt32)index, (Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib4N(UInt32 index, Byte x, Byte y, Byte z, Byte w)
             {
                 Delegates.glVertexAttrib4NubARB((UInt32)index, (Byte)x, (Byte)y, (Byte)z, (Byte)w);
@@ -23635,20 +23635,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib4N(Int32 index, Byte x, Byte y, Byte z, Byte w)
             {
                 Delegates.glVertexAttrib4NubARB((UInt32)index, (Byte)x, (Byte)y, (Byte)z, (Byte)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4N(UInt32 index, Byte* v)
-            {
-                Delegates.glVertexAttrib4NubvARB((UInt32)index, (Byte*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4N(Int32 index, Byte* v)
-            {
-                Delegates.glVertexAttrib4NubvARB((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23703,16 +23689,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4N(UInt32 index, UInt32* v)
+            unsafe void VertexAttrib4N(UInt32 index, Byte* v)
             {
-                Delegates.glVertexAttrib4NuivARB((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttrib4NubvARB((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4N(Int32 index, Int32* v)
+            unsafe void VertexAttrib4N(Int32 index, Byte* v)
             {
-                Delegates.glVertexAttrib4NuivARB((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttrib4NubvARB((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23767,16 +23753,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4N(UInt32 index, UInt16* v)
+            unsafe void VertexAttrib4N(UInt32 index, UInt32* v)
             {
-                Delegates.glVertexAttrib4NusvARB((UInt32)index, (UInt16*)v);
+                Delegates.glVertexAttrib4NuivARB((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4N(Int32 index, Int16* v)
+            unsafe void VertexAttrib4N(Int32 index, Int32* v)
             {
-                Delegates.glVertexAttrib4NusvARB((UInt32)index, (UInt16*)v);
+                Delegates.glVertexAttrib4NuivARB((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23831,9 +23817,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4(UInt32 index, SByte* v)
+            unsafe void VertexAttrib4N(UInt32 index, UInt16* v)
             {
-                Delegates.glVertexAttrib4bvARB((UInt32)index, (SByte*)v);
+                Delegates.glVertexAttrib4NusvARB((UInt32)index, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib4N(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib4NusvARB((UInt32)index, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23864,6 +23857,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib4(UInt32 index, SByte* v)
+            {
+                Delegates.glVertexAttrib4bvARB((UInt32)index, (SByte*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib4(UInt32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glVertexAttrib4dARB((UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
@@ -23873,20 +23873,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib4(Int32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glVertexAttrib4dARB((UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(UInt32 index, Double* v)
-            {
-                Delegates.glVertexAttrib4dvARB((UInt32)index, (Double*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(Int32 index, Double* v)
-            {
-                Delegates.glVertexAttrib4dvARB((UInt32)index, (Double*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -23941,6 +23927,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib4(UInt32 index, Double* v)
+            {
+                Delegates.glVertexAttrib4dvARB((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib4(Int32 index, Double* v)
+            {
+                Delegates.glVertexAttrib4dvARB((UInt32)index, (Double*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib4(UInt32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glVertexAttrib4fARB((UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
@@ -23950,20 +23950,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib4(Int32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glVertexAttrib4fARB((UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(UInt32 index, Single* v)
-            {
-                Delegates.glVertexAttrib4fvARB((UInt32)index, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(Int32 index, Single* v)
-            {
-                Delegates.glVertexAttrib4fvARB((UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -24018,9 +24004,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4(UInt32 index, Int32* v)
+            unsafe void VertexAttrib4(UInt32 index, Single* v)
             {
-                Delegates.glVertexAttrib4ivARB((UInt32)index, (Int32*)v);
+                Delegates.glVertexAttrib4fvARB((UInt32)index, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib4(Int32 index, Single* v)
+            {
+                Delegates.glVertexAttrib4fvARB((UInt32)index, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -24051,6 +24044,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexAttrib4(UInt32 index, Int32* v)
+            {
+                Delegates.glVertexAttrib4ivARB((UInt32)index, (Int32*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VertexAttrib4(UInt32 index, Int16 x, Int16 y, Int16 z, Int16 w)
             {
                 Delegates.glVertexAttrib4sARB((UInt32)index, (Int16)x, (Int16)y, (Int16)z, (Int16)w);
@@ -24060,13 +24060,6 @@ namespace OpenTK.OpenGL
             void VertexAttrib4(Int32 index, Int16 x, Int16 y, Int16 z, Int16 w)
             {
                 Delegates.glVertexAttrib4sARB((UInt32)index, (Int16)x, (Int16)y, (Int16)z, (Int16)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(UInt32 index, Int16* v)
-            {
-                Delegates.glVertexAttrib4svARB((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -24097,16 +24090,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4(UInt32 index, Byte* v)
+            unsafe void VertexAttrib4(UInt32 index, Int16* v)
             {
-                Delegates.glVertexAttrib4ubvARB((UInt32)index, (Byte*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttrib4(Int32 index, Byte* v)
-            {
-                Delegates.glVertexAttrib4ubvARB((UInt32)index, (Byte*)v);
+                Delegates.glVertexAttrib4svARB((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -24161,16 +24147,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4(UInt32 index, UInt32* v)
+            unsafe void VertexAttrib4(UInt32 index, Byte* v)
             {
-                Delegates.glVertexAttrib4uivARB((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttrib4ubvARB((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4(Int32 index, Int32* v)
+            unsafe void VertexAttrib4(Int32 index, Byte* v)
             {
-                Delegates.glVertexAttrib4uivARB((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttrib4ubvARB((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -24225,16 +24211,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4(UInt32 index, UInt16* v)
+            unsafe void VertexAttrib4(UInt32 index, UInt32* v)
             {
-                Delegates.glVertexAttrib4usvARB((UInt32)index, (UInt16*)v);
+                Delegates.glVertexAttrib4uivARB((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttrib4(Int32 index, Int16* v)
+            unsafe void VertexAttrib4(Int32 index, Int32* v)
             {
-                Delegates.glVertexAttrib4usvARB((UInt32)index, (UInt16*)v);
+                Delegates.glVertexAttrib4uivARB((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -24285,6 +24271,20 @@ namespace OpenTK.OpenGL
                         Delegates.glVertexAttrib4usvARB((UInt32)index, (UInt16*)v_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib4(UInt32 index, UInt16* v)
+            {
+                Delegates.glVertexAttrib4usvARB((UInt32)index, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttrib4(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttrib4usvARB((UInt32)index, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -24408,20 +24408,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteProgram(Int32 n, UInt32* programs)
-            {
-                Delegates.glDeleteProgramsARB((Int32)n, (UInt32*)programs);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteProgram(Int32 n, Int32* programs)
-            {
-                Delegates.glDeleteProgramsARB((Int32)n, (UInt32*)programs);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void DeleteProgram(Int32 n, UInt32[] programs)
             {
                 unsafe
@@ -24472,16 +24458,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenProgram(Int32 n, [Out] UInt32* programs)
+            unsafe void DeleteProgram(Int32 n, UInt32* programs)
             {
-                Delegates.glGenProgramsARB((Int32)n, (UInt32*)programs);
+                Delegates.glDeleteProgramsARB((Int32)n, (UInt32*)programs);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenProgram(Int32 n, [Out] Int32* programs)
+            unsafe void DeleteProgram(Int32 n, Int32* programs)
             {
-                Delegates.glGenProgramsARB((Int32)n, (UInt32*)programs);
+                Delegates.glDeleteProgramsARB((Int32)n, (UInt32*)programs);
             }
 
             [System.CLSCompliant(false)]
@@ -24538,6 +24524,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GenProgram(Int32 n, [Out] UInt32* programs)
+            {
+                Delegates.glGenProgramsARB((Int32)n, (UInt32*)programs);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GenProgram(Int32 n, [Out] Int32* programs)
+            {
+                Delegates.glGenProgramsARB((Int32)n, (UInt32*)programs);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glProgramEnvParameter4dARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
@@ -24547,20 +24547,6 @@ namespace OpenTK.OpenGL
             void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glProgramEnvParameter4dARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Double* @params)
-            {
-                Delegates.glProgramEnvParameter4dvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Double* @params)
-            {
-                Delegates.glProgramEnvParameter4dvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -24615,6 +24601,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Double* @params)
+            {
+                Delegates.glProgramEnvParameter4dvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Double* @params)
+            {
+                Delegates.glProgramEnvParameter4dvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glProgramEnvParameter4fARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
@@ -24624,20 +24624,6 @@ namespace OpenTK.OpenGL
             void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glProgramEnvParameter4fARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Single* @params)
-            {
-                Delegates.glProgramEnvParameter4fvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Single* @params)
-            {
-                Delegates.glProgramEnvParameter4fvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -24692,6 +24678,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Single* @params)
+            {
+                Delegates.glProgramEnvParameter4fvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramEnvParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Single* @params)
+            {
+                Delegates.glProgramEnvParameter4fvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glProgramLocalParameter4dARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
@@ -24701,20 +24701,6 @@ namespace OpenTK.OpenGL
             void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Double x, Double y, Double z, Double w)
             {
                 Delegates.glProgramLocalParameter4dARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double)x, (Double)y, (Double)z, (Double)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Double* @params)
-            {
-                Delegates.glProgramLocalParameter4dvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Double* @params)
-            {
-                Delegates.glProgramLocalParameter4dvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -24769,6 +24755,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Double* @params)
+            {
+                Delegates.glProgramLocalParameter4dvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Double* @params)
+            {
+                Delegates.glProgramLocalParameter4dvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glProgramLocalParameter4fARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
@@ -24778,20 +24778,6 @@ namespace OpenTK.OpenGL
             void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Single x, Single y, Single z, Single w)
             {
                 Delegates.glProgramLocalParameter4fARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Single* @params)
-            {
-                Delegates.glProgramLocalParameter4fvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Single* @params)
-            {
-                Delegates.glProgramLocalParameter4fvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -24846,16 +24832,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramEnvParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, [Out] Double* @params)
+            unsafe void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, Single* @params)
             {
-                Delegates.glGetProgramEnvParameterdvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
+                Delegates.glProgramLocalParameter4fvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramEnvParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, [Out] Double* @params)
+            unsafe void ProgramLocalParameter4(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, Single* @params)
             {
-                Delegates.glGetProgramEnvParameterdvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
+                Delegates.glProgramLocalParameter4fvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -24912,16 +24898,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramEnvParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, [Out] Single* @params)
+            unsafe void GetProgramEnvParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, [Out] Double* @params)
             {
-                Delegates.glGetProgramEnvParameterfvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
+                Delegates.glGetProgramEnvParameterdvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramEnvParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, [Out] Single* @params)
+            unsafe void GetProgramEnvParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, [Out] Double* @params)
             {
-                Delegates.glGetProgramEnvParameterfvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
+                Delegates.glGetProgramEnvParameterdvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -24978,16 +24964,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramLocalParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, [Out] Double* @params)
+            unsafe void GetProgramEnvParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, [Out] Single* @params)
             {
-                Delegates.glGetProgramLocalParameterdvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
+                Delegates.glGetProgramEnvParameterfvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramLocalParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, [Out] Double* @params)
+            unsafe void GetProgramEnvParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, [Out] Single* @params)
             {
-                Delegates.glGetProgramLocalParameterdvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
+                Delegates.glGetProgramEnvParameterfvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -25044,16 +25030,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramLocalParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, [Out] Single* @params)
+            unsafe void GetProgramLocalParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, [Out] Double* @params)
             {
-                Delegates.glGetProgramLocalParameterfvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
+                Delegates.glGetProgramLocalParameterdvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgramLocalParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, [Out] Single* @params)
+            unsafe void GetProgramLocalParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, [Out] Double* @params)
             {
-                Delegates.glGetProgramLocalParameterfvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
+                Delegates.glGetProgramLocalParameterdvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -25110,9 +25096,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetProgram(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, OpenTK.OpenGL.Enums.AssemblyProgramParameterArb pname, [Out] Int32* @params)
+            unsafe void GetProgramLocalParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, UInt32 index, [Out] Single* @params)
             {
-                Delegates.glGetProgramivARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (OpenTK.OpenGL.Enums.AssemblyProgramParameterArb)pname, (Int32*)@params);
+                Delegates.glGetProgramLocalParameterfvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetProgramLocalParameter(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, Int32 index, [Out] Single* @params)
+            {
+                Delegates.glGetProgramLocalParameterfvARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (UInt32)index, (Single*)@params);
             }
 
             public static 
@@ -25140,6 +25133,13 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetProgram(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, OpenTK.OpenGL.Enums.AssemblyProgramParameterArb pname, [Out] Int32* @params)
+            {
+                Delegates.glGetProgramivARB((OpenTK.OpenGL.Enums.AssemblyProgramTargetArb)target, (OpenTK.OpenGL.Enums.AssemblyProgramParameterArb)pname, (Int32*)@params);
+            }
+
             public static 
             void GetProgramString(OpenTK.OpenGL.Enums.AssemblyProgramTargetArb target, OpenTK.OpenGL.Enums.AssemblyProgramStringParameterArb pname, [Out] IntPtr @string)
             {
@@ -25164,20 +25164,6 @@ namespace OpenTK.OpenGL
                         @string_ptr.Free();
                     }
                 }
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Double* @params)
-            {
-                Delegates.glGetVertexAttribdvARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Double*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Double* @params)
-            {
-                Delegates.glGetVertexAttribdvARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -25234,16 +25220,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Single* @params)
+            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Double* @params)
             {
-                Delegates.glGetVertexAttribfvARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Single*)@params);
+                Delegates.glGetVertexAttribdvARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Single* @params)
+            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Double* @params)
             {
-                Delegates.glGetVertexAttribfvARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Single*)@params);
+                Delegates.glGetVertexAttribdvARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Double*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -25300,16 +25286,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Int32* @params)
+            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Single* @params)
             {
-                Delegates.glGetVertexAttribivARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Int32*)@params);
+                Delegates.glGetVertexAttribfvARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Int32* @params)
+            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Single* @params)
             {
-                Delegates.glGetVertexAttribivARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Int32*)@params);
+                Delegates.glGetVertexAttribfvARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -25362,6 +25348,20 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetVertexAttrib(UInt32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Int32* @params)
+            {
+                Delegates.glGetVertexAttribivARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetVertexAttrib(Int32 index, OpenTK.OpenGL.Enums.VertexAttribParameterArb pname, [Out] Int32* @params)
+            {
+                Delegates.glGetVertexAttribivARB((UInt32)index, (OpenTK.OpenGL.Enums.VertexAttribParameterArb)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -25446,20 +25446,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteBuffers(Int32 n, UInt32* buffers)
-            {
-                Delegates.glDeleteBuffersARB((Int32)n, (UInt32*)buffers);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteBuffers(Int32 n, Int32* buffers)
-            {
-                Delegates.glDeleteBuffersARB((Int32)n, (UInt32*)buffers);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void DeleteBuffers(Int32 n, UInt32[] buffers)
             {
                 unsafe
@@ -25510,16 +25496,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenBuffers(Int32 n, [Out] UInt32* buffers)
+            unsafe void DeleteBuffers(Int32 n, UInt32* buffers)
             {
-                Delegates.glGenBuffersARB((Int32)n, (UInt32*)buffers);
+                Delegates.glDeleteBuffersARB((Int32)n, (UInt32*)buffers);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenBuffers(Int32 n, [Out] Int32* buffers)
+            unsafe void DeleteBuffers(Int32 n, Int32* buffers)
             {
-                Delegates.glGenBuffersARB((Int32)n, (UInt32*)buffers);
+                Delegates.glDeleteBuffersARB((Int32)n, (UInt32*)buffers);
             }
 
             [System.CLSCompliant(false)]
@@ -25572,6 +25558,20 @@ namespace OpenTK.OpenGL
                         buffers = *buffers_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GenBuffers(Int32 n, [Out] UInt32* buffers)
+            {
+                Delegates.glGenBuffersARB((Int32)n, (UInt32*)buffers);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GenBuffers(Int32 n, [Out] Int32* buffers)
+            {
+                Delegates.glGenBuffersARB((Int32)n, (UInt32*)buffers);
             }
 
             [System.CLSCompliant(false)]
@@ -25678,13 +25678,6 @@ namespace OpenTK.OpenGL
                 return Delegates.glUnmapBufferARB((OpenTK.OpenGL.Enums.BufferTargetArb)target);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetBufferParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.BufferParameterNameArb pname, [Out] Int32* @params)
-            {
-                Delegates.glGetBufferParameterivARB((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.BufferParameterNameArb)pname, (Int32*)@params);
-            }
-
             public static 
             void GetBufferParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.BufferParameterNameArb pname, [Out] Int32[] @params)
             {
@@ -25708,6 +25701,13 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetBufferParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.BufferParameterNameArb pname, [Out] Int32* @params)
+            {
+                Delegates.glGetBufferParameterivARB((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.BufferParameterNameArb)pname, (Int32*)@params);
             }
 
             public static 
@@ -25734,20 +25734,6 @@ namespace OpenTK.OpenGL
                         @params_ptr.Free();
                     }
                 }
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GenQueries(Int32 n, [Out] UInt32* ids)
-            {
-                Delegates.glGenQueriesARB((Int32)n, (UInt32*)ids);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GenQueries(Int32 n, [Out] Int32* ids)
-            {
-                Delegates.glGenQueriesARB((Int32)n, (UInt32*)ids);
             }
 
             [System.CLSCompliant(false)]
@@ -25804,16 +25790,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteQueries(Int32 n, UInt32* ids)
+            unsafe void GenQueries(Int32 n, [Out] UInt32* ids)
             {
-                Delegates.glDeleteQueriesARB((Int32)n, (UInt32*)ids);
+                Delegates.glGenQueriesARB((Int32)n, (UInt32*)ids);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteQueries(Int32 n, Int32* ids)
+            unsafe void GenQueries(Int32 n, [Out] Int32* ids)
             {
-                Delegates.glDeleteQueriesARB((Int32)n, (UInt32*)ids);
+                Delegates.glGenQueriesARB((Int32)n, (UInt32*)ids);
             }
 
             [System.CLSCompliant(false)]
@@ -25868,6 +25854,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void DeleteQueries(Int32 n, UInt32* ids)
+            {
+                Delegates.glDeleteQueriesARB((Int32)n, (UInt32*)ids);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void DeleteQueries(Int32 n, Int32* ids)
+            {
+                Delegates.glDeleteQueriesARB((Int32)n, (UInt32*)ids);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             bool IsQuery(UInt32 id)
             {
                 return Delegates.glIsQueryARB((UInt32)id);
@@ -25898,13 +25898,6 @@ namespace OpenTK.OpenGL
                 Delegates.glEndQueryARB((OpenTK.OpenGL.Enums.All)target);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetQuery(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetQueryivARB((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
             public static 
             void GetQuery(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32[] @params)
             {
@@ -25932,9 +25925,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetQueryObject(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetQuery(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetQueryObjectivARB((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetQueryivARB((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -25966,16 +25959,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetQueryObject(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] UInt32* @params)
+            unsafe void GetQueryObject(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetQueryObjectuivARB((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetQueryObject(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetQueryObjectuivARB((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
+                Delegates.glGetQueryObjectivARB((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -26032,6 +26018,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetQueryObject(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] UInt32* @params)
+            {
+                Delegates.glGetQueryObjectuivARB((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetQueryObject(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetQueryObjectuivARB((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void DeleteObject(UInt32 obj)
             {
                 Delegates.glDeleteObjectARB((UInt32)obj);
@@ -26066,20 +26066,6 @@ namespace OpenTK.OpenGL
             Int32 CreateShaderObject(OpenTK.OpenGL.Enums.All shaderType)
             {
                 return Delegates.glCreateShaderObjectARB((OpenTK.OpenGL.Enums.All)shaderType);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ShaderSource(UInt32 shaderObj, Int32 count, System.String[] @string, Int32* length)
-            {
-                Delegates.glShaderSourceARB((UInt32)shaderObj, (Int32)count, (System.String[])@string, (Int32*)length);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ShaderSource(Int32 shaderObj, Int32 count, System.String[] @string, Int32* length)
-            {
-                Delegates.glShaderSourceARB((UInt32)shaderObj, (Int32)count, (System.String[])@string, (Int32*)length);
             }
 
             [System.CLSCompliant(false)]
@@ -26130,6 +26116,20 @@ namespace OpenTK.OpenGL
                         Delegates.glShaderSourceARB((UInt32)shaderObj, (Int32)count, (System.String[])@string, (Int32*)length_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ShaderSource(UInt32 shaderObj, Int32 count, System.String[] @string, Int32* length)
+            {
+                Delegates.glShaderSourceARB((UInt32)shaderObj, (Int32)count, (System.String[])@string, (Int32*)length);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ShaderSource(Int32 shaderObj, Int32 count, System.String[] @string, Int32* length)
+            {
+                Delegates.glShaderSourceARB((UInt32)shaderObj, (Int32)count, (System.String[])@string, (Int32*)length);
             }
 
             [System.CLSCompliant(false)]
@@ -26251,13 +26251,6 @@ namespace OpenTK.OpenGL
                 Delegates.glUniform4iARB((Int32)location, (Int32)v0, (Int32)v1, (Int32)v2, (Int32)v3);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Uniform1(Int32 location, Int32 count, Single* value)
-            {
-                Delegates.glUniform1fvARB((Int32)location, (Int32)count, (Single*)value);
-            }
-
             public static 
             void Uniform1(Int32 location, Int32 count, Single[] value)
             {
@@ -26284,9 +26277,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform2v(Int32 location, Int32 count, Single* value)
+            unsafe void Uniform1(Int32 location, Int32 count, Single* value)
             {
-                Delegates.glUniform2fvARB((Int32)location, (Int32)count, (Single*)value);
+                Delegates.glUniform1fvARB((Int32)location, (Int32)count, (Single*)value);
             }
 
             public static 
@@ -26315,9 +26308,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform3(Int32 location, Int32 count, Single* value)
+            unsafe void Uniform2v(Int32 location, Int32 count, Single* value)
             {
-                Delegates.glUniform3fvARB((Int32)location, (Int32)count, (Single*)value);
+                Delegates.glUniform2fvARB((Int32)location, (Int32)count, (Single*)value);
             }
 
             public static 
@@ -26346,9 +26339,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform4(Int32 location, Int32 count, Single* value)
+            unsafe void Uniform3(Int32 location, Int32 count, Single* value)
             {
-                Delegates.glUniform4fvARB((Int32)location, (Int32)count, (Single*)value);
+                Delegates.glUniform3fvARB((Int32)location, (Int32)count, (Single*)value);
             }
 
             public static 
@@ -26377,9 +26370,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform1(Int32 location, Int32 count, Int32* value)
+            unsafe void Uniform4(Int32 location, Int32 count, Single* value)
             {
-                Delegates.glUniform1ivARB((Int32)location, (Int32)count, (Int32*)value);
+                Delegates.glUniform4fvARB((Int32)location, (Int32)count, (Single*)value);
             }
 
             public static 
@@ -26408,9 +26401,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform2v(Int32 location, Int32 count, Int32* value)
+            unsafe void Uniform1(Int32 location, Int32 count, Int32* value)
             {
-                Delegates.glUniform2ivARB((Int32)location, (Int32)count, (Int32*)value);
+                Delegates.glUniform1ivARB((Int32)location, (Int32)count, (Int32*)value);
             }
 
             public static 
@@ -26439,9 +26432,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform3(Int32 location, Int32 count, Int32* value)
+            unsafe void Uniform2v(Int32 location, Int32 count, Int32* value)
             {
-                Delegates.glUniform3ivARB((Int32)location, (Int32)count, (Int32*)value);
+                Delegates.glUniform2ivARB((Int32)location, (Int32)count, (Int32*)value);
             }
 
             public static 
@@ -26470,9 +26463,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform4(Int32 location, Int32 count, Int32* value)
+            unsafe void Uniform3(Int32 location, Int32 count, Int32* value)
             {
-                Delegates.glUniform4ivARB((Int32)location, (Int32)count, (Int32*)value);
+                Delegates.glUniform3ivARB((Int32)location, (Int32)count, (Int32*)value);
             }
 
             public static 
@@ -26501,9 +26494,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void UniformMatrix2(Int32 location, Int32 count, bool transpose, Single* value)
+            unsafe void Uniform4(Int32 location, Int32 count, Int32* value)
             {
-                Delegates.glUniformMatrix2fvARB((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+                Delegates.glUniform4ivARB((Int32)location, (Int32)count, (Int32*)value);
             }
 
             public static 
@@ -26532,9 +26525,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void UniformMatrix3(Int32 location, Int32 count, bool transpose, Single* value)
+            unsafe void UniformMatrix2(Int32 location, Int32 count, bool transpose, Single* value)
             {
-                Delegates.glUniformMatrix3fvARB((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+                Delegates.glUniformMatrix2fvARB((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
             }
 
             public static 
@@ -26563,9 +26556,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void UniformMatrix4(Int32 location, Int32 count, bool transpose, Single* value)
+            unsafe void UniformMatrix3(Int32 location, Int32 count, bool transpose, Single* value)
             {
-                Delegates.glUniformMatrix4fvARB((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
+                Delegates.glUniformMatrix3fvARB((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
             }
 
             public static 
@@ -26594,16 +26587,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetObjectParameter(UInt32 obj, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void UniformMatrix4(Int32 location, Int32 count, bool transpose, Single* value)
             {
-                Delegates.glGetObjectParameterfvARB((UInt32)obj, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetObjectParameter(Int32 obj, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetObjectParameterfvARB((UInt32)obj, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glUniformMatrix4fvARB((Int32)location, (Int32)count, (bool)transpose, (Single*)value);
             }
 
             [System.CLSCompliant(false)]
@@ -26660,16 +26646,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetObjectParameter(UInt32 obj, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetObjectParameter(UInt32 obj, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetObjectParameterivARB((UInt32)obj, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetObjectParameterfvARB((UInt32)obj, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetObjectParameter(Int32 obj, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetObjectParameter(Int32 obj, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetObjectParameterivARB((UInt32)obj, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetObjectParameterfvARB((UInt32)obj, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -26726,16 +26712,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetInfoLog(UInt32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
+            unsafe void GetObjectParameter(UInt32 obj, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetInfoLogARB((UInt32)obj, (Int32)maxLength, (Int32*)length, (System.Text.StringBuilder)infoLog);
+                Delegates.glGetObjectParameterivARB((UInt32)obj, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetInfoLog(Int32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
+            unsafe void GetObjectParameter(Int32 obj, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetInfoLogARB((UInt32)obj, (Int32)maxLength, (Int32*)length, (System.Text.StringBuilder)infoLog);
+                Delegates.glGetObjectParameterivARB((UInt32)obj, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -26792,16 +26778,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetAttachedObjects(UInt32 containerObj, Int32 maxCount, [Out] Int32* count, [Out] UInt32* obj)
+            unsafe void GetInfoLog(UInt32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
             {
-                Delegates.glGetAttachedObjectsARB((UInt32)containerObj, (Int32)maxCount, (Int32*)count, (UInt32*)obj);
+                Delegates.glGetInfoLogARB((UInt32)obj, (Int32)maxLength, (Int32*)length, (System.Text.StringBuilder)infoLog);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetAttachedObjects(Int32 containerObj, Int32 maxCount, [Out] Int32* count, [Out] Int32* obj)
+            unsafe void GetInfoLog(Int32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder infoLog)
             {
-                Delegates.glGetAttachedObjectsARB((UInt32)containerObj, (Int32)maxCount, (Int32*)count, (UInt32*)obj);
+                Delegates.glGetInfoLogARB((UInt32)obj, (Int32)maxLength, (Int32*)length, (System.Text.StringBuilder)infoLog);
             }
 
             [System.CLSCompliant(false)]
@@ -26864,6 +26850,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetAttachedObjects(UInt32 containerObj, Int32 maxCount, [Out] Int32* count, [Out] UInt32* obj)
+            {
+                Delegates.glGetAttachedObjectsARB((UInt32)containerObj, (Int32)maxCount, (Int32*)count, (UInt32*)obj);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetAttachedObjects(Int32 containerObj, Int32 maxCount, [Out] Int32* count, [Out] Int32* obj)
+            {
+                Delegates.glGetAttachedObjectsARB((UInt32)containerObj, (Int32)maxCount, (Int32*)count, (UInt32*)obj);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             Int32 GetUniformLocation(UInt32 programObj, System.String name)
             {
                 return Delegates.glGetUniformLocationARB((UInt32)programObj, (System.String)name);
@@ -26873,20 +26873,6 @@ namespace OpenTK.OpenGL
             Int32 GetUniformLocation(Int32 programObj, System.String name)
             {
                 return Delegates.glGetUniformLocationARB((UInt32)programObj, (System.String)name);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetActiveUniform(UInt32 programObj, UInt32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
-            {
-                Delegates.glGetActiveUniformARB((UInt32)programObj, (UInt32)index, (Int32)maxLength, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetActiveUniform(Int32 programObj, Int32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
-            {
-                Delegates.glGetActiveUniformARB((UInt32)programObj, (UInt32)index, (Int32)maxLength, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
             }
 
             [System.CLSCompliant(false)]
@@ -26955,16 +26941,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetUniform(UInt32 programObj, Int32 location, [Out] Single* @params)
+            unsafe void GetActiveUniform(UInt32 programObj, UInt32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
             {
-                Delegates.glGetUniformfvARB((UInt32)programObj, (Int32)location, (Single*)@params);
+                Delegates.glGetActiveUniformARB((UInt32)programObj, (UInt32)index, (Int32)maxLength, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetUniform(Int32 programObj, Int32 location, [Out] Single* @params)
+            unsafe void GetActiveUniform(Int32 programObj, Int32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
             {
-                Delegates.glGetUniformfvARB((UInt32)programObj, (Int32)location, (Single*)@params);
+                Delegates.glGetActiveUniformARB((UInt32)programObj, (UInt32)index, (Int32)maxLength, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
             }
 
             [System.CLSCompliant(false)]
@@ -27021,16 +27007,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetUniform(UInt32 programObj, Int32 location, [Out] Int32* @params)
+            unsafe void GetUniform(UInt32 programObj, Int32 location, [Out] Single* @params)
             {
-                Delegates.glGetUniformivARB((UInt32)programObj, (Int32)location, (Int32*)@params);
+                Delegates.glGetUniformfvARB((UInt32)programObj, (Int32)location, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetUniform(Int32 programObj, Int32 location, [Out] Int32* @params)
+            unsafe void GetUniform(Int32 programObj, Int32 location, [Out] Single* @params)
             {
-                Delegates.glGetUniformivARB((UInt32)programObj, (Int32)location, (Int32*)@params);
+                Delegates.glGetUniformfvARB((UInt32)programObj, (Int32)location, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -27087,16 +27073,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetShaderSource(UInt32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder[] source)
+            unsafe void GetUniform(UInt32 programObj, Int32 location, [Out] Int32* @params)
             {
-                Delegates.glGetShaderSourceARB((UInt32)obj, (Int32)maxLength, (Int32*)length, (System.Text.StringBuilder[])source);
+                Delegates.glGetUniformivARB((UInt32)programObj, (Int32)location, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetShaderSource(Int32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder[] source)
+            unsafe void GetUniform(Int32 programObj, Int32 location, [Out] Int32* @params)
             {
-                Delegates.glGetShaderSourceARB((UInt32)obj, (Int32)maxLength, (Int32*)length, (System.Text.StringBuilder[])source);
+                Delegates.glGetUniformivARB((UInt32)programObj, (Int32)location, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -27153,6 +27139,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetShaderSource(UInt32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder[] source)
+            {
+                Delegates.glGetShaderSourceARB((UInt32)obj, (Int32)maxLength, (Int32*)length, (System.Text.StringBuilder[])source);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetShaderSource(Int32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder[] source)
+            {
+                Delegates.glGetShaderSourceARB((UInt32)obj, (Int32)maxLength, (Int32*)length, (System.Text.StringBuilder[])source);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void BindAttribLocation(UInt32 programObj, UInt32 index, System.String name)
             {
                 Delegates.glBindAttribLocationARB((UInt32)programObj, (UInt32)index, (System.String)name);
@@ -27162,20 +27162,6 @@ namespace OpenTK.OpenGL
             void BindAttribLocation(Int32 programObj, Int32 index, System.String name)
             {
                 Delegates.glBindAttribLocationARB((UInt32)programObj, (UInt32)index, (System.String)name);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetActiveAttrib(UInt32 programObj, UInt32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
-            {
-                Delegates.glGetActiveAttribARB((UInt32)programObj, (UInt32)index, (Int32)maxLength, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetActiveAttrib(Int32 programObj, Int32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
-            {
-                Delegates.glGetActiveAttribARB((UInt32)programObj, (UInt32)index, (Int32)maxLength, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
             }
 
             [System.CLSCompliant(false)]
@@ -27244,6 +27230,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetActiveAttrib(UInt32 programObj, UInt32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
+            {
+                Delegates.glGetActiveAttribARB((UInt32)programObj, (UInt32)index, (Int32)maxLength, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetActiveAttrib(Int32 programObj, Int32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.OpenGL.Enums.All* type, [Out] System.Text.StringBuilder name)
+            {
+                Delegates.glGetActiveAttribARB((UInt32)programObj, (UInt32)index, (Int32)maxLength, (Int32*)length, (Int32*)size, (OpenTK.OpenGL.Enums.All*)type, (System.Text.StringBuilder)name);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             Int32 GetAttribLocation(UInt32 programObj, System.String name)
             {
                 return Delegates.glGetAttribLocationARB((UInt32)programObj, (System.String)name);
@@ -27253,13 +27253,6 @@ namespace OpenTK.OpenGL
             Int32 GetAttribLocation(Int32 programObj, System.String name)
             {
                 return Delegates.glGetAttribLocationARB((UInt32)programObj, (System.String)name);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DrawBuffers(Int32 n, OpenTK.OpenGL.Enums.All* bufs)
-            {
-                Delegates.glDrawBuffersARB((Int32)n, (OpenTK.OpenGL.Enums.All*)bufs);
             }
 
             public static 
@@ -27284,6 +27277,13 @@ namespace OpenTK.OpenGL
                         Delegates.glDrawBuffersARB((Int32)n, (OpenTK.OpenGL.Enums.All*)bufs_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void DrawBuffers(Int32 n, OpenTK.OpenGL.Enums.All* bufs)
+            {
+                Delegates.glDrawBuffersARB((Int32)n, (OpenTK.OpenGL.Enums.All*)bufs);
             }
 
             public static 
@@ -27462,13 +27462,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetHistogramParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
             public static 
             void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single[] @params)
             {
@@ -27496,9 +27489,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetHistogramParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetHistogramParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -27526,6 +27519,13 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetHistogramParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetHistogramParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
             public static 
             void GetMinmax(OpenTK.OpenGL.Enums.All target, bool reset, OpenTK.OpenGL.Enums.PixelFormat format, OpenTK.OpenGL.Enums.PixelType type, [Out] IntPtr values)
             {
@@ -27550,13 +27550,6 @@ namespace OpenTK.OpenGL
                         values_ptr.Free();
                     }
                 }
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetMinmaxParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetMinmaxParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -27586,9 +27579,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetMinmaxParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetMinmaxParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetMinmaxParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetMinmaxParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -27614,6 +27607,13 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetMinmaxParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetMinmaxParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -27698,13 +27698,6 @@ namespace OpenTK.OpenGL
                 Delegates.glConvolutionParameterfEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single)@params);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glConvolutionParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
             public static 
             void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single[] @params)
             {
@@ -27729,17 +27722,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
+            {
+                Delegates.glConvolutionParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+            }
+
             public static 
             void ConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32 @params)
             {
                 Delegates.glConvolutionParameteriEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
-            {
-                Delegates.glConvolutionParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -27764,6 +27757,13 @@ namespace OpenTK.OpenGL
                         Delegates.glConvolutionParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ConvolutionParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
+            {
+                Delegates.glConvolutionParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -27804,13 +27804,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetConvolutionParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
             public static 
             void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single[] @params)
             {
@@ -27838,9 +27831,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetConvolutionParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetConvolutionParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -27866,6 +27859,13 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetConvolutionParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetConvolutionParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -27941,20 +27941,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteTextures(Int32 n, UInt32* textures)
-            {
-                Delegates.glDeleteTexturesEXT((Int32)n, (UInt32*)textures);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteTextures(Int32 n, Int32* textures)
-            {
-                Delegates.glDeleteTexturesEXT((Int32)n, (UInt32*)textures);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void DeleteTextures(Int32 n, UInt32[] textures)
             {
                 unsafe
@@ -28005,16 +27991,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenTextures(Int32 n, [Out] UInt32* textures)
+            unsafe void DeleteTextures(Int32 n, UInt32* textures)
             {
-                Delegates.glGenTexturesEXT((Int32)n, (UInt32*)textures);
+                Delegates.glDeleteTexturesEXT((Int32)n, (UInt32*)textures);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenTextures(Int32 n, [Out] Int32* textures)
+            unsafe void DeleteTextures(Int32 n, Int32* textures)
             {
-                Delegates.glGenTexturesEXT((Int32)n, (UInt32*)textures);
+                Delegates.glDeleteTexturesEXT((Int32)n, (UInt32*)textures);
             }
 
             [System.CLSCompliant(false)]
@@ -28071,6 +28057,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GenTextures(Int32 n, [Out] UInt32* textures)
+            {
+                Delegates.glGenTexturesEXT((Int32)n, (UInt32*)textures);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GenTextures(Int32 n, [Out] Int32* textures)
+            {
+                Delegates.glGenTexturesEXT((Int32)n, (UInt32*)textures);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             bool IsTexture(UInt32 texture)
             {
                 return Delegates.glIsTextureEXT((UInt32)texture);
@@ -28080,20 +28080,6 @@ namespace OpenTK.OpenGL
             bool IsTexture(Int32 texture)
             {
                 return Delegates.glIsTextureEXT((UInt32)texture);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void PrioritizeTextures(Int32 n, UInt32* textures, Single* priorities)
-            {
-                Delegates.glPrioritizeTexturesEXT((Int32)n, (UInt32*)textures, (Single*)priorities);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void PrioritizeTextures(Int32 n, Int32* textures, Single* priorities)
-            {
-                Delegates.glPrioritizeTexturesEXT((Int32)n, (UInt32*)textures, (Single*)priorities);
             }
 
             [System.CLSCompliant(false)]
@@ -28150,6 +28136,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void PrioritizeTextures(Int32 n, UInt32* textures, Single* priorities)
+            {
+                Delegates.glPrioritizeTexturesEXT((Int32)n, (UInt32*)textures, (Single*)priorities);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void PrioritizeTextures(Int32 n, Int32* textures, Single* priorities)
+            {
+                Delegates.glPrioritizeTexturesEXT((Int32)n, (UInt32*)textures, (Single*)priorities);
+            }
+
             public static 
             void ColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, Int32 count, IntPtr pointer)
             {
@@ -28182,13 +28182,6 @@ namespace OpenTK.OpenGL
                 Delegates.glDrawArraysEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32)first, (Int32)count);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void EdgeFlagPointer(Int32 stride, Int32 count, bool* pointer)
-            {
-                Delegates.glEdgeFlagPointerEXT((Int32)stride, (Int32)count, (bool*)pointer);
-            }
-
             public static 
             void EdgeFlagPointer(Int32 stride, Int32 count, bool[] pointer)
             {
@@ -28211,6 +28204,13 @@ namespace OpenTK.OpenGL
                         Delegates.glEdgeFlagPointerEXT((Int32)stride, (Int32)count, (bool*)pointer_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void EdgeFlagPointer(Int32 stride, Int32 count, bool* pointer)
+            {
+                Delegates.glEdgeFlagPointerEXT((Int32)stride, (Int32)count, (bool*)pointer);
             }
 
             public static 
@@ -28355,13 +28355,6 @@ namespace OpenTK.OpenGL
                 Delegates.glPointParameterfEXT((OpenTK.OpenGL.Enums.All)pname, (Single)param);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void PointParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glPointParameterfvEXT((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
             public static 
             void PointParameterv(OpenTK.OpenGL.Enums.All pname, Single[] @params)
             {
@@ -28384,6 +28377,13 @@ namespace OpenTK.OpenGL
                         Delegates.glPointParameterfvEXT((OpenTK.OpenGL.Enums.All)pname, (Single*)@params_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void PointParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
+            {
+                Delegates.glPointParameterfvEXT((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -28470,13 +28470,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetColorTableParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
             public static 
             void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32[] @params)
             {
@@ -28504,9 +28497,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetColorTableParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetColorTableParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -28534,6 +28527,13 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            {
+                Delegates.glGetColorTableParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+            }
+
             public static 
             void IndexMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.All mode)
             {
@@ -28556,13 +28556,6 @@ namespace OpenTK.OpenGL
             void UnlockArrays()
             {
                 Delegates.glUnlockArraysEXT();
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void CullParameter(OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
-            {
-                Delegates.glCullParameterdvEXT((OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
             }
 
             public static 
@@ -28592,9 +28585,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void CullParameter(OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void CullParameter(OpenTK.OpenGL.Enums.All pname, [Out] Double* @params)
             {
-                Delegates.glCullParameterfvEXT((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glCullParameterdvEXT((OpenTK.OpenGL.Enums.All)pname, (Double*)@params);
             }
 
             public static 
@@ -28620,6 +28613,13 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void CullParameter(OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            {
+                Delegates.glCullParameterfvEXT((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -28700,13 +28700,6 @@ namespace OpenTK.OpenGL
                 Delegates.glPixelTransformParameterfEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single)param);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void PixelTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
-            {
-                Delegates.glPixelTransformParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
             public static 
             void PixelTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32[] @params)
             {
@@ -28733,9 +28726,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void PixelTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
+            unsafe void PixelTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
             {
-                Delegates.glPixelTransformParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glPixelTransformParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -28764,16 +28757,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            void SecondaryColor3(SByte red, SByte green, SByte blue)
+            unsafe void PixelTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
             {
-                Delegates.glSecondaryColor3bEXT((SByte)red, (SByte)green, (SByte)blue);
+                Delegates.glPixelTransformParameterfvEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void SecondaryColor3(SByte* v)
+            void SecondaryColor3(SByte red, SByte green, SByte blue)
             {
-                Delegates.glSecondaryColor3bvEXT((SByte*)v);
+                Delegates.glSecondaryColor3bEXT((SByte)red, (SByte)green, (SByte)blue);
             }
 
             [System.CLSCompliant(false)]
@@ -28802,17 +28795,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SecondaryColor3(SByte* v)
+            {
+                Delegates.glSecondaryColor3bvEXT((SByte*)v);
+            }
+
             public static 
             void SecondaryColor3(Double red, Double green, Double blue)
             {
                 Delegates.glSecondaryColor3dEXT((Double)red, (Double)green, (Double)blue);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SecondaryColor3(Double* v)
-            {
-                Delegates.glSecondaryColor3dvEXT((Double*)v);
             }
 
             public static 
@@ -28839,17 +28832,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SecondaryColor3(Double* v)
+            {
+                Delegates.glSecondaryColor3dvEXT((Double*)v);
+            }
+
             public static 
             void SecondaryColor3(Single red, Single green, Single blue)
             {
                 Delegates.glSecondaryColor3fEXT((Single)red, (Single)green, (Single)blue);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SecondaryColor3(Single* v)
-            {
-                Delegates.glSecondaryColor3fvEXT((Single*)v);
             }
 
             public static 
@@ -28876,17 +28869,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SecondaryColor3(Single* v)
+            {
+                Delegates.glSecondaryColor3fvEXT((Single*)v);
+            }
+
             public static 
             void SecondaryColor3(Byte red, Byte green, Byte blue)
             {
                 Delegates.glSecondaryColor3ubEXT((Byte)red, (Byte)green, (Byte)blue);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SecondaryColor3(Byte* v)
-            {
-                Delegates.glSecondaryColor3ubvEXT((Byte*)v);
             }
 
             public static 
@@ -28915,6 +28908,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void SecondaryColor3(Byte* v)
+            {
+                Delegates.glSecondaryColor3ubvEXT((Byte*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void SecondaryColor3(UInt32 red, UInt32 green, UInt32 blue)
             {
                 Delegates.glSecondaryColor3uiEXT((UInt32)red, (UInt32)green, (UInt32)blue);
@@ -28924,20 +28924,6 @@ namespace OpenTK.OpenGL
             void SecondaryColor3(Int32 red, Int32 green, Int32 blue)
             {
                 Delegates.glSecondaryColor3uiEXT((UInt32)red, (UInt32)green, (UInt32)blue);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SecondaryColor3(UInt32* v)
-            {
-                Delegates.glSecondaryColor3uivEXT((UInt32*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SecondaryColor3(Int32* v)
-            {
-                Delegates.glSecondaryColor3uivEXT((UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -28992,6 +28978,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void SecondaryColor3(UInt32* v)
+            {
+                Delegates.glSecondaryColor3uivEXT((UInt32*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SecondaryColor3(Int32* v)
+            {
+                Delegates.glSecondaryColor3uivEXT((UInt32*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void SecondaryColor3(UInt16 red, UInt16 green, UInt16 blue)
             {
                 Delegates.glSecondaryColor3usEXT((UInt16)red, (UInt16)green, (UInt16)blue);
@@ -29001,20 +29001,6 @@ namespace OpenTK.OpenGL
             void SecondaryColor3(Int16 red, Int16 green, Int16 blue)
             {
                 Delegates.glSecondaryColor3usEXT((UInt16)red, (UInt16)green, (UInt16)blue);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SecondaryColor3(UInt16* v)
-            {
-                Delegates.glSecondaryColor3usvEXT((UInt16*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SecondaryColor3(Int16* v)
-            {
-                Delegates.glSecondaryColor3usvEXT((UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -29067,6 +29053,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SecondaryColor3(UInt16* v)
+            {
+                Delegates.glSecondaryColor3usvEXT((UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SecondaryColor3(Int16* v)
+            {
+                Delegates.glSecondaryColor3usvEXT((UInt16*)v);
+            }
+
             public static 
             void SecondaryColorPointer(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, IntPtr pointer)
             {
@@ -29099,13 +29099,6 @@ namespace OpenTK.OpenGL
                 Delegates.glTextureNormalEXT((OpenTK.OpenGL.Enums.All)mode);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiDrawArrays(OpenTK.OpenGL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount)
-            {
-                Delegates.glMultiDrawArraysEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)first, (Int32*)count, (Int32)primcount);
-            }
-
             public static 
             void MultiDrawArrays(OpenTK.OpenGL.Enums.BeginMode mode, [Out] Int32[] first, [Out] Int32[] count, Int32 primcount)
             {
@@ -29136,24 +29129,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount)
+            unsafe void MultiDrawArrays(OpenTK.OpenGL.Enums.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount)
             {
-                Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount)
-            {
-                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
-                }
-                finally
-                {
-                    indices_ptr.Free();
-                }
+                Delegates.glMultiDrawArraysEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)first, (Int32*)count, (Int32)primcount);
             }
 
             public static 
@@ -29220,17 +29198,32 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
             public static 
-            void FogCoord(Single coord)
+            unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount)
             {
-                Delegates.glFogCoordfEXT((Single)coord);
+                Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void FogCoordv(Single* coord)
+            unsafe void MultiDrawElements(OpenTK.OpenGL.Enums.BeginMode mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount)
             {
-                Delegates.glFogCoordfvEXT((Single*)coord);
+                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glMultiDrawElementsEXT((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount);
+                }
+                finally
+                {
+                    indices_ptr.Free();
+                }
+            }
+
+            public static 
+            void FogCoord(Single coord)
+            {
+                Delegates.glFogCoordfEXT((Single)coord);
             }
 
             public static 
@@ -29257,17 +29250,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void FogCoordv(Single* coord)
+            {
+                Delegates.glFogCoordfvEXT((Single*)coord);
+            }
+
             public static 
             void FogCoord(Double coord)
             {
                 Delegates.glFogCoorddEXT((Double)coord);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void FogCoordv(Double* coord)
-            {
-                Delegates.glFogCoorddvEXT((Double*)coord);
             }
 
             public static 
@@ -29292,6 +29285,13 @@ namespace OpenTK.OpenGL
                         Delegates.glFogCoorddvEXT((Double*)coord_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void FogCoordv(Double* coord)
+            {
+                Delegates.glFogCoorddvEXT((Double*)coord);
             }
 
             public static 
@@ -29331,20 +29331,6 @@ namespace OpenTK.OpenGL
             void Tangent3(Byte tx, Byte ty, Byte tz)
             {
                 Delegates.glTangent3bEXT((SByte)tx, (SByte)ty, (SByte)tz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Tangent3(SByte* v)
-            {
-                Delegates.glTangent3bvEXT((SByte*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Tangent3(Byte* v)
-            {
-                Delegates.glTangent3bvEXT((SByte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -29397,17 +29383,24 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
             public static 
-            void Tangent3(Double tx, Double ty, Double tz)
+            unsafe void Tangent3(SByte* v)
             {
-                Delegates.glTangent3dEXT((Double)tx, (Double)ty, (Double)tz);
+                Delegates.glTangent3bvEXT((SByte*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Tangent3(Double* v)
+            unsafe void Tangent3(Byte* v)
             {
-                Delegates.glTangent3dvEXT((Double*)v);
+                Delegates.glTangent3bvEXT((SByte*)v);
+            }
+
+            public static 
+            void Tangent3(Double tx, Double ty, Double tz)
+            {
+                Delegates.glTangent3dEXT((Double)tx, (Double)ty, (Double)tz);
             }
 
             public static 
@@ -29434,17 +29427,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Tangent3(Double* v)
+            {
+                Delegates.glTangent3dvEXT((Double*)v);
+            }
+
             public static 
             void Tangent3(Single tx, Single ty, Single tz)
             {
                 Delegates.glTangent3fEXT((Single)tx, (Single)ty, (Single)tz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Tangent3(Single* v)
-            {
-                Delegates.glTangent3fvEXT((Single*)v);
             }
 
             public static 
@@ -29471,17 +29464,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Tangent3(Single* v)
+            {
+                Delegates.glTangent3fvEXT((Single*)v);
+            }
+
             public static 
             void Tangent3(Int32 tx, Int32 ty, Int32 tz)
             {
                 Delegates.glTangent3iEXT((Int32)tx, (Int32)ty, (Int32)tz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Tangent3(Int32* v)
-            {
-                Delegates.glTangent3ivEXT((Int32*)v);
             }
 
             public static 
@@ -29508,17 +29501,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Tangent3(Int32* v)
+            {
+                Delegates.glTangent3ivEXT((Int32*)v);
+            }
+
             public static 
             void Tangent3(Int16 tx, Int16 ty, Int16 tz)
             {
                 Delegates.glTangent3sEXT((Int16)tx, (Int16)ty, (Int16)tz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Tangent3(Int16* v)
-            {
-                Delegates.glTangent3svEXT((Int16*)v);
             }
 
             public static 
@@ -29547,6 +29540,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void Tangent3(Int16* v)
+            {
+                Delegates.glTangent3svEXT((Int16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void Binormal3(SByte bx, SByte by, SByte bz)
             {
                 Delegates.glBinormal3bEXT((SByte)bx, (SByte)by, (SByte)bz);
@@ -29556,20 +29556,6 @@ namespace OpenTK.OpenGL
             void Binormal3(Byte bx, Byte by, Byte bz)
             {
                 Delegates.glBinormal3bEXT((SByte)bx, (SByte)by, (SByte)bz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Binormal3(SByte* v)
-            {
-                Delegates.glBinormal3bvEXT((SByte*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Binormal3(Byte* v)
-            {
-                Delegates.glBinormal3bvEXT((SByte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -29622,17 +29608,24 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
             public static 
-            void Binormal3(Double bx, Double by, Double bz)
+            unsafe void Binormal3(SByte* v)
             {
-                Delegates.glBinormal3dEXT((Double)bx, (Double)by, (Double)bz);
+                Delegates.glBinormal3bvEXT((SByte*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Binormal3(Double* v)
+            unsafe void Binormal3(Byte* v)
             {
-                Delegates.glBinormal3dvEXT((Double*)v);
+                Delegates.glBinormal3bvEXT((SByte*)v);
+            }
+
+            public static 
+            void Binormal3(Double bx, Double by, Double bz)
+            {
+                Delegates.glBinormal3dEXT((Double)bx, (Double)by, (Double)bz);
             }
 
             public static 
@@ -29659,17 +29652,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Binormal3(Double* v)
+            {
+                Delegates.glBinormal3dvEXT((Double*)v);
+            }
+
             public static 
             void Binormal3(Single bx, Single by, Single bz)
             {
                 Delegates.glBinormal3fEXT((Single)bx, (Single)by, (Single)bz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Binormal3(Single* v)
-            {
-                Delegates.glBinormal3fvEXT((Single*)v);
             }
 
             public static 
@@ -29696,17 +29689,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Binormal3(Single* v)
+            {
+                Delegates.glBinormal3fvEXT((Single*)v);
+            }
+
             public static 
             void Binormal3(Int32 bx, Int32 by, Int32 bz)
             {
                 Delegates.glBinormal3iEXT((Int32)bx, (Int32)by, (Int32)bz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Binormal3(Int32* v)
-            {
-                Delegates.glBinormal3ivEXT((Int32*)v);
             }
 
             public static 
@@ -29733,17 +29726,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Binormal3(Int32* v)
+            {
+                Delegates.glBinormal3ivEXT((Int32*)v);
+            }
+
             public static 
             void Binormal3(Int16 bx, Int16 by, Int16 bz)
             {
                 Delegates.glBinormal3sEXT((Int16)bx, (Int16)by, (Int16)bz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Binormal3(Int16* v)
-            {
-                Delegates.glBinormal3svEXT((Int16*)v);
             }
 
             public static 
@@ -29768,6 +29761,13 @@ namespace OpenTK.OpenGL
                         Delegates.glBinormal3svEXT((Int16*)v_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Binormal3(Int16* v)
+            {
+                Delegates.glBinormal3svEXT((Int16*)v);
             }
 
             public static 
@@ -29834,13 +29834,6 @@ namespace OpenTK.OpenGL
                 Delegates.glVertexWeightfEXT((Single)weight);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexWeightv(Single* weight)
-            {
-                Delegates.glVertexWeightfvEXT((Single*)weight);
-            }
-
             public static 
             void VertexWeightv(Single[] weight)
             {
@@ -29863,6 +29856,13 @@ namespace OpenTK.OpenGL
                         Delegates.glVertexWeightfvEXT((Single*)weight_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexWeightv(Single* weight)
+            {
+                Delegates.glVertexWeightfvEXT((Single*)weight);
             }
 
             public static 
@@ -30034,13 +30034,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(UInt32 id, SByte* addr)
-            {
-                Delegates.glVariantbvEXT((UInt32)id, (SByte*)addr);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void Variant(UInt32 id, SByte[] addr)
             {
                 unsafe
@@ -30067,9 +30060,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(UInt32 id, Int16* addr)
+            unsafe void Variant(UInt32 id, SByte* addr)
             {
-                Delegates.glVariantsvEXT((UInt32)id, (Int16*)addr);
+                Delegates.glVariantbvEXT((UInt32)id, (SByte*)addr);
             }
 
             [System.CLSCompliant(false)]
@@ -30100,9 +30093,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(UInt32 id, Int32* addr)
+            unsafe void Variant(UInt32 id, Int16* addr)
             {
-                Delegates.glVariantivEXT((UInt32)id, (Int32*)addr);
+                Delegates.glVariantsvEXT((UInt32)id, (Int16*)addr);
             }
 
             [System.CLSCompliant(false)]
@@ -30133,16 +30126,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(UInt32 id, Single* addr)
+            unsafe void Variant(UInt32 id, Int32* addr)
             {
-                Delegates.glVariantfvEXT((UInt32)id, (Single*)addr);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Variant(Int32 id, Single* addr)
-            {
-                Delegates.glVariantfvEXT((UInt32)id, (Single*)addr);
+                Delegates.glVariantivEXT((UInt32)id, (Int32*)addr);
             }
 
             [System.CLSCompliant(false)]
@@ -30197,16 +30183,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(UInt32 id, Double* addr)
+            unsafe void Variant(UInt32 id, Single* addr)
             {
-                Delegates.glVariantdvEXT((UInt32)id, (Double*)addr);
+                Delegates.glVariantfvEXT((UInt32)id, (Single*)addr);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(Int32 id, Double* addr)
+            unsafe void Variant(Int32 id, Single* addr)
             {
-                Delegates.glVariantdvEXT((UInt32)id, (Double*)addr);
+                Delegates.glVariantfvEXT((UInt32)id, (Single*)addr);
             }
 
             [System.CLSCompliant(false)]
@@ -30261,16 +30247,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(UInt32 id, Byte* addr)
+            unsafe void Variant(UInt32 id, Double* addr)
             {
-                Delegates.glVariantubvEXT((UInt32)id, (Byte*)addr);
+                Delegates.glVariantdvEXT((UInt32)id, (Double*)addr);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(Int32 id, Byte* addr)
+            unsafe void Variant(Int32 id, Double* addr)
             {
-                Delegates.glVariantubvEXT((UInt32)id, (Byte*)addr);
+                Delegates.glVariantdvEXT((UInt32)id, (Double*)addr);
             }
 
             [System.CLSCompliant(false)]
@@ -30325,16 +30311,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(UInt32 id, UInt16* addr)
+            unsafe void Variant(UInt32 id, Byte* addr)
             {
-                Delegates.glVariantusvEXT((UInt32)id, (UInt16*)addr);
+                Delegates.glVariantubvEXT((UInt32)id, (Byte*)addr);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(Int32 id, Int16* addr)
+            unsafe void Variant(Int32 id, Byte* addr)
             {
-                Delegates.glVariantusvEXT((UInt32)id, (UInt16*)addr);
+                Delegates.glVariantubvEXT((UInt32)id, (Byte*)addr);
             }
 
             [System.CLSCompliant(false)]
@@ -30389,16 +30375,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(UInt32 id, UInt32* addr)
+            unsafe void Variant(UInt32 id, UInt16* addr)
             {
-                Delegates.glVariantuivEXT((UInt32)id, (UInt32*)addr);
+                Delegates.glVariantusvEXT((UInt32)id, (UInt16*)addr);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Variant(Int32 id, Int32* addr)
+            unsafe void Variant(Int32 id, Int16* addr)
             {
-                Delegates.glVariantuivEXT((UInt32)id, (UInt32*)addr);
+                Delegates.glVariantusvEXT((UInt32)id, (UInt16*)addr);
             }
 
             [System.CLSCompliant(false)]
@@ -30449,6 +30435,20 @@ namespace OpenTK.OpenGL
                         Delegates.glVariantuivEXT((UInt32)id, (UInt32*)addr_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Variant(UInt32 id, UInt32* addr)
+            {
+                Delegates.glVariantuivEXT((UInt32)id, (UInt32*)addr);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Variant(Int32 id, Int32* addr)
+            {
+                Delegates.glVariantuivEXT((UInt32)id, (UInt32*)addr);
             }
 
             [System.CLSCompliant(false)]
@@ -30576,20 +30576,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVariantBoolean(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
-            {
-                Delegates.glGetVariantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetVariantBoolean(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
-            {
-                Delegates.glGetVariantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void GetVariantBoolean(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] bool[] data)
             {
                 unsafe
@@ -30642,16 +30628,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVariantInteger(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
+            unsafe void GetVariantBoolean(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
             {
-                Delegates.glGetVariantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
+                Delegates.glGetVariantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVariantInteger(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
+            unsafe void GetVariantBoolean(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
             {
-                Delegates.glGetVariantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
+                Delegates.glGetVariantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -30708,16 +30694,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVariantFloat(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            unsafe void GetVariantInteger(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
             {
-                Delegates.glGetVariantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
+                Delegates.glGetVariantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVariantFloat(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            unsafe void GetVariantInteger(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
             {
-                Delegates.glGetVariantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
+                Delegates.glGetVariantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -30770,6 +30756,20 @@ namespace OpenTK.OpenGL
                         data = *data_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetVariantFloat(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            {
+                Delegates.glGetVariantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetVariantFloat(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            {
+                Delegates.glGetVariantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -30828,20 +30828,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetInvariantBoolean(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
-            {
-                Delegates.glGetInvariantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetInvariantBoolean(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
-            {
-                Delegates.glGetInvariantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void GetInvariantBoolean(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] bool[] data)
             {
                 unsafe
@@ -30894,16 +30880,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetInvariantInteger(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
+            unsafe void GetInvariantBoolean(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
             {
-                Delegates.glGetInvariantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
+                Delegates.glGetInvariantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetInvariantInteger(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
+            unsafe void GetInvariantBoolean(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
             {
-                Delegates.glGetInvariantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
+                Delegates.glGetInvariantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -30960,16 +30946,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetInvariantFloat(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            unsafe void GetInvariantInteger(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
             {
-                Delegates.glGetInvariantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
+                Delegates.glGetInvariantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetInvariantFloat(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            unsafe void GetInvariantInteger(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
             {
-                Delegates.glGetInvariantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
+                Delegates.glGetInvariantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -31026,16 +31012,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetLocalConstantBoolean(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
+            unsafe void GetInvariantFloat(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
             {
-                Delegates.glGetLocalConstantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
+                Delegates.glGetInvariantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetLocalConstantBoolean(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
+            unsafe void GetInvariantFloat(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
             {
-                Delegates.glGetLocalConstantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
+                Delegates.glGetInvariantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -31092,16 +31078,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetLocalConstantInteger(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
+            unsafe void GetLocalConstantBoolean(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
             {
-                Delegates.glGetLocalConstantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
+                Delegates.glGetLocalConstantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetLocalConstantInteger(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
+            unsafe void GetLocalConstantBoolean(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] bool* data)
             {
-                Delegates.glGetLocalConstantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
+                Delegates.glGetLocalConstantBooleanvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (bool*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -31158,16 +31144,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetLocalConstantFloat(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            unsafe void GetLocalConstantInteger(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
             {
-                Delegates.glGetLocalConstantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
+                Delegates.glGetLocalConstantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetLocalConstantFloat(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            unsafe void GetLocalConstantInteger(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Int32* data)
             {
-                Delegates.glGetLocalConstantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
+                Delegates.glGetLocalConstantIntegervEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Int32*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -31222,6 +31208,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetLocalConstantFloat(UInt32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            {
+                Delegates.glGetLocalConstantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetLocalConstantFloat(Int32 id, OpenTK.OpenGL.Enums.All value, [Out] Single* data)
+            {
+                Delegates.glGetLocalConstantFloatvEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)value, (Single*)data);
+            }
+
             public static 
             void ActiveStencilFace(OpenTK.OpenGL.Enums.All face)
             {
@@ -31264,20 +31264,6 @@ namespace OpenTK.OpenGL
             void BindRenderbuffer(OpenTK.OpenGL.Enums.All target, Int32 renderbuffer)
             {
                 Delegates.glBindRenderbufferEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)renderbuffer);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteRenderbuffers(Int32 n, UInt32* renderbuffers)
-            {
-                Delegates.glDeleteRenderbuffersEXT((Int32)n, (UInt32*)renderbuffers);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteRenderbuffers(Int32 n, Int32* renderbuffers)
-            {
-                Delegates.glDeleteRenderbuffersEXT((Int32)n, (UInt32*)renderbuffers);
             }
 
             [System.CLSCompliant(false)]
@@ -31332,16 +31318,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenRenderbuffers(Int32 n, [Out] UInt32* renderbuffers)
+            unsafe void DeleteRenderbuffers(Int32 n, UInt32* renderbuffers)
             {
-                Delegates.glGenRenderbuffersEXT((Int32)n, (UInt32*)renderbuffers);
+                Delegates.glDeleteRenderbuffersEXT((Int32)n, (UInt32*)renderbuffers);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenRenderbuffers(Int32 n, [Out] Int32* renderbuffers)
+            unsafe void DeleteRenderbuffers(Int32 n, Int32* renderbuffers)
             {
-                Delegates.glGenRenderbuffersEXT((Int32)n, (UInt32*)renderbuffers);
+                Delegates.glDeleteRenderbuffersEXT((Int32)n, (UInt32*)renderbuffers);
             }
 
             [System.CLSCompliant(false)]
@@ -31396,17 +31382,24 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
             public static 
-            void RenderbufferStorage(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All internalformat, Int32 width, Int32 height)
+            unsafe void GenRenderbuffers(Int32 n, [Out] UInt32* renderbuffers)
             {
-                Delegates.glRenderbufferStorageEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)internalformat, (Int32)width, (Int32)height);
+                Delegates.glGenRenderbuffersEXT((Int32)n, (UInt32*)renderbuffers);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetRenderbufferParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GenRenderbuffers(Int32 n, [Out] Int32* renderbuffers)
             {
-                Delegates.glGetRenderbufferParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGenRenderbuffersEXT((Int32)n, (UInt32*)renderbuffers);
+            }
+
+            public static 
+            void RenderbufferStorage(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All internalformat, Int32 width, Int32 height)
+            {
+                Delegates.glRenderbufferStorageEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)internalformat, (Int32)width, (Int32)height);
             }
 
             public static 
@@ -31436,6 +31429,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetRenderbufferParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetRenderbufferParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             bool IsFramebuffer(UInt32 framebuffer)
             {
                 return Delegates.glIsFramebufferEXT((UInt32)framebuffer);
@@ -31458,20 +31458,6 @@ namespace OpenTK.OpenGL
             void BindFramebuffer(OpenTK.OpenGL.Enums.All target, Int32 framebuffer)
             {
                 Delegates.glBindFramebufferEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)framebuffer);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteFramebuffers(Int32 n, UInt32* framebuffers)
-            {
-                Delegates.glDeleteFramebuffersEXT((Int32)n, (UInt32*)framebuffers);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteFramebuffers(Int32 n, Int32* framebuffers)
-            {
-                Delegates.glDeleteFramebuffersEXT((Int32)n, (UInt32*)framebuffers);
             }
 
             [System.CLSCompliant(false)]
@@ -31526,16 +31512,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenFramebuffers(Int32 n, [Out] UInt32* framebuffers)
+            unsafe void DeleteFramebuffers(Int32 n, UInt32* framebuffers)
             {
-                Delegates.glGenFramebuffersEXT((Int32)n, (UInt32*)framebuffers);
+                Delegates.glDeleteFramebuffersEXT((Int32)n, (UInt32*)framebuffers);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenFramebuffers(Int32 n, [Out] Int32* framebuffers)
+            unsafe void DeleteFramebuffers(Int32 n, Int32* framebuffers)
             {
-                Delegates.glGenFramebuffersEXT((Int32)n, (UInt32*)framebuffers);
+                Delegates.glDeleteFramebuffersEXT((Int32)n, (UInt32*)framebuffers);
             }
 
             [System.CLSCompliant(false)]
@@ -31588,6 +31574,20 @@ namespace OpenTK.OpenGL
                         framebuffers = *framebuffers_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GenFramebuffers(Int32 n, [Out] UInt32* framebuffers)
+            {
+                Delegates.glGenFramebuffersEXT((Int32)n, (UInt32*)framebuffers);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GenFramebuffers(Int32 n, [Out] Int32* framebuffers)
+            {
+                Delegates.glGenFramebuffersEXT((Int32)n, (UInt32*)framebuffers);
             }
 
             public static 
@@ -31648,13 +31648,6 @@ namespace OpenTK.OpenGL
                 Delegates.glFramebufferRenderbufferEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)attachment, (OpenTK.OpenGL.Enums.All)renderbuffertarget, (UInt32)renderbuffer);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetFramebufferAttachmentParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All attachment, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetFramebufferAttachmentParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)attachment, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
             public static 
             void GetFramebufferAttachmentParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All attachment, OpenTK.OpenGL.Enums.All pname, [Out] Int32[] @params)
             {
@@ -31678,6 +31671,13 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetFramebufferAttachmentParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All attachment, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetFramebufferAttachmentParameterivEXT((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)attachment, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -31709,20 +31709,6 @@ namespace OpenTK.OpenGL
             void RenderbufferStorageMultisample(OpenTK.OpenGL.Enums.All target, Int32 samples, OpenTK.OpenGL.Enums.All internalformat, Int32 width, Int32 height)
             {
                 Delegates.glRenderbufferStorageMultisampleEXT((OpenTK.OpenGL.Enums.All)target, (Int32)samples, (OpenTK.OpenGL.Enums.All)internalformat, (Int32)width, (Int32)height);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetQueryObjecti64(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int64* @params)
-            {
-                Delegates.glGetQueryObjecti64vEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int64*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetQueryObjecti64(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int64* @params)
-            {
-                Delegates.glGetQueryObjecti64vEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int64*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -31779,16 +31765,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetQueryObjectui64(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] UInt64* @params)
+            unsafe void GetQueryObjecti64(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int64* @params)
             {
-                Delegates.glGetQueryObjectui64vEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt64*)@params);
+                Delegates.glGetQueryObjecti64vEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int64*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetQueryObjectui64(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int64* @params)
+            unsafe void GetQueryObjecti64(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int64* @params)
             {
-                Delegates.glGetQueryObjectui64vEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt64*)@params);
+                Delegates.glGetQueryObjecti64vEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int64*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -31845,16 +31831,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramEnvParameters4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, Single* @params)
+            unsafe void GetQueryObjectui64(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] UInt64* @params)
             {
-                Delegates.glProgramEnvParameters4fvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Single*)@params);
+                Delegates.glGetQueryObjectui64vEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt64*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramEnvParameters4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Single* @params)
+            unsafe void GetQueryObjectui64(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int64* @params)
             {
-                Delegates.glProgramEnvParameters4fvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Single*)@params);
+                Delegates.glGetQueryObjectui64vEXT((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (UInt64*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -31909,16 +31895,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramLocalParameters4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, Single* @params)
+            unsafe void ProgramEnvParameters4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, Single* @params)
             {
-                Delegates.glProgramLocalParameters4fvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Single*)@params);
+                Delegates.glProgramEnvParameters4fvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ProgramLocalParameters4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Single* @params)
+            unsafe void ProgramEnvParameters4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Single* @params)
             {
-                Delegates.glProgramLocalParameters4fvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Single*)@params);
+                Delegates.glProgramEnvParameters4fvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -31969,6 +31955,20 @@ namespace OpenTK.OpenGL
                         Delegates.glProgramLocalParameters4fvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Single*)@params_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramLocalParameters4(OpenTK.OpenGL.Enums.All target, UInt32 index, Int32 count, Single* @params)
+            {
+                Delegates.glProgramLocalParameters4fvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Single*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ProgramLocalParameters4(OpenTK.OpenGL.Enums.All target, Int32 index, Int32 count, Single* @params)
+            {
+                Delegates.glProgramLocalParameters4fvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32)count, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -32105,13 +32105,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI1v(UInt32 index, Int32* v)
-            {
-                Delegates.glVertexAttribI1ivEXT((UInt32)index, (Int32*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void VertexAttribI1v(UInt32 index, Int32[] v)
             {
                 unsafe
@@ -32138,9 +32131,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI2(UInt32 index, Int32* v)
+            unsafe void VertexAttribI1v(UInt32 index, Int32* v)
             {
-                Delegates.glVertexAttribI2ivEXT((UInt32)index, (Int32*)v);
+                Delegates.glVertexAttribI1ivEXT((UInt32)index, (Int32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32171,9 +32164,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI3(UInt32 index, Int32* v)
+            unsafe void VertexAttribI2(UInt32 index, Int32* v)
             {
-                Delegates.glVertexAttribI3ivEXT((UInt32)index, (Int32*)v);
+                Delegates.glVertexAttribI2ivEXT((UInt32)index, (Int32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32204,9 +32197,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI4(UInt32 index, Int32* v)
+            unsafe void VertexAttribI3(UInt32 index, Int32* v)
             {
-                Delegates.glVertexAttribI4ivEXT((UInt32)index, (Int32*)v);
+                Delegates.glVertexAttribI3ivEXT((UInt32)index, (Int32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32237,16 +32230,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI1v(UInt32 index, UInt32* v)
+            unsafe void VertexAttribI4(UInt32 index, Int32* v)
             {
-                Delegates.glVertexAttribI1uivEXT((UInt32)index, (UInt32*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttribI1v(Int32 index, Int32* v)
-            {
-                Delegates.glVertexAttribI1uivEXT((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttribI4ivEXT((UInt32)index, (Int32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32301,16 +32287,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI2(UInt32 index, UInt32* v)
+            unsafe void VertexAttribI1v(UInt32 index, UInt32* v)
             {
-                Delegates.glVertexAttribI2uivEXT((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttribI1uivEXT((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI2(Int32 index, Int32* v)
+            unsafe void VertexAttribI1v(Int32 index, Int32* v)
             {
-                Delegates.glVertexAttribI2uivEXT((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttribI1uivEXT((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32365,16 +32351,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI3(UInt32 index, UInt32* v)
+            unsafe void VertexAttribI2(UInt32 index, UInt32* v)
             {
-                Delegates.glVertexAttribI3uivEXT((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttribI2uivEXT((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI3(Int32 index, Int32* v)
+            unsafe void VertexAttribI2(Int32 index, Int32* v)
             {
-                Delegates.glVertexAttribI3uivEXT((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttribI2uivEXT((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32429,16 +32415,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI4(UInt32 index, UInt32* v)
+            unsafe void VertexAttribI3(UInt32 index, UInt32* v)
             {
-                Delegates.glVertexAttribI4uivEXT((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttribI3uivEXT((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI4(Int32 index, Int32* v)
+            unsafe void VertexAttribI3(Int32 index, Int32* v)
             {
-                Delegates.glVertexAttribI4uivEXT((UInt32)index, (UInt32*)v);
+                Delegates.glVertexAttribI3uivEXT((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32493,9 +32479,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI4(UInt32 index, SByte* v)
+            unsafe void VertexAttribI4(UInt32 index, UInt32* v)
             {
-                Delegates.glVertexAttribI4bvEXT((UInt32)index, (SByte*)v);
+                Delegates.glVertexAttribI4uivEXT((UInt32)index, (UInt32*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttribI4(Int32 index, Int32* v)
+            {
+                Delegates.glVertexAttribI4uivEXT((UInt32)index, (UInt32*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32526,9 +32519,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI4(UInt32 index, Int16* v)
+            unsafe void VertexAttribI4(UInt32 index, SByte* v)
             {
-                Delegates.glVertexAttribI4svEXT((UInt32)index, (Int16*)v);
+                Delegates.glVertexAttribI4bvEXT((UInt32)index, (SByte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32559,16 +32552,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI4(UInt32 index, Byte* v)
+            unsafe void VertexAttribI4(UInt32 index, Int16* v)
             {
-                Delegates.glVertexAttribI4ubvEXT((UInt32)index, (Byte*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexAttribI4(Int32 index, Byte* v)
-            {
-                Delegates.glVertexAttribI4ubvEXT((UInt32)index, (Byte*)v);
+                Delegates.glVertexAttribI4svEXT((UInt32)index, (Int16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32623,16 +32609,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI4(UInt32 index, UInt16* v)
+            unsafe void VertexAttribI4(UInt32 index, Byte* v)
             {
-                Delegates.glVertexAttribI4usvEXT((UInt32)index, (UInt16*)v);
+                Delegates.glVertexAttribI4ubvEXT((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexAttribI4(Int32 index, Int16* v)
+            unsafe void VertexAttribI4(Int32 index, Byte* v)
             {
-                Delegates.glVertexAttribI4usvEXT((UInt32)index, (UInt16*)v);
+                Delegates.glVertexAttribI4ubvEXT((UInt32)index, (Byte*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32683,6 +32669,20 @@ namespace OpenTK.OpenGL
                         Delegates.glVertexAttribI4usvEXT((UInt32)index, (UInt16*)v_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttribI4(UInt32 index, UInt16* v)
+            {
+                Delegates.glVertexAttribI4usvEXT((UInt32)index, (UInt16*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexAttribI4(Int32 index, Int16* v)
+            {
+                Delegates.glVertexAttribI4usvEXT((UInt32)index, (UInt16*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -32741,13 +32741,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttribI(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetVertexAttribIivEXT((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void GetVertexAttribI(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32[] @params)
             {
                 unsafe
@@ -32775,16 +32768,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttribI(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] UInt32* @params)
+            unsafe void GetVertexAttribI(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetVertexAttribIuivEXT((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetVertexAttribI(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
-            {
-                Delegates.glGetVertexAttribIuivEXT((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
+                Delegates.glGetVertexAttribIivEXT((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -32841,16 +32827,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetUniform(UInt32 program, Int32 location, [Out] UInt32* @params)
+            unsafe void GetVertexAttribI(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] UInt32* @params)
             {
-                Delegates.glGetUniformuivEXT((UInt32)program, (Int32)location, (UInt32*)@params);
+                Delegates.glGetVertexAttribIuivEXT((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetUniform(Int32 program, Int32 location, [Out] Int32* @params)
+            unsafe void GetVertexAttribI(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetUniformuivEXT((UInt32)program, (Int32)location, (UInt32*)@params);
+                Delegates.glGetVertexAttribIuivEXT((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -32903,6 +32889,20 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetUniform(UInt32 program, Int32 location, [Out] UInt32* @params)
+            {
+                Delegates.glGetUniformuivEXT((UInt32)program, (Int32)location, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetUniform(Int32 program, Int32 location, [Out] Int32* @params)
+            {
+                Delegates.glGetUniformuivEXT((UInt32)program, (Int32)location, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -32985,20 +32985,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform1(Int32 location, Int32 count, UInt32* value)
-            {
-                Delegates.glUniform1uivEXT((Int32)location, (Int32)count, (UInt32*)value);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Uniform1(Int32 location, Int32 count, Int32* value)
-            {
-                Delegates.glUniform1uivEXT((Int32)location, (Int32)count, (UInt32*)value);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void Uniform1(Int32 location, Int32 count, UInt32[] value)
             {
                 unsafe
@@ -33049,16 +33035,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform2v(Int32 location, Int32 count, UInt32* value)
+            unsafe void Uniform1(Int32 location, Int32 count, UInt32* value)
             {
-                Delegates.glUniform2uivEXT((Int32)location, (Int32)count, (UInt32*)value);
+                Delegates.glUniform1uivEXT((Int32)location, (Int32)count, (UInt32*)value);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform2v(Int32 location, Int32 count, Int32* value)
+            unsafe void Uniform1(Int32 location, Int32 count, Int32* value)
             {
-                Delegates.glUniform2uivEXT((Int32)location, (Int32)count, (UInt32*)value);
+                Delegates.glUniform1uivEXT((Int32)location, (Int32)count, (UInt32*)value);
             }
 
             [System.CLSCompliant(false)]
@@ -33113,16 +33099,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform3(Int32 location, Int32 count, UInt32* value)
+            unsafe void Uniform2v(Int32 location, Int32 count, UInt32* value)
             {
-                Delegates.glUniform3uivEXT((Int32)location, (Int32)count, (UInt32*)value);
+                Delegates.glUniform2uivEXT((Int32)location, (Int32)count, (UInt32*)value);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform3(Int32 location, Int32 count, Int32* value)
+            unsafe void Uniform2v(Int32 location, Int32 count, Int32* value)
             {
-                Delegates.glUniform3uivEXT((Int32)location, (Int32)count, (UInt32*)value);
+                Delegates.glUniform2uivEXT((Int32)location, (Int32)count, (UInt32*)value);
             }
 
             [System.CLSCompliant(false)]
@@ -33177,16 +33163,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform4(Int32 location, Int32 count, UInt32* value)
+            unsafe void Uniform3(Int32 location, Int32 count, UInt32* value)
             {
-                Delegates.glUniform4uivEXT((Int32)location, (Int32)count, (UInt32*)value);
+                Delegates.glUniform3uivEXT((Int32)location, (Int32)count, (UInt32*)value);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void Uniform4(Int32 location, Int32 count, Int32* value)
+            unsafe void Uniform3(Int32 location, Int32 count, Int32* value)
             {
-                Delegates.glUniform4uivEXT((Int32)location, (Int32)count, (UInt32*)value);
+                Delegates.glUniform3uivEXT((Int32)location, (Int32)count, (UInt32*)value);
             }
 
             [System.CLSCompliant(false)]
@@ -33237,6 +33223,20 @@ namespace OpenTK.OpenGL
                         Delegates.glUniform4uivEXT((Int32)location, (Int32)count, (UInt32*)value_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Uniform4(Int32 location, Int32 count, UInt32* value)
+            {
+                Delegates.glUniform4uivEXT((Int32)location, (Int32)count, (UInt32*)value);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Uniform4(Int32 location, Int32 count, Int32* value)
+            {
+                Delegates.glUniform4uivEXT((Int32)location, (Int32)count, (UInt32*)value);
             }
 
             public static 
@@ -33299,20 +33299,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetBooleanIndexed(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] bool* data)
-            {
-                Delegates.glGetBooleanIndexedvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (bool*)data);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetBooleanIndexed(OpenTK.OpenGL.Enums.All target, Int32 index, [Out] bool* data)
-            {
-                Delegates.glGetBooleanIndexedvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (bool*)data);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void GetBooleanIndexed(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] bool[] data)
             {
                 unsafe
@@ -33365,16 +33351,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetIntegerIndexed(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] Int32* data)
+            unsafe void GetBooleanIndexed(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] bool* data)
             {
-                Delegates.glGetIntegerIndexedvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)data);
+                Delegates.glGetBooleanIndexedvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (bool*)data);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetIntegerIndexed(OpenTK.OpenGL.Enums.All target, Int32 index, [Out] Int32* data)
+            unsafe void GetBooleanIndexed(OpenTK.OpenGL.Enums.All target, Int32 index, [Out] bool* data)
             {
-                Delegates.glGetIntegerIndexedvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)data);
+                Delegates.glGetBooleanIndexedvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (bool*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -33427,6 +33413,20 @@ namespace OpenTK.OpenGL
                         data = *data_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetIntegerIndexed(OpenTK.OpenGL.Enums.All target, UInt32 index, [Out] Int32* data)
+            {
+                Delegates.glGetIntegerIndexedvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)data);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetIntegerIndexed(OpenTK.OpenGL.Enums.All target, Int32 index, [Out] Int32* data)
+            {
+                Delegates.glGetIntegerIndexedvEXT((OpenTK.OpenGL.Enums.All)target, (UInt32)index, (Int32*)data);
             }
 
             [System.CLSCompliant(false)]
@@ -33496,20 +33496,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void TexParameterIv(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, UInt32* @params)
-            {
-                Delegates.glTexParameterIuivEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexParameterIv(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, Int32* @params)
-            {
-                Delegates.glTexParameterIuivEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (UInt32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void TexParameterIv(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, UInt32[] @params)
             {
                 unsafe
@@ -33560,16 +33546,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetTexParameterI(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] UInt32* @params)
+            unsafe void TexParameterIv(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, UInt32* @params)
             {
-                Delegates.glGetTexParameterIuivEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (UInt32*)@params);
+                Delegates.glTexParameterIuivEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetTexParameterI(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Int32* @params)
+            unsafe void TexParameterIv(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.TextureParameterName pname, Int32* @params)
             {
-                Delegates.glGetTexParameterIuivEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (UInt32*)@params);
+                Delegates.glTexParameterIuivEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.TextureParameterName)pname, (UInt32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -33626,6 +33612,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetTexParameterI(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] UInt32* @params)
+            {
+                Delegates.glGetTexParameterIuivEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetTexParameterI(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.GetTextureParameter pname, [Out] Int32* @params)
+            {
+                Delegates.glGetTexParameterIuivEXT((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.GetTextureParameter)pname, (UInt32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ClearColorI(UInt32 red, UInt32 green, UInt32 blue, UInt32 alpha)
             {
                 Delegates.glClearColorIuiEXT((UInt32)red, (UInt32)green, (UInt32)blue, (UInt32)alpha);
@@ -33641,13 +33641,6 @@ namespace OpenTK.OpenGL
 
         public static partial class Sgis
         {
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetTexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.All filter, [Out] Single* weights)
-            {
-                Delegates.glGetTexFilterFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.All)filter, (Single*)weights);
-            }
-
             public static 
             void GetTexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.All filter, [Out] Single[] weights)
             {
@@ -33675,9 +33668,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void TexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.All filter, Int32 n, Single* weights)
+            unsafe void GetTexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.All filter, [Out] Single* weights)
             {
-                Delegates.glTexFilterFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.All)filter, (Int32)n, (Single*)weights);
+                Delegates.glGetTexFilterFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.All)filter, (Single*)weights);
             }
 
             public static 
@@ -33704,17 +33697,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexFilterFunc(OpenTK.OpenGL.Enums.TextureTarget target, OpenTK.OpenGL.Enums.All filter, Int32 n, Single* weights)
+            {
+                Delegates.glTexFilterFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (OpenTK.OpenGL.Enums.All)filter, (Int32)n, (Single*)weights);
+            }
+
             public static 
             void PixelTexGenParameter(OpenTK.OpenGL.Enums.All pname, Int32 param)
             {
                 Delegates.glPixelTexGenParameteriSGIS((OpenTK.OpenGL.Enums.All)pname, (Int32)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void PixelTexGenParameterv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
-            {
-                Delegates.glPixelTexGenParameterivSGIS((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -33741,17 +33734,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void PixelTexGenParameterv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
+            {
+                Delegates.glPixelTexGenParameterivSGIS((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
             public static 
             void PixelTexGenParameter(OpenTK.OpenGL.Enums.All pname, Single param)
             {
                 Delegates.glPixelTexGenParameterfSGIS((OpenTK.OpenGL.Enums.All)pname, (Single)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void PixelTexGenParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glPixelTexGenParameterfvSGIS((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -33780,9 +33773,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetPixelTexGenParameter(OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void PixelTexGenParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
             {
-                Delegates.glGetPixelTexGenParameterivSGIS((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glPixelTexGenParameterfvSGIS((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -33812,9 +33805,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetPixelTexGenParameter(OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetPixelTexGenParameter(OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetPixelTexGenParameterfvSGIS((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetPixelTexGenParameterivSGIS((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -33840,6 +33833,13 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetPixelTexGenParameter(OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            {
+                Delegates.glGetPixelTexGenParameterfvSGIS((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -33894,13 +33894,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DetailTexFunc(OpenTK.OpenGL.Enums.TextureTarget target, Int32 n, Single* points)
-            {
-                Delegates.glDetailTexFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)n, (Single*)points);
-            }
-
             public static 
             void DetailTexFunc(OpenTK.OpenGL.Enums.TextureTarget target, Int32 n, Single[] points)
             {
@@ -33927,9 +33920,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetDetailTexFunc(OpenTK.OpenGL.Enums.TextureTarget target, [Out] Single* points)
+            unsafe void DetailTexFunc(OpenTK.OpenGL.Enums.TextureTarget target, Int32 n, Single* points)
             {
-                Delegates.glGetDetailTexFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Single*)points);
+                Delegates.glDetailTexFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)n, (Single*)points);
             }
 
             public static 
@@ -33959,9 +33952,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void SharpenTexFunc(OpenTK.OpenGL.Enums.TextureTarget target, Int32 n, Single* points)
+            unsafe void GetDetailTexFunc(OpenTK.OpenGL.Enums.TextureTarget target, [Out] Single* points)
             {
-                Delegates.glSharpenTexFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)n, (Single*)points);
+                Delegates.glGetDetailTexFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Single*)points);
             }
 
             public static 
@@ -33990,9 +33983,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetSharpenTexFunc(OpenTK.OpenGL.Enums.TextureTarget target, [Out] Single* points)
+            unsafe void SharpenTexFunc(OpenTK.OpenGL.Enums.TextureTarget target, Int32 n, Single* points)
             {
-                Delegates.glGetSharpenTexFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Single*)points);
+                Delegates.glSharpenTexFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Int32)n, (Single*)points);
             }
 
             public static 
@@ -34020,6 +34013,13 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetSharpenTexFunc(OpenTK.OpenGL.Enums.TextureTarget target, [Out] Single* points)
+            {
+                Delegates.glGetSharpenTexFuncSGIS((OpenTK.OpenGL.Enums.TextureTarget)target, (Single*)points);
+            }
+
             public static 
             void SampleMask(Single value, bool invert)
             {
@@ -34036,13 +34036,6 @@ namespace OpenTK.OpenGL
             void PointParameter(OpenTK.OpenGL.Enums.All pname, Single param)
             {
                 Delegates.glPointParameterfSGIS((OpenTK.OpenGL.Enums.All)pname, (Single)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void PointParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glPointParameterfvSGIS((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -34071,9 +34064,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void FogFunc(Int32 n, Single* points)
+            unsafe void PointParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
             {
-                Delegates.glFogFuncSGIS((Int32)n, (Single*)points);
+                Delegates.glPointParameterfvSGIS((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -34102,9 +34095,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetFogFunc([Out] Single* points)
+            unsafe void FogFunc(Int32 n, Single* points)
             {
-                Delegates.glGetFogFuncSGIS((Single*)points);
+                Delegates.glFogFuncSGIS((Int32)n, (Single*)points);
             }
 
             public static 
@@ -34130,6 +34123,13 @@ namespace OpenTK.OpenGL
                         points = *points_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetFogFunc([Out] Single* points)
+            {
+                Delegates.glGetFogFuncSGIS((Single*)points);
             }
 
             public static 
@@ -34168,13 +34168,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glColorTableParameterfvSGI((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
             public static 
             void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single[] @params)
             {
@@ -34201,9 +34194,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
+            unsafe void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
             {
-                Delegates.glColorTableParameterivSGI((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glColorTableParameterfvSGI((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -34228,6 +34221,13 @@ namespace OpenTK.OpenGL
                         Delegates.glColorTableParameterivSGI((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
+            {
+                Delegates.glColorTableParameterivSGI((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -34262,13 +34262,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetColorTableParameterfvSGI((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
             public static 
             void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single[] @params)
             {
@@ -34296,9 +34289,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetColorTableParameterivSGI((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetColorTableParameterfvSGI((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -34326,6 +34319,13 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetColorTableParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetColorTableParameterivSGI((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
         }
 
         public static partial class Sgix
@@ -34340,13 +34340,6 @@ namespace OpenTK.OpenGL
             void SpriteParameter(OpenTK.OpenGL.Enums.All pname, Single param)
             {
                 Delegates.glSpriteParameterfSGIX((OpenTK.OpenGL.Enums.All)pname, (Single)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SpriteParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glSpriteParameterfvSGIX((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -34373,17 +34366,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SpriteParameterv(OpenTK.OpenGL.Enums.All pname, Single* @params)
+            {
+                Delegates.glSpriteParameterfvSGIX((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+            }
+
             public static 
             void SpriteParameter(OpenTK.OpenGL.Enums.All pname, Int32 param)
             {
                 Delegates.glSpriteParameteriSGIX((OpenTK.OpenGL.Enums.All)pname, (Int32)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SpriteParameterv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
-            {
-                Delegates.glSpriteParameterivSGIX((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -34410,17 +34403,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SpriteParameterv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
+            {
+                Delegates.glSpriteParameterivSGIX((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
             public static 
             Int32 GetInstruments()
             {
                 return Delegates.glGetInstrumentsSGIX();
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void InstrumentsBuffer(Int32 size, [Out] Int32* buffer)
-            {
-                Delegates.glInstrumentsBufferSGIX((Int32)size, (Int32*)buffer);
             }
 
             public static 
@@ -34450,9 +34443,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe Int32 PollInstruments([Out] Int32* marker_p)
+            unsafe void InstrumentsBuffer(Int32 size, [Out] Int32* buffer)
             {
-                return Delegates.glPollInstrumentsSGIX((Int32*)marker_p);
+                Delegates.glInstrumentsBufferSGIX((Int32)size, (Int32*)buffer);
             }
 
             public static 
@@ -34479,6 +34472,13 @@ namespace OpenTK.OpenGL
                         return retval;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Int32 PollInstruments([Out] Int32* marker_p)
+            {
+                return Delegates.glPollInstrumentsSGIX((Int32*)marker_p);
             }
 
             public static 
@@ -34511,13 +34511,6 @@ namespace OpenTK.OpenGL
                 Delegates.glTagSampleBufferSGIX();
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeformationMap3(OpenTK.OpenGL.Enums.All target, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double w1, Double w2, Int32 wstride, Int32 worder, Double* points)
-            {
-                Delegates.glDeformationMap3dSGIX((OpenTK.OpenGL.Enums.All)target, (Double)u1, (Double)u2, (Int32)ustride, (Int32)uorder, (Double)v1, (Double)v2, (Int32)vstride, (Int32)vorder, (Double)w1, (Double)w2, (Int32)wstride, (Int32)worder, (Double*)points);
-            }
-
             public static 
             void DeformationMap3(OpenTK.OpenGL.Enums.All target, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double w1, Double w2, Int32 wstride, Int32 worder, Double[] points)
             {
@@ -34544,9 +34537,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeformationMap3(OpenTK.OpenGL.Enums.All target, Single u1, Single u2, Int32 ustride, Int32 uorder, Single v1, Single v2, Int32 vstride, Int32 vorder, Single w1, Single w2, Int32 wstride, Int32 worder, Single* points)
+            unsafe void DeformationMap3(OpenTK.OpenGL.Enums.All target, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double w1, Double w2, Int32 wstride, Int32 worder, Double* points)
             {
-                Delegates.glDeformationMap3fSGIX((OpenTK.OpenGL.Enums.All)target, (Single)u1, (Single)u2, (Int32)ustride, (Int32)uorder, (Single)v1, (Single)v2, (Int32)vstride, (Int32)vorder, (Single)w1, (Single)w2, (Int32)wstride, (Int32)worder, (Single*)points);
+                Delegates.glDeformationMap3dSGIX((OpenTK.OpenGL.Enums.All)target, (Double)u1, (Double)u2, (Int32)ustride, (Int32)uorder, (Double)v1, (Double)v2, (Int32)vstride, (Int32)vorder, (Double)w1, (Double)w2, (Int32)wstride, (Int32)worder, (Double*)points);
             }
 
             public static 
@@ -34575,6 +34568,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void DeformationMap3(OpenTK.OpenGL.Enums.All target, Single u1, Single u2, Int32 ustride, Int32 uorder, Single v1, Single v2, Int32 vstride, Int32 vorder, Single w1, Single w2, Int32 wstride, Int32 worder, Single* points)
+            {
+                Delegates.glDeformationMap3fSGIX((OpenTK.OpenGL.Enums.All)target, (Single)u1, (Single)u2, (Int32)ustride, (Int32)uorder, (Single)v1, (Single)v2, (Int32)vstride, (Int32)vorder, (Single)w1, (Single)w2, (Int32)wstride, (Int32)worder, (Single*)points);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void Deform(UInt32 mask)
             {
                 Delegates.glDeformSGIX((UInt32)mask);
@@ -34597,13 +34597,6 @@ namespace OpenTK.OpenGL
             void LoadIdentityDeformationMap(Int32 mask)
             {
                 Delegates.glLoadIdentityDeformationMapSGIX((UInt32)mask);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReferencePlane(Double* equation)
-            {
-                Delegates.glReferencePlaneSGIX((Double*)equation);
             }
 
             public static 
@@ -34630,24 +34623,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReferencePlane(Double* equation)
+            {
+                Delegates.glReferencePlaneSGIX((Double*)equation);
+            }
+
             public static 
             void FlushRaster()
             {
                 Delegates.glFlushRasterSGIX();
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetListParameter(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, [Out] Single* @params)
-            {
-                Delegates.glGetListParameterfvSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetListParameter(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, [Out] Single* @params)
-            {
-                Delegates.glGetListParameterfvSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -34704,16 +34690,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetListParameter(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, [Out] Int32* @params)
+            unsafe void GetListParameter(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, [Out] Single* @params)
             {
-                Delegates.glGetListParameterivSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32*)@params);
+                Delegates.glGetListParameterfvSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetListParameter(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, [Out] Int32* @params)
+            unsafe void GetListParameter(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, [Out] Single* @params)
             {
-                Delegates.glGetListParameterivSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32*)@params);
+                Delegates.glGetListParameterfvSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -34770,6 +34756,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetListParameter(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, [Out] Int32* @params)
+            {
+                Delegates.glGetListParameterivSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetListParameter(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, [Out] Int32* @params)
+            {
+                Delegates.glGetListParameterivSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ListParameter(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Single param)
             {
                 Delegates.glListParameterfSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single)param);
@@ -34779,20 +34779,6 @@ namespace OpenTK.OpenGL
             void ListParameter(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Single param)
             {
                 Delegates.glListParameterfSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ListParameterv(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Single* @params)
-            {
-                Delegates.glListParameterfvSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ListParameterv(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Single* @params)
-            {
-                Delegates.glListParameterfvSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -34847,6 +34833,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ListParameterv(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Single* @params)
+            {
+                Delegates.glListParameterfvSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ListParameterv(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Single* @params)
+            {
+                Delegates.glListParameterfvSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Single*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ListParameter(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Int32 param)
             {
                 Delegates.glListParameteriSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32)param);
@@ -34856,20 +34856,6 @@ namespace OpenTK.OpenGL
             void ListParameter(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Int32 param)
             {
                 Delegates.glListParameteriSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ListParameterv(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Int32* @params)
-            {
-                Delegates.glListParameterivSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ListParameterv(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Int32* @params)
-            {
-                Delegates.glListParameterivSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -34922,6 +34908,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ListParameterv(UInt32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Int32* @params)
+            {
+                Delegates.glListParameterivSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ListParameterv(Int32 list, OpenTK.OpenGL.Enums.ListParameterName pname, Int32* @params)
+            {
+                Delegates.glListParameterivSGIX((UInt32)list, (OpenTK.OpenGL.Enums.ListParameterName)pname, (Int32*)@params);
+            }
+
             public static 
             void FragmentColorMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter mode)
             {
@@ -34932,13 +34932,6 @@ namespace OpenTK.OpenGL
             void FragmentLight(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, Single param)
             {
                 Delegates.glFragmentLightfSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Single)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void FragmentLightv(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glFragmentLightfvSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -34965,17 +34958,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void FragmentLightv(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, Single* @params)
+            {
+                Delegates.glFragmentLightfvSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+            }
+
             public static 
             void FragmentLight(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, Int32 param)
             {
                 Delegates.glFragmentLightiSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Int32)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void FragmentLightv(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, Int32* @params)
-            {
-                Delegates.glFragmentLightivSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -35002,17 +34995,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void FragmentLightv(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, Int32* @params)
+            {
+                Delegates.glFragmentLightivSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
             public static 
             void FragmentLightModel(OpenTK.OpenGL.Enums.All pname, Single param)
             {
                 Delegates.glFragmentLightModelfSGIX((OpenTK.OpenGL.Enums.All)pname, (Single)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void FragmentLightModelv(OpenTK.OpenGL.Enums.All pname, Single* @params)
-            {
-                Delegates.glFragmentLightModelfvSGIX((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -35039,17 +35032,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void FragmentLightModelv(OpenTK.OpenGL.Enums.All pname, Single* @params)
+            {
+                Delegates.glFragmentLightModelfvSGIX((OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+            }
+
             public static 
             void FragmentLightModel(OpenTK.OpenGL.Enums.All pname, Int32 param)
             {
                 Delegates.glFragmentLightModeliSGIX((OpenTK.OpenGL.Enums.All)pname, (Int32)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void FragmentLightModelv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
-            {
-                Delegates.glFragmentLightModelivSGIX((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -35076,17 +35069,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void FragmentLightModelv(OpenTK.OpenGL.Enums.All pname, Int32* @params)
+            {
+                Delegates.glFragmentLightModelivSGIX((OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
             public static 
             void FragmentMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Single param)
             {
                 Delegates.glFragmentMaterialfSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void FragmentMaterialv(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Single* @params)
-            {
-                Delegates.glFragmentMaterialfvSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single*)@params);
             }
 
             public static 
@@ -35113,17 +35106,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void FragmentMaterialv(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Single* @params)
+            {
+                Delegates.glFragmentMaterialfvSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single*)@params);
+            }
+
             public static 
             void FragmentMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Int32 param)
             {
                 Delegates.glFragmentMaterialiSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32)param);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void FragmentMaterialv(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Int32* @params)
-            {
-                Delegates.glFragmentMaterialivSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32*)@params);
             }
 
             public static 
@@ -35152,9 +35145,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetFragmentLight(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void FragmentMaterialv(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, Int32* @params)
             {
-                Delegates.glGetFragmentLightfvSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glFragmentMaterialivSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32*)@params);
             }
 
             public static 
@@ -35184,9 +35177,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetFragmentLight(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetFragmentLight(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetFragmentLightivSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetFragmentLightfvSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -35216,9 +35209,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetFragmentMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, [Out] Single* @params)
+            unsafe void GetFragmentLight(OpenTK.OpenGL.Enums.All light, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetFragmentMaterialfvSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single*)@params);
+                Delegates.glGetFragmentLightivSGIX((OpenTK.OpenGL.Enums.All)light, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -35248,9 +35241,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetFragmentMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, [Out] Int32* @params)
+            unsafe void GetFragmentMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, [Out] Single* @params)
             {
-                Delegates.glGetFragmentMaterialivSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32*)@params);
+                Delegates.glGetFragmentMaterialfvSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Single*)@params);
             }
 
             public static 
@@ -35278,6 +35271,13 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetFragmentMaterial(OpenTK.OpenGL.Enums.MaterialFace face, OpenTK.OpenGL.Enums.MaterialParameter pname, [Out] Int32* @params)
+            {
+                Delegates.glGetFragmentMaterialivSGIX((OpenTK.OpenGL.Enums.MaterialFace)face, (OpenTK.OpenGL.Enums.MaterialParameter)pname, (Int32*)@params);
+            }
+
             public static 
             void LightEnv(OpenTK.OpenGL.Enums.All pname, Int32 param)
             {
@@ -35295,20 +35295,6 @@ namespace OpenTK.OpenGL
             void AsyncMarker(Int32 marker)
             {
                 Delegates.glAsyncMarkerSGIX((UInt32)marker);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Int32 FinishAsync([Out] UInt32* markerp)
-            {
-                return Delegates.glFinishAsyncSGIX((UInt32*)markerp);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe Int32 FinishAsync([Out] Int32* markerp)
-            {
-                return Delegates.glFinishAsyncSGIX((UInt32*)markerp);
             }
 
             [System.CLSCompliant(false)]
@@ -35367,16 +35353,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe Int32 PollAsync([Out] UInt32* markerp)
+            unsafe Int32 FinishAsync([Out] UInt32* markerp)
             {
-                return Delegates.glPollAsyncSGIX((UInt32*)markerp);
+                return Delegates.glFinishAsyncSGIX((UInt32*)markerp);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe Int32 PollAsync([Out] Int32* markerp)
+            unsafe Int32 FinishAsync([Out] Int32* markerp)
             {
-                return Delegates.glPollAsyncSGIX((UInt32*)markerp);
+                return Delegates.glFinishAsyncSGIX((UInt32*)markerp);
             }
 
             [System.CLSCompliant(false)]
@@ -35431,6 +35417,20 @@ namespace OpenTK.OpenGL
                         return retval;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Int32 PollAsync([Out] UInt32* markerp)
+            {
+                return Delegates.glPollAsyncSGIX((UInt32*)markerp);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe Int32 PollAsync([Out] Int32* markerp)
+            {
+                return Delegates.glPollAsyncSGIX((UInt32*)markerp);
             }
 
             public static 
@@ -35507,13 +35507,6 @@ namespace OpenTK.OpenGL
                 Delegates.glImageTransformParameterfHP((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single)param);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ImageTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
-            {
-                Delegates.glImageTransformParameterivHP((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
-            }
-
             public static 
             void ImageTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32[] @params)
             {
@@ -35540,9 +35533,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ImageTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
+            unsafe void ImageTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Int32* @params)
             {
-                Delegates.glImageTransformParameterfvHP((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glImageTransformParameterivHP((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -35571,9 +35564,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetImageTransformParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void ImageTransformParameterv(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, Single* @params)
             {
-                Delegates.glGetImageTransformParameterivHP((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glImageTransformParameterfvHP((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -35603,9 +35596,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetImageTransformParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            unsafe void GetImageTransformParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glGetImageTransformParameterfvHP((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
+                Delegates.glGetImageTransformParameterivHP((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             public static 
@@ -35631,6 +35624,13 @@ namespace OpenTK.OpenGL
                         @params = *@params_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetImageTransformParameter(OpenTK.OpenGL.Enums.All target, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
+            {
+                Delegates.glGetImageTransformParameterfvHP((OpenTK.OpenGL.Enums.All)target, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
         }
@@ -35856,20 +35856,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ReplacementCodev(UInt32* code)
-            {
-                Delegates.glReplacementCodeuivSUN((UInt32*)code);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodev(Int32* code)
-            {
-                Delegates.glReplacementCodeuivSUN((UInt32*)code);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void ReplacementCodev(UInt32[] code)
             {
                 unsafe
@@ -35920,16 +35906,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ReplacementCodev(UInt16* code)
+            unsafe void ReplacementCodev(UInt32* code)
             {
-                Delegates.glReplacementCodeusvSUN((UInt16*)code);
+                Delegates.glReplacementCodeuivSUN((UInt32*)code);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ReplacementCodev(Int16* code)
+            unsafe void ReplacementCodev(Int32* code)
             {
-                Delegates.glReplacementCodeusvSUN((UInt16*)code);
+                Delegates.glReplacementCodeuivSUN((UInt32*)code);
             }
 
             [System.CLSCompliant(false)]
@@ -35984,9 +35970,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void ReplacementCodev(Byte* code)
+            unsafe void ReplacementCodev(UInt16* code)
             {
-                Delegates.glReplacementCodeubvSUN((Byte*)code);
+                Delegates.glReplacementCodeusvSUN((UInt16*)code);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodev(Int16* code)
+            {
+                Delegates.glReplacementCodeusvSUN((UInt16*)code);
             }
 
             public static 
@@ -36011,6 +36004,13 @@ namespace OpenTK.OpenGL
                         Delegates.glReplacementCodeubvSUN((Byte*)code_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodev(Byte* code)
+            {
+                Delegates.glReplacementCodeubvSUN((Byte*)code);
             }
 
             public static 
@@ -36045,13 +36045,6 @@ namespace OpenTK.OpenGL
                 Delegates.glColor4ubVertex2fSUN((Byte)r, (Byte)g, (Byte)b, (Byte)a, (Single)x, (Single)y);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Color4ubVertex2(Byte* c, Single* v)
-            {
-                Delegates.glColor4ubVertex2fvSUN((Byte*)c, (Single*)v);
-            }
-
             public static 
             void Color4ubVertex2(Byte[] c, Single[] v)
             {
@@ -36078,17 +36071,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Color4ubVertex2(Byte* c, Single* v)
+            {
+                Delegates.glColor4ubVertex2fvSUN((Byte*)c, (Single*)v);
+            }
+
             public static 
             void Color4ubVertex3(Byte r, Byte g, Byte b, Byte a, Single x, Single y, Single z)
             {
                 Delegates.glColor4ubVertex3fSUN((Byte)r, (Byte)g, (Byte)b, (Byte)a, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Color4ubVertex3(Byte* c, Single* v)
-            {
-                Delegates.glColor4ubVertex3fvSUN((Byte*)c, (Single*)v);
             }
 
             public static 
@@ -36117,17 +36110,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Color4ubVertex3(Byte* c, Single* v)
+            {
+                Delegates.glColor4ubVertex3fvSUN((Byte*)c, (Single*)v);
+            }
+
             public static 
             void Color3fVertex3(Single r, Single g, Single b, Single x, Single y, Single z)
             {
                 Delegates.glColor3fVertex3fSUN((Single)r, (Single)g, (Single)b, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Color3fVertex3(Single* c, Single* v)
-            {
-                Delegates.glColor3fVertex3fvSUN((Single*)c, (Single*)v);
             }
 
             public static 
@@ -36156,17 +36149,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Color3fVertex3(Single* c, Single* v)
+            {
+                Delegates.glColor3fVertex3fvSUN((Single*)c, (Single*)v);
+            }
+
             public static 
             void Normal3fVertex3(Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glNormal3fVertex3fSUN((Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Normal3fVertex3(Single* n, Single* v)
-            {
-                Delegates.glNormal3fVertex3fvSUN((Single*)n, (Single*)v);
             }
 
             public static 
@@ -36195,17 +36188,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Normal3fVertex3(Single* n, Single* v)
+            {
+                Delegates.glNormal3fVertex3fvSUN((Single*)n, (Single*)v);
+            }
+
             public static 
             void Color4fNormal3fVertex3(Single r, Single g, Single b, Single a, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glColor4fNormal3fVertex3fSUN((Single)r, (Single)g, (Single)b, (Single)a, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void Color4fNormal3fVertex3(Single* c, Single* n, Single* v)
-            {
-                Delegates.glColor4fNormal3fVertex3fvSUN((Single*)c, (Single*)n, (Single*)v);
             }
 
             public static 
@@ -36236,17 +36229,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void Color4fNormal3fVertex3(Single* c, Single* n, Single* v)
+            {
+                Delegates.glColor4fNormal3fVertex3fvSUN((Single*)c, (Single*)n, (Single*)v);
+            }
+
             public static 
             void TexCoord2fVertex3(Single s, Single t, Single x, Single y, Single z)
             {
                 Delegates.glTexCoord2fVertex3fSUN((Single)s, (Single)t, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord2fVertex3(Single* tc, Single* v)
-            {
-                Delegates.glTexCoord2fVertex3fvSUN((Single*)tc, (Single*)v);
             }
 
             public static 
@@ -36275,17 +36268,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord2fVertex3(Single* tc, Single* v)
+            {
+                Delegates.glTexCoord2fVertex3fvSUN((Single*)tc, (Single*)v);
+            }
+
             public static 
             void TexCoord4fVertex4(Single s, Single t, Single p, Single q, Single x, Single y, Single z, Single w)
             {
                 Delegates.glTexCoord4fVertex4fSUN((Single)s, (Single)t, (Single)p, (Single)q, (Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord4fVertex4(Single* tc, Single* v)
-            {
-                Delegates.glTexCoord4fVertex4fvSUN((Single*)tc, (Single*)v);
             }
 
             public static 
@@ -36314,17 +36307,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord4fVertex4(Single* tc, Single* v)
+            {
+                Delegates.glTexCoord4fVertex4fvSUN((Single*)tc, (Single*)v);
+            }
+
             public static 
             void TexCoord2fColor4ubVertex3(Single s, Single t, Byte r, Byte g, Byte b, Byte a, Single x, Single y, Single z)
             {
                 Delegates.glTexCoord2fColor4ubVertex3fSUN((Single)s, (Single)t, (Byte)r, (Byte)g, (Byte)b, (Byte)a, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord2fColor4ubVertex3(Single* tc, Byte* c, Single* v)
-            {
-                Delegates.glTexCoord2fColor4ubVertex3fvSUN((Single*)tc, (Byte*)c, (Single*)v);
             }
 
             public static 
@@ -36355,17 +36348,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord2fColor4ubVertex3(Single* tc, Byte* c, Single* v)
+            {
+                Delegates.glTexCoord2fColor4ubVertex3fvSUN((Single*)tc, (Byte*)c, (Single*)v);
+            }
+
             public static 
             void TexCoord2fColor3fVertex3(Single s, Single t, Single r, Single g, Single b, Single x, Single y, Single z)
             {
                 Delegates.glTexCoord2fColor3fVertex3fSUN((Single)s, (Single)t, (Single)r, (Single)g, (Single)b, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord2fColor3fVertex3(Single* tc, Single* c, Single* v)
-            {
-                Delegates.glTexCoord2fColor3fVertex3fvSUN((Single*)tc, (Single*)c, (Single*)v);
             }
 
             public static 
@@ -36396,17 +36389,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord2fColor3fVertex3(Single* tc, Single* c, Single* v)
+            {
+                Delegates.glTexCoord2fColor3fVertex3fvSUN((Single*)tc, (Single*)c, (Single*)v);
+            }
+
             public static 
             void TexCoord2fNormal3fVertex3(Single s, Single t, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glTexCoord2fNormal3fVertex3fSUN((Single)s, (Single)t, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord2fNormal3fVertex3(Single* tc, Single* n, Single* v)
-            {
-                Delegates.glTexCoord2fNormal3fVertex3fvSUN((Single*)tc, (Single*)n, (Single*)v);
             }
 
             public static 
@@ -36437,17 +36430,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord2fNormal3fVertex3(Single* tc, Single* n, Single* v)
+            {
+                Delegates.glTexCoord2fNormal3fVertex3fvSUN((Single*)tc, (Single*)n, (Single*)v);
+            }
+
             public static 
             void TexCoord2fColor4fNormal3fVertex3(Single s, Single t, Single r, Single g, Single b, Single a, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glTexCoord2fColor4fNormal3fVertex3fSUN((Single)s, (Single)t, (Single)r, (Single)g, (Single)b, (Single)a, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord2fColor4fNormal3fVertex3(Single* tc, Single* c, Single* n, Single* v)
-            {
-                Delegates.glTexCoord2fColor4fNormal3fVertex3fvSUN((Single*)tc, (Single*)c, (Single*)n, (Single*)v);
             }
 
             public static 
@@ -36480,17 +36473,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void TexCoord2fColor4fNormal3fVertex3(Single* tc, Single* c, Single* n, Single* v)
+            {
+                Delegates.glTexCoord2fColor4fNormal3fVertex3fvSUN((Single*)tc, (Single*)c, (Single*)n, (Single*)v);
+            }
+
             public static 
             void TexCoord4fColor4fNormal3fVertex4(Single s, Single t, Single p, Single q, Single r, Single g, Single b, Single a, Single nx, Single ny, Single nz, Single x, Single y, Single z, Single w)
             {
                 Delegates.glTexCoord4fColor4fNormal3fVertex4fSUN((Single)s, (Single)t, (Single)p, (Single)q, (Single)r, (Single)g, (Single)b, (Single)a, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexCoord4fColor4fNormal3fVertex4(Single* tc, Single* c, Single* n, Single* v)
-            {
-                Delegates.glTexCoord4fColor4fNormal3fVertex4fvSUN((Single*)tc, (Single*)c, (Single*)n, (Single*)v);
             }
 
             public static 
@@ -36525,6 +36518,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void TexCoord4fColor4fNormal3fVertex4(Single* tc, Single* c, Single* n, Single* v)
+            {
+                Delegates.glTexCoord4fColor4fNormal3fVertex4fvSUN((Single*)tc, (Single*)c, (Single*)n, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ReplacementCodeuiVertex3(UInt32 rc, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiVertex3fSUN((UInt32)rc, (Single)x, (Single)y, (Single)z);
@@ -36534,20 +36534,6 @@ namespace OpenTK.OpenGL
             void ReplacementCodeuiVertex3(Int32 rc, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiVertex3fSUN((UInt32)rc, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiVertex3v(UInt32* rc, Single* v)
-            {
-                Delegates.glReplacementCodeuiVertex3fvSUN((UInt32*)rc, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiVertex3v(Int32* rc, Single* v)
-            {
-                Delegates.glReplacementCodeuiVertex3fvSUN((UInt32*)rc, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -36606,6 +36592,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ReplacementCodeuiVertex3v(UInt32* rc, Single* v)
+            {
+                Delegates.glReplacementCodeuiVertex3fvSUN((UInt32*)rc, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodeuiVertex3v(Int32* rc, Single* v)
+            {
+                Delegates.glReplacementCodeuiVertex3fvSUN((UInt32*)rc, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ReplacementCodeuiColor4ubVertex3(UInt32 rc, Byte r, Byte g, Byte b, Byte a, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiColor4ubVertex3fSUN((UInt32)rc, (Byte)r, (Byte)g, (Byte)b, (Byte)a, (Single)x, (Single)y, (Single)z);
@@ -36615,20 +36615,6 @@ namespace OpenTK.OpenGL
             void ReplacementCodeuiColor4ubVertex3(Int32 rc, Byte r, Byte g, Byte b, Byte a, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiColor4ubVertex3fSUN((UInt32)rc, (Byte)r, (Byte)g, (Byte)b, (Byte)a, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiColor4ubVertex3v(UInt32* rc, Byte* c, Single* v)
-            {
-                Delegates.glReplacementCodeuiColor4ubVertex3fvSUN((UInt32*)rc, (Byte*)c, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiColor4ubVertex3v(Int32* rc, Byte* c, Single* v)
-            {
-                Delegates.glReplacementCodeuiColor4ubVertex3fvSUN((UInt32*)rc, (Byte*)c, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -36691,6 +36677,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ReplacementCodeuiColor4ubVertex3v(UInt32* rc, Byte* c, Single* v)
+            {
+                Delegates.glReplacementCodeuiColor4ubVertex3fvSUN((UInt32*)rc, (Byte*)c, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodeuiColor4ubVertex3v(Int32* rc, Byte* c, Single* v)
+            {
+                Delegates.glReplacementCodeuiColor4ubVertex3fvSUN((UInt32*)rc, (Byte*)c, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ReplacementCodeuiColor3fVertex3(UInt32 rc, Single r, Single g, Single b, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiColor3fVertex3fSUN((UInt32)rc, (Single)r, (Single)g, (Single)b, (Single)x, (Single)y, (Single)z);
@@ -36700,20 +36700,6 @@ namespace OpenTK.OpenGL
             void ReplacementCodeuiColor3fVertex3(Int32 rc, Single r, Single g, Single b, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiColor3fVertex3fSUN((UInt32)rc, (Single)r, (Single)g, (Single)b, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiColor3fVertex3v(UInt32* rc, Single* c, Single* v)
-            {
-                Delegates.glReplacementCodeuiColor3fVertex3fvSUN((UInt32*)rc, (Single*)c, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiColor3fVertex3v(Int32* rc, Single* c, Single* v)
-            {
-                Delegates.glReplacementCodeuiColor3fVertex3fvSUN((UInt32*)rc, (Single*)c, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -36776,6 +36762,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ReplacementCodeuiColor3fVertex3v(UInt32* rc, Single* c, Single* v)
+            {
+                Delegates.glReplacementCodeuiColor3fVertex3fvSUN((UInt32*)rc, (Single*)c, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodeuiColor3fVertex3v(Int32* rc, Single* c, Single* v)
+            {
+                Delegates.glReplacementCodeuiColor3fVertex3fvSUN((UInt32*)rc, (Single*)c, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ReplacementCodeuiNormal3fVertex3(UInt32 rc, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiNormal3fVertex3fSUN((UInt32)rc, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
@@ -36785,20 +36785,6 @@ namespace OpenTK.OpenGL
             void ReplacementCodeuiNormal3fVertex3(Int32 rc, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiNormal3fVertex3fSUN((UInt32)rc, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiNormal3fVertex3v(UInt32* rc, Single* n, Single* v)
-            {
-                Delegates.glReplacementCodeuiNormal3fVertex3fvSUN((UInt32*)rc, (Single*)n, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiNormal3fVertex3v(Int32* rc, Single* n, Single* v)
-            {
-                Delegates.glReplacementCodeuiNormal3fVertex3fvSUN((UInt32*)rc, (Single*)n, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -36861,6 +36847,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ReplacementCodeuiNormal3fVertex3v(UInt32* rc, Single* n, Single* v)
+            {
+                Delegates.glReplacementCodeuiNormal3fVertex3fvSUN((UInt32*)rc, (Single*)n, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodeuiNormal3fVertex3v(Int32* rc, Single* n, Single* v)
+            {
+                Delegates.glReplacementCodeuiNormal3fVertex3fvSUN((UInt32*)rc, (Single*)n, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ReplacementCodeuiColor4fNormal3fVertex3(UInt32 rc, Single r, Single g, Single b, Single a, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiColor4fNormal3fVertex3fSUN((UInt32)rc, (Single)r, (Single)g, (Single)b, (Single)a, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
@@ -36870,20 +36870,6 @@ namespace OpenTK.OpenGL
             void ReplacementCodeuiColor4fNormal3fVertex3(Int32 rc, Single r, Single g, Single b, Single a, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiColor4fNormal3fVertex3fSUN((UInt32)rc, (Single)r, (Single)g, (Single)b, (Single)a, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiColor4fNormal3fVertex3v(UInt32* rc, Single* c, Single* n, Single* v)
-            {
-                Delegates.glReplacementCodeuiColor4fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)c, (Single*)n, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiColor4fNormal3fVertex3v(Int32* rc, Single* c, Single* n, Single* v)
-            {
-                Delegates.glReplacementCodeuiColor4fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)c, (Single*)n, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -36950,6 +36936,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ReplacementCodeuiColor4fNormal3fVertex3v(UInt32* rc, Single* c, Single* n, Single* v)
+            {
+                Delegates.glReplacementCodeuiColor4fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)c, (Single*)n, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodeuiColor4fNormal3fVertex3v(Int32* rc, Single* c, Single* n, Single* v)
+            {
+                Delegates.glReplacementCodeuiColor4fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)c, (Single*)n, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ReplacementCodeuiTexCoord2fVertex3(UInt32 rc, Single s, Single t, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiTexCoord2fVertex3fSUN((UInt32)rc, (Single)s, (Single)t, (Single)x, (Single)y, (Single)z);
@@ -36959,20 +36959,6 @@ namespace OpenTK.OpenGL
             void ReplacementCodeuiTexCoord2fVertex3(Int32 rc, Single s, Single t, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiTexCoord2fVertex3fSUN((UInt32)rc, (Single)s, (Single)t, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiTexCoord2fVertex3v(UInt32* rc, Single* tc, Single* v)
-            {
-                Delegates.glReplacementCodeuiTexCoord2fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiTexCoord2fVertex3v(Int32* rc, Single* tc, Single* v)
-            {
-                Delegates.glReplacementCodeuiTexCoord2fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -37035,6 +37021,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ReplacementCodeuiTexCoord2fVertex3v(UInt32* rc, Single* tc, Single* v)
+            {
+                Delegates.glReplacementCodeuiTexCoord2fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodeuiTexCoord2fVertex3v(Int32* rc, Single* tc, Single* v)
+            {
+                Delegates.glReplacementCodeuiTexCoord2fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ReplacementCodeuiTexCoord2fNormal3fVertex3(UInt32 rc, Single s, Single t, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiTexCoord2fNormal3fVertex3fSUN((UInt32)rc, (Single)s, (Single)t, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
@@ -37044,20 +37044,6 @@ namespace OpenTK.OpenGL
             void ReplacementCodeuiTexCoord2fNormal3fVertex3(Int32 rc, Single s, Single t, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiTexCoord2fNormal3fVertex3fSUN((UInt32)rc, (Single)s, (Single)t, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3v(UInt32* rc, Single* tc, Single* n, Single* v)
-            {
-                Delegates.glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)n, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3v(Int32* rc, Single* tc, Single* n, Single* v)
-            {
-                Delegates.glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)n, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -37124,6 +37110,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3v(UInt32* rc, Single* tc, Single* n, Single* v)
+            {
+                Delegates.glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)n, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3v(Int32* rc, Single* tc, Single* n, Single* v)
+            {
+                Delegates.glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)n, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3(UInt32 rc, Single s, Single t, Single r, Single g, Single b, Single a, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN((UInt32)rc, (Single)s, (Single)t, (Single)r, (Single)g, (Single)b, (Single)a, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
@@ -37133,20 +37133,6 @@ namespace OpenTK.OpenGL
             void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3(Int32 rc, Single s, Single t, Single r, Single g, Single b, Single a, Single nx, Single ny, Single nz, Single x, Single y, Single z)
             {
                 Delegates.glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN((UInt32)rc, (Single)s, (Single)t, (Single)r, (Single)g, (Single)b, (Single)a, (Single)nx, (Single)ny, (Single)nz, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3v(UInt32* rc, Single* tc, Single* c, Single* n, Single* v)
-            {
-                Delegates.glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)c, (Single*)n, (Single*)v);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3v(Int32* rc, Single* tc, Single* c, Single* n, Single* v)
-            {
-                Delegates.glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)c, (Single*)n, (Single*)v);
             }
 
             [System.CLSCompliant(false)]
@@ -37215,6 +37201,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3v(UInt32* rc, Single* tc, Single* c, Single* n, Single* v)
+            {
+                Delegates.glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)c, (Single*)n, (Single*)v);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3v(Int32* rc, Single* tc, Single* c, Single* n, Single* v)
+            {
+                Delegates.glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN((UInt32*)rc, (Single*)tc, (Single*)c, (Single*)n, (Single*)v);
+            }
+
             public static 
             void DrawMeshArrays(OpenTK.OpenGL.Enums.BeginMode mode, Int32 first, Int32 count, Int32 width)
             {
@@ -37247,13 +37247,6 @@ namespace OpenTK.OpenGL
                 Delegates.glWindowPos2dMESA((Double)x, (Double)y);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos2(Double* v)
-            {
-                Delegates.glWindowPos2dvMESA((Double*)v);
-            }
-
             public static 
             void WindowPos2(Double[] v)
             {
@@ -37278,17 +37271,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos2(Double* v)
+            {
+                Delegates.glWindowPos2dvMESA((Double*)v);
+            }
+
             public static 
             void WindowPos2(Single x, Single y)
             {
                 Delegates.glWindowPos2fMESA((Single)x, (Single)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos2(Single* v)
-            {
-                Delegates.glWindowPos2fvMESA((Single*)v);
             }
 
             public static 
@@ -37315,17 +37308,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos2(Single* v)
+            {
+                Delegates.glWindowPos2fvMESA((Single*)v);
+            }
+
             public static 
             void WindowPos2(Int32 x, Int32 y)
             {
                 Delegates.glWindowPos2iMESA((Int32)x, (Int32)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos2(Int32* v)
-            {
-                Delegates.glWindowPos2ivMESA((Int32*)v);
             }
 
             public static 
@@ -37352,17 +37345,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos2(Int32* v)
+            {
+                Delegates.glWindowPos2ivMESA((Int32*)v);
+            }
+
             public static 
             void WindowPos2(Int16 x, Int16 y)
             {
                 Delegates.glWindowPos2sMESA((Int16)x, (Int16)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos2(Int16* v)
-            {
-                Delegates.glWindowPos2svMESA((Int16*)v);
             }
 
             public static 
@@ -37389,17 +37382,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos2(Int16* v)
+            {
+                Delegates.glWindowPos2svMESA((Int16*)v);
+            }
+
             public static 
             void WindowPos3(Double x, Double y, Double z)
             {
                 Delegates.glWindowPos3dMESA((Double)x, (Double)y, (Double)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos3(Double* v)
-            {
-                Delegates.glWindowPos3dvMESA((Double*)v);
             }
 
             public static 
@@ -37426,17 +37419,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos3(Double* v)
+            {
+                Delegates.glWindowPos3dvMESA((Double*)v);
+            }
+
             public static 
             void WindowPos3(Single x, Single y, Single z)
             {
                 Delegates.glWindowPos3fMESA((Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos3(Single* v)
-            {
-                Delegates.glWindowPos3fvMESA((Single*)v);
             }
 
             public static 
@@ -37463,17 +37456,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos3(Single* v)
+            {
+                Delegates.glWindowPos3fvMESA((Single*)v);
+            }
+
             public static 
             void WindowPos3(Int32 x, Int32 y, Int32 z)
             {
                 Delegates.glWindowPos3iMESA((Int32)x, (Int32)y, (Int32)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos3(Int32* v)
-            {
-                Delegates.glWindowPos3ivMESA((Int32*)v);
             }
 
             public static 
@@ -37500,17 +37493,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos3(Int32* v)
+            {
+                Delegates.glWindowPos3ivMESA((Int32*)v);
+            }
+
             public static 
             void WindowPos3(Int16 x, Int16 y, Int16 z)
             {
                 Delegates.glWindowPos3sMESA((Int16)x, (Int16)y, (Int16)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos3(Int16* v)
-            {
-                Delegates.glWindowPos3svMESA((Int16*)v);
             }
 
             public static 
@@ -37537,17 +37530,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos3(Int16* v)
+            {
+                Delegates.glWindowPos3svMESA((Int16*)v);
+            }
+
             public static 
             void WindowPos4(Double x, Double y, Double z, Double w)
             {
                 Delegates.glWindowPos4dMESA((Double)x, (Double)y, (Double)z, (Double)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos4(Double* v)
-            {
-                Delegates.glWindowPos4dvMESA((Double*)v);
             }
 
             public static 
@@ -37574,17 +37567,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos4(Double* v)
+            {
+                Delegates.glWindowPos4dvMESA((Double*)v);
+            }
+
             public static 
             void WindowPos4(Single x, Single y, Single z, Single w)
             {
                 Delegates.glWindowPos4fMESA((Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos4(Single* v)
-            {
-                Delegates.glWindowPos4fvMESA((Single*)v);
             }
 
             public static 
@@ -37611,17 +37604,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos4(Single* v)
+            {
+                Delegates.glWindowPos4fvMESA((Single*)v);
+            }
+
             public static 
             void WindowPos4(Int32 x, Int32 y, Int32 z, Int32 w)
             {
                 Delegates.glWindowPos4iMESA((Int32)x, (Int32)y, (Int32)z, (Int32)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos4(Int32* v)
-            {
-                Delegates.glWindowPos4ivMESA((Int32*)v);
             }
 
             public static 
@@ -37648,17 +37641,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos4(Int32* v)
+            {
+                Delegates.glWindowPos4ivMESA((Int32*)v);
+            }
+
             public static 
             void WindowPos4(Int16 x, Int16 y, Int16 z, Int16 w)
             {
                 Delegates.glWindowPos4sMESA((Int16)x, (Int16)y, (Int16)z, (Int16)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void WindowPos4(Int16* v)
-            {
-                Delegates.glWindowPos4svMESA((Int16*)v);
             }
 
             public static 
@@ -37685,17 +37678,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void WindowPos4(Int16* v)
+            {
+                Delegates.glWindowPos4svMESA((Int16*)v);
+            }
+
         }
 
         public static partial class Ibm
         {
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiModeDrawArrays(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* first, Int32* count, Int32 primcount, Int32 modestride)
-            {
-                Delegates.glMultiModeDrawArraysIBM((OpenTK.OpenGL.Enums.BeginMode*)mode, (Int32*)first, (Int32*)count, (Int32)primcount, (Int32)modestride);
-            }
-
             public static 
             void MultiModeDrawArrays(OpenTK.OpenGL.Enums.BeginMode[] mode, Int32[] first, Int32[] count, Int32 primcount, Int32 modestride)
             {
@@ -37726,24 +37719,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiModeDrawElements(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount, Int32 modestride)
+            unsafe void MultiModeDrawArrays(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* first, Int32* count, Int32 primcount, Int32 modestride)
             {
-                Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount, (Int32)modestride);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiModeDrawElements(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount, Int32 modestride)
-            {
-                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
-                try
-                {
-                    Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, (Int32)modestride);
-                }
-                finally
-                {
-                    indices_ptr.Free();
-                }
+                Delegates.glMultiModeDrawArraysIBM((OpenTK.OpenGL.Enums.BeginMode*)mode, (Int32*)first, (Int32*)count, (Int32)primcount, (Int32)modestride);
             }
 
             public static 
@@ -37814,6 +37792,28 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiModeDrawElements(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, IntPtr indices, Int32 primcount, Int32 modestride)
+            {
+                Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices, (Int32)primcount, (Int32)modestride);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void MultiModeDrawElements(OpenTK.OpenGL.Enums.BeginMode* mode, Int32* count, OpenTK.OpenGL.Enums.DrawElementsType type, [In, Out] object indices, Int32 primcount, Int32 modestride)
+            {
+                System.Runtime.InteropServices.GCHandle indices_ptr = System.Runtime.InteropServices.GCHandle.Alloc(indices, System.Runtime.InteropServices.GCHandleType.Pinned);
+                try
+                {
+                    Delegates.glMultiModeDrawElementsIBM((OpenTK.OpenGL.Enums.BeginMode*)mode, (Int32*)count, (OpenTK.OpenGL.Enums.DrawElementsType)type, (IntPtr)indices_ptr.AddrOfPinnedObject(), (Int32)primcount, (Int32)modestride);
+                }
+                finally
+                {
+                    indices_ptr.Free();
+                }
+            }
+
             public static 
             void ColorPointerList(Int32 size, OpenTK.OpenGL.Enums.ColorPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride)
             {
@@ -37866,13 +37866,6 @@ namespace OpenTK.OpenGL
                 }
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void EdgeFlagPointerList(Int32 stride, bool* pointer, Int32 ptrstride)
-            {
-                Delegates.glEdgeFlagPointerListIBM((Int32)stride, (bool*)pointer, (Int32)ptrstride);
-            }
-
             public static 
             void EdgeFlagPointerList(Int32 stride, bool[] pointer, Int32 ptrstride)
             {
@@ -37895,6 +37888,13 @@ namespace OpenTK.OpenGL
                         Delegates.glEdgeFlagPointerListIBM((Int32)stride, (bool*)pointer_ptr, (Int32)ptrstride);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void EdgeFlagPointerList(Int32 stride, bool* pointer, Int32 ptrstride)
+            {
+                Delegates.glEdgeFlagPointerListIBM((Int32)stride, (bool*)pointer, (Int32)ptrstride);
             }
 
             public static 
@@ -38048,13 +38048,6 @@ namespace OpenTK.OpenGL
 
         public static partial class Ati
         {
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void TexBumpParameter(OpenTK.OpenGL.Enums.All pname, Int32* param)
-            {
-                Delegates.glTexBumpParameterivATI((OpenTK.OpenGL.Enums.All)pname, (Int32*)param);
-            }
-
             public static 
             void TexBumpParameter(OpenTK.OpenGL.Enums.All pname, Int32[] param)
             {
@@ -38081,9 +38074,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void TexBumpParameter(OpenTK.OpenGL.Enums.All pname, Single* param)
+            unsafe void TexBumpParameter(OpenTK.OpenGL.Enums.All pname, Int32* param)
             {
-                Delegates.glTexBumpParameterfvATI((OpenTK.OpenGL.Enums.All)pname, (Single*)param);
+                Delegates.glTexBumpParameterivATI((OpenTK.OpenGL.Enums.All)pname, (Int32*)param);
             }
 
             public static 
@@ -38112,9 +38105,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetTexBumpParameter(OpenTK.OpenGL.Enums.All pname, [Out] Int32* param)
+            unsafe void TexBumpParameter(OpenTK.OpenGL.Enums.All pname, Single* param)
             {
-                Delegates.glGetTexBumpParameterivATI((OpenTK.OpenGL.Enums.All)pname, (Int32*)param);
+                Delegates.glTexBumpParameterfvATI((OpenTK.OpenGL.Enums.All)pname, (Single*)param);
             }
 
             public static 
@@ -38144,9 +38137,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetTexBumpParameter(OpenTK.OpenGL.Enums.All pname, [Out] Single* param)
+            unsafe void GetTexBumpParameter(OpenTK.OpenGL.Enums.All pname, [Out] Int32* param)
             {
-                Delegates.glGetTexBumpParameterfvATI((OpenTK.OpenGL.Enums.All)pname, (Single*)param);
+                Delegates.glGetTexBumpParameterivATI((OpenTK.OpenGL.Enums.All)pname, (Int32*)param);
             }
 
             public static 
@@ -38172,6 +38165,13 @@ namespace OpenTK.OpenGL
                         param = *param_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetTexBumpParameter(OpenTK.OpenGL.Enums.All pname, [Out] Single* param)
+            {
+                Delegates.glGetTexBumpParameterfvATI((OpenTK.OpenGL.Enums.All)pname, (Single*)param);
             }
 
             [System.CLSCompliant(false)]
@@ -38331,20 +38331,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void SetFragmentShaderConstant(UInt32 dst, Single* value)
-            {
-                Delegates.glSetFragmentShaderConstantATI((UInt32)dst, (Single*)value);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void SetFragmentShaderConstant(Int32 dst, Single* value)
-            {
-                Delegates.glSetFragmentShaderConstantATI((UInt32)dst, (Single*)value);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void SetFragmentShaderConstant(UInt32 dst, Single[] value)
             {
                 unsafe
@@ -38391,6 +38377,20 @@ namespace OpenTK.OpenGL
                         Delegates.glSetFragmentShaderConstantATI((UInt32)dst, (Single*)value_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SetFragmentShaderConstant(UInt32 dst, Single* value)
+            {
+                Delegates.glSetFragmentShaderConstantATI((UInt32)dst, (Single*)value);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void SetFragmentShaderConstant(Int32 dst, Single* value)
+            {
+                Delegates.glSetFragmentShaderConstantATI((UInt32)dst, (Single*)value);
             }
 
             public static 
@@ -38500,20 +38500,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetObjectBuffer(UInt32 buffer, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetObjectBufferfvATI((UInt32)buffer, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetObjectBuffer(Int32 buffer, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetObjectBufferfvATI((UInt32)buffer, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void GetObjectBuffer(UInt32 buffer, OpenTK.OpenGL.Enums.All pname, [Out] Single[] @params)
             {
                 unsafe
@@ -38566,16 +38552,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetObjectBuffer(UInt32 buffer, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetObjectBuffer(UInt32 buffer, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetObjectBufferivATI((UInt32)buffer, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetObjectBufferfvATI((UInt32)buffer, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetObjectBuffer(Int32 buffer, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetObjectBuffer(Int32 buffer, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetObjectBufferivATI((UInt32)buffer, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetObjectBufferfvATI((UInt32)buffer, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -38632,6 +38618,20 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetObjectBuffer(UInt32 buffer, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetObjectBufferivATI((UInt32)buffer, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetObjectBuffer(Int32 buffer, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetObjectBufferivATI((UInt32)buffer, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void FreeObjectBuffer(UInt32 buffer)
             {
                 Delegates.glFreeObjectBufferATI((UInt32)buffer);
@@ -38654,13 +38654,6 @@ namespace OpenTK.OpenGL
             void ArrayObject(OpenTK.OpenGL.Enums.EnableCap array, Int32 size, OpenTK.OpenGL.Enums.All type, Int32 stride, Int32 buffer, Int32 offset)
             {
                 Delegates.glArrayObjectATI((OpenTK.OpenGL.Enums.EnableCap)array, (Int32)size, (OpenTK.OpenGL.Enums.All)type, (Int32)stride, (UInt32)buffer, (UInt32)offset);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetArrayObject(OpenTK.OpenGL.Enums.EnableCap array, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetArrayObjectfvATI((OpenTK.OpenGL.Enums.EnableCap)array, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -38690,9 +38683,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetArrayObject(OpenTK.OpenGL.Enums.EnableCap array, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetArrayObject(OpenTK.OpenGL.Enums.EnableCap array, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetArrayObjectivATI((OpenTK.OpenGL.Enums.EnableCap)array, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetArrayObjectfvATI((OpenTK.OpenGL.Enums.EnableCap)array, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             public static 
@@ -38722,6 +38715,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void GetArrayObject(OpenTK.OpenGL.Enums.EnableCap array, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetArrayObjectivATI((OpenTK.OpenGL.Enums.EnableCap)array, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void VariantArrayObject(UInt32 id, OpenTK.OpenGL.Enums.All type, Int32 stride, UInt32 buffer, UInt32 offset)
             {
                 Delegates.glVariantArrayObjectATI((UInt32)id, (OpenTK.OpenGL.Enums.All)type, (Int32)stride, (UInt32)buffer, (UInt32)offset);
@@ -38731,20 +38731,6 @@ namespace OpenTK.OpenGL
             void VariantArrayObject(Int32 id, OpenTK.OpenGL.Enums.All type, Int32 stride, Int32 buffer, Int32 offset)
             {
                 Delegates.glVariantArrayObjectATI((UInt32)id, (OpenTK.OpenGL.Enums.All)type, (Int32)stride, (UInt32)buffer, (UInt32)offset);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetVariantArrayObject(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetVariantArrayObjectfvATI((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetVariantArrayObject(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetVariantArrayObjectfvATI((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -38801,16 +38787,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVariantArrayObject(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetVariantArrayObject(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetVariantArrayObjectivATI((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetVariantArrayObjectfvATI((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVariantArrayObject(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetVariantArrayObject(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetVariantArrayObjectivATI((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetVariantArrayObjectfvATI((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -38865,17 +38851,24 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
             public static 
-            void VertexStream1(OpenTK.OpenGL.Enums.All stream, Int16 x)
+            unsafe void GetVariantArrayObject(UInt32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glVertexStream1sATI((OpenTK.OpenGL.Enums.All)stream, (Int16)x);
+                Delegates.glGetVariantArrayObjectivATI((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void VertexStream1v(OpenTK.OpenGL.Enums.All stream, Int16* coords)
+            unsafe void GetVariantArrayObject(Int32 id, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
             {
-                Delegates.glVertexStream1svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
+                Delegates.glGetVariantArrayObjectivATI((UInt32)id, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
+            public static 
+            void VertexStream1(OpenTK.OpenGL.Enums.All stream, Int16 x)
+            {
+                Delegates.glVertexStream1sATI((OpenTK.OpenGL.Enums.All)stream, (Int16)x);
             }
 
             public static 
@@ -38902,17 +38895,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream1v(OpenTK.OpenGL.Enums.All stream, Int16* coords)
+            {
+                Delegates.glVertexStream1svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
+            }
+
             public static 
             void VertexStream1(OpenTK.OpenGL.Enums.All stream, Int32 x)
             {
                 Delegates.glVertexStream1iATI((OpenTK.OpenGL.Enums.All)stream, (Int32)x);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream1v(OpenTK.OpenGL.Enums.All stream, Int32* coords)
-            {
-                Delegates.glVertexStream1ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
             }
 
             public static 
@@ -38939,17 +38932,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream1v(OpenTK.OpenGL.Enums.All stream, Int32* coords)
+            {
+                Delegates.glVertexStream1ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
+            }
+
             public static 
             void VertexStream1(OpenTK.OpenGL.Enums.All stream, Single x)
             {
                 Delegates.glVertexStream1fATI((OpenTK.OpenGL.Enums.All)stream, (Single)x);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream1v(OpenTK.OpenGL.Enums.All stream, Single* coords)
-            {
-                Delegates.glVertexStream1fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
             }
 
             public static 
@@ -38976,17 +38969,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream1v(OpenTK.OpenGL.Enums.All stream, Single* coords)
+            {
+                Delegates.glVertexStream1fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
+            }
+
             public static 
             void VertexStream1(OpenTK.OpenGL.Enums.All stream, Double x)
             {
                 Delegates.glVertexStream1dATI((OpenTK.OpenGL.Enums.All)stream, (Double)x);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream1v(OpenTK.OpenGL.Enums.All stream, Double* coords)
-            {
-                Delegates.glVertexStream1dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
             }
 
             public static 
@@ -39013,17 +39006,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream1v(OpenTK.OpenGL.Enums.All stream, Double* coords)
+            {
+                Delegates.glVertexStream1dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
+            }
+
             public static 
             void VertexStream2(OpenTK.OpenGL.Enums.All stream, Int16 x, Int16 y)
             {
                 Delegates.glVertexStream2sATI((OpenTK.OpenGL.Enums.All)stream, (Int16)x, (Int16)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream2(OpenTK.OpenGL.Enums.All stream, Int16* coords)
-            {
-                Delegates.glVertexStream2svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
             }
 
             public static 
@@ -39050,17 +39043,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream2(OpenTK.OpenGL.Enums.All stream, Int16* coords)
+            {
+                Delegates.glVertexStream2svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
+            }
+
             public static 
             void VertexStream2(OpenTK.OpenGL.Enums.All stream, Int32 x, Int32 y)
             {
                 Delegates.glVertexStream2iATI((OpenTK.OpenGL.Enums.All)stream, (Int32)x, (Int32)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream2(OpenTK.OpenGL.Enums.All stream, Int32* coords)
-            {
-                Delegates.glVertexStream2ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
             }
 
             public static 
@@ -39087,17 +39080,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream2(OpenTK.OpenGL.Enums.All stream, Int32* coords)
+            {
+                Delegates.glVertexStream2ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
+            }
+
             public static 
             void VertexStream2(OpenTK.OpenGL.Enums.All stream, Single x, Single y)
             {
                 Delegates.glVertexStream2fATI((OpenTK.OpenGL.Enums.All)stream, (Single)x, (Single)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream2(OpenTK.OpenGL.Enums.All stream, Single* coords)
-            {
-                Delegates.glVertexStream2fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
             }
 
             public static 
@@ -39124,17 +39117,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream2(OpenTK.OpenGL.Enums.All stream, Single* coords)
+            {
+                Delegates.glVertexStream2fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
+            }
+
             public static 
             void VertexStream2(OpenTK.OpenGL.Enums.All stream, Double x, Double y)
             {
                 Delegates.glVertexStream2dATI((OpenTK.OpenGL.Enums.All)stream, (Double)x, (Double)y);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream2(OpenTK.OpenGL.Enums.All stream, Double* coords)
-            {
-                Delegates.glVertexStream2dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
             }
 
             public static 
@@ -39161,17 +39154,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream2(OpenTK.OpenGL.Enums.All stream, Double* coords)
+            {
+                Delegates.glVertexStream2dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
+            }
+
             public static 
             void VertexStream3(OpenTK.OpenGL.Enums.All stream, Int16 x, Int16 y, Int16 z)
             {
                 Delegates.glVertexStream3sATI((OpenTK.OpenGL.Enums.All)stream, (Int16)x, (Int16)y, (Int16)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream3(OpenTK.OpenGL.Enums.All stream, Int16* coords)
-            {
-                Delegates.glVertexStream3svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
             }
 
             public static 
@@ -39198,17 +39191,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream3(OpenTK.OpenGL.Enums.All stream, Int16* coords)
+            {
+                Delegates.glVertexStream3svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
+            }
+
             public static 
             void VertexStream3(OpenTK.OpenGL.Enums.All stream, Int32 x, Int32 y, Int32 z)
             {
                 Delegates.glVertexStream3iATI((OpenTK.OpenGL.Enums.All)stream, (Int32)x, (Int32)y, (Int32)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream3(OpenTK.OpenGL.Enums.All stream, Int32* coords)
-            {
-                Delegates.glVertexStream3ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
             }
 
             public static 
@@ -39235,17 +39228,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream3(OpenTK.OpenGL.Enums.All stream, Int32* coords)
+            {
+                Delegates.glVertexStream3ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
+            }
+
             public static 
             void VertexStream3(OpenTK.OpenGL.Enums.All stream, Single x, Single y, Single z)
             {
                 Delegates.glVertexStream3fATI((OpenTK.OpenGL.Enums.All)stream, (Single)x, (Single)y, (Single)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream3(OpenTK.OpenGL.Enums.All stream, Single* coords)
-            {
-                Delegates.glVertexStream3fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
             }
 
             public static 
@@ -39272,17 +39265,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream3(OpenTK.OpenGL.Enums.All stream, Single* coords)
+            {
+                Delegates.glVertexStream3fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
+            }
+
             public static 
             void VertexStream3(OpenTK.OpenGL.Enums.All stream, Double x, Double y, Double z)
             {
                 Delegates.glVertexStream3dATI((OpenTK.OpenGL.Enums.All)stream, (Double)x, (Double)y, (Double)z);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream3(OpenTK.OpenGL.Enums.All stream, Double* coords)
-            {
-                Delegates.glVertexStream3dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
             }
 
             public static 
@@ -39309,17 +39302,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream3(OpenTK.OpenGL.Enums.All stream, Double* coords)
+            {
+                Delegates.glVertexStream3dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
+            }
+
             public static 
             void VertexStream4(OpenTK.OpenGL.Enums.All stream, Int16 x, Int16 y, Int16 z, Int16 w)
             {
                 Delegates.glVertexStream4sATI((OpenTK.OpenGL.Enums.All)stream, (Int16)x, (Int16)y, (Int16)z, (Int16)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream4(OpenTK.OpenGL.Enums.All stream, Int16* coords)
-            {
-                Delegates.glVertexStream4svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
             }
 
             public static 
@@ -39346,17 +39339,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream4(OpenTK.OpenGL.Enums.All stream, Int16* coords)
+            {
+                Delegates.glVertexStream4svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
+            }
+
             public static 
             void VertexStream4(OpenTK.OpenGL.Enums.All stream, Int32 x, Int32 y, Int32 z, Int32 w)
             {
                 Delegates.glVertexStream4iATI((OpenTK.OpenGL.Enums.All)stream, (Int32)x, (Int32)y, (Int32)z, (Int32)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream4(OpenTK.OpenGL.Enums.All stream, Int32* coords)
-            {
-                Delegates.glVertexStream4ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
             }
 
             public static 
@@ -39383,17 +39376,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream4(OpenTK.OpenGL.Enums.All stream, Int32* coords)
+            {
+                Delegates.glVertexStream4ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
+            }
+
             public static 
             void VertexStream4(OpenTK.OpenGL.Enums.All stream, Single x, Single y, Single z, Single w)
             {
                 Delegates.glVertexStream4fATI((OpenTK.OpenGL.Enums.All)stream, (Single)x, (Single)y, (Single)z, (Single)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream4(OpenTK.OpenGL.Enums.All stream, Single* coords)
-            {
-                Delegates.glVertexStream4fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
             }
 
             public static 
@@ -39420,17 +39413,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void VertexStream4(OpenTK.OpenGL.Enums.All stream, Single* coords)
+            {
+                Delegates.glVertexStream4fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
+            }
+
             public static 
             void VertexStream4(OpenTK.OpenGL.Enums.All stream, Double x, Double y, Double z, Double w)
             {
                 Delegates.glVertexStream4dATI((OpenTK.OpenGL.Enums.All)stream, (Double)x, (Double)y, (Double)z, (Double)w);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void VertexStream4(OpenTK.OpenGL.Enums.All stream, Double* coords)
-            {
-                Delegates.glVertexStream4dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
             }
 
             public static 
@@ -39459,6 +39452,13 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
+            unsafe void VertexStream4(OpenTK.OpenGL.Enums.All stream, Double* coords)
+            {
+                Delegates.glVertexStream4dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
             void NormalStream3(OpenTK.OpenGL.Enums.All stream, SByte nx, SByte ny, SByte nz)
             {
                 Delegates.glNormalStream3bATI((OpenTK.OpenGL.Enums.All)stream, (SByte)nx, (SByte)ny, (SByte)nz);
@@ -39468,20 +39468,6 @@ namespace OpenTK.OpenGL
             void NormalStream3(OpenTK.OpenGL.Enums.All stream, Byte nx, Byte ny, Byte nz)
             {
                 Delegates.glNormalStream3bATI((OpenTK.OpenGL.Enums.All)stream, (SByte)nx, (SByte)ny, (SByte)nz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, SByte* coords)
-            {
-                Delegates.glNormalStream3bvATI((OpenTK.OpenGL.Enums.All)stream, (SByte*)coords);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Byte* coords)
-            {
-                Delegates.glNormalStream3bvATI((OpenTK.OpenGL.Enums.All)stream, (SByte*)coords);
             }
 
             [System.CLSCompliant(false)]
@@ -39534,17 +39520,24 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
             public static 
-            void NormalStream3(OpenTK.OpenGL.Enums.All stream, Int16 nx, Int16 ny, Int16 nz)
+            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, SByte* coords)
             {
-                Delegates.glNormalStream3sATI((OpenTK.OpenGL.Enums.All)stream, (Int16)nx, (Int16)ny, (Int16)nz);
+                Delegates.glNormalStream3bvATI((OpenTK.OpenGL.Enums.All)stream, (SByte*)coords);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Int16* coords)
+            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Byte* coords)
             {
-                Delegates.glNormalStream3svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
+                Delegates.glNormalStream3bvATI((OpenTK.OpenGL.Enums.All)stream, (SByte*)coords);
+            }
+
+            public static 
+            void NormalStream3(OpenTK.OpenGL.Enums.All stream, Int16 nx, Int16 ny, Int16 nz)
+            {
+                Delegates.glNormalStream3sATI((OpenTK.OpenGL.Enums.All)stream, (Int16)nx, (Int16)ny, (Int16)nz);
             }
 
             public static 
@@ -39571,17 +39564,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Int16* coords)
+            {
+                Delegates.glNormalStream3svATI((OpenTK.OpenGL.Enums.All)stream, (Int16*)coords);
+            }
+
             public static 
             void NormalStream3(OpenTK.OpenGL.Enums.All stream, Int32 nx, Int32 ny, Int32 nz)
             {
                 Delegates.glNormalStream3iATI((OpenTK.OpenGL.Enums.All)stream, (Int32)nx, (Int32)ny, (Int32)nz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Int32* coords)
-            {
-                Delegates.glNormalStream3ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
             }
 
             public static 
@@ -39608,17 +39601,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Int32* coords)
+            {
+                Delegates.glNormalStream3ivATI((OpenTK.OpenGL.Enums.All)stream, (Int32*)coords);
+            }
+
             public static 
             void NormalStream3(OpenTK.OpenGL.Enums.All stream, Single nx, Single ny, Single nz)
             {
                 Delegates.glNormalStream3fATI((OpenTK.OpenGL.Enums.All)stream, (Single)nx, (Single)ny, (Single)nz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Single* coords)
-            {
-                Delegates.glNormalStream3fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
             }
 
             public static 
@@ -39645,17 +39638,17 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Single* coords)
+            {
+                Delegates.glNormalStream3fvATI((OpenTK.OpenGL.Enums.All)stream, (Single*)coords);
+            }
+
             public static 
             void NormalStream3(OpenTK.OpenGL.Enums.All stream, Double nx, Double ny, Double nz)
             {
                 Delegates.glNormalStream3dATI((OpenTK.OpenGL.Enums.All)stream, (Double)nx, (Double)ny, (Double)nz);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Double* coords)
-            {
-                Delegates.glNormalStream3dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
             }
 
             public static 
@@ -39680,6 +39673,13 @@ namespace OpenTK.OpenGL
                         Delegates.glNormalStream3dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void NormalStream3(OpenTK.OpenGL.Enums.All stream, Double* coords)
+            {
+                Delegates.glNormalStream3dvATI((OpenTK.OpenGL.Enums.All)stream, (Double*)coords);
             }
 
             public static 
@@ -39745,13 +39745,6 @@ namespace OpenTK.OpenGL
                 Delegates.glDrawRangeElementArrayATI((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)count);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DrawBuffers(Int32 n, OpenTK.OpenGL.Enums.All* bufs)
-            {
-                Delegates.glDrawBuffersATI((Int32)n, (OpenTK.OpenGL.Enums.All*)bufs);
-            }
-
             public static 
             void DrawBuffers(Int32 n, OpenTK.OpenGL.Enums.All[] bufs)
             {
@@ -39774,6 +39767,13 @@ namespace OpenTK.OpenGL
                         Delegates.glDrawBuffersATI((Int32)n, (OpenTK.OpenGL.Enums.All*)bufs_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void DrawBuffers(Int32 n, OpenTK.OpenGL.Enums.All* bufs)
+            {
+                Delegates.glDrawBuffersATI((Int32)n, (OpenTK.OpenGL.Enums.All*)bufs);
             }
 
             [System.CLSCompliant(false)]
@@ -39837,20 +39837,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttribArrayObject(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetVertexAttribArrayObjectfvATI((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void GetVertexAttribArrayObject(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
-            {
-                Delegates.glGetVertexAttribArrayObjectfvATI((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void GetVertexAttribArrayObject(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single[] @params)
             {
                 unsafe
@@ -39903,16 +39889,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttribArrayObject(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetVertexAttribArrayObject(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetVertexAttribArrayObjectivATI((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetVertexAttribArrayObjectfvATI((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GetVertexAttribArrayObject(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            unsafe void GetVertexAttribArrayObject(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Single* @params)
             {
-                Delegates.glGetVertexAttribArrayObjectivATI((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+                Delegates.glGetVertexAttribArrayObjectfvATI((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Single*)@params);
             }
 
             [System.CLSCompliant(false)]
@@ -39967,6 +39953,20 @@ namespace OpenTK.OpenGL
                 }
             }
 
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetVertexAttribArrayObject(UInt32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetVertexAttribArrayObjectivATI((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GetVertexAttribArrayObject(Int32 index, OpenTK.OpenGL.Enums.All pname, [Out] Int32* @params)
+            {
+                Delegates.glGetVertexAttribArrayObjectivATI((UInt32)index, (OpenTK.OpenGL.Enums.All)pname, (Int32*)@params);
+            }
+
         }
 
         public static partial class Apple
@@ -40016,13 +40016,6 @@ namespace OpenTK.OpenGL
                 Delegates.glDrawRangeElementArrayAPPLE((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32)first, (Int32)count);
             }
 
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiDrawElementArray(OpenTK.OpenGL.Enums.BeginMode mode, Int32* first, Int32* count, Int32 primcount)
-            {
-                Delegates.glMultiDrawElementArrayAPPLE((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)first, (Int32*)count, (Int32)primcount);
-            }
-
             public static 
             void MultiDrawElementArray(OpenTK.OpenGL.Enums.BeginMode mode, Int32[] first, Int32[] count, Int32 primcount)
             {
@@ -40051,16 +40044,9 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void MultiDrawRangeElementArray(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32* first, Int32* count, Int32 primcount)
+            unsafe void MultiDrawElementArray(OpenTK.OpenGL.Enums.BeginMode mode, Int32* first, Int32* count, Int32 primcount)
             {
-                Delegates.glMultiDrawRangeElementArrayAPPLE((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32*)first, (Int32*)count, (Int32)primcount);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void MultiDrawRangeElementArray(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32* first, Int32* count, Int32 primcount)
-            {
-                Delegates.glMultiDrawRangeElementArrayAPPLE((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32*)first, (Int32*)count, (Int32)primcount);
+                Delegates.glMultiDrawElementArrayAPPLE((OpenTK.OpenGL.Enums.BeginMode)mode, (Int32*)first, (Int32*)count, (Int32)primcount);
             }
 
             [System.CLSCompliant(false)]
@@ -40119,16 +40105,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenFences(Int32 n, [Out] UInt32* fences)
+            unsafe void MultiDrawRangeElementArray(OpenTK.OpenGL.Enums.BeginMode mode, UInt32 start, UInt32 end, Int32* first, Int32* count, Int32 primcount)
             {
-                Delegates.glGenFencesAPPLE((Int32)n, (UInt32*)fences);
+                Delegates.glMultiDrawRangeElementArrayAPPLE((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32*)first, (Int32*)count, (Int32)primcount);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenFences(Int32 n, [Out] Int32* fences)
+            unsafe void MultiDrawRangeElementArray(OpenTK.OpenGL.Enums.BeginMode mode, Int32 start, Int32 end, Int32* first, Int32* count, Int32 primcount)
             {
-                Delegates.glGenFencesAPPLE((Int32)n, (UInt32*)fences);
+                Delegates.glMultiDrawRangeElementArrayAPPLE((OpenTK.OpenGL.Enums.BeginMode)mode, (UInt32)start, (UInt32)end, (Int32*)first, (Int32*)count, (Int32)primcount);
             }
 
             [System.CLSCompliant(false)]
@@ -40185,16 +40171,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteFences(Int32 n, UInt32* fences)
+            unsafe void GenFences(Int32 n, [Out] UInt32* fences)
             {
-                Delegates.glDeleteFencesAPPLE((Int32)n, (UInt32*)fences);
+                Delegates.glGenFencesAPPLE((Int32)n, (UInt32*)fences);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteFences(Int32 n, Int32* fences)
+            unsafe void GenFences(Int32 n, [Out] Int32* fences)
             {
-                Delegates.glDeleteFencesAPPLE((Int32)n, (UInt32*)fences);
+                Delegates.glGenFencesAPPLE((Int32)n, (UInt32*)fences);
             }
 
             [System.CLSCompliant(false)]
@@ -40245,6 +40231,20 @@ namespace OpenTK.OpenGL
                         Delegates.glDeleteFencesAPPLE((Int32)n, (UInt32*)fences_ptr);
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void DeleteFences(Int32 n, UInt32* fences)
+            {
+                Delegates.glDeleteFencesAPPLE((Int32)n, (UInt32*)fences);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void DeleteFences(Int32 n, Int32* fences)
+            {
+                Delegates.glDeleteFencesAPPLE((Int32)n, (UInt32*)fences);
             }
 
             [System.CLSCompliant(false)]
@@ -40333,20 +40333,6 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void DeleteVertexArrays(Int32 n, UInt32* arrays)
-            {
-                Delegates.glDeleteVertexArraysAPPLE((Int32)n, (UInt32*)arrays);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
-            unsafe void DeleteVertexArrays(Int32 n, Int32* arrays)
-            {
-                Delegates.glDeleteVertexArraysAPPLE((Int32)n, (UInt32*)arrays);
-            }
-
-            [System.CLSCompliant(false)]
-            public static 
             void DeleteVertexArrays(Int32 n, UInt32[] arrays)
             {
                 unsafe
@@ -40397,16 +40383,16 @@ namespace OpenTK.OpenGL
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenVertexArrays(Int32 n, [Out] UInt32* arrays)
+            unsafe void DeleteVertexArrays(Int32 n, UInt32* arrays)
             {
-                Delegates.glGenVertexArraysAPPLE((Int32)n, (UInt32*)arrays);
+                Delegates.glDeleteVertexArraysAPPLE((Int32)n, (UInt32*)arrays);
             }
 
             [System.CLSCompliant(false)]
             public static 
-            unsafe void GenVertexArrays(Int32 n, [Out] Int32* arrays)
+            unsafe void DeleteVertexArrays(Int32 n, Int32* arrays)
             {
-                Delegates.glGenVertexArraysAPPLE((Int32)n, (UInt32*)arrays);
+                Delegates.glDeleteVertexArraysAPPLE((Int32)n, (UInt32*)arrays);
             }
 
             [System.CLSCompliant(false)]
@@ -40459,6 +40445,20 @@ namespace OpenTK.OpenGL
                         arrays = *arrays_ptr;
                     }
                 }
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GenVertexArrays(Int32 n, [Out] UInt32* arrays)
+            {
+                Delegates.glGenVertexArraysAPPLE((Int32)n, (UInt32*)arrays);
+            }
+
+            [System.CLSCompliant(false)]
+            public static 
+            unsafe void GenVertexArrays(Int32 n, [Out] Int32* arrays)
+            {
+                Delegates.glGenVertexArraysAPPLE((Int32)n, (UInt32*)arrays);
             }
 
             [System.CLSCompliant(false)]
