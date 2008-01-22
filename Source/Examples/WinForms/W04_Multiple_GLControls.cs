@@ -11,22 +11,21 @@ using OpenTK.OpenGL;
 
 namespace Examples.WinForms
 {
-    public partial class W04_Multiple_GLControls : Form, IExample
+    [Example("Multiple GLControls test", ExampleCategory.WinForms, 4)]
+    public partial class W04_Multiple_GLControls : Form
     {
         public W04_Multiple_GLControls()
         {
             InitializeComponent();
         }
 
-        #region IExample Members
-
-        public void Launch()
+        public static void Main()
         {
-            
+            using (W04_Multiple_GLControls example = new W04_Multiple_GLControls())
+            {
+                Utilities.SetWindowTitle(example);
+                example.ShowDialog();
+            }
         }
-
-        public static readonly int order = 4;
-
-        #endregion
     }
 }
