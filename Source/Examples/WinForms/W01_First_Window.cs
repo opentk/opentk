@@ -103,9 +103,7 @@ namespace Examples.WinForms
         {
             using (W01_First_Window example = new W01_First_Window())
             {
-                // Get the title and category  of this example using reflection.
-                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
-                example.Text = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                Utilities.SetWindowTitle(example);
                 example.ShowDialog();
             }
         }
