@@ -105,7 +105,7 @@ namespace OpenTK.OpenGL
 
         #endregion
 
-        #region --- Methods ---
+        #region --- Public Methods ---
 
         #region public static bool SupportsExtension(string name)
 
@@ -193,43 +193,11 @@ namespace OpenTK.OpenGL
         /// </remarks>
         public static void LoadAll()
         {
-            // Using reflection is more than 3 times faster than directly loading delegates on the first
-            // run, probably due to code generation overhead. Subsequent runs are faster with direct loading
-            // than with reflection, but the first time is more significant.
+            //TODO: Route GameWindow context creation through GLContext.
+            //if (GLContext.CurrentContext == null)
+            //    throw new InvalidOperationException("You must create an OpenGL context before using the GL class.");
 
-            int supported = 0;
-            if (delegates == null)
-            {
-                delegates = delegatesClass.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
-            }
-
-            Trace.Write("GL.LoadAll(): ");
-
-            System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
-            time.Reset();
-            time.Start();
-
-            foreach (FieldInfo f in delegates)
-            {
-                Delegate d = LoadDelegate(f.Name, f.FieldType);
-                if (d != null)
-                {
-                    ++supported;
-                }
-
-                f.SetValue(null, d);
-            }
-            
-            time.Stop();
-            Trace.WriteLine(String.Format("{0} OpenGL extensions loaded in {1} milliseconds.", supported, time.ElapsedMilliseconds));
-            time.Reset();
-
-            rebuildExtensionList = true;
-        }
-
-        static void set(object d, Delegate value)
-        {
-            d = value;
+            OpenTK.Platform.Utilities.LoadExtensions(glClass);
         }
 
         #endregion
