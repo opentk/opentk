@@ -199,6 +199,7 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets the Height of the DisplayMode. Height is the vertical span measured in pixels.
         /// </summary>
+        [Obsolete("Use GameWindow.Height or GLControl.Height instead.")]
         public int Height
         {
             get { return height; }
@@ -218,6 +219,7 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets the Width of the DisplayMode. Width is the horizontal span measured in pixels.
         /// </summary>
+        [Obsolete("Use GameWindow.Width or GLControl.Width instead.")]
         public int Width
         {
             get { return width; }
