@@ -319,7 +319,7 @@ namespace OpenTK.Platform.X11
 
         public partial class Sgi
         {
-            public static int SwapIntervalSGI(int interval)
+            public static int SwapInterval(int interval)
             {
                 return Delegates.glXSwapIntervalSGI(interval);
             }
