@@ -26,10 +26,6 @@ namespace OpenTK
         static Dictionary<ContextHandle, WeakReference> available_contexts =
             new Dictionary<ContextHandle, WeakReference>();   // Contains all available OpenGL contexts.
 
-        //delegate IntPtr GetCurrentContextDelegate();
-        //static GetCurrentContextDelegate StaticGetCurrentContext;
-
-
         #region public GLContext(DisplayMode mode, IWindowInfo window)
 
         /// <summary>
@@ -129,6 +125,11 @@ namespace OpenTK
         /// <para>Changing this value will not affect already created GLContexts.</para>
         /// </remarks>
         public static bool ShareContexts { get { return share_contexts; } set { share_contexts = value; } }
+
+        #endregion
+
+        #region public static AvailableDisplayFormats
+
 
         #endregion
 
