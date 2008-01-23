@@ -20,6 +20,8 @@ namespace OpenTK.Platform.Windows
         private IntPtr handle;
         private WindowInfo parent;
 
+        #region --- Constructors ---
+
         public WindowInfo()
         {
         }
@@ -64,6 +66,8 @@ namespace OpenTK.Platform.Windows
             */
             this.CopyInfoFrom(window.WindowInfo);
         }
+
+        #endregion
 
         #region --- IWindowInfo Members ---
 
@@ -126,10 +130,14 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region public override string ToString()
+
         public override string ToString()
         {
             return String.Format("Windows.WindowInfo: Handle {0}, Parent ({1})",
                 this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
         }
+
+        #endregion
     }
 }
