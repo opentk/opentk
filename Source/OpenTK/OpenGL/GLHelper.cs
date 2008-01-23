@@ -72,7 +72,6 @@ namespace OpenTK.OpenGL
         private static Type glClass;
         private static Type delegatesClass;
         private static Type importsClass;
-        private static FieldInfo[] delegates;
 
         #endregion
 
