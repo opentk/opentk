@@ -334,10 +334,10 @@ namespace OpenTK.Platform.Windows
                 pixelFormat.AccumAlphaBits = (byte)accum.Alpha;
             }
             */
-            pixelFormat.DepthBits = (byte)mode.DepthBits;
-            pixelFormat.StencilBits = (byte)mode.StencilBits;
+            pixelFormat.DepthBits = (byte)mode.Depth;
+            pixelFormat.StencilBits = (byte)mode.Stencil;
 
-            if (mode.DepthBits <= 0)
+            if (mode.Depth <= 0)
             {
                 pixelFormat.Flags |= PixelFormatDescriptorFlags.DEPTH_DONTCARE;
             }

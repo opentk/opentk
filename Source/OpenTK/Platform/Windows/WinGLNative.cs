@@ -275,7 +275,7 @@ namespace OpenTK.Platform.Windows
 
         #region public void CreateWindow(DisplayMode mode, out IGLContext context)
 
-        public void CreateWindow(DisplayMode windowMode, out IGLContext context)
+        public void CreateWindow(int width, int height, DisplayMode windowMode, out IGLContext context)
         {
             Debug.Print("Creating native window with mode: {0}", windowMode.ToString());
             Debug.Indent();
@@ -294,21 +294,21 @@ namespace OpenTK.Platform.Windows
 
             Rectangle rect = new Rectangle();
             rect.top = rect.left = 0;
-            rect.bottom = windowMode.Height;
-            rect.right = windowMode.Width;
+            rect.bottom = height;
+            rect.right = width;
             Functions.AdjustWindowRect(ref rect, WindowStyle.OverlappedWindow, false);
 
             // Not used
             Top = 0;
             Left = 0;
-            Right = windowMode.Width;
-            Bottom = windowMode.Height;
+            Right = width;
+            Bottom = height;
             // --------
 
             top_border = -rect.top;
             left_border = -rect.left;
-            bottom_border = rect.bottom - windowMode.Height;
-            right_border = rect.right - windowMode.Width;
+            bottom_border = rect.bottom - height;
+            right_border = rect.right - width;
 
             cp.Width = rect.right - rect.left;
             cp.Height = rect.bottom - rect.top;
@@ -472,8 +472,8 @@ namespace OpenTK.Platform.Windows
 
         public void OnResize(ResizeEventArgs e)
         {
-            mode.Width = e.Width;
-            mode.Height = e.Height;
+            this.width = e.Width;
+            this.height = e.Height;
             if (this.Resize != null)
                 this.Resize(this, e);
         }
