@@ -11,6 +11,8 @@ using System.Drawing;
 
 namespace OpenTK.Fonts
 {
+    using Graphics = System.Drawing.Graphics;
+
     /// <summary>
     /// Represents a single character of a specific Font.
     /// </summary>
