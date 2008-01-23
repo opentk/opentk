@@ -45,7 +45,7 @@ namespace OpenTK
 
         /// <summary>Constructs a new DisplayMode with sensible default parameters.</summary>
         public DisplayMode()
-            : this(Display.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 2, false)
+            : this(DisplayDevice.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 2, false)
         {
         }
 
@@ -141,7 +141,7 @@ namespace OpenTK
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         [Obsolete]
         public DisplayMode(int width, int height)
-            : this(width, height, Display.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 0, false, false, false, 0.0f)
+            : this(width, height, DisplayDevice.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 0, false, false, false, 0.0f)
         {
         }
 

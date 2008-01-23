@@ -16,7 +16,7 @@ namespace OpenTK.Graphics
     /// Defines a display device on the underlying system, and provides
     /// methods to query and change its display parameters.
     /// </summary>
-    public class Display
+    public class DisplayDevice
     {
         // TODO: Add support for refresh rate queries and switches.
         // TODO: Check whether bits_per_pixel works correctly under Mono/X11.
@@ -29,20 +29,20 @@ namespace OpenTK.Graphics
         float refresh_rate;
         bool primary;
 
-        static List<Display> available_displays = new List<Display>();
+        static List<DisplayDevice> available_displays = new List<DisplayDevice>();
         static object display_lock = new object();
-        static Display primary_display;
+        static DisplayDevice primary_display;
 
         #region --- Constructors ---
 
-        static Display()
+        static DisplayDevice()
         {
             lock (display_lock)
             {
                 int i = 0;
                 foreach (System.Windows.Forms.Screen scr in System.Windows.Forms.Screen.AllScreens)
                 {
-                    available_displays.Add(new Display(scr.Bounds.Width, scr.Bounds.Height, 32, 0, scr.Primary));
+                    available_displays.Add(new DisplayDevice(scr.Bounds.Width, scr.Bounds.Height, 32, 0, scr.Primary));
                     if (scr.Primary)
                         primary_display = available_displays[i];
                     ++i;
@@ -50,7 +50,7 @@ namespace OpenTK.Graphics
             }
         }
 
-        Display(int width, int height, int bitsPerPixel, float refreshRate, bool primary)
+        DisplayDevice(int width, int height, int bitsPerPixel, float refreshRate, bool primary)
         {
             this.width = width;
             this.height = height;
@@ -78,7 +78,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets an array of OpenTK.Display objects, which describe all available display devices.
         /// </summary>
-        public static Display[] AvailableDisplays
+        public static DisplayDevice[] AvailableDisplays
         {
             get
             {
@@ -90,7 +90,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>Gets the primary display of this system.</summary>
-        public static Display PrimaryDisplay { get { return primary_display; } }
+        public static DisplayDevice PrimaryDisplay { get { return primary_display; } }
 
         #endregion
 
