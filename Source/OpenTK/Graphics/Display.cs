@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace OpenTK.Graphics
 {
@@ -21,6 +22,7 @@ namespace OpenTK.Graphics
         // TODO: Check whether bits_per_pixel works correctly under Mono/X11.
         // TODO: Add properties that describe the 'usable' size of the Display, i.e. the maximized size without the taskbar etc.
         // TODO: Does not detect changes to primary device.
+        // TODO: Mono does not support System.Windows.Forms.Screen.BitsPerPixel -- find workaround!
 
         int width, height;
         int bits_per_pixel;
@@ -40,7 +42,7 @@ namespace OpenTK.Graphics
                 int i = 0;
                 foreach (System.Windows.Forms.Screen scr in System.Windows.Forms.Screen.AllScreens)
                 {
-                    available_displays.Add(new Display(scr.Bounds.Width, scr.Bounds.Height, scr.BitsPerPixel, 0, scr.Primary));
+                    available_displays.Add(new Display(scr.Bounds.Width, scr.Bounds.Height, 32, 0, scr.Primary));
                     if (scr.Primary)
                         primary_display = available_displays[i];
                     ++i;
@@ -68,7 +70,7 @@ namespace OpenTK.Graphics
         public int Height { get { return height; } }
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this Display. Typical values include 8, 16, 24 and 32.</summary>
-        public int BitsPerPixel { get { return bits_per_pixel; } }
+        public int BitsPerPixel { get { Debug.Print("This method is not supported currently."); return bits_per_pixel; } }
 
         /// <summary>Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple Displays.</summary>
         public bool IsPrimary { get { return primary; } }
