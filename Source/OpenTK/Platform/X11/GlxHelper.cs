@@ -10,63 +10,72 @@ using System.Text;
 
 namespace OpenTK.Platform.X11
 {
-    public static partial class Glx
+    internal static partial class Glx
     {
         internal const string Library = "libGL.so.1";
 
         // Disable BeforeFieldInit optimization.
         static Glx() { }
+
+        #region internal static void LoadAll
+
+        internal static void LoadAll()
+        {
+            OpenTK.Platform.Utilities.LoadExtensions(typeof(Glx));
+        }
+
+        #endregion
     }
 
-    public struct Status
+    internal struct Status
     {
     }
 
-    public struct GLXFBConfig
+    internal struct GLXFBConfig
     {
     }
 
-    public struct GLXPbuffer
+    internal struct GLXPbuffer
     {
     }
 
-    public struct GLXContextID
+    internal struct GLXContextID
     {
     }
 
-    public struct GLXHyperpipeNetworkPointer
+    internal struct GLXHyperpipeNetworkPointer
     {
     }
 
-    public struct GLXHyperpipeConfig
+    internal struct GLXHyperpipeConfig
     {
     }
 
-    public struct GLXHyperpipeConfigSGIX
+    internal struct GLXHyperpipeConfigSGIX
     {
     }
 
-    public struct GLXHyperpipeConfigPointer
+    internal struct GLXHyperpipeConfigPointer
     {
     }
 
-    public struct GLXVideoSourceSGIX
+    internal struct GLXVideoSourceSGIX
     {
     }
 
-    public struct GLXFBConfigSGIX
+    internal struct GLXFBConfigSGIX
     {
     }
 
-    public struct GLXPbufferSGIX
+    internal struct GLXPbufferSGIX
     {
     }
 
-    public struct DMparams
+    internal struct DMparams
     {
     }
 
-    public struct DMbuffer
+    internal struct DMbuffer
     {
     }
 }
