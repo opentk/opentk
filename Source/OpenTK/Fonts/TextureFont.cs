@@ -7,20 +7,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-//using System.Drawing;
 using System.Drawing.Text;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 using OpenTK.Math;
 using OpenTK.OpenGL;
 using OpenTK.OpenGL.Enums;
-using System.Drawing.Imaging;
 using OpenTK.Platform;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
 
 namespace OpenTK.Fonts
 {
+    using Graphics = System.Drawing.Graphics;
+
     public class TextureFont : IFont
     {
         Font font;
