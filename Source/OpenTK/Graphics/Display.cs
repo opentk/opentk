@@ -71,7 +71,7 @@ namespace OpenTK.Graphics
         public int BitsPerPixel { get { return bits_per_pixel; } }
 
         /// <summary>Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple Displays.</summary>
-        public bool Primary { get { return primary; } }
+        public bool IsPrimary { get { return primary; } }
 
         /// <summary>
         /// Gets an array of OpenTK.Display objects, which describe all available display devices.

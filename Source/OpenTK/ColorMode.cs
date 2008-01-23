@@ -5,7 +5,6 @@
 #endregion
 
 using System;
-using System.Drawing;
 using System.Globalization;
 
 namespace OpenTK
@@ -15,7 +14,7 @@ namespace OpenTK
     /// <para>A ColorMode contains Red, Green, Blue and Alpha components that descibe
     /// the allocated bits per pixel for the corresponding color.</para>
     /// </remarks>
-    public class ColorMode
+    public sealed class ColorMode
     {
         byte red, green, blue, alpha;
         bool isIndexed = false;
@@ -29,6 +28,8 @@ namespace OpenTK
         /// <param name="bpp">The bits per pixel sum for the Red, Green, Blue and Alpha color channels.</param>
         public ColorMode(int bpp)
         {
+            if (bpp < 0)
+                throw new ArgumentOutOfRangeException("bpp", "Must be greater or equal to zero.");
             Red = Green = Blue = Alpha = 0;
             BitsPerPixel = bpp;
 
@@ -77,6 +78,8 @@ namespace OpenTK
         /// <param name="alpha">Bits per pixel for the Alpha color channel.</param>
         public ColorMode(int red, int green, int blue, int alpha)
         {
+            if (red < 0 || green < 0 || blue < 0 || alpha < 0)
+                throw new ArgumentOutOfRangeException("Arguments must be greater or equal to zero.");
             Red = (byte)red;
             Green = (byte)green;
             Blue = (byte)blue;
@@ -102,6 +105,25 @@ namespace OpenTK
         public bool IsIndexed { get { return isIndexed; } private set { isIndexed = value; } }
         /// <summary>Gets the sum of Red, Green, Blue and Alpha bits per pixel.</summary>
         public int BitsPerPixel { get { return bitsPerPixel; } private set { bitsPerPixel = value; } }
+
+        #endregion
+
+        #region --- Operator Overloads ---
+
+        /// <summary>
+        /// Converts the specified bpp into a new ColorMode.
+        /// </summary>
+        /// <param name="bpp">The bits per pixel to convert.</param>
+        /// <returns>A ColorMode with the specified bits per pixel.</returns>
+        public static implicit operator ColorMode(int bpp)
+        {
+            return new ColorMode(bpp);
+        }
+
+        //public static implicit operator int(ColorMode mode)
+        //{
+        //    return mode.BitsPerPixel;
+        //}
 
         #endregion
 
