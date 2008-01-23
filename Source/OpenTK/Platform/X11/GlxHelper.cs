@@ -25,6 +25,15 @@ namespace OpenTK.Platform.X11
         }
 
         #endregion
+
+        #region internal static bool SupportsExtension(string p)
+
+        internal static bool SupportsExtension(string p)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 
     internal struct Status
