@@ -89,7 +89,7 @@ namespace OpenTK.Platform.Windows
             GL.LoadAll();
             Glu.LoadAll();
 
-            vsync_supported = Wgl.Arb.SupportsExtension(this.deviceContext, "WGL_EXT_swap_control") &&
+            vsync_supported = Wgl.Arb.SupportsExtension(this, "WGL_EXT_swap_control") &&
                 Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
 
             if (source != null)
@@ -387,6 +387,16 @@ namespace OpenTK.Platform.Windows
         {
             this.windowInfo.Handle = handle;
         }
+
+        #endregion
+
+        #region --- Internal Members ---
+
+        #region internal IntPtr Device
+
+        internal IntPtr Device { get { return deviceContext; } }
+
+        #endregion
 
         #endregion
 
