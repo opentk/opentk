@@ -353,4 +353,11 @@ namespace OpenTK
 
         #endregion
     }
+
+    /// <summary>Represents errors related to Graphics operations.</summary>
+    public class GraphicsException : Exception
+    {
+        public GraphicsException() : base() { }
+        public GraphicsException(string message) : base(message) { }
+    }
 }
