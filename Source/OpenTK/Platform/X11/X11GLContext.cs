@@ -20,12 +20,14 @@ namespace OpenTK.Platform.X11
     /// </summary>
     internal sealed class X11GLContext : IGLContext, IGLContextInternal, IGLContextCreationHack
     {
-        private IntPtr context;
-        private DisplayMode mode;
-        private WindowInfo windowInfo = new WindowInfo();
-        private IntPtr visual;
+         IntPtr context;
+         DisplayMode mode;
+         WindowInfo windowInfo = new WindowInfo();
+         IntPtr visual;
+         bool vsync_supported;
+         int vsync_interval;
 
-        private bool disposed;
+         bool disposed;
 
         #region --- Constructors ---
 
@@ -164,7 +166,8 @@ namespace OpenTK.Platform.X11
                     this.MakeCurrent(); 
                     GL.LoadAll();
                     Glu.LoadAll();
-                    
+                    Glx.LoadAll();
+
                     return;
                 }
                 // Context creation failed. Retry with a non-shared context with the
@@ -179,10 +182,13 @@ namespace OpenTK.Platform.X11
                     this.MakeCurrent(); 
                     GL.LoadAll();
                     Glu.LoadAll();
+                    Glx.LoadAll();
 
                     return;
                 }
-                    
+
+                vsync_supported = Glx.SupportsExtension("glxSwapControlSGI");
+
                 throw new ApplicationException("Glx.CreateContext call failed (returned 0).");
             }
             finally
@@ -239,6 +245,28 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public bool VSync
+
+        public bool VSync
+        {
+            get
+            {
+                return vsync_supported && vsync_interval > 0;
+            }
+            set
+            {
+                if (vsync_supported)
+                {
+                    int error_code = Glx.Sgi.SwapInterval(value ? 1 : 0);
+                    if (error_code != 0)
+                        throw new GraphicsException(String.Format("Could not set vsync, error code: {0}", error_code));
+                    vsync_interval = value ? 1 : 0;
+                }
+            }
+        }
+
+        #endregion
+
         public event DestroyEvent<IGLContext> Destroy;
 
         #region public IntPtr GetAddress(string function)
@@ -263,18 +291,6 @@ namespace OpenTK.Platform.X11
         public IEnumerable<DisplayMode> GetDisplayModes()
         {
             throw new Exception("The method or operation is not implemented.");
-        }
-
-        public bool VSync
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-
-            }
         }
 
         #endregion
