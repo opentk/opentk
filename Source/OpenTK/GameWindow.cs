@@ -328,7 +328,7 @@ namespace OpenTK
             {
                 try
                 {
-                    glWindow.CreateWindow(mode, out glContext);
+                    glWindow.CreateWindow(mode.Width, mode.Height, mode, out glContext);
                 }
                 catch (ApplicationException expt)
                 {
@@ -382,7 +382,7 @@ namespace OpenTK
             {
                 // TODO: This is a hack - reslove in 0.3.15 once and for all!
                 // GLContext is created inside the CreateWindow call.
-                glWindow.CreateWindow(mode, out glContext);
+                glWindow.CreateWindow(mode.Width, mode.Height, mode, out glContext);
                 this.Title = title;
             }
             else
@@ -1153,7 +1153,11 @@ namespace OpenTK
         /// <summary>
         /// Occurs when the GameWindow is resized. Derived classes should override the OnResize method for better performance.
         /// </summary>
-        public event ResizeEvent Resize;
+        public event ResizeEvent Resize
+        {
+            add { glWindow.Resize += value; }
+            remove { glWindow.Resize -= value; }
+        }
 
         /// <summary>
         /// Raises the Resize event.
@@ -1165,9 +1169,9 @@ namespace OpenTK
 
             this.width = e.Width;
             this.height = e.Height;
-            
-            if (this.Resize != null)
-                this.Resize(this, e);
+
+            //if (this.Resize != null)
+            //    this.Resize(this, e);
 
             OnResize(e);
         }
@@ -1215,7 +1219,7 @@ namespace OpenTK
         }
         */
         #endregion
-#if false       // TODO: 0.3.15 (Linux support missing)
+#if false       // TODO: 0.9.2 (Linux support missing)
         #region PointToClient
 
         /// <summary>

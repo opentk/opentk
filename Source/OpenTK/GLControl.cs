@@ -201,7 +201,7 @@ namespace OpenTK
                 // Mono's implementation of Windows.Forms on X11 does not allow the context to
                 // have a different colordepth from the parent. To combat this, we do not set a
                 // specific depth for the DisplayMode - we let the driver select one instead.
-                display_mode.Color = new ColorMode(0);
+                //display_mode.ColorFormat = new ColorMode(0);
                 context = new GLContext(display_mode, info);
                 idle = new PlatformIdle(info);
             }

@@ -85,7 +85,7 @@ namespace OpenTK.Platform.X11
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
                 visualAttributes.Add((int)mode.Color.Alpha);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
-                visualAttributes.Add((int)mode.DepthBits);
+                visualAttributes.Add((int)mode.Depth);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
                 visualAttributes.Add((int)0);
             }

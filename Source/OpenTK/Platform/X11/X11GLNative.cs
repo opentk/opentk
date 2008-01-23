@@ -347,7 +347,7 @@ namespace OpenTK.Platform.X11
         /// Colormap creation is currently disabled.
         /// </para>
         /// </remarks>
-        public void CreateWindow(DisplayMode mode, out IGLContext glContext)
+        public void CreateWindow(int width, int height, DisplayMode mode, out IGLContext glContext)
         {
             if (exists)
                 throw new ApplicationException("Render window already exists!");
