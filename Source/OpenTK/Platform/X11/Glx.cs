@@ -37,12 +37,13 @@ namespace OpenTK.Platform.X11
     using GLdouble = System.Double;
     using GLclampd = System.Double;
     using GLstring = System.String;
+    using System.Security;
     #endregion
 
     /// <summary>
     /// Provides access to GLX functions.
     /// </summary>
-    public static partial class Glx
+    partial class Glx
     {
         #region Enums
 
@@ -315,5 +316,20 @@ namespace OpenTK.Platform.X11
         #endregion
 
         #endregion
+
+        public partial class Sgi
+        {
+            public static int SwapIntervalSGI(int interval)
+            {
+                return Delegates.glXSwapIntervalSGI(interval);
+            }
+        }
+
+        partial class Delegates
+        {
+            [SuppressUnmanagedCodeSecurity]
+            internal delegate int SwapIntervalSGI(int interval);
+            internal static SwapIntervalSGI glXSwapIntervalSGI = null;
+        }
     }
 }
