@@ -36,6 +36,7 @@ namespace OpenTK.Platform.Windows
         private bool exists;
         private WindowInfo window = new WindowInfo();
         private int top, bottom, left, right;
+        private int width = 0, height = 0;
 
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
@@ -43,11 +44,6 @@ namespace OpenTK.Platform.Windows
         /// For use in PeekMessage.
         /// </summary>
         private MSG myGoodMsg = new MSG();
-
-        /// <summary>
-        /// For use in WndProc only.
-        /// </summary>
-        private int width = 0, height = 0;
 
         private int left_border, right_border, top_border, bottom_border;
 
@@ -78,15 +74,15 @@ namespace OpenTK.Platform.Windows
             {
                 case WindowMessage.WINDOWPOSCHANGED:
                     // Get window size
-                    width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cx"));
-                    height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cy"));
-                    width -= (left_border + right_border);
-                    height -= (top_border + bottom_border);
+                    int _width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cx"));
+                    int _height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cy"));
+                    _width -= (left_border + right_border);
+                    _height -= (top_border + bottom_border);
                     //if (resizeEventArgs.Width != width || resizeEventArgs.Height != height)
-                    if (this.mode.Width != width || this.mode.Height != height)
+                    if (width != _width || height != _height)
                     {
-                        mode.Width = width;
-                        mode.Height = height;
+                        width = _width;
+                        height = _height;
                         // If the size has changed, raise the ResizeEvent.
                         //resizeEventArgs.Width = width;
                         //resizeEventArgs.Height = height;
@@ -99,10 +95,10 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.CREATE:
                     // Set the window width and height:
-                    this.mode.Width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(CreateStruct), "cx"));
-                    this.mode.Height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(CreateStruct), "cy"));
-                    this.mode.Width -= (left_border + right_border);
-                    this.mode.Height -= (top_border + bottom_border);
+                    width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(CreateStruct), "cx"));
+                    height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(CreateStruct), "cy"));
+                    width -= (left_border + right_border);
+                    height -= (top_border + bottom_border);
 
                     // Raise the Create event
                     this.OnCreate(EventArgs.Empty);
@@ -433,11 +429,12 @@ namespace OpenTK.Platform.Windows
 
         #region public int Width
 
+        /// <summary>Gets a System.Int32 containing the Width of this GameWindow.</summary>
         public int Width
         {
             get
             {
-                return mode.Width;
+                return width;
             }
             set
             {
@@ -449,11 +446,12 @@ namespace OpenTK.Platform.Windows
 
         #region public int Height
 
+        /// <summary>Gets a System.Int32 containing the Heights of this GameWindow.</summary>
         public int Height
         {
             get
             {
-                return mode.Height;
+                return height;
             }
             set
             {
