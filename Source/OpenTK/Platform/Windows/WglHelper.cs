@@ -13,9 +13,6 @@ using System.Reflection;
 
 namespace OpenTK.Platform.Windows
 {
-	/// <summary>
-	/// 
-	/// </summary>
 	internal partial class Wgl
     {
         #region --- Constructors ---
@@ -128,37 +125,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public static partial class Ext
-#if false
-        public static partial class Ext
-        {
-            private static string[] extensions;
-
-            /// <summary>
-            /// Checks if an "ARB" extension is supported by the given context.
-            /// </summary>
-            /// <param name="deviceContext">The device context.</param>
-            /// <param name="ext">The extension to check.</param>
-            /// <returns>True if the extension is supported by the given context, false otherwise</returns>
-            public static bool SupportsExtension(IntPtr deviceContext, string ext)
-            {
-                if (Wgl.Delegates.wglGetExtensionsStringEXT != null)
-                {
-                    if (extensions == null || reload_arb_extension_strings)
-                    {
-                        // Defined wrong in wglext.spec...
-                        extensions = Wgl.Ext.GetExtensionsString(deviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        Array.Sort(extensions);
-                        reload_arb_extension_strings = false;
-                    }
-
-                    return Array.BinarySearch(extensions, ext) != -1;
-                }
-                return false;
-            }
-        }
-#endif
-        #endregion
+        #region public static partial class Arb
 
         /// <summary>Contains ARB extensions for WGL.</summary>
         public static partial class Arb
@@ -187,6 +154,10 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        #endregion 
+
+        #region public static partial class Ext
+
         /// <summary>Contains EXT extensions for WGL.</summary>
         public static partial class Ext
         {
@@ -212,5 +183,7 @@ namespace OpenTK.Platform.Windows
                 return false;
             }
         }
+
+        #endregion
     }
 }
