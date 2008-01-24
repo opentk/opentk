@@ -91,9 +91,9 @@ namespace OpenTK.Platform.X11
         #endregion
     }
 
-    internal struct Status
-    {
-    }
+    //internal struct Status
+    //{
+    //}
 
     internal struct GLXFBConfig
     {
