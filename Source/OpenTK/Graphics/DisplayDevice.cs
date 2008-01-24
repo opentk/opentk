@@ -2,7 +2,8 @@
 /* Licensed under the MIT/X11 license.
  * Copyright (c) 2006-2008 the OpenTK team.
  * This notice may not be removed.
- * See license.txt for licensing detailed licensing information. */
+ * See license.txt for licensing detailed licensing details.
+ */
 #endregion
 
 using System;
@@ -24,56 +25,125 @@ namespace OpenTK.Graphics
         // TODO: Does not detect changes to primary device.
         // TODO: Mono does not support System.Windows.Forms.Screen.BitsPerPixel -- find workaround!
 
-        int width, height;
-        int bits_per_pixel;
-        float refresh_rate;
+        DisplayResolution current_resolution;
+        List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
         bool primary;
 
         static List<DisplayDevice> available_displays = new List<DisplayDevice>();
         static object display_lock = new object();
         static DisplayDevice primary_display;
 
+        static IDisplayDeviceDriver implementation = new OpenTK.Platform.Windows.WinDisplayDeviceDriver();
+
         #region --- Constructors ---
 
         static DisplayDevice()
         {
-            lock (display_lock)
-            {
-                int i = 0;
-                foreach (System.Windows.Forms.Screen scr in System.Windows.Forms.Screen.AllScreens)
-                {
-                    available_displays.Add(new DisplayDevice(scr.Bounds.Width, scr.Bounds.Height, 32, 0, scr.Primary));
-                    if (scr.Primary)
-                        primary_display = available_displays[i];
-                    ++i;
-                }
-            }
+            //lock (display_lock)
+            //{
+            //    int i = 0;
+            //    foreach (System.Windows.Forms.Screen scr in System.Windows.Forms.Screen.AllScreens)
+            //    {
+            //        available_displays.Add(new DisplayDevice(scr.Bounds.Width, scr.Bounds.Height, 32, 0, scr.Primary));
+            //        if (scr.Primary)
+            //            primary_display = available_displays[i];
+            //        ++i;
+            //    }
+            //}
         }
 
-        DisplayDevice(int width, int height, int bitsPerPixel, float refreshRate, bool primary)
+        internal DisplayDevice(DisplayResolution currentResolution, bool primary,
+            IEnumerable<DisplayResolution> availableResolutions)
         {
-            this.width = width;
-            this.height = height;
-            this.bits_per_pixel = bitsPerPixel;
-            this.refresh_rate = refreshRate;
+            this.current_resolution = currentResolution;
             this.primary = primary;
+            this.available_resolutions.AddRange(availableResolutions);
+            available_displays.Add(this);
+            if (primary)
+                primary_display = this;
         }
 
         #endregion
 
         #region --- Public Methods ---
 
-        /// <summary>Gets a System.Int32 that contains the width of this Display in pixels.</summary>
-        public int Width { get { return width; } }
 
-        /// <summary>Gets a System.Int32 that contains the height of this Display in pixels.</summary>
-        public int Height { get { return height; } }
+        #region public int Width
 
-        /// <summary>Gets a System.Int32 that contains number of bits per pixel of this Display. Typical values include 8, 16, 24 and 32.</summary>
-        public int BitsPerPixel { get { Debug.Print("This method is not supported currently."); return bits_per_pixel; } }
+        /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
+        public int Width { get { return current_resolution.Width; } }
+
+        #endregion
+
+        #region public int Height
+
+        /// <summary>Gets a System.Int32 that contains the height of this display in pixels.</summary>
+        public int Height { get { return current_resolution.Height; } }
+
+        #endregion
+
+        #region public int BitsPerPixel
+
+        /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
+        public int BitsPerPixel { get { Debug.Print("This method is not supported currently."); return current_resolution.BitsPerPixel; } }
+
+        #endregion
+
+        #region public float RefreshRate
+
+        /// <summary>
+        /// Gets a System.Single representing the vertical refresh rate of this display.
+        /// </summary>
+        public float RefreshRate
+        {
+            get { return current_resolution.RefreshRate; }
+        }
+
+        #endregion
+
+        #region public bool IsPrimary
 
         /// <summary>Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple Displays.</summary>
         public bool IsPrimary { get { return primary; } }
+
+        #endregion
+
+        #region public void ChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
+
+        /// <summary>Changes the resolution of the DisplayDevice.</summary>
+        /// <param name="width">The new width of the DisplayDevice.</param>
+        /// <param name="height">The new height of the DisplayDevice.</param>
+        /// <param name="bitsPerPixel">The new bits per pixel of the DisplayDevice.</param>
+        /// <param name="refreshRate">The new refresh rate of the DisplayDevice.</param>
+        /// <exception cref="GraphicsModeException">Thrown if the requested resolution change failed.</exception>
+        public void ChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        {
+            if (width <= 0) throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
+            if (height <= 0) throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
+            if (bitsPerPixel <= 0) throw new ArgumentOutOfRangeException("bitsPerPixel", "Must be greater than zero.");
+            if (refreshRate <= 0) throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than zero.");
+
+            if (implementation.TryChangeResolution(width, height, bitsPerPixel, refreshRate))
+            {
+                current_resolution = new DisplayResolution(width, height, bitsPerPixel, refreshRate);
+            }
+            else
+                throw new GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}x{2}x{3]@{4]Hz",
+                    ToString(), width, height, bitsPerPixel, refreshRate));
+        }
+
+        #endregion
+
+        #region public void RestoreResolution()
+
+        public void RestoreResolution()
+        {
+            implementation.RestoreResolution();
+        }
+
+        #endregion
+
+        #region public static DisplayDevice[] AvailableDisplays
 
         /// <summary>
         /// Gets an array of OpenTK.Display objects, which describe all available display devices.
@@ -89,11 +159,65 @@ namespace OpenTK.Graphics
             }
         }
 
+        #endregion
+
+        #region public static DisplayDevice PrimaryDisplay
+
         /// <summary>Gets the primary display of this system.</summary>
         public static DisplayDevice PrimaryDisplay { get { return primary_display; } }
 
         #endregion
 
+        #endregion
 
+        #region --- Overrides ---
+
+        #region public override string ToString()
+
+        /// <summary>
+        /// Returns a System.String representing this DisplayDevice.
+        /// </summary>
+        /// <returns>A System.String representing this DisplayDevice.</returns>
+        public override string ToString()
+        {
+            return String.Format("{0}: {1} ({2} modes available)", IsPrimary ? "Primary" : "Secondary",
+                current_resolution.ToString(), available_resolutions.Count);
+        }
+
+        #endregion
+
+        #region public override bool Equals(object obj)
+
+        /// <summary>Determines whether the specified DisplayDevices are equal.</summary>
+        /// <param name="obj">The System.Object to check against.</param>
+        /// <returns>True if the System.Object is an equal DisplayDevice; false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is DisplayDevice)
+            {
+                DisplayDevice dev = (DisplayDevice)obj;
+                return
+                    IsPrimary == dev.IsPrimary &&
+                    current_resolution == dev.current_resolution &&
+                    available_resolutions.Count == dev.available_resolutions.Count;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        #region public override int GetHashCode()
+
+        /// <summary>Returns a unique hash representing this DisplayDevice.</summary>
+        /// <returns>A System.Int32 that may serve as a hash code for this DisplayDevice.</returns>
+        public override int GetHashCode()
+        {
+            return current_resolution.GetHashCode() ^ IsPrimary.GetHashCode() ^ available_resolutions.Count;
+        }
+
+        #endregion
+
+        #endregion
     }
 }
