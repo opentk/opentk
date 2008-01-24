@@ -32,11 +32,16 @@ namespace OpenTK.Platform.X11
     using Display = System.IntPtr;
     using XPointer = System.IntPtr;
 
+    // Xrandr
+    using Bool = System.Boolean;
+    using XRRScreenConfiguration = System.IntPtr; // opaque datatype
+    using Rotation = System.UInt16;
+
     #endregion
 
     #region public static class API
 
-    public static class API
+    internal static class API
     {
         // Prevent BeforeFieldInit optimization.
         static API() { }
@@ -1105,7 +1110,7 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
 
-    public static partial class Functions
+    internal static partial class Functions
     {
         #region XCreateWindow
 
@@ -1187,6 +1192,70 @@ XF86VidModeGetGammaRampSize(
         [DllImport("libX11", EntryPoint = "XPutBackEvent")]
         public static extern void XPutBackEvent(IntPtr display, ref XEvent @event);
         
+        #endregion
+
+        #region Xrandr
+
+        const string XrandrLibrary = "libxrandr.so.2";
+
+        [DllImport(XrandrLibrary)]
+        public static extern Bool XRRQueryExtension(Display dpy, ref int event_basep, ref int error_basep);
+
+        [DllImport(XrandrLibrary)]
+        public static extern Status XRRQueryVersion(Display dpy, ref int major_versionp, ref int minor_versionp);
+
+        [DllImport(XrandrLibrary)]
+        public static extern XRRScreenConfiguration XRRGetScreenInfo(Display dpy, Drawable draw);
+
+        [DllImport(XrandrLibrary)]
+        public static extern void XRRFreeScreenConfigInfo(XRRScreenConfiguration config);
+
+        //[DllImport(XrandrLibrary)]
+        //public static extern Status XRRSetScreenConfig(Display dpy, XRRScreenConfiguration config,
+        //    Drawable draw, int size_index, Rotation rotation, Time timestamp);
+
+        //Status XRRSetScreenConfigAndRate(Display *dpy, XRRScreenConfiguration *config,
+        //    Drawable draw, int size_index, Rotation rotation, short rate, Time timestamp);
+
+        //Rotation XRRConfigRotations(XRRScreenConfiguration *config, Rotation *current_rotation);
+
+        //Time XRRConfigTimes(XRRScreenConfiguration *config, Time *config_timestamp);
+
+        //XRRScreenSize *XRRConfigSizes(XRRScreenConfiguration *config, int *nsizes);
+
+        //short *XRRConfigRates(XRRScreenConfiguration *config, int size_index, int *nrates);
+
+        //SizeID XRRConfigCurrentConfiguration(XRRScreenConfiguration *config, Rotation *rotation);
+
+        //short XRRConfigCurrentRate(XRRScreenConfiguration *config);   
+
+        //int XRRRootToScreen(Display *dpy, Window root);
+
+        //XRRScreenConfiguration *XRRScreenConfig(Display *dpy, int screen);
+
+        //XRRScreenConfiguration *XRRConfig(Screen *screen);
+
+        //void XRRSelectInput(Display *dpy, Window window, int mask);
+
+        /*
+         * intended to take RRScreenChangeNotify,  or
+         * ConfigureNotify (on the root window)
+         * returns 1 if it is an event type it understands, 0 if not
+         */
+        //int XRRUpdateConfiguration(XEvent *event^);
+
+        /*
+         * the following are always safe to call, even if RandR is
+         * not implemented on a screen
+         */
+        //Rotation XRRRotations(Display *dpy, int screen, Rotation *current_rotation);
+
+        //XRRScreenSize *XRRSizes(Display *dpy, int screen, int *nsizes);
+
+        //short *XRRRates(Display *dpy, int screen, int size_index, int *nrates);
+
+        //Time XRRTimes(Display *dpy, int screen, Time *config_timestamp);
+
         #endregion
     }
     /*
