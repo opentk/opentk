@@ -41,7 +41,7 @@ namespace OpenTK.Platform.Windows
                 DisplayDevice dev1 = new DisplayDevice(), dev2 = new DisplayDevice();
                 while (Functions.EnumDisplayDevices(null, device_count++, dev1, 0))
                 {
-                    if ((dev1.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) != DisplayDeviceStateFlags.None)
+                    if ((dev1.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) == DisplayDeviceStateFlags.None)
                         continue;
 
                     DeviceMode monitor_mode = new DeviceMode();
