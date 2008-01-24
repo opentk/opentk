@@ -148,7 +148,7 @@ namespace OpenTK.Graphics
                     ((width > 0 && width == test.Width) || width == 0) &&
                     ((height > 0 && height == test.Height) || height == 0) &&
                     ((bitsPerPixel > 0 && bitsPerPixel == test.BitsPerPixel) || bitsPerPixel == 0) &&
-                    ((refreshRate > 0 && (int)refreshRate == (int)test.RefreshRate) || refreshRate == 0);
+                    ((refreshRate > 0 && System.Math.Abs(refreshRate - test.RefreshRate) < 1.0) || refreshRate == 0);
             });
         }
 
