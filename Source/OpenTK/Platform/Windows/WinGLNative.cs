@@ -30,13 +30,14 @@ namespace OpenTK.Platform.Windows
         private DisplayMode mode = new DisplayMode();
         private IInputDriver driver;
 
-        //private bool fullscreen;
+        private bool fullscreen, visible = true;
         private bool disposed;
         private bool isExiting;
         private bool exists;
         private WindowInfo window = new WindowInfo();
         private int top, bottom, left, right;
         private int width = 0, height = 0;
+        private Rectangle pre_maximized;
 
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
@@ -192,13 +193,32 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return false;
-                //throw new NotImplementedException();
+                return fullscreen;
             }
             set
             {
-                throw new NotImplementedException();
-                //fullscreen = false;
+                IntPtr style = IntPtr.Zero;
+                ShowWindowCommand command = (ShowWindowCommand)0;
+                if (value && !Fullscreen)
+                {
+                    style = (IntPtr)(int)(WindowStyle.Popup | WindowStyle.ClipChildren | WindowStyle.ClipSiblings);
+                    command = ShowWindowCommand.SHOWMAXIMIZED;
+                    pre_maximized = new Rectangle(width, height);
+                    Functions.AdjustWindowRect(ref pre_maximized, WindowStyle.OverlappedWindow, false);
+                }
+                else if (!value && Fullscreen)
+                {
+                    style = (IntPtr)(int)(WindowStyle.OverlappedWindow | WindowStyle.ClipChildren | WindowStyle.ClipSiblings);
+                    command = ShowWindowCommand.SHOWNORMAL;
+                }
+                
+                Functions.SetWindowLongPtr(Handle, GetWindowLongOffsets.STYLE, style);
+                Functions.ShowWindow(Handle, command);
+                if (!value && Fullscreen)
+                    Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, pre_maximized.Width, pre_maximized.Height,
+                        SetWindowPosFlags.SHOWWINDOW);
+
+                fullscreen = value;
             }
         }
 
@@ -253,11 +273,20 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                //Functions.GetW
-                return true;
+                return visible;
             }
             set
             {
+                if (value && !Visible)
+                {
+                    Functions.ShowWindow(Handle, ShowWindowCommand.SHOWNORMAL);
+                    visible = true;
+                }
+                else if (!value && Visible)
+                {
+                    Functions.ShowWindow(Handle, ShowWindowCommand.HIDE);
+                    visible = false;
+                }
             }
         }
 
@@ -313,7 +342,7 @@ namespace OpenTK.Platform.Windows
             cp.Width = rect.right - rect.left;
             cp.Height = rect.bottom - rect.top;
             cp.Caption = "OpenTK Game Window";
-
+            
             // Keep in mind that some construction code runs in WM_CREATE,
             // which is raised CreateHandle()
             CreateHandle(cp);
