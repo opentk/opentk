@@ -1,24 +1,18 @@
 =================================================================================
 
-OpenTK 0.9.0 Alpha Release notes
+OpenTK 0.9.1 Alpha Release notes
 
 IMPORTANT: This release is intended for testing and experimentation only. Use at your own risk!
 
 ---------------------------------------------------------------------------------
 
-0.9.0 marks the second important milestone in OpenTK development: OpenAL support.
-Inertia, now member of the development team, had made this possible. He has also
-worked on improving the OpenGL interface by revising the specs. We think the new
-OpenTK.OpenGL interface is *much* more elegant and safe than vanilla C/OpenGL.
+0.9.1 improves on the OpenAL bindings included in 0.9.0, with support for
+environmental extensions (EFX, EAX), CLS-compliance and the AudioContext class.
 
-On another note, Mono 1.2.6 has been released, which fixes almost all runtime
-problems encountered by OpenTK. Updating is strongly recommended!
+Resolution changes are supported at last, and code has been internally
+reorganized to help future ports to different platforms.
 
-Last, but not least, http://www.opentk.com now marks the new homepage for OpenTK.
-The new site is much more usable (and faster!)
 
-Once again, thanks to everyone who made this release possible. If you find OpenTK
-useful, please say so in the forums.
 
 Till next time!
  - Stephen A.
@@ -28,17 +22,10 @@ Till next time!
 
 Release highlights
 
- * Feature: OpenAL support (AL, ALC, ALU, ALUT)
- * Feature: OpenGL Version12-Version21 enums removed. Specific tokens used now.
- * Feature: Windows 9x and 2000 support.
- * Feature: GLContext, GLControl and GameWindow are completely modular now.
- * Feature: GameWindow.Exit() now is thread-safe.
- * Feature: Internal work on Garbage Collection of OpenGL resources.
- * Feature: Redesigned homepage.
+ * Feature: EFX/EAX OpenAL extensions.
+ * Feature: AudioContext class.
 
 
- * Bugfix: New InputDriver for Windows takes care of memory leaks.
- * Bugfix: Mouse now works the same under Windows and Linux/X11.
 
  * Known issue (Linux): OpenTK programs may exhibit instability under Mesa3d 6.5.x and/or Mono 1.2.4. Please update to Mesa3d 7.0.x and Mono 1.2.6.
  * Known issue (Linux): DisplayModes with 32-bit bit-depths exhibit flashing under Mesa3d 6.5.x. Is a Mesa3d problem, update to Mesa3d 7.0.x or request a 24-bit depth.
