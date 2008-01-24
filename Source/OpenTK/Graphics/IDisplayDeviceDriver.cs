@@ -14,8 +14,8 @@ namespace OpenTK.Graphics
 {
     internal interface IDisplayDeviceDriver
     {
-        bool TryChangeResolution(int width, int height, int bitsPerPixel, float refreshRate);
-        void RestoreResolution();
+        bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution);
+        void RestoreResolution(DisplayDevice device);
         //DisplayDevice[] AvailableDevices { get; }
         //DisplayResolution[]
     }
