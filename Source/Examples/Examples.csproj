@@ -1,0 +1,329 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4BE3065D-7798-4322-9356-C7259DDBD787}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Examples</AssemblyName>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>
+    </AppDesignerFolder>
+    <RootNamespace>Examples</RootNamespace>
+    <StartupObject>Examples.ExampleLauncher</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;</DefineConstants>
+    <DocumentationFile>OpenTK.xml</DocumentationFile>
+    <DebugSymbols>False</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <Optimize>True</Optimize>
+    <OutputPath>..\..\Binaries\Release\Examples\</OutputPath>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>
+    </NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>True</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <Optimize>False</Optimize>
+    <OutputPath>..\..\Binaries\Debug\Examples\</OutputPath>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <RemoveIntegerChecks>False</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>
+    </NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+      <HintPath>\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+      <HintPath>\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+      <HintPath>\System.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+      <HintPath>\System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenTK\OpenTK.csproj">
+      <Name>OpenTK</Name>
+      <Project>{BE736391-17D4-46AB-950D-673A4A32791F}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExampleAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ExampleLauncher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExampleLauncher.Designer.cs">
+      <DependentUpon>ExampleLauncher.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IExample.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\TestResolutionChanges.cs" />
+    <Compile Include="Utilities.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OpenAL\TestAudioContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OpenGL\GluTessellation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="OpenGL\TessellatorClass.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\Cube.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\IsoSphere.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\Plane.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shapes\Shape.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\MathSpeed.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\S01_Call_Performance.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tests\S04_Input_Logger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tests\S04_Input_Logger.Designer.cs">
+      <DependentUpon>S04_Input_Logger.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\Fonts.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\T01_Simple_Window.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\T02_Vertex_Arrays.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\T03_Immediate_Mode_Cube.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\T04_Vertex_Lighting.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\T07_Display_Lists_Flower.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\T08_VBO.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\T10_GLSL_Cube.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\Text.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tutorial\Textures.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WinForms\DerivedGLControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinForms\DerivedGLControl.Designer.cs">
+      <DependentUpon>DerivedGLControl.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WinForms\W01_First_Window.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\W01_First_Window.Designer.cs">
+      <DependentUpon>W01_First_Window.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WinForms\W02_Immediate_Mode_Cube.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\W02_Immediate_Mode_Cube.Designer.cs">
+      <DependentUpon>W02_Immediate_Mode_Cube.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WinForms\W03_Extensions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\W03_Extensions.Designer.cs">
+      <DependentUpon>W03_Extensions.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WinForms\W04_Multiple_GLControls.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\W04_Multiple_GLControls.Designer.cs">
+      <DependentUpon>W04_Multiple_GLControls.cs</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="..\Examples\Data\logo-dark.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\logo.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\metal.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\Poem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\all-wcprops">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\entries">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\format">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\prop-base\logo-dark.jpg.svn-base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\prop-base\logo.jpg.svn-base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\prop-base\metal.jpg.svn-base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\text-base\logo-dark.jpg.svn-base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\text-base\logo.jpg.svn-base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\text-base\metal.jpg.svn-base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\.svn\text-base\Poem.txt.svn-base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\Shaders\Simple_FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\Shaders\Simple_VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\Shaders\.svn\all-wcprops">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\Shaders\.svn\entries">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\Shaders\.svn\format">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\Shaders\.svn\text-base\Simple_FS.glsl.svn-base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Examples\Data\Shaders\.svn\text-base\Simple_VS.glsl.svn-base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Poem.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\Simple_FS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Shaders\Simple_VS.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\OpenTK\OpenTK.dll.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
