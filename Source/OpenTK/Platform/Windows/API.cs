@@ -2299,6 +2299,13 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Sequential)]
     internal struct Rectangle
     {
+        internal Rectangle(int width, int height)
+        {
+            left = top = 0;
+            right = width;
+            bottom = height;
+        }
+
         /// <summary>
         /// Specifies the x-coordinate of the upper-left corner of the rectangle.
         /// </summary>
@@ -2315,6 +2322,9 @@ namespace OpenTK.Platform.Windows
         /// Specifies the y-coordinate of the lower-right corner of the rectangle.
         /// </summary>
         internal LONG bottom;
+
+        internal int Width { get { return right - left; } }
+        internal int Height { get { return bottom - top; } }
 
         public override string ToString()
         {

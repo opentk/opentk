@@ -201,8 +201,8 @@ namespace OpenTK
         /// </summary>
         public bool Fullscreen
         {
-            get { return false;/* return glWindow.Fullscreen; */ }
-            set { /* glWindow.Fullscreen = value; */}
+            get { return glWindow.Fullscreen; }
+            set { glWindow.Fullscreen = value; }
         }
 
         #endregion
