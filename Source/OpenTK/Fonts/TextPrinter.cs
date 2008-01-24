@@ -259,7 +259,7 @@ namespace OpenTK.Fonts
         /// <param name="handle">The TextHandle to the cached text.</param>
         public void Draw(TextHandle handle)
         {
-            GL.BindTexture(TextureTarget.Texture2d, handle.font.Texture);
+            GL.BindTexture(TextureTarget.Texture2D, handle.font.Texture);
             
             printer.Draw(handle);
         }
@@ -305,7 +305,7 @@ namespace OpenTK.Fonts
             GL.PushAttrib(AttribMask.TextureBit);
             GL.PushAttrib(AttribMask.EnableBit);
 
-            GL.Enable(EnableCap.Texture2d);
+            GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
