@@ -61,7 +61,7 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
-            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Texture2d);
 
             GL.ClearColor(Color.CadetBlue);
             GL.Enable(EnableCap.DepthTest);
