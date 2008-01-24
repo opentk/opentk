@@ -241,7 +241,7 @@ namespace OpenTK.OpenAL
         public static IList<string> GetString( IntPtr device,Enums.AlcGetStringList param )
         {
             List<string> result = new List<string>( );
-            IntPtr t = GetStringPrivate(AL.Null,(Enums.AlcGetString) Enums.AlcGetStringList.DeviceSpecifier);
+            IntPtr t = GetStringPrivate(IntPtr.Zero,(Enums.AlcGetString) Enums.AlcGetStringList.DeviceSpecifier);
             System.Text.StringBuilder sb = new System.Text.StringBuilder( );
             byte b;
             int offset = 0;
