@@ -101,7 +101,7 @@ namespace Bind.Structures
             // Translate the constant's name to match .Net naming conventions
             if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
             {
-                bool is_after_underscore = true;    // Detect if we just passed a '_' and make the next char
+                bool is_after_underscore_or_number = true;    // Detect if we just passed a '_' or a number and make the next char
                                                     // uppercase.
                 bool is_previous_uppercase = false; // Detect if previous character was uppercase, and turn
                                                     // the current one to lowercase.
@@ -109,16 +109,18 @@ namespace Bind.Structures
                 foreach (char c in name)
                 {
                     char char_to_add;
-                    if (c != '_')
+                    if (c == '_')
+                        is_after_underscore_or_number = true;
+                    else 
                     {
-                        char_to_add = is_after_underscore ? Char.ToUpper(c) :
+                        if (Char.IsDigit(c))
+                            is_after_underscore_or_number = true;
+                        char_to_add = is_after_underscore_or_number ? Char.ToUpper(c) :
                             is_previous_uppercase ? Char.ToLower(c) : c;
                         is_previous_uppercase = Char.IsUpper(c);
                         translator.Append(char_to_add);
-                        is_after_underscore = false;
+                        is_after_underscore_or_number = false;
                     }
-                    else
-                        is_after_underscore = true;
                 }
 
                 translator[0] = Char.ToUpper(translator[0]);

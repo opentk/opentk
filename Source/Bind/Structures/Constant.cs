@@ -138,16 +138,22 @@ namespace Bind.Structures
             if ((Settings.Compatibility & Settings.Legacy.NoAdvancedEnumProcessing) == Settings.Legacy.None)
             {
                 bool next_char_uppercase = true;
+                bool is_after_digit = false;
 
                 foreach (char c in s)
                 {
-                    if (c != '_')
+                    if (c == '_')
+                        next_char_uppercase = true;
+                    else if (Char.IsDigit(c))
                     {
-                        translator.Append(next_char_uppercase ? Char.ToUpper(c) : Char.ToLower(c));
-                        next_char_uppercase = false;
+                        is_after_digit = true;
+                        translator.Append(c);
                     }
                     else
-                        next_char_uppercase = true;
+                    {
+                        translator.Append(next_char_uppercase || (is_after_digit && c == 'd') ? Char.ToUpper(c) : Char.ToLower(c));
+                        is_after_digit = next_char_uppercase = false;
+                    }
                 }
 
                 translator[0] = Char.ToUpper(translator[0]);
