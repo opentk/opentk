@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.X11
 {
-    public static partial class Functions
+    internal static partial class Functions
     {
         [DllImport("libX11", EntryPoint = "XOpenDisplay")]
         public extern static IntPtr XOpenDisplay(IntPtr display);
