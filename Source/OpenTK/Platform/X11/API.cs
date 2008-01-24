@@ -32,14 +32,16 @@ namespace OpenTK.Platform.X11
     using Display = System.IntPtr;
     using XPointer = System.IntPtr;
 
-    // Xrandr
+    // Randr and Xrandr
     using Bool = System.Boolean;
     using XRRScreenConfiguration = System.IntPtr; // opaque datatype
     using Rotation = System.UInt16;
+    using Status = System.Int32;
+    using SizeID = System.UInt16;
 
     #endregion
 
-    #region public static class API
+    #region internal static class API
 
     internal static class API
     {
@@ -559,10 +561,10 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
 
-    #region public class SetWindowAttributes
+    #region internal class SetWindowAttributes
 
     [StructLayout(LayoutKind.Sequential), Obsolete("Use XSetWindowAttributes instead")]
-    public class SetWindowAttributes
+    internal class SetWindowAttributes
     {
         /// <summary>
         /// background, None, or ParentRelative
@@ -628,10 +630,10 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
 
-    #region public struct SizeHints
+    #region internal struct SizeHints
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct SizeHints
+    internal struct SizeHints
     {
         public long flags;         /* marks which fields in this structure are defined */
         public int x, y;           /* Obsolete */
@@ -650,6 +652,54 @@ XF86VidModeGetGammaRampSize(
         }
         /* this structure may be extended in the future */
     }
+
+    #endregion
+
+    #region internal struct XRRScreenSize
+
+    internal struct XRRScreenSize
+    {
+        internal int Width, Height;
+        internal int MWidth, MHeight;
+    };
+
+    #endregion
+
+    #region unsafe internal struct Screen
+
+    unsafe internal struct Screen
+    {
+	    XExtData ext_data;	/* hook for extension to hang data */
+	    IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
+	    Window root;		/* Root window id. */
+	    int width, height;	/* width and height of screen */
+	    int mwidth, mheight;	/* width and height of  in millimeters */
+	    int ndepths;		/* number of depths possible */
+	    //Depth *depths;		/* list of allowable depths on the screen */
+	    int root_depth;		/* bits per pixel */
+        //Visual* root_visual;	/* root visual */
+	    IntPtr default_gc;		/* GC for the root root visual */   // GC
+	    Colormap cmap;		/* default color map */
+	    UIntPtr white_pixel;    // unsigned long
+	    UIntPtr black_pixel;	/* White and Black pixel values */  // unsigned long
+	    int max_maps, min_maps;	/* max and min color maps */
+	    int backing_store;	/* Never, WhenMapped, Always */
+	    Bool save_unders;	
+	    long root_input_mask;	/* initial root input mask */
+    }
+
+    #endregion
+
+    #region unsafe internal class XExtData
+
+    unsafe internal class XExtData
+    {
+	    int number;		/* number returned by XRegisterExtension */
+	    XExtData next;	/* next item on list of data for structure */
+	    delegate int FreePrivateDelegate(XExtData extension);
+        FreePrivateDelegate FreePrivate;    /* called to free private storage */
+        XPointer private_data;	/* data private to this extension. */
+    };
 
     #endregion
 
@@ -1210,51 +1260,69 @@ XF86VidModeGetGammaRampSize(
         [DllImport(XrandrLibrary)]
         public static extern void XRRFreeScreenConfigInfo(XRRScreenConfiguration config);
 
-        //[DllImport(XrandrLibrary)]
-        //public static extern Status XRRSetScreenConfig(Display dpy, XRRScreenConfiguration config,
-        //    Drawable draw, int size_index, Rotation rotation, Time timestamp);
+        [DllImport(XrandrLibrary)]
+        public static extern Status XRRSetScreenConfig(Display dpy, XRRScreenConfiguration config,
+            Drawable draw, int size_index, ref Rotation rotation, Time timestamp);
 
-        //Status XRRSetScreenConfigAndRate(Display *dpy, XRRScreenConfiguration *config,
-        //    Drawable draw, int size_index, Rotation rotation, short rate, Time timestamp);
+        [DllImport(XrandrLibrary)]
+        public static extern Status XRRSetScreenConfigAndRate(Display dpy, XRRScreenConfiguration config,
+            Drawable draw, int size_index, Rotation rotation, short rate, Time timestamp);
 
-        //Rotation XRRConfigRotations(XRRScreenConfiguration *config, Rotation *current_rotation);
+        [DllImport(XrandrLibrary)]
+        public static extern Rotation XRRConfigRotations(XRRScreenConfiguration config, ref Rotation current_rotation);
 
-        //Time XRRConfigTimes(XRRScreenConfiguration *config, Time *config_timestamp);
+        [DllImport(XrandrLibrary)]
+        public static extern Time XRRConfigTimes(XRRScreenConfiguration config, ref Time config_timestamp);
 
-        //XRRScreenSize *XRRConfigSizes(XRRScreenConfiguration *config, int *nsizes);
+        [DllImport(XrandrLibrary)]
+        [return: MarshalAs(UnmanagedType.LPStruct)]
+        public static extern XRRScreenSize XRRConfigSizes(XRRScreenConfiguration config, int[] nsizes);
 
-        //short *XRRConfigRates(XRRScreenConfiguration *config, int size_index, int *nrates);
+        [DllImport(XrandrLibrary)]
+        unsafe public static extern short* XRRConfigRates(XRRScreenConfiguration config, int size_index, int[] nrates);
 
-        //SizeID XRRConfigCurrentConfiguration(XRRScreenConfiguration *config, Rotation *rotation);
+        [DllImport(XrandrLibrary)]
+        public static extern SizeID XRRConfigCurrentConfiguration(XRRScreenConfiguration config, ref Rotation rotation);
 
-        //short XRRConfigCurrentRate(XRRScreenConfiguration *config);   
+        [DllImport(XrandrLibrary)]
+        public static extern short XRRConfigCurrentRate(XRRScreenConfiguration config);
 
-        //int XRRRootToScreen(Display *dpy, Window root);
+        [DllImport(XrandrLibrary)]
+        public static extern int XRRRootToScreen(Display dpy, Window root);
 
-        //XRRScreenConfiguration *XRRScreenConfig(Display *dpy, int screen);
+        [DllImport(XrandrLibrary)]
+        public static extern XRRScreenConfiguration XRRScreenConfig(Display dpy, int screen);
 
-        //XRRScreenConfiguration *XRRConfig(Screen *screen);
+        [DllImport(XrandrLibrary)]
+        public static extern XRRScreenConfiguration XRRConfig(ref Screen screen);
 
-        //void XRRSelectInput(Display *dpy, Window window, int mask);
+        [DllImport(XrandrLibrary)]
+        public static extern void XRRSelectInput(Display dpy, Window window, int mask);
 
         /*
          * intended to take RRScreenChangeNotify,  or
          * ConfigureNotify (on the root window)
          * returns 1 if it is an event type it understands, 0 if not
          */
-        //int XRRUpdateConfiguration(XEvent *event^);
+        [DllImport(XrandrLibrary)]
+        public static extern int XRRUpdateConfiguration(ref XEvent @event);
 
         /*
          * the following are always safe to call, even if RandR is
          * not implemented on a screen
          */
-        //Rotation XRRRotations(Display *dpy, int screen, Rotation *current_rotation);
+        [DllImport(XrandrLibrary)]
+        public static extern Rotation XRRRotations(Display dpy, int screen, ref Rotation current_rotation);
 
-        //XRRScreenSize *XRRSizes(Display *dpy, int screen, int *nsizes);
+        [DllImport(XrandrLibrary)]
+        [return: MarshalAs(UnmanagedType.LPStruct)]
+        public static extern XRRScreenSize XRRSizes(Display dpy, int screen, int[] nsizes);
 
-        //short *XRRRates(Display *dpy, int screen, int size_index, int *nrates);
+        [DllImport(XrandrLibrary)]
+        unsafe public static extern short* XRRRates(Display dpy, int screen, int size_index, int[] nrates);
 
-        //Time XRRTimes(Display *dpy, int screen, Time *config_timestamp);
+        [DllImport(XrandrLibrary)]
+        public static extern Time XRRTimes(Display dpy, int screen, ref Time config_timestamp);
 
         #endregion
     }
