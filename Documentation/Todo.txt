@@ -28,7 +28,7 @@ Bind:
 * Implement Glx bindings.
 
 
-OpenTK.OpenGL todos:
+OpenTK.Graphics todos:
 * Improve call performance for functions that use GCHandles.
 * Inline XML documentation.
 
@@ -36,10 +36,9 @@ OpenTK.OpenGL todos:
 OpenTK.Platform:
 * GLContext class:
 	+ FSAA support.
-	+ VSYNC support.
 	+ Add native support for the MacOS X platform (now goes through X).
 * GLControl class:
-	+ Improve the interface. Add more constructors.
+	+ Improve the designer interface.
 
 
 OpenTK.Input todos:
@@ -51,9 +50,6 @@ Examples:
 + Add more Tutorials and WinForms examples.
 
 
-OpenTK.Math todos:
-+ Add Noise module.
-
-
-OpenTK.OpenAL todos:
-+ Audio format loaders.
+OpenTK.Audio todos:
++ CLSCompliant overloads for OpenAL.
++ Wav/PCM and Ogg loaders.
