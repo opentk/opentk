@@ -14,9 +14,13 @@ OpenTK 0.9.0 -> 0.9.1
 	+ Graphics
 		+ Fixed Glu tessellation.
 		+ Refactored/updated DisplayMode and ColorMode. Added docs, fixed a few problematic corner cases. Width/Height are no longer available in DisplayMode.
-		+ Added DisplayDevice class, to enumerate available display devices (i.e. monitors).
+		+ Added DisplayDevice class, to enumerate available display devices (i.e. monitors) and switch resolutions.
+		+ Added DisplayResolution class, to hold resolution information.
 	+ Audio
 		+ Added AudioContext class.
+	+ GameWindow
+		+ Implemented Fullscreen property.
+		+ Implemented Visible property.
 	
 + Examples
 	+ Added GluTessellator example.
