@@ -33,12 +33,23 @@ namespace OpenTK.Graphics
         static object display_lock = new object();
         static DisplayDevice primary_display;
 
-        static IDisplayDeviceDriver implementation = new OpenTK.Platform.Windows.WinDisplayDeviceDriver();
+        static IDisplayDeviceDriver implementation;
 
         #region --- Constructors ---
 
         static DisplayDevice()
         {
+            switch (System.Environment.OSVersion.Platform)
+            {
+                case PlatformID.Unix:
+                case (PlatformID)128:
+                    implementation = null;
+                    break;
+
+                default:
+                    implementation = new OpenTK.Platform.Windows.WinDisplayDeviceDriver();
+                    break;
+            }
             //lock (display_lock)
             //{
             //    int i = 0;
