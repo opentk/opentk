@@ -15,7 +15,7 @@ namespace OpenTK.Platform.X11
     /// Describes a Windows.Form.Control, Windows.Forms.NativeWindow or OpenTK.GameWindow on the X11 platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    public sealed class WindowInfo : IMutableWindowInfo
+    internal sealed class WindowInfo : IMutableWindowInfo
     {
         private IntPtr handle, topLevelWindow;
         private IntPtr rootWindow, display;
@@ -117,7 +117,7 @@ namespace OpenTK.Platform.X11
             // X11.WindowInfo winfo = info as X11.WindowInfo ?? (X11.WindowInfo)(info as Platform.WindowInfo);
             X11.WindowInfo winfo = info as X11.WindowInfo;
             if (winfo == null)
-                winfo = (X11.WindowInfo)(info as Platform.WindowInfo);
+                winfo = new WindowInfo(info);//(X11.WindowInfo)(info as Platform.WindowInfo);
 
             this.RootWindow = winfo.RootWindow;
             this.TopLevelWindow = winfo.TopLevelWindow;

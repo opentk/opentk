@@ -272,7 +272,7 @@ namespace OpenTK
 
         public X11PlatformIdle(WindowInfo info)
         {
-            display = ((OpenTK.Platform.X11.WindowInfo)info).Display;
+            display = new OpenTK.Platform.X11.WindowInfo(info).Display;//((OpenTK.Platform.X11.WindowInfo)info).Display;
         }
 
         #region IPlatformIdle Members
