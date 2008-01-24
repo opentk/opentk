@@ -14,6 +14,7 @@ using OpenTK;
 using OpenTK.OpenGL;
 using OpenTK.Fonts;
 using OpenTK.OpenGL.Enums;
+using OpenTK.Input;
 
 namespace Examples.Tutorial
 {
@@ -23,8 +24,28 @@ namespace Examples.Tutorial
     [Example("Simple Window", ExampleCategory.Tutorial, 1)]
     public class T01_Simple_Window : GameWindow
     {
-        public T01_Simple_Window() : base(new DisplayMode(800, 600))
-        { }
+        public T01_Simple_Window() : base()
+        {
+            Keyboard.KeyDown += new OpenTK.Input.KeyDownEvent(Keyboard_KeyDown);
+        }
+
+        #region Keyboard_KeyDown
+
+        /// <summary>
+        /// Occurs when a key is pressed.
+        /// </summary>
+        /// <param name="sender">The KeyboardDevice which generated this event.</param>
+        /// <param name="key">The key that was pressed.</param>
+        void Keyboard_KeyDown(KeyboardDevice sender, Key key)
+        {
+            if ((sender[Key.AltLeft] || sender[Key.AltRight]) && sender[Key.Enter])
+                this.Fullscreen = !this.Fullscreen;
+
+            if (sender[Key.Escape])
+                this.Exit();
+        }
+
+        #endregion
 
         #region OnLoad
 
@@ -68,10 +89,7 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            base.OnUpdateFrame(e);
-
-            if (Keyboard[OpenTK.Input.Key.Escape])
-                this.Exit();
+            // Nothing to do!
         }
 
         #endregion
@@ -114,8 +132,7 @@ namespace Examples.Tutorial
             using (T01_Simple_Window example = new T01_Simple_Window())
             {
                 // Get the title and category  of this example using reflection.
-                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
-                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                Utilities.SetWindowTitle(example);
                 example.Run(30.0, 0.0);
             }
         }
