@@ -207,49 +207,7 @@ namespace OpenTK.Platform.Windows
 
         public IEnumerable<DisplayMode> GetDisplayModes()
         {
-            List<DisplayMode> modes = new List<DisplayMode>();
-            bool done = false;
-            int index = 0;
-
-            while (!done)
-            {
-                DeviceMode currentMode = new DeviceMode();
-                IntPtr handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DeviceMode)));
-                Marshal.StructureToPtr(currentMode, handle, true);
-
-                done = (Functions.EnumDisplaySettings(null, index++, handle) != 0) ? false : true;
-                int error = Marshal.GetLastWin32Error();
-
-                Marshal.PtrToStructure(handle, currentMode);
-                Marshal.FreeHGlobal(handle);
-
-                if (error != 0)
-                {
-                    Console.WriteLine("Error: {0}", error);
-                    continue;
-                }
-                if (done)
-                    break;
-
-                //DisplayMode mode = new DisplayMode(currentMode.PelsWidth, currentMode.PelsHeight);
-                DisplayMode mode = new DisplayMode(
-                    currentMode.PelsWidth,
-                    currentMode.PelsHeight,
-                    new ColorMode(currentMode.BitsPerPel),
-                    0,
-                    0,
-                    0,
-                    0,
-                    false,
-                    false,
-                    false,
-                    currentMode.DisplayFrequency
-                );
-
-                modes.Add(mode);
-            }
-
-            return modes.ToArray();
+            throw new NotSupportedException("See OpenTK.Graphics.DisplayDevice.AvailableModes instead.");
         }
 
         #endregion
