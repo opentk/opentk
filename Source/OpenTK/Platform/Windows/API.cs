@@ -52,8 +52,8 @@ namespace OpenTK.Platform.Windows
 
     using COLORREF = System.Int32;
     using RECT = OpenTK.Platform.Windows.Rectangle;
-
     using WNDPROC = System.IntPtr;
+    using LPDEVMODE = DeviceMode;
 
     #endregion
 
@@ -506,29 +506,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region Display settings
-
-        #region int ChangeDisplaySettings(ref Gdi.DEVMODE devMode, int flags)
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="device_mode"></param>
-        /// <param name="flags"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern int ChangeDisplaySettings(DeviceMode device_mode, int flags);
-        #endregion int ChangeDisplaySettings(ref Gdi.DEVMODE devMode, int flags)
-
-        #region EnumDisplaySettings
-
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern int EnumDisplaySettings([MarshalAs(UnmanagedType.LPTStr)] string device_name,
-            int graphics_mode, IntPtr device_mode);
-
-        #endregion
-
-        #endregion
-
         #region GetASsyncKeyState
 
         [System.Security.SuppressUnmanagedCodeSecurity]
@@ -643,6 +620,72 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region Display settings
+
+        #region ChangeDisplaySettings
+
+        /// <summary>
+        /// The ChangeDisplaySettings function changes the settings of the default display device to the specified graphics mode.
+        /// </summary>
+        /// <param name="device_mode">[in] Pointer to a DEVMODE structure that describes the new graphics mode. If lpDevMode is NULL, all the values currently in the registry will be used for the display setting. Passing NULL for the lpDevMode parameter and 0 for the dwFlags parameter is the easiest way to return to the default mode after a dynamic mode change.</param>
+        /// <param name="flags">[in] Indicates how the graphics mode should be changed.</param>
+        /// <returns></returns>
+        /// <remarks>To change the settings of a specified display device, use the ChangeDisplaySettingsEx function.
+        /// <para>To ensure that the DEVMODE structure passed to ChangeDisplaySettings is valid and contains only values supported by the display driver, use the DEVMODE returned by the EnumDisplaySettings function.</para>
+        /// <para>When the display mode is changed dynamically, the WM_DISPLAYCHANGE message is sent to all running applications.</para>
+        /// </remarks>
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern int ChangeDisplaySettings(DeviceMode device_mode, ChangeDisplaySettingsEnum flags);
+
+        #endregion int ChangeDisplaySettings
+
+        #region ChangeDisplaySettingsEx
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern LONG ChangeDisplaySettingsEx(LPCTSTR lpszDeviceName, LPDEVMODE lpDevMode,
+            HWND hwnd, DWORD dwflags, LPVOID lParam);
+
+        #endregion
+
+        #region EnumDisplayDevices
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern BOOL EnumDisplayDevices([MarshalAs(UnmanagedType.LPStr)] LPCTSTR lpDevice,
+            DWORD iDevNum, [In, Out] DisplayDevice lpDisplayDevice, DWORD dwFlags);
+
+        #endregion
+
+        #region EnumDisplaySettings
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern BOOL EnumDisplaySettings([MarshalAs(UnmanagedType.LPStr)] string device_name,
+            int graphics_mode, [Out] DeviceMode device_mode);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern BOOL EnumDisplaySettings([MarshalAs(UnmanagedType.LPStr)] string device_name,
+             DisplayModeSettingsEnum graphics_mode, [Out] DeviceMode device_mode);
+
+        #endregion
+
+        #region EnumDisplaySettingsEx
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern BOOL EnumDisplaySettingsEx([MarshalAs(UnmanagedType.LPStr)] LPCTSTR lpszDeviceName, DisplayModeSettingsEnum iModeNum,
+            [Out] DeviceMode lpDevMode, DWORD dwFlags);
+
+        #endregion
+
+        #endregion
+
+        #region Input functions
+
+        #region Async input
+
+        #region GetCursorPos
+
         /// <summary>
         /// Retrieves the cursor's position, in screen coordinates.
         /// </summary>
@@ -655,6 +698,10 @@ namespace OpenTK.Platform.Windows
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
         internal static extern BOOL GetCursorPos(ref System.Drawing.Point point);
+
+        #endregion
+
+        #endregion
 
         #region Raw Input
 
@@ -1127,6 +1174,8 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #endregion
+
+        #endregion
     }
 
     #region --- Constants ---
@@ -1209,11 +1258,6 @@ namespace OpenTK.Platform.Windows
             internal const int DM_PELSHEIGHT = 0x00100000;
             internal const int DM_DISPLAYFLAGS = 0x00200000;
             internal const int DM_DISPLAYFREQUENCY = 0x00400000;
-
-            // ChangeDisplaySettings types (found in winuser.h)
-            internal const int CDS_UPDATEREGISTRY = 0x00000001;
-            internal const int CDS_TEST = 0x00000002;
-            internal const int CDS_FULLSCREEN = 0x00000004;
 
             // ChangeDisplaySettings results (found in winuser.h)
             internal const int DISP_CHANGE_SUCCESSFUL = 0;
@@ -1554,6 +1598,32 @@ namespace OpenTK.Platform.Windows
     }
 
     #endregion DeviceMode class
+
+    #region DisplayDevice
+    
+    /// <summary>
+    /// The DISPLAY_DEVICE structure receives information about the display device specified by the iDevNum parameter of the EnumDisplayDevices function.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Ansi)]
+    internal class DisplayDevice
+    {
+        internal DisplayDevice()
+        {
+            size = (short)Marshal.SizeOf(this);
+        }
+        readonly DWORD size;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        internal string DeviceName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        internal string DeviceString;
+        internal DisplayDeviceStateFlags StateFlags;    // DWORD
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        internal string DeviceID;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        internal string DeviceKey;
+    }
+
+    #endregion
 
     #region Window Handling
 
@@ -2258,8 +2328,54 @@ namespace OpenTK.Platform.Windows
 
     #region --- Enums ---
 
+    #region internal enum DisplayModeSettingsEnum
+
+    internal enum DisplayModeSettingsEnum
+    {
+        CurrentSettings = -1,
+        RegistrySettings = -2
+    }
+
+    #endregion
+
+    #region internal enum DisplayDeviceStateFlags
+
+    [Flags]
+    internal enum DisplayDeviceStateFlags
+    {
+        None              = 0x00000000,
+        AttachedToDesktop = 0x00000001,
+        MultiDriver       = 0x00000002,
+        PrimaryDevice     = 0x00000004,
+        MirroringDriver   = 0x00000008,
+        VgaCompatible     = 0x00000010,
+        Removable         = 0x00000020,
+        ModesPruned       = 0x08000000,
+        Remote            = 0x04000000,
+        Disconnect        = 0x02000000,
+
+        // Child device state
+        Active            = 0x00000001,
+        Attached          = 0x00000002,
+    }
+
+    #endregion
+
+    #region internal enum ChangeDisplaySettingsEnum
+
+    [Flags]
+    internal enum ChangeDisplaySettingsEnum
+    {
+        // ChangeDisplaySettings types (found in winuser.h)
+        UpdateRegistry = 0x00000001,
+        Test = 0x00000002,
+        Fullscreen = 0x00000004,
+    }
+
+    #endregion
+
     #region internal enum WindowStyle : int
-        
+
     internal enum WindowStyle : int
     {
         Overlapped = 0x00000000,
