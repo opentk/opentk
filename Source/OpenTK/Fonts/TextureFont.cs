@@ -91,11 +91,11 @@ namespace OpenTK.Fonts
             pack = new TexturePacker<Glyph>(texture_width, texture_height);
 
             GL.GenTextures(1, out texture);
-            GL.BindTexture(TextureTarget.Texture2d, texture);
-            GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)All.Linear);
-            GL.TexParameter(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)All.Linear);
+            GL.BindTexture(TextureTarget.Texture2D, texture);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, PixelInternalFormat.Alpha, texture_width, texture_height, 0,
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Alpha, texture_width, texture_height, 0,
                 OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
         }
 
@@ -160,14 +160,14 @@ namespace OpenTK.Fonts
                 throw;
             }
 
-            GL.BindTexture(TextureTarget.Texture2d, texture);
+            GL.BindTexture(TextureTarget.Texture2D, texture);
 
             gfx.Clear(System.Drawing.Color.Transparent);
             gfx.DrawString(g.Character.ToString(), g.Font, System.Drawing.Brushes.White, 0.0f, 0.0f);
 
             //BitmapData bitmap_data = bitmap.LockBits(new Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly,
             //    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            //GL.TexSubImage2D(TextureTarget.Texture2d, 0, rect.Left, rect.Top, rect.Width, rect.Height,
+            //GL.TexSubImage2D(TextureTarget.Texture2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
             //    OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bitmap_data.Scan0);
             //bitmap.UnlockBits(bitmap_data);
 
@@ -189,7 +189,7 @@ namespace OpenTK.Fonts
                 }
 
                 fixed (int* data_ptr = data)
-                    GL.TexSubImage2D(TextureTarget.Texture2d, 0, rect.Left, rect.Top, rect.Width, rect.Height,
+                    GL.TexSubImage2D(TextureTarget.Texture2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
                                      OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)data_ptr);
             }
             bmp.UnlockBits(bitmap_data);
