@@ -498,7 +498,16 @@ namespace OpenTK.OpenAL
             Source(sid,(Enums.ALSourcei) param,( value ) ? 1 : 0);
         }
 
-        // <summary>This function sets 3 integer properties of a source. This property is used to establish connections between Sources and Auxiliary Effect Slots.</summary>
+        /// <summary>(Helper) Binds a Buffer to a Source handle.</summary>
+        /// <param name="source">Source name to attach the Buffer to.</param>
+        /// <param name="buffer">Buffer name which is attached to the Source.</param>
+        [CLSCompliant(false)]
+        public static void BindBufferToSource( uint source,uint buffer )
+        {
+            Source(source,Enums.ALSourcei.Buffer,(int)buffer);
+        }
+
+        /// <summary>This function sets 3 integer properties of a source. This property is used to establish connections between Sources and Auxiliary Effect Slots.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">The name of the attribute to set: EfxAuxiliarySendFilter</param>
         /// <param name="value1">The value to set the attribute to. (EFX Extension) The destination Auxiliary Effect Slot ID</param>
@@ -507,6 +516,18 @@ namespace OpenTK.OpenAL
         [CLSCompliant(false),DllImport(AL.Lib,EntryPoint = "alSource3i",ExactSpelling = true,CallingConvention = AL.Style),SuppressUnmanagedCodeSecurity( )]
         public static extern void Source( uint sid,Enums.ALSource3i param,int value1,int value2,int value3 );
         // AL_API void AL_APIENTRY alSource3i( ALuint sid, ALenum param, ALint value1, ALint value2, ALint value3 );
+
+
+        /// <summary>(Helper) Reroutes a Source's output into an Auxiliary Effect Slot.</summary>
+        /// <param name="source">The Source handle who's output is forwarded.</param>
+        /// <param name="slot">The Auxiliary Effect Slot handle that receives input from the Source.</param>
+        /// <param name="slotnumber">Every Source has only a limited number of slots it can feed data to. The number must stay below AlcContextAttributes.EfxMaxAuxiliarySends</param>
+        /// <param name="filter">Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or EfxFilterType.FilterNull for no filter. </param>
+        [CLSCompliant(false)]
+        public static void BindSourceToAuxiliarySlot( uint source,uint slot,int slotnumber, uint filter )
+        {
+            AL.Source(source,Enums.ALSource3i.EfxAuxiliarySendFilter,(int) slot,slotnumber,(int) filter);
+        }
 
         // Not used by any Enum:
         // AL_API void AL_APIENTRY alSourcefv( ALuint sid, ALenum param, const ALfloat* values );
