@@ -139,8 +139,8 @@ namespace OpenTK.OpenAL
             Imported_alEffecti(eid,param,value);
         }
 
-        /// <summary>(Helper) internally calls alEffecti(eid,Enums.EfxEffecti.EffectType,(int) type)</summary>
-        /// <param name="eid">Effect id.</param>
+        /// <summary>(Helper) Selects the Effect type used by this Effect handle.</summary>
+        /// <param name="eid">Effect id returned from a successful call to Efx.GenEffects.</param>
         /// <param name="type">Effect type.</param>
         [CLSCompliant(false)]
         public void BindEffect( uint eid,Enums.EfxEffectType type )
@@ -610,6 +610,15 @@ namespace OpenTK.OpenAL
         public void AuxiliaryEffectSlot( uint asid,Enums.EfxAuxiliaryi param,int value )
         {
             Imported_alAuxiliaryEffectSloti(asid,param,value);
+        }
+
+        /// <summary>(Helper) Attaches an Effect to an Auxiliary Effect Slot.</summary>
+        /// <param name="auxiliaryeffectslot">The slot handle to attach the Effect to.</param>
+        /// <param name="effect">The Effect handle that is being attached.</param>
+        [CLSCompliant(false)]
+        public void BindEffectToAuxiliarySlot( uint auxiliaryeffectslot,uint effect )
+        {
+            AuxiliaryEffectSlot(auxiliaryeffectslot,Enums.EfxAuxiliaryi.EffectslotEffect,(int) effect);
         }
 
         #endregion alAuxiliaryEffectSloti

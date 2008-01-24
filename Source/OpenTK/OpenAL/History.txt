@@ -22,8 +22,7 @@ Efx: Functions not imported:
      alEffectiv, alGetEffectiv
      alFilteriv, alFilterfv, alGetFilteriv, alGetFilterfv
      alAuxiliaryEffectSlotiv, alAuxiliaryEffectSlotfv, alGetAuxiliaryEffectSlotiv, alGetAuxiliaryEffectSlotfv
-     
-- Added AL.Null for convenience when working with C Manuals.       
+            
 - Added Function AL.GetErrorString()
 - Added overloads for requesting/deleting a single buffer/source at a time.
 - Refactored -i -fv -3f functions to be overloads e.g AL.GetSource, AL.GetListener
@@ -35,13 +34,15 @@ Alpha v0.9
 -added alEffectfv and alGetEffectfv
 -ported samples from SDK
 
+Alpha v0.95
+-full cleanup of AL class documentation
+-added *.Bind* helpers.
 
 
 Todo for beta:
 - Identify: AL_FILTER_FIRST_PARAMETER, AL_FILTER_LAST_PARAMETER
             AL_EFFECT_FIRST_PARAMETER, AL_EFFECT_LAST_PARAMETER
-- AL.BindBuffer helper function ala GL.BindBuffer? (Wraps AL.Source, better consistency)
-- change all "name" into "handle" to avoid confusion?
+- replace EaxEfx reverbs with Efx reverbs.
 
 Todo for final:
 - Enums themselves require summaries (do after some more serious tests)
