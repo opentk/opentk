@@ -18,8 +18,9 @@ namespace OpenTK.Platform.Windows
 {
     internal class WinDisplayDeviceDriver : IDisplayDeviceDriver
     {
-        // In OpenTK nomenclature, a DisplayDevice is a screen, not a video card!
         static object display_lock = new object();
+        static Dictionary<OpenTK.Graphics.DisplayDevice, string> available_device_names =
+            new Dictionary<OpenTK.Graphics.DisplayDevice, string>();    // Needed for ChangeDisplaySettingsEx
 
         #region --- Constructors ---
 
@@ -71,6 +72,8 @@ namespace OpenTK.Platform.Windows
                     // Construct the OpenTK DisplayDevice through the accumulated parameters.
                     opentk_dev = new OpenTK.Graphics.DisplayDevice(opentk_dev_current_res, opentk_dev_primary,
                         opentk_dev_available_res);
+
+                    available_device_names.Add(opentk_dev, dev1.DeviceName);
                 }
             }
         }
@@ -83,31 +86,34 @@ namespace OpenTK.Platform.Windows
 
         #region --- IDisplayDeviceDriver Members ---
 
-        #region public bool TryChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        #region public bool TryChangeResolution(OpenTK.Graphics.DisplayDevice device, DisplayResolution resolution)
 
-        public bool TryChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        public bool TryChangeResolution(OpenTK.Graphics.DisplayDevice device, DisplayResolution resolution)
         {
-            DeviceMode settings = new DeviceMode();
-            settings.PelsWidth = width;
-            settings.PelsHeight = height;
-            settings.BitsPerPel = bitsPerPixel;
-            settings.DisplayFrequency = (int)refreshRate;
-            settings.Fields = Constants.DM_BITSPERPEL
+            DeviceMode mode = new DeviceMode();
+            mode.PelsWidth = resolution.Width;
+            mode.PelsHeight = resolution.Height;
+            mode.BitsPerPel = resolution.BitsPerPixel;
+            mode.DisplayFrequency = (int)resolution.RefreshRate;
+            mode.Fields = Constants.DM_BITSPERPEL
                 | Constants.DM_PELSWIDTH
-                | Constants.DM_PELSHEIGHT;
+                | Constants.DM_PELSHEIGHT
+                | Constants.DM_DISPLAYFREQUENCY;
 
-            return Functions.ChangeDisplaySettings(settings, ChangeDisplaySettingsEnum.Fullscreen) ==
+            //return Functions.ChangeDisplaySettings(settings, ChangeDisplaySettingsEnum.Fullscreen) ==
+            //    Constants.DISP_CHANGE_SUCCESSFUL;
+            return Functions.ChangeDisplaySettingsEx(available_device_names[device], mode, IntPtr.Zero, 0, IntPtr.Zero) ==
                 Constants.DISP_CHANGE_SUCCESSFUL;
         }
 
         #endregion
 
-        #region public void RestoreResolution()
+        #region public void RestoreResolution(OpenTK.Graphics.DisplayDevice device)
 
-        public void RestoreResolution()
+        public void RestoreResolution(OpenTK.Graphics.DisplayDevice device)
         {
-            Functions.ChangeDisplaySettings(null, (ChangeDisplaySettingsEnum)0);
-            //Functions.ChangeDisplaySettings(
+            //Functions.ChangeDisplaySettings(null, (ChangeDisplaySettingsEnum)0);
+            Functions.ChangeDisplaySettingsEx(available_device_names[device], null, IntPtr.Zero, 0, IntPtr.Zero);
         }
 
         #endregion

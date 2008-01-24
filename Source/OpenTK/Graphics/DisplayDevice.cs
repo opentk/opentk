@@ -67,7 +67,6 @@ namespace OpenTK.Graphics
 
         #region --- Public Methods ---
 
-
         #region public int Width
 
         /// <summary>Gets a System.Int32 that contains the width of this display in pixels.</summary>
@@ -108,7 +107,54 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region public void ChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        #region public DisplayResolution[] AvailableResolutions
+
+        /// <summary>
+        /// Gets an array of OpenTK.DisplayResolution objects, which describe all available resolutions
+        /// for this device.
+        /// </summary>
+        public DisplayResolution[] AvailableResolutions
+        {
+            get
+            {
+                lock (display_lock)
+                {
+                    return available_resolutions.ToArray();
+                }
+            }
+        }
+
+        #endregion
+
+        #region public DisplayResolution SelectResolution(int width, int height, int bitsPerPixel, float refreshRate)
+
+        /// <summary>
+        /// Selects an available resolution that matches the specified parameters.
+        /// </summary>
+        /// <param name="width">The width of the requested resolution in pixels.</param>
+        /// <param name="height">The height of the requested resolution in pixels.</param>
+        /// <param name="bitsPerPixel">The bits per pixel of the requested resolution.</param>
+        /// <param name="refreshRate">The refresh rate of the requested resolution in Herz.</param>
+        /// <returns>The requested DisplayResolution or null if the parameters cannot be met.</returns>
+        /// <remarks>
+        /// <para>A parameter set to 0 will not be used in the search (e.g. if refreshRate is 0, any refresh rate will be considered valid).</para>
+        /// <para>This function generates garbage.</para>
+        /// </remarks>
+        public DisplayResolution SelectResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        {
+            return available_resolutions.Find(delegate(DisplayResolution test)
+            {
+                return
+                    ((width > 0 && width == test.Width) || width == 0) &&
+                    ((height > 0 && height == test.Height) || height == 0) &&
+                    ((bitsPerPixel > 0 && bitsPerPixel == test.BitsPerPixel) || bitsPerPixel == 0) &&
+                    ((refreshRate > 0 && (int)refreshRate == (int)test.RefreshRate) || refreshRate == 0);
+            });
+        }
+
+        #endregion
+
+        #region public void ChangeResolution(DisplayResolution resolution)
 
         /// <summary>Changes the resolution of the DisplayDevice.</summary>
         /// <param name="width">The new width of the DisplayDevice.</param>
@@ -116,20 +162,18 @@ namespace OpenTK.Graphics
         /// <param name="bitsPerPixel">The new bits per pixel of the DisplayDevice.</param>
         /// <param name="refreshRate">The new refresh rate of the DisplayDevice.</param>
         /// <exception cref="GraphicsModeException">Thrown if the requested resolution change failed.</exception>
-        public void ChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        public void ChangeResolution(DisplayResolution resolution)
         {
-            if (width <= 0) throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
-            if (height <= 0) throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
-            if (bitsPerPixel <= 0) throw new ArgumentOutOfRangeException("bitsPerPixel", "Must be greater than zero.");
-            if (refreshRate <= 0) throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than zero.");
+            if (resolution == null)
+                throw new ArgumentNullException("resulotion", "Must be a valid resolution.");
 
-            if (implementation.TryChangeResolution(width, height, bitsPerPixel, refreshRate))
+            if (implementation.TryChangeResolution(this, resolution))
             {
-                current_resolution = new DisplayResolution(width, height, bitsPerPixel, refreshRate);
+                current_resolution = resolution;
             }
             else
-                throw new GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}x{2}x{3]@{4]Hz",
-                    ToString(), width, height, bitsPerPixel, refreshRate));
+                throw new GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
+                    this, resolution));
         }
 
         #endregion
@@ -138,7 +182,7 @@ namespace OpenTK.Graphics
 
         public void RestoreResolution()
         {
-            implementation.RestoreResolution();
+            implementation.RestoreResolution(this);
         }
 
         #endregion
@@ -146,7 +190,7 @@ namespace OpenTK.Graphics
         #region public static DisplayDevice[] AvailableDisplays
 
         /// <summary>
-        /// Gets an array of OpenTK.Display objects, which describe all available display devices.
+        /// Gets an array of OpenTK.DisplayDevice objects, which describe all available display devices.
         /// </summary>
         public static DisplayDevice[] AvailableDisplays
         {
@@ -191,19 +235,19 @@ namespace OpenTK.Graphics
         /// <summary>Determines whether the specified DisplayDevices are equal.</summary>
         /// <param name="obj">The System.Object to check against.</param>
         /// <returns>True if the System.Object is an equal DisplayDevice; false otherwise.</returns>
-        public override bool Equals(object obj)
-        {
-            if (obj is DisplayDevice)
-            {
-                DisplayDevice dev = (DisplayDevice)obj;
-                return
-                    IsPrimary == dev.IsPrimary &&
-                    current_resolution == dev.current_resolution &&
-                    available_resolutions.Count == dev.available_resolutions.Count;
-            }
+        //public override bool Equals(object obj)
+        //{
+        //    if (obj is DisplayDevice)
+        //    {
+        //        DisplayDevice dev = (DisplayDevice)obj;
+        //        return
+        //            IsPrimary == dev.IsPrimary &&
+        //            current_resolution == dev.current_resolution &&
+        //            available_resolutions.Count == dev.available_resolutions.Count;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         #endregion
 
@@ -211,10 +255,10 @@ namespace OpenTK.Graphics
 
         /// <summary>Returns a unique hash representing this DisplayDevice.</summary>
         /// <returns>A System.Int32 that may serve as a hash code for this DisplayDevice.</returns>
-        public override int GetHashCode()
-        {
-            return current_resolution.GetHashCode() ^ IsPrimary.GetHashCode() ^ available_resolutions.Count;
-        }
+        //public override int GetHashCode()
+        //{
+        //    return current_resolution.GetHashCode() ^ IsPrimary.GetHashCode() ^ available_resolutions.Count;
+        //}
 
         #endregion
 

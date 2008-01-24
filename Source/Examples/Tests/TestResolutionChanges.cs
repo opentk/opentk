@@ -24,9 +24,11 @@ namespace Examples.Tests
             foreach (DisplayDevice dev in DisplayDevice.AvailableDisplays)
             {
                 Trace.WriteLine(dev.ToString());
-                //MessageBox.Show(dev.ToString());
-                //dev.ChangeResolution(640, 480, 32, 60.0f);
-                //dev.RestoreResolution();
+                MessageBox.Show(dev.ToString());
+                // Switch to the first available resolution that has the same bpp as the current one (usually 640x480@60Hz)
+                dev.ChangeResolution(dev.SelectResolution(0, 0, dev.BitsPerPixel, 0));
+                MessageBox.Show(dev.ToString());
+                dev.RestoreResolution();
             }
         }
     }
