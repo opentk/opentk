@@ -26,36 +26,63 @@ namespace OpenTK.Platform.X11
             // Get available resolutions. Then, for each resolution get all
             // available rates.
             // TODO: Find a way to get all available depths, too.
-
-            //lock (display_lock)   // TODO: Global X11 lock.
+            // TODO: Global X11 lock.
+            for (int screen = 0; screen < API.ScreenCount; screen++)
             {
-                for (int screen = 0; screen < API.ScreenCount; screen++)
+                List<DisplayResolution> available_res;
+                float refreshRate;
+                FindAvailableResolutions(screen, out available_res);
+                FindCurrentRefreshRate(screen, out refreshRate);
+                // The default resolution (but not refresh rate) is the first one in available_res.
+                // Its refresh rate is discovered by the FindCurrentRefreshRate call.
+                new DisplayDevice(new DisplayResolution(available_res[0].Width, available_res[0].Height, 24, refreshRate),
+                    screen == API.DefaultScreen, available_res);
+            }
+        }
+
+        internal X11XrandrDisplayDevice() { }
+
+        #endregion
+
+        #region --- Private Methods ---
+
+        #region static void FindAvailableResolutions(int screen, out List<DisplayResolution> resolutions)
+
+        static void FindAvailableResolutions(int screen, out List<DisplayResolution> resolutions)
+        {
+            resolutions = new List<DisplayResolution>();
+            unsafe
+            {
+                XRRScreenSize[] array = Functions.XRRSizes(API.DefaultDisplay, screen);
+                if (array == null)
+                    throw new NotSupportedException("XRandR extensions not available.");
+
+                int resolution = 0;
+                foreach (XRRScreenSize size in array)
                 {
-                    List<DisplayResolution> resolutions = new List<DisplayResolution>();
-                    unsafe
-                    {
-                        XRRScreenSize[] array = Functions.XRRSizes(API.DefaultDisplay, screen);
-                        if (array == null)
-                            throw new NotSupportedException("XRandR extensions not available.");
+                    short[] rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution);
 
-                        int resolution = 0;
-                        foreach (XRRScreenSize size in array)
-                        {
-                            short[] rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution);
-                            foreach (short rate in rates)
-                                resolutions.Add(new DisplayResolution(size.Width, size.Height, 24, (float)rate));
-                            ++resolution;
-                        }
-                    }
-
-                    // Construct a default device for testing purposes.
-                    new DisplayDevice(resolutions[0], screen == API.DefaultScreen, resolutions);
+                    // TODO: Is the rate != 0 conditional correct? It seems that XRRRates returns 0
+                    // for modes that are larger than the screen can support (?)
+                    foreach (short rate in rates)
+                        if (rate != 0)
+                            resolutions.Add(new DisplayResolution(size.Width, size.Height, 24, (float)rate));
+                    ++resolution;
                 }
             }
         }
 
-        public X11XrandrDisplayDevice()
+        #endregion
+
+        static void FindCurrentRefreshRate(int screen, out float refreshRate)
         {
+            IntPtr screen_config_ptr = Functions.XRRGetScreenInfo(API.DefaultDisplay, API.RootWindow);
+            ushort rotation = 0;
+            int size = Functions.XRRConfigCurrentConfiguration(screen_config_ptr, ref rotation);
+            short rate = Functions.XRRConfigCurrentRate(screen_config_ptr);
+            Functions.XRRFreeScreenConfigInfo(screen_config_ptr);
+
+            refreshRate = (float)rate;
         }
 
         #endregion
