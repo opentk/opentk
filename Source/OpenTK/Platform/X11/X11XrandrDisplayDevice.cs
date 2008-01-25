@@ -23,26 +23,33 @@ namespace OpenTK.Platform.X11
 
         static X11XrandrDisplayDevice()
         {
-            //lock (display_lock)
+            // Get available resolutions. Then, for each resolution get all
+            // available rates.
+            // TODO: Find a way to get all available depths, too.
+
+            //lock (display_lock)   // TODO: Global X11 lock.
             {
-                for (int i = 0; i < API.ScreenCount; i++)
+                for (int screen = 0; screen < API.ScreenCount; screen++)
                 {
                     List<DisplayResolution> resolutions = new List<DisplayResolution>();
                     unsafe
                     {
-                        XRRScreenSize[] array = Functions.XRRSizes(API.DefaultDisplay, i);
-                        Debug.Print("{0} resolutions.", array.Length);
-                        Debug.Indent();
-                        for (int count = 0; count < array.Length; count++)
+                        XRRScreenSize[] array = Functions.XRRSizes(API.DefaultDisplay, screen);
+                        if (array == null)
+                            throw new NotSupportedException("XRandR extensions not available.");
+
+                        int resolution = 0;
+                        foreach (XRRScreenSize size in array)
                         {
-                            resolutions.Add(new DisplayResolution(array[count].Width, array[count].Height, 24, 0));
-                            Debug.Print(resolutions[count].ToString());
+                            short[] rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution);
+                            foreach (short rate in rates)
+                                resolutions.Add(new DisplayResolution(size.Width, size.Height, 24, (float)rate));
+                            ++resolution;
                         }
-                        Debug.Unindent();
                     }
 
                     // Construct a default device for testing purposes.
-                    new DisplayDevice(resolutions[0], i == API.DefaultScreen, resolutions);
+                    new DisplayDevice(resolutions[0], screen == API.DefaultScreen, resolutions);
                 }
             }
         }
