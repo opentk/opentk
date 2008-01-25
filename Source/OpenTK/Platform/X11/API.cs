@@ -91,7 +91,6 @@ namespace OpenTK.Platform.X11
 
         #region Window handling
 
-
         [Obsolete("Use XCreateWindow instead")]
         [DllImport(_dll_name, EntryPoint = "XCreateWindow")]
         public extern static Window CreateWindow(
@@ -1342,28 +1341,46 @@ XF86VidModeGetGammaRampSize(
 
         public static XRRScreenSize[] XRRSizes(Display dpy, int screen)
         {
-            XRRScreenSize[] array;
-            IntPtr ptr;
-            int nsizes;
+            XRRScreenSize[] sizes;
+            //IntPtr ptr;
+            int count;
             unsafe
             {
-                ptr = XRRSizes(dpy, screen, &nsizes);
+                //ptr = XRRSizes(dpy, screen, &nsizes);
 
-                byte* data = (byte*)ptr;
-                array = new XRRScreenSize[nsizes];
-                for (int i = 0; i < nsizes; i++)
+                byte* data = (byte*)XRRSizes(dpy, screen, &count);//(byte*)ptr;
+                if (count == 0)
+                    return null;
+                sizes = new XRRScreenSize[count];
+                for (int i = 0; i < count; i++)
                 {
-                    array[i] = new XRRScreenSize();
-                    array[i] = (XRRScreenSize)Marshal.PtrToStructure((IntPtr)data, typeof(XRRScreenSize));
+                    sizes[i] = new XRRScreenSize();
+                    sizes[i] = (XRRScreenSize)Marshal.PtrToStructure((IntPtr)data, typeof(XRRScreenSize));
                     data += Marshal.SizeOf(typeof(XRRScreenSize));
                 }
                 //XFree(ptr);   // Looks like we must not free this.
-                return array;
+                return sizes;
             }
         }
 
         [DllImport(XrandrLibrary)]
-        unsafe public static extern short* XRRRates(Display dpy, int screen, int size_index, int* nrates);
+        unsafe static extern short* XRRRates(Display dpy, int screen, int size_index, int* nrates);
+
+        public static short[] XRRRates(Display dpy, int screen, int size_index)
+        {
+            short[] rates;
+            int count;
+            unsafe
+            {
+                short* data = (short*)XRRRates(dpy, screen, size_index, &count);
+                if (count == 0)
+                    return null;
+                rates = new short[count];
+                for (int i = 0; i < count; i++)
+                    rates[i] = *(data + i);
+            }
+            return rates;
+        }
 
         [DllImport(XrandrLibrary)]
         public static extern Time XRRTimes(Display dpy, int screen, ref Time config_timestamp);
