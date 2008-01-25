@@ -20,6 +20,12 @@ namespace OpenTK.Platform.X11
 
         static X11XrandrDisplayDevice()
         {
+            // Construct a default device for testing purposes.
+            new DisplayDevice(new DisplayResolution(800, 600, 24, 0), true,
+                new DisplayResolution[]
+                {
+                    new DisplayResolution(800, 600, 24, 0)
+                });
         }
 
         public X11XrandrDisplayDevice()
