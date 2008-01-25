@@ -1349,7 +1349,7 @@ XF86VidModeGetGammaRampSize(
                 for (int i = 0; i < nsizes; i++)
                 {
                     array[i] = new XRRScreenSize();
-                    Marshal.PtrToStructure((IntPtr)data, array[i]);
+                    array[i] = (XRRScreenSize)Marshal.PtrToStructure((IntPtr)data, typeof(XRRScreenSize));
                     data += Marshal.SizeOf(typeof(XRRScreenSize));
                 }
                 XFree(ptr);
