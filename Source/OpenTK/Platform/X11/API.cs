@@ -1264,7 +1264,7 @@ XF86VidModeGetGammaRampSize(
 
         #region Xrandr
 
-        const string XrandrLibrary = "libxrandr.so.2";
+        const string XrandrLibrary = "libxrandr";
 
         [DllImport(XrandrLibrary)]
         public static extern Bool XRRQueryExtension(Display dpy, ref int event_basep, ref int error_basep);
