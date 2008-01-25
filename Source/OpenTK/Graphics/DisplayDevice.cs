@@ -69,9 +69,13 @@ namespace OpenTK.Graphics
             this.current_resolution = currentResolution;
             this.primary = primary;
             this.available_resolutions.AddRange(availableResolutions);
-            available_displays.Add(this);
-            if (primary)
-                primary_display = this;
+
+            lock (display_lock)
+            {
+                available_displays.Add(this);
+                if (primary)
+                    primary_display = this;
+            }
         }
 
         #endregion
