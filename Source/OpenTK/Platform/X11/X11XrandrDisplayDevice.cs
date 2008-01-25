@@ -30,9 +30,11 @@ namespace OpenTK.Platform.X11
             for (int screen = 0; screen < API.ScreenCount; screen++)
             {
                 List<DisplayResolution> available_res;
+                int[] depths;
                 float refreshRate;
-                FindAvailableResolutions(screen, out available_res);
+                FindAvailableDepths(screen, out depths);
                 FindCurrentRefreshRate(screen, out refreshRate);
+                FindAvailableResolutions(screen, depths, out available_res);
                 // The default resolution (but not refresh rate) is the first one in available_res.
                 // Its refresh rate is discovered by the FindCurrentRefreshRate call.
                 new DisplayDevice(new DisplayResolution(available_res[0].Width, available_res[0].Height, 24, refreshRate),
@@ -48,7 +50,7 @@ namespace OpenTK.Platform.X11
 
         #region static void FindAvailableResolutions(int screen, out List<DisplayResolution> resolutions)
 
-        static void FindAvailableResolutions(int screen, out List<DisplayResolution> resolutions)
+        static void FindAvailableResolutions(int screen, int[] depths, out List<DisplayResolution> resolutions)
         {
             resolutions = new List<DisplayResolution>();
             unsafe
@@ -66,7 +68,8 @@ namespace OpenTK.Platform.X11
                     // for modes that are larger than the screen can support (?)
                     foreach (short rate in rates)
                         if (rate != 0)
-                            resolutions.Add(new DisplayResolution(size.Width, size.Height, 24, (float)rate));
+                            foreach (int depth in depths)
+                                resolutions.Add(new DisplayResolution(size.Width, size.Height, depth, (float)rate));
                     ++resolution;
                 }
             }
@@ -83,6 +86,11 @@ namespace OpenTK.Platform.X11
             Functions.XRRFreeScreenConfigInfo(screen_config_ptr);
 
             refreshRate = (float)rate;
+        }
+
+        private static void FindAvailableDepths(int screen, out int[] depths)
+        {
+            depths = Functions.XListDepths(API.DefaultDisplay, screen);
         }
 
         #endregion
