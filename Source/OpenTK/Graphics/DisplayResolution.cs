@@ -28,7 +28,7 @@ namespace OpenTK.Graphics
             if (width <= 0) throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
             if (height <= 0) throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
             if (bitsPerPixel <= 0) throw new ArgumentOutOfRangeException("bitsPerPixel", "Must be greater than zero.");
-            if (refreshRate < 0) throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than zero.");
+            if (refreshRate < 0) throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than, or equal to zero.");
 
             this.width = width;
             this.height = height;
