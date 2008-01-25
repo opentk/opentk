@@ -32,7 +32,7 @@ namespace OpenTK.Platform.X11
 
         public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
-            
+            return false;
         }
 
         public void RestoreResolution(DisplayDevice device)
