@@ -38,6 +38,9 @@ Alpha v0.95
 -full cleanup of AL class documentation
 -added *.Bind* helpers.
 
+Alpha v0.96
+- Cleaned up X-Ram, improved docu, hide some previously public things. No more Console.WriteLines
+
 
 Todo for beta:
 - Identify: AL_FILTER_FIRST_PARAMETER, AL_FILTER_LAST_PARAMETER
