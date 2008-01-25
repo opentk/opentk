@@ -48,6 +48,9 @@ namespace OpenTK.Platform.X11
     {
         #region --- Fields ---
 
+        private const string _dll_name = "libX11";
+        private const string _dll_name_vid = "libXxf86vm";
+
         static Display defaultDisplay;
         static int defaultScreen;
         static Window rootWindow;
@@ -75,9 +78,6 @@ namespace OpenTK.Platform.X11
         {
             if (defaultDisplay != IntPtr.Zero) { Functions.XCloseDisplay(defaultDisplay); defaultDisplay = IntPtr.Zero; }
         }
-
-        private const string _dll_name = "libX11";
-        private const string _dll_name_vid = "libXxf86vm";
 
         // Display management
         [DllImport(_dll_name, EntryPoint = "XOpenDisplay")]
@@ -1184,6 +1184,8 @@ XF86VidModeGetGammaRampSize(
 
     internal static partial class Functions
     {
+        internal const string X11Library = "libX11";
+
         #region XCreateWindow
 
         /// <summary>
@@ -1210,7 +1212,7 @@ XF86VidModeGetGammaRampSize(
         /// <para>The XCreateSimpleWindow function creates an unmapped InputOutput subwindow for a specified parent window, returns the window ID of the created window, and causes the X server to generate a CreateNotify event. The created window is placed on top in the stacking order with respect to siblings. Any part of the window that extends outside its parent window is clipped. The border_width for an InputOnly window must be zero, or a BadMatch error results. XCreateSimpleWindow inherits its depth, class, and visual from its parent. All other window attributes, except background and border, have their default values. </para>
         /// <para>XCreateSimpleWindow can generate BadAlloc, BadMatch, BadValue, and BadWindow errors.</para>
         /// </remarks>
-        [DllImport("libX11", EntryPoint = "XCreateWindow"), CLSCompliant(false)]
+        [DllImport(X11Library, EntryPoint = "XCreateWindow"), CLSCompliant(false)]
         public extern static Window XCreateWindow(Display display, Window parent,
             int x, int y, int width, int height, int border_width, int depth,
             int @class, IntPtr visual, UIntPtr valuemask, ref XSetWindowAttributes attributes);
@@ -1226,7 +1228,7 @@ XF86VidModeGetGammaRampSize(
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="keys">Returns an array of bytes that identifies which keys are pressed down. Each bit represents one key of the keyboard.</param>
         /// <remarks>Note that the logical state of a device (as seen by client applications) may lag the physical state if device event processing is frozen.</remarks>
-        [DllImport("libX11", EntryPoint = "XQueryKeymap")]
+        [DllImport(_dll_name, EntryPoint = "XQueryKeymap")]
         extern public static void XQueryKeymap(IntPtr display, [MarshalAs(UnmanagedType.LPArray, SizeConst = 32), In, Out] Keymap keys);
         */
 
@@ -1236,7 +1238,7 @@ XF86VidModeGetGammaRampSize(
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="keys">Returns an array of bytes that identifies which keys are pressed down. Each bit represents one key of the keyboard.</param>
         /// <remarks>Note that the logical state of a device (as seen by client applications) may lag the physical state if device event processing is frozen.</remarks>
-        [DllImport("libX11", EntryPoint = "XQueryKeymap")]
+        [DllImport(X11Library, EntryPoint = "XQueryKeymap")]
         extern public static void XQueryKeymap(IntPtr display, byte[] keys);
 
         #endregion
@@ -1249,7 +1251,7 @@ XF86VidModeGetGammaRampSize(
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="event_mask">Specifies the event mask.</param>
         /// <param name="e">Returns the matched event's associated structure.</param>
-        [DllImport("libX11", EntryPoint = "XMaskEvent")]
+        [DllImport(X11Library, EntryPoint = "XMaskEvent")]
         extern public static void XMaskEvent(IntPtr display, EventMask event_mask, ref XEvent e);
 
         #endregion
@@ -1261,7 +1263,7 @@ XF86VidModeGetGammaRampSize(
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="event">Specifies the event.</param>
-        [DllImport("libX11", EntryPoint = "XPutBackEvent")]
+        [DllImport(X11Library, EntryPoint = "XPutBackEvent")]
         public static extern void XPutBackEvent(IntPtr display, ref XEvent @event);
         
         #endregion
@@ -1389,8 +1391,35 @@ XF86VidModeGetGammaRampSize(
 
         #region Display, Screen and Window functions
 
-        [DllImport("libX11")]
+        #region XScreenCount
+
+        [DllImport(X11Library)]
         public static extern int XScreenCount(Display display);
+
+        #endregion
+
+        #region XListDepths
+
+        [DllImport(X11Library)]
+        unsafe static extern int *XListDepths(Display display, int screen_number, int* count_return);
+
+        public static int[] XListDepths(Display display, int screen_number)
+        {
+            unsafe
+            {
+                int count;
+                int* data = XListDepths(display, screen_number, &count);
+                if (count == 0)
+                    return null;
+                int[] depths = new int[count];
+                for (int i = 0; i < count; i++)
+                    depths[i] = *(data + i);
+
+                return depths;
+            }
+        }
+
+        #endregion
 
         #endregion
     }
