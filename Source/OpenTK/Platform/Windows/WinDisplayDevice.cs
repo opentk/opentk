@@ -33,6 +33,8 @@ namespace OpenTK.Platform.Windows
                 // we only allow settings to be set through its constructor.
                 // Thus, we save all necessary parameters in temporary variables
                 // and construct the device when every needed detail is available.
+                // The main DisplayDevice constructor adds the newly constructed device
+                // to the list of available devices.
                 OpenTK.Graphics.DisplayDevice opentk_dev;
                 DisplayResolution opentk_dev_current_res = null;
                 List<DisplayResolution> opentk_dev_available_res = new List<DisplayResolution>();
@@ -71,6 +73,8 @@ namespace OpenTK.Platform.Windows
                     }
 
                     // Construct the OpenTK DisplayDevice through the accumulated parameters.
+                    // The constructor will automatically add the DisplayDevice to the list
+                    // of available devices.
                     opentk_dev = new OpenTK.Graphics.DisplayDevice(opentk_dev_current_res, opentk_dev_primary,
                         opentk_dev_available_res);
 
@@ -115,15 +119,6 @@ namespace OpenTK.Platform.Windows
         {
             //Functions.ChangeDisplaySettings(null, (ChangeDisplaySettingsEnum)0);
             Functions.ChangeDisplaySettingsEx(available_device_names[device], null, IntPtr.Zero, 0, IntPtr.Zero);
-        }
-
-        #endregion
-
-        #region public DisplayDevice[] AvailableDevices
-
-        public OpenTK.Graphics.DisplayDevice[] AvailableDevices
-        {
-            get { return null; }
         }
 
         #endregion
