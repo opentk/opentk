@@ -27,29 +27,24 @@ namespace OpenTK.Platform.X11
             {
                 for (int i = 0; i < API.ScreenCount; i++)
                 {
+                    List<DisplayResolution> resolutions = new List<DisplayResolution>();
                     unsafe
                     {
-                        Debug.Print("Checkpoint 1");
                         XRRScreenSize[] array = Functions.XRRSizes(API.DefaultDisplay, i);
                         Debug.Print("{0} resolutions.", array.Length);
                         Debug.Indent();
-                        int count = array.Length;
-                        while (count-- != 0)
-                            Debug.Print(array[count].ToString());
+                        for (int count = 0; count < array.Length; count++)
+                        {
+                            resolutions.Add(new DisplayResolution(array[i].Width, array[i].Height, 0, 0));
+                            Debug.Print(resolutions[count].ToString());
+                        }
                         Debug.Unindent();
                     }
-                }
-                //Functions.XRRSizes(API.DefaultDisplay, API.DefaultScreen, 
-                //Functions.XRRGetScreenInfo(API.DefaultDisplay);
-                
-            }
 
-            // Construct a default device for testing purposes.
-            new DisplayDevice(new DisplayResolution(800, 600, 24, 0), true,
-                new DisplayResolution[]
-                {
-                    new DisplayResolution(800, 600, 24, 0)
-                });
+                    // Construct a default device for testing purposes.
+                    new DisplayDevice(resolutions[0], i == API.DefaultScreen, resolutions);
+                }
+            }
         }
 
         public X11XrandrDisplayDevice()
