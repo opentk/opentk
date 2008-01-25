@@ -38,6 +38,7 @@ namespace OpenTK.Platform.X11
     using Rotation = System.UInt16;
     using Status = System.Int32;
     using SizeID = System.UInt16;
+    using System.Diagnostics;
 
     #endregion
 
@@ -47,10 +48,10 @@ namespace OpenTK.Platform.X11
     {
         #region --- Fields ---
 
-        static Display defaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
-        static int defaultScreen = Functions.XDefaultScreen(defaultDisplay);
-        static Window rootWindow = Functions.XRootWindow(defaultDisplay, defaultScreen);
-        static int screenCount = Functions.XScreenCount(defaultDisplay);
+        static Display defaultDisplay;
+        static int defaultScreen;
+        static Window rootWindow;
+        static int screenCount;
 
         internal static Display DefaultDisplay { get { return defaultDisplay; } }
         internal static int DefaultScreen { get { return defaultScreen; } }
@@ -62,12 +63,16 @@ namespace OpenTK.Platform.X11
         static API()
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
+            defaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
+            defaultScreen = Functions.XDefaultScreen(DefaultDisplay);
+            rootWindow = Functions.XRootWindow(DefaultDisplay, DefaultScreen);
+            screenCount = Functions.XScreenCount(DefaultDisplay);
+            Debug.Print("Default Display: {0}, Default Screen: {1}, Default Root Window: {2}, Screen Count: {3}",
+                DefaultDisplay, DefaultScreen, RootWindow, ScreenCount);
         }
 
         static void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
-            if (defaultDisplay != IntPtr.Zero) { Functions.XCloseDisplay(defaultDisplay); defaultDisplay = IntPtr.Zero; }
-            if (defaultDisplay != IntPtr.Zero) { Functions.XCloseDisplay(defaultDisplay); defaultDisplay = IntPtr.Zero; }
             if (defaultDisplay != IntPtr.Zero) { Functions.XCloseDisplay(defaultDisplay); defaultDisplay = IntPtr.Zero; }
         }
 
