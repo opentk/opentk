@@ -247,13 +247,24 @@ namespace OpenTK.Build
             List<string> exe_matches = new List<string>();
             List<string> dll_matches = new List<string>();
             List<string> dll_config_matches = new List<string>();
+            List<string> symbol_matches = new List<string>();
             
             Directory.CreateDirectory(BinPath);
             Directory.CreateDirectory(ExePath);
             Directory.CreateDirectory(LibPath);
             Directory.CreateDirectory(ExamplePath);
             Directory.CreateDirectory(DataPath);
-            
+
+            FindFiles(SourcePath, "*.pdb", symbol_matches);
+            FindFiles(SourcePath, "*.mdb", symbol_matches);
+            foreach (string m in symbol_matches)
+            {
+                File.Delete(Path.Combine(LibPath, Path.GetFileName(m)));
+                File.Copy(m, Path.Combine(LibPath, Path.GetFileName(m)));
+                File.Delete(Path.Combine(ExamplePath, Path.GetFileName(m)));
+                File.Copy(m, Path.Combine(ExamplePath, Path.GetFileName(m)));
+            }
+
             // Move the libraries and the config files.
             FindFiles(SourcePath, "*.dll", dll_matches);
             foreach (string m in dll_matches)
