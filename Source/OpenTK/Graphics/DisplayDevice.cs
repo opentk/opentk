@@ -43,7 +43,7 @@ namespace OpenTK.Graphics
             {
                 case PlatformID.Unix:
                 case (PlatformID)128:
-                    implementation = null;
+                    implementation = new OpenTK.Platform.X11.X11XrandrDisplayDevice();
                     break;
 
                 default:
