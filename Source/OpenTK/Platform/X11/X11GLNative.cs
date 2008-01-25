@@ -63,12 +63,13 @@ namespace OpenTK.Platform.X11
             //Utilities.ThrowOnX11Error = true; // Not very reliable
 
             // Open the display to the X server, and obtain the screen and root window.
-            window.Display = API.OpenDisplay(null); // null == default display
+            //window.Display = API.OpenDisplay(null); // null == default display
+            window.Display = API.DefaultDisplay;
             if (window.Display == IntPtr.Zero)
                 throw new Exception("Could not open connection to X");
 
-            window.Screen = API.DefaultScreen(window.Display);
-            window.RootWindow = API.RootWindow(window.Display, window.Screen);
+            window.Screen = API.DefaultScreen;//Functions.XDefaultScreen(window.Display);
+            window.RootWindow = API.RootWindow;//Functions.XRootWindow(window.Display, window.Screen);
 
             Debug.Print("Display: {0}, Screen {1}, Root window: {2}",
                 window.Display, window.Screen, window.RootWindow);
