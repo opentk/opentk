@@ -74,7 +74,7 @@ namespace OpenTK.Graphics
                 available_displays.Count, available_resolutions.Count, primary ? "primary" : "secondary");
             Debug.Indent();
             foreach (DisplayResolution res in available_resolutions)
-                Debug.Print(res.ToString());
+                Debug.Print(res == current_resolution ? String.Format(">>{0}<<", res.ToString()) : res.ToString());
             Debug.Unindent();
 
             lock (display_lock)
@@ -106,7 +106,7 @@ namespace OpenTK.Graphics
         #region public int BitsPerPixel
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
-        public int BitsPerPixel { get { Debug.Print("This method is not supported currently."); return current_resolution.BitsPerPixel; } }
+        public int BitsPerPixel { get { return current_resolution.BitsPerPixel; } }
 
         #endregion
 
