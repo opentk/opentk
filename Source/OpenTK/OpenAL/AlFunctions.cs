@@ -515,19 +515,7 @@ namespace OpenTK.OpenAL
         ///<param name="value3">The value to set the attribute to. (EFX Extension) optional Filter ID.</param>
         [CLSCompliant(false),DllImport(AL.Lib,EntryPoint = "alSource3i",ExactSpelling = true,CallingConvention = AL.Style),SuppressUnmanagedCodeSecurity( )]
         public static extern void Source( uint sid,Enums.ALSource3i param,int value1,int value2,int value3 );
-        // AL_API void AL_APIENTRY alSource3i( ALuint sid, ALenum param, ALint value1, ALint value2, ALint value3 );
-
-
-        /// <summary>(Helper) Reroutes a Source's output into an Auxiliary Effect Slot.</summary>
-        /// <param name="source">The Source handle who's output is forwarded.</param>
-        /// <param name="slot">The Auxiliary Effect Slot handle that receives input from the Source.</param>
-        /// <param name="slotnumber">Every Source has only a limited number of slots it can feed data to. The number must stay below AlcContextAttributes.EfxMaxAuxiliarySends</param>
-        /// <param name="filter">Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or EfxFilterType.FilterNull for no filter. </param>
-        [CLSCompliant(false)]
-        public static void BindSourceToAuxiliarySlot( uint source,uint slot,int slotnumber, uint filter )
-        {
-            AL.Source(source,Enums.ALSource3i.EfxAuxiliarySendFilter,(int) slot,slotnumber,(int) filter);
-        }
+        // AL_API void AL_APIENTRY alSource3i( ALuint sid, ALenum param, ALint value1, ALint value2, ALint value3 );      
 
         // Not used by any Enum:
         // AL_API void AL_APIENTRY alSourcefv( ALuint sid, ALenum param, const ALfloat* values );

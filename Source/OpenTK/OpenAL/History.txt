@@ -29,23 +29,16 @@ Efx: Functions not imported:
 - X-Ram Extension untested, as it requires special hardware. !verify parameters of GetBufferMode()!
 - functions with ushort, uint, ulong marked as not CLS compliant.
 
-Alpha v0.9
--added docu
--added alEffectfv and alGetEffectfv
--ported samples from SDK
 
 Alpha v0.95
--full cleanup of AL class documentation
--added *.Bind* helpers.
-
-Alpha v0.96
-- Cleaned up X-Ram, improved docu, hide some previously public things. No more Console.WriteLines
+- Cleaned up X-Ram, added docu, hid some previously public delegates.
+- Cleaned up Efx, largely improved docu, refactored some EfxFilter.FilterXYZ glitches to EfxFilter.XYZ.  
+- commented out debugging Console.WriteLines, replaced errormessages with Trace.Writeline
+- Added description for most enums.
 
 
 Todo for beta:
 - Identify: AL_FILTER_FIRST_PARAMETER, AL_FILTER_LAST_PARAMETER
             AL_EFFECT_FIRST_PARAMETER, AL_EFFECT_LAST_PARAMETER
 - replace EaxEfx reverbs with Efx reverbs.
-
-Todo for final:
-- Enums themselves require summaries (do after some more serious tests)
+- keep both reverb preset formats, or delete EaxEfxReverb presets?
