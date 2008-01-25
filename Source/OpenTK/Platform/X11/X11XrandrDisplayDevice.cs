@@ -35,7 +35,7 @@ namespace OpenTK.Platform.X11
                         Debug.Indent();
                         for (int count = 0; count < array.Length; count++)
                         {
-                            resolutions.Add(new DisplayResolution(array[i].Width, array[i].Height, 24, 0));
+                            resolutions.Add(new DisplayResolution(array[count].Width, array[count].Height, 24, 0));
                             Debug.Print(resolutions[count].ToString());
                         }
                         Debug.Unindent();
