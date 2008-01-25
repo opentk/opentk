@@ -70,6 +70,12 @@ namespace OpenTK.Graphics
             this.primary = primary;
             this.available_resolutions.AddRange(availableResolutions);
 
+            Debug.Print("DisplayDevice {0} supports {1} resolutions.", available_displays.Count, available_resolutions.Count);
+            Debug.Indent();
+            foreach (DisplayResolution res in available_resolutions)
+                Debug.Print(res.ToString());
+            Debug.Unindent();
+
             lock (display_lock)
             {
                 available_displays.Add(this);
