@@ -23,17 +23,18 @@ namespace OpenTK.Platform.X11
 
         static X11XrandrDisplayDevice()
         {
-            lock (display_lock)
+            //lock (display_lock)
             {
                 for (int i = 0; i < API.ScreenCount; i++)
                 {
                     unsafe
                     {
+                        Debug.Print("Checkpoint 1");
                         XRRScreenSize[] array = Functions.XRRSizes(API.DefaultDisplay, i);
                         Debug.Print("{0} resolutions.", array.Length);
                         Debug.Indent();
                         int count = array.Length;
-                        while (--count != 0)
+                        while (count-- != 0)
                             Debug.Print(array[count].ToString());
                         Debug.Unindent();
                     }
