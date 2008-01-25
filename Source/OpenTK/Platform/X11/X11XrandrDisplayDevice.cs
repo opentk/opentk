@@ -32,12 +32,17 @@ namespace OpenTK.Platform.X11
                 List<DisplayResolution> available_res;
                 int[] depths;
                 float refreshRate;
+                int currentDepth;
+
                 FindAvailableDepths(screen, out depths);
-                FindCurrentRefreshRate(screen, out refreshRate);
                 FindAvailableResolutions(screen, depths, out available_res);
+                FindCurrentRefreshRate(screen, out refreshRate);
+                FindCurrentDepth(screen, out currentDepth);
+
                 // The default resolution (but not refresh rate) is the first one in available_res.
                 // Its refresh rate is discovered by the FindCurrentRefreshRate call.
-                new DisplayDevice(new DisplayResolution(available_res[0].Width, available_res[0].Height, 24, refreshRate),
+                // Its depth is discovered by the FindCurrentDepth call.
+                new DisplayDevice(new DisplayResolution(available_res[0].Width, available_res[0].Height, currentDepth, refreshRate),
                     screen == API.DefaultScreen, available_res);
             }
         }
@@ -77,6 +82,8 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region static void FindCurrentRefreshRate(int screen, out float refreshRate)
+
         static void FindCurrentRefreshRate(int screen, out float refreshRate)
         {
             IntPtr screen_config_ptr = Functions.XRRGetScreenInfo(API.DefaultDisplay, API.RootWindow);
@@ -88,10 +95,25 @@ namespace OpenTK.Platform.X11
             refreshRate = (float)rate;
         }
 
+        #endregion
+
+        #region private static void FindAvailableDepths(int screen, out int[] depths)
+
         private static void FindAvailableDepths(int screen, out int[] depths)
         {
             depths = Functions.XListDepths(API.DefaultDisplay, screen);
         }
+
+        #endregion
+
+        #region private static void FindCurrentDepth(int screen, out int current_depth)
+
+        private static void FindCurrentDepth(int screen, out int current_depth)
+        {
+            current_depth = (int)Functions.XDefaultDepth(API.DefaultDisplay, screen);
+        }
+
+        #endregion
 
         #endregion
 
