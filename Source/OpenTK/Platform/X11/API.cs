@@ -1357,7 +1357,7 @@ XF86VidModeGetGammaRampSize(
                     array[i] = (XRRScreenSize)Marshal.PtrToStructure((IntPtr)data, typeof(XRRScreenSize));
                     data += Marshal.SizeOf(typeof(XRRScreenSize));
                 }
-                XFree(ptr);
+                //XFree(ptr);   // Looks like we must not free this.
                 return array;
             }
         }
