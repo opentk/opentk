@@ -24,6 +24,7 @@ namespace OpenTK.Platform.Windows
 
         #region --- Constructors ---
 
+        /// <summary>Queries available display devices and display resolutions.</summary>
         static WinDisplayDeviceDriver()
         {
             lock (display_lock)
