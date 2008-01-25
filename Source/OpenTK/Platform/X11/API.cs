@@ -45,8 +45,31 @@ namespace OpenTK.Platform.X11
 
     internal static class API
     {
-        // Prevent BeforeFieldInit optimization.
-        static API() { }
+        #region --- Fields ---
+
+        static Display defaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
+        static int defaultScreen = Functions.XDefaultScreen(defaultDisplay);
+        static Window rootWindow = Functions.XRootWindow(defaultDisplay, defaultScreen);
+        static int screenCount = Functions.XScreenCount(defaultDisplay);
+
+        internal static Display DefaultDisplay { get { return defaultDisplay; } }
+        internal static int DefaultScreen { get { return defaultScreen; } }
+        internal static Window RootWindow { get { return rootWindow; } }
+        internal static int ScreenCount { get { return screenCount; } }
+
+        #endregion
+
+        static API()
+        {
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
+        }
+
+        static void CurrentDomain_ProcessExit(object sender, EventArgs e)
+        {
+            if (defaultDisplay != IntPtr.Zero) { Functions.XCloseDisplay(defaultDisplay); defaultDisplay = IntPtr.Zero; }
+            if (defaultDisplay != IntPtr.Zero) { Functions.XCloseDisplay(defaultDisplay); defaultDisplay = IntPtr.Zero; }
+            if (defaultDisplay != IntPtr.Zero) { Functions.XCloseDisplay(defaultDisplay); defaultDisplay = IntPtr.Zero; }
+        }
 
         private const string _dll_name = "libX11";
         private const string _dll_name_vid = "libXxf86vm";
@@ -63,8 +86,6 @@ namespace OpenTK.Platform.X11
 
         #region Window handling
 
-        [DllImport(_dll_name, EntryPoint = "XRootWindow")]
-        public static extern Window RootWindow(Display display, int screen);
 
         [Obsolete("Use XCreateWindow instead")]
         [DllImport(_dll_name, EntryPoint = "XCreateWindow")]
@@ -108,9 +129,6 @@ namespace OpenTK.Platform.X11
         extern public static void MapRaised(Display display, Window window);
 
         #endregion
-
-        [DllImport(_dll_name, EntryPoint = "XDefaultScreen")]
-        extern public static int DefaultScreen(Display display);
 
         [DllImport(_dll_name, EntryPoint = "XDefaultVisual")]
         extern public static IntPtr DefaultVisual(Display display, int screen_number);
@@ -1315,14 +1333,42 @@ XF86VidModeGetGammaRampSize(
         public static extern Rotation XRRRotations(Display dpy, int screen, ref Rotation current_rotation);
 
         [DllImport(XrandrLibrary)]
-        [return: MarshalAs(UnmanagedType.LPStruct)]
-        public static extern XRRScreenSize XRRSizes(Display dpy, int screen, int[] nsizes);
+        unsafe static extern IntPtr XRRSizes(Display dpy, int screen, int* nsizes);
+
+        public static XRRScreenSize[] XRRSizes(Display dpy, int screen)
+        {
+            XRRScreenSize[] array;
+            IntPtr ptr;
+            int nsizes;
+            unsafe
+            {
+                ptr = XRRSizes(dpy, screen, &nsizes);
+
+                byte* data = (byte*)ptr;
+                array = new XRRScreenSize[nsizes];
+                for (int i = 0; i < nsizes; i++)
+                {
+                    array[i] = new XRRScreenSize();
+                    Marshal.PtrToStructure((IntPtr)data, array[i]);
+                    data += Marshal.SizeOf(typeof(XRRScreenSize));
+                }
+                XFree(ptr);
+                return array;
+            }
+        }
 
         [DllImport(XrandrLibrary)]
-        unsafe public static extern short* XRRRates(Display dpy, int screen, int size_index, int[] nrates);
+        unsafe public static extern short* XRRRates(Display dpy, int screen, int size_index, int* nrates);
 
         [DllImport(XrandrLibrary)]
         public static extern Time XRRTimes(Display dpy, int screen, ref Time config_timestamp);
+
+        #endregion
+
+        #region Display, Screen and Window functions
+
+        [DllImport("libX11")]
+        public static extern int XScreenCount(Display display);
 
         #endregion
     }
