@@ -57,7 +57,7 @@ namespace OpenTK.Graphics
         #region public int BitsPerPixel
 
         /// <summary>Gets a System.Int32 that contains number of bits per pixel of this display. Typical values include 8, 16, 24 and 32.</summary>
-        public int BitsPerPixel { get { Debug.Print("This method is not supported currently."); return bits_per_pixel; } }
+        public int BitsPerPixel { get { return bits_per_pixel; } }
 
         #endregion
 
@@ -122,6 +122,20 @@ namespace OpenTK.Graphics
         }
 
         #endregion
+
+        #endregion
+
+        #region --- Operator Overloads ---
+
+        public static bool operator== (DisplayResolution left, DisplayResolution right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(DisplayResolution left, DisplayResolution right)
+        {
+            return !(left == right);
+        }
 
         #endregion
     }
