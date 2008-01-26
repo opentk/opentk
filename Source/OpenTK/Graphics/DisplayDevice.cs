@@ -194,7 +194,7 @@ namespace OpenTK.Graphics
             if (resolution == current_resolution)
                 return;
 
-            //effect.FadeOut();
+            effect.FadeOut();
 
             if (implementation.TryChangeResolution(this, resolution))
             {
@@ -205,7 +205,7 @@ namespace OpenTK.Graphics
             else throw new GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
                     this, resolution));
 
-            //effect.FadeIn();
+            effect.FadeIn();
         }
 
         #endregion
