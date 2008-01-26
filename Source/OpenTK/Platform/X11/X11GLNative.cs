@@ -233,8 +233,17 @@ namespace OpenTK.Platform.X11
             }
             set
             {
-                if (value && !fullscreen || !value && fullscreen)
+                if (value && !fullscreen)
                 {
+                    Debug.Print("Going fullscreen");
+                    Debug.Indent();
+                    DisableWindowDecorations();
+                    Debug.Unindent();
+                    fullscreen = true;
+                }
+                //else (!value && fullscreen)
+                {
+                    /*
                     Debug.Print(value ? "Going fullscreen" : "Going windowed");
                     IntPtr state_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE", false);
                     IntPtr fullscreen_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE_FULLSCREEN", false);
@@ -252,6 +261,7 @@ namespace OpenTK.Platform.X11
                         (IntPtr)(EventMask.SubstructureRedirectMask | EventMask.SubstructureNotifyMask), ref xev);
 
                     fullscreen = !fullscreen;
+                    */
                 }
             }
         }
@@ -658,6 +668,36 @@ namespace OpenTK.Platform.X11
         {
             this.Dispose(false);
         }
+
+        #endregion
+
+        #region --- Private Methods ---
+
+        #region void DisableWindowDecorations()
+
+        void DisableWindowDecorations()
+        {
+            Debug.Print("Removing decorations.");
+            Debug.Indent();
+            if (DisableMotifDecorations()) Debug.Print("Removed decorations through motif.");
+            Debug.Unindent();
+        }
+
+        bool DisableMotifDecorations()
+        {
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, "_MOTIF_WM_HINTS", true);
+            if (atom != IntPtr.Zero)
+            {
+                MotifWmHints hints = new MotifWmHints();
+                hints.flags = (IntPtr)MotifFlags.Decorations;
+                Functions.XChangeProperty(API.DefaultDisplay, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
+                    Marshal.SizeOf(hints) / 4);
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
 
         #endregion
     }
