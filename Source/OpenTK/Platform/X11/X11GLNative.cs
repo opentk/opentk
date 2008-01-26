@@ -235,6 +235,7 @@ namespace OpenTK.Platform.X11
             {
                 if (value && !fullscreen || !value && fullscreen)
                 {
+                    Debug.Print(value ? "Going fullscreen" : "Going windowed");
                     IntPtr state_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE", false);
                     IntPtr fullscreen_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE_FULLSCREEN", false);
                     XEvent xev = new XEvent();
