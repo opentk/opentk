@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using OpenTK.Graphics;
+using System.Threading;
 
 namespace Examples.Tests
 {
@@ -21,15 +22,19 @@ namespace Examples.Tests
     {
         public static void Main()
         {
+            int count = 0;
             foreach (DisplayDevice dev in DisplayDevice.AvailableDisplays)
             {
+                if (count++ == 0) continue;
                 Trace.WriteLine(dev.ToString());
                 MessageBox.Show(dev.ToString());
                 // Switch to 640x480@60Hz, keeping bits per pixel the same.
                 dev.ChangeResolution(dev.SelectResolution(640, 480, dev.BitsPerPixel, 60.0f));
-                MessageBox.Show(dev.ToString());
+                Thread.Sleep(2000);
+                //MessageBox.Show(dev.ToString());
                 dev.RestoreResolution();
-                MessageBox.Show(dev.ToString());
+                //MessageBox.Show(dev.ToString());
+                //Thread.Sleep(1000);
             }
         }
     }
