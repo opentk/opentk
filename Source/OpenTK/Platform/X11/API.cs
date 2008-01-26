@@ -1306,7 +1306,7 @@ XF86VidModeGetGammaRampSize(
         unsafe public static extern short* XRRConfigRates(XRRScreenConfiguration config, int size_index, int[] nrates);
 
         [DllImport(XrandrLibrary)]
-        public static extern SizeID XRRConfigCurrentConfiguration(XRRScreenConfiguration config, ref Rotation rotation);
+        public static extern SizeID XRRConfigCurrentConfiguration(XRRScreenConfiguration config, out Rotation rotation);
 
         [DllImport(XrandrLibrary)]
         public static extern short XRRConfigCurrentRate(XRRScreenConfiguration config);
@@ -1385,7 +1385,7 @@ XF86VidModeGetGammaRampSize(
         }
 
         [DllImport(XrandrLibrary)]
-        public static extern Time XRRTimes(Display dpy, int screen, ref Time config_timestamp);
+        public static extern Time XRRTimes(Display dpy, int screen, out Time config_timestamp);
 
         #endregion
 
