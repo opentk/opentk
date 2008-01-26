@@ -48,6 +48,8 @@ namespace OpenTK.Platform.X11
         private static IntPtr WMTitle;      // The title of the GameWindow.
         private static IntPtr UTF8String;   // No idea.
 
+        private bool fullscreen = false;
+
         #endregion
 
         #region --- Public Constructors ---
@@ -227,13 +229,29 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                return false;
-                //throw new Exception("The method or operation is not implemented.");
+                return fullscreen;
             }
             set
             {
-                
-                //throw new Exception("The method or operation is not implemented.");
+                if (value && !fullscreen || !value && fullscreen)
+                {
+                    IntPtr state_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE", false);
+                    IntPtr fullscreen_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE_FULLSCREEN", false);
+                    XEvent xev = new XEvent();
+                    xev.ClientMessageEvent.type = XEventName.ClientMessage;
+                    xev.ClientMessageEvent.serial = IntPtr.Zero;
+                    xev.ClientMessageEvent.send_event = true;
+                    xev.ClientMessageEvent.window = this.Handle;
+                    xev.ClientMessageEvent.message_type = state_atom;
+                    xev.ClientMessageEvent.format = 32;
+                    xev.ClientMessageEvent.ptr1 = (IntPtr)(value ? NetWindowManagerState.Add : NetWindowManagerState.Remove);
+                    xev.ClientMessageEvent.ptr2 = (IntPtr)(value ? 1 : 0);
+                    xev.ClientMessageEvent.ptr3 = IntPtr.Zero;
+                    Functions.XSendEvent(API.DefaultDisplay, API.RootWindow, false,
+                        (IntPtr)(EventMask.SubstructureRedirectMask | EventMask.SubstructureNotifyMask), ref xev);
+
+                    fullscreen = !fullscreen;
+                }
             }
         }
 
