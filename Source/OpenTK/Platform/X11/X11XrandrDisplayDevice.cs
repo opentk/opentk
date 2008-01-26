@@ -18,7 +18,20 @@ namespace OpenTK.Platform.X11
     internal class X11XrandrDisplayDevice : IDisplayDeviceDriver
     {
         static object display_lock = new object();
-
+        int current_size = -1;  // current_size == -1 means it hasn't been changed.
+        int current_refresh;
+        // Store a mapping between resolutions and their respective
+        // size_index (needed for XRRSetScreenConfig). The size_index
+        // is simply the sequence number of the resolution as returned by
+        // XRRSizes. This is done per available screen.
+        // The default size for all screens is 0 - no need to store that separately.
+        static List<Dictionary<DisplayResolution, int>> screenResolutionToIndex =
+            new List<Dictionary<DisplayResolution, int>>();
+        // Store a mapping between DisplayDevices and X11 screens.
+        static Dictionary<DisplayDevice, int> deviceToScreen = new Dictionary<DisplayDevice, int>();
+        // Keep the time when the config of each screen was last updated.
+        static List<uint> lastConfigUpdate = new List<uint>();
+        
         #region --- Constructors ---
 
         static X11XrandrDisplayDevice()
@@ -29,21 +42,44 @@ namespace OpenTK.Platform.X11
             // TODO: Global X11 lock.
             for (int screen = 0; screen < API.ScreenCount; screen++)
             {
-                List<DisplayResolution> available_res;
-                int[] depths;
-                float refreshRate;
-                int currentDepth;
+                uint timestamp_of_last_update;
+                Functions.XRRTimes(API.DefaultDisplay, screen, out timestamp_of_last_update);
+                lastConfigUpdate.Add(timestamp_of_last_update);
 
-                FindAvailableDepths(screen, out depths);
-                FindAvailableResolutions(screen, depths, out available_res);
-                FindCurrentRefreshRate(screen, out refreshRate);
-                FindCurrentDepth(screen, out currentDepth);
+                List<DisplayResolution> available_res = new List<DisplayResolution>();
+
+                // Add info for a new screen.
+                screenResolutionToIndex.Add(new Dictionary<DisplayResolution, int>());
+
+                int[] depths = FindAvailableDepths(screen);
+
+                int resolution_count = 0;
+                foreach (XRRScreenSize size in FindAvailableResolutions(screen))
+                {
+                    short[] rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
+
+                    // It seems that XRRRates returns 0 for modes that are larger than the screen
+                    // can support, as well as for all supported modes. On Ubuntu 7.10 the tool
+                    // "Screens and Graphics" does report these modes, though.
+                    foreach (short rate in rates)
+                    {
+                        if (rate != 0)
+                            foreach (int depth in depths)
+                                available_res.Add(new DisplayResolution(size.Width, size.Height, depth, (float)rate));
+                    }
+                    // Keep the index of this resolution - we will need it for resolution changes later.
+                    screenResolutionToIndex[screen].Add(available_res[resolution_count], resolution_count);
+                    ++resolution_count;
+                }
+
+                float current_refresh_rate = FindCurrentRefreshRate(screen);
+                int current_depth = FindCurrentDepth(screen);
 
                 // The default resolution (but not refresh rate) is the first one in available_res.
                 // Its refresh rate is discovered by the FindCurrentRefreshRate call.
                 // Its depth is discovered by the FindCurrentDepth call.
-                new DisplayDevice(new DisplayResolution(available_res[0].Width, available_res[0].Height, currentDepth, refreshRate),
-                    screen == API.DefaultScreen, available_res);
+                deviceToScreen.Add(new DisplayDevice(new DisplayResolution(available_res[0].Width, available_res[0].Height, current_depth, current_refresh_rate),
+                    screen == API.DefaultScreen, available_res), screen);
             }
         }
 
@@ -53,64 +89,47 @@ namespace OpenTK.Platform.X11
 
         #region --- Private Methods ---
 
-        #region static void FindAvailableResolutions(int screen, out List<DisplayResolution> resolutions)
+        #region static int[] FindAvailableDepths(int screen)
 
-        static void FindAvailableResolutions(int screen, int[] depths, out List<DisplayResolution> resolutions)
+        static int[] FindAvailableDepths(int screen)
         {
-            resolutions = new List<DisplayResolution>();
-            unsafe
-            {
-                XRRScreenSize[] array = Functions.XRRSizes(API.DefaultDisplay, screen);
-                if (array == null)
-                    throw new NotSupportedException("XRandR extensions not available.");
-
-                int resolution = 0;
-                foreach (XRRScreenSize size in array)
-                {
-                    short[] rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution);
-
-                    // TODO: Is the rate != 0 conditional correct? It seems that XRRRates returns 0
-                    // for modes that are larger than the screen can support (?)
-                    foreach (short rate in rates)
-                        if (rate != 0)
-                            foreach (int depth in depths)
-                                resolutions.Add(new DisplayResolution(size.Width, size.Height, depth, (float)rate));
-                    ++resolution;
-                }
-            }
+            return Functions.XListDepths(API.DefaultDisplay, screen);
         }
 
         #endregion
 
-        #region static void FindCurrentRefreshRate(int screen, out float refreshRate)
+        #region static XRRScreenSize[] FindAvailableResolutions(int screen)
 
-        static void FindCurrentRefreshRate(int screen, out float refreshRate)
+        static XRRScreenSize[] FindAvailableResolutions(int screen)
         {
-            IntPtr screen_config_ptr = Functions.XRRGetScreenInfo(API.DefaultDisplay, API.RootWindow);
+            XRRScreenSize[] resolutions = Functions.XRRSizes(API.DefaultDisplay, screen);
+            if (resolutions == null)
+                throw new NotSupportedException("XRandR extensions not available.");
+            return resolutions;
+        }
+
+        #endregion
+
+        #region static float FindCurrentRefreshRate(int screen)
+
+        static float FindCurrentRefreshRate(int screen)
+        {
+            IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, API.RootWindow);
             ushort rotation = 0;
-            int size = Functions.XRRConfigCurrentConfiguration(screen_config_ptr, ref rotation);
-            short rate = Functions.XRRConfigCurrentRate(screen_config_ptr);
-            Functions.XRRFreeScreenConfigInfo(screen_config_ptr);
+            int size = Functions.XRRConfigCurrentConfiguration(screen_config, out rotation);
+            short rate = Functions.XRRConfigCurrentRate(screen_config);
+            Functions.XRRFreeScreenConfigInfo(screen_config);
 
-            refreshRate = (float)rate;
+            return (float)rate;
         }
 
         #endregion
 
-        #region private static void FindAvailableDepths(int screen, out int[] depths)
+        #region private static int FindCurrentDepth(int screen)
 
-        private static void FindAvailableDepths(int screen, out int[] depths)
+        private static int FindCurrentDepth(int screen)
         {
-            depths = Functions.XListDepths(API.DefaultDisplay, screen);
-        }
-
-        #endregion
-
-        #region private static void FindCurrentDepth(int screen, out int current_depth)
-
-        private static void FindCurrentDepth(int screen, out int current_depth)
-        {
-            current_depth = (int)Functions.XDefaultDepth(API.DefaultDisplay, screen);
+            return (int)Functions.XDefaultDepth(API.DefaultDisplay, screen);
         }
 
         #endregion
@@ -121,12 +140,31 @@ namespace OpenTK.Platform.X11
 
         public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
-            return false;
+            // If resolution == null, restore to default resolution (new_resolution_index = 0).
+
+            int screen = deviceToScreen[device];
+            IntPtr root = Functions.XRootWindow(API.DefaultDisplay, screen);
+            IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, root);
+
+            ushort current_rotation;
+            int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
+            int new_resolution_index;
+            if (resolution != null)
+                new_resolution_index = screenResolutionToIndex[screen]
+                    [new DisplayResolution(resolution.Width, resolution.Height, resolution.BitsPerPixel, 0)];
+            else
+                new_resolution_index = 0;
+
+            Debug.Print("Changing size of screen {0} from {1} to {2}",
+                screen, current_resolution_index, new_resolution_index);
+
+            return 0 == Functions.XRRSetScreenConfigAndRate(API.DefaultDisplay, screen_config, root, new_resolution_index,
+                current_rotation, (short)resolution.RefreshRate, lastConfigUpdate[screen]);
         }
 
         public void RestoreResolution(DisplayDevice device)
         {
-            
+            TryChangeResolution(device, null);
         }
 
         #endregion
