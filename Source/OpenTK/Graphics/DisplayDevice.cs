@@ -25,7 +25,7 @@ namespace OpenTK.Graphics
         // TODO: Does not detect changes to primary device.
         // TODO: Mono does not support System.Windows.Forms.Screen.BitsPerPixel -- find workaround!
 
-        DisplayResolution current_resolution;
+        DisplayResolution current_resolution, original_resolution;
         List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
         bool primary;
 
@@ -183,18 +183,21 @@ namespace OpenTK.Graphics
         /// <param name="height">The new height of the DisplayDevice.</param>
         /// <param name="bitsPerPixel">The new bits per pixel of the DisplayDevice.</param>
         /// <param name="refreshRate">The new refresh rate of the DisplayDevice.</param>
-        /// <exception cref="GraphicsModeException">Thrown if the requested resolution change failed.</exception>
+        /// <exception cref="GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
         public void ChangeResolution(DisplayResolution resolution)
         {
             if (resolution == null)
                 throw new ArgumentNullException("resulotion", "Must be a valid resolution.");
+            if (resolution == current_resolution)
+                return;
 
             if (implementation.TryChangeResolution(this, resolution))
             {
+                if (original_resolution == null)
+                    original_resolution = current_resolution;
                 current_resolution = resolution;
             }
-            else
-                throw new GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
+            else throw new GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
                     this, resolution));
         }
 
@@ -202,9 +205,14 @@ namespace OpenTK.Graphics
 
         #region public void RestoreResolution()
 
+        /// <summary>Restores the original resolution of the DisplayDevice.</summary>
+        /// <exception cref="GraphicsModeException">Thrown if the original resolution could not be restored.</exception>
         public void RestoreResolution()
         {
-            implementation.RestoreResolution(this);
+            if (original_resolution != null)
+                if (implementation.TryRestoreResolution(this))
+                    current_resolution = original_resolution;
+                else throw new GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
         }
 
         #endregion

@@ -165,9 +165,9 @@ namespace OpenTK.Platform.X11
                 current_rotation, (short)(resolution != null ? resolution.RefreshRate : 0), lastConfigUpdate[screen]);
         }
 
-        public void RestoreResolution(DisplayDevice device)
+        public bool TryRestoreResolution(DisplayDevice device)
         {
-            TryChangeResolution(device, null);
+            return TryChangeResolution(device, null);
             //System.Diagnostics.Process.Start("xrandr", "-s -0").WaitForExit(); // Hack, but works ;)
         }
 
