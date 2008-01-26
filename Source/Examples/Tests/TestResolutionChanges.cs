@@ -25,10 +25,11 @@ namespace Examples.Tests
             {
                 Trace.WriteLine(dev.ToString());
                 MessageBox.Show(dev.ToString());
-                // Switch to the first available resolution that has the same bpp as the current one (usually 640x480@60Hz)
-                dev.ChangeResolution(dev.SelectResolution(0, 0, dev.BitsPerPixel, 0));
+                // Switch to 640x480@60Hz, keeping bits per pixel the same.
+                dev.ChangeResolution(dev.SelectResolution(640, 480, dev.BitsPerPixel, 60.0f));
                 MessageBox.Show(dev.ToString());
                 dev.RestoreResolution();
+                MessageBox.Show(dev.ToString());
             }
         }
     }
