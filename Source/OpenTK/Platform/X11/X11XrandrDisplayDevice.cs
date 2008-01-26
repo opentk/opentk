@@ -162,13 +162,13 @@ namespace OpenTK.Platform.X11
                 screen, current_resolution_index, new_resolution_index);
 
             return 0 == Functions.XRRSetScreenConfigAndRate(API.DefaultDisplay, screen_config, root, new_resolution_index,
-                current_rotation, (short)resolution.RefreshRate, lastConfigUpdate[screen]);
+                current_rotation, (short)(resolution != null ? resolution.RefreshRate : 0), lastConfigUpdate[screen]);
         }
 
         public void RestoreResolution(DisplayDevice device)
         {
-            //TryChangeResolution(device, null);
-            System.Diagnostics.Process.Start("xrandr", "-s -0").WaitForExit();
+            TryChangeResolution(device, null);
+            //System.Diagnostics.Process.Start("xrandr", "-s -0").WaitForExit(); // Hack, but works ;)
         }
 
         #endregion
