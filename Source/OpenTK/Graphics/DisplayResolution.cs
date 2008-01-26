@@ -129,6 +129,11 @@ namespace OpenTK.Graphics
 
         public static bool operator== (DisplayResolution left, DisplayResolution right)
         {
+            if (((object)left) == null && ((object)right) == null)
+                return true;
+            else if ((((object)left) == null && ((object)right) != null) ||
+                     (((object)left) != null && ((object)right) == null))
+                return false;
             return left.Equals(right);
         }
 
