@@ -95,30 +95,31 @@ namespace OpenTK.Platform.Windows
 
         public bool TryChangeResolution(OpenTK.Graphics.DisplayDevice device, DisplayResolution resolution)
         {
-            DeviceMode mode = new DeviceMode();
-            mode.PelsWidth = resolution.Width;
-            mode.PelsHeight = resolution.Height;
-            mode.BitsPerPel = resolution.BitsPerPixel;
-            mode.DisplayFrequency = (int)resolution.RefreshRate;
-            mode.Fields = Constants.DM_BITSPERPEL
-                | Constants.DM_PELSWIDTH
-                | Constants.DM_PELSHEIGHT
-                | Constants.DM_DISPLAYFREQUENCY;
+            DeviceMode mode = null;
+            if (resolution != null)
+            {
+                mode = new DeviceMode();
+                mode.PelsWidth = resolution.Width;
+                mode.PelsHeight = resolution.Height;
+                mode.BitsPerPel = resolution.BitsPerPixel;
+                mode.DisplayFrequency = (int)resolution.RefreshRate;
+                mode.Fields = Constants.DM_BITSPERPEL
+                    | Constants.DM_PELSWIDTH
+                    | Constants.DM_PELSHEIGHT
+                    | Constants.DM_DISPLAYFREQUENCY;
+            }
 
-            //return Functions.ChangeDisplaySettings(settings, ChangeDisplaySettingsEnum.Fullscreen) ==
-            //    Constants.DISP_CHANGE_SUCCESSFUL;
-            return Functions.ChangeDisplaySettingsEx(available_device_names[device], mode, IntPtr.Zero, 0, IntPtr.Zero) ==
-                Constants.DISP_CHANGE_SUCCESSFUL;
+            return Constants.DISP_CHANGE_SUCCESSFUL == 
+                Functions.ChangeDisplaySettingsEx(available_device_names[device], mode, IntPtr.Zero, 0, IntPtr.Zero);
         }
 
         #endregion
 
-        #region public void RestoreResolution(OpenTK.Graphics.DisplayDevice device)
+        #region public TryRestoreResolution TryRestoreResolution(OpenTK.Graphics.DisplayDevice device)
 
-        public void RestoreResolution(OpenTK.Graphics.DisplayDevice device)
+        public bool TryRestoreResolution(OpenTK.Graphics.DisplayDevice device)
         {
-            //Functions.ChangeDisplaySettings(null, (ChangeDisplaySettingsEnum)0);
-            Functions.ChangeDisplaySettingsEx(available_device_names[device], null, IntPtr.Zero, 0, IntPtr.Zero);
+            return TryChangeResolution(device, null);
         }
 
         #endregion
