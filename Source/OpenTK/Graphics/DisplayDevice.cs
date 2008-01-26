@@ -211,7 +211,10 @@ namespace OpenTK.Graphics
         {
             if (original_resolution != null)
                 if (implementation.TryRestoreResolution(this))
+                {
                     current_resolution = original_resolution;
+                    original_resolution = null;
+                }
                 else throw new GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
         }
 
