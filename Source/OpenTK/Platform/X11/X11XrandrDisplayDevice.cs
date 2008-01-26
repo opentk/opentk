@@ -167,7 +167,8 @@ namespace OpenTK.Platform.X11
 
         public void RestoreResolution(DisplayDevice device)
         {
-            TryChangeResolution(device, null);
+            //TryChangeResolution(device, null);
+            System.Diagnostics.Process.Start("xrandr", "-s -0").WaitForExit();
         }
 
         #endregion
