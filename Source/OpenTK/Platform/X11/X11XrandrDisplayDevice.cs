@@ -68,7 +68,10 @@ namespace OpenTK.Platform.X11
                                 available_res.Add(new DisplayResolution(size.Width, size.Height, depth, (float)rate));
                     }
                     // Keep the index of this resolution - we will need it for resolution changes later.
-                    screenResolutionToIndex[screen].Add(available_res[resolution_count], resolution_count);
+                    foreach (int depth in depths)
+                        screenResolutionToIndex[screen].Add(new DisplayResolution(size.Width, size.Height, depth, 0),
+                            resolution_count);
+                    
                     ++resolution_count;
                 }
 
