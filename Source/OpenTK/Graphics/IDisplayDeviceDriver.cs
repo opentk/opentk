@@ -16,7 +16,5 @@ namespace OpenTK.Graphics
     {
         bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution);
         bool TryRestoreResolution(DisplayDevice device);
-        //DisplayDevice[] AvailableDevices { get; }
-        //DisplayResolution[]
     }
 }

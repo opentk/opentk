@@ -1185,6 +1185,7 @@ namespace OpenTK
         }
 
         #endregion
+
         /*
         /// <summary>
         /// Gets the Top coordinate of the GameWindow's rendering area, in pixel coordinates relative to the GameWindow's top left point.

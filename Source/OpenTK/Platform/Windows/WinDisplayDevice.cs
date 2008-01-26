@@ -96,6 +96,7 @@ namespace OpenTK.Platform.Windows
         public bool TryChangeResolution(OpenTK.Graphics.DisplayDevice device, DisplayResolution resolution)
         {
             DeviceMode mode = null;
+
             if (resolution != null)
             {
                 mode = new DeviceMode();
