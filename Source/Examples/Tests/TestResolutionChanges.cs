@@ -30,11 +30,11 @@ namespace Examples.Tests
                 MessageBox.Show(dev.ToString());
                 // Switch to 640x480@60Hz, keeping bits per pixel the same.
                 dev.ChangeResolution(dev.SelectResolution(640, 480, dev.BitsPerPixel, 60.0f));
-                Thread.Sleep(2000);
-                //MessageBox.Show(dev.ToString());
+                Thread.Sleep(1000);
+                MessageBox.Show(dev.ToString());
                 dev.RestoreResolution();
-                //MessageBox.Show(dev.ToString());
-                //Thread.Sleep(1000);
+                Thread.Sleep(1000);
+                MessageBox.Show(dev.ToString());
             }
         }
     }
