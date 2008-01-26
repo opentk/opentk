@@ -22,10 +22,8 @@ namespace Examples.Tests
     {
         public static void Main()
         {
-            int count = 0;
             foreach (DisplayDevice dev in DisplayDevice.AvailableDisplays)
             {
-                if (count++ == 0) continue;
                 Trace.WriteLine(dev.ToString());
                 MessageBox.Show(dev.ToString());
                 // Switch to 640x480@60Hz, keeping bits per pixel the same.
