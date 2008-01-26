@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace OpenTK.Graphics
 {
@@ -32,6 +34,7 @@ namespace OpenTK.Graphics
         static List<DisplayDevice> available_displays = new List<DisplayDevice>();
         static object display_lock = new object();
         static DisplayDevice primary_display;
+        static FadeEffect effect = new FadeEffect();
 
         static IDisplayDeviceDriver implementation;
 
@@ -191,6 +194,8 @@ namespace OpenTK.Graphics
             if (resolution == current_resolution)
                 return;
 
+            effect.FadeOut();
+
             if (implementation.TryChangeResolution(this, resolution))
             {
                 if (original_resolution == null)
@@ -199,6 +204,8 @@ namespace OpenTK.Graphics
             }
             else throw new GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
                     this, resolution));
+
+            effect.FadeIn();
         }
 
         #endregion
@@ -210,12 +217,18 @@ namespace OpenTK.Graphics
         public void RestoreResolution()
         {
             if (original_resolution != null)
+            {
+                effect.FadeOut();
+
                 if (implementation.TryRestoreResolution(this))
                 {
                     current_resolution = original_resolution;
                     original_resolution = null;
                 }
                 else throw new GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
+
+                effect.FadeIn();
+            }
         }
 
         #endregion
@@ -297,4 +310,111 @@ namespace OpenTK.Graphics
 
         #endregion
     }
+
+    #region --- FadeEffect ---
+
+    class FadeEffect : IDisposable
+    {
+        List<Form> forms = new List<Form>();
+        double opacity_step = 0.05;
+        int sleep_step;
+
+        internal FadeEffect()
+        {
+            foreach (Screen s in Screen.AllScreens)
+            {
+                Form form = new Form();
+                form.ShowInTaskbar = false;
+                form.StartPosition = FormStartPosition.Manual;
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.WindowState = FormWindowState.Maximized;
+                form.TopMost = true;
+
+                form.BackColor = System.Drawing.Color.Black;
+                forms.Add(form);
+            }
+
+            sleep_step = 10 / forms.Count;
+            MoveToStartPositions();
+        }
+
+        void MoveToStartPositions()
+        {
+            int count = 0;
+            foreach (Screen s in Screen.AllScreens)
+                forms[count++].Location = new System.Drawing.Point(s.Bounds.X, s.Bounds.Y);
+        }
+
+        bool FadedOut
+        {
+            get
+            {
+                bool ready = true;
+                foreach (Form form in forms)
+                    ready = ready && form.Opacity >= 1.0;
+
+                return ready;
+            }
+        }
+
+        bool FadedIn
+        {
+            get
+            {
+                bool ready = true;
+                foreach (Form form in forms)
+                    ready = ready && form.Opacity <= 0.0;
+
+                return ready;
+            }
+        }
+
+        internal void FadeOut()
+        {
+            MoveToStartPositions();
+
+            foreach (Form form in forms)
+            {
+                form.Opacity = 0.0;
+                form.Visible = true;
+            }
+
+            while (!FadedOut)
+            {
+                foreach (Form form in forms)
+                    form.Opacity += opacity_step;
+                Thread.Sleep(sleep_step);
+            }
+        }
+
+        internal void FadeIn()
+        {
+            MoveToStartPositions();
+
+            foreach (Form form in forms)
+                form.Opacity = 1.0;
+
+            while (!FadedIn)
+            {
+                foreach (Form form in forms)
+                    form.Opacity -= opacity_step;
+                Thread.Sleep(sleep_step);
+            }
+
+            foreach (Form form in forms)
+                form.Visible = false;
+        }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            foreach (Form form in forms)
+                form.Dispose();
+        }
+
+        #endregion
+    }
+
+    #endregion
 }
