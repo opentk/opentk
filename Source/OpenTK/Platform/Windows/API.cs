@@ -652,7 +652,7 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern BOOL EnumDisplayDevices([MarshalAs(UnmanagedType.LPStr)] LPCTSTR lpDevice,
-            DWORD iDevNum, [In, Out] DisplayDevice lpDisplayDevice, DWORD dwFlags);
+            DWORD iDevNum, [In, Out] WindowsDisplayDevice lpDisplayDevice, DWORD dwFlags);
 
         #endregion
 
@@ -1605,9 +1605,9 @@ namespace OpenTK.Platform.Windows
     /// The DISPLAY_DEVICE structure receives information about the display device specified by the iDevNum parameter of the EnumDisplayDevices function.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Ansi)]
-    internal class DisplayDevice
+    internal class WindowsDisplayDevice
     {
-        internal DisplayDevice()
+        internal WindowsDisplayDevice()
         {
             size = (short)Marshal.SizeOf(this);
         }
