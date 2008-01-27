@@ -716,6 +716,10 @@ namespace OpenTK.Platform.X11
                 Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
                 Functions.XUnmapWindow(this.window.Display, this.Handle);
                 Functions.XMapWindow(this.window.Display, this.Handle);
+
+                XSetWindowAttributes attr = new XSetWindowAttributes();
+                attr.override_redirect = true;
+                Functions.XChangeWindowAttributes(this.window.Display, this.Handle, ChangeWindowAttributes.OverrideRedirect, ref attr);
             }
         }
 

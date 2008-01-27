@@ -85,7 +85,7 @@ namespace OpenTK.Platform.X11
         public extern static uint XLowerWindow(IntPtr display, IntPtr window);
 
         [DllImport("libX11", EntryPoint = "XConfigureWindow"), CLSCompliant(false)]
-        public extern static uint XConfigureWindow(IntPtr display, IntPtr window, ChangeWindowFlags value_mask, ref XWindowChanges values);
+        public extern static uint XConfigureWindow(IntPtr display, IntPtr window, ChangeWindowAttributes value_mask, ref XWindowChanges values);
 
         [DllImport("libX11", EntryPoint = "XInternAtom")]
         public extern static IntPtr XInternAtom(IntPtr display, string atom_name, bool only_if_exists);

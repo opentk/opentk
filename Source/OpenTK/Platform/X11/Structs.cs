@@ -998,15 +998,31 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    public enum ChangeWindowFlags
+    public enum ChangeWindowAttributes
     {
-        CWX = 1 << 0,
-        CWY = 1 << 1,
-        CWWidth = 1 << 2,
-        CWHeight = 1 << 3,
-        CWBorderWidth = 1 << 4,
-        CWSibling = 1 << 5,
-        CWStackMode = 1 << 6
+        X = 1 << 0,
+        Y = 1 << 1,
+        Width = 1 << 2,
+        Height = 1 << 3,
+        BorderWidth = 1 << 4,
+        Sibling = 1 << 5,
+        StackMode = 1 << 6,
+
+        //BackPixmap	(1L<<0)
+        //BackPixel	(1L<<1)
+        //SaveUnder	(1L<<10)
+        //EventMask	(1L<<11)
+        //DontPropagate	(1L<<12)
+        //Colormap	(1L<<13)
+        //Cursor	(1L<<14)
+        //BorderPixmap	(1L<<2)
+        //BorderPixel	(1L<<3)
+        //BitGravity	(1L<<4)
+        //WinGravity	(1L<<5)
+        //BackingStore	(1L<<6)
+        //BackingPlanes	(1L<<7)
+        //BackingPixel	(1L<<8)
+        OverrideRedirect = 1<<9,
     }
 
     public enum StackMode

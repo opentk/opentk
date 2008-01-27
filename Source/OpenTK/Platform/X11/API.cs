@@ -1219,6 +1219,18 @@ XF86VidModeGetGammaRampSize(
 
         #endregion
 
+        #region XChangeWindowAttributes
+
+        [DllImport(X11Library)]
+        internal static extern void XChangeWindowAttributes(Display display, Window w, UIntPtr valuemask, ref XSetWindowAttributes attributes);
+
+        internal static void XChangeWindowAttributes(Display display, Window w, ChangeWindowAttributes valuemask, ref XSetWindowAttributes attributes)
+        {
+            XChangeWindowAttributes(display, w, (UIntPtr)valuemask, ref attributes);
+        }
+
+        #endregion
+
         #region XQueryKeymap
 
         /*
