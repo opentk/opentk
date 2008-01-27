@@ -384,7 +384,7 @@ namespace OpenTK.Graphics
                 foreach (Form form in forms)
                 {
                     form.Opacity += opacity_step;
-                    form.Update();
+                    form.Refresh();
                 }
                 Thread.Sleep(sleep_step);
             }
@@ -402,7 +402,7 @@ namespace OpenTK.Graphics
                 foreach (Form form in forms)
                 {
                     form.Opacity -= opacity_step;
-                    form.Update();
+                    form.Refresh();
                 }
                 Thread.Sleep(sleep_step);
             }
