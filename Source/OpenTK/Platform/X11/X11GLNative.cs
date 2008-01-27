@@ -261,6 +261,7 @@ namespace OpenTK.Platform.X11
                     Functions.XMoveResizeWindow(API.DefaultDisplay, this.Handle, 0, 0,
                         pre_fullscreen_width, pre_fullscreen_height);
                     pre_fullscreen_height = pre_fullscreen_width = 0;
+                    EnableWindowDecorations();
                     Debug.Unindent();
                     fullscreen = false;
                 }
