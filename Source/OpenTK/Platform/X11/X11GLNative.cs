@@ -38,7 +38,6 @@ namespace OpenTK.Platform.X11
 
         // Window manager hints for fullscreen windows.
         private const string MOTIF_WM_ATOM = "_MOTIF_WM_HINTS";
-        private const string GNOME_WM_ATOM = "_WIN_HINTS";
         private const string KDE_WM_ATOM = "KWM_WIN_DECORATION";
         private const string KDE_NET_WM_ATOM = "_KDE_NET_WM_WINDOW_TYPE";
         private const string ICCM_WM_ATOM = "_NET_WM_WINDOW_TYPE";
@@ -257,8 +256,8 @@ namespace OpenTK.Platform.X11
                     pre_fullscreen_height = this.Height;
                     pre_fullscreen_width = this.Width;
                     //Functions.XRaiseWindow(this.window.Display, this.Handle);
-                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 25, this.Width, this.Height);
-                        //DisplayDevice.PrimaryDisplay.Width, DisplayDevice.PrimaryDisplay.Height);
+                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 0, 
+                        DisplayDevice.PrimaryDisplay.Width, DisplayDevice.PrimaryDisplay.Height);
                     Debug.Unindent();
                     fullscreen = true;
                 }
@@ -716,10 +715,6 @@ namespace OpenTK.Platform.X11
                 Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
                 Functions.XUnmapWindow(this.window.Display, this.Handle);
                 Functions.XMapWindow(this.window.Display, this.Handle);
-
-                XSetWindowAttributes attr = new XSetWindowAttributes();
-                attr.override_redirect = true;
-                Functions.XChangeWindowAttributes(this.window.Display, this.Handle, ChangeWindowAttributes.OverrideRedirect, ref attr);
             }
         }
 
@@ -745,7 +740,25 @@ namespace OpenTK.Platform.X11
 
         bool DisableGnomeDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(this.window.Display, GNOME_WM_ATOM, true);
+            // Attempt to cover gnome panels.
+            //XEvent xev = new XEvent();
+            //xev.ClientMessageEvent.window = this.window.Handle;
+            //xev.ClientMessageEvent.type = XEventName.ClientMessage;
+            //xev.ClientMessageEvent.message_type = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_LAYER, false);
+            //xev.ClientMessageEvent.format = 32;
+            //xev.ClientMessageEvent.ptr1 = (IntPtr)WindowLayer.AboveDock;
+            //Functions.XSendEvent(this.window.Display, this.window.RootWindow, false, (IntPtr)EventMask.SubstructureNotifyMask, ref xev);
+
+            //xev = new XEvent();
+            //xev.ClientMessageEvent.window = this.window.Handle;
+            //xev.ClientMessageEvent.type = XEventName.ClientMessage;
+            //xev.ClientMessageEvent.message_type = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_STATE, false);
+            //xev.ClientMessageEvent.format = 32;
+            //xev.ClientMessageEvent.ptr1 = (IntPtr)WindowState.;
+            //xev.ClientMessageEvent.ptr2 = (IntPtr)WindowLayer.AboveDock;
+            //Functions.XSendEvent(this.window.Display, this.window.RootWindow, false, (IntPtr)EventMask.SubstructureNotifyMask, ref xev);
+            
+            IntPtr atom = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_HINTS, true);
             if (atom != IntPtr.Zero)
             {
                 IntPtr hints = IntPtr.Zero;
@@ -753,6 +766,7 @@ namespace OpenTK.Platform.X11
                     Marshal.SizeOf(hints) / 4);
                 return true;
             }
+
             return false;
         }
 
@@ -788,7 +802,7 @@ namespace OpenTK.Platform.X11
 
             if (activated)
             {
-                Functions.XSetTransientForHint(this.window.Display, this.Handle, IntPtr.Zero);
+                Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
                 Functions.XUnmapWindow(this.window.Display, this.Handle);
                 Functions.XMapWindow(this.window.Display, this.Handle);
             }
@@ -813,12 +827,22 @@ namespace OpenTK.Platform.X11
 
         bool EnableGnomeDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(this.window.Display, GNOME_WM_ATOM, true);
+            // Restore window layer.
+            //XEvent xev = new XEvent();
+            //xev.ClientMessageEvent.window = this.window.Handle;
+            //xev.ClientMessageEvent.type = XEventName.ClientMessage;
+            //xev.ClientMessageEvent.message_type = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_LAYER, false);
+            //xev.ClientMessageEvent.format = 32;
+            //xev.ClientMessageEvent.ptr1 = (IntPtr)WindowLayer.AboveDock;
+            //Functions.XSendEvent(this.window.Display, this.window.RootWindow, false, (IntPtr)EventMask.SubstructureNotifyMask, ref xev);
+            
+            IntPtr atom = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_HINTS, true);
             if (atom != IntPtr.Zero)
             {
                 Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
                 return true;
             }
+
             return false;
         }
 
