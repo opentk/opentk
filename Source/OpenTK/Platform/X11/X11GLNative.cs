@@ -249,6 +249,7 @@ namespace OpenTK.Platform.X11
                     DisableWindowDecorations();
                     pre_fullscreen_height = this.Height;
                     pre_fullscreen_width = this.Width;
+                    Functions.XRaiseWindow(API.DefaultDisplay, this.Handle);
                     Functions.XMoveResizeWindow(API.DefaultDisplay, this.Handle, 0, 0,
                         DisplayDevice.PrimaryDisplay.Width, DisplayDevice.PrimaryDisplay.Height);
                     Debug.Unindent();
