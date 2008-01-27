@@ -41,7 +41,7 @@ namespace OpenTK.Platform.X11
         private const string GNOME_WM_ATOM = "_WIN_HINTS";
         private const string KDE_WM_ATOM = "KWM_WIN_DECORATION";
         private const string KDE_NET_WM_ATOM = "_KDE_NET_WM_WINDOW_TYPE";
-        private const string ICCM_WM_ATOM = "_NET_WM_STATE";
+        private const string ICCM_WM_ATOM = "_NET_WM_WINDOW_TYPE";
 
         // Number of pending events.
         private int pending = 0;
@@ -82,7 +82,7 @@ namespace OpenTK.Platform.X11
 
             // Open the display to the X server, and obtain the screen and root window.
             //window.Display = API.OpenDisplay(null); // null == default display
-            window.Display = API.DefaultDisplay;
+            window.Display = this.window.Display;
             if (window.Display == IntPtr.Zero)
                 throw new Exception("Could not open connection to X");
 
@@ -256,8 +256,8 @@ namespace OpenTK.Platform.X11
                     DisableWindowDecorations();
                     pre_fullscreen_height = this.Height;
                     pre_fullscreen_width = this.Width;
-                    Functions.XRaiseWindow(API.DefaultDisplay, this.Handle);
-                    Functions.XMoveResizeWindow(API.DefaultDisplay, this.Handle, 0, 0,
+                    Functions.XRaiseWindow(this.window.Display, this.Handle);
+                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 0,
                         DisplayDevice.PrimaryDisplay.Width, DisplayDevice.PrimaryDisplay.Height);
                     Debug.Unindent();
                     fullscreen = true;
@@ -266,7 +266,7 @@ namespace OpenTK.Platform.X11
                 {
                     Debug.Print("Going windowed");
                     Debug.Indent();
-                    Functions.XMoveResizeWindow(API.DefaultDisplay, this.Handle, 0, 0,
+                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 0,
                         pre_fullscreen_width, pre_fullscreen_height);
                     pre_fullscreen_height = pre_fullscreen_width = 0;
                     EnableWindowDecorations();
@@ -275,8 +275,8 @@ namespace OpenTK.Platform.X11
                 }
                 /*
                 Debug.Print(value ? "Going fullscreen" : "Going windowed");
-                IntPtr state_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE", false);
-                IntPtr fullscreen_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE_FULLSCREEN", false);
+                IntPtr state_atom = Functions.XInternAtom(this.window.Display, "_NET_WM_STATE", false);
+                IntPtr fullscreen_atom = Functions.XInternAtom(this.window.Display, "_NET_WM_STATE_FULLSCREEN", false);
                 XEvent xev = new XEvent();
                 xev.ClientMessageEvent.type = XEventName.ClientMessage;
                 xev.ClientMessageEvent.serial = IntPtr.Zero;
@@ -287,7 +287,7 @@ namespace OpenTK.Platform.X11
                 xev.ClientMessageEvent.ptr1 = (IntPtr)(value ? NetWindowManagerState.Add : NetWindowManagerState.Remove);
                 xev.ClientMessageEvent.ptr2 = (IntPtr)(value ? 1 : 0);
                 xev.ClientMessageEvent.ptr3 = IntPtr.Zero;
-                Functions.XSendEvent(API.DefaultDisplay, API.RootWindow, false,
+                Functions.XSendEvent(this.window.Display, API.RootWindow, false,
                     (IntPtr)(EventMask.SubstructureRedirectMask | EventMask.SubstructureNotifyMask), ref xev);
 
                 fullscreen = !fullscreen;
@@ -708,14 +708,14 @@ namespace OpenTK.Platform.X11
         {
             bool removed = false;
             if (DisableMotifDecorations()) { Debug.Print("Removed decorations through motif."); removed = true; }
+            if (DisableGnomeDecorations()) { Debug.Print("Removed decorations through gnome."); removed = true; }
             if (DisableIccmDecorations()) { Debug.Print("Removed decorations through ICCM."); removed = true; }
-            //if (DisableGnomeDecorations()) { Debug.Print("Removed decorations through gnome."); removed = true; }
 
             if (removed)
             {
-                Functions.XSetTransientForHint(API.DefaultDisplay, this.Handle, this.window.RootWindow);
-                Functions.XUnmapWindow(API.DefaultDisplay, this.Handle);
-                Functions.XMapWindow(API.DefaultDisplay, this.Handle);
+                Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
+                Functions.XUnmapWindow(this.window.Display, this.Handle);
+                Functions.XMapWindow(this.window.Display, this.Handle);
             }
         }
 
@@ -723,12 +723,12 @@ namespace OpenTK.Platform.X11
 
         bool DisableMotifDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, MOTIF_WM_ATOM, true);
+            IntPtr atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
                 MotifWmHints hints = new MotifWmHints();
                 hints.flags = (IntPtr)MotifFlags.Decorations;
-                Functions.XChangeProperty(API.DefaultDisplay, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
+                Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
                     Marshal.SizeOf(hints) / 4);
                 return true;
             }
@@ -741,11 +741,11 @@ namespace OpenTK.Platform.X11
 
         bool DisableGnomeDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, GNOME_WM_ATOM, true);
+            IntPtr atom = Functions.XInternAtom(this.window.Display, GNOME_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
                 IntPtr hints = IntPtr.Zero;
-                Functions.XChangeProperty(API.DefaultDisplay, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
+                Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
                     Marshal.SizeOf(hints) / 4);
                 return true;
             }
@@ -758,11 +758,11 @@ namespace OpenTK.Platform.X11
 
         bool DisableIccmDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, ICCM_WM_ATOM, true);
+            IntPtr atom = Functions.XInternAtom(this.window.Display, ICCM_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
-                IntPtr hints = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE_FULLSCREEN", true); 
-                Functions.XChangeProperty(API.DefaultDisplay, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
+                IntPtr hints = Functions.XInternAtom(this.window.Display, "_NET_WM_STATE_FULLSCREEN", true); 
+                Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
                     Marshal.SizeOf(hints) / 4);
                 return true;
             }
@@ -779,14 +779,14 @@ namespace OpenTK.Platform.X11
         {
             bool activated = false;
             if (EnableMotifDecorations()) { Debug.Print("Activated decorations through motif."); activated = true; }
+            if (EnableGnomeDecorations()) { Debug.Print("Activated decorations through gnome."); activated = true; }
             if (EnableIccmDecorations()) { Debug.Print("Activated decorations through ICCM."); activated = true; }
-            //if (EnableGnomeDecorations()) { Debug.Print("Activated decorations through gnome."); activated = true; }
 
             if (activated)
             {
-                Functions.XSetTransientForHint(API.DefaultDisplay, this.Handle, IntPtr.Zero);
-                Functions.XUnmapWindow(API.DefaultDisplay, this.Handle);
-                Functions.XMapWindow(API.DefaultDisplay, this.Handle);
+                Functions.XSetTransientForHint(this.window.Display, this.Handle, IntPtr.Zero);
+                Functions.XUnmapWindow(this.window.Display, this.Handle);
+                Functions.XMapWindow(this.window.Display, this.Handle);
             }
         }
 
@@ -794,10 +794,10 @@ namespace OpenTK.Platform.X11
 
         bool EnableMotifDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, MOTIF_WM_ATOM, true);
+            IntPtr atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
-                Functions.XDeleteProperty(API.DefaultDisplay, this.Handle, atom);
+                Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
                 return true;
             }
             return false;
@@ -809,10 +809,10 @@ namespace OpenTK.Platform.X11
 
         bool EnableGnomeDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, GNOME_WM_ATOM, true);
+            IntPtr atom = Functions.XInternAtom(this.window.Display, GNOME_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
-                Functions.XDeleteProperty(API.DefaultDisplay, this.Handle, atom);
+                Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
                 return true;
             }
             return false;
@@ -824,13 +824,13 @@ namespace OpenTK.Platform.X11
 
         bool EnableIccmDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, ICCM_WM_ATOM, true);
+            IntPtr atom = Functions.XInternAtom(this.window.Display, ICCM_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
-                IntPtr hint = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_WINDOW_TYPE_NORMAL", true);
+                IntPtr hint = Functions.XInternAtom(this.window.Display, "_NET_WM_WINDOW_TYPE_NORMAL", true);
                 if (hint != IntPtr.Zero)
                 {
-                    Functions.XChangeProperty(API.DefaultDisplay, this.Handle, hint, /*XA_ATOM*/(IntPtr)4, 32, PropertyMode.Replace,
+                    Functions.XChangeProperty(this.window.Display, this.Handle, hint, /*XA_ATOM*/(IntPtr)4, 32, PropertyMode.Replace,
                         ref hint, Marshal.SizeOf(hint) / 4);
                 }
                 return true;
