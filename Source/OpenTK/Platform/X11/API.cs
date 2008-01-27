@@ -739,6 +739,57 @@ XF86VidModeGetGammaRampSize(
         public const int CWX = 1;
         public const int InputOutput = 1;
         public const int InputOnly = 2;
+
+        /* The hints we recognize */
+        public const string XA_WIN_PROTOCOLS           = "_WIN_PROTOCOLS";
+        public const string XA_WIN_ICONS               = "_WIN_ICONS";
+        public const string XA_WIN_WORKSPACE           = "_WIN_WORKSPACE";
+        public const string XA_WIN_WORKSPACE_COUNT     = "_WIN_WORKSPACE_COUNT";
+        public const string XA_WIN_WORKSPACE_NAMES     = "_WIN_WORKSPACE_NAMES";
+        public const string XA_WIN_LAYER               = "_WIN_LAYER";
+        public const string XA_WIN_STATE               = "_WIN_STATE";
+        public const string XA_WIN_HINTS               = "_WIN_HINTS";
+        public const string XA_WIN_WORKAREA            = "_WIN_WORKAREA";
+        public const string XA_WIN_CLIENT_LIST         = "_WIN_CLIENT_LIST";
+        public const string XA_WIN_APP_STATE           = "_WIN_APP_STATE";
+        public const string XA_WIN_EXPANDED_SIZE       = "_WIN_EXPANDED_SIZE";
+        public const string XA_WIN_CLIENT_MOVING       = "_WIN_CLIENT_MOVING";
+        public const string XA_WIN_SUPPORTING_WM_CHECK = "_WIN_SUPPORTING_WM_CHECK";
+    }
+
+    public enum WindowLayer
+    {
+        Desktop    = 0,
+        Below      = 2,
+        Normal     = 4,
+        OnTop      = 6,
+        Dock       = 8,
+        AboveDock  = 10,
+        Menu       = 12,
+    }
+
+    public enum WindowState
+    {
+        Sticky           = (1<<0), /* everyone knows sticky */
+        Minimized        = (1<<1), /* ??? */
+        MaximizedVertically = (1<<2), /* window in maximized V state */
+        MaximizedHorizontally = (1<<3), /* window in maximized H state */
+        Hidden           = (1<<4), /* not on taskbar but window visible */
+        Shaded           = (1<<5), /* shaded (NeXT style), */
+        HID_WORKSPACE    = (1<<6), /* not on current desktop */
+        HID_TRANSIENT    = (1<<7), /* owner of transient is hidden */
+        FixedPosition    = (1<<8), /* window is fixed in position even */
+        ArrangeIgnore    = (1<<9),  /* ignore for auto arranging */
+    }
+
+    public enum WindowHints
+    {
+        SkipFocus = (1<<0), /* "alt-tab" skips this win */
+        SkipWinlist = (1<<1), /* not in win list */
+        SkipTaskbar = (1<<2), /* not on taskbar */
+        GroupTransient = (1<<3), /* ??????? */
+        FocusOnClick = (1<<4), /* app only accepts focus when clicked */
+        DoNotCover = (1<<5),  /* attempt to not cover this window */
     }
 
     public enum ErrorCodes : int
