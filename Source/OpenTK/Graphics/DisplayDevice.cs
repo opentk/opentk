@@ -316,7 +316,7 @@ namespace OpenTK.Graphics
     class FadeEffect : IDisposable
     {
         List<Form> forms = new List<Form>();
-        double opacity_step = 0.05;
+        double opacity_step = 0.04;
         int sleep_step;
 
         internal FadeEffect()
@@ -382,7 +382,10 @@ namespace OpenTK.Graphics
             while (!FadedOut)
             {
                 foreach (Form form in forms)
+                {
                     form.Opacity += opacity_step;
+                    form.Update();
+                }
                 Thread.Sleep(sleep_step);
             }
         }
@@ -397,7 +400,10 @@ namespace OpenTK.Graphics
             while (!FadedIn)
             {
                 foreach (Form form in forms)
+                {
                     form.Opacity -= opacity_step;
+                    form.Update();
+                }
                 Thread.Sleep(sleep_step);
             }
 
