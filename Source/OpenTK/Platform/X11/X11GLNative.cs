@@ -36,6 +36,13 @@ namespace OpenTK.Platform.X11
         private DisplayMode mode = new DisplayMode();
         private X11Input driver;
 
+        // Window manager hints for fullscreen windows.
+        private const string MOTIF_WM_ATOM = "_MOTIF_WM_HINTS";
+        private const string GNOME_WM_ATOM = "_WIN_HINTS";
+        private const string KDE_WM_ATOM = "KWM_WIN_DECORATION";
+        private const string KDE_NET_WM_ATOM = "_KDE_NET_WM_WINDOW_TYPE";
+        private const string ICCM_WM_ATOM = "_NET_WM_STATE";
+
         // Number of pending events.
         private int pending = 0;
 
@@ -701,7 +708,8 @@ namespace OpenTK.Platform.X11
         {
             bool removed = false;
             if (DisableMotifDecorations()) { Debug.Print("Removed decorations through motif."); removed = true; }
-            if (DisableGnomeDecorations()) { Debug.Print("Removed decorations through gnome."); removed = true; }
+            if (DisableIccmDecorations()) { Debug.Print("Removed decorations through ICCM."); removed = true; }
+            //if (DisableGnomeDecorations()) { Debug.Print("Removed decorations through gnome."); removed = true; }
 
             if (removed)
             {
@@ -715,7 +723,7 @@ namespace OpenTK.Platform.X11
 
         bool DisableMotifDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, "_MOTIF_WM_HINTS", true);
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, MOTIF_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
                 MotifWmHints hints = new MotifWmHints();
@@ -733,10 +741,27 @@ namespace OpenTK.Platform.X11
 
         bool DisableGnomeDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, "_WIN_HINTS", true);
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, GNOME_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
                 IntPtr hints = IntPtr.Zero;
+                Functions.XChangeProperty(API.DefaultDisplay, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
+                    Marshal.SizeOf(hints) / 4);
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region bool DisableIccmDecorations()
+
+        bool DisableIccmDecorations()
+        {
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, ICCM_WM_ATOM, true);
+            if (atom != IntPtr.Zero)
+            {
+                IntPtr hints = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE_FULLSCREEN", true); 
                 Functions.XChangeProperty(API.DefaultDisplay, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
                     Marshal.SizeOf(hints) / 4);
                 return true;
@@ -754,7 +779,8 @@ namespace OpenTK.Platform.X11
         {
             bool activated = false;
             if (EnableMotifDecorations()) { Debug.Print("Activated decorations through motif."); activated = true; }
-            if (EnableGnomeDecorations()) { Debug.Print("Activated decorations through gnome."); activated = true; }
+            if (EnableIccmDecorations()) { Debug.Print("Activated decorations through ICCM."); activated = true; }
+            //if (EnableGnomeDecorations()) { Debug.Print("Activated decorations through gnome."); activated = true; }
 
             if (activated)
             {
@@ -768,7 +794,7 @@ namespace OpenTK.Platform.X11
 
         bool EnableMotifDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, "_WIN_HINTS", true);
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, MOTIF_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
                 Functions.XDeleteProperty(API.DefaultDisplay, this.Handle, atom);
@@ -783,10 +809,30 @@ namespace OpenTK.Platform.X11
 
         bool EnableGnomeDecorations()
         {
-            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, "_MOTIF_WM_HINTS", true);
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, GNOME_WM_ATOM, true);
             if (atom != IntPtr.Zero)
             {
                 Functions.XDeleteProperty(API.DefaultDisplay, this.Handle, atom);
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region bool EnableIccmDecorations()
+
+        bool EnableIccmDecorations()
+        {
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, ICCM_WM_ATOM, true);
+            if (atom != IntPtr.Zero)
+            {
+                IntPtr hint = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_WINDOW_TYPE_NORMAL", true);
+                if (hint != IntPtr.Zero)
+                {
+                    Functions.XChangeProperty(API.DefaultDisplay, this.Handle, hint, /*XA_ATOM*/(IntPtr)4, 32, PropertyMode.Replace,
+                        ref hint, Marshal.SizeOf(hint) / 4);
+                }
                 return true;
             }
             return false;
