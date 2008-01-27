@@ -12,6 +12,8 @@ using System.Diagnostics;
 using System.Reflection;
 using OpenTK.OpenGL;
 using OpenTK.Input;
+using OpenTK.Platform.Windows;
+using OpenTK.Graphics;
 
 //using OpenTK.OpenGL;
 
@@ -23,6 +25,11 @@ namespace OpenTK.Platform.X11
     /// </summary>
     internal sealed class X11GLNative : INativeGLWindow, IDisposable
     {
+        // TODO: Disable screensaver.
+        // TODO: What happens if we can't disable decorations through motif?
+        // TODO: Mouse/keyboard grabbing/wrapping.
+        // TODO: PointToWindow, PointToScreen
+
         #region --- Fields ---
 
         private WindowInfo window = new WindowInfo();
@@ -48,6 +55,8 @@ namespace OpenTK.Platform.X11
         private static IntPtr WMTitle;      // The title of the GameWindow.
         private static IntPtr UTF8String;   // No idea.
 
+        // Fields used for fullscreen mode changes.
+        private int pre_fullscreen_width, pre_fullscreen_height;
         private bool fullscreen = false;
 
         #endregion
@@ -238,31 +247,42 @@ namespace OpenTK.Platform.X11
                     Debug.Print("Going fullscreen");
                     Debug.Indent();
                     DisableWindowDecorations();
+                    pre_fullscreen_height = this.Height;
+                    pre_fullscreen_width = this.Width;
+                    Functions.XMoveResizeWindow(API.DefaultDisplay, this.Handle, 0, 0,
+                        DisplayDevice.PrimaryDisplay.Width, DisplayDevice.PrimaryDisplay.Height);
                     Debug.Unindent();
                     fullscreen = true;
                 }
-                //else (!value && fullscreen)
+                else if (!value && fullscreen)
                 {
-                    /*
-                    Debug.Print(value ? "Going fullscreen" : "Going windowed");
-                    IntPtr state_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE", false);
-                    IntPtr fullscreen_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE_FULLSCREEN", false);
-                    XEvent xev = new XEvent();
-                    xev.ClientMessageEvent.type = XEventName.ClientMessage;
-                    xev.ClientMessageEvent.serial = IntPtr.Zero;
-                    xev.ClientMessageEvent.send_event = true;
-                    xev.ClientMessageEvent.window = this.Handle;
-                    xev.ClientMessageEvent.message_type = state_atom;
-                    xev.ClientMessageEvent.format = 32;
-                    xev.ClientMessageEvent.ptr1 = (IntPtr)(value ? NetWindowManagerState.Add : NetWindowManagerState.Remove);
-                    xev.ClientMessageEvent.ptr2 = (IntPtr)(value ? 1 : 0);
-                    xev.ClientMessageEvent.ptr3 = IntPtr.Zero;
-                    Functions.XSendEvent(API.DefaultDisplay, API.RootWindow, false,
-                        (IntPtr)(EventMask.SubstructureRedirectMask | EventMask.SubstructureNotifyMask), ref xev);
-
-                    fullscreen = !fullscreen;
-                    */
+                    Debug.Print("Going windowed");
+                    Debug.Indent();
+                    Functions.XMoveResizeWindow(API.DefaultDisplay, this.Handle, 0, 0,
+                        pre_fullscreen_width, pre_fullscreen_height);
+                    pre_fullscreen_height = pre_fullscreen_width = 0;
+                    Debug.Unindent();
+                    fullscreen = false;
                 }
+                /*
+                Debug.Print(value ? "Going fullscreen" : "Going windowed");
+                IntPtr state_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE", false);
+                IntPtr fullscreen_atom = Functions.XInternAtom(API.DefaultDisplay, "_NET_WM_STATE_FULLSCREEN", false);
+                XEvent xev = new XEvent();
+                xev.ClientMessageEvent.type = XEventName.ClientMessage;
+                xev.ClientMessageEvent.serial = IntPtr.Zero;
+                xev.ClientMessageEvent.send_event = true;
+                xev.ClientMessageEvent.window = this.Handle;
+                xev.ClientMessageEvent.message_type = state_atom;
+                xev.ClientMessageEvent.format = 32;
+                xev.ClientMessageEvent.ptr1 = (IntPtr)(value ? NetWindowManagerState.Add : NetWindowManagerState.Remove);
+                xev.ClientMessageEvent.ptr2 = (IntPtr)(value ? 1 : 0);
+                xev.ClientMessageEvent.ptr3 = IntPtr.Zero;
+                Functions.XSendEvent(API.DefaultDisplay, API.RootWindow, false,
+                    (IntPtr)(EventMask.SubstructureRedirectMask | EventMask.SubstructureNotifyMask), ref xev);
+
+                fullscreen = !fullscreen;
+                */
             }
         }
 
@@ -677,10 +697,7 @@ namespace OpenTK.Platform.X11
 
         void DisableWindowDecorations()
         {
-            Debug.Print("Removing decorations.");
-            Debug.Indent();
-            if (DisableMotifDecorations()) Debug.Print("Removed decorations through motif.");
-            Debug.Unindent();
+            if (DisableMotifDecorations()) { Debug.Print("Removed decorations through motif."); return; }
         }
 
         bool DisableMotifDecorations()
@@ -692,6 +709,26 @@ namespace OpenTK.Platform.X11
                 hints.flags = (IntPtr)MotifFlags.Decorations;
                 Functions.XChangeProperty(API.DefaultDisplay, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
                     Marshal.SizeOf(hints) / 4);
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region void EnableWindowDecorations()
+
+        void EnableWindowDecorations()
+        {
+            if (EnableMotifDecorations()) { Debug.Print("Added decorations through motif."); return; }
+        }
+
+        bool EnableMotifDecorations()
+        {
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, "_MOTIF_WM_HINTS", true);
+            if (atom != IntPtr.Zero)
+            {
+                Functions.XDeleteProperty(API.DefaultDisplay, this.Handle, atom);
                 return true;
             }
             return false;
