@@ -24,9 +24,10 @@ namespace OpenTK.Platform.X11
         // size_index (needed for XRRSetScreenConfig). The size_index
         // is simply the sequence number of the resolution as returned by
         // XRRSizes. This is done per available screen.
-        // The default size for all screens is 0 - no need to store that separately.
         static List<Dictionary<DisplayResolution, int>> screenResolutionToIndex =
             new List<Dictionary<DisplayResolution, int>>();
+        // Store a mapping between DisplayDevices and their default resolutions.
+        static Dictionary<DisplayDevice, int> deviceToDefaultResolution = new Dictionary<DisplayDevice, int>();
         // Store a mapping between DisplayDevices and X11 screens.
         static Dictionary<DisplayDevice, int> deviceToScreen = new Dictionary<DisplayDevice, int>();
         // Keep the time when the config of each screen was last updated.
@@ -75,14 +76,25 @@ namespace OpenTK.Platform.X11
                     ++resolution_count;
                 }
 
-                float current_refresh_rate = FindCurrentRefreshRate(screen);
-                int current_depth = FindCurrentDepth(screen);
 
-                // The default resolution (but not refresh rate) is the first one in available_res.
+                // The resolution of the current DisplayDevice is discovered through XRRConfigCurrentConfiguration.
                 // Its refresh rate is discovered by the FindCurrentRefreshRate call.
                 // Its depth is discovered by the FindCurrentDepth call.
-                deviceToScreen.Add(new DisplayDevice(new DisplayResolution(available_res[0].Width, available_res[0].Height, current_depth, current_refresh_rate),
-                    screen == API.DefaultScreen, available_res), screen);
+                float current_refresh_rate = FindCurrentRefreshRate(screen);
+                int current_depth = FindCurrentDepth(screen);
+                IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
+                ushort current_rotation;  // Not needed.
+                int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
+                
+                DisplayDevice current_device = new DisplayDevice(
+                    new DisplayResolution(
+                        available_res[current_resolution_index].Width,
+                        available_res[current_resolution_index].Height,
+                        current_depth, current_refresh_rate),
+                    screen == API.DefaultScreen, available_res);
+
+                deviceToScreen.Add(current_device, screen);
+                deviceToDefaultResolution.Add(current_device, current_resolution_index);
             }
         }
 
@@ -156,7 +168,7 @@ namespace OpenTK.Platform.X11
                 new_resolution_index = screenResolutionToIndex[screen]
                     [new DisplayResolution(resolution.Width, resolution.Height, resolution.BitsPerPixel, 0)];
             else
-                new_resolution_index = 0;
+                new_resolution_index = deviceToDefaultResolution[device];
 
             Debug.Print("Changing size of screen {0} from {1} to {2}",
                 screen, current_resolution_index, new_resolution_index);
