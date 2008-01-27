@@ -700,6 +700,7 @@ namespace OpenTK.Platform.X11
         {
             bool removed = false;
             if (DisableMotifDecorations()) { Debug.Print("Removed decorations through motif."); removed = true; }
+            if (DisableGnomeDecorations()) { Debug.Print("Removed decorations through gnome."); removed = true; }
 
             if (removed)
             {
@@ -708,6 +709,8 @@ namespace OpenTK.Platform.X11
                 Functions.XMapWindow(API.DefaultDisplay, this.Handle);
             }
         }
+
+        #region bool DisableMotifDecorations()
 
         bool DisableMotifDecorations()
         {
@@ -725,12 +728,32 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region bool DisableGnomeDecorations()
+
+        bool DisableGnomeDecorations()
+        {
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, "_WIN_HINTS", true);
+            if (atom != IntPtr.Zero)
+            {
+                IntPtr hints = IntPtr.Zero;
+                Functions.XChangeProperty(API.DefaultDisplay, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
+                    Marshal.SizeOf(hints) / 4);
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+        #endregion
+
         #region void EnableWindowDecorations()
 
         void EnableWindowDecorations()
         {
             bool activated = false;
             if (EnableMotifDecorations()) { Debug.Print("Activated decorations through motif."); activated = true; }
+            if (EnableGnomeDecorations()) { Debug.Print("Activated decorations through gnome."); activated = true; }
 
             if (activated)
             {
@@ -740,7 +763,24 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        #region bool EnableMotifDecorations()
+
         bool EnableMotifDecorations()
+        {
+            IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, "_WIN_HINTS", true);
+            if (atom != IntPtr.Zero)
+            {
+                Functions.XDeleteProperty(API.DefaultDisplay, this.Handle, atom);
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
+        #region bool EnableGnomeDecorations()
+
+        bool EnableGnomeDecorations()
         {
             IntPtr atom = Functions.XInternAtom(API.DefaultDisplay, "_MOTIF_WM_HINTS", true);
             if (atom != IntPtr.Zero)
@@ -750,6 +790,8 @@ namespace OpenTK.Platform.X11
             }
             return false;
         }
+
+        #endregion
 
         #endregion
 
