@@ -42,7 +42,7 @@ namespace OpenTK.Platform.Windows
                 int device_count = 0, mode_count = 0;
 
                 // Get available video adapters and enumerate all monitors
-                DisplayDevice dev1 = new DisplayDevice(), dev2 = new DisplayDevice();
+                WindowsDisplayDevice dev1 = new WindowsDisplayDevice(), dev2 = new WindowsDisplayDevice();
                 while (Functions.EnumDisplayDevices(null, device_count++, dev1, 0))
                 {
                     if ((dev1.StateFlags & DisplayDeviceStateFlags.AttachedToDesktop) == DisplayDeviceStateFlags.None)
