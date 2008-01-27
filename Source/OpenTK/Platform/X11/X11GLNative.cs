@@ -82,7 +82,7 @@ namespace OpenTK.Platform.X11
 
             // Open the display to the X server, and obtain the screen and root window.
             //window.Display = API.OpenDisplay(null); // null == default display
-            window.Display = this.window.Display;
+            window.Display = API.DefaultDisplay;
             if (window.Display == IntPtr.Zero)
                 throw new Exception("Could not open connection to X");
 
