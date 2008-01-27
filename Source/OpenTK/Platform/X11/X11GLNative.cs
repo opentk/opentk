@@ -257,7 +257,7 @@ namespace OpenTK.Platform.X11
                     pre_fullscreen_height = this.Height;
                     pre_fullscreen_width = this.Width;
                     //Functions.XRaiseWindow(this.window.Display, this.Handle);
-                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 0, this.Width, this.Height);
+                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 25, this.Width, this.Height);
                         //DisplayDevice.PrimaryDisplay.Width, DisplayDevice.PrimaryDisplay.Height);
                     Debug.Unindent();
                     fullscreen = true;
