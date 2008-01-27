@@ -698,7 +698,15 @@ namespace OpenTK.Platform.X11
 
         void DisableWindowDecorations()
         {
-            if (DisableMotifDecorations()) { Debug.Print("Removed decorations through motif."); return; }
+            bool removed = false;
+            if (DisableMotifDecorations()) { Debug.Print("Removed decorations through motif."); removed = true; }
+
+            if (removed)
+            {
+                Functions.XSetTransientForHint(API.DefaultDisplay, this.Handle, this.window.RootWindow);
+                Functions.XUnmapWindow(API.DefaultDisplay, this.Handle);
+                Functions.XMapWindow(API.DefaultDisplay, this.Handle);
+            }
         }
 
         bool DisableMotifDecorations()
@@ -721,7 +729,15 @@ namespace OpenTK.Platform.X11
 
         void EnableWindowDecorations()
         {
-            if (EnableMotifDecorations()) { Debug.Print("Added decorations through motif."); return; }
+            bool activated = false;
+            if (EnableMotifDecorations()) { Debug.Print("Activated decorations through motif."); activated = true; }
+
+            if (activated)
+            {
+                Functions.XSetTransientForHint(API.DefaultDisplay, this.Handle, IntPtr.Zero);
+                Functions.XUnmapWindow(API.DefaultDisplay, this.Handle);
+                Functions.XMapWindow(API.DefaultDisplay, this.Handle);
+            }
         }
 
         bool EnableMotifDecorations()
