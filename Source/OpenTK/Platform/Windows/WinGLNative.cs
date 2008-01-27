@@ -77,8 +77,11 @@ namespace OpenTK.Platform.Windows
                     // Get window size
                     int _width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cx"));
                     int _height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cy"));
-                    _width -= (left_border + right_border);
-                    _height -= (top_border + bottom_border);
+                    if (!fullscreen)
+                    {
+                        _width -= (left_border + right_border);
+                        _height -= (top_border + bottom_border);
+                    }
                     //if (resizeEventArgs.Width != width || resizeEventArgs.Height != height)
                     if (width != _width || height != _height)
                     {
@@ -203,6 +206,7 @@ namespace OpenTK.Platform.Windows
                 {
                     style = (IntPtr)(int)(WindowStyle.Popup | WindowStyle.ClipChildren | WindowStyle.ClipSiblings);
                     command = ShowWindowCommand.SHOWMAXIMIZED;
+
                     pre_maximized = new Rectangle(width, height);
                     Functions.AdjustWindowRect(ref pre_maximized, WindowStyle.OverlappedWindow, false);
                 }
