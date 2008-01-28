@@ -1,6 +1,6 @@
 Version History:
  
-Alpha v0.1 - 0.8
+Alpha v0.1 - 0.9
 
 - Alut: The following functions are not bound/imported. Issue of undoing C malloc to prevent memory leaks.
         "alutLoadMemoryFromFile, alutLoadMemoryFromFileImage, alutLoadMemoryHelloWorld, alutLoadMemoryWaveform"
@@ -36,9 +36,11 @@ Alpha v0.95
 - commented out debugging Console.WriteLines, replaced errormessages with Trace.Writeline
 - Added description for most enums.
 
+Alpha v0.96
+- Removed: AL_FILTER_FIRST_PARAMETER, AL_FILTER_LAST_PARAMETER, AL_EFFECT_FIRST_PARAMETER, AL_EFFECT_LAST_PARAMETER
+  they were merely used to reserve the range 0x0000 - 0x8000 for future filters/effects.
+- some spelling errors corrected
 
 Todo for beta:
-- Identify: AL_FILTER_FIRST_PARAMETER, AL_FILTER_LAST_PARAMETER
-            AL_EFFECT_FIRST_PARAMETER, AL_EFFECT_LAST_PARAMETER
 - replace EaxEfx reverbs with Efx reverbs.
 - keep both reverb preset formats, or delete EaxEfxReverb presets?

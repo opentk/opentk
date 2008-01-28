@@ -220,9 +220,6 @@ namespace OpenTK.OpenAL.Enums
         ///<summary>When this flag is set, the high-frequency decay time automatically stays below a limit value that's derived from the setting of the property AirAbsorptionGainHF. Unit: (0) False, (1) True Range [False, True] Default: True</summary>
         EaxReverbDecayHFLimit = 0x0017,
 
-        AL_EFFECT_FIRST_PARAMETER = 0x0000,// deprecated?
-        AL_EFFECT_LAST_PARAMETER = 0x8000, // deprecated?
-
         /// <summary>Used with the enum EfxEffectType as it's parameter.</summary>
         EffectType = 0x8001,
     }
@@ -344,9 +341,6 @@ namespace OpenTK.OpenAL.Enums
     ///<summary>A list of valid Int32 Filter/GetFilter parameters</summary>
     public enum EfxFilteri : int
     {
-        AL_FILTER_FIRST_PARAMETER = 0x0000, // deprecated?
-        AL_FILTER_LAST_PARAMETER = 0x8000, // deprecated?
-
         /// <summary>Used with the enum EfxFilterType as Parameter to select a filter logic.</summary>
         FilterType = 0x8001,
     }
