@@ -31,9 +31,15 @@ namespace OpenTK.Platform.X11
 
         #region --- Constructors ---
 
-        /// <summary>
-        /// Constructs a new X11GLContext object.
-        /// </summary>
+         static X11GLContext()
+         {
+             // Set the GetCurrentContext implementation.
+             if (GLContext.GetCurrentContext == null)
+                 GLContext.GetCurrentContext = X11GLContext.GetCurrentContext;
+         }
+
+        /// <private />
+        /// <summary>Constructs a new X11GLContext object.</summary>
         public X11GLContext() { }
 
         #endregion
@@ -85,7 +91,7 @@ namespace OpenTK.Platform.X11
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.ALPHA_SIZE);
                 visualAttributes.Add((int)mode.Color.Alpha);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.DEPTH_SIZE);
-                visualAttributes.Add((int)mode.Depth);
+                visualAttributes.Add((int)mode.DepthBits);
                 visualAttributes.Add((int)Glx.Enums.GLXAttribute.DOUBLEBUFFER);
                 visualAttributes.Add((int)0);
             }
@@ -130,15 +136,23 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public void CreateContext()
+
         public void CreateContext()
         {
             this.CreateContext(true, null);
         }
 
+        #endregion
+
+        #region public void CreateContext(bool direct)
+
         public void CreateContext(bool direct)
         {
             this.CreateContext(direct, null);
         }
+
+        #endregion
 
         #region public void CreateContext(bool direct, IGLContext shareContext)
 
@@ -241,6 +255,13 @@ namespace OpenTK.Platform.X11
         public bool IsCurrent
         {
             get { return Glx.GetCurrentContext() == this.context; }
+            set
+            {
+                if (value)
+                    Glx.MakeCurrent(windowInfo.Display, windowInfo.Handle, context);
+                else
+                    Glx.MakeCurrent(windowInfo.Handle, IntPtr.Zero, IntPtr.Zero);
+            }
         }
 
         #endregion
@@ -313,24 +334,24 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region ContextHandle IGLContextInternal.GetCurrentContext()
-
-        ContextHandle IGLContextInternal.GetCurrentContext()
-        {
-            return (ContextHandle)Glx.GetCurrentContext();
-        }
-
         #endregion
 
-        #endregion
-
-        #region --- Public Methods ---
+        #region --- Methods ---
 
         void OnDestroy()
         {
             if (Destroy != null)
                 Destroy(this, EventArgs.Empty);
         }
+
+        #region static ContextHandle GetCurrentContext()
+
+        static ContextHandle GetCurrentContext()
+        {
+            return (ContextHandle)Glx.GetCurrentContext();
+        }
+
+        #endregion
 
         #endregion
 

@@ -31,7 +31,7 @@ namespace OpenTK.OpenAL
 
         #region X-RAM Function pointer definitions
 
-        [CLSCompliant( false )]
+        //[CLSCompliant(false)]
         private delegate bool Delegate_SetBufferMode( int n, ref uint buffers, int value );
         //typedef ALboolean (__cdecl *EAXSetBufferMode)(ALsizei n, ALuint *buffers, ALint value);
 

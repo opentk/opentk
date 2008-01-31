@@ -100,7 +100,7 @@ namespace OpenTK
         internal static GetCurrentContextDelegate GetCurrentContext;
 
         /// <summary>
-        /// Returns the context which is current in the calling thread.
+        /// Gets or sets the current GraphicsContext in the calling thread.
         /// </summary>
         public static GLContext CurrentContext
         {
@@ -111,6 +111,13 @@ namespace OpenTK
                 //return (GLContext)available_contexts[((IGLContextInternal)available_contexts[IntPtr.Zero].Target).GetCurrentContext()].Target;
                 return null;
                 //return (GLContext)available_contexts[StaticGetCurrentContext().ToInt64()].Target;
+            }
+            set
+            {
+                if (value != null)
+                    value.MakeCurrent();
+                else if (CurrentContext != null)
+                    CurrentContext.IsCurrent = false;
             }
         }
 
@@ -204,6 +211,7 @@ namespace OpenTK
         public bool IsCurrent
         {
             get { return implementation.IsCurrent; }
+            set { implementation.IsCurrent = value; }
         }
 
         /// <summary>
@@ -253,15 +261,15 @@ namespace OpenTK
             get { return (implementation as IGLContextInternal).Mode; }
         }
 
-        /// <summary>
-        /// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
-        /// calling thread, or IntPtr.Zero if no OpenGL context is current.
-        /// </summary>
-        /// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
-        ContextHandle IGLContextInternal.GetCurrentContext()
-        {
-            return (implementation as IGLContextInternal).GetCurrentContext();
-        }
+        ///// <summary>
+        ///// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
+        ///// calling thread, or IntPtr.Zero if no OpenGL context is current.
+        ///// </summary>
+        ///// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
+        //ContextHandle IGLContextInternal.GetCurrentContext()
+        //{
+        //    return (implementation as IGLContextInternal).GetCurrentContext();
+        //}
 
         /// <summary>
         /// Registers an OpenGL resource for disposal.

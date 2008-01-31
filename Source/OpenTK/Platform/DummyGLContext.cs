@@ -38,7 +38,7 @@ namespace OpenTK.Platform
 
         public void SwapBuffers() { }
         public void MakeCurrent() { }
-        public bool IsCurrent { get { return true; } }
+        public bool IsCurrent { get { return true; } set { } }
         public IntPtr GetCurrentContext() { return IntPtr.Zero; }
 
         public event DestroyEvent<IGLContext> Destroy;

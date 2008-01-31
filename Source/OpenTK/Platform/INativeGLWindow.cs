@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -9,15 +11,17 @@ using System.Collections.Generic;
 using System.Text;
 
 using OpenTK.Input;
+using OpenTK.Graphics;
 
 namespace OpenTK.Platform
 {
     /// <summary>
     /// This interface supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    interface INativeGLWindow : IResizable, IDisposable
+    internal interface INativeGLWindow : IResizable, IDisposable
     {
-        void CreateWindow(int width, int height, DisplayMode mode, out IGLContext context);
+        //void CreateWindow(int width, int height, DisplayMode mode, out IGLContext context);
+        void CreateWindow(int width, int height, GraphicsFormat mode, out IGLContext context);
         void DestroyWindow();
         void ProcessEvents();
         void PointToClient(ref System.Drawing.Point p);

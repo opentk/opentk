@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -8,12 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Threading;
 
 using OpenTK.Platform;
 using OpenTK.Input;
-using System.Threading;
 using OpenTK.OpenGL;
 using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics;
 
 namespace OpenTK
 {
@@ -86,25 +89,23 @@ namespace OpenTK
 
         #region --- Contructors ---
 
-        /// <summary>
-        /// Constructs a new GameWindow using a safe DisplayMode.
-        /// </summary>
-        public GameWindow() : this(new DisplayMode(640, 480, 0, 16, false), "OpenTK game window")
-        { }
+        public GameWindow() : this("OpenTK Game Window", 640, 480, null, GraphicsFormat.Default) { }
 
-        /// <summary>
-        /// Constructs a new GameWindow, and opens a render window with the specified DisplayMode.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the GameWindow.</param>
-        public GameWindow(DisplayMode mode) : this(mode, "OpenTK game window") { }
+        public GameWindow(string title) : this(title, 640, 480, null, GraphicsFormat.Default) { }
 
-        /// <summary>
-        /// Constructs a new GameWindow with the specified title, and opens a render window with the
-        /// specified DisplayMode.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the GameWindow.</param>
-        /// <param name="title">The Title of the GameWindow.</param>
-        public GameWindow(DisplayMode mode, string title)
+        public GameWindow(string title, int width, int height)
+            : this(title, width, height, null, GraphicsFormat.Default) { }
+
+        public GameWindow(string title, int width, int height, GraphicsFormat format)
+            : this(title, width, height, null, format) { }
+
+        public GameWindow(string title, DisplayResolution resolution)
+            : this(title, resolution.Width, resolution.Height, resolution, GraphicsFormat.Default) { }
+
+        public GameWindow(string title, DisplayResolution resolution, GraphicsFormat format)
+            : this(title, resolution.Width, resolution.Height, resolution, format) { }
+
+        GameWindow(string title, int width, int height, DisplayResolution resolution, GraphicsFormat format)
         {
             switch (Environment.OSVersion.Platform)
             {
@@ -122,15 +123,43 @@ namespace OpenTK
 
                 default:
                     throw new PlatformNotSupportedException(
-                        "Your platform is not supported currently. Please, refer to http://opentk.sourceforge.net for more information.");
+                        "Your platform is not supported currently. Please, refer to http://www.opentk.com for more information.");
             }
 
             glWindow.Destroy += glWindow_Destroy;
 
-            CreateWindow(mode, title);
+            // TODO: GLContext is created inside this call.
+            glWindow.CreateWindow(width, height, format, out glContext);
+            this.Title = title;
 
-            //this.vsync = VSyncMode.Adaptive;
-            this.VSync = VSyncMode.On;
+            if (resolution != null)
+            {
+                DisplayDevice.PrimaryDisplay.ChangeResolution(resolution);
+                this.Fullscreen = true;
+            }
+
+            this.VSync = VSyncMode.On; //VSyncMode.Adaptive;
+        }
+
+        /// <summary>
+        /// Constructs a new GameWindow, and opens a render window with the specified DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the GameWindow.</param>
+        [Obsolete]
+        public GameWindow(DisplayMode mode)
+            : this("OpenTK Game Window", mode.Width, mode.Height,
+                   mode.Fullscreen ? DisplayDevice.PrimaryDisplay.SelectResolution(
+                       mode.Width, mode.Height, mode.Color.BitsPerPixel, 0) : null, mode.ToGraphicsFormat()) { }
+
+        /// <summary>
+        /// Constructs a new GameWindow with the specified title, and opens a render window with the
+        /// specified DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the GameWindow.</param>
+        /// <param name="title">The Title of the GameWindow.</param>
+        [Obsolete]
+        public GameWindow(DisplayMode mode, string title)
+        {
         }
 
         void glWindow_Destroy(object sender, EventArgs e)
@@ -215,17 +244,7 @@ namespace OpenTK
         /// </summary>
         public IGLContext Context
         {
-            get
-            {
-				if (!this.Exists && !this.IsExiting)
-				{
-				    Debug.WriteLine("WARNING: OpenGL Context accessed before creating a render window. This may indicate a programming error. Force-creating a render window.");
-				    mode = new DisplayMode(640, 480);
-				    this.CreateWindow(mode);
-				}
-				//return glWindow.Context;
-                return glContext;
-			}
+            get { return glContext; }
         }
 
         #endregion
@@ -311,38 +330,6 @@ namespace OpenTK
 
 #endif
 
-        #region public void CreateWindow(DisplayMode mode)
-
-        /// <summary>
-        /// Creates a render window for the calling GameWindow.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the render window.</param>
-        /// <remarks>
-        /// It is an error to call this function when a render window already exists.
-        /// <para>Call DestroyWindow to close the render window.</para>
-        /// </remarks>
-        /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
-        public void CreateWindow(DisplayMode mode)
-        {
-            if (!Exists)
-            {
-                try
-                {
-                    glWindow.CreateWindow(mode.Width, mode.Height, mode, out glContext);
-                }
-                catch (ApplicationException expt)
-                {
-                    Debug.Print(expt.ToString());
-                    throw;
-                }
-            }
-            else
-            {
-                throw new ApplicationException("A render window already exists for this GameWindow.");
-            }
-        }
-
-        #endregion
 
         #region public void DestroyWindow()
 
@@ -362,34 +349,7 @@ namespace OpenTK
 
         #endregion
 
-        #region --- GameWindow Methods ---
-
-        #region public void CreateWindow(DisplayMode mode, string title)
-
-        /// <summary>
-        /// Creates a render window for the calling GameWindow, with the specified DisplayMode and Title.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the render window.</param>
-        /// <param name="title">The Title of the render window.</param>
-        /// <remarks>
-        /// It is an error to call this function when a render window already exists.
-        /// <para>Call DestroyWindow to close the render window.</para>
-        /// </remarks>
-        /// <exception cref="ApplicationException">Occurs when a render window already exists.</exception>
-        private void CreateWindow(DisplayMode mode, string title)
-        {
-            if (!Exists)
-            {
-                // TODO: This is a hack - reslove in 0.3.15 once and for all!
-                // GLContext is created inside the CreateWindow call.
-                glWindow.CreateWindow(mode.Width, mode.Height, mode, out glContext);
-                this.Title = title;
-            }
-            else
-                throw new InvalidOperationException("A render window already exists for this GameWindow.");
-        }
-
-        #endregion
+        #region --- Public Methods ---
 
         #region void Run()
 
@@ -519,7 +479,7 @@ namespace OpenTK
                     if (VSync == VSyncMode.Adaptive)
                     {
                         // Check if we have enough time for a vsync
-                        if (RenderTime > 2.0 * TargetRenderPeriod)
+                        if (TargetRenderPeriod != 0 && RenderTime > 2.0 * TargetRenderPeriod)
                             Context.VSync = false;
                         else
                             Context.VSync = true;
@@ -609,12 +569,6 @@ namespace OpenTK
         /// <param name="e"></param>
         private void OnRenderFrameInternal(RenderFrameEventArgs e)
         {
-            if (!this.Exists && !this.IsExiting)
-            {
-                Debug.Print("WARNING: RenderFrame event raised, without a valid render window. This may indicate a programming error. Creating render window.");
-                mode = new DisplayMode(640, 480);
-                this.CreateWindow(mode);
-            }
             if (RenderFrame != null)
                 RenderFrame(this, e);
 

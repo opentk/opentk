@@ -1,7 +1,7 @@
 ﻿#region --- License ---
 /* Licensed under the MIT/X11 license.
- * Copyright (c) 2006-2008 the OpenTK team.
- * This notice may not be removed.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
 #endregion
@@ -18,8 +18,6 @@ namespace OpenTK.Platform.X11
     internal class X11XrandrDisplayDevice : IDisplayDeviceDriver
     {
         static object display_lock = new object();
-        int current_size = -1;  // current_size == -1 means it hasn't been changed.
-        int current_refresh;
         // Store a mapping between resolutions and their respective
         // size_index (needed for XRRSetScreenConfig). The size_index
         // is simply the sequence number of the resolution as returned by
