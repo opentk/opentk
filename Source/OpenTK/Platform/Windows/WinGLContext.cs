@@ -23,7 +23,7 @@ namespace OpenTK.Platform.Windows
     /// Provides methods to create and control an opengl context on the Windows platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WinGLContext : IGLContext, IGLContextInternal, IGLContextCreationHack
+    internal sealed class WinGLContext : IGraphicsContext, IGLContextInternal, IGLContextCreationHack
     {
         private IntPtr deviceContext;
         private ContextHandle renderContext;
@@ -51,7 +51,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- IGLContext Members ---
+        #region --- IGraphicsContext Members ---
 
         #region public void CreateContext()
 
@@ -71,9 +71,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public void CreateContext(bool direct, IGLContext source)
+        #region public void CreateContext(bool direct, IGraphicsContext source)
 
-        public void CreateContext(bool direct, IGLContext source)
+        public void CreateContext(bool direct, IGraphicsContext source)
         {
             Debug.WriteLine(String.Format("OpenGL context is bound to handle: {0}", this.windowInfo.Handle));
 
@@ -161,7 +161,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        public event DestroyEvent<IGLContext> Destroy;
+        public event DestroyEvent<IGraphicsContext> Destroy;
 
         #endregion
 

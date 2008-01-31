@@ -18,7 +18,7 @@ namespace OpenTK.Platform.X11
     /// Provides methods to create and control an opengl context on the X11 platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class X11GLContext : IGLContext, IGLContextInternal, IGLContextCreationHack
+    internal sealed class X11GLContext : IGraphicsContext, IGLContextInternal, IGLContextCreationHack
     {
          IntPtr context;
          DisplayMode mode;
@@ -118,7 +118,7 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region --- IGLContext Members ---
+        #region --- IGraphicsContext Members ---
 
         #region public DisplayMode Mode
 
@@ -154,9 +154,9 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public void CreateContext(bool direct, IGLContext shareContext)
+        #region public void CreateContext(bool direct, IGraphicsContext shareContext)
 
-        public void CreateContext(bool direct, IGLContext shareContext)
+        public void CreateContext(bool direct, IGraphicsContext shareContext)
         {
             try
             {
@@ -288,7 +288,7 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        public event DestroyEvent<IGLContext> Destroy;
+        public event DestroyEvent<IGraphicsContext> Destroy;
 
         #region public IntPtr GetAddress(string function)
 

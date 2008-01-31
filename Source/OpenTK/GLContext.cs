@@ -15,9 +15,9 @@ namespace OpenTK
     /// <summary>
     /// Represents and provides methods to manipulate an OpenGL render context.
     /// </summary>
-    public sealed class GLContext : IGLContext, IGLContextInternal, IGLContextCreationHack
+    public sealed class GLContext : IGraphicsContext, IGLContextInternal, IGLContextCreationHack
     {
-        IGLContext implementation;  // The actual render context implementation for the underlying platform.
+        IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
         List<IDisposable> dispose_queue = new List<IDisposable>();
         bool disposed;
 
@@ -77,14 +77,14 @@ namespace OpenTK
 
         #endregion
 
-        #region void ContextDestroyed(IGLContext context, EventArgs e)
+        #region void ContextDestroyed(IGraphicsContext context, EventArgs e)
 
         /// <summary>
         /// Handles the Destroy event.
         /// </summary>
-        /// <param name="context">The OpenTK.Platform.IGLContext that was destroyed.</param>
+        /// <param name="context">The OpenTK.Platform.IGraphicsContext that was destroyed.</param>
         /// <param name="e">Not used.</param>
-        void ContextDestroyed(IGLContext context, EventArgs e)
+        void ContextDestroyed(IGraphicsContext context, EventArgs e)
         {
             this.Destroy -= ContextDestroyed;
             available_contexts.Remove(((IGLContextInternal)this).Context);
@@ -94,7 +94,7 @@ namespace OpenTK
 
         #region --- Public Members ---
 
-        #region public static IGLContext CurrentContext
+        #region public static IGraphicsContext CurrentContext
 
         internal delegate ContextHandle GetCurrentContextDelegate();
         internal static GetCurrentContextDelegate GetCurrentContext;
@@ -142,7 +142,7 @@ namespace OpenTK
 
         #endregion
 
-        #region --- IGLContext Members ---
+        #region --- IGraphicsContext Members ---
 
         /// <summary>
         /// Creates an OpenGL context.
@@ -174,12 +174,12 @@ namespace OpenTK
 
         /// <summary>
         /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
-        /// specified IGLContext.
+        /// specified IGraphicsContext.
         /// </summary>
         /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
-        /// <param name="source">The source IGLContext to share state from.</param>.
+        /// <param name="source">The source IGraphicsContext to share state from.</param>.
         /// <seealso cref="CreateContext(bool)"/>
-        public void CreateContext(bool direct, IGLContext source)
+        public void CreateContext(bool direct, IGraphicsContext source)
         {
             implementation.CreateContext(direct, source);
             this.Destroy += ContextDestroyed;
@@ -217,7 +217,7 @@ namespace OpenTK
         /// <summary>
         /// Raised when a Context is destroyed.
         /// </summary>
-        public event DestroyEvent<IGLContext> Destroy
+        public event DestroyEvent<IGraphicsContext> Destroy
         {
             add { implementation.Destroy += value; }
             remove { implementation.Destroy -= value; }
