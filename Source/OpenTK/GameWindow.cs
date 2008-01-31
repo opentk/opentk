@@ -74,7 +74,7 @@ namespace OpenTK
 
         //InputDriver input_driver;
 
-        IGLContext glContext;
+        IGraphicsContext glContext;
 
         #endregion
 
@@ -236,13 +236,13 @@ namespace OpenTK
 
         #endregion
 
-        #region public IGLContext Context
+        #region public IGraphicsContext Context
 
         /// <summary>
         /// Returns the opengl IGLontext associated with the current GameWindow.
         /// Forces window creation.
         /// </summary>
-        public IGLContext Context
+        public IGraphicsContext Context
         {
             get { return glContext; }
         }

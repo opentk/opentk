@@ -21,7 +21,7 @@ namespace OpenTK
     /// </summary>
     public partial class GLControl : UserControl
     {
-        IGLContext context;
+        IGraphicsContext context;
         IPlatformIdle idle;
         DisplayMode display_mode;
 
@@ -86,13 +86,13 @@ namespace OpenTK
 
         #endregion
 
-        #region public IGLContext Context
+        #region public IGraphicsContext Context
 
         /// <summary>
         /// Gets an interface to the underlying GLContext used by this GLControl.
         /// </summary>
         [Browsable(false)]
-        public IGLContext Context
+        public IGraphicsContext Context
         {
             get { return context; }
             private set { context = value; }

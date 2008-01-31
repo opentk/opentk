@@ -11,10 +11,10 @@ using System.Text;
 namespace OpenTK.Platform
 {
     /// <summary>
-    /// An empty IGLContext implementation to be used inside the Visual Studio designer.
+    /// An empty IGraphicsContext implementation to be used inside the Visual Studio designer.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class DummyGLContext : IGLContext
+    internal sealed class DummyGLContext : IGraphicsContext
     {
         WindowInfo info = new WindowInfo();
         DisplayMode mode;
@@ -26,7 +26,7 @@ namespace OpenTK.Platform
 
         #endregion
 
-        #region --- IGLContext Members ---
+        #region --- IGraphicsContext Members ---
 
         public IntPtr Context { get { return IntPtr.Zero; } }
         public IWindowInfo Info { get { return info; } }
@@ -34,14 +34,14 @@ namespace OpenTK.Platform
 
         public void CreateContext() { }
         public void CreateContext(bool direct) { }
-        public void CreateContext(bool direct, IGLContext source) { }
+        public void CreateContext(bool direct, IGraphicsContext source) { }
 
         public void SwapBuffers() { }
         public void MakeCurrent() { }
         public bool IsCurrent { get { return true; } set { } }
         public IntPtr GetCurrentContext() { return IntPtr.Zero; }
 
-        public event DestroyEvent<IGLContext> Destroy;
+        public event DestroyEvent<IGraphicsContext> Destroy;
         void OnDestroy() { if (Destroy != null) Destroy(this, EventArgs.Empty); }
 
         public void RegisterForDisposal(IDisposable resource)

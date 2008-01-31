@@ -307,9 +307,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public void CreateWindow(int width, int height, GraphicsFormat format, out IGLContext context)
+        #region public void CreateWindow(int width, int height, GraphicsFormat format, out IGraphicsContext context)
 
-        public void CreateWindow(int width, int height, GraphicsFormat format, out IGLContext context)
+        public void CreateWindow(int width, int height, GraphicsFormat format, out IGraphicsContext context)
         {
             Debug.Print("Creating native window.");
             Debug.Indent();

@@ -13,16 +13,16 @@ namespace OpenTK.Platform
     /// <summary>
     /// Provides methods for creating and interacting with an OpenGL context.
     /// </summary>
-    public interface IGLContext : IDisposable
+    public interface IGraphicsContext : IDisposable
     {
         /// <summary>
         /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
-        /// specified IGLContext.
+        /// specified IGraphicsContext.
         /// </summary>
         /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
-        /// <param name="source">The source IGLContext to share state from.</param>.
+        /// <param name="source">The source IGraphicsContext to share state from.</param>.
         /// <seealso cref="CreateContext(bool)"/>
-        void CreateContext(bool direct, IGLContext source);
+        void CreateContext(bool direct, IGraphicsContext source);
 
         /// <summary>Swaps buffers, presenting the rendered scene to the user.</summary>
         void SwapBuffers();
@@ -42,7 +42,7 @@ namespace OpenTK.Platform
         /// <summary>
         /// Raised when a Context is destroyed.
         /// </summary>
-        event DestroyEvent<IGLContext> Destroy;
+        event DestroyEvent<IGraphicsContext> Destroy;
 
         /// <summary>
         /// Gets or sets a value indicating whether VSyncing is enabled.
