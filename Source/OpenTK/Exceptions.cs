@@ -12,7 +12,7 @@ namespace OpenTK
     #region public class ContextExistsException : ApplicationException
 
     /// <summary>
-    /// This exception is thrown when a GLContext property cannot be changed after creation.
+    /// This exception is thrown when a GraphicsContext property cannot be changed after creation.
     /// </summary>
     public class ContextExistsException : ApplicationException
     {

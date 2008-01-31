@@ -128,7 +128,7 @@ namespace OpenTK
 
             glWindow.Destroy += glWindow_Destroy;
 
-            // TODO: GLContext is created inside this call.
+            // TODO: GraphicsContext is created inside this call.
             glWindow.CreateWindow(width, height, format, out glContext);
             this.Title = title;
 

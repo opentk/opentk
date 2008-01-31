@@ -405,8 +405,8 @@ namespace OpenTK.Platform.X11
             glContext = new X11GLContext();
             (glContext as IGLContextCreationHack).SelectDisplayMode(mode, window);
             if (glContext == null)
-                throw new ApplicationException("Could not create GLContext");
-            Debug.Print("Created GLContext");
+                throw new ApplicationException("Could not create GraphicsContext");
+            Debug.Print("Created GraphicsContext");
             window.VisualInfo = ((X11.WindowInfo)((IGLContextInternal)glContext).Info).VisualInfo;
             //window.VisualInfo = Marshal.PtrToStructure(Glx.ChooseVisual(window.Display, window.Screen, 
 

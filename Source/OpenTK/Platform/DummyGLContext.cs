@@ -46,12 +46,12 @@ namespace OpenTK.Platform
 
         public void RegisterForDisposal(IDisposable resource)
         {
-            throw new NotImplementedException("Use the general GLContext class instead.");
+            throw new NotImplementedException("Use the general GraphicsContext class instead.");
         }
 
         public void DisposeResources()
         {
-            throw new NotImplementedException("Use the general GLContext class instead.");
+            throw new NotImplementedException("Use the general GraphicsContext class instead.");
         }
 
         public IntPtr GetAddress(string function) { return IntPtr.Zero; }

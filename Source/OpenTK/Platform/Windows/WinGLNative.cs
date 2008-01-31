@@ -367,7 +367,7 @@ namespace OpenTK.Platform.Windows
 
             Functions.SetWindowPos(this.Handle, WindowPlacementOptions.TOP, Left, Top, cp.Width, cp.Height, SetWindowPosFlags.SHOWWINDOW);
 
-            //context = new GLContext(mode, window);
+            //context = new GraphicsContext(mode, window);
             //context.CreateContext();
 
             context = new WinGLContext();

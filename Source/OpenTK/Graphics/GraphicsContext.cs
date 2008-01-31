@@ -15,7 +15,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Represents and provides methods to manipulate an OpenGL render context.
     /// </summary>
-    public sealed class GLContext : IGraphicsContext, IGLContextInternal, IGLContextCreationHack
+    public sealed class GraphicsContext : IGraphicsContext, IGLContextInternal, IGLContextCreationHack
     {
         IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
         List<IDisposable> dispose_queue = new List<IDisposable>();
@@ -26,14 +26,14 @@ namespace OpenTK.Graphics
         static Dictionary<ContextHandle, WeakReference> available_contexts =
             new Dictionary<ContextHandle, WeakReference>();   // Contains all available OpenGL contexts.
 
-        #region public GLContext(DisplayMode mode, IWindowInfo window)
+        #region public GraphicsContext(DisplayMode mode, IWindowInfo window)
 
         /// <summary>
-        /// Constructs a new GLContext with the specified DisplayMode, and bound to the specified IWindowInfo.
+        /// Constructs a new GraphicsContext with the specified DisplayMode, and bound to the specified IWindowInfo.
         /// </summary>
         /// <param name="mode"></param>
         /// <param name="window"></param>
-        public GLContext(DisplayMode mode, IWindowInfo window)
+        public GraphicsContext(DisplayMode mode, IWindowInfo window)
         {
             //if (available_contexts.Count == 0)
             //    available_contexts.Add(IntPtr.Zero, new WeakReference(null));
@@ -58,14 +58,14 @@ namespace OpenTK.Graphics
 
             (this as IGLContextCreationHack).SetWindowHandle(window.Handle);
             (this as IGLContextCreationHack).SelectDisplayMode(mode, window);
-            if (GLContext.ShareContexts)
+            if (GraphicsContext.ShareContexts)
             {
                 lock (context_lock)
                 {
                     // A small hack to create a shared context with the first available context.
-                    foreach (WeakReference r in GLContext.available_contexts.Values)
+                    foreach (WeakReference r in GraphicsContext.available_contexts.Values)
                     {
-                        this.CreateContext(true, (GLContext)r.Target);
+                        this.CreateContext(true, (GraphicsContext)r.Target);
                         return;
                     }
                 }
@@ -102,15 +102,15 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets or sets the current GraphicsContext in the calling thread.
         /// </summary>
-        public static GLContext CurrentContext
+        public static GraphicsContext CurrentContext
         {
             get
             {
                 if (available_contexts.Count > 0)
-                    return (GLContext)available_contexts[GetCurrentContext()].Target;
-                //return (GLContext)available_contexts[((IGLContextInternal)available_contexts[IntPtr.Zero].Target).GetCurrentContext()].Target;
+                    return (GraphicsContext)available_contexts[GetCurrentContext()].Target;
+                //return (GraphicsContext)available_contexts[((IGLContextInternal)available_contexts[IntPtr.Zero].Target).GetCurrentContext()].Target;
                 return null;
-                //return (GLContext)available_contexts[StaticGetCurrentContext().ToInt64()].Target;
+                //return (GraphicsContext)available_contexts[StaticGetCurrentContext().ToInt64()].Target;
             }
             set
             {
@@ -334,7 +334,7 @@ namespace OpenTK.Graphics
         #region --- IDisposable Members ---
 
         /// <summary>
-        /// Disposes of the GLContext.
+        /// Disposes of the GraphicsContext.
         /// </summary>
         public void Dispose()
         {
@@ -355,7 +355,7 @@ namespace OpenTK.Graphics
             }
         }
 
-        ~GLContext()
+        ~GraphicsContext()
         {
             this.Dispose(false);
         }
