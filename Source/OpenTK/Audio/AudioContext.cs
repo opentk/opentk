@@ -29,6 +29,7 @@ namespace OpenTK.Audio
         static object audio_context_lock = new object();
         static List<string> available_devices = new List<string>();
         static Dictionary<ContextHandle, AudioContext> available_contexts = new Dictionary<ContextHandle, AudioContext>();
+        bool context_exists;
 
         #endregion
 
@@ -41,10 +42,10 @@ namespace OpenTK.Audio
         /// <summary>
         /// Runs before the actual class constructor, to load available devices.
         /// </summary>
-        //static AudioContext()
-        //{
-        //    LoadAvailableDevices();
-        //}
+        static AudioContext()
+        {
+            LoadAvailableDevices();
+        }
 
         #endregion
 
@@ -115,14 +116,14 @@ namespace OpenTK.Audio
 
         #endregion
 
-        #region public AudioContext(string device, int freq, int refresh, bool sync, int maxEfxSends)
+        #region public AudioContext(string device, int freq, int refresh, bool sync, int maxSends)
 
         /// <summary>Creates the audio context using the specified device and device parameters.</summary>
         /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices.</param>
         /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="refresh">Refresh intervals, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="sync">Flag, indicating a synchronous context.</param>
-        /// <param name="maxEfxSends">Number of auxilliary send slots for the EFX extensions. Can be 0 (use driver default) or higher.</param>
+        /// <param name="maxSends">Number of auxilliary send slots for the EFX extensions. Can be 0 (use driver default) or higher.</param>
         /// <exception cref="ArgumentNullException">Occurs when the device string is invalid.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Occurs when a specified parameter is invalid.</exception>
         /// <exception cref="InvalidAudioDeviceException">
@@ -131,19 +132,20 @@ namespace OpenTK.Audio
         /// <exception cref="InvalidAudioContextException">
         /// Occurs when an audio context could not be created with the specified parameters.
         /// </exception>
+        /// <exception cref="NotSupportedException">
+        /// Occurs when an AudioContext already exists.</exception>
         /// <remarks>
-        /// <para>
-        /// Use AudioContext.AvailableDevices to obtain a list of all available audio devices.
-        /// </para>
+        /// <para>For maximum compatibility, you are strongly recommended to use the default constructor.</para>
+        /// <para>Multiple AudioContexts are not supported at this point.</para>
         /// <para>
         /// The number of auxilliary EFX sends depends on the audio hardware and drivers. Most Realtek devices, as well
         /// as the Creative SB Live!, support 1 auxilliary send. Creative's Audigy and X-Fi series support 4 sends.
-        /// Values not supported will be clamped by the driver.
+        /// Values higher than supported will be clamped by the driver.
         /// </para>
         /// </remarks>
-        public AudioContext(string device, int freq, int refresh, bool sync, int maxEfxSends)
+        public AudioContext(string device, int freq, int refresh, bool sync, int maxSends)
         {
-            CreateContext(device, freq, refresh, sync, maxEfxSends);
+            CreateContext(device, freq, refresh, sync, maxSends);
         }
 
         #endregion
@@ -195,25 +197,25 @@ namespace OpenTK.Audio
         /// <exception cref="InvalidAudioContextException">
         /// Occurs when an audio context could not be created with the specified parameters.
         /// </exception>
+        /// <exception cref="NotSupportedException">
+        /// Occurs when an AudioContext already exists.</exception>
         /// <remarks>
+        /// <para>For maximum compatibility, you are strongly recommended to use the default constructor.</para>
+        /// <para>Multiple AudioContexts are not supported at this point.</para>
+        /// <para>
         /// The number of auxilliary EFX sends depends on the audio hardware and drivers. Most Realtek devices, as well
         /// as the Creative SB Live!, support 1 auxilliary send. Creative's Audigy and X-Fi series support 4 sends.
         /// Values higher than supported will be clamped by the driver.
+        /// </para>
         /// </remarks>
         void CreateContext(string device, int freq, int refresh, bool sync, int maxEfxSends)
         {
+            if (context_exists) throw new NotSupportedException("Multiple AudioContexts not supported.");
             //if (String.IsNullOrEmpty(device)) throw new ArgumentNullException("device");
             if (freq < 0) throw new ArgumentOutOfRangeException("freq", freq, "Should be greater than zero.");
             if (refresh < 0) throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
             if (maxEfxSends < 0) throw new ArgumentOutOfRangeException("maxEfxSends", maxEfxSends, "Should be greater than zero.");
             //if (available_devices.Count == 0) throw new NotSupportedException("No audio hardware is available.");
-
-            if (available_devices.Count == 0)
-                LoadAvailableDevices();
-
-            // HACK: Do not allow multiple contexts under linux (crashes under Ubuntu 7.04 and 7.10)
-            if (available_contexts.Count > 0)
-                throw new NotSupportedException("Multiple AudioContexts are not supported under Linux.");
 
             device_handle = Alc.OpenDevice(device);
             if (device_handle == IntPtr.Zero)
@@ -268,6 +270,7 @@ namespace OpenTK.Audio
             lock (audio_context_lock)
             {
                 available_contexts.Add(this.context_handle, this);
+                context_exists = true;
             }
         }
 
@@ -311,79 +314,6 @@ namespace OpenTK.Audio
 
         // TODO: Remove before release!
         public IntPtr Device { get { return device_handle.Handle; } }
-
-        #region --- Public Members ---
-
-        #region public static string[] AvailableDevices
-
-        /// <summary>
-        /// Gets a System.String array containing all available audio devices.
-        /// </summary>
-        /// <remarks>This property allocates memory.</remarks>
-        public static string[] AvailableDevices
-        {
-            get
-            {
-                if (available_devices.Count == 0)
-                    LoadAvailableDevices();
-                return available_devices.ToArray();
-            }
-        }
-
-        #endregion
-
-        #region public void MakeCurrent()
-
-        /// <summary>Makes the AudioContext current in the calling thread.</summary>
-        /// <exception cref="ObjectDisposedException">
-        /// Occurs if this function is called after the AudioContext has been disposed.
-        /// </exception>
-        /// <exception cref="AudioContextException">
-        /// Occurs when the AudioContext could not be made current.
-        /// </exception>
-        /// <remarks>
-        /// Only one AudioContext can be current in the application at any time,
-        /// <b>regardless of the number of threads</b>.
-        /// </remarks>
-        public void MakeCurrent()
-        {
-            AudioContext.MakeCurrent(this);
-        }
-
-        #endregion
-
-        #region public bool IsCurrent
-
-        /// <summary>
-        /// Gets or sets a System.Boolean indicating whether the AudioContext
-        /// is current.
-        /// </summary>
-        /// <remarks>
-        /// Only one AudioContext can be current in the application at any time,
-        /// <b>regardless of the number of threads</b>.
-        /// </remarks>
-        public bool IsCurrent
-        {
-            get
-            {
-                lock (audio_context_lock)
-                {
-                    if (available_contexts.Count == 0)
-                        return false;
-                    else
-                    {
-                        return AudioContext.CurrentContext == this;
-                    }
-                }
-            }
-            set
-            {
-                if (value) AudioContext.MakeCurrent(this);
-                else AudioContext.MakeCurrent(null);
-            }
-        }
-
-        #endregion
 
         #region public bool IsProcessing
 
@@ -491,6 +421,79 @@ namespace OpenTK.Audio
         }
 
         #endregion
+
+        #region --- Public Members ---
+
+        #region public static string[] AvailableDevices
+
+        /// <summary>
+        /// Gets a System.String array containing all available audio devices.
+        /// </summary>
+        /// <remarks>This property allocates memory.</remarks>
+        public static string[] AvailableDevices
+        {
+            get
+            {
+                if (available_devices.Count == 0)
+                    LoadAvailableDevices();
+                return available_devices.ToArray();
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region internal void MakeCurrent()
+
+        /// <summary>Makes the AudioContext current in the calling thread.</summary>
+        /// <exception cref="ObjectDisposedException">
+        /// Occurs if this function is called after the AudioContext has been disposed.
+        /// </exception>
+        /// <exception cref="AudioContextException">
+        /// Occurs when the AudioContext could not be made current.
+        /// </exception>
+        /// <remarks>
+        /// Only one AudioContext can be current in the application at any time,
+        /// <b>regardless of the number of threads</b>.
+        /// </remarks>
+        internal void MakeCurrent()
+        {
+            AudioContext.MakeCurrent(this);
+        }
+
+        #endregion
+
+        #region internal bool IsCurrent
+
+        /// <summary>
+        /// Gets or sets a System.Boolean indicating whether the AudioContext
+        /// is current.
+        /// </summary>
+        /// <remarks>
+        /// Only one AudioContext can be current in the application at any time,
+        /// <b>regardless of the number of threads</b>.
+        /// </remarks>
+        internal bool IsCurrent
+        {
+            get
+            {
+                lock (audio_context_lock)
+                {
+                    if (available_contexts.Count == 0)
+                        return false;
+                    else
+                    {
+                        return AudioContext.CurrentContext == this;
+                    }
+                }
+            }
+            set
+            {
+                if (value) AudioContext.MakeCurrent(this);
+                else AudioContext.MakeCurrent(null);
+            }
+        }
 
         #endregion
 
