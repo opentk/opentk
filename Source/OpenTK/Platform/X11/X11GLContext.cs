@@ -35,8 +35,8 @@ namespace OpenTK.Platform.X11
          static X11GLContext()
          {
              // Set the GetCurrentContext implementation.
-             if (GLContext.GetCurrentContext == null)
-                 GLContext.GetCurrentContext = X11GLContext.GetCurrentContext;
+             if (GraphicsContext.GetCurrentContext == null)
+                 GraphicsContext.GetCurrentContext = X11GLContext.GetCurrentContext;
          }
 
         /// <private />
@@ -302,12 +302,12 @@ namespace OpenTK.Platform.X11
 
         public void RegisterForDisposal(IDisposable resource)
         {
-            throw new NotSupportedException("Use OpenTK.GLContext instead.");
+            throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
         }
 
         public void DisposeResources()
         {
-            throw new NotSupportedException("Use OpenTK.GLContext instead.");
+            throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
         }
 
         public IEnumerable<DisplayMode> GetDisplayModes()

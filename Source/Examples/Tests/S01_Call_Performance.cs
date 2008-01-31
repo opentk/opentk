@@ -20,7 +20,7 @@ namespace Examples.Tests
 {
     public class S01_Call_Performance : IExample
     {
-        GLContext context;
+        GraphicsContext context;
         const int num_calls = 1000000;
         float[] v = new float[] { 0.0f, 0.0f };
         public static int dummy_variable = 0;
@@ -29,7 +29,7 @@ namespace Examples.Tests
         {
             using (Form f = new Form())
             {
-                context = new GLContext(new OpenTK.DisplayMode(), new OpenTK.Platform.WindowInfo(f));
+                context = new GraphicsContext(new OpenTK.DisplayMode(), new OpenTK.Platform.WindowInfo(f));
                 context.CreateContext();
 
                 Trace.WriteLine(String.Format("Number of calls: {0}", num_calls));

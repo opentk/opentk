@@ -192,8 +192,8 @@ namespace OpenTK.OpenGL
         /// </remarks>
         public static void LoadAll()
         {
-            //TODO: Route GameWindow context creation through GLContext.
-            //if (GLContext.CurrentContext == null)
+            //TODO: Route GameWindow context creation through GraphicsContext.
+            //if (GraphicsContext.CurrentContext == null)
             //    throw new InvalidOperationException("You must create an OpenGL context before using the GL class.");
 
             OpenTK.Platform.Utilities.LoadExtensions(glClass);

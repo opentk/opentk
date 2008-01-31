@@ -90,7 +90,7 @@ namespace OpenTK
         #region public IGraphicsContext Context
 
         /// <summary>
-        /// Gets an interface to the underlying GLContext used by this GLControl.
+        /// Gets an interface to the underlying GraphicsContext used by this GLControl.
         /// </summary>
         [Browsable(false)]
         public IGraphicsContext Context
@@ -145,10 +145,10 @@ namespace OpenTK
         // TODO: Remove for 0.3.15
 
         /// <summary>
-        /// Gets the DisplayMode of the GLContext attached to this GLControl.
+        /// Gets the DisplayMode of the GraphicsContext attached to this GLControl.
         /// </summary>
         /// <remarks>
-        /// You cannot change the DisplayMode of an existing GLContext.
+        /// You cannot change the DisplayMode of an existing GraphicsContext.
         /// </remarks>
         public DisplayMode Mode
         {
@@ -189,7 +189,7 @@ namespace OpenTK
         #region public void CreateContext()
         
         /// <summary>
-        /// Creates a GLContext and attaches it to this GLControl.
+        /// Creates a GraphicsContext and attaches it to this GLControl.
         /// </summary>
         public void CreateContext()
         {
@@ -203,7 +203,7 @@ namespace OpenTK
                 // have a different colordepth from the parent. To combat this, we do not set a
                 // specific depth for the DisplayMode - we let the driver select one instead.
                 //display_mode.ColorFormat = new ColorMode(0);
-                context = new GLContext(display_mode, info);
+                context = new GraphicsContext(display_mode, info);
                 idle = new PlatformIdle(info);
             }
             else
@@ -218,9 +218,9 @@ namespace OpenTK
         #region public void DestroyContext()
 
         /// <summary>
-        /// Destroys the GLContext attached to this GLControl.
+        /// Destroys the GraphicsContext attached to this GLControl.
         /// </summary>
-        /// <exception cref="NullReferenceException">Occurs when no GLContext is attached.</exception>
+        /// <exception cref="NullReferenceException">Occurs when no GraphicsContext is attached.</exception>
         public void DestroyContext()
         {
             Context.Dispose();

@@ -25,7 +25,7 @@ namespace Examples.WinForms
     public partial class W03_Extensions : Form
     {
         //GLControl glControl = new GLControl();
-        GLContext context;
+        GraphicsContext context;
         Type glClass;
         Type delegatesClass;
         Type importsClass;
@@ -48,7 +48,7 @@ namespace Examples.WinForms
         {
             Application.Idle -= StartAsync;
 
-            context = new GLContext(new DisplayMode(), new OpenTK.Platform.WindowInfo(this));
+            context = new GraphicsContext(new DisplayMode(), new OpenTK.Platform.WindowInfo(this));
             context.CreateContext();
 
             //while (!glControl.Created)
