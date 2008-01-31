@@ -643,7 +643,7 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern LONG ChangeDisplaySettingsEx(LPCTSTR lpszDeviceName, LPDEVMODE lpDevMode,
-            HWND hwnd, DWORD dwflags, LPVOID lParam);
+            HWND hwnd, ChangeDisplaySettingsEnum dwflags, LPVOID lParam);
 
         #endregion
 

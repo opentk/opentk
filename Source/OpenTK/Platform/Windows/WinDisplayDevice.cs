@@ -111,7 +111,8 @@ namespace OpenTK.Platform.Windows
             }
 
             return Constants.DISP_CHANGE_SUCCESSFUL == 
-                Functions.ChangeDisplaySettingsEx(available_device_names[device], mode, IntPtr.Zero, 0, IntPtr.Zero);
+                Functions.ChangeDisplaySettingsEx(available_device_names[device], mode, IntPtr.Zero,
+                    ChangeDisplaySettingsEnum.Fullscreen, IntPtr.Zero);
         }
 
         #endregion
