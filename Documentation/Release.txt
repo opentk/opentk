@@ -1,68 +1,74 @@
-=================================================================================
+#################################################################################
+#                       OpenTK 0.9.1 Alpha Release notes                        #
+#################################################################################
 
-OpenTK 0.9.1 Alpha Release notes
+IMPORTANT: This release is intended for testing and experimentation only. Use at
+your own risk!
+           
+0.9.1 contains updates to OpenAL (EFX/EAX extensions, AudioContext) and OpenGL
+(enums for FBOs and multiple GraphicsContexts). Resolution changes and fullscreen
+modes are now supported, and work has begun on a native Mac OS X port. Last, but
+not least, several OpenAL and a GLSL example have been added to the Example
+launcher - don't forget to check these out!
 
-IMPORTANT: This release is intended for testing and experimentation only. Use at your own risk!
+The full changelog lies below, in case you are interested, as well as the
+porting guidelines for your applications (there are several breaking changes,
+but all are thankfully simple to fix).
 
----------------------------------------------------------------------------------
+This release marks the third development milestone (fullscreen support). Several
+parts are now considered to be in "beta" status, meaning no breaking changes
+will occur, unless they are needed to fix a serious bug.
 
-0.9.1 improves on the OpenAL bindings included in 0.9.0, with support for
-environmental extensions (EFX, EAX), CLS-compliance and the AudioContext class.
-
-Resolution changes are supported at last, and code has been internally
-reorganized to help future ports to different platforms.
-
-
+Don't forget to visit our homepage at http://www.opentk.com for the latest
+developments, and our #opentk irc channel at de.quakenet.org:6669.
 
 Till next time!
  - Stephen A.
 
+---------------------------------------------------------------------------------
+
+#################################################################################
+#                            Porting from 0.9.0                                 #
+#################################################################################
+
+Updating to Mono 1.2.6 is strongly recommended
+
+To facilitate future development (e.g. OpenGL 3 support), some namespaces and
+class names have been altered. Please, run the following project-wide search and
+replace operations:
+1. "GLContext"     -> "GraphicsContext"
+2. "OpenTK.OpenGL" -> "OpenTK.Graphics.OpenGL"
+3. "OpenTK.OpenAL" -> "OpenTK.Audio.OpenAL"
+
+The "DisplayMode" class has been marked as obsolete. Its functionality has been
+split into two classes: "DisplayResolution" and "GraphicsFormat". This is mostly
+an internal change and should only affect your GameWindow constructor (a 1-line
+change to fix the warning).
+
+Alc and Alut are no longer public. Please use OpenTK.Audio.AudioContext instead.
 
 ---------------------------------------------------------------------------------
 
-Release highlights
+#################################################################################
+#                            Release highlights                                 #
+#################################################################################
 
- * Feature: EFX/EAX OpenAL extensions.
+ * Feature: EFX/EAX/XRAM OpenAL extensions.
  * Feature: AudioContext class.
-
-
-
- * Known issue (Linux): OpenTK programs may exhibit instability under Mesa3d 6.5.x and/or Mono 1.2.4. Please update to Mesa3d 7.0.x and Mono 1.2.6.
- * Known issue (Linux): DisplayModes with 32-bit bit-depths exhibit flashing under Mesa3d 6.5.x. Is a Mesa3d problem, update to Mesa3d 7.0.x or request a 24-bit depth.
- * Known issue (Linux): "Extensions" example only works on Mono 1.2.6.
- * Known issue (Linux): "Textures" example does not work on Mono 1.2.5.
- * Known issue (All): Only a limited number of font glyphs are supported.
+ * Feature: Enumerate and change resolutions through DisplayDevice and
+            DisplayResolution.
+ * Feature: Fullscreen support.
+ * Feature: VSync support under Linux.
+ * Feature: Improved mode selection.
+ * Feature: Improved handling of multiple GraphicsContexts and resource sharing.
+ * Feature: Improved Frame Buffer Objects (FBO) API.
+ 
+ * Fix: Improved adaptive VSync behavior in low-fps situtations.
+ 
+ * Known issue (Linux): Texture loading through System.Drawing.Bitmap may not
+                         work correctly on some Mono versions. Mono 1.2.6 and
+                         higher work correctly.
+ * Known issue (Linux): 32-bit modes are not supported on Mesa3d 6.5.x. Please
+                        update Mesa3d 7.0.x or request a 24-bit depth.
+ * Known issue (All): Many font layout options are not implemented.
  * Known issue (All): Some commandline arguments in "Bind" do not work.
-
-
----------------------------------------------------------------------------------
-
-Porting notes
-
-#################################################################################
-#										#
-#		Updating to Mono 1.2.6 is strongly recommended			#
-#										#
-#################################################################################
-
-0.9.0 contains a few breaking changes, compared to 0.3.13 and previous releases.
-These include:
-
-1) Version12-Version21 enums no longer exist. This affects many OpenGL functions,
-including VBO- and GLSL-related ones. The necessary enum is shown in the function
-signature. In the unlikely case that a token is missing from the new enums,
-please report a bug at http://www.opentk.com/forum/1
-
-2) Updates to internal GLControl and GLContext interfaces may have side-effects.
-Please report anything strange you encounter at http://www.opentk.com/forum/1
-
-
----------------------------------------------------------------------------------
-
-OpenTK homepage: http://www.opentk.com
-
-The latest version is always available at http://sourceforge.net/projects/opentk
-
-Living on the edge? 'svn co https://opentk.svn.sourceforge.net/svnroot/opentk/trunk opentk'
-
-=================================================================================
