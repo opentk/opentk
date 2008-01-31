@@ -11,12 +11,13 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
+using System.Reflection;
 
 using OpenTK;
-using System.Reflection;
 using OpenTK.OpenGL;
-using System.Threading;
 using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics;
 
 namespace Examples.WinForms
 {

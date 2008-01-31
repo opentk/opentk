@@ -1,0 +1,109 @@
+<?xml version="1.0" ?>
+<project name="Examples" default="build">
+    <target name="build">
+        <echo message="Build Directory is ${project::get-base-directory()}/${build.dir}" />
+        <mkdir dir="${project::get-base-directory()}/${build.dir}" />
+        <copy todir="${project::get-base-directory()}/${build.dir}" flatten="true">
+            <fileset basedir="${project::get-base-directory()}">
+            </fileset>
+        </copy>
+        <csc target="winexe" debug="${build.debug}" unsafe="True" define="TRACE;" main="Examples.ExampleLauncher" doc="${project::get-base-directory()}/${build.dir}/OpenTK.xml" output="${project::get-base-directory()}/${build.dir}/${project::get-name()}.exe">
+            <resources prefix="Examples" dynamicprefix="true" >
+            </resources>
+            <sources failonempty="true">
+                <include name="ExampleAttribute.cs" />
+                <include name="ExampleLauncher.cs" />
+                <include name="ExampleLauncher.Designer.cs" />
+                <include name="IExample.cs" />
+                <include name="Utilities.cs" />
+                <include name="OpenAL/TestAudioContext.cs" />
+                <include name="OpenGL/GluTessellation.cs" />
+                <include name="Properties/AssemblyInfo.cs" />
+                <include name="Shapes/Cube.cs" />
+                <include name="Shapes/IsoSphere.cs" />
+                <include name="Shapes/Plane.cs" />
+                <include name="Shapes/Shape.cs" />
+                <include name="Tests/MathSpeed.cs" />
+                <include name="Tests/S01_Call_Performance.cs" />
+                <include name="Tests/S04_Input_Logger.cs" />
+                <include name="Tests/S04_Input_Logger.Designer.cs" />
+                <include name="Tests/TestResolutionChanges.cs" />
+                <include name="Tutorial/Fonts.cs" />
+                <include name="Tutorial/T01_Simple_Window.cs" />
+                <include name="Tutorial/T02_Vertex_Arrays.cs" />
+                <include name="Tutorial/T03_Immediate_Mode_Cube.cs" />
+                <include name="Tutorial/T04_Vertex_Lighting.cs" />
+                <include name="Tutorial/T07_Display_Lists_Flower.cs" />
+                <include name="Tutorial/T08_VBO.cs" />
+                <include name="Tutorial/T10_GLSL_Cube.cs" />
+                <include name="Tutorial/Text.cs" />
+                <include name="Tutorial/Textures.cs" />
+                <include name="WinForms/DerivedGLControl.cs" />
+                <include name="WinForms/DerivedGLControl.Designer.cs" />
+                <include name="WinForms/W01_First_Window.cs" />
+                <include name="WinForms/W01_First_Window.Designer.cs" />
+                <include name="WinForms/W02_Immediate_Mode_Cube.cs" />
+                <include name="WinForms/W02_Immediate_Mode_Cube.Designer.cs" />
+                <include name="WinForms/W03_Extensions.cs" />
+                <include name="WinForms/W03_Extensions.Designer.cs" />
+                <include name="WinForms/W04_Multiple_GLControls.cs" />
+                <include name="WinForms/W04_Multiple_GLControls.Designer.cs" />
+            </sources>
+            <references basedir="${project::get-base-directory()}">
+                <lib>
+                    <include name="${project::get-base-directory()}" />
+                    <include name="${project::get-base-directory()}/${build.dir}" />
+                </lib>
+                <include name="../OpenTK/${build.dir}/OpenTK.dll" />
+                <include name="System.dll" />
+                <include name="System.Drawing.dll" />
+                <include name="System.Windows.Forms.dll" />
+                <include name="System.Data.dll" />
+            </references>
+        </csc>
+    </target>
+    <target name="clean">
+        <delete dir="${bin.dir}" failonerror="false" />
+        <delete dir="${obj.dir}" failonerror="false" />
+    </target>
+    <target name="doc" description="Creates documentation.">
+        <property name="doc.target" value="" />
+        <if test="${platform::is-unix()}">
+            <property name="doc.target" value="Web" />
+        </if>
+        <ndoc failonerror="false" verbose="true">
+            <assemblies basedir="${project::get-base-directory()}">
+                <include name="${build.dir}/${project::get-name()}.exe" />
+            </assemblies>
+            <summaries basedir="${project::get-base-directory()}">
+                <include name="${build.dir}/${project::get-name()}.xml"/>
+            </summaries>
+            <referencepaths basedir="${project::get-base-directory()}">
+                <include name="${build.dir}" />
+            </referencepaths>
+            <documenters>
+                <documenter name="MSDN">
+                    <property name="OutputDirectory" value="${project::get-base-directory()}/${build.dir}/doc/${project::get-name()}" />
+                    <property name="OutputTarget" value="${doc.target}" />
+                    <property name="HtmlHelpName" value="${project::get-name()}" />
+                    <property name="IncludeFavorites" value="False" />
+                    <property name="Title" value="${project::get-name()} SDK Documentation" />
+                    <property name="SplitTOCs" value="False" />
+                    <property name="DefaulTOC" value="" />
+                    <property name="ShowVisualBasic" value="True" />
+                    <property name="AutoDocumentConstructors" value="True" />
+                    <property name="ShowMissingSummaries" value="${build.debug}" />
+                    <property name="ShowMissingRemarks" value="${build.debug}" />
+                    <property name="ShowMissingParams" value="${build.debug}" />
+                    <property name="ShowMissingReturns" value="${build.debug}" />
+                    <property name="ShowMissingValues" value="${build.debug}" />
+                    <property name="DocumentInternals" value="False" />
+                    <property name="DocumentPrivates" value="False" />
+                    <property name="DocumentProtected" value="True" />
+                    <property name="DocumentEmptyNamespaces" value="${build.debug}" />
+                    <property name="IncludeAssemblyVersion" value="True" />
+                </documenter>
+            </documenters>
+        </ndoc>
+    </target>
+</project>
