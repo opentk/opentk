@@ -13,6 +13,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using OpenTK.Platform;
+using OpenTK.Graphics;
 
 namespace OpenTK
 {

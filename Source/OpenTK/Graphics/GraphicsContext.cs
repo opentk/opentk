@@ -10,7 +10,7 @@ using System.Text;
 
 using OpenTK.Platform;
 
-namespace OpenTK
+namespace OpenTK.Graphics
 {
     /// <summary>
     /// Represents and provides methods to manipulate an OpenGL render context.
