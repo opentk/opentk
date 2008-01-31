@@ -38,13 +38,15 @@ namespace OpenTK.Platform.Windows
 
         #region --- Contructors ---
 
-        /// <summary>
-        /// Constructs a new WinGLContext object.
-        /// </summary>
+        static WinGLContext()
+        {
+            // Set the GetCurrentContext implementation.
+            if (GLContext.GetCurrentContext == null)
+                GLContext.GetCurrentContext = WinGLContext.GetCurrentContext;
+        }
+
         public WinGLContext()
         {
-            if (GLContext.GetCurrentContext == null)
-                GLContext.GetCurrentContext = this.GetCurrentContext;
         }
 
         #endregion
@@ -127,15 +129,14 @@ namespace OpenTK.Platform.Windows
         public bool IsCurrent
         {
             get { return Wgl.GetCurrentContext() == this.renderContext; }
-        }
+            set
+            {
+                if (value)
+                    Wgl.MakeCurrent(this.deviceContext, this.renderContext);
+                else
+                    Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+            }
 
-        #endregion
-
-        #region public ContextHandle GetCurrentContext()
-
-        public ContextHandle GetCurrentContext()
-        {
-            return Wgl.GetCurrentContext();
         }
 
         #endregion
@@ -292,10 +293,10 @@ namespace OpenTK.Platform.Windows
                 pixelFormat.AccumAlphaBits = (byte)accum.Alpha;
             }
             */
-            pixelFormat.DepthBits = (byte)mode.Depth;
-            pixelFormat.StencilBits = (byte)mode.Stencil;
+            pixelFormat.DepthBits = (byte)mode.DepthBits;
+            pixelFormat.StencilBits = (byte)mode.StencilBits;
 
-            if (mode.Depth <= 0)
+            if (mode.DepthBits <= 0)
             {
                 pixelFormat.Flags |= PixelFormatDescriptorFlags.DEPTH_DONTCARE;
             }
@@ -348,11 +349,20 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- Internal Members ---
+        #region --- Methods ---
 
         #region internal IntPtr Device
 
         internal IntPtr Device { get { return deviceContext; } }
+
+        #endregion
+
+        #region static ContextHandle GetCurrentContext()
+
+        static ContextHandle GetCurrentContext()
+        {
+            return Wgl.GetCurrentContext();
+        }
 
         #endregion
 

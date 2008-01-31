@@ -24,20 +24,20 @@ namespace OpenTK.Platform
         /// <seealso cref="CreateContext(bool)"/>
         void CreateContext(bool direct, IGLContext source);
 
-        /// <summary>
-        /// Swaps buffers, presenting the rendered scene to the user.
-        /// </summary>
+        /// <summary>Swaps buffers, presenting the rendered scene to the user.</summary>
         void SwapBuffers();
 
-        /// <summary>
-        /// Makes the Context current in the calling thread, i.e. future OpenGL commands will affect this Context.
-        /// </summary>
+        /// <summary>Makes the GraphicsContext current in the calling thread.</summary>
+        /// <remarks>
+        /// <para>OpenGL commands in one thread, affect the GraphicsContext which is current in that thread.</para>
+        /// <para>It is an error to issue an OpenGL command in a thread without a current GraphicsContext.</para>
+        /// </remarks>
         void MakeCurrent();
 
         /// <summary>
-        /// Gets a System.Boolean indicating whether this Context is current in the calling thread.
+        /// Gets or sets a System.Boolean indicating whether the GraphicsContext is current in the calling thread.
         /// </summary>
-        bool IsCurrent { get; }
+        bool IsCurrent { get; set;  }
 
         /// <summary>
         /// Raised when a Context is destroyed.
@@ -79,12 +79,12 @@ namespace OpenTK.Platform
         /// </summary>
         DisplayMode Mode { get; }
 
-        /// <summary>
-        /// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
-        /// calling thread, or IntPtr.Zero if no OpenGL context is current.
-        /// </summary>
-        /// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
-        ContextHandle GetCurrentContext();
+        ///// <summary>
+        ///// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
+        ///// calling thread, or IntPtr.Zero if no OpenGL context is current.
+        ///// </summary>
+        ///// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
+        //ContextHandle GetCurrentContext();
 
         /// <summary>
         /// Registers an OpenGL resource for disposal.
