@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using OpenTK.OpenGL;
 using OpenTK.Input;
+using OpenTK.Graphics;
 
 #endregion
 
@@ -306,12 +307,13 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public void CreateWindow(DisplayMode mode, out IGLContext context)
+        #region public void CreateWindow(int width, int height, GraphicsFormat format, out IGLContext context)
 
-        public void CreateWindow(int width, int height, DisplayMode windowMode, out IGLContext context)
+        public void CreateWindow(int width, int height, GraphicsFormat format, out IGLContext context)
         {
-            Debug.Print("Creating native window with mode: {0}", windowMode.ToString());
+            Debug.Print("Creating native window.");
             Debug.Indent();
+            Debug.Print("GraphicsFormat: {0}", format.ToString());
 
             CreateParams cp = new CreateParams();
             cp.ClassStyle =
@@ -346,7 +348,7 @@ namespace OpenTK.Platform.Windows
             cp.Width = rect.right - rect.left;
             cp.Height = rect.bottom - rect.top;
             cp.Caption = "OpenTK Game Window";
-            
+
             // Keep in mind that some construction code runs in WM_CREATE,
             // which is raised CreateHandle()
             CreateHandle(cp);

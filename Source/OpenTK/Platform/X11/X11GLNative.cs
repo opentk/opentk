@@ -392,20 +392,9 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public void CreateWindow(DisplayMode mode, out IGLContext glContext)
+        #region public void CreateWindow(int width, int height, GraphicsFormat format, out IGLContext glContext)
 
-        /// <summary>
-        /// Opens a new render window with the given DisplayMode.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the render window.</param>
-        /// <remarks>
-        /// Creates the window visual and colormap. Associates the colormap/visual
-        /// with the window and raises the window on top of the window stack.
-        /// <para>
-        /// Colormap creation is currently disabled.
-        /// </para>
-        /// </remarks>
-        public void CreateWindow(int width, int height, DisplayMode mode, out IGLContext glContext)
+        public void CreateWindow(int width, int height, GraphicsFormat format, out IGLContext glContext)
         {
             if (exists)
                 throw new ApplicationException("Render window already exists!");
@@ -485,6 +474,26 @@ namespace OpenTK.Platform.X11
             Debug.Unindent();
             Debug.WriteLine("GameWindow creation completed successfully!");
             exists = true;
+        }
+
+        #endregion
+
+        #region public void CreateWindow(int width, int height, DisplayMode mode, out IGLContext glContext)
+
+        /// <summary>
+        /// Opens a new render window with the given DisplayMode.
+        /// </summary>
+        /// <param name="mode">The DisplayMode of the render window.</param>
+        /// <remarks>
+        /// Creates the window visual and colormap. Associates the colormap/visual
+        /// with the window and raises the window on top of the window stack.
+        /// <para>
+        /// Colormap creation is currently disabled.
+        /// </para>
+        /// </remarks>
+        public void CreateWindow(int width, int height, DisplayMode mode, out IGLContext glContext)
+        {
+            this.CreateWindow(width, height, new GraphicsFormat(), out glContext);
         }
 
         #endregion
@@ -727,8 +736,8 @@ namespace OpenTK.Platform.X11
             {
                 MotifWmHints hints = new MotifWmHints();
                 hints.flags = (IntPtr)MotifFlags.Decorations;
-                Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
-                    Marshal.SizeOf(hints) / 4);
+                Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints, 5
+                    /*Marshal.SizeOf(hints) / 4*/);
                 return true;
             }
             return false;
@@ -763,7 +772,7 @@ namespace OpenTK.Platform.X11
             {
                 IntPtr hints = IntPtr.Zero;
                 Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
-                    Marshal.SizeOf(hints) / 4);
+                    /*Marshal.SizeOf(hints) / 4*/ 1);
                 return true;
             }
 
@@ -780,8 +789,8 @@ namespace OpenTK.Platform.X11
             if (atom != IntPtr.Zero)
             {
                 IntPtr hints = Functions.XInternAtom(this.window.Display, "_NET_WM_STATE_FULLSCREEN", true); 
-                Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints,
-                    Marshal.SizeOf(hints) / 4);
+                Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace, ref hints, 1
+                    /*Marshal.SizeOf(hints) / 4*/);
                 return true;
             }
             return false;

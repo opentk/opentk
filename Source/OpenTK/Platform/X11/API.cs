@@ -679,15 +679,21 @@ XF86VidModeGetGammaRampSize(
 
     #region internal struct XRRScreenSize
 
+    #pragma warning disable 0169, 0649
+
     internal struct XRRScreenSize
     {
         internal int Width, Height;
         internal int MWidth, MHeight;
     };
 
+    #pragma warning restore 0169, 0649
+
     #endregion
 
     #region unsafe internal struct Screen
+
+    #pragma warning disable 0169
 
     unsafe internal struct Screen
     {
@@ -710,9 +716,13 @@ XF86VidModeGetGammaRampSize(
 	    long root_input_mask;	/* initial root input mask */
     }
 
+    #pragma warning restore 0169
+
     #endregion
 
     #region unsafe internal class XExtData
+
+#pragma warning disable 0169
 
     unsafe internal class XExtData
     {
@@ -722,6 +732,8 @@ XF86VidModeGetGammaRampSize(
         FreePrivateDelegate FreePrivate;    /* called to free private storage */
         XPointer private_data;	/* data private to this extension. */
     };
+
+    #pragma warning restore 0169
 
     #endregion
 
@@ -1263,7 +1275,7 @@ XF86VidModeGetGammaRampSize(
         /// <para>The XCreateSimpleWindow function creates an unmapped InputOutput subwindow for a specified parent window, returns the window ID of the created window, and causes the X server to generate a CreateNotify event. The created window is placed on top in the stacking order with respect to siblings. Any part of the window that extends outside its parent window is clipped. The border_width for an InputOnly window must be zero, or a BadMatch error results. XCreateSimpleWindow inherits its depth, class, and visual from its parent. All other window attributes, except background and border, have their default values. </para>
         /// <para>XCreateSimpleWindow can generate BadAlloc, BadMatch, BadValue, and BadWindow errors.</para>
         /// </remarks>
-        [DllImport(X11Library, EntryPoint = "XCreateWindow"), CLSCompliant(false)]
+        [DllImport(X11Library, EntryPoint = "XCreateWindow")]//, CLSCompliant(false)]
         public extern static Window XCreateWindow(Display display, Window parent,
             int x, int y, int width, int height, int border_width, int depth,
             int @class, IntPtr visual, UIntPtr valuemask, ref XSetWindowAttributes attributes);

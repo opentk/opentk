@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -17,6 +19,7 @@ namespace OpenTK
     using OpenTK.Graphics;
 
     /// <summary>Defines the display mode for a render window.</summary>
+    [Obsolete]
     public sealed class DisplayMode
     {
         #region --- Private Variables ---
@@ -36,72 +39,11 @@ namespace OpenTK
 
         #region --- Constructors ---
 
-        /// <summary>
-        /// Constructs a new DisplayMode from the given DisplayMode.
-        /// </summary>
-        /// <param name="mode"></param>
         public DisplayMode(DisplayMode mode)
-            : this(mode.ColorFormat, mode.Depth, mode.Stencil, mode.AuxilliaryColorFormat, mode.Buffers, mode.Stereo) { }
+            : this(mode.width, mode.height, mode.color_format, mode.depthBits, mode.stencilBits, mode.auxilliary_color_format.BitsPerPixel,
+                   mode.buffers, mode.fullscreen, mode.stereo, mode.vsync, mode.refreshRate) { }
 
-        /// <summary>Constructs a new DisplayMode with sensible default parameters.</summary>
-        public DisplayMode()
-            : this(DisplayDevice.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 2, false)
-        {
-        }
-
-        /// <summary>Constructs a new DisplayMode with the specified parameters.</summary>
-        /// <param name="color">The ColorMode of the color buffer.</param>
-        public DisplayMode(ColorMode color)
-            : this(color, 16, 0, 0, 2, false) { }
-
-        /// <summary>Constructs a new DisplayMode with the specified parameters.</summary>
-        /// <param name="color">The ColorMode of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        public DisplayMode(ColorMode color, int depth)
-            : this(color, depth, 0, 0, 2, false) { }
-
-        /// <summary>Constructs a new DisplayMode with the specified parameters.</summary>
-        /// <param name="color">The ColorMode of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        public DisplayMode(ColorMode color, int depth, int stencil)
-            : this(color, depth, stencil, 0, 2, false) { }
-
-        /// <summary>Constructs a new DisplayMode with the specified parameters.</summary>
-        /// <param name="color">The ColorMode of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        /// <param name="aux">The ColorMode of the auxilliary buffer.</param>
-        public DisplayMode(ColorMode color, int depth, int stencil, ColorMode aux)
-            : this(color, depth, stencil, aux, 2, false) { }
-
-        /// <summary>Constructs a new DisplayMode with the specified parameters.</summary>
-        /// <param name="color">The ColorMode of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        /// <param name="aux">The ColorMode of the auxilliary buffer.</param>
-        /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
-        public DisplayMode(ColorMode color, int depth, int stencil, ColorMode aux, int buffers)
-            : this(color, depth, stencil, aux, buffers, false) { }
-
-        /// <summary>Constructs a new DisplayMode with the specified parameters.</summary>
-        /// <param name="color">The ColorMode of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        /// <param name="aux">The ColorMode of the auxilliary buffer.</param>
-        /// <param name="stereo">Set to true for a DisplayMode with stereographic capabilities.</param>
-        /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
-        public DisplayMode(ColorMode color, int depth, int stencil, ColorMode aux, int buffers, bool stereo)
-        {
-            this.ColorFormat = color;
-            this.Depth = depth;
-            this.Stencil = stencil;
-            this.AuxilliaryColorFormat = aux;
-            this.Buffers = buffers;
-            this.Stereo = stereo;
-        }
-
-        #region Obsolete Constructors
+        public DisplayMode() : this(640, 480) { }
 
         /// <summary>
         /// Constructs a new DisplayMode from the specified parameters.
@@ -117,7 +59,6 @@ namespace OpenTK
         /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
         /// <param name="vsync">Set to true to sync the updates to the screen refresh rate.</param>
         /// <param name="refresh">The desired RefreshRate. Taken into account only for Fullscreen DisplayModes.</param>
-        [Obsolete]
         public DisplayMode(int width, int height, ColorMode color, int depth, int stencil, int aux, int buffers,
             bool fullscreen, bool stereo, bool vsync, float refresh)
         {
@@ -139,7 +80,6 @@ namespace OpenTK
         /// </summary>
         /// <param name="width">The Width of the DisplayMode in pixels.</param>
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
-        [Obsolete]
         public DisplayMode(int width, int height)
             : this(width, height, DisplayDevice.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 0, false, false, false, 0.0f)
         {
@@ -151,7 +91,6 @@ namespace OpenTK
         /// <param name="width">The Width of the DisplayMode in pixels.</param>
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         /// <param name="color">The ColorMode of the color buffer.</param>
-        [Obsolete]
         public DisplayMode(int width, int height, ColorMode color)
             : this(width, height, color, 16, 0, 0, 0, false, false, false, 0.0f)
         {
@@ -164,7 +103,6 @@ namespace OpenTK
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         /// <param name="color">The ColorMode of the color buffer.</param>
         /// <param name="depth">The number of bits in the depth buffer.</param>
-        [Obsolete]
         public DisplayMode(int width, int height, ColorMode color, int depth)
             : this(width, height, color, depth, 0, 0, 0, false, false, false, 0.0f)
         {
@@ -178,7 +116,6 @@ namespace OpenTK
         /// <param name="color">The ColorMode of the color buffer.</param>
         /// <param name="depth">The number of bits in the depth buffer.</param>
         /// <param name="fullscreen">True for a fullscreen DisplayMode, false otherwise.</param>
-        [Obsolete]
         public DisplayMode(int width, int height, ColorMode color, int depth, bool fullscreen)
             : this(width, height, color, depth, 0, 0, 0, fullscreen, false, false, 0.0f)
         {
@@ -186,10 +123,8 @@ namespace OpenTK
 
         #endregion
 
-        #endregion
-
         #region --- Public Properties ---
-
+#if false
         #region public int ColorFormat
 
         /// <summary>
@@ -243,12 +178,15 @@ namespace OpenTK
         }
 
         #endregion
+#endif
+        #region Obsolete Properties
 
         #region public bool Stereo
 
         /// <summary>
         /// Gets a System.Boolean indicating whether this DisplayMode is stereoscopic.
         /// </summary>
+        [Obsolete("Use GraphicsFormat.Stereo instead.")]
         public bool Stereo
         {
             get { return this.stereo; }
@@ -263,6 +201,7 @@ namespace OpenTK
         /// Gets a System.Int32 containing the number of buffers associated with this
         /// DisplayMode.
         /// </summary>
+        [Obsolete("Use GraphicsFormat.Buffers instead.")]
         public int Buffers
         {
             get { return this.buffers; }
@@ -270,8 +209,6 @@ namespace OpenTK
         }
 
         #endregion
-
-        #region Obsolete Properties
 
         [Obsolete("Use GameWindow.Fullscreen instead.")]
         public bool Fullscreen
@@ -287,7 +224,7 @@ namespace OpenTK
             internal set { this.vsync = value; }
         }
 
-        [Obsolete("Use OpenTK.Graphics.Display.RefreshRate instead.")]
+        [Obsolete("Use OpenTK.Graphics.DisplayDevice.RefreshRate instead.")]
         public float RefreshRate
         {
             get { return this.refreshRate; }
@@ -296,7 +233,7 @@ namespace OpenTK
 
         #region public ColorDepth Color
         
-        [Obsolete("Use DisplayMode.ColorFormat instead.")]
+        [Obsolete("Use GraphicsFormat.Color instead.")]
         public ColorMode Color
         {
             get { return this.color_format; }
@@ -345,30 +282,35 @@ namespace OpenTK
 
         #endregion
 
-        [Obsolete("Use DisplayMode.Depth instead.")]
+        [Obsolete("Use GraphicsFormat.Depth instead.")]
         public int DepthBits
         {
             get { return this.depthBits; }
             internal set { this.depthBits = value; }
         }
 
-        [Obsolete("Use DisplayMode.Stencil instead.")]
+        [Obsolete("Use GraphicsFormat.Stencil instead.")]
         public int StencilBits
         {
             get { return this.stencilBits; }
             internal set { this.stencilBits = value; }
         }
 
-        [Obsolete("Use DisplayMode.AuxilliaryColorFormat instead.")]
+        [Obsolete("Use GraphicsFormat.AuxilliaryColorFormat instead.")]
         public int AuxBits
         {
-            get { return this.AuxilliaryColorFormat.BitsPerPixel; }
-            internal set { this.AuxilliaryColorFormat = value; }
+            get { return this.auxilliary_color_format.BitsPerPixel; }
+            internal set { this.auxilliary_color_format = value; }
         }
 
         #endregion
 
         #endregion
+
+        internal GraphicsFormat ToGraphicsFormat()
+        {
+            return new GraphicsFormat(this.Color, this.DepthBits, this.StencilBits, this.AuxBits, this.Buffers, this.Stereo);
+        }
 
         #region --- Overrides ---
 
