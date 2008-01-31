@@ -42,8 +42,8 @@ namespace OpenTK.Platform.Windows
         static WinGLContext()
         {
             // Set the GetCurrentContext implementation.
-            if (GLContext.GetCurrentContext == null)
-                GLContext.GetCurrentContext = WinGLContext.GetCurrentContext;
+            if (GraphicsContext.GetCurrentContext == null)
+                GraphicsContext.GetCurrentContext = WinGLContext.GetCurrentContext;
         }
 
         public WinGLContext()
@@ -218,7 +218,7 @@ namespace OpenTK.Platform.Windows
 
         void IGLContextInternal.RegisterForDisposal(IDisposable resource)
         {
-            throw new NotSupportedException("Use OpenTK.GLContext instead.");
+            throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
         }
 
         #endregion
@@ -227,7 +227,7 @@ namespace OpenTK.Platform.Windows
 
         void IGLContextInternal.DisposeResources()
         {
-            throw new NotSupportedException("Use OpenTK.GLContext instead.");
+            throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
         }
 
         #endregion
