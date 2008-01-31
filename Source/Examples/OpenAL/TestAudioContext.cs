@@ -48,9 +48,9 @@ namespace Examples
             context.Process();
             Trace.Assert(context.IsProcessing);
 
-            Trace.WriteLine("MakeCurrent()...");
-            context.MakeCurrent();
-            Trace.Assert(context.IsCurrent);
+            //Trace.WriteLine("MakeCurrent()...");
+            //context.MakeCurrent();
+            //Trace.Assert(context.IsCurrent);
 
             //Trace.WriteLine("IsCurrent = false...");
             //context.IsCurrent = false;
