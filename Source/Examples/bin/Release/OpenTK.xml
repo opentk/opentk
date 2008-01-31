@@ -1,0 +1,476 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Examples</name>
+    </assembly>
+    <members>
+        <member name="M:Examples.ExampleLauncher.Main">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="F:Examples.ExampleLauncher.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Examples.ExampleLauncher.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Examples.ExampleLauncher.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Examples.ExampleLauncher.ExampleInfo">
+            <summary>
+            Contains the information necessary to display and launch an example thorugh the ExampleLauncer.
+            </summary>
+        </member>
+        <member name="T:Examples.IExample">
+            <summary>
+            This interface is is used by the ExampleLauncher to identify OpenTK examples,
+            your applications do not need to implement or use it.
+            </summary>
+        </member>
+        <member name="M:Examples.Utilities.ColorToRgba32(System.Drawing.Color)">
+            <summary>
+            Converts a System.Drawing.Color to a System.Int32.
+            </summary>
+            <param name="c">The System.Drawing.Color to convert.</param>
+            <returns>A System.Int32 containing the R, G, B, A values of the
+            given System.Drawing.Color in the Rbga32 format.</returns>
+        </member>
+        <member name="M:Examples.Tests.S04_Input_Logger.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="F:Examples.Tests.S04_Input_Logger.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Examples.Tests.S04_Input_Logger.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Examples.Tests.S04_Input_Logger.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Examples.Tutorial.Fonts">
+            <summary>
+            Tests Font loading and rendering.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.Fonts.OnLoad(System.EventArgs)">
+            <summary>
+            To maintain high rendering performance, we need to cache the text
+            we wish to draw, for each font we want to draw it with. To achieve
+            this, we use the TextPrinter.Prepare() method, which returns a
+            TextHandle - i.e. a handle to the cached text.
+            <para>
+            We can use these TextHandles with the TextPrinter.Draw() method
+            to draw text with very high performance.
+            </para>
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Examples.Tutorial.Fonts.OnUnload(System.EventArgs)">
+            <summary>
+            It is important that we need to call the Dispose() methods to reclaim of
+            each and every TextHandle and TextureFont to reclaim the unamanged
+            (OpenGL) resources they are using.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Examples.Tutorial.Fonts.OnRenderFrame(OpenTK.RenderFrameEventArgs)">
+            <summary>
+            To render pixel-perfect text, we have to setup a 2d display projection
+            with a width/height that corresponds to our current Viewport.
+            In OpenGL this can be easily achieved using the GL.Ortho method.
+            <para>
+            It is still possible to render text in a 3d projection, but it will
+            be very hard to achieve pixel-perfect precision.
+            </para>
+            <para>
+            To achieve the highest possible performance, render your 3d scene first.
+            At the end of the RenderFrame call, setup a 2d projection and render all
+            text in one go.
+            </para>
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Examples.Tutorial.Fonts.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="T:Examples.Tutorial.T01_Simple_Window">
+            <summary>
+            Demonstrates the GameWindow class.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T01_Simple_Window.Keyboard_KeyDown(OpenTK.Input.KeyboardDevice,OpenTK.Input.Key)">
+            <summary>
+            Occurs when a key is pressed.
+            </summary>
+            <param name="sender">The KeyboardDevice which generated this event.</param>
+            <param name="key">The key that was pressed.</param>
+        </member>
+        <member name="M:Examples.Tutorial.T01_Simple_Window.OnLoad(System.EventArgs)">
+            <summary>
+            Setup OpenGL and load resources here.
+            </summary>
+            <param name="e">Not used.</param>
+        </member>
+        <member name="M:Examples.Tutorial.T01_Simple_Window.OnResize(OpenTK.Platform.ResizeEventArgs)">
+            <summary>
+            Respond to resize events here.
+            </summary>
+            <param name="e">Contains information on the new GameWindow size.</param>
+            <remarks>There is no need to call the base implementation.</remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T01_Simple_Window.OnUpdateFrame(OpenTK.UpdateFrameEventArgs)">
+            <summary>
+            Add your game logic here.
+            </summary>
+            <param name="e">Contains timing information.</param>
+            <remarks>There is no need to call the base implementation.</remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T01_Simple_Window.OnRenderFrame(OpenTK.RenderFrameEventArgs)">
+            <summary>
+            Add your game rendering code here.
+            </summary>
+            <param name="e">Contains timing information.</param>
+            <remarks>There is no need to call the base implementation.</remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T01_Simple_Window.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="T:Examples.Tutorial.T02_Vertex_Arrays">
+            <summary>
+            Demonstrates Vertex Arrays (in system memory).  Example is incomplete (documentation).
+            Broken since release 0.3.12.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T02_Vertex_Arrays.OnResize(OpenTK.Platform.ResizeEventArgs)">
+            <summary>
+            Called when the user resizes the window.
+            </summary>
+            <param name="e">Contains the new width/height of the window.</param>
+            <remarks>
+            You want the OpenGL viewport to match the window. This is the place to do it!
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T02_Vertex_Arrays.OnUpdateFrame(OpenTK.UpdateFrameEventArgs)">
+            <summary>
+            Prepares the next frame for rendering.
+            </summary>
+            <remarks>
+            Place your control logic here. This is the place to respond to user input,
+            update object positions etc.
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T02_Vertex_Arrays.OnRenderFrame(OpenTK.RenderFrameEventArgs)">
+            <summary>
+            Place your rendering code here.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T02_Vertex_Arrays.Launch">
+            <summary>
+            Launches this example.
+            </summary>
+            <remarks>
+            Provides a simple way for the example launcher to launch the examples.
+            </remarks>
+        </member>
+        <member name="T:Examples.Tutorial.T03_Immediate_Mode_Cube">
+            <summary>
+            Demonstrates immediate mode rendering. Example is incomplete, and will probably go away in the future.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T03_Immediate_Mode_Cube.OnResize(OpenTK.Platform.ResizeEventArgs)">
+            <summary>
+            Called when the user resizes the window.
+            </summary>
+            <param name="e">Contains the new width/height of the window.</param>
+            <remarks>
+            You want the OpenGL viewport to match the window. This is the place to do it!
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T03_Immediate_Mode_Cube.OnUpdateFrame(OpenTK.UpdateFrameEventArgs)">
+            <summary>
+            Prepares the next frame for rendering.
+            </summary>
+            <remarks>
+            Place your control logic here. This is the place to respond to user input,
+            update object positions etc.
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T03_Immediate_Mode_Cube.OnRenderFrame(OpenTK.RenderFrameEventArgs)">
+            <summary>
+            Place your rendering code here.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T03_Immediate_Mode_Cube.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="T:Examples.Tutorial.T04_Vertex_Lighting">
+            <summary>
+            Demonstrates fixed-function OpenGL lighting.  Example is incomplete (documentation).
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T04_Vertex_Lighting.OnResize(OpenTK.Platform.ResizeEventArgs)">
+            <summary>
+            Called when the user resizes the window.
+            </summary>
+            <param name="e">Contains the new width/height of the window.</param>
+            <remarks>
+            You want the OpenGL viewport to match the window. This is the place to do it!
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T04_Vertex_Lighting.OnUpdateFrame(OpenTK.UpdateFrameEventArgs)">
+            <summary>
+            Prepares the next frame for rendering.
+            </summary>
+            <remarks>
+            Place your control logic here. This is the place to respond to user input,
+            update object positions etc.
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T04_Vertex_Lighting.OnRenderFrame(OpenTK.RenderFrameEventArgs)">
+            <summary>
+            Place your rendering code here.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T04_Vertex_Lighting.Launch">
+            <summary>
+            Launches this example.
+            </summary>
+            <remarks>
+            Provides a simple way for the example launcher to launch the examples.
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T07_Display_Lists_Flower.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T08_VBO.OnUpdateFrame(OpenTK.UpdateFrameEventArgs)">
+            <summary>
+            Prepares the next frame for rendering.
+            </summary>
+            <remarks>
+            Place your control logic here. This is the place to respond to user input,
+            update object positions etc.
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T08_VBO.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="T:Examples.Tutorial.T10_GLSL_Cube">
+            <summary>
+            Demonstrates how to load and use a simple OpenGL shader program. Example is incomplete (documentation).
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T10_GLSL_Cube.OnLoad(System.EventArgs)">
+            <summary>
+            This is the place to load resources that change little
+            during the lifetime of the GameWindow. In this case, we
+            check for GLSL support, and load the shaders.
+            </summary>
+            <param name="e">Not used.</param>
+        </member>
+        <member name="M:Examples.Tutorial.T10_GLSL_Cube.OnResize(OpenTK.Platform.ResizeEventArgs)">
+            <summary>
+            Called when the user resizes the window.
+            </summary>
+            <param name="e">Contains the new width/height of the window.</param>
+            <remarks>
+            You want the OpenGL viewport to match the window. This is the place to do it!
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T10_GLSL_Cube.OnUpdateFrame(OpenTK.UpdateFrameEventArgs)">
+            <summary>
+            Prepares the next frame for rendering.
+            </summary>
+            <remarks>
+            Place your control logic here. This is the place to respond to user input,
+            update object positions etc.
+            </remarks>
+        </member>
+        <member name="M:Examples.Tutorial.T10_GLSL_Cube.OnRenderFrame(OpenTK.RenderFrameEventArgs)">
+            <summary>
+            Place your rendering code here.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.T10_GLSL_Cube.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="T:Examples.Tutorial.Text">
+            <summary>
+            Shows how to render and scroll large amounts of text.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.Text.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="T:Examples.Tutorial.Textures">
+            <summary>
+            Demonstrates simple OpenGL Texturing.
+            </summary>
+        </member>
+        <member name="M:Examples.Tutorial.Textures.OnLoad(System.EventArgs)">
+            <summary>
+            Setup OpenGL and load resources here.
+            </summary>
+            <param name="e">Not used.</param>
+        </member>
+        <member name="M:Examples.Tutorial.Textures.OnResize(OpenTK.Platform.ResizeEventArgs)">
+            <summary>
+            Respond to resize events here.
+            </summary>
+            <param name="e">Contains information on the new GameWindow size.</param>
+            <remarks>There is no need to call the base implementation.</remarks>
+        </member>
+        <member name="M:Examples.Tutorial.Textures.OnUpdateFrame(OpenTK.UpdateFrameEventArgs)">
+            <summary>
+            Add your game logic here.
+            </summary>
+            <param name="e">Contains timing information.</param>
+            <remarks>There is no need to call the base implementation.</remarks>
+        </member>
+        <member name="M:Examples.Tutorial.Textures.OnRenderFrame(OpenTK.RenderFrameEventArgs)">
+            <summary>
+            Add your game rendering code here.
+            </summary>
+            <param name="e">Contains timing information.</param>
+            <remarks>There is no need to call the base implementation.</remarks>
+        </member>
+        <member name="M:Examples.Tutorial.Textures.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="F:Examples.WinForms.DerivedGLControl.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Examples.WinForms.DerivedGLControl.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Examples.WinForms.DerivedGLControl.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Examples.WinForms.W01_First_Window.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="F:Examples.WinForms.W01_First_Window.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Examples.WinForms.W01_First_Window.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Examples.WinForms.W01_First_Window.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Examples.WinForms.W02_Immediate_Mode_Cube.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="F:Examples.WinForms.W02_Immediate_Mode_Cube.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Examples.WinForms.W02_Immediate_Mode_Cube.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Examples.WinForms.W02_Immediate_Mode_Cube.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Examples.WinForms.W03_Extensions.Main">
+            <summary>
+            Entry point of this example.
+            </summary>
+        </member>
+        <member name="F:Examples.WinForms.W03_Extensions.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Examples.WinForms.W03_Extensions.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Examples.WinForms.W03_Extensions.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:Examples.WinForms.W04_Multiple_GLControls.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Examples.WinForms.W04_Multiple_GLControls.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Examples.WinForms.W04_Multiple_GLControls.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>
