@@ -392,9 +392,9 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public void CreateWindow(int width, int height, GraphicsFormat format, out IGLContext glContext)
+        #region public void CreateWindow(int width, int height, GraphicsFormat format, out IGraphicsContext glContext)
 
-        public void CreateWindow(int width, int height, GraphicsFormat format, out IGLContext glContext)
+        public void CreateWindow(int width, int height, GraphicsFormat format, out IGraphicsContext glContext)
         {
             if (exists)
                 throw new ApplicationException("Render window already exists!");
@@ -478,7 +478,7 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public void CreateWindow(int width, int height, DisplayMode mode, out IGLContext glContext)
+        #region public void CreateWindow(int width, int height, DisplayMode mode, out IGraphicsContext glContext)
 
         /// <summary>
         /// Opens a new render window with the given DisplayMode.
@@ -491,7 +491,7 @@ namespace OpenTK.Platform.X11
         /// Colormap creation is currently disabled.
         /// </para>
         /// </remarks>
-        public void CreateWindow(int width, int height, DisplayMode mode, out IGLContext glContext)
+        public void CreateWindow(int width, int height, DisplayMode mode, out IGraphicsContext glContext)
         {
             this.CreateWindow(width, height, new GraphicsFormat(), out glContext);
         }

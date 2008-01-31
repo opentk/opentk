@@ -20,8 +20,8 @@ namespace OpenTK.Platform
     /// </summary>
     internal interface INativeGLWindow : IResizable, IDisposable
     {
-        //void CreateWindow(int width, int height, DisplayMode mode, out IGLContext context);
-        void CreateWindow(int width, int height, GraphicsFormat mode, out IGLContext context);
+        //void CreateWindow(int width, int height, DisplayMode mode, out IGraphicsContext context);
+        void CreateWindow(int width, int height, GraphicsFormat mode, out IGraphicsContext context);
         void DestroyWindow();
         void ProcessEvents();
         void PointToClient(ref System.Drawing.Point p);
@@ -33,7 +33,7 @@ namespace OpenTK.Platform
         string Title { get; set; }
         bool Visible { get; set; }
         bool IsIdle { get; }
-        //IGLContext Context { get; }
+        //IGraphicsContext Context { get; }
         IInputDriver InputDriver { get; }
         bool Fullscreen { get; set; }
 
