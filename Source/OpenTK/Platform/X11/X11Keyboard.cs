@@ -16,6 +16,8 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.X11
 {
+    // THIS CLASS IS NOT USED ANYMORE.
+
     /// <summary>
     /// Drives Keyboard devices on X11.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
@@ -173,25 +175,9 @@ namespace OpenTK.Platform.X11
 
             //Debug.Print("Info: {0}", window.ToString());
 
-            API.DisplayKeycodes(window.Display, ref firstKeyCode, ref lastKeyCode);
-            Debug.Print("First keycode: {0}, last {1}", firstKeyCode, lastKeyCode);
 
-            IntPtr keysym_ptr = API.GetKeyboardMapping(window.Display, (byte)firstKeyCode,
-                lastKeyCode - firstKeyCode + 1, ref keysyms_per_keycode);
-            Debug.Print("{0} keysyms per keycode.", keysyms_per_keycode);
-
-            keysyms = new IntPtr[(lastKeyCode - firstKeyCode + 1) * keysyms_per_keycode];
-            Marshal.PtrToStructure(keysym_ptr, keysyms);
-            //keysyms = (IntPtr[])Marshal.PtrToStructure(keysym_ptr, typeof(IntPtr[]));
-
-            API.Free(keysym_ptr);
-            
-            KeyboardDevice kb = new KeyboardDevice();
-            kb.Description = "Default X11 keyboard";
-            kb.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
-            kb.DeviceID = IntPtr.Zero;
-            keyboards.Add(kb);
-            Debug.Print("Keyboard added: {0}", kb.ToString());
+            //keyboards.Add(kb);
+            //Debug.Print("Keyboard added: {0}", kb.ToString());
         }
 
         #endregion
@@ -205,38 +191,9 @@ namespace OpenTK.Platform.X11
         /// <returns>True if the event was processed, false otherwise.</returns>
         internal bool ProcessKeyboardEvent(ref X11.XKeyEvent e)
         {
+            return false;
             //int keysym = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
             //int keysym2 = keysyms[(e.keycode - firstKeyCode) * keysyms_per_keycode].ToInt32();
-            bool pressed = e.type == XEventName.KeyPress;
-
-            IntPtr keysym = API.LookupKeysym(ref e, 0);
-            IntPtr keysym2 = API.LookupKeysym(ref e, 1);
-
-            //Debug.Print("Key down: {0}", e.ToString());
-
-            int index = keyboards.FindIndex(delegate(KeyboardDevice kb)
-            {
-                return kb.DeviceID == IntPtr.Zero;
-            });
-
-            switch (keysym.ToInt64())
-            {
-                default:
-                if (keymap.ContainsKey((XKey)keysym))
-                {
-                    keyboards[index][keymap[(XKey)keysym]] = pressed;
-                }
-                else if (keymap.ContainsKey((XKey)keysym2))
-                {
-                    keyboards[index][keymap[(XKey)keysym2]] = pressed;
-                }
-                else
-                {
-                    //Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.keycode, (XKey)keysym, (XKey)keysym2);
-                    return false;
-                }
-                return true;
-            }
         }
 
         #endregion
