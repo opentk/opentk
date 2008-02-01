@@ -13,12 +13,12 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    internal class KeyMap : Dictionary<VirtualKeys, Input.Key>
+    internal class WinKeyMap : Dictionary<VirtualKeys, Input.Key>
     {
         /// <summary>
         /// Initializes the map between VirtualKeys and OpenTK.Key
         /// </summary>
-        internal KeyMap()
+        internal WinKeyMap()
         {
             try
             {
