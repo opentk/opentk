@@ -11,6 +11,8 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.X11
 {
+    // THIS CLASS IS NOT USED ANYMORE.
+
     /// <summary>
     /// Drives Mouse devices on X11.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
@@ -56,11 +58,16 @@ namespace OpenTK.Platform.X11
         internal bool ProcessButton(ref X11.XButtonEvent e)
         {
             MouseDevice m = mice[0];
-            bool pressed = e.type == XEventName.ButtonPress;
-            //e.
-            if ((e.state & (int)X11.MouseMask.Button1Mask) != 0) m[OpenTK.Input.MouseButton.Left] = pressed;
-            if ((e.state & (int)X11.MouseMask.Button2Mask) != 0) m[OpenTK.Input.MouseButton.Middle] = pressed;
-            if ((e.state & (int)X11.MouseMask.Button3Mask) != 0) m[OpenTK.Input.MouseButton.Right] = pressed;
+            //bool pressed = e.type == XEventName.ButtonPress;
+            //if ((e.state & (int)X11.MouseMask.Button1Mask) != 0) m[OpenTK.Input.MouseButton.Left] = pressed;
+            //if ((e.state & (int)X11.MouseMask.Button2Mask) != 0) m[OpenTK.Input.MouseButton.Middle] = pressed;
+            //if ((e.state & (int)X11.MouseMask.Button3Mask) != 0) m[OpenTK.Input.MouseButton.Right] = pressed;
+            //if ((e.state & (int)X11.MouseMask.Button4Mask) != 0) m.Wheel++;
+            //if ((e.state & (int)X11.MouseMask.Button5Mask) != 0) m.Wheel--;
+
+            if (e.button == (int)MouseButton.Button1) m[OpenTK.Input.MouseButton.Left] = true;
+            else if (e.button == (int)MouseButton.Button2) m[OpenTK.Input.MouseButton.Middle] = true;
+            else if (e.button == (int)MouseButton.Button3) m[OpenTK.Input.MouseButton.Right] = true;
             if ((e.state & (int)X11.MouseMask.Button4Mask) != 0) m.Wheel++;
             if ((e.state & (int)X11.MouseMask.Button5Mask) != 0) m.Wheel--;
             return true;

@@ -7,10 +7,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 using OpenTK.Input;
-using System.Diagnostics;
-using System.Threading;
 
 namespace OpenTK.Platform.X11
 {
@@ -20,13 +20,16 @@ namespace OpenTK.Platform.X11
     /// </summary>
     internal sealed class X11Input : IInputDriver
     {
-        X11Keyboard keyboardDriver;
-        X11Mouse mouseDriver;
         X11.WindowInfo window;
+        KeyboardDevice keyboard = new KeyboardDevice();
+        MouseDevice mouse = new MouseDevice();
+        List<KeyboardDevice> dummy_keyboard_list = new List<KeyboardDevice>(1);
+        List<MouseDevice> dummy_mice_list = new List<MouseDevice>(1);
 
-        //XEvent e = new XEvent();
-
-        Thread pollingThread = null;
+        X11KeyMap keymap = new X11KeyMap();
+        int firstKeyCode, lastKeyCode; // The smallest and largest KeyCode supported by the X server.
+        int keysyms_per_keycode;    // The number of KeySyms for each KeyCode.
+        IntPtr[] keysyms;
 
         bool disposed;
 
@@ -47,43 +50,34 @@ namespace OpenTK.Platform.X11
                 throw new ArgumentException("A valid parent window must be defined, in order to create an X11Input driver.");
 
             window = new X11.WindowInfo(attach);
-            /*
-            window = new WindowInfo();
-            window.Parent = attach;
 
-            Debug.Print("Creating hidden input window.");
+            // Init mouse
+            mouse.Description = "Default X11 mouse";
+            mouse.DeviceID = IntPtr.Zero;
+            mouse.NumberOfButtons = 5;
+            mouse.NumberOfWheels = 1;
+            dummy_mice_list.Add(mouse);
 
-            XSetWindowAttributes wnd_attr = new XSetWindowAttributes();
-            wnd_attr.background_pixel = IntPtr.Zero;
-            wnd_attr.border_pixel = IntPtr.Zero;
-            //wnd_attr.colormap = IntPtr.Zero;
-            wnd_attr.event_mask = (IntPtr)
-                (EventMask.StructureNotifyMask |
-                EventMask.PointerMotionMask | EventMask.PointerMotionHintMask |
-                EventMask.ButtonPressMask | EventMask.ButtonReleaseMask |
-                EventMask.KeyPressMask | EventMask.KeyReleaseMask);
-            uint cw = 
-                (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
-                (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
+            // Init keyboard
+            API.DisplayKeycodes(window.Display, ref firstKeyCode, ref lastKeyCode);
+            Debug.Print("First keycode: {0}, last {1}", firstKeyCode, lastKeyCode);
 
-            window.Handle = Functions.XCreateWindow(window.Display, window.Parent.Handle,
-                0, 0, 30, 30, 0, Constants.CopyFromParent, Constants.InputOutput,
-                IntPtr.Zero, (UIntPtr)cw, ref wnd_attr);
-            
-            if (window.Handle == IntPtr.Zero)
-                throw new ApplicationException("Could not create hidden input window.");
+            IntPtr keysym_ptr = API.GetKeyboardMapping(window.Display, (byte)firstKeyCode,
+                lastKeyCode - firstKeyCode + 1, ref keysyms_per_keycode);
+            Debug.Print("{0} keysyms per keycode.", keysyms_per_keycode);
 
-            Functions.XMapWindow(window.Display, window.Handle);
-            */
-            //window = attach;
-            keyboardDriver = new X11Keyboard(window);
-            mouseDriver = new X11Mouse(window);
+            keysyms = new IntPtr[(lastKeyCode - firstKeyCode + 1) * keysyms_per_keycode];
+            Marshal.PtrToStructure(keysym_ptr, keysyms);
+            //keysyms = (IntPtr[])Marshal.PtrToStructure(keysym_ptr, typeof(IntPtr[]));
 
-            //pollingThread = new Thread(InternalPoll);
-            //pollingThread.Priority = ThreadPriority.BelowNormal;
-            //pollingThread.IsBackground = true;
-            //pollingThread.Start();
-            
+            API.Free(keysym_ptr);
+
+            KeyboardDevice kb = new KeyboardDevice();
+            keyboard.Description = "Default X11 keyboard";
+            keyboard.NumberOfKeys = lastKeyCode - firstKeyCode + 1;
+            keyboard.DeviceID = IntPtr.Zero;
+            dummy_keyboard_list.Add(keyboard);
+
             Debug.Unindent();
         }
 
@@ -148,19 +142,38 @@ namespace OpenTK.Platform.X11
             {
                 case XEventName.KeyPress:
                 case XEventName.KeyRelease:
-                    //Debug.Print("Keyboard press");
-                    keyboardDriver.ProcessKeyboardEvent(ref e.KeyEvent);
+                    bool pressed = e.type == XEventName.KeyPress;
+
+                    IntPtr keysym = API.LookupKeysym(ref e.KeyEvent, 0);
+                    IntPtr keysym2 = API.LookupKeysym(ref e.KeyEvent, 1);
+
+                    if (keymap.ContainsKey((XKey)keysym))
+                        keyboard[keymap[(XKey)keysym]] = pressed;
+                    else if (keymap.ContainsKey((XKey)keysym2))
+                        keyboard[keymap[(XKey)keysym2]] = pressed;
+                    else
+                        Debug.Print("KeyCode {0} (Keysym: {1}, {2}) not mapped.", e.KeyEvent.keycode, (XKey)keysym, (XKey)keysym2);
                     break;
-                // See MouseDriver.Poll() instead.
+
                 case XEventName.ButtonPress:
+                    if (e.ButtonEvent.button == (int)MouseButton.Button1) mouse[OpenTK.Input.MouseButton.Left] = true;
+                    else if (e.ButtonEvent.button == (int)MouseButton.Button2) mouse[OpenTK.Input.MouseButton.Middle] = true;
+                    else if (e.ButtonEvent.button == (int)MouseButton.Button3) mouse[OpenTK.Input.MouseButton.Right] = true;
+                    else if (e.ButtonEvent.button == (int)MouseButton.Button4) mouse.Wheel++;
+                    else if (e.ButtonEvent.button == (int)MouseButton.Button5) mouse.Wheel--;
+                    //if ((e.state & (int)X11.MouseMask.Button4Mask) != 0) m.Wheel++;
+                    //if ((e.state & (int)X11.MouseMask.Button5Mask) != 0) m.Wheel--;
+                    break;
+
                 case XEventName.ButtonRelease:
-                    //Debug.Print("Button");
-                    mouseDriver.ProcessButton(ref e.ButtonEvent);
+                    if (e.ButtonEvent.button == (int)MouseButton.Button1) mouse[OpenTK.Input.MouseButton.Left] = false;
+                    else if (e.ButtonEvent.button == (int)MouseButton.Button2) mouse[OpenTK.Input.MouseButton.Middle] = false;
+                    else if (e.ButtonEvent.button == (int)MouseButton.Button3) mouse[OpenTK.Input.MouseButton.Right] = false;
                     break;
 
                 case XEventName.MotionNotify:
-                    //Debug.Print("Mouse move");
-                    mouseDriver.ProcessMotion(ref e.MotionEvent);
+                    mouse.X = e.MotionEvent.x;
+                    mouse.Y = e.MotionEvent.y;
                     break;
             }
         }
@@ -182,7 +195,7 @@ namespace OpenTK.Platform.X11
 
         public IList<KeyboardDevice> Keyboard
         {
-            get { return keyboardDriver.Keyboard; }
+            get { return dummy_keyboard_list;  }//return keyboardDriver.Keyboard;
         }
 
         #endregion
@@ -191,7 +204,7 @@ namespace OpenTK.Platform.X11
 
         public IList<MouseDevice> Mouse
         {
-            get { return mouseDriver.Mouse; }
+            get { return (IList<MouseDevice>)dummy_mice_list; } //return mouseDriver.Mouse;
         }
 
         #endregion
@@ -214,30 +227,30 @@ namespace OpenTK.Platform.X11
 
         public void Dispose()
         {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
+            //this.Dispose(true);
+            //GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool manual)
-        {
-            if (!disposed)
-            {
-                //disposing = true;
-                if (pollingThread != null && pollingThread.IsAlive)
-                    pollingThread.Abort();
+        //private void Dispose(bool manual)
+        //{
+        //    if (!disposed)
+        //    {
+        //        //disposing = true;
+        //        if (pollingThread != null && pollingThread.IsAlive)
+        //            pollingThread.Abort();
 
-                if (manual)
-                {
-                }
+        //        if (manual)
+        //        {
+        //        }
 
-                disposed = true;
-            }
-        }
+        //        disposed = true;
+        //    }
+        //}
 
-        ~X11Input()
-        {
-            this.Dispose(false);
-        }
+        //~X11Input()
+        //{
+        //    this.Dispose(false);
+        //}
 
         #endregion
     }
