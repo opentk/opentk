@@ -24,7 +24,7 @@ namespace OpenTK.Platform.Windows
         MouseDevice mouse = new MouseDevice();
         IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
         IList<MouseDevice> mice = new List<MouseDevice>(1);
-        internal static readonly KeyMap KeyMap = new KeyMap();
+        internal static readonly WinKeyMap KeyMap = new WinKeyMap();
 
         #region --- Constructor ---
 
@@ -52,6 +52,8 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        #region protected override void WndProc(ref Message msg)
 
         protected override void WndProc(ref Message msg)
         {
@@ -97,6 +99,7 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 case WindowMessage.XBUTTONUP:
+                    // TODO: Is this correct?
                     mouse[((msg.WParam.ToInt32() & 0xFFFF0000) >> 16) != (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
                     return;
 
@@ -148,6 +151,8 @@ namespace OpenTK.Platform.Windows
 
             base.WndProc(ref msg);
         }
+
+        #endregion
 
         #region IInputDriver Members
 
