@@ -429,7 +429,7 @@ namespace OpenTK.Platform.X11
                 (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
 
             window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
-                0, 0, mode.Width, mode.Height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
+                0, 0, width, height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
                 (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask, ref attributes);
 
             if (window.Handle == IntPtr.Zero)
@@ -439,8 +439,8 @@ namespace OpenTK.Platform.X11
             XSizeHints hints = new XSizeHints();
             hints.x = 0;
             hints.y = 0;
-            hints.width = mode.Width;
-            hints.height = mode.Height;
+            hints.width = width;
+            hints.height = height;
             hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
             Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
 
@@ -493,7 +493,7 @@ namespace OpenTK.Platform.X11
         /// </remarks>
         public void CreateWindow(int width, int height, DisplayMode mode, out IGraphicsContext glContext)
         {
-            this.CreateWindow(width, height, new GraphicsFormat(), out glContext);
+            this.CreateWindow(width, height, mode.ToGraphicsFormat(), out glContext);
         }
 
         #endregion
