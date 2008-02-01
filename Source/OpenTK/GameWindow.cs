@@ -159,6 +159,7 @@ namespace OpenTK
         /// <param name="title">The Title of the GameWindow.</param>
         [Obsolete]
         public GameWindow(DisplayMode mode, string title)
+            : this(title, mode.Width, mode.Height, new GraphicsFormat(mode.Color, mode.DepthBits, mode.StencilBits, mode.AuxBits))
         {
         }
 
