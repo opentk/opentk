@@ -12,13 +12,13 @@ namespace Bind
 {
     static class Settings
     {
-        public static string InputPath = "..\\..\\..\\Source\\Bind\\Specifications";
-        public static string OutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
-        public static string OutputNamespace = "OpenTK.OpenGL";
+        public static string InputPath = DefaultInputPath;
+        public static string OutputPath = DefaultOutputPath;
+        public static string OutputNamespace = DefaultOutputNamespace;
 
         public const string DefaultInputPath = "..\\..\\..\\Source\\Bind\\Specifications";
         public const string DefaultOutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
-        public const string DefaultOutputNamespace = "OpenTK.OpenGL";
+        public const string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
 
         public static string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
@@ -52,7 +52,7 @@ namespace Bind
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
                     return OutputNamespace + "." + OutputClass + "." + NestedEnumsClass;
                 else
-                    return OutputNamespace + "." + EnumsNamespace;
+                    return String.IsNullOrEmpty(EnumsNamespace) ? OutputNamespace : OutputNamespace + "." + EnumsNamespace;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Bind
         }
 
         // New enums namespace (no nested class).
-        public static string EnumsNamespace = "Enums";
+        public static string EnumsNamespace;// = "Enums";
 
         public static string DelegatesClass = "Delegates";
         public static string ImportsClass = "Imports";
