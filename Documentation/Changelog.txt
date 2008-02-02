@@ -21,7 +21,11 @@ OpenTK 0.9.0 -> 0.9.1
 	+ GameWindow
 		+ Implemented Fullscreen property.
 		+ Implemented Visible property.
-	
+	+ Input
+		+ Fixed MouseDevice events on Linux.
+	+ Platform.X11
+		+ Simplified input handling.
+
 + Examples
 	+ Added GluTessellator example.
 
