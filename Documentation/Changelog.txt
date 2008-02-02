@@ -25,6 +25,10 @@ OpenTK 0.9.0 -> 0.9.1
 		+ Fixed MouseDevice events on Linux.
 	+ Platform.X11
 		+ Simplified input handling.
+	+ Fonts
+		+ Implemented immediate text printing (without caching).
+		+ Improved space width calculation.
+		+ Fixed TextureFont.MeasureString calculation.
 
 + Examples
 	+ Added GluTessellator example.
