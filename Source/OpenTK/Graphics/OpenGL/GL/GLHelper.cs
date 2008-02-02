@@ -17,13 +17,10 @@ using System.Diagnostics;
 using System.Reflection.Emit;
 
 using OpenTK.Math;
-using OpenTK.OpenGL.Enums;
 
 #endregion
 
-[assembly: CLSCompliant(true)]
-
-namespace OpenTK.OpenGL
+namespace OpenTK.Graphics.OpenGL
 {
     /// <summary>
     /// OpenGL binding for .NET, implementing OpenGL 2.1, plus extensions.
@@ -445,7 +442,7 @@ namespace OpenTK.OpenGL
                 AvailableExtensions.Add("gl_version_2_1", true);
             }
 
-            string extension_string = GL.GetString(Enums.StringName.Extensions);
+            string extension_string = GL.GetString(StringName.Extensions);
             if (String.IsNullOrEmpty(extension_string))
                 return;               // no extensions are available
 
