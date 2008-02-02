@@ -272,8 +272,6 @@ namespace Bind.Structures
             {
             }
 
-            this.CurrentType = Enum.TranslateName(CurrentType);
-
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Otherwise, try to find it in the aux enums list. If it exists in neither, it is not an enum.
             // Special case for Boolean - it is an enum, but it is dumb to use that instead of the 'bool' type.
