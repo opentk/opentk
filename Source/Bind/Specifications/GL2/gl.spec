@@ -20235,7 +20235,7 @@ GenRenderbuffersEXT(n, renderbuffers)
 RenderbufferStorageEXT(target, internalformat, width, height)
 	return		void
 	param		target		RenderbufferTarget in value
-	param		internalformat	GLenum in value
+	param		internalformat	RenderbufferStorage in value		# GLenum in value
 	param		width		SizeI in value
 	param		height		SizeI in value
 	category	EXT_framebuffer_object
@@ -20249,7 +20249,7 @@ RenderbufferStorageEXT(target, internalformat, width, height)
 GetRenderbufferParameterivEXT(target, pname, params)
 	return		void
 	param		target		RenderbufferTarget in value
-	param		pname		GLenum in value
+	param		pname		RenderbufferParameterName in value		# GLenum in value
 	param		params		Int32 out array [COMPSIZE(pname)]
 	category	EXT_framebuffer_object
 	dlflags		notlistable
@@ -20309,7 +20309,7 @@ GenFramebuffersEXT(n, framebuffers)
 	offset		?
 
 CheckFramebufferStatusEXT(target)
-	return		GLenum
+	return		FramebufferErrorCode
 	param		target		FramebufferTarget in value
 	category	EXT_framebuffer_object
 	version		1.2
@@ -20323,7 +20323,7 @@ FramebufferTexture1DEXT(target, attachment, textarget, texture, level)
 	return		void
 	param		target		FramebufferTarget in value
 	param		attachment	FramebufferAttachment in value
-	param		textarget	GLenum in value
+	param		textarget	TextureTarget in value		# GLenum in value
 	param		texture		UInt32 in value
 	param		level		Int32 in value
 	category	EXT_framebuffer_object
@@ -20338,7 +20338,7 @@ FramebufferTexture2DEXT(target, attachment, textarget, texture, level)
 	return		void
 	param		target		FramebufferTarget in value
 	param		attachment	FramebufferAttachment in value
-	param		textarget	GLenum in value
+	param		textarget	TextureTarget in value		# GLenum in value
 	param		texture		UInt32 in value
 	param		level		Int32 in value
 	category	EXT_framebuffer_object
@@ -20353,7 +20353,7 @@ FramebufferTexture3DEXT(target, attachment, textarget, texture, level, zoffset)
 	return		void
 	param		target		FramebufferTarget in value
 	param		attachment	FramebufferAttachment in value
-	param		textarget	GLenum in value
+	param		textarget	TextureTarget in value		# GLenum in value
 	param		texture		UInt32 in value
 	param		level		Int32 in value
 	param		zoffset		Int32 in value
@@ -20383,7 +20383,7 @@ GetFramebufferAttachmentParameterivEXT(target, attachment, pname, params)
 	return		void
 	param		target		FramebufferTarget in value
 	param		attachment	FramebufferAttachment in value
-	param		pname		GLenum in value
+	param		pname		FramebufferParameterName in value		# GLenum in value
 	param		params		Int32 out array [COMPSIZE(pname)]
 	category	EXT_framebuffer_object
 	dlflags		notlistable
@@ -20397,7 +20397,7 @@ GetFramebufferAttachmentParameterivEXT(target, attachment, pname, params)
 
 GenerateMipmapEXT(target)
 	return		void
-	param		target		GLenum in value
+	param		target		GenerateMipmapTarget in value		# GLenum in value
 	category	EXT_framebuffer_object
 	version		1.2
 	extension

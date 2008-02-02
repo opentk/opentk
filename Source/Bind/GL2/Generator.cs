@@ -461,14 +461,15 @@ namespace Bind.GL2
 
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, enumsFile)))
             {
-                sw.WriteLine("namespace {0}", Settings.OutputNamespace);
-                sw.WriteLine("{");
-                
-                sw.Indent();
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+                {
+                    sw.WriteLine("namespace {0}", Settings.OutputNamespace);
+                    sw.WriteLine("{");
+                    sw.Indent();
                     sw.WriteLine("static partial class {0}", Settings.OutputClass);
+                }
                 else
-                    sw.WriteLine("namespace {0}", Settings.EnumsNamespace);
+                    sw.WriteLine("namespace {0}", Settings.EnumsOutput);
 
                 sw.WriteLine("{");
                 
@@ -476,8 +477,11 @@ namespace Bind.GL2
                 WriteEnums(sw, Bind.Structures.Enum.GLEnums);
                 sw.Unindent();
 
-                sw.WriteLine("}");
-                sw.Unindent();
+                if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
+                {
+                    sw.WriteLine("}");
+                    sw.Unindent();
+                }
 
                 sw.WriteLine("}");
             }
@@ -682,13 +686,14 @@ namespace Bind.GL2
 
         public void WriteEnums(BindStreamWriter sw, EnumCollection enums)
         {
-            sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
+            //sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
             sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
+            sw.WriteLine();
 
             if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
                 Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}.{2}", Settings.OutputNamespace, Settings.OutputClass, Settings.NestedEnumsClass));
             else
-                Trace.WriteLine(String.Format("Writing enums to:\t{0}.{1}", Settings.OutputNamespace, Settings.EnumsNamespace));
+                Trace.WriteLine(String.Format("Writing enums to:\t{0}", Settings.EnumsOutput));
 
             if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) == Settings.Legacy.None)
             {
