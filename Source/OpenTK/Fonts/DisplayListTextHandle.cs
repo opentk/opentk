@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Fonts
 {

@@ -14,11 +14,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using OpenTK;
 using System.Diagnostics;
 using System.IO;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL.Enums;
 
 #endregion --- Using Directives ---
 

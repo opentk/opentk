@@ -12,8 +12,8 @@ using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 
 using OpenTK.Math;
-using OpenTK.OpenGL;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL.Enums;
 using System.Diagnostics;
 
 namespace OpenTK.Fonts

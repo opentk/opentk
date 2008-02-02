@@ -12,8 +12,8 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Security;
 
-using OpenTK.OpenGL;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Graphics;
 
 namespace Examples.Tests
@@ -69,9 +69,9 @@ namespace Examples.Tests
 
                 #endregion
 
-                #region OpenTK.OpenGL
+                #region OpenTK.Graphics.OpenGL
 
-                Trace.Write("Timing OpenTK.OpenGL core functions: ");
+                Trace.Write("Timing OpenTK.Graphics.OpenGL core functions: ");
                 timer.Start();
                 for (int i = 0; ++i < num_calls; )
                 {
@@ -81,7 +81,7 @@ namespace Examples.Tests
                 Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
                 timer.Reset();
 
-                Trace.Write("Timing OpenTK.OpenGL core functions (array): ");
+                Trace.Write("Timing OpenTK.Graphics.OpenGL core functions (array): ");
                 timer.Start();
                 for (int i = 0; ++i < num_calls; )
                 {
@@ -91,7 +91,7 @@ namespace Examples.Tests
                 Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
                 timer.Reset();
 
-                Trace.Write("Timing OpenTK.OpenGL core functions (void*): ");
+                Trace.Write("Timing OpenTK.Graphics.OpenGL core functions (void*): ");
                 timer.Start();
                 for (int i = 0; ++i < num_calls; )
                     GL.CallLists(v.Length, ListNameType.Float, v);
@@ -99,7 +99,7 @@ namespace Examples.Tests
                 Trace.WriteLine(String.Format("{0} ns", timer.Elapsed.TotalMilliseconds * (1000000.0 / (double)num_calls)));
                 timer.Reset();
 
-                Trace.Write("Timing OpenTK.OpenGL extension functions: ");
+                Trace.Write("Timing OpenTK.Graphics.OpenGL extension functions: ");
                 timer.Start();
                 for (int i = 0; ++i < num_calls; )
                     GL.ActiveTexture(TextureUnit.Texture0);

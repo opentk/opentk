@@ -341,8 +341,8 @@ namespace OpenTK.Graphics
         void MoveToStartPositions()
         {
             int count = 0;
-            foreach (Screen s in Screen.AllScreens)
-                forms[count++].Location = new System.Drawing.Point(s.Bounds.X, s.Bounds.Y);
+            //foreach (Screen s in Screen.AllScreens)
+            //    forms[count++].Location = new System.Drawing.Point(s.Bounds.X, s.Bounds.Y);
         }
 
         bool FadedOut

@@ -12,9 +12,9 @@ using System.Drawing;
 
 using OpenTK;
 using OpenTK.Fonts;
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL.Enums;
 using System.Diagnostics;
 
 namespace Examples.Tutorial

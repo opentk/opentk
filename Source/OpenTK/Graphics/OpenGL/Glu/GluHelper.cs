@@ -10,13 +10,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Reflection.Emit;
 
 using OpenTK.Platform;
 using OpenTK.Math;
-using OpenTK.OpenGL.Enums;
-using System.Reflection.Emit;
 
-namespace OpenTK.OpenGL
+namespace OpenTK.Graphics.OpenGL
 {
     public static partial class Glu
     {
@@ -32,8 +31,8 @@ namespace OpenTK.OpenGL
 
         static Glu()
         {
-            //assembly = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.OpenGL");
-            //glClass = assembly.GetType("OpenTK.OpenGL.Glu");
+            //assembly = Assembly.GetExecutingAssembly();//Assembly.Load("OpenTK.Graphics.OpenGL");
+            //glClass = assembly.GetType("OpenTK.Graphics.OpenGL.Glu");
             //delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             //importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
         }
@@ -269,7 +268,7 @@ namespace OpenTK.OpenGL
 
         public static void TessWindingRuleProperty(IntPtr tess, TessWinding property)
         {
-            Glu.TessProperty(tess, OpenTK.OpenGL.Enums.TessProperty.TessWindingRule, (double)property);
+            Glu.TessProperty(tess, TessParameter.TessWindingRule, (double)property);
         }
 
         #endregion

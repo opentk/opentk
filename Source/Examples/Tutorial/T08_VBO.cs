@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Text;
 
 using OpenTK;
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform;
 using System.Threading;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL.Enums;
 using System.Runtime.InteropServices;
 using OpenTK.Math;
 

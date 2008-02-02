@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using OpenTK;
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 
 namespace Examples.WinForms
 {
