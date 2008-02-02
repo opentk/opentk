@@ -11,11 +11,11 @@ using System.Drawing;
 using System.Threading;
 
 using OpenTK;
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using OpenTK.Input;
 using OpenTK.Fonts;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL.Enums;
 
 namespace Examples.Tutorial
 {

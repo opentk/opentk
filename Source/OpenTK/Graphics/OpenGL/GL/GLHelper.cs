@@ -20,6 +20,12 @@ using OpenTK.Math;
 
 #endregion
 
+// Add a dummy namespace to keep old code compiling.
+namespace OpenTK.Graphics.OpenGL.Enums
+{
+    internal static class Dummy { }
+}
+
 namespace OpenTK.Graphics.OpenGL
 {
     /// <summary>
@@ -754,7 +760,7 @@ namespace OpenTK.Graphics.OpenGL
         /// Helper function that defines the coordinate origin of the Point Sprite.
         /// </summary>
         /// <param name="param">
-        /// A OpenTK.OpenGL.GL.PointSpriteCoordOriginParameter token,
+        /// A OpenTK.Graphics.OpenGL.GL.PointSpriteCoordOriginParameter token,
         /// denoting the origin of the Point Sprite.
         /// </param>
         public static void PointParameter(PointSpriteCoordOriginParameter param)

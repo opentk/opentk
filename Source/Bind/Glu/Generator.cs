@@ -14,7 +14,7 @@ namespace Bind.Glu
 {
     class Generator : Bind.GL2.Generator
     {
-        string enumSpecAux = "GL2\\enum.spec";
+        string enumSpecAux;// = "GL2\\enum.spec";
 
         #region --- Constructors ---
 
@@ -44,7 +44,7 @@ namespace Bind.Glu
             }
             else
             {
-                Settings.OutputNamespace = "OpenTK.OpenGL";
+                //Settings.OutputNamespace = "OpenTK.Graphics.OpenGL";
             }
 
             Settings.CompleteEnumName = "AllGlu";

@@ -180,8 +180,8 @@ namespace Bind
 Available switches:
 -in:         Input directory (e.g. -in:../specs/)
 -out:        Output directory (e.g. -out:out)
--ns:         Output namespace (e.g. -ns:OpenTK.OpenGL).
-             Default: OpenTK.OpenGL
+-ns:         Output namespace (e.g. -ns:OpenTK.Graphics.OpenGL).
+             Default: OpenTK.Graphics.OpenGL
 -namespace:  Same as -ns
 -class:      Output class (e.g. -class:GL3).
              Default: GL/Wgl/Glu/Glx (depends on -mode)
@@ -193,7 +193,7 @@ Available switches:
              Generate all possible parameter permutations.
     -o:enums_in_class
              Place enums in a nested class (i.e. GL.Enums)
-             instead of a namespace (i.e. OpenTK.OpenGL.Enums)
+             instead of a namespace (i.e. OpenTK.Graphics.OpenGL.Enums)
 ");
         }
     }

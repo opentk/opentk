@@ -7,8 +7,8 @@ using System.Text;
 using System.Windows.Forms;
 
 using OpenTK;
-using OpenTK.OpenGL;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL.Enums;
 
 namespace Examples.WinForms
 {

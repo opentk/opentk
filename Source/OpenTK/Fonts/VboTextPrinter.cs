@@ -9,9 +9,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Math;
-using OpenTK.OpenGL.Enums;
 
 namespace OpenTK.Fonts
 {

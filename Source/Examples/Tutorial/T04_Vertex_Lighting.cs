@@ -10,9 +10,9 @@ using System.Text;
 using System.Drawing;
 
 using OpenTK;
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using Examples.Shapes;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL.Enums;
 
 namespace Examples.Tutorial
 {

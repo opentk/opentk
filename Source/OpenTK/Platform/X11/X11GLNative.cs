@@ -10,12 +10,12 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using OpenTK.Platform.Windows;
 using OpenTK.Graphics;
 
-//using OpenTK.OpenGL;
+//using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Platform.X11
 {

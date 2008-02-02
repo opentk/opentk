@@ -14,12 +14,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 
 using OpenTK;
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Fonts;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL.Enums;
 
 namespace Examples.Tutorial
 {
+    using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
+
     /// <summary>
     /// Demonstrates simple OpenGL Texturing.
     /// </summary>
@@ -51,7 +53,7 @@ namespace Examples.Tutorial
                 ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
-                OpenTK.OpenGL.Enums.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+                PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
             
             bitmap.UnlockBits(data);
 

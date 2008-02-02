@@ -28,10 +28,11 @@ namespace Bind.Structures
         {
             Initialize(enumFile, enumextFile);
 
-            using (System.IO.StreamReader sr = new System.IO.StreamReader(Path.Combine(Settings.InputPath, auxFile)))
-            {
-                AuxEnums = Bind.MainClass.Generator.ReadEnums(sr);
-            }
+            if (!String.IsNullOrEmpty(auxFile))
+                using (System.IO.StreamReader sr = new System.IO.StreamReader(Path.Combine(Settings.InputPath, auxFile)))
+                {
+                    AuxEnums = Bind.MainClass.Generator.ReadEnums(sr);
+                }
         }
 
         internal static void Initialize(string enumFile, string enumextFile)
@@ -96,6 +97,9 @@ namespace Bind.Structures
 
         public static string TranslateName(string name)
         {
+            if (Utilities.Keywords.Contains(name))
+                return name;
+
             translator.Remove(0, translator.Length);    // Trick to avoid allocating a new StringBuilder.
 
             // Translate the constant's name to match .Net naming conventions

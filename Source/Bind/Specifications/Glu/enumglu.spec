@@ -226,7 +226,7 @@ TessContour enum:
 	EXTERIOR						= 100123
 	UNKNOWN							= 100124
 
-TessProperty enum:
+TessParameter enum:		# TessProperty
 	TESS_WINDING_RULE					= 100140
 	TESS_BOUNDARY_ONLY					= 100141
 	TESS_TOLERANCE						= 100142
