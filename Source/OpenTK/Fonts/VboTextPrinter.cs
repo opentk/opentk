@@ -71,6 +71,11 @@ namespace OpenTK.Fonts
             //GL.PopClientAttrib();
         }
 
+        public void Draw(Vector2[] vertices, ushort[] indices, int index_count)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 
