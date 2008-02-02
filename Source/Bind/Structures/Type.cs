@@ -183,7 +183,7 @@ namespace Bind.Structures
 
         #endregion
 
-        #region WrapperType property
+        #region public WrapperTypes WrapperType
 
         private WrapperTypes _wrapper_type = WrapperTypes.None;
 
@@ -268,9 +268,11 @@ namespace Bind.Structures
             Enum @enum;
             string s;
 
-            if (this.CurrentType == "BlendEquationModeEXT")
+            if (this.CurrentType == "SGIS_texture_filter4")
             {
             }
+
+            this.CurrentType = Enum.TranslateName(CurrentType);
 
             // Try to find out if it is an enum. If the type exists in the normal GLEnums list, use this.
             // Otherwise, try to find it in the aux enums list. If it exists in neither, it is not an enum.
@@ -289,9 +291,9 @@ namespace Bind.Structures
                 else
                 {
                     if (normal)
-                        CurrentType = Enum.TranslateName(CurrentType).Insert(0, String.Format("{0}.", Settings.EnumsOutput));
+                        CurrentType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsOutput));
                     else if (aux)
-                        CurrentType = Enum.TranslateName(CurrentType).Insert(0, String.Format("{0}.", Settings.EnumsAuxOutput));
+                        CurrentType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsAuxOutput));
                 }
             }
             else if (Bind.Structures.Type.GLTypes.TryGetValue(CurrentType, out s))

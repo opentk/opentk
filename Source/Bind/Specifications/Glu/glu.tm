@@ -14,7 +14,9 @@ Float64Pointer  Float64Pointer
 Float32         Float32
 Float32Pointer  Float32Pointer
 SizeI		    GLsizei
+Sizei		    GLsizei
 UInt8           GLubyte
+Uint8           GLubyte
 
 # Enum types (find Tao-compatible solution!)
 TextureTarget   TextureTarget

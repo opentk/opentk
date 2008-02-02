@@ -15,11 +15,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-using OpenTK.OpenGL;
-//using Enums = OpenTK.OpenGL.GL.Enums;
+using OpenTK.Graphics.OpenGL;
+//using Enums = OpenTK.Graphics.OpenGL.GL.Enums;
 using OpenTK.Platform;
 using System.Threading;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL.Enums;
 
 #endregion
 

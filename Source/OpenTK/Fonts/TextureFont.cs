@@ -14,13 +14,14 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 
 using OpenTK.Math;
-using OpenTK.OpenGL;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Platform;
 
 namespace OpenTK.Fonts
 {
     using Graphics = System.Drawing.Graphics;
+    using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 
     public class TextureFont : IFont
     {
@@ -96,7 +97,7 @@ namespace OpenTK.Fonts
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Alpha, texture_width, texture_height, 0,
-                OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
+                PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
         }
 
         #endregion
@@ -168,7 +169,7 @@ namespace OpenTK.Fonts
             //BitmapData bitmap_data = bitmap.LockBits(new Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly,
             //    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             //GL.TexSubImage2D(TextureTarget.Texture2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
-            //    OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bitmap_data.Scan0);
+            //    OpenTK.Graphics.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bitmap_data.Scan0);
             //bitmap.UnlockBits(bitmap_data);
 
             BitmapData bitmap_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
@@ -190,7 +191,7 @@ namespace OpenTK.Fonts
 
                 fixed (int* data_ptr = data)
                     GL.TexSubImage2D(TextureTarget.Texture2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
-                                     OpenTK.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)data_ptr);
+                                     PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)data_ptr);
             }
             bmp.UnlockBits(bitmap_data);
 
@@ -279,12 +280,28 @@ namespace OpenTK.Fonts
         /// <param name="height">The measured height.</param>
         public void MeasureString(string str, out float width, out float height)
         {
-            System.Drawing.SizeF size = gfx.MeasureString(str, font, 16384, System.Drawing.StringFormat.GenericTypographic);
-            if (size.Width == 0)
-                width = font.SizeInPoints * 0.5f;
-            else
-                width = size.Width;
-            height = size.Height;
+            //System.Drawing.SizeF size = gfx.MeasureString(str, font, 16384, System.Drawing.StringFormat.GenericTypographic);
+            //height = size.Height;
+
+            //if (size.Width == 0)
+            //    width = font.SizeInPoints * 0.5f;
+            //else
+            //    width = size.Width;
+
+            width = 0;
+            height = 0;
+            int i = 0;
+            foreach (char c in str)
+            {
+                if (c != '\n' && c != '\r')
+                {
+                    SizeF size = gfx.MeasureString(str.Substring(i, 1), font, 16384, System.Drawing.StringFormat.GenericTypographic);
+                    width += size.Width == 0 ? font.SizeInPoints * 0.5f : size.Width;
+                    if (height < size.Height)
+                        height = size.Height;
+                }
+                ++i;
+            }
         }
 
         #endregion

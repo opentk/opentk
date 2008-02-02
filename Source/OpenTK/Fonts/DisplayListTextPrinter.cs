@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Fonts
 {
@@ -23,8 +23,8 @@ namespace OpenTK.Fonts
         {
             DisplayListTextHandle handle = new DisplayListTextHandle(GL.GenLists(1));
 
-            GL.NewList(handle.Handle, OpenTK.OpenGL.Enums.ListMode.Compile);
-            GL.Begin(OpenTK.OpenGL.Enums.BeginMode.Triangles);
+            GL.NewList(handle.Handle, ListMode.Compile);
+            GL.Begin(BeginMode.Triangles);
 
             for (int i = 0; i < index_count; i++)
             //foreach (ushort index in indices)

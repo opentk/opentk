@@ -11,9 +11,9 @@ using System.Drawing;
 using System.Diagnostics;
 
 using OpenTK;
-using OpenTK.OpenGL;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Fonts;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Input;
 
 namespace Examples.Tutorial

@@ -185,7 +185,7 @@ GetNurbsProperty(nurb, property, data)
 GetTessProperty(tess, which, data)
 	return		void
 	param		tess		TesselatorObj in value
-	param		which		TessProperty in value
+	param		which		TessParameter in value		# TessProperty in value
 	param		data		Float64Pointer out value
 
 LoadSamplingMatrices(nurb, model, perspective, view)
@@ -401,7 +401,7 @@ TessNormal(tess, valueX, valueY, valueZ)
 TessProperty(tess, which, data)
 	return		void
 	param		tess		TesselatorObj in value
-	param		which		TessProperty in value
+	param		which		TessParameter in value		# TessProperty in value
 	param		data		Float64 in value
 
 # Edited for OpenTK

@@ -14,8 +14,8 @@ using System.Threading;
 
 using OpenTK.Platform;
 using OpenTK.Input;
-using OpenTK.OpenGL;
-using OpenTK.OpenGL.Enums;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Graphics;
 
 namespace OpenTK
@@ -715,7 +715,7 @@ namespace OpenTK
         /// Gets a value indicating whether the shutdown sequence has been initiated
         /// for this window, by calling GameWindow.Exit() or hitting the 'close' button.
         /// If this property is true, it is no longer safe to use any OpenTK.Input or
-        /// OpenTK.OpenGL functions or properties.
+        /// OpenTK.Graphics.OpenGL functions or properties.
         /// </summary>
         public bool IsExiting
         {
