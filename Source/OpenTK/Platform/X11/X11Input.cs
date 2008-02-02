@@ -31,7 +31,7 @@ namespace OpenTK.Platform.X11
         int keysyms_per_keycode;    // The number of KeySyms for each KeyCode.
         IntPtr[] keysyms;
 
-        bool disposed;
+        //bool disposed;
 
         #region --- Constructors ---
 
