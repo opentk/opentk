@@ -310,10 +310,65 @@ namespace OpenTK.Audio
 
         #endregion
 
+        #region internal void MakeCurrent()
+
+        /// <summary>Makes the AudioContext current in the calling thread.</summary>
+        /// <exception cref="ObjectDisposedException">
+        /// Occurs if this function is called after the AudioContext has been disposed.
+        /// </exception>
+        /// <exception cref="AudioContextException">
+        /// Occurs when the AudioContext could not be made current.
+        /// </exception>
+        /// <remarks>
+        /// Only one AudioContext can be current in the application at any time,
+        /// <b>regardless of the number of threads</b>.
+        /// </remarks>
+        internal void MakeCurrent()
+        {
+            AudioContext.MakeCurrent(this);
+        }
+
+        #endregion
+
+        #region internal bool IsCurrent
+
+        /// <summary>
+        /// Gets or sets a System.Boolean indicating whether the AudioContext
+        /// is current.
+        /// </summary>
+        /// <remarks>
+        /// Only one AudioContext can be current in the application at any time,
+        /// <b>regardless of the number of threads</b>.
+        /// </remarks>
+        internal bool IsCurrent
+        {
+            get
+            {
+                lock (audio_context_lock)
+                {
+                    if (available_contexts.Count == 0)
+                        return false;
+                    else
+                    {
+                        return AudioContext.CurrentContext == this;
+                    }
+                }
+            }
+            set
+            {
+                if (value) AudioContext.MakeCurrent(this);
+                else AudioContext.MakeCurrent(null);
+            }
+        }
+
+        #endregion
+
         #endregion
 
         // TODO: Remove before release!
         public IntPtr Device { get { return device_handle.Handle; } }
+
+        #region --- Public Members ---
 
         #region public bool IsProcessing
 
@@ -422,8 +477,6 @@ namespace OpenTK.Audio
 
         #endregion
 
-        #region --- Public Members ---
-
         #region public static string[] AvailableDevices
 
         /// <summary>
@@ -441,59 +494,6 @@ namespace OpenTK.Audio
         }
 
         #endregion
-
-        #endregion
-
-        #region internal void MakeCurrent()
-
-        /// <summary>Makes the AudioContext current in the calling thread.</summary>
-        /// <exception cref="ObjectDisposedException">
-        /// Occurs if this function is called after the AudioContext has been disposed.
-        /// </exception>
-        /// <exception cref="AudioContextException">
-        /// Occurs when the AudioContext could not be made current.
-        /// </exception>
-        /// <remarks>
-        /// Only one AudioContext can be current in the application at any time,
-        /// <b>regardless of the number of threads</b>.
-        /// </remarks>
-        internal void MakeCurrent()
-        {
-            AudioContext.MakeCurrent(this);
-        }
-
-        #endregion
-
-        #region internal bool IsCurrent
-
-        /// <summary>
-        /// Gets or sets a System.Boolean indicating whether the AudioContext
-        /// is current.
-        /// </summary>
-        /// <remarks>
-        /// Only one AudioContext can be current in the application at any time,
-        /// <b>regardless of the number of threads</b>.
-        /// </remarks>
-        internal bool IsCurrent
-        {
-            get
-            {
-                lock (audio_context_lock)
-                {
-                    if (available_contexts.Count == 0)
-                        return false;
-                    else
-                    {
-                        return AudioContext.CurrentContext == this;
-                    }
-                }
-            }
-            set
-            {
-                if (value) AudioContext.MakeCurrent(this);
-                else AudioContext.MakeCurrent(null);
-            }
-        }
 
         #endregion
 
