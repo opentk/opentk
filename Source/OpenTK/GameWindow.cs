@@ -18,6 +18,8 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Graphics;
 
+[assembly: CLSCompliant(true)]
+
 namespace OpenTK
 {
     /// <summary>
@@ -57,7 +59,7 @@ namespace OpenTK
         #region --- Fields ---
 
         INativeGLWindow glWindow;
-        DisplayMode mode;
+        //DisplayMode mode;
 
         ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
