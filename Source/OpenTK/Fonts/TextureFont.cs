@@ -270,6 +270,42 @@ namespace OpenTK.Fonts
 
         #endregion
 
+        #region public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)
+
+        /// <summary>
+        /// Measures the width of the specified string.
+        /// </summary>
+        /// <param name="str">The string to measure.</param>
+        /// <param name="width">The measured width.</param>
+        /// <param name="height">The measured height.</param>
+        /// <param name="addSpace">If true, adds space to account for glyph overhangs. Set to true if you wish to measure a complete string. Set to false if you wish to perform layout on adjacent strings.</param>
+        public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)
+        {
+            System.Drawing.StringFormat format = accountForOverhangs ? System.Drawing.StringFormat.GenericDefault : System.Drawing.StringFormat.GenericTypographic;
+            format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
+
+            System.Drawing.SizeF size = gfx.MeasureString(str, font, 16384, format);
+            height = size.Height;
+            width = size.Width;
+
+            //    width = 0;
+            //    height = 0;
+            //    int i = 0;
+            //    foreach (char c in str)
+            //    {
+            //        if (c != '\n' && c != '\r')
+            //        {
+            //            SizeF size = gfx.MeasureString(str.Substring(i, 1), font, 16384, System.Drawing.StringFormat.GenericTypographic);
+            //            width += size.Width == 0 ? font.SizeInPoints * 0.5f : size.Width;
+            //            if (height < size.Height)
+            //                height = size.Height;
+            //        }
+            //        ++i;
+            //    }
+        }
+
+        #endregion
+
         #region public void MeasureString(string str, out float width, out float height)
 
         /// <summary>
@@ -278,30 +314,10 @@ namespace OpenTK.Fonts
         /// <param name="str">The string to measure.</param>
         /// <param name="width">The measured width.</param>
         /// <param name="height">The measured height.</param>
+        /// <seealso cref="public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)"/>
         public void MeasureString(string str, out float width, out float height)
         {
-            //System.Drawing.SizeF size = gfx.MeasureString(str, font, 16384, System.Drawing.StringFormat.GenericTypographic);
-            //height = size.Height;
-
-            //if (size.Width == 0)
-            //    width = font.SizeInPoints * 0.5f;
-            //else
-            //    width = size.Width;
-
-            width = 0;
-            height = 0;
-            int i = 0;
-            foreach (char c in str)
-            {
-                if (c != '\n' && c != '\r')
-                {
-                    SizeF size = gfx.MeasureString(str.Substring(i, 1), font, 16384, System.Drawing.StringFormat.GenericTypographic);
-                    width += size.Width == 0 ? font.SizeInPoints * 0.5f : size.Width;
-                    if (height < size.Height)
-                        height = size.Height;
-                }
-                ++i;
-            }
+            MeasureString(str, out width, out height, true);
         }
 
         #endregion

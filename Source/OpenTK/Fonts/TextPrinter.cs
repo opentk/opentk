@@ -149,7 +149,6 @@ namespace OpenTK.Fonts
 
         #endregion
 
-
         #region void PerformLayout(string text, TextureFont font, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft, ref Vector2[] vertices, ref ushort[] indices, out int num_indices)
 
         // Performs layout on the given string.
@@ -227,7 +226,7 @@ namespace OpenTK.Fonts
                         indices[index_count++] = (ushort)(vertex_count - 8);
 
 
-                        font.MeasureString(text.Substring(i, 1), out measured_width, out measured_height);
+                        font.MeasureString(text.Substring(i, 1), out measured_width, out measured_height, false);
                         x_pos += measured_width;
                     }
                     else if (c == '\n')
@@ -275,7 +274,9 @@ namespace OpenTK.Fonts
         /// <param name="font">The OpenTK.Fonts.TextureFont to draw the text in.</param>
         public void Draw(string text, TextureFont font)
         {
-            //printer.Draw(text);
+            int num_indices;
+            PerformLayout(text, font, 0, false, StringAlignment.Near, false, ref vertices, ref indices, out num_indices);
+            printer.Draw(vertices, indices, num_indices);
         }
 
         #endregion
@@ -296,7 +297,7 @@ namespace OpenTK.Fonts
             GL.MatrixMode(MatrixMode.Projection);
             GL.PushMatrix();
             GL.LoadIdentity();
-            GL.Ortho(viewport[0], viewport[2], viewport[3], viewport[1], 0.0, 1.0);
+            GL.Ortho(viewport[0], viewport[2], viewport[3], viewport[1], -1.0, 1.0);
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PushMatrix();
@@ -324,10 +325,10 @@ namespace OpenTK.Fonts
             GL.PopAttrib();
             GL.PopAttrib();
 
-            GL.MatrixMode(MatrixMode.Projection);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.PopMatrix();
 
-            GL.MatrixMode(MatrixMode.Modelview);
+            GL.MatrixMode(MatrixMode.Projection);
             GL.PopMatrix();
         }
 

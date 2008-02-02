@@ -19,6 +19,6 @@ namespace OpenTK.Fonts
     {
         TextHandle Load(Vector2[] vertices, ushort[] indices, int index_count);
         void Draw(TextHandle handle);
-        //void Draw(Vector2[] vertices, ushort[] indices, int index_count);
+        void Draw(Vector2[] vertices, ushort[] indices, int index_count);
     }
 }
