@@ -24,3 +24,5 @@ PixelFormat     PixelFormat
 PixelType       PixelType
 MapTarget       MapTarget
 Boolean			GLboolean
+
+SGIS_texture_filter4 SgisTextureFilter4
