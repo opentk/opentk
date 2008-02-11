@@ -13,6 +13,8 @@ using System.Security;
 
 using OpenTK.Math;
 
+[assembly:CLSCompliant(true)]
+
 /* Type Mapping
 // 8-bit boolean 
 typedef char ALboolean;
@@ -68,7 +70,7 @@ namespace OpenTK.OpenAL
 
     // AL = Audio Library
     [CLSCompliant( true )]
-    public static partial class AL
+    public static class AL
     {
         #region Constants
 
