@@ -13,8 +13,6 @@ using System.Security;
 
 using OpenTK.Math;
 
-[assembly:CLSCompliant(true)]
-
 /* Type Mapping
 // 8-bit boolean 
 typedef char ALboolean;
