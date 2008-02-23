@@ -65,7 +65,7 @@ namespace OpenTK.Platform.X11
 
         static API()
         {
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
+            //AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             defaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
             defaultScreen = Functions.XDefaultScreen(DefaultDisplay);
             rootWindow = Functions.XRootWindow(DefaultDisplay, DefaultScreen);
@@ -1345,7 +1345,7 @@ XF86VidModeGetGammaRampSize(
 
         #region Xrandr
 
-        const string XrandrLibrary = "libXrandr";
+        const string XrandrLibrary = "libXrandr.so.2";
 
         [DllImport(XrandrLibrary)]
         public static extern Bool XRRQueryExtension(Display dpy, ref int event_basep, ref int error_basep);
