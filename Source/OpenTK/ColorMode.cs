@@ -14,6 +14,7 @@ namespace OpenTK
     /// <para>A ColorMode contains Red, Green, Blue and Alpha components that descibe
     /// the allocated bits per pixel for the corresponding color.</para>
     /// </remarks>
+    [Obsolete("Use OpenTK.Graphics.ColorDepth instead.")]
     public sealed class ColorMode
     {
         byte red, green, blue, alpha;
