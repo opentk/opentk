@@ -13,8 +13,8 @@ namespace OpenTK.Platform
     /// <summary>
     /// Provides methods to 
     /// </summary>
-    public interface IMutableWindowInfo : IWindowInfo
+    public interface IMutableWindowInfo : IWindowInfoOld
     {
-        void CopyInfoFrom(IWindowInfo info);
+        void CopyInfoFrom(IWindowInfoOld info);
     }
 }
