@@ -40,7 +40,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="mode"></param>
         public GLControl(DisplayMode mode)
-            : this(mode.ToGraphicsFormat())
+            : this(mode.ToGraphicsMode())
         { }
 
         public GLControl(GraphicsMode format)
@@ -213,17 +213,17 @@ namespace OpenTK
 
         #endregion
 
-        #region public GraphicsFormat GraphicsFormat
+        #region public GraphicsMode GraphicsMode
 
         /// <summary>
-        /// Gets the GraphicsFormat of the GraphicsContext attached to this GLControl.
+        /// Gets the GraphicsMode of the GraphicsContext attached to this GLControl.
         /// </summary>
         /// <remarks>
-        /// To change the GraphicsFormat, you must destroy and recreate the GLControl.
+        /// To change the GraphicsMode, you must destroy and recreate the GLControl.
         /// </remarks>
-        public GraphicsMode GraphicsFormat
+        public GraphicsMode GraphicsMode
         {
-            get { return (Context as IGLContextInternal).GraphicsFormat; }
+            get { return (Context as IGLContextInternal).GraphicsMode; }
         }
 
         #endregion

@@ -156,7 +156,7 @@ namespace OpenTK
         public GameWindow(DisplayMode mode)
             : this("OpenTK Game Window", mode.Width, mode.Height,
                    mode.Fullscreen ? DisplayDevice.PrimaryDisplay.SelectResolution(
-                       mode.Width, mode.Height, mode.Color.BitsPerPixel, 0) : null, mode.ToGraphicsFormat()) { }
+                       mode.Width, mode.Height, mode.Color.BitsPerPixel, 0) : null, mode.ToGraphicsMode()) { }
 
         /// <summary>
         /// Constructs a new GameWindow with the specified title, and opens a render window with the
@@ -166,7 +166,7 @@ namespace OpenTK
         /// <param name="title">The Title of the GameWindow.</param>
         [Obsolete]
         public GameWindow(DisplayMode mode, string title)
-            : this(title, mode.Width, mode.Height, mode.ToGraphicsFormat())
+            : this(title, mode.Width, mode.Height, mode.ToGraphicsMode())
         {
         }
 

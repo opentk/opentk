@@ -78,7 +78,7 @@ namespace OpenTK.Platform.Windows
                 throw new ArgumentException("window", "Must be a valid window.");
 
             Debug.Print("Setting pixel format...");
-            this.format = this.SetGraphicsFormatPFD(format);
+            this.format = this.SetGraphicsModePFD(format);
 
             Debug.Write("Creating render context... ");
             // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
@@ -220,9 +220,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region GraphicsFormat IGLContextInternal.GraphicsFormat
+        #region GraphicsMode IGLContextInternal.GraphicsMode
 
-        GraphicsMode IGLContextInternal.GraphicsFormat
+        GraphicsMode IGLContextInternal.GraphicsMode
         {
             get { return format; }
         }
@@ -269,9 +269,9 @@ namespace OpenTK.Platform.Windows
 
         #region --- Private Methods ---
 
-        #region GraphicsFormat SetGraphicsFormatPFD(GraphicsFormat format)
+        #region GraphicsMode SetGraphicsModePFD(GraphicsMode format)
 
-        GraphicsMode SetGraphicsFormatPFD(GraphicsMode format)
+        GraphicsMode SetGraphicsModePFD(GraphicsMode format)
         {
             deviceContext = Functions.GetDC(this.windowInfo.Handle);
             Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
@@ -327,7 +327,7 @@ namespace OpenTK.Platform.Windows
                 (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
 
             if (!Functions.SetPixelFormat(deviceContext, pixel, ref pixelFormat))
-                throw new GraphicsContextException(String.Format("Requested GraphicsFormat not available. SetPixelFormat error: {0}",
+                throw new GraphicsContextException(String.Format("Requested GraphicsMode not available. SetPixelFormat error: {0}",
                                                                  Marshal.GetLastWin32Error()));
             Debug.Print("done! (format: {0})", pixel);
 
@@ -336,9 +336,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region GraphicsFormat SetGraphicsFormatARB(GraphicsFormat format)
+        #region GraphicsMode SetGraphicsModeARB(GraphicsMode format)
 
-        GraphicsMode SetGraphicsFormatARB(GraphicsMode format)
+        GraphicsMode SetGraphicsModeARB(GraphicsMode format)
         {
             return null;
         }

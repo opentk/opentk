@@ -29,7 +29,7 @@ namespace OpenTK.Platform
         #region --- IGraphicsContext Members ---
 
         public IntPtr Context { get { return IntPtr.Zero; } }
-        public GraphicsMode GraphicsFormat { get { return format; } }
+        public GraphicsMode GraphicsMode { get { return format; } }
 
         public void CreateContext() { }
         public void CreateContext(bool direct) { }

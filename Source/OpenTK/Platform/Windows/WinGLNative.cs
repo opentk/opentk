@@ -322,11 +322,11 @@ namespace OpenTK.Platform.Windows
 
         #region public void CreateWindow(int width, int height)
 
-        public void CreateWindow(int width, int height)//, GraphicsFormat format, out IGraphicsContext context)
+        public void CreateWindow(int width, int height)//, GraphicsMode format, out IGraphicsContext context)
         {
             Debug.Print("Creating native window.");
             Debug.Indent();
-            //Debug.Print("GraphicsFormat: {0}", format.ToString());
+            //Debug.Print("GraphicsMode: {0}", format.ToString());
 
             CreateParams cp = new CreateParams();
             cp.ClassStyle =
