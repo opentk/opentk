@@ -32,7 +32,7 @@ namespace OpenTK.Platform.Windows
         const string opengl32Name = "OPENGL32.DLL";
         WinWindowInfo windowInfo = new WinWindowInfo();
 
-        GraphicsFormat format;
+        GraphicsMode format;
         //DisplayMode mode = null;
         bool vsync_supported;
 
@@ -58,7 +58,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        GraphicsFormat SelectFormat(GraphicsFormat format)
+        GraphicsMode SelectFormat(GraphicsMode format)
         {
             using (WinGLNative native = new WinGLNative(16, 16))
             //using (WinGLContext context = new WinGLContext(format, native.WindowInfo, null))
@@ -68,7 +68,7 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public WinGLContext(GraphicsFormat format, IWindowInfo window, IGraphicsContext sharedContext)
+        public WinGLContext(GraphicsMode format, IWindowInfo window, IGraphicsContext sharedContext)
         {
             //format = this.SelectFormat(format);
 
@@ -222,7 +222,7 @@ namespace OpenTK.Platform.Windows
 
         #region GraphicsFormat IGLContextInternal.GraphicsFormat
 
-        GraphicsFormat IGLContextInternal.GraphicsFormat
+        GraphicsMode IGLContextInternal.GraphicsFormat
         {
             get { return format; }
         }
@@ -271,7 +271,7 @@ namespace OpenTK.Platform.Windows
 
         #region GraphicsFormat SetGraphicsFormatPFD(GraphicsFormat format)
 
-        GraphicsFormat SetGraphicsFormatPFD(GraphicsFormat format)
+        GraphicsMode SetGraphicsFormatPFD(GraphicsMode format)
         {
             deviceContext = Functions.GetDC(this.windowInfo.Handle);
             Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
@@ -317,7 +317,7 @@ namespace OpenTK.Platform.Windows
             pixelFormat.Size = API.PixelFormatDescriptorSize;
             pixelFormat.Version = API.PixelFormatDescriptorVersion;
             Functions.DescribePixelFormat(deviceContext, pixel, API.PixelFormatDescriptorSize, ref pfd);
-            GraphicsFormat fmt = new GraphicsFormat(
+            GraphicsMode fmt = new GraphicsMode(
                 new ColorDepth(pfd.RedBits, pfd.GreenBits, pfd.BlueBits, pfd.AlphaBits),
                 pfd.DepthBits,
                 pfd.StencilBits,
@@ -338,7 +338,7 @@ namespace OpenTK.Platform.Windows
 
         #region GraphicsFormat SetGraphicsFormatARB(GraphicsFormat format)
 
-        GraphicsFormat SetGraphicsFormatARB(GraphicsFormat format)
+        GraphicsMode SetGraphicsFormatARB(GraphicsMode format)
         {
             return null;
         }

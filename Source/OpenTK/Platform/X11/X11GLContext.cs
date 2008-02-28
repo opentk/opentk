@@ -24,7 +24,7 @@ namespace OpenTK.Platform.X11
          IntPtr context;
          DisplayMode mode;
          X11WindowInfo windowInfo = new X11WindowInfo();
-         GraphicsFormat format;
+         GraphicsMode format;
          IntPtr visual;
          bool vsync_supported;
          int vsync_interval;
@@ -306,7 +306,7 @@ namespace OpenTK.Platform.X11
 
         #region public DisplayMode Mode
 
-        GraphicsFormat IGLContextInternal.GraphicsFormat
+        GraphicsMode IGLContextInternal.GraphicsFormat
         {
             get { return format; }
         }

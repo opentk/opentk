@@ -79,7 +79,7 @@ namespace OpenTK.Graphics
         IWindowInfo Info { get; }
 
         /// <summary>Gets the GraphicsFormat of the context.</summary>
-        GraphicsFormat GraphicsFormat { get; }
+        GraphicsMode GraphicsFormat { get; }
 
         ///// <summary>
         ///// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
