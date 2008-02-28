@@ -36,7 +36,7 @@ namespace OpenTK.Graphics
         /// <param name="mode"></param>
         /// <param name="window"></param>
         public GraphicsContext(DisplayMode mode, IWindowInfo window)
-            : this(mode.ToGraphicsFormat(), window)
+            : this(mode.ToGraphicsMode(), window)
         { }
 
         public GraphicsContext(GraphicsMode format, IWindowInfo window)
@@ -247,9 +247,9 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the DisplayMode of the context.
         /// </summary>
-        GraphicsMode IGLContextInternal.GraphicsFormat
+        GraphicsMode IGLContextInternal.GraphicsMode
         {
-            get { return (implementation as IGLContextInternal).GraphicsFormat; }
+            get { return (implementation as IGLContextInternal).GraphicsMode; }
         }
 
         ///// <summary>

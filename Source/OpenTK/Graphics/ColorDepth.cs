@@ -12,7 +12,7 @@ using System.Text;
 
 namespace OpenTK.Graphics
 {
-    /// <summary>Defines the ColorDepth component of a GraphicsFormat.</summary>
+    /// <summary>Defines the ColorDepth component of a GraphicsMode.</summary>
     /// <remarks>
     /// <para>A ColorDepth contains Red, Green, Blue and Alpha components that descibe
     /// the allocated bits per pixel for the corresponding color.</para>

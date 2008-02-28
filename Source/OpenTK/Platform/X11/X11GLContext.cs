@@ -306,7 +306,7 @@ namespace OpenTK.Platform.X11
 
         #region public DisplayMode Mode
 
-        GraphicsMode IGLContextInternal.GraphicsFormat
+        GraphicsMode IGLContextInternal.GraphicsMode
         {
             get { return format; }
         }
