@@ -186,7 +186,7 @@ namespace OpenTK
         /// <summary>
         /// Gets a System.Boolean indicating whether this DisplayMode is stereoscopic.
         /// </summary>
-        [Obsolete("Use GraphicsFormat.Stereo instead.")]
+        [Obsolete("Use GraphicsMode.Stereo instead.")]
         public bool Stereo
         {
             get { return this.stereo; }
@@ -201,7 +201,7 @@ namespace OpenTK
         /// Gets a System.Int32 containing the number of buffers associated with this
         /// DisplayMode.
         /// </summary>
-        [Obsolete("Use GraphicsFormat.Buffers instead.")]
+        [Obsolete("Use GraphicsMode.Buffers instead.")]
         public int Buffers
         {
             get { return this.buffers; }
@@ -233,7 +233,7 @@ namespace OpenTK
 
         #region public ColorDepth Color
         
-        [Obsolete("Use GraphicsFormat.Color instead.")]
+        [Obsolete("Use GraphicsMode.Color instead.")]
         public ColorMode Color
         {
             get { return this.color_format; }
@@ -282,21 +282,21 @@ namespace OpenTK
 
         #endregion
 
-        [Obsolete("Use GraphicsFormat.Depth instead.")]
+        [Obsolete("Use GraphicsMode.Depth instead.")]
         public int DepthBits
         {
             get { return this.depthBits; }
             internal set { this.depthBits = value; }
         }
 
-        [Obsolete("Use GraphicsFormat.Stencil instead.")]
+        [Obsolete("Use GraphicsMode.Stencil instead.")]
         public int StencilBits
         {
             get { return this.stencilBits; }
             internal set { this.stencilBits = value; }
         }
 
-        [Obsolete("Use GraphicsFormat.AuxilliaryColorFormat instead.")]
+        [Obsolete("Use GraphicsMode.AuxilliaryColorFormat instead.")]
         public int AuxBits
         {
             get { return this.auxilliary_color_format.BitsPerPixel; }
@@ -307,7 +307,7 @@ namespace OpenTK
 
         #endregion
 
-        internal GraphicsMode ToGraphicsFormat()
+        internal GraphicsMode ToGraphicsMode()
         {
             return new GraphicsMode(this.Color.BitsPerPixel, this.DepthBits, this.StencilBits, 0, this.AuxBits, this.Buffers, this.Stereo);
         }

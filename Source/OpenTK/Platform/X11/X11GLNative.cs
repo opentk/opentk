@@ -495,7 +495,7 @@ namespace OpenTK.Platform.X11
         /// </remarks>
         public void CreateWindow(int width, int height, DisplayMode mode, out IGraphicsContext glContext)
         {
-            this.CreateWindow(width, height);//, mode.ToGraphicsFormat(), out glContext);
+            this.CreateWindow(width, height);//, mode.ToGraphicsMode(), out glContext);
             glContext = null;
         }
 
