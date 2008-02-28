@@ -292,7 +292,7 @@ namespace OpenTK.Platform.Windows
             pixelFormat.BlueBits = (byte)format.ColorFormat.Blue;
             pixelFormat.AlphaBits = (byte)format.ColorFormat.Alpha;
 
-            if (format.AccumulatorFormat != null)
+            if (format.AccumulatorFormat.BitsPerPixel > 0)
             {
                 pixelFormat.AccumBits = (byte)(format.AccumulatorFormat.Red + format.AccumulatorFormat.Green + format.AccumulatorFormat.Blue);
                 pixelFormat.AccumRedBits = (byte)format.AccumulatorFormat.Red;
