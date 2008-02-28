@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -34,30 +36,14 @@ namespace OpenTK.Graphics
         /// <param name="mode"></param>
         /// <param name="window"></param>
         public GraphicsContext(DisplayMode mode, IWindowInfo window)
+            : this(mode.ToGraphicsFormat(), window)
+        { }
+
+        public GraphicsContext(GraphicsFormat format, IWindowInfo window)
         {
             //if (available_contexts.Count == 0)
             //    available_contexts.Add(IntPtr.Zero, new WeakReference(null));
-
-            switch (Environment.OSVersion.Platform)
-            {
-                case PlatformID.Unix:
-                case (PlatformID)128:
-                    implementation = new OpenTK.Platform.X11.X11GLContext();
-                    break;
-
-                case PlatformID.Win32NT:
-                case PlatformID.Win32S:
-                case PlatformID.Win32Windows:
-                case PlatformID.WinCE:
-                    implementation = new OpenTK.Platform.Windows.WinGLContext();
-                    break;
-
-                default:
-                    throw new PlatformNotSupportedException("Your platform is not supported currently. Please, refer to http://www.opentk.com for more information.");
-            }
-
-            (this as IGLContextCreationHack).SetWindowHandle(window.Handle);
-            (this as IGLContextCreationHack).SelectDisplayMode(mode, window);
+            IGraphicsContext share = null;
             if (GraphicsContext.ShareContexts)
             {
                 lock (context_lock)
@@ -65,14 +51,18 @@ namespace OpenTK.Graphics
                     // A small hack to create a shared context with the first available context.
                     foreach (WeakReference r in GraphicsContext.available_contexts.Values)
                     {
-                        this.CreateContext(true, (GraphicsContext)r.Target);
-                        return;
+                        share = (IGraphicsContext)r.Target;
+                        break;
                     }
                 }
             }
-            // Only reached if a shared context was not created above, or if this is the first
-            // context ever constructed.
-            this.CreateContext(true, null);
+
+            if (Configuration.RunningOnWindows)
+                implementation = new OpenTK.Platform.Windows.WinGLContext(format, window, share);
+            else if (Configuration.RunningOnX11)
+                implementation = new OpenTK.Platform.X11.X11GLContext();
+            else
+                throw new PlatformNotSupportedException("Your platform is not supported currently. Please, refer to http://www.opentk.com for more information.");
         }
 
         #endregion
@@ -185,6 +175,7 @@ namespace OpenTK.Graphics
             this.Destroy += ContextDestroyed;
 
             available_contexts.Add((this as IGLContextInternal).Context, new WeakReference(this));
+            //OpenTK.Graphics.OpenGL.GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.ColorBufferBit);
             //if (StaticGetCurrentContext == null)
             //    StaticGetCurrentContext = implementation.GetCurrentContext;
         }
@@ -256,9 +247,9 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the DisplayMode of the context.
         /// </summary>
-        DisplayMode IGLContextInternal.Mode
+        GraphicsFormat IGLContextInternal.GraphicsFormat
         {
-            get { return (implementation as IGLContextInternal).Mode; }
+            get { return (implementation as IGLContextInternal).GraphicsFormat; }
         }
 
         ///// <summary>
@@ -348,9 +339,9 @@ namespace OpenTK.Graphics
             {
                 // TODO: Check if this is safe
                 //if (manual)
-                {
-                    implementation.Dispose();
-                }
+                    if (implementation != null)
+                        implementation.Dispose();
+
                 disposed = true;
             }
         }

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace OpenTK.Platform.X11
 {
+#if false
     /// <summary>
     /// Describes a Windows.Form.Control, Windows.Forms.NativeWindow or OpenTK.GameWindow on the X11 platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
@@ -30,7 +31,7 @@ namespace OpenTK.Platform.X11
             //visinfo = new XVisualInfo();
         }
 
-        public WindowInfo(IWindowInfo info)
+        public WindowInfo(IWindowInfoOld info)
         {
             this.CopyInfoFrom(info);
         }
@@ -61,16 +62,16 @@ namespace OpenTK.Platform.X11
         {
             if (window == null)
                 throw new ArgumentException("GameWindow cannot be null.");
-
-            this.CopyInfoFrom(window.WindowInfo);
+            throw new NotSupportedException();
+            //this.CopyInfoFrom(window.WindowInfo);
         }
 
-        #region --- IWindowInfo Members ---
+    #region --- IWindowInfo Members ---
 
         public IntPtr Handle { get { return handle; } internal set { handle = value; } }
-        public IWindowInfo Parent { get { return parent; } internal set { parent = value as WindowInfo; } }
+        public IWindowInfoOld Parent { get { return parent; } internal set { parent = value as WindowInfo; } }
 
-        public IWindowInfo GetInfoFrom(Control control)
+        public IWindowInfoOld GetInfoFrom(Control control)
         {
             if (control == null)
                 throw new ArgumentException("Control cannot be null.");
@@ -78,7 +79,7 @@ namespace OpenTK.Platform.X11
             return new WindowInfo(control);
         }
 
-        public IWindowInfo GetInfoFrom(NativeWindow window)
+        public IWindowInfoOld GetInfoFrom(NativeWindow window)
         {
             if (window == null)
                 throw new ArgumentException("NativeWindow cannot be null.");
@@ -86,15 +87,16 @@ namespace OpenTK.Platform.X11
             return new WindowInfo(window);
         }
 
-        public IWindowInfo GetInfoFrom(GameWindow window)
+        public IWindowInfoOld GetInfoFrom(GameWindow window)
         {
             if (window == null)
                 throw new ArgumentException("GameWindow cannot be null.");
 
-            return this.GetInfoFrom(window.WindowInfo);
+            throw new NotSupportedException();
+            //return this.GetInfoFrom(window.WindowInfo);
         }
 
-        public IWindowInfo GetInfoFrom(IWindowInfo info)
+        public IWindowInfoOld GetInfoFrom(IWindowInfoOld info)
         {
             if (info == null)
                 throw new ArgumentException("WindowInfo cannot be null");
@@ -104,12 +106,12 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region --- IMutableWindowInfo Members ---
+    #region --- IMutableWindowInfo Members ---
 
-        public void CopyInfoFrom(IWindowInfo info)
+        public void CopyInfoFrom(IWindowInfoOld info)
         {
             if (info == null)
-                throw new ArgumentException("IWindowInfo info cannot be null.");
+                throw new ArgumentNullException("IWindowInfo", "Cannot be null.");
             this.Handle = info.Handle;
             this.Parent = info.Parent;
 
@@ -117,7 +119,7 @@ namespace OpenTK.Platform.X11
             // X11.WindowInfo winfo = info as X11.WindowInfo ?? (X11.WindowInfo)(info as Platform.WindowInfo);
             X11.WindowInfo winfo = info as X11.WindowInfo;
             if (winfo == null)
-                winfo = new WindowInfo(info);//(X11.WindowInfo)(info as Platform.WindowInfo);
+                //winfo = (X11.WindowInfo)(info as Platform.WindowInfo);
 
             this.RootWindow = winfo.RootWindow;
             this.TopLevelWindow = winfo.TopLevelWindow;
@@ -159,4 +161,5 @@ namespace OpenTK.Platform.X11
 
         }
     }
+#endif
 }

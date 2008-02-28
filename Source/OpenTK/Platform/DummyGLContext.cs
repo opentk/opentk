@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using OpenTK.Graphics;
 
 namespace OpenTK.Platform
 {
@@ -16,21 +17,19 @@ namespace OpenTK.Platform
     /// </summary>
     internal sealed class DummyGLContext : IGraphicsContext
     {
-        WindowInfo info = new WindowInfo();
-        DisplayMode mode;
+        GraphicsFormat format;
         bool vsync;
 
         #region --- Constructors ---
 
-        public DummyGLContext(DisplayMode m) { mode = m; }
+        public DummyGLContext(GraphicsFormat format) { this.format = format; }
 
         #endregion
 
         #region --- IGraphicsContext Members ---
 
         public IntPtr Context { get { return IntPtr.Zero; } }
-        public IWindowInfo Info { get { return info; } }
-        public DisplayMode Mode { get { return mode; } }
+        public GraphicsFormat GraphicsFormat { get { return format; } }
 
         public void CreateContext() { }
         public void CreateContext(bool direct) { }

@@ -35,7 +35,7 @@ namespace OpenTK.Platform.Windows
 
         #region --- Constructors ---
 
-        internal WinRawInput(IWindowInfo parent)
+        internal WinRawInput(WinWindowInfo parent)
         {
             Debug.WriteLine("Initalizing windows raw input driver.");
             Debug.Indent();
