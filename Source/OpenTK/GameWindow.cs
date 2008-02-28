@@ -98,23 +98,23 @@ namespace OpenTK
 
         #region --- Contructors ---
 
-        public GameWindow() : this("OpenTK Game Window", 640, 480, null, GraphicsFormat.Default) { }
+        public GameWindow() : this("OpenTK Game Window", 640, 480, null, GraphicsMode.Default) { }
 
-        public GameWindow(string title) : this(title, 640, 480, null, GraphicsFormat.Default) { }
+        public GameWindow(string title) : this(title, 640, 480, null, GraphicsMode.Default) { }
 
         public GameWindow(string title, int width, int height)
-            : this(title, width, height, null, GraphicsFormat.Default) { }
+            : this(title, width, height, null, GraphicsMode.Default) { }
 
-        public GameWindow(string title, int width, int height, GraphicsFormat format)
+        public GameWindow(string title, int width, int height, GraphicsMode format)
             : this(title, width, height, null, format) { }
 
         public GameWindow(string title, DisplayResolution resolution)
-            : this(title, resolution.Width, resolution.Height, resolution, GraphicsFormat.Default) { }
+            : this(title, resolution.Width, resolution.Height, resolution, GraphicsMode.Default) { }
 
-        public GameWindow(string title, DisplayResolution resolution, GraphicsFormat format)
+        public GameWindow(string title, DisplayResolution resolution, GraphicsMode format)
             : this(title, resolution.Width, resolution.Height, resolution, format) { }
 
-        GameWindow(string title, int width, int height, DisplayResolution resolution, GraphicsFormat format)
+        GameWindow(string title, int width, int height, DisplayResolution resolution, GraphicsMode format)
         {
             if (Configuration.RunningOnWindows)
                 glWindow = new OpenTK.Platform.Windows.WinGLNative();

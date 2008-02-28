@@ -24,7 +24,7 @@ namespace Examples.WinForms
     [Example("Extensions", ExampleCategory.WinForms, 3)]
     public partial class W03_Extensions : Form
     {
-        GLControl glControl = new GLControl(GraphicsFormat.Default);
+        GLControl glControl = new GLControl(GraphicsMode.Default);
         Type glClass;
         Type delegatesClass;
         Type importsClass;

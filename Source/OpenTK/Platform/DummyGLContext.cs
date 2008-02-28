@@ -17,19 +17,19 @@ namespace OpenTK.Platform
     /// </summary>
     internal sealed class DummyGLContext : IGraphicsContext
     {
-        GraphicsFormat format;
+        GraphicsMode format;
         bool vsync;
 
         #region --- Constructors ---
 
-        public DummyGLContext(GraphicsFormat format) { this.format = format; }
+        public DummyGLContext(GraphicsMode format) { this.format = format; }
 
         #endregion
 
         #region --- IGraphicsContext Members ---
 
         public IntPtr Context { get { return IntPtr.Zero; } }
-        public GraphicsFormat GraphicsFormat { get { return format; } }
+        public GraphicsMode GraphicsFormat { get { return format; } }
 
         public void CreateContext() { }
         public void CreateContext(bool direct) { }

@@ -307,9 +307,9 @@ namespace OpenTK
 
         #endregion
 
-        internal GraphicsFormat ToGraphicsFormat()
+        internal GraphicsMode ToGraphicsFormat()
         {
-            return new GraphicsFormat(this.Color.BitsPerPixel, this.DepthBits, this.StencilBits, 0, this.AuxBits, this.Buffers, this.Stereo);
+            return new GraphicsMode(this.Color.BitsPerPixel, this.DepthBits, this.StencilBits, 0, this.AuxBits, this.Buffers, this.Stereo);
         }
 
         #region --- Overrides ---

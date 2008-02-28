@@ -23,7 +23,7 @@ namespace OpenTK
     public partial class GLControl : UserControl
     {
         IGraphicsContext context;
-        GraphicsFormat format;
+        GraphicsMode format;
         IGLControlHelper helper;
 
         #region --- Constructor ---
@@ -32,7 +32,7 @@ namespace OpenTK
         /// Constructs a new GLControl.
         /// </summary>
         public GLControl()
-            : this(GraphicsFormat.Default)
+            : this(GraphicsMode.Default)
         { }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace OpenTK
             : this(mode.ToGraphicsFormat())
         { }
 
-        public GLControl(GraphicsFormat format)
+        public GLControl(GraphicsMode format)
         {
             InitializeComponent();
 
@@ -119,7 +119,7 @@ namespace OpenTK
             if (context != null)
                 throw new InvalidOperationException("GLControl already contains an OpenGL context.");
             if (format == null)
-                format = GraphicsFormat.Default;
+                format = GraphicsMode.Default;
 
             if (!this.DesignMode)
             {
@@ -221,7 +221,7 @@ namespace OpenTK
         /// <remarks>
         /// To change the GraphicsFormat, you must destroy and recreate the GLControl.
         /// </remarks>
-        public GraphicsFormat GraphicsFormat
+        public GraphicsMode GraphicsFormat
         {
             get { return (Context as IGLContextInternal).GraphicsFormat; }
         }
