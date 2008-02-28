@@ -39,7 +39,7 @@ namespace OpenTK.Graphics
             : this(mode.ToGraphicsFormat(), window)
         { }
 
-        public GraphicsContext(GraphicsFormat format, IWindowInfo window)
+        public GraphicsContext(GraphicsMode format, IWindowInfo window)
         {
             //if (available_contexts.Count == 0)
             //    available_contexts.Add(IntPtr.Zero, new WeakReference(null));
@@ -247,7 +247,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the DisplayMode of the context.
         /// </summary>
-        GraphicsFormat IGLContextInternal.GraphicsFormat
+        GraphicsMode IGLContextInternal.GraphicsFormat
         {
             get { return (implementation as IGLContextInternal).GraphicsFormat; }
         }

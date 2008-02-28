@@ -13,7 +13,7 @@ using System.Text;
 namespace OpenTK.Graphics
 {
     /// <summary>Defines the format for graphics operations.</summary>
-    public class GraphicsFormat
+    public class GraphicsMode
     {
         ColorDepth color_format, accumulator_format;
         int depth, stencil, buffers, samples;
@@ -26,7 +26,7 @@ namespace OpenTK.Graphics
         /// <internal />
         /// <summary>Constructs a new GraphicsFormat from the given GraphicsFormat.</summary>
         /// <param name="mode"></param>
-        internal GraphicsFormat(GraphicsFormat mode)
+        internal GraphicsMode(GraphicsMode mode)
             : this(mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo) { }
 
         #endregion
@@ -34,7 +34,7 @@ namespace OpenTK.Graphics
         #region public GraphicsFormat()
 
         /// <summary>Constructs a new GraphicsFormat with sensible default parameters.</summary>
-        public GraphicsFormat()
+        public GraphicsMode()
             : this(Default)
         { }
 
@@ -44,7 +44,7 @@ namespace OpenTK.Graphics
 
         /// <summary>Constructs a new GraphicsFormat with the specified parameters.</summary>
         /// <param name="color">The ColorFormat of the color buffer.</param>
-        public GraphicsFormat(ColorDepth color)
+        public GraphicsMode(ColorDepth color)
             : this(color, Default.Depth, Default.Stencil, Default.Samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
         { }
 
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics
         /// <summary>Constructs a new GraphicsFormat with the specified parameters.</summary>
         /// <param name="color">The ColorFormat of the color buffer.</param>
         /// <param name="depth">The number of bits in the depth buffer.</param>
-        public GraphicsFormat(ColorDepth color, int depth)
+        public GraphicsMode(ColorDepth color, int depth)
             : this(color, depth, Default.Stencil, Default.Samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
         { }
 
@@ -67,7 +67,7 @@ namespace OpenTK.Graphics
         /// <param name="color">The ColorFormat of the color buffer.</param>
         /// <param name="depth">The number of bits in the depth buffer.</param>
         /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        public GraphicsFormat(ColorDepth color, int depth, int stencil)
+        public GraphicsMode(ColorDepth color, int depth, int stencil)
             : this(color, depth, stencil, Default.Samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
         { }
 
@@ -80,7 +80,7 @@ namespace OpenTK.Graphics
         /// <param name="depth">The number of bits in the depth buffer.</param>
         /// <param name="stencil">The number of bits in the stencil buffer.</param>
         /// <param name="samples">The number of samples for FSAA.</param>
-        public GraphicsFormat(ColorDepth color, int depth, int stencil, int samples)
+        public GraphicsMode(ColorDepth color, int depth, int stencil, int samples)
             : this(color, depth, stencil, samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
         { }
 
@@ -94,7 +94,7 @@ namespace OpenTK.Graphics
         /// <param name="stencil">The number of bits in the stencil buffer.</param>
         /// <param name="samples">The number of samples for FSAA.</param>
         /// <param name="accum">The ColorFormat of the accumilliary buffer.</param>
-        public GraphicsFormat(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum)
+        public GraphicsMode(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum)
             : this(color, depth, stencil, samples, accum, Default.Buffers, Default.Stereo)
         { }
 
@@ -109,7 +109,7 @@ namespace OpenTK.Graphics
         /// <param name="samples">The number of samples for FSAA.</param>
         /// <param name="accum">The ColorFormat of the accumilliary buffer.</param>
         /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
-        public GraphicsFormat(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum, int buffers)
+        public GraphicsMode(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum, int buffers)
             : this(color, depth, stencil, samples, accum, buffers, Default.Stereo)
         { }
 
@@ -125,7 +125,7 @@ namespace OpenTK.Graphics
         /// <param name="accum">The ColorFormat of the accumilliary buffer.</param>
         /// <param name="stereo">Set to true for a GraphicsFormat with stereographic capabilities.</param>
         /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
-        public GraphicsFormat(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum, int buffers, bool stereo)
+        public GraphicsMode(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum, int buffers, bool stereo)
         {
             if (depth < 0) throw new ArgumentOutOfRangeException("depth", "Must be greater than, or equal to zero.");
             if (stencil < 0) throw new ArgumentOutOfRangeException("stencil", "Must be greater than, or equal to zero.");
@@ -239,9 +239,9 @@ namespace OpenTK.Graphics
         #region public static GraphicsFormat Default
 
         /// <summary>Returns an OpenTK.GraphicsFormat compatible with the underlying platform.</summary>
-        public static GraphicsFormat Default
+        public static GraphicsMode Default
         {
-            get { return new GraphicsFormat(DisplayDevice.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 0, 2, false); }
+            get { return new GraphicsMode(DisplayDevice.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 0, 2, false); }
         }
 
         #endregion
