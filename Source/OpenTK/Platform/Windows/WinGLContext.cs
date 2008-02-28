@@ -26,65 +26,68 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal sealed class WinGLContext : IGraphicsContext, IGLContextInternal, IGLContextCreationHack
     {
-        private IntPtr deviceContext;
-        private ContextHandle renderContext;
-        static private IntPtr opengl32Handle;
-        private const string opengl32Name = "OPENGL32.DLL";
-        private WindowInfo windowInfo = new WindowInfo();
+        IntPtr deviceContext;
+        ContextHandle renderContext;
+        static IntPtr opengl32Handle;
+        const string opengl32Name = "OPENGL32.DLL";
+        WinWindowInfo windowInfo = new WinWindowInfo();
 
-        private DisplayMode mode = null;
-        private bool vsync_supported;
+        GraphicsFormat format;
+        //DisplayMode mode = null;
+        bool vsync_supported;
 
-        private bool disposed;
+        bool disposed;
 
         #region --- Contructors ---
 
         static WinGLContext()
         {
             // Set the GetCurrentContext implementation.
+            // TODO: Does this belong here?
             if (GraphicsContext.GetCurrentContext == null)
                 GraphicsContext.GetCurrentContext = WinGLContext.GetCurrentContext;
+
+            // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.
+            if (opengl32Handle == IntPtr.Zero)
+            {
+                opengl32Handle = Functions.LoadLibrary(opengl32Name);
+                if (opengl32Handle == IntPtr.Zero)
+                    throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
+                                                                 opengl32Name, Marshal.GetLastWin32Error()));
+                Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
+            }
         }
 
-        public WinGLContext()
+        GraphicsFormat SelectFormat(GraphicsFormat format)
         {
+            using (WinGLNative native = new WinGLNative(16, 16))
+            //using (WinGLContext context = new WinGLContext(format, native.WindowInfo, null))
+            {
+                // Find the best multisampling mode.
+                return format;
+            }
         }
 
-        #endregion
-
-        #region --- IGraphicsContext Members ---
-
-        #region public void CreateContext()
-
-        public void CreateContext()
+        public WinGLContext(GraphicsFormat format, IWindowInfo window, IGraphicsContext sharedContext)
         {
-            this.CreateContext(true, null);
-        }
+            //format = this.SelectFormat(format);
 
-        #endregion
+            this.windowInfo = (WinWindowInfo)window;
+            Debug.Print("OpenGL will be bound to handle: {0}", this.windowInfo.Handle);
+            if (this.windowInfo.Handle == IntPtr.Zero)
+                throw new ArgumentException("window", "Must be a valid window.");
 
-        #region public void CreateContext(bool direct)
-
-        public void CreateContext(bool direct)
-        {
-            this.CreateContext(direct, null);
-        }
-
-        #endregion
-
-        #region public void CreateContext(bool direct, IGraphicsContext source)
-
-        public void CreateContext(bool direct, IGraphicsContext source)
-        {
-            Debug.WriteLine(String.Format("OpenGL context is bound to handle: {0}", this.windowInfo.Handle));
+            Debug.Print("Setting pixel format...");
+            this.format = this.SetGraphicsFormatPFD(format);
 
             Debug.Write("Creating render context... ");
             // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
             // and Wgl extensions will fail to load.
             renderContext = new ContextHandle(Wgl.Imports.CreateContext(deviceContext));
             if (renderContext == IntPtr.Zero)
-                throw new ApplicationException("Could not create OpenGL render context (Wgl.CreateContext() return 0).");
-            
+                throw new GraphicsContextException(String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
+                                                                 Marshal.GetLastWin32Error()));
+
             Debug.WriteLine(String.Format("done! (id: {0})", renderContext));
 
             Wgl.Imports.MakeCurrent(deviceContext, renderContext);
@@ -95,11 +98,42 @@ namespace OpenTK.Platform.Windows
             vsync_supported = Wgl.Arb.SupportsExtension(this, "WGL_EXT_swap_control") &&
                 Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
 
-            if (source != null)
+            if (sharedContext != null)
             {
-                Debug.Print("Sharing state with context {0}", (source as IGLContextInternal).Context);
-                Wgl.Imports.ShareLists(renderContext, (source as IGLContextInternal).Context);
+                Debug.Print("Sharing state with context {0}", sharedContext.ToString());
+                Wgl.Imports.ShareLists(renderContext, (sharedContext as IGLContextInternal).Context);
             }
+        }
+
+        #endregion
+
+        #region --- IGraphicsContext Members ---
+
+        #region public void CreateContext()
+
+        public void CreateContext()
+        {
+            throw new NotSupportedException();
+            this.CreateContext(true, null);
+        }
+
+        #endregion
+
+        #region public void CreateContext(bool direct)
+
+        public void CreateContext(bool direct)
+        {
+            throw new NotSupportedException();
+            this.CreateContext(direct, null);
+        }
+
+        #endregion
+
+        #region public void CreateContext(bool direct, IGraphicsContext source)
+
+        public void CreateContext(bool direct, IGraphicsContext source)
+        {
+            throw new NotSupportedException();
         }
 
         #endregion
@@ -168,7 +202,7 @@ namespace OpenTK.Platform.Windows
 
         #region --- IGLContextInternal Members ---
 
-        #region public IntPtr Context
+        #region ContextHandle IGLContextInternal.Context
 
         ContextHandle IGLContextInternal.Context
         {
@@ -177,21 +211,20 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public IWindowInfo Info
+        #region IWindowInfo IGLContextInternal.Info
 
         IWindowInfo IGLContextInternal.Info
         {
-            get { return windowInfo; }
+            get { return (IWindowInfo)windowInfo; }
         }
 
         #endregion
 
-        #region public DisplayMode Mode
+        #region GraphicsFormat IGLContextInternal.GraphicsFormat
 
-        [Obsolete]
-        DisplayMode IGLContextInternal.Mode
+        GraphicsFormat IGLContextInternal.GraphicsFormat
         {
-            get { return new DisplayMode(mode); }
+            get { return format; }
         }
 
         #endregion
@@ -234,6 +267,87 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region --- Private Methods ---
+
+        #region GraphicsFormat SetGraphicsFormatPFD(GraphicsFormat format)
+
+        GraphicsFormat SetGraphicsFormatPFD(GraphicsFormat format)
+        {
+            deviceContext = Functions.GetDC(this.windowInfo.Handle);
+            Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
+
+            Debug.Write("Setting pixel format... ");
+            PixelFormatDescriptor pixelFormat = new PixelFormatDescriptor();
+            pixelFormat.Size = API.PixelFormatDescriptorSize;
+            pixelFormat.Version = API.PixelFormatDescriptorVersion;
+            pixelFormat.Flags =
+                PixelFormatDescriptorFlags.SUPPORT_OPENGL |
+                PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
+            pixelFormat.ColorBits = (byte)(format.ColorFormat.Red + format.ColorFormat.Green + format.ColorFormat.Blue);
+            
+            pixelFormat.PixelType = format.ColorFormat.IsIndexed ? PixelType.INDEXED : PixelType.RGBA;
+            pixelFormat.PixelType = PixelType.RGBA;
+            pixelFormat.RedBits = (byte)format.ColorFormat.Red;
+            pixelFormat.GreenBits = (byte)format.ColorFormat.Green;
+            pixelFormat.BlueBits = (byte)format.ColorFormat.Blue;
+            pixelFormat.AlphaBits = (byte)format.ColorFormat.Alpha;
+
+            if (format.AccumulatorFormat != null)
+            {
+                pixelFormat.AccumBits = (byte)(format.AccumulatorFormat.Red + format.AccumulatorFormat.Green + format.AccumulatorFormat.Blue);
+                pixelFormat.AccumRedBits = (byte)format.AccumulatorFormat.Red;
+                pixelFormat.AccumGreenBits = (byte)format.AccumulatorFormat.Green;
+                pixelFormat.AccumBlueBits = (byte)format.AccumulatorFormat.Blue;
+                pixelFormat.AccumAlphaBits = (byte)format.AccumulatorFormat.Alpha;
+            }
+
+            pixelFormat.DepthBits = (byte)format.Depth;
+            pixelFormat.StencilBits = (byte)format.Stencil;
+
+            if (format.Depth <= 0) pixelFormat.Flags |= PixelFormatDescriptorFlags.DEPTH_DONTCARE;
+            if (format.Stereo) pixelFormat.Flags |= PixelFormatDescriptorFlags.STEREO;
+            if (format.Buffers > 1) pixelFormat.Flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
+
+            int pixel = Functions.ChoosePixelFormat(deviceContext, ref pixelFormat);
+            if (pixel == 0)
+                throw new GraphicsModeException(String.Format("The requested format is not available: {0}.", format));
+
+            // Find out what we really got as a format:
+            PixelFormatDescriptor pfd = new PixelFormatDescriptor();
+            pixelFormat.Size = API.PixelFormatDescriptorSize;
+            pixelFormat.Version = API.PixelFormatDescriptorVersion;
+            Functions.DescribePixelFormat(deviceContext, pixel, API.PixelFormatDescriptorSize, ref pfd);
+            GraphicsFormat fmt = new GraphicsFormat(
+                new ColorDepth(pfd.RedBits, pfd.GreenBits, pfd.BlueBits, pfd.AlphaBits),
+                pfd.DepthBits,
+                pfd.StencilBits,
+                0,
+                new ColorDepth(pfd.AccumBits),
+                (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
+                (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
+
+            if (!Functions.SetPixelFormat(deviceContext, pixel, ref pixelFormat))
+                throw new GraphicsContextException(String.Format("Requested GraphicsFormat not available. SetPixelFormat error: {0}",
+                                                                 Marshal.GetLastWin32Error()));
+            Debug.Print("done! (format: {0})", pixel);
+
+            return fmt;
+        }
+
+        #endregion
+
+        #region GraphicsFormat SetGraphicsFormatARB(GraphicsFormat format)
+
+        GraphicsFormat SetGraphicsFormatARB(GraphicsFormat format)
+        {
+            return null;
+        }
+
+        #endregion
+
+
+        #endregion
+
         #region --- IGLContextCreationHack Members ---
 
         #region bool IGLContextCreationHack.SelectDisplayMode(DisplayMode mode, IWindowInfo info)
@@ -259,7 +373,6 @@ namespace OpenTK.Platform.Windows
                 }
                 Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
             }
-
             deviceContext = Functions.GetDC(this.windowInfo.Handle);
             Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
 
@@ -350,7 +463,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- Methods ---
+        #region --- Internal Methods ---
 
         #region internal IntPtr Device
 
@@ -366,6 +479,17 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        #endregion
+
+        #region --- Overrides ---
+
+        /// <summary>Returns a System.String describing this OpenGL context.</summary>
+        /// <returns>A System.String describing this OpenGL context.</returns>
+        public override string ToString()
+        {
+            return (this as IGLContextInternal).Context.ToString();
+        }
 
         #endregion
 

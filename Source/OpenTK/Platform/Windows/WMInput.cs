@@ -28,7 +28,7 @@ namespace OpenTK.Platform.Windows
 
         #region --- Constructor ---
 
-        public WMInput(IWindowInfo parent)
+        public WMInput(WinWindowInfo parent)
         {
             Debug.WriteLine("Initalizing WMInput driver.");
             Debug.Indent();

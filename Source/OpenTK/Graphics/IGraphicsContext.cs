@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -8,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Platform
+using OpenTK.Platform;
+
+namespace OpenTK.Graphics
 {
     /// <summary>
     /// Provides methods for creating and interacting with an OpenGL context.
@@ -74,10 +78,8 @@ namespace OpenTK.Platform
         /// </summary>
         IWindowInfo Info { get; }
 
-        /// <summary>
-        /// Gets the DisplayMode of the context.
-        /// </summary>
-        DisplayMode Mode { get; }
+        /// <summary>Gets the GraphicsFormat of the context.</summary>
+        GraphicsFormat GraphicsFormat { get; }
 
         ///// <summary>
         ///// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
