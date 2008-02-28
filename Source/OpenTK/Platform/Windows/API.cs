@@ -218,13 +218,31 @@ namespace OpenTK.Platform.Windows
             LPARAM lParam
         );
 
+        internal static IntPtr SetWindowLong(IntPtr handle, GetWindowLongOffsets index, IntPtr newValue)
+        {
+            if (IntPtr.Size == 4)
+                return (IntPtr)SetWindowLong(handle, index, (LONG)newValue);
+
+            return SetWindowLongPtr(handle, index, newValue);
+        }
+
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern LONG_PTR SetWindowLongPtr(
+        static extern LONG SetWindowLong(
+            HWND hWnd,
+            GetWindowLongOffsets nIndex,
+            LONG dwNewLong
+        );
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern LONG_PTR SetWindowLongPtr(
             HWND hWnd,
             GetWindowLongOffsets nIndex,
             LONG_PTR dwNewLong
         );
+
+
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
@@ -417,16 +435,13 @@ namespace OpenTK.Platform.Windows
 
         #region ChoosePixelFormat
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dc"></param>
-        /// <param name="pfd"></param>
-        /// <returns></returns>
         [DllImport("gdi32.dll")]
         internal static extern int ChoosePixelFormat(IntPtr dc, ref PixelFormatDescriptor pfd);
 
         #endregion
+
+        [DllImport("gdi32.dll")]
+        internal static extern int DescribePixelFormat(IntPtr deviceContext, int pixel, int pfdSize, ref PixelFormatDescriptor pixelFormat);
 
         #region SetPixelFormat
 
@@ -437,7 +452,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="format"></param>
         /// <param name="pfd"></param>
         /// <returns></returns>
-        [DllImport("gdi32.dll")]
+        [DllImport("gdi32.dll", SetLastError=true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetPixelFormat(IntPtr dc, int format, ref PixelFormatDescriptor pfd);
 
@@ -2498,20 +2513,20 @@ namespace OpenTK.Platform.Windows
     internal enum PixelFormatDescriptorFlags : int
     {
         // PixelFormatDescriptor flags
-        DOUBLEBUFFER,
-        STEREO,
-        DRAW_TO_WINDOW,
-        DRAW_TO_BITMAP,
-        SUPPORT_GDI,
-        SUPPORT_OPENGL,
-        GENERIC_FORMAT,
-        NEED_PALETTE,
-        NEED_SYSTEM_PALETTE,
-        SWAP_EXCHANGE,
-        SWAP_COPY,
-        SWAP_LAYER_BUFFERS,
-        GENERIC_ACCELERATED,
-        SUPPORT_DIRECTDRAW,
+        DOUBLEBUFFER = 0x01,
+        STEREO = 0x02,
+        DRAW_TO_WINDOW = 0x04,
+        DRAW_TO_BITMAP = 0x08,
+        SUPPORT_GDI = 0x10,
+        SUPPORT_OPENGL = 0x20,
+        GENERIC_FORMAT = 0x40,
+        NEED_PALETTE = 0x80,
+        NEED_SYSTEM_PALETTE = 0x100,
+        SWAP_EXCHANGE = 0x200,
+        SWAP_COPY = 0x400,
+        SWAP_LAYER_BUFFERS = 0x800,
+        GENERIC_ACCELERATED = 0x1000,
+        SUPPORT_DIRECTDRAW = 0x2000,
 
         // PixelFormatDescriptor flags for use in ChoosePixelFormat only
         DEPTH_DONTCARE = unchecked((int)0x20000000),
