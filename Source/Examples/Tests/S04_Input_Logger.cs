@@ -35,7 +35,7 @@ namespace Examples.Tests
 
         void LaunchGameWindow()
         {
-            hidden = new GameWindow(new DisplayMode(30, 30), "OpenTK | Hidden input window");
+            hidden = new GameWindow("OpenTK | Hidden input window", 16, 16);
             hidden.Load += hidden_Load;
             hidden.Unload += hidden_Unload;
             hidden.Run(60.0, 1.0);
@@ -64,7 +64,7 @@ namespace Examples.Tests
             while (!start)
                 Thread.Sleep(100);
 
-            WindowInfo info = new WindowInfo(this);
+            //WindowInfo info = new WindowInfo(this);
 
             keyboardListBoxes.Add(hidden.Keyboard.DeviceID, listBox1);
 
@@ -84,7 +84,8 @@ namespace Examples.Tests
         {
             base.OnClosing(e);
 
-            hidden.Exit();
+            hidden.ExitAsync();
+
             while (hidden.Exists)
                 Thread.Sleep(100);
 

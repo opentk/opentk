@@ -27,16 +27,7 @@ namespace Examples.WinForms
     {
         public W01_First_Window()
         {
-            try
-            {
-                InitializeComponent();
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Trace.WriteLine("Exception during initialization, aborting: {0}", e.ToString());
-                this.Close();
-                return;
-            }
+            InitializeComponent();
         }
 
         #region Events
