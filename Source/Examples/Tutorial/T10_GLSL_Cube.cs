@@ -64,7 +64,6 @@ namespace Examples.Tutorial
                 MessageBox.Show("You need at least OpenGL 2.0 to run this example. Aborting.", "GLSL not supported",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 this.Exit();
-                return;
             }
 
             GL.ClearColor(Color.SteelBlue);
@@ -159,11 +158,16 @@ namespace Examples.Tutorial
 
         public override void OnUnload(EventArgs e)
         {
-            GL.DeleteProgram(shader_program);
-            GL.DeleteShader(fragment_shader_object);
-            GL.DeleteShader(vertex_shader_object);
-            GL.DeleteBuffers(1, ref vertex_buffer_object);
-            GL.DeleteBuffers(1, ref element_buffer_object);
+            if (shader_program != 0)
+                GL.DeleteProgram(shader_program);
+            if (fragment_shader_object != 0)
+                GL.DeleteShader(fragment_shader_object);
+            if (vertex_shader_object != 0)
+                GL.DeleteShader(vertex_shader_object);
+            if (vertex_buffer_object != 0)
+                GL.DeleteBuffers(1, ref vertex_buffer_object);
+            if (element_buffer_object != 0)
+                GL.DeleteBuffers(1, ref element_buffer_object);
         }
 
         #endregion

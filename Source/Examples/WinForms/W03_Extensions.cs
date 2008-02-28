@@ -24,8 +24,7 @@ namespace Examples.WinForms
     [Example("Extensions", ExampleCategory.WinForms, 3)]
     public partial class W03_Extensions : Form
     {
-        //GLControl glControl = new GLControl();
-        GraphicsContext context;
+        GLControl glControl = new GLControl(GraphicsFormat.Default);
         Type glClass;
         Type delegatesClass;
         Type importsClass;
@@ -40,18 +39,18 @@ namespace Examples.WinForms
             delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
 
-            //glControl.CreateControl();
+            glControl.CreateControl();
             Application.Idle += StartAsync;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            glControl.Dispose();
         }
 
         void StartAsync(object sender, EventArgs e)
         {
             Application.Idle -= StartAsync;
-
-            context = new GraphicsContext(new DisplayMode(), new OpenTK.Platform.WindowInfo(this));
-            context.CreateContext();
-
-            //while (!glControl.Created)
 
             driver =
                 GL.GetString(StringName.Vendor) + " " +

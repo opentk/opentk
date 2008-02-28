@@ -29,7 +29,7 @@ namespace Examples.Tests
         {
             using (Form f = new Form())
             {
-                context = new GraphicsContext(new OpenTK.DisplayMode(), new OpenTK.Platform.WindowInfo(f));
+                //context = new GraphicsContext(new OpenTK.DisplayMode(), new OpenTK.Platform.WindowInfo(f));
                 context.CreateContext();
 
                 Trace.WriteLine(String.Format("Number of calls: {0}", num_calls));
