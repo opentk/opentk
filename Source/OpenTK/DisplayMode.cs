@@ -81,7 +81,7 @@ namespace OpenTK
         /// <param name="width">The Width of the DisplayMode in pixels.</param>
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         public DisplayMode(int width, int height)
-            : this(width, height, DisplayDevice.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 0, false, false, false, 0.0f)
+            : this(width, height, DisplayDevice.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 2, false, false, false, 0.0f)
         {
         }
 
@@ -92,7 +92,7 @@ namespace OpenTK
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         /// <param name="color">The ColorMode of the color buffer.</param>
         public DisplayMode(int width, int height, ColorMode color)
-            : this(width, height, color, 16, 0, 0, 0, false, false, false, 0.0f)
+            : this(width, height, color, 16, 0, 0, 2, false, false, false, 0.0f)
         {
         }
 
@@ -104,7 +104,7 @@ namespace OpenTK
         /// <param name="color">The ColorMode of the color buffer.</param>
         /// <param name="depth">The number of bits in the depth buffer.</param>
         public DisplayMode(int width, int height, ColorMode color, int depth)
-            : this(width, height, color, depth, 0, 0, 0, false, false, false, 0.0f)
+            : this(width, height, color, depth, 0, 0, 2, false, false, false, 0.0f)
         {
         }
 
@@ -117,7 +117,7 @@ namespace OpenTK
         /// <param name="depth">The number of bits in the depth buffer.</param>
         /// <param name="fullscreen">True for a fullscreen DisplayMode, false otherwise.</param>
         public DisplayMode(int width, int height, ColorMode color, int depth, bool fullscreen)
-            : this(width, height, color, depth, 0, 0, 0, fullscreen, false, false, 0.0f)
+            : this(width, height, color, depth, 0, 0, 2, fullscreen, false, false, 0.0f)
         {
         }
 
@@ -309,7 +309,7 @@ namespace OpenTK
 
         internal GraphicsFormat ToGraphicsFormat()
         {
-            return new GraphicsFormat(this.Color, this.DepthBits, this.StencilBits, this.AuxBits, this.Buffers, this.Stereo);
+            return new GraphicsFormat(this.Color.BitsPerPixel, this.DepthBits, this.StencilBits, 0, this.AuxBits, this.Buffers, this.Stereo);
         }
 
         #region --- Overrides ---
