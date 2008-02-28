@@ -12,10 +12,10 @@ namespace OpenTK.Platform.Windows
         {
 
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglCreateContext", ExactSpelling = true)]
+            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglCreateContext", ExactSpelling = true, SetLastError=true)]
             internal extern static IntPtr CreateContext(IntPtr hDc);
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglDeleteContext", ExactSpelling = true)]
+            [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglDeleteContext", ExactSpelling = true, SetLastError = true)]
             internal extern static Boolean DeleteContext(IntPtr oldContext);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Wgl.Library, EntryPoint = "wglGetCurrentContext", ExactSpelling = true)]
