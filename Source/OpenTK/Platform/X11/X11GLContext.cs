@@ -23,7 +23,8 @@ namespace OpenTK.Platform.X11
     {
          IntPtr context;
          DisplayMode mode;
-         WindowInfo windowInfo = new WindowInfo();
+         X11WindowInfo windowInfo = new X11WindowInfo();
+         GraphicsFormat format;
          IntPtr visual;
          bool vsync_supported;
          int vsync_interval;
@@ -97,7 +98,7 @@ namespace OpenTK.Platform.X11
                 visualAttributes.Add((int)0);
             }
 
-            windowInfo.CopyInfoFrom(info);
+            //windowInfo.CopyInfoFrom(info);
             visual = Glx.ChooseVisual(windowInfo.Display, windowInfo.Screen, visualAttributes.ToArray());
             if (visual == IntPtr.Zero)
                 return false;
@@ -120,22 +121,6 @@ namespace OpenTK.Platform.X11
         #endregion
 
         #region --- IGraphicsContext Members ---
-
-        #region public DisplayMode Mode
-
-        public DisplayMode Mode
-        {
-            get { return mode; }
-            private set
-            {
-                if (context == IntPtr.Zero)
-                    mode = value;
-                else
-                    Debug.Print("Cannot change DisplayMode of an existing context.");
-            }
-        }
-
-        #endregion
 
         #region public void CreateContext()
 
@@ -318,6 +303,15 @@ namespace OpenTK.Platform.X11
         #endregion
 
         #region --- IGLContextInternal Members ---
+
+        #region public DisplayMode Mode
+
+        GraphicsFormat IGLContextInternal.GraphicsFormat
+        {
+            get { return format; }
+        }
+
+        #endregion
 
         #region IntPtr IGLContextInternal.Context
 

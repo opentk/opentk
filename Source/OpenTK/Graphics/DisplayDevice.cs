@@ -132,25 +132,6 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region public DisplayResolution[] AvailableResolutions
-
-        /// <summary>
-        /// Gets an array of OpenTK.DisplayResolution objects, which describe all available resolutions
-        /// for this device.
-        /// </summary>
-        public DisplayResolution[] AvailableResolutions
-        {
-            get
-            {
-                lock (display_lock)
-                {
-                    return available_resolutions.ToArray();
-                }
-            }
-        }
-
-        #endregion
-
         #region public DisplayResolution SelectResolution(int width, int height, int bitsPerPixel, float refreshRate)
 
         /// <summary>
@@ -175,6 +156,25 @@ namespace OpenTK.Graphics
                     ((bitsPerPixel > 0 && bitsPerPixel == test.BitsPerPixel) || bitsPerPixel == 0) &&
                     ((refreshRate > 0 && System.Math.Abs(refreshRate - test.RefreshRate) < 1.0) || refreshRate == 0);
             });
+        }
+
+        #endregion
+
+        #region public DisplayResolution[] AvailableResolutions
+
+        /// <summary>
+        /// Gets an array of OpenTK.DisplayResolution objects, which describe all available resolutions
+        /// for this device.
+        /// </summary>
+        public DisplayResolution[] AvailableResolutions
+        {
+            get
+            {
+                lock (display_lock)
+                {
+                    return available_resolutions.ToArray();
+                }
+            }
         }
 
         #endregion

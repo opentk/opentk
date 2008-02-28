@@ -32,7 +32,7 @@ namespace OpenTK.Platform.X11
 
         #region --- Fields ---
 
-        private WindowInfo window = new WindowInfo();
+        private X11WindowInfo window = new X11WindowInfo();
         private DisplayMode mode = new DisplayMode();
         private X11Input driver;
 
@@ -102,7 +102,7 @@ namespace OpenTK.Platform.X11
         /// Not used yet.
         /// Registers the necessary atoms for GameWindow.
         /// </summary>
-        private static void RegisterAtoms(WindowInfo window)
+        private static void RegisterAtoms(X11WindowInfo window)
         {
             string[] atom_names = new string[] 
             {
@@ -392,10 +392,11 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public void CreateWindow(int width, int height, GraphicsFormat format, out IGraphicsContext glContext)
+        #region public void CreateWindow(int width, int height)
 
-        public void CreateWindow(int width, int height, GraphicsFormat format, out IGraphicsContext glContext)
+        public void CreateWindow(int width, int height)
         {
+#if false
             if (exists)
                 throw new ApplicationException("Render window already exists!");
 
@@ -407,7 +408,7 @@ namespace OpenTK.Platform.X11
             if (glContext == null)
                 throw new ApplicationException("Could not create GraphicsContext");
             Debug.Print("Created GraphicsContext");
-            window.VisualInfo = ((X11.WindowInfo)((IGLContextInternal)glContext).Info).VisualInfo;
+            window.VisualInfo = ((X11WindowInfo)((IGLContextInternal)glContext).Info).VisualInfo;
             //window.VisualInfo = Marshal.PtrToStructure(Glx.ChooseVisual(window.Display, window.Screen, 
 
             // Create a window on this display using the visual above
@@ -474,6 +475,7 @@ namespace OpenTK.Platform.X11
             Debug.Unindent();
             Debug.WriteLine("GameWindow creation completed successfully!");
             exists = true;
+#endif
         }
 
         #endregion
@@ -493,7 +495,8 @@ namespace OpenTK.Platform.X11
         /// </remarks>
         public void CreateWindow(int width, int height, DisplayMode mode, out IGraphicsContext glContext)
         {
-            this.CreateWindow(width, height, mode.ToGraphicsFormat(), out glContext);
+            this.CreateWindow(width, height);//, mode.ToGraphicsFormat(), out glContext);
+            glContext = null;
         }
 
         #endregion

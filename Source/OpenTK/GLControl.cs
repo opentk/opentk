@@ -23,8 +23,8 @@ namespace OpenTK
     public partial class GLControl : UserControl
     {
         IGraphicsContext context;
-        IPlatformIdle idle;
-        DisplayMode display_mode;
+        GraphicsFormat format;
+        IGLControlHelper helper;
 
         #region --- Constructor ---
 
@@ -32,15 +32,18 @@ namespace OpenTK
         /// Constructs a new GLControl.
         /// </summary>
         public GLControl()
-            : this(null)
-        {
-        }
+            : this(GraphicsFormat.Default)
+        { }
 
         /// <summary>
         /// Constructs a new GLControl with the specified DisplayMode.
         /// </summary>
         /// <param name="mode"></param>
         public GLControl(DisplayMode mode)
+            : this(mode.ToGraphicsFormat())
+        { }
+
+        public GLControl(GraphicsFormat format)
         {
             InitializeComponent();
 
@@ -49,18 +52,25 @@ namespace OpenTK
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             DoubleBuffered = false;
 
-            this.display_mode = mode;
+            this.format = format;
 
             this.CreateControl();
         }
 
         #endregion
 
-        #region --- Context Setup ---
+        #region --- Protected Methods ---
 
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+            if (Configuration.RunningOnWindows)
+                helper = new Platform.Windows.WinGLControlHelper(this);
+            else if (Configuration.RunningOnX11)
+                throw new NotImplementedException();
+            //helper = new Platform.X11.X11GLControlHelper(this);
+            else if (Configuration.RunningOnOSX)
+                throw new NotImplementedException();
             this.CreateContext();
         }
 
@@ -72,7 +82,70 @@ namespace OpenTK
 
         #endregion
 
-        #region --- Public Properties ---
+        #region --- Public Methods ---
+
+        #region public void SwapBuffers()
+
+        /// <summary>
+        /// Swaps the front and back buffers, presenting the rendered scene to the screen.
+        /// </summary>
+        public void SwapBuffers()
+        {
+            Context.SwapBuffers();
+        }
+
+        #endregion
+
+        #region public void MakeCurrent()
+
+        /// <summary>
+        /// Makes the underlying this GLControl current in the calling thread.
+        /// All OpenGL commands issued are hereafter interpreted by this GLControl.
+        /// </summary>
+        public void MakeCurrent()
+        {
+            Context.MakeCurrent();
+        }
+
+        #endregion
+
+        #region public void CreateContext()
+        
+        /// <summary>
+        /// Creates a GraphicsContext and attaches it to this GLControl.
+        /// </summary>
+        public void CreateContext()
+        {
+            if (context != null)
+                throw new InvalidOperationException("GLControl already contains an OpenGL context.");
+            if (format == null)
+                format = GraphicsFormat.Default;
+
+            if (!this.DesignMode)
+            {
+                // Note: Mono's implementation of Windows.Forms on X11 does not allow the context to
+                // have a different colordepth from the parent window.
+                context = new GraphicsContext(format, helper.WindowInfo);
+            }
+            else
+                context = new DummyGLContext(format);
+        }
+
+        #endregion
+
+        #region public void DestroyContext()
+
+        /// <summary>
+        /// Destroys the GraphicsContext attached to this GLControl.
+        /// </summary>
+        /// <exception cref="NullReferenceException">Occurs when no GraphicsContext is attached.</exception>
+        public void DestroyContext()
+        {
+            Context.Dispose();
+            Context = null;
+        }
+
+        #endregion
 
         #region public bool IsIdle
 
@@ -82,7 +155,7 @@ namespace OpenTK
         [Browsable(false)]
         public bool IsIdle
         {
-            get { return idle.IsIdle; }
+            get { return helper.IsIdle; }
         }
 
         #endregion
@@ -140,91 +213,17 @@ namespace OpenTK
 
         #endregion
 
-        #region public DisplayMode Mode
-
-        // TODO: Remove for 0.3.15
+        #region public GraphicsFormat GraphicsFormat
 
         /// <summary>
-        /// Gets the DisplayMode of the GraphicsContext attached to this GLControl.
+        /// Gets the GraphicsFormat of the GraphicsContext attached to this GLControl.
         /// </summary>
         /// <remarks>
-        /// You cannot change the DisplayMode of an existing GraphicsContext.
+        /// To change the GraphicsFormat, you must destroy and recreate the GLControl.
         /// </remarks>
-        public DisplayMode Mode
+        public GraphicsFormat GraphicsFormat
         {
-            get { return (Context as IGLContextInternal).Mode; }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region --- Public Methods ---
-
-        #region public void SwapBuffers()
-
-        /// <summary>
-        /// Swaps the front and back buffers, presenting the rendered scene to the screen.
-        /// </summary>
-        public void SwapBuffers()
-        {
-            Context.SwapBuffers();
-        }
-
-        #endregion
-
-        #region public void MakeCurrent()
-
-        /// <summary>
-        /// Makes the underlying this GLControl current in the calling thread.
-        /// All OpenGL commands issued are hereafter interpreted by this GLControl.
-        /// </summary>
-        public void MakeCurrent()
-        {
-            Context.MakeCurrent();
-        }
-
-        #endregion
-
-        #region public void CreateContext()
-        
-        /// <summary>
-        /// Creates a GraphicsContext and attaches it to this GLControl.
-        /// </summary>
-        public void CreateContext()
-        {
-            if (display_mode == null)
-                display_mode = new DisplayMode();
-            WindowInfo info = new WindowInfo(this);
-            
-            if (!this.DesignMode)
-            {
-                // Mono's implementation of Windows.Forms on X11 does not allow the context to
-                // have a different colordepth from the parent. To combat this, we do not set a
-                // specific depth for the DisplayMode - we let the driver select one instead.
-                //display_mode.ColorFormat = new ColorMode(0);
-                context = new GraphicsContext(display_mode, info);
-                idle = new PlatformIdle(info);
-            }
-            else
-            {
-                context = new DummyGLContext(display_mode);
-                idle = new DummyPlatformIdle();
-            }
-        }
-
-        #endregion
-
-        #region public void DestroyContext()
-
-        /// <summary>
-        /// Destroys the GraphicsContext attached to this GLControl.
-        /// </summary>
-        /// <exception cref="NullReferenceException">Occurs when no GraphicsContext is attached.</exception>
-        public void DestroyContext()
-        {
-            Context.Dispose();
-            Context = null;
+            get { return (Context as IGLContextInternal).GraphicsFormat; }
         }
 
         #endregion
@@ -233,37 +232,10 @@ namespace OpenTK
     }
 
     #region internal interface IPlatformIdle
-
+#if false
     internal interface IPlatformIdle
     {
         bool IsIdle { get; }
-    }
-
-    internal class WinPlatformIdle : IPlatformIdle
-    {
-        OpenTK.Platform.Windows.MSG msg = new OpenTK.Platform.Windows.MSG();
-        object get_lock = new object();
-        //IntPtr handle;
-
-        public WinPlatformIdle(WindowInfo info)
-        {
-            //handle = info.Handle;
-        }
-
-        #region IPlatformIdle Members
-
-        public bool IsIdle
-        {
-            get 
-            {
-                lock (get_lock)
-                {
-                    return !OpenTK.Platform.Windows.Functions.PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
-                }
-            }
-        }
-
-        #endregion
     }
 
     internal class X11PlatformIdle : IPlatformIdle
@@ -291,52 +263,16 @@ namespace OpenTK
 
         #endregion
     }
+#endif
 
-    internal class PlatformIdle : IPlatformIdle
+    #endregion
+
+    #region internal interface IGLControlHelper
+
+    internal interface IGLControlHelper
     {
-        IPlatformIdle implementation;
-
-        public PlatformIdle(WindowInfo info)
-        {
-            switch (System.Environment.OSVersion.Platform)
-            {
-                case PlatformID.Unix:
-                case (PlatformID)128:
-                    implementation = new X11PlatformIdle(info);
-                    break;
-
-                case PlatformID.Win32NT:
-                case PlatformID.Win32S:
-                case PlatformID.Win32Windows:
-                case PlatformID.WinCE:
-                    implementation = new WinPlatformIdle(info);
-                    break;
-
-                default:
-                    throw new PlatformNotSupportedException();
-            }
-        }
-
-        #region IPlatformIdle Members
-
-        public bool IsIdle
-        {
-            get { return implementation.IsIdle; }
-        }
-
-        #endregion
-    }
-
-    internal class DummyPlatformIdle : IPlatformIdle
-    {
-        #region IPlatformIdle Members
-
-        public bool IsIdle
-        {
-            get { return false; }
-        }
-
-        #endregion
+        IWindowInfo WindowInfo { get; }
+        bool IsIdle { get; }
     }
 
     #endregion

@@ -64,6 +64,7 @@ namespace OpenTK
         ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
         bool isExiting;
+        bool hasMainLoop;
         bool disposed;
 
         double update_period, render_period;
@@ -80,11 +81,17 @@ namespace OpenTK
 
         #endregion
 
-        #region --- Internal Properties ---
+        #region --- Private Methods ---
 
         bool MustResize
         {
             get { return glWindow.Width != this.Width || glWindow.Height != this.Height; }
+        }
+
+        bool HasMainLoop
+        {
+            get { return hasMainLoop; }
+            set { hasMainLoop = value; }
         }
 
         #endregion
@@ -109,29 +116,27 @@ namespace OpenTK
 
         GameWindow(string title, int width, int height, DisplayResolution resolution, GraphicsFormat format)
         {
-            switch (Environment.OSVersion.Platform)
-            {
-                case PlatformID.Win32NT:
-                case PlatformID.Win32S:
-                case PlatformID.Win32Windows:
-                case PlatformID.WinCE:
-                    glWindow = new OpenTK.Platform.Windows.WinGLNative();
-                    break;
-
-                case PlatformID.Unix:
-                case (PlatformID)128:
-                    glWindow = new OpenTK.Platform.X11.X11GLNative();
-                    break;
-
-                default:
-                    throw new PlatformNotSupportedException(
-                        "Your platform is not supported currently. Please, refer to http://www.opentk.com for more information.");
-            }
+            if (Configuration.RunningOnWindows)
+                glWindow = new OpenTK.Platform.Windows.WinGLNative();
+            else if (Configuration.RunningOnX11)
+                glWindow = new OpenTK.Platform.X11.X11GLNative();
+            else
+                throw new PlatformNotSupportedException(
+                    "Your platform is not supported currently. Please, refer to http://www.opentk.com for more information.");
 
             glWindow.Destroy += glWindow_Destroy;
 
             // TODO: GraphicsContext is created inside this call.
-            glWindow.CreateWindow(width, height, format, out glContext);
+            glWindow.CreateWindow(width, height);//, format, out glContext);
+            try
+            {
+                this.glContext = new GraphicsContext(format, this.WindowInfo);
+            }
+            catch (GraphicsContextException e)
+            {
+                glWindow.DestroyWindow();
+                throw;
+            }
             this.Title = title;
 
             if (resolution != null)
@@ -161,7 +166,7 @@ namespace OpenTK
         /// <param name="title">The Title of the GameWindow.</param>
         [Obsolete]
         public GameWindow(DisplayMode mode, string title)
-            : this(title, mode.Width, mode.Height, new GraphicsFormat(mode.Color, mode.DepthBits, mode.StencilBits, mode.AuxBits))
+            : this(title, mode.Width, mode.Height, mode.ToGraphicsFormat())
         {
         }
 
@@ -178,7 +183,7 @@ namespace OpenTK
         #region public virtual void Exit()
 
         /// <summary>
-        /// Gracefully exits the GameWindow. May be called from any thread.
+        /// Gracefully exits the GameWindow. May only be called from the thread where the GameWindow was created.
         /// </summary>
         /// <remarks>
         /// <para>Override if you want to provide yor own exit sequence.</para>
@@ -187,20 +192,44 @@ namespace OpenTK
         /// </remarks>
         public virtual void Exit()
         {
-            isExiting = true;
+            //glWindow.DestroyWindow();
+            //while (glWindow.Exists)
+            //    glWindow.ProcessEvents();
+            if (HasMainLoop)
+                ExitAsync();
+            else
+                ExitInternal();
+            //isExiting = true;
             //UpdateFrame += CallExitInternal;
+        }
+
+        #endregion
+
+        #region public virtual void ExitAsync()
+
+        /// <summary>
+        /// Gracefully exits the GameWindow. May be called from any thread.
+        /// </summary>
+        /// <remarks>
+        /// <para>Override if you want to provide yor own exit sequence.</para>
+        /// <para>If you override this method, place a call to base.ExitAsync(), to ensure
+        /// proper OpenTK shutdown.</para>
+        /// </remarks>
+        public virtual void ExitAsync()
+        {
+            //isExiting = true;
+            UpdateFrame += CallExitInternal;
         }
 
         #endregion
 
         #region void ExitInternal()
 
-        /// <summary>
-        /// Stops the main loop.
-        /// </summary>
+        /// <internal />
+        /// <summary>Stops the main loop.</summary>
         void ExitInternal()
         {
-            Debug.Print("Firing GameWindowExitException");  
+            //Debug.Print("Firing GameWindowExitException");  
             throw new GameWindowExitException();
         }
 
@@ -419,7 +448,7 @@ namespace OpenTK
 
                 //try
                 //{
-                    OnLoadInternal(EventArgs.Empty);
+                OnLoadInternal(EventArgs.Empty);
                 //}
                 //catch (Exception e)
                 //{
@@ -431,6 +460,7 @@ namespace OpenTK
                 //Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
 
                 Debug.Print("Entering main loop.");
+                hasMainLoop = true;
                 while (!isExiting)
                 {
                     ProcessEvents();

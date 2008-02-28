@@ -35,7 +35,7 @@ namespace OpenTK.Platform.Windows
         private bool disposed;
         private bool isExiting;
         private bool exists;
-        private WindowInfo window = new WindowInfo();
+        private WinWindowInfo window;
         private int top, bottom, left, right;
         private int width = 0, height = 0;
         private Rectangle pre_maximized;
@@ -53,14 +53,24 @@ namespace OpenTK.Platform.Windows
 
         #region --- Contructors ---
 
+        /// <internal />
         /// <summary>
         /// Constructs a new WinGLNative class. Call CreateWindow to create the
         /// actual render window.
         /// </summary>
-        public WinGLNative()
+        internal WinGLNative()
         {
             Debug.Print("Native window driver: {0}", this.ToString());
         }
+
+        /// <internal />
+        /// <summary>Constructs a new win32 top-level window with the specified size.</summary>
+        internal WinGLNative(int width, int height)
+            : this()
+        {
+            this.CreateWindow(width, height);
+        }
+
 
         #endregion
 
@@ -182,7 +192,7 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public bool Quit
+        #region public bool IsExiting
 
         public bool IsExiting
         {
@@ -217,7 +227,10 @@ namespace OpenTK.Platform.Windows
                     command = ShowWindowCommand.SHOWNORMAL;
                 }
                 
-                Functions.SetWindowLongPtr(Handle, GetWindowLongOffsets.STYLE, style);
+                // This calls a C# function that determines whether we need SetWindowLong (32bit platforms)
+                // or SetWindowLongPtr (64bit). This happens because SetWindowLongPtr is a macro on 32bit
+                // platforms, and is *not* available as a function.
+                Functions.SetWindowLong(Handle, GetWindowLongOffsets.STYLE, style);
                 Functions.ShowWindow(Handle, command);
                 if (!value && Fullscreen)
                     Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, pre_maximized.Width, pre_maximized.Height,
@@ -307,13 +320,13 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public void CreateWindow(int width, int height, GraphicsFormat format, out IGraphicsContext context)
+        #region public void CreateWindow(int width, int height)
 
-        public void CreateWindow(int width, int height, GraphicsFormat format, out IGraphicsContext context)
+        public void CreateWindow(int width, int height)//, GraphicsFormat format, out IGraphicsContext context)
         {
             Debug.Print("Creating native window.");
             Debug.Indent();
-            Debug.Print("GraphicsFormat: {0}", format.ToString());
+            //Debug.Print("GraphicsFormat: {0}", format.ToString());
 
             CreateParams cp = new CreateParams();
             cp.ClassStyle =
@@ -370,10 +383,10 @@ namespace OpenTK.Platform.Windows
             //context = new GraphicsContext(mode, window);
             //context.CreateContext();
 
-            context = new WinGLContext();
-            (context as IGLContextCreationHack).SetWindowHandle(window.Handle);
-            (context as IGLContextCreationHack).SelectDisplayMode(mode, window);
-            context.CreateContext(true, null);
+            //context = new WinGLContext();
+            //(context as IGLContextCreationHack).SetWindowHandle(window.Handle);
+            //(context as IGLContextCreationHack).SelectDisplayMode(mode, window);
+            //context.CreateContext(true, null);
 
             Debug.Unindent();
         }
@@ -386,9 +399,7 @@ namespace OpenTK.Platform.Windows
 
         public void OnCreate(EventArgs e)
         {
-            this.window.Handle = this.Handle;
-            this.window.Parent = null;
-            //this.window = new WindowInfo(this);
+            this.window = new WinWindowInfo(Handle, null);
 
             //driver = new WinRawInput(this.window);    // Disabled until the mouse issues are resolved.
             driver = new WMInput(this.window);
@@ -409,7 +420,8 @@ namespace OpenTK.Platform.Windows
         public void DestroyWindow()
         {
             Debug.Print("Destroying window: {0}", window.ToString());
-            Functions.PostMessage(this.Handle, WindowMessage.DESTROY, IntPtr.Zero, IntPtr.Zero);
+            //Functions.PostMessage(this.Handle, WindowMessage.DESTROY, IntPtr.Zero, IntPtr.Zero);
+            Functions.DestroyWindow(this.Handle);
         }
 
         #endregion

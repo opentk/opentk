@@ -20,7 +20,7 @@ namespace OpenTK.Platform.X11
     /// </summary>
     internal sealed class X11Input : IInputDriver
     {
-        X11.WindowInfo window;
+        X11WindowInfo window;
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
         List<KeyboardDevice> dummy_keyboard_list = new List<KeyboardDevice>(1);
@@ -49,7 +49,8 @@ namespace OpenTK.Platform.X11
             if (attach == null)
                 throw new ArgumentException("A valid parent window must be defined, in order to create an X11Input driver.");
 
-            window = new X11.WindowInfo(attach);
+            //window = new X11WindowInfo(attach);
+            window = (X11WindowInfo)attach;
 
             // Init mouse
             mouse.Description = "Default X11 mouse";

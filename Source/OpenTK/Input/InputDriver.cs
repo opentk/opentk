@@ -33,12 +33,12 @@ namespace OpenTK
                     if (Environment.OSVersion.Version.Major > 5 ||
                         (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
                     {
-                        inputDriver = new OpenTK.Platform.Windows.WinRawInput(parent.WindowInfo);
+                        inputDriver = new OpenTK.Platform.Windows.WinRawInput((OpenTK.Platform.Windows.WinWindowInfo)parent.WindowInfo);
                     }
                     else
                     {
                         // Legacy or unknown windows version:
-                        inputDriver = new OpenTK.Platform.Windows.WMInput(parent.WindowInfo);
+                        inputDriver = new OpenTK.Platform.Windows.WMInput((OpenTK.Platform.Windows.WinWindowInfo)parent.WindowInfo);
                     }
                     break;
 
