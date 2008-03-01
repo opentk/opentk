@@ -17,6 +17,7 @@ using OpenTK.Platform;
 using OpenTK.Input;
 using System.Diagnostics;
 using System.Threading;
+using OpenTK.Graphics;
 
 namespace Examples.Tests
 {
@@ -35,7 +36,7 @@ namespace Examples.Tests
 
         void LaunchGameWindow()
         {
-            hidden = new GameWindow("OpenTK | Hidden input window", 16, 16);
+            hidden = new GameWindow(16, 16, GraphicsMode.Default, "OpenTK | Hidden input window");
             hidden.Load += hidden_Load;
             hidden.Unload += hidden_Unload;
             hidden.Run(60.0, 1.0);
