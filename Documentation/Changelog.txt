@@ -9,6 +9,7 @@ OpenTK 0.9.0 -> 0.9.1
 	+ Fixed a bug that resulted in missing overloads in functions with both pointers and generic parameters (like Glu.TessVertex).
 	+ Worked around an Intellisense bug, where some overloads might not be reported if the pointer overload was the first one encountered.
 	+ Fixed naming of 1D, 2D, 3D etc (e.g. Texture2D, which used to be Texture2d).
+	+ Corrected GL.ReadPixels (was GL.ReadPixel).
 	
 + OpenTK
 	+ Graphics
