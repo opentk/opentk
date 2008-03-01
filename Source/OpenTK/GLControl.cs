@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 using OpenTK.Platform;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK
 {
@@ -223,7 +224,26 @@ namespace OpenTK
         /// </remarks>
         public GraphicsMode GraphicsMode
         {
-            get { return (Context as IGLContextInternal).GraphicsMode; }
+            get { return (Context as IGraphicsContextInternal).GraphicsMode; }
+        }
+
+        #endregion
+
+        #region public Bitmap GrabScreenshot()
+
+        /// <summary>Grabs a screenshot of the frontbuffer contents.</summary>
+        /// <returns>A System.Drawing.Bitmap, containing the contents of the frontbuffer.</returns>
+        public Bitmap GrabScreenshot()
+        {
+            Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);
+            System.Drawing.Imaging.BitmapData data = 
+                bmp.LockBits(this.ClientRectangle, System.Drawing.Imaging.ImageLockMode.WriteOnly,
+                             System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            GL.ReadPixels(0, 0, this.ClientSize.Width, this.ClientSize.Height, PixelFormat.Bgr, PixelType.UnsignedByte,
+                          data.Scan0);
+            bmp.UnlockBits(data);
+            bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            return bmp;
         }
 
         #endregion

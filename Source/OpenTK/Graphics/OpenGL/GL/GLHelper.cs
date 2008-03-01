@@ -198,8 +198,10 @@ namespace OpenTK.Graphics.OpenGL
             //TODO: Route GameWindow context creation through GraphicsContext.
             //if (GraphicsContext.CurrentContext == null)
             //    throw new InvalidOperationException("You must create an OpenGL context before using the GL class.");
-
-            OpenTK.Platform.Utilities.LoadExtensions(glClass);
+            if (GraphicsContext.CurrentContext != null)
+                OpenTK.Platform.Utilities.LoadExtensions(glClass);
+            else
+                throw new InvalidOperationException("No GraphicsContext available in the calling thread.");
         }
 
         #endregion
@@ -332,16 +334,16 @@ namespace OpenTK.Graphics.OpenGL
 
         #endregion
 
-        #region public static bool SupportsFunction(Type function)
+        #region static bool SupportsFunction(Type function)
 
         /// <summary>
         /// Checks if a given OpenGL function is supported by the current context
         /// </summary>
-        /// <param name="function">The name of the OpenGL function (e.g. glShaderSource)</param>
-        /// <param name="extension">The name of the extension catagory (e.g. ARB, EXT, ATI, ...)</param>
+        /// <param name="method">The System.Reflection.MethodInfo of the OpenGL function.</param>
         /// <returns>True if the function is supported, false otherwise</returns>
-        public static bool SupportsFunction(MethodInfo method)
+        static bool SupportsFunction(MethodInfo method)
         {
+            throw new NotImplementedException();
             lock (gl_lock)
             {
                 /*

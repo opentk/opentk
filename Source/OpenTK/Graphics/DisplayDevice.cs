@@ -182,15 +182,12 @@ namespace OpenTK.Graphics
         #region public void ChangeResolution(DisplayResolution resolution)
 
         /// <summary>Changes the resolution of the DisplayDevice.</summary>
-        /// <param name="width">The new width of the DisplayDevice.</param>
-        /// <param name="height">The new height of the DisplayDevice.</param>
-        /// <param name="bitsPerPixel">The new bits per pixel of the DisplayDevice.</param>
-        /// <param name="refreshRate">The new refresh rate of the DisplayDevice.</param>
+        /// <param name="resolution">The resolution to set. <see cref="DisplayDevice.SelectResolution"/></param>
         /// <exception cref="GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
         public void ChangeResolution(DisplayResolution resolution)
         {
             if (resolution == null)
-                throw new ArgumentNullException("resulotion", "Must be a valid resolution.");
+                throw new ArgumentNullException("resolution", "Must be a valid resolution.");
             if (resolution == current_resolution)
                 return;
 
@@ -206,6 +203,21 @@ namespace OpenTK.Graphics
                     this, resolution));
 
             effect.FadeIn();
+        }
+
+        #endregion
+
+        #region public void ChangeResolution(DisplayResolution resolution)
+
+        /// <summary>Changes the resolution of the DisplayDevice.</summary>
+        /// <param name="width">The new width of the DisplayDevice.</param>
+        /// <param name="height">The new height of the DisplayDevice.</param>
+        /// <param name="bitsPerPixel">The new bits per pixel of the DisplayDevice.</param>
+        /// <param name="refreshRate">The new refresh rate of the DisplayDevice.</param>
+        /// <exception cref="GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
+        public void ChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        {
+            this.ChangeResolution(this.SelectResolution(width, height, bitsPerPixel, refreshRate));
         }
 
         #endregion
@@ -251,10 +263,10 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region public static DisplayDevice PrimaryDisplay
+        #region public static DisplayDevice Default
 
-        /// <summary>Gets the primary display of this system.</summary>
-        public static DisplayDevice PrimaryDisplay { get { return primary_display; } }
+        /// <summary>Gets the default (primary) display of this system.</summary>
+        public static DisplayDevice Default { get { return primary_display; } }
 
         #endregion
 

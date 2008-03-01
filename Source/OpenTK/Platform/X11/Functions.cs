@@ -325,5 +325,9 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11")]
         public extern static void XPeekEvent(IntPtr display, ref XEvent xevent);
+
+        [DllImport("libX11")]
+        public static extern IntPtr XGetVisualInfo(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo vinfo_template,
+                                                   out int nitems_return);
     }
 }
