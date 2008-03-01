@@ -39,11 +39,15 @@ replace operations:
 1. "GLContext"     -> "GraphicsContext"
 2. "OpenTK.OpenGL" -> "OpenTK.Graphics.OpenGL"
 3. "OpenTK.OpenAL" -> "OpenTK.Audio.OpenAL"
+4. "GL.ReadPixel"  -> "GL.ReadPixels"
 
 The "DisplayMode" class has been marked as obsolete. Its functionality has been
-split into two classes: "DisplayResolution" and "GraphicsFormat". This is mostly
+split into two classes: "DisplayResolution" and "GraphicsMode". This is mostly
 an internal change and should only affect your GameWindow constructor (a 1-line
 change to fix the warning).
+
+The "ColorMode" class has been moved to "OpenTK.Graphics.ColorDepth"; please,
+replace references with the latter.
 
 Alc and Alut are no longer public. Please use OpenTK.Audio.AudioContext instead.
 
