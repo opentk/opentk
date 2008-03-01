@@ -4368,13 +4368,13 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        void CopyPixel(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelCopyType type)
+        void CopyPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelCopyType type)
         {
             Delegates.glCopyPixels((Int32)x, (Int32)y, (Int32)width, (Int32)height, (OpenTK.Graphics.OpenGL.PixelCopyType)type);
         }
 
         public static 
-        void ReadPixel(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [Out] IntPtr pixels)
+        void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [Out] IntPtr pixels)
         {
             unsafe
             {
@@ -4383,7 +4383,7 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        void ReadPixel(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [In, Out] object pixels)
+        void ReadPixels(Int32 x, Int32 y, Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [In, Out] object pixels)
         {
             unsafe
             {
@@ -4400,7 +4400,7 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        void DrawPixel(Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels)
+        void DrawPixels(Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, IntPtr pixels)
         {
             unsafe
             {
@@ -4409,7 +4409,7 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        void DrawPixel(Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [In, Out] object pixels)
+        void DrawPixels(Int32 width, Int32 height, OpenTK.Graphics.OpenGL.PixelFormat format, OpenTK.Graphics.OpenGL.PixelType type, [In, Out] object pixels)
         {
             unsafe
             {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OpenTK
 {
-    internal class ContextHandle : /*System.Runtime.InteropServices.SafeHandle,*/ IComparable<ContextHandle>
+    public class ContextHandle : /*System.Runtime.InteropServices.SafeHandle,*/ IComparable<ContextHandle>
     {
         IntPtr handle;
         public IntPtr Handle { get { return handle; } }

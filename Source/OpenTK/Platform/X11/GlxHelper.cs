@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
+
+using OpenTK.Graphics;
 
 namespace OpenTK.Platform.X11
 {
@@ -77,15 +80,6 @@ namespace OpenTK.Platform.X11
         internal static void LoadAll()
         {
             OpenTK.Platform.Utilities.LoadExtensions(typeof(Glx));
-        }
-
-        #endregion
-
-        #region internal static bool SupportsExtension(string p)
-
-        internal static bool SupportsExtension(string p)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

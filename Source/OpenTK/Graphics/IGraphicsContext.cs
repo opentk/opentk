@@ -19,15 +19,6 @@ namespace OpenTK.Graphics
     /// </summary>
     public interface IGraphicsContext : IDisposable
     {
-        /// <summary>
-        /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
-        /// specified IGraphicsContext.
-        /// </summary>
-        /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
-        /// <param name="source">The source IGraphicsContext to share state from.</param>.
-        /// <seealso cref="CreateContext(bool)"/>
-        void CreateContext(bool direct, IGraphicsContext source);
-
         /// <summary>Swaps buffers, presenting the rendered scene to the user.</summary>
         void SwapBuffers();
 
@@ -66,8 +57,23 @@ namespace OpenTK.Graphics
     // Functions for internal use by OpenTK.
     // TODO: RegisterForDisposal/DisposeResources for 0.3.15 (GC & OpenGL)
     // TODO: Remove or move GetDisplayModes to another class.
-    internal interface IGLContextInternal
+    /// <summary>
+    /// Provides methods to create new GraphicsContexts. Should only be used for extending OpenTK.
+    /// </summary>
+    public interface IGraphicsContextInternal
     {
+        /// <summary>
+        /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
+        /// specified IGraphicsContext.
+        /// </summary>
+        /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
+        /// <param name="source">The source IGraphicsContext to share state from.</param>.
+        /// <seealso cref="CreateContext(bool)"/>
+        //void CreateContext(bool direct, IGraphicsContext source);
+
+        /// <summary>Prepares the entry points for OpenGL.</summary>
+        void LoadAll();
+
         /// <summary>
         /// Gets a handle to the OpenGL rendering context.
         /// </summary>

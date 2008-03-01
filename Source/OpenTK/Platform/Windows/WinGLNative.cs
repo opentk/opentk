@@ -63,15 +63,6 @@ namespace OpenTK.Platform.Windows
             Debug.Print("Native window driver: {0}", this.ToString());
         }
 
-        /// <internal />
-        /// <summary>Constructs a new win32 top-level window with the specified size.</summary>
-        internal WinGLNative(int width, int height)
-            : this()
-        {
-            this.CreateWindow(width, height);
-        }
-
-
         #endregion
 
         #region protected override void WndProc(ref Message m)
@@ -320,9 +311,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public void CreateWindow(int width, int height)
+        #region public void CreateWindow(int width, int height, GraphicsMode mode, out IGraphicsContext context)
 
-        public void CreateWindow(int width, int height)//, GraphicsMode format, out IGraphicsContext context)
+        public void CreateWindow(int width, int height, GraphicsMode mode, out IGraphicsContext context)
         {
             Debug.Print("Creating native window.");
             Debug.Indent();
@@ -380,13 +371,7 @@ namespace OpenTK.Platform.Windows
 
             Functions.SetWindowPos(this.Handle, WindowPlacementOptions.TOP, Left, Top, cp.Width, cp.Height, SetWindowPosFlags.SHOWWINDOW);
 
-            //context = new GraphicsContext(mode, window);
-            //context.CreateContext();
-
-            //context = new WinGLContext();
-            //(context as IGLContextCreationHack).SetWindowHandle(window.Handle);
-            //(context as IGLContextCreationHack).SelectDisplayMode(mode, window);
-            //context.CreateContext(true, null);
+            context = new GraphicsContext(mode, window);
 
             Debug.Unindent();
         }

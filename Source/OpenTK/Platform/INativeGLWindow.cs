@@ -20,8 +20,7 @@ namespace OpenTK.Platform
     /// </summary>
     internal interface INativeGLWindow : IResizable, IDisposable
     {
-        //void CreateWindow(int width, int height, DisplayMode mode, out IGraphicsContext context);
-        void CreateWindow(int width, int height);//, GraphicsMode mode, out IGraphicsContext context);
+        void CreateWindow(int width, int height, GraphicsMode mode, out IGraphicsContext context);
         void DestroyWindow();
         void ProcessEvents();
         void PointToClient(ref System.Drawing.Point p);
