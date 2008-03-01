@@ -46,6 +46,7 @@ namespace Examples.WinForms
             base.OnLoad(e);
 
             glControl.KeyDown += new KeyEventHandler(glControl_KeyDown);
+            glControl.KeyUp += new KeyEventHandler(glControl_KeyUp);
             //glControl.Resize += new EventHandler(glControl_Resize);
             glControl.Paint += new PaintEventHandler(glControl_Paint);
 
@@ -60,6 +61,12 @@ namespace Examples.WinForms
             Application.Idle += Application_Idle;
 
             //glControl_Resize(glControl, EventArgs.Empty);
+        }
+
+        void glControl_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12)
+                glControl.GrabScreenshot().Save("screenshot.png");
         }
 
         #endregion
