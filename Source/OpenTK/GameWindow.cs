@@ -98,24 +98,78 @@ namespace OpenTK
 
         #region --- Contructors ---
 
-        public GameWindow() : this("OpenTK Game Window", 640, 480, null, GraphicsMode.Default) { }
+        #region public GameWindow()
 
-        public GameWindow(string title) : this(title, 640, 480, null, GraphicsMode.Default) { }
+        /// <summary>Constructs a new GameWindow with sensible default attributes..</summary>
+        public GameWindow()
+            : this(640, 480, GraphicsMode.Default, "OpenTK Game Window", 0, DisplayDevice.Default) { }
 
-        public GameWindow(string title, int width, int height)
-            : this(title, width, height, null, GraphicsMode.Default) { }
+        #endregion
 
-        public GameWindow(string title, int width, int height, GraphicsMode format)
-            : this(title, width, height, null, format) { }
+        #region public GameWindow(int width, int height)
 
-        public GameWindow(string title, DisplayResolution resolution)
-            : this(title, resolution.Width, resolution.Height, resolution, GraphicsMode.Default) { }
+        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <param name="width">The width of the GameWindow in pixels.</param>
+        /// <param name="height">The height of the GameWindow in pixels.</param>
+        public GameWindow(int width, int height)
+            : this(width, height, GraphicsMode.Default, "OpenTK Game Window", 0, DisplayDevice.Default) { }
 
-        public GameWindow(string title, DisplayResolution resolution, GraphicsMode format)
-            : this(title, resolution.Width, resolution.Height, resolution, format) { }
+        #endregion
 
-        GameWindow(string title, int width, int height, DisplayResolution resolution, GraphicsMode format)
+        #region public GameWindow(int width, int height, GraphicsMode mode)
+
+        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <param name="width">The width of the GameWindow in pixels.</param>
+        /// <param name="height">The height of the GameWindow in pixels.</param>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
+        public GameWindow(int width, int height, GraphicsMode mode)
+            : this(width, height, mode, "OpenTK Game Window", 0, DisplayDevice.Default) { }
+
+        #endregion
+
+        #region public GameWindow(int width, int height, GraphicsMode mode, string title)
+
+        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <param name="width">The width of the GameWindow in pixels.</param>
+        /// <param name="height">The height of the GameWindow in pixels.</param>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
+        /// <param name="title">The title of the GameWindow.</param>
+        public GameWindow(int width, int height, GraphicsMode mode, string title)
+            : this(width, height, mode, title, 0, DisplayDevice.Default) { }
+
+        #endregion
+
+        #region public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options)
+
+        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <param name="width">The width of the GameWindow in pixels.</param>
+        /// <param name="height">The height of the GameWindow in pixels.</param>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
+        /// <param name="title">The title of the GameWindow.</param>
+        /// <param name="options">GameWindow options regarding window appearance and behavior.</param>
+        public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options)
+            : this(width, height, mode, title, options, DisplayDevice.Default) { }
+
+        #endregion
+
+        #region public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device)
+
+        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <param name="width">The width of the GameWindow in pixels.</param>
+        /// <param name="height">The height of the GameWindow in pixels.</param>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
+        /// <param name="title">The title of the GameWindow.</param>
+        /// <param name="options">GameWindow options regarding window appearance and behavior.</param>
+        /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the GameWindow in.</param>
+        public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device)
         {
+            if (width <= 0) throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
+            if (height <= 0) throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
+            if (mode == null)
+                mode = GraphicsMode.Default;
+            if (device == null)
+                device = DisplayDevice.Default;
+
             if (Configuration.RunningOnWindows)
                 glWindow = new OpenTK.Platform.Windows.WinGLNative();
             else if (Configuration.RunningOnX11)
@@ -126,27 +180,36 @@ namespace OpenTK
 
             glWindow.Destroy += glWindow_Destroy;
 
-            // TODO: GraphicsContext is created inside this call.
-            glWindow.CreateWindow(width, height);//, format, out glContext);
             try
             {
-                this.glContext = new GraphicsContext(format, this.WindowInfo);
+                glWindow.CreateWindow(width, height, mode, out glContext);
+                Debug.Print("1");
+                glContext.MakeCurrent();
+                Debug.Print("2");
+                (glContext as IGraphicsContextInternal).LoadAll();
+                Debug.Print("3");
             }
-            catch (GraphicsContextException e)
+            //catch (GraphicsContextException e)
+            catch (Exception e)
             {
+                Debug.Print(e.ToString());
                 glWindow.DestroyWindow();
                 throw;
             }
+            
             this.Title = title;
-
-            if (resolution != null)
+            
+            if ((options & GameWindowFlags.Fullscreen) != 0)
             {
-                DisplayDevice.PrimaryDisplay.ChangeResolution(resolution);
+                device.ChangeResolution(width, height, mode.ColorDepth.BitsPerPixel, 0);
                 this.Fullscreen = true;
             }
-
+            
             this.VSync = VSyncMode.On; //VSyncMode.Adaptive;
+
         }
+
+        #endregion
 
         /// <summary>
         /// Constructs a new GameWindow, and opens a render window with the specified DisplayMode.
@@ -154,9 +217,7 @@ namespace OpenTK
         /// <param name="mode">The DisplayMode of the GameWindow.</param>
         [Obsolete]
         public GameWindow(DisplayMode mode)
-            : this("OpenTK Game Window", mode.Width, mode.Height,
-                   mode.Fullscreen ? DisplayDevice.PrimaryDisplay.SelectResolution(
-                       mode.Width, mode.Height, mode.Color.BitsPerPixel, 0) : null, mode.ToGraphicsMode()) { }
+            : this(mode.Width, mode.Height, mode.ToGraphicsMode(), "OpenTK Game Window", mode.Fullscreen ? GameWindowFlags.Fullscreen : 0) { }
 
         /// <summary>
         /// Constructs a new GameWindow with the specified title, and opens a render window with the
@@ -166,9 +227,13 @@ namespace OpenTK
         /// <param name="title">The Title of the GameWindow.</param>
         [Obsolete]
         public GameWindow(DisplayMode mode, string title)
-            : this(title, mode.Width, mode.Height, mode.ToGraphicsMode())
-        {
-        }
+            : this(mode.Width, mode.Height, mode.ToGraphicsMode(), title, mode.Fullscreen ? GameWindowFlags.Fullscreen : 0) { }
+
+        #endregion
+
+        #region --- Private Methods ---
+
+        #region void glWindow_Destroy(object sender, EventArgs e)
 
         void glWindow_Destroy(object sender, EventArgs e)
         {
@@ -178,7 +243,27 @@ namespace OpenTK
 
         #endregion
 
-        #region --- INativeGLWindow Members ---
+        #region void ExitInternal()
+
+        /// <internal />
+        /// <summary>Stops the main loop.</summary>
+        void ExitInternal()
+        {
+            //Debug.Print("Firing GameWindowExitException");  
+            throw new GameWindowExitException();
+        }
+
+        void CallExitInternal(GameWindow sender, UpdateFrameEventArgs e)
+        {
+            UpdateFrame -= CallExitInternal;
+            sender.ExitInternal();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- Public Methods ---
 
         #region public virtual void Exit()
 
@@ -219,24 +304,6 @@ namespace OpenTK
         {
             //isExiting = true;
             UpdateFrame += CallExitInternal;
-        }
-
-        #endregion
-
-        #region void ExitInternal()
-
-        /// <internal />
-        /// <summary>Stops the main loop.</summary>
-        void ExitInternal()
-        {
-            //Debug.Print("Firing GameWindowExitException");  
-            throw new GameWindowExitException();
-        }
-
-        void CallExitInternal(GameWindow sender, UpdateFrameEventArgs e)
-        {
-            UpdateFrame -= CallExitInternal;
-            sender.ExitInternal();
         }
 
         #endregion
@@ -342,7 +409,7 @@ namespace OpenTK
         }
 
         #endregion
-        
+
 #if false
 
         #region public IInputDriver InputDriver
@@ -378,10 +445,6 @@ namespace OpenTK
         }
 
         #endregion
-
-        #endregion
-
-        #region --- Public Methods ---
 
         #region void Run()
 
@@ -446,15 +509,15 @@ namespace OpenTK
                 //sleep_granularity = System.Math.Round(1000.0 * update_watch.Elapsed.TotalSeconds / test_times, MidpointRounding.AwayFromZero) / 1000.0;
                 //update_watch.Reset();       // We don't want to affect the first UpdateFrame!
 
-                //try
-                //{
-                OnLoadInternal(EventArgs.Empty);
-                //}
-                //catch (Exception e)
-                //{
-                //    Trace.WriteLine(String.Format("OnLoad failed: {0}", e.ToString()));
-                //    return;
-                //}
+                try
+                {
+                    OnLoadInternal(EventArgs.Empty);
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(String.Format("OnLoad failed: {0}", e.ToString()));
+                    return;
+                }
 
                 //Debug.Print("Elevating priority.");
                 //Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
@@ -678,6 +741,7 @@ namespace OpenTK
         /// <param name="e"></param>
         private void OnLoadInternal(EventArgs e)
         {
+            Debug.Print("Firing internal load event.");
             if (MustResize)
             {
                 resizeEventArgs.Width = glWindow.Width;
@@ -1152,7 +1216,7 @@ namespace OpenTK
         /// <param name="e">Contains information about the Resize event.</param>
         private void OnResizeInternal(ResizeEventArgs e)
         {
-            Debug.Print("Firing GameWindow.Resize event: {0}.", e.ToString());
+            Debug.Print("Firing internal resize event: {0}.", e.ToString());
 
             this.width = e.Width;
             this.height = e.Height;
@@ -1374,6 +1438,18 @@ You can disable this warning for this specific exception: select Debug->Exceptio
 Alternatively, you can disable the ""Just my code"" debugging mode (""Tools->Options->Debugging->General"" and untick ""Enable Just my code (Managed only)"". This has the sideffect that it will allow you to step into OpenTK code if an error happens. Please, do this only if you are confident in your debugging skills.";
             }
         }
+    }
+
+    #endregion
+
+    #region public enum GameWindowFlags
+
+    /// <summary>Enumerates available GameWindow construction options.</summary>
+    [Flags]
+    public enum GameWindowFlags
+    {
+        /// <summary>Indicates that the GameWindow should cover the whole screen.</summary>
+        Fullscreen = 1,
     }
 
     #endregion

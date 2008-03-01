@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 using OpenTK.Platform;
 
@@ -17,33 +18,45 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Represents and provides methods to manipulate an OpenGL render context.
     /// </summary>
-    public sealed class GraphicsContext : IGraphicsContext, IGLContextInternal, IGLContextCreationHack
+    public sealed class GraphicsContext : IGraphicsContext, IGraphicsContextInternal, IGLContextCreationHack
     {
         IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
         List<IDisposable> dispose_queue = new List<IDisposable>();
         bool disposed;
 
         static bool share_contexts = true;
+        static bool direct_rendering = true;
         static object context_lock = new object();        
+        // Maps OS-specific context handles to GraphicsContext weak references.
         static Dictionary<ContextHandle, WeakReference> available_contexts =
-            new Dictionary<ContextHandle, WeakReference>();   // Contains all available OpenGL contexts.
+            new Dictionary<ContextHandle, WeakReference>();
 
         #region public GraphicsContext(DisplayMode mode, IWindowInfo window)
 
-        /// <summary>
-        /// Constructs a new GraphicsContext with the specified DisplayMode, and bound to the specified IWindowInfo.
-        /// </summary>
+        /// <summary>This method is obsolete.</summary>
         /// <param name="mode"></param>
         /// <param name="window"></param>
         public GraphicsContext(DisplayMode mode, IWindowInfo window)
             : this(mode.ToGraphicsMode(), window)
         { }
 
+        #endregion
+
+        #region public GraphicsContext(GraphicsMode format, IWindowInfo window)
+
+        /// <summary>Constructs a new GraphicsContext with the specified format, and attaches it to the specified window.</summary>
+        /// <param name="format">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
+        /// <param name="window">The OpenTK.Platform.IWindowInfo to attach the GraphicsContext to.</param>
         public GraphicsContext(GraphicsMode format, IWindowInfo window)
         {
-            //if (available_contexts.Count == 0)
-            //    available_contexts.Add(IntPtr.Zero, new WeakReference(null));
-            IGraphicsContext share = null;
+            if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
+
+            Debug.Print("Creating GraphicsContext.");
+            Debug.Indent();
+            Debug.Print("GraphicsMode: {0}", format);
+            Debug.Print("IWindowInfo: {0}", window);
+
+            IGraphicsContext shareContext = null;
             if (GraphicsContext.ShareContexts)
             {
                 lock (context_lock)
@@ -51,18 +64,22 @@ namespace OpenTK.Graphics
                     // A small hack to create a shared context with the first available context.
                     foreach (WeakReference r in GraphicsContext.available_contexts.Values)
                     {
-                        share = (IGraphicsContext)r.Target;
+                        shareContext = (IGraphicsContext)r.Target;
                         break;
                     }
                 }
             }
 
             if (Configuration.RunningOnWindows)
-                implementation = new OpenTK.Platform.Windows.WinGLContext(format, window, share);
+                implementation = new OpenTK.Platform.Windows.WinGLContext(format, window, shareContext);
             else if (Configuration.RunningOnX11)
-                implementation = new OpenTK.Platform.X11.X11GLContext();
+                implementation = new OpenTK.Platform.X11.X11GLContext(format, window, shareContext, DirectRendering);
             else
-                throw new PlatformNotSupportedException("Your platform is not supported currently. Please, refer to http://www.opentk.com for more information.");
+                throw new PlatformNotSupportedException(
+                    "Your platform is not currently supported. Please, check http://www.opentk.com for an updated version.");
+
+            available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
+            //(implementation as IGraphicsContextInternal).LoadAll();
         }
 
         #endregion
@@ -77,7 +94,7 @@ namespace OpenTK.Graphics
         void ContextDestroyed(IGraphicsContext context, EventArgs e)
         {
             this.Destroy -= ContextDestroyed;
-            available_contexts.Remove(((IGLContextInternal)this).Context);
+            available_contexts.Remove(((IGraphicsContextInternal)this).Context);
         }
 
         #endregion
@@ -97,10 +114,12 @@ namespace OpenTK.Graphics
             get
             {
                 if (available_contexts.Count > 0)
-                    return (GraphicsContext)available_contexts[GetCurrentContext()].Target;
-                //return (GraphicsContext)available_contexts[((IGLContextInternal)available_contexts[IntPtr.Zero].Target).GetCurrentContext()].Target;
+                {
+                    ContextHandle handle = GetCurrentContext();
+                    if (handle.Handle != IntPtr.Zero)
+                        return (GraphicsContext)available_contexts[handle].Target;
+                }
                 return null;
-                //return (GraphicsContext)available_contexts[StaticGetCurrentContext().ToInt64()].Target;
             }
             set
             {
@@ -115,13 +134,34 @@ namespace OpenTK.Graphics
 
         #region public static bool ShareContexts
 
-        /// <summary>Gets or sets a System.Boolean, indicating whether GLContexts are shared</summary>
+        /// <summary>Gets or sets a System.Boolean, indicating whether GraphicsContext resources are shared</summary>
         /// <remarks>
         /// <para>If ShareContexts is true, new GLContexts will share resources. If this value is
         /// false, new GLContexts will not share resources.</para>
         /// <para>Changing this value will not affect already created GLContexts.</para>
         /// </remarks>
         public static bool ShareContexts { get { return share_contexts; } set { share_contexts = value; } }
+
+        #endregion
+
+        #region public static bool DirectRendering
+
+        /// <summary>Gets or sets a System.Boolean, indicating whether GraphicsContexts will perform direct rendering.</summary>
+        /// <remarks>
+        /// <para>
+        /// If DirectRendering is true, new contexts will be constructed with direct rendering capabilities, if possible.
+        /// If DirectRendering is false, new contexts will be constructed with indirect rendering capabilities.
+        /// </para>
+        /// <para>This property does not affect existing GraphicsContexts, unless they are recreated.</para>
+        /// <para>
+        /// This property is ignored on Operating Systems without support for indirect rendering, like Windows and OS X.
+        /// </para>
+        /// </remarks>
+        public static bool DirectRendering
+        {
+            get { return direct_rendering; }
+            set { direct_rendering = value; }
+        }
 
         #endregion
 
@@ -171,10 +211,10 @@ namespace OpenTK.Graphics
         /// <seealso cref="CreateContext(bool)"/>
         public void CreateContext(bool direct, IGraphicsContext source)
         {
-            implementation.CreateContext(direct, source);
             this.Destroy += ContextDestroyed;
 
-            available_contexts.Add((this as IGLContextInternal).Context, new WeakReference(this));
+            available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
+
             //OpenTK.Graphics.OpenGL.GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.ColorBufferBit);
             //if (StaticGetCurrentContext == null)
             //    StaticGetCurrentContext = implementation.GetCurrentContext;
@@ -227,29 +267,37 @@ namespace OpenTK.Graphics
 
         #region --- IGLContextInternal Members ---
 
-        /// <summary>
-        /// Gets a handle to the OpenGL rendering context.
-        /// </summary>
-        ContextHandle IGLContextInternal.Context
+        #region void LoadAll()
+
+        void IGraphicsContextInternal.LoadAll()
         {
-            get { return ((IGLContextInternal)implementation).Context; }
+            (implementation as IGraphicsContextInternal).LoadAll();
+        }
+
+        #endregion
+
+        /// <internal />
+        /// <summary>Gets a handle to the OpenGL rendering context.</summary>
+        ContextHandle IGraphicsContextInternal.Context
+        {
+            get { return ((IGraphicsContextInternal)implementation).Context; }
         }
 
         /// <summary>
         /// Gets the IWindowInfo describing the window associated with this context.
         /// </summary>
-        IWindowInfo IGLContextInternal.Info
+        IWindowInfo IGraphicsContextInternal.Info
         {
-            get { return (implementation as IGLContextInternal).Info; }
+            get { return (implementation as IGraphicsContextInternal).Info; }
             //internal set { (implementation as IGLContextInternal).Info = value; }
         }
 
         /// <summary>
         /// Gets the DisplayMode of the context.
         /// </summary>
-        GraphicsMode IGLContextInternal.GraphicsMode
+        GraphicsMode IGraphicsContextInternal.GraphicsMode
         {
-            get { return (implementation as IGLContextInternal).GraphicsMode; }
+            get { return (implementation as IGraphicsContextInternal).GraphicsMode; }
         }
 
         ///// <summary>
@@ -266,7 +314,7 @@ namespace OpenTK.Graphics
         /// Registers an OpenGL resource for disposal.
         /// </summary>
         /// <param name="resource">The OpenGL resource to dispose.</param>
-        void IGLContextInternal.RegisterForDisposal(IDisposable resource)
+        void IGraphicsContextInternal.RegisterForDisposal(IDisposable resource)
         {
             GC.KeepAlive(resource);
             dispose_queue.Add(resource);
@@ -275,7 +323,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Disposes all registered OpenGL resources.
         /// </summary>
-        void IGLContextInternal.DisposeResources()
+        void IGraphicsContextInternal.DisposeResources()
         {
             foreach (IDisposable resource in dispose_queue)
                 resource.Dispose();
@@ -287,9 +335,9 @@ namespace OpenTK.Graphics
         /// Returns the display modes supported by the current opengl context.
         /// </summary>
         /// <returns>An IEnumerable containing all supported display modes.</returns>
-        IEnumerable<DisplayMode> IGLContextInternal.GetDisplayModes()
+        IEnumerable<DisplayMode> IGraphicsContextInternal.GetDisplayModes()
         {
-            return (implementation as IGLContextInternal).GetDisplayModes();
+            return (implementation as IGraphicsContextInternal).GetDisplayModes();
         }
 
         /// <summary>
@@ -301,9 +349,9 @@ namespace OpenTK.Graphics
         /// available in the current opengl context.
         /// </returns>
         /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
-        IntPtr IGLContextInternal.GetAddress(string function)
+        IntPtr IGraphicsContextInternal.GetAddress(string function)
         {
-            return (implementation as IGLContextInternal).GetAddress(function);
+            return (implementation as IGraphicsContextInternal).GetAddress(function);
         }
 
         #endregion

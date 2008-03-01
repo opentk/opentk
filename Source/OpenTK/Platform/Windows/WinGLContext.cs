@@ -24,7 +24,7 @@ namespace OpenTK.Platform.Windows
     /// Provides methods to create and control an opengl context on the Windows platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WinGLContext : IGraphicsContext, IGLContextInternal, IGLContextCreationHack
+    internal sealed class WinGLContext : IGraphicsContext, IGraphicsContextInternal, IGLContextCreationHack
     {
         IntPtr deviceContext;
         ContextHandle renderContext;
@@ -60,7 +60,7 @@ namespace OpenTK.Platform.Windows
 
         GraphicsMode SelectFormat(GraphicsMode format)
         {
-            using (WinGLNative native = new WinGLNative(16, 16))
+            using (WinGLNative native = new WinGLNative())
             //using (WinGLContext context = new WinGLContext(format, native.WindowInfo, null))
             {
                 // Find the best multisampling mode.
@@ -90,18 +90,10 @@ namespace OpenTK.Platform.Windows
 
             Debug.WriteLine(String.Format("done! (id: {0})", renderContext));
 
-            Wgl.Imports.MakeCurrent(deviceContext, renderContext);
-            Wgl.LoadAll();
-            GL.LoadAll();
-            Glu.LoadAll();
-
-            vsync_supported = Wgl.Arb.SupportsExtension(this, "WGL_EXT_swap_control") &&
-                Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
-
             if (sharedContext != null)
             {
                 Debug.Print("Sharing state with context {0}", sharedContext.ToString());
-                Wgl.Imports.ShareLists(renderContext, (sharedContext as IGLContextInternal).Context);
+                Wgl.Imports.ShareLists(renderContext, (sharedContext as IGraphicsContextInternal).Context);
             }
         }
 
@@ -202,9 +194,23 @@ namespace OpenTK.Platform.Windows
 
         #region --- IGLContextInternal Members ---
 
+        #region void LoadAll()
+
+        void IGraphicsContextInternal.LoadAll()
+        {
+            Wgl.LoadAll();
+            GL.LoadAll();
+            Glu.LoadAll();
+
+            vsync_supported = Wgl.Arb.SupportsExtension(this, "WGL_EXT_swap_control") &&
+                Wgl.Load("wglGetSwapIntervalEXT") && Wgl.Load("wglSwapIntervalEXT");
+        }
+
+        #endregion
+
         #region ContextHandle IGLContextInternal.Context
 
-        ContextHandle IGLContextInternal.Context
+        ContextHandle IGraphicsContextInternal.Context
         {
             get { return renderContext; }
         }
@@ -213,7 +219,7 @@ namespace OpenTK.Platform.Windows
 
         #region IWindowInfo IGLContextInternal.Info
 
-        IWindowInfo IGLContextInternal.Info
+        IWindowInfo IGraphicsContextInternal.Info
         {
             get { return (IWindowInfo)windowInfo; }
         }
@@ -222,7 +228,7 @@ namespace OpenTK.Platform.Windows
 
         #region GraphicsMode IGLContextInternal.GraphicsMode
 
-        GraphicsMode IGLContextInternal.GraphicsMode
+        GraphicsMode IGraphicsContextInternal.GraphicsMode
         {
             get { return format; }
         }
@@ -249,7 +255,7 @@ namespace OpenTK.Platform.Windows
 
         #region void IGLContextInternal.RegisterForDisposal(IDisposable resource)
 
-        void IGLContextInternal.RegisterForDisposal(IDisposable resource)
+        void IGraphicsContextInternal.RegisterForDisposal(IDisposable resource)
         {
             throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
         }
@@ -258,7 +264,7 @@ namespace OpenTK.Platform.Windows
 
         #region void IGLContextInternal.DisposeResources()
 
-        void IGLContextInternal.DisposeResources()
+        void IGraphicsContextInternal.DisposeResources()
         {
             throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
         }
@@ -283,14 +289,14 @@ namespace OpenTK.Platform.Windows
             pixelFormat.Flags =
                 PixelFormatDescriptorFlags.SUPPORT_OPENGL |
                 PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
-            pixelFormat.ColorBits = (byte)(format.ColorFormat.Red + format.ColorFormat.Green + format.ColorFormat.Blue);
+            pixelFormat.ColorBits = (byte)(format.ColorDepth.Red + format.ColorDepth.Green + format.ColorDepth.Blue);
             
-            pixelFormat.PixelType = format.ColorFormat.IsIndexed ? PixelType.INDEXED : PixelType.RGBA;
+            pixelFormat.PixelType = format.ColorDepth.IsIndexed ? PixelType.INDEXED : PixelType.RGBA;
             pixelFormat.PixelType = PixelType.RGBA;
-            pixelFormat.RedBits = (byte)format.ColorFormat.Red;
-            pixelFormat.GreenBits = (byte)format.ColorFormat.Green;
-            pixelFormat.BlueBits = (byte)format.ColorFormat.Blue;
-            pixelFormat.AlphaBits = (byte)format.ColorFormat.Alpha;
+            pixelFormat.RedBits = (byte)format.ColorDepth.Red;
+            pixelFormat.GreenBits = (byte)format.ColorDepth.Green;
+            pixelFormat.BlueBits = (byte)format.ColorDepth.Blue;
+            pixelFormat.AlphaBits = (byte)format.ColorDepth.Alpha;
 
             if (format.AccumulatorFormat.BitsPerPixel > 0)
             {
@@ -488,7 +494,7 @@ namespace OpenTK.Platform.Windows
         /// <returns>A System.String describing this OpenGL context.</returns>
         public override string ToString()
         {
-            return (this as IGLContextInternal).Context.ToString();
+            return (this as IGraphicsContextInternal).Context.ToString();
         }
 
         #endregion

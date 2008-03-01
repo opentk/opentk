@@ -81,7 +81,7 @@ namespace OpenTK
         /// <param name="width">The Width of the DisplayMode in pixels.</param>
         /// <param name="height">The Height of the DisplayMode in pixels.</param>
         public DisplayMode(int width, int height)
-            : this(width, height, DisplayDevice.PrimaryDisplay.BitsPerPixel, 16, 0, 0, 2, false, false, false, 0.0f)
+            : this(width, height, DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 2, false, false, false, 0.0f)
         {
         }
 
@@ -125,12 +125,12 @@ namespace OpenTK
 
         #region --- Public Properties ---
 #if false
-        #region public int ColorFormat
+        #region public int ColorDepth
 
         /// <summary>
         /// Gets an OpenTK.Graphics.ColorMode that describes the color format of this DisplayMode.
         /// </summary>
-        public ColorMode ColorFormat
+        public ColorMode ColorDepth
         {
             get { return color_format; }
             private set { color_format = value; }
@@ -138,12 +138,12 @@ namespace OpenTK
 
         #endregion
 
-        #region public int AuxilliaryColorFormat
+        #region public int AuxilliaryColorDepth
 
         /// <summary>
         /// Gets an OpenTK.Graphics.ColorMode that describes the color format of this DisplayMode.
         /// </summary>
-        public ColorMode AuxilliaryColorFormat
+        public ColorMode AuxilliaryColorDepth
         {
             get { return auxilliary_color_format; }
             private set { auxilliary_color_format = value; }
@@ -296,7 +296,7 @@ namespace OpenTK
             internal set { this.stencilBits = value; }
         }
 
-        [Obsolete("Use GraphicsMode.AuxilliaryColorFormat instead.")]
+        [Obsolete("Use GraphicsMode.AuxilliaryColorDepth instead.")]
         public int AuxBits
         {
             get { return this.auxilliary_color_format.BitsPerPixel; }
