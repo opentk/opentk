@@ -8,8 +8,9 @@ namespace OpenTK.Platform.Windows
     /// <summary>Describes a win32 window.</summary>
     internal sealed class WinWindowInfo : IWindowInfo
     {
-        IntPtr handle;
+        IntPtr handle, dc;
         WinWindowInfo parent;
+        bool disposed;
 
         #region --- Constructors ---
 
@@ -25,10 +26,20 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region --- Methods ---
+        #region --- Public Methods ---
 
-        internal IntPtr Handle { get { return handle; } set { handle = value; } }
-        internal WinWindowInfo Parent { get { return parent; } set { parent = value; } }
+        public IntPtr WindowHandle { get { return handle; } set { handle = value; } }
+        public WinWindowInfo Parent { get { return parent; } set { parent = value; } }
+        public IntPtr DeviceContext
+        {
+            get
+            {
+                if (dc == IntPtr.Zero)
+                    dc = Functions.GetDC(this.WindowHandle);
+                return dc;
+            }
+            //set { dc = value; }
+        }
 
         #region public override string ToString()
 
@@ -37,7 +48,7 @@ namespace OpenTK.Platform.Windows
         public override string ToString()
         {
             return String.Format("Windows.WindowInfo: Handle {0}, Parent ({1})",
-                this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
+                this.WindowHandle, this.Parent != null ? this.Parent.ToString() : "null");
         }
 
         /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>
@@ -59,6 +70,51 @@ namespace OpenTK.Platform.Windows
         public override int GetHashCode()
         {
             return handle.GetHashCode();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- IDisposable ---
+
+        #region public void Dispose()
+
+        /// <summary>Releases the unmanaged resources consumed by this instance.</summary>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region void Dispose(bool manual)
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (this.dc != IntPtr.Zero)
+                    Functions.ReleaseDC(this.handle, this.dc);
+
+                if (manual)
+                {
+                    if (parent != null)
+                        parent.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
+
+        #endregion
+
+        #region ~WinWindowInfo()
+
+        ~WinWindowInfo()
+        {
+            this.Dispose(false);
         }
 
         #endregion

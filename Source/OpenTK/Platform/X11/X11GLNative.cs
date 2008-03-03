@@ -82,13 +82,23 @@ namespace OpenTK.Platform.X11
 
                 //Utilities.ThrowOnX11Error = true; // Not very reliable
 
-                // Open the display to the X server, and obtain the screen and root window.
-                window.Display = API.OpenDisplay(null); // null == default display //window.Display = API.DefaultDisplay;
-                if (window.Display == IntPtr.Zero)
-                    throw new Exception("Could not open connection to X");
+                // We reuse the display connection of System.Windows.Forms.
+                // TODO: Multiple screens.
+                Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+                window.Display = (IntPtr)xplatui.GetField("DisplayHandle",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                window.RootWindow = (IntPtr)xplatui.GetField("RootWindow",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                window.Screen = (int)xplatui.GetField("ScreenNo",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
 
-                window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
-                window.RootWindow = Functions.XRootWindow(window.Display, window.Screen); // API.RootWindow;
+                // Open the display to the X server, and obtain the screen and root window.
+                //window.Display = API.OpenDisplay(null); // null == default display //window.Display = API.DefaultDisplay;
+                //if (window.Display == IntPtr.Zero)
+                //    throw new Exception("Could not open connection to X");
+
+                //window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
+                //window.RootWindow = Functions.XRootWindow(window.Display, window.Screen); // API.RootWindow;
                 Debug.Print("Display: {0}, Screen {1}, Root window: {2}", window.Display, window.Screen, window.RootWindow);
 
                 RegisterAtoms(window);
@@ -136,8 +146,11 @@ namespace OpenTK.Platform.X11
 
             Debug.Indent();
 
-            // Create the context. This call also creates an XVisualInfo structure for us.
-            context = new GraphicsContext(mode, window);
+            XVisualInfo info = new XVisualInfo();
+            info.visualid = mode.Index;
+            int dummy;
+            window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
+                Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));
 
             // Create a window on this display using the visual above
             Debug.Write("Opening render window... ");
@@ -157,15 +170,17 @@ namespace OpenTK.Platform.X11
             uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
                 (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
 
-            window.Handle = Functions.XCreateWindow(window.Display, window.RootWindow,
+            window.WindowHandle = Functions.XCreateWindow(window.Display, window.RootWindow,
                 0, 0, width, height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
                 (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask, ref attributes);
 
-            if (window.Handle == IntPtr.Zero)
+            if (window.WindowHandle == IntPtr.Zero)
                 throw new ApplicationException("XCreateWindow call failed (returned 0).");
 
-            XVisualInfo vis = window.VisualInfo;
-            Glx.CreateContext(window.Display, ref vis, IntPtr.Zero, true);
+            //XVisualInfo vis = window.VisualInfo;
+            //Glx.CreateContext(window.Display, ref vis, IntPtr.Zero, true);
+
+            context = new GraphicsContext(mode, window);
 
             // Set the window hints
             XSizeHints hints = new XSizeHints();
@@ -174,12 +189,12 @@ namespace OpenTK.Platform.X11
             hints.width = width;
             hints.height = height;
             hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
-            Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
+            Functions.XSetWMNormalHints(window.Display, window.WindowHandle, ref hints);
 
             // Register for window destroy notification
             IntPtr wm_destroy_atom = Functions.XInternAtom(window.Display, "WM_DELETE_WINDOW", true);
             //XWMHints hint = new XWMHints();
-            Functions.XSetWMProtocols(window.Display, window.Handle, new IntPtr[] { wm_destroy_atom }, 1);
+            Functions.XSetWMProtocols(window.Display, window.WindowHandle, new IntPtr[] { wm_destroy_atom }, 1);
 
             Top = Left = 0;
             Right = Width;
@@ -191,11 +206,11 @@ namespace OpenTK.Platform.X11
             //Functions.XSetWMName(window.Display, window.Handle, ref text);
             //Functions.XSetWMProperties(display, window, name, name, 0,  /*None*/ null, 0, hints);
 
-            Debug.Print("done! (id: {0})", window.Handle);
+            Debug.Print("done! (id: {0})", window.WindowHandle);
 
             //(glContext as IGLContextCreationHack).SetWindowHandle(window.Handle);
 
-            API.MapRaised(window.Display, window.Handle);
+            API.MapRaised(window.Display, window.WindowHandle);
             mapped = true;
 
             //context.CreateContext(true, null);
@@ -245,6 +260,7 @@ namespace OpenTK.Platform.X11
                         exists = false;
                         isExiting = true;
                         Debug.Print("X11 window {0} destroyed.", e.DestroyWindowEvent.window);
+                        window.WindowHandle = IntPtr.Zero;
                         return;
 
                     case XEventName.ConfigureNotify:
@@ -384,7 +400,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public IntPtr Handle
         {
-            get { return this.window.Handle; }
+            get { return this.window.WindowHandle; }
         }
 
         #endregion
@@ -400,7 +416,7 @@ namespace OpenTK.Platform.X11
             get
             {
                 IntPtr name = IntPtr.Zero;
-                Functions.XFetchName(window.Display, window.Handle, ref name);
+                Functions.XFetchName(window.Display, window.WindowHandle, ref name);
                 if (name != IntPtr.Zero)
                     return Marshal.PtrToStringAnsi(name);
 
@@ -419,7 +435,7 @@ namespace OpenTK.Platform.X11
                 Functions.XSetWMName(window.Display, window.Handle, ref name);
                 */
                 if (value != null)
-                    Functions.XStoreName(window.Display, window.Handle, value);
+                    Functions.XStoreName(window.Display, window.WindowHandle, value);
             }
         }
 
@@ -439,12 +455,12 @@ namespace OpenTK.Platform.X11
             {
                 if (value && !mapped)
                 {
-                    Functions.XMapWindow(window.Display, window.Handle);
+                    Functions.XMapWindow(window.Display, window.WindowHandle);
                     mapped = true;
                 }
                 else if (!value && mapped)
                 {
-                    Functions.XUnmapWindow(window.Display, window.Handle);
+                    Functions.XUnmapWindow(window.Display, window.WindowHandle);
                     mapped = false;
                 }
             }
@@ -490,7 +506,7 @@ namespace OpenTK.Platform.X11
         public void DestroyWindow()
         {
             Debug.WriteLine("X11GLNative shutdown sequence initiated.");
-            Functions.XDestroyWindow(window.Display, window.Handle);
+            Functions.XDestroyWindow(window.Display, window.WindowHandle);
         }
 
         #endregion
@@ -647,19 +663,13 @@ namespace OpenTK.Platform.X11
         {
             if (!disposed)
             {
+                //Functions.XUnmapWindow(window.Display, window.WindowHandle);
+                if (window.WindowHandle != IntPtr.Zero)
+                    Functions.XDestroyWindow(window.Display, window.WindowHandle);
+
                 if (manuallyCalled)
                 {
-                    //if (glContext != null)
-                    //    glContext.Dispose();
-
-                    // Kills connection to the X-Server. We don't want that,
-                    // 'cause it kills the ExampleLauncher too.
-                    //Functions.XCloseDisplay(window.Display);
                 }
-
-                Functions.XUnmapWindow(window.Display, window.Handle);
-                Functions.XDestroyWindow(window.Display, window.Handle);
-
                 disposed = true;
             }
         }

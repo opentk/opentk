@@ -254,19 +254,19 @@ namespace OpenTK.Platform.Windows
             get
             {
                 StringBuilder title = new StringBuilder(256);
-                Functions.GetWindowText(window.Handle, title, title.Capacity);
+                Functions.GetWindowText(window.WindowHandle, title, title.Capacity);
                 return title.ToString();
             }
             set
             {
 #if DEBUG
-                bool ret = Functions.SetWindowText(window.Handle, value);
+                bool ret = Functions.SetWindowText(window.WindowHandle, value);
                 if (ret)
-                    Debug.Print("Window {0} title changed to {1}.", window.Handle, value);
+                    Debug.Print("Window {0} title changed to {1}.", window.WindowHandle, value);
                 else
-                    Debug.Print("Window {0} title failed to change to {1}.", window.Handle, value);
+                    Debug.Print("Window {0} title failed to change to {1}.", window.WindowHandle, value);
 #else
-                Functions.SetWindowText(window.Handle, value);
+                Functions.SetWindowText(window.WindowHandle, value);
 #endif
             }
         }

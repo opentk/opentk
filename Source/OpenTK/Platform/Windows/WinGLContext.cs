@@ -24,13 +24,14 @@ namespace OpenTK.Platform.Windows
     /// Provides methods to create and control an opengl context on the Windows platform.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class WinGLContext : IGraphicsContext, IGraphicsContextInternal, IGLContextCreationHack
+    internal sealed class WinGLContext : IGraphicsContext, IGraphicsContextInternal//, IGLContextCreationHack
     {
-        IntPtr deviceContext;
+        //IntPtr deviceContext;
+        WinWindowInfo currentWindow;
         ContextHandle renderContext;
         static IntPtr opengl32Handle;
         const string opengl32Name = "OPENGL32.DLL";
-        WinWindowInfo windowInfo = new WinWindowInfo();
+        //WinWindowInfo windowInfo = new WinWindowInfo();
 
         GraphicsMode format;
         //DisplayMode mode = null;
@@ -58,32 +59,24 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        GraphicsMode SelectFormat(GraphicsMode format)
-        {
-            using (WinGLNative native = new WinGLNative())
-            //using (WinGLContext context = new WinGLContext(format, native.WindowInfo, null))
-            {
-                // Find the best multisampling mode.
-                return format;
-            }
-        }
-
         public WinGLContext(GraphicsMode format, IWindowInfo window, IGraphicsContext sharedContext)
         {
-            //format = this.SelectFormat(format);
+            if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
 
-            this.windowInfo = (WinWindowInfo)window;
-            Debug.Print("OpenGL will be bound to handle: {0}", this.windowInfo.Handle);
-            if (this.windowInfo.Handle == IntPtr.Zero)
-                throw new ArgumentException("window", "Must be a valid window.");
+            currentWindow = (WinWindowInfo)window;
+            if (currentWindow.WindowHandle == IntPtr.Zero) throw new ArgumentException("window", "Must be a valid window.");
 
-            Debug.Print("Setting pixel format...");
-            this.format = this.SetGraphicsModePFD(format);
+            Debug.Print("OpenGL will be bound to handle: {0}", currentWindow.WindowHandle);
 
-            Debug.Write("Creating render context... ");
+            Debug.Print("Setting pixel format... ");
+            this.SetGraphicsModePFD(format, (WinWindowInfo)window);
+
             // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
             // and Wgl extensions will fail to load.
-            renderContext = new ContextHandle(Wgl.Imports.CreateContext(deviceContext));
+            Debug.Write("Creating render context... ");
+            renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
+            if (renderContext == IntPtr.Zero)
+                renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
             if (renderContext == IntPtr.Zero)
                 throw new GraphicsContextException(String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
                                                                  Marshal.GetLastWin32Error()));
@@ -134,19 +127,33 @@ namespace OpenTK.Platform.Windows
 
         public void SwapBuffers()
         {
-            Functions.SwapBuffers(deviceContext);
+
+            Functions.SwapBuffers(currentWindow.DeviceContext);
         }
 
         #endregion
 
-        #region public void MakeCurrent()
-        
-        public void MakeCurrent()
+        #region public void MakeCurrent(IWindowInfo window)
+
+        public void MakeCurrent(IWindowInfo window)
         {
-            if (!Wgl.Imports.MakeCurrent(deviceContext, renderContext))
+            bool success;
+
+            if (window != null)
             {
-                Debug.Print("WinGLContext.MakeCurrent() call failed. Error: {0}", Marshal.GetLastWin32Error());
+                if (((WinWindowInfo)window).WindowHandle == IntPtr.Zero)
+                    throw new ArgumentException("window", "Must point to a valid window.");
+                
+                currentWindow = (WinWindowInfo)window;
+                success = Wgl.Imports.MakeCurrent(((WinWindowInfo)window).DeviceContext, this.renderContext);
             }
+            else
+                success = Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+
+            if (!success)
+                throw new GraphicsContextException(String.Format(
+                    "Failed to make context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
+
         }
 
 	    #endregion
@@ -156,6 +163,7 @@ namespace OpenTK.Platform.Windows
         public bool IsCurrent
         {
             get { return Wgl.GetCurrentContext() == this.renderContext; }
+            /*
             set
             {
                 if (value)
@@ -163,6 +171,7 @@ namespace OpenTK.Platform.Windows
                 else
                     Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
             }
+            */
 
         }
 
@@ -218,12 +227,12 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region IWindowInfo IGLContextInternal.Info
-
+        /*
         IWindowInfo IGraphicsContextInternal.Info
         {
             get { return (IWindowInfo)windowInfo; }
         }
-
+        */
         #endregion
 
         #region GraphicsMode IGLContextInternal.GraphicsMode
@@ -275,205 +284,49 @@ namespace OpenTK.Platform.Windows
 
         #region --- Private Methods ---
 
-        #region GraphicsMode SetGraphicsModePFD(GraphicsMode format)
+        #region void SetGraphicsModePFD(GraphicsMode format, WinWindowInfo window)
 
-        GraphicsMode SetGraphicsModePFD(GraphicsMode format)
+        void SetGraphicsModePFD(GraphicsMode mode, WinWindowInfo window)
         {
-            deviceContext = Functions.GetDC(this.windowInfo.Handle);
-            Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
+            if (mode.Index == IntPtr.Zero) throw new ArgumentException(
+                "mode", "The Index (pixel format) of the GraphicsMode is not set.");
+            if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
 
-            Debug.Write("Setting pixel format... ");
-            PixelFormatDescriptor pixelFormat = new PixelFormatDescriptor();
-            pixelFormat.Size = API.PixelFormatDescriptorSize;
-            pixelFormat.Version = API.PixelFormatDescriptorVersion;
-            pixelFormat.Flags =
-                PixelFormatDescriptorFlags.SUPPORT_OPENGL |
-                PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
-            pixelFormat.ColorBits = (byte)(format.ColorDepth.Red + format.ColorDepth.Green + format.ColorDepth.Blue);
-            
-            pixelFormat.PixelType = format.ColorDepth.IsIndexed ? PixelType.INDEXED : PixelType.RGBA;
-            pixelFormat.PixelType = PixelType.RGBA;
-            pixelFormat.RedBits = (byte)format.ColorDepth.Red;
-            pixelFormat.GreenBits = (byte)format.ColorDepth.Green;
-            pixelFormat.BlueBits = (byte)format.ColorDepth.Blue;
-            pixelFormat.AlphaBits = (byte)format.ColorDepth.Alpha;
-
-            if (format.AccumulatorFormat.BitsPerPixel > 0)
-            {
-                pixelFormat.AccumBits = (byte)(format.AccumulatorFormat.Red + format.AccumulatorFormat.Green + format.AccumulatorFormat.Blue);
-                pixelFormat.AccumRedBits = (byte)format.AccumulatorFormat.Red;
-                pixelFormat.AccumGreenBits = (byte)format.AccumulatorFormat.Green;
-                pixelFormat.AccumBlueBits = (byte)format.AccumulatorFormat.Blue;
-                pixelFormat.AccumAlphaBits = (byte)format.AccumulatorFormat.Alpha;
-            }
-
-            pixelFormat.DepthBits = (byte)format.Depth;
-            pixelFormat.StencilBits = (byte)format.Stencil;
-
-            if (format.Depth <= 0) pixelFormat.Flags |= PixelFormatDescriptorFlags.DEPTH_DONTCARE;
-            if (format.Stereo) pixelFormat.Flags |= PixelFormatDescriptorFlags.STEREO;
-            if (format.Buffers > 1) pixelFormat.Flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
-
-            int pixel = Functions.ChoosePixelFormat(deviceContext, ref pixelFormat);
-            if (pixel == 0)
-                throw new GraphicsModeException(String.Format("The requested format is not available: {0}.", format));
-
-            // Find out what we really got as a format:
             PixelFormatDescriptor pfd = new PixelFormatDescriptor();
-            pixelFormat.Size = API.PixelFormatDescriptorSize;
-            pixelFormat.Version = API.PixelFormatDescriptorVersion;
-            Functions.DescribePixelFormat(deviceContext, pixel, API.PixelFormatDescriptorSize, ref pfd);
-            GraphicsMode fmt = new GraphicsMode(
-                new ColorDepth(pfd.RedBits, pfd.GreenBits, pfd.BlueBits, pfd.AlphaBits),
-                pfd.DepthBits,
-                pfd.StencilBits,
-                0,
-                new ColorDepth(pfd.AccumBits),
-                (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
-                (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
-
-            if (!Functions.SetPixelFormat(deviceContext, pixel, ref pixelFormat))
-                throw new GraphicsContextException(String.Format("Requested GraphicsMode not available. SetPixelFormat error: {0}",
-                                                                 Marshal.GetLastWin32Error()));
-            Debug.Print("done! (format: {0})", pixel);
-
-            return fmt;
+            Functions.DescribePixelFormat(window.DeviceContext, (int)mode.Index,
+                API.PixelFormatDescriptorSize, ref pfd);
+            Debug.WriteLine(mode.Index.ToString());
+            if (!Functions.SetPixelFormat(window.DeviceContext, (int)mode.Index, ref pfd))
+                throw new GraphicsContextException(String.Format(
+                    "Requested GraphicsMode not available. SetPixelFormat error: {0}", Marshal.GetLastWin32Error()));
         }
-
         #endregion
 
-        #region GraphicsMode SetGraphicsModeARB(GraphicsMode format)
+        #region void SetGraphicsModeARB(GraphicsMode format, IWindowInfo window)
 
-        GraphicsMode SetGraphicsModeARB(GraphicsMode format)
+        void SetGraphicsModeARB(GraphicsMode format, IWindowInfo window)
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         #endregion
-
-
-        #endregion
-
-        #region --- IGLContextCreationHack Members ---
-
-        #region bool IGLContextCreationHack.SelectDisplayMode(DisplayMode mode, IWindowInfo info)
-
-        /// <summary>
-        /// HACK! This function will be removed in 0.3.15
-        /// Checks if the specified OpenTK.Platform.DisplayMode is available, and selects it if it is.
-        /// </summary>
-        /// <param name="mode">The OpenTK.Platform.DisplayMode to select.</param>
-        /// <param name="info">The OpenTK.Platform.IWindowInfo that describes the display to use. Note: a window handle is not necessary for this function!</param>
-        /// <returns>True if the DisplayMode is available, false otherwise.</returns>
-        bool IGLContextCreationHack.SelectDisplayMode(DisplayMode mode, IWindowInfo info)
-        {
-            // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.
-            if (opengl32Handle == IntPtr.Zero)
-            {
-                opengl32Handle = Functions.LoadLibrary(opengl32Name);
-                if (opengl32Handle == IntPtr.Zero)
-                {
-                    //System.Diagnostics.Debug.WriteLine("LoadLibrary({0}) set error code: {1}. Will not load extensions.", _dll_name, error_code);
-                    throw new ApplicationException(String.Format("LoadLibrary(\"{0}\") call failed with code {1}",
-                                                                 opengl32Name, Marshal.GetLastWin32Error()));
-                }
-                Debug.WriteLine(String.Format("Loaded opengl32.dll: {0}", opengl32Handle));
-            }
-            deviceContext = Functions.GetDC(this.windowInfo.Handle);
-            Debug.WriteLine(String.Format("Device context: {0}", deviceContext));
-
-            Debug.Write("Setting pixel format... ");
-            PixelFormatDescriptor pixelFormat = new PixelFormatDescriptor();
-            pixelFormat.Size = API.PixelFormatDescriptorSize;
-            pixelFormat.Version = API.PixelFormatDescriptorVersion;
-            pixelFormat.Flags =
-                PixelFormatDescriptorFlags.SUPPORT_OPENGL |
-                PixelFormatDescriptorFlags.DRAW_TO_WINDOW;
-            pixelFormat.ColorBits = (byte)(mode.Color.Red + mode.Color.Green + mode.Color.Blue);
-            if (mode.Color.IsIndexed)
-            {
-                pixelFormat.PixelType = PixelType.INDEXED;
-            }
-            else
-            {
-                pixelFormat.PixelType = PixelType.RGBA;
-                pixelFormat.RedBits = (byte)mode.Color.Red;
-                pixelFormat.GreenBits = (byte)mode.Color.Green;
-                pixelFormat.BlueBits = (byte)mode.Color.Blue;
-                pixelFormat.AlphaBits = (byte)mode.Color.Alpha;
-            }
-
-            /*
-            if (accum != null)
-            {
-                pixelFormat.AccumBits = (byte)(accum.Red + accum.Green + accum.Blue);
-                pixelFormat.AccumRedBits = (byte)accum.Red;
-                pixelFormat.AccumGreenBits = (byte)accum.Green;
-                pixelFormat.AccumBlueBits = (byte)accum.Blue;
-                pixelFormat.AccumAlphaBits = (byte)accum.Alpha;
-            }
-            */
-            pixelFormat.DepthBits = (byte)mode.DepthBits;
-            pixelFormat.StencilBits = (byte)mode.StencilBits;
-
-            if (mode.DepthBits <= 0)
-            {
-                pixelFormat.Flags |= PixelFormatDescriptorFlags.DEPTH_DONTCARE;
-            }
-
-            if (mode.Stereo)
-            {
-                pixelFormat.Flags |= PixelFormatDescriptorFlags.STEREO;
-            }
-
-            if (mode.Buffers > 1)
-            {
-                pixelFormat.Flags |= PixelFormatDescriptorFlags.DOUBLEBUFFER;
-            }
-
-            // TODO: More elaborate mode setting, using DescribePixelFormat.
-            /*
-            unsafe
-            {
-                int pixel = Wgl.Imports.ChoosePixelFormat(deviceContext, &pixelFormat);
-
-                if (pixel == 0)
-                {
-                    throw new ApplicationException("The requested pixel format is not supported by the hardware configuration.");
-                }
-
-                Wgl.Imports.SetPixelFormat(deviceContext, pixel, &pixelFormat);
-
-                Debug.WriteLine(String.Format("done! (format: {0})", pixel));
-            }
-            */
-            int pixel = Functions.ChoosePixelFormat(deviceContext, ref pixelFormat);
-            if (pixel == 0)
-            {
-                Debug.Print("format not available...");
-                return false;
-            }
-            Functions.SetPixelFormat(deviceContext, pixel, ref pixelFormat);
-
-            Debug.Print("done! (format: {0})", pixel);
-
-            return true;
-        }
-
-        #endregion
-
-        void IGLContextCreationHack.SetWindowHandle(IntPtr handle)
-        {
-            this.windowInfo.Handle = handle;
-        }
 
         #endregion
 
         #region --- Internal Methods ---
 
-        #region internal IntPtr Device
+        #region internal IntPtr DeviceContext
 
-        internal IntPtr Device { get { return deviceContext; } }
+        internal IntPtr DeviceContext
+        {
+            get
+            {
+                if (currentWindow != null)
+                    return currentWindow.DeviceContext;
+                return IntPtr.Zero;
+            }
+        }
+
 
         #endregion
 
@@ -544,14 +397,14 @@ namespace OpenTK.Platform.Windows
                 renderContext = null;
             }
 
-            if (deviceContext != IntPtr.Zero)
-            {
-                if (!Functions.ReleaseDC(this.windowInfo.Handle, deviceContext))
-                {
-                    //throw new ApplicationException("Could not release device context. Error: " + Marshal.GetLastWin32Error());
-                    //Debug.Print("Could not destroy the device context. Error: {0}", Marshal.GetLastWin32Error());
-                }
-            }
+            //if (deviceContext != IntPtr.Zero)
+            //{
+            //    if (!Functions.ReleaseDC(this.windowInfo.Handle, deviceContext))
+            //    {
+            //        //throw new ApplicationException("Could not release device context. Error: " + Marshal.GetLastWin32Error());
+            //        //Debug.Print("Could not destroy the device context. Error: {0}", Marshal.GetLastWin32Error());
+            //    }
+            //}
 
             /*
             if (opengl32Handle != IntPtr.Zero)

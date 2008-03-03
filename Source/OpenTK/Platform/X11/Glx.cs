@@ -295,24 +295,27 @@ namespace OpenTK.Platform.X11
         [DllImport(Library, EntryPoint = "glXGetProcAddress")]
         public static extern IntPtr GetProcAddress([MarshalAs(UnmanagedType.LPTStr)] string procName);
 
+        [DllImport(Library, EntryPoint = "glXGetConfig")]
+        public static extern int GetConfig(IntPtr dpy, ref XVisualInfo vis, GLXAttribute attrib, out int value);
+
         #region glXChooseVisual
 
         [DllImport(Library, EntryPoint = "glXChooseVisual")]
         public extern static IntPtr ChooseVisual(IntPtr dpy, int screen, IntPtr attriblist);
 
         [DllImport(Library, EntryPoint = "glXChooseVisual")]
-        public extern static IntPtr ChooseVisual(IntPtr dpy, int screen, int[] attriblist);
+        public extern static IntPtr ChooseVisual(IntPtr dpy, int screen, ref int attriblist);
 
-        //public static IntPtr ChooseVisual(IntPtr dpy, int screen, int[] attriblist)
-        //{
-        //    unsafe
-        //    {
-        //        fixed (int* attriblist_ptr = attriblist)
-        //        {
-        //            return ChooseVisual(dpy, screen, (IntPtr)attriblist_ptr);
-        //        }
-        //    }
-        //}
+        public static IntPtr ChooseVisual(IntPtr dpy, int screen, int[] attriblist)
+        {
+            unsafe
+            {
+                fixed (int* attriblist_ptr = attriblist)
+                {
+                    return ChooseVisual(dpy, screen, (IntPtr)attriblist_ptr);
+                }
+            }
+        }
 
         #endregion
 
