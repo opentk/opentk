@@ -12,12 +12,12 @@ using System.Text;
 
 namespace OpenTK.Graphics
 {
-    /// <summary>Defines the ColorDepth component of a GraphicsMode.</summary>
+    /// <summary>Defines the ColorFormat component of a GraphicsMode.</summary>
     /// <remarks>
-    /// <para>A ColorDepth contains Red, Green, Blue and Alpha components that descibe
+    /// <para>A ColorFormat contains Red, Green, Blue and Alpha components that descibe
     /// the allocated bits per pixel for the corresponding color.</para>
     /// </remarks>
-    public struct ColorDepth
+    public struct ColorFormat
     {
         byte red, green, blue, alpha;
         bool isIndexed;
@@ -26,10 +26,10 @@ namespace OpenTK.Graphics
         #region --- Constructors ---
 
         /// <summary>
-        /// Constructs a new ColorDepth with the specified aggregate bits per pixel.
+        /// Constructs a new ColorFormat with the specified aggregate bits per pixel.
         /// </summary>
         /// <param name="bpp">The bits per pixel sum for the Red, Green, Blue and Alpha color channels.</param>
-        public ColorDepth(int bpp)
+        public ColorFormat(int bpp)
         {
             if (bpp < 0)
                 throw new ArgumentOutOfRangeException("bpp", "Must be greater or equal to zero.");
@@ -73,14 +73,14 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Constructs a new ColorDepth with the specified bits per pixel for 
+        /// Constructs a new ColorFormat with the specified bits per pixel for 
         /// the Red, Green, Blue and Alpha color channels.
         /// </summary>
         /// <param name="red">Bits per pixel for the Red color channel.</param>
         /// <param name="green">Bits per pixel for the Green color channel.</param>
         /// <param name="blue">Bits per pixel for the Blue color channel.</param>
         /// <param name="alpha">Bits per pixel for the Alpha color channel.</param>
-        public ColorDepth(int red, int green, int blue, int alpha)
+        public ColorFormat(int red, int green, int blue, int alpha)
         {
             if (red < 0 || green < 0 || blue < 0 || alpha < 0)
                 throw new ArgumentOutOfRangeException("Arguments must be greater or equal to zero.");
@@ -106,7 +106,7 @@ namespace OpenTK.Graphics
         public int Blue { get { return blue; } private set { blue = (byte)value; } }
         /// <summary>Gets the bits per pixel for the Alpha channel.</summary>
         public int Alpha { get { return alpha; } private set { alpha = (byte)value; } }
-        /// <summary>Gets a System.Boolean indicating whether this ColorDepth is indexed.</summary>
+        /// <summary>Gets a System.Boolean indicating whether this ColorFormat is indexed.</summary>
         public bool IsIndexed { get { return isIndexed; } private set { isIndexed = value; } }
         /// <summary>Gets the sum of Red, Green, Blue and Alpha bits per pixel.</summary>
         public int BitsPerPixel { get { return bitsPerPixel; } private set { bitsPerPixel = value; } }
@@ -116,16 +116,16 @@ namespace OpenTK.Graphics
         #region --- Operator Overloads ---
 
         /// <summary>
-        /// Converts the specified bpp into a new ColorDepth.
+        /// Converts the specified bpp into a new ColorFormat.
         /// </summary>
         /// <param name="bpp">The bits per pixel to convert.</param>
-        /// <returns>A ColorDepth with the specified bits per pixel.</returns>
-        public static implicit operator ColorDepth(int bpp)
+        /// <returns>A ColorFormat with the specified bits per pixel.</returns>
+        public static implicit operator ColorFormat(int bpp)
         {
-            return new ColorDepth(bpp);
+            return new ColorFormat(bpp);
         }
 
-        //public static implicit operator int(ColorDepth mode)
+        //public static implicit operator int(ColorFormat mode)
         //{
         //    return mode.BitsPerPixel;
         //}
@@ -136,10 +136,10 @@ namespace OpenTK.Graphics
 
         public override bool Equals(object obj)
         {
-            return (obj is ColorDepth) ? (this == (ColorDepth)obj) : false;
+            return (obj is ColorFormat) ? (this == (ColorFormat)obj) : false;
         }
 
-        public static bool operator ==(ColorDepth left, ColorDepth right)
+        public static bool operator ==(ColorFormat left, ColorFormat right)
         {
             if ((object)left == (object)null && (object)right != (object)null ||
                 (object)left != (object)null && (object)right == (object)null)
@@ -154,7 +154,7 @@ namespace OpenTK.Graphics
                    left.Alpha == right.Alpha;
         }
 
-        public static bool operator !=(ColorDepth left, ColorDepth right)
+        public static bool operator !=(ColorFormat left, ColorFormat right)
         {
             return !(left == right);
         }

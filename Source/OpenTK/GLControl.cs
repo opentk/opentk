@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -15,6 +17,7 @@ using System.Windows.Forms;
 using OpenTK.Platform;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace OpenTK
 {
@@ -24,8 +27,9 @@ namespace OpenTK
     public partial class GLControl : UserControl
     {
         IGraphicsContext context;
+        IGLControl implementation;
         GraphicsMode format;
-        IGLControlHelper helper;
+        IWindowInfo window_info;
 
         #region --- Constructor ---
 
@@ -36,15 +40,17 @@ namespace OpenTK
             : this(GraphicsMode.Default)
         { }
 
-        /// <summary>
-        /// Constructs a new GLControl with the specified DisplayMode.
-        /// </summary>
-        /// <param name="mode"></param>
+        /// <summary>This method is obsolete and will be removed in future versions.</summary>
+        /// <param name="mode">Obsolete.</param>
         public GLControl(DisplayMode mode)
             : this(mode.ToGraphicsMode())
         { }
 
-        public GLControl(GraphicsMode format)
+        /// <summary>
+        /// Constructs a new GLControl with the specified GraphicsMode.
+        /// </summary>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the control.</param>
+        public GLControl(GraphicsMode mode)
         {
             InitializeComponent();
 
@@ -53,7 +59,21 @@ namespace OpenTK
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             DoubleBuffered = false;
 
-            this.format = format;
+            this.format = mode;
+
+            // On Windows, you first need to create the window, then set the pixel format.
+            // On X11, you first need to select the visual, then create the window.
+            // On OSX, ???
+            // Right now, pixel formats/visuals are selected during context creation. In the future,
+            // it would be better to decouple selection from context creation, which will allow us
+            // to clean up this hacky code. The best option is to do this along with multisampling
+            // support.
+            if (Configuration.RunningOnWindows)
+                implementation = new OpenTK.Platform.Windows.WinGLControl(mode, this);
+            else if (Configuration.RunningOnX11)
+                implementation = new OpenTK.Platform.X11.X11GLControl(mode, this);
+            else if (Configuration.RunningOnOSX)
+                throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
 
             this.CreateControl();
         }
@@ -62,23 +82,50 @@ namespace OpenTK
 
         #region --- Protected Methods ---
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            // Workaround Mono 1.2.4 bug where the OnHandleCreated event isn't raised at the correct time.
+            if (this.Context == null)
+            {
+                if (!DesignMode)
+                    this.Context = implementation.CreateContext();
+                else
+                    this.Context = new DummyGLContext(null);
+
+                this.window_info = implementation.WindowInfo;
+                this.MakeCurrent();
+                ((IGraphicsContextInternal)this.Context).LoadAll();
+            }
+        }
+
+        /// <summary>Raises the HandleCreated event.</summary>
+        /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            if (Configuration.RunningOnWindows)
-                helper = new Platform.Windows.WinGLControlHelper(this);
-            else if (Configuration.RunningOnX11)
-                throw new NotImplementedException();
-            //helper = new Platform.X11.X11GLControlHelper(this);
-            else if (Configuration.RunningOnOSX)
-                throw new NotImplementedException();
-            this.CreateContext();
+            // On Mono 1.2.4 the Resize event is raised before this :/
+            //if (!DesignMode)
+            //    this.Context = implementation.CreateContext();
+            //else
+            //    this.Context = new DummyGLContext(null);
+
+            //this.window_info = implementation.WindowInfo;
+            //this.MakeCurrent();
+            //((IGraphicsContextInternal)this.Context).LoadAll();
         }
 
+        /// <summary>Raises the HandleDestroyed event.</summary>
+        /// <param name="e">Not used.</param>
         protected override void OnHandleDestroyed(EventArgs e)
         {
             base.OnHandleDestroyed(e);
-            this.DestroyContext();
+            if (this.Context != null)
+            {
+                this.Context.Dispose();
+                this.Context = null;
+            }
+            this.window_info = null;
         }
 
         #endregion
@@ -105,7 +152,7 @@ namespace OpenTK
         /// </summary>
         public void MakeCurrent()
         {
-            Context.MakeCurrent();
+            this.Context.MakeCurrent(this.window_info);
         }
 
         #endregion
@@ -117,19 +164,44 @@ namespace OpenTK
         /// </summary>
         public void CreateContext()
         {
-            if (context != null)
-                throw new InvalidOperationException("GLControl already contains an OpenGL context.");
-            if (format == null)
-                format = GraphicsMode.Default;
+            if (context != null) throw new InvalidOperationException("GLControl already contains an OpenGL context.");
+            if (format == null) format = GraphicsMode.Default;
 
             if (!this.DesignMode)
             {
                 // Note: Mono's implementation of Windows.Forms on X11 does not allow the context to
                 // have a different colordepth from the parent window.
-                context = new GraphicsContext(format, helper.WindowInfo);
+                //context = new GraphicsContext(format, helper.WindowInfo);
+                if (Configuration.RunningOnX11)
+                {
+                    //OpenTK.Platform.X11.X11WindowInfo info = 
+                    //    (context as IGraphicsContextInternal).Info as OpenTK.Platform.X11.X11WindowInfo;
+                    //IntPtr visual = info.VisualInfo.visual;
+                    //IntPtr colormap = OpenTK.Platform.X11.API.CreateColormap(info.Display, info.RootWindow, visual, 0);
+                    //IntPtr visual = ((OpenTK.Platform.X11.X11WindowInfo)helper.WindowInfo).VisualInfo.visual;
+                    //IntPtr colormap = OpenTK.Platform.X11.API.CreateColormap(info.Display, info.RootWindow, visual, 0);
+
+                    //Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+                    //if (xplatui == null)
+                    //    throw new PlatformNotSupportedException(
+                    //        "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
+
+                    //xplatui.GetField("CustomVisual",
+                    //                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+                    //    .SetValue(null, visual);
+                    
+                    //xplatui.GetField("CustomColormap",
+                    //                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+                    //    .SetValue(null, colormap);
+
+                    //Debug.Print("Mono/X11 System.Windows.Forms custom visual and colormap installed succesfully.");
+                }
             }
             else
                 context = new DummyGLContext(format);
+
+            this.MakeCurrent();
+            (context as IGraphicsContextInternal).LoadAll();
         }
 
         #endregion
@@ -156,7 +228,7 @@ namespace OpenTK
         [Browsable(false)]
         public bool IsIdle
         {
-            get { return helper.IsIdle; }
+            get { return implementation.IsIdle; }
         }
 
         #endregion
@@ -233,6 +305,9 @@ namespace OpenTK
 
         /// <summary>Grabs a screenshot of the frontbuffer contents.</summary>
         /// <returns>A System.Drawing.Bitmap, containing the contents of the frontbuffer.</returns>
+        /// <exception cref="GraphicsContextException">
+        /// Occurs when no OpenTK.Graphics.GraphicsContext is current in the calling thread.
+        /// </exception>
         public Bitmap GrabScreenshot()
         {
             Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height);

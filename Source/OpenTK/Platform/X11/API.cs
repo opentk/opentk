@@ -1189,19 +1189,20 @@ XF86VidModeGetGammaRampSize(
         DirectColor = 5,
     }
 
+    [Flags]
     public enum XVisualInfoMask
     {
-        VisualNoMask = 0x0,
-        VisualIDMask = 0x1,
-        VisualScreenMask = 0x2,
-        VisualDepthMask = 0x4,
-        VisualClassMask = 0x8,
-        VisualRedMaskMask = 0x10,
-        VisualGreenMaskMask = 0x20,
-        VisualBlueMaskMask = 0x40,
-        VisualColormapSizeMask = 0x80,
-        VisualBitsPerRGBMask = 0x100,
-        VisualAllMask = 0x1FF,
+        No = 0x0,
+        ID = 0x1,
+        Screen = 0x2,
+        Depth = 0x4,
+        Class = 0x8,
+        Red = 0x10,
+        Green = 0x20,
+        Blue = 0x40,
+        ColormapSize = 0x80,
+        BitsPerRGB = 0x100,
+        All = 0x1FF,
     }
 
     #region public enum MouseMask

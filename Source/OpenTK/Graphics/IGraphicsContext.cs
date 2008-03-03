@@ -23,16 +23,17 @@ namespace OpenTK.Graphics
         void SwapBuffers();
 
         /// <summary>Makes the GraphicsContext current in the calling thread.</summary>
+        /// <param name="window">An OpenTK.Platform.IWindowInfo structure that points to a valid window.</param>
         /// <remarks>
         /// <para>OpenGL commands in one thread, affect the GraphicsContext which is current in that thread.</para>
         /// <para>It is an error to issue an OpenGL command in a thread without a current GraphicsContext.</para>
         /// </remarks>
-        void MakeCurrent();
+        void MakeCurrent(IWindowInfo window);
 
         /// <summary>
         /// Gets or sets a System.Boolean indicating whether the GraphicsContext is current in the calling thread.
         /// </summary>
-        bool IsCurrent { get; set;  }
+        bool IsCurrent { get; /*set;*/  }
 
         /// <summary>
         /// Raised when a Context is destroyed.
@@ -82,7 +83,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the IWindowInfo describing the window associated with this context.
         /// </summary>
-        IWindowInfo Info { get; }
+        //IWindowInfo Info { get; }
 
         /// <summary>Gets the GraphicsMode of the context.</summary>
         GraphicsMode GraphicsMode { get; }

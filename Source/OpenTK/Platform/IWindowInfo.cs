@@ -12,7 +12,10 @@ using System.Text;
 
 namespace OpenTK.Platform
 {
-    public interface IWindowInfo
+    /// <summary>Descibes an OS window.</summary>
+    public interface IWindowInfo : IDisposable
     {
+        // /// <summary>Gets a System.IntPtr which contains the handle of the window.</summary>
+        //IntPtr WindowHandle { get; }
     }
 }

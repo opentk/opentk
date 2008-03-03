@@ -33,7 +33,7 @@ namespace OpenTK.Platform.Windows
             Debug.WriteLine("Initalizing WMInput driver.");
             Debug.Indent();
 
-            AssignHandle(parent.Handle);
+            AssignHandle(parent.WindowHandle);
             Debug.Print("Input window attached to parent {0}", parent);
             
             Debug.Unindent();

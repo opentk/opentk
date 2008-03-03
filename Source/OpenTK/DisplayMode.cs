@@ -231,7 +231,7 @@ namespace OpenTK
             private set { this.refreshRate = value; }
         }
 
-        #region public ColorDepth Color
+        #region public ColorFormat Color
         
         [Obsolete("Use GraphicsMode.Color instead.")]
         public ColorMode Color

@@ -81,21 +81,6 @@ namespace OpenTK
 
         #endregion
 
-        #region --- Private Methods ---
-
-        bool MustResize
-        {
-            get { return glWindow.Width != this.Width || glWindow.Height != this.Height; }
-        }
-
-        bool HasMainLoop
-        {
-            get { return hasMainLoop; }
-            set { hasMainLoop = value; }
-        }
-
-        #endregion
-
         #region --- Contructors ---
 
         #region public GameWindow()
@@ -183,11 +168,8 @@ namespace OpenTK
             try
             {
                 glWindow.CreateWindow(width, height, mode, out glContext);
-                Debug.Print("1");
-                glContext.MakeCurrent();
-                Debug.Print("2");
+                glContext.MakeCurrent(this.WindowInfo);
                 (glContext as IGraphicsContextInternal).LoadAll();
-                Debug.Print("3");
             }
             //catch (GraphicsContextException e)
             catch (Exception e)
@@ -201,7 +183,7 @@ namespace OpenTK
             
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
-                device.ChangeResolution(width, height, mode.ColorDepth.BitsPerPixel, 0);
+                device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
                 this.Fullscreen = true;
             }
             
@@ -257,6 +239,25 @@ namespace OpenTK
         {
             UpdateFrame -= CallExitInternal;
             sender.ExitInternal();
+        }
+
+        #endregion
+
+        #region bool MustResize
+
+        bool MustResize
+        {
+            get { return glWindow.Width != this.Width || glWindow.Height != this.Height; }
+        }
+
+        #endregion
+
+        #region bool HasMainLoop
+
+        bool HasMainLoop
+        {
+            get { return hasMainLoop; }
+            set { hasMainLoop = value; }
         }
 
         #endregion
@@ -607,7 +608,7 @@ namespace OpenTK
             }
             catch (GameWindowExitException)
             {
-                Trace.WriteLine("GameWindowExitException caught - exiting main loop.");
+                Debug.WriteLine("GameWindowExitException caught - exiting main loop.");
             }
             finally
             {
@@ -616,13 +617,13 @@ namespace OpenTK
 
                 OnUnloadInternal(EventArgs.Empty);
 
-                if (this.Exists)
+                if (Exists)
                 {
-                    if (Exists)
-                        glWindow.DestroyWindow();
-                    while (this.Exists)
-                        this.ProcessEvents();
+                    glContext.Dispose();
+                    glWindow.DestroyWindow();
                 }
+                while (this.Exists)
+                    this.ProcessEvents();
             }
         }
 
@@ -899,7 +900,7 @@ namespace OpenTK
         /// <remarks>Calling this function is equivalent to calling Context.SwapBuffers()</remarks>
         public void SwapBuffers()
         {
-            Context.SwapBuffers();
+            this.Context.SwapBuffers();
         }
 
         #endregion
@@ -1310,7 +1311,8 @@ namespace OpenTK
         private void DisposeInternal()
         {
             Dispose();                  // User overridable Dispose method.
-
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -1318,8 +1320,6 @@ namespace OpenTK
         /// </summary>
         public virtual void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool manual)
@@ -1328,9 +1328,11 @@ namespace OpenTK
             {
                 if (manual)
                 {
+                    if (glContext != null)
+                        glContext.Dispose();
+
                     if (glWindow != null)
                     {
-                        glContext.Dispose();
                         glWindow.Dispose();
                         glWindow = null;
                     }
@@ -1339,6 +1341,7 @@ namespace OpenTK
             }
         }
 
+        /// <summary>Finalizes unmanaged resources consumed by the GameWindow.</summary>
         ~GameWindow()
         {
             Dispose(false);

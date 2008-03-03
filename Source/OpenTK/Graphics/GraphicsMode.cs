@@ -15,130 +15,177 @@ namespace OpenTK.Graphics
     /// <summary>Defines the format for graphics operations.</summary>
     public class GraphicsMode
     {
-        ColorDepth color_format, accumulator_format;
+        ColorFormat color_format, accumulator_format;
         int depth, stencil, buffers, samples;
         bool stereo;
+        IntPtr index;  // The id of the pixel format or visual.
+
+        static IGraphicsMode implementation;
+        static object mode_selection_lock = new object();
 
         #region --- Constructors ---
 
-        #region internal GraphicsFormat(GraphicsFormat mode)
+        #region static GraphicsMode()
+        
+        static GraphicsMode()
+        {
+            if (Configuration.RunningOnWindows)
+                implementation = new OpenTK.Platform.Windows.WinGraphicsMode();
+            else if (Configuration.RunningOnX11)
+                implementation = new OpenTK.Platform.X11.X11GraphicsMode();
+            else
+                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+        }
 
-        /// <internal />
-        /// <summary>Constructs a new GraphicsFormat from the given GraphicsFormat.</summary>
-        /// <param name="mode"></param>
+        #endregion
+
+        #region internal GraphicsMode(GraphicsMode mode)
+
         internal GraphicsMode(GraphicsMode mode)
-            : this(mode.ColorDepth, mode.Depth, mode.Stencil, mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo) { }
+            : this(mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo) { }
 
         #endregion
 
-        #region public GraphicsFormat()
+        #region internal GraphicsMode((IntPtr index, ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
 
-        /// <summary>Constructs a new GraphicsFormat with sensible default parameters.</summary>
-        public GraphicsMode()
-            : this(Default)
-        { }
-
-        #endregion
-
-        #region public GraphicsFormat(ColorDepth color)
-
-        /// <summary>Constructs a new GraphicsFormat with the specified parameters.</summary>
-        /// <param name="color">The ColorDepth of the color buffer.</param>
-        public GraphicsMode(ColorDepth color)
-            : this(color, Default.Depth, Default.Stencil, Default.Samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
-        { }
-
-        #endregion
-
-        #region public GraphicsFormat(ColorDepth color, int depth)
-
-        /// <summary>Constructs a new GraphicsFormat with the specified parameters.</summary>
-        /// <param name="color">The ColorDepth of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        public GraphicsMode(ColorDepth color, int depth)
-            : this(color, depth, Default.Stencil, Default.Samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
-        { }
-
-        #endregion
-
-        #region public GraphicsFormat(ColorDepth color, int depth, int stencil)
-
-        /// <summary>Constructs a new GraphicsFormat with the specified parameters.</summary>
-        /// <param name="color">The ColorDepth of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        public GraphicsMode(ColorDepth color, int depth, int stencil)
-            : this(color, depth, stencil, Default.Samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
-        { }
-
-        #endregion
-
-        #region public GraphicsFormat(ColorDepth color, int depth, int stencil, int samples)
-
-        /// <summary>Constructs a new GraphicsFormat with the specified parameters.</summary>
-        /// <param name="color">The ColorDepth of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        /// <param name="samples">The number of samples for FSAA.</param>
-        public GraphicsMode(ColorDepth color, int depth, int stencil, int samples)
-            : this(color, depth, stencil, samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
-        { }
-
-        #endregion
-
-        #region public GraphicsFormat(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum)
-
-        /// <summary>Constructs a new GraphicsFormat with the specified parameters.</summary>
-        /// <param name="color">The ColorDepth of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        /// <param name="samples">The number of samples for FSAA.</param>
-        /// <param name="accum">The ColorDepth of the accumilliary buffer.</param>
-        public GraphicsMode(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum)
-            : this(color, depth, stencil, samples, accum, Default.Buffers, Default.Stereo)
-        { }
-
-        #endregion
-
-        #region public GraphicsFormat(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum, int buffers)
-
-        /// <summary>Constructs a new GraphicsFormat with the specified parameters.</summary>
-        /// <param name="color">The ColorDepth of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        /// <param name="samples">The number of samples for FSAA.</param>
-        /// <param name="accum">The ColorDepth of the accumilliary buffer.</param>
-        /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
-        public GraphicsMode(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum, int buffers)
-            : this(color, depth, stencil, samples, accum, buffers, Default.Stereo)
-        { }
-
-        #endregion
-
-        #region public GraphicsFormat(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum, int buffers, bool stereo)
-
-        /// <summary>Constructs a new GraphicsFormat with the specified parameters.</summary>
-        /// <param name="color">The ColorDepth of the color buffer.</param>
-        /// <param name="depth">The number of bits in the depth buffer.</param>
-        /// <param name="stencil">The number of bits in the stencil buffer.</param>
-        /// <param name="samples">The number of samples for FSAA.</param>
-        /// <param name="accum">The ColorDepth of the accumilliary buffer.</param>
-        /// <param name="stereo">Set to true for a GraphicsFormat with stereographic capabilities.</param>
-        /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
-        public GraphicsMode(ColorDepth color, int depth, int stencil, int samples, ColorDepth accum, int buffers, bool stereo)
+        internal GraphicsMode(IntPtr index, ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
+                              int buffers, bool stereo)
         {
             if (depth < 0) throw new ArgumentOutOfRangeException("depth", "Must be greater than, or equal to zero.");
             if (stencil < 0) throw new ArgumentOutOfRangeException("stencil", "Must be greater than, or equal to zero.");
             if (buffers <= 0) throw new ArgumentOutOfRangeException("buffers", "Must be greater than zero.");
             if (samples < 0) throw new ArgumentOutOfRangeException("samples", "Must be greater than, or equal to zero.");
 
-            this.ColorDepth = color;
-            this.Depth = depth;
-            this.Stencil = stencil;
-            this.AccumulatorFormat = accum;
-            this.Buffers = buffers;
-            this.Stereo = stereo;
+            // This method will search for the closest 
+
+            if (index == IntPtr.Zero)
+            {
+                GraphicsMode mode;
+                lock (mode_selection_lock)
+                {
+                    mode = implementation.SelectGraphicsMode(color, depth, stencil, samples, accum, buffers, stereo);
+                }
+
+                this.Index = mode.Index;
+                this.ColorFormat = mode.ColorFormat;
+                this.Depth = mode.Depth;
+                this.Stencil = mode.Stencil;
+                this.Samples = mode.Samples;
+                this.AccumulatorFormat = mode.AccumulatorFormat;
+                this.Buffers = mode.Buffers;
+                this.Stereo = mode.Stereo;
+            }
+            else
+            {
+                this.Index = index;
+                this.ColorFormat = color;
+                this.Depth = depth;
+                this.Stencil = stencil;
+                this.Samples = samples;
+                this.AccumulatorFormat = accum;
+                this.Buffers = buffers;
+                this.Stereo = stereo;
+            }
         }
+
+        #endregion
+
+        #region public GraphicsMode()
+
+        /// <summary>Constructs a new GraphicsMode with sensible default parameters.</summary>
+        public GraphicsMode()
+            : this(Default)
+        { }
+
+        #endregion
+
+        #region public GraphicsMode(ColorFormat color)
+
+        /// <summary>Constructs a new GraphicsMode with the specified parameters.</summary>
+        /// <param name="color">The ColorFormat of the color buffer.</param>
+        public GraphicsMode(ColorFormat color)
+            : this(color, Default.Depth, Default.Stencil, Default.Samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
+        { }
+
+        #endregion
+
+        #region public GraphicsMode(ColorFormat color, int depth)
+
+        /// <summary>Constructs a new GraphicsMode with the specified parameters.</summary>
+        /// <param name="color">The ColorFormat of the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        public GraphicsMode(ColorFormat color, int depth)
+            : this(color, depth, Default.Stencil, Default.Samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
+        { }
+
+        #endregion
+
+        #region public GraphicsMode(ColorFormat color, int depth, int stencil)
+
+        /// <summary>Constructs a new GraphicsMode with the specified parameters.</summary>
+        /// <param name="color">The ColorFormat of the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        /// <param name="stencil">The number of bits in the stencil buffer.</param>
+        public GraphicsMode(ColorFormat color, int depth, int stencil)
+            : this(color, depth, stencil, Default.Samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
+        { }
+
+        #endregion
+
+        #region public GraphicsMode(ColorFormat color, int depth, int stencil, int samples)
+
+        /// <summary>Constructs a new GraphicsMode with the specified parameters.</summary>
+        /// <param name="color">The ColorFormat of the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        /// <param name="stencil">The number of bits in the stencil buffer.</param>
+        /// <param name="samples">The number of samples for FSAA.</param>
+        public GraphicsMode(ColorFormat color, int depth, int stencil, int samples)
+            : this(color, depth, stencil, samples, Default.AccumulatorFormat, Default.Buffers, Default.Stereo)
+        { }
+
+        #endregion
+
+        #region public GraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum)
+
+        /// <summary>Constructs a new GraphicsMode with the specified parameters.</summary>
+        /// <param name="color">The ColorFormat of the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        /// <param name="stencil">The number of bits in the stencil buffer.</param>
+        /// <param name="samples">The number of samples for FSAA.</param>
+        /// <param name="accum">The ColorFormat of the accumilliary buffer.</param>
+        public GraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum)
+            : this(color, depth, stencil, samples, accum, Default.Buffers, Default.Stereo)
+        { }
+
+        #endregion
+
+        #region public GraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers)
+
+        /// <summary>Constructs a new GraphicsMode with the specified parameters.</summary>
+        /// <param name="color">The ColorFormat of the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        /// <param name="stencil">The number of bits in the stencil buffer.</param>
+        /// <param name="samples">The number of samples for FSAA.</param>
+        /// <param name="accum">The ColorFormat of the accumilliary buffer.</param>
+        /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
+        public GraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers)
+            : this(color, depth, stencil, samples, accum, buffers, Default.Stereo)
+        { }
+
+        #endregion
+
+        #region public GraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
+
+        /// <summary>Constructs a new GraphicsMode with the specified parameters.</summary>
+        /// <param name="color">The ColorFormat of the color buffer.</param>
+        /// <param name="depth">The number of bits in the depth buffer.</param>
+        /// <param name="stencil">The number of bits in the stencil buffer.</param>
+        /// <param name="samples">The number of samples for FSAA.</param>
+        /// <param name="accum">The ColorFormat of the accumilliary buffer.</param>
+        /// <param name="stereo">Set to true for a GraphicsMode with stereographic capabilities.</param>
+        /// <param name="buffers">The number of render buffers. Typical values include one (single-), two (double-) or three (triple-buffering).</param>
+        public GraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum, int buffers, bool stereo)
+            : this(IntPtr.Zero, color, depth, stencil, samples, accum, buffers, stereo) { }
 
         #endregion
 
@@ -146,12 +193,12 @@ namespace OpenTK.Graphics
 
         #region --- Public Methods ---
 
-        #region public int ColorDepth
+        #region public int ColorFormat
 
         /// <summary>
-        /// Gets an OpenTK.Graphics.ColorDepth that describes the color format for this GraphicsFormat.
+        /// Gets an OpenTK.Graphics.ColorFormat that describes the color format for this GraphicsFormat.
         /// </summary>
-        public ColorDepth ColorDepth
+        public ColorFormat ColorFormat
         {
             get { return color_format; }
             private set { color_format = value; }
@@ -162,9 +209,9 @@ namespace OpenTK.Graphics
         #region public int AccumulatorFormat
 
         /// <summary>
-        /// Gets an OpenTK.Graphics.ColorDepth that describes the accumulator format for this GraphicsFormat.
+        /// Gets an OpenTK.Graphics.ColorFormat that describes the accumulator format for this GraphicsFormat.
         /// </summary>
-        public ColorDepth AccumulatorFormat
+        public ColorFormat AccumulatorFormat
         {
             get { return accumulator_format; }
             private set { accumulator_format = value; }
@@ -200,6 +247,8 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region public int Samples
+
         /// <summary>
         /// Gets a System.Int32 that contains the number of FSAA samples per pixel for this GraphicsFormat.
         /// </summary>
@@ -208,6 +257,8 @@ namespace OpenTK.Graphics
             get { return samples; }
             private set { samples = value; }
         }
+
+        #endregion
 
         #region public bool Stereo
 
@@ -248,14 +299,28 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region --- Internal Methods ---
+
+        #region internal IntPtr Index
+
+        internal IntPtr Index
+        {
+            get { return index; }
+            set { index = value; }
+        }
+
+        #endregion
+
+        #endregion
+
         #region --- Overrides ---
 
         /// <summary>Returns a System.String describing the current GraphicsFormat.</summary>
         /// <returns>! System.String describing the current GraphicsFormat.</returns>
         public override string ToString()
         {
-            return String.Format("Color: {0}, Depth: {1}, Stencil: {2}, Samples: {3}, Accum: {4}, Buffers: {5}, Stereo: {6}",
-                ColorDepth, Depth, Stereo, Samples, AccumulatorFormat, Buffers, Stereo);
+            return String.Format("Index: {0}, Color: {1}, Depth: {2}, Stencil: {3}, Samples: {4}, Accum: {5}, Buffers: {6}, Stereo: {7}",
+                Index, ColorFormat, Depth, Stereo, Samples, AccumulatorFormat, Buffers, Stereo);
         }
 
         #endregion
