@@ -31,12 +31,12 @@ namespace OpenTK.Platform
         public IntPtr Context { get { return IntPtr.Zero; } }
         public GraphicsMode GraphicsMode { get { return format; } }
 
-        public void CreateContext() { }
-        public void CreateContext(bool direct) { }
+        //public void CreateContext() { }
+        //public void CreateContext(bool direct) { }
         public void CreateContext(bool direct, IGraphicsContext source) { }
 
         public void SwapBuffers() { }
-        public void MakeCurrent() { }
+        public void MakeCurrent(IWindowInfo info) { }
         public bool IsCurrent { get { return true; } set { } }
         public IntPtr GetCurrentContext() { return IntPtr.Zero; }
 

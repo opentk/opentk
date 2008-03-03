@@ -14,17 +14,17 @@ using System.Windows.Forms;
 namespace OpenTK.Platform.Windows
 {
     /// <internal />
-    /// <summary>OpenGL capable Windows.Forms control implementation on win32.</summary>
+    /// <summary>Utility to obtain IWindowInfo from a System.Windows.Forms.Control on win32.</summary>
     internal sealed class WinGLControlHelper : IGLControlHelper
     {
         MSG msg = new MSG();
-        WinWindowInfo windowInfo;
+        Control control;
 
         #region --- Constructors ---
 
-        internal WinGLControlHelper(Control c)
+        public WinGLControlHelper(Control c)
         {
-            windowInfo = new WinWindowInfo(c.Handle, null);
+            control = c;
         }
 
         #endregion
@@ -32,7 +32,7 @@ namespace OpenTK.Platform.Windows
         #region --- IGLControlHelper Members ---
 
         /// <summary>Returns an OpenTK.Platform.IWindowInfo describing this control.</summary>
-        public IWindowInfo WindowInfo { get { return windowInfo; } }
+        public IWindowInfo WindowInfo { get { return new WinWindowInfo(control.Handle, null); } }
 
         /// <summary>Returns true if no messages are pending in the event loop.</summary>
         public bool IsIdle

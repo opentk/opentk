@@ -389,9 +389,10 @@ namespace OpenTK.Graphics.OpenGL
             // Most drivers return the version in the 3 first characters of the version string,
             // (e.g. on Ati X1950 with Catalyst 7.10 -> "2.0.6956 Release"). However, Mesa seems
             // to do something strange: "1.4 (2.1 Mesa 7.0.1).".
+            // Update: this seems to occur with indirect rendering. E.g. Ati 8.2: 1.4 (2.1.7281 ...)
             // We'll do some trickery to get the second number (2.1), but this may break on
             // some implementations...
-            if (version_string.ToLower().Contains("mesa"))
+            //if (version_string.ToLower().Contains("mesa"))
             {
                 int index = version_string.IndexOf('(');
                 if (index != -1)
@@ -399,8 +400,8 @@ namespace OpenTK.Graphics.OpenGL
                 else
                     version = version_string.TrimStart(' ');
             }
-            else
-                version = version_string.TrimStart(' ');
+            //else
+            //    version = version_string.TrimStart(' ');
 
             Debug.Print(version);
 

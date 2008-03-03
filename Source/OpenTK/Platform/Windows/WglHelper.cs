@@ -143,7 +143,7 @@ namespace OpenTK.Platform.Windows
                 {
                     if (extensions == null || rebuildExtensionList)
                     {
-                        extensions = Wgl.Arb.GetExtensionsString(context.Device).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        extensions = Wgl.Arb.GetExtensionsString(context.DeviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                         Array.Sort(extensions);
                         rebuildExtensionList = false;
                     }

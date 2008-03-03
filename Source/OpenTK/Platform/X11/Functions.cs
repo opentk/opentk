@@ -1,4 +1,12 @@
-﻿using System;
+﻿#region --- License ---
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
+ */
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
@@ -7,6 +15,8 @@ namespace OpenTK.Platform.X11
 {
     internal static partial class Functions
     {
+        public static readonly object Lock = new object();
+
         [DllImport("libX11", EntryPoint = "XOpenDisplay")]
         public extern static IntPtr XOpenDisplay(IntPtr display);
         [DllImport("libX11", EntryPoint = "XCloseDisplay")]
@@ -326,8 +336,14 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11")]
         public extern static void XPeekEvent(IntPtr display, ref XEvent xevent);
 
-        [DllImport("libX11")]
-        public static extern IntPtr XGetVisualInfo(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo vinfo_template,
-                                                   out int nitems_return);
+        [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
+        static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template,
+                                                    out int nitems);
+
+
+        public static IntPtr XGetVisualInfo(IntPtr display, XVisualInfoMask vinfo_mask, ref XVisualInfo template, out int nitems)
+        {
+            return XGetVisualInfoInternal(display, (IntPtr)(int)vinfo_mask, ref template, out nitems);
+        }
     }
 }

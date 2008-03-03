@@ -28,8 +28,7 @@ namespace OpenTK.Graphics
         static bool direct_rendering = true;
         static object context_lock = new object();        
         // Maps OS-specific context handles to GraphicsContext weak references.
-        static Dictionary<ContextHandle, WeakReference> available_contexts =
-            new Dictionary<ContextHandle, WeakReference>();
+        static Dictionary<ContextHandle, WeakReference> available_contexts = new Dictionary<ContextHandle, WeakReference>();
 
         #region public GraphicsContext(DisplayMode mode, IWindowInfo window)
 
@@ -44,7 +43,9 @@ namespace OpenTK.Graphics
 
         #region public GraphicsContext(GraphicsMode format, IWindowInfo window)
 
-        /// <summary>Constructs a new GraphicsContext with the specified format, and attaches it to the specified window.</summary>
+        /// <summary>
+        /// Constructs a new GraphicsContext with the specified format, and attaches it to the specified window.
+        /// </summary>
         /// <param name="format">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
         /// <param name="window">The OpenTK.Platform.IWindowInfo to attach the GraphicsContext to.</param>
         public GraphicsContext(GraphicsMode format, IWindowInfo window)
@@ -75,8 +76,7 @@ namespace OpenTK.Graphics
             else if (Configuration.RunningOnX11)
                 implementation = new OpenTK.Platform.X11.X11GLContext(format, window, shareContext, DirectRendering);
             else
-                throw new PlatformNotSupportedException(
-                    "Your platform is not currently supported. Please, check http://www.opentk.com for an updated version.");
+                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
 
             available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
             //(implementation as IGraphicsContextInternal).LoadAll();
@@ -94,7 +94,7 @@ namespace OpenTK.Graphics
         void ContextDestroyed(IGraphicsContext context, EventArgs e)
         {
             this.Destroy -= ContextDestroyed;
-            available_contexts.Remove(((IGraphicsContextInternal)this).Context);
+            //available_contexts.Remove(((IGraphicsContextInternal)this).Context);
         }
 
         #endregion
@@ -121,13 +121,13 @@ namespace OpenTK.Graphics
                 }
                 return null;
             }
-            set
-            {
-                if (value != null)
-                    value.MakeCurrent();
-                else if (CurrentContext != null)
-                    CurrentContext.IsCurrent = false;
-            }
+            //set
+            //{
+            //    if (value != null)
+            //        value.MakeCurrent();
+            //    else if (CurrentContext != null)
+            //        CurrentContext.IsCurrent = false;
+            //}
         }
 
         #endregion
@@ -229,11 +229,15 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Makes this context the current rendering target.
+        /// Makes the GraphicsContext the current rendering target.
         /// </summary>
-        public void MakeCurrent()
+        /// <param name="info">A System.Platform.IWindowInfo structure for the window this context is bound to.</param>
+        /// <remarks>
+        /// You can use this method to bind the GraphicsContext to a different window than the one it was created from.
+        /// </remarks>
+        public void MakeCurrent(IWindowInfo info)
         {
-            implementation.MakeCurrent();
+            implementation.MakeCurrent(info);
         }
 
         /// <summary>
@@ -242,7 +246,7 @@ namespace OpenTK.Graphics
         public bool IsCurrent
         {
             get { return implementation.IsCurrent; }
-            set { implementation.IsCurrent = value; }
+            //set { implementation.IsCurrent = value; }
         }
 
         /// <summary>
@@ -283,6 +287,7 @@ namespace OpenTK.Graphics
             get { return ((IGraphicsContextInternal)implementation).Context; }
         }
 
+        /*
         /// <summary>
         /// Gets the IWindowInfo describing the window associated with this context.
         /// </summary>
@@ -291,6 +296,7 @@ namespace OpenTK.Graphics
             get { return (implementation as IGraphicsContextInternal).Info; }
             //internal set { (implementation as IGLContextInternal).Info = value; }
         }
+        */
 
         /// <summary>
         /// Gets the DisplayMode of the context.
@@ -385,11 +391,15 @@ namespace OpenTK.Graphics
         {
             if (!disposed)
             {
-                // TODO: Check if this is safe
-                //if (manual)
+                if (manual)
+                {
+                    Debug.WriteLine("Disposing context.");
+                    available_contexts.Remove((this as IGraphicsContextInternal).Context);
+
+                    // TODO: Check if this is safe
                     if (implementation != null)
                         implementation.Dispose();
-
+                }
                 disposed = true;
             }
         }
@@ -402,10 +412,17 @@ namespace OpenTK.Graphics
         #endregion
     }
 
+    #region public class GraphicsException : Exception
+
     /// <summary>Represents errors related to Graphics operations.</summary>
     public class GraphicsException : Exception
     {
+        /// <summary>Constructs a new GraphicsException.</summary>
         public GraphicsException() : base() { }
+        /// <summary>Constructs a new GraphicsException with the specified excpetion message.</summary>
+        /// <param name="message"></param>
         public GraphicsException(string message) : base(message) { }
     }
+
+    #endregion
 }

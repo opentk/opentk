@@ -46,10 +46,10 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region --- Methods ---
+        #region --- Public Methods ---
 
         /// <summary>Gets or sets the handle of the window.</summary>
-        public IntPtr Handle { get { return handle; } set { handle = value; } }
+        public IntPtr WindowHandle { get { return handle; } set { handle = value; } }
         /// <summary>Gets or sets the parent of the window.</summary>
         public X11WindowInfo Parent { get { return parent; } set { parent = value; } }
         /// <summary>Gets or sets the X11 root window.</summary>
@@ -64,14 +64,29 @@ namespace OpenTK.Platform.X11
         public EventMask EventMask { get { return eventMask; } set { eventMask = value; } }
         //public IntPtr TopLevelWindow { get { return topLevelWindow; } set { topLevelWindow = value; } }
 
+        #endregion
+
+        #region --- IDisposable Members ---
+
+        public void Dispose()
+        {
+        }
+
+        #endregion
+
+        #region --- Overrides ---
+
+        #region public override string ToString()
+
         /// <summary>Returns a System.String that represents the current window.</summary>
         /// <returns>A System.String that represents the current window.</returns>
         public override string ToString()
         {
             return String.Format("X11.WindowInfo: Display {0}, Screen {1}, Handle {2}, Parent: ({3})",
-                this.Display, this.Screen, this.Handle, this.Parent != null ? this.Parent.ToString() : "null");
+                this.Display, this.Screen, this.WindowHandle, this.Parent != null ? this.Parent.ToString() : "null");
         }
-        #region public override string ToString()
+
+        #endregion
 
         /// <summary>Checks if <c>this</c> and <c>obj</c> reference the same win32 window.</summary>
         /// <param name="obj">The object to check against.</param>
@@ -97,6 +112,5 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #endregion
     }
 }
