@@ -2,7 +2,7 @@
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  * 
- * Contributions by Andy Gill.
+ * Contributions by Andy Gill, Georg WΓ¤chter.
  */
 #endregion
 
@@ -144,6 +144,21 @@ namespace OpenTK.Math
 				return X * X + Y * Y;
 			}
         }
+
+		#endregion
+
+		#region public Vector2 Perpendicular
+
+		/// <summary>
+		/// Gets the perpendicular vector.
+		/// </summary>
+		public Vector2 Perpendicular
+		{
+			get
+			{
+				return new Vector2(Y, -X);
+			}
+		}
 
         #endregion
 
