@@ -1,8 +1,10 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  * 
- * Contributions by Andy Gill.
+ * Contributions by Andy Gill, James Talton and Georg Wächter.
  */
 #endregion
 
@@ -17,6 +19,32 @@ namespace OpenTK.Math
     /// </summary>
     public static class Functions
     {
+		/// <summary>
+		/// Calculates the factorial of a given natural number.
+		/// </summary>
+		/// <param name="n">The number.</param>
+		/// <returns>n!</returns>
+		public static long Factorial(int n)
+		{
+			long result = 1;
+
+			for (; n > 1; n--)
+				result *= n;
+
+			return result;
+		}
+
+		/// <summary>
+		/// Calculates the binomial coefficient <paramref name="n"/> above <paramref name="k"/>.
+		/// </summary>
+		/// <param name="n">The n.</param>
+		/// <param name="k">The k.</param>
+		/// <returns>n! / (k! * (n - k)!)</returns>
+		public static long BinomialCoefficient(int n, int k)
+		{
+			return Factorial(n) / (Factorial(k) * Factorial(n - k));
+		}
+
         /// <summary>
         /// Returns an approximation of the inverse square root of left number.
         /// </summary>
@@ -43,6 +71,9 @@ namespace OpenTK.Math
 
         public static double InverseSqrtFast(double x)
         {
+            return InverseSqrtFast((float)x);
+            // TODO: The following code is wrong. Fix it, to improve precision.
+#if false
             unsafe
             {
                 double xhalf = 0.5f * x;
@@ -52,6 +83,7 @@ namespace OpenTK.Math
                 x = x * (1.5f - xhalf * x * x); // Perform left single Newton-Raphson step.
                 return x;
             }
+#endif
         }
 
         /// <summary>
