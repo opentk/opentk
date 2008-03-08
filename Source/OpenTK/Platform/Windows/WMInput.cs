@@ -110,18 +110,42 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.SYSKEYUP:
                     bool pressed = (WindowMessage)msg.Msg == WindowMessage.KEYDOWN ||
                                    (WindowMessage)msg.Msg == WindowMessage.SYSKEYDOWN;
+                    //bool left = (((int)msg.LParam) & 0x100000) == 0; // valid for Shift, Control and Menu presses.
                     switch ((VirtualKeys)msg.WParam)
                     {
                         case VirtualKeys.SHIFT:
-                            keyboard[Input.Key.ShiftLeft] = keyboard[Input.Key.ShiftRight] = pressed;
+                            // Win95 does not distinguish left/right constants (GetAsyncKeyState returns 0).
+                            // In this case, report both keys as down.
+                            bool left = Functions.GetAsyncKeyState(VirtualKeys.LSHIFT) != 0;
+                            bool right = Functions.GetAsyncKeyState(VirtualKeys.RSHIFT) != 0;
+                            if (left)
+                                keyboard[Input.Key.ShiftLeft] = pressed;
+                            if (right)
+                                keyboard[Input.Key.ShiftRight] = pressed;
+                            if (!left && !right)
+                                keyboard[Input.Key.ShiftLeft] = keyboard[Input.Key.ShiftRight] = pressed;
                             return;
 
                         case VirtualKeys.CONTROL:
-                            keyboard[Input.Key.ControlLeft] = keyboard[Input.Key.ControlRight] = pressed;
+                            left = Functions.GetAsyncKeyState(VirtualKeys.LCONTROL) != 0;
+                            right = Functions.GetAsyncKeyState(VirtualKeys.RCONTROL) != 0;
+                            if (left)
+                                keyboard[Input.Key.ControlLeft] = pressed;
+                            if (right)
+                                keyboard[Input.Key.ControlRight] = pressed;
+                            if (!left && !right)
+                                keyboard[Input.Key.ControlLeft] = keyboard[Input.Key.ControlRight] = pressed;
                             return;
 
                         case VirtualKeys.MENU:
-                            keyboard[Input.Key.AltLeft] = keyboard[Input.Key.AltRight] = pressed;
+                            left = Functions.GetAsyncKeyState(VirtualKeys.LMENU) != 0;
+                            right = Functions.GetAsyncKeyState(VirtualKeys.RMENU) != 0;
+                            if (left)
+                                keyboard[Input.Key.AltLeft] = pressed;
+                            if (right)
+                                keyboard[Input.Key.AltRight] = pressed;
+                            if (!left && !right)
+                                keyboard[Input.Key.AltLeft] = keyboard[Input.Key.AltRight] = pressed;
                             return;
 
                         default:
