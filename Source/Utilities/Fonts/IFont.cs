@@ -10,7 +10,7 @@ using System.Text;
 
 using OpenTK.Math;
 
-namespace OpenTK.Fonts
+namespace OpenTK.Graphics
 {
     public interface IFont : IDisposable
     {
