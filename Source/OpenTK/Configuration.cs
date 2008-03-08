@@ -12,6 +12,9 @@ using System.Text;
 using System.Diagnostics;
 using System.IO;
 
+[assembly: CLSCompliant(true)]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("OpenTK.Utilities")]
+
 namespace OpenTK
 {
     /// <internal />
