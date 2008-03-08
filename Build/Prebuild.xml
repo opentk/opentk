@@ -150,6 +150,7 @@
       </Configuration>
 
       <Reference name="OpenTK"/>
+      <Reference name="OpenTK.Utilities"/>
       <Reference name="System"/>
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>

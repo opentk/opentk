@@ -18,8 +18,6 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Graphics;
 
-[assembly: CLSCompliant(true)]
-
 namespace OpenTK
 {
     /// <summary>
