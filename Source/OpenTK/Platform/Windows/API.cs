@@ -525,7 +525,7 @@ namespace OpenTK.Platform.Windows
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern SHORT GetAsyncKeyState(int vKey);
+        internal static extern SHORT GetAsyncKeyState(VirtualKeys vKey);
 
         #endregion
 
