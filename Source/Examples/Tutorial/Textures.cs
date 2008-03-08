@@ -15,7 +15,7 @@ using System.Drawing.Imaging;
 
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Fonts;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL.Enums;
 
 namespace Examples.Tutorial

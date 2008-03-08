@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Fonts;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Input;
 

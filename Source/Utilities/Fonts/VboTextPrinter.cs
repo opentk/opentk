@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Math;
 
-namespace OpenTK.Fonts
+namespace OpenTK.Graphics
 {
     /// <summary>
     /// Provides text printing through OpenGL 1.5 vertex buffer objects.

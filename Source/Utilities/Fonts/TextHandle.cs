@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Fonts
+namespace OpenTK.Graphics
 {
     /// <summary>
     /// Represents a handle to cached text.
@@ -21,7 +21,7 @@ namespace OpenTK.Fonts
         }
 
         /// <summary>
-        /// The handle of the cached text. Call the OpenTK.Fonts.ITextPrinter.Draw() method
+        /// The handle of the cached text. Call the OpenTK.Graphics.ITextPrinter.Draw() method
         /// to draw the text represented by this TextHandle.
         /// </summary>
         public readonly int Handle;
