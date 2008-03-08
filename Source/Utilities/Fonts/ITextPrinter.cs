@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 
-namespace OpenTK.Fonts
+namespace OpenTK.Graphics
 {
     /// <summary>
     /// Defines the interface for a TextPrinter.

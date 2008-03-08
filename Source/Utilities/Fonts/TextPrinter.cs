@@ -16,7 +16,9 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.OpenGL.Enums;
 using System.Diagnostics;
 
-namespace OpenTK.Fonts
+namespace OpenTK.Fonts { }
+
+namespace OpenTK.Graphics
 {
     /// <summary>
     /// Provides methods to perform layout and print hardware accelerated text.
@@ -271,7 +273,7 @@ namespace OpenTK.Fonts
         /// Draws dynamic text without caching. Not implemented yet!
         /// </summary>
         /// <param name="text">The System.String to draw.</param>
-        /// <param name="font">The OpenTK.Fonts.TextureFont to draw the text in.</param>
+        /// <param name="font">The OpenTK.Graphics.TextureFont to draw the text in.</param>
         public void Draw(string text, TextureFont font)
         {
             int num_indices;

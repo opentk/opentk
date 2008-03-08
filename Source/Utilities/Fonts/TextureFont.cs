@@ -18,7 +18,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Platform;
 
-namespace OpenTK.Fonts
+namespace OpenTK.Graphics
 {
     using Graphics = System.Drawing.Graphics;
     using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
@@ -327,7 +327,7 @@ namespace OpenTK.Fonts
         bool disposed;
 
         /// <summary>
-        /// Releases all resources used by this OpenTK.Fonts.TextureFont.
+        /// Releases all resources used by this OpenTK.Graphics.TextureFont.
         /// </summary>
         public void Dispose()
         {

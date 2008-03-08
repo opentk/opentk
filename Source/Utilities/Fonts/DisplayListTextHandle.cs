@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using OpenTK.Graphics.OpenGL;
 
-namespace OpenTK.Fonts
+namespace OpenTK.Graphics
 {
     class DisplayListTextHandle : TextHandle
     {

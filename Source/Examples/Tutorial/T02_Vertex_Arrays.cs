@@ -14,7 +14,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using OpenTK.Input;
-using OpenTK.Fonts;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL.Enums;
 
 namespace Examples.Tutorial
