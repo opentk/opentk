@@ -105,6 +105,34 @@
 
     </Project>
 
+    <Project name="OpenTK.Utilities" path="../Source/Utilities" language="C#" type="Library">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Debug/Libraries</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Release/Libraries</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+      </Files>
+
+    </Project>
+
     <Project name="Examples" path="../Source/Examples" language="C#" type="WinExe" startupObject="Examples.ExampleLauncher">
 
       <Configuration name="Debug">
