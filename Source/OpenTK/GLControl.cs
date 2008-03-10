@@ -84,19 +84,19 @@ namespace OpenTK
 
         protected override void OnResize(EventArgs e)
         {
-            base.OnResize(e);
-            // Workaround Mono 1.2.4 bug where the OnHandleCreated event isn't raised at the correct time.
-            if (this.Context == null)
-            {
-                if (!DesignMode)
-                    this.Context = implementation.CreateContext();
-                else
-                    this.Context = new DummyGLContext(null);
+            //// Workaround Mono 1.2.4 bug where the OnHandleCreated event isn't raised at the correct time.
+            //if (this.Context == null)
+            //{
+            //    if (!DesignMode)
+            //        this.Context = implementation.CreateContext();
+            //    else
+            //        this.Context = new DummyGLContext(null);
 
-                this.window_info = implementation.WindowInfo;
-                this.MakeCurrent();
-                ((IGraphicsContextInternal)this.Context).LoadAll();
-            }
+            //    this.window_info = implementation.WindowInfo;
+            //    this.MakeCurrent();
+            //    ((IGraphicsContextInternal)this.Context).LoadAll();
+            //}
+            base.OnResize(e);
         }
 
         /// <summary>Raises the HandleCreated event.</summary>
@@ -105,14 +105,14 @@ namespace OpenTK
         {
             base.OnHandleCreated(e);
             // On Mono 1.2.4 the Resize event is raised before this :/
-            //if (!DesignMode)
-            //    this.Context = implementation.CreateContext();
-            //else
-            //    this.Context = new DummyGLContext(null);
+            if (!DesignMode)
+                this.Context = implementation.CreateContext();
+            else
+                this.Context = new DummyGLContext(null);
 
-            //this.window_info = implementation.WindowInfo;
-            //this.MakeCurrent();
-            //((IGraphicsContextInternal)this.Context).LoadAll();
+            this.window_info = implementation.WindowInfo;
+            this.MakeCurrent();
+            ((IGraphicsContextInternal)this.Context).LoadAll();
         }
 
         /// <summary>Raises the HandleDestroyed event.</summary>
