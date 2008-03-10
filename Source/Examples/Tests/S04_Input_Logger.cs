@@ -17,7 +17,9 @@ using OpenTK.Platform;
 using OpenTK.Input;
 using System.Diagnostics;
 using System.Threading;
+
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tests
 {
@@ -36,15 +38,24 @@ namespace Examples.Tests
 
         void LaunchGameWindow()
         {
-            hidden = new GameWindow(16, 16, GraphicsMode.Default, "OpenTK | Hidden input window");
+            hidden = new GameWindow(320, 240, GraphicsMode.Default, "OpenTK | Hidden input window");
             hidden.Load += hidden_Load;
             hidden.Unload += hidden_Unload;
-            hidden.Run(60.0, 1.0);
+            hidden.RenderFrame += new OpenTK.RenderFrameEvent(hidden_RenderFrame);
+            hidden.Run(31.0, 10.0);
+        }
+
+        void hidden_RenderFrame(GameWindow sender, RenderFrameEventArgs e)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            sender.SwapBuffers();
+            Thread.Sleep(10);
         }
 
         void hidden_Load(GameWindow sender, EventArgs e)
         {
             start = true;
+            GL.ClearColor(Color.Black);
         }
 
         void hidden_Unload(GameWindow sender, EventArgs e)
