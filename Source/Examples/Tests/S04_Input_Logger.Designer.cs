@@ -367,6 +367,7 @@
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "S04_Input_Logger";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "S04: Input Logger";
             this.tabControl.ResumeLayout(false);
             this.Keyboard.ResumeLayout(false);
