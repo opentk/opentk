@@ -15,14 +15,16 @@ namespace OpenTK.Platform
     /// An empty IGraphicsContext implementation to be used inside the Visual Studio designer.
     /// This class supports OpenTK, and is not intended for use by OpenTK programs.
     /// </summary>
-    internal sealed class DummyGLContext : IGraphicsContext
+    internal sealed class DummyGLContext : IGraphicsContext, IGraphicsContextInternal
     {
         GraphicsMode format;
         bool vsync;
+        static int dummy_context_count = 0;
+        IntPtr context;
 
         #region --- Constructors ---
 
-        public DummyGLContext(GraphicsMode format) { this.format = format; }
+        public DummyGLContext(GraphicsMode format) { this.format = format; context = new IntPtr(dummy_context_count++); }
 
         #endregion
 
@@ -63,6 +65,19 @@ namespace OpenTK.Platform
         #region --- IDisposable Members ---
 
         public void Dispose() { }
+
+        #endregion
+
+        #region IGraphicsContextInternal Members
+
+        public void LoadAll()
+        {
+        }
+
+        ContextHandle IGraphicsContextInternal.Context
+        {
+            get { return context; }
+        }
 
         #endregion
     }
