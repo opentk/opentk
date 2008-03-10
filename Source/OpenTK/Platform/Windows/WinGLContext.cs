@@ -392,7 +392,7 @@ namespace OpenTK.Platform.Windows
                 if (!Wgl.Imports.DeleteContext(renderContext))
                 {
                     //throw new ApplicationException("Could not destroy the OpenGL render context. Error: " + Marshal.GetLastWin32Error());
-                    //Debug.Print("Could not destroy the OpenGL render context. Error: {0}", Marshal.GetLastWin32Error());
+                    Debug.Print("Could not destroy the OpenGL render context. Error: {0}", Marshal.GetLastWin32Error());
                 }
                 renderContext = null;
             }
