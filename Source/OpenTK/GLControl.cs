@@ -82,33 +82,16 @@ namespace OpenTK
 
         #region --- Protected Methods ---
 
-        protected override void OnResize(EventArgs e)
-        {
-            //// Workaround Mono 1.2.4 bug where the OnHandleCreated event isn't raised at the correct time.
-            //if (this.Context == null)
-            //{
-            //    if (!DesignMode)
-            //        this.Context = implementation.CreateContext();
-            //    else
-            //        this.Context = new DummyGLContext(null);
-
-            //    this.window_info = implementation.WindowInfo;
-            //    this.MakeCurrent();
-            //    ((IGraphicsContextInternal)this.Context).LoadAll();
-            //}
-            base.OnResize(e);
-        }
-
         /// <summary>Raises the HandleCreated event.</summary>
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            // On Mono 1.2.4 the Resize event is raised before this :/
-            if (!DesignMode)
-                this.Context = implementation.CreateContext();
-            else
+
+            if (DesignMode)
                 this.Context = new DummyGLContext(null);
+            else
+                this.Context = implementation.CreateContext();
 
             this.window_info = implementation.WindowInfo;
             this.MakeCurrent();
