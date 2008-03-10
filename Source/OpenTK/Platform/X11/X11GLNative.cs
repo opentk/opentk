@@ -82,23 +82,22 @@ namespace OpenTK.Platform.X11
 
                 //Utilities.ThrowOnX11Error = true; // Not very reliable
 
-                // We reuse the display connection of System.Windows.Forms.
+                // We *cannot* reuse the display connection of System.Windows.Forms (events get mixed with Windows.Forms).
                 // TODO: Multiple screens.
-                Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-                window.Display = (IntPtr)xplatui.GetField("DisplayHandle",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
-                window.RootWindow = (IntPtr)xplatui.GetField("RootWindow",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
-                window.Screen = (int)xplatui.GetField("ScreenNo",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                //Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+                //window.Display = (IntPtr)xplatui.GetField("DisplayHandle",
+                //    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                //window.RootWindow = (IntPtr)xplatui.GetField("RootWindow",
+                //    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                //window.Screen = (int)xplatui.GetField("ScreenNo",
+                //    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
 
-                // Open the display to the X server, and obtain the screen and root window.
-                //window.Display = API.OpenDisplay(null); // null == default display //window.Display = API.DefaultDisplay;
-                //if (window.Display == IntPtr.Zero)
-                //    throw new Exception("Could not open connection to X");
-
-                //window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
-                //window.RootWindow = Functions.XRootWindow(window.Display, window.Screen); // API.RootWindow;
+                // Open a display connection to the X server, and obtain the screen and root window.
+                window.Display = API.OpenDisplay(null); // null == default display //window.Display = API.DefaultDisplay;
+                if (window.Display == IntPtr.Zero)
+                    throw new Exception("Could not open connection to X");
+                window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
+                window.RootWindow = Functions.XRootWindow(window.Display, window.Screen); // API.RootWindow;
                 Debug.Print("Display: {0}, Screen {1}, Root window: {2}", window.Display, window.Screen, window.RootWindow);
 
                 RegisterAtoms(window);
@@ -663,9 +662,14 @@ namespace OpenTK.Platform.X11
         {
             if (!disposed)
             {
-                //Functions.XUnmapWindow(window.Display, window.WindowHandle);
-                if (window.WindowHandle != IntPtr.Zero)
-                    Functions.XDestroyWindow(window.Display, window.WindowHandle);
+                if (window != null)
+                {
+                    if (window.WindowHandle != IntPtr.Zero)
+                        Functions.XDestroyWindow(window.Display, window.WindowHandle);
+                    if (window.Display != IntPtr.Zero)
+                        Functions.XCloseDisplay(window.Display);
+                    window = null;
+                }
 
                 if (manuallyCalled)
                 {
