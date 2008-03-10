@@ -29,9 +29,7 @@ namespace OpenTK.Input
 
         #region --- Constructors ---
 
-        public KeyboardDevice()
-        {
-        }
+        internal KeyboardDevice() { }
 
         #endregion
 
@@ -125,15 +123,23 @@ namespace OpenTK.Input
 
         #endregion
 
+        #region public event KeyDownEvent KeyDown;
+
         /// <summary>
         /// Occurs when a key is pressed.
         /// </summary>
         public event KeyDownEvent KeyDown;
 
+        #endregion
+
+        #region public event KeyUpEvent KeyUp;
+
         /// <summary>
         /// Occurs when a key is released.
         /// </summary>
         public event KeyUpEvent KeyUp;
+
+        #endregion
 
         #endregion
 
@@ -154,18 +160,38 @@ namespace OpenTK.Input
 
         #region --- Public Methods ---
 
+        /// <summary>Returns the hash code for this KeyboardDevice.</summary>
+        /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
         {
             //return base.GetHashCode();
             return (int)(numKeys ^ numFKeys ^ numLeds ^ devID.GetHashCode() ^ description.GetHashCode());
         }
 
+        /// <summary>
+        /// Returns a System.String representing this KeyboardDevice.
+        /// </summary>
+        /// <returns>A System.String representing this KeyboardDevice.</returns>
         public override string ToString()
         {
             //return base.ToString();
             return String.Format("ID: {0} ({1}). Keys: {2}, Function keys: {3}, Leds: {4}",
                 DeviceID, Description, NumberOfKeys, NumberOfFunctionKeys, NumberOfLeds);
         }
+
+        #endregion
+
+        #region --- Internal Methods ---
+
+        #region internal void ClearKeys()
+
+        internal void ClearKeys()
+        {
+            for (int i = 0; i < (int)Key.MaxKeys; i++)
+                this[(Key)i] = false;
+        }
+
+        #endregion
 
         #endregion
     }
@@ -277,7 +303,7 @@ namespace OpenTK.Input
         KeypadSubtract,
         KeypadAdd,
         KeypadDecimal,
-        //KeypadEnter,
+        KeypadEnter,
 
         // Letters
         A, B, C, D, E, F, G,
