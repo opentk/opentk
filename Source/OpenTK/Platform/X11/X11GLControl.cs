@@ -62,7 +62,10 @@ namespace OpenTK.Platform.X11
                 if (xplatui == null) throw new PlatformNotSupportedException(
                         "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
 
-                X11WindowInfo window = new X11WindowInfo(control.Handle, null);
+                X11WindowInfo window = new X11WindowInfo();
+
+                if (control.IsHandleCreated)
+                    window.WindowHandle = control.Handle;
                 
                 display =
                 window.Display = (IntPtr)xplatui.GetField("DisplayHandle",
