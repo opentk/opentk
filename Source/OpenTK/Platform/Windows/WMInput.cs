@@ -25,6 +25,10 @@ namespace OpenTK.Platform.Windows
         IList<KeyboardDevice> keyboards = new List<KeyboardDevice>(1);
         IList<MouseDevice> mice = new List<MouseDevice>(1);
         internal static readonly WinKeyMap KeyMap = new WinKeyMap();
+        // Used to distinguish left and right control, alt and enter keys.
+        const int ExtendedBit = 1 << 24;
+        // Used to distinguish left and right shift keys.
+        static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);
 
         #region --- Constructor ---
 
@@ -110,42 +114,58 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.SYSKEYUP:
                     bool pressed = (WindowMessage)msg.Msg == WindowMessage.KEYDOWN ||
                                    (WindowMessage)msg.Msg == WindowMessage.SYSKEYDOWN;
-                    //bool left = (((int)msg.LParam) & 0x100000) == 0; // valid for Shift, Control and Menu presses.
+
+                    // Shift/Control/Alt behave strangely when e.g. ShiftRight is held down and ShiftLeft is pressed
+                    // and released. It looks like neither key is released in this case, or that the wrong key is
+                    // released in the case of Control and Alt.
+                    // To combat this, we are going to release both keys when either is released. Hacky, but should work.
+                    // Win95 does not distinguish left/right key constants (GetAsyncKeyState returns 0).
+                    // In this case, both keys will be reported as pressed.
+
+                    bool extended = (((int)msg.LParam) & ExtendedBit) != 0;
                     switch ((VirtualKeys)msg.WParam)
                     {
                         case VirtualKeys.SHIFT:
-                            // Win95 does not distinguish left/right constants (GetAsyncKeyState returns 0).
-                            // In this case, report both keys as down.
-                            bool left = Functions.GetAsyncKeyState(VirtualKeys.LSHIFT) != 0;
-                            bool right = Functions.GetAsyncKeyState(VirtualKeys.RSHIFT) != 0;
-                            if (left)
+                            // The behavior of this key is very strange. Unlike Control and Alt, there is no extended bit
+                            // to distinguish between left and right keys. Moreover, pressing both keys and releasing one
+                            // may result in both keys being held down (but not always).
+                            // The only reliably way to solve this was reported by BlueMonkMN at the forums: we should
+                            // check the scancodes. It looks like GLFW does the same thing, so it should be reliable.
+                            
+                            // TODO: Not 100% reliable, when both keys are pressed at once.
+                            if (ShiftRightScanCode != 0)
+                            {
+                                if ((((int)msg.LParam >> 16) & 0xFF) == ShiftRightScanCode)
+                                    keyboard[Input.Key.ShiftRight] = pressed;
+                                else
+                                    keyboard[Input.Key.ShiftLeft] = pressed;
+                            }
+                            else
+                            {
+                                // Should only fall here on Windows 9x and NT4.0-
                                 keyboard[Input.Key.ShiftLeft] = pressed;
-                            if (right)
-                                keyboard[Input.Key.ShiftRight] = pressed;
-                            if (!left && !right)
-                                keyboard[Input.Key.ShiftLeft] = keyboard[Input.Key.ShiftRight] = pressed;
+                            }
                             return;
 
                         case VirtualKeys.CONTROL:
-                            left = Functions.GetAsyncKeyState(VirtualKeys.LCONTROL) != 0;
-                            right = Functions.GetAsyncKeyState(VirtualKeys.RCONTROL) != 0;
-                            if (left)
-                                keyboard[Input.Key.ControlLeft] = pressed;
-                            if (right)
+                            if (extended)
                                 keyboard[Input.Key.ControlRight] = pressed;
-                            if (!left && !right)
-                                keyboard[Input.Key.ControlLeft] = keyboard[Input.Key.ControlRight] = pressed;
+                            else
+                                keyboard[Input.Key.ControlLeft] = pressed;
                             return;
 
                         case VirtualKeys.MENU:
-                            left = Functions.GetAsyncKeyState(VirtualKeys.LMENU) != 0;
-                            right = Functions.GetAsyncKeyState(VirtualKeys.RMENU) != 0;
-                            if (left)
-                                keyboard[Input.Key.AltLeft] = pressed;
-                            if (right)
+                            if (extended)
                                 keyboard[Input.Key.AltRight] = pressed;
-                            if (!left && !right)
-                                keyboard[Input.Key.AltLeft] = keyboard[Input.Key.AltRight] = pressed;
+                            else
+                                keyboard[Input.Key.AltLeft] = pressed;
+                            return;
+
+                        case VirtualKeys.RETURN:
+                            if (extended)
+                                keyboard[Key.KeypadEnter] = pressed;
+                            else
+                                keyboard[Key.Enter] = pressed;
                             return;
 
                         default:
@@ -160,6 +180,10 @@ namespace OpenTK.Platform.Windows
                                 return;
                             }
                     }
+                    break;
+
+                case WindowMessage.KILLFOCUS:
+                    keyboard.ClearKeys();
                     break;
 
                 case WindowMessage.DESTROY:
