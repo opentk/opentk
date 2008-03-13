@@ -29,7 +29,7 @@ namespace OpenTK.Graphics
         //static char[] split_chars = new char[] { ' ', '\n', '\t', ',', '.', '/', '?', '!', ';', '\\', '-', '+', '*', '=' };
         static bool functionality_checked = false;
         static ITextPrinterImplementation printer;
-        float[] viewport = new float[6];
+        float[] viewport = new float[4];
         // 8 chars by default
         Vector2[] vertices = new Vector2[8 * 8];  // Interleaved, vertex, texcoord, vertex, etc...
         ushort[] indices = new ushort[6 * 8];
@@ -307,6 +307,7 @@ namespace OpenTK.Graphics
 
             GL.PushAttrib(AttribMask.TextureBit);
             GL.PushAttrib(AttribMask.EnableBit);
+            GL.PushAttrib(AttribMask.ColorBufferBit);
 
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
@@ -324,6 +325,7 @@ namespace OpenTK.Graphics
         /// </summary>
         public void End()
         {
+            GL.PopAttrib();
             GL.PopAttrib();
             GL.PopAttrib();
 
