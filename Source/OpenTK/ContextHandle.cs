@@ -52,7 +52,7 @@ namespace OpenTK
 
         public static implicit operator IntPtr(ContextHandle c)
         {
-            return c.handle;
+            return c != null ? c.handle : IntPtr.Zero;
         }
 
         public static implicit operator ContextHandle(IntPtr p)
