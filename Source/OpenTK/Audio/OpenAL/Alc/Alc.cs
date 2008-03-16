@@ -238,29 +238,29 @@ namespace OpenTK.OpenAL
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">an attribute to be retrieved: ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_ALL_DEVICES_SPECIFIER</param>
         /// <returns>A List of strings containing the names of the Devices.</returns>
-        public static IList<string> GetString( IntPtr device,Enums.AlcGetStringList param )
+        public static IList<string> GetString(IntPtr device, Enums.AlcGetStringList param)
         {
-            List<string> result = new List<string>( );
-            IntPtr t = GetStringPrivate(IntPtr.Zero,(Enums.AlcGetString) Enums.AlcGetStringList.DeviceSpecifier);
-            System.Text.StringBuilder sb = new System.Text.StringBuilder( );
+            List<string> result = new List<string>();
+            IntPtr t = GetStringPrivate(IntPtr.Zero, (Enums.AlcGetString)param);
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
             byte b;
             int offset = 0;
             do
             {
-                b = Marshal.ReadByte(t,offset++);
-                if ( b != 0 )
-                    sb.Append((char) b);
-                if ( b == 0 )
+                b = Marshal.ReadByte(t, offset++);
+                if (b != 0)
+                    sb.Append((char)b);
+                if (b == 0)
                 {
-                    result.Add(sb.ToString( ));
-                    if ( Marshal.ReadByte(t,offset) == 0 ) // offset already properly increased through ++
+                    result.Add(sb.ToString());
+                    if (Marshal.ReadByte(t, offset) == 0) // offset already properly increased through ++
                         break; // 2x null
                     else
-                        sb.Remove(0,sb.Length); // 1x null
+                        sb.Remove(0, sb.Length); // 1x null
                 }
-            } while ( true );
+            } while (true);
 
-            return (IList<string>) result;
+            return (IList<string>)result;
         }
 
         /// <summary>This function returns integers related to the context.</summary>
