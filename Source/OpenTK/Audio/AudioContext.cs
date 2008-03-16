@@ -53,10 +53,13 @@ namespace OpenTK.Audio
 
         /// <summary>Constructs a new AudioContext, using the default audio device.</summary>
         /// <exception cref="NotSupportedException">Occurs when no audio devices are available.</exception>
-        public AudioContext() : this(available_devices.Count > 0 ? available_devices[0] : null, 0, 0, false, 0) { }
+        public AudioContext()// : this(available_devices.Count > 0 ? available_devices[0] : null, 0, 0, false, 0) { }
+        {
+            CreateContext(null, 0, 0, false, 0);
+        }
 
         #endregion
-
+#if false
         #region public AudioContext(string device)
 
         /// <summary>Constructs a new AudioContext, using the specified audio device.</summary>
@@ -149,10 +152,10 @@ namespace OpenTK.Audio
         }
 
         #endregion
-
+#endif
         #endregion
 
-        #region --- Private Members ---
+        #region --- Private Methods ---
 
         #region static void LoadAvailableDevices()
 
@@ -170,10 +173,23 @@ namespace OpenTK.Audio
             {
                 if (available_devices.Count == 0)
                 {
-                    if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATION_EXT"))
-                        available_devices.AddRange(Alc.GetString(IntPtr.Zero, AlcGetStringList.DeviceSpecifier));
-                    else
-                        Debug.Print("Device enumeration extension not available. Failed to enumerate devices.");
+                    try
+                    {
+                        Debug.WriteLine("Enumerating audio devices.");
+                        Debug.Indent();
+
+                        if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATION_EXT"))
+                            available_devices.AddRange(Alc.GetString(IntPtr.Zero, AlcGetStringList.DeviceSpecifier));
+                        else
+                            Debug.Print("Device enumeration extension not available. Failed to enumerate devices.");
+
+                        foreach (string s in available_devices)
+                            Debug.WriteLine(s);
+                    }
+                    finally
+                    {
+                        Debug.Unindent();
+                    }
                 }
             }
         }
@@ -189,12 +205,11 @@ namespace OpenTK.Audio
         /// <param name="refresh">Refresh intervals, in units of Hz. Pass 0 for driver default.</param>
         /// <param name="sync">Flag, indicating a synchronous context.</param>
         /// <param name="maxEfxSends">Number of auxilliary send slots for the EFX extensions. Can be 0 (use driver default) or higher.</param>
-        /// <exception cref="ArgumentNullException">Occurs when the device string is invalid.</exception>
         /// /// <exception cref="ArgumentOutOfRangeException">Occurs when a specified parameter is invalid.</exception>
-        /// <exception cref="InvalidAudioDeviceException">
+        /// <exception cref="AudioDeviceException">
         /// Occurs when the specified device is not available, or is in use by another program.
         /// </exception>
-        /// <exception cref="InvalidAudioContextException">
+        /// <exception cref="AudioDeviceException">
         /// Occurs when an audio context could not be created with the specified parameters.
         /// </exception>
         /// <exception cref="NotSupportedException">
@@ -210,14 +225,20 @@ namespace OpenTK.Audio
         /// </remarks>
         void CreateContext(string device, int freq, int refresh, bool sync, int maxEfxSends)
         {
-            if (context_exists) throw new NotSupportedException("Multiple AudioContexts not supported.");
-            //if (String.IsNullOrEmpty(device)) throw new ArgumentNullException("device");
+            if (available_devices.Count == 0) throw new NotSupportedException("No audio hardware is available.");
+            if (context_exists) throw new NotSupportedException("Multiple AudioContexts are not supported.");
             if (freq < 0) throw new ArgumentOutOfRangeException("freq", freq, "Should be greater than zero.");
             if (refresh < 0) throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
             if (maxEfxSends < 0) throw new ArgumentOutOfRangeException("maxEfxSends", maxEfxSends, "Should be greater than zero.");
-            //if (available_devices.Count == 0) throw new NotSupportedException("No audio hardware is available.");
 
-            device_handle = Alc.OpenDevice(device);
+            if (!String.IsNullOrEmpty(device))
+                device_handle = Alc.OpenDevice(device);
+            if (device_handle == IntPtr.Zero)
+                Alc.OpenDevice(Alc.GetString(IntPtr.Zero, AlcGetString.DefaultDeviceSpecifier));
+            if (device_handle == IntPtr.Zero && available_devices.Count > 0)
+                device_handle = Alc.OpenDevice(available_devices[0]);
+            if (device_handle == IntPtr.Zero)
+                device_handle = Alc.OpenDevice(null);
             if (device_handle == IntPtr.Zero)
                 throw new AudioDeviceException("The specified audio device does not exist or is tied up by another application.");
 
@@ -277,7 +298,7 @@ namespace OpenTK.Audio
         #endregion
 
         #region void CheckForAlcErrors()
-
+        
         void CheckForAlcErrors()
         {
             AlcError err = Alc.GetError(device_handle);
@@ -512,13 +533,14 @@ namespace OpenTK.Audio
         {
             if (!disposed)
             {
-                available_contexts.Remove(this.context_handle);
-
                 if (this.IsCurrent)
                     this.IsCurrent = false;
 
                 if (context_handle != IntPtr.Zero)
+                {
+                    available_contexts.Remove(context_handle);
                     Alc.DestroyContext(context_handle);
+                }
 
                 if (device_handle != IntPtr.Zero)
                     Alc.CloseDevice(device_handle);
