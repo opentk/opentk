@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace OpenTK.Graphics
 {
@@ -296,7 +297,11 @@ namespace OpenTK.Graphics
             get
             {
                 if (defaultMode == null)
+                {
+                    Debug.Print("Creating default GraphicsMode ({0}, {1}, {2}, {3}, {4}, {5}, {6}).", DisplayDevice.Default.BitsPerPixel,
+                                16, 0, 0, 0, 2, false);
                     defaultMode = new GraphicsMode(DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 0, 2, false);
+                }
                 return defaultMode;
             }
         }
