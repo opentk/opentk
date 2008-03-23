@@ -20,6 +20,7 @@ namespace OpenTK.Graphics
         bool stereo;
         IntPtr index;  // The id of the pixel format or visual.
 
+        static GraphicsMode defaultMode;
         static IGraphicsMode implementation;
         static object mode_selection_lock = new object();
 
@@ -292,7 +293,12 @@ namespace OpenTK.Graphics
         /// <summary>Returns an OpenTK.GraphicsFormat compatible with the underlying platform.</summary>
         public static GraphicsMode Default
         {
-            get { return new GraphicsMode(DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 0, 2, false); }
+            get
+            {
+                if (defaultMode == null)
+                    defaultMode = new GraphicsMode(DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 0, 2, false);
+                return defaultMode;
+            }
         }
 
         #endregion
