@@ -20,18 +20,14 @@ namespace Examples.Tests
 {
     public class S01_Call_Performance : IExample
     {
-        GraphicsContext context;
         const int num_calls = 1000000;
         float[] v = new float[] { 0.0f, 0.0f };
         public static int dummy_variable = 0;
 
         public void Launch()
         {
-            using (Form f = new Form())
+            using (OpenTK.GLControl control = new OpenTK.GLControl(GraphicsMode.Default))
             {
-                //context = new GraphicsContext(new OpenTK.DisplayMode(), new OpenTK.Platform.WindowInfo(f));
-                context.CreateContext();
-
                 Trace.WriteLine(String.Format("Number of calls: {0}", num_calls));
 
                 Stopwatch timer = new Stopwatch();
