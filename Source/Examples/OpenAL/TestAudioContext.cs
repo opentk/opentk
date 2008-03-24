@@ -40,13 +40,13 @@ namespace Examples
             Trace.WriteLine("Testing AudioContext functions.");
             Trace.Indent();
 
-            Trace.WriteLine("Suspend()...");
-            context.Suspend();
-            Trace.Assert(!context.IsProcessing);
-
-            Trace.WriteLine("Process()...");
-            context.Process();
-            Trace.Assert(context.IsProcessing);
+//            Trace.WriteLine("Suspend()...");
+//            context.Suspend();
+//            Trace.Assert(!context.IsProcessing);
+//
+//            Trace.WriteLine("Process()...");
+//            context.Process();
+//            Trace.Assert(context.IsProcessing);
 
             //Trace.WriteLine("MakeCurrent()...");
             //context.MakeCurrent();
