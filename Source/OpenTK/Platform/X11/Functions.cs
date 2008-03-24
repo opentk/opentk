@@ -13,6 +13,35 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.X11
 {
+    #region Types
+
+    // using XID = System.Int32;
+    using Window = System.IntPtr;
+    using Drawable = System.IntPtr;
+    using Font = System.IntPtr;
+    using Pixmap = System.IntPtr;
+    using Cursor = System.IntPtr;
+    using Colormap = System.IntPtr;
+    using GContext = System.IntPtr;
+    using KeySym = System.IntPtr;
+    using Mask = System.IntPtr;
+    using Atom = System.IntPtr;
+    using VisualID = System.IntPtr;
+    using Time = System.UInt32;
+    using KeyCode = System.Byte;    // Or maybe ushort?
+
+    using Display = System.IntPtr;
+    using XPointer = System.IntPtr;
+
+    // Randr and Xrandr
+    using Bool = System.Boolean;
+    using XRRScreenConfiguration = System.IntPtr; // opaque datatype
+    using Rotation = System.UInt16;
+    using Status = System.Int32;
+    using SizeID = System.UInt16;
+
+    #endregion
+
     internal static partial class Functions
     {
         public static readonly object Lock = new object();
@@ -337,13 +366,15 @@ namespace OpenTK.Platform.X11
         public extern static void XPeekEvent(IntPtr display, ref XEvent xevent);
 
         [DllImport("libX11", EntryPoint = "XGetVisualInfo")]
-        static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template,
-                                                    out int nitems);
-
-
+        static extern IntPtr XGetVisualInfoInternal(IntPtr display, IntPtr vinfo_mask, ref XVisualInfo template, out int nitems);
+                                                    
         public static IntPtr XGetVisualInfo(IntPtr display, XVisualInfoMask vinfo_mask, ref XVisualInfo template, out int nitems)
         {
             return XGetVisualInfoInternal(display, (IntPtr)(int)vinfo_mask, ref template, out nitems);
         }
+        
+        [DllImport("libX11")]
+        public static extern IntPtr XCreateColormap(Display display, Window window, IntPtr visual, int alloc);
+
     }
 }

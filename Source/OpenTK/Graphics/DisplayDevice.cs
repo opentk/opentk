@@ -339,8 +339,8 @@ namespace OpenTK.Graphics
                 Form form = new Form();
                 form.ShowInTaskbar = false;
                 form.StartPosition = FormStartPosition.Manual;
-                form.FormBorderStyle = FormBorderStyle.None;
                 form.WindowState = FormWindowState.Maximized;
+                form.FormBorderStyle = FormBorderStyle.None;
                 form.TopMost = true;
 
                 form.BackColor = System.Drawing.Color.Black;
@@ -353,9 +353,13 @@ namespace OpenTK.Graphics
 
         void MoveToStartPositions()
         {
-            //int count = 0;
-            //foreach (Screen s in Screen.AllScreens)
+            int count = 0;
+            foreach (Screen s in Screen.AllScreens)
+            {
             //    forms[count++].Location = new System.Drawing.Point(s.Bounds.X, s.Bounds.Y);
+                //forms[count].Size = new System.Drawing.Size(4096, 4096);
+                count++;
+            }
         }
 
         bool FadedOut

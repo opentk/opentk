@@ -37,7 +37,6 @@ namespace OpenTK.Platform.X11
         {
             // Get available resolutions. Then, for each resolution get all
             // available rates.
-            // TODO: Find a way to get all available depths, too.
             // TODO: Global X11 lock.
             for (int screen = 0; screen < API.ScreenCount; screen++)
             {
@@ -85,11 +84,10 @@ namespace OpenTK.Platform.X11
                 int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
                 
                 DisplayDevice current_device = new DisplayDevice(
-                    new DisplayResolution(
-                        available_res[current_resolution_index].Width,
-                        available_res[current_resolution_index].Height,
-                        current_depth, current_refresh_rate),
-                    screen == API.DefaultScreen, available_res);
+                    new DisplayResolution(available_res[current_resolution_index].Width, available_res[current_resolution_index].Height,
+                                          current_depth, current_refresh_rate),
+                    screen == Functions.XDefaultScreen(API.DefaultDisplay),
+                    available_res);
 
                 deviceToScreen.Add(current_device, screen);
                 deviceToDefaultResolution.Add(current_device, current_resolution_index);
@@ -127,7 +125,7 @@ namespace OpenTK.Platform.X11
 
         static float FindCurrentRefreshRate(int screen)
         {
-            IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, API.RootWindow);
+            IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
             ushort rotation = 0;
             int size = Functions.XRRConfigCurrentConfiguration(screen_config, out rotation);
             short rate = Functions.XRRConfigCurrentRate(screen_config);
