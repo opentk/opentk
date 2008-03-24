@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing details.
  */
 #endregion
 
@@ -229,10 +231,21 @@ namespace Examples
         [STAThread]
         static void Main()
         {
-            using (Form exampleLauncher = new ExampleLauncher())
+            try
             {
-                Application.EnableVisualStyles();
-                Application.Run(exampleLauncher);
+                //FileIOPermission fileIO = new FileIOPermission(FileIOPermissionAccess.AllAccess, ".");
+                //fileIO.Demand();
+
+                using (Form exampleLauncher = new ExampleLauncher())
+                {
+                    Application.EnableVisualStyles();
+                    Application.Run(exampleLauncher);
+                }
+
+            }
+            catch (System.Security.SecurityException e)
+            {
+
             }
         }
     }
