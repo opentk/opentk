@@ -100,7 +100,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets an integer representing the absolute x position of the pointer, in screen pixel coordinates.
+        /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
         public int X
         {
@@ -113,7 +113,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets an integer representing the absolute y position of the pointer, in screen pixel coordinates.
+        /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
         /// </summary>
         public int Y
         {
@@ -154,7 +154,7 @@ namespace OpenTK.Input
         #region public Point Position
 
         /// <summary>
-        /// Gets a System.Drawing.Point representing the absolute position of the pointer, in screen pixel coordinates.
+        /// Gets a System.Drawing.Point representing the absolute position of the pointer, in window pixel coordinates.
         /// </summary>
         public Point Position
         {
@@ -191,14 +191,11 @@ namespace OpenTK.Input
             internal set
             {
                 if (ButtonDown != null && value && !button[(int)b])
-                {
                     ButtonDown(this, b);
-                }
                 else if (ButtonUp != null && !value && button[(int)b])
-                {
                     ButtonUp(this, b);
-                }
                 button[(int)b] = value;
+
                 //System.Diagnostics.Debug.Print("Mouse button {0} {1}", b, value ? "down" : "up");
             }
         }

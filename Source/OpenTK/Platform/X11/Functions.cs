@@ -73,8 +73,16 @@ namespace OpenTK.Platform.X11
         public extern static int XUnmapSubwindows(IntPtr display, IntPtr window);
         [DllImport("libX11", EntryPoint = "XRootWindow")]
         public extern static IntPtr XRootWindow(IntPtr display, int screen_number);
+
         [DllImport("libX11", EntryPoint = "XNextEvent")]
         public extern static IntPtr XNextEvent(IntPtr display, ref XEvent xevent);
+        [DllImport("libX11")]
+        public extern static Bool XWindowEvent(Display display, Window w, EventMask event_mask, ref XEvent event_return);
+        [DllImport("libX11")]
+        public extern static Bool XCheckWindowEvent(Display display, Window w, EventMask event_mask, ref XEvent event_return);
+        [DllImport("libX11")]
+        public extern static Bool XCheckTypedWindowEvent(Display display, Window w, XEventName event_type, ref XEvent event_return);
+        
         [DllImport("libX11")]
         public extern static int XConnectionNumber(IntPtr diplay);
         [DllImport("libX11")]

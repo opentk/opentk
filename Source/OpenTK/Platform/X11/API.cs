@@ -69,7 +69,7 @@ namespace OpenTK.Platform.X11
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             
-            //using (System.Windows.Forms.Control c = new System.Windows.Forms.Control()) { }
+            // Bad idea - Windows.Forms will steal our events!
             //Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
             //defaultDisplay = (IntPtr)xplatui.GetField("DisplayHandle", System.Reflection.BindingFlags.Static |
             //                                                           System.Reflection.BindingFlags.NonPublic).GetValue(null);
@@ -1238,6 +1238,9 @@ XF86VidModeGetGammaRampSize(
         Button3Mask = (1 << 10),
         Button4Mask = (1 << 11),
         Button5Mask = (1 << 12),
+        Button6Mask = (1 << 13),
+        Button7Mask = (1 << 14),
+        Button8Mask = (1 << 15),
         ShiftMask = (1 << 0),
         LockMask = (1 << 1),
         ControlMask = (1 << 2),
@@ -1246,19 +1249,6 @@ XF86VidModeGetGammaRampSize(
         Mod3Mask = (1 << 5),
         Mod4Mask = (1 << 6),
         Mod5Mask = (1 << 7),
-    }
-
-    #endregion
-
-    #region public enum MouseButton
-
-    public enum MouseButton
-    {
-        Button1 = 1,
-        Button2 = 2,
-        Button3 = 3,
-        Button4 = 4,
-        Button5 = 5,
     }
 
     #endregion
