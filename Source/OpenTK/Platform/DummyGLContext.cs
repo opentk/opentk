@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -19,23 +21,28 @@ namespace OpenTK.Platform
     {
         GraphicsMode format;
         bool vsync;
-        static int dummy_context_count = 0;
-        IntPtr context;
+        ContextHandle handle;
+        static int handle_count;
 
         #region --- Constructors ---
 
-        public DummyGLContext(GraphicsMode format) { this.format = format; context = new IntPtr(dummy_context_count++); }
+        public DummyGLContext(GraphicsMode format) { this.format = format; }
 
         #endregion
 
         #region --- IGraphicsContext Members ---
 
-        public IntPtr Context { get { return IntPtr.Zero; } }
+        public IntPtr Context { get { return (IntPtr)handle_count; } }
         public GraphicsMode GraphicsMode { get { return format; } }
 
-        //public void CreateContext() { }
-        //public void CreateContext(bool direct) { }
-        public void CreateContext(bool direct, IGraphicsContext source) { }
+        public void CreateContext(bool direct, IGraphicsContext source)
+        {
+            if (handle == null)
+            {
+                ++handle_count;
+                handle = new ContextHandle((IntPtr)handle_count);
+            }
+        }
 
         public void SwapBuffers() { }
         public void MakeCurrent(IWindowInfo info) { }
@@ -76,7 +83,7 @@ namespace OpenTK.Platform
 
         ContextHandle IGraphicsContextInternal.Context
         {
-            get { return context; }
+            get { return handle; }
         }
 
         #endregion
