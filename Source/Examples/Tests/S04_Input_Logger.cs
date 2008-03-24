@@ -109,13 +109,19 @@ namespace Examples.Tests
             delegate(GameWindow input_window, S04_Input_Logger control, MouseDevice sender, MouseButton button)
             {
                 if (sender.DeviceID == input_window.Mouse.DeviceID)
+                {
                     control.MouseButtonsBox.Items.Add(button);
+                    System.Diagnostics.Debug.Print("Button down: {0}", button);
+                }
             };
         ControlLogMouseKey ControlLogMouseKeyUp = 
             delegate(GameWindow input_window, S04_Input_Logger control, MouseDevice sender, MouseButton button)
             {
                 if (sender.DeviceID == input_window.Mouse.DeviceID)
+                {
                     control.MouseButtonsBox.Items.Remove(button);
+                    System.Diagnostics.Debug.Print("Button up: {0}", button);
+                }
             };
 
         delegate void ControlLogMousePosition(GameWindow input_window, S04_Input_Logger control);
