@@ -18,7 +18,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Represents and provides methods to manipulate an OpenGL render context.
     /// </summary>
-    public sealed class GraphicsContext : IGraphicsContext, IGraphicsContextInternal, IGLContextCreationHack
+    public sealed class GraphicsContext : IGraphicsContext, IGraphicsContextInternal
     {
         IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
         List<IDisposable> dispose_queue = new List<IDisposable>();
@@ -48,13 +48,17 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="format">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
         /// <param name="window">The OpenTK.Platform.IWindowInfo to attach the GraphicsContext to.</param>
-        public GraphicsContext(GraphicsMode format, IWindowInfo window)
+        public GraphicsContext(GraphicsMode mode, IWindowInfo window)
         {
-            if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
+            bool designMode = false;
+            if (mode == null && window == null)
+                designMode = true;
+            else if (mode == null) throw new ArgumentNullException("mode", "Must be a valid GraphicsMode.");
+            else if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
 
             Debug.Print("Creating GraphicsContext.");
             Debug.Indent();
-            Debug.Print("GraphicsMode: {0}", format);
+            Debug.Print("GraphicsMode: {0}", mode);
             Debug.Print("IWindowInfo: {0}", window);
 
             IGraphicsContext shareContext = null;
@@ -71,10 +75,12 @@ namespace OpenTK.Graphics
                 }
             }
 
-            if (Configuration.RunningOnWindows)
-                implementation = new OpenTK.Platform.Windows.WinGLContext(format, window, shareContext);
+            if (designMode)
+                implementation = new OpenTK.Platform.DummyGLContext(mode);
+            else if (Configuration.RunningOnWindows)
+                implementation = new OpenTK.Platform.Windows.WinGLContext(mode, window, shareContext);
             else if (Configuration.RunningOnX11)
-                implementation = new OpenTK.Platform.X11.X11GLContext(format, window, shareContext, DirectRendering);
+                implementation = new OpenTK.Platform.X11.X11GLContext(mode, window, shareContext, DirectRendering);
             else
                 throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
 
@@ -175,18 +181,11 @@ namespace OpenTK.Graphics
         #region --- IGraphicsContext Members ---
 
         /// <summary>
-        /// Creates an OpenGL context.
-        /// </summary>
-        public void CreateContext()
-        {
-            CreateContext(true, null);
-        }
-
-        /// <summary>
-        /// Creates an OpenGL context with a direct or indirect rendering mode. This parameter is ignored
-        /// on Windows platforms (direct mode only).
+        /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
+        /// specified IGraphicsContext.
         /// </summary>
         /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
+        /// <param name="source">The source IGraphicsContext to share state from.</param>.
         /// <remarks>
         /// <para>
         /// Direct rendering is the default rendering mode for OpenTK, since it can provide higher performance
@@ -197,19 +196,7 @@ namespace OpenTK.Graphics
         /// indirect rendering on Windows platforms).
         /// </para>
         /// </remarks>
-        public void CreateContext(bool direct)
-        {
-            CreateContext(direct, null);
-        }
-
-        /// <summary>
-        /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
-        /// specified IGraphicsContext.
-        /// </summary>
-        /// <param name="direct">Set to true for direct rendering or false otherwise.</param>
-        /// <param name="source">The source IGraphicsContext to share state from.</param>.
-        /// <seealso cref="CreateContext(bool)"/>
-        public void CreateContext(bool direct, IGraphicsContext source)
+        void CreateContext(bool direct, IGraphicsContext source)
         {
             this.Destroy += ContextDestroyed;
 
@@ -358,20 +345,6 @@ namespace OpenTK.Graphics
         IntPtr IGraphicsContextInternal.GetAddress(string function)
         {
             return (implementation as IGraphicsContextInternal).GetAddress(function);
-        }
-
-        #endregion
-
-        #region --- IGLContextCreationHack Members ---
-
-        bool IGLContextCreationHack.SelectDisplayMode(DisplayMode mode, IWindowInfo info)
-        {
-            return (implementation as IGLContextCreationHack).SelectDisplayMode(mode, info);
-        }
-
-        void IGLContextCreationHack.SetWindowHandle(IntPtr handle)
-        {
-            (implementation as IGLContextCreationHack).SetWindowHandle(handle);
         }
 
         #endregion
