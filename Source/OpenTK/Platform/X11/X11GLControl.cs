@@ -39,7 +39,7 @@ namespace OpenTK.Platform.X11
             xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
                 .SetValue(null, window.VisualInfo.visual);
             xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                .SetValue(null, API.CreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0));
+                .SetValue(null, Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0));
         }
 
         #region --- IGLControl Members ---

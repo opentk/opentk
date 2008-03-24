@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace OpenTK.Platform.X11
 {
@@ -38,7 +39,6 @@ namespace OpenTK.Platform.X11
     using Rotation = System.UInt16;
     using Status = System.Int32;
     using SizeID = System.UInt16;
-    using System.Diagnostics;
 
     #endregion
 
@@ -57,37 +57,56 @@ namespace OpenTK.Platform.X11
         static int screenCount;
 
         internal static Display DefaultDisplay { get { return defaultDisplay; } }
-        internal static int DefaultScreen { get { return defaultScreen; } }
-        internal static Window RootWindow { get { return rootWindow; } }
+        //internal static int DefaultScreen { get { return defaultScreen; } }
+        //internal static Window RootWindow { get { return rootWindow; } }
         internal static int ScreenCount { get { return screenCount; } }
+        
+        internal static object Lock = new object();
 
         #endregion
 
         static API()
         {
-            //AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
+            
+            //using (System.Windows.Forms.Control c = new System.Windows.Forms.Control()) { }
+            //Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+            //defaultDisplay = (IntPtr)xplatui.GetField("DisplayHandle", System.Reflection.BindingFlags.Static |
+            //                                                           System.Reflection.BindingFlags.NonPublic).GetValue(null);
+
             defaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
-            defaultScreen = Functions.XDefaultScreen(DefaultDisplay);
-            rootWindow = Functions.XRootWindow(DefaultDisplay, DefaultScreen);
+                
+            if (defaultDisplay == IntPtr.Zero)
+                throw new PlatformException("Could not establish connection to the X-Server.");
+
+            //defaultScreen = Functions.XDefaultScreen(DefaultDisplay);
+            //rootWindow = Functions.XRootWindow(DefaultDisplay, DefaultScreen);
             screenCount = Functions.XScreenCount(DefaultDisplay);
-            Debug.Print("Default Display: {0}, Default Screen: {1}, Default Root Window: {2}, Screen Count: {3}",
-                DefaultDisplay, DefaultScreen, RootWindow, ScreenCount);
+            //Debug.Print("Default Display: {0}, Default Screen: {1}, Default Root Window: {2}, Screen Count: {3}",
+            //    DefaultDisplay, DefaultScreen, RootWindow, ScreenCount);
+            Debug.Print("Display connection: {0}, Screen count: {1}", DefaultDisplay, ScreenCount);
         }
 
         static void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
-            if (defaultDisplay != IntPtr.Zero) { Functions.XCloseDisplay(defaultDisplay); defaultDisplay = IntPtr.Zero; }
+            if (defaultDisplay != IntPtr.Zero)
+            {
+                Functions.XCloseDisplay(defaultDisplay);
+                defaultDisplay = IntPtr.Zero;
+                defaultScreen = 0;
+                rootWindow = IntPtr.Zero;
+            }
         }
 
         // Display management
-        [DllImport(_dll_name, EntryPoint = "XOpenDisplay")]
-        extern public static IntPtr OpenDisplay([MarshalAs(UnmanagedType.LPTStr)] string display_name);
+        //[DllImport(_dll_name, EntryPoint = "XOpenDisplay")]
+        //extern public static IntPtr OpenDisplay([MarshalAs(UnmanagedType.LPTStr)] string display_name);
 
-        [DllImport(_dll_name, EntryPoint = "XCloseDisplay")]
-        extern public static void CloseDisplay(Display display);
+        //[DllImport(_dll_name, EntryPoint = "XCloseDisplay")]
+        //extern public static void CloseDisplay(Display display);
 
-        [DllImport(_dll_name, EntryPoint = "XCreateColormap")]
-        extern public static IntPtr CreateColormap(Display display, Window window, IntPtr visual, int alloc);
+        //[DllImport(_dll_name, EntryPoint = "XCreateColormap")]
+        //extern public static IntPtr CreateColormap(Display display, Window window, IntPtr visual, int alloc);
 
         #region Window handling
 
