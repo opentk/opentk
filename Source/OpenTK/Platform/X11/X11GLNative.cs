@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -93,7 +95,7 @@ namespace OpenTK.Platform.X11
                 //    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
 
                 // Open a display connection to the X server, and obtain the screen and root window.
-                window.Display = API.OpenDisplay(null); // null == default display //window.Display = API.DefaultDisplay;
+                window.Display = API.DefaultDisplay;//Functions.XOpenDisplay(IntPtr.Zero); // IntPtr.Zero == default display
                 if (window.Display == IntPtr.Zero)
                     throw new Exception("Could not open connection to X");
                 window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
@@ -157,13 +159,11 @@ namespace OpenTK.Platform.X11
             XSetWindowAttributes attributes = new XSetWindowAttributes();
             attributes.background_pixel = IntPtr.Zero;
             attributes.border_pixel = IntPtr.Zero;
-            attributes.colormap =
-                API.CreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
-            window.EventMask =
-                EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
-                EventMask.KeyReleaseMask | EventMask.KeyPressMask |
-                    EventMask.PointerMotionMask | // Bad! EventMask.PointerMotionHintMask |
-                    EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
+            attributes.colormap = Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
+            window.EventMask = EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
+                               EventMask.KeyReleaseMask | EventMask.KeyPressMask |
+                               EventMask.PointerMotionMask | // Bad! EventMask.PointerMotionHintMask |
+                               EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
             attributes.event_mask = (IntPtr)window.EventMask;
 
             uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
@@ -666,8 +666,8 @@ namespace OpenTK.Platform.X11
                 {
                     if (window.WindowHandle != IntPtr.Zero)
                         Functions.XDestroyWindow(window.Display, window.WindowHandle);
-                    if (window.Display != IntPtr.Zero)
-                        Functions.XCloseDisplay(window.Display);
+                    //if (window.Display != IntPtr.Zero)
+                    //    Functions.XCloseDisplay(window.Display);
                     window = null;
                 }
 

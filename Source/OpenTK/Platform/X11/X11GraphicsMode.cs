@@ -25,7 +25,11 @@ namespace OpenTK.Platform.X11
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
                                                int buffers, bool stereo)
         {
+            GraphicsMode gfx;                               // The actual GraphicsMode that will be selected.
             List<int> visualAttributes = new List<int>();
+            IntPtr visual;
+
+            Debug.Print("Bits per pixel: {0}", color.BitsPerPixel);
 
             if (color.BitsPerPixel > 0)
             {
@@ -40,6 +44,8 @@ namespace OpenTK.Platform.X11
                 visualAttributes.Add((int)GLXAttribute.ALPHA_SIZE);
                 visualAttributes.Add(color.Alpha);
             }
+
+            Debug.Print("Depth: {0}", depth);
 
             if (depth > 0)
             {
@@ -73,54 +79,68 @@ namespace OpenTK.Platform.X11
 
             visualAttributes.Add((int)0);
 
+            // Select a visual that matches the parameters set by the user.
+            lock (API.Lock)
+            {
+                IntPtr display = API.DefaultDisplay; //Functions.XOpenDisplay(IntPtr.Zero);
+                int screen = Functions.XDefaultScreen(display);
+                IntPtr root = Functions.XRootWindow(display, screen);
+                Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
+
+                visual = Glx.ChooseVisual(display, screen, visualAttributes.ToArray());
+
+                if (visual == IntPtr.Zero)
+                    throw new GraphicsContextException("Requested GraphicsMode not available.");
+
+                XVisualInfo info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
+
+                // See what we *really* got:
+                int r, g, b, a;
+                Glx.GetConfig(display, ref info, GLXAttribute.ALPHA_SIZE, out a);
+                Glx.GetConfig(display, ref info, GLXAttribute.RED_SIZE, out r);
+                Glx.GetConfig(display, ref info, GLXAttribute.GREEN_SIZE, out g);
+                Glx.GetConfig(display, ref info, GLXAttribute.BLUE_SIZE, out b);
+                int ar, ag, ab, aa;
+                Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_ALPHA_SIZE, out aa);
+                Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_RED_SIZE, out ar);
+                Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_GREEN_SIZE, out ag);
+                Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_BLUE_SIZE, out ab);
+                Glx.GetConfig(display, ref info, GLXAttribute.DEPTH_SIZE, out depth);
+                Glx.GetConfig(display, ref info, GLXAttribute.STENCIL_SIZE, out stencil);
+                Glx.GetConfig(display, ref info, GLXAttribute.SAMPLES, out samples);
+                Glx.GetConfig(display, ref info, GLXAttribute.DOUBLEBUFFER, out buffers);
+                ++buffers;  // the above lines returns 0 - false and 1 - true.
+                int st;
+                Glx.GetConfig(display, ref info, GLXAttribute.STEREO, out st);
+                stereo = st != 0;
+
+                gfx = new GraphicsMode(info.visualid, new ColorFormat(r, g, b, a), depth, stencil, samples,
+                                                    new ColorFormat(ar, ag, ab, aa), buffers, stereo);
+
+                //Functions.XCloseDisplay(display);
+            }
+
             // Prepare Windows.Forms for creating OpenGL drawables.
-            // We reuse the display connection.
-            // TODO: Multiple screens.
-            Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-            IntPtr display = (IntPtr)xplatui.GetField("DisplayHandle",
-                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
-            IntPtr root = (IntPtr)xplatui.GetField("RootWindow",
-                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
-            int screen = (int)xplatui.GetField("ScreenNo",
-                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            lock (API.Lock)
+            {
+                Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+                IntPtr display = (IntPtr)xplatui.GetField("DisplayHandle",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                IntPtr root = (IntPtr)xplatui.GetField("RootWindow",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+                int screen = (int)xplatui.GetField("ScreenNo",
+                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
 
-            Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
 
-            IntPtr visual = Glx.ChooseVisual(display, screen, visualAttributes.ToArray());
+                xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+                    .SetValue(null, visual);
+                xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+                    .SetValue(null, Functions.XCreateColormap(display, root, visual, 0));
 
-            if (visual == IntPtr.Zero)
-                throw new GraphicsContextException("Requested GraphicsMode not available.");
-
-            XVisualInfo info = (XVisualInfo)Marshal.PtrToStructure(visual, typeof(XVisualInfo));
-
-            // See what we *really* got:
-            int r, g, b, a;
-            Glx.GetConfig(display, ref info, GLXAttribute.ALPHA_SIZE, out a);
-            Glx.GetConfig(display, ref info, GLXAttribute.RED_SIZE, out r);
-            Glx.GetConfig(display, ref info, GLXAttribute.GREEN_SIZE, out g);
-            Glx.GetConfig(display, ref info, GLXAttribute.BLUE_SIZE, out b);
-            int ar, ag, ab, aa;
-            Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_ALPHA_SIZE, out aa);
-            Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_RED_SIZE, out ar);
-            Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_GREEN_SIZE, out ag);
-            Glx.GetConfig(display, ref info, GLXAttribute.ACCUM_BLUE_SIZE, out ab);
-            Glx.GetConfig(display, ref info, GLXAttribute.DEPTH_SIZE, out depth);
-            Glx.GetConfig(display, ref info, GLXAttribute.STENCIL_SIZE, out stencil);
-            Glx.GetConfig(display, ref info, GLXAttribute.SAMPLES, out samples);
-            Glx.GetConfig(display, ref info, GLXAttribute.DOUBLEBUFFER, out buffers);
-            ++buffers;  // the above lines returns 0 - false and 1 - true.
-            int st;
-            Glx.GetConfig(display, ref info, GLXAttribute.STEREO, out st);
-            stereo = st != 0;
-
-            GraphicsMode gfx = new GraphicsMode(info.visualid, new ColorFormat(r, g, b, a), depth, stencil, samples,
-                                                new ColorFormat(ar, ag, ab, aa), buffers, stereo);
-
-            xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                .SetValue(null, visual);
-            xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                .SetValue(null, API.CreateColormap(display, root, visual, 0));
-
+            }
+            
+            Functions.XFree(visual);
+            
             return gfx;
         }
     }
