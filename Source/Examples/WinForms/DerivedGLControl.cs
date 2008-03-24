@@ -22,8 +22,12 @@ namespace Examples.WinForms
             set
             {
                 clearColor = value;
-                MakeCurrent();
-                GL.ClearColor(clearColor);
+
+                if (!this.DesignMode)
+                {
+                    MakeCurrent();
+                    GL.ClearColor(clearColor);
+                }
             }
         }
 
