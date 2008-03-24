@@ -132,10 +132,10 @@ namespace OpenTK.Platform.X11
                     System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
 
 
-                xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                    .SetValue(null, visual);
-                xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                    .SetValue(null, Functions.XCreateColormap(display, root, visual, 0));
+                //xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+                //    .SetValue(null, visual);
+                //xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+                //    .SetValue(null, Functions.XCreateColormap(display, root, visual, 0));
 
             }
             

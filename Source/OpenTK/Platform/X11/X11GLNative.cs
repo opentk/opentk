@@ -228,15 +228,17 @@ namespace OpenTK.Platform.X11
         public void ProcessEvents()
         {
             // Process all pending events
-            while (true)
+            //while (true)
+            while (Functions.XCheckWindowEvent(window.Display, window.WindowHandle, window.EventMask, ref e) ||
+                   Functions.XCheckTypedWindowEvent(window.Display, window.WindowHandle, XEventName.ClientMessage, ref e))
             {
                 //pending = Functions.XPending(window.Display);
-                pending = API.Pending(window.Display);
+                //pending = API.Pending(window.Display);
 
-                if (pending == 0)
-                    return;
+                //if (pending == 0)
+                //    return;
 
-                Functions.XNextEvent(window.Display, ref e);
+                //Functions.XNextEvent(window.Display, ref e);
 
                 //Debug.Print("Event: {0} ({1} pending)", e.type, pending);
 
