@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -13,12 +15,12 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
-
-using OpenTK.Graphics.OpenGL;
-using OpenTK;
 using System.Diagnostics;
 using System.IO;
-using OpenTK.Graphics.OpenGL.Enums;
+
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 #endregion --- Using Directives ---
 
@@ -43,7 +45,7 @@ namespace Examples.Tutorial
         #region --- Constructors ---
 
         public T10_GLSL_Cube()
-            : base(new DisplayMode(800, 600))
+            : base(800, 600, GraphicsMode.Default)
         { }
 
         #endregion

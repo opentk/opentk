@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
  */
 #endregion
 
@@ -13,9 +15,8 @@ using System.Threading;
 using System.Drawing;
 
 using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics.OpenGL.Enums;
-using OpenTK.Platform;
 
 #endregion
 
@@ -36,7 +37,7 @@ namespace Examples.Tutorial
 
         #region --- Constructor ---
 
-        public T03_Immediate_Mode_Cube() : base(new DisplayMode(800, 600))
+        public T03_Immediate_Mode_Cube() : base(800, 600, new GraphicsMode(16, 16))
 		{ } 
 
 		#endregion	
