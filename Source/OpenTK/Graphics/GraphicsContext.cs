@@ -84,7 +84,10 @@ namespace OpenTK.Graphics
             else
                 throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
 
-            available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
+            lock (context_lock)
+            {
+                available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
+            }
             //(implementation as IGraphicsContextInternal).LoadAll();
         }
 
@@ -119,13 +122,16 @@ namespace OpenTK.Graphics
         {
             get
             {
-                if (available_contexts.Count > 0)
+                lock (context_lock)
                 {
-                    ContextHandle handle = GetCurrentContext();
-                    if (handle.Handle != IntPtr.Zero)
-                        return (GraphicsContext)available_contexts[handle].Target;
+                    if (available_contexts.Count > 0)
+                    {
+                        ContextHandle handle = GetCurrentContext();
+                        if (handle.Handle != IntPtr.Zero)
+                            return (GraphicsContext)available_contexts[handle].Target;
+                    }
+                    return null;
                 }
-                return null;
             }
             //set
             //{
@@ -200,7 +206,10 @@ namespace OpenTK.Graphics
         {
             this.Destroy += ContextDestroyed;
 
-            available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
+            lock (context_lock)
+            {
+                available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
+            }
 
             //OpenTK.Graphics.OpenGL.GL.Clear(OpenTK.Graphics.OpenGL.ClearBufferMask.ColorBufferBit);
             //if (StaticGetCurrentContext == null)
@@ -364,12 +373,14 @@ namespace OpenTK.Graphics
         {
             if (!disposed)
             {
+                Debug.WriteLine("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
+                lock (context_lock)
+                {
+                    available_contexts.Remove((this as IGraphicsContextInternal).Context);
+                }
+
                 if (manual)
                 {
-                    Debug.WriteLine("Disposing context.");
-                    available_contexts.Remove((this as IGraphicsContextInternal).Context);
-
-                    // TODO: Check if this is safe
                     if (implementation != null)
                         implementation.Dispose();
                 }
@@ -377,10 +388,10 @@ namespace OpenTK.Graphics
             }
         }
 
-        ~GraphicsContext()
-        {
-            this.Dispose(false);
-        }
+        //~GraphicsContext()
+        //{
+        //    this.Dispose(false);
+        //}
 
         #endregion
     }

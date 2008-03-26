@@ -41,6 +41,35 @@ namespace OpenTK.Platform.X11
     using SizeID = System.UInt16;
 
     #endregion
+    
+    #region DisplayLock
+    
+    /*
+    internal class DisplayLock : IDisposable
+    {
+        IntPtr display;
+        
+        public DisplayLock(IntPtr display)
+        {
+            if (display == IntPtr.Zero) throw new ArgumentException("display", "Must be a valid X11 display connection.");
+            this.display = display;
+            Functions.XLockDisplay(display);
+        }
+    
+        publc void Dispose()
+        {
+            Functions.XUnlockDisplay(display);
+            GC.SuppressFinalize(this);
+        }
+        
+        ~DisplayLock()
+        {
+            Functions.XUnlockDisplay(display);
+        }
+    }
+    */
+
+    #endregion
 
     internal static partial class Functions
     {
@@ -383,6 +412,11 @@ namespace OpenTK.Platform.X11
         
         [DllImport("libX11")]
         public static extern IntPtr XCreateColormap(Display display, Window window, IntPtr visual, int alloc);
+        
+        [DllImport("libX11")]
+        public static extern void XLockDisplay(Display display);
 
+        [DllImport("libX11")]
+        public static extern void XUnlockDisplay(Display display);
     }
 }

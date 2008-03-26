@@ -80,9 +80,12 @@ namespace OpenTK.Platform.X11
             visualAttributes.Add((int)0);
 
             // Select a visual that matches the parameters set by the user.
-            lock (API.Lock)
+            IntPtr display = API.DefaultDisplay; //Functions.XOpenDisplay(IntPtr.Zero);
+
+            try
             {
-                IntPtr display = API.DefaultDisplay; //Functions.XOpenDisplay(IntPtr.Zero);
+                Functions.XLockDisplay(display);
+
                 int screen = Functions.XDefaultScreen(display);
                 IntPtr root = Functions.XRootWindow(display, screen);
                 Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
@@ -113,23 +116,25 @@ namespace OpenTK.Platform.X11
                 int st;
                 Glx.GetConfig(display, ref info, GLXAttribute.STEREO, out st);
                 stereo = st != 0;
-
+                
                 gfx = new GraphicsMode(info.visualid, new ColorFormat(r, g, b, a), depth, stencil, samples,
-                                                    new ColorFormat(ar, ag, ab, aa), buffers, stereo);
-
-                //Functions.XCloseDisplay(display);
+                                       new ColorFormat(ar, ag, ab, aa), buffers, stereo);
+            }
+            finally
+            {
+                Functions.XUnlockDisplay(display);
             }
 
             // Prepare Windows.Forms for creating OpenGL drawables.
-            lock (API.Lock)
-            {
-                Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-                IntPtr display = (IntPtr)xplatui.GetField("DisplayHandle",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
-                IntPtr root = (IntPtr)xplatui.GetField("RootWindow",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
-                int screen = (int)xplatui.GetField("ScreenNo",
-                    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            //lock (API.Lock)
+            //{
+            //    Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+            //    IntPtr display = (IntPtr)xplatui.GetField("DisplayHandle",
+            //        System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            //    IntPtr root = (IntPtr)xplatui.GetField("RootWindow",
+            //        System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+            //    int screen = (int)xplatui.GetField("ScreenNo",
+            //        System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
 
 
                 //xplatui.GetField("CustomVisual", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
@@ -137,9 +142,17 @@ namespace OpenTK.Platform.X11
                 //xplatui.GetField("CustomColormap", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
                 //    .SetValue(null, Functions.XCreateColormap(display, root, visual, 0));
 
-            }
+            //}
             
-            Functions.XFree(visual);
+            try
+            {
+                Functions.XLockDisplay(display);
+                Functions.XFree(visual);
+            }
+            finally
+            {
+                Functions.XUnlockDisplay(display);
+            }
             
             return gfx;
         }
