@@ -64,12 +64,17 @@ namespace OpenTK.Platform.X11
             info.visualid = (IntPtr)mode.Index;
             info.screen = currentWindow.Screen;
             int items;
-            IntPtr vs = Functions.XGetVisualInfo(currentWindow.Display, XVisualInfoMask.ID | XVisualInfoMask.Screen, ref info, out items);
-            if (items == 0)
-                throw new GraphicsModeException(String.Format("Invalid GraphicsMode specified ({0}).", mode));
+            
+            lock (API.Lock)
+            {
+                IntPtr vs = Functions.XGetVisualInfo(currentWindow.Display, XVisualInfoMask.ID | XVisualInfoMask.Screen, ref info, out items);
+                if (items == 0)
+                    throw new GraphicsModeException(String.Format("Invalid GraphicsMode specified ({0}).", mode));
 
-            info = (XVisualInfo)Marshal.PtrToStructure(vs, typeof(XVisualInfo));
-            Functions.XFree(vs);
+                info = (XVisualInfo)Marshal.PtrToStructure(vs, typeof(XVisualInfo));
+                Functions.XFree(vs);
+            }
+
             return info;
         }
 
@@ -89,24 +94,27 @@ namespace OpenTK.Platform.X11
                 Debug.Write(shareHandle.Handle == IntPtr.Zero ? "not shared... " :
                     String.Format("shared with ({0})... ", shareHandle));
 
-                XVisualInfo info = window.VisualInfo;   // Cannot pass a Property by reference.
-                context = Glx.CreateContext(window.Display, ref info, shareHandle.Handle, direct);
-
-                // Context creation succeeded, return.
-                if (context != IntPtr.Zero)
+                lock (API.Lock)
                 {
-                    Debug.Print("done! (id: {0})", context);
-                    return;
-                }
+                    XVisualInfo info = window.VisualInfo;   // Cannot pass a Property by reference.
+                    context = Glx.CreateContext(window.Display, ref info, shareHandle.Handle, direct);
 
-                // Context creation failed. Retry with a non-shared context with the direct/indirect bit flipped.
-                Debug.Print("failed.");
-                Debug.Write(String.Format("Creating OpenGL context: {0}, not shared... ", !direct ? "direct" : "indirect"));
-                context = Glx.CreateContext(window.Display, ref info, IntPtr.Zero, !direct);
-                if (context != IntPtr.Zero)
-                {
-                    Debug.Print("done! (id: {0})", context);
-                    return;
+                    // Context creation succeeded, return.
+                    if (context != IntPtr.Zero)
+                    {
+                        Debug.Print("done! (id: {0})", context);
+                        return;
+                    }
+
+                    // Context creation failed. Retry with a non-shared context with the direct/indirect bit flipped.
+                    Debug.Print("failed.");
+                    Debug.Write(String.Format("Creating OpenGL context: {0}, not shared... ", !direct ? "direct" : "indirect"));
+                    context = Glx.CreateContext(window.Display, ref info, IntPtr.Zero, !direct);
+                    if (context != IntPtr.Zero)
+                    {
+                        Debug.Print("done! (id: {0})", context);
+                        return;
+                    }
                 }
 
                 Debug.Print("failed.");
@@ -307,14 +315,20 @@ namespace OpenTK.Platform.X11
             if (!disposed)
             {
                 // Clean unmanaged resources:
-
-                Glx.MakeCurrent(currentWindow.Display, IntPtr.Zero, IntPtr.Zero);
-                Glx.DestroyContext(currentWindow.Display, context);
-                //API.Free(visual);
+                try
+                {
+                    Functions.XLockDisplay(currentWindow.Display);
+                    Glx.MakeCurrent(currentWindow.Display, IntPtr.Zero, IntPtr.Zero);
+                    Glx.DestroyContext(currentWindow.Display, context);
+                    //Functions.XFree(visual);
+                }
+                finally
+                {
+                    Functions.XUnlockDisplay(currentWindow.Display);               
+                }
 
                 if (manuallyCalled)
                 {
-                    // Safe to clean managed resources, too
                 }
             }
             disposed = true;

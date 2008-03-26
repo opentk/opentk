@@ -276,6 +276,7 @@ namespace OpenTK
         /// </remarks>
         public virtual void Exit()
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
             //glWindow.DestroyWindow();
             //while (glWindow.Exists)
             //    glWindow.ProcessEvents();
@@ -302,6 +303,7 @@ namespace OpenTK
         public virtual void ExitAsync()
         {
             //isExiting = true;
+            if (disposed) throw new ObjectDisposedException("GameWindow");
             UpdateFrame += CallExitInternal;
         }
 
@@ -315,7 +317,7 @@ namespace OpenTK
         /// </summary>
         public bool IsIdle
         {
-            get { return glWindow.IsIdle; }
+            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return glWindow.IsIdle; }
         }
 
         #endregion
@@ -328,8 +330,8 @@ namespace OpenTK
         /// </summary>
         public bool Fullscreen
         {
-            get { return glWindow.Fullscreen; }
-            set { glWindow.Fullscreen = value; }
+            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return glWindow.Fullscreen; }
+            set { if (disposed) throw new ObjectDisposedException("GameWindow"); glWindow.Fullscreen = value; }
         }
 
         #endregion
@@ -337,12 +339,15 @@ namespace OpenTK
         #region public IGraphicsContext Context
 
         /// <summary>
-        /// Returns the opengl IGLontext associated with the current GameWindow.
-        /// Forces window creation.
+        /// Returns the opengl IGraphicsContext associated with the current GameWindow.
         /// </summary>
         public IGraphicsContext Context
         {
-            get { return glContext; }
+            get
+            {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
+                return glContext;
+            }
         }
 
         #endregion
@@ -368,10 +373,12 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 return glWindow.Title;
             }
             set
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 glWindow.Title = value;
             }
         }
@@ -404,7 +411,7 @@ namespace OpenTK
 
         public IWindowInfo WindowInfo
         {
-            get { return glWindow.WindowInfo; }
+            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return glWindow.WindowInfo; }
         }
 
         #endregion
@@ -437,6 +444,7 @@ namespace OpenTK
         /// </summary>
         public void DestroyWindow()
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
             if (Exists)
                 glWindow.DestroyWindow();
             else
@@ -453,6 +461,7 @@ namespace OpenTK
         /// <see cref="public virtual void Run(double update_frequency, double render_frequency)"/>
         public void Run()
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
             Run(0.0, 0.0);
         }
 
@@ -463,6 +472,7 @@ namespace OpenTK
         /// <see cref="public virtual void Run(double updateFrequency, double renderFrequency)"/>
         public void Run(double updateFrequency)
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
             Run(updateFrequency, 0.0);
         }
 
@@ -473,6 +483,7 @@ namespace OpenTK
         /// <param name="frames_per_second">The frequency of RenderFrame events.</param>
         public void Run(double updates_per_second, double frames_per_second)
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
             try
             {
                 if (updates_per_second < 0.0 || updates_per_second > 200.0)
@@ -618,6 +629,7 @@ namespace OpenTK
                 if (Exists)
                 {
                     glContext.Dispose();
+                    glContext = null;
                     glWindow.DestroyWindow();
                 }
                 while (this.Exists)
@@ -642,6 +654,7 @@ namespace OpenTK
         /// </remarks>
         public void ProcessEvents()
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
             if (!isExiting)
                 glWindow.InputDriver.Poll();
             glWindow.ProcessEvents();
@@ -680,6 +693,7 @@ namespace OpenTK
         /// </remarks>
         public virtual void OnRenderFrame(RenderFrameEventArgs e)
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
         }
 
         /// <summary>
@@ -718,6 +732,7 @@ namespace OpenTK
         /// </remarks>
         public virtual void OnUpdateFrame(UpdateFrameEventArgs e)
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
         }
 
         /// <summary>
@@ -768,6 +783,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         public virtual void OnLoad(EventArgs e)
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
         }
 
         #endregion
@@ -800,6 +816,7 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         public virtual void OnUnload(EventArgs e)
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
         }
 
         #endregion
@@ -814,7 +831,7 @@ namespace OpenTK
         /// </summary>
         public bool IsExiting
         {
-            get { return isExiting; }
+            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return isExiting; }
         }
 
         #endregion
@@ -828,6 +845,7 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 //if (input_driver.Keyboard.Count > 0)
                 //    return input_driver.Keyboard[0];
                 //else
@@ -851,6 +869,7 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 //if (input_driver.Mouse.Count > 0)
                 //    return input_driver.Mouse[0];
                 //else
@@ -874,10 +893,12 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 return vsync;
             }
             set
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (value == VSyncMode.Off)
                     Context.VSync = false;
                 else
@@ -898,6 +919,7 @@ namespace OpenTK
         /// <remarks>Calling this function is equivalent to calling Context.SwapBuffers()</remarks>
         public void SwapBuffers()
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
             this.Context.SwapBuffers();
         }
 
@@ -931,10 +953,12 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 return target_render_period;
             }
             set
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (value <= 0.005)
                 {
                     target_render_period = target_render_period_doubled = 0.0;
@@ -963,12 +987,14 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (TargetRenderPeriod == 0.0)
                     return 0.0;
                 return 1.0 / TargetRenderPeriod;
             }
             set
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (value < 1.0)
                 {
                     TargetRenderPeriod = 0.0;
@@ -996,10 +1022,12 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 return target_update_period;
             }
             set
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (value <= 0.005)
                 {
                     target_update_period = 0.0;
@@ -1027,12 +1055,14 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (TargetUpdatePeriod == 0.0)
                     return 0.0;
                 return 1.0 / TargetUpdatePeriod;
             }
             set
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (value < 1.0)
                 {
                     TargetUpdatePeriod = 0.0;
@@ -1056,6 +1086,7 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (render_period == 0.0)
                     return 1.0;
                 return 1.0 / render_period;
@@ -1073,6 +1104,7 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 return render_period;
             }
         }
@@ -1088,6 +1120,7 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (update_period == 0.0)
                     return 1.0;
                 return 1.0 / update_period;
@@ -1105,6 +1138,7 @@ namespace OpenTK
         {
             get
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 return update_period;
             }
         }
@@ -1118,8 +1152,8 @@ namespace OpenTK
         /// </summary>
         public double RenderTime
         {
-            get { return render_time; }
-            protected set { render_time = value; }
+            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return render_time; }
+            protected set { if (disposed) throw new ObjectDisposedException("GameWindow"); render_time = value; }
         }
 
         #endregion
@@ -1131,7 +1165,7 @@ namespace OpenTK
         /// </summary>
         public double UpdateTime
         {
-            get { return update_time; }
+            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return update_time; }
         }
 
         #endregion
@@ -1147,9 +1181,10 @@ namespace OpenTK
         /// </summary>
         public int Width
         {
-            get { return width; }
+            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return width; }
             set
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (value == this.Width)
                 {
                     return;
@@ -1174,9 +1209,10 @@ namespace OpenTK
         /// </summary>
         public int Height
         {
-            get { return height; }
+            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return height; }
             set
             {
+                if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (value == this.Height)
                 {
                     return;
@@ -1205,8 +1241,8 @@ namespace OpenTK
         /// </summary>
         public event ResizeEvent Resize
         {
-            add { glWindow.Resize += value; }
-            remove { glWindow.Resize -= value; }
+            add { if (disposed) throw new ObjectDisposedException("GameWindow"); glWindow.Resize += value; }
+            remove { if (disposed) throw new ObjectDisposedException("GameWindow"); glWindow.Resize -= value; }
         }
 
         /// <summary>
@@ -1232,6 +1268,7 @@ namespace OpenTK
         /// <param name="e">Contains information about the Resize event.</param>
         protected virtual void OnResize(ResizeEventArgs e)
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
         }
 
         #endregion
@@ -1304,20 +1341,13 @@ namespace OpenTK
         #region --- IDisposable Members ---
 
         /// <summary>
-        /// Not used yet.
-        /// </summary>
-        private void DisposeInternal()
-        {
-            Dispose();                  // User overridable Dispose method.
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
         /// Disposes of the GameWindow, releasing all resources consumed by it.
         /// </summary>
         public virtual void Dispose()
         {
+            if (disposed) throw new ObjectDisposedException("GameWindow");
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         private void Dispose(bool manual)
@@ -1327,7 +1357,10 @@ namespace OpenTK
                 if (manual)
                 {
                     if (glContext != null)
+                    {
                         glContext.Dispose();
+                        glContext = null;
+                    }
 
                     if (glWindow != null)
                     {
@@ -1340,10 +1373,10 @@ namespace OpenTK
         }
 
         /// <summary>Finalizes unmanaged resources consumed by the GameWindow.</summary>
-        ~GameWindow()
-        {
-            Dispose(false);
-        }
+        //~GameWindow()
+        //{
+        //    Dispose(false);
+        //}
 
         #endregion
     }
