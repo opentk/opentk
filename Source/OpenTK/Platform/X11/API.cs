@@ -67,6 +67,8 @@ namespace OpenTK.Platform.X11
 
         static API()
         {
+            Debug.Print("Initializing threaded X11: {0}.", Functions.XInitThreads().ToString());
+        
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             
             // Bad idea - Windows.Forms will steal our events!

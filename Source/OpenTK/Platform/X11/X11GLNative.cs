@@ -98,8 +98,18 @@ namespace OpenTK.Platform.X11
                 window.Display = API.DefaultDisplay;//Functions.XOpenDisplay(IntPtr.Zero); // IntPtr.Zero == default display
                 if (window.Display == IntPtr.Zero)
                     throw new Exception("Could not open connection to X");
-                window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
-                window.RootWindow = Functions.XRootWindow(window.Display, window.Screen); // API.RootWindow;
+
+                try
+                {
+                    Functions.XLockDisplay(window.Display);
+                    window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
+                    window.RootWindow = Functions.XRootWindow(window.Display, window.Screen); // API.RootWindow;
+                }
+                finally
+                {
+                    Functions.XUnlockDisplay(window.Display);
+                }
+                
                 Debug.Print("Display: {0}, Screen {1}, Root window: {2}", window.Display, window.Screen, window.RootWindow);
 
                 RegisterAtoms(window);
@@ -145,40 +155,43 @@ namespace OpenTK.Platform.X11
             if (height <= 0) throw new ArgumentOutOfRangeException("height", "Must be higher than zero.");
             if (exists) throw new InvalidOperationException("A render window already exists.");
 
-            Debug.Indent();
-
             XVisualInfo info = new XVisualInfo();
-            info.visualid = mode.Index;
-            int dummy;
-            window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
-                Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));
 
-            // Create a window on this display using the visual above
-            Debug.Write("Opening render window... ");
+            Debug.Indent();
+            
+            lock (API.Lock)
+            {
+                info.visualid = mode.Index;
+                int dummy;
+                window.VisualInfo = (XVisualInfo)Marshal.PtrToStructure(
+                    Functions.XGetVisualInfo(window.Display, XVisualInfoMask.ID, ref info, out dummy), typeof(XVisualInfo));
 
-            XSetWindowAttributes attributes = new XSetWindowAttributes();
-            attributes.background_pixel = IntPtr.Zero;
-            attributes.border_pixel = IntPtr.Zero;
-            attributes.colormap = Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
-            window.EventMask = EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
-                               EventMask.KeyReleaseMask | EventMask.KeyPressMask |
-                               EventMask.PointerMotionMask | // Bad! EventMask.PointerMotionHintMask |
-                               EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
-            attributes.event_mask = (IntPtr)window.EventMask;
+                // Create a window on this display using the visual above
+                Debug.Write("Opening render window... ");
 
-            uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
-                (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
+                XSetWindowAttributes attributes = new XSetWindowAttributes();
+                attributes.background_pixel = IntPtr.Zero;
+                attributes.border_pixel = IntPtr.Zero;
+                attributes.colormap = Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0/*AllocNone*/);
+                window.EventMask = EventMask.StructureNotifyMask | EventMask.SubstructureNotifyMask | EventMask.ExposureMask |
+                                   EventMask.KeyReleaseMask | EventMask.KeyPressMask |
+                                   EventMask.PointerMotionMask | // Bad! EventMask.PointerMotionHintMask |
+                                   EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
+                attributes.event_mask = (IntPtr)window.EventMask;
 
-            window.WindowHandle = Functions.XCreateWindow(window.Display, window.RootWindow,
-                0, 0, width, height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
-                (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask, ref attributes);
+                uint mask = (uint)SetWindowValuemask.ColorMap | (uint)SetWindowValuemask.EventMask |
+                    (uint)SetWindowValuemask.BackPixel | (uint)SetWindowValuemask.BorderPixel;
 
-            if (window.WindowHandle == IntPtr.Zero)
-                throw new ApplicationException("XCreateWindow call failed (returned 0).");
+                window.WindowHandle = Functions.XCreateWindow(window.Display, window.RootWindow,
+                    0, 0, width, height, 0, window.VisualInfo.depth/*(int)CreateWindowArgs.CopyFromParent*/,
+                    (int)CreateWindowArgs.InputOutput, window.VisualInfo.visual, (UIntPtr)mask, ref attributes);
 
-            //XVisualInfo vis = window.VisualInfo;
-            //Glx.CreateContext(window.Display, ref vis, IntPtr.Zero, true);
+                if (window.WindowHandle == IntPtr.Zero)
+                    throw new ApplicationException("XCreateWindow call failed (returned 0).");
 
+                //XVisualInfo vis = window.VisualInfo;
+                //Glx.CreateContext(window.Display, ref vis, IntPtr.Zero, true);
+            }
             context = new GraphicsContext(mode, window);
 
             // Set the window hints
@@ -188,13 +201,14 @@ namespace OpenTK.Platform.X11
             hints.width = width;
             hints.height = height;
             hints.flags = (IntPtr)(XSizeHintsFlags.USSize | XSizeHintsFlags.USPosition);
-            Functions.XSetWMNormalHints(window.Display, window.WindowHandle, ref hints);
+            lock (API.Lock)
+            {
+                Functions.XSetWMNormalHints(window.Display, window.WindowHandle, ref hints);
 
-            // Register for window destroy notification
-            IntPtr wm_destroy_atom = Functions.XInternAtom(window.Display, "WM_DELETE_WINDOW", true);
-            //XWMHints hint = new XWMHints();
-            Functions.XSetWMProtocols(window.Display, window.WindowHandle, new IntPtr[] { wm_destroy_atom }, 1);
-
+                // Register for window destroy notification
+                IntPtr wm_destroy_atom = Functions.XInternAtom(window.Display, "WM_DELETE_WINDOW", true);
+                Functions.XSetWMProtocols(window.Display, window.WindowHandle, new IntPtr[] { wm_destroy_atom }, 1);
+            }
             Top = Left = 0;
             Right = Width;
             Bottom = Height;
@@ -207,9 +221,10 @@ namespace OpenTK.Platform.X11
 
             Debug.Print("done! (id: {0})", window.WindowHandle);
 
-            //(glContext as IGLContextCreationHack).SetWindowHandle(window.Handle);
-
-            API.MapRaised(window.Display, window.WindowHandle);
+            lock (API.Lock)
+            {
+                API.MapRaised(window.Display, window.WindowHandle);
+            }
             mapped = true;
 
             //context.CreateContext(true, null);
@@ -664,12 +679,18 @@ namespace OpenTK.Platform.X11
         {
             if (!disposed)
             {
-                if (window != null)
+                if (window != null && window.WindowHandle != IntPtr.Zero)
                 {
-                    if (window.WindowHandle != IntPtr.Zero)
+                    try
+                    {
+                        Functions.XLockDisplay(window.Display);
                         Functions.XDestroyWindow(window.Display, window.WindowHandle);
-                    //if (window.Display != IntPtr.Zero)
-                    //    Functions.XCloseDisplay(window.Display);
+                    }
+                    finally
+                    {
+                        Functions.XUnlockDisplay(window.Display);
+                    }
+
                     window = null;
                 }
 
