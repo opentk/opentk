@@ -422,6 +422,20 @@ namespace OpenTK.OpenAL
             }
         }
 
+        /// <summary>This function generates one or more sources. References to sources are int values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
+        /// <param name="n">The number of sources to be generated.</param>
+        /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
+        [CLSCompliant( true )]
+        public static void GenSources( int[] sources )
+        {
+            uint[] temp = new uint[sources.Length];
+            GenSources( temp.Length, out temp[0] );
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                sources[i] = (int) temp[i];
+            }
+        }
+
         /// <summary>This function generates one source only. References to sources are uint values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
         /// <param name="source">Pointer to an uint value which will store the name of the new source.</param>
         [CLSCompliant( false )]
@@ -438,6 +452,16 @@ namespace OpenTK.OpenAL
             uint temp;
             GenSources( 1, out temp );
             source = (int) temp;
+        }
+
+        /// <summary>This function generates one source only. References to sources are int values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
+        /// <param name="source">Pointer to an int value which will store the name of the new source.</param>
+        [CLSCompliant( true )]
+        public static int GenSources( )
+        {
+            uint temp;
+            GenSources( 1, out temp );
+            return (int) temp;
         }
 
         #endregion GenSources()
@@ -477,6 +501,20 @@ namespace OpenTK.OpenAL
             DeleteSources( n, ref temp );
         }
 
+        /// <summary>This function deletes one or more sources.</summary>
+        /// <param name="n">The number of sources to be deleted.</param>
+        /// <param name="sources">Pointer to an array of source names identifying the sources to be deleted.</param>
+        [CLSCompliant( true )]
+        public static void DeleteSources( int[] sources )
+        {
+            uint[] temp = new uint[sources.Length];
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                temp[i] = (uint) sources[i];
+            }
+            DeleteSources( temp.Length, ref temp );
+        }
+
         /// <summary>This function deletes one source only.</summary>
         /// <param name="source">Pointer to a source name identifying the source to be deleted.</param>
         [CLSCompliant( false )]
@@ -491,6 +529,16 @@ namespace OpenTK.OpenAL
         /// <param name="source">Pointer to a source name identifying the source to be deleted.</param>
         [CLSCompliant( true )]
         public static void DeleteSources( ref int source )
+        {
+            uint[] temp = new uint[1];
+            temp[0] = (uint) source;
+            DeleteSources( 1, ref temp );
+        }
+
+        /// <summary>This function deletes one source only.</summary>
+        /// <param name="source">Pointer to a source name identifying the source to be deleted.</param>
+        [CLSCompliant( true )]
+        public static void DeleteSources( int source )
         {
             uint[] temp = new uint[1];
             temp[0] = (uint) source;
@@ -1289,6 +1337,20 @@ namespace OpenTK.OpenAL
             }
         }
 
+        /// <summary>This function generates one or more buffers, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
+        /// <param name="n">The number of buffers to be generated.</param>
+        /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
+        [CLSCompliant( true )]
+        public static void GenBuffers( int[] buffers )
+        {
+            uint[] temp = new uint[buffers.Length];
+            GenBuffers( temp.Length, out temp[0] );
+            for ( int i = 0 ; i <temp.Length ; i++ )
+            {
+                buffers[i] = (int) temp[i];
+            }
+        }
+
         /// <summary>This function generates one buffer only, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
         /// <param name="buffer">Pointer to an uint value which will store the name of the new buffer.</param>
         [CLSCompliant( false )]
@@ -1305,6 +1367,16 @@ namespace OpenTK.OpenAL
             uint temp;
             GenBuffers( 1, out temp );
             buffer = (int) temp;
+        }
+
+        /// <summary>This function generates one buffer only, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
+        /// <param name="buffer">Pointer to an uint value which will store the name of the new buffer.</param>
+        [CLSCompliant( true )]
+        public static int GenBuffers( )
+        {
+            uint temp;
+            GenBuffers( 1, out temp );
+            return (int) temp;
         }
 
         #endregion GenBuffers
@@ -1347,6 +1419,20 @@ namespace OpenTK.OpenAL
             DeleteBuffers( n, ref temp );
         }
 
+        /// <summary>This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
+        /// <param name="n">The number of buffers to be deleted.</param>
+        /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
+        [CLSCompliant( true )]
+        public static void DeleteBuffers( int[] buffers )
+        {
+            uint[] temp = new uint[buffers.Length];
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                temp[i] = (uint) buffers[i];
+            }
+            DeleteBuffers( temp.Length, ref temp );
+        }
+
         /// <summary>This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
         /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
         [CLSCompliant( false )]
@@ -1365,6 +1451,15 @@ namespace OpenTK.OpenAL
         /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
         [CLSCompliant( true )]
         public static void DeleteBuffers( ref int buffer )
+        {
+            uint temp = (uint) buffer;
+            DeleteBuffers( ref temp );
+        }
+
+        /// <summary>This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
+        /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
+        [CLSCompliant( true )]
+        public static void DeleteBuffers( int buffer )
         {
             uint temp = (uint) buffer;
             DeleteBuffers( ref temp );
