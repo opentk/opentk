@@ -158,6 +158,21 @@ namespace OpenTK.OpenAL
             }
         }
 
+        /// <summary>The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary Effect Slot object</summary>
+        /// <remarks>After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using Effect() with EfxEffecti.</remarks>
+        /// <param name="n">Number of Effects to be created.</param>
+        /// <param name="effects">Pointer addressing sufficient memory to store n Effect object identifiers.</param>
+        [CLSCompliant( true )]
+        public void GenEffects( int[] effects )
+        {
+            uint[] temp = new uint[effects.Length];
+            GenEffects( temp.Length, out temp[0] );
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                effects[i] = (int) temp[i];
+            }
+        }
+
         /// <summary>This function generates only one Effect.</summary>
         /// <param name="effect">Storage UInt32 for the new effect name/handle.</param>
         [CLSCompliant( false )]
@@ -180,6 +195,16 @@ namespace OpenTK.OpenAL
             uint temp;
             GenEffects( out temp );
             effect = (int) temp;
+        }
+
+        /// <summary>This function generates only one Effect.</summary>
+        /// <param name="effect">Storage UInt32 for the new effect name/handle.</param>
+        [CLSCompliant( true )]
+        public int GenEffects(  )
+        {
+            uint temp;
+            GenEffects( out temp );
+            return (int) temp;
         }
 
         #endregion alGenEffects
@@ -222,6 +247,20 @@ namespace OpenTK.OpenAL
             DeleteEffects( n, ref temp );
         }
 
+        /// <summary>The DeleteEffects function is used to delete and free resources for Effect objects previously created with GenEffects.</summary>
+        /// <param name="n">Number of Effects to be deleted.</param>
+        /// <param name="effects">Pointer to n Effect object identifiers.</param>
+        [CLSCompliant( true )]
+        public void DeleteEffects( int[] effects )
+        {
+            uint[] temp = new uint[effects.Length];
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                temp[i] = (uint) effects[i];
+            }
+            DeleteEffects( temp.Length, ref temp );
+        }
+
         /// <summary>This function deletes one Effect only.</summary>
         /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
         [CLSCompliant(false)]
@@ -238,8 +277,17 @@ namespace OpenTK.OpenAL
 
          /// <summary>This function deletes one Effect only.</summary>
         /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
-        [CLSCompliant( false )]
+        [CLSCompliant( true)]
         public void DeleteEffects( ref int effect )
+        {
+            uint temp = (uint) effect;
+            DeleteEffects( ref temp );
+        }
+
+        /// <summary>This function deletes one Effect only.</summary>
+        /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
+        [CLSCompliant( true )]
+        public void DeleteEffects( int effect )
         {
             uint temp = (uint) effect;
             DeleteEffects( ref temp );
@@ -539,6 +587,21 @@ namespace OpenTK.OpenAL
             }
         }
 
+        /// <summary>The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or Auxiliary Send Filters.</summary>
+        /// <remarks>After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of parameters, the application must specify what type of filter should be stored in the object, using Filter() with EfxFilteri.</remarks>
+        /// <param name="n">Number of Filters to be created.</param>
+        /// <param name="filters">Pointer addressing sufficient memory to store n Filter object identifiers.</param>
+        [CLSCompliant( true )]
+        public void GenFilters( int[] filters )
+        {
+            uint[] temp = new uint[filters.Length];
+            GenFilters( temp.Length, out temp[0] );
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                filters[i] = (int) temp[i];
+            }
+        }
+
         /// <summary>This function generates only one Filter.</summary>
         /// <param name="filter">Storage UInt32 for the new filter name/handle.</param>
         [CLSCompliant( false )]
@@ -561,6 +624,16 @@ namespace OpenTK.OpenAL
             uint temp;
             GenFilters( out temp );
             filter = (int) temp;
+        }
+
+        /// <summary>This function generates only one Filter.</summary>
+        /// <param name="filter">Storage UInt32 for the new filter name/handle.</param>
+        [CLSCompliant( true )]
+        public int GenFilters( )
+        {
+            uint temp;
+            GenFilters( out temp );
+            return (int) temp;
         }
 
         #endregion alGenFilters
@@ -603,6 +676,20 @@ namespace OpenTK.OpenAL
             DeleteFilters( n, ref temp );
         }
 
+        /// <summary>The DeleteFilters function is used to delete and free resources for Filter objects previously created with GenFilters.</summary>
+        /// <param name="n">Number of Filters to be deleted.</param>
+        /// <param name="filters">Pointer to n Filter object identifiers.</param>
+        [CLSCompliant( true )]
+        public void DeleteFilters( int[] filters )
+        {
+            uint[] temp = new uint[filters.Length];
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                temp[i] = (uint) filters[i];
+            }
+            DeleteFilters( temp.Length, ref temp );
+        }
+
         /// <summary>This function deletes one Filter only.</summary>
         /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         [CLSCompliant(false)]
@@ -621,6 +708,15 @@ namespace OpenTK.OpenAL
         /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         [CLSCompliant( true )]
         public void DeleteFilters( ref int filter )
+        {
+            uint temp = (uint) filter;
+            DeleteFilters( ref temp );
+        }
+
+        /// <summary>This function deletes one Filter only.</summary>
+        /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
+        [CLSCompliant( true )]
+        public void DeleteFilters( int filter )
         {
             uint temp = (uint) filter;
             DeleteFilters( ref temp );
@@ -845,6 +941,20 @@ namespace OpenTK.OpenAL
             }
         }
 
+        /// <summary>The GenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots that can be created will be dependant upon the Open AL device used.</summary>
+        /// <remarks>An application should check the OpenAL error state after making this call to determine if the Effect Slot was successfully created. If the function call fails then none of the requested Effect Slots are created. A good strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then check for an error condition. If an error is set then the loop can be broken and the application can determine if sufficient resources are available.</remarks>
+        /// <param name="n">Number of Auxiliary Effect Slots to be created.</param>
+        /// <param name="slots">Pointer addressing sufficient memory to store n Effect Slot object identifiers.</param>
+        [CLSCompliant( true )]
+        public void GenAuxiliaryEffectSlots(  int[] slots )
+        {
+            uint[] temp = new uint[slots.Length];
+            GenAuxiliaryEffectSlots( temp.Length, out temp[0] );
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                slots[i] = (int) temp[i];
+            }
+        }
        
         /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
         /// <param name="slot">Storage UInt32 for the new auxiliary effect slot name/handle.</param>
@@ -869,6 +979,16 @@ namespace OpenTK.OpenAL
             uint temp;
             GenAuxiliaryEffectSlots( out temp );
             slot = (int) temp;
+        }
+
+        /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
+        /// <param name="slot">Storage UInt32 for the new auxiliary effect slot name/handle.</param>
+        [CLSCompliant( true )]
+        public int GenAuxiliaryEffectSlots(  )
+        {
+            uint temp;
+            GenAuxiliaryEffectSlots( out temp );
+            return (int) temp;
         }
 
         #endregion alGenAuxiliaryEffectSlots
@@ -911,6 +1031,20 @@ namespace OpenTK.OpenAL
             DeleteAuxiliaryEffectSlots( n, ref temp );
         }
 
+        /// <summary>The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots previously created with GenAuxiliaryEffectSlots.</summary>
+        /// <param name="n">Number of Auxiliary Effect Slots to be deleted.</param>
+        /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
+        [CLSCompliant( true )]
+        public void DeleteAuxiliaryEffectSlots( int[] slots )
+        {
+            uint[] temp = new uint[slots.Length];
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                temp[i] = (uint) slots[i];
+            }
+            DeleteAuxiliaryEffectSlots( temp.Length, ref temp );
+        }
+
         /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
         /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
         [CLSCompliant(false)]
@@ -929,6 +1063,15 @@ namespace OpenTK.OpenAL
         /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
         [CLSCompliant( true )]
         public void DeleteAuxiliaryEffectSlots( ref int slot )
+        {
+            uint temp = (uint) slot;
+            DeleteAuxiliaryEffectSlots( ref temp );
+        }
+
+        /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
+        /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
+        [CLSCompliant( true )]
+        public void DeleteAuxiliaryEffectSlots( int slot )
         {
             uint temp = (uint) slot;
             DeleteAuxiliaryEffectSlots( ref temp );
