@@ -416,14 +416,13 @@ namespace OpenTK.OpenAL
             uint[] temp = new uint[n];
             GenSources( n, out temp[0] );
             sources = new int[n];
-            for ( int i = 0; i < n; i++ )
+            for ( int i = 0 ; i < n ; i++ )
             {
                 sources[i] = (int) temp[i];
             }
         }
 
         /// <summary>This function generates one or more sources. References to sources are int values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
-        /// <param name="n">The number of sources to be generated.</param>
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
         [CLSCompliant( true )]
         public static void GenSources( int[] sources )
@@ -435,6 +434,23 @@ namespace OpenTK.OpenAL
                 sources[i] = (int) temp[i];
             }
         }
+
+        /// <summary>This function generates one or more sources. References to sources are int values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
+        /// <param name="n">The number of sources to be generated.</param>
+        /// <returns>Pointer to an array of int values which will store the names of the new sources.</returns>
+        [CLSCompliant( true )]
+        public static int[] GenSources( int n )
+        {
+            uint[] temp = new uint[n];
+            GenSources( temp.Length, out temp[0] );
+            int[] sources = new int[n];
+            for ( int i = 0 ; i < temp.Length ; i++ )
+            {
+                sources[i] = (int) temp[i];
+            }
+            return sources;
+        }
+
 
         /// <summary>This function generates one source only. References to sources are uint values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
         /// <param name="source">Pointer to an uint value which will store the name of the new source.</param>
@@ -455,7 +471,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function generates one source only. References to sources are int values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
-        /// <param name="source">Pointer to an int value which will store the name of the new source.</param>
+        /// <returns>Pointer to an int value which will store the name of the new source.</returns>
         [CLSCompliant( true )]
         public static int GenSources( )
         {
@@ -494,7 +510,7 @@ namespace OpenTK.OpenAL
         public static void DeleteSources( int n, ref int[] sources )
         {
             uint[] temp = new uint[n];
-            for ( int i = 0; i < n; i++ )
+            for ( int i = 0 ; i < n ; i++ )
             {
                 temp[i] = (uint) sources[i];
             }
@@ -502,7 +518,6 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function deletes one or more sources.</summary>
-        /// <param name="n">The number of sources to be deleted.</param>
         /// <param name="sources">Pointer to an array of source names identifying the sources to be deleted.</param>
         [CLSCompliant( true )]
         public static void DeleteSources( int[] sources )
@@ -893,7 +908,7 @@ namespace OpenTK.OpenAL
         public static void SourcePlay( int ns, int[] sids )
         {
             uint[] temp = new uint[ns];
-            for ( int i = 0; i < ns; i++ )
+            for ( int i = 0 ; i < ns ; i++ )
             {
                 temp[i] = (uint) sids[i];
             }
@@ -948,7 +963,7 @@ namespace OpenTK.OpenAL
         public static void SourceStop( int ns, int[] sids )
         {
             uint[] temp = new uint[ns];
-            for ( int i = 0; i < ns; i++ )
+            for ( int i = 0 ; i < ns ; i++ )
             {
                 temp[i] = (uint) sids[i];
             }
@@ -1003,7 +1018,7 @@ namespace OpenTK.OpenAL
         public static void SourceRewind( int ns, int[] sids )
         {
             uint[] temp = new uint[ns];
-            for ( int i = 0; i < ns; i++ )
+            for ( int i = 0 ; i < ns ; i++ )
             {
                 temp[i] = (uint) sids[i];
             }
@@ -1057,7 +1072,7 @@ namespace OpenTK.OpenAL
         public static void SourcePause( int ns, int[] sids )
         {
             uint[] temp = new uint[ns];
-            for ( int i = 0; i < ns; i++ )
+            for ( int i = 0 ; i < ns ; i++ )
             {
                 temp[i] = (uint) sids[i];
             }
@@ -1195,7 +1210,7 @@ namespace OpenTK.OpenAL
         public static void SourceQueueBuffers( int sid, int numEntries, int[] bids )
         {
             uint[] temp = new uint[numEntries];
-            for ( int i = 0; i < numEntries; i++ )
+            for ( int i = 0 ; i < numEntries ; i++ )
             {
                 temp[i] = (uint) bids[i];
             }
@@ -1254,7 +1269,7 @@ namespace OpenTK.OpenAL
         public static void SourceUnqueueBuffers( int sid, int numEntries, int[] bids )
         {
             uint[] temp = new uint[numEntries];
-            for ( int i = 0; i < numEntries; i++ )
+            for ( int i = 0 ; i < numEntries ; i++ )
             {
                 temp[i] = (uint) bids[i];
             }
@@ -1331,7 +1346,20 @@ namespace OpenTK.OpenAL
             uint[] temp = new uint[n];
             GenBuffers( n, out temp[0] );
             buffers = new int[n];
-            for ( int i = 0; i < n; i++ )
+            for ( int i = 0 ; i < n ; i++ )
+            {
+                buffers[i] = (int) temp[i];
+            }
+        }
+
+        /// <summary>This function generates one or more buffers, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
+        /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
+        [CLSCompliant( true )]
+        public static void GenBuffers( int[] buffers )
+        {
+            uint[] temp = new uint[buffers.Length];
+            GenBuffers( temp.Length, out temp[0] );
+            for ( int i = 0 ; i < temp.Length ; i++ )
             {
                 buffers[i] = (int) temp[i];
             }
@@ -1339,16 +1367,18 @@ namespace OpenTK.OpenAL
 
         /// <summary>This function generates one or more buffers, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
         /// <param name="n">The number of buffers to be generated.</param>
-        /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
+        /// <returns>Pointer to an array of uint values which will store the names of the new buffers.</returns>
         [CLSCompliant( true )]
-        public static void GenBuffers( int[] buffers )
+        public static int[] GenBuffers( int n )
         {
-            uint[] temp = new uint[buffers.Length];
+            uint[] temp = new uint[n];
             GenBuffers( temp.Length, out temp[0] );
-            for ( int i = 0 ; i <temp.Length ; i++ )
+            int[] buffers = new int[n];
+            for ( int i = 0 ; i < temp.Length ; i++ )
             {
                 buffers[i] = (int) temp[i];
             }
+            return buffers;
         }
 
         /// <summary>This function generates one buffer only, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
@@ -1370,7 +1400,7 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>This function generates one buffer only, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
-        /// <param name="buffer">Pointer to an uint value which will store the name of the new buffer.</param>
+        /// <returns>Pointer to an uint value which will store the name of the new buffer.</returns>
         [CLSCompliant( true )]
         public static int GenBuffers( )
         {
@@ -1412,7 +1442,7 @@ namespace OpenTK.OpenAL
         public static void DeleteBuffers( int n, ref int[] buffers )
         {
             uint[] temp = new uint[n];
-            for ( int i = 0; i < n; i++ )
+            for ( int i = 0 ; i < n ; i++ )
             {
                 temp[i] = (uint) buffers[i];
             }
