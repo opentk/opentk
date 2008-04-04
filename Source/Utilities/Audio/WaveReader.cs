@@ -44,9 +44,11 @@ namespace OpenTK.Audio
 
         internal WaveReader(Stream s)
         {
+            if (s == null) throw new ArgumentNullException();
+            if (!s.CanRead) throw new ArgumentException("Cannot read from specified Stream.");
+
             reader = new BinaryReader(s);
-            if (!ReadHeaders(reader))
-                throw new NotSupportedException("The specified stream is not supported by this decoder.");
+            this.Stream = s;
         }
 
 #if false
@@ -163,7 +165,7 @@ namespace OpenTK.Audio
             decoded_data = new SoundData(new SoundFormat(channels, bits_per_sample, sample_rate),
                                                          reader.ReadBytes((int)samples));
 
-            throw new NotImplementedException();
+            return decoded_data;
         }
 
         #endregion
