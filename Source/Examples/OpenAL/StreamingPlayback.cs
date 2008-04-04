@@ -37,9 +37,8 @@ namespace Examples.OpenAL
 
                 Console.Write("Playing");
 
-                //new Thread().Start(buffers
-
-
+                SoundStreamer streamer = new SoundStreamer(sound, source, buffers);
+                streamer.Start();
 
                 // Query the source to find out when it stops playing.
                 do
@@ -50,12 +49,13 @@ namespace Examples.OpenAL
                     {
                         AL.GetSource(source, ALGetSourcei.SourceState, out state);
                     }
-                } while ((ALSourceState)state == ALSourceState.Playing);
+                }
+                while ((ALSourceState)state == ALSourceState.Playing);
 
                 Console.WriteLine();
 
                 AL.SourceStop(source);
-                AL.DeleteSources(ref source);
+                AL.DeleteSource(source);
                 AL.DeleteBuffers(buffers);
 
                 sound.Dispose();
@@ -64,9 +64,33 @@ namespace Examples.OpenAL
 
         class SoundStreamer
         {
+            SoundReader reader;
+            int source;
+            int[] buffers;
+
             public SoundStreamer(SoundReader sound, int source, int[] buffers)
             {
-                while (!sound.EndOfFile)
+                reader = sound;
+                this.source = source;
+                this.buffers = buffers;
+
+                lock (openal_lock)
+                {
+                    foreach (int buffer in buffers)
+                        AL.BufferData(buffer, sound.ReadSamples(buffer_size));
+
+                    AL.SourceQueueBuffers(source, buffers.Length, buffers);
+                }
+            }
+
+            public void Start()
+            {
+                new Thread(new ThreadStart(StartStreaming)).Start();
+            }
+
+            void StartStreaming()
+            {
+                while (!reader.EndOfFile)
                 {
                     lock (openal_lock)
                     {
@@ -75,10 +99,12 @@ namespace Examples.OpenAL
                         while (processed_count-- > 0)
                         {
                             int buffer = AL.SourceUnqueueBuffer(source);
-                            AL.BufferData(buffer, sound.ReadSamples(buffer_size));
+                            AL.BufferData(buffer, reader.ReadSamples(buffer_size));
                             AL.SourceQueueBuffer(source, buffer);
                         }
                     }
+
+                    Thread.Sleep(5);
                 }
             }
         }

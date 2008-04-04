@@ -48,8 +48,8 @@ namespace Examples
                 Console.WriteLine();
 
                 AL.SourceStop(source);
-                AL.DeleteSources(ref source);
-                AL.DeleteBuffers(ref buffer);
+                AL.DeleteSource(source);
+                AL.DeleteBuffer(buffer);
 
                 sound.Dispose();
             }
