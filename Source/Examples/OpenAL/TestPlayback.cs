@@ -13,7 +13,7 @@ using OpenTK.Audio;
 
 namespace Examples
 {
-    [Example("Playback Test", ExampleCategory.Test)]
+    [Example("Playback", ExampleCategory.OpenAL)]
     public partial class Playback
     {
         public static void Main()
@@ -22,21 +22,13 @@ namespace Examples
 
             AudioContext context = new AudioContext();
 
-            TestWaveReader(file);
-            TestWaveReaderStreaming(file);
-        }
-
-        #region static void TestWaveReader(string filename)
-
-        static void TestWaveReader(string filename)
-        {
-            using (SoundReader sound = new SoundReader(filename))
+            using (SoundReader sound = new SoundReader(file))
             {
+                Console.WriteLine("Testing WaveReader({0}).ReadToEnd()", file);
+
                 int buffer = AL.GenBuffer();
                 int source = AL.GenSource();
                 int state;
-
-                Console.WriteLine("Testing WaveReader({0}).ReadToEnd()", filename);
 
                 AL.BufferData(buffer, sound.ReadToEnd());
                 AL.Source(source, ALSourcei.Buffer, buffer);
@@ -50,7 +42,8 @@ namespace Examples
                     Thread.Sleep(250);
                     Console.Write(".");
                     AL.GetSource(source, ALGetSourcei.SourceState, out state);
-                } while ((ALSourceState)state == ALSourceState.Playing);
+                }
+                while ((ALSourceState)state == ALSourceState.Playing);
 
                 Console.WriteLine();
 
@@ -61,8 +54,6 @@ namespace Examples
                 sound.Dispose();
             }
         }
-
-        #endregion
 
         #region static void TestWaveReaderStreaming(string filename)
 
