@@ -163,7 +163,7 @@ namespace OpenTK.Platform.X11
         /// <summary>
         /// Frees the memory used by an X structure. Only use on unmanaged structures!
         /// </summary>
-        /// <param name="data">A pointer to the structure that will be freed.</param>
+        /// <param name="buffer">A pointer to the structure that will be freed.</param>
         [DllImport(_dll_name, EntryPoint = "XFree")]
         extern public static void Free(IntPtr data);
 
@@ -718,7 +718,7 @@ XF86VidModeGetGammaRampSize(
 
     unsafe internal struct Screen
     {
-	    XExtData ext_data;	/* hook for extension to hang data */
+	    XExtData ext_data;	/* hook for extension to hang buffer */
 	    IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
 	    Window root;		/* Root window id. */
 	    int width, height;	/* width and height of screen */
@@ -748,10 +748,10 @@ XF86VidModeGetGammaRampSize(
     unsafe internal class XExtData
     {
 	    int number;		/* number returned by XRegisterExtension */
-	    XExtData next;	/* next item on list of data for structure */
+	    XExtData next;	/* next item on list of buffer for structure */
 	    delegate int FreePrivateDelegate(XExtData extension);
         FreePrivateDelegate FreePrivate;    /* called to free private storage */
-        XPointer private_data;	/* data private to this extension. */
+        XPointer private_data;	/* buffer private to this extension. */
     };
 
     #pragma warning restore 0169

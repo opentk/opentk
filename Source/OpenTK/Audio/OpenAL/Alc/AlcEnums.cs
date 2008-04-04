@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenTK.OpenAL.Enums
+namespace OpenTK.Audio
 {
 
     public enum AlcContextAttributes : int

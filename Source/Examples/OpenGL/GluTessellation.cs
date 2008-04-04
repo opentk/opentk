@@ -10,9 +10,7 @@ using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.OpenGL.Enums;
-using OpenTK.OpenAL;
-using OpenTK.OpenAL.Enums;
-using OpenTK.Audio;
+
 using OpenTK.Input;
 using System.Runtime.InteropServices;
 

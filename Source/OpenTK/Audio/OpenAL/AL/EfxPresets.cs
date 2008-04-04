@@ -11,7 +11,7 @@ using System;
 
 using OpenTK.Math;
 
-namespace OpenTK.OpenAL
+namespace OpenTK.Audio
 {
 
     public partial class EfxExtension

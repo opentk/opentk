@@ -11,7 +11,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace OpenTK.OpenAL
+namespace OpenTK.Audio
 {
 
     /// <summary>Alut, FreeAlut = Free Audio Library Utilities</summary>
@@ -67,19 +67,19 @@ namespace OpenTK.OpenAL
         #region Error Checking
 
         /// <summary>Any ALUT routine that fails will return AL_FALSE / AL_NONE / NULL and set the global error state. If a subsequent error occurs while there is still an error recorded internally, the second error will simply be ignored. Calling alutGetError will reset the error code to ALUT_ERROR_NO_ERROR. Note that the error state is not cleared by other successful ALUT calls. Alut.GetError can be called in any ALUT state and will never fail.</summary>
-        /// <returns><see cref="Enums.AlutError"/></returns>
+        /// <returns><see cref="AlutError"/></returns>
         [DllImport(Alut.Lib, EntryPoint = "alutGetError", ExactSpelling = true, CallingConvention = Alut.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern Enums.AlutError GetError();
+        public static extern AlutError GetError();
         // ALUT_API ALenum ALUT_APIENTRY alutGetError (void);
 
         [DllImport(Alut.Lib, EntryPoint = "alutGetErrorString", ExactSpelling = true, CallingConvention = Alut.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
-        private static extern IntPtr GetErrorStringPrivate(Enums.AlutError error);
+        private static extern IntPtr GetErrorStringPrivate(AlutError error);
         // ALUT_API const char *ALUT_APIENTRY alutGetErrorString (ALenum error);
 
         /// <summary>Alut.GetErrorString can be used to convert an error code into a human-readable description. The precise text of these descriptions may vary from implementation to implementation and should not be relied upon by the application.</summary>
         /// <param name="error">Retrieve first occured error with Alut.GetError</param>
         /// <returns>A human-readable description of the Error.</returns>
-        public static string GetErrorString(Enums.AlutError error)
+        public static string GetErrorString(AlutError error)
         {
             return Marshal.PtrToStringAnsi(GetErrorStringPrivate(error));
         }
@@ -88,20 +88,20 @@ namespace OpenTK.OpenAL
 
         #region File Loading
 
-        /// <summary>Alut.CreateBufferFromFile tries to guess the sound data format by looking at the filename and/or the file contents and loads the sound data into an OpenAL buffer.</summary>
+        /// <summary>Alut.CreateBufferFromFile tries to guess the sound buffer format by looking at the filename and/or the file contents and loads the sound buffer into an OpenAL buffer.</summary>
         /// <param name="filename">The file to be loaded</param>
         /// <returns>OpenAL Buffer, 0 on failure.</returns>
         [CLSCompliant(false), DllImport(Alut.Lib, EntryPoint = "alutCreateBufferFromFile", ExactSpelling = true, CallingConvention = Alut.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         public static extern uint CreateBufferFromFile([In] string filename);
         // ALUT_API ALuint ALUT_APIENTRY alutCreateBufferFromFile (const char *fileName); 
 
-        /// <summary>Alut.CreateBufferFromFileImage tries to guess the sound data format by looking at the contents of the memory region given as parameters and loads the sound data into an OpenAL buffer.</summary>
-        /// <param name="data">A Pointer to the sound data in memory.</param>
-        /// <param name="length">Size in Bytes of the sound data.</param>
+        /// <summary>Alut.CreateBufferFromFileImage tries to guess the sound buffer format by looking at the contents of the memory region given as parameters and loads the sound buffer into an OpenAL buffer.</summary>
+        /// <param name="buffer">A Pointer to the sound buffer in memory.</param>
+        /// <param name="length">Size in Bytes of the sound buffer.</param>
         /// <returns>OpenAL Buffer, 0 on failure.</returns>
         [CLSCompliant(false), DllImport(Alut.Lib, EntryPoint = "alutCreateBufferFromFileImage", ExactSpelling = true, CallingConvention = Alut.Style), SuppressUnmanagedCodeSecurity()]
         public static extern uint CreateBufferFromFileImage([In] IntPtr data, int length);
-        // ALUT_API ALuint ALUT_APIENTRY alutCreateBufferFromFileImage (const ALvoid *data, ALsizei length);
+        // ALUT_API ALuint ALUT_APIENTRY alutCreateBufferFromFileImage (const ALvoid *buffer, ALsizei length);
 
 
         /// <summary>Alut.CreateBufferHelloWorld returns a handle to an OpenAL buffer containing the sound of someone saying 'Hello, world!'.</summary>
@@ -117,12 +117,12 @@ namespace OpenTK.OpenAL
         /// <param name="duration">Duration (in seconds)</param>
         /// <returns>OpenAL Buffer, 0 on failure.</returns>
         [CLSCompliant(false), DllImport(Alut.Lib, EntryPoint = "alutCreateBufferWaveform", ExactSpelling = true, CallingConvention = Alut.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern uint CreateBufferWaveform(Enums.AlutWaveform waveshape, float frequency, float phase, float duration);
+        public static extern uint CreateBufferWaveform(AlutWaveform waveshape, float frequency, float phase, float duration);
         // ALUT_API ALuint ALUT_APIENTRY alutCreateBufferWaveform (ALenum waveshape, ALfloat frequency, ALfloat phase, ALfloat duration);
 
         // Warning: these leak memory if not properly free'd
         // ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryFromFile (const char *fileName, ALenum *format, ALsizei *size, ALfloat *frequency);
-        // ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryFromFileImage (const ALvoid *data, ALsizei length, ALenum *format, ALsizei *size, ALfloat *frequency);
+        // ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryFromFileImage (const ALvoid *buffer, ALsizei length, ALenum *format, ALsizei *size, ALfloat *frequency);
         // ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryHelloWorld (ALenum *format, ALsizei *size, ALfloat *frequency);
         // ALUT_API ALvoid *ALUT_APIENTRY alutLoadMemoryWaveform (ALenum waveshape, ALfloat frequency, ALfloat phase, ALfloat duration, ALenum *format, ALsizei *size, ALfloat *freq);
 
@@ -130,26 +130,26 @@ namespace OpenTK.OpenAL
 
         #region Misc
         [DllImport(Alut.Lib, EntryPoint = "alutGetMIMETypes", ExactSpelling = true, CallingConvention = Alut.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
-        private static extern IntPtr GetMIMETypesPrivate(Enums.AlutLoader loader);
+        private static extern IntPtr GetMIMETypesPrivate(AlutLoader loader);
         // ALUT_API const char *ALUT_APIENTRY alutGetMIMETypes (ALenum loader); 
 
         /// <summary>Alut.GetMIMETypes returns a comma-separated list of supported MIME types for the given loader type, e.g. something like "audio/basic,audio/mpeg,audio/x-wav". 
-        /// It is possible that Enums.AlutLoader.Memory loaders will be unable to support some file types that Enums.AlutLoader.Buffer loaders can support (although the reverse is never the case). Furthermore, it is possible that for some file types (notably audio/x-wav) the support may be only for a few sub-formats. For example, an implementation may advertise that audio/x-wav is supported when in fact it only supports uncompressed (i.e. PCM) WAV files and not any of the compressed subformats. In this event, the various ALUT loaders may return an error and set ALUT_ERROR_UNSUPPORTED_FILE_SUBTYPE rather than ALUT_ERROR_UNSUPPORTED_FILE_TYPE which would indicate that no files of this type are allowed.
+        /// It is possible that AlutLoader.Memory loaders will be unable to support some file types that AlutLoader.Buffer loaders can support (although the reverse is never the case). Furthermore, it is possible that for some file types (notably audio/x-wav) the support may be only for a few sub-formats. For example, an implementation may advertise that audio/x-wav is supported when in fact it only supports uncompressed (i.e. PCM) WAV files and not any of the compressed subformats. In this event, the various ALUT loaders may return an error and set ALUT_ERROR_UNSUPPORTED_FILE_SUBTYPE rather than ALUT_ERROR_UNSUPPORTED_FILE_TYPE which would indicate that no files of this type are allowed.
         /// </summary>
-        /// <param name="loader"><see cref="Enums.AlutLoader"/></param>
+        /// <param name="loader"><see cref="AlutLoader"/></param>
         /// <returns>A comma-separated list of supported MIME types.</returns>
-        public static string GetMIMETypes(Enums.AlutLoader loader)
+        public static string GetMIMETypes(AlutLoader loader)
         {
             return Marshal.PtrToStringAnsi(GetMIMETypesPrivate(loader));
         }
 
-        /// <summary>Alut.GetMajorVersion returns the major version number of the ALUT in use, which will match the major version number of the corresponding ALUT specification document. Can be compared using Enums.AlutVersions.</summary>
+        /// <summary>Alut.GetMajorVersion returns the major version number of the ALUT in use, which will match the major version number of the corresponding ALUT specification document. Can be compared using AlutVersions.</summary>
         /// <returns>Major Version Number.</returns>
         [DllImport(Alut.Lib, EntryPoint = "alutGetMajorVersion", ExactSpelling = true, CallingConvention = Alut.Style), SuppressUnmanagedCodeSecurity()]
         public static extern int GetMajorVersion();
         // ALUT_API ALint ALUT_APIENTRY alutGetMajorVersion (void);
 
-        /// <summary>Alut.GetMinorVersion returns the minor version number of the ALUT in use, which will match the minor version number of the corresponding ALUT specification document. Can be compared using Enums.AlutVersions.</summary>
+        /// <summary>Alut.GetMinorVersion returns the minor version number of the ALUT in use, which will match the minor version number of the corresponding ALUT specification document. Can be compared using AlutVersions.</summary>
         /// <returns>Minor Version Number.</returns>
         [DllImport(Alut.Lib, EntryPoint = "alutGetMinorVersion", ExactSpelling = true, CallingConvention = Alut.Style), SuppressUnmanagedCodeSecurity()]
         public static extern int GetMinorVersion();
