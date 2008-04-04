@@ -132,34 +132,34 @@ namespace Examples.Tutorial
             GL.GenBuffers(1, out color_buffer_object);
             GL.GenBuffers(1, out element_buffer_object);
 
-            // Upload the vertex data.
+            // Upload the vertex buffer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertex_buffer_object);
             GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(shape.Vertices.Length * 3 * sizeof(float)), shape.Vertices,
                 BufferUsageHint.StaticDraw);
             GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out size);
             if (size != shape.Vertices.Length * 3 * sizeof(Single))
                 throw new ApplicationException(String.Format(
-                    "Problem uploading vertex data to VBO (vertices). Tried to upload {0} bytes, uploaded {1}.",
+                    "Problem uploading vertex buffer to VBO (vertices). Tried to upload {0} bytes, uploaded {1}.",
                     shape.Vertices.Length * 3 * sizeof(Single), size));
 
-            // Upload the color data.
+            // Upload the color buffer.
             GL.BindBuffer(BufferTarget.ArrayBuffer, color_buffer_object);
             GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(shape.Colors.Length * sizeof(int)), shape.Colors,
                 BufferUsageHint.StaticDraw);
             GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out size);
             if (size != shape.Colors.Length * sizeof(int))
                 throw new ApplicationException(String.Format(
-                    "Problem uploading vertex data to VBO (colors). Tried to upload {0} bytes, uploaded {1}.",
+                    "Problem uploading vertex buffer to VBO (colors). Tried to upload {0} bytes, uploaded {1}.",
                     shape.Colors.Length * sizeof(int), size));
             
-            // Upload the index data (elements inside the vertex data, not color indices as per the IndexPointer function!)
+            // Upload the index buffer (elements inside the vertex buffer, not color indices as per the IndexPointer function!)
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, element_buffer_object);
             GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(shape.Indices.Length * sizeof(Int32)), shape.Indices,
                 BufferUsageHint.StaticDraw);
             GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out size);
             if (size != shape.Indices.Length * sizeof(int))
                 throw new ApplicationException(String.Format(
-                    "Problem uploading vertex data to VBO (offsets). Tried to upload {0} bytes, uploaded {1}.",
+                    "Problem uploading vertex buffer to VBO (offsets). Tried to upload {0} bytes, uploaded {1}.",
                     shape.Indices.Length * sizeof(int), size));
         }
 

@@ -1,13 +1,13 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006-2008 the OpenTK team
- * See license.txt for licensing details
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing details.
  */
 #endregion
 
 using System;
 
-using OpenTK.OpenAL;
-using OpenTK.OpenAL.Enums;
 using OpenTK.Audio;
 
 using AlContext = System.IntPtr;
@@ -175,7 +175,7 @@ main (int argc, char **argv)
             /*
 
              * Processing Loop Example:
-// PlaceCamera - places OpenGL camera & updates OpenAL listener data
+// PlaceCamera - places OpenGL camera & updates OpenAL listener buffer
 void AVEnvironment::PlaceCamera()
 {
 // update OpenGL camera position

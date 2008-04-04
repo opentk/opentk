@@ -37,7 +37,7 @@ namespace Examples.Tests
             for (int i = 100000000; --i != 0; )
                 ;
             watch.Stop();
-            Trace.WriteLine(String.Format("Noop\t\t\t\t\t\t{0}ns", (watch.Elapsed.TotalSeconds / 10.0).ToString()));
+            Trace.WriteLine(String.format("Noop\t\t\t\t\t\t{0}ns", (watch.Elapsed.TotalSeconds / 10.0).ToString()));
 
             watch.Reset();
             watch.Start();
@@ -45,7 +45,7 @@ namespace Examples.Tests
                 res = Vector3.Add(res, a);
             watch.Stop();
             res += res;         // To make sure the whole for-loop isn't optimized-out
-            Trace.WriteLine(String.Format("res = Vector3.Add(a, b)\t\t\t{0}ns", (watch.Elapsed.TotalSeconds / 10.0).ToString()));
+            Trace.WriteLine(String.format("res = Vector3.Add(a, b)\t\t\t{0}ns", (watch.Elapsed.TotalSeconds / 10.0).ToString()));
             res = Vector3.Zero;
 
             watch.Reset();
@@ -54,7 +54,7 @@ namespace Examples.Tests
                 res = res + a;
             watch.Stop();
             res += res;         // To make sure the whole for-loop isn't optimized-out
-            Trace.WriteLine(String.Format("res = a + b\t\t\t\t\t{0}ns", (watch.Elapsed.TotalSeconds / 10.0).ToString()));
+            Trace.WriteLine(String.format("res = a + b\t\t\t\t\t{0}ns", (watch.Elapsed.TotalSeconds / 10.0).ToString()));
             
             watch.Reset();
             watch.Start();
@@ -62,7 +62,7 @@ namespace Examples.Tests
                 Vector3.Add(ref res, ref a, out res);
             watch.Stop();
             res += res;         // To make sure the whole for-loop isn't optimized-out
-            Trace.WriteLine(String.Format("Vector3.Add(ref a, ref b, out res)\t{0}ns", (watch.Elapsed.TotalSeconds / 10.0).ToString()));
+            Trace.WriteLine(String.format("Vector3.Add(ref a, ref b, out res)\t{0}ns", (watch.Elapsed.TotalSeconds / 10.0).ToString()));
 */
             /*
             a = Vector3.UnitX;

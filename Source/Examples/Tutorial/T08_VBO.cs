@@ -65,8 +65,8 @@ namespace Examples.Tutorial
 
             // Create the Vertex Buffer Object:
             // 1) Generate the buffer handles.
-            // 2) Bind the Vertex Buffer and upload your vertex data. Check that the data was uploaded correctly.
-            // 3) Bind the Index Buffer and upload your index data. Check that the data was uploaded correctly.
+            // 2) Bind the Vertex Buffer and upload your vertex buffer. Check that the buffer was uploaded correctly.
+            // 3) Bind the Index Buffer and upload your index buffer. Check that the buffer was uploaded correctly.
 
             vbo[0] = LoadVBO(cube.Vertices, cube.Indices);
             vbo[1] = LoadVBO(cube.Vertices, cube.Indices);

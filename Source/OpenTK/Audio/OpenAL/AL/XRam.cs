@@ -11,7 +11,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.OpenAL
+namespace OpenTK.Audio
 {
 
     ///<summary>The X-Ram Extension is provided on the top-end Sound Blaster X-Fi solutions (Sound Blaster X-Fi Fatal1ty, Sound Blaster X-Fi Elite Pro, or later). These products feature 64MB of X-Ram that can only be used for audio purposes, which can be controlled by this Extension.</summary>
@@ -102,13 +102,13 @@ namespace OpenTK.OpenAL
         /// <summary>Query total amount of X-RAM in bytes.</summary>
         public int GetRamSize( )
         {
-            return AL.Get( (Enums.ALGetInteger) AL_EAX_RAM_SIZE );
+            return AL.Get( (ALGetInteger) AL_EAX_RAM_SIZE );
         }
 
         /// <summary>Query free X-RAM available in bytes.</summary>
         public int GetRamFree( )
         {
-            return AL.Get( (Enums.ALGetInteger) AL_EAX_RAM_FREE );
+            return AL.Get( (ALGetInteger) AL_EAX_RAM_FREE );
         }
 
         /// <summary>This enum is used to abstract the need of using AL.GetEnumValue() with the Extension. The values do NOT correspond to AL_STORAGE_* tokens!</summary>
