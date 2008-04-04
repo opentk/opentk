@@ -26,7 +26,7 @@ namespace OpenTK.Platform.Windows
         IList<MouseDevice> mice = new List<MouseDevice>(1);
         internal static readonly WinKeyMap KeyMap = new WinKeyMap();
         // Used to distinguish left and right control, alt and enter keys.
-        const int ExtendedBit = 1 << 24;
+        const long ExtendedBit = 1 << 24;
         // Used to distinguish left and right shift keys.
         static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);
 
@@ -122,7 +122,7 @@ namespace OpenTK.Platform.Windows
                     // Win95 does not distinguish left/right key constants (GetAsyncKeyState returns 0).
                     // In this case, both keys will be reported as pressed.
 
-                    bool extended = (((int)msg.LParam) & ExtendedBit) != 0;
+                    bool extended = (msg.LParam.ToInt64() & ExtendedBit) != 0;
                     switch ((VirtualKeys)msg.WParam)
                     {
                         case VirtualKeys.SHIFT:
