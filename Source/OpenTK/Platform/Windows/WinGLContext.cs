@@ -253,15 +253,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public DisplayMode[] GetDisplayModes()
-
-        public IEnumerable<DisplayMode> GetDisplayModes()
-        {
-            throw new NotSupportedException("See OpenTK.Graphics.DisplayDevice.AvailableModes instead.");
-        }
-
-        #endregion
-
         #region void IGLContextInternal.RegisterForDisposal(IDisposable resource)
 
         void IGraphicsContextInternal.RegisterForDisposal(IDisposable resource)

@@ -234,11 +234,6 @@ namespace OpenTK.Platform.X11
             throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
         }
 
-        public IEnumerable<DisplayMode> GetDisplayModes()
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
-
         #endregion
 
         #region --- IGLContextInternal Members ---
