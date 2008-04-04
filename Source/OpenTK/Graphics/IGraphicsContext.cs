@@ -106,12 +106,6 @@ namespace OpenTK.Graphics
         void DisposeResources();
 
         /// <summary>
-        /// Returns the display modes supported by the current opengl context.
-        /// </summary>
-        /// <returns>An IEnumerable containing all supported display modes.</returns>
-        IEnumerable<DisplayMode> GetDisplayModes();
-
-        /// <summary>
         /// Gets the address of an OpenGL extension function.
         /// </summary>
         /// <param name="function">The name of the OpenGL function (e.g. "glGetString")</param>
