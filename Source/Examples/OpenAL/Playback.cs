@@ -50,8 +50,6 @@ namespace Examples
                 AL.SourceStop(source);
                 AL.DeleteSource(source);
                 AL.DeleteBuffer(buffer);
-
-                sound.Dispose();
             }
         }
     }

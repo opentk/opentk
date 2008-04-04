@@ -19,7 +19,7 @@ namespace Examples.OpenAL
     public class StreamingPlayback
     {
         const string filename = "Data\\Audio\\the_ring_that_fell.wav";
-        const int buffer_size = 8096;
+        const int buffer_size = 18096;
 
         static object openal_lock = new object();
 
@@ -39,12 +39,16 @@ namespace Examples.OpenAL
 
                 SoundStreamer streamer = new SoundStreamer(sound, source, buffers);
                 streamer.Start();
+                lock (openal_lock)
+                {
+                    AL.SourcePlay(source);
+                }
 
                 // Query the source to find out when it stops playing.
                 do
                 {
-                    Thread.Sleep(100);
-                    Console.Write(".");
+                    //Thread.Sleep(100);
+                    //Console.Write(".");
                     lock (openal_lock)
                     {
                         AL.GetSource(source, ALGetSourcei.SourceState, out state);
@@ -52,13 +56,15 @@ namespace Examples.OpenAL
                 }
                 while ((ALSourceState)state == ALSourceState.Playing);
 
-                Console.WriteLine();
+                Console.WriteLine("asd");
 
-                AL.SourceStop(source);
-                AL.DeleteSource(source);
-                AL.DeleteBuffers(buffers);
+                lock (openal_lock)
+                {
+                    AL.SourceStop(source);
+                    AL.DeleteSource(source);
+                    AL.DeleteBuffers(buffers);
+                }
 
-                sound.Dispose();
             }
         }
 
@@ -67,6 +73,7 @@ namespace Examples.OpenAL
             SoundReader reader;
             int source;
             int[] buffers;
+            Thread thread;
 
             public SoundStreamer(SoundReader sound, int source, int[] buffers)
             {
@@ -85,7 +92,8 @@ namespace Examples.OpenAL
 
             public void Start()
             {
-                new Thread(new ThreadStart(StartStreaming)).Start();
+                thread = new Thread(new ThreadStart(StartStreaming));
+                thread.Start();
             }
 
             void StartStreaming()
@@ -106,6 +114,7 @@ namespace Examples.OpenAL
 
                     Thread.Sleep(5);
                 }
+                Console.WriteLine("booh");
             }
         }
     }

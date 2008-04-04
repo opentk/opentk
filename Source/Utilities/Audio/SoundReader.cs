@@ -50,7 +50,7 @@ namespace OpenTK.Audio
         /// <param name="filename">The path to the sound file.</param>
         /// <returns>A new OpenTK.Audio.SoundReader, which can be used to read from the specified sound file.</returns>
         public SoundReader(string filename)
-            : this(new FileStream(filename, FileMode.Open))
+            : this(new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
         { }
 
         #endregion
@@ -170,13 +170,18 @@ namespace OpenTK.Audio
 
         #endregion
 
-        #region public bool EndOfFile
+        #region public virtual bool EndOfFile
 
-        public bool EndOfFile
+        public virtual bool EndOfFile
         {
-            get { return stream.Position >= stream.Length; }
-        }
+            get
+            {
+                if (implementation != null)
+                    return implementation.EndOfFile;
 
+                return this.Stream.Position >= this.Stream.Length;
+            }
+        }
         #endregion
 
         #endregion
