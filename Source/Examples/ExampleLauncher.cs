@@ -126,9 +126,19 @@ namespace Examples
             // Select first item
             if (listBox1.Items.Count > 0)
                 this.listBox1.SelectedIndex = 0;
+
+            RaiseWindow();
         }
 
         #endregion
+
+        void RaiseWindow()
+        {
+            // Force the ExampleLauncher to appear.
+            this.TopMost = false;
+            this.TopMost = true;
+            this.TopMost = false;
+        }
 
         #region private void RunExample()
 
@@ -172,8 +182,7 @@ namespace Examples
                 finally
                 {
                     this.Visible = true;
-                    this.TopMost = true;    // Bring the ExampleLauncher window to front
-                    this.TopMost = false;   // but allow the user to cover it with other windows.
+                    RaiseWindow();
                 }
             }
         }
@@ -236,9 +245,10 @@ namespace Examples
                 //FileIOPermission fileIO = new FileIOPermission(FileIOPermissionAccess.AllAccess, ".");
                 //fileIO.Demand();
 
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(true);
                 using (Form exampleLauncher = new ExampleLauncher())
                 {
-                    Application.EnableVisualStyles();
                     Application.Run(exampleLauncher);
                 }
 

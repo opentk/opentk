@@ -35,7 +35,7 @@ namespace OpenTK.Graphics
         static TexturePacker<Glyph> pack;
         static int texture_width, texture_height;
 
-        int[] data = new int[256];  // Used to upload glyph data to the OpenGL texture.
+        int[] data = new int[256];  // Used to upload glyph buffer to the OpenGL texture.
         
         object upload_lock = new object();
 
@@ -141,7 +141,7 @@ namespace OpenTK.Graphics
         /// Adds a glyph to the texture packer.
         /// </summary>
         /// <param name="c">The character of the glyph.</param>
-        /// <param name="rectangle">An OpenTK.Math.Box2 that will hold the data for this glyph.</param>
+        /// <param name="rectangle">An OpenTK.Math.Box2 that will hold the buffer for this glyph.</param>
         private void LoadGlyph(char c, out Box2 rectangle)
         {
             if (pack == null)
@@ -215,7 +215,7 @@ namespace OpenTK.Graphics
         /// <param name="glyph">The character corresponding to this glyph.</param>
         /// <param name="width">The width of this glyph.</param>
         /// <param name="height">The height of this glyph (line spacing).</param>
-        /// <param name="textureRectangle">The bounding box of the texture data of this glyph.</param>
+        /// <param name="textureRectangle">The bounding box of the texture buffer of this glyph.</param>
         /// <param name="texture">The handle to the texture that contains this glyph.</param>
         /// <returns>True if the glyph has been loaded, false otherwise.</returns>
         /// <seealso cref="LoadGlyphs"/>

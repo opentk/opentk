@@ -68,20 +68,20 @@ namespace OpenTK.Platform.Windows
         #region protected override void WndProc(ref Message msg)
 
         /// <summary>
-        /// Processes the input Windows Message, routing the data to the correct Keyboard, Mouse or HID.
+        /// Processes the input Windows Message, routing the buffer to the correct Keyboard, Mouse or HID.
         /// </summary>
-        /// <param name="msg">The WM_INPUT message, containing the data on the input event.</param>
+        /// <param name="msg">The WM_INPUT message, containing the buffer on the input event.</param>
         protected override void WndProc(ref Message msg)
         {
             switch ((WindowMessage)msg.Msg)
             {
                 case WindowMessage.INPUT:
                     int size = 0;
-                    // Get the size of the input data
+                    // Get the size of the input buffer
                     Functions.GetRawInputData(msg.LParam, GetRawInputDataEnum.INPUT,
                         IntPtr.Zero, ref size, API.RawInputHeaderSize);
 
-                    //if (data == null || API.RawInputSize < size)
+                    //if (buffer == null || API.RawInputSize < size)
                     //{
                     //    throw new ApplicationException("Critical error when processing raw windows input.");
                     //}
@@ -111,7 +111,7 @@ namespace OpenTK.Platform.Windows
                     else
                     {
                         throw new ApplicationException(String.Format(
-                            "GetRawInputData returned invalid data. Windows error {0}. Please file a bug at http://opentk.sourceforge.net",
+                            "GetRawInputData returned invalid buffer. Windows error {0}. Please file a bug at http://opentk.sourceforge.net",
                             Marshal.GetLastWin32Error()));
                     }
                     break;

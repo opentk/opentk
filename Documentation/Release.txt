@@ -38,7 +38,7 @@ class names have been altered. Please, run the following project-wide search and
 replace operations:
 1. "GLContext"     -> "GraphicsContext"
 2. "OpenTK.OpenGL" -> "OpenTK.Graphics.OpenGL"
-3. "OpenTK.OpenAL" -> "OpenTK.Audio.OpenAL"
+3. "OpenTK.OpenAL" -> "OpenTK.Audio"
 4. "GL.ReadPixel"  -> "GL.ReadPixels"
 
 The "DisplayMode" class has been marked as obsolete. Its functionality has been

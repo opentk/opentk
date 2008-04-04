@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenTK.OpenAL.Enums
+namespace OpenTK.Audio
 {
 
     public enum AlutVersions : int
@@ -50,7 +50,7 @@ namespace OpenTK.OpenAL.Enums
         DestroyContext = 0x20B,
         /// <summary>There was an error generating an AL buffer.</summary>
         GenBuffers = 0x20C,
-        /// <summary>There was an error passing buffer data to AL.</summary>
+        /// <summary>There was an error passing buffer buffer to AL.</summary>
         BufferData = 0x20D,
         /// <summary>I/O error, consult errno for more details.</summary>
         IoError = 0x20E,
@@ -58,7 +58,7 @@ namespace OpenTK.OpenAL.Enums
         UnsupportedFileType = 0x20F,
         /// <summary>Unsupported mode within an otherwise usable file type.</summary>
         UnsupportedFileSubtype = 0x210,
-        /// <summary>The sound data was corrupt or truncated.</summary>
+        /// <summary>The sound buffer was corrupt or truncated.</summary>
         CorruptOrTruncatedData = 0x211,
     }
 
@@ -73,9 +73,9 @@ namespace OpenTK.OpenAL.Enums
 
     public enum AlutLoader : int
     {
-        ///<summary>For the loaders returning sound data in an OpenAL buffer, e.g. Alut.CreateBufferFromFile and Alut.CreateBufferFromFileImage</summary>
+        ///<summary>For the loaders returning sound buffer in an OpenAL buffer, e.g. Alut.CreateBufferFromFile and Alut.CreateBufferFromFileImage</summary>
         Buffer = 0x300,
-        ///<summary>For the loaders returning sound data in a newly allocated memory region, e.g. Alut.LoadMemoryFromFile and Alut.LoadMemoryFromFileImage.</summary>
+        ///<summary>For the loaders returning sound buffer in a newly allocated memory region, e.g. Alut.LoadMemoryFromFile and Alut.LoadMemoryFromFileImage.</summary>
         Memory = 0x301,
     }
 

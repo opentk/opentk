@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 
 using OpenTK.Math;
 
-namespace OpenTK.OpenAL
+namespace OpenTK.Audio
 {
 
     public partial class EfxExtension
@@ -25,19 +25,19 @@ namespace OpenTK.OpenAL
         /// <summary>(Helper) Selects the Effect type used by this Effect handle.</summary>
         /// <param name="eid">Effect id returned from a successful call to GenEffects.</param>
         /// <param name="type">Effect type.</param>
-        [CLSCompliant( false )]
-        public void BindEffect( uint eid, Enums.EfxEffectType type )
+        [CLSCompliant(false)]
+        public void BindEffect( uint eid,EfxEffectType type )
         {
-            Imported_alEffecti( eid, Enums.EfxEffecti.EffectType, (int) type );
+            Imported_alEffecti(eid,EfxEffecti.EffectType,(int) type);
         }
 
         /// <summary>(Helper) Selects the Effect type used by this Effect handle.</summary>
         /// <param name="eid">Effect id returned from a successful call to GenEffects.</param>
         /// <param name="type">Effect type.</param>
         [CLSCompliant( true )]
-        public void BindEffect( int eid, Enums.EfxEffectType type )
+        public void BindEffect( int eid, EfxEffectType type )
         {
-            Imported_alEffecti( (uint) eid, Enums.EfxEffecti.EffectType, (int) type );
+            Imported_alEffecti( (uint)eid, EfxEffecti.EffectType, (int) type );
         }
 
         #endregion BindEffect
@@ -50,7 +50,7 @@ namespace OpenTK.OpenAL
         [CLSCompliant( false )]
         public void BindFilterToSource( uint source, uint filter )
         {
-            AL.Source( source, Enums.ALSourcei.EfxDirectFilter, (int) filter );
+            AL.Source(source,ALSourcei.EfxDirectFilter,(int) filter);
         }
 
         /// <summary>(Helper) reroutes the output of a Source through a Filter.</summary>
@@ -59,7 +59,7 @@ namespace OpenTK.OpenAL
         [CLSCompliant( true )]
         public void BindFilterToSource( int source, int filter )
         {
-            AL.Source( (uint) source, Enums.ALSourcei.EfxDirectFilter, (int) filter );
+            AL.Source( (uint)source, ALSourcei.EfxDirectFilter, (int) filter );
         }
 
         #endregion BindFilterToSource
@@ -72,7 +72,7 @@ namespace OpenTK.OpenAL
         [CLSCompliant( false )]
         public void BindEffectToAuxiliarySlot( uint auxiliaryeffectslot, uint effect )
         {
-            AuxiliaryEffectSlot( auxiliaryeffectslot, Enums.EfxAuxiliaryi.EffectslotEffect, (int) effect );
+            AuxiliaryEffectSlot(auxiliaryeffectslot,EfxAuxiliaryi.EffectslotEffect,(int) effect);
         }
 
         /// <summary>(Helper) Attaches an Effect to an Auxiliary Effect Slot.</summary>
@@ -81,7 +81,7 @@ namespace OpenTK.OpenAL
         [CLSCompliant( true )]
         public void BindEffectToAuxiliarySlot( int auxiliaryeffectslot, int effect )
         {
-            AuxiliaryEffectSlot( (uint) auxiliaryeffectslot, Enums.EfxAuxiliaryi.EffectslotEffect, (int) effect );
+            AuxiliaryEffectSlot( (uint)auxiliaryeffectslot, EfxAuxiliaryi.EffectslotEffect, (int) effect );
         }
 
         #endregion BindEffectToAuxiliarySlot
@@ -91,23 +91,23 @@ namespace OpenTK.OpenAL
         /// <summary>(Helper) Reroutes a Source's output into an Auxiliary Effect Slot.</summary>
         /// <param name="source">The Source handle who's output is forwarded.</param>
         /// <param name="slot">The Auxiliary Effect Slot handle that receives input from the Source.</param>
-        /// <param name="slotnumber">Every Source has only a limited number of slots it can feed data to. The number must stay below AlcContextAttributes.EfxMaxAuxiliarySends</param>
+        /// <param name="slotnumber">Every Source has only a limited number of slots it can feed buffer to. The number must stay below AlcContextAttributes.EfxMaxAuxiliarySends</param>
         /// <param name="filter">Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or EfxFilterType.FilterNull for no filter. </param>
         [CLSCompliant( false )]
         public void BindSourceToAuxiliarySlot( uint source, uint slot, int slotnumber, uint filter )
         {
-            AL.Source( source, Enums.ALSource3i.EfxAuxiliarySendFilter, (int) slot, (int) slotnumber, (int) filter );
+            AL.Source( source, ALSource3i.EfxAuxiliarySendFilter, (int) slot, (int) slotnumber, (int) filter );
         }
 
         /// <summary>(Helper) Reroutes a Source's output into an Auxiliary Effect Slot.</summary>
         /// <param name="source">The Source handle who's output is forwarded.</param>
         /// <param name="slot">The Auxiliary Effect Slot handle that receives input from the Source.</param>
-        /// <param name="slotnumber">Every Source has only a limited number of slots it can feed data to. The number must stay below AlcContextAttributes.EfxMaxAuxiliarySends</param>
+        /// <param name="slotnumber">Every Source has only a limited number of slots it can feed buffer to. The number must stay below AlcContextAttributes.EfxMaxAuxiliarySends</param>
         /// <param name="filter">Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or EfxFilterType.FilterNull for no filter. </param>
         [CLSCompliant( true )]
         public void BindSourceToAuxiliarySlot( int source, int slot, int slotnumber, int filter )
         {
-            AL.Source( (uint) source, Enums.ALSource3i.EfxAuxiliarySendFilter, (int) slot, (int) slotnumber, (int) filter );
+            AL.Source( (uint)source, ALSource3i.EfxAuxiliarySendFilter, (int) slot,(int) slotnumber, (int) filter );
         }
 
         #endregion BindSourceToAuxiliarySlot
@@ -342,7 +342,7 @@ namespace OpenTK.OpenAL
         #region alEffecti
 
         //[CLSCompliant(false)]
-        private delegate void Delegate_alEffecti( uint eid, Enums.EfxEffecti param, int value );
+        private delegate void Delegate_alEffecti( uint eid,EfxEffecti param,int value );
         // typedef void (__cdecl *LPALEFFECTI)( ALuint eid, ALenum param, ALint value); 
 
         //[CLSCompliant(false)]
@@ -352,8 +352,8 @@ namespace OpenTK.OpenAL
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
-        [CLSCompliant( false )]
-        public void Effect( uint eid, Enums.EfxEffecti param, int value )
+        [CLSCompliant(false)]
+        public void Effect( uint eid,EfxEffecti param,int value )
         {
             Imported_alEffecti( eid, param, value );
         }
@@ -363,7 +363,7 @@ namespace OpenTK.OpenAL
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
         [CLSCompliant( true )]
-        public void Effect( int eid, Enums.EfxEffecti param, int value )
+        public void Effect( int eid, EfxEffecti param, int value )
         {
             Imported_alEffecti( (uint) eid, param, value );
         }
@@ -373,7 +373,7 @@ namespace OpenTK.OpenAL
         #region alEffectf
 
         //[CLSCompliant(false)]
-        private delegate void Delegate_alEffectf( uint eid, Enums.EfxEffectf param, float value );
+        private delegate void Delegate_alEffectf( uint eid,EfxEffectf param,float value );
         // typedef void (__cdecl *LPALEFFECTF)( ALuint eid, ALenum param, ALfloat value);
 
         //[CLSCompliant(false)]
@@ -383,8 +383,8 @@ namespace OpenTK.OpenAL
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating point value.</param>
-        [CLSCompliant( false )]
-        public void Effect( uint eid, Enums.EfxEffectf param, float value )
+        [CLSCompliant(false)]
+        public void Effect( uint eid,EfxEffectf param,float value )
         {
             Imported_alEffectf( eid, param, value );
         }
@@ -394,7 +394,7 @@ namespace OpenTK.OpenAL
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating point value.</param>
         [CLSCompliant( true )]
-        public void Effect( int eid, Enums.EfxEffectf param, float value )
+        public void Effect( int eid, EfxEffectf param, float value )
         {
             Imported_alEffectf( (uint) eid, param, value );
         }
@@ -404,7 +404,7 @@ namespace OpenTK.OpenAL
         #region alEffectfv
 
         //[CLSCompliant(false)]
-        unsafe private delegate void Delegate_alEffectfv( uint eid, Enums.EfxEffect3f param, [In] float* values );
+        unsafe private delegate void Delegate_alEffectfv( uint eid,EfxEffect3f param,[In] float* values );
         // typedef void (__cdecl *LPALEFFECTFV)( ALuint eid, ALenum param, ALfloat* values ); 
 
         //[CLSCompliant(false)]
@@ -414,8 +414,8 @@ namespace OpenTK.OpenAL
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="values">Pointer to Math.Vector3.</param>
-        [CLSCompliant( false )]
-        public void Effect( uint eid, Enums.EfxEffect3f param, ref Vector3 values )
+        [CLSCompliant(false)]
+        public void Effect( uint eid,EfxEffect3f param,ref Vector3 values )
         {
             unsafe
             {
@@ -431,7 +431,7 @@ namespace OpenTK.OpenAL
         /// <param name="param">Effect property to set.</param>
         /// <param name="values">Pointer to Math.Vector3.</param>
         [CLSCompliant( true )]
-        public void Effect( int eid, Enums.EfxEffect3f param, ref Vector3 values )
+        public void Effect( int eid, EfxEffect3f param, ref Vector3 values )
         {
             Effect( (uint) eid, param, ref values );
         }
@@ -441,7 +441,7 @@ namespace OpenTK.OpenAL
         #region alGetEffecti
 
         //[CLSCompliant(false)]
-        unsafe private delegate void Delegate_alGetEffecti( uint eid, Enums.EfxEffecti pname, [Out] int* value );
+        unsafe private delegate void Delegate_alGetEffecti( uint eid,EfxEffecti pname,[Out] int* value );
         // typedef void (__cdecl *LPALGETEFFECTI)( ALuint eid, ALenum pname, ALint* value );
 
         //[CLSCompliant(false)]
@@ -451,8 +451,8 @@ namespace OpenTK.OpenAL
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
-        [CLSCompliant( false )]
-        public void GetEffect( uint eid, Enums.EfxEffecti pname, out int value )
+        [CLSCompliant(false)]
+        public void GetEffect( uint eid,EfxEffecti pname,out int value )
         {
             unsafe
             {
@@ -468,7 +468,7 @@ namespace OpenTK.OpenAL
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
         [CLSCompliant( true )]
-        public void GetEffect( int eid, Enums.EfxEffecti pname, out int value )
+        public void GetEffect( int eid, EfxEffecti pname, out int value )
         {
             GetEffect( (uint) eid, pname, out value );
         }
@@ -478,7 +478,7 @@ namespace OpenTK.OpenAL
         #region alGetEffectf
 
         //[CLSCompliant(false)]
-        unsafe private delegate void Delegate_alGetEffectf( uint eid, Enums.EfxEffectf pname, [Out]float* value );
+        unsafe private delegate void Delegate_alGetEffectf( uint eid,EfxEffectf pname,[Out]float* value );
         // typedef void (__cdecl *LPALGETEFFECTF)( ALuint eid, ALenum pname, ALfloat* value );
 
         //[CLSCompliant(false)]
@@ -488,8 +488,8 @@ namespace OpenTK.OpenAL
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating point value will be stored.</param>
-        [CLSCompliant( false )]
-        public void GetEffect( uint eid, Enums.EfxEffectf pname, out float value )
+        [CLSCompliant(false)]
+        public void GetEffect( uint eid,EfxEffectf pname,out float value )
         {
             unsafe
             {
@@ -505,7 +505,7 @@ namespace OpenTK.OpenAL
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating point value will be stored.</param>
         [CLSCompliant( true )]
-        public void GetEffect( int eid, Enums.EfxEffectf pname, out float value )
+        public void GetEffect( int eid, EfxEffectf pname, out float value )
         {
             GetEffect( (uint) eid, pname, out value );
         }
@@ -515,7 +515,7 @@ namespace OpenTK.OpenAL
         #region alGetEffectfv
 
         //[CLSCompliant(false)]
-        unsafe private delegate void Delegate_alGetEffectfv( uint eid, Enums.EfxEffect3f param, [Out] float* values );
+        unsafe private delegate void Delegate_alGetEffectfv( uint eid,EfxEffect3f param,[Out] float* values );
         // typedef void (__cdecl *LPALGETEFFECTFV)( ALuint eid, ALenum pname, ALfloat* values );
 
         //[CLSCompliant(false)]
@@ -525,8 +525,8 @@ namespace OpenTK.OpenAL
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">A Math.Vector3 to hold the values.</param>
-        [CLSCompliant( false )]
-        public void GetEffect( uint eid, Enums.EfxEffect3f param, out Vector3 values )
+        [CLSCompliant(false)]
+        public void GetEffect( uint eid,EfxEffect3f param,out Vector3 values )
         {
             unsafe
             {
@@ -545,7 +545,7 @@ namespace OpenTK.OpenAL
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">A Math.Vector3 to hold the values.</param>
         [CLSCompliant( true )]
-        public void GetEffect( int eid, Enums.EfxEffect3f param, out Vector3 values )
+        public void GetEffect( int eid, EfxEffect3f param, out Vector3 values )
         {
             GetEffect( (uint) eid, param, out values );
         }
@@ -786,7 +786,7 @@ namespace OpenTK.OpenAL
         #region alFilteri
 
         //[CLSCompliant(false)]
-        private delegate void Delegate_alFilteri( uint fid, Enums.EfxFilteri param, int value );
+        private delegate void Delegate_alFilteri( uint fid,EfxFilteri param,int value );
         // typedef void (__cdecl *LPALFILTERI)( ALuint fid, ALenum param, ALint value );
 
         //[CLSCompliant(false)]
@@ -796,8 +796,8 @@ namespace OpenTK.OpenAL
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
-        [CLSCompliant( false )]
-        public void Filter( uint fid, Enums.EfxFilteri param, int value )
+        [CLSCompliant(false)]
+        public void Filter( uint fid,EfxFilteri param,int value )
         {
             Imported_alFilteri( fid, param, value );
         }
@@ -807,7 +807,7 @@ namespace OpenTK.OpenAL
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
         [CLSCompliant( true )]
-        public void Filter( int fid, Enums.EfxFilteri param, int value )
+        public void Filter( int fid, EfxFilteri param, int value )
         {
             Imported_alFilteri( (uint) fid, param, value );
         }
@@ -817,7 +817,7 @@ namespace OpenTK.OpenAL
         #region alFilterf
 
         //[CLSCompliant(false)]
-        private delegate void Delegate_alFilterf( uint fid, Enums.EfxFilterf param, float value );
+        private delegate void Delegate_alFilterf( uint fid,EfxFilterf param,float value );
         // typedef void (__cdecl *LPALFILTERF)( ALuint fid, ALenum param, ALfloat value);
 
         //[CLSCompliant(false)]
@@ -827,8 +827,8 @@ namespace OpenTK.OpenAL
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating point value.</param>
-        [CLSCompliant( false )]
-        public void Filter( uint fid, Enums.EfxFilterf param, float value )
+        [CLSCompliant(false)]
+        public void Filter( uint fid,EfxFilterf param,float value )
         {
             Imported_alFilterf( fid, param, value );
         }
@@ -838,7 +838,7 @@ namespace OpenTK.OpenAL
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating point value.</param>
         [CLSCompliant( true )]
-        public void Filter( int fid, Enums.EfxFilterf param, float value )
+        public void Filter( int fid, EfxFilterf param, float value )
         {
             Imported_alFilterf( (uint) fid, param, value );
         }
@@ -848,7 +848,7 @@ namespace OpenTK.OpenAL
         #region alGetFilteri
 
         //[CLSCompliant(false)]
-        unsafe private delegate void Delegate_alGetFilteri( uint fid, Enums.EfxFilteri pname, [Out] int* value );
+        unsafe private delegate void Delegate_alGetFilteri( uint fid,EfxFilteri pname,[Out] int* value );
         // typedef void (__cdecl *LPALGETFILTERI)( ALuint fid, ALenum pname, ALint* value );
 
         //[CLSCompliant(false)]
@@ -858,8 +858,8 @@ namespace OpenTK.OpenAL
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
-        [CLSCompliant( false )]
-        public void GetFilter( uint fid, Enums.EfxFilteri pname, out int value )
+        [CLSCompliant(false)]
+        public void GetFilter( uint fid,EfxFilteri pname,out int value )
         {
             unsafe
             {
@@ -875,7 +875,7 @@ namespace OpenTK.OpenAL
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
         [CLSCompliant( true )]
-        public void GetFilter( int fid, Enums.EfxFilteri pname, out int value )
+        public void GetFilter( int fid, EfxFilteri pname, out int value )
         {
             GetFilter( (uint) fid, pname, out value );
         }
@@ -885,7 +885,7 @@ namespace OpenTK.OpenAL
         #region alGetFilterf
 
         //[CLSCompliant(false)]
-        unsafe private delegate void Delegate_alGetFilterf( uint fid, Enums.EfxFilterf pname, [Out] float* value );
+        unsafe private delegate void Delegate_alGetFilterf( uint fid,EfxFilterf pname,[Out] float* value );
         // typedef void (__cdecl *LPALGETFILTERF)( ALuint fid, ALenum pname, ALfloat* value );
 
         //[CLSCompliant(false)]
@@ -895,8 +895,8 @@ namespace OpenTK.OpenAL
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating point value will be stored.</param>
-        [CLSCompliant( false )]
-        public void GetFilter( uint fid, Enums.EfxFilterf pname, out float value )
+        [CLSCompliant(false)]
+        public void GetFilter( uint fid,EfxFilterf pname,out float value )
         {
             unsafe
             {
@@ -912,7 +912,7 @@ namespace OpenTK.OpenAL
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating point value will be stored.</param>
         [CLSCompliant( true )]
-        public void GetFilter( int fid, Enums.EfxFilterf pname, out float value )
+        public void GetFilter( int fid, EfxFilterf pname, out float value )
         {
             GetFilter( (uint) fid, pname, out value );
         }
@@ -1156,7 +1156,7 @@ namespace OpenTK.OpenAL
         #region alAuxiliaryEffectSloti
 
         //[CLSCompliant(false)]
-        private delegate void Delegate_alAuxiliaryEffectSloti( uint asid, Enums.EfxAuxiliaryi param, int value );
+        private delegate void Delegate_alAuxiliaryEffectSloti( uint asid,EfxAuxiliaryi param,int value );
         // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTI)( ALuint asid, ALenum param, ALint value ); 
 
         //[CLSCompliant(false)]
@@ -1166,8 +1166,8 @@ namespace OpenTK.OpenAL
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Integer value.</param>
-        [CLSCompliant( false )]
-        public void AuxiliaryEffectSlot( uint asid, Enums.EfxAuxiliaryi param, int value )
+        [CLSCompliant(false)]
+        public void AuxiliaryEffectSlot( uint asid,EfxAuxiliaryi param,int value )
         {
             Imported_alAuxiliaryEffectSloti( asid, param, value );
         }
@@ -1177,7 +1177,7 @@ namespace OpenTK.OpenAL
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Integer value.</param>
         [CLSCompliant( true )]
-        public void AuxiliaryEffectSlot( int asid, Enums.EfxAuxiliaryi param, int value )
+        public void AuxiliaryEffectSlot( int asid, EfxAuxiliaryi param, int value )
         {
             Imported_alAuxiliaryEffectSloti( (uint) asid, param, value );
         }
@@ -1187,7 +1187,7 @@ namespace OpenTK.OpenAL
         #region alAuxiliaryEffectSlotf
 
         //[CLSCompliant(false)]
-        private delegate void Delegate_alAuxiliaryEffectSlotf( uint asid, Enums.EfxAuxiliaryf param, float value );
+        private delegate void Delegate_alAuxiliaryEffectSlotf( uint asid,EfxAuxiliaryf param,float value );
         // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTF)( ALuint asid, ALenum param, ALfloat value );
 
         //[CLSCompliant(false)]
@@ -1197,8 +1197,8 @@ namespace OpenTK.OpenAL
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Floating point value.</param>
-        [CLSCompliant( false )]
-        public void AuxiliaryEffectSlot( uint asid, Enums.EfxAuxiliaryf param, float value )
+        [CLSCompliant(false)]
+        public void AuxiliaryEffectSlot( uint asid,EfxAuxiliaryf param,float value )
         {
             Imported_alAuxiliaryEffectSlotf( asid, param, value );
         }
@@ -1208,7 +1208,7 @@ namespace OpenTK.OpenAL
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Floating point value.</param>
         [CLSCompliant( true )]
-        public void AuxiliaryEffectSlot( int asid, Enums.EfxAuxiliaryf param, float value )
+        public void AuxiliaryEffectSlot( int asid, EfxAuxiliaryf param, float value )
         {
             Imported_alAuxiliaryEffectSlotf( (uint) asid, param, value );
         }
@@ -1218,7 +1218,7 @@ namespace OpenTK.OpenAL
         #region alGetAuxiliaryEffectSloti
 
         //[CLSCompliant(false)]
-        unsafe private delegate void Delegate_alGetAuxiliaryEffectSloti( uint asid, Enums.EfxAuxiliaryi pname, [Out] int* value );
+        unsafe private delegate void Delegate_alGetAuxiliaryEffectSloti( uint asid,EfxAuxiliaryi pname,[Out] int* value );
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTI)( ALuint asid, ALenum pname, ALint* value );
 
         //[CLSCompliant(false)]
@@ -1228,8 +1228,8 @@ namespace OpenTK.OpenAL
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
-        [CLSCompliant( false )]
-        public void GetAuxiliaryEffectSlot( uint asid, Enums.EfxAuxiliaryi pname, out int value )
+        [CLSCompliant(false)]
+        public void GetAuxiliaryEffectSlot( uint asid,EfxAuxiliaryi pname,out int value )
         {
             unsafe
             {
@@ -1245,7 +1245,7 @@ namespace OpenTK.OpenAL
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
         [CLSCompliant( true )]
-        public void GetAuxiliaryEffectSlot( int asid, Enums.EfxAuxiliaryi pname, out int value )
+        public void GetAuxiliaryEffectSlot( int asid, EfxAuxiliaryi pname, out int value )
         {
             GetAuxiliaryEffectSlot( (uint) asid, pname, out value );
         }
@@ -1255,7 +1255,7 @@ namespace OpenTK.OpenAL
         #region alGetAuxiliaryEffectSlotf
 
         //[CLSCompliant(false)]
-        unsafe private delegate void Delegate_alGetAuxiliaryEffectSlotf( uint asid, Enums.EfxAuxiliaryf pname, [Out] float* value );
+        unsafe private delegate void Delegate_alGetAuxiliaryEffectSlotf( uint asid,EfxAuxiliaryf pname,[Out] float* value );
         // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTF)( ALuint asid, ALenum pname, ALfloat* value );
 
         //[CLSCompliant(false)]
@@ -1265,8 +1265,8 @@ namespace OpenTK.OpenAL
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where floating point value will be stored.</param>
-        [CLSCompliant( false )]
-        public void GetAuxiliaryEffectSlot( uint asid, Enums.EfxAuxiliaryf pname, out float value )
+        [CLSCompliant(false)]
+        public void GetAuxiliaryEffectSlot( uint asid,EfxAuxiliaryf pname,out float value )
         {
             unsafe
             {
@@ -1282,7 +1282,7 @@ namespace OpenTK.OpenAL
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where floating point value will be stored.</param>
         [CLSCompliant( true )]
-        public void GetAuxiliaryEffectSlot( int asid, Enums.EfxAuxiliaryf pname, out float value )
+        public void GetAuxiliaryEffectSlot( int asid, EfxAuxiliaryf pname, out float value )
         {
             GetAuxiliaryEffectSlot( (uint) asid, pname, out value );
         }

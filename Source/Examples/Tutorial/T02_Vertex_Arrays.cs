@@ -179,7 +179,7 @@ namespace Examples.Tutorial
             GL.LoadIdentity();
 
             //GL.Translate(0.7f, 1.0f, 0.0f);
-            //sans.Print(String.Format("{0:f1}", RenderFrequency));
+            //sans.Print(String.format("{0:f1}", RenderFrequency));
 
             GL.PopMatrix();
             

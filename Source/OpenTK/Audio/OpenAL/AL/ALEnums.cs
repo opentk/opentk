@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenTK.OpenAL.Enums
+namespace OpenTK.Audio
 {
 
     ///<summary>A list of valid Enable/Disable/IsEnabled parameters</summary>
@@ -244,7 +244,7 @@ namespace OpenTK.OpenAL.Enums
         /// <summary>size of the Buffer in bytes.</summary>
         Size = 0x2004,
 
-        // Deprecated: From Manual, not in header: AL_DATA ( i, iv ) original location where data was copied from generally useless, as was probably freed after buffer creation
+        // Deprecated: From Manual, not in header: AL_DATA ( i, iv ) original location where buffer was copied from generally useless, as was probably freed after buffer creation
     }
 
     ///<summary>Buffer state. Not supported for public use (yet).</summary>

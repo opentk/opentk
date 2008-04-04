@@ -1,17 +1,17 @@
 ﻿#region --- License ---
-/* Copyright (c) 2008 the OpenTK team
- * See license.txt for license details
- * http://www.opentk.com
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing details.
  */
 #endregion
 
 using System;
 using System.Collections.Generic;
 using System.Text;
-
-using OpenTK.OpenAL;
-using OpenTK.OpenAL.Enums;
 using System.Diagnostics;
+
+using OpenTK.Audio;
 
 namespace OpenTK.Audio
 {
@@ -240,7 +240,8 @@ namespace OpenTK.Audio
             if (device_handle == IntPtr.Zero)
                 device_handle = Alc.OpenDevice(null);
             if (device_handle == IntPtr.Zero)
-                throw new AudioDeviceException("The specified audio device does not exist or is tied up by another application.");
+                throw new AudioDeviceException(String.Format("Audio device '{0}' does not exist or is tied up by another application.",
+                                                             String.IsNullOrEmpty(device) ? "default" : device));
 
             CheckForAlcErrors();
 
@@ -579,22 +580,4 @@ namespace OpenTK.Audio
 
         #endregion
     }
-
-    #region --- Exceptions ---
-
-    /// <summary>Represents errors related to an Audio device.</summary>
-    public class AudioDeviceException : Exception
-    {
-        public AudioDeviceException() : base() { }
-        public AudioDeviceException(string message) : base(message) { }
-    }
-
-    /// <summary>Represents errors related to an AudioContext.</summary>
-    public class AudioContextException : Exception
-    {
-        public AudioContextException() : base() { }
-        public AudioContextException(string message) : base(message) { }
-    }
-
-    #endregion
 }

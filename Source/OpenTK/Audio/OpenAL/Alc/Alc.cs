@@ -66,7 +66,7 @@ typedef void ALCvoid;
  * IntPtr
 */
 
-namespace OpenTK.OpenAL
+namespace OpenTK.Audio
 {
 
     /// <summary>Alc = Audio Library Context</summary>
@@ -174,7 +174,7 @@ namespace OpenTK.OpenAL
         /// <param name="device">a pointer to the device to retrieve the error state from</param>
         /// <returns>Errorcode Int32.</returns>
         [DllImport(Alc.Lib,EntryPoint = "alcGetError",ExactSpelling = true,CallingConvention = Alc.Style),SuppressUnmanagedCodeSecurity( )]
-        public static extern Enums.AlcError GetError( [In] IntPtr device );
+        public static extern AlcError GetError( [In] IntPtr device );
         // ALC_API ALCenum         ALC_APIENTRY alcGetError( ALCdevice *device );
 
         #endregion Error support.
@@ -210,7 +210,7 @@ namespace OpenTK.OpenAL
         #region Query functions
 
         [DllImport(Alc.Lib,EntryPoint = "alcGetString",ExactSpelling = true,CallingConvention = Alc.Style,CharSet = CharSet.Ansi),SuppressUnmanagedCodeSecurity( )]
-        private static extern IntPtr GetStringPrivate( [In] IntPtr device,Enums.AlcGetString param );
+        private static extern IntPtr GetStringPrivate( [In] IntPtr device,AlcGetString param );
         // ALC_API const ALCchar * ALC_APIENTRY alcGetString( ALCdevice *device, ALCenum param );
 
         /// <summary>This function returns pointers to strings related to the context.</summary>
@@ -224,7 +224,7 @@ namespace OpenTK.OpenAL
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">an attribute to be retrieved: ALC_DEFAULT_DEVICE_SPECIFIER, ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER, ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_EXTENSIONS</param>
         /// <returns>A string containing the name of the Device.</returns>
-        public static string GetString( IntPtr device,Enums.AlcGetString param )
+        public static string GetString( IntPtr device,AlcGetString param )
         {
             return Marshal.PtrToStringAnsi(GetStringPrivate(device,param));
         }
@@ -238,10 +238,10 @@ namespace OpenTK.OpenAL
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">an attribute to be retrieved: ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_ALL_DEVICES_SPECIFIER</param>
         /// <returns>A List of strings containing the names of the Devices.</returns>
-        public static IList<string> GetString(IntPtr device, Enums.AlcGetStringList param)
+        public static IList<string> GetString(IntPtr device, AlcGetStringList param)
         {
             List<string> result = new List<string>();
-            IntPtr t = GetStringPrivate(IntPtr.Zero, (Enums.AlcGetString)param);
+            IntPtr t = GetStringPrivate(IntPtr.Zero, (AlcGetString)param);
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             byte b;
             int offset = 0;
@@ -267,10 +267,10 @@ namespace OpenTK.OpenAL
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">an attribute to be retrieved: ALC_MAJOR_VERSION, ALC_MINOR_VERSION, ALC_ATTRIBUTES_SIZE, ALC_ALL_ATTRIBUTES</param>
         /// <param name="size">the size of the destination buffer provided. In bytes.</param>
-        /// <param name="data">a pointer to the data to be returned</param>
+        /// <param name="buffer">a pointer to the buffer to be returned</param>
         [DllImport(Alc.Lib,EntryPoint = "alcGetIntegerv",ExactSpelling = true,CallingConvention = Alc.Style,CharSet = CharSet.Ansi),SuppressUnmanagedCodeSecurity( )]
-        public static extern void GetInteger( [In] IntPtr device,Enums.AlcGetInteger param,int size,[Out] out int data );
-        // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *data );
+        public static extern void GetInteger( [In] IntPtr device,AlcGetInteger param,int size,[Out] out int data );
+        // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *buffer );
 
         #endregion Query functions
 
@@ -278,12 +278,12 @@ namespace OpenTK.OpenAL
 
         /// <summary>This function opens a capture device by name. </summary>
         /// <param name="devicename">a pointer to a device name string</param>
-        /// <param name="frequency">the frequency that the data should be captured at</param>
+        /// <param name="frequency">the frequency that the buffer should be captured at</param>
         /// <param name="format">the requested capture buffer format</param>
         /// <param name="buffersize">the size of the capture buffer in bytes</param>
         /// <returns>Returns the capture device pointer, or NULL on failure.</returns>
         [CLSCompliant(false),DllImport(Alc.Lib,EntryPoint = "alcCaptureOpenDevice",ExactSpelling = true,CallingConvention = Alc.Style,CharSet = CharSet.Ansi),SuppressUnmanagedCodeSecurity( )]
-        public static extern IntPtr CaptureOpenDevice( string devicename,uint frequency,Enums.ALFormat format,int buffersize );
+        public static extern IntPtr CaptureOpenDevice( string devicename,uint frequency,ALFormat format,int buffersize );
         // ALC_API ALCdevice*      ALC_APIENTRY alcCaptureOpenDevice( const ALCchar *devicename, ALCuint frequency, ALCenum format, ALCsizei buffersize );
 
         /// <summary>This function closes the specified capture device.</summary>
@@ -308,7 +308,7 @@ namespace OpenTK.OpenAL
 
         /// <summary>This function completes a capture operation, and does not block.</summary>
         /// <param name="device">a pointer to a capture device.</param>
-        /// <param name="buffer">a pointer to a data buffer, which must be large enough to accommodate samples number of samples.</param>
+        /// <param name="buffer">a pointer to a buffer buffer, which must be large enough to accommodate samples number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
         [DllImport(Alc.Lib,EntryPoint = "alcCaptureSamples",ExactSpelling = true,CallingConvention = Alc.Style),SuppressUnmanagedCodeSecurity( )]
         public static extern void CaptureSamples( [In] IntPtr device,[Out] out IntPtr buffer,[Out] out int samples );
