@@ -904,27 +904,15 @@ namespace OpenTK.Audio
         /// <remarks>An application should check the OpenAL error state after making this call to determine if the Effect Slot was successfully created. If the function call fails then none of the requested Effect Slots are created. A good strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then check for an error condition. If an error is set then the loop can be broken and the application can determine if sufficient resources are available.</remarks>
         /// <param name="n">Number of Auxiliary Effect Slots to be created.</param>
         /// <param name="slots">Pointer addressing sufficient memory to store n Effect Slot object identifiers.</param>
-        public void GenAuxiliaryEffectSlots(int n, out int[] slots)
+        public void GenAuxiliaryEffectSlots(int n, out int slots)
         {
-            uint[] temp = new uint[n];
-            GenAuxiliaryEffectSlots(n, out temp[0]);
-            slots = new int[n];
-            for (int i = 0; i < n; i++)
+            unsafe
             {
-                slots[i] = (int)temp[i];
-            }
-        }
-
-        /// <summary>The GenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots that can be created will be dependant upon the Open AL device used.</summary>
-        /// <remarks>An application should check the OpenAL error state after making this call to determine if the Effect Slot was successfully created. If the function call fails then none of the requested Effect Slots are created. A good strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then check for an error condition. If an error is set then the loop can be broken and the application can determine if sufficient resources are available.</remarks>
-        /// <param name="slots">Pointer addressing sufficient memory to store n Effect Slot object identifiers.</param>
-        public void GenAuxiliaryEffectSlots(int[] slots)
-        {
-            uint[] temp = new uint[slots.Length];
-            GenAuxiliaryEffectSlots(temp.Length, out temp[0]);
-            for (int i = 0; i < temp.Length; i++)
-            {
-                slots[i] = (int)temp[i];
+                fixed (int* ptr = &slots)
+                {
+                    Imported_alGenAuxiliaryEffectSlots(n, (uint*)ptr);
+                    slots = *ptr;
+                }
             }
         }
 
@@ -934,48 +922,19 @@ namespace OpenTK.Audio
         /// <returns>Pointer addressing sufficient memory to store n Effect Slot object identifiers.</returns>
         public int[] GenAuxiliaryEffectSlots(int n)
         {
-            uint[] temp = new uint[n];
-            GenAuxiliaryEffectSlots(temp.Length, out temp[0]);
+            if (n <= 0) throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
             int[] slots = new int[n];
-            for (int i = 0; i < temp.Length; i++)
-            {
-                slots[i] = (int)temp[i];
-            }
+            GenAuxiliaryEffectSlots(slots.Length, out slots[0]);
             return slots;
         }
 
         /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
-        /// <param name="slot">Storage UInt32 for the new auxiliary effect slot name/handle.</param>
-        [CLSCompliant(false)]
-        public void GenAuxiliaryEffectSlots(out uint slot)
-        {
-            unsafe
-            {
-                fixed (uint* ptr = &slot)
-                {
-                    Imported_alGenAuxiliaryEffectSlots(1, ptr);
-                }
-            }
-        }
-
-        /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
-        /// <param name="slot">Storage UInt32 for the new auxiliary effect slot name/handle.</param>
-        
-        public void GenAuxiliaryEffectSlots(out int slot)
-        {
-            uint temp;
-            GenAuxiliaryEffectSlots(out temp);
-            slot = (int)temp;
-        }
-
-        /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
         /// <returns>Storage UInt32 for the new auxiliary effect slot name/handle.</returns>
-        
         public int GenAuxiliaryEffectSlots()
         {
-            uint temp;
-            GenAuxiliaryEffectSlots(out temp);
-            return (int)temp;
+            int temp;
+            GenAuxiliaryEffectSlots(1, out temp);
+            return temp;
         }
 
         #endregion alGenAuxiliaryEffectSlots
