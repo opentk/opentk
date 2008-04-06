@@ -242,7 +242,6 @@ namespace OpenTK.Audio
             DeleteEffects(effects.Length, ref effects[0]);
         }
 
-
         /// <summary>This function deletes one Effect only.</summary>
         /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
         public void DeleteEffect(int effect)
@@ -535,81 +534,39 @@ namespace OpenTK.Audio
         /// <remarks>After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of parameters, the application must specify what type of filter should be stored in the object, using Filter() with EfxFilteri.</remarks>
         /// <param name="n">Number of Filters to be created.</param>
         /// <param name="filters">Pointer addressing sufficient memory to store n Filter object identifiers.</param>
-        
-        public void GenFilters(int n, out int[] filters)
+        public void GenFilters(int n, out int filters)
         {
-            uint[] temp = new uint[n];
-            GenFilters(n, out temp[0]);
-            filters = new int[n];
-            for (int i = 0; i < n; i++)
+            unsafe
             {
-                filters[i] = (int)temp[i];
+                fixed (int* ptr = &filters)
+                {
+                    Imported_alGenFilters(n, (uint*)ptr);
+                    filters = *ptr;
+                }
             }
         }
 
-        /// <summary>The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or Auxiliary Send Filters.</summary>
-        /// <remarks>After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of parameters, the application must specify what type of filter should be stored in the object, using Filter() with EfxFilteri.</remarks>
-        /// <param name="filters">Pointer addressing sufficient memory to store n Filter object identifiers.</param>
-        
-        public void GenFilters(int[] filters)
-        {
-            uint[] temp = new uint[filters.Length];
-            GenFilters(temp.Length, out temp[0]);
-            for (int i = 0; i < temp.Length; i++)
-            {
-                filters[i] = (int)temp[i];
-            }
-        }
 
         /// <summary>The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or Auxiliary Send Filters.</summary>
         /// <remarks>After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of parameters, the application must specify what type of filter should be stored in the object, using Filter() with EfxFilteri.</remarks>
         /// <param name="n">Number of Filters to be created.</param>
         /// <returns>Pointer addressing sufficient memory to store n Filter object identifiers.</returns>
-        
         public int[] GenFilters(int n)
         {
-            uint[] temp = new uint[n];
-            GenFilters(temp.Length, out temp[0]);
+
+            if (n <= 0) throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
             int[] filters = new int[n];
-            for (int i = 0; i < temp.Length; i++)
-            {
-                filters[i] = (int)temp[i];
-            }
+            GenFilters(filters.Length, out filters[0]);
             return filters;
         }
 
         /// <summary>This function generates only one Filter.</summary>
-        /// <param name="filter">Storage UInt32 for the new filter name/handle.</param>
-        [CLSCompliant(false)]
-        public void GenFilters(out uint filter)
-        {
-            unsafe
-            {
-                fixed (uint* ptr = &filter)
-                {
-                    Imported_alGenFilters(1, ptr);
-                }
-            }
-        }
-
-        /// <summary>This function generates only one Filter.</summary>
-        /// <param name="filter">Storage UInt32 for the new filter name/handle.</param>
-        
-        public void GenFilters(out int filter)
-        {
-            uint temp;
-            GenFilters(out temp);
-            filter = (int)temp;
-        }
-
-        /// <summary>This function generates only one Filter.</summary>
         /// <returns>Storage UInt32 for the new filter name/handle.</returns>
-        
-        public int GenFilters()
+        public int GenFilter()
         {
-            uint temp;
-            GenFilters(out temp);
-            return (int)temp;
+            int filter;
+            GenFilters(1, out filter);
+            return filter;
         }
 
         #endregion alGenFilters
@@ -627,11 +584,11 @@ namespace OpenTK.Audio
         /// <param name="n">Number of Filters to be deleted.</param>
         /// <param name="filters">Pointer to n Filter object identifiers.</param>
         [CLSCompliant(false)]
-        public void DeleteFilters(int n, ref uint[] filters)
+        public void DeleteFilters(int n, ref uint filters)
         {
             unsafe
             {
-                fixed (uint* ptr = filters)
+                fixed (uint* ptr = &filters)
                 {
                     Imported_alDeleteFilters(n, ptr);
                 }
@@ -641,60 +598,39 @@ namespace OpenTK.Audio
         /// <summary>The DeleteFilters function is used to delete and free resources for Filter objects previously created with GenFilters.</summary>
         /// <param name="n">Number of Filters to be deleted.</param>
         /// <param name="filters">Pointer to n Filter object identifiers.</param>
-        
-        public void DeleteFilters(int n, ref int[] filters)
-        {
-            uint[] temp = new uint[n];
-            for (int i = 0; i < n; i++)
-            {
-                temp[i] = (uint)filters[i];
-            }
-            DeleteFilters(n, ref temp);
-        }
-
-        /// <summary>The DeleteFilters function is used to delete and free resources for Filter objects previously created with GenFilters.</summary>
-        /// <param name="filters">Pointer to n Filter object identifiers.</param>
-        
-        public void DeleteFilters(int[] filters)
-        {
-            uint[] temp = new uint[filters.Length];
-            for (int i = 0; i < temp.Length; i++)
-            {
-                temp[i] = (uint)filters[i];
-            }
-            DeleteFilters(temp.Length, ref temp);
-        }
-
-        /// <summary>This function deletes one Filter only.</summary>
-        /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
-        [CLSCompliant(false)]
-        public void DeleteFilters(ref uint filter)
+        public void DeleteFilters(int n, ref int filters)
         {
             unsafe
             {
-                fixed (uint* ptr = &filter)
+                fixed (int* ptr = &filters)
                 {
-                    Imported_alDeleteFilters(1, ptr);
+                    Imported_alDeleteFilters(n, (uint*)ptr);
                 }
             }
         }
 
         /// <summary>This function deletes one Filter only.</summary>
         /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
-        
-        public void DeleteFilters(ref int filter)
+        [CLSCompliant(false)]
+        public void DeleteFilters(uint[] filters)
         {
-            uint temp = (uint)filter;
-            DeleteFilters(ref temp);
+            if (filters == null) throw new ArgumentNullException("filters");
+            DeleteFilters(filters.Length, ref filters[0]);
         }
 
         /// <summary>This function deletes one Filter only.</summary>
         /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
-        
+        public void DeleteFilters(int[] filters)
+        {
+            if (filters == null) throw new ArgumentNullException("filters");
+            DeleteFilters(filters.Length, ref filters[0]);
+        }
+
+        /// <summary>This function deletes one Filter only.</summary>
+        /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         public void DeleteFilters(int filter)
         {
-            uint temp = (uint)filter;
-            DeleteFilters(ref temp);
+            DeleteFilters(1, ref filter);
         }
 
         #endregion alDeleteFilters
