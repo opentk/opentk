@@ -10,112 +10,88 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.ComponentModel;
 
 using OpenTK.Audio;
 
 namespace Examples.OpenAL
 {
-    [Example("Streaming Playback", ExampleCategory.OpenAL)]
+    // Not working correctly (sound pops).
+
+    //[Example("Streaming Playback", ExampleCategory.OpenAL)]
     public class StreamingPlayback
     {
         const string filename = "Data\\Audio\\the_ring_that_fell.wav";
-        const int buffer_size = 18096;
+        const int buffer_size = (int)(0.5*44100);
+        const int buffer_count = 4;
 
-        static object openal_lock = new object();
+        static object openal_lock = new object();   // Should be global in your app.
 
         public static void Main()
         {
-            AudioContext context = new AudioContext();
-
+            using (AudioContext context = new AudioContext())
             using (SoundReader sound = new SoundReader(filename))
             {
-                int[] buffers = AL.GenBuffers(2);
                 int source = AL.GenSource();
+                int[] buffers = AL.GenBuffers(buffer_count);
                 int state;
 
                 Console.WriteLine("Testing WaveReader({0}).ReadSamples()", filename);
 
                 Console.Write("Playing");
 
-                SoundStreamer streamer = new SoundStreamer(sound, source, buffers);
-                streamer.Start();
-                lock (openal_lock)
-                {
-                    AL.SourcePlay(source);
-                }
+                foreach (int buffer in buffers)
+                    AL.BufferData(buffer, sound.ReadSamples(buffer_size));
+                AL.SourceQueueBuffers(source, buffers.Length, buffers);
+                AL.SourcePlay(source);
 
-                // Query the source to find out when it stops playing.
+                int processed_count, queued_count;
+
                 do
                 {
-                    //Thread.Sleep(100);
                     //Console.Write(".");
-                    lock (openal_lock)
+
+                    do
                     {
-                        AL.GetSource(source, ALGetSourcei.SourceState, out state);
-                    }
-                }
-                while ((ALSourceState)state == ALSourceState.Playing);
-
-                Console.WriteLine("asd");
-
-                lock (openal_lock)
-                {
-                    AL.SourceStop(source);
-                    AL.DeleteSource(source);
-                    AL.DeleteBuffers(buffers);
-                }
-
-            }
-        }
-
-        class SoundStreamer
-        {
-            SoundReader reader;
-            int source;
-            int[] buffers;
-            Thread thread;
-
-            public SoundStreamer(SoundReader sound, int source, int[] buffers)
-            {
-                reader = sound;
-                this.source = source;
-                this.buffers = buffers;
-
-                lock (openal_lock)
-                {
-                    foreach (int buffer in buffers)
-                        AL.BufferData(buffer, sound.ReadSamples(buffer_size));
-
-                    AL.SourceQueueBuffers(source, buffers.Length, buffers);
-                }
-            }
-
-            public void Start()
-            {
-                thread = new Thread(new ThreadStart(StartStreaming));
-                thread.Start();
-            }
-
-            void StartStreaming()
-            {
-                while (!reader.EndOfFile)
-                {
-                    lock (openal_lock)
-                    {
-                        int processed_count;
                         AL.GetSource(source, ALGetSourcei.BuffersProcessed, out processed_count);
-                        while (processed_count-- > 0)
+                        //Thread.Sleep(1);
+                    }
+                    while (processed_count == 0);
+
+                    Console.WriteLine(processed_count);
+                    while (processed_count > 0)
+                    {
+                        int buffer = AL.SourceUnqueueBuffer(source);
+                        if (buffer != 0 && !sound.EndOfFile)
                         {
-                            int buffer = AL.SourceUnqueueBuffer(source);
-                            AL.BufferData(buffer, reader.ReadSamples(buffer_size));
+                            Console.WriteLine("    " + buffer.ToString());
+                            AL.BufferData(buffer, sound.ReadSamples(buffer_size));
                             AL.SourceQueueBuffer(source, buffer);
                         }
+                        --processed_count;
                     }
 
-                    Thread.Sleep(5);
+                    AL.GetSource(source, ALGetSourcei.BuffersQueued, out queued_count);
+                    if (queued_count > 0)
+                    {
+                        AL.GetSource(source, ALGetSourcei.SourceState, out state);
+                        if ((ALSourceState)state != ALSourceState.Playing)
+                        {
+                            AL.SourcePlay(source);
+                            Console.WriteLine("r");
+                        }
+                    }
+                    else
+                        break;
                 }
-                Console.WriteLine("booh");
+                while (true);
+
+                AL.SourceStop(source);
+                AL.DeleteSource(source);
+                AL.DeleteBuffers(buffers);
             }
+
+            Console.WriteLine();
         }
     }
 }
