@@ -200,11 +200,11 @@ namespace OpenTK.Audio
         /// <param name="n">Number of Effects to be deleted.</param>
         /// <param name="effects">Pointer to n Effect object identifiers.</param>
         [CLSCompliant(false)]
-        public void DeleteEffects(int n, ref uint[] effects)
+        public void DeleteEffects(int n, ref uint effects)
         {
             unsafe
             {
-                fixed (uint* ptr = effects)
+                fixed (uint* ptr = &effects)
                 {
                     Imported_alDeleteEffects(n, ptr);
                 }
@@ -214,60 +214,43 @@ namespace OpenTK.Audio
         /// <summary>The DeleteEffects function is used to delete and free resources for Effect objects previously created with GenEffects.</summary>
         /// <param name="n">Number of Effects to be deleted.</param>
         /// <param name="effects">Pointer to n Effect object identifiers.</param>
-        
-        public void DeleteEffects(int n, ref int[] effects)
-        {
-            uint[] temp = new uint[n];
-            for (int i = 0; i < n; i++)
-            {
-                temp[i] = (uint)effects[i];
-            }
-            DeleteEffects(n, ref temp);
-        }
-
-        /// <summary>The DeleteEffects function is used to delete and free resources for Effect objects previously created with GenEffects.</summary>
-        /// <param name="effects">Pointer to n Effect object identifiers.</param>
-        
-        public void DeleteEffects(int[] effects)
-        {
-            uint[] temp = new uint[effects.Length];
-            for (int i = 0; i < temp.Length; i++)
-            {
-                temp[i] = (uint)effects[i];
-            }
-            DeleteEffects(temp.Length, ref temp);
-        }
-
-        /// <summary>This function deletes one Effect only.</summary>
-        /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
-        [CLSCompliant(false)]
-        public void DeleteEffects(ref uint effect)
+        public void DeleteEffects(int n, ref int effects)
         {
             unsafe
             {
-                fixed (uint* ptr = &effect)
+                fixed (int* ptr = &effects)
                 {
-                    Imported_alDeleteEffects(1, ptr);
+                    Imported_alDeleteEffects(n, (uint*)ptr);
                 }
             }
         }
 
-        /// <summary>This function deletes one Effect only.</summary>
-        /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
-        
-        public void DeleteEffects(ref int effect)
+        /// <summary>The DeleteEffects function is used to delete and free resources for Effect objects previously created with GenEffects.</summary>
+        /// <param name="effects">Pointer to n Effect object identifiers.</param>
+        public void DeleteEffects(int[] effects)
         {
-            uint temp = (uint)effect;
-            DeleteEffects(ref temp);
+            if (effects == null) throw new ArgumentNullException("effects");
+            DeleteEffects(effects.Length, ref effects[0]);
         }
+
+        /// <summary>The DeleteEffects function is used to delete and free resources for Effect objects previously created with GenEffects.</summary>
+        /// <param name="effects">Pointer to n Effect object identifiers.</param>
+        [CLSCompliant(false)]
+        public void DeleteEffects(uint[] effects)
+        {
+            if (effects == null) throw new ArgumentNullException("effects");
+            DeleteEffects(effects.Length, ref effects[0]);
+        }
+
 
         /// <summary>This function deletes one Effect only.</summary>
         /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
-        
-        public void DeleteEffects(int effect)
+        public void DeleteEffect(int effect)
         {
-            uint temp = (uint)effect;
-            DeleteEffects(ref temp);
+            unsafe
+            {
+                Imported_alDeleteEffects(1, (uint*)&effect);
+            }
         }
 
         #endregion alDeleteEffects
