@@ -628,7 +628,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function deletes one Filter only.</summary>
         /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
-        public void DeleteFilters(int filter)
+        public void DeleteFilter(int filter)
         {
             DeleteFilters(1, ref filter);
         }
