@@ -1049,11 +1049,11 @@ namespace OpenTK.Audio
         /// <param name="n">Number of Auxiliary Effect Slots to be deleted.</param>
         /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
         [CLSCompliant(false)]
-        public void DeleteAuxiliaryEffectSlots(int n, ref uint[] slots)
+        public void DeleteAuxiliaryEffectSlots(int n, ref uint slots)
         {
-            unsafe
+            unsafe 
             {
-                fixed (uint* ptr = slots)
+                fixed (uint* ptr = &slots)
                 {
                     Imported_alDeleteAuxiliaryEffectSlots(n, ptr);
                 }
@@ -1063,61 +1063,48 @@ namespace OpenTK.Audio
         /// <summary>The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots previously created with GenAuxiliaryEffectSlots.</summary>
         /// <param name="n">Number of Auxiliary Effect Slots to be deleted.</param>
         /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
-        [CLSCompliant(true)]
-        public void DeleteAuxiliaryEffectSlots(int n, ref int[] slots)
+        public void DeleteAuxiliaryEffectSlots(int n, ref int slots)
         {
-            uint[] temp = new uint[n];
-            for (int i = 0; i < n; i++)
+            unsafe
             {
-                temp[i] = (uint)slots[i];
+                fixed (int* ptr = &slots)
+                {
+                    Imported_alDeleteAuxiliaryEffectSlots(n, (uint*)ptr);
+                }
             }
-            DeleteAuxiliaryEffectSlots(n, ref temp);
         }
 
         /// <summary>The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots previously created with GenAuxiliaryEffectSlots.</summary>
         /// <param name="n">Number of Auxiliary Effect Slots to be deleted.</param>
         /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
-        [CLSCompliant(true)]
         public void DeleteAuxiliaryEffectSlots(int[] slots)
         {
-            uint[] temp = new uint[slots.Length];
-            for (int i = 0; i < temp.Length; i++)
-            {
-                temp[i] = (uint)slots[i];
-            }
-            DeleteAuxiliaryEffectSlots(temp.Length, ref temp);
+            if (slots == null) throw new ArgumentNullException("slots");
+            DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }
 
         /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
         /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
         [CLSCompliant(false)]
-        public void DeleteAuxiliaryEffectSlots(ref uint slot)
+        public void DeleteAuxiliaryEffectSlots(uint[] slots)
         {
-            unsafe
-            {
-                fixed (uint* ptr = &slot)
-                {
-                    Imported_alDeleteAuxiliaryEffectSlots(1, ptr);
-                }
-            }
+            if (slots == null) throw new ArgumentNullException("slots");
+            DeleteAuxiliaryEffectSlots(slots.Length, ref slots[0]);
         }
 
         /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
         /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
-        [CLSCompliant(true)]
-        public void DeleteAuxiliaryEffectSlots(ref int slot)
-        {
-            uint temp = (uint)slot;
-            DeleteAuxiliaryEffectSlots(ref temp);
-        }
-
-        /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
-        /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
-        [CLSCompliant(true)]
         public void DeleteAuxiliaryEffectSlots(int slot)
         {
-            uint temp = (uint)slot;
-            DeleteAuxiliaryEffectSlots(ref temp);
+            DeleteAuxiliaryEffectSlots(1, ref slot);
+        }
+
+        /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
+        /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
+        [CLSCompliant(false)]
+        public void DeleteAuxiliaryEffectSlots(uint slot)
+        {
+            DeleteAuxiliaryEffectSlots(1, ref slot);
         }
 
         #endregion alDeleteAuxiliaryEffectSlots
