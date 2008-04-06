@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Audio
 {
-    internal sealed class WaveReader : SoundReader
+    internal sealed class WaveLoader : AudioLoader
 	{
         SoundData decoded_data;
 
@@ -40,9 +40,9 @@ namespace OpenTK.Audio
 
         BinaryReader reader;
 
-        internal WaveReader() { }
+        internal WaveLoader() { }
 
-        internal WaveReader(Stream s)
+        internal WaveLoader(Stream s)
         {
             if (s == null) throw new ArgumentNullException();
             if (!s.CanRead) throw new ArgumentException("Cannot read from specified Stream.");
@@ -191,7 +191,7 @@ namespace OpenTK.Audio
                 //return new SoundData(decoded_data, new SoundFormat(channels, bits_per_sample, sample_rate));
                 return decoded_data;
             }
-            catch (SoundReaderException e)
+            catch (AudioLoaderException e)
             {
                 reader.Close();
                 throw;
@@ -211,7 +211,7 @@ namespace OpenTK.Audio
             {
                 base.Stream = value;
                 if (!ReadHeaders(reader))
-                    throw new SoundReaderException("Invalid WAVE/RIFF file: invalid or corrupt signature.");
+                    throw new AudioLoaderException("Invalid WAVE/RIFF file: invalid or corrupt signature.");
 
                 Debug.Write(String.Format("Opened WAVE/RIFF file: ({0}, {1}, {2}, {3}) ", sample_rate.ToString(), bits_per_sample.ToString(),
                                           channels.ToString(), audio_format.ToString()));
