@@ -15,7 +15,7 @@ namespace OpenTK.Math
 {
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix3d : IEquatable<Matrix3d>
+    internal struct Matrix3d : IEquatable<Matrix3d>
     {
         #region Fields & Access
 

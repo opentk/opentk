@@ -19,7 +19,7 @@ namespace OpenTK.Math
     /// <summary>A 4-dimensional vector using double-precision floating point numbers.</summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4d : IEquatable<Vector4d>, IComparer<Vector4d>, IComparable<Vector4d>
+    internal struct Vector4d : IEquatable<Vector4d>, IComparer<Vector4d>, IComparable<Vector4d>
     {
         #region Fields & Access
 
