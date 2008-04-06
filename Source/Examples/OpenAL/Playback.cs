@@ -20,8 +20,7 @@ namespace Examples
 
         public static void Main()
         {
-            AudioContext context = new AudioContext();
-
+            using (AudioContext context = new AudioContext())
             using (SoundReader sound = new SoundReader(filename))
             {
                 Console.WriteLine("Testing WaveReader({0}).ReadToEnd()", filename);
