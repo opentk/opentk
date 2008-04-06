@@ -146,81 +146,43 @@ namespace OpenTK.Audio
         /// <remarks>After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using Effect() with EfxEffecti.</remarks>
         /// <param name="n">Number of Effects to be created.</param>
         /// <param name="effects">Pointer addressing sufficient memory to store n Effect object identifiers.</param>
-        
-        public void GenEffects(int n, out int[] effects)
-        {
-            uint[] temp = new uint[n];
-            GenEffects(n, out temp[0]);
-            effects = new int[n];
-            for (int i = 0; i < n; i++)
-            {
-                effects[i] = (int)temp[i];
-            }
-        }
-
-        /// <summary>The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary Effect Slot object</summary>
-        /// <remarks>After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using Effect() with EfxEffecti.</remarks>
-        /// <param name="effects">Pointer addressing sufficient memory to store n Effect object identifiers.</param>
-        
-        public void GenEffects(int[] effects)
-        {
-            uint[] temp = new uint[effects.Length];
-            GenEffects(temp.Length, out temp[0]);
-            for (int i = 0; i < temp.Length; i++)
-            {
-                effects[i] = (int)temp[i];
-            }
-        }
-
-        /// <summary>The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary Effect Slot object</summary>
-        /// <remarks>After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using Effect() with EfxEffecti.</remarks>
-        /// <param name="n">Number of Effects to be created.</param>
-        /// <returns>Pointer addressing sufficient memory to store n Effect object identifiers.</returns>
-        
-        public int[] GenEffects(int n)
-        {
-            uint[] temp = new uint[n];
-            GenEffects(temp.Length, out temp[0]);
-            int[] effects = new int[n];
-            for (int i = 0; i < temp.Length; i++)
-            {
-                effects[i] = (int)temp[i];
-            }
-            return effects;
-        }
-
-        /// <summary>This function generates only one Effect.</summary>
-        /// <param name="effect">Storage UInt32 for the new effect name/handle.</param>
-        [CLSCompliant(false)]
-        public void GenEffects(out uint effect)
+        public void GenEffects(int n, out int effects)
         {
             unsafe
             {
-                fixed (uint* ptr = &effect)
+                fixed (int* ptr = &effects)
                 {
-                    Imported_alGenEffects(1, ptr);
+                    Imported_alGenEffects(n, (uint*)ptr);
+                    effects = *ptr;
                 }
             }
         }
 
-        /// <summary>This function generates only one Effect.</summary>
-        /// <param name="effect">Storage UInt32 for the new effect name/handle.</param>
-        
-        public void GenEffects(out int effect)
+        /// <summary>Generates one or more effect objects.</summary>
+        /// <param name="n">Number of Effect object identifiers to generate.</param>
+        /// <remarks>
+        /// <para>The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary Effect Slot object.</para>
+        /// <para>After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using Effect() with EfxEffecti.</para>
+        /// </remarks>
+        public int[] GenEffects(int n)
         {
-            uint temp;
-            GenEffects(out temp);
-            effect = (int)temp;
+            if (n <= 0) throw new ArgumentOutOfRangeException("n", "Must be higher than 0.");
+            int[] effects = new int[n];
+            GenEffects(n, out effects[0]);
+            return effects;
         }
-
-        /// <summary>This function generates only one Effect.</summary>
-        /// <returns>Storage UInt32 for the new effect name/handle.</returns>
         
-        public int GenEffects()
+        /// <summary>Generates a single effect object.</summary>
+        /// <returns>A handle to the generated effect object.</returns>
+        /// <remarks>
+        /// <para>The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary Effect Slot object.</para>
+        /// <para>After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using Effect() with EfxEffecti.</para>
+        /// </remarks>
+        public int GenEffect()
         {
-            uint temp;
-            GenEffects(out temp);
-            return (int)temp;
+            int temp;
+            GenEffects(1, out temp);
+            return temp;
         }
 
         #endregion alGenEffects
