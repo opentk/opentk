@@ -791,10 +791,7 @@ namespace OpenTK.Audio
         {
             int result;
             GetSource(sid, (ALGetSourcei)param, out result);
-            if (result == 1)
-                value = true;
-            else
-                value = false;
+            value = result != 0;
         }
 
         /// <summary>This function retrieves a bool property of a source.</summary>
@@ -806,10 +803,7 @@ namespace OpenTK.Audio
         {
             int result;
             GetSource((uint)sid, (ALGetSourcei)param, out result);
-            if (result == 1)
-                value = true;
-            else
-                value = false;
+            value = result != 0;
         }
 
         #endregion GetSourcei
