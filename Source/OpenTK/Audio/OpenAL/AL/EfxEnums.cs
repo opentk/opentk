@@ -11,7 +11,6 @@ using System;
 
 namespace OpenTK.Audio
 {
-
     #region Effect
 
     ///<summary>A list of valid 32-Bits Float Effect/GetEffect parameters</summary>
@@ -359,5 +358,4 @@ namespace OpenTK.Audio
     }
 
     #endregion Filter Object
-
 }
