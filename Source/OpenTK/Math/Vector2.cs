@@ -147,12 +147,12 @@ namespace OpenTK.Math
 
 		#endregion
 
-		#region public Vector2 Perpendicular
+		#region public Vector2 PerpendicularRight
 
 		/// <summary>
-		/// Gets the perpendicular vector.
+		/// Gets the perpendicular vector on the right side of this vector.
 		/// </summary>
-		public Vector2 Perpendicular
+		public Vector2 PerpendicularRight
 		{
 			get
 			{
@@ -160,7 +160,22 @@ namespace OpenTK.Math
 			}
 		}
 
-        #endregion
+		#endregion
+
+		#region public Vector2 PerpendicularLeft
+
+		/// <summary>
+		/// Gets the perpendicular vector on the left side of this vector.
+		/// </summary>
+		public Vector2 PerpendicularLeft
+		{
+			get
+			{
+				return new Vector2(-Y, X);
+			}
+		}
+
+		#endregion
 
         #region public void Normalize()
 
