@@ -325,29 +325,10 @@ namespace OpenTK.Audio
             lock (audio_context_lock)
             {
                 if (!Alc.MakeContextCurrent(context != null ? (IntPtr)context.context_handle : IntPtr.Zero))
-                    throw new AudioContextException(Alc.GetError(
-                        context != null ? (IntPtr)context.context_handle : IntPtr.Zero).ToString());
+                    throw new AudioContextException(String.Format("ALC {0} error detected at {1}.",
+                        Alc.GetError(context != null ? (IntPtr)context.context_handle : IntPtr.Zero).ToString(),
+                        context != null ? context.ToString() : "null"));
             }
-        }
-
-        #endregion
-
-        #region internal void MakeCurrent()
-
-        /// <summary>Makes the AudioContext current in the calling thread.</summary>
-        /// <exception cref="ObjectDisposedException">
-        /// Occurs if this function is called after the AudioContext has been disposed.
-        /// </exception>
-        /// <exception cref="AudioContextException">
-        /// Occurs when the AudioContext could not be made current.
-        /// </exception>
-        /// <remarks>
-        /// Only one AudioContext can be current in the application at any time,
-        /// <b>regardless of the number of threads</b>.
-        /// </remarks>
-        internal void MakeCurrent()
-        {
-            AudioContext.MakeCurrent(this);
         }
 
         #endregion
@@ -391,6 +372,26 @@ namespace OpenTK.Audio
         public IntPtr Device { get { return device_handle.Handle; } }
 
         #region --- Public Members ---
+
+        #region internal void MakeCurrent()
+
+        /// <summary>Makes the AudioContext current in the calling thread.</summary>
+        /// <exception cref="ObjectDisposedException">
+        /// Occurs if this function is called after the AudioContext has been disposed.
+        /// </exception>
+        /// <exception cref="AudioContextException">
+        /// Occurs when the AudioContext could not be made current.
+        /// </exception>
+        /// <remarks>
+        /// Only one AudioContext can be current in the application at any time,
+        /// <b>regardless of the number of threads</b>.
+        /// </remarks>
+        public void MakeCurrent()
+        {
+            AudioContext.MakeCurrent(this);
+        }
+
+        #endregion
 
         #region public bool IsProcessing
 
