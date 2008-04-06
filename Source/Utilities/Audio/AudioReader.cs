@@ -17,62 +17,62 @@ namespace OpenTK.Audio
     /// Encapsulates a sound stream and provides decoding and streaming capabilities.
     /// </summary>
     /// <typeparam name="SampleType"></typeparam>
-    public class AudioLoader : IDisposable
+    public class AudioReader : IDisposable
     {
         static object reader_lock = new object();
-        static List<AudioLoader> readers = new List<AudioLoader>();
+        static List<AudioReader> readers = new List<AudioReader>();
 
         bool disposed;
         Stream stream;
-        AudioLoader implementation;
+        AudioReader implementation;
 
         #region --- Constructors ---
 
-        #region static AudioLoader()
+        #region static AudioReader()
 
-        static AudioLoader()
+        static AudioReader()
         {
-            // TODO: Plugin architecture for sound formats. This is overkill now that we only have a WaveLoader (future proofing).
-            readers.Add(new WaveLoader());
+            // TODO: Plugin architecture for sound formats. This is overkill now that we only have a WaveReader (future proofing).
+            readers.Add(new WaveReader());
         }
 
         #endregion
 
-        #region protected AudioLoader()
+        #region protected AudioReader()
 
-        protected AudioLoader() { }
+        protected AudioReader() { }
 
         #endregion
 
-        #region public AudioLoader(string filename)
+        #region public AudioReader(string filename)
 
-        /// <summary>Creates a new AudioLoader that can read the specified sound file.</summary>
+        /// <summary>Creates a new AudioReader that can read the specified sound file.</summary>
         /// <param name="filename">The path to the sound file.</param>
-        /// <returns>A new OpenTK.Audio.AudioLoader, which can be used to read from the specified sound file.</returns>
-        public AudioLoader(string filename)
+        /// <returns>A new OpenTK.Audio.AudioReader, which can be used to read from the specified sound file.</returns>
+        public AudioReader(string filename)
             : this(new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
         { }
 
         #endregion
 
-        #region public AudioLoader(Stream s)
+        #region public AudioReader(Stream s)
 
-        /// <summary>Creates a new AudioLoader that can read the specified soundstream.</summary>
+        /// <summary>Creates a new AudioReader that can read the specified soundstream.</summary>
         /// <param name="s">The System.IO.Stream to read from.</param>
-        /// <returns>A new OpenTK.Audio.AudioLoader, which can be used to read from the specified sound stream.</returns>
-        public AudioLoader(Stream s)
+        /// <returns>A new OpenTK.Audio.AudioReader, which can be used to read from the specified sound stream.</returns>
+        public AudioReader(Stream s)
         {
             try
             {
                 lock (reader_lock)
                 {
-                    foreach (AudioLoader reader in readers)
+                    foreach (AudioReader reader in readers)
                     {
                         long pos = s.Position;
                         if (reader.Supports(s))
                         {
                             s.Position = pos;
-                            implementation = (AudioLoader)
+                            implementation = (AudioReader)
                                 reader.GetType().GetConstructor(
                                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public |
                                     System.Reflection.BindingFlags.Instance,
@@ -198,7 +198,7 @@ namespace OpenTK.Audio
 
         #region IDisposable Members
 
-        /// <summary>Closes the underlying Stream and disposes of the AudioLoader resources.</summary>
+        /// <summary>Closes the underlying Stream and disposes of the AudioReader resources.</summary>
         public virtual void Dispose()
         {
             this.Dispose(true);
@@ -217,7 +217,7 @@ namespace OpenTK.Audio
             }
         }
 
-        ~AudioLoader()
+        ~AudioReader()
         {
             this.Dispose(false);
         }
