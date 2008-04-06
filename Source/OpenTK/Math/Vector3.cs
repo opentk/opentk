@@ -157,7 +157,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region public Vector3 Normalize()
+        #region public void Normalize()
 
         /// <summary>
         /// Scales the Vector3 to unit length.
@@ -172,7 +172,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region public Vector3 NormalizeFast()
+        #region public void NormalizeFast()
 
         /// <summary>
         /// Scales the Vector3 to approximately unit length.
@@ -187,7 +187,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region public Vector3 Scale(float sx, float sy, float sz)
+        #region public void Scale(float sx, float sy, float sz)
 
         /// <summary>
         /// Scales the current Vector3 by the given amounts.
@@ -776,6 +776,22 @@ namespace OpenTK.Math
 		{
 			Vector4 h = Transform(vec, mat);
 			return new Vector3(h.X / h.W, h.Y / h.W, h.Z / h.W);
+		}
+
+		#endregion
+
+		#region CalculateAngle
+
+		/// <summary>
+		/// Calculates the angle (in radians) between two vectors.
+		/// </summary>
+		/// <param name="first">The first vector.</param>
+		/// <param name="second">The second vector.</param>
+		/// <returns>Angle (in radians) between the vectors.</returns>
+		/// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
+		public static float CalculateAngle(Vector3 first, Vector3 second)
+		{
+			return (float)System.Math.Acos((Vector3.Dot(first, second)) / (first.Length * second.Length));
 		}
 
 		#endregion
