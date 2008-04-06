@@ -15,8 +15,7 @@ using OpenTK.Math;
 
 namespace OpenTK.Audio
 {
-
-    public partial class EfxExtension
+    public partial class EffectsExtension
     {
         #region Helpers
 
@@ -1132,13 +1131,16 @@ namespace OpenTK.Audio
             }
         }
 
-        public EfxExtension()
+        public EffectsExtension()
         {
             _valid = false;
 
-            if (Alc.IsExtensionPresent(Alc.GetContextsDevice(Alc.GetCurrentContext()), "ALC_EXT_EFX") == false)
+            if (AudioContext.CurrentContext == null)
+                throw new InvalidOperationException("AL.LoadAll() needs a current AudioContext.");
+
+            if (Alc.IsExtensionPresent(AudioContext.CurrentContext.Device, "ALC_EXT_EFX") == false)
             {
-                Trace.WriteLine("Efx Extension ALC_EXT_EFX is unknown to the Device.");
+                Debug.WriteLine("EFX Extension (ALC_EXT_EFX) is not known to device: {0}.", AudioContext.CurrentContext.Device.ToString());
                 return;
             }
             // Console.WriteLine("ALC_EXT_EFX found. Efx can be used.");
@@ -1157,7 +1159,7 @@ namespace OpenTK.Audio
             }
             catch (Exception e)
             {
-                Trace.WriteLine("Failed to marshal Effect functions. " + e.ToString());
+                Debug.WriteLine("Failed to marshal Effect functions. " + e.ToString());
                 return;
             }
             // Console.WriteLine("Effect functions appear to be ok.");
@@ -1174,7 +1176,7 @@ namespace OpenTK.Audio
             }
             catch (Exception e)
             {
-                Trace.WriteLine("Failed to marshal Filter functions. " + e.ToString());
+                Debug.WriteLine("Failed to marshal Filter functions. " + e.ToString());
                 return;
             }
             // Console.WriteLine("Filter functions appear to be ok.");
@@ -1191,7 +1193,7 @@ namespace OpenTK.Audio
             }
             catch (Exception e)
             {
-                Trace.WriteLine("Failed to marshal AuxiliaryEffectSlot functions. " + e.ToString());
+                Debug.WriteLine("Failed to marshal AuxiliaryEffectSlot functions. " + e.ToString());
                 return;
             }
             // Console.WriteLine("Auxiliary Effect Slot functions appear to be ok.");
@@ -1202,5 +1204,4 @@ namespace OpenTK.Audio
 
         #endregion Constructor / Extension Loading
     }
-
 }

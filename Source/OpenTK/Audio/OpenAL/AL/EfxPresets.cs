@@ -13,8 +13,7 @@ using OpenTK.Math;
 
 namespace OpenTK.Audio
 {
-
-    public partial class EfxExtension
+    public partial class EffectsExtension
     {
         // TODO: CLS compliance.
         [CLSCompliant(false)]
