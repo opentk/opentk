@@ -17,62 +17,62 @@ namespace OpenTK.Audio
     /// Encapsulates a sound stream and provides decoding and streaming capabilities.
     /// </summary>
     /// <typeparam name="SampleType"></typeparam>
-    public class SoundReader : IDisposable
+    public class AudioLoader : IDisposable
     {
         static object reader_lock = new object();
-        static List<SoundReader> readers = new List<SoundReader>();
+        static List<AudioLoader> readers = new List<AudioLoader>();
 
         bool disposed;
         Stream stream;
-        SoundReader implementation;
+        AudioLoader implementation;
 
         #region --- Constructors ---
 
-        #region static SoundReader()
+        #region static AudioLoader()
 
-        static SoundReader()
+        static AudioLoader()
         {
             // TODO: Plugin architecture for sound formats. This is overkill now that we only have a WaveLoader (future proofing).
-            readers.Add(new WaveReader());
+            readers.Add(new WaveLoader());
         }
 
         #endregion
 
-        #region protected SoundReader()
+        #region protected AudioLoader()
 
-        protected SoundReader() { }
+        protected AudioLoader() { }
 
         #endregion
 
-        #region public SoundReader(string filename)
+        #region public AudioLoader(string filename)
 
-        /// <summary>Creates a new SoundReader that can read the specified sound file.</summary>
+        /// <summary>Creates a new AudioLoader that can read the specified sound file.</summary>
         /// <param name="filename">The path to the sound file.</param>
-        /// <returns>A new OpenTK.Audio.SoundReader, which can be used to read from the specified sound file.</returns>
-        public SoundReader(string filename)
+        /// <returns>A new OpenTK.Audio.AudioLoader, which can be used to read from the specified sound file.</returns>
+        public AudioLoader(string filename)
             : this(new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
         { }
 
         #endregion
 
-        #region public SoundReader(Stream s)
+        #region public AudioLoader(Stream s)
 
-        /// <summary>Creates a new SoundReader that can read the specified soundstream.</summary>
+        /// <summary>Creates a new AudioLoader that can read the specified soundstream.</summary>
         /// <param name="s">The System.IO.Stream to read from.</param>
-        /// <returns>A new OpenTK.Audio.SoundReader, which can be used to read from the specified sound stream.</returns>
-        public SoundReader(Stream s)
+        /// <returns>A new OpenTK.Audio.AudioLoader, which can be used to read from the specified sound stream.</returns>
+        public AudioLoader(Stream s)
         {
             try
             {
                 lock (reader_lock)
                 {
-                    foreach (SoundReader reader in readers)
+                    foreach (AudioLoader reader in readers)
                     {
                         long pos = s.Position;
                         if (reader.Supports(s))
                         {
                             s.Position = pos;
-                            implementation = (SoundReader)
+                            implementation = (AudioLoader)
                                 reader.GetType().GetConstructor(
                                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public |
                                     System.Reflection.BindingFlags.Instance,
@@ -198,7 +198,7 @@ namespace OpenTK.Audio
 
         #region IDisposable Members
 
-        /// <summary>Closes the underlying Stream and disposes of the SoundReader resources.</summary>
+        /// <summary>Closes the underlying Stream and disposes of the AudioLoader resources.</summary>
         public virtual void Dispose()
         {
             this.Dispose(true);
@@ -217,7 +217,7 @@ namespace OpenTK.Audio
             }
         }
 
-        ~SoundReader()
+        ~AudioLoader()
         {
             this.Dispose(false);
         }
