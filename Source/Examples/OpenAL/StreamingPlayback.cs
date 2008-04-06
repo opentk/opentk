@@ -30,7 +30,7 @@ namespace Examples.OpenAL
         public static void Main()
         {
             using (AudioContext context = new AudioContext())
-            using (SoundReader sound = new SoundReader(filename))
+            using (AudioReader sound = new AudioReader(filename))
             {
                 int source = AL.GenSource();
                 int[] buffers = AL.GenBuffers(buffer_count);

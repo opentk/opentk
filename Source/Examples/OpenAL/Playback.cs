@@ -21,7 +21,7 @@ namespace Examples
         public static void Main()
         {
             using (AudioContext context = new AudioContext())
-            using (SoundReader sound = new SoundReader(filename))
+            using (AudioReader sound = new AudioReader(filename))
             {
                 Console.WriteLine("Testing WaveReader({0}).ReadToEnd()", filename);
 
