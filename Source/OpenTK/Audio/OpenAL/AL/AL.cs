@@ -65,10 +65,7 @@ typedef void ALvoid;
 
 namespace OpenTK.Audio
 {
-
-    // AL = Audio Library
-    [CLSCompliant(true)]
-    public static class AL
+    public static partial class AL
     {
         #region Constants
 
