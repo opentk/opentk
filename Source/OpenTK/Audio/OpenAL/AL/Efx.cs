@@ -34,7 +34,7 @@ namespace OpenTK.Audio
         /// <summary>(Helper) Selects the Effect type used by this Effect handle.</summary>
         /// <param name="eid">Effect id returned from a successful call to GenEffects.</param>
         /// <param name="type">Effect type.</param>
-        [CLSCompliant(true)]
+        
         public void BindEffect(int eid, EfxEffectType type)
         {
             Imported_alEffecti((uint)eid, EfxEffecti.EffectType, (int)type);
@@ -56,7 +56,7 @@ namespace OpenTK.Audio
         /// <summary>(Helper) reroutes the output of a Source through a Filter.</summary>
         /// <param name="source">A valid Source handle.</param>
         /// <param name="filter">A valid Filter handle.</param>
-        [CLSCompliant(true)]
+        
         public void BindFilterToSource(int source, int filter)
         {
             AL.Source((uint)source, ALSourcei.EfxDirectFilter, (int)filter);
@@ -78,7 +78,7 @@ namespace OpenTK.Audio
         /// <summary>(Helper) Attaches an Effect to an Auxiliary Effect Slot.</summary>
         /// <param name="auxiliaryeffectslot">The slot handle to attach the Effect to.</param>
         /// <param name="effect">The Effect handle that is being attached.</param>
-        [CLSCompliant(true)]
+        
         public void BindEffectToAuxiliarySlot(int auxiliaryeffectslot, int effect)
         {
             AuxiliaryEffectSlot((uint)auxiliaryeffectslot, EfxAuxiliaryi.EffectslotEffect, (int)effect);
@@ -104,7 +104,7 @@ namespace OpenTK.Audio
         /// <param name="slot">The Auxiliary Effect Slot handle that receives input from the Source.</param>
         /// <param name="slotnumber">Every Source has only a limited number of slots it can feed buffer to. The number must stay below AlcContextAttributes.EfxMaxAuxiliarySends</param>
         /// <param name="filter">Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or EfxFilterType.FilterNull for no filter. </param>
-        [CLSCompliant(true)]
+        
         public void BindSourceToAuxiliarySlot(int source, int slot, int slotnumber, int filter)
         {
             AL.Source((uint)source, ALSource3i.EfxAuxiliarySendFilter, (int)slot, (int)slotnumber, (int)filter);
@@ -146,7 +146,7 @@ namespace OpenTK.Audio
         /// <remarks>After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using Effect() with EfxEffecti.</remarks>
         /// <param name="n">Number of Effects to be created.</param>
         /// <param name="effects">Pointer addressing sufficient memory to store n Effect object identifiers.</param>
-        [CLSCompliant(true)]
+        
         public void GenEffects(int n, out int[] effects)
         {
             uint[] temp = new uint[n];
@@ -161,7 +161,7 @@ namespace OpenTK.Audio
         /// <summary>The GenEffects function is used to create one or more Effect objects. An Effect object stores an effect type and a set of parameter values to control that Effect. In order to use an Effect it must be attached to an Auxiliary Effect Slot object</summary>
         /// <remarks>After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using Effect() with EfxEffecti.</remarks>
         /// <param name="effects">Pointer addressing sufficient memory to store n Effect object identifiers.</param>
-        [CLSCompliant(true)]
+        
         public void GenEffects(int[] effects)
         {
             uint[] temp = new uint[effects.Length];
@@ -176,7 +176,7 @@ namespace OpenTK.Audio
         /// <remarks>After creation an Effect has no type (EfxEffectType.Null), so before it can be used to store a set of parameters, the application must specify what type of effect should be stored in the object, using Effect() with EfxEffecti.</remarks>
         /// <param name="n">Number of Effects to be created.</param>
         /// <returns>Pointer addressing sufficient memory to store n Effect object identifiers.</returns>
-        [CLSCompliant(true)]
+        
         public int[] GenEffects(int n)
         {
             uint[] temp = new uint[n];
@@ -205,7 +205,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function generates only one Effect.</summary>
         /// <param name="effect">Storage UInt32 for the new effect name/handle.</param>
-        [CLSCompliant(true)]
+        
         public void GenEffects(out int effect)
         {
             uint temp;
@@ -215,7 +215,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function generates only one Effect.</summary>
         /// <returns>Storage UInt32 for the new effect name/handle.</returns>
-        [CLSCompliant(true)]
+        
         public int GenEffects()
         {
             uint temp;
@@ -252,7 +252,7 @@ namespace OpenTK.Audio
         /// <summary>The DeleteEffects function is used to delete and free resources for Effect objects previously created with GenEffects.</summary>
         /// <param name="n">Number of Effects to be deleted.</param>
         /// <param name="effects">Pointer to n Effect object identifiers.</param>
-        [CLSCompliant(true)]
+        
         public void DeleteEffects(int n, ref int[] effects)
         {
             uint[] temp = new uint[n];
@@ -265,7 +265,7 @@ namespace OpenTK.Audio
 
         /// <summary>The DeleteEffects function is used to delete and free resources for Effect objects previously created with GenEffects.</summary>
         /// <param name="effects">Pointer to n Effect object identifiers.</param>
-        [CLSCompliant(true)]
+        
         public void DeleteEffects(int[] effects)
         {
             uint[] temp = new uint[effects.Length];
@@ -292,7 +292,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function deletes one Effect only.</summary>
         /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
-        [CLSCompliant(true)]
+        
         public void DeleteEffects(ref int effect)
         {
             uint temp = (uint)effect;
@@ -301,7 +301,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function deletes one Effect only.</summary>
         /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
-        [CLSCompliant(true)]
+        
         public void DeleteEffects(int effect)
         {
             uint temp = (uint)effect;
@@ -331,7 +331,7 @@ namespace OpenTK.Audio
         /// <summary>The IsEffect function is used to determine if an object identifier is a valid Effect object.</summary>
         /// <param name="eid">Effect identifier to validate.</param>
         /// <returns>True if the identifier is a valid Effect, False otherwise.</returns>
-        [CLSCompliant(true)]
+        
         public bool IsEffect(int eid)
         {
             return Imported_alIsEffect((uint)eid);
@@ -362,7 +362,7 @@ namespace OpenTK.Audio
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
-        [CLSCompliant(true)]
+        
         public void Effect(int eid, EfxEffecti param, int value)
         {
             Imported_alEffecti((uint)eid, param, value);
@@ -393,7 +393,7 @@ namespace OpenTK.Audio
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating point value.</param>
-        [CLSCompliant(true)]
+        
         public void Effect(int eid, EfxEffectf param, float value)
         {
             Imported_alEffectf((uint)eid, param, value);
@@ -430,7 +430,7 @@ namespace OpenTK.Audio
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="values">Pointer to Math.Vector3.</param>
-        [CLSCompliant(true)]
+        
         public void Effect(int eid, EfxEffect3f param, ref Vector3 values)
         {
             Effect((uint)eid, param, ref values);
@@ -467,7 +467,7 @@ namespace OpenTK.Audio
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
-        [CLSCompliant(true)]
+        
         public void GetEffect(int eid, EfxEffecti pname, out int value)
         {
             GetEffect((uint)eid, pname, out value);
@@ -504,7 +504,7 @@ namespace OpenTK.Audio
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating point value will be stored.</param>
-        [CLSCompliant(true)]
+        
         public void GetEffect(int eid, EfxEffectf pname, out float value)
         {
             GetEffect((uint)eid, pname, out value);
@@ -544,7 +544,7 @@ namespace OpenTK.Audio
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">A Math.Vector3 to hold the values.</param>
-        [CLSCompliant(true)]
+        
         public void GetEffect(int eid, EfxEffect3f param, out Vector3 values)
         {
             GetEffect((uint)eid, param, out values);
@@ -590,7 +590,7 @@ namespace OpenTK.Audio
         /// <remarks>After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of parameters, the application must specify what type of filter should be stored in the object, using Filter() with EfxFilteri.</remarks>
         /// <param name="n">Number of Filters to be created.</param>
         /// <param name="filters">Pointer addressing sufficient memory to store n Filter object identifiers.</param>
-        [CLSCompliant(true)]
+        
         public void GenFilters(int n, out int[] filters)
         {
             uint[] temp = new uint[n];
@@ -605,7 +605,7 @@ namespace OpenTK.Audio
         /// <summary>The GenFilters function is used to create one or more Filter objects. A Filter object stores a filter type and a set of parameter values to control that Filter. Filter objects can be attached to Sources as Direct Filters or Auxiliary Send Filters.</summary>
         /// <remarks>After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of parameters, the application must specify what type of filter should be stored in the object, using Filter() with EfxFilteri.</remarks>
         /// <param name="filters">Pointer addressing sufficient memory to store n Filter object identifiers.</param>
-        [CLSCompliant(true)]
+        
         public void GenFilters(int[] filters)
         {
             uint[] temp = new uint[filters.Length];
@@ -620,7 +620,7 @@ namespace OpenTK.Audio
         /// <remarks>After creation a Filter has no type (EfxFilterType.Null), so before it can be used to store a set of parameters, the application must specify what type of filter should be stored in the object, using Filter() with EfxFilteri.</remarks>
         /// <param name="n">Number of Filters to be created.</param>
         /// <returns>Pointer addressing sufficient memory to store n Filter object identifiers.</returns>
-        [CLSCompliant(true)]
+        
         public int[] GenFilters(int n)
         {
             uint[] temp = new uint[n];
@@ -649,7 +649,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function generates only one Filter.</summary>
         /// <param name="filter">Storage UInt32 for the new filter name/handle.</param>
-        [CLSCompliant(true)]
+        
         public void GenFilters(out int filter)
         {
             uint temp;
@@ -659,7 +659,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function generates only one Filter.</summary>
         /// <returns>Storage UInt32 for the new filter name/handle.</returns>
-        [CLSCompliant(true)]
+        
         public int GenFilters()
         {
             uint temp;
@@ -696,7 +696,7 @@ namespace OpenTK.Audio
         /// <summary>The DeleteFilters function is used to delete and free resources for Filter objects previously created with GenFilters.</summary>
         /// <param name="n">Number of Filters to be deleted.</param>
         /// <param name="filters">Pointer to n Filter object identifiers.</param>
-        [CLSCompliant(true)]
+        
         public void DeleteFilters(int n, ref int[] filters)
         {
             uint[] temp = new uint[n];
@@ -709,7 +709,7 @@ namespace OpenTK.Audio
 
         /// <summary>The DeleteFilters function is used to delete and free resources for Filter objects previously created with GenFilters.</summary>
         /// <param name="filters">Pointer to n Filter object identifiers.</param>
-        [CLSCompliant(true)]
+        
         public void DeleteFilters(int[] filters)
         {
             uint[] temp = new uint[filters.Length];
@@ -736,7 +736,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function deletes one Filter only.</summary>
         /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
-        [CLSCompliant(true)]
+        
         public void DeleteFilters(ref int filter)
         {
             uint temp = (uint)filter;
@@ -745,7 +745,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function deletes one Filter only.</summary>
         /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
-        [CLSCompliant(true)]
+        
         public void DeleteFilters(int filter)
         {
             uint temp = (uint)filter;
@@ -775,7 +775,7 @@ namespace OpenTK.Audio
         /// <summary>The IsFilter function is used to determine if an object identifier is a valid Filter object.</summary>
         /// <param name="fid">Effect identifier to validate.</param>
         /// <returns>True if the identifier is a valid Filter, False otherwise.</returns>
-        [CLSCompliant(true)]
+        
         public bool IsFilter(int fid)
         {
             return Imported_alIsFilter((uint)fid);
@@ -806,7 +806,7 @@ namespace OpenTK.Audio
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Integer value.</param>
-        [CLSCompliant(true)]
+        
         public void Filter(int fid, EfxFilteri param, int value)
         {
             Imported_alFilteri((uint)fid, param, value);
@@ -837,7 +837,7 @@ namespace OpenTK.Audio
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="param">Effect property to set.</param>
         /// <param name="value">Floating point value.</param>
-        [CLSCompliant(true)]
+        
         public void Filter(int fid, EfxFilterf param, float value)
         {
             Imported_alFilterf((uint)fid, param, value);
@@ -874,7 +874,7 @@ namespace OpenTK.Audio
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
-        [CLSCompliant(true)]
+        
         public void GetFilter(int fid, EfxFilteri pname, out int value)
         {
             GetFilter((uint)fid, pname, out value);
@@ -911,7 +911,7 @@ namespace OpenTK.Audio
         /// <param name="fid">Filter object identifier.</param>
         /// <param name="pname">Effect property to retrieve.</param>
         /// <param name="value">Address where floating point value will be stored.</param>
-        [CLSCompliant(true)]
+        
         public void GetFilter(int fid, EfxFilterf pname, out float value)
         {
             GetFilter((uint)fid, pname, out value);
@@ -959,7 +959,6 @@ namespace OpenTK.Audio
         /// <remarks>An application should check the OpenAL error state after making this call to determine if the Effect Slot was successfully created. If the function call fails then none of the requested Effect Slots are created. A good strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then check for an error condition. If an error is set then the loop can be broken and the application can determine if sufficient resources are available.</remarks>
         /// <param name="n">Number of Auxiliary Effect Slots to be created.</param>
         /// <param name="slots">Pointer addressing sufficient memory to store n Effect Slot object identifiers.</param>
-        [CLSCompliant(true)]
         public void GenAuxiliaryEffectSlots(int n, out int[] slots)
         {
             uint[] temp = new uint[n];
@@ -974,7 +973,6 @@ namespace OpenTK.Audio
         /// <summary>The GenAuxiliaryEffectSlots function is used to create one or more Auxiliary Effect Slots. The number of slots that can be created will be dependant upon the Open AL device used.</summary>
         /// <remarks>An application should check the OpenAL error state after making this call to determine if the Effect Slot was successfully created. If the function call fails then none of the requested Effect Slots are created. A good strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then check for an error condition. If an error is set then the loop can be broken and the application can determine if sufficient resources are available.</remarks>
         /// <param name="slots">Pointer addressing sufficient memory to store n Effect Slot object identifiers.</param>
-        [CLSCompliant(true)]
         public void GenAuxiliaryEffectSlots(int[] slots)
         {
             uint[] temp = new uint[slots.Length];
@@ -989,7 +987,6 @@ namespace OpenTK.Audio
         /// <remarks>An application should check the OpenAL error state after making this call to determine if the Effect Slot was successfully created. If the function call fails then none of the requested Effect Slots are created. A good strategy for creating any OpenAL object is to use a for-loop and generate one object each loop iteration and then check for an error condition. If an error is set then the loop can be broken and the application can determine if sufficient resources are available.</remarks>
         /// <param name="n">Number of Auxiliary Effect Slots to be created.</param>
         /// <returns>Pointer addressing sufficient memory to store n Effect Slot object identifiers.</returns>
-        [CLSCompliant(true)]
         public int[] GenAuxiliaryEffectSlots(int n)
         {
             uint[] temp = new uint[n];
@@ -1018,7 +1015,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
         /// <param name="slot">Storage UInt32 for the new auxiliary effect slot name/handle.</param>
-        [CLSCompliant(true)]
+        
         public void GenAuxiliaryEffectSlots(out int slot)
         {
             uint temp;
@@ -1028,7 +1025,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
         /// <returns>Storage UInt32 for the new auxiliary effect slot name/handle.</returns>
-        [CLSCompliant(true)]
+        
         public int GenAuxiliaryEffectSlots()
         {
             uint temp;
@@ -1038,7 +1035,7 @@ namespace OpenTK.Audio
 
         #endregion alGenAuxiliaryEffectSlots
 
-        #region alDeleteAuxiliaryEffectSlots
+        #region DeleteAuxiliaryEffectSlots
 
         unsafe private delegate void Delegate_alDeleteAuxiliaryEffectSlots(int n, [In] uint* slots);
         // typedef void (__cdecl *LPALDELETEAUXILIARYEFFECTSLOTS)( ALsizei n, ALuint* slots );
@@ -1130,7 +1127,7 @@ namespace OpenTK.Audio
         /// <summary>The IsAuxiliaryEffectSlot function is used to determine if an object identifier is a valid Auxiliary Effect Slot object.</summary>
         /// <param name="slot">Effect Slot object identifier to validate.</param>
         /// <returns>True if the identifier is a valid Auxiliary Effect Slot, False otherwise.</returns>
-        [CLSCompliant(true)]
+        
         public bool IsAuxiliaryEffectSlot(int slot)
         {
             return Imported_alIsAuxiliaryEffectSlot((uint)slot);
@@ -1161,7 +1158,7 @@ namespace OpenTK.Audio
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Integer value.</param>
-        [CLSCompliant(true)]
+        
         public void AuxiliaryEffectSlot(int asid, EfxAuxiliaryi param, int value)
         {
             Imported_alAuxiliaryEffectSloti((uint)asid, param, value);
@@ -1192,7 +1189,7 @@ namespace OpenTK.Audio
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="param">Auxiliary Effect Slot property to set.</param>
         /// <param name="value">Floating point value.</param>
-        [CLSCompliant(true)]
+        
         public void AuxiliaryEffectSlot(int asid, EfxAuxiliaryf param, float value)
         {
             Imported_alAuxiliaryEffectSlotf((uint)asid, param, value);
@@ -1229,7 +1226,7 @@ namespace OpenTK.Audio
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where integer value will be stored.</param>
-        [CLSCompliant(true)]
+        
         public void GetAuxiliaryEffectSlot(int asid, EfxAuxiliaryi pname, out int value)
         {
             GetAuxiliaryEffectSlot((uint)asid, pname, out value);
@@ -1266,7 +1263,7 @@ namespace OpenTK.Audio
         /// <param name="asid">Auxiliary Effect Slot object identifier.</param>
         /// <param name="pname">Auxiliary Effect Slot property to retrieve.</param>
         /// <param name="value">Address where floating point value will be stored.</param>
-        [CLSCompliant(true)]
+        
         public void GetAuxiliaryEffectSlot(int asid, EfxAuxiliaryf pname, out float value)
         {
             GetAuxiliaryEffectSlot((uint)asid, pname, out value);
