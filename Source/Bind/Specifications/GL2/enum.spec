@@ -1750,6 +1750,7 @@ TextureCoordName enum:
 TextureEnvMode enum:
 	MODULATE					= 0x2100
 	DECAL						= 0x2101
+	REPLACE						= 0x1e01
 	use GetPName BLEND
 	use EXT_texture REPLACE_EXT
 	use AccumOp ADD
