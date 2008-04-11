@@ -158,8 +158,6 @@ namespace Bind
                 Console.WriteLine();
                 Console.WriteLine("Bindings generated in {0} seconds.", ticks / (double)10000000.0);
                 Console.WriteLine();
-                //Console.WriteLine("Press any key to continue...");
-                Console.ReadKey(true);
             }
             catch (SecurityException e)
             {
@@ -170,6 +168,11 @@ namespace Bind
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine("The requested functionality is not implemented yet.");
+            }
+            finally
+            {
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey(true);
             }
         }
 
