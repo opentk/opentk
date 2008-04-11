@@ -708,9 +708,48 @@ namespace OpenTK.Graphics.OpenGL
             Delegates.glTranslatef(trans.X, trans.Y, trans.Z);
         }
 
-		public static void MultMatrix(Matrix4 mat)
+		public static void MultMatrix(ref Matrix4 mat)
 		{
-			MultMatrix(ref mat.Row0.X);
+			unsafe
+			{
+				fixed (Single* m_ptr = &mat.Row0.X)
+				{
+					Delegates.glMultMatrixf((Single*)m_ptr);
+				}
+			}
+		}
+
+		public static void LoadMatrix(ref Matrix4 mat)
+		{
+			unsafe
+			{
+				fixed (Single* m_ptr = &mat.Row0.X)
+				{
+					Delegates.glLoadMatrixf((Single*)m_ptr);
+				}
+			}
+		}
+
+		public static void LoadTransposeMatrix(ref Matrix4 mat)
+		{
+			unsafe
+			{
+				fixed (Single* m_ptr = &mat.Row0.X)
+				{
+					Delegates.glLoadTransposeMatrixf((Single*)m_ptr);
+				}
+			}
+		}
+
+		public static void MultTransposeMatrix(ref Matrix4 mat)
+		{
+			unsafe
+			{
+				fixed (Single* m_ptr = &mat.Row0.X)
+				{
+					Delegates.glMultTransposeMatrixf((Single*)m_ptr);
+				}
+			}
 		}
 
         public static void Materialv(MaterialFace face, MaterialParameter pname, Vector4 @params)
