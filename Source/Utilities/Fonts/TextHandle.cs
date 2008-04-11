@@ -43,6 +43,9 @@ namespace OpenTK.Graphics
 
         #region --- IDisposable Members ---
 
+        /// <summary>
+        /// Frees the resource consumed by the TextHandle.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
