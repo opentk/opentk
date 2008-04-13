@@ -86,7 +86,7 @@ namespace OpenTK.Platform.Windows
             if (sharedContext != null)
             {
                 Debug.Print("Sharing state with context {0}", sharedContext.ToString());
-                Wgl.Imports.ShareLists(renderContext, (sharedContext as IGraphicsContextInternal).Context);
+                Wgl.Imports.ShareLists((sharedContext as IGraphicsContextInternal).Context, renderContext);
             }
         }
 
