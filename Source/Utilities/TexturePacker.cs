@@ -152,8 +152,8 @@ namespace OpenTK
                     left = new Node();
                     right = new Node();
 
-                    int dw = this.rect.Width - item.Width;
-                    int dh = this.rect.Height - item.Height;
+                    int dw = this.rect.Width - item.Width + 1;
+                    int dh = this.rect.Height - item.Height + 1;
 
                     if (dw > dh)
                     {
