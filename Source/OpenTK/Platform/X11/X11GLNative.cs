@@ -563,6 +563,22 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public OpenTK.WindowState WindowState
+
+        public OpenTK.WindowState WindowState
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region --- IResizable Members ---
