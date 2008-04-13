@@ -34,7 +34,8 @@ namespace Examples.Tutorial
         {
         }
 
-        #region private Fields
+        #region Private Fields
+
         // GLSL Objects
         int VertexShaderObject, FragmentShaderObject, ProgramObject;
         int TextureObject;
@@ -51,16 +52,21 @@ namespace Examples.Tutorial
         float UniformScaleFactorY; // fractal vertical scaling is only affected by window resize
         float UniformOffsetX = 1.8f; // fractal horizontal offset
         float UniformOffsetY = 1.8f; // fractal vertical offset
+
+        // Text drawing (for fps)
+        TextPrinter printer = new TextPrinter();
+        TextureFont font = new TextureFont(new Font(FontFamily.GenericSansSerif, 14.0f));
+
         #endregion private Fields
 
         #region OnLoad
+
         /// <summary>
         /// Setup OpenGL and load resources here.
         /// </summary>
         /// <param name="e">Not used.</param>
         public override void OnLoad(EventArgs e)
         {
-
             // Check for necessary capabilities:
             if (!GL.SupportsExtension("VERSION_2_0"))
             {
@@ -69,7 +75,7 @@ namespace Examples.Tutorial
                 this.Exit();
             }
 
-            this.VSync = VSyncMode.Off;
+            this.VSync = VSyncMode.On;
 
             GL.Disable(EnableCap.Dither);
             GL.ClearColor(0.2f, 0f, 0.4f, 0f);
@@ -164,13 +170,12 @@ namespace Examples.Tutorial
         {
             GL.DeleteTextures(1, ref TextureObject);
             GL.DeleteProgram(ProgramObject); // implies deleting the previously flagged ShaderObjects
-
-            base.OnUnload(e);
         }
 
         #endregion
 
         #region OnResize
+
         /// <summary>
         /// Respond to resize events here.
         /// </summary>
@@ -178,7 +183,7 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
         {
-            // magic numbers so the fractal almost fits inside the window.
+            // Magic numbers so the fractal almost fits inside the window.
             // If changing this, also change the -1.6f offset in the fragment shader accordingly.
             UniformScaleFactorX = Width / (UniformOffsetX * 2f);
             UniformScaleFactorY = Height / (UniformOffsetY * 2f);
@@ -187,12 +192,10 @@ namespace Examples.Tutorial
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 0.1); // 2D setup
+            GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 1.0); // 2D setup
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-
-            base.OnResize(e);
         }
 
         #endregion
@@ -225,8 +228,11 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
-            this.Title = "FPS: " + 1 / e.Time;
+            //this.Title = "FPS: " + 1 / e.Time;
             GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            // First, render the next frame of the Julia fractal.
+            GL.UseProgram(ProgramObject);
 
             // advance the animation by elapsed time, scaling is solely used to make the anim more interesting
             AnimOffsetX += (float)(e.Time * AnimSpeedX);
@@ -246,14 +252,21 @@ namespace Examples.Tutorial
             // Fullscreen quad. Using immediate mode, since this app is fragment shader limited anyways.
             GL.Begin(BeginMode.Quads);
             {
-                GL.Vertex3(-1.0f, -1.0f, 0f);
-                GL.Vertex3(1.0f, -1.0f, 0f);
-                GL.Vertex3(1.0f, 1.0f, 0f);
-                GL.Vertex3(-1.0f, 1.0f, 0f);
+                GL.Vertex2(-1.0f, -1.0f);
+                GL.Vertex2(1.0f, -1.0f);
+                GL.Vertex2(1.0f, 1.0f);
+                GL.Vertex2(-1.0f, 1.0f);
             }
             GL.End();
 
-            this.SwapBuffers();
+            // Then, render the fps:
+            GL.UseProgram(0);
+            printer.Begin();
+            GL.Color3(Color.PaleGoldenrod);
+            printer.Draw((1 / e.Time).ToString("F2"), font);
+            printer.End();
+
+            SwapBuffers();
         }
 
         #endregion
@@ -266,13 +279,10 @@ namespace Examples.Tutorial
         [STAThread]
         public static void Main()
         {
-
             using (T11_Julia_Set example = new T11_Julia_Set())
             {
-                // Get the title and category  of this example using reflection.
-                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
-                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
-                example.Run(30.0, 60.0);
+                Utilities.SetWindowTitle(example);
+                example.Run(30.0);
             }
         }
 
