@@ -29,7 +29,7 @@ namespace Examples.Tutorial
         TextHandle poem_handle;
         ITextPrinter text = new TextPrinter();
 
-        public Text() : base(new DisplayMode(800, 600))
+        public Text() : base(800, 600)
         { }
 
  	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd();

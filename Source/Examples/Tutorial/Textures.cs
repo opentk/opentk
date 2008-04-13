@@ -31,7 +31,7 @@ namespace Examples.Tutorial
         Bitmap bitmap = new Bitmap("Data/logo.jpg");
         int texture;
 
-        public Textures() : base(new DisplayMode(800, 600)) { }
+        public Textures() : base(800, 600) { }
 
         #region OnLoad
 

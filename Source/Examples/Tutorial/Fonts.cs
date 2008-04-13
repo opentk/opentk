@@ -25,7 +25,7 @@ namespace Examples.Tutorial
     [Example("Fonts", ExampleCategory.Tutorial, 3)]
     class Fonts : GameWindow
     {
-        public Fonts() : base(new DisplayMode(800, 600))
+        public Fonts() : base(800, 600)
         { }
 
         #region --- Fields ---
