@@ -1138,9 +1138,9 @@ namespace OpenTK.Audio
             if (AudioContext.CurrentContext == null)
                 throw new InvalidOperationException("AL.LoadAll() needs a current AudioContext.");
 
-            if (Alc.IsExtensionPresent(AudioContext.CurrentContext.Device, "ALC_EXT_EFX") == false)
+            if (!AudioContext.CurrentContext.SupportsExtension("ALC_EXT_EFX"))
             {
-                Debug.WriteLine("EFX Extension (ALC_EXT_EFX) is not known to device: {0}.", AudioContext.CurrentContext.Device.ToString());
+                Debug.WriteLine("EFX Extension (ALC_EXT_EFX) is not supported(AudioContext: {0}).", AudioContext.CurrentContext.ToString());
                 return;
             }
             // Console.WriteLine("ALC_EXT_EFX found. Efx can be used.");
