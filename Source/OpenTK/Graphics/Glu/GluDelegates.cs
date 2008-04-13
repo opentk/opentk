@@ -1,4 +1,4 @@
-namespace OpenTK.Graphics.OpenGL
+namespace OpenTK.Graphics
 {
     using System;
     using System.Runtime.InteropServices;
@@ -71,16 +71,16 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void EndTrim(IntPtr nurb);
             internal static EndTrim gluEndTrim;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr ErrorString(OpenTK.Graphics.OpenGL.GluErrorCode error);
+            internal delegate IntPtr ErrorString(OpenTK.Graphics.GluErrorCode error);
             internal static ErrorString gluErrorString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr GetString(OpenTK.Graphics.OpenGL.GluStringName name);
+            internal delegate IntPtr GetString(OpenTK.Graphics.GluStringName name);
             internal static GetString gluGetString;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsProperty property, [Out] float* data);
+            internal unsafe delegate void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.NurbsProperty property, [Out] float* data);
             internal unsafe static GetNurbsProperty gluGetNurbsProperty;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTessProperty(IntPtr tess, OpenTK.Graphics.OpenGL.TessParameter which, [Out] double* data);
+            internal unsafe delegate void GetTessProperty(IntPtr tess, OpenTK.Graphics.TessParameter which, [Out] double* data);
             internal unsafe static GetTessProperty gluGetTessProperty;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void LoadSamplingMatrices(IntPtr nurb, float* model, float* perspective, Int32* view);
@@ -98,10 +98,10 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate IntPtr NewTess();
             internal static NewTess gluNewTess;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void NextContour(IntPtr tess, OpenTK.Graphics.OpenGL.TessContour type);
+            internal delegate void NextContour(IntPtr tess, OpenTK.Graphics.TessContour type);
             internal static NextContour gluNextContour;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void NurbsCallback(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsCallback which, Delegate CallBackFunc);
+            internal delegate void NurbsCallback(IntPtr nurb, OpenTK.Graphics.NurbsCallback which, Delegate CallBackFunc);
             internal static NurbsCallback gluNurbsCallback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void NurbsCallbackData(IntPtr nurb, IntPtr userData);
@@ -113,7 +113,7 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate void NurbsCurve(IntPtr nurb, Int32 knotCount, [Out] float* knots, Int32 stride, [Out] float* control, Int32 order, MapTarget type);
             internal unsafe static NurbsCurve gluNurbsCurve;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void NurbsProperty(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsProperty property, float value);
+            internal delegate void NurbsProperty(IntPtr nurb, OpenTK.Graphics.NurbsProperty property, float value);
             internal static NurbsProperty gluNurbsProperty;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void NurbsSurface(IntPtr nurb, Int32 sKnotCount, float* sKnots, Int32 tKnotCount, float* tKnots, Int32 sStride, Int32 tStride, float* control, Int32 sOrder, Int32 tOrder, MapTarget type);
@@ -134,19 +134,19 @@ namespace OpenTK.Graphics.OpenGL
             internal unsafe delegate Int32 Project(double objX, double objY, double objZ, double* model, double* proj, Int32* view, double* winX, double* winY, double* winZ);
             internal unsafe static Project gluProject;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void PwlCurve(IntPtr nurb, Int32 count, float* data, Int32 stride, OpenTK.Graphics.OpenGL.NurbsTrim type);
+            internal unsafe delegate void PwlCurve(IntPtr nurb, Int32 count, float* data, Int32 stride, OpenTK.Graphics.NurbsTrim type);
             internal unsafe static PwlCurve gluPwlCurve;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void QuadricCallback(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricCallback which, Delegate CallBackFunc);
+            internal delegate void QuadricCallback(IntPtr quad, OpenTK.Graphics.QuadricCallback which, Delegate CallBackFunc);
             internal static QuadricCallback gluQuadricCallback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void QuadricDrawStyle(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricDrawStyle draw);
+            internal delegate void QuadricDrawStyle(IntPtr quad, OpenTK.Graphics.QuadricDrawStyle draw);
             internal static QuadricDrawStyle gluQuadricDrawStyle;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void QuadricNormals(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricNormal normal);
+            internal delegate void QuadricNormals(IntPtr quad, OpenTK.Graphics.QuadricNormal normal);
             internal static QuadricNormals gluQuadricNormals;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void QuadricOrientation(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricOrientation orientation);
+            internal delegate void QuadricOrientation(IntPtr quad, OpenTK.Graphics.QuadricOrientation orientation);
             internal static QuadricOrientation gluQuadricOrientation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void QuadricTexture(IntPtr quad, bool texture);
@@ -164,7 +164,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void TessBeginPolygon(IntPtr tess, IntPtr data);
             internal static TessBeginPolygon gluTessBeginPolygon;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TessCallback(IntPtr tess, OpenTK.Graphics.OpenGL.TessCallback which, Delegate CallBackFunc);
+            internal delegate void TessCallback(IntPtr tess, OpenTK.Graphics.TessCallback which, Delegate CallBackFunc);
             internal static TessCallback gluTessCallback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TessEndContour(IntPtr tess);
@@ -176,7 +176,7 @@ namespace OpenTK.Graphics.OpenGL
             internal delegate void TessNormal(IntPtr tess, double valueX, double valueY, double valueZ);
             internal static TessNormal gluTessNormal;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TessProperty(IntPtr tess, OpenTK.Graphics.OpenGL.TessParameter which, double data);
+            internal delegate void TessProperty(IntPtr tess, OpenTK.Graphics.TessParameter which, double data);
             internal static TessProperty gluTessProperty;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void TessVertex(IntPtr tess, double* location, IntPtr data);

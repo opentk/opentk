@@ -8,8 +8,7 @@ using System;
 using System.Diagnostics;
 
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics.OpenGL.Enums;
+using OpenTK.Graphics;
 
 using OpenTK.Input;
 using System.Runtime.InteropServices;

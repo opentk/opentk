@@ -15,7 +15,7 @@ using System.Reflection.Emit;
 using OpenTK.Platform;
 using OpenTK.Math;
 
-namespace OpenTK.Graphics.OpenGL
+namespace OpenTK.Graphics
 {
     public static partial class Glu
     {
