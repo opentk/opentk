@@ -29,6 +29,7 @@ namespace OpenTK.Audio
         static object audio_context_lock = new object();
         static List<string> available_devices = new List<string>();
         static Dictionary<ContextHandle, AudioContext> available_contexts = new Dictionary<ContextHandle, AudioContext>();
+        static bool openal_supported = true;
         bool context_exists;
 
         #endregion
@@ -55,6 +56,8 @@ namespace OpenTK.Audio
         /// <exception cref="NotSupportedException">Occurs when no audio devices are available.</exception>
         public AudioContext()// : this(available_devices.Count > 0 ? available_devices[0] : null, 0, 0, false, 0) { }
         {
+            if (!openal_supported)
+                throw new DllNotFoundException("openal32.dll");
             CreateContext(null, 0, 0, false, 0);
         }
 
@@ -185,6 +188,11 @@ namespace OpenTK.Audio
 
                         foreach (string s in available_devices)
                             Debug.WriteLine(s);
+                    }
+                    catch (DllNotFoundException e)
+                    {
+                        Debug.WriteLine(e.ToString());
+                        openal_supported = false;
                     }
                     finally
                     {
