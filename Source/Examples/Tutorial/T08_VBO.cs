@@ -43,7 +43,7 @@ namespace Examples.Tutorial
 
         #region --- Constructor ---
 
-        public T08_VBO() : base(new DisplayMode(800, 600), "OpenTK Tutorial 08: Vertex Buffer Objects") { }
+        public T08_VBO() : base(800, 600) { }
 
         #endregion
 

@@ -26,7 +26,7 @@ namespace Examples.Tutorial
 
         #region Constructor
 
-        public T04_Vertex_Lighting() : base(new DisplayMode(800, 600), "OpenTK | Vertex Lighting example")
+        public T04_Vertex_Lighting() : base(800, 600)
         {
         }
 

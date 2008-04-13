@@ -36,7 +36,7 @@ namespace Examples.Tutorial
         #region --- Constructor ---
 
         public T07_Display_Lists_Flower()
-            : base(new DisplayMode(800, 600))
+            : base(800, 600)
         {
         }
 

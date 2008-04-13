@@ -35,7 +35,8 @@ namespace Examples.Tutorial
 
         #region Constructor
 
-        public T02_Vertex_Arrays() : base(new DisplayMode(800, 600), "OpenTK Tutorial 2: Vertex Arrays")
+        public T02_Vertex_Arrays()
+            : base(800, 600)
         {
             //this.VSync = VSyncMode.On;
             this.Keyboard.KeyUp += new KeyUpEvent(Keyboard_KeyUp);
