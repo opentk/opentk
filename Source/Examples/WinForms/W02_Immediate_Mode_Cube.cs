@@ -14,12 +14,10 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-
-using OpenTK.Graphics.OpenGL;
-//using Enums = OpenTK.Graphics.OpenGL.GL.Enums;
-using OpenTK.Platform;
 using System.Threading;
-using OpenTK.Graphics.OpenGL.Enums;
+
+using OpenTK.Graphics;
+using OpenTK.Platform;
 
 #endregion
 

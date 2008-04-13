@@ -1,4 +1,4 @@
-namespace OpenTK.Graphics.OpenGL
+namespace OpenTK.Graphics
 {
     using System;
     using System.Runtime.InteropServices;
@@ -73,16 +73,16 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void EndTrim(IntPtr nurb);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluErrorString", ExactSpelling = true)]
-            internal extern static IntPtr ErrorString(OpenTK.Graphics.OpenGL.GluErrorCode error);
+            internal extern static IntPtr ErrorString(OpenTK.Graphics.GluErrorCode error);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluGetString", ExactSpelling = true)]
-            internal extern static IntPtr GetString(OpenTK.Graphics.OpenGL.GluStringName name);
+            internal extern static IntPtr GetString(OpenTK.Graphics.GluStringName name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluGetNurbsProperty", ExactSpelling = true)]
-            internal extern static unsafe void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsProperty property, [Out] float* data);
+            internal extern static unsafe void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.NurbsProperty property, [Out] float* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluGetTessProperty", ExactSpelling = true)]
-            internal extern static unsafe void GetTessProperty(IntPtr tess, OpenTK.Graphics.OpenGL.TessParameter which, [Out] double* data);
+            internal extern static unsafe void GetTessProperty(IntPtr tess, OpenTK.Graphics.TessParameter which, [Out] double* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluLoadSamplingMatrices", ExactSpelling = true)]
             internal extern static unsafe void LoadSamplingMatrices(IntPtr nurb, float* model, float* perspective, Int32* view);
@@ -100,10 +100,10 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static IntPtr NewTess();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluNextContour", ExactSpelling = true)]
-            internal extern static void NextContour(IntPtr tess, OpenTK.Graphics.OpenGL.TessContour type);
+            internal extern static void NextContour(IntPtr tess, OpenTK.Graphics.TessContour type);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluNurbsCallback", ExactSpelling = true)]
-            internal extern static void NurbsCallback(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsCallback which, Delegate CallBackFunc);
+            internal extern static void NurbsCallback(IntPtr nurb, OpenTK.Graphics.NurbsCallback which, Delegate CallBackFunc);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluNurbsCallbackData", ExactSpelling = true)]
             internal extern static void NurbsCallbackData(IntPtr nurb, IntPtr userData);
@@ -112,7 +112,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe void NurbsCurve(IntPtr nurb, Int32 knotCount, [Out] float* knots, Int32 stride, [Out] float* control, Int32 order, MapTarget type);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluNurbsProperty", ExactSpelling = true)]
-            internal extern static void NurbsProperty(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsProperty property, float value);
+            internal extern static void NurbsProperty(IntPtr nurb, OpenTK.Graphics.NurbsProperty property, float value);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluNurbsSurface", ExactSpelling = true)]
             internal extern static unsafe void NurbsSurface(IntPtr nurb, Int32 sKnotCount, float* sKnots, Int32 tKnotCount, float* tKnots, Int32 sStride, Int32 tStride, float* control, Int32 sOrder, Int32 tOrder, MapTarget type);
@@ -133,19 +133,19 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static unsafe Int32 Project(double objX, double objY, double objZ, double* model, double* proj, Int32* view, double* winX, double* winY, double* winZ);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluPwlCurve", ExactSpelling = true)]
-            internal extern static unsafe void PwlCurve(IntPtr nurb, Int32 count, float* data, Int32 stride, OpenTK.Graphics.OpenGL.NurbsTrim type);
+            internal extern static unsafe void PwlCurve(IntPtr nurb, Int32 count, float* data, Int32 stride, OpenTK.Graphics.NurbsTrim type);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluQuadricCallback", ExactSpelling = true)]
-            internal extern static void QuadricCallback(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricCallback which, Delegate CallBackFunc);
+            internal extern static void QuadricCallback(IntPtr quad, OpenTK.Graphics.QuadricCallback which, Delegate CallBackFunc);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluQuadricDrawStyle", ExactSpelling = true)]
-            internal extern static void QuadricDrawStyle(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricDrawStyle draw);
+            internal extern static void QuadricDrawStyle(IntPtr quad, OpenTK.Graphics.QuadricDrawStyle draw);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluQuadricNormals", ExactSpelling = true)]
-            internal extern static void QuadricNormals(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricNormal normal);
+            internal extern static void QuadricNormals(IntPtr quad, OpenTK.Graphics.QuadricNormal normal);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluQuadricOrientation", ExactSpelling = true)]
-            internal extern static void QuadricOrientation(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricOrientation orientation);
+            internal extern static void QuadricOrientation(IntPtr quad, OpenTK.Graphics.QuadricOrientation orientation);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluQuadricTexture", ExactSpelling = true)]
             internal extern static void QuadricTexture(IntPtr quad, bool texture);
@@ -163,7 +163,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void TessBeginPolygon(IntPtr tess, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluTessCallback", ExactSpelling = true)]
-            internal extern static void TessCallback(IntPtr tess, OpenTK.Graphics.OpenGL.TessCallback which, Delegate CallBackFunc);
+            internal extern static void TessCallback(IntPtr tess, OpenTK.Graphics.TessCallback which, Delegate CallBackFunc);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluTessEndContour", ExactSpelling = true)]
             internal extern static void TessEndContour(IntPtr tess);
@@ -175,7 +175,7 @@ namespace OpenTK.Graphics.OpenGL
             internal extern static void TessNormal(IntPtr tess, double valueX, double valueY, double valueZ);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluTessProperty", ExactSpelling = true)]
-            internal extern static void TessProperty(IntPtr tess, OpenTK.Graphics.OpenGL.TessParameter which, double data);
+            internal extern static void TessProperty(IntPtr tess, OpenTK.Graphics.TessParameter which, double data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(Glu.Library, EntryPoint = "gluTessVertex", ExactSpelling = true)]
             internal extern static unsafe void TessVertex(IntPtr tess, double* location, IntPtr data);
