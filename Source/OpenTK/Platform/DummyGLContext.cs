@@ -63,7 +63,7 @@ namespace OpenTK.Platform
         }
 
         public IntPtr GetAddress(string function) { return IntPtr.Zero; }
-        public IEnumerable<DisplayMode> GetDisplayModes() { return null; }
+        //public IEnumerable<DisplayMode> GetDisplayModes() { return null; }
 
         public bool VSync { get { return vsync; } set { vsync = value; } }
 
