@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace Examples
 {
-    [Example("AudioContext Test", ExampleCategory.Test)]
+    [Example("AudioContext Test", ExampleCategory.Test, 0, false)]
     class TestApp
     {
         public static void PrintOpenALErrors( IntPtr device )
@@ -65,21 +65,21 @@ namespace Examples
 
             #region Get Attribs
 
-            int AttribCount;
-            Alc.GetInteger(context.Device, AlcGetInteger.AttributesSize, sizeof(int), out AttribCount);
-            Console.WriteLine("AttributeSize: " + AttribCount);
+            //int AttribCount;
+            //Alc.GetInteger(context.Device, AlcGetInteger.AttributesSize, sizeof(int), out AttribCount);
+            //Console.WriteLine("AttributeSize: " + AttribCount);
 
-            if (AttribCount > 0)
-            {
-                int[] Attribs = new int[AttribCount];
-                Alc.GetInteger(context.Device, AlcGetInteger.AllAttributes, AttribCount, out Attribs[0]);
-                for (int i = 0; i < Attribs.Length; i++)
-                {
-                    Console.Write(Attribs[i]);
-                    Console.Write(" ");
-                }
-                Console.WriteLine();
-            }
+            //if (AttribCount > 0)
+            //{
+            //    int[] Attribs = new int[AttribCount];
+            //    Alc.GetInteger(context.Device, AlcGetInteger.AllAttributes, AttribCount, out Attribs[0]);
+            //    for (int i = 0; i < Attribs.Length; i++)
+            //    {
+            //        Console.Write(Attribs[i]);
+            //        Console.Write(" ");
+            //    }
+            //    Console.WriteLine();
+            //}
             
             #endregion Get Attribs
 
