@@ -27,43 +27,49 @@ namespace OpenTK.Graphics
     {
         //static Regex break_point = new Regex("[ .,/*-+?\\!=]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         //static char[] split_chars = new char[] { ' ', '\n', '\t', ',', '.', '/', '?', '!', ';', '\\', '-', '+', '*', '=' };
-        static bool functionality_checked = false;
         static ITextPrinterImplementation printer;
         float[] viewport = new float[4];
-        // 8 chars by default
-        Vector2[] vertices = new Vector2[8 * 8];  // Interleaved, vertex, texcoord, vertex, etc...
+        Vector2[] vertices = new Vector2[8 * 8];  // Interleaved, vertex, texcoord, vertex, etc... Starts with 8 chars, will expand as needed.
         ushort[] indices = new ushort[6 * 8];
 
         #region --- Constructor ---
 
         /// <summary>
-        /// Constructs a new DefaultLayoutProvider object.
+        /// Constructs a new TextPrinter object.
         /// </summary>
         public TextPrinter() { }
 
         #endregion
 
-        #region static void CheckNeededFunctionality()
+        #region --- Private Members ---
+
+        #region static ITextPrinterImplementation Printer
 
         /// <summary>
         /// Checks the machine's capabilities and selects the fastest method to print text.
         /// </summary>
-        static void CheckNeededFunctionality()
+        static ITextPrinterImplementation Printer
         {
-            printer = (ITextPrinterImplementation)new DisplayListTextPrinter();
-                /*
-                GL.SupportsExtension("VERSION_1_5") ?
-                (ITextPrinterImplementation)new VboTextPrinter() :
-                GL.SupportsExtension("ARB_vertex_buffer_object") ? null :
-                GL.SupportsExtension("VERSION_1_1") ? null : null;
-                */
-            if (printer == null)
-                throw new NotSupportedException("TextPrinter requires at least OpenGL 1.1 support.");
-            
-            functionality_checked = true;
+            get
+            {
+                if (printer == null)
+                {
 
-            Debug.Print("Using {0} for font printing.", printer);
+                    printer = (ITextPrinterImplementation)new DisplayListTextPrinter();
+                    //GL.SupportsExtension("VERSION_1_5") ?
+                    //(ITextPrinterImplementation)new VboTextPrinter() :
+                    //GL.SupportsExtension("ARB_vertex_buffer_object") ? null :
+                    //GL.SupportsExtension("VERSION_1_1") ? null : null;
+                    if (printer == null)
+                        throw new NotSupportedException("TextPrinter requires at least OpenGL 1.1 support.");
+
+                    Debug.Print("Using {0} for font printing.", printer);
+                }
+                return printer;
+            }
         }
+
+        #endregion
 
         #endregion
 
@@ -138,14 +144,11 @@ namespace OpenTK.Graphics
         /// <exception cref="NotSupportedException">Occurs when OpenGL 1.1 is not supported.</exception>
         public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft)
         {
-            if (!functionality_checked)
-                CheckNeededFunctionality();
-
             int num_indices;
 
             PerformLayout(text, font, width, wordWarp, alignment, rightToLeft, ref vertices, ref indices, out num_indices);
 
-            handle = printer.Load(vertices, indices, num_indices);
+            handle = Printer.Load(vertices, indices, num_indices);
             handle.font = font;
         }
 
@@ -261,8 +264,8 @@ namespace OpenTK.Graphics
         public void Draw(TextHandle handle)
         {
             GL.BindTexture(TextureTarget.Texture2D, handle.font.Texture);
-            
-            printer.Draw(handle);
+
+            Printer.Draw(handle);
         }
 
         #endregion
@@ -278,7 +281,10 @@ namespace OpenTK.Graphics
         {
             int num_indices;
             PerformLayout(text, font, 0, false, StringAlignment.Near, false, ref vertices, ref indices, out num_indices);
-            printer.Draw(vertices, indices, num_indices);
+
+            GL.BindTexture(TextureTarget.Texture2D, font.Texture);
+
+            Printer.Draw(vertices, indices, num_indices);
         }
 
         #endregion
@@ -290,6 +296,9 @@ namespace OpenTK.Graphics
         /// </summary>
         public void Begin()
         {
+            if (GraphicsContext.CurrentContext == null)
+                throw new GraphicsContextException("No GraphicsContext is current in the calling thread.");
+
             GL.GetFloat(GetPName.Viewport, viewport);
 
             // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
@@ -305,9 +314,7 @@ namespace OpenTK.Graphics
             GL.PushMatrix();
             GL.LoadIdentity();
 
-            GL.PushAttrib(AttribMask.TextureBit);
-            GL.PushAttrib(AttribMask.EnableBit);
-            GL.PushAttrib(AttribMask.ColorBufferBit);
+            GL.PushAttrib(AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit);
 
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
