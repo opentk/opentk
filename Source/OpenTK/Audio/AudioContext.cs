@@ -25,12 +25,20 @@ namespace OpenTK.Audio
         bool disposed;
         bool is_processing;
         ContextHandle device_handle, context_handle;
+        bool context_exists;
+
         string device_name;
         static object audio_context_lock = new object();
         static List<string> available_devices = new List<string>();
         static Dictionary<ContextHandle, AudioContext> available_contexts = new Dictionary<ContextHandle, AudioContext>();
         static bool openal_supported = true;
-        bool context_exists;
+        static Version version;
+
+        private enum Version
+        {
+            OpenAL10,
+            OpenAL11
+        }
 
         #endregion
 
@@ -182,9 +190,15 @@ namespace OpenTK.Audio
                         Debug.Indent();
 
                         if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATION_EXT"))
+                        {
+                            version = Version.OpenAL11;
                             available_devices.AddRange(Alc.GetString(IntPtr.Zero, AlcGetStringList.DeviceSpecifier));
+                        }
                         else
+                        {
+                            version = Version.OpenAL10;
                             Debug.Print("Device enumeration extension not available. Failed to enumerate devices.");
+                        }
 
                         foreach (string s in available_devices)
                             Debug.WriteLine(s);
@@ -233,7 +247,8 @@ namespace OpenTK.Audio
         /// </remarks>
         void CreateContext(string device, int freq, int refresh, bool sync, int maxEfxSends)
         {
-            if (available_devices.Count == 0) throw new NotSupportedException("No audio hardware is available.");
+            if (version == Version.OpenAL11 && available_devices.Count == 0)    // Version.OpenAL10 does not support device enumeration.
+                throw new NotSupportedException("No audio hardware is available.");
             if (context_exists) throw new NotSupportedException("Multiple AudioContexts are not supported.");
             if (freq < 0) throw new ArgumentOutOfRangeException("freq", freq, "Should be greater than zero.");
             if (refresh < 0) throw new ArgumentOutOfRangeException("refresh", refresh, "Should be greater than zero.");
