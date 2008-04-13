@@ -255,7 +255,9 @@ namespace Examples
             }
             catch (System.Security.SecurityException e)
             {
-
+                MessageBox.Show("The Example Launcher failed to start, due to insufficient permissions. This may happen if you execute the application from a network share.", "OpenTK Example Launcher failed to start.",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Trace.WriteLine(e.ToString());
             }
         }
     }
