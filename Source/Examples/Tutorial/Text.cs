@@ -9,13 +9,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using System.Diagnostics;
 
 using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using OpenTK.Graphics.OpenGL.Enums;
-using System.Diagnostics;
 
 namespace Examples.Tutorial
 {
@@ -26,11 +24,9 @@ namespace Examples.Tutorial
     public class Text : GameWindow
     {
         TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 24.0f));
+        TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 14.0f));
         TextHandle poem_handle;
         ITextPrinter text = new TextPrinter();
-
-        public Text() : base(800, 600)
-        { }
 
  	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
         int lines;  // How many lines the poem contains.
@@ -40,6 +36,10 @@ namespace Examples.Tutorial
         float warparound_position;
         float current_position;
 
+        public Text()
+            : base(800, 600)
+        { }
+
         #region OnLoad
 
         public override void OnLoad(EventArgs e)
@@ -48,7 +48,6 @@ namespace Examples.Tutorial
             
             current_position = initial_position;
             scroll_speed = -1.0f;
-
             text.Prepare(poem, serif, out poem_handle);
 
             // Count the amount of lines in the text, to find out the correct
@@ -69,8 +68,8 @@ namespace Examples.Tutorial
 
         public override void OnUnload(EventArgs e)
         {
-            poem_handle.Dispose();
-            serif.Dispose();
+            if (poem_handle != null) poem_handle.Dispose();
+            if (serif != null) serif.Dispose();
         }
 
         #endregion
@@ -120,28 +119,19 @@ namespace Examples.Tutorial
             else if (scroll_speed < 0.0f && current_position < warparound_position)
                 current_position = initial_position;
 
-            TextHandle t = null;
-            text.Prepare((1.0 / e.Time).ToString(), serif, out t);
-
             // TextPrinter.Begin() sets up a 2d orthographic projection, with the x axis
             // moving from 0 to viewport.Width (left to right) and the y axis from
             // 0 to viewport.Height (top to bottom). This is the typical coordinate system
             // used in 2d graphics, and is necessary for achieving pixel-perfect glyph rendering.
             // TextPrinter.End() restores your previous projection/modelview matrices.
             text.Begin();
-
-            using (t)
-            {
-                //text.Begin();
-                text.Draw(t);
-                //text.End();
-            }
-
+            GL.Color3(Color.PaleGoldenrod);
+            text.Draw((1.0 / e.Time).ToString("F2"), sans);
             GL.Translate(0.0f, current_position, 0.0f);
+            GL.Color3(Color.White);
             text.Draw(poem_handle);
-
             text.End();
-
+            
             SwapBuffers();
         }
 
