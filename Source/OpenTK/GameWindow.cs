@@ -262,7 +262,7 @@ namespace OpenTK
 
         #endregion
 
-        #region --- Public Methods ---
+        #region --- Public Members ---
 
         #region public virtual void Exit()
 
@@ -924,6 +924,18 @@ namespace OpenTK
         }
 
         #endregion
+
+        internal WindowState WindowState
+        {
+            get
+            {
+                return glWindow.WindowState;
+            }
+            set
+            {
+                glWindow.WindowState = value;
+            }
+        }
 
         #endregion
 
