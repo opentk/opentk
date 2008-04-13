@@ -187,7 +187,7 @@
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
-        <Match path="../Examples/Data" pattern="^.*\.(png|jpg|txt|glsl|wav|ogg)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="../Examples/Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
         <Match path="./Data" pattern="*.txt" recurse="true" buildAction="None" copyToOutput="Always"/>
         <Match path="./Data" pattern="*.glsl" recurse="true" buildAction="None" copyToOutput="Always"/>
         <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
