@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 namespace Examples
 {
-    [Example("GLU Tesselation Functions Test", ExampleCategory.OpenGL, 10)]
+    [Example("GLU Tesselation Functions Test", ExampleCategory.OpenGL)]
     public class Test : GameWindow
     {
         int startList;
