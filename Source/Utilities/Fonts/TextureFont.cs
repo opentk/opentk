@@ -14,14 +14,13 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 
 using OpenTK.Math;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics.OpenGL.Enums;
+using OpenTK.Graphics;
 using OpenTK.Platform;
 
 namespace OpenTK.Graphics
 {
     using Graphics = System.Drawing.Graphics;
-    using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
+    using PixelFormat = OpenTK.Graphics.PixelFormat;
 
     public class TextureFont : IFont
     {
@@ -97,7 +96,7 @@ namespace OpenTK.Graphics
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Alpha, texture_width, texture_height, 0,
-                PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
+                OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
         }
 
         #endregion
@@ -169,7 +168,7 @@ namespace OpenTK.Graphics
             //BitmapData bitmap_data = bitmap.LockBits(new Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly,
             //    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             //GL.TexSubImage2D(TextureTarget.Texture2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
-            //    OpenTK.Graphics.OpenGL.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bitmap_data.Scan0);
+            //    OpenTK.Graphics.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bitmap_data.Scan0);
             //bitmap.UnlockBits(bitmap_data);
 
             BitmapData bitmap_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
@@ -191,7 +190,7 @@ namespace OpenTK.Graphics
 
                 fixed (int* data_ptr = data)
                     GL.TexSubImage2D(TextureTarget.Texture2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
-                                     PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)data_ptr);
+                                     OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)data_ptr);
             }
             bmp.UnlockBits(bitmap_data);
 

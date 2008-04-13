@@ -9,13 +9,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics;
 using OpenTK.Platform;
-using System.Threading;
-using OpenTK.Graphics.OpenGL.Enums;
-using System.Runtime.InteropServices;
 using OpenTK.Math;
 
 #endregion

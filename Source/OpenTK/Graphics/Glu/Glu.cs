@@ -1,4 +1,4 @@
-namespace OpenTK.Graphics.OpenGL
+namespace OpenTK.Graphics
 {
     using System;
     using System.Runtime.InteropServices;
@@ -276,43 +276,43 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        string ErrorString(OpenTK.Graphics.OpenGL.GluErrorCode error)
+        string ErrorString(OpenTK.Graphics.GluErrorCode error)
         {
             unsafe
             {
-                return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.gluErrorString((OpenTK.Graphics.OpenGL.GluErrorCode)error));
+                return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.gluErrorString((OpenTK.Graphics.GluErrorCode)error));
             }
         }
 
         public static 
-        string GetString(OpenTK.Graphics.OpenGL.GluStringName name)
+        string GetString(OpenTK.Graphics.GluStringName name)
         {
             unsafe
             {
-                return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.gluGetString((OpenTK.Graphics.OpenGL.GluStringName)name));
+                return System.Runtime.InteropServices.Marshal.PtrToStringAnsi(Delegates.gluGetString((OpenTK.Graphics.GluStringName)name));
             }
         }
 
         public static 
-        void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsProperty property, [Out] float[] data)
+        void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.NurbsProperty property, [Out] float[] data)
         {
             unsafe
             {
                 fixed (float* data_ptr = data)
                 {
-                    Delegates.gluGetNurbsProperty((IntPtr)nurb, (OpenTK.Graphics.OpenGL.NurbsProperty)property, (float*)data_ptr);
+                    Delegates.gluGetNurbsProperty((IntPtr)nurb, (OpenTK.Graphics.NurbsProperty)property, (float*)data_ptr);
                 }
             }
         }
 
         public static 
-        void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsProperty property, [Out] out float data)
+        void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.NurbsProperty property, [Out] out float data)
         {
             unsafe
             {
                 fixed (float* data_ptr = &data)
                 {
-                    Delegates.gluGetNurbsProperty((IntPtr)nurb, (OpenTK.Graphics.OpenGL.NurbsProperty)property, (float*)data_ptr);
+                    Delegates.gluGetNurbsProperty((IntPtr)nurb, (OpenTK.Graphics.NurbsProperty)property, (float*)data_ptr);
                     data = *data_ptr;
                 }
             }
@@ -320,31 +320,31 @@ namespace OpenTK.Graphics.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsProperty property, [Out] float* data)
+        unsafe void GetNurbsProperty(IntPtr nurb, OpenTK.Graphics.NurbsProperty property, [Out] float* data)
         {
-            Delegates.gluGetNurbsProperty((IntPtr)nurb, (OpenTK.Graphics.OpenGL.NurbsProperty)property, (float*)data);
+            Delegates.gluGetNurbsProperty((IntPtr)nurb, (OpenTK.Graphics.NurbsProperty)property, (float*)data);
         }
 
         public static 
-        void GetTessProperty(IntPtr tess, OpenTK.Graphics.OpenGL.TessParameter which, [Out] double[] data)
+        void GetTessProperty(IntPtr tess, OpenTK.Graphics.TessParameter which, [Out] double[] data)
         {
             unsafe
             {
                 fixed (double* data_ptr = data)
                 {
-                    Delegates.gluGetTessProperty((IntPtr)tess, (OpenTK.Graphics.OpenGL.TessParameter)which, (double*)data_ptr);
+                    Delegates.gluGetTessProperty((IntPtr)tess, (OpenTK.Graphics.TessParameter)which, (double*)data_ptr);
                 }
             }
         }
 
         public static 
-        void GetTessProperty(IntPtr tess, OpenTK.Graphics.OpenGL.TessParameter which, [Out] out double data)
+        void GetTessProperty(IntPtr tess, OpenTK.Graphics.TessParameter which, [Out] out double data)
         {
             unsafe
             {
                 fixed (double* data_ptr = &data)
                 {
-                    Delegates.gluGetTessProperty((IntPtr)tess, (OpenTK.Graphics.OpenGL.TessParameter)which, (double*)data_ptr);
+                    Delegates.gluGetTessProperty((IntPtr)tess, (OpenTK.Graphics.TessParameter)which, (double*)data_ptr);
                     data = *data_ptr;
                 }
             }
@@ -352,9 +352,9 @@ namespace OpenTK.Graphics.OpenGL
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void GetTessProperty(IntPtr tess, OpenTK.Graphics.OpenGL.TessParameter which, [Out] double* data)
+        unsafe void GetTessProperty(IntPtr tess, OpenTK.Graphics.TessParameter which, [Out] double* data)
         {
-            Delegates.gluGetTessProperty((IntPtr)tess, (OpenTK.Graphics.OpenGL.TessParameter)which, (double*)data);
+            Delegates.gluGetTessProperty((IntPtr)tess, (OpenTK.Graphics.TessParameter)which, (double*)data);
         }
 
         public static 
@@ -417,15 +417,15 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        void NextContour(IntPtr tess, OpenTK.Graphics.OpenGL.TessContour type)
+        void NextContour(IntPtr tess, OpenTK.Graphics.TessContour type)
         {
-            Delegates.gluNextContour((IntPtr)tess, (OpenTK.Graphics.OpenGL.TessContour)type);
+            Delegates.gluNextContour((IntPtr)tess, (OpenTK.Graphics.TessContour)type);
         }
 
         public static 
-        void NurbsCallback(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsCallback which, Delegate CallBackFunc)
+        void NurbsCallback(IntPtr nurb, OpenTK.Graphics.NurbsCallback which, Delegate CallBackFunc)
         {
-            Delegates.gluNurbsCallback((IntPtr)nurb, (OpenTK.Graphics.OpenGL.NurbsCallback)which, (Delegate)CallBackFunc);
+            Delegates.gluNurbsCallback((IntPtr)nurb, (OpenTK.Graphics.NurbsCallback)which, (Delegate)CallBackFunc);
         }
 
         public static 
@@ -490,9 +490,9 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        void NurbsProperty(IntPtr nurb, OpenTK.Graphics.OpenGL.NurbsProperty property, float value)
+        void NurbsProperty(IntPtr nurb, OpenTK.Graphics.NurbsProperty property, float value)
         {
-            Delegates.gluNurbsProperty((IntPtr)nurb, (OpenTK.Graphics.OpenGL.NurbsProperty)property, (float)value);
+            Delegates.gluNurbsProperty((IntPtr)nurb, (OpenTK.Graphics.NurbsProperty)property, (float)value);
         }
 
         public static 
@@ -622,58 +622,58 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        void PwlCurve(IntPtr nurb, Int32 count, float[] data, Int32 stride, OpenTK.Graphics.OpenGL.NurbsTrim type)
+        void PwlCurve(IntPtr nurb, Int32 count, float[] data, Int32 stride, OpenTK.Graphics.NurbsTrim type)
         {
             unsafe
             {
                 fixed (float* data_ptr = data)
                 {
-                    Delegates.gluPwlCurve((IntPtr)nurb, (Int32)count, (float*)data_ptr, (Int32)stride, (OpenTK.Graphics.OpenGL.NurbsTrim)type);
+                    Delegates.gluPwlCurve((IntPtr)nurb, (Int32)count, (float*)data_ptr, (Int32)stride, (OpenTK.Graphics.NurbsTrim)type);
                 }
             }
         }
 
         public static 
-        void PwlCurve(IntPtr nurb, Int32 count, ref float data, Int32 stride, OpenTK.Graphics.OpenGL.NurbsTrim type)
+        void PwlCurve(IntPtr nurb, Int32 count, ref float data, Int32 stride, OpenTK.Graphics.NurbsTrim type)
         {
             unsafe
             {
                 fixed (float* data_ptr = &data)
                 {
-                    Delegates.gluPwlCurve((IntPtr)nurb, (Int32)count, (float*)data_ptr, (Int32)stride, (OpenTK.Graphics.OpenGL.NurbsTrim)type);
+                    Delegates.gluPwlCurve((IntPtr)nurb, (Int32)count, (float*)data_ptr, (Int32)stride, (OpenTK.Graphics.NurbsTrim)type);
                 }
             }
         }
 
         [System.CLSCompliant(false)]
         public static 
-        unsafe void PwlCurve(IntPtr nurb, Int32 count, float* data, Int32 stride, OpenTK.Graphics.OpenGL.NurbsTrim type)
+        unsafe void PwlCurve(IntPtr nurb, Int32 count, float* data, Int32 stride, OpenTK.Graphics.NurbsTrim type)
         {
-            Delegates.gluPwlCurve((IntPtr)nurb, (Int32)count, (float*)data, (Int32)stride, (OpenTK.Graphics.OpenGL.NurbsTrim)type);
+            Delegates.gluPwlCurve((IntPtr)nurb, (Int32)count, (float*)data, (Int32)stride, (OpenTK.Graphics.NurbsTrim)type);
         }
 
         public static 
-        void QuadricCallback(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricCallback which, Delegate CallBackFunc)
+        void QuadricCallback(IntPtr quad, OpenTK.Graphics.QuadricCallback which, Delegate CallBackFunc)
         {
-            Delegates.gluQuadricCallback((IntPtr)quad, (OpenTK.Graphics.OpenGL.QuadricCallback)which, (Delegate)CallBackFunc);
+            Delegates.gluQuadricCallback((IntPtr)quad, (OpenTK.Graphics.QuadricCallback)which, (Delegate)CallBackFunc);
         }
 
         public static 
-        void QuadricDrawStyle(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricDrawStyle draw)
+        void QuadricDrawStyle(IntPtr quad, OpenTK.Graphics.QuadricDrawStyle draw)
         {
-            Delegates.gluQuadricDrawStyle((IntPtr)quad, (OpenTK.Graphics.OpenGL.QuadricDrawStyle)draw);
+            Delegates.gluQuadricDrawStyle((IntPtr)quad, (OpenTK.Graphics.QuadricDrawStyle)draw);
         }
 
         public static 
-        void QuadricNormal(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricNormal normal)
+        void QuadricNormal(IntPtr quad, OpenTK.Graphics.QuadricNormal normal)
         {
-            Delegates.gluQuadricNormals((IntPtr)quad, (OpenTK.Graphics.OpenGL.QuadricNormal)normal);
+            Delegates.gluQuadricNormals((IntPtr)quad, (OpenTK.Graphics.QuadricNormal)normal);
         }
 
         public static 
-        void QuadricOrientation(IntPtr quad, OpenTK.Graphics.OpenGL.QuadricOrientation orientation)
+        void QuadricOrientation(IntPtr quad, OpenTK.Graphics.QuadricOrientation orientation)
         {
-            Delegates.gluQuadricOrientation((IntPtr)quad, (OpenTK.Graphics.OpenGL.QuadricOrientation)orientation);
+            Delegates.gluQuadricOrientation((IntPtr)quad, (OpenTK.Graphics.QuadricOrientation)orientation);
         }
 
         public static 
@@ -749,9 +749,9 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        void TessCallback(IntPtr tess, OpenTK.Graphics.OpenGL.TessCallback which, Delegate CallBackFunc)
+        void TessCallback(IntPtr tess, OpenTK.Graphics.TessCallback which, Delegate CallBackFunc)
         {
-            Delegates.gluTessCallback((IntPtr)tess, (OpenTK.Graphics.OpenGL.TessCallback)which, (Delegate)CallBackFunc);
+            Delegates.gluTessCallback((IntPtr)tess, (OpenTK.Graphics.TessCallback)which, (Delegate)CallBackFunc);
         }
 
         public static 
@@ -773,9 +773,9 @@ namespace OpenTK.Graphics.OpenGL
         }
 
         public static 
-        void TessProperty(IntPtr tess, OpenTK.Graphics.OpenGL.TessParameter which, double data)
+        void TessProperty(IntPtr tess, OpenTK.Graphics.TessParameter which, double data)
         {
-            Delegates.gluTessProperty((IntPtr)tess, (OpenTK.Graphics.OpenGL.TessParameter)which, (double)data);
+            Delegates.gluTessProperty((IntPtr)tess, (OpenTK.Graphics.TessParameter)which, (double)data);
         }
 
         public static 

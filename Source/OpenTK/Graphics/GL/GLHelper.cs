@@ -26,7 +26,7 @@ namespace OpenTK.Graphics.OpenGL.Enums
     internal static class Dummy { }
 }
 
-namespace OpenTK.Graphics.OpenGL
+namespace OpenTK.Graphics
 {
     /// <summary>
     /// OpenGL binding for .NET, implementing OpenGL 2.1, plus extensions.
