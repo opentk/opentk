@@ -148,6 +148,7 @@ namespace Examples.Tutorial
             #endregion Shaders
 
             #region Textures
+
             // Load&Bind the 1D texture for color lookups
             GL.ActiveTexture(TextureUnit.Texture0); // select TMU0
             GL.GenTextures(1, out TextureObject);
@@ -155,10 +156,14 @@ namespace Examples.Tutorial
             GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture1D, TextureParameterName.TextureWrapS, (int)(TextureWrapMode)All.ClampToEdge);
 
-            Bitmap bitmap = new Bitmap("Data/JuliaColorTable.bmp");
-            BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgb8, data.Width, 0, OpenTK.Graphics.PixelFormat.Bgr, PixelType.UnsignedByte, data.Scan0);
-            bitmap.UnlockBits(data);
+            using (Bitmap bitmap = new Bitmap("Data/JuliaColorTable.bmp"))
+            {
+                BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly,
+                                                  System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                GL.TexImage1D(TextureTarget.Texture1D, 0, PixelInternalFormat.Rgb8, data.Width, 0, OpenTK.Graphics.PixelFormat.Bgr,
+                              PixelType.UnsignedByte, data.Scan0);
+                bitmap.UnlockBits(data);
+            }
             #endregion Textures
         }
 
