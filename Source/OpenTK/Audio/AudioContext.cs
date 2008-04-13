@@ -374,10 +374,13 @@ namespace OpenTK.Audio
 
         #endregion
 
+        #region IntPtr Device
+
+        IntPtr Device { get { return device_handle.Handle; } }
+
         #endregion
 
-        // TODO: Remove before release!
-        public IntPtr Device { get { return device_handle.Handle; } }
+        #endregion
 
         #region --- Public Members ---
 
@@ -473,6 +476,21 @@ namespace OpenTK.Audio
             if (disposed) throw new ObjectDisposedException(this.ToString());
             Alc.SuspendContext(this.context_handle);
             IsProcessing = false;
+        }
+
+        #endregion
+
+        #region public bool SupportsExtension(string extension)
+
+        /// <summary>
+        /// Checks whether the specified OpenAL extension is supported.
+        /// </summary>
+        /// <param name="extension">The name of the extension to check (e.g. "ALC_EXT_EFX").</param>
+        /// <returns>true if the extension is supported; false otherwise.</returns>
+        public bool SupportsExtension(string extension)
+        {
+            if (disposed) throw new ObjectDisposedException(this.GetType().FullName);
+            return Alc.IsExtensionPresent(this.Device, extension);
         }
 
         #endregion
