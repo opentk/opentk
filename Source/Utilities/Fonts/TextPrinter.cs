@@ -333,8 +333,6 @@ namespace OpenTK.Graphics
         public void End()
         {
             GL.PopAttrib();
-            GL.PopAttrib();
-            GL.PopAttrib();
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PopMatrix();
