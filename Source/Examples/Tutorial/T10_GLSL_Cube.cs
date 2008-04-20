@@ -221,7 +221,10 @@ namespace Examples.Tutorial
 
             if ((Keyboard[OpenTK.Input.Key.AltLeft] || Keyboard[OpenTK.Input.Key.AltRight]) &&
                 Keyboard[OpenTK.Input.Key.Enter])
-                Fullscreen = !Fullscreen;
+                if (WindowState != WindowState.Fullscreen)
+                    WindowState = WindowState.Fullscreen;
+                else
+                    WindowState = WindowState.Normal;
         }
 
         #endregion
