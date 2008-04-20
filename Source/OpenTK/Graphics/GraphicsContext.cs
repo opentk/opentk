@@ -57,38 +57,45 @@ namespace OpenTK.Graphics
             else if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
 
             Debug.Print("Creating GraphicsContext.");
-            Debug.Indent();
-            Debug.Print("GraphicsMode: {0}", mode);
-            Debug.Print("IWindowInfo: {0}", window);
-
-            IGraphicsContext shareContext = null;
-            if (GraphicsContext.ShareContexts)
+            try
             {
-                lock (context_lock)
+                Debug.Indent();
+                Debug.Print("GraphicsMode: {0}", mode);
+                Debug.Print("IWindowInfo: {0}", window);
+
+                IGraphicsContext shareContext = null;
+                if (GraphicsContext.ShareContexts)
                 {
-                    // A small hack to create a shared context with the first available context.
-                    foreach (WeakReference r in GraphicsContext.available_contexts.Values)
+                    lock (context_lock)
                     {
-                        shareContext = (IGraphicsContext)r.Target;
-                        break;
+                        // A small hack to create a shared context with the first available context.
+                        foreach (WeakReference r in GraphicsContext.available_contexts.Values)
+                        {
+                            shareContext = (IGraphicsContext)r.Target;
+                            break;
+                        }
                     }
                 }
+
+                if (designMode)
+                    implementation = new OpenTK.Platform.DummyGLContext(mode);
+                else if (Configuration.RunningOnWindows)
+                    implementation = new OpenTK.Platform.Windows.WinGLContext(mode, window, shareContext);
+                else if (Configuration.RunningOnX11)
+                    implementation = new OpenTK.Platform.X11.X11GLContext(mode, window, shareContext, DirectRendering);
+                else
+                    throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+
+                lock (context_lock)
+                {
+                    available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
+                }
+                //(implementation as IGraphicsContextInternal).LoadAll();
             }
-
-            if (designMode)
-                implementation = new OpenTK.Platform.DummyGLContext(mode);
-            else if (Configuration.RunningOnWindows)
-                implementation = new OpenTK.Platform.Windows.WinGLContext(mode, window, shareContext);
-            else if (Configuration.RunningOnX11)
-                implementation = new OpenTK.Platform.X11.X11GLContext(mode, window, shareContext, DirectRendering);
-            else
-                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
-
-            lock (context_lock)
+            finally
             {
-                available_contexts.Add((this as IGraphicsContextInternal).Context, new WeakReference(this));
+                Debug.Unindent();
             }
-            //(implementation as IGraphicsContextInternal).LoadAll();
         }
 
         #endregion
