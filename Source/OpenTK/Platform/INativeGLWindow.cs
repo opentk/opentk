@@ -34,8 +34,9 @@ namespace OpenTK.Platform
         bool IsIdle { get; }
         //IGraphicsContext Context { get; }
         IInputDriver InputDriver { get; }
-        bool Fullscreen { get; set; }
+        //bool Fullscreen { get; set; }
         WindowState WindowState { get; set; }
+        WindowBorder WindowBorder { get; set; }
 
         event CreateEvent Create;
         event DestroyEvent Destroy;

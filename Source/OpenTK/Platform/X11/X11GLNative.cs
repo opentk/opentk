@@ -579,6 +579,22 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public WindowBorder WindowBorder
+
+        public WindowBorder WindowBorder
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region --- IResizable Members ---
