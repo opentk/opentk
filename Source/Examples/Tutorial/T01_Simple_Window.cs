@@ -38,8 +38,10 @@ namespace Examples.Tutorial
         /// <param name="key">The key that was pressed.</param>
         void Keyboard_KeyDown(KeyboardDevice sender, Key key)
         {
-            if ((sender[Key.AltLeft] || sender[Key.AltRight]) && sender[Key.Enter])
-                this.Fullscreen = !this.Fullscreen;
+            if (WindowState != WindowState.Fullscreen)
+                WindowState = WindowState.Fullscreen;
+            else
+                WindowState = WindowState.Normal;
 
             if (sender[Key.Escape])
                 this.Exit();
