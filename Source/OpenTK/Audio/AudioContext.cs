@@ -306,7 +306,11 @@ namespace OpenTK.Audio
 
             CheckForAlcErrors();
 
-            MakeCurrent();
+            // HACK: OpenAL SI on Linux/ALSA crashes on MakeCurrent. This hack avoids calling MakeCurrent when
+            // an old OpenAL version is detect - it may affect outdated OpenAL versions different than OpenAL SI,
+            // but it looks like a good compromise for now.
+            if (available_devices.Count > 0)
+                MakeCurrent();
 
             CheckForAlcErrors();
             
