@@ -182,7 +182,8 @@ namespace OpenTK
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
                 device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
-                this.Fullscreen = true;
+                //this.Fullscreen = true;
+                throw new NotImplementedException();
             }
             
             this.VSync = VSyncMode.On; //VSyncMode.Adaptive;
@@ -328,11 +329,11 @@ namespace OpenTK
         /// TODO: This property is not implemented.
         /// Gets or sets a value indicating whether the GameWindow is in fullscrren mode.
         /// </summary>
-        public bool Fullscreen
-        {
-            get { if (disposed) throw new ObjectDisposedException("GameWindow"); return glWindow.Fullscreen; }
-            set { if (disposed) throw new ObjectDisposedException("GameWindow"); glWindow.Fullscreen = value; }
-        }
+        //public bool Fullscreen
+        //{
+        //    get { if (disposed) throw new ObjectDisposedException("GameWindow"); return glWindow.Fullscreen; }
+        //    set { if (disposed) throw new ObjectDisposedException("GameWindow"); glWindow.Fullscreen = value; }
+        //}
 
         #endregion
 
@@ -925,7 +926,12 @@ namespace OpenTK
 
         #endregion
 
-        internal WindowState WindowState
+        #region public WindowState WindowState
+
+        /// <summary>
+        /// Gets or states the state of the GameWindow.
+        /// </summary>
+        public WindowState WindowState
         {
             get
             {
@@ -936,6 +942,8 @@ namespace OpenTK
                 glWindow.WindowState = value;
             }
         }
+
+        #endregion
 
         #endregion
 

@@ -15,6 +15,7 @@ using System.Diagnostics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using OpenTK.Graphics;
+using System.Drawing;
 
 #endregion
 
@@ -28,17 +29,24 @@ namespace OpenTK.Platform.Windows
     {
         #region --- Fields ---
 
-        private DisplayMode mode = new DisplayMode();
         private IInputDriver driver;
 
-        private bool fullscreen, visible = true;
+        private bool visible = true;
         private bool disposed;
         private bool isExiting;
         private bool exists;
         private WinWindowInfo window;
+        private WindowBorder windowBorder = WindowBorder.Resizable, previous_window_border;
+        private WindowState windowState = WindowState.Normal;
+
         private int top, bottom, left, right;
         private int width = 0, height = 0;
-        private Rectangle pre_maximized;
+        private Rectangle previous_client_area;
+
+        private Point position = new Point();
+        private Rectangle client_rectangle = new Rectangle();
+        private Size window_size = new Size();
+        private Rectangle borders = new Rectangle();
 
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
@@ -65,6 +73,8 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region --- Protected Members ---
+
         #region protected override void WndProc(ref Message m)
 
         /// <summary>
@@ -75,29 +85,42 @@ namespace OpenTK.Platform.Windows
         {
             switch ((WindowMessage)m.Msg)
             {
+                case WindowMessage.ACTIVATE:
+                    break;
+
                 case WindowMessage.WINDOWPOSCHANGED:
+                    WindowPosition pos = (WindowPosition)Marshal.PtrToStructure(m.LParam, typeof(WindowPosition));
+                    position.X = pos.x;
+                    position.Y = pos.y;
+                    window_size.Width = pos.cx;
+                    window_size.Height = pos.cy;
+
+                    Functions.GetClientRect(Handle, out client_rectangle);
+
+                    //client_size.Width = pos.cx - (left_border + right_border);
+                    //client_size.Height = pos.cy - (top_border + bottom_border);
+
                     // Get window size
-                    int _width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cx"));
-                    int _height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cy"));
-                    if (!fullscreen)
-                    {
-                        _width -= (left_border + right_border);
-                        _height -= (top_border + bottom_border);
-                    }
-                    //if (resizeEventArgs.Width != width || resizeEventArgs.Height != height)
-                    if (width != _width || height != _height)
-                    {
-                        width = _width;
-                        height = _height;
-                        // If the size has changed, raise the ResizeEvent.
-                        //resizeEventArgs.Width = width;
-                        //resizeEventArgs.Height = height;
-                        //this.OnResize(resizeEventArgs);
-                        // The message was processed.
-                        return;
-                    }
+                    //int _width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cx"));
+                    //int _height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cy"));
+
+                    //if (client_size.Width != new_width || client_size.Height != new_height)
+                    //{
+                    //    client_size.Width = new_width;
+                    //    client_size.Height = new_height;
+                    //    return;
+                    //}
+
                     // If the message was not a resize notification, send it to the default WndProc.
                     break;
+
+                //case WindowMessage.MOUSELEAVE:
+                //    Cursor.Current = Cursors.Default;
+                //    break;
+
+                //case WindowMessage.MOUSE_ENTER:
+                //    Cursor.Current = Cursors.Default;
+                //    break;
 
                 case WindowMessage.CREATE:
                     // Set the window width and height:
@@ -132,6 +155,8 @@ namespace OpenTK.Platform.Windows
             //DefWndProc(ref m);
             base.WndProc(ref m);
         }
+
+        #endregion
 
         #endregion
 
@@ -188,47 +213,6 @@ namespace OpenTK.Platform.Windows
         public bool IsExiting
         {
             get { return isExiting; }
-        }
-
-        #endregion
-
-        #region public bool Fullscreen
-
-        public bool Fullscreen
-        {
-            get
-            {
-                return fullscreen;
-            }
-            set
-            {
-                IntPtr style = IntPtr.Zero;
-                ShowWindowCommand command = (ShowWindowCommand)0;
-                if (value && !Fullscreen)
-                {
-                    style = (IntPtr)(int)(WindowStyle.Popup | WindowStyle.ClipChildren | WindowStyle.ClipSiblings);
-                    command = ShowWindowCommand.SHOWMAXIMIZED;
-
-                    pre_maximized = new Rectangle(width, height);
-                    Functions.AdjustWindowRect(ref pre_maximized, WindowStyle.OverlappedWindow, false);
-                }
-                else if (!value && Fullscreen)
-                {
-                    style = (IntPtr)(int)(WindowStyle.OverlappedWindow | WindowStyle.ClipChildren | WindowStyle.ClipSiblings);
-                    command = ShowWindowCommand.SHOWNORMAL;
-                }
-                
-                // This calls a C# function that determines whether we need SetWindowLong (32bit platforms)
-                // or SetWindowLongPtr (64bit). This happens because SetWindowLongPtr is a macro on 32bit
-                // platforms, and is *not* available as a function.
-                Functions.SetWindowLong(Handle, GetWindowLongOffsets.STYLE, style);
-                Functions.ShowWindow(Handle, command);
-                if (!value && Fullscreen)
-                    Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, pre_maximized.Width, pre_maximized.Height,
-                        SetWindowPosFlags.SHOWWINDOW);
-
-                fullscreen = value;
-            }
         }
 
         #endregion
@@ -349,9 +333,9 @@ namespace OpenTK.Platform.Windows
             bottom_border = rect.bottom - height;
             right_border = rect.right - width;
 
-            cp.Width = rect.right - rect.left;
-            cp.Height = rect.bottom - rect.top;
-            cp.Caption = "OpenTK Game Window";
+            //cp.Width = rect.right - rect.left;
+            //cp.Height = rect.bottom - rect.top;
+            //cp.Caption = "OpenTK Game Window";
 
             // Keep in mind that some construction code runs in WM_CREATE,
             // which is raised CreateHandle()
@@ -369,7 +353,8 @@ namespace OpenTK.Platform.Windows
                     "Could not create native window and/or context. Handle: {0}",
                     this.Handle));
 
-            Functions.SetWindowPos(this.Handle, WindowPlacementOptions.TOP, Left, Top, cp.Width, cp.Height, SetWindowPosFlags.SHOWWINDOW);
+            Functions.SetWindowPos(this.Handle, WindowPlacementOptions.TOP, Left, Top, rect.right - rect.left,
+                                   rect.bottom - rect.top, SetWindowPosFlags.SHOWWINDOW);
 
             context = new GraphicsContext(mode, window);
 
@@ -455,17 +440,97 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region public OpenTK.WindowState WindowState
+        #region public WindowState WindowState
 
-        public OpenTK.WindowState WindowState
+        public WindowState WindowState
         {
             get
             {
-                throw new NotImplementedException();
+                return windowState;   
             }
             set
             {
-                throw new NotImplementedException();
+                IntPtr style = Functions.GetWindowLong(Handle, GetWindowLongOffsets.STYLE);
+                ShowWindowCommand command = (ShowWindowCommand)0;
+                SetWindowPosFlags flags = SetWindowPosFlags.NOREPOSITION;
+                int new_width = 0, new_height = 0;
+
+                switch (value)
+                {
+                    case WindowState.Normal:
+                        command = ShowWindowCommand.RESTORE;
+                        flags |= SetWindowPosFlags.SHOWWINDOW | SetWindowPosFlags.FRAMECHANGED;
+                        new_width = previous_client_area.Width;
+                        new_height = previous_client_area.Height;
+                        break;
+
+                    case WindowState.Minimized:
+                        command = ShowWindowCommand.SHOWMINIMIZED;
+                        flags |= SetWindowPosFlags.NOSIZE;
+                        break;
+
+                    case WindowState.Maximized:
+                    case WindowState.Fullscreen:
+                        if (windowState == WindowState.Normal || windowState == WindowState.Minimized)
+                        {
+                            // Get the normal size of the window, so we can set it when reverting from fullscreen/maximized to normal.
+                            previous_client_area = new Rectangle(width, height);
+                            previous_window_border = windowBorder;
+                            //Functions.AdjustWindowRect(ref previous_client_area, WindowStyle.OverlappedWindow, false);
+                        }
+
+                        command = ShowWindowCommand.SHOWMAXIMIZED;
+                        flags |= SetWindowPosFlags.SHOWWINDOW | SetWindowPosFlags.DRAWFRAME | SetWindowPosFlags.NOSIZE;
+
+                        if (value == WindowState.Fullscreen)
+                            windowBorder = WindowBorder.Hidden;
+                        else
+                            windowBorder = previous_window_border;
+
+                        break;
+                }
+
+                Functions.ShowWindow(Handle, command);
+                Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, new_width, new_height, flags);
+
+                windowState = value;
+            }
+        }
+
+        #endregion
+
+        #region public WindowBorder WindowBorder
+        
+        public WindowBorder WindowBorder
+        {
+            get
+            {
+                return windowBorder;
+            }
+            set
+            {
+                if (windowBorder == value)
+                    return;
+
+                WindowStyle style = WindowStyle.ClipChildren | WindowStyle.ClipSiblings;
+
+                switch (value)
+                {
+                    case WindowBorder.Resizable:
+                        style |= WindowStyle.OverlappedWindow;
+                        break;
+
+                    case WindowBorder.Fixed:
+                        style &= ~(WindowStyle.MaximizeBox | WindowStyle.ThickFrame | WindowStyle.SizeBox);
+                        break;
+
+                    case WindowBorder.Hidden:
+                        style &= WindowStyle.Popup;
+                        break;
+                }
+
+                Functions.SetWindowLong(Handle, GetWindowLongOffsets.STYLE, (IntPtr)(int)style);
+
             }
         }
 
@@ -482,11 +547,14 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return width;
+                return client_rectangle.Width;
             }
             set
             {
-                throw new NotImplementedException();
+                if (value <= 0) throw new ArgumentOutOfRangeException("Window width must be higher than zero.");
+                //if (WindowState == WindowState.Fullscreen || WindowState == WindowState.Maximized)
+                //    throw new InvalidOperationException("Cannot resize a fullscreen or maximized window.");
+                Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, value, Height, SetWindowPosFlags.NOMOVE);
             }
         }
 
@@ -499,16 +567,12 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                return height;
+                return client_rectangle.Height;
             }
             set
             {
-                throw new NotImplementedException();
-                //WinApi.PostMessage(
-                //    this.Handle,
-                //    WinApi.Constants.WM_WINDOWPOSCHANGING,
-
-                //mode.Height = value;
+                if (value <= 0) throw new ArgumentOutOfRangeException("Window height must be higher than zero.");
+                Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, Width, value, SetWindowPosFlags.NOMOVE);
             }
         }
 
@@ -516,17 +580,20 @@ namespace OpenTK.Platform.Windows
 
         #region public void OnResize
 
-        public event ResizeEvent Resize;
+        public event ResizeEvent Resize = null;
 
         public void OnResize(ResizeEventArgs e)
         {
-            this.width = e.Width;
-            this.height = e.Height;
-            if (this.Resize != null)
-                this.Resize(this, e);
+            throw new NotImplementedException("Use GameWindow.OnResize instead.");
+            //this.width = e.Width;
+            //this.height = e.Height;
+            //if (this.Resize != null)
+            //    this.Resize(this, e);
         }
 
         #endregion
+
+        #region Top, Bottom, Left and Right
 
         public int Top
         {
@@ -551,6 +618,8 @@ namespace OpenTK.Platform.Windows
             get { return right; }
             private set { right = value; }
         }
+
+        #endregion
 
         #endregion
 
