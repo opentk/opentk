@@ -68,7 +68,7 @@ namespace OpenTK.Platform.Windows
 
             Debug.Print("OpenGL will be bound to handle: {0}", currentWindow.WindowHandle);
 
-            Debug.Print("Setting pixel format... ");
+            Debug.Write("Setting pixel format... ");
             this.SetGraphicsModePFD(format, (WinWindowInfo)window);
 
             // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
@@ -379,11 +379,23 @@ namespace OpenTK.Platform.Windows
 
             if (renderContext != IntPtr.Zero)
             {
-                Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
-                if (!Wgl.Imports.DeleteContext(renderContext))
+                try
                 {
-                    //throw new ApplicationException("Could not destroy the OpenGL render context. Error: " + Marshal.GetLastWin32Error());
-                    Debug.Print("Could not destroy the OpenGL render context. Error: {0}", Marshal.GetLastWin32Error());
+                    if (!Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero))
+                        Debug.Print("Failed to make OpenGL context {0} non current. Error: {1}",
+                            renderContext.ToString(), Marshal.GetLastWin32Error());
+
+                    if (!Wgl.Imports.DeleteContext(renderContext))
+                        Debug.Print("Failed to destroy OpenGL context {0}. Error: {1}",
+                            renderContext.ToString(), Marshal.GetLastWin32Error());
+                }
+                catch (AccessViolationException e)
+                {
+                    Debug.WriteLine("An access violation occured while destroying the OpenGL context. Please report at http://www.opentk.com.");
+                    Debug.Indent();
+                    Debug.Print("Marshal.GetLastWin32Error(): {0}", Marshal.GetLastWin32Error().ToString());
+                    Debug.WriteLine(e.ToString());
+                    Debug.Unindent();
                 }
                 renderContext = null;
             }
