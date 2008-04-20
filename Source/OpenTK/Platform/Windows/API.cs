@@ -218,6 +218,8 @@ namespace OpenTK.Platform.Windows
             LPARAM lParam
         );
 
+        #region SetWindowLong
+
         internal static IntPtr SetWindowLong(IntPtr handle, GetWindowLongOffsets index, IntPtr newValue)
         {
             if (IntPtr.Size == 4)
@@ -228,28 +230,33 @@ namespace OpenTK.Platform.Windows
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG SetWindowLong(
-            HWND hWnd,
-            GetWindowLongOffsets nIndex,
-            LONG dwNewLong
-        );
+        static extern LONG SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex, LONG dwNewLong);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true)]
-        static extern LONG_PTR SetWindowLongPtr(
-            HWND hWnd,
-            GetWindowLongOffsets nIndex,
-            LONG_PTR dwNewLong
-        );
+        static extern LONG_PTR SetWindowLongPtr(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong);
 
+        #endregion
 
+        #region GetWindowLong
+
+        internal static IntPtr GetWindowLong(IntPtr handle, GetWindowLongOffsets index)
+        {
+            if (IntPtr.Size == 4)
+                return (IntPtr)GetWindowLongInternal(handle, index);
+
+            return GetWindowLongPtrInternal(handle, index);
+        }
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern LONG_PTR GetWindowLongPtr(
-            HWND hWnd,
-            GetWindowLongOffsets nIndex
-        );
+        [DllImport("user32.dll", SetLastError = true, EntryPoint="GetWindowLong")]
+        static extern LONG GetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex);
+
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLongPtr")]
+        static extern LONG_PTR GetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex);
+
+        #endregion
 
         #endregion
 
@@ -650,6 +657,23 @@ namespace OpenTK.Platform.Windows
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
         internal static extern BOOL ClientToScreen(HWND hWnd, ref System.Drawing.Point point);
+
+        #endregion
+
+        #region GetClientRect
+
+        /// <summary>
+        /// The GetClientRect function retrieves the coordinates of a window's client area. The client coordinates specify the upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left corner of a window's client area, the coordinates of the upper-left corner are (0,0).
+        /// </summary>
+        /// <param name="windowHandle">Handle to the window whose client coordinates are to be retrieved.</param>
+        /// <param name="clientRectangle">Pointer to a RECT structure that receives the client coordinates. The left and top members are zero. The right and bottom members contain the width and height of the window.</param>
+        /// <returns>
+        /// <para>If the function succeeds, the return value is nonzero.</para>
+        /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+        /// </returns>
+        /// <remarks>In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.</remarks>
+        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
+        internal extern static BOOL GetClientRect(HWND windowHandle, out RECT clientRectangle);
 
         #endregion
 
