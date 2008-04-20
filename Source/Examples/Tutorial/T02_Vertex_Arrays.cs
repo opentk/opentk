@@ -119,9 +119,10 @@ namespace Examples.Tutorial
 
             // Alt+Enter toggles fullscreen mode.
             if ((Keyboard[Key.AltLeft] || Keyboard[Key.AltRight]) && Keyboard[Key.Enter])
-            {
-                Fullscreen = !Fullscreen;
-            }
+                if (WindowState != WindowState.Fullscreen)
+                    WindowState = WindowState.Fullscreen;
+                else
+                    WindowState = WindowState.Normal;
 
             // Plus/Minus change the target render frequency.
             // PageUp/PageDown change the target update frequency.
