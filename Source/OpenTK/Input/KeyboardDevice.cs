@@ -50,13 +50,9 @@ namespace OpenTK.Input
                     keys[(int)key] = value;
 
                     if (value && KeyDown != null)
-                    {
                         KeyDown(this, key);
-                    }
                     else if (!value && KeyUp != null)
-                    {
                         KeyUp(this, key);
-                    }
                 }
             }
         }
@@ -188,7 +184,8 @@ namespace OpenTK.Input
         internal void ClearKeys()
         {
             for (int i = 0; i < (int)Key.MaxKeys; i++)
-                this[(Key)i] = false;
+                if (this[(Key)i])       // Make sure KeyUp events are *not* raised for keys that are up, even if key repeat is on.
+                    this[(Key)i] = false;
         }
 
         #endregion
