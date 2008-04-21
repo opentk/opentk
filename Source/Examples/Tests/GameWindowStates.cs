@@ -11,12 +11,16 @@ using System.Diagnostics;
 
 using OpenTK;
 using OpenTK.Graphics;
+using System.Drawing;
 
 namespace Examples.Tests
 {
     [Example("GameWindow states.", ExampleCategory.Test)]
     public class GameWindowStates : GameWindow
     {
+        TextureFont font = new TextureFont(new Font(FontFamily.GenericSansSerif, 20.0f));
+        TextPrinter printer = new TextPrinter();
+
         public GameWindowStates()
             : base(800, 600)
         {
@@ -29,24 +33,54 @@ namespace Examples.Tests
 
         void Keyboard_KeyUp(OpenTK.Input.KeyboardDevice sender, OpenTK.Input.Key key)
         {
-            if (key == OpenTK.Input.Key.Escape)
-                this.Exit();
-
-            if (key == OpenTK.Input.Key.Space)
+            switch (key)
             {
-                switch (this.WindowState)
-                {
-                    case WindowState.Normal: this.WindowState = WindowState.Maximized; break;
-                    case WindowState.Maximized: this.WindowState = WindowState.Minimized; break;
-                    case WindowState.Minimized: this.WindowState = WindowState.Fullscreen; break;
-                    case WindowState.Fullscreen: this.WindowState = WindowState.Normal; break;
-                }
+                case OpenTK.Input.Key.Escape:
+                    this.Exit();
+                    break;
+
+                case OpenTK.Input.Key.Number1:
+                    switch (this.WindowState)
+                    {
+                        case WindowState.Normal: this.WindowState = WindowState.Maximized; break;
+                        case WindowState.Maximized: this.WindowState = WindowState.Minimized; break;
+                        case WindowState.Minimized:
+                            this.WindowState = WindowState.Normal;
+                            this.WindowState = WindowState.Fullscreen;
+                            break;
+                        case WindowState.Fullscreen: this.WindowState = WindowState.Normal; break;
+                    }
+                    break;
+
+                case OpenTK.Input.Key.Number2:
+                    this.WindowState = WindowState.Normal;
+                    switch (this.WindowBorder)
+                    {
+                        case WindowBorder.Fixed: this.WindowBorder = WindowBorder.Hidden; break;
+                        case WindowBorder.Hidden: this.WindowBorder = WindowBorder.Resizable; break;
+                        case WindowBorder.Resizable: this.WindowBorder = WindowBorder.Fixed; break;
+                    }
+
+                    break;
             }
+        }
+
+        protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
+        {
+            GL.Viewport(0, 0, Width, Height);
         }
 
         public override void OnRenderFrame(RenderFrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            printer.Begin();
+
+            printer.Draw("Instructions:", font); GL.Translate(0, font.Height, 0);
+            printer.Draw("1 - cycle through window styles.", font); GL.Translate(0, font.Height, 0);
+            printer.Draw("2 - cycle through window borders.", font);
+
+            printer.End();
 
             SwapBuffers();
         }
