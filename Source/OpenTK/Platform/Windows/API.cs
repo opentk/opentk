@@ -2445,6 +2445,7 @@ namespace OpenTK.Platform.Windows
 
     #region internal enum WindowStyle : int
 
+    [Flags]
     internal enum WindowStyle : int
     {
         Overlapped = 0x00000000,
