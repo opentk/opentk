@@ -450,6 +450,9 @@ namespace OpenTK.Platform.Windows
             }
             set
             {
+                if (WindowState == value)
+                    return;
+
                 IntPtr style = Functions.GetWindowLong(Handle, GetWindowLongOffsets.STYLE);
                 ShowWindowCommand command = (ShowWindowCommand)0;
                 SetWindowPosFlags flags = SetWindowPosFlags.NOREPOSITION;
@@ -460,6 +463,10 @@ namespace OpenTK.Platform.Windows
                     case WindowState.Normal:
                         command = ShowWindowCommand.RESTORE;
                         flags |= SetWindowPosFlags.SHOWWINDOW | SetWindowPosFlags.FRAMECHANGED;
+
+                        if (WindowState == WindowState.Fullscreen || WindowState == WindowState.Maximized)
+                            WindowBorder = previous_window_border;
+
                         new_width = previous_client_area.Width;
                         new_height = previous_client_area.Height;
                         break;
@@ -471,21 +478,20 @@ namespace OpenTK.Platform.Windows
 
                     case WindowState.Maximized:
                     case WindowState.Fullscreen:
-                        if (windowState == WindowState.Normal || windowState == WindowState.Minimized)
+                        if (WindowState == WindowState.Normal || WindowState == WindowState.Minimized)
                         {
                             // Get the normal size of the window, so we can set it when reverting from fullscreen/maximized to normal.
-                            previous_client_area = new Rectangle(width, height);
-                            previous_window_border = windowBorder;
-                            //Functions.AdjustWindowRect(ref previous_client_area, WindowStyle.OverlappedWindow, false);
+                            previous_client_area = new Rectangle(window_size.Width, window_size.Height);
+                            previous_window_border = WindowBorder;
                         }
 
                         command = ShowWindowCommand.SHOWMAXIMIZED;
                         flags |= SetWindowPosFlags.SHOWWINDOW | SetWindowPosFlags.DRAWFRAME | SetWindowPosFlags.NOSIZE;
 
                         if (value == WindowState.Fullscreen)
-                            windowBorder = WindowBorder.Hidden;
+                            this.WindowBorder = WindowBorder.Hidden;
                         else
-                            windowBorder = previous_window_border;
+                            this.WindowBorder = previous_window_border;
 
                         break;
                 }
@@ -525,12 +531,13 @@ namespace OpenTK.Platform.Windows
                         break;
 
                     case WindowBorder.Hidden:
-                        style &= WindowStyle.Popup;
+                        style |= WindowStyle.Popup;
                         break;
                 }
 
                 Functions.SetWindowLong(Handle, GetWindowLongOffsets.STYLE, (IntPtr)(int)style);
 
+                windowBorder = value;
             }
         }
 
