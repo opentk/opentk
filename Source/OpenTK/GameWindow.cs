@@ -945,6 +945,25 @@ namespace OpenTK
 
         #endregion
 
+        #region public WindowBorder WindowBorder
+
+        /// <summary>
+        /// Gets or states the border of the GameWindow.
+        /// </summary>
+        public WindowBorder WindowBorder
+        {
+            get
+            {
+                return glWindow.WindowBorder;
+            }
+            set
+            {
+                glWindow.WindowBorder = value;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region --- GameWindow Timing ---
