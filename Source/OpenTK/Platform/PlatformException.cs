@@ -8,9 +8,12 @@
 
 using System;
 
-/// <summary>Defines a plaftorm specific exception.</summary>
-public class PlatformException : Exception
+namespace OpenTK
 {
-    /// <summary>Constructs a new PlatformException.</summary>
-    public PlatformException(string s) : base(s) { }
+    /// <summary>Defines a plaftorm specific exception.</summary>
+    public class PlatformException : Exception
+    {
+        /// <summary>Constructs a new PlatformException.</summary>
+        public PlatformException(string s) : base(s) { }
+    }
 }

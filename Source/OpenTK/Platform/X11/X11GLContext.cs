@@ -122,7 +122,7 @@ namespace OpenTK.Platform.X11
             }
             finally
             {
-                Debug.Unindent();
+                //Debug.Unindent();
             }
         }
 
