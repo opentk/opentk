@@ -49,6 +49,7 @@ namespace OpenTK.Platform.Windows
     using INT = System.Int32;
     using UINT = System.UInt32;
     using LONG_PTR = System.IntPtr;
+    using ATOM = System.Int32;
 
     using COLORREF = System.Int32;
     using RECT = OpenTK.Platform.Windows.Rectangle;
@@ -74,6 +75,7 @@ namespace OpenTK.Platform.Windows
             RawInputDeviceInfoSize = Marshal.SizeOf(typeof(RawInputDeviceInfo));
             PixelFormatDescriptorVersion = 1;
             PixelFormatDescriptorSize = (short)Marshal.SizeOf(typeof(PixelFormatDescriptor));
+            WindowInfoSize = Marshal.SizeOf(typeof(WindowInfo));
         }
 
         internal static readonly short PixelFormatDescriptorSize;
@@ -84,6 +86,7 @@ namespace OpenTK.Platform.Windows
         internal static readonly int RawInputDeviceListSize;
         internal static readonly int RawInputDeviceInfoSize;
         internal static readonly int RawMouseSize;
+        internal static readonly int WindowInfoSize;
     }
 
     internal static class Functions
@@ -674,6 +677,13 @@ namespace OpenTK.Platform.Windows
         /// <remarks>In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.</remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
         internal extern static BOOL GetClientRect(HWND windowHandle, out RECT clientRectangle);
+
+        #endregion
+
+        #region GetWindowInfo
+
+        [DllImport("user32.dll"), SuppressUnmanagedCodeSecurity]
+        internal static extern BOOL GetWindowInfo(HWND hwnd, ref WindowInfo wi);
 
         #endregion
 
@@ -2389,6 +2399,58 @@ namespace OpenTK.Platform.Windows
         {
             return String.Format("({0},{1})-({2},{3})", left, top, right, bottom);
         }
+    }
+
+    #endregion
+
+    #region WindowInfo
+
+    /// <summary>
+    /// Contains window information.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    struct WindowInfo
+    {
+        /// <summary>
+        /// The size of the structure, in bytes.
+        /// </summary>
+        public DWORD Size;
+        /// <summary>
+        /// Pointer to a RECT structure that specifies the coordinates of the window. 
+        /// </summary>
+        public RECT Window;
+        /// <summary>
+        /// Pointer to a RECT structure that specifies the coordinates of the client area. 
+        /// </summary>
+        public RECT Client;
+        /// <summary>
+        /// The window styles. For a table of window styles, see CreateWindowEx. 
+        /// </summary>
+        public WindowStyle Style;
+        /// <summary>
+        /// The extended window styles. For a table of extended window styles, see CreateWindowEx.
+        /// </summary>
+        public ExtendedWindowStyle ExStyle;
+        /// <summary>
+        /// The window status. If this member is WS_ACTIVECAPTION, the window is active. Otherwise, this member is zero.
+        /// </summary>
+        public DWORD WindowStatus;
+        /// <summary>
+        /// The width of the window border, in pixels. 
+        /// </summary>
+        public UINT WindowBordersX;
+        /// <summary>
+        /// The height of the window border, in pixels.
+        /// </summary>
+        public UINT WindowBordersY;
+        /// <summary>
+        /// The window class atom (see RegisterClass). 
+        /// </summary>
+        public ATOM WindowType;
+        /// <summary>
+        /// The Microsoft Windows version of the application that created the window. 
+        /// </summary>
+        public WORD CreatorVersion;
     }
 
     #endregion
