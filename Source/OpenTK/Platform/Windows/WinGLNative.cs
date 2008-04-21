@@ -92,26 +92,35 @@ namespace OpenTK.Platform.Windows
                     WindowPosition pos = (WindowPosition)Marshal.PtrToStructure(m.LParam, typeof(WindowPosition));
                     position.X = pos.x;
                     position.Y = pos.y;
+
                     window_size.Width = pos.cx;
                     window_size.Height = pos.cy;
 
                     Functions.GetClientRect(Handle, out client_rectangle);
 
-                    //client_size.Width = pos.cx - (left_border + right_border);
-                    //client_size.Height = pos.cy - (top_border + bottom_border);
+                    break;
 
-                    // Get window size
-                    //int _width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cx"));
-                    //int _height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(WindowPosition), "cy"));
+                case WindowMessage.STYLECHANGED:
+                    WindowStyle style = (WindowStyle)(long)Functions.GetWindowLong(Handle, GetWindowLongOffsets.STYLE);
+                    if ((style & WindowStyle.Popup) != 0)
+                        windowBorder = WindowBorder.Hidden;
+                    else if ((style & WindowStyle.ThickFrame) != 0)
+                        windowBorder = WindowBorder.Resizable;
+                    else if ((style & ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox)) != 0)
+                        windowBorder = WindowBorder.Fixed;
+                    break;
 
-                    //if (client_size.Width != new_width || client_size.Height != new_height)
-                    //{
-                    //    client_size.Width = new_width;
-                    //    client_size.Height = new_height;
-                    //    return;
-                    //}
-
-                    // If the message was not a resize notification, send it to the default WndProc.
+                case WindowMessage.SIZE:
+                    Console.WriteLine(m.WParam.ToString());
+                    long state = m.WParam.ToInt64();
+                    switch (state)
+                    {
+                        case 0: windowState = WindowState.Normal; break;
+                        case 1: windowState = WindowState.Minimized; break;
+                        case 2:
+                            windowState = WindowBorder == WindowBorder.Hidden ? WindowState.Fullscreen : WindowState.Maximized;
+                            break;
+                    }
                     break;
 
                 //case WindowMessage.MOUSELEAVE:
@@ -124,10 +133,12 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.CREATE:
                     // Set the window width and height:
-                    width = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(CreateStruct), "cx"));
-                    height = Marshal.ReadInt32(m.LParam, (int)Marshal.OffsetOf(typeof(CreateStruct), "cy"));
-                    width -= (left_border + right_border);
-                    height -= (top_border + bottom_border);
+                    pos = (WindowPosition)Marshal.PtrToStructure(m.LParam, typeof(WindowPosition));
+                    position.X = pos.x;
+                    position.Y = pos.y;
+
+                    window_size.Width = pos.cx;
+                    window_size.Height = pos.cy;
 
                     // Raise the Create event
                     this.OnCreate(EventArgs.Empty);
@@ -499,7 +510,7 @@ namespace OpenTK.Platform.Windows
                 Functions.ShowWindow(Handle, command);
                 Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, new_width, new_height, flags);
 
-                windowState = value;
+                //windowState = value;
             }
         }
 
@@ -527,7 +538,7 @@ namespace OpenTK.Platform.Windows
                         break;
 
                     case WindowBorder.Fixed:
-                        style &= ~(WindowStyle.MaximizeBox | WindowStyle.ThickFrame | WindowStyle.SizeBox);
+                        style |= WindowStyle.OverlappedWindow & ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox | WindowStyle.SizeBox);
                         break;
 
                     case WindowBorder.Hidden:
@@ -536,8 +547,10 @@ namespace OpenTK.Platform.Windows
                 }
 
                 Functions.SetWindowLong(Handle, GetWindowLongOffsets.STYLE, (IntPtr)(int)style);
+                Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, 0, 0, SetWindowPosFlags.NOMOVE |
+                    SetWindowPosFlags.NOSIZE | SetWindowPosFlags.FRAMECHANGED | SetWindowPosFlags.SHOWWINDOW);
 
-                windowBorder = value;
+                //windowBorder = value;
             }
         }
 
