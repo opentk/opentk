@@ -34,7 +34,7 @@ namespace OpenTK.Graphics
         static List<DisplayDevice> available_displays = new List<DisplayDevice>();
         static object display_lock = new object();
         static DisplayDevice primary_display;
-        static FadeEffect effect = new FadeEffect();
+        //static FadeEffect effect = new FadeEffect();
 
         static IDisplayDeviceDriver implementation;
 
@@ -192,7 +192,7 @@ namespace OpenTK.Graphics
             if (resolution == current_resolution)
                 return;
 
-            effect.FadeOut();
+            //effect.FadeOut();
 
             if (implementation.TryChangeResolution(this, resolution))
             {
@@ -203,7 +203,7 @@ namespace OpenTK.Graphics
             else throw new GraphicsModeException(String.Format("Device {0}: Failed to change resolution to {1}.",
                     this, resolution));
 
-            effect.FadeIn();
+            //effect.FadeIn();
         }
 
         #endregion
@@ -231,7 +231,7 @@ namespace OpenTK.Graphics
         {
             if (original_resolution != null)
             {
-                effect.FadeOut();
+                //effect.FadeOut();
 
                 if (implementation.TryRestoreResolution(this))
                 {
@@ -240,7 +240,7 @@ namespace OpenTK.Graphics
                 }
                 else throw new GraphicsModeException(String.Format("Device {0}: Failed to restore resolution.", this));
 
-                effect.FadeIn();
+                //effect.FadeIn();
             }
         }
 
@@ -325,7 +325,7 @@ namespace OpenTK.Graphics
     }
 
     #region --- FadeEffect ---
-
+#if false
     class FadeEffect : IDisposable
     {
         List<Form> forms = new List<Form>();
@@ -438,6 +438,6 @@ namespace OpenTK.Graphics
 
         #endregion
     }
-
+#endif
     #endregion
 }
