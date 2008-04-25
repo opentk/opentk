@@ -538,7 +538,8 @@ namespace OpenTK.Platform.Windows
                         break;
 
                     case WindowBorder.Fixed:
-                        style |= WindowStyle.OverlappedWindow & ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox | WindowStyle.SizeBox);
+                        style |= WindowStyle.OverlappedWindow & ~(WindowStyle.ThickFrame | WindowStyle.MaximizeBox |
+                                                                  WindowStyle.SizeBox);
                         break;
 
                     case WindowBorder.Hidden:
