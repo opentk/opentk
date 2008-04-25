@@ -627,10 +627,10 @@ namespace OpenTK.Platform.X11
 
     			if (minimized)
     				return WindowState.Minimized;
+                else if (fullscreen)                        // Must come before maximized!
+                    return OpenTK.WindowState.Fullscreen;
     			else if (maximized == 2)
     				return OpenTK.WindowState.Maximized;
-                else if (fullscreen)
-                    return OpenTK.WindowState.Fullscreen;
 
     			attributes = new XWindowAttributes();
     			Functions.XGetWindowAttributes(window.Display, window.WindowHandle, ref attributes);
@@ -651,55 +651,49 @@ namespace OpenTK.Platform.X11
                 
                 if (current_state == OpenTK.WindowState.Minimized)
                     Functions.XMapWindow(window.Display, window.WindowHandle);
+                else if (current_state == OpenTK.WindowState.Fullscreen)
+                {
+                    WindowBorder = _previous_window_border;
+                    Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_toggle,
+							                  _atom_wm_state_fullscreen,
+                                               IntPtr.Zero);
+                }
+                else if (current_state == OpenTK.WindowState.Maximized)
+                    Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_toggle,
+							                  _atom_wm_state_maximized_horizontal,
+                                              _atom_wm_state_maximized_vertical);
 
                 switch (value)
                 {
                     case OpenTK.WindowState.Normal:
-                        if (current_state == OpenTK.WindowState.Maximized ||
-                            current_state == OpenTK.WindowState.Fullscreen)
-                        {
-                            Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_toggle,
-    								                  _atom_wm_state_maximized_horizontal,
-                                                      _atom_wm_state_maximized_vertical);
-
-                            if (current_state == WindowState.Fullscreen)
-                                WindowBorder = _previous_window_border;
-                        }
-                        else if (current_state == OpenTK.WindowState.Minimized)
-                            Functions.XMapWindow(window.Display, window.WindowHandle);
-                        
                         Functions.XRaiseWindow(window.Display, window.WindowHandle);
                         
                         break;
                         
                     case OpenTK.WindowState.Maximized:
-                    case OpenTK.WindowState.Fullscreen:
-                        if (current_state == WindowState.Minimized)
-                            Functions.XMapWindow(window.Display, window.WindowHandle);
-                        
                         Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_enable,
 								                  _atom_wm_state_maximized_horizontal,
                                                   _atom_wm_state_maximized_vertical);
-                        
-                        if (this.WindowState == WindowState.Fullscreen)
-                        {
-                            _previous_window_border = this.WindowBorder;
-                            this.WindowBorder = WindowBorder.Hidden;
-                        }
                         
                         Functions.XRaiseWindow(window.Display, window.WindowHandle);
                         
                         break;
                         
                     case WindowState.Minimized:
-        				if (current_state == WindowState.Maximized || current_state == WindowState.Fullscreen)
-        					Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_toggle,
-								                      _atom_wm_state_maximized_horizontal,
-                                                      _atom_wm_state_maximized_vertical);
-                        
         				// FIXME multiscreen support
         				Functions.XIconifyWindow(window.Display, window.WindowHandle, window.Screen);
+                        
         				break;
+                        
+                    case WindowState.Fullscreen:
+                        _previous_window_border = this.WindowBorder;
+                            this.WindowBorder = WindowBorder.Hidden;
+                        
+     					Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_enable,
+		                                          _atom_wm_state_fullscreen,
+                                                  IntPtr.Zero);
+                        
+                        break;
                 }
             }
         }
