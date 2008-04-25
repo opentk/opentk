@@ -418,5 +418,42 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11")]
         public static extern void XUnlockDisplay(Display display);
+        
+        public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)
+		{
+			XEvent	xev;
+
+			xev = new XEvent();
+			xev.ClientMessageEvent.type = XEventName.ClientMessage;
+			xev.ClientMessageEvent.send_event = true;
+			xev.ClientMessageEvent.window = window.WindowHandle;
+			xev.ClientMessageEvent.message_type = message_type;
+			xev.ClientMessageEvent.format = 32;
+			xev.ClientMessageEvent.ptr1 = l0;
+			xev.ClientMessageEvent.ptr2 = l1;
+			xev.ClientMessageEvent.ptr3 = l2;
+
+			XSendEvent(window.Display, window.RootWindow, false,
+                       new IntPtr((int)(EventMask.SubstructureRedirectMask | EventMask.SubstructureNotifyMask)),
+                       ref xev);
+		}
+        
+		public static void SendNetClientMessage(X11WindowInfo window, IntPtr message_type,
+                                                IntPtr l0, IntPtr l1, IntPtr l2)
+		{
+			XEvent	xev;
+
+			xev = new XEvent();
+			xev.ClientMessageEvent.type = XEventName.ClientMessage;
+			xev.ClientMessageEvent.send_event = true;
+			xev.ClientMessageEvent.window = window.WindowHandle;
+			xev.ClientMessageEvent.message_type = message_type;
+			xev.ClientMessageEvent.format = 32;
+			xev.ClientMessageEvent.ptr1 = l0;
+			xev.ClientMessageEvent.ptr2 = l1;
+			xev.ClientMessageEvent.ptr3 = l2;
+
+			XSendEvent(window.Display, window.WindowHandle, false, new IntPtr((int)EventMask.NoEventMask), ref xev);
+		}
     }
 }
