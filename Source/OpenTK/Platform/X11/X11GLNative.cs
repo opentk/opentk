@@ -43,6 +43,15 @@ namespace OpenTK.Platform.X11
         const string KDE_NET_WM_ATOM = "_KDE_NET_WM_WINDOW_TYPE";
         const string ICCM_WM_ATOM = "_NET_WM_WINDOW_TYPE";
 
+        IntPtr _atom_wm_state;
+        IntPtr _atom_wm_state_minimized;
+        IntPtr _atom_wm_state_fullscreen;
+        IntPtr _atom_wm_state_maximized_horizontal;
+        IntPtr _atom_wm_state_maximized_vertical;
+        
+        IntPtr _atom_state_enable = (IntPtr)1;
+        IntPtr _atom_state_toggle = (IntPtr)2;          
+        
         // Number of pending events.
         int pending = 0;
 
@@ -66,9 +75,9 @@ namespace OpenTK.Platform.X11
         // Fields used for fullscreen mode changes.
         int pre_fullscreen_width, pre_fullscreen_height;
         bool fullscreen = false;
-        
+
         OpenTK.WindowState _window_state;
-        OpenTK.WindowBorder _window_border;
+        OpenTK.WindowBorder _window_border, _previous_window_border;
 
         #endregion
 
@@ -87,7 +96,7 @@ namespace OpenTK.Platform.X11
 
                 //Utilities.ThrowOnX11Error = true; // Not very reliable
 
-                // We *cannot* reuse the display connection of System.Windows.Forms (events get mixed with Windows.Forms).
+                // We *cannot* reuse the display connection of System.Windows.Forms (Windows.Forms eat our events).
                 // TODO: Multiple screens.
                 //Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
                 //window.Display = (IntPtr)xplatui.GetField("DisplayHandle",
@@ -98,7 +107,7 @@ namespace OpenTK.Platform.X11
                 //    System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
 
                 // Open a display connection to the X server, and obtain the screen and root window.
-                window.Display = API.DefaultDisplay;//Functions.XOpenDisplay(IntPtr.Zero); // IntPtr.Zero == default display
+                window.Display = API.DefaultDisplay;
                 if (window.Display == IntPtr.Zero)
                     throw new Exception("Could not open connection to X");
 
@@ -113,8 +122,9 @@ namespace OpenTK.Platform.X11
                     Functions.XUnlockDisplay(window.Display);
                 }
                 
-                Debug.Print("Display: {0}, Screen {1}, Root window: {2}", window.Display, window.Screen, window.RootWindow);
-
+                Debug.Print("Display: {0}, Screen {1}, Root window: {2}", window.Display, window.Screen,
+                            window.RootWindow);
+                
                 RegisterAtoms(window);
             }
             finally
@@ -125,25 +135,35 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region private static void RegisterAtoms()
+        #region private void RegisterAtoms()
 
         /// <summary>
         /// Not used yet.
         /// Registers the necessary atoms for GameWindow.
         /// </summary>
-        private static void RegisterAtoms(X11WindowInfo window)
+        private void RegisterAtoms(X11WindowInfo window)
         {
-            string[] atom_names = new string[] 
-            {
-                "WM_TITLE",
-                "UTF8_STRING"
-            };
-            IntPtr[] atoms = new IntPtr[atom_names.Length];
-            //Functions.XInternAtoms(window.Display, atom_names, atom_names.Length, false, atoms);
+            Debug.WriteLine("Registering atoms.");            
+            
+            _atom_wm_state = Functions.XInternAtom(window.Display, "_NET_WM_STATE", false);
+            _atom_wm_state_minimized = Functions.XInternAtom(window.Display, "_NET_WM_STATE_MINIMIZED", false);
+            _atom_wm_state_fullscreen = Functions.XInternAtom(window.Display, "_NET_WM_STATE_FULLSCREEN", false);
+            _atom_wm_state_maximized_horizontal =
+                Functions.XInternAtom(window.Display, "_NET_WM_STATE_MAXIMIZED_HORZ", false);
+            _atom_wm_state_maximized_vertical =
+                Functions.XInternAtom(window.Display, "_NET_WM_STATE_MAXIMIZED_VERT", false);
 
-            int offset = 0;
-            WMTitle = atoms[offset++];
-            UTF8String = atoms[offset++];
+//            string[] atom_names = new string[]
+//            {
+//                //"WM_TITLE",
+//                //"UTF8_STRING"
+//            };
+//            IntPtr[] atoms = new IntPtr[atom_names.Length];
+//            //Functions.XInternAtoms(window.Display, atom_names, atom_names.Length, false, atoms);
+//
+//            int offset = 0;
+//            //WMTitle = atoms[offset++];
+//            //UTF8String = atoms[offset++];
         }
 
         #endregion
@@ -236,6 +256,7 @@ namespace OpenTK.Platform.X11
 
             Debug.WriteLine("X11GLNative window created successfully!");
             Debug.Unindent();
+            
             exists = true;
         }
 
@@ -368,7 +389,7 @@ namespace OpenTK.Platform.X11
                 {
                     Debug.Print("Going fullscreen");
                     Debug.Indent();
-                    DisableWindowDecorations();
+                    DisableWindowDecorations(); 
                     pre_fullscreen_height = this.Height;
                     pre_fullscreen_width = this.Width;
                     //Functions.XRaiseWindow(this.window.Display, this.Handle);
@@ -572,14 +593,108 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                return _window_state;
+    			IntPtr actual_atom;
+    			int actual_format;
+    			IntPtr nitems;
+    			IntPtr bytes_after;
+    			IntPtr prop = IntPtr.Zero;
+    			IntPtr atom;
+    			int maximized;
+    			bool minimized;
+    			XWindowAttributes attributes;
+
+    			maximized = 0;
+    			minimized = false;
+    			Functions.XGetWindowProperty(window.Display, window.WindowHandle,
+    						 _atom_wm_state, IntPtr.Zero, new IntPtr (256), false,
+    						 IntPtr.Zero, out actual_atom, out actual_format, out nitems, out bytes_after, ref prop);
+
+                Debug.Print("Number of items: {0}", nitems.ToString());                
+                
+    			if ((long)nitems > 0 && prop != IntPtr.Zero)
+                {
+    				for (int i = 0; i < (long)nitems; i++)
+                    {
+    					// XXX 64 bit clean?
+                        atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
+    					//atom = (IntPtr)Marshal.ReadInt32(prop, i * 4);
+                            
+    					if (atom == _atom_wm_state_maximized_horizontal || atom == _atom_wm_state_maximized_vertical)
+                        {
+                            Debug.WriteLine("maximized++");
+    						maximized++;
+                        }
+    					else if (atom == _atom_wm_state_minimized)
+    						minimized = true;
+                        else if (atom == _atom_wm_state_fullscreen)
+                            fullscreen = true;
+    				}
+    				Functions.XFree(prop);
+    			}
+
+    			if (minimized)
+    				return OpenTK.WindowState.Minimized;
+    			else if (maximized == 2)
+    				return OpenTK.WindowState.Maximized;
+                else if (fullscreen)
+                    return OpenTK.WindowState.Fullscreen;
+
+    			attributes = new XWindowAttributes();
+    			Functions.XGetWindowAttributes(window.Display, window.WindowHandle, ref attributes);
+    			if (attributes.map_state == MapState.IsUnmapped)
+    				return (OpenTK.WindowState)(-1);
+
+    			return OpenTK.WindowState.Normal; 
             }
             set
             {
+                OpenTK.WindowState current_state = this.WindowState;
+                
+                if (current_state == value)
+                    return;
+                
+                Debug.Print("GameWindow {0} changing WindowState from {1} to {2}.", window.WindowHandle.ToString(),
+                            current_state.ToString(), value.ToString());
+                
+                if (current_state == OpenTK.WindowState.Minimized)
+                    Functions.XMapWindow(window.Display, window.WindowHandle);
+
                 switch (value)
                 {
                     case OpenTK.WindowState.Normal:
+                        if (current_state == OpenTK.WindowState.Maximized ||
+                            current_state == OpenTK.WindowState.Fullscreen)
+                        {
+                            Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_toggle,
+    								                  _atom_wm_state_maximized_horizontal,
+                                                      _atom_wm_state_maximized_vertical);
+
+                            if (current_state == OpenTK.WindowState.Fullscreen)
+                                WindowBorder = _previous_window_border;
+                        }
+                        else if (current_state == OpenTK.WindowState.Minimized)
+                            Functions.XMapWindow(window.Display, window.WindowHandle);
                         
+                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
+                        
+                        break;
+                        
+                    case OpenTK.WindowState.Maximized:
+                    case OpenTK.WindowState.Fullscreen:
+                        if (current_state == OpenTK.WindowState.Minimized)
+                            Functions.XMapWindow(window.Display, window.WindowHandle);
+                        
+                        Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_enable,
+								                  _atom_wm_state_maximized_horizontal,
+                                                  _atom_wm_state_maximized_vertical);
+                        
+                        if (this.WindowState == WindowState.Fullscreen)
+                        {
+                            _previous_window_border = this.WindowBorder;
+                            this.WindowBorder = OpenTK.WindowBorder.Hidden;
+                        }
+                        
+                        Functions.XRaiseWindow(window.Display, window.WindowHandle);
                         
                         break;
                 }
