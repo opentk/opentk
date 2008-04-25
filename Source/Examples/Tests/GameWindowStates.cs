@@ -18,7 +18,7 @@ namespace Examples.Tests
     [Example("GameWindow states.", ExampleCategory.Test)]
     public class GameWindowStates : GameWindow
     {
-        TextureFont font = new TextureFont(new Font(FontFamily.GenericSansSerif, 20.0f));
+        TextureFont font = new TextureFont(new Font(FontFamily.GenericSansSerif, 16.0f));
         TextPrinter printer = new TextPrinter();
 
         public GameWindowStates()
@@ -77,8 +77,13 @@ namespace Examples.Tests
             printer.Begin();
 
             printer.Draw("Instructions:", font); GL.Translate(0, font.Height, 0);
-            printer.Draw("1 - cycle through window styles.", font); GL.Translate(0, font.Height, 0);
-            printer.Draw("2 - cycle through window borders.", font);
+            printer.Draw(String.Format("1 - cycle through window styles (current: {0}).", this.WindowState), font);
+            GL.Translate(0, font.Height, 0);
+            printer.Draw(String.Format("2 - cycle through window borders (current: {0}).", this.WindowBorder), font);
+            GL.Translate(0, font.Height, 0);
+            printer.Draw(String.Format("3 - toggle fullscreen (current: {0}).",
+                                       this.WindowState == WindowState.Fullscreen ? "enabled" : "disabled"), font);
+            
 
             printer.End();
 
