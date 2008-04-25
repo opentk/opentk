@@ -43,12 +43,12 @@ namespace Examples.Tests
                     switch (this.WindowState)
                     {
                         case WindowState.Normal: this.WindowState = WindowState.Maximized; break;
-                        case WindowState.Maximized: this.WindowState = WindowState.Minimized; break;
+                        case WindowState.Maximized: this.WindowState = WindowState.Fullscreen; break;
+                        case WindowState.Fullscreen: this.WindowState = WindowState.Minimized; break;
                         case WindowState.Minimized:
                             this.WindowState = WindowState.Normal;
-                            this.WindowState = WindowState.Fullscreen;
                             break;
-                        case WindowState.Fullscreen: this.WindowState = WindowState.Normal; break;
+
                     }
                     break;
 
@@ -61,6 +61,14 @@ namespace Examples.Tests
                         case WindowBorder.Resizable: this.WindowBorder = WindowBorder.Fixed; break;
                     }
 
+                    break;
+                    
+                case OpenTK.Input.Key.Number3:
+                    if (this.WindowState == WindowState.Fullscreen)
+                        this.WindowState = WindowState.Normal;
+                    else
+                        this.WindowState = WindowState.Fullscreen;
+                    
                     break;
             }
         }
