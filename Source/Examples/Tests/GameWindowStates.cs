@@ -44,9 +44,11 @@ namespace Examples.Tests
                     {
                         case WindowState.Normal: this.WindowState = WindowState.Maximized; break;
                         case WindowState.Maximized: this.WindowState = WindowState.Fullscreen; break;
-                        case WindowState.Fullscreen: this.WindowState = WindowState.Minimized; break;
-                        case WindowState.Minimized:
+                        case WindowState.Fullscreen:
                             this.WindowState = WindowState.Normal;
+                            this.WindowState = WindowState.Minimized;
+                            break;
+                        case WindowState.Minimized: this.WindowState = WindowState.Normal;
                             break;
 
                     }
