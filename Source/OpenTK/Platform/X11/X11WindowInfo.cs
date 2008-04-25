@@ -58,6 +58,8 @@ namespace OpenTK.Platform.X11
         public IntPtr Display { get { return display; } set { display = value; } }
         /// <summary>Gets or sets the X11 screen.</summary>
         public int Screen { get { return screen; } set { screen = value; } }
+                        //{ get { return Functions.XRRRootToScreen(display, rootWindow); } set { } }
+        //public int Screen { get { return screen; } set { screen = value; } }
         /// <summary>Gets or sets the X11 VisualInfo.</summary>
         public XVisualInfo VisualInfo { get { return visualInfo; } set { visualInfo = value; } }
         /// <summary>Gets or sets the X11 EventMask.</summary>
