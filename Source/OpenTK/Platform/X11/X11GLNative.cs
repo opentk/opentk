@@ -587,7 +587,7 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region public OpenTK.WindowState WindowState
+        #region publicOpenTK.WindowState WindowState
 
         public OpenTK.WindowState WindowState
         {
@@ -609,21 +609,14 @@ namespace OpenTK.Platform.X11
     						 _atom_wm_state, IntPtr.Zero, new IntPtr (256), false,
     						 IntPtr.Zero, out actual_atom, out actual_format, out nitems, out bytes_after, ref prop);
 
-                Debug.Print("Number of items: {0}", nitems.ToString());                
-                
     			if ((long)nitems > 0 && prop != IntPtr.Zero)
                 {
     				for (int i = 0; i < (long)nitems; i++)
                     {
-    					// XXX 64 bit clean?
                         atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
-    					//atom = (IntPtr)Marshal.ReadInt32(prop, i * 4);
-                            
-    					if (atom == _atom_wm_state_maximized_horizontal || atom == _atom_wm_state_maximized_vertical)
-                        {
-                            Debug.WriteLine("maximized++");
+    					
+                        if (atom == _atom_wm_state_maximized_horizontal || atom == _atom_wm_state_maximized_vertical)
     						maximized++;
-                        }
     					else if (atom == _atom_wm_state_minimized)
     						minimized = true;
                         else if (atom == _atom_wm_state_fullscreen)
@@ -633,7 +626,7 @@ namespace OpenTK.Platform.X11
     			}
 
     			if (minimized)
-    				return OpenTK.WindowState.Minimized;
+    				return WindowState.Minimized;
     			else if (maximized == 2)
     				return OpenTK.WindowState.Maximized;
                 else if (fullscreen)
@@ -669,7 +662,7 @@ namespace OpenTK.Platform.X11
     								                  _atom_wm_state_maximized_horizontal,
                                                       _atom_wm_state_maximized_vertical);
 
-                            if (current_state == OpenTK.WindowState.Fullscreen)
+                            if (current_state == WindowState.Fullscreen)
                                 WindowBorder = _previous_window_border;
                         }
                         else if (current_state == OpenTK.WindowState.Minimized)
@@ -681,7 +674,7 @@ namespace OpenTK.Platform.X11
                         
                     case OpenTK.WindowState.Maximized:
                     case OpenTK.WindowState.Fullscreen:
-                        if (current_state == OpenTK.WindowState.Minimized)
+                        if (current_state == WindowState.Minimized)
                             Functions.XMapWindow(window.Display, window.WindowHandle);
                         
                         Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_enable,
@@ -691,28 +684,39 @@ namespace OpenTK.Platform.X11
                         if (this.WindowState == WindowState.Fullscreen)
                         {
                             _previous_window_border = this.WindowBorder;
-                            this.WindowBorder = OpenTK.WindowBorder.Hidden;
+                            this.WindowBorder = WindowBorder.Hidden;
                         }
                         
                         Functions.XRaiseWindow(window.Display, window.WindowHandle);
                         
                         break;
+                        
+                    case WindowState.Minimized:
+        				if (current_state == WindowState.Maximized || current_state == WindowState.Fullscreen)
+        					Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_toggle,
+								                      _atom_wm_state_maximized_horizontal,
+                                                      _atom_wm_state_maximized_vertical);
+                        
+        				// FIXME multiscreen support
+        				Functions.XIconifyWindow(window.Display, window.WindowHandle, window.Screen);
+        				break;
                 }
             }
         }
 
         #endregion
 
-        #region public WindowBorder WindowBorder
+        #region public OpenTK.WindowBorder WindowBorder
 
-        public WindowBorder WindowBorder
+        public OpenTK.WindowBorder WindowBorder
         {
             get
             {
-                throw new NotImplementedException();
+                return _window_border;
             }
             set
             {
+                _window_border = value;
                 //Functions.XChangeProperty(window.Display, window.WindowHandle, 
             }
         }
