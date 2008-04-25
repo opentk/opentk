@@ -49,8 +49,9 @@ namespace OpenTK.Platform.X11
         IntPtr _atom_wm_state_maximized_horizontal;
         IntPtr _atom_wm_state_maximized_vertical;
         
-        IntPtr _atom_state_enable = (IntPtr)1;
-        IntPtr _atom_state_toggle = (IntPtr)2;          
+        static readonly IntPtr _atom_state_remove = (IntPtr)0;
+        static readonly IntPtr _atom_state_add = (IntPtr)1;
+        static readonly IntPtr _atom_state_toggle = (IntPtr)2;          
         
         // Number of pending events.
         int pending = 0;
@@ -74,9 +75,9 @@ namespace OpenTK.Platform.X11
 
         // Fields used for fullscreen mode changes.
         int pre_fullscreen_width, pre_fullscreen_height;
-        bool fullscreen = false;
+        //bool fullscreen = false;
 
-        OpenTK.WindowState _window_state;
+        OpenTK.WindowState _window_state, _previous_window_state;
         OpenTK.WindowBorder _window_border, _previous_window_border;
 
         #endregion
@@ -381,34 +382,35 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                return fullscreen;
+                return false;
+                //return fullscreen;
             }
             set
             {
-                if (value && !fullscreen)
-                {
-                    Debug.Print("Going fullscreen");
-                    Debug.Indent();
-                    DisableWindowDecorations(); 
-                    pre_fullscreen_height = this.Height;
-                    pre_fullscreen_width = this.Width;
-                    //Functions.XRaiseWindow(this.window.Display, this.Handle);
-                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 0, 
-                        DisplayDevice.Default.Width, DisplayDevice.Default.Height);
-                    Debug.Unindent();
-                    fullscreen = true;
-                }
-                else if (!value && fullscreen)
-                {
-                    Debug.Print("Going windowed");
-                    Debug.Indent();
-                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 0,
-                        pre_fullscreen_width, pre_fullscreen_height);
-                    pre_fullscreen_height = pre_fullscreen_width = 0;
-                    EnableWindowDecorations();
-                    Debug.Unindent();
-                    fullscreen = false;
-                }
+//                if (value && !fullscreen)
+//                {
+//                    Debug.Print("Going fullscreen");
+//                    Debug.Indent();
+//                    DisableWindowDecorations(); 
+//                    pre_fullscreen_height = this.Height;
+//                    pre_fullscreen_width = this.Width;
+//                    //Functions.XRaiseWindow(this.window.Display, this.Handle);
+//                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 0, 
+//                        DisplayDevice.Default.Width, DisplayDevice.Default.Height);
+//                    Debug.Unindent();
+//                    fullscreen = true;
+//                }
+//                else if (!value && fullscreen)
+//                {
+//                    Debug.Print("Going windowed");
+//                    Debug.Indent();
+//                    Functions.XMoveResizeWindow(this.window.Display, this.Handle, 0, 0,
+//                        pre_fullscreen_width, pre_fullscreen_height);
+//                    pre_fullscreen_height = pre_fullscreen_width = 0;
+//                    EnableWindowDecorations();
+//                    Debug.Unindent();
+//                    fullscreen = false;
+//                }
                 /*
                 Debug.Print(value ? "Going fullscreen" : "Going windowed");
                 IntPtr state_atom = Functions.XInternAtom(this.window.Display, "_NET_WM_STATE", false);
@@ -599,18 +601,18 @@ namespace OpenTK.Platform.X11
     			IntPtr bytes_after;
     			IntPtr prop = IntPtr.Zero;
     			IntPtr atom;
-    			int maximized;
-    			bool minimized;
     			XWindowAttributes attributes;
-
-    			maximized = 0;
-    			minimized = false;
+                bool fullscreen = false;
+    			int maximized = 0;
+                bool minimized = false;
+                
     			Functions.XGetWindowProperty(window.Display, window.WindowHandle,
     						 _atom_wm_state, IntPtr.Zero, new IntPtr (256), false,
     						 IntPtr.Zero, out actual_atom, out actual_format, out nitems, out bytes_after, ref prop);
 
     			if ((long)nitems > 0 && prop != IntPtr.Zero)
                 {
+                    Debug.Print("nitems: {0}", nitems.ToString());
     				for (int i = 0; i < (long)nitems; i++)
                     {
                         atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
@@ -627,16 +629,16 @@ namespace OpenTK.Platform.X11
 
     			if (minimized)
     				return WindowState.Minimized;
-                else if (fullscreen)                        // Must come before maximized!
-                    return OpenTK.WindowState.Fullscreen;
     			else if (maximized == 2)
     				return OpenTK.WindowState.Maximized;
-
+                else if (fullscreen)
+                    return OpenTK.WindowState.Fullscreen;
+/*
     			attributes = new XWindowAttributes();
     			Functions.XGetWindowAttributes(window.Display, window.WindowHandle, ref attributes);
     			if (attributes.map_state == MapState.IsUnmapped)
     				return (OpenTK.WindowState)(-1);
-
+*/
     			return OpenTK.WindowState.Normal; 
             }
             set
@@ -654,7 +656,7 @@ namespace OpenTK.Platform.X11
                 else if (current_state == OpenTK.WindowState.Fullscreen)
                 {
                     WindowBorder = _previous_window_border;
-                    Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_toggle,
+                    Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_remove,
 							                  _atom_wm_state_fullscreen,
                                                IntPtr.Zero);
                 }
@@ -671,7 +673,7 @@ namespace OpenTK.Platform.X11
                         break;
                         
                     case OpenTK.WindowState.Maximized:
-                        Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_enable,
+                        Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_add,
 								                  _atom_wm_state_maximized_horizontal,
                                                   _atom_wm_state_maximized_vertical);
                         
@@ -687,11 +689,10 @@ namespace OpenTK.Platform.X11
                         
                     case WindowState.Fullscreen:
                         _previous_window_border = this.WindowBorder;
-                            this.WindowBorder = WindowBorder.Hidden;
+                        this.WindowBorder = WindowBorder.Hidden;
                         
-     					Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_enable,
-		                                          _atom_wm_state_fullscreen,
-                                                  IntPtr.Zero);
+     					Functions.SendNetWMMessage(window, _atom_wm_state, _atom_state_add,
+		                                          _atom_wm_state_fullscreen, IntPtr.Zero);
                         
                         break;
                 }
