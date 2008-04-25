@@ -66,6 +66,9 @@ namespace OpenTK.Platform.X11
         // Fields used for fullscreen mode changes.
         int pre_fullscreen_width, pre_fullscreen_height;
         bool fullscreen = false;
+        
+        OpenTK.WindowState _window_state;
+        OpenTK.WindowBorder _window_border;
 
         #endregion
 
@@ -569,11 +572,17 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                throw new NotImplementedException();
+                return _window_state;
             }
             set
             {
-                throw new NotImplementedException();
+                switch (value)
+                {
+                    case OpenTK.WindowState.Normal:
+                        
+                        
+                        break;
+                }
             }
         }
 
@@ -589,7 +598,7 @@ namespace OpenTK.Platform.X11
             }
             set
             {
-                throw new NotImplementedException();
+                //Functions.XChangeProperty(window.Display, window.WindowHandle, 
             }
         }
 
