@@ -795,6 +795,27 @@ namespace OpenTK.Graphics
         }
 
         #endregion
+        
+        #region public static void GetProgramInfoLog(Int32 program, out string info)
+        
+        public static void GetProgramInfoLog(Int32 program, out string info)
+        {
+            unsafe
+            {
+                int length;
+                GL.GetProgram(program, ProgramParameter.InfoLogLength, out length);
+                if (length == 0)
+                {
+                    info = "";
+                    return;
+                }
+                StringBuilder sb = new StringBuilder(length);
+                Delegates.glGetProgramInfoLog((UInt32)program, sb.Capacity, &length, sb);
+                info = sb.ToString();
+            }
+        }
+        
+        #endregion
 
         #region public static void PointParameter(PointSpriteCoordOriginParameter param)
 
@@ -810,6 +831,60 @@ namespace OpenTK.Graphics
             GL.PointParameter(PointParameterName.PointSpriteCoordOrigin, (int)param);
         }
 
+        #endregion
+        
+        #region public static void VertexAttrib2(Int32 index, ref Vector2 v)
+        
+        public static void VertexAttrib2(Int32 index, ref Vector2 v)
+        {
+            GL.VertexAttrib2(index, v.X, v.Y);
+        }
+        
+        #endregion
+        
+        #region public static void VertexAttrib3(Int32 index, ref Vector3 v)
+
+        public static void VertexAttrib3(Int32 index, ref Vector3 v)
+        {
+            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+        }
+        
+        #endregion
+        
+        #region public static void VertexAttrib4(Int32 index, ref Vector4 v)
+
+        public static void VertexAttrib4(Int32 index, ref Vector4 v)
+        {
+            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+        }
+        
+        #endregion
+
+        #region public static void MultiTexCoord2(TextureUnit target, ref Vector2 v)        
+        
+        public static void MultiTexCoord2(TextureUnit target, ref Vector2 v)
+        {
+            GL.MultiTexCoord2(target, v.X, v.Y);
+        }
+        
+        #endregion
+                
+        #region public static void MultiTexCoord3(TextureUnit target, ref Vector3 v)
+
+        public static void MultiTexCoord3(TextureUnit target, ref Vector3 v)
+        {
+            GL.MultiTexCoord3(target, v.X, v.Y, v.Z);
+        }
+        
+        #endregion
+
+        #region public static void MultiTexCoord4(TextureUnit target, ref Vector4 v)
+        
+        public static void MultiTexCoord4(TextureUnit target, ref Vector4 v)
+        {
+            GL.MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
+        }
+        
         #endregion
 
         #endregion
