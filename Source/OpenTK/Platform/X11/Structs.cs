@@ -1073,63 +1073,6 @@ namespace OpenTK.Platform.X11
         NotifyDetailNone = 7
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct MotifWmHints
-    {
-        public IntPtr flags;
-        public IntPtr functions;
-        public IntPtr decorations;
-        public IntPtr input_mode;
-        public IntPtr status;
-
-        public override string ToString()
-        {
-            return string.Format("MotifWmHints <flags={0}, functions={1}, decorations={2}, input_mode={3}, status={4}", (MotifFlags)flags.ToInt32(), (MotifFunctions)functions.ToInt32(), (MotifDecorations)decorations.ToInt32(), (MotifInputMode)input_mode.ToInt32(), status.ToInt32());
-        }
-    }
-
-    [Flags]
-    public enum MotifFlags
-    {
-        Functions = 1,
-        Decorations = 2,
-        InputMode = 4,
-        Status = 8
-    }
-
-    [Flags]
-    public enum MotifFunctions
-    {
-        All = 0x01,
-        Resize = 0x02,
-        Move = 0x04,
-        Minimize = 0x08,
-        Maximize = 0x10,
-        Close = 0x20
-    }
-
-    [Flags]
-    public enum MotifDecorations
-    {
-        All = 0x01,
-        Border = 0x02,
-        ResizeH = 0x04,
-        Title = 0x08,
-        Menu = 0x10,
-        Minimize = 0x20,
-        Maximize = 0x40,
-
-    }
-
-    [Flags]
-    public enum MotifInputMode
-    {
-        Modeless = 0,
-        ApplicationModal = 1,
-        SystemModal = 2,
-        FullApplicationModal = 3
-    }
-
     [Flags]
     public enum KeyMasks
     {
