@@ -8,10 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Drawing;
+using System.Threading;
 
 using OpenTK;
 using OpenTK.Graphics;
-using System.Drawing;
+using OpenTK.Input;
 
 namespace Examples.Tests
 {
@@ -20,6 +22,49 @@ namespace Examples.Tests
     {
         TextureFont font = new TextureFont(new Font(FontFamily.GenericSansSerif, 16.0f));
         TextPrinter printer = new TextPrinter();
+        
+        WindowState[] window_state_sequence = new WindowState[]
+        {
+            WindowState.Normal,
+            WindowState.Maximized,
+            WindowState.Fullscreen,
+            WindowState.Minimized
+        };
+
+        WindowBorder[] window_border_sequence = new WindowBorder[]
+        {
+            WindowBorder.Resizable,
+            WindowBorder.Fixed,
+            WindowBorder.Hidden,
+        };
+        
+        int window_state_counter = 0;
+        int WindowStateCounter
+        {
+            get { return window_state_counter; }
+            set
+            {
+                if (value < 0)
+                    window_state_counter = window_state_sequence.Length - 1;
+                else
+                    window_state_counter = ++window_state_counter % window_state_sequence.Length;
+            }
+        }
+        
+        int window_border_counter = 0;
+        int WindowBorderCounter
+        {
+            get { return window_border_counter; }
+            set
+            {
+                if (value < 0)
+                    window_border_counter = window_border_sequence.Length - 1;
+                else
+                    window_border_counter = ++window_border_counter % window_border_sequence.Length;
+            }
+        }
+        
+
 
         public GameWindowStates()
             : base(800, 600)
@@ -31,7 +76,7 @@ namespace Examples.Tests
             GL.ClearColor(System.Drawing.Color.SteelBlue);
         }
 
-        void Keyboard_KeyUp(OpenTK.Input.KeyboardDevice sender, OpenTK.Input.Key key)
+        void Keyboard_KeyUp(KeyboardDevice sender, Key key)
         {
             switch (key)
             {
@@ -40,28 +85,39 @@ namespace Examples.Tests
                     break;
 
                 case OpenTK.Input.Key.Number1:
-                    switch (this.WindowState)
-                    {
-                        case WindowState.Normal: this.WindowState = WindowState.Maximized; break;
-                        case WindowState.Maximized: this.WindowState = WindowState.Fullscreen; break;
-                        case WindowState.Fullscreen:
-                            this.WindowState = WindowState.Normal;
-                            this.WindowState = WindowState.Minimized;
-                            break;
-                        case WindowState.Minimized: this.WindowState = WindowState.Normal;
-                            break;
-
-                    }
+                    if (sender[Key.ShiftLeft] || sender[Key.ShiftRight])
+                        WindowStateCounter--;
+                    else
+                        WindowStateCounter++;
+                    WindowState = window_state_sequence[WindowStateCounter];
+                    
+//                    switch (this.WindowState)
+//                    {
+//                        case WindowState.Normal: this.WindowState = WindowState.Maximized; break;1
+//                        case WindowState.Maximized: this.WindowState = WindowState.Fullscreen; break;
+//                        case WindowState.Fullscreen:
+//                            this.WindowState = WindowState.Normal;
+//                            this.WindowState = WindowState.Minimized;
+//                            break;
+//                        case WindowState.Minimized: this.WindowState = WindowState.Normal;
+//                            break;
+//
+//                    }
                     break;
 
                 case OpenTK.Input.Key.Number2:
-                    this.WindowState = WindowState.Normal;
-                    switch (this.WindowBorder)
-                    {
-                        case WindowBorder.Fixed: this.WindowBorder = WindowBorder.Hidden; break;
-                        case WindowBorder.Hidden: this.WindowBorder = WindowBorder.Resizable; break;
-                        case WindowBorder.Resizable: this.WindowBorder = WindowBorder.Fixed; break;
-                    }
+                    if (sender[Key.ShiftLeft] || sender[Key.ShiftRight])
+                        WindowBorderCounter--;
+                    else
+                        WindowBorderCounter++;
+                    WindowBorder = window_border_sequence[WindowBorderCounter];
+//                    this.WindowState = WindowState.Normal;
+//                    switch (this.WindowBorder)
+//                    {
+//                        case WindowBorder.Fixed: this.WindowBorder = WindowBorder.Hidden; break;
+//                        case WindowBorder.Hidden: this.WindowBorder = WindowBorder.Resizable; break;
+//                        case WindowBorder.Resizable: this.WindowBorder = WindowBorder.Fixed; break;
+//                    }
 
                     break;
                     
@@ -98,6 +154,7 @@ namespace Examples.Tests
             printer.End();
 
             SwapBuffers();
+            Thread.Sleep(5);
         }
 
         public static void Main()
