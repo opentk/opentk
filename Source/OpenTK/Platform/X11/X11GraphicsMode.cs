@@ -84,7 +84,7 @@ namespace OpenTK.Platform.X11
 
             try
             {
-                Functions.XLockDisplay(display);
+                //Functions.XLockDisplay(display);
 
                 int screen = Functions.XDefaultScreen(display);
                 IntPtr root = Functions.XRootWindow(display, screen);
@@ -122,7 +122,7 @@ namespace OpenTK.Platform.X11
             }
             finally
             {
-                Functions.XUnlockDisplay(display);
+                //Functions.XUnlockDisplay(display);
             }
 
             // Prepare Windows.Forms for creating OpenGL drawables.
