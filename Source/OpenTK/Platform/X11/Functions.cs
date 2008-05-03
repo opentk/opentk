@@ -418,6 +418,14 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11")]
         public static extern void XUnlockDisplay(Display display);
+
+        [DllImport("libX11")]
+        public static extern Status XGetTransientForHint(Display display, Window w, out Window prop_window_return);
+
+        [DllImport("libX11")]
+        public static extern void XSync(Display display, bool discard);
+
+
         
         public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)
 		{

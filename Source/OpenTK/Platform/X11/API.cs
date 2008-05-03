@@ -288,7 +288,7 @@ namespace OpenTK.Platform.X11
         /// <para>The X server arbitrarily chooses the keysyms_per_keycode_return value to be large enough to report all requested symbols. A special KeySym value of NoSymbol is used to fill in unused elements for individual KeyCodes. To free the storage returned by XGetKeyboardMapping(), use XFree(). </para>
         /// <para>XGetKeyboardMapping() can generate a BadValue error.</para>
         /// <para>Diagnostics:</para>
-        /// <para>BadValue:	Some numeric value falls outside the range of values accepted by the request. Unless a specific range is specified for an argument, the full range defined by the argument's type is accepted. Any argument defined as a set of alternatives can generate this error.</para>
+        /// <para>BadValue:    Some numeric value falls outside the range of values accepted by the request. Unless a specific range is specified for an argument, the full range defined by the argument's type is accepted. Any argument defined as a set of alternatives can generate this error.</para>
         /// </remarks>
         [DllImport(_dll_name, EntryPoint = "XGetKeyboardMapping")]
         public static extern KeySym GetKeyboardMapping(Display display, KeyCode first_keycode, int keycode_count,
@@ -718,23 +718,23 @@ XF86VidModeGetGammaRampSize(
 
     unsafe internal struct Screen
     {
-	    XExtData ext_data;	/* hook for extension to hang buffer */
-	    IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
-	    Window root;		/* Root window id. */
-	    int width, height;	/* width and height of screen */
-	    int mwidth, mheight;	/* width and height of  in millimeters */
-	    int ndepths;		/* number of depths possible */
-	    //Depth *depths;		/* list of allowable depths on the screen */
-	    int root_depth;		/* bits per pixel */
-        //Visual* root_visual;	/* root visual */
-	    IntPtr default_gc;		/* GC for the root root visual */   // GC
-	    Colormap cmap;		/* default color map */
-	    UIntPtr white_pixel;    // unsigned long
-	    UIntPtr black_pixel;	/* White and Black pixel values */  // unsigned long
-	    int max_maps, min_maps;	/* max and min color maps */
-	    int backing_store;	/* Never, WhenMapped, Always */
-	    Bool save_unders;	
-	    long root_input_mask;	/* initial root input mask */
+        XExtData ext_data;    /* hook for extension to hang buffer */
+        IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
+        Window root;        /* Root window id. */
+        int width, height;    /* width and height of screen */
+        int mwidth, mheight;    /* width and height of  in millimeters */
+        int ndepths;        /* number of depths possible */
+        //Depth *depths;        /* list of allowable depths on the screen */
+        int root_depth;        /* bits per pixel */
+        //Visual* root_visual;    /* root visual */
+        IntPtr default_gc;        /* GC for the root root visual */   // GC
+        Colormap cmap;        /* default color map */
+        UIntPtr white_pixel;    // unsigned long
+        UIntPtr black_pixel;    /* White and Black pixel values */  // unsigned long
+        int max_maps, min_maps;    /* max and min color maps */
+        int backing_store;    /* Never, WhenMapped, Always */
+        Bool save_unders;    
+        long root_input_mask;    /* initial root input mask */
     }
 
     #pragma warning restore 0169
@@ -743,19 +743,78 @@ XF86VidModeGetGammaRampSize(
 
     #region unsafe internal class XExtData
 
-#pragma warning disable 0169
-
     unsafe internal class XExtData
     {
-	    int number;		/* number returned by XRegisterExtension */
-	    XExtData next;	/* next item on list of buffer for structure */
-	    delegate int FreePrivateDelegate(XExtData extension);
+        int number;        /* number returned by XRegisterExtension */
+        XExtData next;    /* next item on list of buffer for structure */
+        delegate int FreePrivateDelegate(XExtData extension);
         FreePrivateDelegate FreePrivate;    /* called to free private storage */
-        XPointer private_data;	/* buffer private to this extension. */
+        XPointer private_data;    /* buffer private to this extension. */
     };
 
-    #pragma warning restore 0169
+    #pragma warning restore 0169, 0649
 
+    #endregion
+    
+    #region Motif    
+    
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct MotifWmHints
+    {
+        internal IntPtr flags;
+        internal IntPtr    functions;
+        internal IntPtr    decorations;
+        internal IntPtr    input_mode;
+        internal IntPtr    status;
+
+        public override string ToString ()
+        {
+            return string.Format("MotifWmHints <flags={0}, functions={1}, decorations={2}, input_mode={3}, status={4}", (MotifFlags) flags.ToInt32 (), (MotifFunctions) functions.ToInt32 (), (MotifDecorations) decorations.ToInt32 (), (MotifInputMode) input_mode.ToInt32 (), status.ToInt32 ());
+        }
+    }
+    
+        [Flags]
+    internal enum MotifFlags
+    {
+        Functions    = 1,
+        Decorations  = 2,
+        InputMode    = 4,
+        Status       = 8
+    }
+
+    [Flags]
+    internal enum MotifFunctions
+    {
+        All         = 0x01,
+        Resize      = 0x02,
+        Move        = 0x04,
+        Minimize    = 0x08,
+        Maximize    = 0x10,
+        Close       = 0x20
+    }
+
+    [Flags]
+    internal enum MotifDecorations
+    {
+        All         = 0x01,
+        Border      = 0x02,
+        ResizeH     = 0x04,
+        Title       = 0x08,
+        Menu        = 0x10,
+        Minimize    = 0x20,
+        Maximize    = 0x40,
+        
+    }
+
+    [Flags]
+    internal enum MotifInputMode
+    {
+        Modeless                = 0,
+        ApplicationModal        = 1,
+        SystemModal             = 2,
+        FullApplicationModal    = 3
+    }
+    
     #endregion
 
     #endregion
@@ -768,7 +827,7 @@ XF86VidModeGetGammaRampSize(
         public const int QueuedAfterReading = 1;
         public const int QueuedAfterFlush = 2;
 
-        public const int CopyFromParent	= 0;
+        public const int CopyFromParent = 0;
         public const int CWX = 1;
         public const int InputOutput = 1;
         public const int InputOnly = 2;
@@ -850,28 +909,28 @@ XF86VidModeGetGammaRampSize(
     [Flags]
     public enum CreateWindowMask : long//: ulong
     {
-        CWBackPixmap	= (1L<<0),
+        CWBackPixmap    = (1L<<0),
         CWBackPixel     = (1L<<1),
-        CWSaveUnder	    = (1L<<10),
-        CWEventMask	    = (1L<<11),
-        CWDontPropagate	= (1L<<12),
-        CWColormap  	= (1L<<13),
-        CWCursor	    = (1L<<14),
-        CWBorderPixmap	= (1L<<2),
-        CWBorderPixel	= (1L<<3),
-        CWBitGravity	= (1L<<4),
-        CWWinGravity	= (1L<<5),
-        CWBackingStore	= (1L<<6),
-        CWBackingPlanes	= (1L<<7),
-        CWBackingPixel 	= (1L<<8),
-        CWOverrideRedirect	= (1L<<9),
+        CWSaveUnder        = (1L<<10),
+        CWEventMask        = (1L<<11),
+        CWDontPropagate    = (1L<<12),
+        CWColormap      = (1L<<13),
+        CWCursor        = (1L<<14),
+        CWBorderPixmap    = (1L<<2),
+        CWBorderPixel    = (1L<<3),
+        CWBitGravity    = (1L<<4),
+        CWWinGravity    = (1L<<5),
+        CWBackingStore    = (1L<<6),
+        CWBackingPlanes    = (1L<<7),
+        CWBackingPixel     = (1L<<8),
+        CWOverrideRedirect    = (1L<<9),
 
-        //CWY	= (1<<1),
-        //CWWidth	= (1<<2),
-        //CWHeight	= (1<<3),
-        //CWBorderWidth	= (1<<4),
-        //CWSibling	= (1<<5),
-        //CWStackMode	= (1<<6),
+        //CWY    = (1<<1),
+        //CWWidth    = (1<<2),
+        //CWHeight    = (1<<3),
+        //CWBorderWidth    = (1<<4),
+        //CWSibling    = (1<<5),
+        //CWStackMode    = (1<<6),
     }
 
     #region XKey
@@ -1299,7 +1358,7 @@ XF86VidModeGetGammaRampSize(
         [DllImport(X11Library)]
         internal static extern void XChangeWindowAttributes(Display display, Window w, UIntPtr valuemask, ref XSetWindowAttributes attributes);
 
-        internal static void XChangeWindowAttributes(Display display, Window w, ChangeWindowAttributes valuemask, ref XSetWindowAttributes attributes)
+        internal static void XChangeWindowAttributes(Display display, Window w, SetWindowValuemask valuemask, ref XSetWindowAttributes attributes)
         {
             XChangeWindowAttributes(display, w, (UIntPtr)valuemask, ref attributes);
         }
