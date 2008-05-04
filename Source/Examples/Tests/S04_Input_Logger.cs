@@ -138,7 +138,7 @@ namespace Examples.Tests
                 //System.Drawing.Point p = control.PointToClient(input_window.Mouse.Position);
                 //control.MouseXWindow.Text = p.X.ToString();
                 //control.MouseYWindow.Text = p.Y.ToString();
-                //MouseWheelDelta.Text = driver.Mouse[ChooseMouse.SelectedIndex].WheelDelta.ToString();
+                control.MouseWheelDelta.Text = input_window.Mouse.WheelDelta.ToString();
             };
 
         delegate void ControlLogKeyboard(GameWindow input_window, S04_Input_Logger control, OpenTK.Input.KeyboardDevice sender, Key key);
