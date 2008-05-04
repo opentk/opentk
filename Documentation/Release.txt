@@ -8,19 +8,18 @@ your own risk!
 0.9.1 contains updates to OpenAL (EFX/EAX extensions, AudioContext) and OpenGL
 (enums for FBOs and multiple GraphicsContexts). Resolution changes and fullscreen
 modes are now supported, and work has begun on a native Mac OS X port. Last, but
-not least, several OpenAL and a GLSL example have been added to the Example
+not least, new OpenAL and GLSL examples have been added to the Example
 launcher - don't forget to check these out!
 
 The full changelog lies below, in case you are interested, as well as the
 porting guidelines for your applications (there are several breaking changes,
 but all are thankfully simple to fix).
 
-This release marks the third development milestone (fullscreen support). Several
-parts are now considered to be in "beta" status, meaning no breaking changes
-will occur, unless they are needed to fix a serious bug.
+This release marks the third development milestone (fullscreen support). One
+missing feature, Joystick support, left for beta now.
 
 Don't forget to visit our homepage at http://www.opentk.com for the latest
-developments, and our #opentk irc channel at de.quakenet.org:6669.
+developments.
 
 Till next time!
  - Stephen A.
