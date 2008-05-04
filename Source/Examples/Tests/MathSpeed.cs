@@ -12,7 +12,7 @@ using OpenTK.Math;
 
 namespace Examples.Tests
 {
-    [Example("Math speed test", ExampleCategory.Test)]
+    [Example("Math speed test", ExampleCategory.Test, Visible = false)]
     public class MathSpeed
     {
         public static void Main()

@@ -108,7 +108,7 @@ namespace Examples
                     ////sb.Append(type.Name);
                     //sb.Append(example.Title);
 
-                    if (example.Visible && example.Category != ExampleCategory.Test)
+                    if (example.Visible)
                         listBox1.Items.Add(new ExampleInfo(type, example));
                     else
                     {
