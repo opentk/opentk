@@ -24,7 +24,7 @@ namespace Examples.Tutorial
     [Example("Simple Window", ExampleCategory.Tutorial, 1)]
     public class T01_Simple_Window : GameWindow
     {
-        public T01_Simple_Window() : base(640, 480, new GraphicsMode(16))
+        public T01_Simple_Window() : base(800, 600)
         {
             Keyboard.KeyDown += new OpenTK.Input.KeyDownEvent(Keyboard_KeyDown);
         }
