@@ -32,7 +32,8 @@ namespace OpenTK.Build
 
         static string PrebuildXml = Path.Combine(ToolPath, "Prebuild.xml");
 
-        static Regex DataFiles = new Regex(@"^.*\.(jpg|txt|glsl)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        static Regex DataFiles = new Regex(@"^.*\.(bmp|png|jpg|txt|glsl|wav|ogg)$",
+                                           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         enum BuildMode
         {
