@@ -190,8 +190,7 @@ namespace OpenTK.Platform.X11
                     break;
 
                 case XEventName.MotionNotify:
-                    mouse.X = e.MotionEvent.x;
-                    mouse.Y = e.MotionEvent.y;
+                    mouse.Position = new System.Drawing.Point(mouse.X, mouse.Y);
                     break;
             }
         }

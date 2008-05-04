@@ -155,10 +155,7 @@ namespace OpenTK.Platform.Windows
                 Debug.Print("Registered mouse {0}", mouse.ToString());
                 System.Drawing.Point p = new System.Drawing.Point();
                 if (Functions.GetCursorPos(ref p))
-                {
-                    mouse.X = p.X;
-                    mouse.Y = p.Y;
-                }
+                    mouse.Position = p;
             }
         }
 
@@ -200,13 +197,12 @@ namespace OpenTK.Platform.Windows
 
                     if ((rin.Data.Mouse.Flags & RawMouseFlags.MOUSE_MOVE_ABSOLUTE) != 0)
                     {
-                        mouse.X = rin.Data.Mouse.LastX;
-                        mouse.Y = rin.Data.Mouse.LastY;
+                        mouse.Position = new System.Drawing.Point(rin.Data.Mouse.LastX, rin.Data.Mouse.LastY);
                     }
                     else
                     {   // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
-                        mouse.X += rin.Data.Mouse.LastX;
-                        mouse.Y += rin.Data.Mouse.LastY;
+                        mouse.Position = new System.Drawing.Point(mouse.X + rin.Data.Mouse.LastX,
+                                                                  mouse.Y + rin.Data.Mouse.LastY);
                     }
 
                     if ((rin.Data.Mouse.Flags & RawMouseFlags.MOUSE_VIRTUAL_DESKTOP) != 0)
