@@ -42,7 +42,6 @@ OpenTK.Platform:
 
 
 OpenTK.Input todos:
-* Fix Mouse.Wheel and Mouse.WheelDelta.
 + Implement Joystick input.
 
 
@@ -51,5 +50,4 @@ Examples:
 
 
 OpenTK.Audio todos:
-+ CLSCompliant overloads for OpenAL.
-+ Wav/PCM and Ogg loaders.
++ Ogg loader.
