@@ -59,15 +59,24 @@ namespace OpenTK.Platform.Windows
 
         #region protected override void WndProc(ref Message msg)
 
+        bool mouse_about_to_enter = false;
         protected override void WndProc(ref Message msg)
         {
             switch ((WindowMessage)msg.Msg)
             {
                 // Mouse events:
+                case WindowMessage.NCMOUSEMOVE:
+                    mouse_about_to_enter = true;   // Used to simulate a mouse enter event.
+                    break;
+
                 case WindowMessage.MOUSEMOVE:
-                //case WindowMessage.NCMOUSEMOVE:
                     mouse.Position = new System.Drawing.Point(msg.LParam.ToInt32() & 0x0000FFFF, 
                                                         (int)(msg.LParam.ToInt32() & 0xFFFF0000) >> 16);
+                    if (mouse_about_to_enter)
+                    {
+                        Cursor.Current = Cursors.Default;
+                        mouse_about_to_enter = false;
+                    }
                     return;
 
                 case WindowMessage.MOUSEWHEEL:
