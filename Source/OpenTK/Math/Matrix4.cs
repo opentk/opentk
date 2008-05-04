@@ -358,16 +358,16 @@ namespace OpenTK.Math
 		/// <param name="near">Distance to the near clip plane</param>
 		/// <param name="far">Distance to the far clip plane</param>
 		/// <returns>A projection matrix that transforms camera space to raster space</returns>
-		public static Matrix4 Frustum(float left, float right, float bottom, float top, float near, float far)
-		{
-			float invRL = 1.0f / (right - left);
-			float invTB = 1.0f / (top - bottom);
-			float invFN = 1.0f / (far - near);
-			return new Matrix4(new Vector4(2.0f * near * invRL, 0.0f, (right + left) * invRL, 0.0f),
-								new Vector4(0.0f, 2.0f * near * invTB, (top + bottom) * invTB, 0.0f),
-								new Vector4(0.0f, 0.0f, -(far + near) * invFN, -1.0f),
-								new Vector4(0.0f, 0.0f, -2.0f * far * near * invFN, 0.0f));
-		}
+        public static Matrix4 Frustum(float left, float right, float bottom, float top, float near, float far)
+        {
+            float invRL = 1.0f / (right - left);
+            float invTB = 1.0f / (top - bottom);
+            float invFN = 1.0f / (far - near);
+            return new Matrix4(new Vector4(2.0f * near * invRL, 0.0f, 0.0f, 0.0f),
+                               new Vector4(0.0f, 2.0f * near * invTB, 0.0f, 0.0f),
+                               new Vector4((right + left) * invRL, (top + bottom) * invTB, -(far + near) * invFN, -1.0f),
+                               new Vector4(0.0f, 0.0f, -2.0f * far * near * invFN, 0.0f));
+        }
 
 		/// <summary>
 		/// Build a projection matrix
