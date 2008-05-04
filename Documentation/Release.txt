@@ -76,6 +76,7 @@ OpenTK.Audio.AudioContext and OpenTK.Audio.AudioReader instead.
  
  * Fix: Improved adaptive VSync behavior in low-fps situtations.
  * Fix: Mouse movement deltas are correctly reported now.
+ * Fix: Matrix4.Frustum was invalid for skewed matrices.
  * Fix (Windows): Mouse cursor no longer remains in an invalid state when
                   entering a GameWindow.
 
