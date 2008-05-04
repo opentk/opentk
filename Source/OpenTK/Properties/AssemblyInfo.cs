@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("OpenTK")]
-[assembly: AssemblyDescription("An open-source game development toolkit for .Net/Mono")]
+[assembly: AssemblyDescription("Open source game development toolkit for .Net/Mono.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OpenTK")]
+[assembly: AssemblyProduct("OpenTK Core Library")]
 [assembly: AssemblyCopyright("Copyright ©  2006-2008 the OpenTK team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
