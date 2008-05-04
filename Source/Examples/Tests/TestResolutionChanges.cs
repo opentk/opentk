@@ -26,8 +26,7 @@ namespace Examples.Tests
             {
                 Trace.WriteLine(dev.ToString());
                 MessageBox.Show(dev.ToString());
-                // Switch to 640x480@60Hz, keeping bits per pixel the same.
-                dev.ChangeResolution(dev.SelectResolution(640, 480, dev.BitsPerPixel, 60.0f));
+                dev.ChangeResolution(dev.SelectResolution(640, 480, 32, 60.0f));
                 Thread.Sleep(1000);
                 MessageBox.Show(dev.ToString());
                 dev.RestoreResolution();
