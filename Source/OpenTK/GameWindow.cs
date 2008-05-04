@@ -436,24 +436,6 @@ namespace OpenTK
 
 #endif
 
-
-        #region public void DestroyWindow()
-
-        /// <summary>
-        /// Destroys the GameWindow. The Destroy event is raised before destruction commences
-        /// (while the opengl context still exists), to allow resource cleanup.
-        /// </summary>
-        public void DestroyWindow()
-        {
-            if (disposed) throw new ObjectDisposedException("GameWindow");
-            if (Exists)
-                glWindow.DestroyWindow();
-            else
-                throw new ApplicationException("Tried to destroy non-existent window.");
-        }
-
-        #endregion
-
         #region void Run()
 
         /// <summary>
