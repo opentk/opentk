@@ -14,10 +14,11 @@ namespace Examples
     public class ExampleAttribute : System.Attribute
     {
         string title;
+        bool visible = true;
         public string Title { get { return title; } internal set { title = value; } }
         public readonly ExampleCategory Category;
         public readonly int Difficulty;
-        public readonly bool Visible = true;
+        public bool Visible { get { return visible; } set { visible = value; } }
 
         public ExampleAttribute(string title, ExampleCategory category)
             : this(title, category, 0, true) { }
