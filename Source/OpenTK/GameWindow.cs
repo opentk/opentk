@@ -387,7 +387,7 @@ namespace OpenTK
         #endregion
 
         #region public bool Visible
-
+#if false
         /// <summary>
         /// TODO: This property is not implemented
         /// Gets or sets a value indicating whether the GameWindow is visible.
@@ -405,7 +405,7 @@ namespace OpenTK
                 //glWindow.Visible = value;
             }
         }
-
+#endif
         #endregion
 
         #region public IWindowInfo WindowInfo
