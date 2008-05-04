@@ -27,6 +27,8 @@ namespace OpenTK.Input
 
         #region --- IInputDevice Members ---
 
+        #region public string Description
+
         /// <summary>
         /// Gets a string describing this MouseDevice.
         /// </summary>
@@ -36,6 +38,10 @@ namespace OpenTK.Input
             internal set { description = value; }
         }
 
+        #endregion
+
+        #region public InputDeviceType DeviceType
+
         /// <summary>
         /// Gets an value indicating the InputDeviceType of this InputDevice. 
         /// </summary>
@@ -43,6 +49,8 @@ namespace OpenTK.Input
         {
             get { return InputDeviceType.Mouse; }
         }
+
+        #endregion
 
         #endregion
 
@@ -116,7 +124,7 @@ namespace OpenTK.Input
             {
                 int result = wheel - wheel_last_accessed;
                 wheel_last_accessed = wheel;
-                return wheel;
+                return result;
             }
         }
 
