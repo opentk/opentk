@@ -156,7 +156,7 @@ namespace Examples.Tests
         void hidden_UpdateFrame(object sender, UpdateFrameEventArgs e)
         {
             this.BeginInvoke(ControlLogMousePositionChanges, hidden, this);
-            Thread.Sleep(0);
+            //Thread.Sleep(0);
         }
 
         void LogMouseMove(MouseDevice sender, EventArgs e)
@@ -176,9 +176,6 @@ namespace Examples.Tests
 
         void LogKeyDown(KeyboardDevice sender, Key key)
         {
-            if (key == Key.Escape)
-                this.BeginInvoke(new MethodInvoker(Close));
-
             this.BeginInvoke(ControlLogKeyboardDown, hidden, this, sender, key);
         }
 
@@ -202,7 +199,7 @@ namespace Examples.Tests
         {
             using (InputLogger example = new InputLogger())
             {
-                // Get the title and category  of this example using reflection.
+                // Get the title and category of this example using reflection.
                 ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
                 example.Text = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
                 example.ShowDialog();
