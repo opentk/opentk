@@ -7,16 +7,17 @@ your own risk!
            
 0.9.1 contains updates to OpenAL (EFX/EAX extensions, AudioContext) and OpenGL
 (enums for FBOs and multiple GraphicsContexts). Resolution changes and fullscreen
-modes are now supported, and work has begun on a native Mac OS X port. Last, but
-not least, new OpenAL and GLSL examples have been added to the Example
-launcher - don't forget to check these out!
+modes are now supported, and work has begun on a native Mac OS X port. Many long-
+standing bugs have been fixed, and last, but not least, new OpenAL and GLSL
+examples have been added to the Example launcher - don't forget to check these
+out!
 
-The full changelog lies below, in case you are interested, as well as the
-porting guidelines for your applications (there are several breaking changes,
-but all are thankfully simple to fix).
+See below for the full changelog, in case you are interested, as well as the
+porting guidelines below (there are several breaking changes, but all are
+thankfully simple to fix).
 
 This release marks the third development milestone (fullscreen support). One
-missing feature, Joystick support, left for beta now.
+missing feature, Joystick support, left to enter beta state.
 
 Don't forget to visit our homepage at http://www.opentk.com for the latest
 developments.
@@ -36,7 +37,7 @@ To facilitate future development (e.g. OpenGL 3 support), some namespaces and
 class names have been altered. Please, run the following project-wide search and
 replace operations:
 1. "GLContext"     -> "GraphicsContext"
-2. "OpenTK.OpenGL" -> "OpenTK.Graphics.OpenGL"
+2. "OpenTK.OpenGL" -> "OpenTK.Graphics"
 3. "OpenTK.OpenAL" -> "OpenTK.Audio"
 4. "GL.ReadPixel"  -> "GL.ReadPixels"
 
@@ -48,7 +49,8 @@ change to fix the warning).
 The "ColorMode" class has been moved to "OpenTK.Graphics.ColorDepth"; please,
 replace references with the latter.
 
-Alc and Alut are no longer public. Please use OpenTK.Audio.AudioContext instead.
+Alc and Alut will be removed in future versions. Please use
+OpenTK.Audio.AudioContext and OpenTK.Audio.AudioReader instead.
 
 ---------------------------------------------------------------------------------
 
@@ -57,21 +59,31 @@ Alc and Alut are no longer public. Please use OpenTK.Audio.AudioContext instead.
 #################################################################################
 
  * Feature: EFX/EAX/XRAM OpenAL extensions.
- * Feature: AudioContext class.
+ * Feature: AudioContext class to create and use OpenAL contexts.
+ * Feature: AudioReader class to load audio resources. Wav/PCM formats are
+            supported, while Ogg support will be added in the future.
  * Feature: Enumerate and change resolutions through DisplayDevice and
             DisplayResolution.
- * Feature: Fullscreen support.
+ * Feature: GameWindow Fullscreen support.
+ * Feature: GameWindow borders can be made fixed or hidden.
  * Feature: VSync support under Linux.
- * Feature: Improved mode selection.
+ * Feature: Improved mode selection for OpenGL contexts.
  * Feature: Improved handling of multiple GraphicsContexts and resource sharing.
  * Feature: Improved Frame Buffer Objects (FBO) API.
+ * Feature: New GLSL example (Julia Set).
+ * Feature: New OpenAL example (Playback).
+ * Feature: New Tests (Input Logger, GameWindow States, Resolutions).
  
  * Fix: Improved adaptive VSync behavior in low-fps situtations.
- 
- * Known issue (Linux): Texture loading through System.Drawing.Bitmap may not
-                         work correctly on some Mono versions. Mono 1.2.6 and
-                         higher work correctly.
- * Known issue (Linux): 32-bit modes are not supported on Mesa3d 6.5.x. Please
-                        update Mesa3d 7.0.x or request a 24-bit depth.
- * Known issue (All): Many font layout options are not implemented.
- * Known issue (All): Some commandline arguments in "Bind" do not work.
+ * Fix: Mouse movement deltas are correctly reported now.
+ * Fix (Windows): Mouse cursor no longer remains in an invalid state when
+                  entering a GameWindow.
+
+ * Known issue: Many font layout options are not implemented.
+ * Known issue: Some commandline arguments in "Bind" do not work.
+ * Known issue: Audio may crack or even crash when using the obsolete Sample
+                Implementation. Upgrade to OpenAL Soft to fix this issue.
+ * Known issue: Fonts are not snapped to the pixel grid and may look blurry.
+ * Known issue (Linux): OpenTK may segfault while loading, on some Xorg/video
+                        driver combinations. This is known to occur on fglrx
+                        7.10-8.4.
