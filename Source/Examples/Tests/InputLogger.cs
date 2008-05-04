@@ -42,14 +42,14 @@ namespace Examples.Tests
             hidden.Load += hidden_Load;
             hidden.Unload += hidden_Unload;
             hidden.RenderFrame += new OpenTK.RenderFrameEvent(hidden_RenderFrame);
-            hidden.Run(31.0, 10.0);
+            hidden.Run(60.0, 10.0);
         }
 
         void hidden_RenderFrame(GameWindow sender, RenderFrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
             sender.SwapBuffers();
-            Thread.Sleep(10);
+            //Thread.Sleep(1);
         }
 
         void hidden_Load(GameWindow sender, EventArgs e)
@@ -82,13 +82,13 @@ namespace Examples.Tests
 
             // Add available mice to the mouse input logger.
             ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", 0, hidden.Mouse.Description));
+            //hidden.Mouse.Move += LogMouseMove;
             hidden.Mouse.ButtonDown += LogMouseButtonDown;
             hidden.Mouse.ButtonUp += LogMouseButtonUp;
 
             hidden.Keyboard.KeyDown += LogKeyDown;
             hidden.Keyboard.KeyUp += LogKeyUp;
 
-            //Application.Idle += new EventHandler(UpdateDevices);
             hidden.UpdateFrame += hidden_UpdateFrame;
         }
 
@@ -156,6 +156,12 @@ namespace Examples.Tests
         void hidden_UpdateFrame(object sender, UpdateFrameEventArgs e)
         {
             this.BeginInvoke(ControlLogMousePositionChanges, hidden, this);
+            Thread.Sleep(0);
+        }
+
+        void LogMouseMove(MouseDevice sender, EventArgs e)
+        {
+            //this.BeginInvoke(ControlLogMousePositionChanges, hidden, this);
         }
 
         void LogMouseButtonDown(MouseDevice sender, MouseButton button)
@@ -170,6 +176,9 @@ namespace Examples.Tests
 
         void LogKeyDown(KeyboardDevice sender, Key key)
         {
+            if (key == Key.Escape)
+                this.BeginInvoke(new MethodInvoker(Close));
+
             this.BeginInvoke(ControlLogKeyboardDown, hidden, this, sender, key);
         }
 

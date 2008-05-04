@@ -106,8 +106,8 @@ namespace OpenTK.Input
             internal set
             {
                 wheel = value;
-                if (Move != null)
-                    Move(this, EventArgs.Empty);
+                //if (Move != null)
+                //    Move(this, EventArgs.Empty);
             }
         }
 
@@ -198,17 +198,17 @@ namespace OpenTK.Input
             set
             {
                 pos = value;
-                if (Move != null)
-                    Move(this, EventArgs.Empty);
+                //if (Move != null)
+                //    Move(this, EventArgs.Empty);
             }
         }
 
         #endregion
 
-        /// <summary>
+        ///// <summary>
         /// Occurs when the mouse, or one of its wheels, is moved.
         /// </summary>
-        public event MouseMoveEvent Move;
+        //public event MouseMoveEvent Move;
 
         /// <summary>
         /// Occurs when a button is pressed.
