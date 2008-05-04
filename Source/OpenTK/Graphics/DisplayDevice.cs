@@ -189,10 +189,12 @@ namespace OpenTK.Graphics
         /// <summary>Changes the resolution of the DisplayDevice.</summary>
         /// <param name="resolution">The resolution to set. <see cref="DisplayDevice.SelectResolution"/></param>
         /// <exception cref="GraphicsModeException">Thrown if the requested resolution could not be set.</exception>
+        /// <remarks>If the specified resolution is null, this function will restore the original DisplayResolution.</remarks>
         public void ChangeResolution(DisplayResolution resolution)
         {
             if (resolution == null)
-                throw new ArgumentNullException("resolution", "Must be a valid resolution.");
+                this.RestoreResolution();
+
             if (resolution == current_resolution)
                 return;
 
