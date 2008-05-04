@@ -23,49 +23,43 @@ namespace Examples.Tests
         TextureFont font = new TextureFont(new Font(FontFamily.GenericSansSerif, 16.0f));
         TextPrinter printer = new TextPrinter();
         
-        WindowState[] window_state_sequence = new WindowState[]
-        {
-            WindowState.Normal,
-            WindowState.Maximized,
-            WindowState.Fullscreen,
-            WindowState.Minimized
-        };
-
-        WindowBorder[] window_border_sequence = new WindowBorder[]
-        {
-            WindowBorder.Resizable,
-            WindowBorder.Fixed,
-            WindowBorder.Hidden,
-        };
+        #region GetNext and GetPrevious methods for enums.         
         
-        int window_state_counter = 0;
-        int WindowStateCounter
+        T GetNext<T>(T t)
         {
-            get { return window_state_counter; }
-            set
-            {
-                if (value < 0)
-                    window_state_counter = window_state_sequence.Length - 1;
-                else
-                    window_state_counter = ++window_state_counter % window_state_sequence.Length;
-            }
+            if (!(t is Enum))
+                throw new ArgumentException(String.Format("Should be an Enum type (is {0}).", t.GetType().ToString()),
+                                            "t");
+            
+            string[] names = Enum.GetNames(t.GetType());
+            T[] values = (T[])Enum.GetValues(t.GetType());
+   
+            int current_index = Array.IndexOf(names, t.ToString());
+            if (current_index >= values.Length - 1)
+                return values[0];
+            else
+                return values[current_index + 1];
+
         }
         
-        int window_border_counter = 0;
-        int WindowBorderCounter
+        T GetPrevious<T>(T t)
         {
-            get { return window_border_counter; }
-            set
-            {
-                if (value < 0)
-                    window_border_counter = window_border_sequence.Length - 1;
-                else
-                    window_border_counter = ++window_border_counter % window_border_sequence.Length;
-            }
+            if (!(t is Enum))
+                throw new ArgumentException(String.Format("Should be an Enum type (is {0}).", t.GetType().ToString()),
+                                            "t");
+                     
+            string[] names = Enum.GetNames(t.GetType());
+            T[] values = (T[])Enum.GetValues(t.GetType());
+
+            int current_index = Array.IndexOf(names, t.ToString());
+            if (current_index <= 0)
+                return values[values.Length - 1];
+            else
+                return values[current_index - 1];
         }
         
-
-
+        #endregion
+        
         public GameWindowStates()
             : base(800, 600)
         {
@@ -85,43 +79,25 @@ namespace Examples.Tests
                     break;
 
                 case OpenTK.Input.Key.Number1:
-                    if (sender[Key.ShiftLeft] || sender[Key.ShiftRight])
-                        WindowStateCounter--;
-                    else
-                        WindowStateCounter++;
-                    WindowState = window_state_sequence[WindowStateCounter];
                     
-//                    switch (this.WindowState)
-//                    {
-//                        case WindowState.Normal: this.WindowState = WindowState.Maximized; break;1
-//                        case WindowState.Maximized: this.WindowState = WindowState.Fullscreen; break;
-//                        case WindowState.Fullscreen:
-//                            this.WindowState = WindowState.Normal;
-//                            this.WindowState = WindowState.Minimized;
-//                            break;
-//                        case WindowState.Minimized: this.WindowState = WindowState.Normal;
-//                            break;
-//
-//                    }
+                    if (sender[Key.ShiftLeft] || sender[Key.ShiftRight])
+                        WindowState = GetPrevious(WindowState);
+                    else
+                        WindowState = GetNext(WindowState);
+                    
                     break;
 
                 case OpenTK.Input.Key.Number2:
+                    
                     if (sender[Key.ShiftLeft] || sender[Key.ShiftRight])
-                        WindowBorderCounter--;
+                        WindowBorder = GetPrevious(WindowBorder);
                     else
-                        WindowBorderCounter++;
-                    WindowBorder = window_border_sequence[WindowBorderCounter];
-//                    this.WindowState = WindowState.Normal;
-//                    switch (this.WindowBorder)
-//                    {
-//                        case WindowBorder.Fixed: this.WindowBorder = WindowBorder.Hidden; break;
-//                        case WindowBorder.Hidden: this.WindowBorder = WindowBorder.Resizable; break;
-//                        case WindowBorder.Resizable: this.WindowBorder = WindowBorder.Fixed; break;
-//                    }
+                        WindowBorder = GetNext(WindowBorder);
 
                     break;
                     
                 case OpenTK.Input.Key.Number3:
+                    
                     if (this.WindowState == WindowState.Fullscreen)
                         this.WindowState = WindowState.Normal;
                     else
