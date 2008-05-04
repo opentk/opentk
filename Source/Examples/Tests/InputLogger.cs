@@ -82,6 +82,8 @@ namespace Examples.Tests
 
             // Add available mice to the mouse input logger.
             ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", 0, hidden.Mouse.Description));
+            ChooseMouse.SelectedIndex = 0;
+
             //hidden.Mouse.Move += LogMouseMove;
             hidden.Mouse.ButtonDown += LogMouseButtonDown;
             hidden.Mouse.ButtonUp += LogMouseButtonUp;

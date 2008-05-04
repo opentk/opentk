@@ -359,14 +359,14 @@
             // 
             this.PollTimer.Interval = 10;
             // 
-            // S04_Input_Logger
+            // InputLogger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(432, 378);
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "S04_Input_Logger";
+            this.Name = "InputLogger";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "S04: Input Logger";
             this.tabControl.ResumeLayout(false);
