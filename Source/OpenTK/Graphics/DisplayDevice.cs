@@ -144,19 +144,23 @@ namespace OpenTK.Graphics
         /// <param name="refreshRate">The refresh rate of the requested resolution in Herz.</param>
         /// <returns>The requested DisplayResolution or null if the parameters cannot be met.</returns>
         /// <remarks>
-        /// <para>A parameter set to 0 will not be used in the search (e.g. if refreshRate is 0, any refresh rate will be considered valid).</para>
-        /// <para>This function generates garbage.</para>
+        /// <para>If a matching resolution is not found, this function will retry ignoring the specified refresh rate,
+        /// bits per pixel and resolution, in this order. If a matching resolution still doesn't exist, this function will
+        /// return the current resolution.</para>
+        /// <para>A parameter set to 0 or negative numbers will not be used in the search (e.g. if refreshRate is 0,
+        /// any refresh rate will be considered valid).</para>
+        /// <para>This function allocates memory.</para>
         /// </remarks>
         public DisplayResolution SelectResolution(int width, int height, int bitsPerPixel, float refreshRate)
         {
-            return available_resolutions.Find(delegate(DisplayResolution test)
-            {
-                return
-                    ((width > 0 && width == test.Width) || width == 0) &&
-                    ((height > 0 && height == test.Height) || height == 0) &&
-                    ((bitsPerPixel > 0 && bitsPerPixel == test.BitsPerPixel) || bitsPerPixel == 0) &&
-                    ((refreshRate > 0 && System.Math.Abs(refreshRate - test.RefreshRate) < 1.0) || refreshRate == 0);
-            });
+            DisplayResolution resolution = FindResolution(width, height, bitsPerPixel, refreshRate);
+            if (resolution == null)
+                resolution = FindResolution(width, height, bitsPerPixel, 0);
+            if (resolution == null)
+                resolution = FindResolution(width, height, 0, 0);
+            if (resolution == null)
+                return current_resolution;
+            return resolution;
         }
 
         #endregion
@@ -208,7 +212,7 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region public void ChangeResolution(DisplayResolution resolution)
+        #region public void ChangeResolution(int width, int height, int bitsPerPixel, float refreshRate)
 
         /// <summary>Changes the resolution of the DisplayDevice.</summary>
         /// <param name="width">The new width of the DisplayDevice.</param>
@@ -268,6 +272,26 @@ namespace OpenTK.Graphics
 
         /// <summary>Gets the default (primary) display of this system.</summary>
         public static DisplayDevice Default { get { return primary_display; } }
+
+        #endregion
+
+        #endregion
+
+        #region --- Private Methods ---
+
+        #region DisplayResolution FindResolution(int width, int height, int bitsPerPixel, float refreshRate)
+
+        DisplayResolution FindResolution(int width, int height, int bitsPerPixel, float refreshRate)
+        {
+            return available_resolutions.Find(delegate(DisplayResolution test)
+            {
+                return
+                    ((width > 0 && width == test.Width) || width == 0) &&
+                    ((height > 0 && height == test.Height) || height == 0) &&
+                    ((bitsPerPixel > 0 && bitsPerPixel == test.BitsPerPixel) || bitsPerPixel == 0) &&
+                    ((refreshRate > 0 && System.Math.Abs(refreshRate - test.RefreshRate) < 1.0) || refreshRate == 0);
+            });
+        }
 
         #endregion
 
