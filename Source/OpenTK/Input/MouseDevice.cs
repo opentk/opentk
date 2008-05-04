@@ -20,8 +20,9 @@ namespace OpenTK.Input
         private int numButtons, numWheels;
         private IntPtr id;
         private bool[] button = new bool[(int)MouseButton.LastButton];
-        private int wheel, last_wheel;
+        private int wheel, wheel_last_accessed = 0;
         private Point pos = new Point();
+        private Point pos_last_accessed = new Point();
         internal int last_x, last_y;
 
         #region --- IInputDevice Members ---
@@ -47,6 +48,8 @@ namespace OpenTK.Input
 
         #region --- Public Members ---
 
+        #region public int NumberOfButtons
+
         /// <summary>
         /// Gets an integer representing the number of buttons on this MouseDevice.
         /// </summary>
@@ -55,6 +58,10 @@ namespace OpenTK.Input
             get { return numButtons; }
             internal set { numButtons = value; }
         }
+
+        #endregion
+
+        #region public int NumberOfWheels
 
         /// <summary>
         /// Gets an integer representing the number of wheels on this MouseDevice.
@@ -65,6 +72,10 @@ namespace OpenTK.Input
             internal set { numWheels = value; }
         }
 
+        #endregion
+
+        #region public IntPtr DeviceID
+
         /// <summary>
         /// Gets an IntPtr representing a device dependent ID.
         /// </summary>
@@ -74,6 +85,10 @@ namespace OpenTK.Input
             internal set { id = value; }
         }
 
+        #endregion
+
+        #region public int Wheel
+
         /// <summary>
         /// Gets an integer representing the absolute wheel position.
         /// </summary>
@@ -82,10 +97,15 @@ namespace OpenTK.Input
             get { return wheel; }
             internal set
             {
-                last_wheel = wheel;
                 wheel = value;
+                if (Move != null)
+                    Move(this, EventArgs.Empty);
             }
         }
+
+        #endregion
+
+        #region public int WheelDelta
 
         /// <summary>
         /// Gets an integer representing the relative wheel movement.
@@ -94,10 +114,15 @@ namespace OpenTK.Input
         {
             get
             {
-                return wheel - last_wheel;
+                int result = wheel - wheel_last_accessed;
+                wheel_last_accessed = wheel;
+                return wheel;
             }
-            //internal set { wheel_delta = value; }
         }
+
+        #endregion
+
+        #region public int X
 
         /// <summary>
         /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
@@ -105,12 +130,11 @@ namespace OpenTK.Input
         public int X
         {
             get { return pos.X; }
-            internal set
-            {
-                last_x = pos.X;
-                pos.X = value;
-            }
         }
+
+        #endregion
+
+        #region public int Y
 
         /// <summary>
         /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
@@ -118,12 +142,11 @@ namespace OpenTK.Input
         public int Y
         {
             get { return pos.Y; }
-            internal set
-            {
-                last_y = pos.Y;
-                pos.Y = value;
-            }
         }
+
+        #endregion
+
+        #region public int XDelta
 
         /// <summary>
         /// Gets an integer representing the relative x movement of the pointer, in pixel coordinates.
@@ -132,11 +155,15 @@ namespace OpenTK.Input
         {
             get
             {
-                //return delta_x;
-                return pos.X - last_x;
+                int result = pos.X - pos_last_accessed.X;
+                pos_last_accessed.X = pos.X;
+                return result;
             }
-            //internal set { delta_x = value; }
         }
+
+        #endregion
+
+        #region public int YDelta
 
         /// <summary>
         /// Gets an integer representing the relative y movement of the pointer, in pixel coordinates.
@@ -145,25 +172,35 @@ namespace OpenTK.Input
         {
             get
             {
-                //return delta_y;
-                return pos.Y - last_y;
+                int result = pos.Y - pos_last_accessed.Y;
+                pos_last_accessed.Y = pos.Y;
+                return result;
             }
-            //internal set { delta_y = value; }
-        }
-
-        #region public Point Position
-
-        /// <summary>
-        /// Gets a System.Drawing.Point representing the absolute position of the pointer, in window pixel coordinates.
-        /// </summary>
-        public Point Position
-        {
-            get { return pos; }
         }
 
         #endregion
 
-        //public event MouseMoveEvent Move;
+        #region internal Point Position
+
+        /// <summary>
+        /// Sets a System.Drawing.Point representing the absolute position of the pointer, in window pixel coordinates.
+        /// </summary>
+        internal Point Position
+        {
+            set
+            {
+                pos = value;
+                if (Move != null)
+                    Move(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Occurs when the mouse, or one of its wheels, is moved.
+        /// </summary>
+        public event MouseMoveEvent Move;
 
         /// <summary>
         /// Occurs when a button is pressed.
@@ -202,6 +239,8 @@ namespace OpenTK.Input
 
         #endregion
 
+        #region --- Overrides ---
+
         public override int GetHashCode()
         {
             //return base.GetHashCode();
@@ -215,33 +254,28 @@ namespace OpenTK.Input
         }
 
         #endregion
+
+        #endregion
     }
-
-    public delegate void MouseMoveEvent(MouseDevice sender);
-    public delegate void MouseButtonDownEvent(MouseDevice sender, MouseButton button);
-    public delegate void MouseButtonUpEvent(MouseDevice sender, MouseButton button);
-
-    #region public enum MouseButton
 
     /// <summary>
-    /// Enumerates all possible mouse buttons.
+    /// Defines a MouseMove event.
     /// </summary>
-    public enum MouseButton
-    {
-        Left = 0,
-        Middle,
-        Right,
-        Button1,
-        Button2,
-        Button3,
-        Button4,
-        Button5,
-        Button6,
-        Button7,
-        Button8,
-        Button9,
-        LastButton
-    }
+    /// <param name="sender">The MouseDevice that generated this event.</param>
+    /// <param name="e">Not used.</param>
+    public delegate void MouseMoveEvent(MouseDevice sender, EventArgs e);
 
-    #endregion
+    /// <summary>
+    /// Defines the MouseButtonDown event.
+    /// </summary>
+    /// <param name="sender">The MouseDevice that generated this event.</param>
+    /// <param name="button">The MouseButton that was pressed.</param>
+    public delegate void MouseButtonDownEvent(MouseDevice sender, MouseButton button);
+
+    /// <summary>
+    /// Defines the MouseButtonUp event.
+    /// </summary>
+    /// <param name="sender">The MouseDevice that generated this event.</param>
+    /// <param name="button">The MouseButton that was released.</param>
+    public delegate void MouseButtonUpEvent(MouseDevice sender, MouseButton button);
 }
