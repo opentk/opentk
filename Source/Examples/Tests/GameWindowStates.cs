@@ -17,7 +17,7 @@ using OpenTK.Input;
 
 namespace Examples.Tests
 {
-    [Example("GameWindow states.", ExampleCategory.Test)]
+    [Example("GameWindow states", ExampleCategory.Test)]
     public class GameWindowStates : GameWindow
     {
         TextureFont font = new TextureFont(new Font(FontFamily.GenericSansSerif, 16.0f));
