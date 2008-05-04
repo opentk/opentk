@@ -673,7 +673,7 @@ namespace OpenTK.Platform.X11
     			}
 
     			if (minimized)
-    				return WindowState.Minimized;
+    				return OpenTK.WindowState.Minimized;
     			else if (maximized == 2)
     				return OpenTK.WindowState.Maximized;
                 else if (fullscreen)
@@ -732,14 +732,14 @@ namespace OpenTK.Platform.X11
                         Functions.XRaiseWindow(window.Display, window.WindowHandle);
 
                         break;
-                        
-                    case WindowState.Minimized:
+
+                    case OpenTK.WindowState.Minimized:
         				// FIXME multiscreen support
         				Functions.XIconifyWindow(window.Display, window.WindowHandle, window.Screen);
                         
         				break;
-                        
-                    case WindowState.Fullscreen:
+
+                    case OpenTK.WindowState.Fullscreen:
                         //_previous_window_border = this.WindowBorder;
                         //this.WindowBorder = WindowBorder.Hidden;
      					Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
