@@ -369,6 +369,8 @@ namespace OpenTK.Platform.Windows
 
             context = new GraphicsContext(mode, window);
 
+            Cursor.Current = Cursors.Default;
+
             Debug.Unindent();
         }
 
