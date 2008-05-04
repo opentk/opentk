@@ -8,6 +8,7 @@
 
 using System;
 using System.Threading;
+using System.IO;
 
 using OpenTK.Audio;
 
@@ -16,7 +17,7 @@ namespace Examples
     [Example("Playback", ExampleCategory.OpenAL)]
     public class Playback
     {
-        const string filename = "Data\\Audio\\the_ring_that_fell.wav";
+        static readonly string filename = Path.Combine(Path.Combine("Data", "Audio"), "the_ring_that_fell.wav");
 
         public static void Main()
         {
