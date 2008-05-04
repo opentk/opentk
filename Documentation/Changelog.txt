@@ -19,11 +19,13 @@ OpenTK 0.9.0 -> 0.9.1
 		+ Added DisplayResolution class, to hold resolution information.
 	+ Audio
 		+ Added AudioContext class.
+		+ Added AudioReader class.
 	+ GameWindow
-		+ Implemented Fullscreen property.
-		+ Implemented Visible property.
+		+ Implemented WindowBorder property.
+		+ Implemented WindowState property.
 	+ Input
 		+ Fixed MouseDevice events on Linux.
+		+ Fixed MouseDevice deltas.
 	+ Platform.X11
 		+ Simplified input handling.
 	+ Fonts
@@ -38,6 +40,9 @@ OpenTK 0.9.0 -> 0.9.1
 
 + Examples
 	+ Added GluTessellator example.
+	+ Added Inertia's Julia Set GLSL example.
+	+ Added Inertia's OpenAL Playback example.
+	+ Made several tests public (Input Logger, Resolutions, GameWindow states).
 
 -----------------------
 OpenTK 0.3.13 -> 0.9.0
