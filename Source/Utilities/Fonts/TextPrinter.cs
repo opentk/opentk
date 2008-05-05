@@ -1,6 +1,8 @@
 ﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2006-2008 the OpenTK Team.
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing details.
  */
 #endregion
 
@@ -26,10 +28,14 @@ namespace OpenTK.Graphics
     public class TextPrinter : ITextPrinter
     {
         //static Regex break_point = new Regex("[ .,/*-+?\\!=]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        //static char[] split_chars = new char[] { ' ', '\n', '\t', ',', '.', '/', '?', '!', ';', '\\', '-', '+', '*', '=' };
+        //static char[] split_chars = new char[]
+        //{
+        //    ' ', '\n', '\t', ',', '.', '/', '?', '!', ';', '\\', '-', '+', '*', '='
+        //};
         static ITextPrinterImplementation printer;
         float[] viewport = new float[4];
-        Vector2[] vertices = new Vector2[8 * 8];  // Interleaved, vertex, texcoord, vertex, etc... Starts with 8 chars, will expand as needed.
+          // Interleaved, vertex, texcoord, vertex, etc... Starts with 8 chars, will expand as needed.
+        Vector2[] vertices = new Vector2[8 * 8];
         ushort[] indices = new ushort[6 * 8];
 
         #region --- Constructor ---
