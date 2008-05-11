@@ -111,6 +111,17 @@ namespace OpenTK
             this.window_info = null;
         }
 
+        /// <summary>
+        /// Raises the System.Windows.Forms.Control.Paint event.
+        /// </summary>
+        /// <param name="e">A System.Windows.Forms.PaintEventArgs that contains the event data.</param>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (DesignMode)
+                e.Graphics.Clear(BackColor);
+            base.OnPaint(e);
+        }
+
         #endregion
 
         #region --- Public Methods ---
