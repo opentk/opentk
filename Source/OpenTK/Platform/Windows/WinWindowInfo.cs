@@ -4,9 +4,8 @@ using System.Text;
 
 namespace OpenTK.Platform.Windows
 {
-    /// <internal />
     /// <summary>Describes a win32 window.</summary>
-    internal sealed class WinWindowInfo : IWindowInfo
+    public sealed class WinWindowInfo : IWindowInfo
     {
         IntPtr handle, dc;
         WinWindowInfo parent;
