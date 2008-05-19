@@ -108,7 +108,7 @@ namespace OpenTK.Graphics
         /// Make sure to call the Dispose() method once this context is destroyed.</para>
         /// <para>You may not call this method more than once on the same context. Doing so will throw an exception.</para>
         /// </remarks>
-        public static GraphicsContext CreateFromCurrentContext(IWindowInfo window)
+        public static GraphicsContext CreateFromCurrentThread(IWindowInfo window)
         {
             Debug.Print("Creating context from current thread.");
 
