@@ -162,7 +162,7 @@ namespace OpenTK.Graphics
             PerformLayout(text, font, width, wordWarp, alignment, rightToLeft, ref vertices, ref indices, out num_indices);
 
             handle = Printer.Load(vertices, indices, num_indices);
-            handle.font = font;
+            handle.Font = font;
         }
 
         #endregion
@@ -276,7 +276,7 @@ namespace OpenTK.Graphics
         /// <param name="handle">The TextHandle to the cached text.</param>
         public void Draw(TextHandle handle)
         {
-            GL.BindTexture(TextureTarget.Texture2D, handle.font.Texture);
+            GL.BindTexture(TextureTarget.Texture2D, handle.Font.Texture);
 
             Printer.Draw(handle);
         }

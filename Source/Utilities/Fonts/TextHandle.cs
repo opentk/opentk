@@ -13,20 +13,39 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Represents a handle to cached text.
     /// </summary>
-    public class TextHandle : IDisposable
+    public abstract class TextHandle : IDisposable
     {
-        internal TextHandle(int handle)
+        /// <summary>
+        /// Constructs a new TextHandle,
+        /// </summary>
+        /// <param name="handle"></param>
+        public TextHandle(int handle)
         {
             Handle = handle;
         }
 
+        private int handle;
+        protected TextureFont font;
+        protected bool disposed;
+
         /// <summary>
-        /// The handle of the cached text. Call the OpenTK.Graphics.ITextPrinter.Draw() method
+        /// Gets the handle of the cached text run. Call the OpenTK.Graphics.ITextPrinter.Draw() method
         /// to draw the text represented by this TextHandle.
         /// </summary>
-        public readonly int Handle;
-        internal TextureFont font;
-        protected bool disposed;
+        public int Handle
+        {
+            get { return handle; }
+            protected set { handle = value; }
+        }
+
+        /// <summary>
+        /// Gets the TextureFont used for this text run.
+        /// </summary>
+        public TextureFont Font
+        {
+            get { return font; }
+            internal set { font = value; }
+        }
 
         #region public override string ToString()
 
