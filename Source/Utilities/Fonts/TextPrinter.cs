@@ -38,12 +38,19 @@ namespace OpenTK.Graphics
         Vector2[] vertices = new Vector2[8 * 8];
         ushort[] indices = new ushort[6 * 8];
 
-        #region --- Constructor ---
+        #region --- Constructors ---
 
         /// <summary>
         /// Constructs a new TextPrinter object.
         /// </summary>
         public TextPrinter() { }
+
+        public TextPrinter(ITextPrinterImplementation implementation)
+        {
+            if (implementation == null)
+                throw new ArgumentNullException("implementation");
+            printer = implementation;
+        }
 
         #endregion
 
