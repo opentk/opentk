@@ -17,6 +17,7 @@ namespace OpenTK.Audio
 {
     public partial class EffectsExtension
     {
+
         #region Helpers
 
         #region BindEffect
@@ -184,6 +185,22 @@ namespace OpenTK.Audio
             return temp;
         }
 
+        /// <summary>Generates a single effect object.</summary>
+        /// <param name="effect">A handle to the generated effect object.</param>
+        [CLSCompliant(false)]
+        public void GenEffect( out uint effect )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &effect )
+                {
+                    Imported_alGenEffects( 1, ptr );
+                    effect = *ptr;
+                }
+            }
+
+        }
+
         #endregion alGenEffects
 
         #region alDeleteEffects
@@ -245,9 +262,20 @@ namespace OpenTK.Audio
         /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
         public void DeleteEffect(int effect)
         {
+            DeleteEffects( 1, ref effect );
+        }
+
+        /// <summary>This function deletes one Effect only.</summary>
+        /// <param name="effect">Pointer to an effect name/handle identifying the Effect Object to be deleted.</param>
+        [CLSCompliant(false)]
+        public void DeleteEffect( ref uint effect )
+        {
             unsafe
             {
-                Imported_alDeleteEffects(1, (uint*)&effect);
+                fixed ( uint* ptr = &effect )
+                {
+                    Imported_alDeleteEffects( 1, ptr );
+                }
             }
         }
 
@@ -560,12 +588,27 @@ namespace OpenTK.Audio
         }
 
         /// <summary>This function generates only one Filter.</summary>
-        /// <returns>Storage UInt32 for the new filter name/handle.</returns>
+        /// <returns>Storage Int32 for the new filter name/handle.</returns>
         public int GenFilter()
         {
             int filter;
             GenFilters(1, out filter);
             return filter;
+        }
+
+        /// <summary>This function generates only one Filter.</summary>
+        /// <param name="filter">Storage UInt32 for the new filter name/handle.</param>
+        [CLSCompliant(false)]
+        unsafe public void GenFilter( out uint filter )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &filter )
+                {
+                    Imported_alGenFilters( 1, ptr );
+                    filter = *ptr;
+                }
+            }
         }
 
         #endregion alGenFilters
@@ -630,6 +673,20 @@ namespace OpenTK.Audio
         public void DeleteFilter(int filter)
         {
             DeleteFilters(1, ref filter);
+        }
+
+        /// <summary>This function deletes one Filter only.</summary>
+        /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
+        [CLSCompliant(false)]
+        public void DeleteFilter( ref uint filter )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &filter )
+                {
+                    Imported_alDeleteFilters( 1, ptr );
+                }
+            }
         }
 
         #endregion alDeleteFilters
@@ -864,12 +921,27 @@ namespace OpenTK.Audio
         }
 
         /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
-        /// <returns>Storage UInt32 for the new auxiliary effect slot name/handle.</returns>
-        public int GenAuxiliaryEffectSlots()
+        /// <returns>Storage Int32 for the new auxiliary effect slot name/handle.</returns>
+        public int GenAuxiliaryEffectSlot()
         {
             int temp;
             GenAuxiliaryEffectSlots(1, out temp);
             return temp;
+        }
+
+        /// <summary>This function generates only one Auxiliary Effect Slot.</summary>
+        /// <returns>Storage UInt32 for the new auxiliary effect slot name/handle.</returns>
+        [CLSCompliant(false)]
+        public void GenAuxiliaryEffectSlot( out uint slot )
+        {
+            unsafe
+            {
+                fixed ( uint* ptr = &slot )
+                {
+                    Imported_alGenAuxiliaryEffectSlots( 1, ptr );
+                    slot = *ptr;
+                }
+            }
         }
 
         #endregion alGenAuxiliaryEffectSlots
@@ -930,7 +1002,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
         /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
-        public void DeleteAuxiliaryEffectSlots(int slot)
+        public void DeleteAuxiliaryEffectSlot(int slot)
         {
             DeleteAuxiliaryEffectSlots(1, ref slot);
         }
@@ -938,9 +1010,15 @@ namespace OpenTK.Audio
         /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
         /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
         [CLSCompliant(false)]
-        public void DeleteAuxiliaryEffectSlots(uint slot)
+        public void DeleteAuxiliaryEffectSlot( ref uint slot)
         {
-            DeleteAuxiliaryEffectSlots(1, ref slot);
+            unsafe
+            {
+                fixed ( uint* ptr = &slot )
+                {
+                    Imported_alDeleteAuxiliaryEffectSlots( 1, ptr );
+                }
+            }
         }
 
         #endregion alDeleteAuxiliaryEffectSlots
