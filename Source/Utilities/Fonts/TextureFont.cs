@@ -70,36 +70,7 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region private void PrepareTexturePacker()
-
-        /// <summary>
-        /// Calculates the optimal size for the font texture and TexturePacker, and creates both.
-        /// </summary>
-        private void PrepareTexturePacker()
-        {
-            // Calculate the size of the texture packer. We want a power-of-two size
-            // that is less than 1024 (supported in Geforce256-era cards), but large
-            // enough to hold at least 256 (16*16) font glyphs.
-            // TODO: Find the actual card limits, maybe?
-            int size = (int)(font.Size * 16);
-            size = (int)System.Math.Pow(2.0, System.Math.Ceiling(System.Math.Log((double)size, 2.0)));
-            if (size > 1024)
-                size = 1024;
-
-            texture_width = size;
-            texture_height = size;
-            pack = new TexturePacker<Glyph>(texture_width, texture_height);
-
-            GL.GenTextures(1, out texture);
-            GL.BindTexture(TextureTarget.Texture2D, texture);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
-
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Alpha, texture_width, texture_height, 0,
-                OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
-        }
-
-        #endregion
+        #region --- Public Methods ---
 
         #region public void LoadGlyphs(string glyphs)
 
@@ -130,6 +101,144 @@ namespace OpenTK.Graphics
             Box2 rect = new Box2();
             if (!loaded_glyphs.ContainsKey(glyph))
                 LoadGlyph(glyph, out rect);
+        }
+
+        #endregion
+
+        #region public bool GlyphData(char glyph, out float width, out float height, out Box2 textureRectangle, out int texture)
+
+        /// <summary>
+        /// Returns the characteristics of a loaded glyph.
+        /// </summary>
+        /// <param name="glyph">The character corresponding to this glyph.</param>
+        /// <param name="width">The width of this glyph.</param>
+        /// <param name="height">The height of this glyph (line spacing).</param>
+        /// <param name="textureRectangle">The bounding box of the texture buffer of this glyph.</param>
+        /// <param name="texture">The handle to the texture that contains this glyph.</param>
+        /// <returns>True if the glyph has been loaded, false otherwise.</returns>
+        /// <seealso cref="LoadGlyphs"/>
+        public bool GlyphData(char glyph, out float width, out float height, out Box2 textureRectangle, out int texture)
+        {
+            if (loaded_glyphs.TryGetValue(glyph, out textureRectangle))
+            {
+                width = textureRectangle.Width * texture_width;
+                height = textureRectangle.Height * texture_height;
+                texture = TextureFont.texture;
+                return true;
+            }
+            width = height = texture = 0;
+            return false;
+        }
+
+        #endregion
+
+        #region public float Height
+
+        /// <summary>
+        /// Gets a float indicating the default line spacing of this font.
+        /// </summary>
+        public float Height
+        {
+            get { return font.Height; }
+        }
+
+        #endregion
+
+        #region public float Width
+
+        /// <summary>
+        /// Gets a float indicating the default line spacing of this font.
+        /// </summary>
+        public float Width
+        {
+            get { return font.SizeInPoints; }
+        }
+
+        #endregion
+
+        #region public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)
+
+        /// <summary>
+        /// Measures the width of the specified string.
+        /// </summary>
+        /// <param name="str">The string to measure.</param>
+        /// <param name="width">The measured width.</param>
+        /// <param name="height">The measured height.</param>
+        /// <param name="addSpace">If true, adds space to account for glyph overhangs. Set to true if you wish to measure a complete string. Set to false if you wish to perform layout on adjacent strings.</param>
+        public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)
+        {
+            System.Drawing.StringFormat format = accountForOverhangs ? System.Drawing.StringFormat.GenericDefault : System.Drawing.StringFormat.GenericTypographic;
+            format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
+
+            System.Drawing.SizeF size = gfx.MeasureString(str, font, 16384, format);
+            height = size.Height;
+            width = size.Width;
+
+            //    width = 0;
+            //    height = 0;
+            //    int i = 0;
+            //    foreach (char c in str)
+            //    {
+            //        if (c != '\n' && c != '\r')
+            //        {
+            //            SizeF size = gfx.MeasureString(str.Substring(i, 1), font, 16384, System.Drawing.StringFormat.GenericTypographic);
+            //            width += size.Width == 0 ? font.SizeInPoints * 0.5f : size.Width;
+            //            if (height < size.Height)
+            //                height = size.Height;
+            //        }
+            //        ++i;
+            //    }
+        }
+
+        #endregion
+
+        #region public void MeasureString(string str, out float width, out float height)
+
+        /// <summary>
+        /// Measures the width of the specified string.
+        /// </summary>
+        /// <param name="str">The string to measure.</param>
+        /// <param name="width">The measured width.</param>
+        /// <param name="height">The measured height.</param>
+        /// <seealso cref="public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)"/>
+        public void MeasureString(string str, out float width, out float height)
+        {
+            MeasureString(str, out width, out height, true);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- Private Methods ---
+
+        #region private void PrepareTexturePacker()
+
+        /// <summary>
+        /// Calculates the optimal size for the font texture and TexturePacker, and creates both.
+        /// </summary>
+        private void PrepareTexturePacker()
+        {
+            // Calculate the size of the texture packer. We want a power-of-two size
+            // that is less than 1024 (supported in Geforce256-era cards), but large
+            // enough to hold at least 256 (16*16) font glyphs.
+            // TODO: Find the actual card limits, maybe?
+            int size = (int)(font.Size * 16);
+            size = (int)System.Math.Pow(2.0, System.Math.Ceiling(System.Math.Log((double)size, 2.0)));
+            if (size > 1024)
+                size = 1024;
+
+            texture_width = size;
+            texture_height = size;
+            pack = new TexturePacker<Glyph>(texture_width, texture_height);
+
+            GL.GenTextures(1, out texture);
+            GL.BindTexture(TextureTarget.Texture2D, texture);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Alpha, texture_width, texture_height, 0,
+                OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
         }
 
         #endregion
@@ -202,56 +311,9 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region public bool GlyphData(char glyph, out float width, out float height, out Box2 textureRectangle, out int texture)
-
-        /// <summary>
-        /// Returns the characteristics of a loaded glyph.
-        /// </summary>
-        /// <param name="glyph">The character corresponding to this glyph.</param>
-        /// <param name="width">The width of this glyph.</param>
-        /// <param name="height">The height of this glyph (line spacing).</param>
-        /// <param name="textureRectangle">The bounding box of the texture buffer of this glyph.</param>
-        /// <param name="texture">The handle to the texture that contains this glyph.</param>
-        /// <returns>True if the glyph has been loaded, false otherwise.</returns>
-        /// <seealso cref="LoadGlyphs"/>
-        public bool GlyphData(char glyph, out float width, out float height, out Box2 textureRectangle, out int texture)
-        {
-            if (loaded_glyphs.TryGetValue(glyph, out textureRectangle))
-            {
-                width = textureRectangle.Width * texture_width;
-                height = textureRectangle.Height * texture_height;
-                texture = TextureFont.texture;
-                return true;
-            }
-            width = height = texture = 0;
-            return false;
-        }
-
         #endregion
 
-        #region public float Height
-
-        /// <summary>
-        /// Gets a float indicating the default line spacing of this font.
-        /// </summary>
-        public float Height
-        {
-            get { return font.Height; }
-        }
-
-        #endregion
-
-        #region public float Width
-
-        /// <summary>
-        /// Gets a float indicating the default line spacing of this font.
-        /// </summary>
-        public float Width
-        {
-            get { return font.SizeInPoints; }
-        }
-
-        #endregion
+        #region --- Internal Methods ---
 
         #region internal int Texture
 
@@ -264,56 +326,6 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-
-        #region public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)
-
-        /// <summary>
-        /// Measures the width of the specified string.
-        /// </summary>
-        /// <param name="str">The string to measure.</param>
-        /// <param name="width">The measured width.</param>
-        /// <param name="height">The measured height.</param>
-        /// <param name="addSpace">If true, adds space to account for glyph overhangs. Set to true if you wish to measure a complete string. Set to false if you wish to perform layout on adjacent strings.</param>
-        public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)
-        {
-            System.Drawing.StringFormat format = accountForOverhangs ? System.Drawing.StringFormat.GenericDefault : System.Drawing.StringFormat.GenericTypographic;
-            format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-
-            System.Drawing.SizeF size = gfx.MeasureString(str, font, 16384, format);
-            height = size.Height;
-            width = size.Width;
-
-            //    width = 0;
-            //    height = 0;
-            //    int i = 0;
-            //    foreach (char c in str)
-            //    {
-            //        if (c != '\n' && c != '\r')
-            //        {
-            //            SizeF size = gfx.MeasureString(str.Substring(i, 1), font, 16384, System.Drawing.StringFormat.GenericTypographic);
-            //            width += size.Width == 0 ? font.SizeInPoints * 0.5f : size.Width;
-            //            if (height < size.Height)
-            //                height = size.Height;
-            //        }
-            //        ++i;
-            //    }
-        }
-
-        #endregion
-
-        #region public void MeasureString(string str, out float width, out float height)
-
-        /// <summary>
-        /// Measures the width of the specified string.
-        /// </summary>
-        /// <param name="str">The string to measure.</param>
-        /// <param name="width">The measured width.</param>
-        /// <param name="height">The measured height.</param>
-        /// <seealso cref="public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)"/>
-        public void MeasureString(string str, out float width, out float height)
-        {
-            MeasureString(str, out width, out height, true);
-        }
 
         #endregion
 
