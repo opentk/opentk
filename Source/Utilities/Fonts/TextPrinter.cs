@@ -183,10 +183,10 @@ namespace OpenTK.Graphics
                 throw new NotImplementedException();
 
             while (8 * text.Length > vertices.Length)
-                vertices = new Vector2[vertices.Length << 1];
+                vertices = new Vector2[Math.Functions.NextPowerOfTwo(8 * text.Length)];
 
             while (6 * text.Length > indices.Length)
-                indices = new ushort[indices.Length << 1];
+                indices = new ushort[Math.Functions.NextPowerOfTwo(6 * text.Length)];
 
             num_indices = 6 * text.Length;
 
@@ -201,9 +201,7 @@ namespace OpenTK.Graphics
             font.LoadGlyphs(text);
 
             // Every character comprises of 4 vertices, forming two triangles. We generate an index array which
-            // indexes vertices in a triangle-strip fashion. To create a single strip for the whole string, we
-            // need to add a degenerate triangle (0 height) to connect the last vertex of the previous line with
-            // the first vertex of the next line.
+            // indexes vertices in a triangle-list fashion. 
             // This algorithm works for left-to-right scripts.
 
             if (alignment == StringAlignment.Near && !rightToLeft || alignment == StringAlignment.Far && rightToLeft)
