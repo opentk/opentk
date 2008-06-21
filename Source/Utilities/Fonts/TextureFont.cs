@@ -181,12 +181,8 @@ namespace OpenTK.Graphics
             {
                 int* bitmap_data_ptr = (int*)bitmap_data.Scan0;
                 for (int y = 0; y < rect.Height; y++)
-                {
                     for (int x = 0; x < rect.Width; x++)
-                    {
                         data[y * rect.Width + x] = *(bitmap_data_ptr + y * bmp.Width + x);
-                    }
-                }
 
                 fixed (int* data_ptr = data)
                     GL.TexSubImage2D(TextureTarget.Texture2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
