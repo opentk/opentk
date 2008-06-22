@@ -194,8 +194,8 @@ namespace OpenTK.Graphics
             //ushort[] indices = new ushort[6 * text.Length];
             float x_pos = 0, y_pos = 0;
             ushort i = 0, index_count = 0, vertex_count = 0, last_break_point = 0;
-            Box2 rect = new Box2();
-            float char_width, char_height, measured_width, measured_height;
+            RectangleF rect = new RectangleF();
+            float char_width, char_height;
             int texture;
 
             font.LoadGlyphs(text);
@@ -206,51 +206,48 @@ namespace OpenTK.Graphics
 
             if (alignment == StringAlignment.Near && !rightToLeft || alignment == StringAlignment.Far && rightToLeft)
             {
-                foreach (char c in text)
+                ICollection<RectangleF> ranges = new List<RectangleF>();
+                font.MeasureCharacterRanges(text, StringFormat.GenericTypographic, ref ranges);
+
+                int current = 0;
+                //foreach (char c in text)
+                foreach (RectangleF range in ranges)
                 {
+                    char c = text[current++];
                     if (Char.IsSeparator(c))
                         last_break_point = index_count;
 
-                    if (c != '\n' && c != '\r')
-                    {
-                        font.GlyphData(c, out char_width, out char_height, out rect, out texture);
+                    x_pos = range.X;
+                    y_pos = range.Y;
 
-                        vertices[vertex_count].X = x_pos;                // Vertex
-                        vertices[vertex_count++].Y = y_pos;
-                        vertices[vertex_count].X = rect.Left;            // Texcoord
-                        vertices[vertex_count++].Y = rect.Top;
-                        vertices[vertex_count].X = x_pos;                // Vertex
-                        vertices[vertex_count++].Y = y_pos + char_height;
-                        vertices[vertex_count].X = rect.Left;            // Texcoord
-                        vertices[vertex_count++].Y = rect.Bottom;
+                    font.GlyphData(c, out char_width, out char_height, out rect, out texture);
 
-                        vertices[vertex_count].X = x_pos + char_width;   // Vertex
-                        vertices[vertex_count++].Y = y_pos + char_height;
-                        vertices[vertex_count].X = rect.Right;           // Texcoord
-                        vertices[vertex_count++].Y = rect.Bottom;
-                        vertices[vertex_count].X = x_pos + char_width;   // Vertex
-                        vertices[vertex_count++].Y = y_pos;
-                        vertices[vertex_count].X = rect.Right;           // Texcoord
-                        vertices[vertex_count++].Y = rect.Top;
+                    vertices[vertex_count].X = x_pos;                // Vertex
+                    vertices[vertex_count++].Y = y_pos;
+                    vertices[vertex_count].X = rect.Left;            // Texcoord
+                    vertices[vertex_count++].Y = rect.Top;
+                    vertices[vertex_count].X = x_pos;                // Vertex
+                    vertices[vertex_count++].Y = y_pos + char_height;
+                    vertices[vertex_count].X = rect.Left;            // Texcoord
+                    vertices[vertex_count++].Y = rect.Bottom;
 
-                        indices[index_count++] = (ushort)(vertex_count - 8);
-                        indices[index_count++] = (ushort)(vertex_count - 6);
-                        indices[index_count++] = (ushort)(vertex_count - 4);
+                    vertices[vertex_count].X = x_pos + char_width;   // Vertex
+                    vertices[vertex_count++].Y = y_pos + char_height;
+                    vertices[vertex_count].X = rect.Right;           // Texcoord
+                    vertices[vertex_count++].Y = rect.Bottom;
+                    vertices[vertex_count].X = x_pos + char_width;   // Vertex
+                    vertices[vertex_count++].Y = y_pos;
+                    vertices[vertex_count].X = rect.Right;           // Texcoord
+                    vertices[vertex_count++].Y = rect.Top;
 
-                        indices[index_count++] = (ushort)(vertex_count - 4);
-                        indices[index_count++] = (ushort)(vertex_count - 2);
-                        indices[index_count++] = (ushort)(vertex_count - 8);
+                    indices[index_count++] = (ushort)(vertex_count - 8);
+                    indices[index_count++] = (ushort)(vertex_count - 6);
+                    indices[index_count++] = (ushort)(vertex_count - 4);
 
+                    indices[index_count++] = (ushort)(vertex_count - 4);
+                    indices[index_count++] = (ushort)(vertex_count - 2);
+                    indices[index_count++] = (ushort)(vertex_count - 8);
 
-                        font.MeasureString(text.Substring(i, 1), out measured_width, out measured_height, false);
-                        x_pos += measured_width;
-                    }
-                    else if (c == '\n')
-                    {
-                        //x_pos = layoutRect.Left;
-                        x_pos = 0;
-                        y_pos += font.Height;
-                    }
                     ++i;
                 }
             }
