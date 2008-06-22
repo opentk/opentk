@@ -165,8 +165,30 @@ namespace Examples.Tutorial
                 bitmap.UnlockBits(data);
             }
             #endregion Textures
+            
+            Keyboard.KeyUp += KeyUp;
         }
 
+        int i = 0;
+        void KeyUp(OpenTK.Input.KeyboardDevice sender, OpenTK.Input.Key e)
+        {
+            if (e == OpenTK.Input.Key.F12)
+            {
+                Bitmap bmp = new Bitmap(this.Width, this.Height);
+                System.Drawing.Imaging.BitmapData data = 
+                    bmp.LockBits(new Rectangle(0, 0, this.Width, this.Height),
+                                 System.Drawing.Imaging.ImageLockMode.WriteOnly,
+                                 System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                GL.ReadPixels(0, 0, this.Width, this.Height,
+                              OpenTK.Graphics.PixelFormat.Bgr,
+                              OpenTK.Graphics.PixelType.UnsignedByte,
+                              data.Scan0);
+                bmp.UnlockBits(data);
+                bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                bmp.Save("Screenshot" + (i++).ToString() + ".png", ImageFormat.Png);
+            }
+        }
+        
         #endregion
 
         #region OnUnLoad
