@@ -182,10 +182,10 @@ namespace OpenTK.Graphics
             if (wordWarp || rightToLeft || alignment != StringAlignment.Near)
                 throw new NotImplementedException();
 
-            while (8 * text.Length > vertices.Length)
+            if (8 * text.Length > vertices.Length)
                 vertices = new Vector2[Math.Functions.NextPowerOfTwo(8 * text.Length)];
 
-            while (6 * text.Length > indices.Length)
+            if (6 * text.Length > indices.Length)
                 indices = new ushort[Math.Functions.NextPowerOfTwo(6 * text.Length)];
 
             num_indices = 6 * text.Length;
