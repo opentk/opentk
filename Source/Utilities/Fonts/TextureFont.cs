@@ -25,7 +25,7 @@ namespace OpenTK.Graphics
     public class TextureFont : IFont
     {
         Font font;
-        Dictionary<char, Box2> loaded_glyphs = new Dictionary<char, Box2>(64);
+        Dictionary<char, RectangleF> loaded_glyphs = new Dictionary<char, RectangleF>(64);
 
         Bitmap bmp;
         Graphics gfx;
@@ -80,7 +80,7 @@ namespace OpenTK.Graphics
         /// <param name="glyphs">The glyphs to prepare for rendering.</param>
         public void LoadGlyphs(string glyphs)
         {
-            Box2 rect = new Box2();
+            RectangleF rect = new RectangleF();
             foreach (char c in glyphs)
             {
                 if (!loaded_glyphs.ContainsKey(c))
@@ -98,14 +98,14 @@ namespace OpenTK.Graphics
         /// <param name="glyphs">The glyph to prepare for rendering.</param>
         public void LoadGlyph(char glyph)
         {
-            Box2 rect = new Box2();
+            RectangleF rect = new RectangleF();
             if (!loaded_glyphs.ContainsKey(glyph))
                 LoadGlyph(glyph, out rect);
         }
 
         #endregion
 
-        #region public bool GlyphData(char glyph, out float width, out float height, out Box2 textureRectangle, out int texture)
+        #region public bool GlyphData(char glyph, out float width, out float height, out RectangleF textureRectangle, out int texture)
 
         /// <summary>
         /// Returns the characteristics of a loaded glyph.
@@ -117,7 +117,7 @@ namespace OpenTK.Graphics
         /// <param name="texture">The handle to the texture that contains this glyph.</param>
         /// <returns>True if the glyph has been loaded, false otherwise.</returns>
         /// <seealso cref="LoadGlyphs"/>
-        public bool GlyphData(char glyph, out float width, out float height, out Box2 textureRectangle, out int texture)
+        public bool GlyphData(char glyph, out float width, out float height, out RectangleF textureRectangle, out int texture)
         {
             if (loaded_glyphs.TryGetValue(glyph, out textureRectangle))
             {
@@ -164,15 +164,26 @@ namespace OpenTK.Graphics
         /// <param name="str">The string to measure.</param>
         /// <param name="width">The measured width.</param>
         /// <param name="height">The measured height.</param>
-        /// <param name="addSpace">If true, adds space to account for glyph overhangs. Set to true if you wish to measure a complete string. Set to false if you wish to perform layout on adjacent strings.</param>
+        /// <param name="accountForOverhangs">If true, adds space to account for glyph overhangs. Set to true if you wish to measure a complete string. Set to false if you wish to perform layout on adjacent strings.</param>
         public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)
         {
             System.Drawing.StringFormat format = accountForOverhangs ? System.Drawing.StringFormat.GenericDefault : System.Drawing.StringFormat.GenericTypographic;
-            format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
+            //format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
 
             System.Drawing.SizeF size = gfx.MeasureString(str, font, 16384, format);
             height = size.Height;
             width = size.Width;
+
+            //width = height = 0;
+
+            //RectangleF rect = new RectangleF(0, 0, 0, 0);
+            //ICollection<RectangleF> ranges = new List<RectangleF>();
+            //MeasureCharacterRanges(gfx, str, font, ref rect, format, ref ranges);
+            //foreach (RectangleF range in ranges)
+            //{
+            //    width += range.Width;
+            //    height = range.Height > height ?range.Height : height;
+            //}
 
             //    width = 0;
             //    height = 0;
@@ -208,9 +219,102 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region public void MeasureCharacterRanges(string text, ref ICollection<RectangleF> ranges)
+
+        /// <summary>
+        /// Measures the individual character positions for the specified string.
+        /// </summary>
+        /// <param name="text">The string to measure.</param>
+        /// <param name="ranges">An ICollection of RectangleF structures, containing the positions of individual characters.</param>
+        public void MeasureCharacterRanges(string text, ref ICollection<RectangleF> ranges)
+        {
+            MeasureCharacterRanges(text, false, ref ranges);
+        }
+
+        #endregion
+
+        #region public void MeasureCharacterRanges(string text, bool accountForOverhangs, ref ICollection<RectangleF> ranges)
+
+        /// <summary>
+        /// Measures the individual character positions for the specified string.
+        /// </summary>
+        /// <param name="text">The string to measure.</param>
+        /// <param name="accountForOverhangs">If true, adds space to account for glyph overhangs. Set to true if you wish to measure a complete string. Set to false if you wish to perform layout on adjacent strings.</param>
+        /// <param name="ranges">An ICollection of RectangleF structures, containing the positions of individual characters.</param>
+        public void MeasureCharacterRanges(string text, bool accountForOverhangs, ref ICollection<RectangleF> ranges)
+        {
+            System.Drawing.StringFormat format = accountForOverhangs ? System.Drawing.StringFormat.GenericDefault : System.Drawing.StringFormat.GenericTypographic;
+            RectangleF rect = new RectangleF(0, 0, gfx.ClipBounds.Width, gfx.ClipBounds.Height);
+            MeasureCharacterRanges(text, ref rect, format, ref ranges);
+        }
+
+        #endregion
+
         #endregion
 
         #region --- Private Methods ---
+
+        #region void MeasureCharacterRanges(string text, ref RectangleF layoutRect, StringFormat format, ref ICollection<RectangleF> ranges)
+
+        void MeasureCharacterRanges(string text, ref RectangleF layoutRect, StringFormat format, ref ICollection<RectangleF> ranges)
+        {
+            ranges.Clear();     // Hopefully this doesn't trim the collection.
+
+            //GPRECTF rect = new GPRECTF(layoutRect);
+            //rect = new GPRECTF(0, 0, 256, 256);
+            int status = 0;
+
+            if (String.IsNullOrEmpty(text))
+                return;
+
+            if (font == null) throw new ArgumentNullException("font");
+            if (format == null) throw new ArgumentNullException("format");
+
+            IntPtr[] regions = new IntPtr[GdiPlus.MaxMeasurableCharacterRanges];
+            CharacterRange[] characterRanges = new CharacterRange[GdiPlus.MaxMeasurableCharacterRanges];
+
+            for (int i = 0; i < text.Length; i += GdiPlus.MaxMeasurableCharacterRanges)
+            {
+                int num_characters = text.Length - i > GdiPlus.MaxMeasurableCharacterRanges ? GdiPlus.MaxMeasurableCharacterRanges : text.Length - i;
+
+                for (int j = 0; j < num_characters; j++)
+                {
+                    characterRanges[j] = new CharacterRange(i + j, 1);
+
+                    IntPtr region;
+                    status = GdiPlus.CreateRegion(out region);
+                    regions[j] = region;
+                    if (status != 0)
+                        Debug.Print("GDI+ error: {0}", status);
+                }
+
+                CharacterRange[] a = (CharacterRange[])characterRanges.Clone();
+                Array.Resize(ref a, num_characters);
+                format.SetMeasurableCharacterRanges(a);
+
+                IntPtr native_graphics = GdiPlus.GetNativeGraphics(gfx);
+                IntPtr native_font = GdiPlus.GetNativeFont(font);
+                IntPtr native_string_format = GdiPlus.GetNativeStringFormat(format);
+
+                status = GdiPlus.MeasureCharacterRanges(new HandleRef(gfx, native_graphics), text, text.Length,
+                                                new HandleRef(font, native_font), ref layoutRect,
+                                                new HandleRef(format, (format == null) ? IntPtr.Zero : native_string_format),
+                                                num_characters, regions);
+
+                for (int j = 0; j < num_characters; j++)
+                {
+                    RectangleF rect = new RectangleF();
+                    status = GdiPlus.GetRegionBounds(regions[j], new HandleRef(gfx, GdiPlus.GetNativeGraphics(gfx)), ref rect);
+
+                    ranges.Add(rect);
+
+                    status = GdiPlus.DeleteRegion(regions[j]);
+                }
+
+            }
+        }
+
+        #endregion
 
         #region private void PrepareTexturePacker()
 
@@ -250,7 +354,7 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="c">The character of the glyph.</param>
         /// <param name="rectangle">An OpenTK.Math.Box2 that will hold the buffer for this glyph.</param>
-        private void LoadGlyph(char c, out Box2 rectangle)
+        private void LoadGlyph(char c, out RectangleF rectangle)
         {
             if (pack == null)
                 PrepareTexturePacker();
@@ -299,7 +403,7 @@ namespace OpenTK.Graphics
             }
             bmp.UnlockBits(bitmap_data);
 
-            rectangle = new Box2(
+            rectangle = RectangleF.FromLTRB(
                 rect.Left / (float)texture_width,
                 rect.Top / (float)texture_height,
                 rect.Right / (float)texture_width,
