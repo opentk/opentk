@@ -436,7 +436,7 @@ namespace OpenTK
 
 #endif
 
-        #region void Run()
+        #region public void Run()
 
         /// <summary>
         /// Enters the game loop of the GameWindow updating and rendering at the maximum possible frequency.
@@ -448,6 +448,10 @@ namespace OpenTK
             Run(0.0, 0.0);
         }
 
+        #endregion
+
+        #region public void Run(double updateFrequency)
+
         /// <summary>
         /// Enters the game loop of the GameWindow updating the specified update frequency, while maintaining the
         /// maximum possible render frequency.
@@ -458,6 +462,10 @@ namespace OpenTK
             if (disposed) throw new ObjectDisposedException("GameWindow");
             Run(updateFrequency, 0.0);
         }
+
+        #endregion
+
+        #region public void Run(double updates_per_second, double frames_per_second)
 
         /// <summary>
         /// Enters the game loop of the GameWindow updating and rendering at the specified frequency.
