@@ -207,7 +207,7 @@ namespace OpenTK.Graphics
             if (alignment == StringAlignment.Near && !rightToLeft || alignment == StringAlignment.Far && rightToLeft)
             {
                 ICollection<RectangleF> ranges = new List<RectangleF>();
-                font.MeasureCharacterRanges(text, StringFormat.GenericTypographic, ref ranges);
+                font.MeasureCharacterRanges(text, ref ranges);
 
                 int current = 0;
                 //foreach (char c in text)
