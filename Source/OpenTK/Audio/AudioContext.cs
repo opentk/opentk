@@ -257,11 +257,11 @@ namespace OpenTK.Audio
             if (!String.IsNullOrEmpty(device))
                 device_handle = Alc.OpenDevice(device);
             if (device_handle == IntPtr.Zero)
+                device_handle = Alc.OpenDevice(null);
+            if (device_handle == IntPtr.Zero)
                 Alc.OpenDevice(Alc.GetString(IntPtr.Zero, AlcGetString.DefaultDeviceSpecifier));
             if (device_handle == IntPtr.Zero && available_devices.Count > 0)
                 device_handle = Alc.OpenDevice(available_devices[0]);
-            if (device_handle == IntPtr.Zero)
-                device_handle = Alc.OpenDevice(null);
             if (device_handle == IntPtr.Zero)
                 throw new AudioDeviceException(String.Format("Audio device '{0}' does not exist or is tied up by another application.",
                                                              String.IsNullOrEmpty(device) ? "default" : device));
