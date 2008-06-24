@@ -177,7 +177,7 @@ namespace OpenTK.Graphics
         #region public float Width
 
         /// <summary>
-        /// Gets a float indicating the default line spacing of this font.
+        /// Gets a float indicating the default size of this font, in points.
         /// </summary>
         public float Width
         {
@@ -321,9 +321,15 @@ namespace OpenTK.Graphics
             if (format == null)
                 format = default_string_format;
 
+            if (ranges != null)
+                ranges.Clear();
+
             IntPtr[] regions = new IntPtr[GdiPlus.MaxMeasurableCharacterRanges];
             CharacterRange[] characterRanges = new CharacterRange[GdiPlus.MaxMeasurableCharacterRanges];
 
+            PointF origin = PointF.Empty;
+            SizeF size = SizeF.Empty;
+            RectangleF rect = new RectangleF();
             for (int i = 0; i < text.Length; i += GdiPlus.MaxMeasurableCharacterRanges)
             {
                 int num_characters = text.Length - i > GdiPlus.MaxMeasurableCharacterRanges ? GdiPlus.MaxMeasurableCharacterRanges : text.Length - i;
@@ -355,19 +361,21 @@ namespace OpenTK.Graphics
 
                 for (int j = 0; j < num_characters; j++)
                 {
-                    status = GdiPlus.GetRegionBounds(regions[j], new HandleRef(gfx, GdiPlus.GetNativeGraphics(gfx)), ref bounding_box);
+                    status = GdiPlus.GetRegionBounds(regions[j], new HandleRef(gfx, GdiPlus.GetNativeGraphics(gfx)), ref rect);
+
+                    if (i == 0 && j == 0)
+                        origin = rect.Location;
 
                     if (ranges != null)
-                        ranges.Add(bounding_box);
+                        ranges.Add(rect);
 
                     status = GdiPlus.DeleteRegion(regions[j]);
                 }
 
-                bounding_box.Size = new SizeF(bounding_box.X + bounding_box.Width, bounding_box.Y + bounding_box.Height);
-                bounding_box.Location = PointF.Empty;
+                bounding_box = RectangleF.Union(bounding_box, rect);
             }
-           
-            return bounding_box;
+
+            return new RectangleF(origin.X, origin.Y, bounding_box.Width, bounding_box.Height);
         }
 
         #endregion
@@ -403,20 +411,18 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region private void LoadGlyph(char c, out Box2 rectangle)
+        #region private void LoadGlyph(char c, out RectangleF rectangle)
 
-        /// <summary>
-        /// Adds a glyph to the texture packer.
-        /// </summary>
-        /// <param name="c">The character of the glyph.</param>
-        /// <param name="rectangle">An OpenTK.Math.Box2 that will hold the buffer for this glyph.</param>
+        // Adds the specified caharacter to the texture packer.
         private void LoadGlyph(char c, out RectangleF rectangle)
         {
             if (pack == null)
                 PrepareTexturePacker();
 
-            Glyph g = new Glyph(c, font);
-            Rectangle rect = new Rectangle();
+            RectangleF glyph_rect = MeasureText(c.ToString(), SizeF.Empty, StringFormat.GenericDefault);
+            SizeF glyph_size = new SizeF(glyph_rect.Right, glyph_rect.Bottom);  // We need to do this, since the origin might not be (0, 0)
+            Glyph g = new Glyph(c, font, glyph_size);
+            Rectangle rect;
 
             try
             {
@@ -431,6 +437,7 @@ namespace OpenTK.Graphics
 
             GL.BindTexture(TextureTarget.Texture2D, texture);
 
+            //gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
             gfx.Clear(System.Drawing.Color.Transparent);
             gfx.DrawString(g.Character.ToString(), g.Font, System.Drawing.Brushes.White, 0.0f, 0.0f);
 
