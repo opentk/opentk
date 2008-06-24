@@ -211,7 +211,7 @@ namespace OpenTK.Graphics
                 font.MeasureText(text, SizeF.Empty, null, ranges);
 
                 int current = 0;
-                //foreach (char c in text)
+
                 foreach (RectangleF range in ranges)
                 {
                     char c = text[current++];
