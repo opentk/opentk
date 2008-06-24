@@ -37,6 +37,8 @@ namespace OpenTK.Graphics
           // Interleaved, vertex, texcoord, vertex, etc... Starts with 8 chars, will expand as needed.
         Vector2[] vertices = new Vector2[8 * 8];
         ushort[] indices = new ushort[6 * 8];
+        IList<RectangleF> ranges = new List<RectangleF>();
+
 
         #region --- Constructors ---
 
@@ -206,8 +208,7 @@ namespace OpenTK.Graphics
 
             if (alignment == StringAlignment.Near && !rightToLeft || alignment == StringAlignment.Far && rightToLeft)
             {
-                ICollection<RectangleF> ranges = new List<RectangleF>();
-                font.MeasureCharacterRanges(text, ref ranges);
+                font.MeasureText(text, SizeF.Empty, null, ranges);
 
                 int current = 0;
                 //foreach (char c in text)
