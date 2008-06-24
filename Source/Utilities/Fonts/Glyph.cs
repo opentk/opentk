@@ -20,8 +20,8 @@ namespace OpenTK.Graphics
     {
         char character;
         Font font;
-        int width;
-        static Bitmap bmp = new Bitmap(1, 1);
+        SizeF size;
+        //static Bitmap bmp = new Bitmap(1, 1);
         object obj = new object();
 
         #region --- Constructors ---
@@ -31,12 +31,13 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="c">The character to represent.</param>
         /// <param name="f">The Font of the character.</param>
-        public Glyph(char c, Font f)
+        public Glyph(char c, Font f, SizeF s)
         {
             if (f == null)
                 throw new ArgumentNullException("f", "You must specify a valid font");
             character = c;
             font = f;
+            size = s;
         }
 
         #endregion
@@ -82,17 +83,7 @@ namespace OpenTK.Graphics
         {
             get
             {
-                if (width == 0)
-                {
-                    lock (obj)
-                    using (Graphics gfx = Graphics.FromImage(bmp))
-                    {
-                        float w = gfx.MeasureString(Character.ToString(), font).Width;
-                        width = (int)System.Math.Ceiling(w);
-                    }
-                }
-
-                return width;
+                return (int)System.Math.Ceiling(size.Width);
             }
         }
 
@@ -103,7 +94,7 @@ namespace OpenTK.Graphics
         {
             get
             {
-                return font.Height;
+                return (int)System.Math.Ceiling(size.Height);
             }
         }
 
@@ -118,12 +109,13 @@ namespace OpenTK.Graphics
 
         public override string ToString()
         {
-            return String.Format("'{0}', {1} {2}, {3} {4}", Character, Font.Name, font.Style, font.Size, font.Unit);
+            return String.Format("'{0}', {1} {2}, {3} {4}, ({5}, {6})", Character, Font.Name, font.Style, font.Size, font.Unit, Width, Height);
         }
 
         public override int GetHashCode()
         {
-            return character.GetHashCode() ^ font.Style.GetHashCode() ^ font.Size.GetHashCode() ^ font.Unit.GetHashCode();
+            //return character.GetHashCode() ^ font.Style.GetHashCode() ^ font.Size.GetHashCode() ^ font.Unit.GetHashCode();
+            return character.GetHashCode() ^ font.GetHashCode() ^ size.GetHashCode();
         }
 
         #region IEquatable<Glyph> Members
