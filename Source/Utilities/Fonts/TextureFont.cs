@@ -33,15 +33,17 @@ namespace OpenTK.Graphics
         static int texture;
         static TexturePacker<Glyph> pack;
         static int texture_width, texture_height;
+        static StringFormat default_string_format = StringFormat.GenericTypographic;
+        static SizeF maximum_graphics_size;
 
-        int[] data = new int[256];  // Used to upload glyph buffer to the OpenGL texture.
-        
+        int[] data = new int[256];  // Used to upload the glyph buffer to the OpenGL texture.
+
         object upload_lock = new object();
 
         #region --- Constructor ---
 
         /// <summary>
-        /// Constructs a new TextureFont object, using the specified System.Drawing.Font.
+        /// Constructs a new TextureFont, using the specified System.Drawing.Font.
         /// </summary>
         /// <param name="font">The System.Drawing.Font to use.</param>
         public TextureFont(Font font)
@@ -53,6 +55,7 @@ namespace OpenTK.Graphics
 
             bmp = new Bitmap(font.Height * 2, font.Height * 2);
             gfx = Graphics.FromImage(bmp);
+            maximum_graphics_size = gfx.ClipBounds.Size;
 
             // Adjust font rendering mode. Small sizes look blurry without gridfitting, so turn
             // that on. Increasing contrast also seems to help.
@@ -67,6 +70,25 @@ namespace OpenTK.Graphics
                 gfx.TextContrast = 0;
             }
         }
+
+        /// <summary>
+        /// Constructs a new TextureFont, using the specified parameters.
+        /// </summary>
+        /// <param name="font">The System.Drawing.FontFamily to use for the typeface.</param>
+        /// <param name="emSize">The em size to use for the typeface.</param>
+        public TextureFont(FontFamily family, float emSize)
+            : this(new Font(family, emSize))
+        { }
+
+        /// <summary>
+        /// Constructs a new TextureFont, using the specified parameters.
+        /// </summary>
+        /// <param name="font">The System.Drawing.FontFamily to use for the typeface.</param>
+        /// <param name="emSize">The em size to use for the typeface.</param>
+        /// <param name="family">The style to use for the typeface.</param>
+        public TextureFont(FontFamily family, float emSize, FontStyle style)
+            : this(new Font(family, emSize, style))
+        { }
 
         #endregion
 
@@ -83,8 +105,16 @@ namespace OpenTK.Graphics
             RectangleF rect = new RectangleF();
             foreach (char c in glyphs)
             {
-                if (!loaded_glyphs.ContainsKey(c))
-                    LoadGlyph(c, out rect);
+                try
+                {
+                    if (!loaded_glyphs.ContainsKey(c))
+                        LoadGlyph(c, out rect);
+                }
+                catch (Exception e)
+                {
+                    Debug.Print(e.ToString());
+                    throw;
+                }
             }
         }
 
@@ -165,6 +195,7 @@ namespace OpenTK.Graphics
         /// <param name="width">The measured width.</param>
         /// <param name="height">The measured height.</param>
         /// <param name="accountForOverhangs">If true, adds space to account for glyph overhangs. Set to true if you wish to measure a complete string. Set to false if you wish to perform layout on adjacent strings.</param>
+        [Obsolete("Returns invalid results - use MeasureText() instead")]
         public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)
         {
             System.Drawing.StringFormat format = accountForOverhangs ? System.Drawing.StringFormat.GenericDefault : System.Drawing.StringFormat.GenericTypographic;
@@ -212,6 +243,7 @@ namespace OpenTK.Graphics
         /// <param name="width">The measured width.</param>
         /// <param name="height">The measured height.</param>
         /// <seealso cref="public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)"/>
+        [Obsolete("Returns invalid results - use MeasureText() instead")]
         public void MeasureString(string str, out float width, out float height)
         {
             MeasureString(str, out width, out height, true);
@@ -219,56 +251,75 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region public void MeasureCharacterRanges(string text, ref ICollection<RectangleF> ranges)
+        #region public RectangleF MeasureText(string text)
 
         /// <summary>
-        /// Measures the individual character positions for the specified string.
+        /// Calculates size information for the specified text.
         /// </summary>
         /// <param name="text">The string to measure.</param>
-        /// <param name="ranges">An ICollection of RectangleF structures, containing the positions of individual characters.</param>
-        public void MeasureCharacterRanges(string text, ref ICollection<RectangleF> ranges)
+        /// <returns>A RectangleF containing the bounding box for the specified text.</returns>
+        public RectangleF MeasureText(string text)
         {
-            MeasureCharacterRanges(text, false, ref ranges);
+            return MeasureText(text, SizeF.Empty, default_string_format, null);
         }
 
         #endregion
 
-        #region public void MeasureCharacterRanges(string text, bool accountForOverhangs, ref ICollection<RectangleF> ranges)
+        #region public RectangleF MeasureText(string text, SizeF bounds)
 
         /// <summary>
-        /// Measures the individual character positions for the specified string.
+        /// Calculates size information for the specified text.
         /// </summary>
         /// <param name="text">The string to measure.</param>
-        /// <param name="accountForOverhangs">If true, adds space to account for glyph overhangs. Set to true if you wish to measure a complete string. Set to false if you wish to perform layout on adjacent strings.</param>
-        /// <param name="ranges">An ICollection of RectangleF structures, containing the positions of individual characters.</param>
-        public void MeasureCharacterRanges(string text, bool accountForOverhangs, ref ICollection<RectangleF> ranges)
+        /// <param name="bounds">A SizeF structure containing the maximum desired width and height of the text. Default is SizeF.Empty.</param>
+        /// <returns>A RectangleF containing the bounding box for the specified text.</returns>
+        public RectangleF MeasureText(string text, SizeF bounds)
         {
-            System.Drawing.StringFormat format = accountForOverhangs ? System.Drawing.StringFormat.GenericDefault : System.Drawing.StringFormat.GenericTypographic;
-            RectangleF rect = new RectangleF(0, 0, gfx.ClipBounds.Width, gfx.ClipBounds.Height);
-            MeasureCharacterRanges(text, ref rect, format, ref ranges);
+            return MeasureText(text, bounds, default_string_format, null);
         }
 
         #endregion
 
+        #region public RectangleF MeasureText(string text, SizeF bounds, StringFormat format)
+
+        /// <summary>
+        /// Calculates size information for the specified text.
+        /// </summary>
+        /// <param name="text">The string to measure.</param>
+        /// <param name="bounds">A SizeF structure containing the maximum desired width and height of the text. Pass SizeF.Empty to disable wrapping calculations. A width or height of 0 disables the relevant calculation.</param>
+        /// <param name="format">A StringFormat object which specifies the measurement format of the string. Pass null to use the default StringFormat (StringFormat.GenericTypographic).</param>
+        /// <returns>A RectangleF containing the bounding box for the specified text.</returns>
+        public RectangleF MeasureText(string text, SizeF bounds, StringFormat format)
+        {
+            return MeasureText(text, bounds, format, null);
+        }
+
         #endregion
 
-        #region --- Private Methods ---
+        #region public RectangleF MeasureText(string text, SizeF bounds, StringFormat format, IList<RectangleF> ranges)
 
-        #region void MeasureCharacterRanges(string text, ref RectangleF layoutRect, StringFormat format, ref ICollection<RectangleF> ranges)
-
-        void MeasureCharacterRanges(string text, ref RectangleF layoutRect, StringFormat format, ref ICollection<RectangleF> ranges)
+        /// <summary>
+        /// Calculates size information for the specified text.
+        /// </summary>
+        /// <param name="text">The string to measure.</param>
+        /// <param name="bounds">A SizeF structure containing the maximum desired width and height of the text. Pass SizeF.Empty to disable wrapping calculations. A width or height of 0 disables the relevant calculation.</param>
+        /// <param name="format">A StringFormat object which specifies the measurement format of the string. Pass null to use the default StringFormat (StringFormat.GenericTypographic).</param>
+        /// <param name="ranges">Fills the specified IList of RectangleF structures with position information for individual characters. If this argument is null, these calculations are skipped.</param>
+        /// <returns>A RectangleF containing the bounding box for the specified text.</returns>
+        public RectangleF MeasureText(string text, SizeF bounds, StringFormat format, IList<RectangleF> ranges)
         {
-            ranges.Clear();     // Hopefully this doesn't trim the collection.
-
-            //GPRECTF rect = new GPRECTF(layoutRect);
-            //rect = new GPRECTF(0, 0, 256, 256);
             int status = 0;
 
-            if (String.IsNullOrEmpty(text))
-                return;
+            RectangleF bounding_box = new RectangleF();
 
-            if (font == null) throw new ArgumentNullException("font");
-            if (format == null) throw new ArgumentNullException("format");
+            if (String.IsNullOrEmpty(text))
+                return RectangleF.Empty;
+
+            if (bounds == SizeF.Empty)
+                bounds = maximum_graphics_size;
+
+            if (format == null)
+                format = default_string_format;
 
             IntPtr[] regions = new IntPtr[GdiPlus.MaxMeasurableCharacterRanges];
             CharacterRange[] characterRanges = new CharacterRange[GdiPlus.MaxMeasurableCharacterRanges];
@@ -295,6 +346,7 @@ namespace OpenTK.Graphics
                 IntPtr native_graphics = GdiPlus.GetNativeGraphics(gfx);
                 IntPtr native_font = GdiPlus.GetNativeFont(font);
                 IntPtr native_string_format = GdiPlus.GetNativeStringFormat(format);
+                RectangleF layoutRect = new RectangleF(PointF.Empty, bounds);
 
                 status = GdiPlus.MeasureCharacterRanges(new HandleRef(gfx, native_graphics), text, text.Length,
                                                 new HandleRef(font, native_font), ref layoutRect,
@@ -303,15 +355,19 @@ namespace OpenTK.Graphics
 
                 for (int j = 0; j < num_characters; j++)
                 {
-                    RectangleF rect = new RectangleF();
-                    status = GdiPlus.GetRegionBounds(regions[j], new HandleRef(gfx, GdiPlus.GetNativeGraphics(gfx)), ref rect);
+                    status = GdiPlus.GetRegionBounds(regions[j], new HandleRef(gfx, GdiPlus.GetNativeGraphics(gfx)), ref bounding_box);
 
-                    ranges.Add(rect);
+                    if (ranges != null)
+                        ranges.Add(bounding_box);
 
                     status = GdiPlus.DeleteRegion(regions[j]);
                 }
 
+                bounding_box.Size = new SizeF(bounding_box.X + bounding_box.Width, bounding_box.Y + bounding_box.Height);
+                bounding_box.Location = PointF.Empty;
             }
+           
+            return bounding_box;
         }
 
         #endregion
