@@ -31,6 +31,8 @@ namespace OpenTK
 
         #endregion
 
+        #region --- Public Methods ---
+
         #region public Rectangle Add(T item)
 
         /// <summary>
@@ -88,6 +90,8 @@ namespace OpenTK
         {
             throw new NotImplementedException();
         }
+
+        #endregion
 
         #endregion
 
