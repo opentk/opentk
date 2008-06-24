@@ -641,7 +641,7 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region overloads using OpenTK.Math classes
+        #region --- Overloads for OpenTK.Math ---
 
         public static void Normal3(Vector3 normal)
         {
@@ -885,6 +885,44 @@ namespace OpenTK.Graphics
             GL.MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
         }
         
+        #endregion
+
+        #region public static void Rect(System.Drawing.RectangleF rect)
+
+        public static void Rect(System.Drawing.RectangleF rect)
+        {
+            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
+        }
+
+        #endregion
+
+        #region public static void Rect(ref System.Drawing.RectangleF rect)
+
+        [CLSCompliant(false)]
+        public static void Rect(ref System.Drawing.RectangleF rect)
+        {
+            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
+        }
+
+        #endregion
+
+        #region public static void Rect(System.Drawing.Rectangle rect)
+
+        public static void Rect(System.Drawing.Rectangle rect)
+        {
+            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
+        }
+
+        #endregion
+
+        #region public static void Rect(ref System.Drawing.Rectangle rect)
+
+        [CLSCompliant(false)]
+        public static void Rect(ref System.Drawing.Rectangle rect)
+        {
+            GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
+        }
+
         #endregion
 
         #endregion
