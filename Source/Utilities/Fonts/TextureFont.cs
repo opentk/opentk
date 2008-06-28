@@ -33,7 +33,7 @@ namespace OpenTK.Graphics
         static int texture;
         static TexturePacker<Glyph> pack;
         static int texture_width, texture_height;
-        static StringFormat default_string_format = StringFormat.GenericTypographic;
+        static StringFormat default_string_format = StringFormat.GenericDefault;
         static SizeF maximum_graphics_size;
 
         int[] data = new int[256];  // Used to upload the glyph buffer to the OpenGL texture.
@@ -287,7 +287,7 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="text">The string to measure.</param>
         /// <param name="bounds">A SizeF structure containing the maximum desired width and height of the text. Pass SizeF.Empty to disable wrapping calculations. A width or height of 0 disables the relevant calculation.</param>
-        /// <param name="format">A StringFormat object which specifies the measurement format of the string. Pass null to use the default StringFormat (StringFormat.GenericTypographic).</param>
+        /// <param name="format">A StringFormat object which specifies the measurement format of the string. Pass null to use the default StringFormat (StringFormat.GenericDefault).</param>
         /// <returns>A RectangleF containing the bounding box for the specified text.</returns>
         public RectangleF MeasureText(string text, SizeF bounds, StringFormat format)
         {
@@ -303,7 +303,7 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="text">The string to measure.</param>
         /// <param name="bounds">A SizeF structure containing the maximum desired width and height of the text. Pass SizeF.Empty to disable wrapping calculations. A width or height of 0 disables the relevant calculation.</param>
-        /// <param name="format">A StringFormat object which specifies the measurement format of the string. Pass null to use the default StringFormat (StringFormat.GenericTypographic).</param>
+        /// <param name="format">A StringFormat object which specifies the measurement format of the string. Pass null to use the default StringFormat (StringFormat.GenericDefault).</param>
         /// <param name="ranges">Fills the specified IList of RectangleF structures with position information for individual characters. If this argument is null, these calculations are skipped.</param>
         /// <returns>A RectangleF containing the bounding box for the specified text.</returns>
         public RectangleF MeasureText(string text, SizeF bounds, StringFormat format, IList<RectangleF> ranges)
