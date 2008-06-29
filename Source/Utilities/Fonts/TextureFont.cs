@@ -33,7 +33,7 @@ namespace OpenTK.Graphics
         static int texture;
         static TexturePacker<Glyph> pack;
         static int texture_width, texture_height;
-        static StringFormat default_string_format = StringFormat.GenericDefault;
+        static StringFormat default_string_format = StringFormat.GenericTypographic;
         static SizeF maximum_graphics_size;
 
         int[] data = new int[256];  // Used to upload the glyph buffer to the OpenGL texture.
@@ -62,12 +62,12 @@ namespace OpenTK.Graphics
             if (font.Size <= 18.0f)
             {
                 gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                gfx.TextContrast = 1;
+                //gfx.TextContrast = 11;
             }
             else
             {
                 gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
-                gfx.TextContrast = 0;
+                //gfx.TextContrast = 0;
             }
         }
 
@@ -287,7 +287,7 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="text">The string to measure.</param>
         /// <param name="bounds">A SizeF structure containing the maximum desired width and height of the text. Pass SizeF.Empty to disable wrapping calculations. A width or height of 0 disables the relevant calculation.</param>
-        /// <param name="format">A StringFormat object which specifies the measurement format of the string. Pass null to use the default StringFormat (StringFormat.GenericDefault).</param>
+        /// <param name="format">A StringFormat object which specifies the measurement format of the string. Pass null to use the default StringFormat (StringFormat.GenericTypographic).</param>
         /// <returns>A RectangleF containing the bounding box for the specified text.</returns>
         public RectangleF MeasureText(string text, SizeF bounds, StringFormat format)
         {
@@ -366,19 +366,25 @@ namespace OpenTK.Graphics
                     if (i == 0 && j == 0)
                         origin = rect.Location;
 
+                    //if (origin.X > 0)
+                    //    rect.X -= (float)System.Math.Floor(origin.X);
+
                     if (ranges != null)
                         ranges.Add(rect);
 
                     status = GdiPlus.DeleteRegion(regions[j]);
                 }
-
-                bounding_box = RectangleF.Union(bounding_box, rect);
             }
 
-            return new RectangleF(origin.X, origin.Y, bounding_box.Width, bounding_box.Height);
+            //origin.X = 0;
+            return new RectangleF(origin.X, origin.Y, rect.Right, rect.Bottom);
         }
 
         #endregion
+
+        #endregion
+
+        #region --- Private Methods ---
 
         #region private void PrepareTexturePacker()
 
@@ -419,7 +425,7 @@ namespace OpenTK.Graphics
             if (pack == null)
                 PrepareTexturePacker();
 
-            RectangleF glyph_rect = MeasureText(c.ToString(), SizeF.Empty, StringFormat.GenericDefault);
+            RectangleF glyph_rect = MeasureText(c.ToString(), SizeF.Empty, default_string_format);
             SizeF glyph_size = new SizeF(glyph_rect.Right, glyph_rect.Bottom);  // We need to do this, since the origin might not be (0, 0)
             Glyph g = new Glyph(c, font, glyph_size);
             Rectangle rect;
@@ -439,7 +445,7 @@ namespace OpenTK.Graphics
 
             //gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
             gfx.Clear(System.Drawing.Color.Transparent);
-            gfx.DrawString(g.Character.ToString(), g.Font, System.Drawing.Brushes.White, 0.0f, 0.0f);
+            gfx.DrawString(g.Character.ToString(), g.Font, System.Drawing.Brushes.White, 0.0f, 0.0f, default_string_format);
 
             //BitmapData bitmap_data = bitmap.LockBits(new Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly,
             //    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
