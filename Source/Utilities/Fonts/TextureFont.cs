@@ -33,7 +33,8 @@ namespace OpenTK.Graphics
         static int texture;
         static TexturePacker<Glyph> pack;
         static int texture_width, texture_height;
-        static StringFormat default_string_format = StringFormat.GenericTypographic;
+        static readonly StringFormat default_string_format = StringFormat.GenericTypographic; // Check the constructor, too, for additional flags.
+        static readonly StringFormat load_glyph_string_format = StringFormat.GenericDefault;
         static SizeF maximum_graphics_size;
 
         int[] data = new int[256];  // Used to upload the glyph buffer to the OpenGL texture.
@@ -69,6 +70,8 @@ namespace OpenTK.Graphics
                 gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
                 //gfx.TextContrast = 0;
             }
+
+            default_string_format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
         }
 
         /// <summary>
@@ -310,8 +313,6 @@ namespace OpenTK.Graphics
         {
             int status = 0;
 
-            RectangleF bounding_box = new RectangleF();
-
             if (String.IsNullOrEmpty(text))
                 return RectangleF.Empty;
 
@@ -425,7 +426,7 @@ namespace OpenTK.Graphics
             if (pack == null)
                 PrepareTexturePacker();
 
-            RectangleF glyph_rect = MeasureText(c.ToString(), SizeF.Empty, default_string_format);
+            RectangleF glyph_rect = MeasureText(c.ToString(), SizeF.Empty, load_glyph_string_format);
             SizeF glyph_size = new SizeF(glyph_rect.Right, glyph_rect.Bottom);  // We need to do this, since the origin might not be (0, 0)
             Glyph g = new Glyph(c, font, glyph_size);
             Rectangle rect;
