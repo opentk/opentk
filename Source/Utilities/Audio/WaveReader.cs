@@ -191,7 +191,7 @@ namespace OpenTK.Audio
                 //return new SoundData(decoded_data, new SoundFormat(channels, bits_per_sample, sample_rate));
                 return decoded_data;
             }
-            catch (AudioReaderException e)
+            catch (AudioReaderException)
             {
                 reader.Close();
                 throw;
