@@ -16,13 +16,11 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Represents a single character of a specific Font.
     /// </summary>
-    class Glyph : IPackable<Glyph>
+    struct Glyph : IPackable<Glyph>
     {
         char character;
         Font font;
         SizeF size;
-        //static Bitmap bmp = new Bitmap(1, 1);
-        object obj = new object();
 
         #region --- Constructors ---
 
@@ -41,6 +39,8 @@ namespace OpenTK.Graphics
         }
 
         #endregion
+
+        #region --- Public Methods ---
 
         #region public char Character
 
@@ -74,7 +74,52 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region IPackable<T> Members
+        #region public override bool Equals(object obj)
+
+        /// <summary>
+        /// Checks whether the given object is equal (memberwise) to the current Glyph.
+        /// </summary>
+        /// <param name="obj">The obj to check.</param>
+        /// <returns>True, if the object is identical to the current Glyph.</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj is Glyph)
+                return this.Equals((Glyph)obj);
+            return base.Equals(obj);
+        }
+
+        #endregion
+
+        #region public override string ToString()
+
+        /// <summary>
+        /// Describes this Glyph object.
+        /// </summary>
+        /// <returns>Returns a System.String describing this Glyph.</returns>
+        public override string ToString()
+        {
+            return String.Format("'{0}', {1} {2}, {3} {4}, ({5}, {6})", Character, Font.Name, font.Style, font.Size, font.Unit, Width, Height);
+        }
+
+        #endregion
+
+        #region public override int GetHashCode()
+
+        /// <summary>
+        /// Calculates the hashcode for this Glyph.
+        /// </summary>
+        /// <returns>A System.Int32 containing a hashcode that uniquely identifies this Glyph.</returns>
+        public override int GetHashCode()
+        {
+            //return character.GetHashCode() ^ font.Style.GetHashCode() ^ font.Size.GetHashCode() ^ font.Unit.GetHashCode();
+            return character.GetHashCode() ^ font.GetHashCode() ^ size.GetHashCode();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region --- IPackable<T> Members ---
 
         /// <summary>
         /// Gets an integer representing the width of the Glyph in pixels.
@@ -100,25 +145,7 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        public override bool Equals(object obj)
-        {
-            if (obj is Glyph)
-                return this.Equals((Glyph)obj);
-            return base.Equals(obj);
-        }
-
-        public override string ToString()
-        {
-            return String.Format("'{0}', {1} {2}, {3} {4}, ({5}, {6})", Character, Font.Name, font.Style, font.Size, font.Unit, Width, Height);
-        }
-
-        public override int GetHashCode()
-        {
-            //return character.GetHashCode() ^ font.Style.GetHashCode() ^ font.Size.GetHashCode() ^ font.Unit.GetHashCode();
-            return character.GetHashCode() ^ font.GetHashCode() ^ size.GetHashCode();
-        }
-
-        #region IEquatable<Glyph> Members
+        #region --- IEquatable<Glyph> Members ---
 
         /// <summary>
         /// Compares the current Glyph with the given Glyph.
