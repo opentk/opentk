@@ -16,6 +16,7 @@ namespace OpenTK.Math
     /// <summary>
     /// Represents a Quaternion
     /// </summary>
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Quaternion
     {

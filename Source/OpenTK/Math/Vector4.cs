@@ -16,8 +16,9 @@ namespace OpenTK.Math
     /// <summary>
     /// Represents a four-dimensional vector.
     /// </summary>
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4
+    public struct Vector4 : IEquatable<Vector4>
     {
         #region Fields
 
@@ -275,6 +276,16 @@ namespace OpenTK.Math
 			vec.W *= mult;
 			return vec;
 		}
+
+        public static bool operator ==(Vector4 left, Vector4 right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Vector4 left, Vector4 right)
+        {
+            return !left.Equals(right);
+        }
 
         [CLSCompliant(false)]
         unsafe public static explicit operator float*(Vector4 v)
@@ -682,5 +693,51 @@ namespace OpenTK.Math
 		}
 
 		#endregion
-	}
+
+        #region public override int GetHashCode()
+
+        /// <summary>
+        /// Returns the hashcode for this instance.
+        /// </summary>
+        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode() ^ W.GetHashCode();
+        }
+
+        #endregion
+
+        #region public override bool Equals(object obj)
+
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare to.</param>
+        /// <returns>True if the instances are equal; false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Vector4))
+                return false;
+
+            return this.Equals((Vector4)obj);
+        }
+
+        #endregion
+
+        #region IEquatable<Vector4> Members
+
+        /// <summary>Indicates whether the current vector is equal to another vector.</summary>
+        /// <param name="vector">A vector to compare with this vector.</param>
+        /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
+        public bool Equals(Vector4 other)
+        {
+            return
+                X == other.X &&
+                Y == other.Y &&
+                Z == other.Z &&
+                W == other.W;
+        }
+
+        #endregion
+    }
 }

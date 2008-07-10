@@ -16,8 +16,9 @@ namespace OpenTK.Math
 	/// <summary>
 	/// Represents a three-dimensional vector.
 	/// </summary>
+    [Serializable]
 	[StructLayout(LayoutKind.Sequential)]
-	public struct Vector3
+	public struct Vector3 : IEquatable<Vector3>
 	{
 		#region Fields
 
@@ -96,6 +97,32 @@ namespace OpenTK.Math
         #endregion
 
         #region Functions
+
+        #region This property
+
+        public float this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0: return X;
+                    case 1: return Y;
+                    case 2: return Z;
+                    default: throw new ArgumentOutOfRangeException("index", index, "Should be 0, 1 or 2.");
+                }
+                /*
+                unsafe
+                {
+                    fixed (float* ptr = &this.X)
+                        return *(ptr + index);
+                }
+
+                */
+            }
+        }
+
+        #endregion
 
         #region public float Length
 
@@ -257,23 +284,14 @@ namespace OpenTK.Math
 			return vec;
 		}
 
-        public float get(int index)
+        public static bool operator ==(Vector3 left, Vector3 right)
         {
-            switch (index)
-            {
-                case 0: return X;
-                case 1: return Y;
-                case 2: return Z;
-                default: throw new ArgumentOutOfRangeException("index", index, "Should be 0, 1 or 2.");
-            }
-            /*
-            unsafe
-            {
-                fixed (float* ptr = &this.X)
-                    return *(ptr + index);
-            }
+            return left.Equals(right);
+        }
 
-            */
+        public static bool operator !=(Vector3 left, Vector3 right)
+        {
+            return !left.Equals(right);
         }
 
         #endregion
@@ -810,5 +828,50 @@ namespace OpenTK.Math
 		}
 
 		#endregion
-	}
+
+        #region public override int GetHashCode()
+
+        /// <summary>
+        /// Returns the hashcode for this instance.
+        /// </summary>
+        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+        }
+
+        #endregion
+
+        #region public override bool Equals(object obj)
+
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare to.</param>
+        /// <returns>True if the instances are equal; false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Vector3))
+                return false;
+
+            return this.Equals((Vector3)obj);
+        }
+
+        #endregion
+
+        #region IEquatable<Vector3> Members
+
+        /// <summary>Indicates whether the current vector is equal to another vector.</summary>
+        /// <param name="vector">A vector to compare with this vector.</param>
+        /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
+        public bool Equals(Vector3 other)
+        {
+            return
+                X == other.X &&
+                Y == other.Y &&
+                Z == other.Z;
+        }
+
+        #endregion
+    }
 }
