@@ -173,9 +173,14 @@ Extensions define:
 
 ###############################################################################
 #
-# Edited by Stefanos Apostolopoulos for OpenTK. Revision 2
+# Edited by Stefanos Apostolopoulos for OpenTK. Revision 3
 #
 ###############################################################################
+
+StencilFace enum:
+	use DrawBufferMode FRONT
+	use DrawBufferMode BACK
+	use DrawBufferMode FRONT_AND_BACK
 
 DrawElementsType enum:
 	use DataType UNSIGNED_BYTE
