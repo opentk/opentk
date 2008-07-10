@@ -16,8 +16,9 @@ namespace OpenTK.Math
     /// <summary>
     /// Represents a 4x4 Matrix
     /// </summary>
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix4
+    public struct Matrix4 : IEquatable<Matrix4>
     {
         #region Fields
 
@@ -152,9 +153,14 @@ namespace OpenTK.Math
 			return Matrix4.Mult(left, right);
 		}
 
-        public float get(int x, int y)
+        public static bool operator ==(Matrix4 left, Matrix4 right)
         {
-            throw new NotImplementedException();
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Matrix4 left, Matrix4 right)
+        {
+            return !left.Equals(right);
         }
 
         #endregion
@@ -577,6 +583,52 @@ namespace OpenTK.Math
         public override string ToString()
         {
             return String.Format("{0}\n{1}\n{2}\n{3}", Row0, Row1, Row2, Row3);
+        }
+
+        #endregion
+
+        #region public override int GetHashCode()
+
+        /// <summary>
+        /// Returns the hashcode for this instance.
+        /// </summary>
+        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
+        public override int GetHashCode()
+        {
+            return Row0.GetHashCode() ^ Row1.GetHashCode() ^ Row2.GetHashCode() ^ Row3.GetHashCode();
+        }
+
+        #endregion
+
+        #region public override bool Equals(object obj)
+
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare to.</param>
+        /// <returns>True if the instances are equal; false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Matrix4))
+                return false;
+
+            return this.Equals((Matrix4)obj);
+        }
+
+        #endregion
+
+        #region IEquatable<Matrix4> Members
+
+        /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
+        /// <param name="matrix">An matrix to compare with this matrix.</param>
+        /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
+        public bool Equals(Matrix4 other)
+        {
+            return
+                Row0 == other.Row0 &&
+                Row1 == other.Row1 &&
+                Row2 == other.Row2 &&
+                Row3 == other.Row3;
         }
 
         #endregion
