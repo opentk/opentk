@@ -19,8 +19,9 @@ namespace OpenTK.Math
     /// <remarks>
     /// The Vector2 structure is suitable for interoperation with unmanaged code requiring two consecutive floats.
     /// </remarks>
+    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2
+    public struct Vector2 : IEquatable<Vector2>
     {
         #region Fields
 
@@ -266,6 +267,16 @@ namespace OpenTK.Math
 			vec.Y *= mult;
 			return vec;
 		}
+
+        public static bool operator ==(Vector2 left, Vector2 right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Vector2 left, Vector2 right)
+        {
+            return !left.Equals(right);
+        }
 
 		[CLSCompliant(false)]
 		unsafe public static explicit operator float*(Vector2 v)
@@ -612,6 +623,50 @@ namespace OpenTK.Math
         public override string ToString()
         {
             return String.Format("({0}, {1})", X, Y);
+        }
+
+        #endregion
+
+        #region public override int GetHashCode()
+
+        /// <summary>
+        /// Returns the hashcode for this instance.
+        /// </summary>
+        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() ^ Y.GetHashCode();
+        }
+
+        #endregion
+
+        #region public override bool Equals(object obj)
+
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare to.</param>
+        /// <returns>True if the instances are equal; false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Vector2))
+                return false;
+
+            return this.Equals((Vector2)obj);
+        }
+
+        #endregion
+
+        #region IEquatable<Vector2> Members
+
+        /// <summary>Indicates whether the current vector is equal to another vector.</summary>
+        /// <param name="vector">A vector to compare with this vector.</param>
+        /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
+        public bool Equals(Vector2 other)
+        {
+            return
+                X == other.X &&
+                Y == other.Y;
         }
 
         #endregion
