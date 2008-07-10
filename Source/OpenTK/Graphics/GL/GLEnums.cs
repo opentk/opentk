@@ -2,6 +2,13 @@ namespace OpenTK.Graphics
 {
     #pragma warning disable 1591
 
+    public enum StencilFace
+    {
+        Front = ((int)0X0404),
+        FrontAndBack = ((int)0X0408),
+        Back = ((int)0X0405),
+    }
+
     public enum DrawElementsType
     {
         UnsignedByte = ((int)0X1401),
@@ -100,10 +107,12 @@ namespace OpenTK.Graphics
         OneMinusConstantColorExt = ((int)0X8002),
         SrcColor = ((int)0X0300),
         OneMinusSrcColor = ((int)0X0301),
+        OneMinusDstColor = ((int)0X0307),
         ConstantAlphaExt = ((int)0X8003),
         SrcAlpha = ((int)0X0302),
-        DstAlpha = ((int)0X0304),
+        DstColor = ((int)0X0306),
         Zero = ((int)0),
+        DstAlpha = ((int)0X0304),
         OneMinusConstantAlphaExt = ((int)0X8004),
     }
 
@@ -112,9 +121,11 @@ namespace OpenTK.Graphics
         ConstantColorExt = ((int)0X8001),
         OneMinusSrcAlpha = ((int)0X0303),
         One = ((int)1),
-        SrcAlphaSaturate = ((int)0X0308),
-        OneMinusConstantColorExt = ((int)0X8002),
         OneMinusDstAlpha = ((int)0X0305),
+        OneMinusConstantColorExt = ((int)0X8002),
+        SrcColor = ((int)0X0300),
+        SrcAlphaSaturate = ((int)0X0308),
+        OneMinusSrcColor = ((int)0X0301),
         OneMinusDstColor = ((int)0X0307),
         ConstantAlphaExt = ((int)0X8003),
         SrcAlpha = ((int)0X0302),
