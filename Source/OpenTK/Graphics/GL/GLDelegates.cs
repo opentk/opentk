@@ -1472,7 +1472,7 @@ namespace OpenTK.Graphics
             internal delegate void StencilOpSeparate(OpenTK.Graphics.All face, OpenTK.Graphics.StencilOp sfail, OpenTK.Graphics.StencilOp dpfail, OpenTK.Graphics.StencilOp dppass);
             internal static StencilOpSeparate glStencilOpSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void StencilFuncSeparate(OpenTK.Graphics.StencilFunction frontfunc, OpenTK.Graphics.StencilFunction backfunc, Int32 @ref, UInt32 mask);
+            internal delegate void StencilFuncSeparate(OpenTK.Graphics.StencilFace face, OpenTK.Graphics.StencilFunction func, Int32 @ref, UInt32 mask);
             internal static StencilFuncSeparate glStencilFuncSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void StencilMaskSeparate(OpenTK.Graphics.All face, UInt32 mask);
