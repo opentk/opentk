@@ -9532,15 +9532,15 @@ namespace OpenTK.Graphics
 
         [System.CLSCompliant(false)]
         public static 
-        void StencilFuncSeparate(OpenTK.Graphics.StencilFunction frontfunc, OpenTK.Graphics.StencilFunction backfunc, Int32 @ref, UInt32 mask)
+        void StencilFuncSeparate(OpenTK.Graphics.StencilFace face, OpenTK.Graphics.StencilFunction func, Int32 @ref, UInt32 mask)
         {
-            Delegates.glStencilFuncSeparate((OpenTK.Graphics.StencilFunction)frontfunc, (OpenTK.Graphics.StencilFunction)backfunc, (Int32)@ref, (UInt32)mask);
+            Delegates.glStencilFuncSeparate((OpenTK.Graphics.StencilFace)face, (OpenTK.Graphics.StencilFunction)func, (Int32)@ref, (UInt32)mask);
         }
 
         public static 
-        void StencilFuncSeparate(OpenTK.Graphics.StencilFunction frontfunc, OpenTK.Graphics.StencilFunction backfunc, Int32 @ref, Int32 mask)
+        void StencilFuncSeparate(OpenTK.Graphics.StencilFace face, OpenTK.Graphics.StencilFunction func, Int32 @ref, Int32 mask)
         {
-            Delegates.glStencilFuncSeparate((OpenTK.Graphics.StencilFunction)frontfunc, (OpenTK.Graphics.StencilFunction)backfunc, (Int32)@ref, (UInt32)mask);
+            Delegates.glStencilFuncSeparate((OpenTK.Graphics.StencilFace)face, (OpenTK.Graphics.StencilFunction)func, (Int32)@ref, (UInt32)mask);
         }
 
         [System.CLSCompliant(false)]
