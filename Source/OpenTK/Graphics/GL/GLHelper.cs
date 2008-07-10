@@ -344,9 +344,10 @@ namespace OpenTK.Graphics
         static bool SupportsFunction(MethodInfo method)
         {
             throw new NotImplementedException();
+#if false
             lock (gl_lock)
             {
-                /*
+                
                 if (function == null)
                     throw new ArgumentNullException("function");
 
@@ -362,9 +363,10 @@ namespace OpenTK.Graphics
                     return false;
 
                 return f.GetValue(null) != null;
-                */
+                
                 return false;
             }
+#endif
         }
 
         #endregion
