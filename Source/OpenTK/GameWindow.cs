@@ -1372,14 +1372,20 @@ namespace OpenTK
         /// <summary>
         /// Disposes of the GameWindow, releasing all resources consumed by it.
         /// </summary>
-        public virtual void Dispose()
+        public void Dispose()
         {
-            if (disposed) throw new ObjectDisposedException("GameWindow");
-            Dispose(true);
+            try
+            {
+                Dispose(true);
+            }
+            finally
+            {
+                DisposeInternal(true);
+            }
             GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool manual)
+        private void DisposeInternal(bool manual)
         {
             if (!disposed)
             {
@@ -1401,10 +1407,19 @@ namespace OpenTK
             }
         }
 
-        /// <summary>Finalizes unmanaged resources consumed by the GameWindow.</summary>
+        /// <summary>
+        /// Override to add custom cleanup logic.
+        /// </summary>
+        /// <param name="manual">True, if this method was called by the application; false if this was called by the finalizer thread.</param>
+        protected virtual void Dispose(bool manual)
+        {
+        }
+
+        ///// <summary>Finalizes unmanaged resources consumed by the GameWindow.</summary>
         //~GameWindow()
         //{
         //    Dispose(false);
+        //    DisposeInternal(false);
         //}
 
         #endregion
