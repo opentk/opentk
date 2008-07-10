@@ -5868,12 +5868,14 @@ StencilOpSeparate(face, sfail, dpfail, dppass)
 	glsopcode	?
 	offset		?
 
-StencilFuncSeparate(frontfunc, backfunc, ref, mask)
+
+# Edited for OpenTK
+StencilFuncSeparate(face, func, ref, mask)
 	return		void
-	param		frontfunc	StencilFunction in value
-	param		backfunc	StencilFunction in value
+	param		face	StencilFace in value
+	param		func	StencilFunction in value
 	param		ref		ClampedStencilValue in value
-	param		mask		MaskedStencilValue in value
+	param		mask	MaskedStencilValue in value
 	category	VERSION_2_0
 	version		2.0
 	extension
