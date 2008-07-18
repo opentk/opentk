@@ -149,7 +149,7 @@ namespace OpenTK.Platform
                 return false;
             }
 
-            FieldInfo f = type.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic);
+            FieldInfo f = extensions_class.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic);
             if (f == null)
             {
                 Debug.Print("Extension \"", extension, "\" not found in ", type.ToString());
