@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Xml;
+
+#if false
+
 using System.Xml.Serialization;
 
 using OpenTK.Math;
@@ -62,3 +65,5 @@ namespace Examples.Tests
         }
     }
 }
+
+#endif
