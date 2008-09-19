@@ -17,6 +17,7 @@ namespace Examples.Tests
     {
         public static void Main()
         {
+            /*
             Stopwatch watch = new Stopwatch();
 
             Vector3 a = new Vector3(0.0f, 0.0f, 0.0f);
@@ -31,7 +32,7 @@ namespace Examples.Tests
             Vector3.Add(ref a, ref b, out res);
             res = a + b;
             res = Vector3.Zero;
-            /*
+            
             watch.Reset();
             watch.Start();
             for (int i = 100000000; --i != 0; )
@@ -82,12 +83,12 @@ namespace Examples.Tests
             */
         }
 
-        static Vector3 pos = new Vector3();
+        //static Vector3 pos = new Vector3();
 
-        static Vector3 Pos
-        {
-            get { return pos; }
-            set { pos = value; }
-        }
+        //static Vector3 Pos
+        //{
+        //    get { return pos; }
+        //    set { pos = value; }
+        //}
     }
 }

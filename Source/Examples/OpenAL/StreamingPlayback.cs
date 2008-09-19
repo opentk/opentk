@@ -25,7 +25,7 @@ namespace Examples.OpenAL
         const int buffer_size = (int)(0.5*44100);
         const int buffer_count = 4;
 
-        static object openal_lock = new object();   // Should be global in your app.
+        //static object openal_lock = new object();   // Should be global in your app.
 
         public static void Main()
         {
