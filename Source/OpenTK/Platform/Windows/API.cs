@@ -1434,6 +1434,8 @@ namespace OpenTK.Platform.Windows
 
     #region PixelFormatDescriptor
 
+    #pragma warning disable 0169    
+    
     /// <summary>
     /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
     /// Found in WinGDI.h
@@ -1468,6 +1470,8 @@ namespace OpenTK.Platform.Windows
         internal int VisibleMask;
         internal int DamageMask;
     }
+    
+    #pragma warning restore 0169
 
     #endregion
     
