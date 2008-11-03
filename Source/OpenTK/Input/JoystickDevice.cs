@@ -5,6 +5,7 @@ using OpenTK.Math;
 
 namespace OpenTK.Input
 {
+#if false
     /// <summary>
     /// Represents a joystick device and provides methods to query its state.
     /// </summary>
@@ -13,7 +14,7 @@ namespace OpenTK.Input
         string description;
         Vector2[] axis_position;
 
-        #region --- IInputDevice Members ---
+    #region --- IInputDevice Members ---
 
         /// <summary>
         /// Gets a string describing this JoystickDevice.
@@ -34,7 +35,7 @@ namespace OpenTK.Input
 
         #endregion
 
-        #region --- Public Methods ---
+    #region --- Public Methods ---
 
         //public Vector2 Axis1
         //{
@@ -44,4 +45,5 @@ namespace OpenTK.Input
 
         #endregion
     }
+#endif
 }
