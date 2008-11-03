@@ -8,7 +8,6 @@ namespace OpenTK.Platform.Windows
 {
     class WinGdiPlusInternals : IGdiPlusInternals
     {
-        const string gdi_plus_library = "gdiplus.dll";
         static readonly PropertyInfo native_graphics_property, native_font_property;
         static readonly FieldInfo native_string_format_field;
 
