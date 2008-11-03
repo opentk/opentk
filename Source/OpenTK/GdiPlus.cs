@@ -18,6 +18,8 @@ namespace OpenTK.Platform
 {
     internal static class GdiPlus
     {
+        static IGdiPlusInternals internals;
+
         const string gdi_plus_library = "gdiplus.dll";
         static readonly PropertyInfo native_graphics_property, native_font_property;
         static readonly FieldInfo native_string_format_field;
@@ -26,33 +28,29 @@ namespace OpenTK.Platform
 
         static GdiPlus()
         {
-            native_graphics_property =
-                typeof(System.Drawing.Graphics).GetProperty("NativeGraphics", BindingFlags.Instance | BindingFlags.NonPublic);
-
-            native_font_property =
-                typeof(System.Drawing.Font).GetProperty("NativeFont", BindingFlags.Instance | BindingFlags.NonPublic);
-
-            native_string_format_field =
-                typeof(System.Drawing.StringFormat).GetField("nativeFormat", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (Configuration.RunningOnWindows)
+                internals = new Windows.WinGdiPlusInternals();
+           else
+                internals = new X11.X11GdiPlusInternals();
         }
 
         #endregion
 
-        #region --- Reflection ---
+        #region --- Public Methods ---
 
         public static IntPtr GetNativeGraphics(System.Drawing.Graphics graphics)
         {
-            return (IntPtr)native_graphics_property.GetValue(graphics, null);
+            return internals.GetNativeGraphics(graphics);
         }
 
         public static IntPtr GetNativeFont(Font font)
         {
-            return (IntPtr)native_font_property.GetValue(font, null);
+            return internals.GetNativeFont(font);
         }
 
         public static IntPtr GetNativeStringFormat(StringFormat format)
         {
-            return (IntPtr)native_string_format_field.GetValue(format);
+            return internals.GetNativeStringFormat(format);
         }
 
         public static int MaxMeasurableCharacterRanges
@@ -63,11 +61,7 @@ namespace OpenTK.Platform
             }
         }
 
-        #endregion
-
-        #region --- Methods ---
-
-        [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint="GdipSetStringFormatMeasurableCharacterRanges")]
+        [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipSetStringFormatMeasurableCharacterRanges")]
         public static extern int SetStringFormatMeasurableCharacterRanges(HandleRef format, int rangeCount, [In, Out] CharacterRange[] range);
 
         [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipGetStringFormatMeasurableCharacterRangeCount")]
@@ -87,6 +81,7 @@ namespace OpenTK.Platform
 
         #endregion
 
+#if false
         [StructLayout(LayoutKind.Sequential)]
         internal struct GPRECTF
         {
@@ -122,9 +117,6 @@ namespace OpenTK.Platform
                 return new RectangleF(this.X, this.Y, this.Width, this.Height);
             }
         }
-
-
+#endif
     }
-
-
 }
