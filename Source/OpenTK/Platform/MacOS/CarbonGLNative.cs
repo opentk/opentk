@@ -1,0 +1,627 @@
+//
+//  
+//  xCSCarbon
+//
+//  Created by Erik Ylvisaker on 3/17/08.
+//  Copyright 2008 __MyCompanyName__. All rights reserved.
+//
+//
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Text;
+
+namespace OpenTK.Platform.MacOS
+{
+    using Carbon;
+    using Graphics;
+
+	class CarbonGLNative : INativeGLWindow
+	{
+        CarbonWindowInfo window;
+        CarbonInput mInputDriver;
+        GraphicsContext context;
+
+        static MacOSKeyMap Keymap = new MacOSKeyMap();
+
+        IntPtr uppHandler;
+        string title = "New Window";
+        short mWidth, mHeight;
+        bool mIsDisposed = false;
+
+        WindowAttributes mWindowAttrib;
+        WindowClass mWindowClass;
+        WindowPositionMethod mPositionMethod = WindowPositionMethod.CenterOnMainScreen;
+        int mTitlebarHeight;
+        private WindowBorder windowBorder = WindowBorder.Resizable;
+        private WindowState windowState = WindowState.Normal;
+
+        static Dictionary<IntPtr, WeakReference> mWindows = new Dictionary<IntPtr, WeakReference>();
+
+        static CarbonGLNative()
+        {
+            Application.Initialize();
+        }
+        public CarbonGLNative()
+            : this(WindowClass.Document, 
+            WindowAttributes.StandardDocument | 
+            WindowAttributes.StandardHandler | 
+            WindowAttributes.InWindowMenu |
+            WindowAttributes.LiveResize)
+        {
+
+        }
+        private CarbonGLNative(WindowClass @class, WindowAttributes attrib)
+        {
+            mWindowClass = @class;
+            mWindowAttrib = attrib;
+
+            
+        }
+        ~CarbonGLNative()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (mIsDisposed)
+                return;
+
+            Debug.Print("Disposing of CarbonGLNative window.");
+
+            mIsDisposed = true;
+
+            if (disposing)
+            {
+            		mWindows.Remove(window.WindowRef);
+            		
+            		window.Dispose();
+                window = null;
+            }
+            
+            DisposeUPP();
+        }
+
+        private void DisposeUPP()
+        {
+            if (uppHandler != IntPtr.Zero)
+            {
+                // API.RemoveEventHandler(uppHandler);
+                // API.DisposeEventHandlerUPP(uppHandler);
+
+            }
+
+            uppHandler = IntPtr.Zero;
+        }
+
+
+        void CreateNativeWindow(WindowClass @class, WindowAttributes attrib, Rect r)
+        {
+            Debug.Print("Creating window...");
+            Debug.Indent();
+
+            IntPtr windowRef = API.CreateNewWindow(@class, attrib, r);
+            //API.SetWindowTitle(windowRef, title);
+
+            window = new CarbonWindowInfo(windowRef, true, false);
+
+            SetSize(r.Width, r.Height);
+
+            Debug.Unindent();
+            Debug.Print("Created window.");
+
+            mWindows.Add(windowRef, new WeakReference(this));
+
+            LoadSize();
+
+            Rect titleSize = API.GetWindowBounds(window.WindowRef, WindowRegionCode.TitleBarRegion);
+            mTitlebarHeight = titleSize.Height;
+
+            Debug.Print("Titlebar size: {0}", titleSize);
+
+            ConnectEvents();
+
+            System.Diagnostics.Debug.Print("Attached events.");
+        }
+
+        public void Activate()
+        {
+            API.SelectWindow(window.WindowRef);
+        }
+        
+        void ConnectEvents()
+        {
+            mInputDriver = new CarbonInput();
+
+            EventTypeSpec[] eventTypes = new EventTypeSpec[]
+            {
+                new EventTypeSpec(EventClass.Window, WindowEventKind.WindowClose),
+                new EventTypeSpec(EventClass.Window, WindowEventKind.WindowClosed),
+                new EventTypeSpec(EventClass.Window, WindowEventKind.WindowBoundsChanged),
+
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseMoved),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDragged),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseEntered),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseExited),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelMoved),
+
+                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyDown),
+                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyRepeat),
+                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp),
+                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged),
+            };
+
+            MacOSEventHandler handler = EventHandler;
+            uppHandler = API.NewEventHandlerUPP(handler);
+
+            API.InstallWindowEventHandler(window.WindowRef, uppHandler, eventTypes, window.WindowRef, IntPtr.Zero);
+        }
+
+        public string Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                API.SetWindowTitle(window.WindowRef, value);
+                title = value;
+            }
+        }
+
+        public void Show()
+        {
+            IntPtr parent = IntPtr.Zero;
+
+            API.ShowWindow(window.WindowRef);
+            API.RepositionWindow(window.WindowRef, parent, WindowPositionMethod);
+            API.SelectWindow(window.WindowRef);
+
+        }
+        public void Hide()
+        {
+            API.HideWindow(window.WindowRef);
+        }
+        public bool Visible
+        {
+            get { return API.IsWindowVisible(window.WindowRef); }
+            set 
+            { 
+                if (value && Visible == false)
+                    Show();
+                else
+                    Hide();
+            }
+        }
+        public bool IsDisposed
+        {
+            get { return mIsDisposed; }
+        }
+
+
+        public WindowPositionMethod WindowPositionMethod
+        {
+            get { return mPositionMethod; }
+            set { mPositionMethod = value; }
+        }
+
+        protected static OSStatus EventHandler(IntPtr inCaller, IntPtr inEvent, IntPtr userData)
+        {
+            EventInfo evt = new EventInfo(inEvent);
+            WeakReference reference = mWindows[userData];
+            CarbonGLNative window = (CarbonGLNative)reference.Target;
+            
+
+            if (window == null)
+            {
+                Debug.WriteLine("Window for event not found.");
+                return OSStatus.EventNotHandled;
+            }
+
+            switch(evt.EventClass)
+            {
+                case EventClass.Window:
+                    return window.ProcessWindowEvent(inCaller, inEvent, evt, userData);
+
+                case EventClass.Mouse:
+                    return window.ProcessMouseEvent(inCaller, inEvent, evt, userData);
+
+                case EventClass.Keyboard:
+                    return window.ProcessKeyboardEvent(inCaller, inEvent, evt, userData);
+
+                default:
+                    return OSStatus.EventNotHandled;
+            }
+
+        }
+
+        private OSStatus ProcessKeyboardEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
+        {
+            System.Diagnostics.Debug.Assert(evt.EventClass == EventClass.Keyboard);
+            MacOSKeyCode code;
+            char charCode;
+
+            //Debug.Print("                 {0}, '{1}'", (int)charCode, charCode);
+
+            switch (evt.KeyboardEventKind)
+            {
+                case KeyboardEventKind.RawKeyRepeat:
+                    GetCharCodes(inEvent, out code, out charCode);
+                    InputDriver.Keyboard[0].KeyRepeat = true;
+                    goto case KeyboardEventKind.RawKeyDown;
+
+                case KeyboardEventKind.RawKeyDown:
+                    GetCharCodes(inEvent, out code, out charCode);
+                    Debug.Print("                 {0}, '{1}'", code, charCode);
+                    InputDriver.Keyboard[0][Keymap[code]] = true;
+                    return OSStatus.EventNotHandled;
+
+                case KeyboardEventKind.RawKeyUp:
+                    GetCharCodes(inEvent, out code, out charCode);
+                    InputDriver.Keyboard[0][Keymap[code]] = false;
+                    
+                    return OSStatus.EventNotHandled;
+
+                case KeyboardEventKind.RawKeyModifiersChanged:
+                    ProcessModifierKey(inEvent);
+                    return OSStatus.EventNotHandled;
+
+                default:
+                    return OSStatus.EventNotHandled;
+            }
+
+
+        }
+
+        private OSStatus ProcessWindowEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
+        {
+            System.Diagnostics.Debug.Assert(evt.EventClass == EventClass.Window);
+
+            switch(evt.WindowEventKind)
+            {
+                case WindowEventKind.WindowClose:
+                    CancelEventArgs cancel = new CancelEventArgs();
+                    OnQueryWindowClose(cancel);
+
+                    if (cancel.Cancel)
+                        return OSStatus.NoError;
+                    else
+                        return OSStatus.EventNotHandled;
+
+                case WindowEventKind.WindowClosed:
+                    OnWindowClosed();
+
+                    return OSStatus.NoError;
+
+                case WindowEventKind.WindowBoundsChanged:
+                    OnResize();
+                    return OSStatus.EventNotHandled;
+
+                default:
+                    Debug.Print("{0}", evt);
+
+                    return OSStatus.EventNotHandled;
+            }
+        }
+        protected OSStatus ProcessMouseEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
+        {
+            System.Diagnostics.Debug.Assert(evt.EventClass == EventClass.Mouse);
+            MouseButton button = MouseButton.Primary;
+            HIPoint pt = new HIPoint();
+
+            pt = API.GetEventWindowMouseLocation(inEvent);
+
+            // ignore clicks in the title bar
+            if (pt.Y < mTitlebarHeight)
+                return OSStatus.EventNotHandled;
+
+            // TODO: Fix this
+            //InputDriver.Mouse[0].X = (int)pt.X;
+            //InputDriver.Mouse[0].Y = (int)pt.Y - mTitlebarHeight;
+
+            switch(evt.MouseEventKind)
+            {
+                case MouseEventKind.MouseDown:
+                    button = API.GetEventMouseButton(inEvent);
+
+                    switch (button)
+                    {
+                        case MouseButton.Primary:
+                            InputDriver.Mouse[0][OpenTK.Input.MouseButton.Left] = true;
+                            break;
+
+                        case MouseButton.Secondary:
+                            InputDriver.Mouse[0][OpenTK.Input.MouseButton.Right] = true;
+                            break;
+
+                        case MouseButton.Tertiary:
+                            InputDriver.Mouse[0][OpenTK.Input.MouseButton.Middle] = true;
+                            break;
+                    }
+
+
+                    break;
+					
+                case MouseEventKind.MouseUp:
+                    switch (button)
+                    {
+                        case MouseButton.Primary:
+                            InputDriver.Mouse[0][OpenTK.Input.MouseButton.Left] = false;
+                            break;
+
+                        case MouseButton.Secondary:
+                            InputDriver.Mouse[0][OpenTK.Input.MouseButton.Right] = false;
+                            break;
+
+                        case MouseButton.Tertiary:
+                            InputDriver.Mouse[0][OpenTK.Input.MouseButton.Middle] = false;
+                            break;
+                    }
+                    
+                    button = API.GetEventMouseButton(inEvent);
+
+                    break;
+					
+                case MouseEventKind.MouseMoved:
+                case MouseEventKind.MouseDragged:
+                    
+                    //Debug.Print("MouseMoved: {0}", InputDriver.Mouse[0].Position);
+
+                    return OSStatus.EventNotHandled;
+
+                default:
+                    Debug.Print("{0}", evt);
+
+                    return OSStatus.EventNotHandled;
+            }
+
+			return OSStatus.EventNotHandled;
+        }
+
+
+        private static void GetCharCodes(IntPtr inEvent, out MacOSKeyCode code, out char charCode)
+        {
+            code = API.GetEventKeyboardKeyCode(inEvent);
+            charCode = API.GetEventKeyboardChar(inEvent);
+        }
+        private void ProcessModifierKey(IntPtr inEvent)
+        {
+            MacOSKeyModifiers modifiers = API.GetEventKeyModifiers(inEvent);
+
+            bool caps = (modifiers & MacOSKeyModifiers.CapsLock) != 0 ? true : false;
+            bool control = (modifiers & MacOSKeyModifiers.Control) != 0 ? true : false;
+            bool command = (modifiers & MacOSKeyModifiers.Command) != 0 ? true : false;
+            bool option = (modifiers & MacOSKeyModifiers.Option) != 0 ? true : false;
+            bool shift = (modifiers & MacOSKeyModifiers.Shift) != 0 ? true : false;
+
+            Debug.Print("Modifiers Changed: {0}", modifiers);
+
+            Input.KeyboardDevice keyboard = InputDriver.Keyboard[0];
+
+            if (keyboard[OpenTK.Input.Key.AltLeft] ^ option)
+                keyboard[OpenTK.Input.Key.AltLeft] = option;
+
+            if (keyboard[OpenTK.Input.Key.ShiftLeft] ^ shift)
+                keyboard[OpenTK.Input.Key.ShiftLeft] = shift;
+
+            if (keyboard[OpenTK.Input.Key.WinLeft] ^ command)
+                keyboard[OpenTK.Input.Key.WinLeft] = command;
+
+            if (keyboard[OpenTK.Input.Key.ControlLeft] ^ control)
+                keyboard[OpenTK.Input.Key.ControlLeft] = control;
+
+            if (keyboard[OpenTK.Input.Key.CapsLock] ^ caps)
+                keyboard[OpenTK.Input.Key.CapsLock] = caps;
+
+        }
+
+
+        Rect GetRegion()
+        {
+            Rect retval = API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
+
+            return retval;
+        }
+
+        public int Width
+        {
+            get { return mWidth; }
+            set { SetSize(value, mHeight); }
+        }
+        public int Height
+        {
+            get { return mHeight; }
+            set { SetSize(mWidth, value); }
+        }
+        public void SetSize(int width, int height)
+        {
+            mWidth = (short)width;
+            mHeight = (short)height;
+
+            API.SizeWindow(window.WindowRef, mWidth, mHeight, true);
+
+            Rect contentBounds = API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
+
+            Rect newSize = new Rect(0, 0,
+                (short)(2 * mWidth - contentBounds.Width),
+                (short)(2 * mHeight - contentBounds.Height));
+
+            Debug.Print("Content region was: {0}", contentBounds);
+            Debug.Print("Resizing window to: {0}", newSize);
+
+            API.SizeWindow(window.WindowRef, newSize.Width, newSize.Height, true);
+
+            contentBounds = API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
+            Debug.Print("New content region size: {0}", contentBounds);
+
+        }
+
+        protected void OnResize()
+        {
+            LoadSize();
+
+            if (context != null)
+                context.Update(window);
+
+            if (Resize != null)
+                Resize(this, new ResizeEventArgs(Width, Height));
+        }
+
+        private void LoadSize()
+        {
+            Rect region = GetRegion();
+
+            mWidth = (short)(region.Right - region.Left);
+            mHeight = (short)(region.Bottom - region.Top);
+        }
+
+        protected virtual void OnQueryWindowClose(CancelEventArgs e)
+        {
+            if (QueryWindowClose != null)
+                QueryWindowClose(this, e);
+        }
+        protected virtual void OnWindowClosed()
+        {
+            if (Destroy != null)
+                Destroy(this, EventArgs.Empty);
+
+        }
+
+        public event CancelEventHandler QueryWindowClose;
+
+
+        #region INativeGLWindow Members
+
+        public void CreateWindow(int width, int height, OpenTK.Graphics.GraphicsMode mode, out OpenTK.Graphics.IGraphicsContext context)
+        {
+            Rect r = new Rect(0, 0, (short)width, (short)height);
+            CreateNativeWindow(mWindowClass, mWindowAttrib, r);
+
+            Show();
+
+            this.context = new Graphics.GraphicsContext(mode, window);
+            this.context.MakeCurrent(window);
+
+            context = this.context;
+            
+        }
+
+        public void DestroyWindow()
+        {
+            Dispose();
+        }
+
+        public void ProcessEvents()
+        {
+            Application.ProcessEvents();
+        }
+
+        public void PointToClient(ref System.Drawing.Point p)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public void PointToScreen(ref System.Drawing.Point p)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public bool Exists
+        {
+            get { return !mIsDisposed; }
+        }
+
+        public IWindowInfo WindowInfo
+        {
+            get { return window; }
+        }
+
+        public bool IsIdle
+        {
+            get { return true; }
+        }
+
+        public OpenTK.Input.IInputDriver InputDriver
+        {
+            get 
+            {
+                return mInputDriver;
+            }
+        }
+
+        public bool Fullscreen
+        {
+            get
+            {
+                return false;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public event CreateEvent Create;
+
+        public event DestroyEvent Destroy;
+
+        #endregion
+
+        #region IResizable Members
+
+        public event ResizeEvent Resize;
+
+        #endregion
+
+        #region INativeGLWindow Members
+
+
+        public WindowState WindowState
+        {
+            get
+            {
+            		return windowState;
+            }
+            set
+            {
+                windowState = value;
+            }
+        }
+
+        public WindowBorder WindowBorder
+        {
+            get
+            {
+                return windowBorder;
+            }
+            set
+            {
+                windowBorder = value;
+                
+                if (windowBorder == WindowBorder.Resizable)
+                {
+                		API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.Resizable | WindowAttributes.FullZoom, 
+                								   WindowAttributes.NoAttributes);
+                }
+                else if (windowBorder == WindowBorder.Fixed)
+                {
+                		API.ChangeWindowAttributes(window.WindowRef, WindowAttributes.NoAttributes, 
+                		                           WindowAttributes.Resizable | WindowAttributes.FullZoom);
+                }
+            }
+        }
+
+        #endregion
+    }
+}

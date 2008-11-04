@@ -42,17 +42,8 @@ namespace OpenTK.Graphics
 
         static DisplayDevice()
         {
-            switch (System.Environment.OSVersion.Platform)
-            {
-                case PlatformID.Unix:
-                case (PlatformID)128:
-                    implementation = new OpenTK.Platform.X11.X11XrandrDisplayDevice();
-                    break;
-
-                default:
-                    implementation = new OpenTK.Platform.Windows.WinDisplayDeviceDriver();
-                    break;
-            }
+            implementation = Platform.Factory.CreateDisplayDeviceDriver();
+           
             //lock (display_lock)
             //{
             //    int i = 0;

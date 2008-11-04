@@ -87,5 +87,14 @@ namespace OpenTK.Platform
         }
 
         #endregion
+
+        #region IGraphicsContext Members
+
+
+        public void Update(IWindowInfo window)
+        {
+        }
+
+        #endregion
     }
 }

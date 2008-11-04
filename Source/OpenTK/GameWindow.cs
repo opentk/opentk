@@ -153,14 +153,7 @@ namespace OpenTK
             if (device == null)
                 device = DisplayDevice.Default;
 
-            if (Configuration.RunningOnWindows)
-                glWindow = new OpenTK.Platform.Windows.WinGLNative();
-            else if (Configuration.RunningOnX11)
-                glWindow = new OpenTK.Platform.X11.X11GLNative();
-            else
-                throw new PlatformNotSupportedException(
-                    "Your platform is not supported currently. Please, refer to http://www.opentk.com for more information.");
-
+            glWindow = Platform.Factory.CreateNativeGLWindow();                
             glWindow.Destroy += glWindow_Destroy;
 
             try
@@ -230,9 +223,17 @@ namespace OpenTK
         /// <summary>Stops the main loop.</summary>
         void ExitInternal()
         {
-            //Debug.Print("Firing GameWindowExitException");  
-            throw new GameWindowExitException();
+            //Debug.Print("Firing GameWindowExitException");
+            if (HasMainLoop)
+            {
+                throw new GameWindowExitException();
+            }
+            if (CloseWindow != null)
+            {
+                CloseWindow(this, EventArgs.Empty);
+            }
         }
+        public event EventHandler CloseWindow;
 
         void CallExitInternal(GameWindow sender, UpdateFrameEventArgs e)
         {

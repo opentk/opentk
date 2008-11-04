@@ -208,6 +208,13 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region public void Update
+        public void Update(IWindowInfo window)
+        {
+        }
+        #endregion
+
+
         public event DestroyEvent<IGraphicsContext> Destroy;
 
         #endregion
@@ -434,6 +441,12 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
+
+        #endregion
+
+        #region IGraphicsContext Members
+
+
 
         #endregion
     }

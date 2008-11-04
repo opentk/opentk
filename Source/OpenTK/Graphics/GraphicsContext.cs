@@ -72,12 +72,8 @@ namespace OpenTK.Graphics
 
                 if (designMode)
                     implementation = new OpenTK.Platform.DummyGLContext(mode);
-                else if (Configuration.RunningOnWindows)
-                    implementation = new OpenTK.Platform.Windows.WinGLContext(mode, window, shareContext);
-                else if (Configuration.RunningOnX11)
-                    implementation = new OpenTK.Platform.X11.X11GLContext(mode, window, shareContext, DirectRendering);
                 else
-                    throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+                    implementation = Factory.CreateGLContext(mode, window, shareContext, DirectRendering);
 
                 lock (context_lock)
                 {
@@ -298,6 +294,13 @@ namespace OpenTK.Graphics
             get { return implementation.VSync; }
             set { implementation.VSync = value;  }
         }
+
+        #region public void Update
+        public void Update(IWindowInfo window)
+        {
+            implementation.Update(window);
+        }
+        #endregion
 
         #endregion
 

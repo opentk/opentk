@@ -31,12 +31,7 @@ namespace OpenTK.Graphics
         
         static GraphicsMode()
         {
-            if (Configuration.RunningOnWindows)
-                implementation = new OpenTK.Platform.Windows.WinGraphicsMode();
-            else if (Configuration.RunningOnX11)
-                implementation = new OpenTK.Platform.X11.X11GraphicsMode();
-            else
-                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+            implementation = Platform.Factory.CreateGraphicsMode();
         }
 
         #endregion
