@@ -39,7 +39,7 @@ namespace OpenTK.Platform.X11
                 GraphicsContext.GetCurrentContext = X11GLContext.GetCurrentContext;
         }
 
-        internal X11GLContext(GraphicsMode mode, IWindowInfo info, IGraphicsContext shared, bool directRendering)
+        public X11GLContext(GraphicsMode mode, IWindowInfo info, IGraphicsContext shared, bool directRendering)
         {
             //if (mode == null) mode = GraphicsMode.Default;
             if (info == null) throw new ArgumentNullException("info", "Should point to a valid window.");
@@ -50,6 +50,17 @@ namespace OpenTK.Platform.X11
             Debug.Print("Chose visual: {0}", currentWindow.VisualInfo);
 
             CreateContext(shared, directRendering, currentWindow);
+        }
+
+        public X11GLContext(IWindowInfo window)
+        {
+            if (window == null) throw new ArgumentNullException("window");
+
+            //renderContext = Glx.GetCurrentContext();
+            //if (renderContext == IntPtr.Zero)
+            //    throw new InvalidOperationException("No OpenGL context is current in the calling thread.");
+
+            //currentWindow = window;
         }
 
         #endregion

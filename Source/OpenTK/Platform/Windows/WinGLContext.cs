@@ -90,6 +90,17 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        public WinGLContext(IWindowInfo window)
+        {
+            if (window == null) throw new ArgumentNullException("window");
+
+            renderContext = Wgl.GetCurrentContext();
+            if (renderContext == IntPtr.Zero)
+                throw new InvalidOperationException("No OpenGL context is current in the calling thread.");
+
+            currentWindow = (WinWindowInfo)window;
+        }
+
         #endregion
 
         #region --- IGraphicsContext Members ---

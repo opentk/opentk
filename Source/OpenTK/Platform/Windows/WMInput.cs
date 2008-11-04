@@ -144,7 +144,7 @@ namespace OpenTK.Platform.Windows
                             // TODO: Not 100% reliable, when both keys are pressed at once.
                             if (ShiftRightScanCode != 0)
                             {
-                                if ((((int)msg.LParam >> 16) & 0xFF) == ShiftRightScanCode)
+                                if (((msg.LParam.ToInt32() >> 16) & 0xFF) == ShiftRightScanCode)
                                     keyboard[Input.Key.ShiftRight] = pressed;
                                 else
                                     keyboard[Input.Key.ShiftLeft] = pressed;

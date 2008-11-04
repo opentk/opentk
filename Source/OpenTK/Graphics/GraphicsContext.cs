@@ -23,23 +23,16 @@ namespace OpenTK.Graphics
         IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
         List<IDisposable> dispose_queue = new List<IDisposable>();
         bool disposed;
+        // Indicates that this context was created through external means, e.g. Tao.Sdl or GLWidget#.
+        // In this case, We'll assume that the external program will manage the lifetime of this
+        // context - we'll not destroy it manually.
+        bool is_external;
 
         static bool share_contexts = true;
         static bool direct_rendering = true;
         static object context_lock = new object();        
         // Maps OS-specific context handles to GraphicsContext weak references.
         static Dictionary<ContextHandle, WeakReference> available_contexts = new Dictionary<ContextHandle, WeakReference>();
-
-        #region public GraphicsContext(DisplayMode mode, IWindowInfo window)
-
-        /// <summary>This method is obsolete.</summary>
-        /// <param name="mode"></param>
-        /// <param name="window"></param>
-        public GraphicsContext(DisplayMode mode, IWindowInfo window)
-            : this(mode.ToGraphicsMode(), window)
-        { }
-
-        #endregion
 
         #region public GraphicsContext(GraphicsMode format, IWindowInfo window)
 
@@ -99,6 +92,42 @@ namespace OpenTK.Graphics
         }
 
         #endregion
+
+        private GraphicsContext()
+        {
+        }
+
+        /// <summary>
+        /// Attempts to create a GraphicsContext object from an existing OpenGL context.
+        /// </summary>
+        /// <param name="window">The window this context is bound to.</param>
+        /// <returns>A new GraphicsContext object, describing the current OpenGL context.</returns>
+        /// <remarks>
+        /// <para>Use this function to interoperate with OpenGL contexts created outside of OpenTK.</para>
+        /// <para>The new GraphicsContext is added to the list of available OpenTK contexts.
+        /// Make sure to call the Dispose() method once this context is destroyed.</para>
+        /// <para>You may not call this method more than once on the same context. Doing so will throw an exception.</para>
+        /// </remarks>
+        public static GraphicsContext CreateFromCurrentThread(IWindowInfo window)
+        {
+            Debug.Print("Creating context from current thread.");
+
+            GraphicsContext context = new GraphicsContext();
+            context.is_external = true;
+            if (Configuration.RunningOnWindows)
+                context.implementation = new OpenTK.Platform.Windows.WinGLContext(window);
+            else if (Configuration.RunningOnX11)
+                context.implementation = new OpenTK.Platform.X11.X11GLContext(window);
+            else
+                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+
+            lock (context_lock)
+            {
+                available_contexts.Add((context as IGraphicsContextInternal).Context, new WeakReference(context));
+            }
+
+            return context;
+        }
 
         #region void ContextDestroyed(IGraphicsContext context, EventArgs e)
 
@@ -377,7 +406,7 @@ namespace OpenTK.Graphics
                     available_contexts.Remove((this as IGraphicsContextInternal).Context);
                 }
 
-                if (manual)
+                if (manual && !is_external)
                 {
                     if (implementation != null)
                         implementation.Dispose();

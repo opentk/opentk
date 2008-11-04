@@ -27,7 +27,7 @@ namespace Examples.Tutorial
         #region --- Private Fields ---
 
         Shapes.Shape cube = new Examples.Shapes.Cube();
-        Shapes.Shape plane = new Examples.Shapes.Plane(16, 16, 2.0f, 2.0f);
+        //Shapes.Shape plane = new Examples.Shapes.Plane(16, 16, 2.0f, 2.0f);
 
         struct Vbo
         {

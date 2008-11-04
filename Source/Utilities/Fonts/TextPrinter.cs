@@ -37,13 +37,22 @@ namespace OpenTK.Graphics
           // Interleaved, vertex, texcoord, vertex, etc... Starts with 8 chars, will expand as needed.
         Vector2[] vertices = new Vector2[8 * 8];
         ushort[] indices = new ushort[6 * 8];
+        IList<RectangleF> ranges = new List<RectangleF>();
 
-        #region --- Constructor ---
+
+        #region --- Constructors ---
 
         /// <summary>
         /// Constructs a new TextPrinter object.
         /// </summary>
         public TextPrinter() { }
+
+        public TextPrinter(ITextPrinterImplementation implementation)
+        {
+            if (implementation == null)
+                throw new ArgumentNullException("implementation");
+            printer = implementation;
+        }
 
         #endregion
 
@@ -155,7 +164,7 @@ namespace OpenTK.Graphics
             PerformLayout(text, font, width, wordWarp, alignment, rightToLeft, ref vertices, ref indices, out num_indices);
 
             handle = Printer.Load(vertices, indices, num_indices);
-            handle.font = font;
+            handle.Font = font;
         }
 
         #endregion
@@ -175,11 +184,11 @@ namespace OpenTK.Graphics
             if (wordWarp || rightToLeft || alignment != StringAlignment.Near)
                 throw new NotImplementedException();
 
-            while (8 * text.Length > vertices.Length)
-                vertices = new Vector2[vertices.Length << 1];
+            if (8 * text.Length > vertices.Length)
+                vertices = new Vector2[Math.Functions.NextPowerOfTwo(8 * text.Length)];
 
-            while (6 * text.Length > indices.Length)
-                indices = new ushort[indices.Length << 1];
+            if (6 * text.Length > indices.Length)
+                indices = new ushort[Math.Functions.NextPowerOfTwo(6 * text.Length)];
 
             num_indices = 6 * text.Length;
 
@@ -187,65 +196,59 @@ namespace OpenTK.Graphics
             //ushort[] indices = new ushort[6 * text.Length];
             float x_pos = 0, y_pos = 0;
             ushort i = 0, index_count = 0, vertex_count = 0, last_break_point = 0;
-            Box2 rect = new Box2();
-            float char_width, char_height, measured_width, measured_height;
+            RectangleF rect = new RectangleF();
+            float char_width, char_height;
             int texture;
 
             font.LoadGlyphs(text);
 
             // Every character comprises of 4 vertices, forming two triangles. We generate an index array which
-            // indexes vertices in a triangle-strip fashion. To create a single strip for the whole string, we
-            // need to add a degenerate triangle (0 height) to connect the last vertex of the previous line with
-            // the first vertex of the next line.
+            // indexes vertices in a triangle-list fashion. 
             // This algorithm works for left-to-right scripts.
 
             if (alignment == StringAlignment.Near && !rightToLeft || alignment == StringAlignment.Far && rightToLeft)
             {
-                foreach (char c in text)
+                font.MeasureText(text, SizeF.Empty, null, ranges);
+
+                int current = 0;
+
+                foreach (RectangleF range in ranges)
                 {
+                    char c = text[current++];
                     if (Char.IsSeparator(c))
                         last_break_point = index_count;
 
-                    if (c != '\n' && c != '\r')
-                    {
-                        font.GlyphData(c, out char_width, out char_height, out rect, out texture);
+                    x_pos = range.X;
+                    y_pos = range.Y;
 
-                        vertices[vertex_count].X = x_pos;                // Vertex
-                        vertices[vertex_count++].Y = y_pos;
-                        vertices[vertex_count].X = rect.Left;            // Texcoord
-                        vertices[vertex_count++].Y = rect.Top;
-                        vertices[vertex_count].X = x_pos;                // Vertex
-                        vertices[vertex_count++].Y = y_pos + char_height;
-                        vertices[vertex_count].X = rect.Left;            // Texcoord
-                        vertices[vertex_count++].Y = rect.Bottom;
+                    font.GlyphData(c, out char_width, out char_height, out rect, out texture);
 
-                        vertices[vertex_count].X = x_pos + char_width;   // Vertex
-                        vertices[vertex_count++].Y = y_pos + char_height;
-                        vertices[vertex_count].X = rect.Right;           // Texcoord
-                        vertices[vertex_count++].Y = rect.Bottom;
-                        vertices[vertex_count].X = x_pos + char_width;   // Vertex
-                        vertices[vertex_count++].Y = y_pos;
-                        vertices[vertex_count].X = rect.Right;           // Texcoord
-                        vertices[vertex_count++].Y = rect.Top;
+                    vertices[vertex_count].X = x_pos;                // Vertex
+                    vertices[vertex_count++].Y = y_pos;
+                    vertices[vertex_count].X = rect.Left;            // Texcoord
+                    vertices[vertex_count++].Y = rect.Top;
+                    vertices[vertex_count].X = x_pos;                // Vertex
+                    vertices[vertex_count++].Y = y_pos + char_height;
+                    vertices[vertex_count].X = rect.Left;            // Texcoord
+                    vertices[vertex_count++].Y = rect.Bottom;
 
-                        indices[index_count++] = (ushort)(vertex_count - 8);
-                        indices[index_count++] = (ushort)(vertex_count - 6);
-                        indices[index_count++] = (ushort)(vertex_count - 4);
+                    vertices[vertex_count].X = x_pos + char_width;   // Vertex
+                    vertices[vertex_count++].Y = y_pos + char_height;
+                    vertices[vertex_count].X = rect.Right;           // Texcoord
+                    vertices[vertex_count++].Y = rect.Bottom;
+                    vertices[vertex_count].X = x_pos + char_width;   // Vertex
+                    vertices[vertex_count++].Y = y_pos;
+                    vertices[vertex_count].X = rect.Right;           // Texcoord
+                    vertices[vertex_count++].Y = rect.Top;
 
-                        indices[index_count++] = (ushort)(vertex_count - 4);
-                        indices[index_count++] = (ushort)(vertex_count - 2);
-                        indices[index_count++] = (ushort)(vertex_count - 8);
+                    indices[index_count++] = (ushort)(vertex_count - 8);
+                    indices[index_count++] = (ushort)(vertex_count - 6);
+                    indices[index_count++] = (ushort)(vertex_count - 4);
 
+                    indices[index_count++] = (ushort)(vertex_count - 4);
+                    indices[index_count++] = (ushort)(vertex_count - 2);
+                    indices[index_count++] = (ushort)(vertex_count - 8);
 
-                        font.MeasureString(text.Substring(i, 1), out measured_width, out measured_height, false);
-                        x_pos += measured_width;
-                    }
-                    else if (c == '\n')
-                    {
-                        //x_pos = layoutRect.Left;
-                        x_pos = 0;
-                        y_pos += font.Height;
-                    }
                     ++i;
                 }
             }
@@ -269,7 +272,7 @@ namespace OpenTK.Graphics
         /// <param name="handle">The TextHandle to the cached text.</param>
         public void Draw(TextHandle handle)
         {
-            GL.BindTexture(TextureTarget.Texture2D, handle.font.Texture);
+            GL.BindTexture(TextureTarget.Texture2D, handle.Font.Texture);
 
             Printer.Draw(handle);
         }

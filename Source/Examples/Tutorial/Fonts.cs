@@ -175,10 +175,11 @@ namespace Examples.Tutorial
             }
 
             // Move to the right, and print using the second font.
-            float width, height;
-            fonts[handles.Length / 2 - 1].MeasureString(text, out width, out height);
+            //float width, height;
+            //fonts[handles.Length / 2 - 1].MeasureString(text, out width, out height);
+            RectangleF rect = fonts[handles.Length / 2 - 1].MeasureText(text);
             GL.LoadIdentity();
-            GL.Translate(width + 32.0f, 0, 0);
+            GL.Translate(rect.Width + 32.0f, 0, 0);
             for (int i = handles.Length / 2; i < handles.Length; i++)
             {
                 printer.Draw(handles[i]);

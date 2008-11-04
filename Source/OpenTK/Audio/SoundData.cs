@@ -12,7 +12,7 @@ using System.Text;
 
 namespace OpenTK.Audio
 {
-    /// <summary>Encapsulates a pointer to decoded sound buffer.</summary>
+    /// <summary>Encapsulates a pointer to a decoded sound buffer.</summary>
     public class SoundData
     {
         byte[] buffer;
