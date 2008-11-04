@@ -27,7 +27,7 @@ namespace Examples.WinForms
         GLControl glControl = new GLControl(GraphicsMode.Default);
         Type glClass;
         Type delegatesClass;
-        Type importsClass;
+        //Type importsClass;
         int supported, all;      // Number of supported extensions.
         string driver;
 
@@ -37,7 +37,7 @@ namespace Examples.WinForms
 
             glClass = typeof(GL);
             delegatesClass = glClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
-            importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
+            //importsClass = glClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
 
             glControl.CreateControl();
             Application.Idle += StartAsync;

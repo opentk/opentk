@@ -436,7 +436,7 @@ namespace OpenTK
 
 #endif
 
-        #region void Run()
+        #region public void Run()
 
         /// <summary>
         /// Enters the game loop of the GameWindow updating and rendering at the maximum possible frequency.
@@ -448,6 +448,10 @@ namespace OpenTK
             Run(0.0, 0.0);
         }
 
+        #endregion
+
+        #region public void Run(double updateFrequency)
+
         /// <summary>
         /// Enters the game loop of the GameWindow updating the specified update frequency, while maintaining the
         /// maximum possible render frequency.
@@ -458,6 +462,10 @@ namespace OpenTK
             if (disposed) throw new ObjectDisposedException("GameWindow");
             Run(updateFrequency, 0.0);
         }
+
+        #endregion
+
+        #region public void Run(double updates_per_second, double frames_per_second)
 
         /// <summary>
         /// Enters the game loop of the GameWindow updating and rendering at the specified frequency.
@@ -1364,14 +1372,20 @@ namespace OpenTK
         /// <summary>
         /// Disposes of the GameWindow, releasing all resources consumed by it.
         /// </summary>
-        public virtual void Dispose()
+        public void Dispose()
         {
-            if (disposed) throw new ObjectDisposedException("GameWindow");
-            Dispose(true);
+            try
+            {
+                Dispose(true);
+            }
+            finally
+            {
+                DisposeInternal(true);
+            }
             GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool manual)
+        private void DisposeInternal(bool manual)
         {
             if (!disposed)
             {
@@ -1393,10 +1407,19 @@ namespace OpenTK
             }
         }
 
-        /// <summary>Finalizes unmanaged resources consumed by the GameWindow.</summary>
+        /// <summary>
+        /// Override to add custom cleanup logic.
+        /// </summary>
+        /// <param name="manual">True, if this method was called by the application; false if this was called by the finalizer thread.</param>
+        protected virtual void Dispose(bool manual)
+        {
+        }
+
+        ///// <summary>Finalizes unmanaged resources consumed by the GameWindow.</summary>
         //~GameWindow()
         //{
         //    Dispose(false);
+        //    DisposeInternal(false);
         //}
 
         #endregion

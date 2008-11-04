@@ -43,7 +43,7 @@ namespace OpenTK.Input
         #region public InputDeviceType DeviceType
 
         /// <summary>
-        /// Gets an value indicating the InputDeviceType of this InputDevice. 
+        /// Gets a value indicating the InputDeviceType of this InputDevice. 
         /// </summary>
         public InputDeviceType DeviceType
         {

@@ -30,8 +30,8 @@ namespace Examples.Tutorial
         float angle = 0.0f;
 
         Shapes.Shape shape = new Examples.Shapes.Plane(16, 16, 2.0f, 2.0f);
-        TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 32, FontStyle.Regular,
-                                                    GraphicsUnit.Pixel));
+        //TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 32, FontStyle.Regular,
+        //                                            GraphicsUnit.Pixel));
 
         #region Constructor
 

@@ -149,7 +149,7 @@ namespace OpenTK.Platform
                 return false;
             }
 
-            FieldInfo f = type.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic);
+            FieldInfo f = extensions_class.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic);
             if (f == null)
             {
                 Debug.Print("Extension \"", extension, "\" not found in ", type.ToString());
@@ -211,6 +211,132 @@ namespace OpenTK.Platform
             }
         }
 
+
+        #endregion
+
+        #region --- Creating an Graphics Context ---
+        #region --- CreateWindowInfo ---
+		
+		/// <summary>
+		/// Creates GraphicsContext and IWindowInfo objects for a WinForms control.
+		/// </summary>
+        /// <param name="cntrl"></param>
+        /// <param name="context"></param>
+        /// <param name="info"></param>
+        /// <param name="mode"></param>
+		public static void CreateGraphicsContext(Graphics.GraphicsMode mode, Control cntrl, out Graphics.GraphicsContext context, out IWindowInfo info)
+		{
+			CreateGraphicsContext(mode, cntrl.Handle, out context, out info);	
+		}
+		/// <summary>
+		/// Creates GraphicsContext and IWindowInfo objects for a WinForms control.
+		/// </summary>
+        /// <param name="cntrlHandle"></param>
+        /// <param name="context"></param>
+        /// <param name="info"></param>
+        /// <param name="mode"></param>
+		public static void CreateGraphicsContext(Graphics.GraphicsMode mode, IntPtr cntrlHandle, out Graphics.GraphicsContext context, out IWindowInfo info)
+		{
+			info = CreateWindowInfo(mode, cntrlHandle);
+            
+            context = new Graphics.GraphicsContext(mode, info);
+            context.MakeCurrent(info);
+
+            (context as OpenTK.Graphics.IGraphicsContextInternal).LoadAll();			
+		}
+        /// <summary>
+        /// Creates an object which implements the IWindowInfo interface for the platform
+        /// currently running on.  This will create a handle for the control, so it is not
+        /// recommended that this be called in the constructor of a custom control.
+        /// </summary>
+        /// <param name="cntrl"></param>
+        /// <returns></returns>
+        public static IWindowInfo CreateWindowInfo(Graphics.GraphicsMode mode, Control cntrl)
+        {
+            return CreateWindowInfo(mode, cntrl.Handle);
+        }
+        /// <summary>
+        /// Creates an object which implements the IWindowInfo interface for the platform
+        /// currently running on.  
+        /// </summary>
+        /// <param name="controlHandle">The handle to the control, obtained from Control.Handle.</param>
+        /// <returns></returns>
+        public static IWindowInfo CreateWindowInfo(Graphics.GraphicsMode mode, IntPtr controlHandle)
+        {
+            if (Configuration.RunningOnWindows) return CreateWinWindowInfo(controlHandle);
+            else if (Configuration.RunningOnX11) return CreateX11WindowInfo(mode, controlHandle);
+            else if (Configuration.RunningOnOSX) return CreateOSXWindowInfo(controlHandle);
+            else
+                throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
+        }
+
+        #endregion
+
+        #region --- X11 Platform-specific implementation ---
+
+        private static IWindowInfo CreateX11WindowInfo(Graphics.GraphicsMode mode, IntPtr controlHandle)
+        {
+            Platform.X11.X11WindowInfo window = new OpenTK.Platform.X11.X11WindowInfo();
+
+            Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
+            if (xplatui == null) throw new PlatformNotSupportedException(
+                    "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
+
+            window.WindowHandle = controlHandle;
+
+            // get the required handles from the X11 API.
+            window.Display = (IntPtr)GetStaticFieldValue(xplatui, "DisplayHandle");
+            window.RootWindow = (IntPtr)GetStaticFieldValue(xplatui, "RootWindow");
+            window.Screen = (int)GetStaticFieldValue(xplatui, "ScreenNo");
+
+            // get the X11 Visual info for the display.
+            Platform.X11.XVisualInfo info = new Platform.X11.XVisualInfo();
+            info.visualid = mode.Index;
+            int dummy;
+            window.VisualInfo = (Platform.X11.XVisualInfo)Marshal.PtrToStructure(
+                Platform.X11.Functions.XGetVisualInfo(window.Display, Platform.X11.XVisualInfoMask.ID, 
+                                         ref info, out dummy), typeof(Platform.X11.XVisualInfo));
+
+            // set the X11 colormap.
+            SetStaticFieldValue(xplatui, "CustomVisual", window.VisualInfo.visual);
+            SetStaticFieldValue(xplatui, "CustomColormap", 
+                Platform.X11.Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0));
+
+            return window;
+        }
+
+        #endregion
+        #region --- Windows Platform-specific implementation ---
+
+        private static IWindowInfo CreateWinWindowInfo(IntPtr controlHandle)
+        {
+            return new OpenTK.Platform.Windows.WinWindowInfo(controlHandle, null);
+        }
+
+        #endregion
+        #region --- Mac OS X Platform-specific implementation ---
+
+        private static IWindowInfo CreateOSXWindowInfo(IntPtr controlHandle)
+        {
+            throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
+        }
+
+        #endregion
+
+        #region --- Utility functions for reading/writing non-public static fields through reflection ---
+
+        private static object GetStaticFieldValue(Type type, string fieldName)
+        {
+            return type.GetField(fieldName,
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).GetValue(null);
+        }
+        private static void SetStaticFieldValue(Type type, string fieldName, object value)
+        {
+            type.GetField(fieldName,
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic).SetValue(null, value);
+        }
+
+        #endregion
 
         #endregion
     }

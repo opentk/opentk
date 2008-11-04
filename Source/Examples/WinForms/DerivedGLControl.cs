@@ -14,6 +14,11 @@ namespace Examples.WinForms
     public partial class DerivedGLControl : GLControl
     {
         Color clearColor;
+        
+        public DerivedGLControl()
+        {
+            this.InitializeComponent();
+        }
 
         public Color ClearColor
         {

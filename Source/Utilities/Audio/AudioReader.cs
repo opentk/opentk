@@ -86,7 +86,7 @@ namespace OpenTK.Audio
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 s.Close();
                 throw;

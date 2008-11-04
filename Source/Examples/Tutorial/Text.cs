@@ -45,7 +45,7 @@ namespace Examples.Tutorial
         public override void OnLoad(EventArgs e)
         {
             GL.ClearColor(Color.SteelBlue);
-            
+
             current_position = initial_position;
             scroll_speed = -1.0f;
             text.Prepare(poem, serif, out poem_handle);
@@ -125,7 +125,7 @@ namespace Examples.Tutorial
             // used in 2d graphics, and is necessary for achieving pixel-perfect glyph rendering.
             // TextPrinter.End() restores your previous projection/modelview matrices.
             text.Begin();
-            GL.Color3(Color.PaleGoldenrod);
+            GL.Color3(Color.LightBlue);
             text.Draw((1.0 / e.Time).ToString("F2"), sans);
             GL.Translate(0.0f, current_position, 0.0f);
             GL.Color3(Color.White);
