@@ -21,7 +21,7 @@ namespace OpenTK
     /// <summary>Contains configuration options for OpenTK.</summary>
     internal static class Configuration
     {
-        static bool runningOnWindows, runningOnX11, runningOnOSX, runningOnLinux;
+        static bool runningOnWindows, runningOnX11, runningOnMacOS, runningOnLinux;
 
         #region --- Constructors ---
 
@@ -44,7 +44,7 @@ namespace OpenTK
                         break;
 
                     case "Darwin":
-                        runningOnOSX = true;
+                        runningOnMacOS = true;
                         break;
 
                     default:
@@ -67,7 +67,7 @@ namespace OpenTK
 
         #endregion
 
-        #region internal static bool  RunningOnX11
+        #region internal static bool RunningOnX11
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
         internal static bool RunningOnX11 { get { return runningOnX11; } }
@@ -81,10 +81,10 @@ namespace OpenTK
 
         #endregion
 
-        #region internal static bool  RunningOnOSX
+        #region internal static bool RunningOnMacOS
 
-        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an OSX platform.</summary>
-        internal static bool RunningOnOSX { get { return runningOnOSX; } }
+        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Mac OS platform.</summary>
+        internal static bool RunningOnMacOS { get { return runningOnMacOS; } }
 
         #endregion
 

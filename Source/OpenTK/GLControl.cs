@@ -68,17 +68,20 @@ namespace OpenTK
             // it would be better to decouple selection from context creation, which will allow us
             // to clean up this hacky code. The best option is to do this along with multisampling
             // support.
-            if (Configuration.RunningOnWindows)
-                implementation = new OpenTK.Platform.Windows.WinGLControl(mode, this);
-            else if (Configuration.RunningOnX11)
-                implementation = new OpenTK.Platform.X11.X11GLControl(mode, this);
-            else if (Configuration.RunningOnOSX)
-                throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
+            implementation = Platform.Factory.CreateGLControl(mode, this);
 
             this.CreateControl();
         }
 
         #endregion
+
+        protected override void OnResize(EventArgs e)
+        {
+            if (context != null)
+                context.Update(window_info);
+
+            base.OnResize(e);
+        }
 
         #region --- Protected Methods ---
 

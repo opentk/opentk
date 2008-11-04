@@ -265,7 +265,7 @@ namespace OpenTK.Platform
         {
             if (Configuration.RunningOnWindows) return CreateWinWindowInfo(controlHandle);
             else if (Configuration.RunningOnX11) return CreateX11WindowInfo(mode, controlHandle);
-            else if (Configuration.RunningOnOSX) return CreateOSXWindowInfo(controlHandle);
+            else if (Configuration.RunningOnMacOS) return CreateOSXWindowInfo(controlHandle);
             else
                 throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
         }
