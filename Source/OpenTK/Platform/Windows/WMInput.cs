@@ -80,7 +80,7 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 case WindowMessage.MOUSEWHEEL:
-                    mouse.Wheel += (int)(msg.WParam.ToInt32() >> 16) / 120;
+                    mouse.Wheel += (msg.WParam.ToInt32() >> 16) / 120;
                     return;
 
                 case WindowMessage.LBUTTONDOWN:
