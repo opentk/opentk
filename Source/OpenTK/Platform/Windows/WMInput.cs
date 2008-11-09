@@ -88,7 +88,9 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 case WindowMessage.MOUSEWHEEL:
-                    mouse.Wheel += (int)(wparam.ToUInt32() >> 16) / 120;
+                    // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
+                    // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
+                    mouse.Wheel += (int)((long)msg.WParam << 32 >> 48) / 120;
                     return;
 
                 case WindowMessage.LBUTTONDOWN:
