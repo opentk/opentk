@@ -62,6 +62,13 @@ namespace OpenTK.Platform.Windows
         bool mouse_about_to_enter = false;
         protected override void WndProc(ref Message msg)
         {
+            UIntPtr lparam, wparam;
+            unsafe
+            {
+                lparam = (UIntPtr)(void*)msg.LParam;
+                wparam = (UIntPtr)(void*)msg.WParam;
+            }
+
             switch ((WindowMessage)msg.Msg)
             {
                 // Mouse events:
@@ -70,8 +77,9 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.MOUSEMOVE:
-                    mouse.Position = new System.Drawing.Point(msg.LParam.ToInt32() & 0x0000FFFF, 
-                                                        (int)(msg.LParam.ToInt32() & 0xFFFF0000) >> 16);
+                    mouse.Position = new System.Drawing.Point(
+                                                        (int)(lparam.ToUInt32() & 0x0000FFFF),
+                                                        (int)(lparam.ToUInt32() & 0xFFFF0000) >> 16);
                     if (mouse_about_to_enter)
                     {
                         Cursor.Current = Cursors.Default;
@@ -80,7 +88,9 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 case WindowMessage.MOUSEWHEEL:
-                    mouse.Wheel += (int)(msg.WParam.ToInt32() >> 16) / 120;
+                    // This is due to inconsistent behavior of the WParam value on 64bit arch, whese
+                    // wparam = 0xffffffffff880000 or wparam = 0x00000000ff100000
+                    mouse.Wheel += (int)((long)msg.WParam << 32 >> 48) / 120;
                     return;
 
                 case WindowMessage.LBUTTONDOWN:
@@ -96,7 +106,7 @@ namespace OpenTK.Platform.Windows
                     return;
 
                 case WindowMessage.XBUTTONDOWN:
-                    mouse[((msg.WParam.ToInt32() & 0xFFFF0000) >> 16) != (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = true;
+                    mouse[((wparam.ToUInt32() & 0xFFFF0000) >> 16) != (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = true;
                     return;
 
                 case WindowMessage.LBUTTONUP:
@@ -113,7 +123,7 @@ namespace OpenTK.Platform.Windows
 
                 case WindowMessage.XBUTTONUP:
                     // TODO: Is this correct?
-                    mouse[((msg.WParam.ToInt32() & 0xFFFF0000) >> 16) != (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
+                    mouse[((wparam.ToUInt32() & 0xFFFF0000) >> 16) != (int)MouseKeys.XButton1 ? MouseButton.Button1 : MouseButton.Button2] = false;
                     return;
 
                 // Keyboard events:
@@ -132,7 +142,7 @@ namespace OpenTK.Platform.Windows
                     // In this case, both keys will be reported as pressed.
 
                     bool extended = (msg.LParam.ToInt64() & ExtendedBit) != 0;
-                    switch ((VirtualKeys)msg.WParam)
+                    switch ((VirtualKeys)wparam)
                     {
                         case VirtualKeys.SHIFT:
                             // The behavior of this key is very strange. Unlike Control and Alt, there is no extended bit
@@ -144,10 +154,13 @@ namespace OpenTK.Platform.Windows
                             // TODO: Not 100% reliable, when both keys are pressed at once.
                             if (ShiftRightScanCode != 0)
                             {
-                                if (((msg.LParam.ToInt32() >> 16) & 0xFF) == ShiftRightScanCode)
-                                    keyboard[Input.Key.ShiftRight] = pressed;
-                                else
-                                    keyboard[Input.Key.ShiftLeft] = pressed;
+                                unchecked
+                                {
+                                    if (((lparam.ToUInt32() >> 16) & 0xFF) == ShiftRightScanCode)
+                                        keyboard[Input.Key.ShiftRight] = pressed;
+                                    else
+                                        keyboard[Input.Key.ShiftLeft] = pressed;
+                                }
                             }
                             else
                             {
