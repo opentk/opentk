@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace OpenTK.Platform.MacOS
@@ -59,6 +60,7 @@ namespace OpenTK.Platform.MacOS
 
             if (ownHandle)
             {
+            	Debug.Print("Disposing window {0}.", windowRef);
                 Carbon.API.DisposeWindow(this.windowRef);
                 windowRef = IntPtr.Zero;
             }

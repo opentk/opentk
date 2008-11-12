@@ -27,7 +27,7 @@ namespace OpenTK.Platform.MacOS
         static MacOSKeyMap Keymap = new MacOSKeyMap();
 
         IntPtr uppHandler;
-        string title = "New Window";
+        string title = "OpenTK Window";
         short mWidth, mHeight;
         bool mIsDisposed = false;
 
@@ -81,9 +81,9 @@ namespace OpenTK.Platform.MacOS
 
             if (disposing)
             {
-            		mWindows.Remove(window.WindowRef);
+            	mWindows.Remove(window.WindowRef);
             		
-            		window.Dispose();
+            	window.Dispose();
                 window = null;
             }
             
@@ -94,8 +94,8 @@ namespace OpenTK.Platform.MacOS
         {
             if (uppHandler != IntPtr.Zero)
             {
-                // API.RemoveEventHandler(uppHandler);
-                // API.DisposeEventHandlerUPP(uppHandler);
+                //API.RemoveEventHandler(uppHandler);
+                //API.DisposeEventHandlerUPP(uppHandler);
 
             }
 
@@ -109,7 +109,7 @@ namespace OpenTK.Platform.MacOS
             Debug.Indent();
 
             IntPtr windowRef = API.CreateNewWindow(@class, attrib, r);
-            //API.SetWindowTitle(windowRef, title);
+            API.SetWindowTitle(windowRef, title);
 
             window = new CarbonWindowInfo(windowRef, true, false);
 
@@ -129,7 +129,7 @@ namespace OpenTK.Platform.MacOS
 
             ConnectEvents();
 
-            System.Diagnostics.Debug.Print("Attached events.");
+            System.Diagnostics.Debug.Print("Attached window events.");
         }
 
         public void Activate()
@@ -187,7 +187,6 @@ namespace OpenTK.Platform.MacOS
             API.ShowWindow(window.WindowRef);
             API.RepositionWindow(window.WindowRef, parent, WindowPositionMethod);
             API.SelectWindow(window.WindowRef);
-
         }
         public void Hide()
         {
@@ -222,6 +221,7 @@ namespace OpenTK.Platform.MacOS
             WeakReference reference = mWindows[userData];
             CarbonGLNative window = (CarbonGLNative)reference.Target;
             
+            Debug.Print("Processing {0} event for {1}.", evt, window.window);
 
             if (window == null)
             {
@@ -591,7 +591,7 @@ namespace OpenTK.Platform.MacOS
         {
             get
             {
-            		return windowState;
+            	return windowState;
             }
             set
             {

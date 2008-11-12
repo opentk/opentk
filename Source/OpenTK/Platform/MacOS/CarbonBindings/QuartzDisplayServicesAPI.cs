@@ -21,7 +21,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         // CGRect -> HIRect
 
         [DllImport(appServices,EntryPoint="CGGetActiveDisplayList")]
-        internal static extern CGDisplayErr GetActiveDisplayList(int maxDisplays, IntPtr[] activeDspys, out int dspyCnt);
+        internal unsafe static extern CGDisplayErr GetActiveDisplayList(int maxDisplays, IntPtr* activeDspys, out int dspyCnt);
 
         [DllImport(appServices,EntryPoint="CGMainDisplayID")]
         internal static extern IntPtr MainDisplayID();
@@ -33,7 +33,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern int DisplayPixelsHigh(IntPtr display);
 
         [DllImport(appServices,EntryPoint="CGDisplayCurrentMode")]
-        internal static extern CFDictionary DisplayCurrentMode(IntPtr display);
+        internal static extern IntPtr DisplayCurrentMode(IntPtr display);
 
         [DllImport(appServices,EntryPoint="CGDisplayCapture")]
         internal static extern CGDisplayErr DisplayCapture(IntPtr display);
@@ -42,7 +42,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern CGDisplayErr DisplayRelease(IntPtr display);
 
         [DllImport(appServices, EntryPoint = "CGDisplayAvailableModes")]
-        internal static extern CFArray DisplayAvailableModes(IntPtr display);
+        internal static extern IntPtr DisplayAvailableModes(IntPtr display);
 
     }
 }
