@@ -72,6 +72,7 @@ namespace OpenTK.Platform.MacOS.Carbon
             else if (evt.EventClass == EventClass.AppleEvent)
             {
                 // only event here is the apple event.
+                Debug.Print("Processing apple event.");
                 API.ProcessAppleEvent(inEvent);
             }
 
@@ -90,6 +91,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         static void MainWindowClosed(object sender, EventArgs e)
         {
+        	Debug.Print("Quitting application event loop.");
             API.QuitApplicationEventLoop();
         }
 

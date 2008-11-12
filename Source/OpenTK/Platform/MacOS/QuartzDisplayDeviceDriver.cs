@@ -36,7 +36,13 @@ namespace OpenTK.Platform.MacOS
                 IntPtr[] displays = new IntPtr[maxDisplayCount];
                 int displayCount;
 
-                CG.GetActiveDisplayList(maxDisplayCount, displays, out displayCount);
+                unsafe
+                {
+                    fixed(IntPtr* displayPtr = displays)
+                    {
+                        CG.GetActiveDisplayList(maxDisplayCount, displayPtr, out displayCount);
+                    }
+                }
 
                 Debug.Print("CoreGraphics reported {0} displays.", displayCount);
                 Debug.Indent();
@@ -54,12 +60,14 @@ namespace OpenTK.Platform.MacOS
                     int currentHeight = CG.DisplayPixelsHigh(currentDisplay);
                     Debug.Print("Display {0} is at  {1}x{2}", i, currentWidth, currentHeight);
 
-                    CFArray displayModes = CG.DisplayAvailableModes(currentDisplay);
+					IntPtr displayModesPtr = CG.DisplayAvailableModes(currentDisplay);				
+                    CFArray displayModes = new CFArray(displayModesPtr);
                     Debug.Print("Supports {0} display modes.", displayModes.Count);
 
                     DisplayResolution opentk_dev_current_res = null;
                     List<DisplayResolution> opentk_dev_available_res = new List<DisplayResolution>();
-                    CFDictionary currentMode = CG.DisplayCurrentMode(currentDisplay);
+                    IntPtr currentModePtr = CG.DisplayCurrentMode(currentDisplay);
+                    CFDictionary currentMode = new CFDictionary(currentModePtr);
 
                     for (int j = 0; j < displayModes.Count; j++)
                     {
