@@ -62,19 +62,28 @@ namespace OpenTK.Platform
         [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipSetStringFormatMeasurableCharacterRanges")]
         public static extern int SetStringFormatMeasurableCharacterRanges(HandleRef format, int rangeCount, [In, Out] CharacterRange[] range);
 
+        [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipSetStringFormatMeasurableCharacterRanges")]
+        public static extern int SetStringFormatMeasurableCharacterRanges(IntPtr format, int rangeCount, [In, Out] CharacterRange[] range);
+
         [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipGetStringFormatMeasurableCharacterRangeCount")]
         public static extern int GetStringFormatMeasurableCharacterRangeCount(HandleRef format, out int count);
 
         [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipMeasureCharacterRanges")]
         public static extern int MeasureCharacterRanges(HandleRef graphics, string textString, int length, HandleRef font, ref RectangleF layoutRect, HandleRef stringFormat, int characterCount, [In, Out] IntPtr[] region);
 
-        [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipGetRegionBounds")]
+        [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipMeasureCharacterRanges")]
+        public static extern int MeasureCharacterRanges(IntPtr graphics, string textString, int length, IntPtr font, ref RectangleF layoutRect, IntPtr stringFormat, int characterCount, [In, Out] IntPtr[] region);
+
+        [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipGetRegionBounds")]
         public static extern int GetRegionBounds(IntPtr region, HandleRef graphics, ref RectangleF gprectf);
 
-        [DllImport("gdiplus.dll", EntryPoint = "GdipCreateRegion", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
+        [DllImport(gdi_plus_library, CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true, EntryPoint = "GdipGetRegionBounds")]
+        public static extern int GetRegionBounds(IntPtr region, IntPtr graphics, ref RectangleF gprectf);
+
+        [DllImport(gdi_plus_library, EntryPoint = "GdipCreateRegion", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
         public static extern int CreateRegion(out IntPtr region);
 
-        [DllImport("gdiplus.dll", EntryPoint = "GdipDeleteRegion", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
+        [DllImport(gdi_plus_library, EntryPoint = "GdipDeleteRegion", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
         public static extern int DeleteRegion(IntPtr region);
 
         #endregion
