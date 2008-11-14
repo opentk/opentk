@@ -418,8 +418,6 @@ using System.Text.RegularExpressions;
             if (pack == null)
                 PrepareTexturePacker();
 
-            Debug.Write(String.Format("Loading glyph: {0} ", c));
-
             RectangleF glyph_rect = MeasureText(c.ToString(), SizeF.Empty, load_glyph_string_format);
             SizeF glyph_size = new SizeF(glyph_rect.Right, glyph_rect.Bottom);  // We need to do this, since the origin might not be (0, 0)
             Glyph g = new Glyph(c, font, glyph_size);
