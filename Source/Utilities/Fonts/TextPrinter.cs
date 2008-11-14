@@ -37,7 +37,7 @@ namespace OpenTK.Graphics
           // Interleaved, vertex, texcoord, vertex, etc... Starts with 8 chars, will expand as needed.
         Vector2[] vertices = new Vector2[8 * 8];
         ushort[] indices = new ushort[6 * 8];
-        IList<RectangleF> ranges = new List<RectangleF>();
+        List<RectangleF> ranges = new List<RectangleF>();
 
 
         #region --- Constructors ---
@@ -195,7 +195,7 @@ namespace OpenTK.Graphics
             //Vector2[] vertices = new Vector2[8 * text.Length];  // Interleaved, vertex, texcoord, vertex, etc...
             //ushort[] indices = new ushort[6 * text.Length];
             float x_pos = 0, y_pos = 0;
-            ushort i = 0, index_count = 0, vertex_count = 0, last_break_point = 0;
+            ushort i = 0, index_count = 0, vertex_count = 0;
             RectangleF rect = new RectangleF();
             float char_width, char_height;
             int texture;
@@ -212,11 +212,19 @@ namespace OpenTK.Graphics
 
                 int current = 0;
 
-                foreach (RectangleF range in ranges)
+                foreach (char c  in text)
                 {
-                    char c = text[current++];
-                    if (Char.IsSeparator(c))
-                        last_break_point = index_count;
+                    if (c == '\n' || c == '\r')
+                        continue;
+                    else if (Char.IsWhiteSpace(c))
+                    {
+                        current++;
+                        continue;
+                    }
+
+                    RectangleF range = ranges[current++];
+
+                    Console.WriteLine(String.Format("{0}: {1}", c, range.ToString()));
 
                     x_pos = range.X;
                     y_pos = range.Y;

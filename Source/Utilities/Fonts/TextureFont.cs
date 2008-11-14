@@ -21,6 +21,7 @@ namespace OpenTK.Graphics
 {
     using Graphics = System.Drawing.Graphics;
     using PixelFormat = OpenTK.Graphics.PixelFormat;
+using System.Text.RegularExpressions;
 
     public class TextureFont : IFont
     {
@@ -40,6 +41,8 @@ namespace OpenTK.Graphics
         int[] data = new int[256];  // Used to upload the glyph buffer to the OpenGL texture.
 
         object upload_lock = new object();
+
+        static readonly char[] newline_characters = new char[] { '\n', '\r' };
 
         #region --- Constructor ---
 
@@ -108,6 +111,9 @@ namespace OpenTK.Graphics
             RectangleF rect = new RectangleF();
             foreach (char c in glyphs)
             {
+                if (Char.IsWhiteSpace(c))
+                    continue;
+
                 try
                 {
                     if (!loaded_glyphs.ContainsKey(c))
@@ -301,6 +307,9 @@ namespace OpenTK.Graphics
 
         #region public RectangleF MeasureText(string text, SizeF bounds, StringFormat format, IList<RectangleF> ranges)
 
+        IntPtr[] regions = new IntPtr[GdiPlus.MaxMeasurableCharacterRanges];
+        CharacterRange[] characterRanges = new CharacterRange[GdiPlus.MaxMeasurableCharacterRanges];
+
         /// <summary>
         /// Calculates size information for the specified text.
         /// </summary>
@@ -309,10 +318,8 @@ namespace OpenTK.Graphics
         /// <param name="format">A StringFormat object which specifies the measurement format of the string. Pass null to use the default StringFormat (StringFormat.GenericDefault).</param>
         /// <param name="ranges">Fills the specified IList of RectangleF structures with position information for individual characters. If this argument is null, these calculations are skipped.</param>
         /// <returns>A RectangleF containing the bounding box for the specified text.</returns>
-        public RectangleF MeasureText(string text, SizeF bounds, StringFormat format, IList<RectangleF> ranges)
+        public RectangleF MeasureText(string text, SizeF bounds, StringFormat format, List<RectangleF> ranges)
         {
-            int status = 0;
-
             if (String.IsNullOrEmpty(text))
                 return RectangleF.Empty;
 
@@ -322,63 +329,46 @@ namespace OpenTK.Graphics
             if (format == null)
                 format = default_string_format;
 
-            if (ranges != null)
-                ranges.Clear();
+            // TODO: What should we do in this case?
+            if (ranges == null)
+                ranges = new List<RectangleF>();
 
-            IntPtr[] regions = new IntPtr[GdiPlus.MaxMeasurableCharacterRanges];
-            CharacterRange[] characterRanges = new CharacterRange[GdiPlus.MaxMeasurableCharacterRanges];
+            ranges.Clear();
 
             PointF origin = PointF.Empty;
             SizeF size = SizeF.Empty;
-            RectangleF rect = new RectangleF();
-            for (int i = 0; i < text.Length; i += GdiPlus.MaxMeasurableCharacterRanges)
+
+            IntPtr native_graphics = GdiPlus.GetNativeGraphics(gfx);
+            IntPtr native_font = GdiPlus.GetNativeFont(font);
+            IntPtr native_string_format = GdiPlus.GetNativeStringFormat(format);
+
+            RectangleF layoutRect = new RectangleF(PointF.Empty, bounds);
+
+            int height = 0;
+            // Todo: This allocates memory, see below for possible solutions.
+            string[] lines = text.Split(newline_characters, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string s in lines)
             {
-                int num_characters = text.Length - i > GdiPlus.MaxMeasurableCharacterRanges ? GdiPlus.MaxMeasurableCharacterRanges : text.Length - i;
-
-                for (int j = 0; j < num_characters; j++)
-                {
-                    characterRanges[j] = new CharacterRange(i + j, 1);
-
-                    IntPtr region;
-                    status = GdiPlus.CreateRegion(out region);
-                    regions[j] = region;
-                    if (status != 0)
-                        Debug.Print("GDI+ error: {0}", status);
-                }
-
-                CharacterRange[] a = (CharacterRange[])characterRanges.Clone();
-                Array.Resize(ref a, num_characters);
-                format.SetMeasurableCharacterRanges(a);
-
-                IntPtr native_graphics = GdiPlus.GetNativeGraphics(gfx);
-                IntPtr native_font = GdiPlus.GetNativeFont(font);
-                IntPtr native_string_format = GdiPlus.GetNativeStringFormat(format);
-                RectangleF layoutRect = new RectangleF(PointF.Empty, bounds);
-
-                status = GdiPlus.MeasureCharacterRanges(new HandleRef(gfx, native_graphics), text, text.Length,
-                                                new HandleRef(font, native_font), ref layoutRect,
-                                                new HandleRef(format, (format == null) ? IntPtr.Zero : native_string_format),
-                                                num_characters, regions);
-
-                for (int j = 0; j < num_characters; j++)
-                {
-                    status = GdiPlus.GetRegionBounds(regions[j], new HandleRef(gfx, GdiPlus.GetNativeGraphics(gfx)), ref rect);
-
-                    if (i == 0 && j == 0)
-                        origin = rect.Location;
-
-                    //if (origin.X > 0)
-                    //    rect.X -= (float)System.Math.Floor(origin.X);
-
-                    if (ranges != null)
-                        ranges.Add(rect);
-
-                    status = GdiPlus.DeleteRegion(regions[j]);
-                }
+                ranges.AddRange(GetCharExtents(
+                    s, height, 0, s.Length, layoutRect,
+                    native_graphics, native_font, native_string_format));
+                height += font.Height;
             }
 
-            //origin.X = 0;
-            return new RectangleF(origin.X, origin.Y, rect.Right, rect.Bottom);
+            // It seems that the mere presence of \n and \r characters
+            // is enough for Mono to botch the layout (even if these
+            // characters are not processed.) We'll need to find a
+            // different way to perform layout on Mono, probably
+            // through Pango.
+            //foreach (LineDelimiter d in SplitLines(text))
+            //{
+            //    ranges.AddRange(ProcessLine(
+            //        text, height, d.Start, d.Length, layoutRect,
+            //        native_graphics, native_font, native_string_format));
+            //    height += font.Height;
+            //}
+
+            return new RectangleF(ranges[0].X, ranges[0].Y, ranges[ranges.Count - 1].Right, ranges[ranges.Count - 1].Bottom);
         }
 
         #endregion
@@ -411,6 +401,8 @@ namespace OpenTK.Graphics
             GL.BindTexture(TextureTarget.Texture2D, texture);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.ClampToEdge);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.ClampToEdge);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Alpha, texture_width, texture_height, 0,
                 OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
@@ -425,6 +417,8 @@ namespace OpenTK.Graphics
         {
             if (pack == null)
                 PrepareTexturePacker();
+
+            Debug.Write(String.Format("Loading glyph: {0} ", c));
 
             RectangleF glyph_rect = MeasureText(c.ToString(), SizeF.Empty, load_glyph_string_format);
             SizeF glyph_size = new SizeF(glyph_rect.Right, glyph_rect.Bottom);  // We need to do this, since the origin might not be (0, 0)
@@ -444,33 +438,17 @@ namespace OpenTK.Graphics
 
             GL.BindTexture(TextureTarget.Texture2D, texture);
 
-            //gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
             gfx.Clear(System.Drawing.Color.Transparent);
             gfx.DrawString(g.Character.ToString(), g.Font, System.Drawing.Brushes.White, 0.0f, 0.0f, default_string_format);
 
-            //BitmapData bitmap_data = bitmap.LockBits(new Rectangle(0, 0, rect.Width, rect.Height), ImageLockMode.ReadOnly,
-            //    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            //GL.TexSubImage2D(TextureTarget.Texture2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
-            //    OpenTK.Graphics.Enums.PixelFormat.Rgba, PixelType.UnsignedByte, bitmap_data.Scan0);
-            //bitmap.UnlockBits(bitmap_data);
-
             BitmapData bitmap_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
                 System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            int needed_size = rect.Width * rect.Height;
-            if (data.Length < needed_size)
-                Array.Resize<int>(ref data, needed_size);
-            Array.Clear(data, 0, needed_size);
-            unsafe
-            {
-                int* bitmap_data_ptr = (int*)bitmap_data.Scan0;
-                for (int y = 0; y < rect.Height; y++)
-                    for (int x = 0; x < rect.Width; x++)
-                        data[y * rect.Width + x] = *(bitmap_data_ptr + y * bmp.Width + x);
-
-                fixed (int* data_ptr = data)
-                    GL.TexSubImage2D(TextureTarget.Texture2D, 0, rect.Left, rect.Top, rect.Width, rect.Height,
-                                     OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, (IntPtr)data_ptr);
-            }
+            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1.0f);
+            GL.PixelStore(PixelStoreParameter.UnpackRowLength, bmp.Width);
+            GL.TexSubImage2D(TextureTarget.Texture2D, 0, (int)rect.Left, (int)rect.Top,
+                                        rect.Width, rect.Height,
+                                        OpenTK.Graphics.PixelFormat.Rgba,
+                                        PixelType.UnsignedByte, bitmap_data.Scan0);
             bmp.UnlockBits(bitmap_data);
 
             rectangle = RectangleF.FromLTRB(
@@ -480,7 +458,107 @@ namespace OpenTK.Graphics
                 rect.Bottom / (float)texture_height);
 
             loaded_glyphs.Add(g.Character, rectangle);
+        }
 
+        #endregion
+
+        #region struct LineDelimiter
+
+        // Denotes the start and end of a line of text.
+        struct LineDelimiter
+        {
+            public int Start, Length;
+
+            public int End { get { return Start + Length; } }
+
+            public LineDelimiter(int start, int length)
+            {
+                Start = start;
+                Length = length;
+            }
+        }
+
+        #endregion
+
+        #region SplitLines
+
+        // Splits the specified string into substrings separated by the
+        // \n and \r characters.
+        //IEnumerable<LineDelimiter> SplitLines(string text)
+        //{
+        //    if (text == null)
+        //        throw new ArgumentNullException("text");
+
+        //    if (text.Length == 0)
+        //        yield break;
+
+        //    int segment_start = 0;
+        //    int i = 0;
+        //    for (; i < text.Length; i++)
+        //    {
+        //        if (text[i] == '\n' || text[i] == '\r')
+        //        {
+        //            if (i - segment_start > 0)
+        //                yield return new LineDelimiter() { Start = segment_start, Length = i - segment_start };
+        //            segment_start = i + 1;
+        //        }
+        //    }
+
+        //    if (i - segment_start > 0)
+        //        yield return new LineDelimiter() { Start = segment_start, Length = i - segment_start };
+        //}
+
+        #endregion
+
+        #region GetCharExtents
+
+        // Gets the bounds of each character in a line of text.
+        // The line is processed in blocks of 32 characters (GdiPlus.MaxMeasurableCharacterRanges).
+        IEnumerable<RectangleF> GetCharExtents(string text, int height, int line_start, int line_length,
+            RectangleF layoutRect, IntPtr native_graphics, IntPtr native_font, IntPtr native_string_format)
+        {
+            RectangleF rect = new RectangleF();
+            int line_end = line_start + line_length;
+            while (line_start < line_end)
+            {
+                if (text[line_start] == '\n' || text[line_start] == '\r')
+                {
+                    line_start++;
+                    continue;
+                }
+
+                int num_characters = (line_end - line_start) > GdiPlus.MaxMeasurableCharacterRanges ?
+                    GdiPlus.MaxMeasurableCharacterRanges :
+                    line_end - line_start;
+                int status = 0;
+
+                for (int i = 0; i < num_characters; i++)
+                {
+                    characterRanges[i] = new CharacterRange(line_start + i, 1);
+
+                    IntPtr region;
+                    status = GdiPlus.CreateRegion(out region);
+                    regions[i] = region;
+                    if (status != 0)
+                        Debug.Print("GDI+ error: {0}", status);
+                }
+
+                GdiPlus.SetStringFormatMeasurableCharacterRanges(native_string_format, num_characters, characterRanges);
+
+                status = GdiPlus.MeasureCharacterRanges(native_graphics, text, text.Length,
+                                                native_font, ref layoutRect, native_string_format, num_characters, regions);
+
+                for (int i = 0; i < num_characters; i++)
+                {
+                    GdiPlus.GetRegionBounds(regions[i], native_graphics, ref rect);
+                    GdiPlus.DeleteRegion(regions[i]);
+
+                    rect.Y += height;
+                    yield return rect;
+                }
+
+                line_start += num_characters;
+            }
         }
 
         #endregion
