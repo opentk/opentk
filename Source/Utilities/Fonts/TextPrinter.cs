@@ -224,8 +224,6 @@ namespace OpenTK.Graphics
 
                     RectangleF range = ranges[current++];
 
-                    Console.WriteLine(String.Format("{0}: {1}", c, range.ToString()));
-
                     x_pos = range.X;
                     y_pos = range.Y;
 
