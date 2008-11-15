@@ -42,11 +42,35 @@ namespace OpenTK.Math
         /// </summary>
         public float W;
 
+        /// <summary>
+        /// Defines a unit-length Vector4 that points towards the X-axis.
+        /// </summary>
 		public static Vector4 UnitX = new Vector4(1, 0, 0, 0);
-		public static Vector4 UnitY = new Vector4(0, 1, 0, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector4 that points towards the Y-axis.
+        /// </summary>
+        public static Vector4 UnitY = new Vector4(0, 1, 0, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector4 that points towards the Z-axis.
+        /// </summary>
 		public static Vector4 UnitZ = new Vector4(0, 0, 1, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector4 that points towards the W-axis.
+        /// </summary>
 		public static Vector4 UnitW = new Vector4(0, 0, 0, 1);
+
+        /// <summary>
+        /// Defines a zero-length Vector4.
+        /// </summary>
 		public static Vector4 Zero = new Vector4(0, 0, 0, 0);
+
+        /// <summary>
+        /// Defines the size of the Vector4 struct in bytes.
+        /// </summary>
+        public static readonly int SizeInBytes = Marshal.SizeOf(new Vector4());
 
         #endregion
 
