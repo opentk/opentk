@@ -35,9 +35,25 @@ namespace OpenTK.Math
         /// </summary>
         public float Y;
 
+        /// <summary>
+        /// Defines a unit-length Vector2 that points towards the X-axis.
+        /// </summary>
 		public static Vector2 UnitX = new Vector2(1, 0);
+
+        /// <summary>
+        /// Defines a unit-length Vector2 that points towards the Y-axis.
+        /// </summary>
 		public static Vector2 UnitY = new Vector2(0, 1);
+
+        /// <summary>
+        /// Defines a zero-length Vector2.
+        /// </summary>
 		public static Vector2 Zero = new Vector2(0, 0);
+
+        /// <summary>
+        /// Defines the size of the Vector2 struct in bytes.
+        /// </summary>
+        public static readonly int SizeInBytes = Marshal.SizeOf(new Vector2());
 
         #endregion
 
