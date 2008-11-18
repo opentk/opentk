@@ -208,37 +208,10 @@ using System.Text.RegularExpressions;
         public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)
         {
             System.Drawing.StringFormat format = accountForOverhangs ? System.Drawing.StringFormat.GenericDefault : System.Drawing.StringFormat.GenericTypographic;
-            //format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
 
             System.Drawing.SizeF size = gfx.MeasureString(str, font, 16384, format);
             height = size.Height;
             width = size.Width;
-
-            //width = height = 0;
-
-            //RectangleF rect = new RectangleF(0, 0, 0, 0);
-            //ICollection<RectangleF> ranges = new List<RectangleF>();
-            //MeasureCharacterRanges(gfx, str, font, ref rect, format, ref ranges);
-            //foreach (RectangleF range in ranges)
-            //{
-            //    width += range.Width;
-            //    height = range.Height > height ?range.Height : height;
-            //}
-
-            //    width = 0;
-            //    height = 0;
-            //    int i = 0;
-            //    foreach (char c in str)
-            //    {
-            //        if (c != '\n' && c != '\r')
-            //        {
-            //            SizeF size = gfx.MeasureString(str.Substring(i, 1), font, 16384, System.Drawing.StringFormat.GenericTypographic);
-            //            width += size.Width == 0 ? font.SizeInPoints * 0.5f : size.Width;
-            //            if (height < size.Height)
-            //                height = size.Height;
-            //        }
-            //        ++i;
-            //    }
         }
 
         #endregion
@@ -345,28 +318,24 @@ using System.Text.RegularExpressions;
             RectangleF layoutRect = new RectangleF(PointF.Empty, bounds);
 
             int height = 0;
-            // Todo: This allocates memory, see below for possible solutions.
-            string[] lines = text.Split(newline_characters, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string s in lines)
-            {
-                ranges.AddRange(GetCharExtents(
-                    s, height, 0, s.Length, layoutRect,
-                    native_graphics, native_font, native_string_format));
-                height += font.Height;
-            }
 
             // It seems that the mere presence of \n and \r characters
             // is enough for Mono to botch the layout (even if these
             // characters are not processed.) We'll need to find a
             // different way to perform layout on Mono, probably
             // through Pango.
-            //foreach (LineDelimiter d in SplitLines(text))
-            //{
-            //    ranges.AddRange(ProcessLine(
-            //        text, height, d.Start, d.Length, layoutRect,
-            //        native_graphics, native_font, native_string_format));
-            //    height += font.Height;
-            //}
+            // Todo: This workaround  allocates memory.
+            //if (Configuration.RunningOnMono)
+            {
+                string[] lines = text.Replace("\r", String.Empty).Split(newline_characters);
+                foreach (string s in lines)
+                {
+                    ranges.AddRange(GetCharExtents(
+                        s, height, 0, s.Length, layoutRect,
+                        native_graphics, native_font, native_string_format));
+                    height += font.Height;
+                }
+            }
 
             return new RectangleF(ranges[0].X, ranges[0].Y, ranges[ranges.Count - 1].Right, ranges[ranges.Count - 1].Bottom);
         }
@@ -468,54 +437,6 @@ using System.Text.RegularExpressions;
 
         #endregion
 
-        #region struct LineDelimiter
-
-        // Denotes the start and end of a line of text.
-        struct LineDelimiter
-        {
-            public int Start, Length;
-
-            public int End { get { return Start + Length; } }
-
-            public LineDelimiter(int start, int length)
-            {
-                Start = start;
-                Length = length;
-            }
-        }
-
-        #endregion
-
-        #region SplitLines
-
-        // Splits the specified string into substrings separated by the
-        // \n and \r characters.
-        //IEnumerable<LineDelimiter> SplitLines(string text)
-        //{
-        //    if (text == null)
-        //        throw new ArgumentNullException("text");
-
-        //    if (text.Length == 0)
-        //        yield break;
-
-        //    int segment_start = 0;
-        //    int i = 0;
-        //    for (; i < text.Length; i++)
-        //    {
-        //        if (text[i] == '\n' || text[i] == '\r')
-        //        {
-        //            if (i - segment_start > 0)
-        //                yield return new LineDelimiter() { Start = segment_start, Length = i - segment_start };
-        //            segment_start = i + 1;
-        //        }
-        //    }
-
-        //    if (i - segment_start > 0)
-        //        yield return new LineDelimiter() { Start = segment_start, Length = i - segment_start };
-        //}
-
-        #endregion
-
         #region GetCharExtents
 
         // Gets the bounds of each character in a line of text.
@@ -527,11 +448,11 @@ using System.Text.RegularExpressions;
             int line_end = line_start + line_length;
             while (line_start < line_end)
             {
-                if (text[line_start] == '\n' || text[line_start] == '\r')
-                {
-                    line_start++;
-                    continue;
-                }
+                //if (text[line_start] == '\n' || text[line_start] == '\r')
+                //{
+                //    line_start++;
+                //    continue;
+                //}
 
                 int num_characters = (line_end - line_start) > GdiPlus.MaxMeasurableCharacterRanges ?
                     GdiPlus.MaxMeasurableCharacterRanges :
@@ -545,19 +466,22 @@ using System.Text.RegularExpressions;
                     IntPtr region;
                     status = GdiPlus.CreateRegion(out region);
                     regions[i] = region;
-                    if (status != 0)
-                        Debug.Print("GDI+ error: {0}", status);
+                    Debug.Assert(status == 0, String.Format("GDI+ error: {0}", status));
                 }
 
-                GdiPlus.SetStringFormatMeasurableCharacterRanges(native_string_format, num_characters, characterRanges);
+                status = GdiPlus.SetStringFormatMeasurableCharacterRanges(native_string_format, num_characters, characterRanges);
+                Debug.Assert(status == 0, String.Format("GDI+ error: {0}", status));
 
                 status = GdiPlus.MeasureCharacterRanges(native_graphics, text, text.Length,
                                                 native_font, ref layoutRect, native_string_format, num_characters, regions);
+                Debug.Assert(status == 0, String.Format("GDI+ error: {0}", status));
 
                 for (int i = 0; i < num_characters; i++)
                 {
                     GdiPlus.GetRegionBounds(regions[i], native_graphics, ref rect);
+                    Debug.Assert(status == 0, String.Format("GDI+ error: {0}", status));
                     GdiPlus.DeleteRegion(regions[i]);
+                    Debug.Assert(status == 0, String.Format("GDI+ error: {0}", status));
 
                     rect.Y += height;
                     yield return rect;
