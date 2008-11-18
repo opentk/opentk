@@ -39,8 +39,11 @@ namespace OpenTK
                 switch (DetectUnixKernel())
                 {
                     case "Unix":
-                    case "Linux":
                         runningOnX11 = true;
+                        break;
+
+                    case "Linux":
+                        runningOnLinux = runningOnX11 = true;
                         break;
 
                     case "Darwin":
