@@ -42,6 +42,7 @@ namespace OpenTK
 
         /// <summary>This method is obsolete and will be removed in future versions.</summary>
         /// <param name="mode">Obsolete.</param>
+        [Obsolete]
         public GLControl(DisplayMode mode)
             : this(mode.ToGraphicsMode())
         { }
