@@ -17,14 +17,14 @@ using System.IO;
 
 namespace OpenTK
 {
-    /// <internal />
-    /// <summary>Contains configuration options for OpenTK.</summary>
-    internal static class Configuration
+    /// <summary>Provides information about the underlying OS and runtime.</summary>
+    public static class Configuration
     {
-        static bool runningOnWindows, runningOnX11, runningOnOSX, runningOnLinux;
+        static bool runningOnWindows, runningOnX11, runningOnOSX, runningOnLinux, runningOnMono;
 
         #region --- Constructors ---
 
+        // Detects the underlying OS and runtime.
         static Configuration()
         {
             if (System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
@@ -57,37 +57,51 @@ namespace OpenTK
             }
             else
                 throw new PlatformNotSupportedException("Unknown platform. Please report this error at http://www.opentk.com.");
+
+            // Detect the Mono runtime (code taken from http://mono.wikia.com/wiki/Detecting_if_program_is_running_in_Mono).
+            Type t = Type.GetType("Mono.Runtime");
+            if (t != null)
+                runningOnMono = true;
         }
 
         #endregion
 
         #region --- Public Methods ---
 
-        #region internal static bool RunningOnWindows
+        #region public static bool RunningOnWindows
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a Windows platform.</summary>
-        internal static bool RunningOnWindows { get { return runningOnWindows; } }
+        public static bool RunningOnWindows { get { return runningOnWindows; } }
 
         #endregion
 
-        #region internal static bool  RunningOnX11
+        #region public static bool  RunningOnX11
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
-        internal static bool RunningOnX11 { get { return runningOnX11; } }
+        public static bool RunningOnX11 { get { return runningOnX11; } }
 
         #endregion
 
-        #region internal static bool RunningOnLinux
+        #region public static bool RunningOnLinux
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
-        internal static bool RunningOnLinux { get { return runningOnLinux; } }
+        public static bool RunningOnLinux { get { return runningOnLinux; } }
 
         #endregion
 
-        #region internal static bool  RunningOnOSX
+        #region public static bool  RunningOnOSX
 
-        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an OSX platform.</summary>
-        internal static bool RunningOnOSX { get { return runningOnOSX; } }
+        /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a MacOS platform.</summary>
+        public static bool RunningOnOSX { get { return runningOnOSX; } }
+
+        #endregion
+
+        #region public static bool RunningOnMono
+
+        /// <summary>
+        /// Gets a System.Boolean indicating whether OpenTK is running on the Mono runtime.
+        /// </summary>
+        public static bool RunningOnMono { get { return runningOnMono; } }
 
         #endregion
 
@@ -95,12 +109,12 @@ namespace OpenTK
 
         #region private static string DetectUnixKernel()
 
-        /// <summary>
-        /// Executes "uname" which returns a string representing the name of the
-        /// underlying Unix kernel.
-        /// </summary>
-        /// <returns>"Unix", "Linux", "Darwin" or null.</returns>
-        /// <remarks>Source code from "Mono: A Developer's Notebook"</remarks>
+        // <summary>
+        // Executes "uname" which returns a string representing the name of the
+        // underlying Unix kernel.
+        // </summary>
+        // <returns>"Unix", "Linux", "Darwin" or null.</returns>
+        // <remarks>Source code from "Mono: A Developer's Notebook"</remarks>
         private static string DetectUnixKernel()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
