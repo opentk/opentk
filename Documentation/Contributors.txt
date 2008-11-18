@@ -1,31 +1,14 @@
-The following people have contributed towards making OpenTK what it is. Thank you!
+The Open Toolkit library team consists of:
+
+Stefanos Apostolopoulos
+Christoph Brandtner 
+Erik Ylvisaker
 
 
+The following people have contributed code, art and support to the Open Toolkit library. Thank you!
 
-* Andy Gill			(andyggill@gmail.com)
-	Math toolkit: Vector2/3/4, Matrix4, Quaternions
-
-* Beau Gunderson
-	Windows FSAA patch.
-
-* Christoph Brandtner
-	OpenAL bindings
-	Updated OpenGL tokens
-
-* Erik Ylvisaker
-	Linux support (GLContext on linux)
-	Glx bindings.
-
-* James Talton
-	GTK GLWidget
-	Double precision math toolkit
-
-* Kostas Soulakellis
-	OpenTK logo
-
-* Per
-	Fix for flickering GLControl
-
-
-
-
+Andy Gill
+Beau Gunderson
+James Talton
+Kostas Soulakellis
+Per
