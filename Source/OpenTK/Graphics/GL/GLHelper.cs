@@ -128,6 +128,7 @@ namespace OpenTK.Graphics
                 if (!name.StartsWith("GL_"))
                     sb.Append("gl_");
                 sb.Append(name.ToLower());
+                sb.Replace("_", String.Empty);
 
                 // Search the cache for the string.
                 return AvailableExtensions.ContainsKey(sb.ToString());
@@ -407,20 +408,24 @@ namespace OpenTK.Graphics
 
             Debug.Print(version);
 
-            if (version.StartsWith("1.2"))
+            if (version.StartsWith("1.1"))
             {
-                AvailableExtensions.Add("gl_version_1_1", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
+                AvailableExtensions.Add("glversion11", true);
+            }
+            else if (version.StartsWith("1.2"))
+            {
+                AvailableExtensions.Add("glversion11", true);
+                AvailableExtensions.Add("glversion12", true);
             }
             else if (version.StartsWith("1.3"))
             {
-                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("glversion11", true);
                 AvailableExtensions.Add("gl_version_1_2", true);
                 AvailableExtensions.Add("gl_version_1_3", true);
             }
             else if (version.StartsWith("1.4"))
             {
-                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("glversion11", true);
                 AvailableExtensions.Add("gl_version_1_2", true);
                 AvailableExtensions.Add("gl_version_1_3", true);
                 AvailableExtensions.Add("gl_version_1_4", true);
@@ -435,7 +440,7 @@ namespace OpenTK.Graphics
             }
             else if (version.StartsWith("2.0"))
             {
-                AvailableExtensions.Add("gl_version_1_1", true);
+                AvailableExtensions.Add("glversion11", true);
                 AvailableExtensions.Add("gl_version_1_2", true);
                 AvailableExtensions.Add("gl_version_1_3", true);
                 AvailableExtensions.Add("gl_version_1_4", true);
@@ -444,13 +449,24 @@ namespace OpenTK.Graphics
             }
             else if (version.StartsWith("2.1"))
             {
-                AvailableExtensions.Add("gl_version_1_1", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
-                AvailableExtensions.Add("gl_version_1_4", true);
-                AvailableExtensions.Add("gl_version_1_5", true);
-                AvailableExtensions.Add("gl_version_2_0", true);
-                AvailableExtensions.Add("gl_version_2_1", true);
+                AvailableExtensions.Add("glversion11", true);
+                AvailableExtensions.Add("glversion12", true);
+                AvailableExtensions.Add("glversion13", true);
+                AvailableExtensions.Add("glversion14", true);
+                AvailableExtensions.Add("glversion15", true);
+                AvailableExtensions.Add("glversion20", true);
+                AvailableExtensions.Add("glversion21", true);
+            }
+            else if (version.StartsWith("3.0"))
+            {
+                AvailableExtensions.Add("glversion11", true);
+                AvailableExtensions.Add("glversion12", true);
+                AvailableExtensions.Add("glversion13", true);
+                AvailableExtensions.Add("glversion14", true);
+                AvailableExtensions.Add("glversion15", true);
+                AvailableExtensions.Add("glversion20", true);
+                AvailableExtensions.Add("glversion21", true);
+                AvailableExtensions.Add("glversion30", true);
             }
 
             string extension_string = GL.GetString(StringName.Extensions);
@@ -459,7 +475,7 @@ namespace OpenTK.Graphics
 
             string[] extensions = extension_string.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string ext in extensions)
-                AvailableExtensions.Add(ext.ToLower(), true);
+                AvailableExtensions.Add(ext.Replace("_", String.Empty).ToLower(), true);
 
             foreach (string s in AvailableExtensions.Keys)
                 Debug.Print(s);
