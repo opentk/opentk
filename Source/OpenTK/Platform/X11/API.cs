@@ -756,16 +756,16 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
     
-    #region Motif    
+    #region Motif
     
     [StructLayout(LayoutKind.Sequential)]
     internal struct MotifWmHints
     {
         internal IntPtr flags;
-        internal IntPtr    functions;
-        internal IntPtr    decorations;
-        internal IntPtr    input_mode;
-        internal IntPtr    status;
+        internal IntPtr functions;
+        internal IntPtr decorations;
+        internal IntPtr input_mode;
+        internal IntPtr status;
 
         public override string ToString ()
         {
@@ -773,7 +773,7 @@ XF86VidModeGetGammaRampSize(
         }
     }
     
-        [Flags]
+    [Flags]
     internal enum MotifFlags
     {
         Functions    = 1,
