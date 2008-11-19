@@ -418,12 +418,22 @@ using System.Text.RegularExpressions;
 
             BitmapData bitmap_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly,
                 System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1.0f);
-            GL.PixelStore(PixelStoreParameter.UnpackRowLength, bmp.Width);
-            GL.TexSubImage2D(TextureTarget.Texture2D, 0, (int)rect.Left, (int)rect.Top,
-                                        rect.Width, rect.Height,
-                                        OpenTK.Graphics.PixelFormat.Rgba,
-                                        PixelType.UnsignedByte, bitmap_data.Scan0);
+            
+            GL.PushClientAttrib(ClientAttribMask.ClientPixelStoreBit);
+            try
+            {
+                GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1.0f);
+                GL.PixelStore(PixelStoreParameter.UnpackRowLength, bmp.Width);
+                GL.TexSubImage2D(TextureTarget.Texture2D, 0, (int)rect.Left, (int)rect.Top,
+                    rect.Width, rect.Height,
+                    OpenTK.Graphics.PixelFormat.Rgba,
+                    PixelType.UnsignedByte, bitmap_data.Scan0);
+            }
+            finally
+            {
+                GL.PopClientAttrib();
+            }
+
             bmp.UnlockBits(bitmap_data);
 
             rectangle = RectangleF.FromLTRB(
