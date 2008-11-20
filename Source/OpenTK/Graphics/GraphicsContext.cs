@@ -93,9 +93,12 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region private GraphicsContext()
+
         private GraphicsContext()
-        {
-        }
+        { }
+
+        #endregion
 
         /// <summary>
         /// Attempts to create a GraphicsContext object from an existing OpenGL context.
@@ -218,6 +221,19 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region public static void Assert()
+
+        /// <summary>
+        /// Checks if a GraphicsContext exists in the calling thread and throws a GraphicsContextException if it doesn't.
+        /// </summary>
+        public static void Assert()
+        {
+            if (GraphicsContext.CurrentContext == null)
+                throw new GraphicsContextException();
+        }
+
+        #endregion
+
         #endregion
 
         #region --- IGraphicsContext Members ---
@@ -301,7 +317,7 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region --- IGLContextInternal Members ---
+        #region --- IGraphicsContextInternal Members ---
 
         #region void LoadAll()
 
