@@ -943,6 +943,26 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region public static int GenTexture()
+
+        public static int GenTexture()
+        {
+            int id;
+            GenTextures(1, out id);
+            return id;
+        }
+
+        #endregion
+
+        #region public static void DeleteTexture(int id)
+
+        public static void DeleteTexture(int id)
+        {
+            DeleteTextures(1, ref id);
+        }
+
+        #endregion
+
         #endregion
     }
 }
