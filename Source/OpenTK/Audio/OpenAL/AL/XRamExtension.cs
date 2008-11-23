@@ -76,7 +76,7 @@ namespace OpenTK.Audio
                  AL_STORAGE_HARDWARE == 0 ||
                  AL_STORAGE_ACCESSIBLE == 0 )
             {
-                Trace.WriteLine( "X-Ram: Token values could not be retrieved." );
+                Debug.WriteLine( "X-Ram: Token values could not be retrieved." );
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace OpenTK.Audio
                 Imported_SetBufferMode = (Delegate_SetBufferMode) Marshal.GetDelegateForFunctionPointer( AL.GetProcAddress( "EAXSetBufferMode" ), typeof( Delegate_SetBufferMode ) );
             } catch ( Exception e )
             {
-                Trace.WriteLine( "X-Ram: Attempt to marshal function pointers with AL.GetProcAddress failed. " + e.ToString( ) );
+                Debug.WriteLine( "X-Ram: Attempt to marshal function pointers with AL.GetProcAddress failed. " + e.ToString( ) );
                 return;
             }
 

@@ -516,7 +516,7 @@ namespace OpenTK
                 }
                 catch (Exception e)
                 {
-                    Trace.WriteLine(String.Format("OnLoad failed: {0}", e.ToString()));
+                    Debug.WriteLine(String.Format("OnLoad failed: {0}", e.ToString()));
                     return;
                 }
 
