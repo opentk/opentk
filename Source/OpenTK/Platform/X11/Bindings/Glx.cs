@@ -283,11 +283,17 @@ namespace OpenTK.Platform.X11
         [DllImport(Library, EntryPoint = "glXDestroyContext")]
         public static extern void DestroyContext(IntPtr dpy, IntPtr context);
 
+        [DllImport(Library, EntryPoint = "glXDestroyContext")]
+        public static extern void DestroyContext(IntPtr dpy, ContextHandle context);
+
         [DllImport(Library, EntryPoint = "glXGetCurrentContext")]
         public static extern IntPtr GetCurrentContext();
 
         [DllImport(Library, EntryPoint = "glXMakeCurrent")]
         public static extern bool MakeCurrent(IntPtr display, IntPtr drawable, IntPtr context);
+
+        [DllImport(Library, EntryPoint = "glXMakeCurrent")]
+        public static extern bool MakeCurrent(IntPtr display, IntPtr drawable, ContextHandle context);
 
         [DllImport(Library, EntryPoint = "glXSwapBuffers")]
         public static extern void SwapBuffers(IntPtr display, IntPtr drawable);

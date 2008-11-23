@@ -89,7 +89,7 @@ namespace OpenTK.Audio
         /// <returns>Returns a pointer to the new context (NULL on failure). The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity]
         [CLSCompliant(false)]
-        unsafe public static extern IntPtr CreateContext([In] IntPtr device, [In] int* attrlist);
+        unsafe public static extern ContextHandle CreateContext([In] IntPtr device, [In] int* attrlist);
         // ALC_API ALCcontext *    ALC_APIENTRY alcCreateContext( ALCdevice *device, const ALCint* attrlist );
 
         /// <summary>This function creates a context using a specified device.</summary>
@@ -97,7 +97,7 @@ namespace OpenTK.Audio
         /// <param name="attrlist">an array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC</param>
         /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
         /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
-        public static IntPtr CreateContext(IntPtr device, int[] attriblist)
+        public static ContextHandle CreateContext(IntPtr device, int[] attriblist)
         {
             unsafe
             {
@@ -114,38 +114,38 @@ namespace OpenTK.Audio
         /// <param name="context">A pointer to the new context.</param>
         /// <returns>Returns True on success, or False on failure.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcMakeContextCurrent", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern bool MakeContextCurrent([In] IntPtr context);
+        public static extern bool MakeContextCurrent([In] ContextHandle context);
         // ALC_API ALCboolean      ALC_APIENTRY alcMakeContextCurrent( ALCcontext *context );
 
         /// <summary>This function tells a context to begin processing. When a context is suspended, changes in OpenAL state will be accepted but will not be processed. alcSuspendContext can be used to suspend a context, and then all the OpenAL state changes can be applied at once, followed by a call to alcProcessContext to apply all the state changes immediately. In some cases, this procedure may be more efficient than application of properties in a non-suspended state. In some implementations, process and suspend calls are each a NOP.</summary>
         /// <param name="context">a pointer to the new context</param>
         [DllImport(Alc.Lib, EntryPoint = "alcProcessContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void ProcessContext([In] IntPtr context);
+        public static extern void ProcessContext([In] ContextHandle context);
         // ALC_API void            ALC_APIENTRY alcProcessContext( ALCcontext *context );
 
         /// <summary>This function suspends processing on a specified context. When a context is suspended, changes in OpenAL state will be accepted but will not be processed. A typical use of alcSuspendContext would be to suspend a context, apply all the OpenAL state changes at once, and then call alcProcessContext to apply all the state changes at once. In some cases, this procedure may be more efficient than application of properties in a non-suspended state. In some implementations, process and suspend calls are each a NOP.</summary>
         /// <param name="context">a pointer to the context to be suspended.</param>
         [DllImport(Alc.Lib, EntryPoint = "alcSuspendContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void SuspendContext([In] IntPtr context);
+        public static extern void SuspendContext([In] ContextHandle context);
         // ALC_API void            ALC_APIENTRY alcSuspendContext( ALCcontext *context );
 
         /// <summary>This function destroys a context.</summary>
         /// <param name="context">a pointer to the new context.</param>
         [DllImport(Alc.Lib, EntryPoint = "alcDestroyContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void DestroyContext([In] IntPtr context);
+        public static extern void DestroyContext([In] ContextHandle context);
         // ALC_API void            ALC_APIENTRY alcDestroyContext( ALCcontext *context );
 
         /// <summary>This function retrieves the current context.</summary>
         /// <returns>Returns a pointer to the current context.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcGetCurrentContext", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern IntPtr GetCurrentContext();
+        public static extern ContextHandle GetCurrentContext();
         // ALC_API ALCcontext *    ALC_APIENTRY alcGetCurrentContext( void );
 
         /// <summary>This function retrieves a context's device pointer.</summary>
         /// <param name="context">a pointer to a context.</param>
         /// <returns>Returns a pointer to the specified context's device.</returns>
         [DllImport(Alc.Lib, EntryPoint = "alcGetContextsDevice", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern IntPtr GetContextsDevice([In] IntPtr context);
+        public static extern IntPtr GetContextsDevice([In] ContextHandle context);
         // ALC_API ALCdevice*      ALC_APIENTRY alcGetContextsDevice( ALCcontext *context );
 
         #endregion Context Management

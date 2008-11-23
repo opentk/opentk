@@ -24,7 +24,8 @@ namespace OpenTK.Audio
 
         bool disposed;
         bool is_processing;
-        ContextHandle device_handle, context_handle;
+        IntPtr device_handle;
+        ContextHandle context_handle;
         bool context_exists;
 
         string device_name;
@@ -298,7 +299,7 @@ namespace OpenTK.Audio
 
             context_handle = Alc.CreateContext(device_handle, attributes.ToArray());
 
-            if (context_handle == IntPtr.Zero)
+            if (context_handle == ContextHandle.Zero)
             {
                 Alc.CloseDevice(device_handle);
                 throw new AudioContextException("The audio context could not be created with the specified parameters.");
@@ -351,7 +352,7 @@ namespace OpenTK.Audio
         {
             lock (audio_context_lock)
             {
-                if (!Alc.MakeContextCurrent(context != null ? (IntPtr)context.context_handle : IntPtr.Zero))
+                if (!Alc.MakeContextCurrent(context != null ? context.context_handle : ContextHandle.Zero))
                     throw new AudioContextException(String.Format("ALC {0} error detected at {1}.",
                         Alc.GetError(context != null ? (IntPtr)context.context_handle : IntPtr.Zero).ToString(),
                         context != null ? context.ToString() : "null"));
@@ -395,7 +396,7 @@ namespace OpenTK.Audio
 
         #region IntPtr Device
 
-        IntPtr Device { get { return device_handle.Handle; } }
+        IntPtr Device { get { return device_handle; } }
 
         #endregion
 
@@ -583,7 +584,7 @@ namespace OpenTK.Audio
                 if (this.IsCurrent)
                     this.IsCurrent = false;
 
-                if (context_handle != IntPtr.Zero)
+                if (context_handle != ContextHandle.Zero)
                 {
                     available_contexts.Remove(context_handle);
                     Alc.DestroyContext(context_handle);

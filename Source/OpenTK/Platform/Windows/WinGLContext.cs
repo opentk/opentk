@@ -75,9 +75,9 @@ namespace OpenTK.Platform.Windows
             // and Wgl extensions will fail to load.
             Debug.Write("Creating render context... ");
             renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
-            if (renderContext == IntPtr.Zero)
+            if (renderContext == ContextHandle.Zero)
                 renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
-            if (renderContext == IntPtr.Zero)
+            if (renderContext == ContextHandle.Zero)
                 throw new GraphicsContextException(String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
                                                                  Marshal.GetLastWin32Error()));
 
@@ -86,7 +86,7 @@ namespace OpenTK.Platform.Windows
             if (sharedContext != null)
             {
                 Debug.Print("Sharing state with context {0}", sharedContext.ToString());
-                Wgl.Imports.ShareLists((sharedContext as IGraphicsContextInternal).Context, renderContext);
+                Wgl.Imports.ShareLists((sharedContext as IGraphicsContextInternal).Context.Handle, renderContext.Handle);
             }
         }
 
@@ -94,8 +94,8 @@ namespace OpenTK.Platform.Windows
         {
             if (window == null) throw new ArgumentNullException("window");
 
-            renderContext = Wgl.GetCurrentContext();
-            if (renderContext == IntPtr.Zero)
+            renderContext = new ContextHandle(Wgl.GetCurrentContext());
+            if (renderContext == ContextHandle.Zero)
                 throw new InvalidOperationException("No OpenGL context is current in the calling thread.");
 
             currentWindow = (WinWindowInfo)window;
@@ -156,7 +156,7 @@ namespace OpenTK.Platform.Windows
                     throw new ArgumentException("window", "Must point to a valid window.");
                 
                 currentWindow = (WinWindowInfo)window;
-                success = Wgl.Imports.MakeCurrent(((WinWindowInfo)window).DeviceContext, this.renderContext);
+                success = Wgl.Imports.MakeCurrent(((WinWindowInfo)window).DeviceContext, this.renderContext.Handle);
             }
             else
                 success = Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
@@ -173,7 +173,7 @@ namespace OpenTK.Platform.Windows
 
         public bool IsCurrent
         {
-            get { return Wgl.GetCurrentContext() == this.renderContext; }
+            get { return Wgl.GetCurrentContext() == this.renderContext.Handle; }
             /*
             set
             {
@@ -336,7 +336,7 @@ namespace OpenTK.Platform.Windows
 
         static ContextHandle GetCurrentContext()
         {
-            return Wgl.GetCurrentContext();
+            return new ContextHandle(Wgl.GetCurrentContext());
         }
 
         #endregion
@@ -388,7 +388,7 @@ namespace OpenTK.Platform.Windows
             if (Destroy != null)
                 Destroy(this, EventArgs.Empty);
 
-            if (renderContext != IntPtr.Zero)
+            if (renderContext != ContextHandle.Zero)
             {
                 try
                 {
@@ -396,7 +396,7 @@ namespace OpenTK.Platform.Windows
                         Debug.Print("Failed to make OpenGL context {0} non current. Error: {1}",
                             renderContext.ToString(), Marshal.GetLastWin32Error());
 
-                    if (!Wgl.Imports.DeleteContext(renderContext))
+                    if (!Wgl.Imports.DeleteContext(renderContext.Handle))
                         Debug.Print("Failed to destroy OpenGL context {0}. Error: {1}",
                             renderContext.ToString(), Marshal.GetLastWin32Error());
                 }
@@ -408,7 +408,7 @@ namespace OpenTK.Platform.Windows
                     Debug.WriteLine(e.ToString());
                     Debug.Unindent();
                 }
-                renderContext = null;
+                renderContext = ContextHandle.Zero;
             }
 
             //if (deviceContext != IntPtr.Zero)

@@ -37,7 +37,7 @@ namespace OpenTK.Platform
 
         public void CreateContext(bool direct, IGraphicsContext source)
         {
-            if (handle == null)
+            if (handle == ContextHandle.Zero)
             {
                 ++handle_count;
                 handle = new ContextHandle((IntPtr)handle_count);
