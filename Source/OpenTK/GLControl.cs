@@ -356,14 +356,4 @@ namespace OpenTK
 #endif
 
     #endregion
-
-    #region internal interface IGLControlHelper
-
-    internal interface IGLControlHelper
-    {
-        IWindowInfo WindowInfo { get; }
-        bool IsIdle { get; }
-    }
-
-    #endregion
 }
