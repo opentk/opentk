@@ -206,7 +206,7 @@ namespace OpenTK.Platform.Windows
                     }
 
                     if ((rin.Data.Mouse.Flags & RawMouseFlags.MOUSE_VIRTUAL_DESKTOP) != 0)
-                        Trace.WriteLine(String.Format("Mouse {0} defines MOUSE_VIRTUAL_DESKTOP flag, please report at http://www.opentk.com", mouse.ToString()));
+                        Debug.WriteLine(String.Format("Mouse {0} defines MOUSE_VIRTUAL_DESKTOP flag, please report at http://www.opentk.com", mouse.ToString()));
                     
                     return true;
 
