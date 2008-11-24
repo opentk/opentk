@@ -23,7 +23,7 @@ namespace OpenTK.Graphics.Text
                 if (c != '\n' && c != '\r' && !Char.IsWhiteSpace(c) && !cache.Contains(c, block.Font))
                     cache.Add(c, block.Font);
 
-            GL.BindTexture(TextureTarget.Texture2D, 1);
+            GL.BindTexture(TextureTarget.Texture2D, 2);
 
             //GL.Begin(BeginMode.Quads);
 
@@ -40,8 +40,6 @@ namespace OpenTK.Graphics.Text
 
             //GL.Translate(0, 256, 0);
 
-            //GL.Disable(EnableCap.Texture2D);
-            //GL.BindTexture(TextureTarget.Texture2D, 1);
             GL.Begin(BeginMode.Triangles);
 
             int current = 0;
