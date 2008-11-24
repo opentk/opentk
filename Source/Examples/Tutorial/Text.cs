@@ -23,10 +23,11 @@ namespace Examples.Tutorial
     [Example("Text", ExampleCategory.Tutorial, 4)]
     public class Text : GameWindow
     {
-        TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 24.0f));
+        Font serif2 = new Font(FontFamily.GenericSerif, 14.0f);
+        TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 12.0f));
         TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 14.0f));
         TextHandle poem_handle;
-        ITextPrinter text = new TextPrinter();
+        TextPrinter text = new TextPrinter();
 
  	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
         int lines;  // How many lines the poem contains.
@@ -125,11 +126,14 @@ namespace Examples.Tutorial
             // used in 2d graphics, and is necessary for achieving pixel-perfect glyph rendering.
             // TextPrinter.End() restores your previous projection/modelview matrices.
             text.Begin();
-            GL.Color3(Color.LightBlue);
-            text.Draw((1.0 / e.Time).ToString("F2"), sans);
+            //GL.Color3(Color.LightBlue);
+            //text.Draw((1.0 / e.Time).ToString("F2"), sans);
             GL.Translate(0.0f, current_position, 0.0f);
             GL.Color3(Color.White);
-            text.Draw(poem_handle);
+            //text.Draw(poem_handle);
+            //text.Draw(poem, serif);
+            //GL.BindTexture(TextureTarget.Texture2D, 1);
+            text.Print(poem, serif2);
             text.End();
             
             SwapBuffers();

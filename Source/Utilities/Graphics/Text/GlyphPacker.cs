@@ -1,24 +1,17 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
-#endregion
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-using System.Drawing.Imaging;
 
-namespace OpenTK
+namespace OpenTK.Graphics.Text
 {
-    class TexturePacker<T> where T : IPackable<T>
+    class GlyphPacker
     {
         Node root;
 
         #region --- Constructors ---
 
-        public TexturePacker(int width, int height)
+        public GlyphPacker(int width, int height)
         {
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width", width, "Must be greater than zero.");
@@ -26,40 +19,55 @@ namespace OpenTK
                 throw new ArgumentOutOfRangeException("height", height, "Must be greater than zero.");
 
             root = new Node();
-            root.Rect = new Rectangle(0, 0, width, width);
+            root.Rectangle = new Rectangle(0, 0, width, width);
         }
 
         #endregion
 
         #region --- Public Methods ---
 
-        #region public Rectangle Add(T item)
+        #region public Rectangle Add(Rectangle boundingBox)
 
         /// <summary>
-        /// Packs the given item into the free space of the TexturePacker.
+        /// Adds boundingBox to the GlyphPacker.
         /// </summary>
-        /// <param name="item">The item to pack.</param>
+        /// <param name="boundingBox">The bounding box of the item to pack.</param>
         /// <returns>A System.Drawing.Rectangle containing the coordinates of the packed item.</returns>
         /// <exception cref="InvalidOperationException">Occurs if the item is larger than the available TexturePacker area</exception>
         /// <exception cref="ArgumentException">Occurs if the item already exists in the TexturePacker.</exception>
-        public void Add(T item, out Rectangle rect)
+        public Rectangle Add(Rectangle boundingBox)
         {
-            if (item.Width > root.Rect.Width || item.Height > root.Rect.Height)
+            if (!root.Rectangle.Contains(boundingBox))
                 throw new InvalidOperationException("The item is too large for this TexturePacker");
 
             Node node;
-            //if (!items.ContainsKey(item))
-            {
-                node = root.Insert(item);
+            node = root.Insert(boundingBox);
 
-                // Tree is full and insertion failed:
-                if (node == null)
-                    throw new TexturePackerFullException();
+            // Tree is full and insertion failed:
+            if (node == null)
+                throw new TexturePackerFullException();
 
-                //items.Add(item, node);
-                rect = node.Rect;
-            }
-            //throw new ArgumentException("The item already exists in the TexturePacker.", "item");
+            return node.Rectangle;
+        }
+
+        #endregion
+
+        #region public Rectangle Add(RectangleF boundingBox)
+
+        /// <summary>
+        /// Rounds boundingBox to the largest integer and adds the resulting Rectangle to the GlyphPacker.
+        /// </summary>
+        /// <param name="boundingBox">The bounding box of the item to pack.</param>
+        /// <returns>A System.Drawing.Rectangle containing the coordinates of the packed item.</returns>
+        /// <exception cref="InvalidOperationException">Occurs if the item is larger than the available TexturePacker area</exception>
+        /// <exception cref="ArgumentException">Occurs if the item already exists in the TexturePacker.</exception>
+        public Rectangle Add(RectangleF boundingBox)
+        {
+            Rectangle bbox = new Rectangle(
+                (int)boundingBox.X, (int)boundingBox.Y,
+                (int)(boundingBox.Width + 0.5f), (int)(boundingBox.Height + 0.5f));
+
+            return Add(bbox);
         }
 
         #endregion
@@ -71,7 +79,6 @@ namespace OpenTK
         /// </summary>
         public void Clear()
         {
-            //items.Clear();
             root.Clear();
         }
 
@@ -105,9 +112,9 @@ namespace OpenTK
 
             Node left, right;
             Rectangle rect;
-            int use_count;
+            bool occupied;
 
-            public Rectangle Rect { get { return rect; } set { rect = value; } }
+            public Rectangle Rectangle { get { return rect; } set { rect = value; } }
             public Node Left { get { return left; } set { left = value; } }
             public Node Right { get { return right; } set { right = value; } }
 
@@ -120,32 +127,32 @@ namespace OpenTK
 
             #endregion
 
-            #region public Node Insert(T item)
+            #region Node Insert(Rectangle bbox)
 
-            public Node Insert(T item)
+            public Node Insert( Rectangle bbox)
             {
                 if (!this.Leaf)
                 {
                     // Recurse towards left child, and if that fails, towards the right.
-                    Node new_node = left.Insert(item);
-                    return new_node ?? right.Insert(item);
+                    Node new_node = left.Insert(bbox);
+                    return new_node ?? right.Insert(bbox);
                 }
                 else
                 {
                     // We have recursed to a leaf.
 
                     // If it is not empty go back.
-                    if (use_count != 0)
+                    if (occupied)
                         return null;
 
                     // If this leaf is too small go back.
-                    if (rect.Width < item.Width || rect.Height < item.Height)
+                    if (rect.Width < bbox.Width || rect.Height < bbox.Height)
                         return null;
 
                     // If this leaf is the right size, insert here.
-                    if (rect.Width == item.Width && rect.Height == item.Height)
+                    if (rect.Width == bbox.Width && rect.Height == bbox.Height)
                     {
-                        use_count = 1;
+                        occupied = true;
                         return this;
                     }
 
@@ -156,21 +163,21 @@ namespace OpenTK
                     left = new Node();
                     right = new Node();
 
-                    int dw = this.rect.Width - item.Width + 1;
-                    int dh = this.rect.Height - item.Height + 1;
+                    int dw = this.rect.Width - bbox.Width + 1;
+                    int dh = this.rect.Height - bbox.Height + 1;
 
                     if (dw > dh)
                     {
-                        left.rect = new Rectangle(rect.Left, rect.Top, item.Width, rect.Height);
-                        right.rect = new Rectangle(rect.Left + item.Width, rect.Top, rect.Width - item.Width, rect.Height);
+                        left.rect = new Rectangle(rect.Left, rect.Top, bbox.Width, rect.Height);
+                        right.rect = new Rectangle(rect.Left + bbox.Width, rect.Top, rect.Width - bbox.Width, rect.Height);
                     }
                     else
                     {
-                        left.rect = new Rectangle(rect.Left, rect.Top, rect.Width, item.Height);
-                        right.rect = new Rectangle(rect.Left, rect.Top + item.Height, rect.Width, rect.Height - item.Height);
+                        left.rect = new Rectangle(rect.Left, rect.Top, rect.Width, bbox.Height);
+                        right.rect = new Rectangle(rect.Left, rect.Top + bbox.Height, rect.Width, rect.Height - bbox.Height);
                     }
 
-                    return left.Insert(item);
+                    return left.Insert(bbox);
                 }
             }
 
