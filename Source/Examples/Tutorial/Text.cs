@@ -23,7 +23,7 @@ namespace Examples.Tutorial
     [Example("Text", ExampleCategory.Tutorial, 4)]
     public class Text : GameWindow
     {
-        Font serif2 = new Font(FontFamily.GenericSerif, 14.0f);
+        Font serif2 = new Font(FontFamily.GenericSerif, 16.0f);
         TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 12.0f));
         TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 14.0f));
         TextHandle poem_handle;
