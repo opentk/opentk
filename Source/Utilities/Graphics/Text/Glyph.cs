@@ -1,41 +1,28 @@
-﻿#region --- License ---
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
-#endregion
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 
-namespace OpenTK.Graphics
+namespace OpenTK.Graphics.Text
 {
-    using Graphics = System.Drawing.Graphics;
-
-    /// <summary>
-    /// Represents a single character of a specific Font.
-    /// </summary>
-    struct Glyph : IPackable<Glyph>
+    struct Glyph : IEquatable<Glyph>
     {
         char character;
         Font font;
-        SizeF size;
 
-        #region --- Constructors ---
+        #region Constructors
 
         /// <summary>
         /// Constructs a new Glyph that represents the given character and Font.
         /// </summary>
         /// <param name="c">The character to represent.</param>
         /// <param name="f">The Font of the character.</param>
-        public Glyph(char c, Font f, SizeF s)
+        public Glyph(char c, Font font)
         {
-            if (f == null)
-                throw new ArgumentNullException("f", "You must specify a valid font");
+            if (font == null)
+                throw new ArgumentNullException("font");
             character = c;
-            font = f;
-            size = s;
+            this.font = font;
         }
 
         #endregion
@@ -98,7 +85,7 @@ namespace OpenTK.Graphics
         /// <returns>Returns a System.String describing this Glyph.</returns>
         public override string ToString()
         {
-            return String.Format("'{0}', {1} {2}, {3} {4}, ({5}, {6})", Character, Font.Name, font.Style, font.Size, font.Unit, Width, Height);
+            return String.Format("'{0}', {1} {2}, {3} {4}", Character, Font.Name, font.Style, font.Size, font.Unit);
         }
 
         #endregion
@@ -111,67 +98,18 @@ namespace OpenTK.Graphics
         /// <returns>A System.Int32 containing a hashcode that uniquely identifies this Glyph.</returns>
         public override int GetHashCode()
         {
-            return character.GetHashCode() ^ font.GetHashCode() ^ size.GetHashCode();
+            return character.GetHashCode() ^ font.GetHashCode();
         }
 
         #endregion
 
-        #region public SizeF Size
-
-        /// <summary>
-        /// Gets the size of this Glyph.
-        /// </summary>
-        public SizeF Size { get { return size; } }
-
         #endregion
 
-        #region public RectangleF Rectangle
+        #region IEquatable<Glyph> Members
 
-        /// <summary>
-        /// Gets the bounding box of this Glyph.
-        /// </summary>
-        public RectangleF Rectangle { get { return new RectangleF(PointF.Empty, Size); } }
-
-        #endregion
-
-        #endregion
-
-        #region --- IPackable<T> Members ---
-
-        /// <summary>
-        /// Gets an integer representing the width of the Glyph in pixels.
-        /// </summary>
-        public int Width
-        {
-            get
-            {
-                return (int)System.Math.Ceiling(size.Width);
-            }
-        }
-
-        /// <summary>
-        /// Gets an integer representing the height of the Glyph in pixels.
-        /// </summary>
-        public int Height
-        {
-            get
-            {
-                return (int)System.Math.Ceiling(size.Height);
-            }
-        }
-
-        #endregion
-
-        #region --- IEquatable<Glyph> Members ---
-
-        /// <summary>
-        /// Compares the current Glyph with the given Glyph.
-        /// </summary>
-        /// <param name="other">The Glyph to compare to.</param>
-        /// <returns>True if both Glyphs represent the same character of the same Font, false otherwise.</returns>
         public bool Equals(Glyph other)
         {
-            return Character == other.Character && Font == other.Font && Size == other.Size;
+            return Character == other.Character && Font == other.Font;
         }
 
         #endregion

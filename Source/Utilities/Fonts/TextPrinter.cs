@@ -12,11 +12,12 @@ using System.Text;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 using OpenTK.Math;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics.OpenGL.Enums;
-using System.Diagnostics;
+using OpenTK.Graphics;
+using OpenTK.Graphics.Text;
+using OpenTK.Platform;
 
 namespace OpenTK.Fonts { }
 
@@ -25,7 +26,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Provides methods to perform layout and print hardware accelerated text.
     /// </summary>
-    public class TextPrinter : ITextPrinter
+    public sealed class TextPrinter : ITextPrinter
     {
         //static Regex break_point = new Regex("[ .,/*-+?\\!=]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         //static char[] split_chars = new char[]
@@ -41,11 +42,6 @@ namespace OpenTK.Graphics
 
 
         #region --- Constructors ---
-
-        /// <summary>
-        /// Constructs a new TextPrinter object.
-        /// </summary>
-        public TextPrinter() { }
 
         public TextPrinter(ITextPrinterImplementation implementation)
         {
@@ -355,6 +351,155 @@ namespace OpenTK.Graphics
             GL.MatrixMode(MatrixMode.Projection);
             GL.PopMatrix();
         }
+
+        #endregion
+
+        #endregion
+
+        #region New Implementation
+
+        #region Fields
+
+        Dictionary<Font, TextureFont> font_cache = new Dictionary<Font, TextureFont>();
+
+        GlyphCache glyph_cache;
+        IGlyphRasterizer glyph_rasterizer;
+        ITextOutputProvider text_output;
+
+        //TextExtents text_extents = new TextExtents();
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Constructs a new TextPrinter object.
+        /// </summary>
+        public TextPrinter()
+            : this(null, null)
+        {
+        }
+
+        TextPrinter(IGlyphRasterizer rasterizer, ITextOutputProvider output/*, IGlyphCacheProvider, ITextOutputProvider */)
+        {
+            if (rasterizer == null)
+                rasterizer = new GdiPlusGlyphRasterizer();
+
+            if (output == null)
+                output = new GL1TextOutputProvider();
+
+            glyph_rasterizer = rasterizer;
+            glyph_cache = new GlyphCache(rasterizer);
+            text_output = output;
+        }
+
+        #endregion
+
+        #region Public Members
+
+        #region Print
+
+        public void Print(string text, Font font)
+        {
+            Print(text, font, 0, RectangleF.Empty);
+        }
+
+        public void Print(string text, Font font, TextPrinterOptions options)
+        {
+            Print(text, font, options, RectangleF.Empty);
+        }
+
+        public void Print(string text, Font font, TextPrinterOptions options, RectangleF layoutRectangle)
+        {
+            if (String.IsNullOrEmpty(text))
+                return;
+
+            if (font == null)
+                throw new ArgumentNullException("font");
+
+            text_output.Print(new TextBlock(text, font, options, layoutRectangle), glyph_rasterizer, glyph_cache);
+
+            //glyph_rasterizer.MeasureText(text, font, options, layoutRectangle, ref text_extents);
+
+            //List<Vector2> vertices = new List<Vector2>();
+            //List<int> indices = new List<int>();
+            //PerformLayout(new TextBlock(text, font, layoutRectangle, options), text_extents, vertices, indices);
+
+            //GL.Begin(BeginMode.Triangles);
+            //foreach (int i in indices)
+            //{
+            //    GL.TexCoord2(vertices[i + 1]);
+            //    GL.Vertex2(vertices[i]);
+            //}
+            //GL.End();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Private Members
+
+        #region PerformLayout
+
+        void PerformLayout(TextBlock block, TextExtents extents, List<Vector2> vertices, List<int> indices)
+        {
+            vertices.Clear();
+            vertices.Capacity = 4 * block.Text.Length;
+            indices.Clear();
+            indices.Capacity = 6 * block.Text.Length;
+            
+            float x_pos = 0, y_pos = 0;
+            RectangleF rect = new RectangleF();
+            float char_width, char_height;
+
+            // Every character comprises of 4 vertices, forming two triangles. We generate an index array which
+            // indexes vertices in a triangle-list fashion. 
+
+            int current = 0;
+            foreach (char c in block.Text)
+            {
+                if (c == '\n' || c == '\r')
+                    continue;
+                else if (Char.IsWhiteSpace(c))
+                {
+                    current++;
+                    continue;
+                }
+                else if (!glyph_cache.Contains(c, block.Font))
+                    glyph_cache.Add(c, block.Font);
+
+                //font.GlyphData(c, out char_width, out char_height, out rect, out texture);
+                CachedGlyphInfo cache_info = glyph_cache[c, block.Font];
+                RectangleF glyph_position = extents[current];
+
+                x_pos = glyph_position.X;
+                y_pos = glyph_position.Y;
+                char_width = glyph_position.Width;
+                char_height = glyph_position.Height;
+
+                // Interleaved array: Vertex, TexCoord, Vertex, ...
+                vertices.Add(new Vector2(x_pos, y_pos)); // Vertex
+                vertices.Add(new Vector2(rect.Left, rect.Top));  // Texcoord
+                vertices.Add(new Vector2(x_pos, y_pos + char_height));
+                vertices.Add(new Vector2(rect.Left, rect.Bottom));
+
+                vertices.Add(new Vector2(x_pos + char_width, y_pos + char_height));
+                vertices.Add(new Vector2(rect.Right, rect.Bottom));
+                vertices.Add(new Vector2(x_pos + char_width, y_pos));
+                vertices.Add(new Vector2(rect.Right, rect.Top));
+
+                indices.Add(vertices.Count - 8);
+                indices.Add(vertices.Count - 6);
+                indices.Add(vertices.Count - 4);
+
+                indices.Add(vertices.Count - 4);
+                indices.Add(vertices.Count - 2);
+                indices.Add(vertices.Count - 8);
+            }
+        }
+
+        #endregion
 
         #endregion
 
