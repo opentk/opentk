@@ -41,13 +41,17 @@ namespace OpenTK.Graphics.Text
                 throw new InvalidOperationException("The item is too large for this TexturePacker");
 
             Node node;
+            // Increase size so that the glyphs do not touch each other (to avoid rendering artifacts).
+            boundingBox.Width += 2;
+            boundingBox.Height += 2;
             node = root.Insert(boundingBox);
 
             // Tree is full and insertion failed:
             if (node == null)
                 throw new TexturePackerFullException();
 
-            return node.Rectangle;
+            return new Rectangle(node.Rectangle.X, node.Rectangle.Y, node.Rectangle.Width - 2, node.Rectangle.Height - 2);
+            //return node.Rectangle;
         }
 
         #endregion
