@@ -33,7 +33,7 @@ using System.Drawing.Imaging;
 
 namespace OpenTK.Graphics
 {
-    abstract class Texture2D :  IGraphicsResource
+    abstract class Texture2D :  IGraphicsResource, IEquatable<Texture2D>
     {
         #region Fields
 
@@ -165,6 +165,23 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region Equals
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Texture2D)
+                return this.Equals((Texture2D)obj);
+
+            return false;
+        }
+
+        #endregion
+
+        //public override int GetHashCode()
+        //{
+        //    return (this as IGraphicsResource).Id;
+        //}
+
         #endregion
 
         #region Protected Members
@@ -224,6 +241,15 @@ namespace OpenTK.Graphics
         }
 
         #endregion
+
+        #endregion
+
+        #region IEquatable<Texture2D> Members
+
+        public bool Equals(Texture2D other)
+        {
+            return (this as IGraphicsResource).Id == (other as IGraphicsResource).Id;
+        }
 
         #endregion
 
