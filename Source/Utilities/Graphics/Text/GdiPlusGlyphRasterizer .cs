@@ -1,3 +1,30 @@
+#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -51,31 +78,16 @@ namespace OpenTK.Graphics.Text
             using (Bitmap bmp = new Bitmap((int)(2 * glyph.Font.Size), (int)(2 * glyph.Font.Size)))
             using (System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(bmp))
             {
-                // Small sizes look blurry without gridfitting, so turn that on. 
-                if (glyph.Font.Size <= 18.0f)
-                    gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                else
-                    gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
+                SetTextRenderingOptions(gfx, glyph.Font);
 
-                gfx.Clear(Color.Transparent);
-                gfx.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty);
-
-                Rectangle tight_rect = FindEdges(bmp);
-                Bitmap tight_glyph = bmp.Clone(tight_rect, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                //new Bitmap(tight_rect.Width, tight_rect.Height);
-                //return bmp.Clone(FindEdges(bmp), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                return tight_glyph;
+                gfx.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty, load_glyph_string_format);
+                return bmp.Clone(FindEdges(bmp), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             }
         }
 
         #endregion
 
         #region MeasureText
-
-        //public RectangleF MeasureText(TextBlock block)
-        //{
-        //    return MeasureText(block, ref extents);
-        //}
 
         public TextExtents MeasureText(TextBlock block)
         {
@@ -94,21 +106,23 @@ namespace OpenTK.Graphics.Text
 
         #endregion
 
-        #region MeasureGlyph
-
-        public RectangleF MeasureGlyph(Glyph glyph)
-        {
-            using (Bitmap bmp = Rasterize(glyph))
-            {
-                return FindEdges(bmp);
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region Private Members
+
+        #region SetRenderingOptions
+
+        // Modify rendering settings (antialiasing, grid fitting) to improve appearance.
+        void SetTextRenderingOptions(System.Drawing.Graphics gfx, Font font)
+        {
+            // Small sizes look blurry without gridfitting, so turn that on. 
+            if (font.Size <= 18.0f)
+                gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+            else
+                gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
+        }
+
+        #endregion
 
         #region MeasureTextExtents
 
@@ -121,6 +135,8 @@ namespace OpenTK.Graphics.Text
 
             PointF origin = PointF.Empty;
             SizeF size = SizeF.Empty;
+
+            SetTextRenderingOptions(graphics, block.Font);
 
             IntPtr native_graphics = GdiPlus.GetNativeGraphics(graphics);
             IntPtr native_font = GdiPlus.GetNativeFont(block.Font);
@@ -140,7 +156,8 @@ namespace OpenTK.Graphics.Text
                 foreach (string s in lines)
                 {
                     extents.AddRange(MeasureGlyphExtents(
-                        s, height, 0, s.Length, block.LayoutRectangle,
+                        s, height, 0, s.Length,
+                        block.LayoutRectangle,
                         native_graphics, native_font, native_string_format));
                     height += block.Font.Height;
                 }
@@ -227,12 +244,8 @@ namespace OpenTK.Graphics.Text
 
         int FindLeftEdge(Bitmap bmp)
         {
-            for (int x = 0; x < bmp.Width; x++)
-                for (int y = 0; y < bmp.Height; y++)
-                    if (bmp.GetPixel(x, y).A != 0)
-                        return x;
-
-            return bmp.Width;
+            // Don't trim the left edge, because the layout engine expects it to be 0.
+            return 0;
         }
 
         int FindRightEdge(Bitmap bmp)
