@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using OpenTK.Graphics.Text;
 
 namespace OpenTK.Graphics
 {
@@ -16,13 +17,13 @@ namespace OpenTK.Graphics
     /// </summary>
     public interface ITextPrinter
     {
-        void Prepare(string text, TextureFont font, out TextHandle handle);
-        void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp);
-        void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment);
-        void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft);
-        void Draw(TextHandle handle);
-        void Draw(string text, TextureFont font);
         void Begin();
         void End();
+        void Print(string text, Font font);
+        void Print(string text, Font font, TextPrinterOptions options);
+        void Print(string text, Font font, TextPrinterOptions options, RectangleF layoutRectangle);
+        TextExtents Measure(string text, Font font);
+        TextExtents Measure(string text, Font font, TextPrinterOptions options);
+        TextExtents Measure(string text, Font font, TextPrinterOptions options, RectangleF layoutRectangle);
     }
 }
