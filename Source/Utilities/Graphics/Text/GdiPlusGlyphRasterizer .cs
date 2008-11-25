@@ -80,7 +80,8 @@ namespace OpenTK.Graphics.Text
             {
                 SetTextRenderingOptions(gfx, glyph.Font);
 
-                gfx.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty, load_glyph_string_format);
+                gfx.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty,
+                    glyph.Font.Style == FontStyle.Italic ? load_glyph_string_format : default_string_format);
                 return bmp.Clone(FindEdges(bmp), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             }
         }
@@ -130,6 +131,10 @@ namespace OpenTK.Graphics.Text
         {
             // Todo: Parse layout options:
             StringFormat format = default_string_format;
+            //if (block.Font.Style != FontStyle.Regular)
+            //    format = load_glyph_string_format;
+            //else
+            //    format = default_string_format;
 
             extents.Clear();
 
