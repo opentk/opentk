@@ -436,6 +436,25 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region Measure
+
+        public TextExtents Measure(string text, Font font)
+        {
+            return Measure(text, font, 0, RectangleF.Empty);
+        }
+    
+        public TextExtents Measure(string text, Font font, TextPrinterOptions options)
+        {
+            return Measure(text, font, options, RectangleF.Empty);
+        }
+
+        public TextExtents Measure(string text, Font font, TextPrinterOptions options, RectangleF layoutRectangle)
+        {
+            return glyph_rasterizer.MeasureText(new TextBlock(text, font, options, layoutRectangle));
+        }
+
+        #endregion
+
         #endregion
 
         #region Private Members
