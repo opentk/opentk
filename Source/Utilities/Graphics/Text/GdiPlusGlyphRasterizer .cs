@@ -49,6 +49,9 @@ namespace OpenTK.Graphics.Text
 
         TextExtents extents = new TextExtents();
 
+        Bitmap glyph_surface;
+        System.Drawing.Graphics glyph_renderer;
+
         // Check the constructor, too, for additional flags.
         static readonly StringFormat default_string_format = StringFormat.GenericTypographic;
         static readonly StringFormat load_glyph_string_format = StringFormat.GenericDefault;
@@ -75,15 +78,14 @@ namespace OpenTK.Graphics.Text
 
         public Bitmap Rasterize(Glyph glyph)
         {
-            using (Bitmap bmp = new Bitmap((int)(2 * glyph.Font.Size), (int)(2 * glyph.Font.Size)))
-            using (System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(bmp))
-            {
-                SetTextRenderingOptions(gfx, glyph.Font);
+            EnsureSurfaceSize(ref glyph_surface, ref glyph_renderer, glyph.Font);
 
-                gfx.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty,
-                    glyph.Font.Style == FontStyle.Italic ? load_glyph_string_format : default_string_format);
-                return bmp.Clone(FindEdges(bmp), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            }
+            SetTextRenderingOptions(glyph_renderer, glyph.Font);
+
+            glyph_renderer.Clear(Color.Transparent);
+            glyph_renderer.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty,
+                glyph.Font.Style == FontStyle.Italic ? load_glyph_string_format : default_string_format);
+            return glyph_surface.Clone(FindEdges(glyph_surface), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
         }
 
         #endregion
@@ -110,6 +112,24 @@ namespace OpenTK.Graphics.Text
         #endregion
 
         #region Private Members
+
+        #region EnsureSurfaceSize
+
+        void EnsureSurfaceSize(ref Bitmap bmp, ref System.Drawing.Graphics gfx, Font font)
+        {
+            if (bmp == null || bmp.Width < 2 * font.Size || bmp.Height < 2 * font.Size)
+            {
+                if (bmp != null)
+                    bmp.Dispose();
+                if (gfx != null)
+                    gfx.Dispose();
+
+                bmp = new Bitmap((int)(2 * font.Size), (int)(2 * font.Size));
+                gfx = System.Drawing.Graphics.FromImage(bmp);
+            }
+        }
+
+        #endregion
 
         #region SetRenderingOptions
 

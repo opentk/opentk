@@ -140,20 +140,6 @@ namespace OpenTK.Graphics
                 throw new ArgumentNullException("font");
 
             text_output.Print(new TextBlock(text, font, options, layoutRectangle), glyph_rasterizer, glyph_cache);
-
-            //glyph_rasterizer.MeasureText(text, font, options, layoutRectangle, ref text_extents);
-
-            //List<Vector2> vertices = new List<Vector2>();
-            //List<int> indices = new List<int>();
-            //PerformLayout(new TextBlock(text, font, layoutRectangle, options), text_extents, vertices, indices);
-
-            //GL.Begin(BeginMode.Triangles);
-            //foreach (int i in indices)
-            //{
-            //    GL.TexCoord2(vertices[i + 1]);
-            //    GL.Vertex2(vertices[i]);
-            //}
-            //GL.End();
         }
 
         #endregion
@@ -195,71 +181,6 @@ namespace OpenTK.Graphics
         public void Prepare(string text, TextureFont font, out TextHandle handle)
         {
             handle = new TextHandle(text, font.font);
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Private Members
-
-        #region PerformLayout
-
-        void PerformLayout(TextBlock block, TextExtents extents, List<Vector2> vertices, List<int> indices)
-        {
-            vertices.Clear();
-            vertices.Capacity = 4 * block.Text.Length;
-            indices.Clear();
-            indices.Capacity = 6 * block.Text.Length;
-            
-            float x_pos = 0, y_pos = 0;
-            RectangleF rect = new RectangleF();
-            float char_width, char_height;
-
-            // Every character comprises of 4 vertices, forming two triangles. We generate an index array which
-            // indexes vertices in a triangle-list fashion. 
-
-            int current = 0;
-            foreach (char c in block.Text)
-            {
-                if (c == '\n' || c == '\r')
-                    continue;
-                else if (Char.IsWhiteSpace(c))
-                {
-                    current++;
-                    continue;
-                }
-                else if (!glyph_cache.Contains(c, block.Font))
-                    glyph_cache.Add(c, block.Font);
-
-                //font.GlyphData(c, out char_width, out char_height, out rect, out texture);
-                CachedGlyphInfo cache_info = glyph_cache[c, block.Font];
-                RectangleF glyph_position = extents[current];
-
-                x_pos = glyph_position.X;
-                y_pos = glyph_position.Y;
-                char_width = glyph_position.Width;
-                char_height = glyph_position.Height;
-
-                // Interleaved array: Vertex, TexCoord, Vertex, ...
-                vertices.Add(new Vector2(x_pos, y_pos)); // Vertex
-                vertices.Add(new Vector2(rect.Left, rect.Top));  // Texcoord
-                vertices.Add(new Vector2(x_pos, y_pos + char_height));
-                vertices.Add(new Vector2(rect.Left, rect.Bottom));
-
-                vertices.Add(new Vector2(x_pos + char_width, y_pos + char_height));
-                vertices.Add(new Vector2(rect.Right, rect.Bottom));
-                vertices.Add(new Vector2(x_pos + char_width, y_pos));
-                vertices.Add(new Vector2(rect.Right, rect.Top));
-
-                indices.Add(vertices.Count - 8);
-                indices.Add(vertices.Count - 6);
-                indices.Add(vertices.Count - 4);
-
-                indices.Add(vertices.Count - 4);
-                indices.Add(vertices.Count - 2);
-                indices.Add(vertices.Count - 8);
-            }
         }
 
         #endregion

@@ -59,10 +59,6 @@ namespace OpenTK.Graphics.Text
         {
             TextExtents extents = rasterizer.MeasureText(block);
 
-            foreach (char c in block.Text)
-                if (c != '\n' && c != '\r' && !Char.IsWhiteSpace(c) && !cache.Contains(c, block.Font))
-                    cache.Add(c, block.Font);
-
             //GL.BindTexture(TextureTarget.Texture2D, 2);
 
             //GL.Begin(BeginMode.Quads);
@@ -82,20 +78,20 @@ namespace OpenTK.Graphics.Text
 
             // Build layout
             int current = 0;
-            foreach (char c in block.Text)
+            foreach (Glyph glyph in block)
             {
-                if (c == '\n' || c == '\r')
-                    continue;
-                else if (Char.IsWhiteSpace(c))
+                if (glyph.IsWhiteSpace)
                 {
                     current++;
                     continue;
                 }
+                else if (!cache.Contains(glyph))
+                    cache.Add(glyph);
 
-                CachedGlyphInfo info = cache[c, block.Font];
+                CachedGlyphInfo info = cache[glyph];
                 RectangleF position = extents[current++];
-                // Use the real glyph width instead of the measured one
-                // (we want to achieve pixel perfect output).
+                
+                // Use the real glyph width instead of the measured one (we want to achieve pixel perfect output).
                 position.Size = info.Rectangle.Size;
 
                 if (!active_lists.ContainsKey(info.Texture))
