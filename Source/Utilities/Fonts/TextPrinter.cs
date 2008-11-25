@@ -28,277 +28,42 @@ namespace OpenTK.Graphics
     /// </summary>
     public sealed class TextPrinter : ITextPrinter
     {
-        //static Regex break_point = new Regex("[ .,/*-+?\\!=]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        //static char[] split_chars = new char[]
-        //{
-        //    ' ', '\n', '\t', ',', '.', '/', '?', '!', ';', '\\', '-', '+', '*', '='
-        //};
-        static ITextPrinterImplementation printer;
+        #region Fields
+
+        GlyphCache glyph_cache;
+        IGlyphRasterizer glyph_rasterizer;
+        ITextOutputProvider text_output;
+
         float[] viewport = new float[4];
-          // Interleaved, vertex, texcoord, vertex, etc... Starts with 8 chars, will expand as needed.
-        Vector2[] vertices = new Vector2[8 * 8];
-        ushort[] indices = new ushort[6 * 8];
-        List<RectangleF> ranges = new List<RectangleF>();
-
-
-        #region --- Constructors ---
-
-        public TextPrinter(ITextPrinterImplementation implementation)
-        {
-            if (implementation == null)
-                throw new ArgumentNullException("implementation");
-            printer = implementation;
-        }
 
         #endregion
 
-        #region --- Private Members ---
-
-        #region static ITextPrinterImplementation Printer
+        #region Constructors
 
         /// <summary>
-        /// Checks the machine's capabilities and selects the fastest method to print text.
+        /// Constructs a new TextPrinter object.
         /// </summary>
-        static ITextPrinterImplementation Printer
+        public TextPrinter()
+            : this(null, null)
         {
-            get
-            {
-                if (printer == null)
-                {
+        }
 
-                    printer = (ITextPrinterImplementation)new DisplayListTextPrinter();
-                    //GL.SupportsExtension("VERSION_1_5") ?
-                    //(ITextPrinterImplementation)new VboTextPrinter() :
-                    //GL.SupportsExtension("ARB_vertex_buffer_object") ? null :
-                    //GL.SupportsExtension("VERSION_1_1") ? null : null;
-                    if (printer == null)
-                        throw new NotSupportedException("TextPrinter requires at least OpenGL 1.1 support.");
+        TextPrinter(IGlyphRasterizer rasterizer, ITextOutputProvider output/*, IGlyphCacheProvider, ITextOutputProvider */)
+        {
+            if (rasterizer == null)
+                rasterizer = new GdiPlusGlyphRasterizer();
 
-                    Debug.Print("Using {0} for font printing.", printer);
-                }
-                return printer;
-            }
+            if (output == null)
+                output = new GL1TextOutputProvider();
+
+            glyph_rasterizer = rasterizer;
+            glyph_cache = new GlyphCache(rasterizer);
+            text_output = output;
         }
 
         #endregion
 
-        #endregion
-
-        #region --- ITextPrinter Members ---
-
-        #region public void Prepare(string text, TextureFont font, out TextHandle handle)
-
-        /// <summary>
-        /// Prepares text for drawing.
-        /// </summary>
-        /// <param name="text">The string to draw.</param>
-        /// <param name="font">The font to use for drawing.</param>
-        /// <param name="handle">The handle to the cached text. Use this to draw the text with the Draw() function.</param>
-        /// <see cref="TextPrinter.Draw()"/>
-        public void Prepare(string text, TextureFont font, out TextHandle handle)
-        {
-            this.Prepare(text, font, out handle, 0, false, StringAlignment.Near, false);
-        }
-
-        #endregion
-
-        #region public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp)
-
-        /// <summary>
-        /// Prepares text for drawing.
-        /// </summary>
-        /// <param name="text">The string to draw.</param>
-        /// <param name="font">The font to use for drawing.</param>
-        /// <param name="handle">The handle to the cached text. Use this to draw the text with the Draw() function.</param>
-        /// <param name="width">Not implemented.</param>
-        /// <param name="wordWarp">Not implemented.</param>
-        /// <see cref="TextPrinter.Draw()"/>
-        public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp)
-        {
-            this.Prepare(text, font, out handle, width, wordWarp, StringAlignment.Near, false);
-        }
-
-        #endregion
-
-        #region public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment)
-
-        /// <summary>
-        /// Prepares text for drawing.
-        /// </summary>
-        /// <param name="text">The string to draw.</param>
-        /// <param name="font">The font to use for drawing.</param>
-        /// <param name="handle">The handle to the cached text. Use this to draw the text with the Draw() function.</param>
-        /// <param name="width">Not implemented.</param>
-        /// <param name="wordWarp">Not implemented.</param>
-        /// <param name="alignment">Not implemented.</param>
-        /// <see cref="TextPrinter.Draw()"/>
-        public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment)
-        {
-            this.Prepare(text, font, out handle, width, wordWarp, alignment, false);
-        }
-
-        #endregion
-
-        #region public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft)
-
-        /// <summary>
-        /// Prepares text for drawing.
-        /// </summary>
-        /// <param name="text">The string to draw.</param>
-        /// <param name="font">The font to use for drawing.</param>
-        /// <param name="handle">The handle to the cached text. Use this to draw the text with the Draw() function.</param>
-        /// <param name="width">Not implemented.</param>
-        /// <param name="wordWarp">Not implemented.</param>
-        /// <param name="alignment">Not implemented.</param>
-        /// <param name="rightToLeft">Not implemented.</param>
-        /// <see cref="TextPrinter.Draw()"/>
-        /// <exception cref="NotSupportedException">Occurs when OpenGL 1.1 is not supported.</exception>
-        public void Prepare(string text, TextureFont font, out TextHandle handle, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft)
-        {
-            int num_indices;
-
-            PerformLayout(text, font, width, wordWarp, alignment, rightToLeft, ref vertices, ref indices, out num_indices);
-
-            handle = Printer.Load(vertices, indices, num_indices);
-            handle.Font = font;
-        }
-
-        #endregion
-
-        #region void PerformLayout(string text, TextureFont font, float width, bool wordWarp, StringAlignment alignment, bool rightToLeft, ref Vector2[] vertices, ref ushort[] indices, out int num_indices)
-
-        // Performs layout on the given string.
-        void PerformLayout(string text, TextureFont font, float width, bool wordWarp, StringAlignment alignment,
-                           bool rightToLeft, ref Vector2[] vertices, ref ushort[] indices, out int num_indices)
-        {
-            if (text == null)
-                throw new ArgumentNullException("Parameter cannot be null.", "text");
-
-            if (text.Length > 8192)
-                throw new ArgumentOutOfRangeException("text", text.Length, "Text length must be between 1 and 8192 characters");
-
-            if (wordWarp || rightToLeft || alignment != StringAlignment.Near)
-                throw new NotImplementedException();
-
-            if (8 * text.Length > vertices.Length)
-                vertices = new Vector2[Math.Functions.NextPowerOfTwo(8 * text.Length)];
-
-            if (6 * text.Length > indices.Length)
-                indices = new ushort[Math.Functions.NextPowerOfTwo(6 * text.Length)];
-
-            num_indices = 6 * text.Length;
-
-            //Vector2[] vertices = new Vector2[8 * text.Length];  // Interleaved, vertex, texcoord, vertex, etc...
-            //ushort[] indices = new ushort[6 * text.Length];
-            float x_pos = 0, y_pos = 0;
-            ushort i = 0, index_count = 0, vertex_count = 0;
-            RectangleF rect = new RectangleF();
-            float char_width, char_height;
-            int texture;
-
-            font.LoadGlyphs(text);
-
-            // Every character comprises of 4 vertices, forming two triangles. We generate an index array which
-            // indexes vertices in a triangle-list fashion. 
-            // This algorithm works for left-to-right scripts.
-
-            if (alignment == StringAlignment.Near && !rightToLeft || alignment == StringAlignment.Far && rightToLeft)
-            {
-                font.MeasureText(text, SizeF.Empty, null, ranges);
-
-                int current = 0;
-
-                foreach (char c  in text)
-                {
-                    if (c == '\n' || c == '\r')
-                        continue;
-                    else if (Char.IsWhiteSpace(c))
-                    {
-                        current++;
-                        continue;
-                    }
-
-                    RectangleF range = ranges[current++];
-
-                    x_pos = range.X;
-                    y_pos = range.Y;
-
-                    font.GlyphData(c, out char_width, out char_height, out rect, out texture);
-
-                    vertices[vertex_count].X = x_pos;                // Vertex
-                    vertices[vertex_count++].Y = y_pos;
-                    vertices[vertex_count].X = rect.Left;            // Texcoord
-                    vertices[vertex_count++].Y = rect.Top;
-                    vertices[vertex_count].X = x_pos;                // Vertex
-                    vertices[vertex_count++].Y = y_pos + char_height;
-                    vertices[vertex_count].X = rect.Left;            // Texcoord
-                    vertices[vertex_count++].Y = rect.Bottom;
-
-                    vertices[vertex_count].X = x_pos + char_width;   // Vertex
-                    vertices[vertex_count++].Y = y_pos + char_height;
-                    vertices[vertex_count].X = rect.Right;           // Texcoord
-                    vertices[vertex_count++].Y = rect.Bottom;
-                    vertices[vertex_count].X = x_pos + char_width;   // Vertex
-                    vertices[vertex_count++].Y = y_pos;
-                    vertices[vertex_count].X = rect.Right;           // Texcoord
-                    vertices[vertex_count++].Y = rect.Top;
-
-                    indices[index_count++] = (ushort)(vertex_count - 8);
-                    indices[index_count++] = (ushort)(vertex_count - 6);
-                    indices[index_count++] = (ushort)(vertex_count - 4);
-
-                    indices[index_count++] = (ushort)(vertex_count - 4);
-                    indices[index_count++] = (ushort)(vertex_count - 2);
-                    indices[index_count++] = (ushort)(vertex_count - 8);
-
-                    ++i;
-                }
-            }
-            else if (alignment != StringAlignment.Center)
-            {
-                throw new NotImplementedException("This feature is not yet implemented. Sorry for the inconvenience.");
-            }
-            else
-            {
-                throw new NotImplementedException("This feature is not yet implemented. Sorry for the inconvenience.");
-            }
-        }
-
-        #endregion
-
-        #region public void Draw(TextHandle handle)
-
-        /// <summary>
-        /// Draws the cached text referred to by the TextHandle.
-        /// </summary>
-        /// <param name="handle">The TextHandle to the cached text.</param>
-        public void Draw(TextHandle handle)
-        {
-            GL.BindTexture(TextureTarget.Texture2D, handle.Font.Texture);
-
-            Printer.Draw(handle);
-        }
-
-        #endregion
-
-        #region public void Draw(string text, TextureFont font)
-
-        /// <summary>
-        /// Draws dynamic text without caching. Not implemented yet!
-        /// </summary>
-        /// <param name="text">The System.String to draw.</param>
-        /// <param name="font">The OpenTK.Graphics.TextureFont to draw the text in.</param>
-        public void Draw(string text, TextureFont font)
-        {
-            int num_indices;
-            PerformLayout(text, font, 0, false, StringAlignment.Near, false, ref vertices, ref indices, out num_indices);
-
-            GL.BindTexture(TextureTarget.Texture2D, font.Texture);
-
-            Printer.Draw(vertices, indices, num_indices);
-        }
-
-        #endregion
+        #region ITextPrinter Members
 
         #region public void Begin()
 
@@ -353,49 +118,6 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-
-        #endregion
-
-        #region New Implementation
-
-        #region Fields
-
-        Dictionary<Font, TextureFont> font_cache = new Dictionary<Font, TextureFont>();
-
-        GlyphCache glyph_cache;
-        IGlyphRasterizer glyph_rasterizer;
-        ITextOutputProvider text_output;
-
-        //TextExtents text_extents = new TextExtents();
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Constructs a new TextPrinter object.
-        /// </summary>
-        public TextPrinter()
-            : this(null, null)
-        {
-        }
-
-        TextPrinter(IGlyphRasterizer rasterizer, ITextOutputProvider output/*, IGlyphCacheProvider, ITextOutputProvider */)
-        {
-            if (rasterizer == null)
-                rasterizer = new GdiPlusGlyphRasterizer();
-
-            if (output == null)
-                output = new GL1TextOutputProvider();
-
-            glyph_rasterizer = rasterizer;
-            glyph_cache = new GlyphCache(rasterizer);
-            text_output = output;
-        }
-
-        #endregion
-
-        #region Public Members
 
         #region Print
 
@@ -517,8 +239,6 @@ namespace OpenTK.Graphics
                 indices.Add(vertices.Count - 8);
             }
         }
-
-        #endregion
 
         #endregion
 
