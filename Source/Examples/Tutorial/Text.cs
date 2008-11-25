@@ -23,13 +23,12 @@ namespace Examples.Tutorial
     [Example("Text", ExampleCategory.Tutorial, 4)]
     public class Text : GameWindow
     {
-        Font serif2 = new Font(FontFamily.GenericSerif, 16.0f);
-        TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 12.0f));
-        TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 14.0f));
-        TextHandle poem_handle;
+        Font serif = new Font(FontFamily.GenericSerif, 16.0f);
+        Font sans = new Font(FontFamily.GenericSansSerif, 48.0f, FontStyle.Italic);
         TextPrinter text = new TextPrinter();
 
- 	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
+ 	    //string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
+        string poem = "The quick brown fox jumped over the lazy dogs!\n\nKerning: Wo\nLigatures: ffi, fft";
         int lines;  // How many lines the poem contains.
         
         float scroll_speed;
@@ -49,7 +48,6 @@ namespace Examples.Tutorial
 
             current_position = initial_position;
             scroll_speed = -1.0f;
-            text.Prepare(poem, serif, out poem_handle);
 
             // Count the amount of lines in the text, to find out the correct
             // warparound position. We want the text to scroll until the last
@@ -69,8 +67,10 @@ namespace Examples.Tutorial
 
         public override void OnUnload(EventArgs e)
         {
-            if (poem_handle != null) poem_handle.Dispose();
-            if (serif != null) serif.Dispose();
+            if (serif != null)
+                serif.Dispose();
+            if (sans != null)
+                sans.Dispose();
         }
 
         #endregion
@@ -126,14 +126,17 @@ namespace Examples.Tutorial
             // used in 2d graphics, and is necessary for achieving pixel-perfect glyph rendering.
             // TextPrinter.End() restores your previous projection/modelview matrices.
             text.Begin();
-            //GL.Color3(Color.LightBlue);
-            //text.Draw((1.0 / e.Time).ToString("F2"), sans);
+
+            // Print FPS counter. Since the counter changes per frame,
+            // it shouldn't be cached (TextPrinterOptions.NoCache).
+            GL.Color3(Color.LightYellow);
+            text.Print((1.0 / e.Time).ToString("F2"), sans, TextPrinterOptions.NoCache);
+            
+            // Print the actual text.
             GL.Translate(0.0f, current_position, 0.0f);
             GL.Color3(Color.White);
-            //text.Draw(poem_handle);
-            //text.Draw(poem, serif);
-            //GL.BindTexture(TextureTarget.Texture2D, 1);
-            text.Print(poem, serif2);
+            text.Print(poem, serif);
+            
             text.End();
             
             SwapBuffers();
