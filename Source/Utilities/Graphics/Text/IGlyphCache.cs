@@ -30,7 +30,7 @@ namespace OpenTK.Graphics.Text
     interface IGlyphCache
     {
         void Add(Glyph glyph);
-        void Contains(Glyph glyph);
+        bool Contains(Glyph glyph);
         CachedGlyphInfo this[Glyph glyph] { get; }
     }
 }

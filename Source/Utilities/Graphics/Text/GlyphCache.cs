@@ -31,7 +31,7 @@ using System.Drawing;
 
 namespace OpenTK.Graphics.Text
 {
-    class GlyphCache// : IGlyphCache
+    class GlyphCache : IGlyphCache
     {
         #region Fields
 
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.Text
 
         #endregion
 
-        #region Public Members
+        #region IGlyphCache Members
 
         public void Add(Glyph glyph)
         {
