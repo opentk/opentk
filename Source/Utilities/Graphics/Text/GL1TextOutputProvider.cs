@@ -38,13 +38,18 @@ namespace OpenTK.Graphics.Text
     {
         #region Fields
 
-        SortedList<int, List<Vector2>> vertices = new SortedList<int,List<Vector2>>();
+        // Triangle lists, sorted by texture.
+        Dictionary<Texture2D, List<Vector2>> active_lists = new Dictionary<Texture2D, List<Vector2>>();
+        Queue<List<Vector2>> inactive_lists = new Queue<List<Vector2>>();
 
         #endregion
 
         #region Constructors
 
-        public GL1TextOutputProvider() { }
+        public GL1TextOutputProvider()
+        {
+            inactive_lists.Enqueue(new List<Vector2>());
+        }
 
         #endregion
 
@@ -75,8 +80,7 @@ namespace OpenTK.Graphics.Text
 
             //GL.Translate(0, 256, 0);
 
-            GL.Begin(BeginMode.Triangles);
-
+            // Build layout
             int current = 0;
             foreach (char c in block.Text)
             {
@@ -90,26 +94,58 @@ namespace OpenTK.Graphics.Text
 
                 CachedGlyphInfo info = cache[c, block.Font];
                 RectangleF position = extents[current++];
-
+                // Use the real glyph width instead of the measured one
+                // (we want to achieve pixel perfect output).
                 position.Size = info.Rectangle.Size;
 
-                // Interleaved array: Vertex, TexCoord, Vertex, ...
-                GL.TexCoord2(info.RectangleNormalized.Left, info.RectangleNormalized.Top);
-                GL.Vertex2(position.Left, position.Top);
-                GL.TexCoord2(info.RectangleNormalized.Left, info.RectangleNormalized.Bottom);
-                GL.Vertex2(position.Left, position.Bottom);
-                GL.TexCoord2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom);
-                GL.Vertex2(position.Right, position.Bottom);
+                if (!active_lists.ContainsKey(info.Texture))
+                    if (inactive_lists.Count > 0)
+                        active_lists.Add(info.Texture, inactive_lists.Dequeue());
+                    else
+                        active_lists.Add(info.Texture, new List<Vector2>());
+                {
+                    // Interleaved array: Vertex, TexCoord, Vertex, ...
+                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
+                    active_lists[info.Texture].Add(new Vector2(position.Left, position.Top));
+                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Bottom));
+                    active_lists[info.Texture].Add(new Vector2(position.Left, position.Bottom));
+                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
+                    active_lists[info.Texture].Add(new Vector2(position.Right, position.Bottom));
 
-                GL.TexCoord2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom);
-                GL.Vertex2(position.Right, position.Bottom);
-                GL.TexCoord2(info.RectangleNormalized.Right, info.RectangleNormalized.Top);
-                GL.Vertex2(position.Right, position.Top);
-                GL.TexCoord2(info.RectangleNormalized.Left, info.RectangleNormalized.Top);
-                GL.Vertex2(position.Left, position.Top);
+                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
+                    active_lists[info.Texture].Add(new Vector2(position.Right, position.Bottom));
+                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Top));
+                    active_lists[info.Texture].Add(new Vector2(position.Right, position.Top));
+                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
+                    active_lists[info.Texture].Add(new Vector2(position.Left, position.Top));
+                }
             }
 
-            GL.End();
+            // Render
+            foreach (Texture2D key in active_lists.Keys)
+            {
+                List<Vector2> list = active_lists[key];
+                
+                key.Bind();
+                GL.Begin(BeginMode.Triangles);
+
+                for (int i = 0; i < list.Count; i += 2)
+                {
+                    GL.TexCoord2(list[i]);
+                    GL.Vertex2(list[i + 1]);
+                }
+
+                GL.End();
+            }
+
+            // Clean layout
+            foreach (List<Vector2> list in active_lists.Values)
+            {
+                list.Clear();
+                inactive_lists.Enqueue(list);
+            }
+
+            active_lists.Clear();
         }
 
         #endregion
