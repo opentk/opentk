@@ -33,52 +33,50 @@ namespace Examples.Tutorial
         ITextPrinter printer = new TextPrinter();
         const string text = "Hello, world!";
 
-        TextHandle[] handles;       // Used to cache the strings we want to print.
-
         // Load some different TextureFont sizes to compare their quality.
         // You'll never need to load that many fonts in your application,
         // 3 or 4 should be more than enough.
-        TextureFont[] fonts = new TextureFont[]
+        Font[] fonts = new Font[]
         {
-            new TextureFont(new Font(FontFamily.GenericSerif, 8.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 10.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 12.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 14.0f)),
+            new Font(FontFamily.GenericSerif, 8.0f),
+            new Font(FontFamily.GenericSerif, 10.0f),
+            new Font(FontFamily.GenericSerif, 12.0f),
+            new Font(FontFamily.GenericSerif, 14.0f),
 
-            new TextureFont(new Font(FontFamily.GenericSerif, 16.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 18.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 20.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 22.0f)),
+            new Font(FontFamily.GenericSerif, 16.0f),
+            new Font(FontFamily.GenericSerif, 18.0f),
+            new Font(FontFamily.GenericSerif, 20.0f),
+            new Font(FontFamily.GenericSerif, 22.0f),
 
-            new TextureFont(new Font(FontFamily.GenericSerif, 24.0f, FontStyle.Bold)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 26.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 28.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 30.0f)),
+            new Font(FontFamily.GenericSerif, 24.0f, FontStyle.Bold),
+            new Font(FontFamily.GenericSerif, 26.0f),
+            new Font(FontFamily.GenericSerif, 28.0f),
+            new Font(FontFamily.GenericSerif, 30.0f),
 
-            new TextureFont(new Font(FontFamily.GenericSerif, 32.0f, FontStyle.Italic)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 34.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 36.0f)),
-            new TextureFont(new Font(FontFamily.GenericSerif, 38.0f)),
+            new Font(FontFamily.GenericSerif, 32.0f, FontStyle.Italic),
+            new Font(FontFamily.GenericSerif, 34.0f),
+            new Font(FontFamily.GenericSerif, 36.0f),
+            new Font(FontFamily.GenericSerif, 38.0f),
 
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 8.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 10.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 12.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 14.0f)),
+            new Font(FontFamily.GenericSansSerif, 8.0f),
+            new Font(FontFamily.GenericSansSerif, 10.0f),
+            new Font(FontFamily.GenericSansSerif, 12.0f),
+            new Font(FontFamily.GenericSansSerif, 14.0f),
 
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 16.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 18.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 20.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 22.0f)),
+            new Font(FontFamily.GenericSansSerif, 16.0f),
+            new Font(FontFamily.GenericSansSerif, 18.0f),
+            new Font(FontFamily.GenericSansSerif, 20.0f),
+            new Font(FontFamily.GenericSansSerif, 22.0f),
 
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 24.0f, FontStyle.Bold)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 26.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 28.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 30.0f)),
+            new Font(FontFamily.GenericSansSerif, 24.0f, FontStyle.Bold),
+            new Font(FontFamily.GenericSansSerif, 26.0f),
+            new Font(FontFamily.GenericSansSerif, 28.0f),
+            new Font(FontFamily.GenericSansSerif, 30.0f),
 
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 32.0f, FontStyle.Italic)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 34.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 36.0f)),
-            new TextureFont(new Font(FontFamily.GenericSansSerif, 38.0f)),
+            new Font(FontFamily.GenericSansSerif, 32.0f, FontStyle.Italic),
+            new Font(FontFamily.GenericSansSerif, 34.0f),
+            new Font(FontFamily.GenericSansSerif, 36.0f),
+            new Font(FontFamily.GenericSansSerif, 38.0f),
         };
 
         #endregion
@@ -99,10 +97,6 @@ namespace Examples.Tutorial
         public override void OnLoad(EventArgs e)
         {
             GL.ClearColor(Color.SteelBlue);
-
-            handles = new TextHandle[fonts.Length];
-            for (int i = handles.Length; --i >= 0; )
-                printer.Prepare(text, fonts[i], out handles[i]);
         }
 
         #endregion
@@ -117,9 +111,7 @@ namespace Examples.Tutorial
         /// <param name="e"></param>
         public override void OnUnload(EventArgs e)
         {
-            foreach (TextHandle h in handles)
-                h.Dispose();
-            foreach (TextureFont f in fonts)
+            foreach (Font f in fonts)
                 f.Dispose();
         }
 
@@ -168,21 +160,21 @@ namespace Examples.Tutorial
             printer.Begin();
 
             // Print using the first font.
-            for (int i = 0; i < handles.Length / 2; i++)
+            for (int i = 0; i < fonts.Length / 2; i++)
             {
-                printer.Draw(handles[i]);
+                printer.Print(text, fonts[i]);
                 GL.Translate(0, fonts[i].Height, 0);
             }
 
             // Move to the right, and print using the second font.
             //float width, height;
             //fonts[handles.Length / 2 - 1].MeasureString(text, out width, out height);
-            RectangleF rect = fonts[handles.Length / 2 - 1].MeasureText(text);
+            RectangleF rect = printer.Measure(text, fonts[fonts.Length / 2 - 1]).BoundingBox;
             GL.LoadIdentity();
             GL.Translate(rect.Width + 32.0f, 0, 0);
-            for (int i = handles.Length / 2; i < handles.Length; i++)
+            for (int i = fonts.Length / 2; i < fonts.Length; i++)
             {
-                printer.Draw(handles[i]);
+                printer.Print(text, fonts[i]);
                 GL.Translate(0, fonts[i].Height, 0);
             }
 

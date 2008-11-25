@@ -55,7 +55,7 @@ namespace Examples.Tutorial
 
         // Text drawing (for fps)
         TextPrinter printer = new TextPrinter();
-        TextureFont font = new TextureFont(new Font(FontFamily.GenericSansSerif, 14.0f));
+        Font font = new Font(FontFamily.GenericSansSerif, 16.0f);
 
         #endregion private Fields
 
@@ -290,7 +290,7 @@ namespace Examples.Tutorial
             GL.UseProgram(0);
             printer.Begin();
             GL.Color3(Color.PaleGoldenrod);
-            printer.Draw((1 / e.Time).ToString("F2"), font);
+            printer.Print((1 / e.Time).ToString("F2"), font, TextPrinterOptions.NoCache);
             printer.End();
 
             SwapBuffers();
