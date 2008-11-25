@@ -27,15 +27,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-
-using OpenTK.Graphics;
-using System.Diagnostics;
 
 namespace OpenTK.Graphics.Text
 {
-    class GlyphCache
+    class GlyphCache// : IGlyphCache
     {
         #region Fields
 
@@ -62,9 +58,8 @@ namespace OpenTK.Graphics.Text
 
         #region Public Members
 
-        public void Add(char c, Font font)
+        public void Add(Glyph glyph)
         {
-            Glyph glyph = new Glyph(c, font);
             bool inserted = false;
 
             using (Bitmap bmp = rasterizer.Rasterize(glyph))
@@ -91,27 +86,9 @@ namespace OpenTK.Graphics.Text
             }
         }
 
-        void InsertGlyph(Glyph glyph, Bitmap bmp, GlyphSheet sheet)
+        public bool Contains(Glyph glyph)
         {
-            Rectangle source = new Rectangle(0, 0, bmp.Width, bmp.Height);
-            Rectangle target = sheet.Packer.Add(source);
-
-            sheet.Texture.WriteRegion(source, target, 0, bmp);
-
-            cached_glyphs.Add(glyph, new CachedGlyphInfo(sheet.Texture, target));
-        }
-
-        public bool Contains(char c, Font font)
-        {
-            return cached_glyphs.ContainsKey(new Glyph(c, font));
-        }
-
-        public CachedGlyphInfo this[char c, Font font]
-        {
-            get
-            {
-                return cached_glyphs[new Glyph(c, font)];
-            }
+            return cached_glyphs.ContainsKey(glyph);
         }
 
         public CachedGlyphInfo this[Glyph glyph]
@@ -120,6 +97,20 @@ namespace OpenTK.Graphics.Text
             {
                 return cached_glyphs[glyph];
             }
+        }
+
+        #endregion
+
+        #region Private Members
+
+        void InsertGlyph(Glyph glyph, Bitmap bmp, GlyphSheet sheet)
+        {
+            Rectangle source = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            Rectangle target = sheet.Packer.Add(source);
+
+            sheet.Texture.WriteRegion(source, target, 0, bmp);
+
+            cached_glyphs.Add(glyph, new CachedGlyphInfo(sheet.Texture, target));
         }
 
         #endregion

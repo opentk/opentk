@@ -54,8 +54,8 @@ namespace OpenTK.Graphics.Text
 
         #endregion
 
-        #region --- Public Methods ---
-
+        #region Public Methods 
+        
         #region public char Character
 
         /// <summary>
@@ -84,6 +84,15 @@ namespace OpenTK.Graphics.Text
 
                 font = value;
             }
+        }
+
+        #endregion
+
+        #region public bool IsWhiteSpace
+
+        public bool IsWhiteSpace
+        {
+            get { return Char.IsWhiteSpace(Character); }
         }
 
         #endregion

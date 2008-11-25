@@ -33,7 +33,7 @@ using System.Drawing;
 namespace OpenTK.Graphics.Text
 {
     // Uniquely identifies a block of text. This structure can be used to identify text blocks for caching.
-    struct TextBlock : IEquatable<TextBlock>
+    struct TextBlock : IEquatable<TextBlock>, IEnumerable<Glyph>
     {
         #region Fields
 
@@ -77,6 +77,11 @@ namespace OpenTK.Graphics.Text
             return Text.GetHashCode() ^ Font.GetHashCode() ^ LayoutRectangle.GetHashCode() ^ Options.GetHashCode();
         }
 
+        public Glyph this[int i]
+        {
+            get { return new Glyph(Text[i], Font); }
+        }
+
         #endregion
 
         #region IEquatable<TextBlock> Members
@@ -88,6 +93,24 @@ namespace OpenTK.Graphics.Text
                 Font == other.Font &&
                 LayoutRectangle == other.LayoutRectangle &&
                 Options == other.Options;
+        }
+
+        #endregion
+
+        #region IEnumerable<Glyph> Members
+
+        public IEnumerator<Glyph> GetEnumerator()
+        {
+            return new GlyphEnumerator(Text, Font);
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return new GlyphEnumerator(Text, Font);
         }
 
         #endregion
