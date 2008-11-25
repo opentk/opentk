@@ -34,7 +34,7 @@ namespace OpenTK.Graphics
 {
     struct CachedGlyphInfo
     {
-        public readonly AlphaTexture2D Texture;
+        public readonly Texture2D Texture;
         public readonly RectangleF RectangleNormalized;
         public Rectangle Rectangle
         {
@@ -49,7 +49,7 @@ namespace OpenTK.Graphics
         }
 
         // Rect denotes the absolute position of the glyph in the texture [0, Texture.Width], [0, Texture.Height].
-        public CachedGlyphInfo(AlphaTexture2D texture, Rectangle rect)
+        public CachedGlyphInfo(Texture2D texture, Rectangle rect)
         {
             Texture = texture;
             RectangleNormalized = new RectangleF(
