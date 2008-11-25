@@ -17,6 +17,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Provides text printing through OpenGL 1.5 vertex buffer objects.
     /// </summary>
+    [Obsolete]
     class VboTextPrinter : ITextPrinterImplementation
     {
         static int allocated_handles;
@@ -84,6 +85,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Contains the necessary information to print text through the VboTextPrinter implementation.
     /// </summary>
+    [Obsolete]
     class VboTextHandle : TextHandle
     {
         public VboTextHandle(int handle) : base(handle) { }

@@ -16,6 +16,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Represents a single character of a specific Font.
     /// </summary>
+    [Obsolete]
     struct Glyph : IPackable<Glyph>
     {
         char character;

@@ -25,5 +25,14 @@ namespace OpenTK.Graphics
         TextExtents Measure(string text, Font font);
         TextExtents Measure(string text, Font font, TextPrinterOptions options);
         TextExtents Measure(string text, Font font, TextPrinterOptions options, RectangleF layoutRectangle);
+
+        [Obsolete("Use TextPrinter.Print instead")]
+        void Draw(TextHandle handle);
+
+        [Obsolete("Use TextPrinter.Print instead")]
+        void Draw(string text, TextureFont font);
+
+        [Obsolete("Use TextPrinter.Print instead")]
+        void Prepare(string text, TextureFont font, out TextHandle handle);
     }
 }

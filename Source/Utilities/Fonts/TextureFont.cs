@@ -21,11 +21,12 @@ namespace OpenTK.Graphics
 {
     using Graphics = System.Drawing.Graphics;
     using PixelFormat = OpenTK.Graphics.PixelFormat;
-using System.Text.RegularExpressions;
+    using System.Text.RegularExpressions;
 
+    [Obsolete("Use System.Drawing.Font instead")]
     public class TextureFont : IFont
     {
-        Font font;
+        internal Font font;
         Dictionary<char, RectangleF> loaded_glyphs = new Dictionary<char, RectangleF>(64);
 
         Bitmap bmp;

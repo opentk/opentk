@@ -177,6 +177,28 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region Obsolete
+
+        [Obsolete("Use TextPrinter.Print instead")]
+        public void Draw(TextHandle handle)
+        {
+            Print(handle.Text, handle.GdiPFont);
+        }
+
+        [Obsolete("Use TextPrinter.Print instead")]
+        public void Draw(string text, TextureFont font)
+        {
+            Print(text, font.font);
+        }
+
+        [Obsolete("Use TextPrinter.Print instead")]
+        public void Prepare(string text, TextureFont font, out TextHandle handle)
+        {
+            handle = new TextHandle(text, font.font);
+        }
+
+        #endregion
+
         #endregion
 
         #region Private Members
