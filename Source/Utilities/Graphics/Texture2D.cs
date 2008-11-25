@@ -177,10 +177,27 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        //public override int GetHashCode()
-        //{
-        //    return (this as IGraphicsResource).Id;
-        //}
+        #region public override int GetHashCode()
+
+        public override int GetHashCode()
+        {
+            return (this as IGraphicsResource).Id;
+        }
+
+        #endregion
+
+        #region public overrid string ToString()
+
+        public override string ToString()
+        {
+            return String.Format("Texture2D #{0} ({1}x{2}, {3})",
+                (this as IGraphicsResource).Id.ToString(),
+                Width.ToString(),
+                Height.ToString(),
+                InternalFormat.ToString());
+        }
+
+        #endregion
 
         #endregion
 
