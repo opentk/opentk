@@ -57,63 +57,64 @@ namespace OpenTK.Graphics.Text
 
         public void Print(TextBlock block, IGlyphRasterizer rasterizer, GlyphCache cache)
         {
-            TextExtents extents = rasterizer.MeasureText(block);
-
-            //GL.BindTexture(TextureTarget.Texture2D, 2);
-
-            //GL.Begin(BeginMode.Quads);
-
-            //GL.TexCoord2(0, 0);
-            //GL.Vertex2(0, 0);
-            //GL.TexCoord2(1, 0);
-            //GL.Vertex2(256, 0);
-            //GL.TexCoord2(1, 1);
-            //GL.Vertex2(256, 256);
-            //GL.TexCoord2(0, 1);
-            //GL.Vertex2(0, 256);
-
-            //GL.End();
-
-            //GL.Translate(0, 256, 0);
-
-            // Build layout
-            int current = 0;
-            foreach (Glyph glyph in block)
+            using (TextExtents extents = rasterizer.MeasureText(block))
             {
-                if (glyph.IsWhiteSpace)
+                //GL.BindTexture(TextureTarget.Texture2D, 2);
+
+                //GL.Begin(BeginMode.Quads);
+
+                //GL.TexCoord2(0, 0);
+                //GL.Vertex2(0, 0);
+                //GL.TexCoord2(1, 0);
+                //GL.Vertex2(256, 0);
+                //GL.TexCoord2(1, 1);
+                //GL.Vertex2(256, 256);
+                //GL.TexCoord2(0, 1);
+                //GL.Vertex2(0, 256);
+
+                //GL.End();
+
+                //GL.Translate(0, 256, 0);
+
+                // Build layout
+                int current = 0;
+                foreach (Glyph glyph in block)
                 {
-                    current++;
-                    continue;
-                }
-                else if (!cache.Contains(glyph))
-                    cache.Add(glyph);
+                    if (glyph.IsWhiteSpace)
+                    {
+                        current++;
+                        continue;
+                    }
+                    else if (!cache.Contains(glyph))
+                        cache.Add(glyph);
 
-                CachedGlyphInfo info = cache[glyph];
-                RectangleF position = extents[current++];
-                
-                // Use the real glyph width instead of the measured one (we want to achieve pixel perfect output).
-                position.Size = info.Rectangle.Size;
+                    CachedGlyphInfo info = cache[glyph];
+                    RectangleF position = extents[current++];
 
-                if (!active_lists.ContainsKey(info.Texture))
-                    if (inactive_lists.Count > 0)
-                        active_lists.Add(info.Texture, inactive_lists.Dequeue());
-                    else
-                        active_lists.Add(info.Texture, new List<Vector2>());
-                {
-                    // Interleaved array: Vertex, TexCoord, Vertex, ...
-                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
-                    active_lists[info.Texture].Add(new Vector2(position.Left, position.Top));
-                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Bottom));
-                    active_lists[info.Texture].Add(new Vector2(position.Left, position.Bottom));
-                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
-                    active_lists[info.Texture].Add(new Vector2(position.Right, position.Bottom));
+                    // Use the real glyph width instead of the measured one (we want to achieve pixel perfect output).
+                    position.Size = info.Rectangle.Size;
 
-                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
-                    active_lists[info.Texture].Add(new Vector2(position.Right, position.Bottom));
-                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Top));
-                    active_lists[info.Texture].Add(new Vector2(position.Right, position.Top));
-                    active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
-                    active_lists[info.Texture].Add(new Vector2(position.Left, position.Top));
+                    if (!active_lists.ContainsKey(info.Texture))
+                        if (inactive_lists.Count > 0)
+                            active_lists.Add(info.Texture, inactive_lists.Dequeue());
+                        else
+                            active_lists.Add(info.Texture, new List<Vector2>());
+                    {
+                        // Interleaved array: Vertex, TexCoord, Vertex, ...
+                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
+                        active_lists[info.Texture].Add(new Vector2(position.Left, position.Top));
+                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Bottom));
+                        active_lists[info.Texture].Add(new Vector2(position.Left, position.Bottom));
+                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
+                        active_lists[info.Texture].Add(new Vector2(position.Right, position.Bottom));
+
+                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
+                        active_lists[info.Texture].Add(new Vector2(position.Right, position.Bottom));
+                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Top));
+                        active_lists[info.Texture].Add(new Vector2(position.Right, position.Top));
+                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
+                        active_lists[info.Texture].Add(new Vector2(position.Left, position.Top));
+                    }
                 }
             }
 

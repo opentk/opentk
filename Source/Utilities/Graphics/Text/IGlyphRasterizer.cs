@@ -38,5 +38,6 @@ namespace OpenTK.Graphics.Text
     {
         Bitmap Rasterize(Glyph glyph);
         TextExtents MeasureText(TextBlock block);
+        void Rasterize(Glyph glyph, ref Bitmap bmp, out Rectangle rect);
     }
 }

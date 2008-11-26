@@ -33,29 +33,19 @@ using System.Drawing;
 namespace OpenTK.Graphics.Text
 {
     // Holds layout information about a TextBlock.
-    public struct TextExtents
+    public class TextExtents : IDisposable
     {
         #region Fields
 
-        RectangleF text_extents;
-        List<RectangleF> glyph_extents;
+        protected RectangleF text_extents;
+        protected List<RectangleF> glyph_extents = new List<RectangleF>();
 
         #endregion
 
         #region Constructors
 
-        public TextExtents(RectangleF bbox)
-            : this(bbox, null)
+        internal TextExtents()
         {
-        }
-
-        public TextExtents(RectangleF bbox, IEnumerable<RectangleF> glyphExtents)
-            : this()
-        {
-            BoundingBox = bbox;
-
-            if (glyphExtents != null)
-                AddRange(glyphExtents);
         }
 
         #endregion
@@ -70,23 +60,29 @@ namespace OpenTK.Graphics.Text
 
         public RectangleF this[int i]
         {
-            get { return (GlyphExtents as List<RectangleF>)[i]; }
-            internal set { (GlyphExtents as List<RectangleF>)[i] = value; }
+            get { return glyph_extents[i]; }
+            internal set { glyph_extents[i] = value; }
         }
 
         public IEnumerable<RectangleF> GlyphExtents
         {
             get
             {
-                if (glyph_extents == null)
-                    glyph_extents = new List<RectangleF>();
                 return (IEnumerable<RectangleF>)glyph_extents;
             }
         }
 
         public int Count
         {
-            get { return (GlyphExtents as List<RectangleF>).Count; }
+            get { return glyph_extents.Count; }
+        }
+
+        public TextExtents Clone()
+        {
+            TextExtents extents = new TextExtents();
+            extents.glyph_extents.AddRange(GlyphExtents);
+            extents.BoundingBox = BoundingBox;
+            return extents;
         }
 
         #endregion
@@ -95,18 +91,26 @@ namespace OpenTK.Graphics.Text
 
         internal void Add(RectangleF glyphExtent)
         {
-            (GlyphExtents as List<RectangleF>).Add(glyphExtent);
+            glyph_extents.Add(glyphExtent);
         }
 
         internal void AddRange(IEnumerable<RectangleF> glyphExtents)
         {
-            (GlyphExtents as List<RectangleF>).AddRange(glyphExtents);
+            glyph_extents.AddRange(glyphExtents);
         }
 
         internal void Clear()
         {
             BoundingBox = RectangleF.Empty;
-            (GlyphExtents as List<RectangleF>).Clear();
+            glyph_extents.Clear();
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public virtual void Dispose()
+        {
         }
 
         #endregion

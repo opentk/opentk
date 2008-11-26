@@ -34,6 +34,7 @@ using System.Drawing.Text;
 using OpenTK.Graphics.Text;
 using OpenTK.Platform;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 
 namespace OpenTK.Graphics.Text
 {
@@ -47,10 +48,10 @@ namespace OpenTK.Graphics.Text
         IntPtr[] regions = new IntPtr[GdiPlus.MaxMeasurableCharacterRanges];
         CharacterRange[] characterRanges = new CharacterRange[GdiPlus.MaxMeasurableCharacterRanges];
 
-        TextExtents extents = new TextExtents();
-
         Bitmap glyph_surface;
         System.Drawing.Graphics glyph_renderer;
+
+        readonly ObjectPool<PoolableTextExtents> text_extents_pool = new ObjectPool<PoolableTextExtents>();
 
         // Check the constructor, too, for additional flags.
         static readonly StringFormat default_string_format = StringFormat.GenericTypographic;
@@ -78,6 +79,8 @@ namespace OpenTK.Graphics.Text
 
         public Bitmap Rasterize(Glyph glyph)
         {
+            RectangleF r = MeasureText(new TextBlock(glyph.Character.ToString(), glyph.Font, TextPrinterOptions.NoCache, RectangleF.Empty)).BoundingBox;
+
             EnsureSurfaceSize(ref glyph_surface, ref glyph_renderer, glyph.Font);
 
             SetTextRenderingOptions(glyph_renderer, glyph.Font);
@@ -85,7 +88,25 @@ namespace OpenTK.Graphics.Text
             glyph_renderer.Clear(Color.Transparent);
             glyph_renderer.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty,
                 glyph.Font.Style == FontStyle.Italic ? load_glyph_string_format : default_string_format);
-            return glyph_surface.Clone(FindEdges(glyph_surface), System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            RectangleF r2 = FindEdges(glyph_surface);
+
+            return glyph_surface.Clone(r2, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+        }
+
+        public void Rasterize(Glyph glyph, ref Bitmap bmp, out Rectangle rect)
+        {
+            EnsureSurfaceSize(ref bmp, ref glyph_renderer, glyph.Font);
+
+            using (System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(bmp))
+            {
+                SetTextRenderingOptions(gfx, glyph.Font);
+
+                gfx.Clear(Color.Transparent);
+                gfx.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty,
+                    glyph.Font.Style == FontStyle.Italic ? load_glyph_string_format : default_string_format);
+                rect = FindEdges(bmp);
+            }
         }
 
         #endregion
@@ -99,10 +120,10 @@ namespace OpenTK.Graphics.Text
             if (block_cache.ContainsKey(block))
                 return block_cache[block];
 
-            // If this block is not cached, we have to measure it and place it in the cache.
-            MeasureTextExtents(block, ref extents);
+            // If this block is not cached, we have to measure it and (potentially) place it in the cache.
+            TextExtents extents = MeasureTextExtents(block);
             if ((block.Options & TextPrinterOptions.NoCache) == 0)
-                block_cache.Add(block, new TextExtents(extents.BoundingBox, extents.GlyphExtents));
+                block_cache.Add(block, extents);
 
             return extents;
         }
@@ -147,7 +168,7 @@ namespace OpenTK.Graphics.Text
 
         #region MeasureTextExtents
 
-        void MeasureTextExtents(TextBlock block, ref TextExtents extents)
+        TextExtents MeasureTextExtents(TextBlock block)
         {
             // Todo: Parse layout options:
             StringFormat format = default_string_format;
@@ -156,7 +177,7 @@ namespace OpenTK.Graphics.Text
             //else
             //    format = default_string_format;
 
-            extents.Clear();
+            TextExtents extents = text_extents_pool.Acquire();
 
             PointF origin = PointF.Empty;
             SizeF size = SizeF.Empty;
@@ -189,6 +210,8 @@ namespace OpenTK.Graphics.Text
             }
 
             extents.BoundingBox = new RectangleF(extents[0].X, extents[0].Y, extents[extents.Count - 1].Right, extents[extents.Count - 1].Bottom);
+
+            return extents;
         }
 
         #endregion
@@ -252,13 +275,28 @@ namespace OpenTK.Graphics.Text
 
         #region FindEdges
 
+        #pragma warning disable 0649
+
+        struct Pixel { public byte B, G, R, A; }
+
+        #pragma warning restore 0649
+
         Rectangle FindEdges(Bitmap bmp)
         {
-            return Rectangle.FromLTRB(
-                FindLeftEdge(bmp),
-                FindTopEdge(bmp),
-                FindRightEdge(bmp),
-                FindBottomEdge(bmp));
+            BitmapData data = bmp.LockBits(
+                new Rectangle(0, 0, bmp.Width, bmp.Height),
+                ImageLockMode.ReadOnly,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            
+            Rectangle rect = Rectangle.FromLTRB(
+                FindLeftEdge(bmp, data.Scan0),
+                FindTopEdge(bmp, data.Scan0),
+                FindRightEdge(bmp, data.Scan0),
+                FindBottomEdge(bmp, data.Scan0));
+
+            bmp.UnlockBits(data);
+
+            return rect;
         }
 
         #endregion
@@ -267,34 +305,40 @@ namespace OpenTK.Graphics.Text
 
         // Iterates through the bmp, and returns the first row or line that contains a non-transparent pixels.
 
-        int FindLeftEdge(Bitmap bmp)
+        int FindLeftEdge(Bitmap bmp, IntPtr ptr)
         {
             // Don't trim the left edge, because the layout engine expects it to be 0.
             return 0;
         }
 
-        int FindRightEdge(Bitmap bmp)
+        int FindRightEdge(Bitmap bmp, IntPtr ptr)
         {
             for (int x = bmp.Width - 1; x >= 0; x--)
                 for (int y = 0; y < bmp.Height; y++)
-                    if (bmp.GetPixel(x, y).A != 0)
-                        return x + 1;
+                    unsafe
+                    {
+                        if (((Pixel*)(ptr) + y * bmp.Width + x)->A != 0)
+                            return x + 1;
+                    }
 
             return 0;
         }
 
-        int FindTopEdge(Bitmap bmp)
+        int FindTopEdge(Bitmap bmp, IntPtr ptr)
         {
             // Don't trim the top edge, because the layout engine expects it to be 0.
             return 0;
         }
 
-        int FindBottomEdge(Bitmap bmp)
+        int FindBottomEdge(Bitmap bmp, IntPtr ptr)
         {
             for (int y = bmp.Height - 1; y >= 0; y--)
                 for (int x = 0; x < bmp.Width; x++)
-                    if (bmp.GetPixel(x, y).A != 0)
-                        return y + 1;
+                    unsafe
+                    {
+                        if (((Pixel*)(ptr) + y * bmp.Width + x)->A != 0)
+                            return y + 1;
+                    }
 
             return 0;
         }
