@@ -162,7 +162,7 @@ namespace Examples.Tutorial
             // Print using the first font.
             for (int i = 0; i < fonts.Length / 2; i++)
             {
-                printer.Print(text, fonts[i]);
+                printer.Print(text, fonts[i], Color.White);
                 GL.Translate(0, fonts[i].Height, 0);
             }
 
@@ -174,7 +174,7 @@ namespace Examples.Tutorial
             GL.Translate(rect.Width + 32.0f, 0, 0);
             for (int i = fonts.Length / 2; i < fonts.Length; i++)
             {
-                printer.Print(text, fonts[i]);
+                printer.Print(text, fonts[i], Color.White);
                 GL.Translate(0, fonts[i].Height, 0);
             }
 

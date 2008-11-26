@@ -289,8 +289,7 @@ namespace Examples.Tutorial
             // Then, render the fps:
             GL.UseProgram(0);
             printer.Begin();
-            GL.Color3(Color.PaleGoldenrod);
-            printer.Print((1 / e.Time).ToString("F2"), font, TextPrinterOptions.NoCache);
+            printer.Print((1 / e.Time).ToString("F2"), font, Color.PaleGoldenrod, RectangleF .Empty, TextPrinterOptions.NoCache);
             printer.End();
 
             SwapBuffers();

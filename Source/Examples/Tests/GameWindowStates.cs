@@ -118,13 +118,12 @@ namespace Examples.Tests
 
             printer.Begin();
 
-            printer.Print("Instructions:", font); GL.Translate(0, font.Height, 0);
-            printer.Print(String.Format("1 - cycle through window styles (current: {0}).", this.WindowState), font);
-            GL.Translate(0, font.Height, 0);
-            printer.Print(String.Format("2 - cycle through window borders (current: {0}).", this.WindowBorder), font);
+            printer.Print("Instructions:", font, Color.White);
+            printer.Print(String.Format("1 - cycle through window styles (current: {0}).", this.WindowState), font, Color.White, new RectangleF(0, font.Height, 0, 0));
+            printer.Print(String.Format("2 - cycle through window borders (current: {0}).", this.WindowBorder), font, Color.White, new RectangleF(0, 2 * font.Height, 0, 0));
             GL.Translate(0, font.Height, 0);
             printer.Print(String.Format("3 - toggle fullscreen (current: {0}).",
-                                       this.WindowState == WindowState.Fullscreen ? "enabled" : "disabled"), font);
+                                       this.WindowState == WindowState.Fullscreen ? "enabled" : "disabled"), font, Color.White, new RectangleF(0, 2 * font.Height, 0, 0));
             
 
             printer.End();

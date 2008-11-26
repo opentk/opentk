@@ -36,27 +36,25 @@ namespace OpenTK.Graphics.Text
     {
         #region Fields
 
-        AlphaTexture2D texture;
-        GlyphPacker packer;
+        //AlphaTexture2D texture;
+        RgbaTexture2D texture = new RgbaTexture2D(512, 512);
+        GlyphPacker packer = new GlyphPacker(512, 512);
 
         #endregion
 
         #region Constructors
 
         public GlyphSheet()
-        {
-            Texture = new AlphaTexture2D(256, 256);
-            Packer = new GlyphPacker(256, 256);
-        }
+        { }
 
         #endregion
 
         #region Public Members
 
-        public AlphaTexture2D Texture
+        public Texture2D Texture
         {
             get { return texture; }
-            private set { texture = value; }
+            private set { texture = (RgbaTexture2D)value; }
         }
 
         public GlyphPacker Packer

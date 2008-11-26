@@ -237,7 +237,7 @@ namespace Examples.Tutorial
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
             text.Begin();
-            text.Print((1.0 / e.Time).ToString("F2"), sans);
+            text.Print((1.0 / e.Time).ToString("F2"), sans, Color.White);
             text.End();
 
             GL.PushMatrix();

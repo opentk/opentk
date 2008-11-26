@@ -37,7 +37,7 @@ namespace OpenTK.Graphics.Text
     interface IGlyphRasterizer
     {
         Bitmap Rasterize(Glyph glyph);
-        TextExtents MeasureText(TextBlock block);
+        TextExtents MeasureText(TextBlock block, PointF location);
         void Rasterize(Glyph glyph, ref Bitmap bmp, out Rectangle rect);
     }
 }

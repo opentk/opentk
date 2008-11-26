@@ -79,7 +79,11 @@ namespace OpenTK.Graphics.Text
 
         public Bitmap Rasterize(Glyph glyph)
         {
-            RectangleF r = MeasureText(new TextBlock(glyph.Character.ToString(), glyph.Font, TextPrinterOptions.NoCache, RectangleF.Empty)).BoundingBox;
+            RectangleF r = MeasureText(
+                new TextBlock(
+                    glyph.Character.ToString(), glyph.Font,
+                    TextPrinterOptions.NoCache, SizeF.Empty),
+                PointF.Empty).BoundingBox;
 
             EnsureSurfaceSize(ref glyph_surface, ref glyph_renderer, glyph.Font);
 
@@ -102,9 +106,15 @@ namespace OpenTK.Graphics.Text
             {
                 SetTextRenderingOptions(gfx, glyph.Font);
 
-                gfx.Clear(Color.Transparent);
-                gfx.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty,
-                    glyph.Font.Style == FontStyle.Italic ? load_glyph_string_format : default_string_format);
+                //gfx.Clear(Color.Transparent);
+                //gfx.Clear(Color.FromArgb(255, 0, 0, 0));
+                //gfx.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty,
+                //    glyph.Font.Style & FontStyle.Italic != 0 ? load_glyph_string_format : default_string_format);
+                System.Windows.Forms.TextRenderer.DrawText(gfx, glyph.Character.ToString(), glyph.Font, Point.Empty, Color.White);
+                //,
+                //    (glyph.Font.Style & FontStyle.Italic) != 0 ?
+                //    System.Windows.Forms.TextFormatFlags.GlyphOverhangPadding :
+                //    System.Windows.Forms.TextFormatFlags.Default);
                 rect = FindEdges(bmp);
             }
         }
@@ -113,7 +123,7 @@ namespace OpenTK.Graphics.Text
 
         #region MeasureText
 
-        public TextExtents MeasureText(TextBlock block)
+        public TextExtents MeasureText(TextBlock block, PointF location)
         {
             // First, check if we have cached this text block. Do not use block_cache.TryGetValue, to avoid thrashing
             // the user's TextBlockExtents struct.
@@ -121,7 +131,8 @@ namespace OpenTK.Graphics.Text
                 return block_cache[block];
 
             // If this block is not cached, we have to measure it and (potentially) place it in the cache.
-            TextExtents extents = MeasureTextExtents(block);
+            TextExtents extents = MeasureTextExtents(block, location);
+            
             if ((block.Options & TextPrinterOptions.NoCache) == 0)
                 block_cache.Add(block, extents);
 
@@ -158,29 +169,25 @@ namespace OpenTK.Graphics.Text
         void SetTextRenderingOptions(System.Drawing.Graphics gfx, Font font)
         {
             // Small sizes look blurry without gridfitting, so turn that on. 
-            if (font.Size <= 18.0f)
-                gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-            else
-                gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
+            //if (font.Size <= 18.0f)
+            //    gfx.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            //else
+            gfx.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            //gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
         }
 
         #endregion
 
         #region MeasureTextExtents
 
-        TextExtents MeasureTextExtents(TextBlock block)
+        TextExtents MeasureTextExtents(TextBlock block, PointF location)
         {
             // Todo: Parse layout options:
             StringFormat format = default_string_format;
-            //if (block.Font.Style != FontStyle.Regular)
-            //    format = load_glyph_string_format;
-            //else
-            //    format = default_string_format;
 
             TextExtents extents = text_extents_pool.Acquire();
 
-            PointF origin = PointF.Empty;
-            SizeF size = SizeF.Empty;
+            RectangleF rect = new RectangleF(location, block.Bounds);
 
             SetTextRenderingOptions(graphics, block.Font);
 
@@ -203,7 +210,7 @@ namespace OpenTK.Graphics.Text
                 {
                     extents.AddRange(MeasureGlyphExtents(
                         s, height, 0, s.Length,
-                        block.LayoutRectangle,
+                        rect,
                         native_graphics, native_font, native_string_format));
                     height += block.Font.Height;
                 }

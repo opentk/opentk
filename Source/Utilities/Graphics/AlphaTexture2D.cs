@@ -38,10 +38,6 @@ namespace OpenTK.Graphics
     /// </summary>
     class AlphaTexture2D : Texture2D
     {
-        #region Fields
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -50,10 +46,6 @@ namespace OpenTK.Graphics
         public AlphaTexture2D(int width, int height)
             : base(width, height)
         { }
-
-        #endregion
-
-        #region Public Members
 
         #endregion
 
