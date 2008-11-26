@@ -53,6 +53,64 @@ namespace OpenTK.Graphics.Text
 
         #region --- Public Methods ---
 
+        #region public bool TryAdd(Rectangle boundingBox)
+
+        /// <summary>
+        /// Adds boundingBox to the GlyphPacker.
+        /// </summary>
+        /// <param name="boundingBox">The bounding box of the item to pack.</param>
+        /// <param name="packedRectangle">The System.Drawing.Rectangle that contains the position of the packed item.</param>
+        /// <returns>True, if the item was successfully packed; false if the item is too big for this packer..</returns>
+        /// <exception cref="InvalidOperationException">Occurs if the item is larger than the available TexturePacker area</exception>
+        /// <exception cref="TexturePackerFullException">Occurs if the item cannot fit in the remaining packer space.</exception>
+        public bool TryAdd(Rectangle boundingBox, out Rectangle packedRectangle)
+        {
+            if (!root.Rectangle.Contains(boundingBox))
+            {
+                packedRectangle = new Rectangle();
+                return false;
+            }
+
+            // Increase size so that the glyphs do not touch each other (to avoid rendering artifacts).
+            boundingBox.Width += 2;
+            boundingBox.Height += 2;
+
+            Node node = root.Insert(boundingBox);
+
+            // Tree is full and insertion failed:
+            if (node == null)
+            {
+                packedRectangle = new Rectangle();
+                return false;
+            }
+
+            packedRectangle = new Rectangle(node.Rectangle.X, node.Rectangle.Y, node.Rectangle.Width - 2, node.Rectangle.Height - 2);
+            return true;
+        }
+
+        #endregion
+
+        #region public Rectangle TryAdd(RectangleF boundingBox)
+
+        /// <summary>
+        /// Adds boundingBox to the GlyphPacker.
+        /// </summary>
+        /// <param name="boundingBox">The bounding box of the item to pack.</param>
+        /// <param name="packedRectangle">The System.Drawing.RectangleF that contains the position of the packed item.</param>
+        /// <returns>True, if the item was successfully packed; false if the item is too big for this packer..</returns>
+        /// <exception cref="InvalidOperationException">Occurs if the item is larger than the available TexturePacker area</exception>
+        /// <exception cref="TexturePackerFullException">Occurs if the item cannot fit in the remaining packer space.</exception>
+        public bool TryAdd(RectangleF boundingBox, out RectangleF packedRectangle)
+        {
+            Rectangle bbox = new Rectangle(
+                (int)boundingBox.X, (int)boundingBox.Y,
+                (int)(boundingBox.Width + 0.5f), (int)(boundingBox.Height + 0.5f));
+
+            return TryAdd(bbox, out packedRectangle);
+        }
+
+        #endregion
+
         #region public Rectangle Add(Rectangle boundingBox)
 
         /// <summary>
@@ -61,24 +119,13 @@ namespace OpenTK.Graphics.Text
         /// <param name="boundingBox">The bounding box of the item to pack.</param>
         /// <returns>A System.Drawing.Rectangle containing the coordinates of the packed item.</returns>
         /// <exception cref="InvalidOperationException">Occurs if the item is larger than the available TexturePacker area</exception>
-        /// <exception cref="ArgumentException">Occurs if the item already exists in the TexturePacker.</exception>
+        /// <exception cref="TexturePackerFullException">Occurs if the item cannot fit in the remaining packer space.</exception>
         public Rectangle Add(Rectangle boundingBox)
         {
-            if (!root.Rectangle.Contains(boundingBox))
-                throw new InvalidOperationException("The item is too large for this TexturePacker");
-
-            Node node;
-            // Increase size so that the glyphs do not touch each other (to avoid rendering artifacts).
-            boundingBox.Width += 2;
-            boundingBox.Height += 2;
-            node = root.Insert(boundingBox);
-
-            // Tree is full and insertion failed:
-            if (node == null)
+            if (!TryAdd(boundingBox, out boundingBox))
                 throw new TexturePackerFullException();
 
-            return new Rectangle(node.Rectangle.X, node.Rectangle.Y, node.Rectangle.Width - 2, node.Rectangle.Height - 2);
-            //return node.Rectangle;
+            return boundingBox;
         }
 
         #endregion
@@ -111,22 +158,6 @@ namespace OpenTK.Graphics.Text
         public void Clear()
         {
             root.Clear();
-        }
-
-        #endregion
-
-        #region public void ChangeSize(int new_width, int new_height)
-
-        /// <summary>
-        /// Changes the dimensions of the TexturePacker surface.
-        /// </summary>
-        /// <param name="new_width">The new width of the TexturePacker surface.</param>
-        /// <param name="new_height">The new height of the TexturePacker surface.</param>
-        /// <remarks>Changing the size of the TexturePacker surface will implicitly call TexturePacker.Clear().</remarks>
-        /// <seealso cref="Clear"/>
-        public void ChangeSize(int new_width, int new_height)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
