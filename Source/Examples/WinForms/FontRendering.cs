@@ -50,6 +50,7 @@ namespace Examples.WinForms
 
         private void glControl1_Load(object sender, EventArgs e)
         {
+            glControl1.MakeCurrent();
             GL.ClearColor(Color.SteelBlue);
         }
 
@@ -58,9 +59,9 @@ namespace Examples.WinForms
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
                 UpdateFontList(fontDialog.Font);
+                glControl1.Invalidate();
             }
         }
-
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -69,6 +70,7 @@ namespace Examples.WinForms
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
+            glControl1.MakeCurrent();
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.Color3(Color.White);
 
@@ -87,6 +89,8 @@ namespace Examples.WinForms
 
         private void glControl1_Resize(object sender, EventArgs e)
         {
+            glControl1.MakeCurrent();
+
             if (glControl1.ClientSize.Height == 0)
                 glControl1.ClientSize = new System.Drawing.Size(glControl1.ClientSize.Width, 1);
 
