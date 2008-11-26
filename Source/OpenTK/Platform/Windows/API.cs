@@ -470,11 +470,8 @@ namespace OpenTK.Platform.Windows
 
         #region SwapBuffers
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dc"></param>
-        [DllImport("gdi32.dll")]
+        [SuppressUnmanagedCodeSecurity]
+        [DllImport("gdi32.dll", SetLastError=true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SwapBuffers(IntPtr dc);
 
