@@ -59,6 +59,8 @@ namespace Examples.WinForms
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
+            glControl1.MakeCurrent();
+
             GL.Clear(ClearBufferMask.ColorBufferBit);
             glControl1.SwapBuffers();
         }

@@ -55,9 +55,9 @@ namespace OpenTK.Graphics.Text
 
         #region ITextOutputProvider Members
 
-        public void Print(TextBlock block, IGlyphRasterizer rasterizer, GlyphCache cache)
+        public void Print(TextBlock block, PointF location, Color color, IGlyphRasterizer rasterizer, GlyphCache cache)
         {
-            using (TextExtents extents = rasterizer.MeasureText(block))
+            using (TextExtents extents = rasterizer.MeasureText(block, location))
             {
                 //GL.BindTexture(TextureTarget.Texture2D, 2);
 

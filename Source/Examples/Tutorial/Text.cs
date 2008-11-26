@@ -129,13 +129,10 @@ namespace Examples.Tutorial
 
             // Print FPS counter. Since the counter changes per frame,
             // it shouldn't be cached (TextPrinterOptions.NoCache).
-            GL.Color3(Color.LightYellow);
-            text.Print((1.0 / e.Time).ToString("F2"), sans, TextPrinterOptions.NoCache);
+            text.Print((1.0 / e.Time).ToString("F2"), sans, Color.LightYellow, RectangleF.Empty, TextPrinterOptions.NoCache);
             
             // Print the actual text.
-            GL.Translate(0.0f, current_position, 0.0f);
-            GL.Color3(Color.White);
-            text.Print(poem, serif);
+            text.Print(poem, serif, Color.White, new RectangleF(0, current_position, 0, 0), TextPrinterOptions.Default);
             
             text.End();
             

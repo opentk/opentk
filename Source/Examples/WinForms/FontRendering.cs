@@ -14,7 +14,7 @@ namespace Examples.WinForms
     {
         #region Fields
 
-        float[] sizes = new float[] { 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 48 };
+        float[] sizes = new float[] { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 28, 32, 36, 42, 48 };
         List<Font> fonts = new List<Font>();
 
         TextPrinter text = new TextPrinter();
@@ -70,15 +70,18 @@ namespace Examples.WinForms
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
+            GL.ClearColor(Color.Red);
             glControl1.MakeCurrent();
+            //GL.ClearColor(Color.Gainsboro);
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            GL.Color3(Color.White);
+            //GL.Color4(Color.Blue);
+            //GL.BlendColor(0, 0, 0, 0);
 
             text.Begin();
 
             foreach (Font font in fonts)
             {
-                text.Print(textBox1.Text, font);
+                text.Print(textBox1.Text, font, Color.White);
                 GL.Translate(0, font.Height, 0);
             }
 

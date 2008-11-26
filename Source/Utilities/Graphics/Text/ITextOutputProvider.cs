@@ -28,11 +28,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace OpenTK.Graphics.Text
 {
     interface ITextOutputProvider
     {
-        void Print(TextBlock block, IGlyphRasterizer rasterizer, GlyphCache cache);
+        void Print(TextBlock block, PointF location, Color color, IGlyphRasterizer rasterizer, GlyphCache cache);
     }
 }

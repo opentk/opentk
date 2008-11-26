@@ -92,9 +92,15 @@ namespace OpenTK.Graphics
 
             GL.PushAttrib(AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit);
 
+            //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Modulate);
+
+            //GL.Enable(EnableCap.ColorMaterial);
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);  // For grayscale
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);   // For subpixel
+            //GL.BlendFunc(BlendingFactorSrc.ConstantColorExt, BlendingFactorDest.OneMinusSrcColor);   // For subpixel with color
+
 
             GL.Disable(EnableCap.DepthTest);
         }
@@ -121,17 +127,17 @@ namespace OpenTK.Graphics
 
         #region Print
 
-        public void Print(string text, Font font)
+        public void Print(string text, Font font, Color color)
         {
-            Print(text, font, 0, RectangleF.Empty);
+            Print(text, font, color, RectangleF.Empty, TextPrinterOptions.Default);
         }
 
-        public void Print(string text, Font font, TextPrinterOptions options)
+        public void Print(string text, Font font, Color color, RectangleF layoutRectangle)
         {
-            Print(text, font, options, RectangleF.Empty);
+            Print(text, font, color, layoutRectangle, TextPrinterOptions.Default);
         }
 
-        public void Print(string text, Font font, TextPrinterOptions options, RectangleF layoutRectangle)
+        public void Print(string text, Font font, Color color, RectangleF layoutRectangle, TextPrinterOptions options)
         {
             if (String.IsNullOrEmpty(text))
                 return;
@@ -139,7 +145,7 @@ namespace OpenTK.Graphics
             if (font == null)
                 throw new ArgumentNullException("font");
 
-            text_output.Print(new TextBlock(text, font, options, layoutRectangle), glyph_rasterizer, glyph_cache);
+            text_output.Print(new TextBlock(text, font, options, layoutRectangle.Size), layoutRectangle.Location, color, glyph_rasterizer, glyph_cache);
         }
 
         #endregion
@@ -148,17 +154,17 @@ namespace OpenTK.Graphics
 
         public TextExtents Measure(string text, Font font)
         {
-            return Measure(text, font, 0, RectangleF.Empty);
-        }
-    
-        public TextExtents Measure(string text, Font font, TextPrinterOptions options)
-        {
-            return Measure(text, font, options, RectangleF.Empty);
+            return Measure(text, font, RectangleF.Empty, TextPrinterOptions.Default);
         }
 
-        public TextExtents Measure(string text, Font font, TextPrinterOptions options, RectangleF layoutRectangle)
+        public TextExtents Measure(string text, Font font, RectangleF layoutRectangle)
         {
-            return glyph_rasterizer.MeasureText(new TextBlock(text, font, options, layoutRectangle));
+            return Measure(text, font, layoutRectangle, TextPrinterOptions.Default);
+        }
+
+        public TextExtents Measure(string text, Font font, RectangleF layoutRectangle, TextPrinterOptions options)
+        {
+            return glyph_rasterizer.MeasureText(new TextBlock(text, font, options, layoutRectangle.Size), layoutRectangle.Location);
         }
 
         #endregion
@@ -168,13 +174,13 @@ namespace OpenTK.Graphics
         [Obsolete("Use TextPrinter.Print instead")]
         public void Draw(TextHandle handle)
         {
-            Print(handle.Text, handle.GdiPFont);
+            Print(handle.Text, handle.GdiPFont, Color.White);
         }
 
         [Obsolete("Use TextPrinter.Print instead")]
         public void Draw(string text, TextureFont font)
         {
-            Print(text, font.font);
+            Print(text, font.font, Color.White);
         }
 
         [Obsolete("Use TextPrinter.Print instead")]

@@ -41,7 +41,7 @@ namespace OpenTK.Graphics.Text
 
         public readonly Font Font;
 
-        public readonly RectangleF LayoutRectangle;
+        public readonly SizeF Bounds;
 
         public readonly TextPrinterOptions Options;
 
@@ -51,11 +51,11 @@ namespace OpenTK.Graphics.Text
 
         #region Constructors
 
-        public TextBlock(string text, Font font, TextPrinterOptions options, RectangleF layoutRectangle)
+        public TextBlock(string text, Font font, TextPrinterOptions options, SizeF bounds)
         {
             Text = text;
             Font = font;
-            LayoutRectangle = layoutRectangle;
+            Bounds = bounds;
             Options = options;
             UsageCount = 0;
         }
@@ -74,7 +74,7 @@ namespace OpenTK.Graphics.Text
 
         public override int GetHashCode()
         {
-            return Text.GetHashCode() ^ Font.GetHashCode() ^ LayoutRectangle.GetHashCode() ^ Options.GetHashCode();
+            return Text.GetHashCode() ^ Font.GetHashCode() ^ Bounds.GetHashCode() ^ Options.GetHashCode();
         }
 
         public Glyph this[int i]
@@ -91,7 +91,7 @@ namespace OpenTK.Graphics.Text
             return
                 Text == other.Text &&
                 Font == other.Font &&
-                LayoutRectangle == other.LayoutRectangle &&
+                Bounds == other.Bounds &&
                 Options == other.Options;
         }
 
