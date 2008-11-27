@@ -12,7 +12,7 @@ namespace OpenTK.Graphics
 
         protected override PixelInternalFormat InternalFormat
         {
-            get { return PixelInternalFormat.CompressedRgba; }
+            get { return PixelInternalFormat.Rgba; }
         }
     }
 }
