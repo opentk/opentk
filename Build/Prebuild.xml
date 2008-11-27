@@ -31,40 +31,6 @@
       <File>Prebuild.xml</File>
     </Files>
 
-    <Project name="Examples" path="../Source/Examples" language="C#" type="Exe" startupObject="Examples.ExampleLauncher">
-
-      <Configuration name="Debug">
-        <Options>
-          <OutputPath>../../Binaries/Debug/Examples</OutputPath>
-          <AllowUnsafe>true</AllowUnsafe>
-        </Options>
-      </Configuration>
-
-      <Configuration name="Release">
-        <Options>
-          <OutputPath>../../Binaries/Release/Examples</OutputPath>
-          <AllowUnsafe>true</AllowUnsafe>
-        </Options>
-      </Configuration>
-
-      <Reference name="OpenTK"/>
-      <Reference name="OpenTK.Utilities"/>
-      <Reference name="System"/>
-      <Reference name="System.Drawing"/>
-      <Reference name="System.Windows.Forms"/>
-      <Reference name="System.Data"/>
-
-      <Files>
-        <Match path="." pattern="*.cs" recurse="true"/>
-        <Match path="../Examples/Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
-        <Match path="./Data" pattern="*.txt" recurse="true" buildAction="None" copyToOutput="Always"/>
-        <Match path="./Data" pattern="*.glsl" recurse="true" buildAction="None" copyToOutput="Always"/>
-        <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
-        <Match path="../Utilities" pattern="OpenTK.Utilities.dll.config" buildAction="None" copyToOutput="Always"/>
-      </Files>
-
-    </Project>
-
     <Project name="Build" path="../Source/Build" language="C#" type="Exe">
 
       <Configuration name="Debug">
@@ -166,7 +132,41 @@
       </Files>
 
     </Project>
-        
+
+    <Project name="Examples" path="../Source/Examples" language="C#" type="Exe" startupObject="Examples.ExampleLauncher">
+
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../Binaries/Debug/Examples</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../Binaries/Release/Examples</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <Reference name="OpenTK"/>
+      <Reference name="OpenTK.Utilities"/>
+      <Reference name="System"/>
+      <Reference name="System.Drawing"/>
+      <Reference name="System.Windows.Forms"/>
+      <Reference name="System.Data"/>
+
+      <Files>
+        <Match path="." pattern="*.cs" recurse="true"/>
+        <Match path="../Examples/Data" pattern="^.*\.(bmp|png|jpg|txt|glsl|wav|ogg)$" useRegex="true" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="./Data" pattern="*.txt" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="./Data" pattern="*.glsl" recurse="true" buildAction="None" copyToOutput="Always"/>
+        <Match path="../OpenTK" pattern="OpenTK.dll.config" buildAction="None" copyToOutput="Always"/>
+        <Match path="../Utilities" pattern="OpenTK.Utilities.dll.config" buildAction="None" copyToOutput="Always"/>
+      </Files>
+
+    </Project>
+
   </Solution>
 
 </Prebuild>
