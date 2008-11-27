@@ -136,7 +136,7 @@ namespace OpenTK.Graphics
                 GL.TexSubImage2D(TextureTarget.Texture2D, mipLevel,
                     target.Left, target.Top,
                     target.Width, target.Height,
-                    OpenTK.Graphics.PixelFormat.Rgba,
+                    OpenTK.Graphics.PixelFormat.Bgra,
                     PixelType.UnsignedByte, data.Scan0);
             }
             finally
