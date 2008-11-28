@@ -27,14 +27,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-using System.Drawing.Text;
-
-using OpenTK.Graphics.Text;
-using OpenTK.Platform;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
+using OpenTK.Platform;
 
 namespace OpenTK.Graphics.Text
 {
@@ -59,6 +56,8 @@ namespace OpenTK.Graphics.Text
 
         static readonly char[] newline_characters = new char[] { '\n', '\r' };
 
+        static readonly SizeF MaximumGraphicsClipSize;
+
         #endregion
 
         #region Constructors
@@ -66,6 +65,12 @@ namespace OpenTK.Graphics.Text
         static GdiPlusGlyphRasterizer()
         {
             default_string_format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
+
+            using (Bitmap bmp = new Bitmap(1, 1))
+            using (System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(bmp))
+            {
+                MaximumGraphicsClipSize = gfx.ClipBounds.Size;
+            }
         }
 
         public GdiPlusGlyphRasterizer()
@@ -79,11 +84,11 @@ namespace OpenTK.Graphics.Text
 
         public Bitmap Rasterize(Glyph glyph)
         {
-            RectangleF r = MeasureText(
-                new TextBlock(
-                    glyph.Character.ToString(), glyph.Font,
-                    TextPrinterOptions.NoCache, SizeF.Empty),
-                PointF.Empty).BoundingBox;
+            //RectangleF r = MeasureText(
+            //    new TextBlock(
+            //        glyph.Character.ToString(), glyph.Font,
+            //        TextPrinterOptions.NoCache, SizeF.Empty),
+            //    PointF.Empty).BoundingBox;
 
             EnsureSurfaceSize(ref glyph_surface, ref glyph_renderer, glyph.Font);
 
@@ -183,11 +188,16 @@ namespace OpenTK.Graphics.Text
         TextExtents MeasureTextExtents(TextBlock block, PointF location)
         {
             // Todo: Parse layout options:
+            //StringFormat format = default_string_format;
             StringFormat format = default_string_format;
 
             TextExtents extents = text_extents_pool.Acquire();
 
             RectangleF rect = new RectangleF(location, block.Bounds);
+            // Work around Mono/GDI+ bug, which causes incorrect
+            // text wraping when block.Bounds == SizeF.Empty.
+            if (block.Bounds == SizeF.Empty)
+                rect.Size = MaximumGraphicsClipSize;
 
             SetTextRenderingOptions(graphics, block.Font);
 
@@ -209,8 +219,7 @@ namespace OpenTK.Graphics.Text
                 foreach (string s in lines)
                 {
                     extents.AddRange(MeasureGlyphExtents(
-                        s, height, 0, s.Length,
-                        rect,
+                        s, height, rect,
                         native_graphics, native_font, native_string_format));
                     height += block.Font.Height;
                 }
@@ -227,27 +236,24 @@ namespace OpenTK.Graphics.Text
 
         // Gets the bounds of each character in a line of text.
         // The line is processed in blocks of 32 characters (GdiPlus.MaxMeasurableCharacterRanges).
-        IEnumerable<RectangleF> MeasureGlyphExtents(string text, int height, int line_start, int line_length,
+        IEnumerable<RectangleF> MeasureGlyphExtents(string text, int height,
             RectangleF layoutRect, IntPtr native_graphics, IntPtr native_font, IntPtr native_string_format)
         {
-            RectangleF rect = new RectangleF();
-            int line_end = line_start + line_length;
-            while (line_start < line_end)
+             RectangleF rect = new RectangleF();
+             int current = 0;
+             while (current < text.Length)
             {
-                //if (text[line_start] == '\n' || text[line_start] == '\r')
-                //{
-                //    line_start++;
-                //    continue;
-                //}
-
-                int num_characters = (line_end - line_start) > GdiPlus.MaxMeasurableCharacterRanges ?
+                int num_characters = (text.Length - current) > GdiPlus.MaxMeasurableCharacterRanges ?
                     GdiPlus.MaxMeasurableCharacterRanges :
-                    line_end - line_start;
+                    text.Length - current;
                 int status = 0;
 
                 for (int i = 0; i < num_characters; i++)
                 {
-                    characterRanges[i] = new CharacterRange(line_start + i, 1);
+                    if (text[current + i] == '\n' || text[current + i] == '\r')
+                        throw new Exception();
+
+                    characterRanges[i] = new CharacterRange(current + i, 1);
 
                     IntPtr region;
                     status = GdiPlus.CreateRegion(out region);
@@ -274,7 +280,7 @@ namespace OpenTK.Graphics.Text
                     yield return rect;
                 }
 
-                line_start += num_characters;
+                current += num_characters;
             }
         }
 
