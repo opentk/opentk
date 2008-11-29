@@ -136,7 +136,7 @@ namespace OpenTK.Graphics.Text
                 return block_cache[block];
 
             // If this block is not cached, we have to measure it and (potentially) place it in the cache.
-            TextExtents extents = MeasureTextExtents(block, location);
+            TextExtents extents = MeasureTextExtents(block);
             
             if ((block.Options & TextPrinterOptions.NoCache) == 0)
                 block_cache.Add(block, extents);
@@ -185,7 +185,7 @@ namespace OpenTK.Graphics.Text
 
         #region MeasureTextExtents
 
-        TextExtents MeasureTextExtents(TextBlock block, PointF location)
+        TextExtents MeasureTextExtents(TextBlock block)
         {
             // Todo: Parse layout options:
             //StringFormat format = default_string_format;
@@ -193,7 +193,7 @@ namespace OpenTK.Graphics.Text
 
             TextExtents extents = text_extents_pool.Acquire();
 
-            RectangleF rect = new RectangleF(location, block.Bounds);
+            RectangleF rect = new RectangleF(PointF.Empty, block.Bounds);
             // Work around Mono/GDI+ bug, which causes incorrect
             // text wraping when block.Bounds == SizeF.Empty.
             if (block.Bounds == SizeF.Empty)

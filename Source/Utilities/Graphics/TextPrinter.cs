@@ -34,8 +34,6 @@ namespace OpenTK.Graphics
         IGlyphRasterizer glyph_rasterizer;
         ITextOutputProvider text_output;
 
-        float[] viewport = new float[4];
-
         #endregion
 
         #region Constructors
@@ -70,39 +68,10 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Sets up OpenGL state for drawing text.
         /// </summary>
+        [Obsolete]
         public void Begin()
         {
-            if (GraphicsContext.CurrentContext == null)
-                throw new GraphicsContextException("No GraphicsContext is current in the calling thread.");
-
-            GL.GetFloat(GetPName.Viewport, viewport);
-
-            // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
-            // with size equal to the window (in pixels). 
-            // While we could also render text in 3D mode, it would be very hard to get
-            // pixel-perfect precision.
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PushMatrix();
-            GL.LoadIdentity();
-            GL.Ortho(viewport[0], viewport[2], viewport[3], viewport[1], -1.0, 1.0);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PushMatrix();
-            GL.LoadIdentity();
-
-            GL.PushAttrib(AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit);
-
-            //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Modulate);
-
-            //GL.Enable(EnableCap.ColorMaterial);
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
-            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);  // For grayscale
-            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);   // For subpixel
-            //GL.BlendFunc(BlendingFactorSrc.ConstantColorExt, BlendingFactorDest.OneMinusSrcColor);   // For subpixel with color
-
-
-            GL.Disable(EnableCap.DepthTest);
+            text_output.Begin();
         }
 
         #endregion
@@ -112,15 +81,10 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Restores OpenGL state.
         /// </summary>
+        [Obsolete]
         public void End()
         {
-            GL.PopAttrib();
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PopMatrix();
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PopMatrix();
+            text_output.End();
         }
 
         #endregion
@@ -145,7 +109,9 @@ namespace OpenTK.Graphics
             if (font == null)
                 throw new ArgumentNullException("font");
 
+            text_output.Begin();
             text_output.Print(new TextBlock(text, font, options, layoutRectangle.Size), layoutRectangle.Location, color, glyph_rasterizer, glyph_cache);
+            text_output.End();
         }
 
         #endregion
