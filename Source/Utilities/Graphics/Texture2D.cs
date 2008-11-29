@@ -218,6 +218,8 @@ namespace OpenTK.Graphics
             if (id == 0)
                 throw new GraphicsResourceException(String.Format("Texture creation failed, (Error: {0})", GL.GetError()));
 
+            SetDefaultTextureParameters(id);
+
             GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat, Width, Height, 0,
                 OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
 
@@ -264,7 +266,6 @@ namespace OpenTK.Graphics
                     context = GraphicsContext.CurrentContext;
 
                     id = CreateTexture(Width, Height);
-                    SetDefaultTextureParameters(id);
                 }
 
                 return id;
