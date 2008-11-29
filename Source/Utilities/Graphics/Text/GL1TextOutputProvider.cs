@@ -25,11 +25,8 @@
 //
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
-
 using OpenTK.Math;
 
 namespace OpenTK.Graphics.Text
@@ -41,6 +38,7 @@ namespace OpenTK.Graphics.Text
         // Triangle lists, sorted by texture.
         Dictionary<Texture2D, List<Vector2>> active_lists = new Dictionary<Texture2D, List<Vector2>>();
         Queue<List<Vector2>> inactive_lists = new Queue<List<Vector2>>();
+        float[] viewport = new float[4];
 
         #endregion
 
@@ -55,27 +53,12 @@ namespace OpenTK.Graphics.Text
 
         #region ITextOutputProvider Members
 
+        #region Print
+
         public void Print(TextBlock block, PointF location, Color color, IGlyphRasterizer rasterizer, GlyphCache cache)
         {
             using (TextExtents extents = rasterizer.MeasureText(block, location))
             {
-                //GL.BindTexture(TextureTarget.Texture2D, 2);
-
-                //GL.Begin(BeginMode.Quads);
-
-                //GL.TexCoord2(0, 0);
-                //GL.Vertex2(0, 0);
-                //GL.TexCoord2(1, 0);
-                //GL.Vertex2(256, 0);
-                //GL.TexCoord2(1, 1);
-                //GL.Vertex2(256, 256);
-                //GL.TexCoord2(0, 1);
-                //GL.Vertex2(0, 256);
-
-                //GL.End();
-
-                //GL.Translate(0, 256, 0);
-
                 // Build layout
                 int current = 0;
                 foreach (Glyph glyph in block)
@@ -124,6 +107,9 @@ namespace OpenTK.Graphics.Text
                 List<Vector2> list = active_lists[key];
                 
                 key.Bind();
+
+                GL.Translate(location.X, location.Y, 0);
+
                 GL.Begin(BeginMode.Triangles);
 
                 for (int i = 0; i < list.Count; i += 2)
@@ -144,6 +130,62 @@ namespace OpenTK.Graphics.Text
 
             active_lists.Clear();
         }
+
+        #endregion
+
+        #region Begin
+
+        public void Begin()
+        {
+            if (GraphicsContext.CurrentContext == null)
+                throw new GraphicsContextException("No GraphicsContext is current in the calling thread.");
+
+            GL.GetFloat(GetPName.Viewport, viewport);
+
+            // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
+            // with size equal to the window (in pixels). 
+            // While we could also render text in 3D mode, it would be very hard to get
+            // pixel-perfect precision.
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PushMatrix();
+            GL.LoadIdentity();
+            GL.Ortho(viewport[0], viewport[2], viewport[3], viewport[1], -1.0, 1.0);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PushMatrix();
+            GL.LoadIdentity();
+
+            GL.PushAttrib(AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit);
+
+            //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Modulate);
+
+            //GL.Enable(EnableCap.ColorMaterial);
+            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);  // For grayscale
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);   // For subpixel
+            //GL.BlendFunc(BlendingFactorSrc.ConstantColorExt, BlendingFactorDest.OneMinusSrcColor);   // For subpixel with color
+
+
+            GL.Disable(EnableCap.DepthTest);
+        }
+
+        #endregion
+
+        #region End
+
+        public void End()
+        {
+            GL.PopAttrib();
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PopMatrix();
+
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PopMatrix();
+        }
+
+        #endregion
 
         #endregion
     }
