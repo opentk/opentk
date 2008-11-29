@@ -116,7 +116,6 @@ namespace OpenTK.Graphics
                 throw new ArgumentNullException("data");
 
             GraphicsUnit unit = GraphicsUnit.Pixel;
-
             if (!bitmap.GetBounds(ref unit).Contains(source))
                 throw new InvalidOperationException("The source Rectangle is larger than the Bitmap.");
 
@@ -211,6 +210,40 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region Private Members
+
+        int CreateTexture(int width, int height)
+        {
+            int id = GL.GenTexture();
+            if (id == 0)
+                throw new GraphicsResourceException(String.Format("Texture creation failed, (Error: {0})", GL.GetError()));
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat, Width, Height, 0,
+                OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
+
+            return id;
+        }
+
+        void SetDefaultTextureParameters(int id)
+        {
+            // Ensure the texture is allocated.
+            GL.BindTexture(TextureTarget.Texture2D, id);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
+            if (GL.SupportsExtension("Version12"))
+            {
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.ClampToEdge);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.ClampToEdge);
+            }
+            else
+            {
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.Clamp);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.Clamp);
+            }
+        }
+
+        #endregion
+
         #region IGraphicsResource Members
 
         #region IGraphicsResource.Context
@@ -230,27 +263,8 @@ namespace OpenTK.Graphics
                     GraphicsContext.Assert();
                     context = GraphicsContext.CurrentContext;
 
-                    id = GL.GenTexture();
-                    if (id == 0)
-                        throw new GraphicsResourceException(String.Format("Texture creation failed, (Error: {0})", GL.GetError()));
-
-                    // Ensure the texture is allocated.
-                    GL.BindTexture(TextureTarget.Texture2D, id);
-                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
-                    GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
-                    if (GL.SupportsExtension("Version12"))
-                    {
-                        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.ClampToEdge);
-                        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.ClampToEdge);
-                    }
-                    else
-                    {
-                        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)All.Clamp);
-                        GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)All.Clamp);
-                    }
-
-                    GL.TexImage2D(TextureTarget.Texture2D, 0, InternalFormat, Width, Height, 0,
-                        OpenTK.Graphics.PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
+                    id = CreateTexture(Width, Height);
+                    SetDefaultTextureParameters(id);
                 }
 
                 return id;
