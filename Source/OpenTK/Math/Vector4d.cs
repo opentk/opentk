@@ -16,6 +16,9 @@ using System.Text.RegularExpressions;
 
 namespace OpenTK.Math
 {
+    // Todo: Remove this warning when the code goes public.
+    #pragma warning disable 3019
+
     /// <summary>A 4-dimensional vector using double-precision floating point numbers.</summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
@@ -1351,4 +1354,6 @@ namespace OpenTK.Math
 
         #endregion
     }
+
+    #pragma warning restore 3019
 }

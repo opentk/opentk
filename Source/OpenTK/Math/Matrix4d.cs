@@ -13,6 +13,9 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Math
 {
+    // Todo: Remove this warning when the code goes public.
+#pragma warning disable 3019
+
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal struct Matrix4d : IEquatable<Matrix4d>
@@ -75,7 +78,7 @@ namespace OpenTK.Math
         {
             get
             {
-                switch( row )
+                switch (row)
                 {
                     case 0:
                         switch (column)
@@ -122,7 +125,7 @@ namespace OpenTK.Math
             }
             set
             {
-                switch( row )
+                switch (row)
                 {
                     case 0:
                         switch (column)
@@ -166,7 +169,8 @@ namespace OpenTK.Math
                 }
 
                 throw new IndexOutOfRangeException();
-            }        }
+            }
+        }
 
         /// <summary>Gets the component at the index into the matrix.</summary>
         /// <param name="index">The index into the components of the matrix.</param>
@@ -2361,4 +2365,6 @@ namespace OpenTK.Math
 
         #endregion
     }
+
+    #pragma warning restore 3019
 }
