@@ -13,6 +13,9 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Math
 {
+    // Todo: Remove this warning when the code goes public.
+    #pragma warning disable 3019
+
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     internal struct Matrix3d : IEquatable<Matrix3d>
@@ -807,4 +810,6 @@ namespace OpenTK.Math
 
         #endregion
     }
+
+    #pragma warning restore 3019
 }
