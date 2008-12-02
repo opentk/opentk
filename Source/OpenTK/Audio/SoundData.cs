@@ -16,7 +16,7 @@ namespace OpenTK.Audio
     public class SoundData
     {
         byte[] buffer;
-        int data_length;        // The actual position of the last sample (the buffer may be larger than this).
+        //int data_length;        // The actual position of the last sample (the buffer may be larger than this).
         SoundFormat format;
 
         #region --- Constructors ---
