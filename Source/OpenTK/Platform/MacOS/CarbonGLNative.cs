@@ -482,8 +482,8 @@ namespace OpenTK.Platform.MacOS
         {
             Rect region = GetRegion();
 
-            mWidth = (short)(region.Right - region.Left);
-            mHeight = (short)(region.Bottom - region.Top);
+            mWidth = (short)(region.Width);
+            mHeight = (short)(region.Height);
         }
 
         protected virtual void OnQueryWindowClose(CancelEventArgs e)

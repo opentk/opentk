@@ -26,26 +26,54 @@ namespace OpenTK.Platform.MacOS.Carbon
     [StructLayout(LayoutKind.Sequential)]
     internal struct Rect
     {
-        internal short Top;
-        internal short Left;
-        internal short Bottom;
-        internal short Right;
+        short top;
+        short left;
+        short bottom;
+        short right;
 
         internal Rect(short _left, short _top, short _width, short _height)
         {
-            Top = _top;
-            Left = _left;
-            Bottom = (short)(_top + _height);
-            Right = (short)(_left + _width);
+            top = _top;
+            left = _left;
+            bottom = (short)(_top + _height);
+            right = (short)(_left + _width);
         }
 
-        internal short Width { get { return (short)(Right - Left); } }
-        internal short Height { get { return (short)(Bottom - Top); } }
+		internal short X
+		{
+			get { return left; }
+			set
+			{
+				short width = Width;
+				left = value;
+				right = (short)(left + width);
+			}
+		}
+		internal short Y
+		{
+			get { return top; }
+			set
+			{
+				short height = Height;
+				top = value;
+				bottom = (short)(top + height);
+			}
+		}
+        internal short Width 
+        { 
+        	get { return (short)(right - left); } 
+        	set { right = (short)(left + value); }
+        }
+        internal short Height 
+        { 
+        	get { return (short)(bottom - top); } 
+        	set { bottom = (short)(top + value); }
+       	}
 
         public override string ToString()
         {
             return string.Format(
-                "Rect: [{0}, {1}, {2}, {3}]", Top, Left, Width, Height);
+                "Rect: [{0}, {1}, {2}, {3}]", X, Y, Width, Height);
         }
     }
 

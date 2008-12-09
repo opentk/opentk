@@ -73,7 +73,7 @@ namespace Examples.WinForms
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.glControl1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.glControl1.Location = new System.Drawing.Point(10, 10);
+            this.glControl1.Location = new System.Drawing.Point(10, 30);
             this.glControl1.Name = "glControl1";
             this.glControl1.Size = new System.Drawing.Size(629, 225);
             this.glControl1.TabIndex = 0;
