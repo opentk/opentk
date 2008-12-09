@@ -1,14 +1,28 @@
 #region --- License ---
-/* Copyright (c) 2006, 2007 the OpenTK team
- * See license.txt for license info
- * 
- * Implemented by Andy Gill
+/*
+Copyright (c) 2006 - 2008 The Open Toolkit library.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Math
@@ -26,12 +40,11 @@ namespace OpenTK.Math
 		/// The vector part of the quaternion
 		/// </summary>
 		public Vector3 XYZ;
+
 		/// <summary>
 		/// The w component of the quaternion
 		/// </summary>
 		public float W;
-
-		public static Quaternion Identity = new Quaternion(0, 0, 0, 1);
 
         #endregion
 
@@ -63,11 +76,44 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region Functions
+        #region Public Members
 
-		#region pubilc void ToAxisAngle(out Vector3 axis, out float angle)
+        #region Properties
 
-		/// <summary>
+        /// <summary>
+        /// Gets or sets the X component of this instance.
+        /// </summary>
+        public float X
+        {
+            get { return XYZ.X; }
+            set { XYZ.X = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Y component of this instance.
+        /// </summary>
+        public float Y
+        {
+            get { return XYZ.Y; }
+            set { XYZ.Y = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Z component of this instance.
+        /// </summary>
+        public float Z
+        {
+            get { return XYZ.Z; }
+            set { XYZ.Z = value; }
+        }
+
+        #endregion
+
+        #region Instance
+
+        #region pubilc void ToAxisAngle(out Vector3 axis, out float angle)
+
+        /// <summary>
 		/// Convert the current quaternion to axis angle representation
 		/// </summary>
 		/// <param name="axis">The resultant axis</param>
@@ -148,7 +194,272 @@ namespace OpenTK.Math
 
 		#endregion
 
-		#region Operator overloads
+        #region Static
+
+        #region Fields
+
+        /// <summary>
+        /// Defines the identity quaternion.
+        /// </summary>
+        public static Quaternion Identity = new Quaternion(0, 0, 0, 1);
+
+        #endregion
+
+        #region Add
+
+        /// <summary>
+        /// Add two quaternions
+        /// </summary>
+        /// <param name="left">The first operand</param>
+        /// <param name="right">The second operand</param>
+        /// <returns>The result of the addition</returns>
+        public static Quaternion Add(Quaternion left, Quaternion right)
+        {
+            left.XYZ += right.XYZ;
+            left.W += right.W;
+            return left;
+        }
+
+        /// <summary>
+        /// Add two quaternions
+        /// </summary>
+        /// <param name="left">The first operand</param>
+        /// <param name="right">The second operand</param>
+        /// <param name="result">The result of the addition</param>
+        public static void Add(ref Quaternion left, ref Quaternion right, out Quaternion result)
+        {
+            result.XYZ = left.XYZ + right.XYZ;
+            result.W = left.W + right.W;
+        }
+
+        #endregion
+
+        #region Sub
+
+        public static Quaternion Sub(Quaternion left, Quaternion right)
+        {
+            left.XYZ -= right.XYZ;
+            left.W -= right.W;
+            return left;
+        }
+
+        public static void Sub(ref Quaternion left, ref Quaternion right, out Quaternion result)
+        {
+            result.XYZ = left.XYZ - right.XYZ;
+            result.W = left.W - right.W;
+        }
+
+        #endregion
+
+        #region Mult
+
+        public static Quaternion Mult(Quaternion left, Quaternion right)
+        {
+            float w = left.W * right.W - Vector3.Dot(left.XYZ, right.XYZ);
+            left.XYZ = right.W * left.XYZ + left.W * right.XYZ + Vector3.Cross(left.XYZ, right.XYZ);
+            left.W = w;
+            return left;
+        }
+
+        public static void Mult(ref Quaternion left, ref Quaternion right, out Quaternion result)
+        {
+            result.W = left.W * right.W - Vector3.Dot(left.XYZ, right.XYZ);
+            result.XYZ = right.W * left.XYZ + left.W * right.XYZ + Vector3.Cross(left.XYZ, right.XYZ);
+        }
+
+        #endregion
+
+        #region Conjugate
+
+        /// <summary>
+        /// Get the conjugate of the given quaternion
+        /// </summary>
+        /// <param name="q">The quaternion</param>
+        /// <returns>The conjugate of the given quaternion</returns>
+        public static Quaternion Conjugate(Quaternion q)
+        {
+            q.XYZ = -q.XYZ;
+            return q;
+        }
+
+        /// <summary>
+        /// Get the conjugate of the given quaternion
+        /// </summary>
+        /// <param name="q">The quaternion</param>
+        /// <param name="result">The conjugate of the given quaternion</param>
+        public static void Conjugate(ref Quaternion q, out Quaternion result)
+        {
+            result.XYZ = -q.XYZ;
+            result.W = q.W;
+        }
+
+        #endregion
+
+        #region Invert
+
+        /// <summary>
+        /// Get the inverse of the given quaternion
+        /// </summary>
+        /// <param name="q">The quaternion to invert</param>
+        /// <returns>The inverse of the given quaternion</returns>
+        public static Quaternion Invert(Quaternion q)
+        {
+            float lengthSq = q.LengthSquared;
+            if (lengthSq != 0.0)
+            {
+                float i = 1.0f / lengthSq;
+                q.XYZ *= -i;
+                q.W *= i;
+            }
+            return q;
+        }
+
+        /// <summary>
+        /// Get the inverse of the given quaternion
+        /// </summary>
+        /// <param name="q">The quaternion to invert</param>
+        /// <param name="result">The inverse of the given quaternion</param>
+        public static void Invert(ref Quaternion q, out Quaternion result)
+        {
+            float lengthSq = q.LengthSquared;
+            if (lengthSq != 0.0)
+            {
+                float i = 1.0f / lengthSq;
+                result.XYZ = q.XYZ * -i;
+                result.W = q.W * i;
+            }
+            else
+            {
+                result = q;
+            }
+        }
+
+        #endregion
+
+        #region Normalize
+
+        /// <summary>
+        /// Scale the given quaternion to unit length
+        /// </summary>
+        /// <param name="q">The quaternion to normalize</param>
+        /// <returns>The normalized quaternion</returns>
+        public static Quaternion Normalize(Quaternion q)
+        {
+            float scale = 1.0f / q.Length;
+            q.XYZ *= scale;
+            q.W *= scale;
+            return q;
+        }
+
+        /// <summary>
+        /// Scale the given quaternion to unit length
+        /// </summary>
+        /// <param name="q">The quaternion to normalize</param>
+        /// <param name="result">The normalized quaternion</param>
+        public static void Normalize(ref Quaternion q, out Quaternion result)
+        {
+            float scale = 1.0f / q.Length;
+            result.XYZ = q.XYZ * scale;
+            result.W = q.W * scale;
+        }
+
+        #endregion
+
+        #region FromAxisAngle
+
+        /// <summary>
+        /// Build a quaternion from the given axis and angle
+        /// </summary>
+        /// <param name="axis">The axis to rotate about</param>
+        /// <param name="angle">The rotation angle in radians</param>
+        /// <returns></returns>
+        public static Quaternion FromAxisAngle(Vector3 axis, float angle)
+        {
+            if (axis.LengthSquared == 0.0f)
+                return Identity;
+
+            Quaternion result = Identity;
+
+            angle *= 0.5f;
+            axis.Normalize();
+            result.XYZ = axis * (float)System.Math.Sin(angle);
+            result.W = (float)System.Math.Cos(angle);
+
+            return Normalize(result);
+        }
+
+        #endregion
+
+        #region Slerp
+
+        /// <summary>
+        /// Do Spherical linear interpolation between two quaternions 
+        /// </summary>
+        /// <param name="q1">The first quaternion</param>
+        /// <param name="q2">The second quaternion</param>
+        /// <param name="blend">The blend factor</param>
+        /// <returns>A smooth blend between the given quaternions</returns>
+        public static Quaternion Slerp(Quaternion q1, Quaternion q2, float blend)
+        {
+            // if either input is zero, return the other.
+            if (q1.LengthSquared == 0.0f)
+            {
+                if (q2.LengthSquared == 0.0f)
+                {
+                    return Identity;
+                }
+                return q2;
+            }
+            else if (q2.LengthSquared == 0.0f)
+            {
+                return q1;
+            }
+
+
+            float cosHalfAngle = q1.W * q2.W + Vector3.Dot(q1.XYZ, q2.XYZ);
+
+            if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
+            {
+                // angle = 0.0f, so just return one input.
+                return q1;
+            }
+            else if (cosHalfAngle < 0.0f)
+            {
+                q2.XYZ = -q2.XYZ;
+                q2.W = -q2.W;
+                cosHalfAngle = -cosHalfAngle;
+            }
+
+            float blendA;
+            float blendB;
+            if (cosHalfAngle < 0.99f)
+            {
+                // do proper slerp for big angles
+                float halfAngle = (float)System.Math.Acos(cosHalfAngle);
+                float sinHalfAngle = (float)System.Math.Sin(halfAngle);
+                float oneOverSinHalfAngle = 1.0f / sinHalfAngle;
+                blendA = (float)System.Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
+                blendB = (float)System.Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
+            }
+            else
+            {
+                // do lerp if angle is really small.
+                blendA = 1.0f - blend;
+                blendB = blend;
+            }
+
+            Quaternion result = new Quaternion(blendA * q1.XYZ + blendB * q2.XYZ, blendA * q1.W + blendB * q2.W);
+            if (result.LengthSquared > 0.0f)
+                return Normalize(result);
+            else
+                return Identity;
+        }
+
+        #endregion
+
+        #endregion
+
+		#region Operators
 
 		public static Quaternion operator +(Quaternion left, Quaternion right)
         {
@@ -188,265 +499,11 @@ namespace OpenTK.Math
 
         #endregion
 
-		#region Static functions
+        #region Overrides
 
-		#region Add
+        #region public override string ToString()
 
-		/// <summary>
-		/// Add two quaternions
-		/// </summary>
-		/// <param name="left">The first operand</param>
-		/// <param name="right">The second operand</param>
-		/// <returns>The result of the addition</returns>
-		public static Quaternion Add(Quaternion left, Quaternion right)
-        {
-            left.XYZ += right.XYZ;
-            left.W += right.W;
-            return left;
-        }
-
-		/// <summary>
-		/// Add two quaternions
-		/// </summary>
-		/// <param name="left">The first operand</param>
-		/// <param name="right">The second operand</param>
-		/// <param name="result">The result of the addition</param>
-		public static void Add(ref Quaternion left, ref Quaternion right, out Quaternion result)
-		{
-            result.XYZ = left.XYZ + right.XYZ;
-            result.W = left.W + right.W;
-		}
-
-		#endregion
-
-		#region Sub
-
-		public static Quaternion Sub(Quaternion left, Quaternion right)
-        {
-            left.XYZ -= right.XYZ;
-            left.W -= right.W;
-            return left;
-		}
-
-		public static void Sub(ref Quaternion left, ref Quaternion right, out Quaternion result)
-		{
-            result.XYZ = left.XYZ - right.XYZ;
-            result.W = left.W - right.W;
-		}
-
-		#endregion
-
-		#region Mult
-
-		public static Quaternion Mult(Quaternion left, Quaternion right)
-		{
-			float w = left.W * right.W - Vector3.Dot(left.XYZ, right.XYZ);
-			left.XYZ = right.W * left.XYZ + left.W * right.XYZ + Vector3.Cross(left.XYZ, right.XYZ);
-			left.W = w;
-			return left;
-		}
-
-		public static void Mult(ref Quaternion left, ref Quaternion right, out Quaternion result)
-		{
-			result.W = left.W * right.W - Vector3.Dot(left.XYZ, right.XYZ);
-			result.XYZ = right.W * left.XYZ + left.W * right.XYZ + Vector3.Cross(left.XYZ, right.XYZ);
-		}
-
-		#endregion
-
-		#region Conjugate
-
-		/// <summary>
-		/// Get the conjugate of the given quaternion
-		/// </summary>
-		/// <param name="q">The quaternion</param>
-		/// <returns>The conjugate of the given quaternion</returns>
-		public static Quaternion Conjugate(Quaternion q)
-		{
-			q.XYZ = -q.XYZ;
-			return q;
-		}
-
-		/// <summary>
-		/// Get the conjugate of the given quaternion
-		/// </summary>
-		/// <param name="q">The quaternion</param>
-		/// <param name="result">The conjugate of the given quaternion</param>
-		public static void Conjugate(ref Quaternion q, out Quaternion result)
-		{
-			result.XYZ = -q.XYZ;
-			result.W = q.W;
-		}
-		
-		#endregion
-
-		#region Invert
-
-		/// <summary>
-		/// Get the inverse of the given quaternion
-		/// </summary>
-		/// <param name="q">The quaternion to invert</param>
-		/// <returns>The inverse of the given quaternion</returns>
-		public static Quaternion Invert(Quaternion q)
-		{
-			float lengthSq = q.LengthSquared;
-			if (lengthSq != 0.0)
-			{
-				float i = 1.0f / lengthSq;
-				q.XYZ *= -i;
-				q.W *= i;
-			}
-			return q;
-		}
-
-		/// <summary>
-		/// Get the inverse of the given quaternion
-		/// </summary>
-		/// <param name="q">The quaternion to invert</param>
-		/// <param name="result">The inverse of the given quaternion</param>
-		public static void Invert(ref Quaternion q, out Quaternion result)
-		{
-			float lengthSq = q.LengthSquared;
-			if (lengthSq != 0.0)
-			{
-				float i = 1.0f / lengthSq;
-				result.XYZ = q.XYZ * -i;
-				result.W = q.W * i;
-			}
-			else
-			{
-				result = q;
-			}
-		}
-		
-		#endregion
-
-		#region Normalize
-
-		/// <summary>
-		/// Scale the given quaternion to unit length
-		/// </summary>
-		/// <param name="q">The quaternion to normalize</param>
-		/// <returns>The normalized quaternion</returns>
-		public static Quaternion Normalize(Quaternion q)
-		{
-			float scale = 1.0f / q.Length;
-			q.XYZ *= scale;
-			q.W *= scale;
-			return q;
-		}
-
-		/// <summary>
-		/// Scale the given quaternion to unit length
-		/// </summary>
-		/// <param name="q">The quaternion to normalize</param>
-		/// <param name="result">The normalized quaternion</param>
-		public static void Normalize(ref Quaternion q, out Quaternion result)
-		{
-			float scale = 1.0f / q.Length;
-			result.XYZ = q.XYZ * scale;
-			result.W = q.W * scale;
-		}
-
-		#endregion
-
-		#region FromAxisAngle
-
-		/// <summary>
-		/// Build a quaternion from the given axis and angle
-		/// </summary>
-		/// <param name="axis">The axis to rotate about</param>
-		/// <param name="angle">The rotation angle in radians</param>
-		/// <returns></returns>
-		public static Quaternion FromAxisAngle(Vector3 axis, float angle)
-		{
-			if (axis.LengthSquared == 0.0f)
-				return Identity;
-
-			Quaternion result = Identity;
-
-			angle *= 0.5f;
-			axis.Normalize();
-			result.XYZ = axis * (float)System.Math.Sin(angle);
-			result.W = (float)System.Math.Cos(angle);
-
-			return Normalize(result);
-		}
-
-		#endregion
-
-		#region Slerp
-
-		/// <summary>
-		/// Do Spherical linear interpolation between two quaternions 
-		/// </summary>
-		/// <param name="q1">The first quaternion</param>
-		/// <param name="q2">The second quaternion</param>
-		/// <param name="blend">The blend factor</param>
-		/// <returns>A smooth blend between the given quaternions</returns>
-		public static Quaternion Slerp(Quaternion q1, Quaternion q2, float blend)
-		{
-			// if either input is zero, return the other.
-			if (q1.LengthSquared == 0.0f)
-			{
-				if (q2.LengthSquared == 0.0f)
-				{
-					return Identity;
-				}
-				return q2;
-			}
-			else if (q2.LengthSquared == 0.0f)
-			{
-				return q1;
-			}
-
-
-			float cosHalfAngle = q1.W * q2.W + Vector3.Dot(q1.XYZ, q2.XYZ);
-
-			if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
-			{
-				// angle = 0.0f, so just return one input.
-				return q1;
-			}
-			else if (cosHalfAngle < 0.0f)
-			{
-				q2.XYZ = -q2.XYZ;
-				q2.W = -q2.W;
-				cosHalfAngle = -cosHalfAngle;
-			}
-
-			float blendA;
-			float blendB;
-			if (cosHalfAngle < 0.99f)
-			{
-				// do proper slerp for big angles
-				float halfAngle = (float)System.Math.Acos(cosHalfAngle);
-				float sinHalfAngle = (float)System.Math.Sin(halfAngle);
-				float oneOverSinHalfAngle = 1.0f / sinHalfAngle;
-				blendA = (float)System.Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
-				blendB = (float)System.Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
-			}
-			else
-			{
-				// do lerp if angle is really small.
-				blendA = 1.0f - blend;
-				blendB = blend;
-			}
-
-			Quaternion result = new Quaternion(blendA * q1.XYZ + blendB * q2.XYZ, blendA * q1.W + blendB * q2.W);
-			if (result.LengthSquared > 0.0f)
-				return Normalize(result);
-			else
-				return Identity;
-		}
-
-		#endregion
-
-		#endregion
-
-		#region public override string ToString()
-
-		/// <summary>
+        /// <summary>
         /// Returns a System.String that represents the current Quaternion.
         /// </summary>
         /// <returns></returns>
@@ -454,6 +511,10 @@ namespace OpenTK.Math
         {
             return String.Format("V: {0}, W: {1}", XYZ, W);
         }
+
+        #endregion
+
+        #endregion
 
         #endregion
     }
