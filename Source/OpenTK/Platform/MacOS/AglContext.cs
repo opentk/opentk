@@ -27,13 +27,26 @@ namespace OpenTK.Platform.MacOS
         IntPtr contextRef;
         bool mVSync = false;
         IntPtr displayID;
-
+        
+        GraphicsMode mode;
+		CarbonWindowInfo carbonWindow;
+		IGraphicsContext shareContext;
+		
         static AglContext()
         {
             if (GraphicsContext.GetCurrentContext == null)
                 GraphicsContext.GetCurrentContext = AglContext.GetCurrentContext;
         }
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext)
+        {
+        	this.mode = mode;
+        	this.carbonWindow = (CarbonWindowInfo)window;
+        	this.shareContext = shareContext;
+        	
+        	CreateContext(mode, carbonWindow, shareContext);
+        }
+        
+        void CreateContext(GraphicsMode mode, CarbonWindowInfo carbonWindow, IGraphicsContext shareContext)
         {
             int[] attributes =  
             { 
@@ -53,10 +66,8 @@ namespace OpenTK.Platform.MacOS
                 (int)Agl.PixelFormatAttribute.AGL_NONE, 
             };
 
-            AGLContext myAGLContext = IntPtr.Zero;
             AGLPixelFormat myAGLPixelFormat;
             IntPtr shareContextRef = IntPtr.Zero;
-            CarbonWindowInfo carbonWindow = (CarbonWindowInfo)window;
 
             // Choose a pixel format with the attributes we specified.
             myAGLPixelFormat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attributes);
@@ -71,33 +82,25 @@ namespace OpenTK.Platform.MacOS
                 shareContextRef = ((AglContext)shareContext).contextRef;
 
             // create the context and share it with the share reference.
-            myAGLContext = Agl.aglCreateContext(myAGLPixelFormat, shareContextRef);
+            this.contextRef = Agl.aglCreateContext(myAGLPixelFormat, shareContextRef);
             MyAGLReportError();
 
             // Free the pixel format from memory.
             Agl.aglDestroyPixelFormat(myAGLPixelFormat);
             MyAGLReportError();
 
-            
-            IntPtr windowPort;
-
             Debug.Print("IsControl: {0}", carbonWindow.IsControl);
-            if (carbonWindow.IsControl)
-            {
-                IntPtr controlOwner = API.GetControlOwner(carbonWindow.WindowRef);
+            
+            SetDrawable(carbonWindow);
+            SetBufferRect(carbonWindow);
+			Update(carbonWindow);
+			
+            MakeCurrent(carbonWindow);
 
-                Debug.Print("GetControlOwner: {0}", controlOwner);
-
-                windowPort = API.GetWindowPort(controlOwner);
-            }
-            else
-                windowPort = API.GetWindowPort(carbonWindow.WindowRef);
-
-            windowPort = API.GetWindowPort(carbonWindow.WindowRef);
-            Agl.aglSetDrawable(myAGLContext, windowPort);
-
-            MyAGLReportError();
-
+            Debug.Print("context: {0}", contextRef);
+        }
+        void SetBufferRect(CarbonWindowInfo carbonWindow)
+        {
             if (carbonWindow.IsControl)
             {
                 Rect rect = API.GetControlBounds(carbonWindow.WindowRef);
@@ -114,50 +117,41 @@ namespace OpenTK.Platform.MacOS
                 glrect[2] = rect.Width;
                 glrect[3] = rect.Height;
 
-                Agl.aglSetInteger(myAGLContext, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
-                MyAGLReportError();
-
-                Agl.aglEnable(myAGLContext, Agl.ParameterNames.AGL_BUFFER_RECT);
-                MyAGLReportError();
-            }
-
-            // 
-            MyAGLReportError();
-
-            MakeCurrent(window);
-
-            this.contextRef = myAGLContext;
-
-            Debug.Print("context: {0}", contextRef);
-        }
-
-        public void Update(IWindowInfo window)
-        {
-            CarbonWindowInfo carbonWindow = (CarbonWindowInfo)window;
-
-            if (carbonWindow.IsControl)
-            {
-                Rect rect = API.GetControlBounds(carbonWindow.WindowRef);
-                HIRect hirect = API.HIViewGetFrame(carbonWindow.WindowRef);
-
-                Debug.Print("Setting buffer_rect for control.");
-                Debug.Print("Rect:   {0}", rect);
-                Debug.Print("HIRect: {0}", hirect);
-
-                int[] glrect = new int[4];
-
-                glrect[0] = rect.Left;
-                glrect[1] = rect.Top;
-                glrect[2] = rect.Width;
-                glrect[3] = rect.Height;
-
                 Agl.aglSetInteger(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
                 MyAGLReportError();
 
+                Agl.aglEnable(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT);
+                MyAGLReportError();
+            }     
+        }
+		void SetDrawable(CarbonWindowInfo carbonWindow)
+		{
+			IntPtr windowPort;
+			
+            if (carbonWindow.IsControl)
+            {
+                IntPtr controlOwner = API.GetControlOwner(carbonWindow.WindowRef);
+
+                Debug.Print("GetControlOwner: {0}", controlOwner);
+
+                windowPort = API.GetWindowPort(controlOwner);
             }
+            else
+                windowPort = API.GetWindowPort(carbonWindow.WindowRef);
+
+            Agl.aglSetDrawable(contextRef, windowPort);
+
+            MyAGLReportError();
+		
+		}
+        public void Update(IWindowInfo window)
+        {
+            CarbonWindowInfo carbonWindow = (CarbonWindowInfo)window;
+			
+			SetBufferRect(carbonWindow);
+			
             //Agl.aglSetCurrentContext(contextRef);
             Agl.aglUpdateContext(contextRef);
-            //Agl.aglSetDrawable(contextRef, API.GetWindowPort(carbonWindow.WindowRef));
             
         }
         void MyAGLReportError()
@@ -174,13 +168,21 @@ namespace OpenTK.Platform.MacOS
         }
 
         #region IGraphicsContext Members
-
+		bool first = false;
         public void SwapBuffers()
         {
+        	if (first == false && carbonWindow.IsControl)
+        	{
+        		Debug.WriteLine("--> Resetting drawable. <--");
+        		first = true;
+        		SetDrawable(carbonWindow);
+        		Update(carbonWindow);
+        	}
+        	
             Agl.aglSwapBuffers(contextRef);
             MyAGLReportError();
         }
-
+		
         public void MakeCurrent(IWindowInfo window)
         {
             if (Agl.aglSetCurrentContext(contextRef) == false)

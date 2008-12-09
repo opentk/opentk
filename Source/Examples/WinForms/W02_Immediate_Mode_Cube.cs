@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* This source file is released under the MIT license. See License.txt for more information.
  * Coded by Erik Ylvisaker and Stefanos Apostolopoulos.
  */
@@ -155,6 +155,7 @@ namespace Examples.WinForms
             DrawCube();
 
             glControl.SwapBuffers();
+            
         }
 
         #endregion
