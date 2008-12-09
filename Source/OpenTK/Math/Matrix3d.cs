@@ -1,10 +1,24 @@
 #region --- License ---
-/* Licensed under the MIT/X11 license.
- * Copyright (c) 2006-2008 the OpenTK Team.
- * This notice may not be removed from any source distribution.
- * See license.txt for licensing detailed licensing details.
- * 
- * Contributions by James Talton.
+/*
+Copyright (c) 2006 - 2008 The Open Toolkit library.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
 #endregion
 
@@ -15,10 +29,10 @@ namespace OpenTK.Math
 {
     // Todo: Remove this warning when the code goes public.
     #pragma warning disable 3019
-
+#if false
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    internal struct Matrix3d : IEquatable<Matrix3d>
+    public struct Matrix3d : IEquatable<Matrix3d>
     {
         #region Fields & Access
 
@@ -275,20 +289,19 @@ namespace OpenTK.Math
 
         /// <summary>Constructs left matrix from the given quaternion.</summary>
         /// <param name="quaternion">The quaternion to use to construct the martix.</param>
-        public Matrix3d(ref Quaterniond quaternion)
+        public Matrix3d(Quaterniond quaternion)
         {
-            Quaterniond quaternionNormalized;
-            quaternion.Normalize(out quaternionNormalized);
+            quaternion.Normalize();
 
-            double xx = quaternionNormalized.X * quaternionNormalized.X;
-            double yy = quaternionNormalized.Y * quaternionNormalized.Y;
-            double zz = quaternionNormalized.Z * quaternionNormalized.Z;
-            double xy = quaternionNormalized.X * quaternionNormalized.Y;
-            double xz = quaternionNormalized.X * quaternionNormalized.Z;
-            double yz = quaternionNormalized.Y * quaternionNormalized.Z;
-            double wx = quaternionNormalized.W * quaternionNormalized.X;
-            double wy = quaternionNormalized.W * quaternionNormalized.Y;
-            double wz = quaternionNormalized.W * quaternionNormalized.Z;
+            double xx = quaternion.X * quaternion.X;
+            double yy = quaternion.Y * quaternion.Y;
+            double zz = quaternion.Z * quaternion.Z;
+            double xy = quaternion.X * quaternion.Y;
+            double xz = quaternion.X * quaternion.Z;
+            double yz = quaternion.Y * quaternion.Z;
+            double wx = quaternion.W * quaternion.X;
+            double wy = quaternion.W * quaternion.Y;
+            double wz = quaternion.W * quaternion.Z;
 
             R0C0 = 1 - 2 * (yy + zz);
             R0C1 = 2 * (xy - wz);
@@ -752,9 +765,9 @@ namespace OpenTK.Math
             result.R2C2 = 1;
         }
 
-        public void Quaternion(out Quaterniond quaternion)
+        public Quaterniond ToQuaternion()
         {
-            quaternion = new Quaterniond(ref this);
+            //return new Quaterniond(ref this);
         }
 
         #endregion
@@ -810,6 +823,6 @@ namespace OpenTK.Math
 
         #endregion
     }
-
+#endif
     #pragma warning restore 3019
 }
