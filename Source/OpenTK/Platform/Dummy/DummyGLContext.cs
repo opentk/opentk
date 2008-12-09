@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using OpenTK.Graphics;
 
-namespace OpenTK.Platform
+namespace OpenTK.Platform.Dummy
 {
     /// <summary>
     /// An empty IGraphicsContext implementation to be used inside the Visual Studio designer.
