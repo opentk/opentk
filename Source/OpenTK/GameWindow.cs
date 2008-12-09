@@ -61,7 +61,7 @@ namespace OpenTK
 
         ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
-        bool isExiting;
+        bool isExiting = false;
         bool hasMainLoop;
         bool disposed;
 
