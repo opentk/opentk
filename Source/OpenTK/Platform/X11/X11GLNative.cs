@@ -61,16 +61,16 @@ namespace OpenTK.Platform.X11
         IntPtr _atom_net_wm_action_maximize_horizontally;
         IntPtr _atom_net_wm_action_maximize_vertically;
         
-        IntPtr _atom_motif_wm_hints;
-        IntPtr _atom_kde_wm_hints;
-        IntPtr _atom_kde_net_wm_hints;
+        //IntPtr _atom_motif_wm_hints;
+        //IntPtr _atom_kde_wm_hints;
+        //IntPtr _atom_kde_net_wm_hints;
         
         static readonly IntPtr _atom_remove = (IntPtr)0;
         static readonly IntPtr _atom_add = (IntPtr)1;
         static readonly IntPtr _atom_toggle = (IntPtr)2;
         
         // Number of pending events.
-        int pending = 0;
+        //int pending = 0;
 
         int width, height;
         int top, bottom, left, right;
@@ -86,11 +86,11 @@ namespace OpenTK.Platform.X11
         bool isExiting;
 
         // XAtoms for window properties
-        static IntPtr WMTitle;      // The title of the GameWindow.
-        static IntPtr UTF8String;   // No idea.
+        //static IntPtr WMTitle;      // The title of the GameWindow.
+        //static IntPtr UTF8String;   // No idea.
 
         // Fields used for fullscreen mode changes.
-        int pre_fullscreen_width, pre_fullscreen_height;
+        //int pre_fullscreen_width, pre_fullscreen_height;
         //bool fullscreen = false;
 
         bool _decorations_hidden = false;        
@@ -646,7 +646,7 @@ namespace OpenTK.Platform.X11
     			IntPtr bytes_after;
     			IntPtr prop = IntPtr.Zero;
     			IntPtr atom;
-    			XWindowAttributes attributes;
+    			//XWindowAttributes attributes;
                 bool fullscreen = false;
     			int maximized = 0;
                 bool minimized = false;
@@ -995,7 +995,7 @@ namespace OpenTK.Platform.X11
     			IntPtr bytes_after;
     			IntPtr prop = IntPtr.Zero;
     			IntPtr atom;
-    			XWindowAttributes attributes;                
+    			//XWindowAttributes attributes;                
                 
     			Functions.XGetWindowProperty(window.Display, window.WindowHandle,
                     						 _atom_net_wm_allowed_actions, IntPtr.Zero, new IntPtr(256), false,
@@ -1023,13 +1023,13 @@ namespace OpenTK.Platform.X11
         {
             get
             {                
-    			IntPtr actual_atom;
-    			int actual_format;
-    			IntPtr nitems;
-    			IntPtr bytes_after;
+                //IntPtr actual_atom;
+                //int actual_format;
+                //IntPtr nitems;
+                //IntPtr bytes_after;
     			IntPtr prop = IntPtr.Zero;
-    			IntPtr atom;
-    			XWindowAttributes attributes;
+                //IntPtr atom;
+                //XWindowAttributes attributes;
 
                 // Test if decorations have been disabled through Motif.
                 IntPtr motif_hints_atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
