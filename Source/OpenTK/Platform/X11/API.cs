@@ -57,7 +57,7 @@ namespace OpenTK.Platform.X11
         static int screenCount;
 
         internal static Display DefaultDisplay { get { return defaultDisplay; } }
-        //internal static int DefaultScreen { get { return defaultScreen; } }
+        static int DefaultScreen { get { return defaultScreen; } }
         //internal static Window RootWindow { get { return rootWindow; } }
         internal static int ScreenCount { get { return screenCount; } }
         
@@ -742,6 +742,8 @@ XF86VidModeGetGammaRampSize(
     #endregion
 
     #region unsafe internal class XExtData
+
+    #pragma warning disable 0169, 0649
 
     unsafe internal class XExtData
     {

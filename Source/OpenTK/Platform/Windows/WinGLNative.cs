@@ -40,13 +40,13 @@ namespace OpenTK.Platform.Windows
         private WindowState windowState = WindowState.Normal;
 
         private int top, bottom, left, right;
-        private int width = 0, height = 0;
+        //private int width = 0, height = 0;
         private Rectangle previous_client_area;
 
         private Point position = new Point();
         private Rectangle client_rectangle = new Rectangle();
         private Size window_size = new Size();
-        private Rectangle borders = new Rectangle();
+        //private Rectangle borders = new Rectangle();
 
         private ResizeEventArgs resizeEventArgs = new ResizeEventArgs();
 
@@ -603,10 +603,13 @@ namespace OpenTK.Platform.Windows
 
         #region public void OnResize
 
-        public event ResizeEvent Resize = null;
+        public event ResizeEvent Resize;
 
         public void OnResize(ResizeEventArgs e)
         {
+            if (Resize != null)
+                Resize(this, e);
+
             throw new NotImplementedException("Use GameWindow.OnResize instead.");
             //this.width = e.Width;
             //this.height = e.Height;

@@ -66,6 +66,8 @@ namespace OpenTK.Platform.Windows
             currentWindow = (WinWindowInfo)window;
             if (currentWindow.WindowHandle == IntPtr.Zero) throw new ArgumentException("window", "Must be a valid window.");
 
+            this.format = format;
+
             Debug.Print("OpenGL will be bound to handle: {0}", currentWindow.WindowHandle);
 
             Debug.Write("Setting pixel format... ");
@@ -110,7 +112,7 @@ namespace OpenTK.Platform.Windows
         public void CreateContext()
         {
             throw new NotSupportedException();
-            this.CreateContext(true, null);
+            //this.CreateContext(true, null);
         }
 
         #endregion
@@ -120,7 +122,7 @@ namespace OpenTK.Platform.Windows
         public void CreateContext(bool direct)
         {
             throw new NotSupportedException();
-            this.CreateContext(direct, null);
+            //this.CreateContext(direct, null);
         }
 
         #endregion
