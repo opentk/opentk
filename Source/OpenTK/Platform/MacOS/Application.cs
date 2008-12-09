@@ -29,7 +29,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static void Initialize()
         {
             if (mInitialized) return;
-
+			
             API.AcquireRootMenu();
 
             ConnectEvents();    

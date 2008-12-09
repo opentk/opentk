@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
@@ -59,6 +59,8 @@ namespace Examples.WinForms
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
+        	System.Diagnostics.Debug.Print("Repainting glControl.");
+        	
             GL.Clear(ClearBufferMask.ColorBufferBit);
             glControl1.SwapBuffers();
         }
