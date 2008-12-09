@@ -53,12 +53,12 @@ namespace OpenTK
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the control.</param>
         public GLControl(GraphicsMode mode)
         {
-            InitializeComponent();
-
-            this.SetStyle(ControlStyles.Opaque, true);
-            this.SetStyle(ControlStyles.UserPaint, true);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.Opaque, true);
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             DoubleBuffered = false;
+
+            InitializeComponent();
 
             this.format = mode;
 
@@ -69,10 +69,12 @@ namespace OpenTK
             // it would be better to decouple selection from context creation, which will allow us
             // to clean up this hacky code. The best option is to do this along with multisampling
             // support.
-            if (Configuration.RunningOnWindows)
-                implementation = new OpenTK.Platform.Windows.WinGLControl(mode, this);
+            if (DesignMode)
+                implementation = new Platform.Dummy.DummyGLControl();
+            else if (Configuration.RunningOnWindows)
+                implementation = new Platform.Windows.WinGLControl(mode, this);
             else if (Configuration.RunningOnX11)
-                implementation = new OpenTK.Platform.X11.X11GLControl(mode, this);
+                implementation = new Platform.X11.X11GLControl(mode, this);
             else if (Configuration.RunningOnOSX)
                 throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
 
@@ -89,10 +91,7 @@ namespace OpenTK
         {
             base.OnHandleCreated(e);
 
-            if (DesignMode)
-                this.Context = new DummyGLContext(null);
-            else
-                this.Context = implementation.CreateContext();
+            this.Context = implementation.CreateContext();
 
             this.window_info = implementation.WindowInfo;
             this.MakeCurrent();
@@ -193,7 +192,7 @@ namespace OpenTK
                 }
             }
             else
-                context = new DummyGLContext(format);
+                context = new Platform.Dummy.DummyGLContext(format);
 
             this.MakeCurrent();
             (context as IGraphicsContextInternal).LoadAll();
