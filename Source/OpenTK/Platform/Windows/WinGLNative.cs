@@ -111,7 +111,6 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.SIZE:
-                    Console.WriteLine(m.WParam.ToString());
                     long state = m.WParam.ToInt64();
                     switch (state)
                     {
