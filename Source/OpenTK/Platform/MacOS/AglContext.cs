@@ -10,6 +10,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Control = System.Windows.Forms.Control;
 
 namespace OpenTK.Platform.MacOS
 {
@@ -101,28 +102,38 @@ namespace OpenTK.Platform.MacOS
         }
         void SetBufferRect(CarbonWindowInfo carbonWindow)
         {
-            if (carbonWindow.IsControl)
-            {
-                Rect rect = API.GetControlBounds(carbonWindow.WindowRef);
-                HIRect hirect = API.HIViewGetFrame(carbonWindow.WindowRef);
+            if (carbonWindow.IsControl == false)
+            	return;
+            
+            System.Windows.Forms.Control ctrl = Control.FromHandle(carbonWindow.WindowRef);
+				
+            if (ctrl.TopLevelControl == null)
+            	return;
+            	
+            Rect rect = API.GetControlBounds(carbonWindow.WindowRef);
 
-                Debug.Print("Setting buffer_rect for control.");
-                Debug.Print("Rect:   {0}", rect);
-                Debug.Print("HIRect: {0}", hirect);
-                
-                int[] glrect = new int[4];
+			rect.X = (short)ctrl.Left;
+			rect.Y = (short)ctrl.Top;
+            
+            Debug.Print("Setting buffer_rect for control.");
+            Debug.Print("MacOS Coordinate Rect:   {0}", rect);
+            
+            rect.Y = (short)(ctrl.TopLevelControl.ClientSize.Height - rect.Y - rect.Height);
+            Debug.Print("  AGL Coordinate Rect:   {0}", rect);
+            
+            int[] glrect = new int[4];
 
-                glrect[0] = rect.Left;
-                glrect[1] = rect.Top;
-                glrect[2] = rect.Width;
-                glrect[3] = rect.Height;
+            glrect[0] = rect.X;
+            glrect[1] = rect.Y;
+            glrect[2] = rect.Width;
+            glrect[3] = rect.Height;
 
-                Agl.aglSetInteger(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
-                MyAGLReportError();
+            Agl.aglSetInteger(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
+            MyAGLReportError();
 
-                Agl.aglEnable(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT);
-                MyAGLReportError();
-            }     
+            Agl.aglEnable(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT);
+            MyAGLReportError();
+  
         }
 		void SetDrawable(CarbonWindowInfo carbonWindow)
 		{
