@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
@@ -318,7 +318,7 @@ namespace OpenTK.Platform
 
         private static IWindowInfo CreateOSXWindowInfo(IntPtr controlHandle)
         {
-            throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
+            return new OpenTK.Platform.MacOS.CarbonWindowInfo(controlHandle, false, true);
         }
 
         #endregion
