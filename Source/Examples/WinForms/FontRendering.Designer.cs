@@ -68,7 +68,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(550, 22);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "The quick fox jumped over the lazy dogs. 0123456789";
+            this.textBox1.Text = "The quick brown fox jumped over the lazy dogs. 0123456789";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // FontRendering
