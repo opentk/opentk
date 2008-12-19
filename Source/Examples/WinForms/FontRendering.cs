@@ -77,15 +77,16 @@ namespace Examples.WinForms
             //GL.Color4(Color.Blue);
             //GL.BlendColor(0, 0, 0, 0);
 
-            text.Begin();
+            //text.Begin();
 
+            RectangleF rect = new RectangleF();
             foreach (Font font in fonts)
             {
-                text.Print(textBox1.Text, font, Color.White);
-                GL.Translate(0, font.Height, 0);
+                text.Print(textBox1.Text, font, Color.White, rect);
+                rect.Y += font.Height;
             }
 
-            text.End();
+            //text.End();
 
             glControl1.SwapBuffers();
         }
