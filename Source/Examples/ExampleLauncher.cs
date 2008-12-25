@@ -153,6 +153,7 @@ namespace Examples
 
                     Debug.Print("Launching example: {0}", example.ToString());
                     this.Visible = false;
+					Application.DoEvents();
 
                     example.GetMethod("Main").Invoke(null, null);
 
