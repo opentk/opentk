@@ -221,7 +221,7 @@ namespace OpenTK.Platform.MacOS
             WeakReference reference = mWindows[userData];
             CarbonGLNative window = (CarbonGLNative)reference.Target;
             
-            Debug.Print("Processing {0} event for {1}.", evt, window.window);
+            //Debug.Print("Processing {0} event for {1}.", evt, window.window);
 
             if (window == null)
             {
@@ -326,9 +326,10 @@ namespace OpenTK.Platform.MacOS
             if (pt.Y < mTitlebarHeight)
                 return OSStatus.EventNotHandled;
 
-            // TODO: Fix this
-            //InputDriver.Mouse[0].X = (int)pt.X;
-            //InputDriver.Mouse[0].Y = (int)pt.Y - mTitlebarHeight;
+            InputDriver.Mouse[0].Position =
+                new System.Drawing.Point(
+                    (int)pt.X,
+                    (int)(pt.Y - mTitlebarHeight));
 
             switch(evt.MouseEventKind)
             {
