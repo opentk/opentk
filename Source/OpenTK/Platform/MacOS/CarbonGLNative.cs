@@ -217,8 +217,20 @@ namespace OpenTK.Platform.MacOS
 
         protected static OSStatus EventHandler(IntPtr inCaller, IntPtr inEvent, IntPtr userData)
         {
-            EventInfo evt = new EventInfo(inEvent);
+            // bail out if the window passed in is not actually our window.
+            if (mWindows.ContainsKey(userData) == false)
+                return OSStatus.EventNotHandled;
+
             WeakReference reference = mWindows[userData];
+
+            // bail out if the CarbonGLNative window has been garbage collected.
+            if (reference.IsAlive == false)
+            {
+                mWindows.Remove(userData);
+                return OSStatus.EventNotHandled;
+            }
+
+            EventInfo evt = new EventInfo(inEvent);
             CarbonGLNative window = (CarbonGLNative)reference.Target;
             
             //Debug.Print("Processing {0} event for {1}.", evt, window.window);
