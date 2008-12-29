@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Control = System.Windows.Forms.Control;
@@ -46,33 +47,64 @@ namespace OpenTK.Platform.MacOS
         	
         	CreateContext(mode, carbonWindow, shareContext);
         }
-        
+
+
+        private void AddPixelAttrib(List<int> aglAttributes, Agl.PixelFormatAttribute pixelFormatAttribute)
+        {
+            Debug.Print(pixelFormatAttribute.ToString());
+
+            aglAttributes.Add((int)pixelFormatAttribute);
+        }
+        private void AddPixelAttrib(List<int> aglAttributes, Agl.PixelFormatAttribute pixelFormatAttribute, int value)
+        {
+            Debug.Print("{0} : {1}", pixelFormatAttribute, value);
+
+            aglAttributes.Add((int)pixelFormatAttribute);
+            aglAttributes.Add(value);
+        }
         void CreateContext(GraphicsMode mode, CarbonWindowInfo carbonWindow, IGraphicsContext shareContext)
         {
-            int[] attributes =  
-            { 
-                (int)Agl.PixelFormatAttribute.AGL_RGBA,
-                (int)Agl.PixelFormatAttribute.AGL_DOUBLEBUFFER,
-                (int)Agl.PixelFormatAttribute.AGL_RED_SIZE, mode.ColorFormat.Red,
-                (int)Agl.PixelFormatAttribute.AGL_GREEN_SIZE, mode.ColorFormat.Green,
-                (int)Agl.PixelFormatAttribute.AGL_BLUE_SIZE, mode.ColorFormat.Blue,
-                (int)Agl.PixelFormatAttribute.AGL_ALPHA_SIZE, mode.ColorFormat.Alpha,
-                (int)Agl.PixelFormatAttribute.AGL_DEPTH_SIZE, mode.Depth,
-                (int)Agl.PixelFormatAttribute.AGL_STENCIL_SIZE, mode.Stencil,
-                (int)Agl.PixelFormatAttribute.AGL_ACCUM_RED_SIZE, mode.AccumulatorFormat.Red,
-                (int)Agl.PixelFormatAttribute.AGL_ACCUM_GREEN_SIZE, mode.AccumulatorFormat.Green,
-                (int)Agl.PixelFormatAttribute.AGL_ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue,
-                (int)Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha,
-                (int)Agl.PixelFormatAttribute.AGL_FULLSCREEN,
-                (int)Agl.PixelFormatAttribute.AGL_NONE, 
-            };
+            List<int> aglAttributes = new  List<int>();
+
+            Debug.Print("AGL attributes:");
+            Debug.Indent();
+
+            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_RGBA);
+            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_DOUBLEBUFFER);
+            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_RED_SIZE, mode.ColorFormat.Red);
+            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_GREEN_SIZE, mode.ColorFormat.Green);
+            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_BLUE_SIZE, mode.ColorFormat.Blue);
+            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ALPHA_SIZE, mode.ColorFormat.Alpha);
+
+            if (mode.Depth > 0)
+                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_DEPTH_SIZE, mode.Depth);
+
+            if (mode.Stencil > 0)
+                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_STENCIL_SIZE, mode.Stencil);
+
+            if (mode.AccumulatorFormat.BitsPerPixel > 0)
+            {
+                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_RED_SIZE, mode.AccumulatorFormat.Red);
+                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_GREEN_SIZE, mode.AccumulatorFormat.Green);
+                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue);
+                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
+            }
+            //AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
+            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_NONE);
+
+            Debug.Unindent();
+
+            Debug.Write("Attribute array:  ");
+            for (int i = 0; i < aglAttributes.Count; i++)
+                Debug.Write(aglAttributes[i].ToString() + "  ");
+            Debug.WriteLine("");
 
             AGLPixelFormat myAGLPixelFormat;
             IntPtr shareContextRef = IntPtr.Zero;
 
             // Choose a pixel format with the attributes we specified.
-            myAGLPixelFormat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, attributes);
-            MyAGLReportError();
+            myAGLPixelFormat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, aglAttributes.ToArray());
+            MyAGLReportError("aglChoosePixelFormat");
 
             if (shareContext != null)
             {
@@ -84,11 +116,11 @@ namespace OpenTK.Platform.MacOS
 
             // create the context and share it with the share reference.
             this.contextRef = Agl.aglCreateContext(myAGLPixelFormat, shareContextRef);
-            MyAGLReportError();
+            MyAGLReportError("aglCreateContext");
 
             // Free the pixel format from memory.
             Agl.aglDestroyPixelFormat(myAGLPixelFormat);
-            MyAGLReportError();
+            MyAGLReportError("aglDestroyPixelFormat");
 
             Debug.Print("IsControl: {0}", carbonWindow.IsControl);
             
@@ -100,6 +132,7 @@ namespace OpenTK.Platform.MacOS
 
             Debug.Print("context: {0}", contextRef);
         }
+
         void SetBufferRect(CarbonWindowInfo carbonWindow)
         {
             if (carbonWindow.IsControl == false)
@@ -129,10 +162,10 @@ namespace OpenTK.Platform.MacOS
             glrect[3] = rect.Height;
 
             Agl.aglSetInteger(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT, glrect);
-            MyAGLReportError();
+            MyAGLReportError("aglSetInteger");
 
             Agl.aglEnable(contextRef, Agl.ParameterNames.AGL_BUFFER_RECT);
-            MyAGLReportError();
+            MyAGLReportError("aglEnable");
   
         }
 		void SetDrawable(CarbonWindowInfo carbonWindow)
@@ -152,7 +185,7 @@ namespace OpenTK.Platform.MacOS
 
             Agl.aglSetDrawable(contextRef, windowPort);
 
-            MyAGLReportError();
+            MyAGLReportError("aglSetDrawable");
 		
 		}
         public void Update(IWindowInfo window)
@@ -165,12 +198,13 @@ namespace OpenTK.Platform.MacOS
             Agl.aglUpdateContext(contextRef);
             
         }
-        void MyAGLReportError()
+        void MyAGLReportError(string function)
         {
             Agl.AglError err = Agl.GetError();
 
             if (err != Agl.AglError.NoError)
-                throw new MacOSException((OSStatus)err, "AGL Error: " + err.ToString() + "  " + Agl.ErrorString(err));
+                throw new MacOSException((OSStatus)err, string.Format(
+                    "AGL Error from function {0}: {1}  {2}", err, Agl.ErrorString(err)));
         }
 
         static ContextHandle GetCurrentContext()
@@ -191,13 +225,13 @@ namespace OpenTK.Platform.MacOS
         	}
         	
             Agl.aglSwapBuffers(contextRef);
-            MyAGLReportError();
+            MyAGLReportError("aglSwapBuffers");
         }
 		
         public void MakeCurrent(IWindowInfo window)
         {
             if (Agl.aglSetCurrentContext(contextRef) == false)
-                MyAGLReportError();
+                MyAGLReportError("aglSetCurrentContext");
         }
 
         public bool IsCurrent
