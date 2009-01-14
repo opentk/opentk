@@ -216,6 +216,14 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        /// <summary>
+        /// Hack for Mac OS full screen support.
+        /// </summary>
+        internal IGraphicsContext Implementation
+        {
+            get { return implementation; }
+        }
+
         #region --- IGraphicsContext Members ---
 
         /// <summary>

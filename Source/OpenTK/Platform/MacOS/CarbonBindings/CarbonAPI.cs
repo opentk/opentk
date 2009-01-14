@@ -21,6 +21,12 @@ namespace OpenTK.Platform.MacOS.Carbon
     {
         internal short V;
         internal short H;
+
+        public Point(int x, int y)
+        {
+            V = (short)x;
+            H = (short)y;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -345,6 +351,24 @@ namespace OpenTK.Platform.MacOS.Carbon
     }
 
     internal delegate OSStatus MacOSEventHandler(IntPtr inCaller, IntPtr inEvent, IntPtr userData);
+
+    internal enum WindowPartCode : short 
+    {
+        inDesk = 0,
+        inNoWindow = 0,
+        inMenuBar = 1,
+        inSysWindow = 2,
+        inContent = 3,
+        inDrag = 4,
+        inGrow = 5,
+        inGoAway = 6,
+        inZoomIn = 7,
+        inZoomOut = 8,
+        inCollapseBox = 11,
+        inProxyIcon = 12,
+        inToolbarButton = 13,
+        inStructure = 15,
+    }
 
     #endregion
 
@@ -778,6 +802,51 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         #endregion
 
+        [DllImport(carbon)]
+        internal static extern bool IsWindowCollapsed(IntPtr windowRef);
+
+        [DllImport(carbon, EntryPoint = "CollapseWindow")]
+        static extern OSStatus _CollapseWindow(IntPtr windowRef, bool collapse);
+
+        internal static void CollapseWindow(IntPtr windowRef, bool collapse)
+        {
+            OSStatus error = _CollapseWindow(windowRef, collapse);
+
+            if (error != OSStatus.NoError)
+            {
+                throw new MacOSException(error);
+            }
+        }
+
+        [DllImport(carbon, EntryPoint="IsWindowInStandardState")]
+        static extern bool _IsWindowInStandardState(IntPtr windowRef, IntPtr inIdealSize, IntPtr outIdealStandardState);
+
+        internal static bool IsWindowInStandardState(IntPtr windowRef)
+        {
+            return _IsWindowInStandardState(windowRef, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        [DllImport(carbon, EntryPoint = "ZoomWindowIdeal")]
+        unsafe static extern OSStatus _ZoomWindowIdeal(IntPtr windowRef, short inPartCode, IntPtr toIdealSize);
+
+        internal static void ZoomWindowIdeal(IntPtr windowRef, WindowPartCode inPartCode, ref Point toIdealSize)
+        {
+            Point pt = toIdealSize;
+            OSStatus error ;
+            IntPtr handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Point)));
+            Marshal.StructureToPtr(toIdealSize, handle, false);
+
+            error = _ZoomWindowIdeal(windowRef, (short)inPartCode, handle);
+
+            toIdealSize = (Point)Marshal.PtrToStructure(handle,typeof(Point));
+
+            Marshal.FreeHGlobal(handle);
+
+            if (error != OSStatus.NoError)
+            {
+                throw new MacOSException(error);
+            }
+        }
 
     }
 
