@@ -89,7 +89,7 @@ namespace OpenTK.Platform.MacOS
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue);
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
             }
-            //AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
+            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
             AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_NONE);
 
             Debug.Unindent();
@@ -103,7 +103,9 @@ namespace OpenTK.Platform.MacOS
             IntPtr shareContextRef = IntPtr.Zero;
 
             // Choose a pixel format with the attributes we specified.
-            myAGLPixelFormat = Agl.aglChoosePixelFormat(IntPtr.Zero, 0, aglAttributes.ToArray());
+            myAGLPixelFormat = Agl.aglChoosePixelFormat(QuartzDisplayDeviceDriver.MainDisplay, 
+                0, aglAttributes.ToArray());
+
             MyAGLReportError("aglChoosePixelFormat");
 
             if (shareContext != null)
@@ -211,6 +213,16 @@ namespace OpenTK.Platform.MacOS
         {
             return Agl.aglGetCurrentContext();
         }
+
+        internal void SetFullScreen()
+        {
+            Agl.aglSetFullScreen(contextRef, 0, 0, 0, 0);
+        }
+        internal void UnsetFullScreen()
+        {
+            SetDrawable(carbonWindow);
+        }
+
 
         #region IGraphicsContext Members
 		bool first = false;

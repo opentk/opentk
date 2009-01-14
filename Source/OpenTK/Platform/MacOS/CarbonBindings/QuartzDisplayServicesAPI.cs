@@ -44,5 +44,8 @@ namespace OpenTK.Platform.MacOS.Carbon
         [DllImport(appServices, EntryPoint = "CGDisplayAvailableModes")]
         internal static extern IntPtr DisplayAvailableModes(IntPtr display);
 
+        [DllImport(appServices, EntryPoint = "CGDisplaySwitchToMode")]
+        internal static extern IntPtr DisplaySwitchToMode(IntPtr display, IntPtr displayMode);
+
     }
 }
