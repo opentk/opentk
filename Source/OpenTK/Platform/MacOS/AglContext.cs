@@ -104,7 +104,7 @@ namespace OpenTK.Platform.MacOS
 
             // Choose a pixel format with the attributes we specified.
             myAGLPixelFormat = Agl.aglChoosePixelFormat(QuartzDisplayDeviceDriver.MainDisplay, 
-                0, aglAttributes.ToArray());
+                1, aglAttributes.ToArray());
 
             MyAGLReportError("aglChoosePixelFormat");
 
