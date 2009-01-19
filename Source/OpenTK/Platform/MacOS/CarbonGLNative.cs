@@ -653,6 +653,8 @@ namespace OpenTK.Platform.MacOS
                         break;
                 }
 
+                OnResize();
+
                 windowState = value;
 
             }
