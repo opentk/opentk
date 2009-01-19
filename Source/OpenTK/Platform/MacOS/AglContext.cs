@@ -89,7 +89,7 @@ namespace OpenTK.Platform.MacOS
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue);
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
             }
-            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
+            //AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
             AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_NONE);
 
             Debug.Unindent();
