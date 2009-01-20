@@ -19,7 +19,11 @@ namespace OpenTK.Platform.MacOS
         {
             this.errorCode = errorCode;
         }
-
+        internal MacOSException(Agl.AglError errorCode, string message)
+            : base(message)
+        {
+            this.errorCode = (OSStatus)errorCode;
+        }
 
         public OSStatus ErrorCode
         {

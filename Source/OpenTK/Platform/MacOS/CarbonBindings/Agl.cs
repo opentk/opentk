@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.MacOS
@@ -279,7 +280,7 @@ namespace OpenTK.Platform.MacOS
         /*
 		 ** Pixel format functions
 		 */
-        [DllImport(agl)] internal static extern AGLPixelFormat aglChoosePixelFormat(AGLDevice gdevs, int ndev, int []attribs);
+        [DllImport(agl)] internal static extern AGLPixelFormat aglChoosePixelFormat(ref AGLDevice gdevs, int ndev, int []attribs);
         [DllImport(agl)] internal static extern void aglDestroyPixelFormat(AGLPixelFormat pix);
         [DllImport(agl)] internal static extern AGLPixelFormat aglNextPixelFormat(AGLPixelFormat pix);
         [DllImport(agl)] static extern byte aglDescribePixelFormat(AGLPixelFormat pix, int attrib, out int value);
@@ -331,11 +332,40 @@ namespace OpenTK.Platform.MacOS
         /*
 		 ** Drawable Functions
 		 */
-        [DllImport(agl)] internal static extern byte aglSetDrawable(AGLContext ctx, AGLDrawable draw);
+        [DllImport(agl,EntryPoint="aglSetDrawable")] 
+        static extern byte _aglSetDrawable(AGLContext ctx, AGLDrawable draw);
+
+        internal static void aglSetDrawable(AGLContext ctx, AGLDrawable draw)
+        {
+            byte retval = _aglSetDrawable(ctx, draw);
+
+            if (retval == 0)
+            {
+                AglError err = GetError();
+
+                throw new MacOSException(err, ErrorString(err));
+            }
+        }
         [DllImport(agl)] static extern byte aglSetOffScreen(AGLContext ctx, int width, int height, int rowbytes, IntPtr baseaddr);
-        [DllImport(agl)] internal static extern byte aglSetFullScreen(AGLContext ctx, int width, int height, int freq, int device);
         [DllImport(agl)] static extern AGLDrawable aglGetDrawable(AGLContext ctx);
-		
+
+        [DllImport(agl, EntryPoint = "aglSetFullScreen")]
+        static extern byte _aglSetFullScreen(AGLContext ctx, int width, int height, int freq, int device);
+        internal static void aglSetFullScreen(AGLContext ctx, int width, int height, int freq, int device)
+        {
+            byte retval = _aglSetFullScreen(ctx, width, height, freq, device);
+
+            if (retval == 0)
+            {
+                AglError err = GetError();
+                Debug.Print("AGL Error: {0}", err);
+                Debug.Indent();
+                Debug.Print(ErrorString(err));
+                Debug.Unindent();
+
+                throw new MacOSException(err, ErrorString(err));
+            }
+        }
         /*
 		 ** Virtual screen functions
 		 */

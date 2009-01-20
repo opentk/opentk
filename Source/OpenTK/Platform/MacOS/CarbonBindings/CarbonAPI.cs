@@ -848,6 +848,11 @@ namespace OpenTK.Platform.MacOS.Carbon
             }
         }
 
+        [DllImport(carbon)]
+        internal unsafe static extern OSStatus DMGetGDeviceByDisplayID(
+            IntPtr displayID, out IntPtr displayDevice, Boolean failToMain);
+
+
     }
 
     #endregion
