@@ -89,7 +89,7 @@ namespace OpenTK.Platform.MacOS
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue);
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
             }
-            //AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
+            AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
             AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_NONE);
 
             Debug.Unindent();
@@ -100,14 +100,23 @@ namespace OpenTK.Platform.MacOS
             Debug.WriteLine("");
 
             AGLPixelFormat myAGLPixelFormat;
-            IntPtr shareContextRef = IntPtr.Zero;
+            IntPtr gdevice;
+
+            OSStatus status = Carbon.API.DMGetGDeviceByDisplayID(
+                QuartzDisplayDeviceDriver.MainDisplay, out gdevice, false);
+            if (status != OSStatus.NoError)
+                throw new MacOSException(status, "DMGetGDeviceByDisplayID failed.");
 
             // Choose a pixel format with the attributes we specified.
-            myAGLPixelFormat = Agl.aglChoosePixelFormat(QuartzDisplayDeviceDriver.MainDisplay, 
-                1, aglAttributes.ToArray());
+            myAGLPixelFormat = Agl.aglChoosePixelFormat(
+                ref gdevice, 1,
+                //IntPtr.Zero, 0, 
+                aglAttributes.ToArray());
 
             MyAGLReportError("aglChoosePixelFormat");
 
+
+            IntPtr shareContextRef = IntPtr.Zero;
             if (shareContext != null)
             {
                 Debug.Print("shareContext type is {0}", shareContext.GetType());
@@ -216,7 +225,7 @@ namespace OpenTK.Platform.MacOS
 
         internal void SetFullScreen()
         {
-            Agl.aglSetFullScreen(contextRef, 0, 0, 0, 0);
+            Agl.aglSetFullScreen(contextRef, 640, 480, 60, 0);
         }
         internal void UnsetFullScreen()
         {
