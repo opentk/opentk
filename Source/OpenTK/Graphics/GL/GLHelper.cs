@@ -54,7 +54,7 @@ namespace OpenTK.Graphics
     /// </remarks>
     /// <see href="http://opengl.org/registry/"/>
     /// <seealso cref="GL.SupportsExtension"/>
-    /// <seealso cref="GL.GetDelegate"/>
+    /// <seealso cref="GL.GetDelegate(string)"/>
     /// <seealso cref="GL.LoadAll"/>
     /// <seealso cref="GL.Load"/>
     public static partial class GL
@@ -659,6 +659,34 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region public static void Material() overloads
+
+        public static void Materialv(MaterialFace face, MaterialParameter pname, Vector4 @params)
+        {
+            Materialv(face, pname, ref @params.X);
+        }
+
+        public static void Materialv(MaterialFace face, MaterialParameter pname, Color4 @params)
+        {
+            unsafe { GL.Materialv(face, pname, (float*)&@params); }
+        }
+
+        #endregion
+
+        #region public static void Light() overloads
+
+        public static void Lightv(LightName name, LightParameter pname, Vector4 @params)
+        {
+            GL.Lightv(name, pname, ref @params.X);
+        }
+
+        public static void Lightv(LightName name, LightParameter pname, Color4 @params)
+        {
+            unsafe { GL.Lightv(name, pname, (float*)&@params); }
+        }
+
+        #endregion
+
         #region --- Overloads for OpenTK.Math ---
 
         public static void Normal3(Vector3 normal)
@@ -769,14 +797,6 @@ namespace OpenTK.Graphics
 				}
 			}
 		}
-
-        public static void Materialv(MaterialFace face, MaterialParameter pname, Vector4 @params)
-        {
-            unsafe
-            {
-                Materialv(face, pname, &@params.X);
-            }
-        }
 
         #endregion
 
