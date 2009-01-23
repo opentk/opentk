@@ -27,9 +27,10 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Math
 {
-    /// <summary>
-    /// Represents a four-dimensional vector.
-    /// </summary>
+    /// <summary>Represents a 4D vector using four single-precision floating-point numbers.</summary>
+    /// <remarks>
+    /// The Vector4 structure is suitable for interoperation with unmanaged code requiring four consecutive floats.
+    /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector4 : IEquatable<Vector4>
@@ -566,7 +567,7 @@ namespace OpenTK.Math
         #region Dot
 
         /// <summary>
-        /// Caclulate the dot product of two vectors
+        /// Calculate the dot product of two vectors
         /// </summary>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
@@ -575,6 +576,19 @@ namespace OpenTK.Math
         {
             return left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
         }
+
+        /// <summary>
+        /// Calculate the dot product of two vectors
+        /// </summary>
+        /// <param name="left">First operand</param>
+        /// <param name="right">Second operand</param>
+        /// <param name="result">The dot product of the two inputs</param>
+        public static void Dot( ref Vector4 left, ref Vector4 right, out float result )
+        {
+            result = left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
+        }
+
+        
 
         #endregion
 
@@ -585,7 +599,7 @@ namespace OpenTK.Math
         /// </summary>
         /// <param name="a">First input vector</param>
         /// <param name="b">Second input vector</param>
-        /// <param name="blend">The blend factor</param>
+        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise</returns>
         public static Vector4 Lerp(Vector4 a, Vector4 b, float blend)
         {
@@ -594,6 +608,21 @@ namespace OpenTK.Math
             a.Z = blend * (b.Z - a.Z) + a.Z;
             a.W = blend * (b.W - a.W) + a.W;
             return a;
+        }
+
+        /// <summary>
+        /// Returns a new Vector that is the linear blend of the 2 given Vectors
+        /// </summary>
+        /// <param name="a">First input vector</param>
+        /// <param name="b">Second input vector</param>
+        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
+        public static void Lerp( ref Vector4 a, ref Vector4 b, float blend, out Vector4 result )
+        {
+            result.X = blend * ( b.X - a.X ) + a.X;
+            result.Y = blend * ( b.Y - a.Y ) + a.Y;
+            result.Z = blend * ( b.Z - a.Z ) + a.Z;
+            result.W = blend * ( b.W - a.W ) + a.W;
         }
 
         #endregion
