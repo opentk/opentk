@@ -107,6 +107,59 @@ namespace OpenTK.Math
         #region Public Members
 
         #region Instance
+        
+        #region public void Add()
+
+        /// <summary>Add the Vector passed as parameter to this instance.</summary>
+        /// <param name="right">Right operand. This parameter is only read from.</param>
+        public void Add( ref Vector3 right )
+        {
+            this.X += right.X;
+            this.Y += right.Y;
+            this.Z += right.Z;
+        }
+
+        #endregion public void Add()
+
+        #region public void Sub()
+
+        /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
+        /// <param name="right">Right operand. This parameter is only read from.</param>
+        public void Sub( ref Vector3 right )
+        {
+            this.X -= right.X;
+            this.Y -= right.Y;
+            this.Z -= right.Z;
+        }
+
+        #endregion public void Sub()
+
+        #region public void Mult()
+
+        /// <summary>Multiply this instance by a scalar.</summary>
+        /// <param name="f">Scalar operand.</param>
+        public void Mult( float f )
+        {
+            this.X *= f;
+            this.Y *= f;
+            this.Z *= f;
+        }
+
+        #endregion public void Mult()
+
+        #region public void Div()
+
+        /// <summary>Divide this instance by a scalar.</summary>
+        /// <param name="f">Scalar operand.</param>
+        public void Div( float f )
+        {
+            float mult = 1.0f / f;
+            this.X *= mult;
+            this.Y *= mult;
+            this.Z *= mult;
+        }
+
+        #endregion public void Div()
 
         #region public float Length
 
@@ -198,7 +251,7 @@ namespace OpenTK.Math
 
         #endregion
 
-        #region public void Scale(float sx, float sy, float sz)
+        #region public void Scale()
 
         /// <summary>
         /// Scales the current Vector3 by the given amounts.
@@ -213,7 +266,16 @@ namespace OpenTK.Math
             this.Z = Z * sz;
         }
 
-        #endregion
+        /// <summary>Scales this instance by the given parameter.</summary>
+        /// <param name="scale">The scaling of the individual components.</param>
+        public void Scale( ref Vector3 scale )
+        {
+            this.X *= scale.X;
+            this.Y *= scale.Y;
+            this.Z *= scale.Z;
+        }
+
+        #endregion public void Scale()
 
         #endregion
 
