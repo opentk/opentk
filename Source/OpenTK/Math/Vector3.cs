@@ -27,9 +27,10 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Math
 {
-	/// <summary>
-	/// Represents a three-dimensional vector.
-	/// </summary>
+	/// <summary>Represents a 3D vector using three single-precision floating-point numbers.</summary>
+    /// <remarks>
+    /// The Vector3 structure is suitable for interoperation with unmanaged code requiring three consecutive floats.
+    /// </remarks>
     [Serializable]
 	[StructLayout(LayoutKind.Sequential)]
 	public struct Vector3 : IEquatable<Vector3>
@@ -563,7 +564,7 @@ namespace OpenTK.Math
         #region Dot
 
         /// <summary>
-        /// Caclulate the dot (scalar) product of two vectors
+        /// Calculate the dot (scalar) product of two vectors
         /// </summary>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
@@ -571,6 +572,17 @@ namespace OpenTK.Math
         public static float Dot(Vector3 left, Vector3 right)
         {
             return left.X * right.X + left.Y * right.Y + left.Z * right.Z;
+        }
+
+        /// <summary>
+        /// Calculate the dot (scalar) product of two vectors
+        /// </summary>
+        /// <param name="left">First operand</param>
+        /// <param name="right">Second operand</param>
+        /// <param name="result">The dot product of the two inputs</param>
+        public static void Dot( ref Vector3 left, ref Vector3 right, out float result )
+        {
+            result = left.X * right.X + left.Y * right.Y + left.Z * right.Z;
         }
 
         #endregion
@@ -585,14 +597,9 @@ namespace OpenTK.Math
         /// <returns>The cross product of the two inputs</returns>
         public static Vector3 Cross(Vector3 left, Vector3 right)
         {
-            float
-                x = left.Y * right.Z - left.Z * right.Y,
-                y = left.Z * right.X - left.X * right.Z,
-                z = left.X * right.Y - left.Y * right.X;
-            left.X = x;
-            left.Y = y;
-            left.Z = z;
-            return left;
+            return new Vector3(left.Y * right.Z - left.Z * right.Y,
+                               left.Z * right.X - left.X * right.Z,
+                               left.X * right.Y - left.Y * right.X);
         }
 
         /// <summary>
@@ -618,7 +625,7 @@ namespace OpenTK.Math
         /// </summary>
         /// <param name="a">First input vector</param>
         /// <param name="b">Second input vector</param>
-        /// <param name="blend">The blend factor</param>
+        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise</returns>
         public static Vector3 Lerp(Vector3 a, Vector3 b, float blend)
         {
@@ -626,6 +633,20 @@ namespace OpenTK.Math
             a.Y = blend * (b.Y - a.Y) + a.Y;
             a.Z = blend * (b.Z - a.Z) + a.Z;
             return a;
+        }
+
+        /// <summary>
+        /// Returns a new Vector that is the linear blend of the 2 given Vectors
+        /// </summary>
+        /// <param name="a">First input vector</param>
+        /// <param name="b">Second input vector</param>
+        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
+        public static void Lerp( ref Vector3 a, ref Vector3 b, float blend, out Vector3 result )
+        {
+            result.X = blend * ( b.X - a.X ) + a.X;
+            result.Y = blend * ( b.Y - a.Y ) + a.Y;
+            result.Z = blend * ( b.Z - a.Z ) + a.Z;
         }
 
         #endregion

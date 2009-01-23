@@ -27,9 +27,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Math
 {
-    /// <summary>
-    /// Represents a 2D vector.
-    /// </summary>
+    /// <summary>Represents a 2D vector using two single-precision floating-point numbers.</summary>
     /// <remarks>
     /// The Vector2 structure is suitable for interoperation with unmanaged code requiring two consecutive floats.
     /// </remarks>
@@ -562,7 +560,7 @@ namespace OpenTK.Math
         #region Dot
 
         /// <summary>
-        /// Caclulate the dot (scalar) product of two vectors
+        /// Calculate the dot (scalar) product of two vectors
         /// </summary>
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
@@ -570,6 +568,17 @@ namespace OpenTK.Math
         public static float Dot(Vector2 left, Vector2 right)
         {
             return left.X * right.X + left.Y * right.Y;
+        }
+
+        /// <summary>
+        /// Calculate the dot (scalar) product of two vectors
+        /// </summary>
+        /// <param name="left">First operand</param>
+        /// <param name="right">Second operand</param>
+        /// <param name="result">The dot product of the two inputs</param>
+        public static void Dot( ref Vector2 left, ref Vector2 right, out float result )
+        {
+            result = left.X * right.X + left.Y * right.Y;
         }
 
         #endregion
@@ -581,13 +590,26 @@ namespace OpenTK.Math
         /// </summary>
         /// <param name="a">First input vector</param>
         /// <param name="b">Second input vector</param>
-        /// <param name="blend">The blend factor</param>
+        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise</returns>
         public static Vector2 Lerp(Vector2 a, Vector2 b, float blend)
         {
             a.X = blend * (b.X - a.X) + a.X;
             a.Y = blend * (b.Y - a.Y) + a.Y;
             return a;
+        }
+
+        /// <summary>
+        /// Returns a new Vector that is the linear blend of the 2 given Vectors
+        /// </summary>
+        /// <param name="a">First input vector</param>
+        /// <param name="b">Second input vector</param>
+        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
+        public static void Lerp( ref Vector2 a, ref Vector2 b, float blend, out Vector2 result )
+        {
+            result.X = blend * ( b.X - a.X ) + a.X;
+            result.Y = blend * ( b.Y - a.Y ) + a.Y;
         }
 
         #endregion
