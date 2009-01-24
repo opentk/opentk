@@ -149,6 +149,17 @@ namespace OpenTK.Math
 
         /// <summary>Add the Vector passed as parameter to this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
+        public void Add( Vector4d right )
+        {
+            this.X += right.X;
+            this.Y += right.Y;
+            this.Z += right.Z;
+            this.W += right.W;
+        }
+
+        /// <summary>Add the Vector passed as parameter to this instance.</summary>
+        /// <param name="right">Right operand. This parameter is only read from.</param>
+        [CLSCompliant(false)]
         public void Add( ref Vector4d right )
         {
             this.X += right.X;
@@ -163,6 +174,17 @@ namespace OpenTK.Math
 
         /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
+        public void Sub( Vector4d right )
+        {
+            this.X -= right.X;
+            this.Y -= right.Y;
+            this.Z -= right.Z;
+            this.W -= right.W;
+        }
+
+        /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
+        /// <param name="right">Right operand. This parameter is only read from.</param>
+        [CLSCompliant(false)]
         public void Sub( ref Vector4d right )
         {
             this.X -= right.X;
@@ -313,6 +335,17 @@ namespace OpenTK.Math
 
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
+        public void Scale( Vector4d scale )
+        {
+            this.X *= scale.X;
+            this.Y *= scale.Y;
+            this.Z *= scale.Z;
+            this.W *= scale.W;
+        }
+
+        /// <summary>Scales this instance by the given parameter.</summary>
+        /// <param name="scale">The scaling of the individual components.</param>
+        [CLSCompliant(false)]
         public void Scale( ref Vector4d scale )
         {
             this.X *= scale.X;
@@ -703,6 +736,28 @@ namespace OpenTK.Math
         public static Vector4d BaryCentric(Vector4d a, Vector4d b, Vector4d c, double u, double v)
         {
             return a + u * (b - a) + v * (c - a);
+        }
+
+        /// <summary>Interpolate 3 Vectors using Barycentric coordinates</summary>
+        /// <param name="a">First input Vector.</param>
+        /// <param name="b">Second input Vector.</param>
+        /// <param name="c">Third input Vector.</param>
+        /// <param name="u">First Barycentric Coordinate.</param>
+        /// <param name="v">Second Barycentric Coordinate.</param>
+        /// <param name="result">Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</param>
+        public static void BaryCentric( ref Vector4d a, ref Vector4d b, ref Vector4d c, float u, float v, out Vector4d result )
+        {
+            result = a; // copy
+
+            Vector4d temp = b; // copy
+            temp.Sub( ref a );
+            temp.Mult( u );
+            result.Add( ref temp );
+
+            temp = c; // copy
+            temp.Sub( ref a );
+            temp.Mult( v );
+            result.Add( ref temp );
         }
 
         #endregion
