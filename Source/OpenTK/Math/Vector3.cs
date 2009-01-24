@@ -896,6 +896,18 @@ namespace OpenTK.Math
             return (float)System.Math.Acos((Vector3.Dot(first, second)) / (first.Length * second.Length));
         }
 
+        /// <summary>Calculates the angle (in radians) between two vectors.</summary>
+        /// <param name="first">The first vector.</param>
+        /// <param name="second">The second vector.</param>
+        /// <param name="result">Angle (in radians) between the vectors.</param>
+        /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
+        public static void CalculateAngle( ref Vector3 first, ref Vector3 second, out float result )
+        {
+            float temp;
+            Vector3.Dot( ref first, ref second, out temp );
+            result = (float)System.Math.Acos( temp / ( first.Length * second.Length ) );
+        }
+
         #endregion
 
         #endregion
