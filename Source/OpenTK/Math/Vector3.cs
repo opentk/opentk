@@ -785,8 +785,7 @@ namespace OpenTK.Math
 
         #region Transform
 
-        /// <summary>
-        /// Transform a direction vector by the given Matrix
+        /// <summary>Transform a direction vector by the given Matrix
         /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
         /// </summary>
         /// <param name="vec">The vector to transform</param>
@@ -801,9 +800,28 @@ namespace OpenTK.Math
             return v;
         }
 
-        /// <summary>
-        /// Transform a Normal by the given Matrix
+        /// <summary>Transform a direction vector by the given Matrix
+        /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
         /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void TransformVector( ref Vector3 vec, ref Matrix4 mat, out Vector3 result)
+        {
+            result.X = vec.X * mat.Row0.X +
+                       vec.Y * mat.Row1.X +
+                       vec.Z * mat.Row2.X;
+
+            result.Y = vec.X * mat.Row0.Y +
+                       vec.Y * mat.Row1.Y +
+                       vec.Z * mat.Row2.Y;
+
+            result.Z = vec.X * mat.Row0.Z +
+                       vec.Y * mat.Row1.Z +
+                       vec.Z * mat.Row2.Z;
+        }
+
+        /// <summary>Transform a Normal by the given Matrix</summary>
         /// <remarks>
         /// This calculates the inverse of the given matrix, use TransformNormalInverse if you
         /// already have the inverse to avoid this extra calculation
@@ -817,9 +835,21 @@ namespace OpenTK.Math
             return TransformNormalInverse(norm, mat);
         }
 
-        /// <summary>
-        /// Transform a Normal by the (transpose of the) given Matrix
-        /// </summary>
+        /// <summary>Transform a Normal by the given Matrix</summary>
+        /// <remarks>
+        /// This calculates the inverse of the given matrix, use TransformNormalInverse if you
+        /// already have the inverse to avoid this extra calculation
+        /// </remarks>
+        /// <param name="norm">The normal to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed normal</param>
+        public static void TransformNormal( ref Vector3 norm, ref Matrix4 mat, out Vector3 result)
+        {
+            Matrix4 Inverse = Matrix4.Invert( mat );
+            Vector3.TransformNormalInverse( ref norm, ref Inverse, out result );
+        }
+
+        /// <summary>Transform a Normal by the (transpose of the) given Matrix</summary>
         /// <remarks>
         /// This version doesn't calculate the inverse matrix.
         /// Use this version if you already have the inverse of the desired transform to hand
@@ -836,9 +866,30 @@ namespace OpenTK.Math
             return n;
         }
 
-        /// <summary>
-        /// Transform a Position by the given Matrix
-        /// </summary>
+        /// <summary>Transform a Normal by the (transpose of the) given Matrix</summary>
+        /// <remarks>
+        /// This version doesn't calculate the inverse matrix.
+        /// Use this version if you already have the inverse of the desired transform to hand
+        /// </remarks>
+        /// <param name="norm">The normal to transform</param>
+        /// <param name="mat">The inverse of the desired transformation</param>
+        /// <param name="result">The transformed normal</param>
+        public static void TransformNormalInverse( ref Vector3 norm, ref Matrix4 invMat, out Vector3 result )
+        {
+            result.X = norm.X * invMat.Row0.X +
+                       norm.Y * invMat.Row0.Y +
+                       norm.Z * invMat.Row0.Z;
+
+            result.Y = norm.X * invMat.Row1.X +
+                       norm.Y * invMat.Row1.Y +
+                       norm.Z * invMat.Row1.Z;
+
+            result.Z = norm.X * invMat.Row2.X +
+                       norm.Y * invMat.Row2.Y +
+                       norm.Z * invMat.Row2.Z;
+        }
+
+        /// <summary>Transform a Position by the given Matrix</summary>
         /// <param name="pos">The position to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns>The transformed position</returns>
@@ -851,9 +902,29 @@ namespace OpenTK.Math
             return p;
         }
 
-        /// <summary>
-        /// Transform a Vector by the given Matrix
-        /// </summary>
+        /// <summary>Transform a Position by the given Matrix</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed position</param>
+        public static void TransformPosition( ref Vector3 pos, ref Matrix4 mat, out Vector3 result )
+        {
+            result.X = pos.X * mat.Row0.X +
+                       pos.Y * mat.Row1.X +
+                       pos.Z * mat.Row2.X +
+                       mat.Row3.X;
+
+            result.Y = pos.X * mat.Row0.Y +
+                       pos.Y * mat.Row1.Y +
+                       pos.Z * mat.Row2.Y +
+                       mat.Row3.Y;
+
+            result.Z = pos.X * mat.Row0.Z +
+                       pos.Y * mat.Row1.Z +
+                       pos.Z * mat.Row2.Z +
+                       mat.Row3.Z;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix</summary>
         /// <param name="pos">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns>The transformed vector</returns>
@@ -868,9 +939,17 @@ namespace OpenTK.Math
             return result;
         }
 
-        /// <summary>
-        /// Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3
-        /// </summary>
+        /// <summary>Transform a Vector by the given Matrix</summary>
+        /// <param name="pos">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform( ref Vector3 vec, ref Matrix4 mat, out Vector4 result )
+        {
+            Vector4 v4 = new Vector4( vec.X, vec.Y, vec.Z, 1.0f );
+            Vector4.Transform( ref v4, ref mat, out result );
+        }
+
+        /// <summary>Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3</summary>
         /// <param name="pos">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns>The transformed vector</returns>
@@ -878,6 +957,19 @@ namespace OpenTK.Math
         {
             Vector4 h = Transform(vec, mat);
             return new Vector3(h.X / h.W, h.Y / h.W, h.Z / h.W);
+        }
+
+        /// <summary>Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3</summary>
+        /// <param name="pos">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void TransformPerspective( ref Vector3 vec, ref Matrix4 mat, out Vector3 result )
+        {
+            Vector4 h;
+            Vector3.Transform( ref vec, ref mat, out h );
+            result.X = h.X / h.W;
+            result.Y = h.Y / h.W;
+            result.Z = h.Z / h.W;
         }
 
         #endregion
