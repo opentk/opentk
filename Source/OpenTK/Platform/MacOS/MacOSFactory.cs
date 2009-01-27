@@ -27,7 +27,7 @@ namespace OpenTK.Platform.MacOS
 
         public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering)
         {
-            return new AglContext(mode, window, shareContext);
+            return new AglContext(mode, window, shareContext, false);
         }
 
         public IGraphicsMode CreateGraphicsMode()

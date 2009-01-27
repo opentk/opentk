@@ -632,9 +632,13 @@ namespace OpenTK.Platform.MacOS
                     case WindowState.Fullscreen:
                         ((AglContext)context.Implementation).SetFullScreen();
                         context.Update(WindowInfo);
+
                         break;
 
                     case WindowState.Maximized:
+                        // hack because mac os has no concept of maximized. Instead windows are "zoomed" 
+                        // meaning they are maximized up to their reported ideal size.  So we report a 
+                        // large ideal size.
                         idealSize = new Point(9000, 9000);
                         API.ZoomWindowIdeal(window.WindowRef, WindowPartCode.inZoomOut, ref idealSize);
                         break;

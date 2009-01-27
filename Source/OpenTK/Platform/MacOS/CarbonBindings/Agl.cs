@@ -281,6 +281,18 @@ namespace OpenTK.Platform.MacOS
 		 ** Pixel format functions
 		 */
         [DllImport(agl)] internal static extern AGLPixelFormat aglChoosePixelFormat(ref AGLDevice gdevs, int ndev, int []attribs);
+		/// <summary>
+		/// Use this overload only with IntPtr.Zero for the first argument.
+		/// </summary>
+		/// <param name="gdevs">
+		/// </param>
+		/// <param name="ndev">
+		/// </param>
+		/// <param name="attribs">
+		/// </param>
+		/// <returns>
+		/// </returns>
+        [DllImport(agl)] internal static extern AGLPixelFormat aglChoosePixelFormat(IntPtr gdevs, int ndev, int []attribs);
         [DllImport(agl)] internal static extern void aglDestroyPixelFormat(AGLPixelFormat pix);
         [DllImport(agl)] internal static extern AGLPixelFormat aglNextPixelFormat(AGLPixelFormat pix);
         [DllImport(agl)] static extern byte aglDescribePixelFormat(AGLPixelFormat pix, int attrib, out int value);

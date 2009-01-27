@@ -20,16 +20,6 @@ namespace OpenTK.Platform.MacOS
 
         static QuartzDisplayDeviceDriver()
         {
-            //lock (display_lock)
-            //{
-            //    List<DisplayResolution> resolutions = new List<DisplayResolution>();
-
-            //    DisplayResolution primaryRes = new DisplayResolution(1024, 768, 32, 60);
-            //    resolutions.Add(primaryRes);
-
-            //    object o = new Graphics.DisplayDevice(primaryRes, true, resolutions);
-            //}
-
             lock (display_lock)
             {
                 // To minimize the need to add static methods to OpenTK.Graphics.DisplayDevice
@@ -143,6 +133,8 @@ namespace OpenTK.Platform.MacOS
                     bpp == resolution.BitsPerPixel &&
                     freq == resolution.RefreshRate)
                 {
+                    CG.DisplayCapture(display);
+
                     CG.DisplaySwitchToMode(display, displayModes[j]);
 
                     return true;
@@ -158,7 +150,8 @@ namespace OpenTK.Platform.MacOS
 
             if (storedModes.ContainsKey(display))
             {
-                CG.DisplaySwitchToMode(display, storedModes[display]);
+                //CG.DisplaySwitchToMode(display, storedModes[display]);
+                CG.DisplayRelease(display);
                 return true;
             }
 
