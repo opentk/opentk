@@ -131,6 +131,19 @@ namespace OpenTK.Math
         }
 
         /// <summary>
+        /// Constructs a new Vector4 from the specified Vector3 and W component.
+        /// </summary>
+        /// <param name="v">The Vector3 to copy components from.</param>
+        /// <param name="w">The W component of the new Vector4.</param>
+        public Vector4(Vector3 v, float w)
+        {
+            X = v.X;
+            Y = v.Y;
+            Z = v.Z;
+            W = w;
+        }
+
+        /// <summary>
         /// Constructs a new Vector4 from the given Vector4.
         /// </summary>
         /// <param name="v">The Vector4 to copy components from.</param>
@@ -809,6 +822,14 @@ namespace OpenTK.Math
         }
 
         #endregion
+
+        #endregion
+
+        #region Swizzle
+
+        public Vector2 Xy { get { return new Vector2(X, Y); } set { X = value.X; Y = value.Y; } }
+
+        public Vector3 Xyz { get { return new Vector3(X, Y, Z); } set { X = value.X; Y = value.Y; Z = value.Z; } }
 
         #endregion
 
