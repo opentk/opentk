@@ -983,7 +983,7 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region [Vertex|Normal|Index|Color]Pointer
+        #region [Vertex|Normal|Index|Color|FogCoord|VertexAttrib]Pointer
 
         public static void VertexPointer(int size, VertexPointerType type, int stride, int pointer)
         {
@@ -1003,6 +1003,21 @@ namespace OpenTK.Graphics
         public static void ColorPointer(int size, ColorPointerType type, int stride, int pointer)
         {
             ColorPointer(size, type, stride, (IntPtr)pointer);
+        }
+
+        public static void FogCoordPointer(int size, FogPointerType type, int stride, int pointer)
+        {
+            FogCoordPointer(type, stride, (IntPtr)pointer);
+        }
+
+        public static void EdgeFlagPointer(int stride, int pointer)
+        {
+            EdgeFlagPointer(stride, (IntPtr)pointer);
+        }
+
+        public static void VertexAttribPointer(int index, int size, VertexAttribPointerType type, bool normalized, int stride, int pointer)
+        {
+            VertexAttribPointer(index, size, type, normalized, stride, (IntPtr)pointer);
         }
 
         #endregion
