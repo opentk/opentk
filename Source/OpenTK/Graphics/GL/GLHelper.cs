@@ -983,6 +983,30 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region [Vertex|Normal|Index|Color]Pointer
+
+        public static void VertexPointer(int size, VertexPointerType type, int stride, int pointer)
+        {
+            VertexPointer(size, type, stride, (IntPtr)pointer);
+        }
+
+        public static void NormalPointer(int size, NormalPointerType type, int stride, int pointer)
+        {
+            NormalPointer(type, stride, (IntPtr)pointer);
+        }
+
+        public static void IndexPointer(IndexPointerType type, int stride, int pointer)
+        {
+            IndexPointer(type, stride, (IntPtr)pointer);
+        }
+
+        public static void ColorPointer(int size, ColorPointerType type, int stride, int pointer)
+        {
+            ColorPointer(size, type, stride, (IntPtr)pointer);
+        }
+
+        #endregion
+
         #endregion
     }
 }
