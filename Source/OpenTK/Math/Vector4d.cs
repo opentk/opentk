@@ -104,10 +104,10 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// Constructs a new Vector4d from the given Vector2.
+        /// Constructs a new Vector4d from the given Vector2d.
         /// </summary>
-        /// <param name="v">The Vector2 to copy components from.</param>
-        public Vector4d(Vector2 v)
+        /// <param name="v">The Vector2d to copy components from.</param>
+        public Vector4d(Vector2d v)
         {
             X = v.X;
             Y = v.Y;
@@ -116,15 +116,28 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// Constructs a new Vector4d from the given Vector3.
+        /// Constructs a new Vector4d from the given Vector3d.
         /// </summary>
-        /// <param name="v">The Vector3 to copy components from.</param>
-        public Vector4d(Vector3 v)
+        /// <param name="v">The Vector3d to copy components from.</param>
+        public Vector4d(Vector3d v)
         {
             X = v.X;
             Y = v.Y;
             Z = v.Z;
             W = 0.0f;
+        }
+
+        /// <summary>
+        /// Constructs a new Vector4d from the specified Vector3d and W component.
+        /// </summary>
+        /// <param name="v">The Vector3d to copy components from.</param>
+        /// <param name="w">The W component of the new Vector4.</param>
+        public Vector4d(Vector3 v, double w)
+        {
+            X = v.X;
+            Y = v.Y;
+            Z = v.Z;
+            W = w;
         }
 
         /// <summary>
