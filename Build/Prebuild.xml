@@ -97,6 +97,7 @@
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
       <Reference name="System.Data"/>
+      <Reference name="System.Xml"/>
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
@@ -155,6 +156,7 @@
       <Reference name="System.Drawing"/>
       <Reference name="System.Windows.Forms"/>
       <Reference name="System.Data"/>
+      <Reference name="System.Xml"/>
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
