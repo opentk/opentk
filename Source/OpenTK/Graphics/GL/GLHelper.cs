@@ -754,50 +754,94 @@ namespace OpenTK.Graphics
             Delegates.glTranslatef(trans.X, trans.Y, trans.Z);
         }
 
-		public static void MultMatrix(ref Matrix4 mat)
-		{
-			unsafe
-			{
-				fixed (Single* m_ptr = &mat.Row0.X)
-				{
-					Delegates.glMultMatrixf((Single*)m_ptr);
-				}
-			}
-		}
+        public static void MultMatrix(ref Matrix4 mat)
+        {
+            unsafe
+            {
+                fixed (Single* m_ptr = &mat.Row0.X)
+                {
+                    Delegates.glMultMatrixf((Single*)m_ptr);
+                }
+            }
+        }
 
-		public static void LoadMatrix(ref Matrix4 mat)
-		{
-			unsafe
-			{
-				fixed (Single* m_ptr = &mat.Row0.X)
-				{
-					Delegates.glLoadMatrixf((Single*)m_ptr);
-				}
-			}
-		}
+        public static void LoadMatrix(ref Matrix4 mat)
+        {
+            unsafe
+            {
+                fixed (Single* m_ptr = &mat.Row0.X)
+                {
+                    Delegates.glLoadMatrixf((Single*)m_ptr);
+                }
+            }
+        }
 
-		public static void LoadTransposeMatrix(ref Matrix4 mat)
-		{
-			unsafe
-			{
-				fixed (Single* m_ptr = &mat.Row0.X)
-				{
-					Delegates.glLoadTransposeMatrixf((Single*)m_ptr);
-				}
-			}
-		}
+        public static void LoadTransposeMatrix(ref Matrix4 mat)
+        {
+            unsafe
+            {
+                fixed (Single* m_ptr = &mat.Row0.X)
+                {
+                    Delegates.glLoadTransposeMatrixf((Single*)m_ptr);
+                }
+            }
+        }
 
-		public static void MultTransposeMatrix(ref Matrix4 mat)
-		{
-			unsafe
-			{
-				fixed (Single* m_ptr = &mat.Row0.X)
-				{
-					Delegates.glMultTransposeMatrixf((Single*)m_ptr);
-				}
-			}
-		}
-
+        public static void MultTransposeMatrix(ref Matrix4 mat)
+        {
+            unsafe
+            {
+                fixed (Single* m_ptr = &mat.Row0.X)
+                {
+                    Delegates.glMultTransposeMatrixf((Single*)m_ptr);
+                }
+            }
+        }
+        
+         public static void MultMatrix(ref Matrix4d mat)
+         {
+             unsafe
+             {
+                 fixed (Double* m_ptr = &mat.Row0.X)
+                 {
+                     Delegates.glMultMatrixd((Double*)m_ptr);
+                 }
+             }
+         }
+ 
+         public static void LoadMatrix(ref Matrix4d mat)
+         {
+             unsafe
+             {
+                 fixed (Double* m_ptr = &mat.Row0.X)
+                 {
+                     Delegates.glLoadMatrixd((Double*)m_ptr);
+                 }
+             }
+         }
+ 
+         public static void LoadTransposeMatrix(ref Matrix4d mat)
+         {
+             unsafe
+             {
+                 fixed (Double* m_ptr = &mat.Row0.X)
+                 {
+                     Delegates.glLoadTransposeMatrixd((Double*)m_ptr);
+                 }
+             }
+         }
+ 
+         public static void MultTransposeMatrix(ref Matrix4d mat)
+         {
+             unsafe
+             {
+                 fixed (Double* m_ptr = &mat.Row0.X)
+                 {
+                     Delegates.glMultTransposeMatrixd((Double*)m_ptr);
+                 }
+             }
+         }
+ 
         #endregion
 
         #region public static void ShaderSource(Int32 shader, System.String @string)
