@@ -59,7 +59,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         {
             EventInfo evt = new EventInfo(inEvent);
             
-            Debug.Print("{0}", evt);
+            //Debug.Print("{0}", evt);
 
             if (evt.EventClass == EventClass.Application)
             {
