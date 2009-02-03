@@ -193,8 +193,17 @@ namespace OpenTK.Platform.MacOS
         }
 		void SetDrawable(CarbonWindowInfo carbonWindow)
 		{
-			IntPtr windowPort;
-			
+			IntPtr windowPort = GetWindowPortForWindowInfo(carbonWindow);
+
+            Agl.aglSetDrawable(contextRef, windowPort);
+
+            MyAGLReportError("aglSetDrawable");
+		
+		}
+
+        private static IntPtr GetWindowPortForWindowInfo(CarbonWindowInfo carbonWindow)
+        {
+            IntPtr windowPort;
             if (carbonWindow.IsControl)
             {
                 IntPtr controlOwner = API.GetControlOwner(carbonWindow.WindowRef);
@@ -203,21 +212,18 @@ namespace OpenTK.Platform.MacOS
             }
             else
                 windowPort = API.GetWindowPort(carbonWindow.WindowRef);
-
-            Agl.aglSetDrawable(contextRef, windowPort);
-
-            MyAGLReportError("aglSetDrawable");
-		
-		}
-        public void Update(IWindowInfo window)
+            return windowPort;
+        }
+        public void Update(IWindowInfo window)      
         {
             CarbonWindowInfo carbonWindow = (CarbonWindowInfo)window;
-			
+
+            SetDrawable(carbonWindow);
 			SetBufferRect(carbonWindow);
 			
             Agl.aglUpdateContext(contextRef);
-            
         }
+
         void MyAGLReportError(string function)
         {
             Agl.AglError err = Agl.GetError();
@@ -263,12 +269,12 @@ namespace OpenTK.Platform.MacOS
         	{
         		Debug.WriteLine("--> Resetting drawable. <--");
         		first = true;
-        		SetDrawable(carbonWindow);
-        		Update(carbonWindow);
-        	}
-        	
-            Agl.aglSwapBuffers(contextRef);
-            MyAGLReportError("aglSwapBuffers");
+        		SetDrawable(carbonWindow); 
+                Update(carbonWindow);    
+            }       
+
+            Agl.aglSwapBuffers(contextRef);  
+            MyAGLReportError("aglSwapBuffers");       
         }
 		
         public void MakeCurrent(IWindowInfo window)

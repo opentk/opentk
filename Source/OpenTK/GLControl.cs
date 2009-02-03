@@ -82,6 +82,13 @@ namespace OpenTK
 
             base.OnResize(e);
         }
+        protected override void OnParentChanged(EventArgs e)
+        {
+            if (context != null)
+                context.Update(window_info);
+            
+            base.OnParentChanged(e);
+        }
 
         #region --- Protected Methods ---
 
