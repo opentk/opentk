@@ -262,13 +262,16 @@ namespace OpenTK.Platform.MacOS
 
 
         #region IGraphicsContext Members
-		bool first = false;
+
+		bool firstSwap = false;
         public void SwapBuffers()
         {
-        	if (first == false && carbonWindow.IsControl)
+            // this is part of the hack to avoid dropping the first frame when
+            // using multiple GLControls.
+        	if (firstSwap == false && carbonWindow.IsControl)
         	{
         		Debug.WriteLine("--> Resetting drawable. <--");
-        		first = true;
+        		firstSwap = true;
         		SetDrawable(carbonWindow); 
                 Update(carbonWindow);    
             }       
