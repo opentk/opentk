@@ -29,6 +29,7 @@ namespace OpenTK.Platform.MacOS
         IntPtr uppHandler;
         string title = "OpenTK Window";
         short mWidth, mHeight;
+        short mWindowedWidth, mWindowedHeight;
         bool mIsDisposed = false;
 
         WindowAttributes mWindowAttrib;
@@ -262,8 +263,6 @@ namespace OpenTK.Platform.MacOS
             MacOSKeyCode code;
             char charCode;
 
-            //Debug.Print("                 {0}, '{1}'", (int)charCode, charCode);
-
             switch (evt.KeyboardEventKind)
             {
                 case KeyboardEventKind.RawKeyRepeat:
@@ -273,7 +272,6 @@ namespace OpenTK.Platform.MacOS
 
                 case KeyboardEventKind.RawKeyDown:
                     GetCharCodes(inEvent, out code, out charCode);
-                    Debug.Print("                 {0}, '{1}'", code, charCode);
                     InputDriver.Keyboard[0][Keymap[code]] = true;
                     return OSStatus.EventNotHandled;
 
@@ -329,7 +327,18 @@ namespace OpenTK.Platform.MacOS
             MouseButton button = MouseButton.Primary;
             HIPoint pt = new HIPoint();
 
-            pt = API.GetEventWindowMouseLocation(inEvent);
+            OSStatus err = API.GetEventWindowMouseLocation(inEvent, out pt);
+
+            if (err != OSStatus.NoError)
+            {
+                // this error comes up if there is a mouse move event
+                // while switching from fullscreen to windowed.  just 
+                // ignore it.
+                if (err != OSStatus.EventParameterNotFound)
+                {
+                    throw new MacOSException(err);
+                }
+            }
 
             // ignore clicks in the title bar
             if (pt.Y < mTitlebarHeight)
@@ -454,6 +463,9 @@ namespace OpenTK.Platform.MacOS
         }
         public void SetSize(int width, int height)
         {
+            if (WindowState == WindowState.Fullscreen)
+                return;
+
             mWidth = (short)width;
             mHeight = (short)height;
 
@@ -472,22 +484,26 @@ namespace OpenTK.Platform.MacOS
 
             contentBounds = API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
             Debug.Print("New content region size: {0}", contentBounds);
-
         }
 
         protected void OnResize()
         {
             LoadSize();
 
-            if (context != null)
+            if (context != null && this.windowState != WindowState.Fullscreen)
                 context.Update(window);
 
             if (Resize != null)
+            {
                 Resize(this, new ResizeEventArgs(Width, Height));
+            }
         }
 
         private void LoadSize()
         {
+            if (WindowState == WindowState.Fullscreen)
+                return;
+
             Rect region = GetRegion();
 
             mWidth = (short)(region.Width);
@@ -619,7 +635,7 @@ namespace OpenTK.Platform.MacOS
 
                 if (WindowState == WindowState.Fullscreen)
                 {
-                    ((AglContext)context.Implementation).UnsetFullScreen();
+                    ((AglContext)context.Implementation).UnsetFullScreen(window);
                 }
                 if (WindowState == WindowState.Minimized)
                 {
@@ -630,8 +646,17 @@ namespace OpenTK.Platform.MacOS
                 switch (value)
                 {
                     case WindowState.Fullscreen:
-                        ((AglContext)context.Implementation).SetFullScreen();
-                        context.Update(WindowInfo);
+                        ((AglContext)context.Implementation).SetFullScreen(window);
+
+                        mWindowedWidth = mWidth;
+                        mWindowedHeight = mHeight;
+
+                        Debug.Print("Prev Size: {0}, {1}", Width, Height);
+
+                        mWidth = (short) DisplayDevice.Default.Width;
+                        mHeight = (short) DisplayDevice.Default.Height;
+
+                        Debug.Print("New Size: {0}, {1}", Width, Height);
 
                         break;
 
@@ -657,10 +682,9 @@ namespace OpenTK.Platform.MacOS
                         break;
                 }
 
-                OnResize();
-
                 windowState = value;
 
+                OnResize();
             }
         }
 
