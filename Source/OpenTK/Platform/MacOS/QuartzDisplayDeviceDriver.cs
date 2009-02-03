@@ -150,7 +150,7 @@ namespace OpenTK.Platform.MacOS
 
             if (storedModes.ContainsKey(display))
             {
-                //CG.DisplaySwitchToMode(display, storedModes[display]);
+                CG.DisplaySwitchToMode(display, storedModes[display]);
                 CG.DisplayRelease(display);
                 return true;
             }

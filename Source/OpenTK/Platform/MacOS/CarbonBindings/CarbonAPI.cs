@@ -599,24 +599,24 @@ namespace OpenTK.Platform.MacOS.Carbon
 
             return (MouseButton)button;
         }
-        static internal HIPoint GetEventWindowMouseLocation(IntPtr inEvent)
+        static internal OSStatus GetEventWindowMouseLocation(IntPtr inEvent, out HIPoint pt)
         {
-            HIPoint pt;
+            HIPoint point;
 
             unsafe
             {
-                HIPoint* parm = &pt;
+                HIPoint* parm = &point;
 
                 OSStatus result = API.GetEventParameter(inEvent,
                         EventParamName.WindowMouseLocation, EventParamType.typeHIPoint, IntPtr.Zero,
                         (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(HIPoint)), IntPtr.Zero,
                         (IntPtr)parm);
 
-                if (result != OSStatus.NoError)
-                    throw new MacOSException(result);
+                pt = point;
+
+                return result;
             }
 
-            return pt;
         }
         static internal MacOSKeyModifiers GetEventKeyModifiers(IntPtr inEvent)
         {

@@ -26,7 +26,6 @@ namespace OpenTK.Platform.MacOS
 
     class AglContext : IGraphicsContext, IGraphicsContextInternal 
     {
-        IntPtr storedContextRef;
         IntPtr contextRef;
 
         bool mVSync = false;
@@ -99,7 +98,7 @@ namespace OpenTK.Platform.MacOS
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
             }
 
-			if (fullscreen)
+			//if (fullscreen)
 			{
             	AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
 			}
@@ -200,8 +199,6 @@ namespace OpenTK.Platform.MacOS
             {
                 IntPtr controlOwner = API.GetControlOwner(carbonWindow.WindowRef);
 
-                Debug.Print("GetControlOwner: {0}", controlOwner);
-
                 windowPort = API.GetWindowPort(controlOwner);
             }
             else
@@ -235,40 +232,26 @@ namespace OpenTK.Platform.MacOS
         {
             return Agl.aglGetCurrentContext();
         }
+        bool firstFullScreen = false;
 
-        internal void SetFullScreen()
+        internal void SetFullScreen(CarbonWindowInfo info)
         {
-            if (storedContextRef == IntPtr.Zero)
-            {
-                storedContextRef = contextRef;
-            }
-            else
-            {
-                Agl.aglDestroyContext(contextRef);
-            }
+            Agl.aglSetFullScreen(contextRef, 0, 0, 0, 0);
 
-            // TODO: this may be a problem if we are switching from one
-            // full screen mode to another.
-            try
+            // This is a weird hack to workaround a bug where the first time a context
+            // is made fullscreen, we just end up with a blank screen.  So we undo it as fullscreen
+            // and redo it as fullscreen.  
+            if (firstFullScreen == false)
             {
-                CreateContext(mode, carbonWindow, storedContextRef, true);
-                Agl.aglSetFullScreen(contextRef, 0, 0, 0, 0);
-            }
-            catch (MacOSException e)
-            {
-                contextRef = storedContextRef;
-                storedContextRef = IntPtr.Zero;
-
-                throw;
+                firstFullScreen = true;
+                UnsetFullScreen(info);
+                SetFullScreen(info);
             }
         }
-        internal void UnsetFullScreen()
+        internal void UnsetFullScreen(CarbonWindowInfo windowInfo)
         {
-            if (storedContextRef == IntPtr.Zero)
-                return;
-
-            Agl.aglDestroyContext(contextRef);
-            contextRef = storedContextRef;
+            Agl.aglSetDrawable(contextRef, IntPtr.Zero);
+            SetDrawable(windowInfo);
         }
 
 
