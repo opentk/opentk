@@ -104,7 +104,7 @@ namespace OpenTK.Platform.MacOS
         #region IDisplayDeviceDriver Members
 
         Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
-
+        List<IntPtr> displaysCaptured = new List<IntPtr>();
                     
         public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
@@ -131,9 +131,14 @@ namespace OpenTK.Platform.MacOS
                 if (width == resolution.Width &&
                     height == resolution.Height &&
                     bpp == resolution.BitsPerPixel &&
-                    freq == resolution.RefreshRate)
+                    System.Math.Abs(freq - resolution.RefreshRate) < 1e-6)
                 {
-                    CG.DisplayCapture(display);
+                    if (displaysCaptured.Contains(display) == false)
+                    {
+                        CG.DisplayCapture(display);
+                    }
+
+                    Debug.Print("Changing resolution to {0}x{1}x{2}@{3}.", width, height, bpp, freq);
 
                     CG.DisplaySwitchToMode(display, displayModes[j]);
 
@@ -150,8 +155,12 @@ namespace OpenTK.Platform.MacOS
 
             if (storedModes.ContainsKey(display))
             {
+                Debug.Print("Restoring resolution.");
+
                 CG.DisplaySwitchToMode(display, storedModes[display]);
                 CG.DisplayRelease(display);
+                displaysCaptured.Remove(display);
+
                 return true;
             }
 
