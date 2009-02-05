@@ -27,6 +27,7 @@ namespace OpenTK.Platform.MacOS
         static MacOSKeyMap Keymap = new MacOSKeyMap();
 
         IntPtr uppHandler;
+
         string title = "OpenTK Window";
         short mWidth, mHeight;
         short mWindowedWidth, mWindowedHeight;
@@ -142,24 +143,26 @@ namespace OpenTK.Platform.MacOS
                 new EventTypeSpec(EventClass.Window, WindowEventKind.WindowClosed),
                 new EventTypeSpec(EventClass.Window, WindowEventKind.WindowBoundsChanged),
 
-                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown),
-                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp),
-                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseMoved),
-                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDragged),
-                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseEntered),
-                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseExited),
-                new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelMoved),
+                //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown),
+                //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp),
+                //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseMoved),
+                //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDragged),
+                //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseEntered),
+                //new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseExited),
+                //new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelMoved),
 
-                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyDown),
-                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyRepeat),
-                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp),
-                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged),
+                //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyDown),
+                //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyRepeat),
+                //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp),
+                //new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged),
             };
 
             MacOSEventHandler handler = EventHandler;
             uppHandler = API.NewEventHandlerUPP(handler);
 
             API.InstallWindowEventHandler(window.WindowRef, uppHandler, eventTypes, window.WindowRef, IntPtr.Zero);
+
+            Application.WindowEventHandler = this;
         }
 
 
@@ -214,9 +217,28 @@ namespace OpenTK.Platform.MacOS
             set { mPositionMethod = value; }
         }
 
+        internal OSStatus DispatchEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
+        {
+            switch (evt.EventClass)
+            {
+                case EventClass.Window:
+                    return ProcessWindowEvent(inCaller, inEvent, evt, userData);
+
+                case EventClass.Mouse:
+                    return ProcessMouseEvent(inCaller, inEvent, evt, userData);
+
+                case EventClass.Keyboard:
+                    return ProcessKeyboardEvent(inCaller, inEvent, evt, userData);
+
+                default:
+                    return OSStatus.EventNotHandled;
+            }
+        }
+
         protected static OSStatus EventHandler(IntPtr inCaller, IntPtr inEvent, IntPtr userData)
         {
             // bail out if the window passed in is not actually our window.
+            // I think this happens if using winforms with a GameWindow sometimes.
             if (mWindows.ContainsKey(userData) == false)
                 return OSStatus.EventNotHandled;
 
@@ -312,7 +334,14 @@ namespace OpenTK.Platform.MacOS
                     return OSStatus.NoError;
 
                 case WindowEventKind.WindowBoundsChanged:
-                    OnResize();
+                    int thisWidth = Width;
+                    int thisHeight = Height;
+
+                    LoadSize();
+
+                    if (thisWidth != Width || thisHeight != Height)
+                        OnResize();
+
                     return OSStatus.EventNotHandled;
 
                 default:
@@ -327,27 +356,45 @@ namespace OpenTK.Platform.MacOS
             MouseButton button = MouseButton.Primary;
             HIPoint pt = new HIPoint();
 
-            OSStatus err = API.GetEventWindowMouseLocation(inEvent, out pt);
+            OSStatus err ;
+
+            if (this.windowState == WindowState.Fullscreen)
+            {
+                err = API.GetEventMouseLocation(inEvent, out pt);
+            }
+            else
+            {
+                err = API.GetEventWindowMouseLocation(inEvent, out pt);
+            }
 
             if (err != OSStatus.NoError)
             {
-                // this error comes up if there is a mouse move event
-                // while switching from fullscreen to windowed.  just 
-                // ignore it.
+                // this error comes up from the application event handler.
                 if (err != OSStatus.EventParameterNotFound)
                 {
                     throw new MacOSException(err);
                 }
             }
 
-            // ignore clicks in the title bar
-            if (pt.Y < mTitlebarHeight)
-                return OSStatus.EventNotHandled;
 
-            InputDriver.Mouse[0].Position =
-                new System.Drawing.Point(
-                    (int)pt.X,
-                    (int)(pt.Y - mTitlebarHeight));
+            if (this.windowState == WindowState.Fullscreen)
+            {
+                InputDriver.Mouse[0].Position =
+                    new System.Drawing.Point(
+                        (int)pt.X,
+                        (int)pt.Y);
+            }
+            else
+            {
+                // ignore clicks in the title bar
+                if (pt.Y < mTitlebarHeight)
+                    return OSStatus.EventNotHandled;
+
+                InputDriver.Mouse[0].Position =
+                    new System.Drawing.Point(
+                        (int)pt.X,
+                        (int)(pt.Y - mTitlebarHeight));
+            }
 
             switch (evt.MouseEventKind)
             {
@@ -635,7 +682,7 @@ namespace OpenTK.Platform.MacOS
 
                 if (WindowState == WindowState.Fullscreen)
                 {
-                    ((AglContext)context.Implementation).UnsetFullScreen(window);
+                    UnsetFullscreen();
                 }
                 if (WindowState == WindowState.Minimized)
                 {
@@ -646,17 +693,7 @@ namespace OpenTK.Platform.MacOS
                 switch (value)
                 {
                     case WindowState.Fullscreen:
-                        ((AglContext)context.Implementation).SetFullScreen(window);
-
-                        mWindowedWidth = mWidth;
-                        mWindowedHeight = mHeight;
-
-                        Debug.Print("Prev Size: {0}, {1}", Width, Height);
-
-                        mWidth = (short) DisplayDevice.Default.Width;
-                        mHeight = (short) DisplayDevice.Default.Height;
-
-                        Debug.Print("New Size: {0}, {1}", Width, Height);
+                        SetFullscreen();
 
                         break;
 
@@ -688,6 +725,28 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
+
+        private void SetFullscreen()
+        {
+            ((AglContext)context.Implementation).SetFullScreen(window);
+
+            mWindowedWidth = mWidth;
+            mWindowedHeight = mHeight;
+
+            Debug.Print("Prev Size: {0}, {1}", Width, Height);
+
+            mWidth = (short)DisplayDevice.Default.Width;
+            mHeight = (short)DisplayDevice.Default.Height;
+
+            Debug.Print("New Size: {0}, {1}", Width, Height);
+
+        }
+        private void UnsetFullscreen()
+        {
+            ((AglContext)context.Implementation).UnsetFullScreen(window);
+            SetSize(mWindowedWidth, mWindowedHeight);
+        }
+
         public WindowBorder WindowBorder
         {
             get
@@ -712,5 +771,6 @@ namespace OpenTK.Platform.MacOS
         }
 
         #endregion
+
     }
 }

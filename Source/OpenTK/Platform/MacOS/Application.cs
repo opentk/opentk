@@ -15,11 +15,11 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS.Carbon
 {
-	
 	static class Application
 	{
         static bool mInitialized = false;
         static IntPtr uppHandler;
+        static CarbonGLNative eventHandler;
 
         static Application()
         {
@@ -35,6 +35,12 @@ namespace OpenTK.Platform.MacOS.Carbon
             ConnectEvents();    
         }
 
+        internal static CarbonGLNative WindowEventHandler
+        {
+            get { return eventHandler; }
+            set { eventHandler = value; }
+        }
+
         static void ConnectEvents()
         {
             EventTypeSpec[] eventTypes = new EventTypeSpec[]
@@ -42,6 +48,19 @@ namespace OpenTK.Platform.MacOS.Carbon
                 new EventTypeSpec(EventClass.Application, AppEventKind.AppActivated),
                 new EventTypeSpec(EventClass.Application, AppEventKind.AppDeactivated),
                 new EventTypeSpec(EventClass.Application, AppEventKind.AppQuit),
+
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDown),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseUp),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseMoved),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseDragged),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseEntered),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.MouseExited),
+                new EventTypeSpec(EventClass.Mouse, MouseEventKind.WheelMoved),
+                
+                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyDown),
+                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyRepeat),
+                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyUp),
+                new EventTypeSpec(EventClass.Keyboard, KeyboardEventKind.RawKeyModifiersChanged),
 
                 new EventTypeSpec(EventClass.AppleEvent, AppleEventKind.AppleEvent),
             };
@@ -59,21 +78,28 @@ namespace OpenTK.Platform.MacOS.Carbon
         {
             EventInfo evt = new EventInfo(inEvent);
             
-            //Debug.Print("{0}", evt);
+            switch (evt.EventClass)
+            {
+                case EventClass.Application:
+                    switch (evt.AppEventKind)
+                    {
+                        default:
+                            return OSStatus.EventNotHandled;
+                    }
 
-            if (evt.EventClass == EventClass.Application)
-            {
-                switch (evt.AppEventKind)
-                {
-                    default:
-                        return OSStatus.EventNotHandled;
-                }
-            }
-            else if (evt.EventClass == EventClass.AppleEvent)
-            {
-                // only event here is the apple event.
-                Debug.Print("Processing apple event.");
-                API.ProcessAppleEvent(inEvent);
+                case EventClass.AppleEvent:
+                    // only event here is the apple event.
+                    Debug.Print("Processing apple event.");
+                    API.ProcessAppleEvent(inEvent);
+                    break;
+
+                case EventClass.Keyboard:
+                case EventClass.Mouse:
+                    if (WindowEventHandler != null)
+                    {
+                        return WindowEventHandler.DispatchEvent(inCaller, inEvent, evt, userData);
+                    }
+                    break;
             }
 
             return OSStatus.EventNotHandled;
