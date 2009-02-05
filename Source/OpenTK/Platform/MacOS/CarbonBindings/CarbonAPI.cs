@@ -618,6 +618,25 @@ namespace OpenTK.Platform.MacOS.Carbon
             }
 
         }
+        static internal OSStatus GetEventMouseLocation(IntPtr inEvent, out HIPoint pt)
+        {
+            HIPoint point;
+
+            unsafe
+            {
+                HIPoint* parm = &point;
+
+                OSStatus result = API.GetEventParameter(inEvent,
+                        EventParamName.MouseLocation, EventParamType.typeHIPoint, IntPtr.Zero,
+                        (uint)System.Runtime.InteropServices.Marshal.SizeOf(typeof(HIPoint)), IntPtr.Zero,
+                        (IntPtr)parm);
+
+                pt = point;
+
+                return result;
+            }
+
+        }
         static internal MacOSKeyModifiers GetEventKeyModifiers(IntPtr inEvent)
         {
             uint code;
@@ -676,6 +695,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static void InstallApplicationEventHandler(IntPtr uppHandlerProc, 
                 EventTypeSpec[] eventTypes, IntPtr userData, IntPtr handlerRef)
         {
+
             OSStatus error = _InstallEventHandler(GetApplicationEventTarget(), uppHandlerProc, 
                                     eventTypes.Length, eventTypes,
                                     userData, handlerRef);
