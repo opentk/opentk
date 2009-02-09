@@ -27,7 +27,7 @@ namespace OpenTK.Platform.X11
     using Mask = System.IntPtr;
     using Atom = System.IntPtr;
     using VisualID = System.IntPtr;
-    using Time = System.UInt32;
+    using Time = System.IntPtr;
     using KeyCode = System.Byte;    // Or maybe ushort?
 
     using Display = System.IntPtr;

@@ -29,7 +29,7 @@ namespace OpenTK.Platform.X11
         // Store a mapping between DisplayDevices and X11 screens.
         static Dictionary<DisplayDevice, int> deviceToScreen = new Dictionary<DisplayDevice, int>();
         // Keep the time when the config of each screen was last updated.
-        static List<uint> lastConfigUpdate = new List<uint>();
+        static List<IntPtr> lastConfigUpdate = new List<IntPtr>();
         
         #region --- Constructors ---
 
@@ -40,7 +40,7 @@ namespace OpenTK.Platform.X11
             // TODO: Global X11 lock.
             for (int screen = 0; screen < API.ScreenCount; screen++)
             {
-                uint timestamp_of_last_update;
+                IntPtr timestamp_of_last_update;
                 Functions.XRRTimes(API.DefaultDisplay, screen, out timestamp_of_last_update);
                 lastConfigUpdate.Add(timestamp_of_last_update);
 

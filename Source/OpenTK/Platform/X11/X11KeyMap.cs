@@ -126,7 +126,7 @@ namespace OpenTK.Platform.X11
                 this.Add(XKey.KP_Up, Key.Keypad8);
                 this.Add(XKey.KP_Page_Up, Key.Keypad9);
                 this.Add(XKey.KP_Delete, Key.KeypadDecimal);
-                this.Add(XKey.KP_Enter, Key.Enter);
+                this.Add(XKey.KP_Enter, Key.KeypadEnter);
 
             }
             catch (ArgumentException e)
