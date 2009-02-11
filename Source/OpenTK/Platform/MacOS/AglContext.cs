@@ -40,7 +40,7 @@ namespace OpenTK.Platform.MacOS
             if (GraphicsContext.GetCurrentContext == null)
                 GraphicsContext.GetCurrentContext = AglContext.GetCurrentContext;
         }
-        public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool fullscreen)
+        public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext)
         {
             Debug.Print("Context Type: {0}", shareContext);
             Debug.Print("Window info: {0}", window);
@@ -48,11 +48,10 @@ namespace OpenTK.Platform.MacOS
         	this.mode = mode;
         	this.carbonWindow = (CarbonWindowInfo)window;
 
-            
             if (shareContext is AglContext)
                 shareContextRef = ((AglContext)shareContext).contextRef;
             
-        	CreateContext(mode, carbonWindow, shareContextRef, fullscreen);
+        	CreateContext(mode, carbonWindow, shareContextRef, true);
         }
 
 
@@ -98,7 +97,7 @@ namespace OpenTK.Platform.MacOS
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
             }
 
-			//if (fullscreen)
+			if (fullscreen)
 			{
             	AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
 			}
@@ -127,16 +126,28 @@ namespace OpenTK.Platform.MacOS
 				myAGLPixelFormat = Agl.aglChoosePixelFormat(
 	                ref gdevice, 1,
 	                aglAttributes.ToArray());
+
+                Agl.AglError err = Agl.GetError();
+
+                if (err == Agl.AglError.BadPixelFormat)
+                {
+                    Debug.Print("Failed to create full screen pixel format.");
+                    Debug.Print("Trying again to create a non-fullscreen pixel format.");
+
+                    CreateContext(mode, carbonWindow, shareContextRef, false);
+                    return;
+                }
 			}
 			else
 			{
 				myAGLPixelFormat = Agl.aglChoosePixelFormat(
 	                IntPtr.Zero, 0, 
 	                aglAttributes.ToArray());
+
+                MyAGLReportError("aglChoosePixelFormat");
 			}
 			
-            MyAGLReportError("aglChoosePixelFormat");
-
+            
             // create the context and share it with the share reference.
             this.contextRef = Agl.aglCreateContext(myAGLPixelFormat, shareContextRef);
             MyAGLReportError("aglCreateContext");
