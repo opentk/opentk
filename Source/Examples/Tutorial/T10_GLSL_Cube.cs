@@ -68,7 +68,7 @@ namespace Examples.Tutorial
                 this.Exit();
             }
 
-            GL.ClearColor(Color.SteelBlue);
+            GL.ClearColor(Color.MidnightBlue);
             GL.Enable(EnableCap.DepthTest);
 
             CreateVBO();
