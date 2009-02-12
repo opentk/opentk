@@ -41,11 +41,15 @@ namespace OpenTK.Graphics
         #region Constructors
 
         /// <summary>
-        /// Constructs a new TextPrinter object.
+        /// Constructs a new TextPrinter instance.
         /// </summary>
         public TextPrinter()
             : this(null, null, TextQuality.Default) { }
 
+        /// <summary>
+        /// Constructs a new TextPrinter instance with the specified TextQuality level.
+        /// </summary>
+        /// <param name="quality">The desired TextQuality of this TextPrinter.</param>
         public TextPrinter(TextQuality quality)
             : this(null, null, quality) { }
 
@@ -62,26 +66,66 @@ namespace OpenTK.Graphics
 
         #region Print
 
+        /// <summary>
+        /// Prints text using the specified color and layout options.
+        /// </summary>
+        /// <param name="text">The System.String to print.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to print text.</param>
+        /// <param name="color">The System.Drawing.Color that will be used to print text.</param>
         public void Print(string text, Font font, Color color)
         {
             Print(text, font, color, RectangleF.Empty, TextPrinterOptions.Default, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
+        /// <summary>
+        /// Prints text using the specified color and layout options.
+        /// </summary>
+        /// <param name="text">The System.String to print.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to print text.</param>
+        /// <param name="color">The System.Drawing.Color that will be used to print text.</param>
+        /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
         public void Print(string text, Font font, Color color, RectangleF rect)
         {
             Print(text, font, color, rect, TextPrinterOptions.Default, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
+        /// <summary>
+        /// Prints text using the specified color and layout options.
+        /// </summary>
+        /// <param name="text">The System.String to print.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to print text.</param>
+        /// <param name="color">The System.Drawing.Color that will be used to print text.</param>
+        /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
+        /// <param name="options">The OpenTK.Graphics.TextPrinterOptions that will be used to print text.</param>
         public void Print(string text, Font font, Color color, RectangleF rect, TextPrinterOptions options)
         {
             Print(text, font, color, rect, options, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
+        /// <summary>
+        /// Prints text using the specified color and layout options.
+        /// </summary>
+        /// <param name="text">The System.String to print.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to print text.</param>
+        /// <param name="color">The System.Drawing.Color that will be used to print text.</param>
+        /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
+        /// <param name="options">The OpenTK.Graphics.TextPrinterOptions that will be used to print text.</param>
+        /// <param name="alignment">The OpenTK.Graphics.TextAlignment that will be used to print text.</param>
         public void Print(string text, Font font, Color color, RectangleF rect, TextPrinterOptions options, TextAlignment alignment)
         {
             Print(text, font, color, rect, options, alignment, TextDirection.LeftToRight);
         }
 
+        /// <summary>
+        /// Prints text using the specified color and layout options.
+        /// </summary>
+        /// <param name="text">The System.String to print.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to print text.</param>
+        /// <param name="color">The System.Drawing.Color that will be used to print text.</param>
+        /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
+        /// <param name="options">The OpenTK.Graphics.TextPrinterOptions that will be used to print text.</param>
+        /// <param name="alignment">The OpenTK.Graphics.TextAlignment that will be used to print text.</param>
+        /// <param name="direction">The OpenTK.Graphics.TextDirection that will be used to print text.</param>
         public void Print(string text, Font font, Color color, RectangleF rect, TextPrinterOptions options, TextAlignment alignment, TextDirection direction)
         {
             if (disposed)
@@ -97,27 +141,66 @@ namespace OpenTK.Graphics
 
         #region Measure
 
+        /// <summary>
+        /// Measures text using the specified layout options.
+        /// </summary>
+        /// <param name="text">The System.String to measure.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to measure text.</param>
+        /// <returns>An OpenTK.Graphics.TextExtents instance that contains the results of the measurement.</returns>
         public TextExtents Measure(string text, Font font)
         {
             return Measure(text, font, RectangleF.Empty, TextPrinterOptions.Default, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
+        /// <summary>
+        /// Measures text using the specified layout options.
+        /// </summary>
+        /// <param name="text">The System.String to measure.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to measure text.</param>
+        /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
+        /// <returns>An OpenTK.Graphics.TextExtents instance that contains the results of the measurement.</returns>
         public TextExtents Measure(string text, Font font, RectangleF rect)
         {
             return Measure(text, font, rect, TextPrinterOptions.Default, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
+        /// <summary>
+        /// Measures text using the specified layout options.
+        /// </summary>
+        /// <param name="text">The System.String to measure.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to measure text.</param>
+        /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
+        /// <param name="options">The OpenTK.Graphics.TextPrinterOptions that will be used to measure text.</param>
+        /// <returns>An OpenTK.Graphics.TextExtents instance that contains the results of the measurement.</returns>
         public TextExtents Measure(string text, Font font, RectangleF rect, TextPrinterOptions options)
         {
             return Measure(text, font, rect, options, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
-
+        /// <summary>
+        /// Measures text using the specified layout options.
+        /// </summary>
+        /// <param name="text">The System.String to measure.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to measure text.</param>
+        /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
+        /// <param name="options">The OpenTK.Graphics.TextPrinterOptions that will be used to measure text.</param>
+        /// <param name="alignment">The OpenTK.Graphics.TextAlignment that will be used to measure text.</param>
+        /// <returns>An OpenTK.Graphics.TextExtents instance that contains the results of the measurement.</returns>
         public TextExtents Measure(string text, Font font, RectangleF rect, TextPrinterOptions options, TextAlignment alignment)
         {
             return Measure(text, font, rect, options, alignment, TextDirection.LeftToRight);
         }
 
+        /// <summary>
+        /// Measures text using the specified layout options.
+        /// </summary>
+        /// <param name="text">The System.String to measure.</param>
+        /// <param name="font">The System.Drawing.Font that will be used to measure text.</param>
+        /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
+        /// <param name="options">The OpenTK.Graphics.TextPrinterOptions that will be used to measure text.</param>
+        /// <param name="alignment">The OpenTK.Graphics.TextAlignment that will be used to measure text.</param>
+        /// <param name="direction">The OpenTK.Graphics.TextDirection that will be used to measure text.</param>
+        /// <returns>An OpenTK.Graphics.TextExtents instance that contains the results of the measurement.</returns>
         public TextExtents Measure(string text, Font font, RectangleF rect, TextPrinterOptions options, TextAlignment alignment, TextDirection direction)
         {
             if (disposed)
@@ -260,6 +343,9 @@ namespace OpenTK.Graphics
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Frees the resources consumed by this TextPrinter object.
+        /// </summary>
         public void Dispose()
         {
             if (!disposed)
