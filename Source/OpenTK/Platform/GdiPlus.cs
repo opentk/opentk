@@ -26,10 +26,10 @@ namespace OpenTK.Platform
 
         static GdiPlus()
         {
-            if (Configuration.RunningOnWindows)
+            if (Configuration.RunningOnWindows && !Configuration.RunningOnMono)
                 internals = new Windows.WinGdiPlusInternals();
            else
-                internals = new X11.X11GdiPlusInternals();
+                internals = new X11.X11GdiPlusInternals(); // This class is Mono-specific and works on all platforms.
         }
 
         #endregion
