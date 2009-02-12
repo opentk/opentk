@@ -659,6 +659,15 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region public static void BlendColor() overloads
+
+        public static void BlendColor(System.Drawing.Color color)
+        {
+            GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
+        }
+
+        #endregion
+
         #region --- Overloads for OpenTK.Math ---
 
         public static void Normal3(Vector3 normal)
