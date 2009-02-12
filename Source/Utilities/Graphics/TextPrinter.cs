@@ -34,6 +34,8 @@ namespace OpenTK.Graphics
         ITextOutputProvider text_output;
         TextQuality text_quality;
 
+        bool disposed;
+
         #endregion
 
         #region Constructors
@@ -58,32 +60,6 @@ namespace OpenTK.Graphics
 
         #region ITextPrinter Members
 
-        #region public void Begin()
-
-        /// <summary>
-        /// Sets up OpenGL state for drawing text.
-        /// </summary>
-        [Obsolete]
-        public void Begin()
-        {
-            TextOutput.Begin();
-        }
-
-        #endregion
-
-        #region public void End()
-
-        /// <summary>
-        /// Restores OpenGL state.
-        /// </summary>
-        [Obsolete]
-        public void End()
-        {
-            TextOutput.End();
-        }
-
-        #endregion
-
         #region Print
 
         public void Print(string text, Font font, Color color)
@@ -98,10 +74,13 @@ namespace OpenTK.Graphics
 
         public void Print(string text, Font font, Color color, SizeF size, TextPrinterOptions options)
         {
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().ToString());
+
             if (!ValidateParameters(text, font, size))
                 return;
 
-            text_output.Print(new TextBlock(text, font, options, size), color, Rasterizer);
+            TextOutput.Print(new TextBlock(text, font, options, size), color, Rasterizer);
         }
 
         #endregion
@@ -120,6 +99,9 @@ namespace OpenTK.Graphics
 
         public TextExtents Measure(string text, Font font, SizeF size, TextPrinterOptions options)
         {
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().ToString());
+
             if (!ValidateParameters(text, font, size))
                 return TextExtents.Empty;
 
@@ -132,13 +114,63 @@ namespace OpenTK.Graphics
 
         public void Clear()
         {
-            //glyph_cache.Clear();
-            throw new NotImplementedException();
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().ToString());
+
+            TextOutput.Clear();
+            Rasterizer.Clear();
         }
 
         #endregion
 
         #region Obsolete
+
+        /// <summary>
+        /// Sets up OpenGL state for drawing text.
+        /// </summary>
+        [Obsolete]
+        public void Begin()
+        {
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().ToString());
+
+            GraphicsContext.Assert();
+
+            float[] viewport = new float[4];
+
+            GL.GetFloat(GetPName.Viewport, viewport);
+
+            // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
+            // with size equal to the window (in pixels). 
+            // While we could also render text in 3D mode, it would be very hard to get
+            // pixel-perfect precision.
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PushMatrix();
+            GL.LoadIdentity();
+            GL.Ortho(viewport[0], viewport[2], viewport[3], viewport[1], -1.0, 1.0);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PushMatrix();
+            GL.LoadIdentity();
+        }
+
+        /// <summary>
+        /// Restores OpenGL state.
+        /// </summary>
+        [Obsolete]
+        public void End()
+        {
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().ToString());
+
+            GraphicsContext.Assert();
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PopMatrix();
+
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PopMatrix();
+        }
 
         [Obsolete("Use TextPrinter.Print instead")]
         public void Draw(TextHandle handle)
@@ -201,6 +233,19 @@ namespace OpenTK.Graphics
                 throw new ArgumentOutOfRangeException("size");
 
             return true;
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            if (!disposed)
+            {
+                TextOutput.Dispose();
+                disposed = true;
+            }
         }
 
         #endregion

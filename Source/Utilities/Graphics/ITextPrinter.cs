@@ -15,7 +15,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Defines the interface for a TextPrinter.
     /// </summary>
-    public interface ITextPrinter
+    public interface ITextPrinter : IDisposable
     {
         void Begin();
         void End();

@@ -41,10 +41,14 @@ namespace OpenTK.Graphics.Text
 
         public abstract CachedGlyphInfo this[Glyph glyph] { get; }
 
+        public abstract void Clear();
+
+        public abstract void Dispose();
+
         #endregion
     }
 
-    class GlyphCache<T> : GlyphCache where T : Texture2D
+    sealed class GlyphCache<T> : GlyphCache where T : Texture2D
     {
         #region Fields
 
@@ -52,6 +56,8 @@ namespace OpenTK.Graphics.Text
         Bitmap bmp = new Bitmap(32, 32);
 
         Dictionary<Glyph, CachedGlyphInfo> cached_glyphs = new Dictionary<Glyph, CachedGlyphInfo>();
+
+        bool disposed;
 
         const int SheetWidth = 512, SheetHeight = 512;
 
@@ -106,6 +112,13 @@ namespace OpenTK.Graphics.Text
                 return cached_glyphs[glyph];
             }
         }
+        public override void Clear()
+        {
+            for (int i = 0; i < sheets.Count; i++)
+                sheets[i].Dispose();
+
+            sheets.Clear();
+        }
 
         #endregion
 
@@ -122,6 +135,19 @@ namespace OpenTK.Graphics.Text
             cached_glyphs.Add(glyph, new CachedGlyphInfo(sheet.Texture, target));
 
             return true;
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public override void Dispose()
+        {
+             if (!disposed)
+            {
+                Clear();
+                disposed = true;
+             }
         }
 
         #endregion

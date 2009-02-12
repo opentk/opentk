@@ -39,8 +39,8 @@ namespace OpenTK.Graphics.Text
         // Triangle lists, sorted by texture.
         Dictionary<Texture2D, List<Vector2>> active_lists = new Dictionary<Texture2D, List<Vector2>>();
         Queue<List<Vector2>> inactive_lists = new Queue<List<Vector2>>();
-        float[] viewport = new float[4];
-        bool legacy_mode = false;
+
+        bool disposed;
 
         #endregion
 
@@ -118,10 +118,12 @@ namespace OpenTK.Graphics.Text
                 
                 key.Bind();
 
-                if (!legacy_mode)
-                {
-                    GL.Scale(2.0 / (viewport[2] - viewport[0]), -2.0 / (viewport[3] - viewport[1]), 1);
-                }
+                //if (!legacy_mode)
+                //{
+                //    GL.PushMatrix();
+                //    GL.GetFloat(GetPName.Viewport, viewport);
+                //    GL.Scale(2.0 / (viewport[2] - viewport[0]), -2.0 / (viewport[3] - viewport[1]), 1);
+                //}
 
                 SetColor(color);
 
@@ -134,6 +136,9 @@ namespace OpenTK.Graphics.Text
                 }
 
                 GL.End();
+
+                //if (!legacy_mode)
+                //    GL.PopMatrix();
             }
 
             // Clean layout
@@ -150,47 +155,11 @@ namespace OpenTK.Graphics.Text
 
         #endregion
 
-        #region Begin
+        #region Clear
 
-        [Obsolete]
-        public void Begin()
+        public void Clear()
         {
-            GraphicsContext.Assert();
-
-            legacy_mode = true;
-
-            GL.GetFloat(GetPName.Viewport, viewport);
-
-            // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
-            // with size equal to the window (in pixels). 
-            // While we could also render text in 3D mode, it would be very hard to get
-            // pixel-perfect precision.
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PushMatrix();
-            GL.LoadIdentity();
-            GL.Ortho(viewport[0], viewport[2], viewport[3], viewport[1], -1.0, 1.0);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PushMatrix();
-            GL.LoadIdentity();
-        }
-
-        #endregion
-
-        #region End
-
-        [Obsolete]
-        public void End()
-        {
-            GraphicsContext.Assert();
-
-            legacy_mode = false;
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PopMatrix();
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PopMatrix();
+            Cache.Clear();
         }
 
         #endregion
@@ -217,6 +186,19 @@ namespace OpenTK.Graphics.Text
                 return new GL11TextOutputProvider(quality);
             else
                 return new GL12TextOutputProvider(quality);
+        }
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            if (!disposed)
+            {
+                Cache.Dispose();
+                disposed = true;
+            }
         }
 
         #endregion
