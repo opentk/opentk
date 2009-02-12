@@ -109,9 +109,9 @@ namespace OpenTK.Graphics
             if (font == null)
                 throw new ArgumentNullException("font");
 
-            text_output.Begin();
+            //text_output.Begin();
             text_output.Print(new TextBlock(text, font, options, layoutRectangle.Size), layoutRectangle.Location, color, glyph_rasterizer, glyph_cache);
-            text_output.End();
+            //text_output.End();
         }
 
         #endregion
