@@ -14,10 +14,11 @@ namespace Examples.WinForms
     {
         #region Fields
 
-        float[] sizes = new float[] { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 28, 32, 36, 42, 48 };
+        //float[] sizes = new float[] { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 28, 32, 36, 42, 48 };
+        float[] sizes = new float[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 24 };
         List<Font> fonts = new List<Font>();
 
-        TextPrinter text = new TextPrinter();
+        TextPrinter printer = new TextPrinter();
 
         #endregion
 
@@ -26,6 +27,7 @@ namespace Examples.WinForms
         public FontRendering()
         {
             InitializeComponent();
+            ResizeRedraw = true;
 
             UpdateFontList(fontDialog.Font);
             glControl1_Resize(this, EventArgs.Empty);
@@ -37,11 +39,13 @@ namespace Examples.WinForms
 
         void UpdateFontList(Font base_font)
         {
+            printer.Clear();
+
             foreach (Font font in fonts)
                 font.Dispose();
             fonts.Clear();
             foreach (float size in sizes)
-                fonts.Add(new Font(base_font.Name, size, base_font.Style));
+                fonts.Add(new Font(base_font.Name, base_font.SizeInPoints + size, base_font.Style));
         }
 
         #endregion
@@ -51,7 +55,6 @@ namespace Examples.WinForms
         private void glControl1_Load(object sender, EventArgs e)
         {
             glControl1.MakeCurrent();
-            GL.ClearColor(Color.SteelBlue);
         }
 
         private void changeFont_Click(object sender, EventArgs e)
@@ -70,23 +73,21 @@ namespace Examples.WinForms
 
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {
-            GL.ClearColor(Color.Red);
             glControl1.MakeCurrent();
-            //GL.ClearColor(Color.Gainsboro);
+            GL.ClearColor(Color.MidnightBlue);
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            //GL.Color4(Color.Blue);
-            //GL.BlendColor(0, 0, 0, 0);
+            
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(0, glControl1.ClientSize.Width, glControl1.ClientSize.Height, 0, -1, 1);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
 
-            //text.Begin();
-
-            RectangleF rect = new RectangleF();
             foreach (Font font in fonts)
             {
-                text.Print(textBox1.Text, font, Color.White, rect);
-                rect.Y += font.Height;
+                printer.Print(textBox1.Text, font, Color.White);
+                GL.Translate(0, font.Height + 5, 0);
             }
-
-            //text.End();
 
             glControl1.SwapBuffers();
         }

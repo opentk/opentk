@@ -107,13 +107,6 @@ namespace Examples.Tutorial
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            GL.Ortho(-1, 1, -1, 1, -1, 1);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
-
             // We'll start printing from the lower left corner of the screen. The text
             // will slowly move updwards - the user can control the movement speed with
             // the keyboard arrows and the space bar.
@@ -140,7 +133,7 @@ namespace Examples.Tutorial
             text.Print(poem, serif, Color.White, new RectangleF(0, 0, Width / 2, 0));
 
             text.End();
-            
+
             SwapBuffers();
         }
 
