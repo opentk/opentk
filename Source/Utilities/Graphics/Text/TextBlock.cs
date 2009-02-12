@@ -41,22 +41,28 @@ namespace OpenTK.Graphics.Text
 
         public readonly Font Font;
 
-        public readonly SizeF Bounds;
+        public readonly RectangleF Bounds;
 
         public readonly TextPrinterOptions Options;
 
-        public int UsageCount;     // Used to identify old and unused blocks of text.
+        public readonly TextAlignment Alignment;
+
+        public readonly TextDirection Direction;
+
+        public readonly int UsageCount;
 
         #endregion
 
         #region Constructors
 
-        public TextBlock(string text, Font font, TextPrinterOptions options, SizeF bounds)
+        public TextBlock(string text, Font font, RectangleF bounds, TextPrinterOptions options, TextAlignment alignment, TextDirection direction)
         {
             Text = text;
             Font = font;
             Bounds = bounds;
             Options = options;
+            Alignment = alignment;
+            Direction = direction;
             UsageCount = 0;
         }
 

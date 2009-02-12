@@ -64,23 +64,33 @@ namespace OpenTK.Graphics
 
         public void Print(string text, Font font, Color color)
         {
-            Print(text, font, color, SizeF.Empty, TextPrinterOptions.Default);
+            Print(text, font, color, RectangleF.Empty, TextPrinterOptions.Default, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
-        public void Print(string text, Font font, Color color, SizeF size)
+        public void Print(string text, Font font, Color color, RectangleF rect)
         {
-            Print(text, font, color, size, TextPrinterOptions.Default);
+            Print(text, font, color, rect, TextPrinterOptions.Default, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
-        public void Print(string text, Font font, Color color, SizeF size, TextPrinterOptions options)
+        public void Print(string text, Font font, Color color, RectangleF rect, TextPrinterOptions options)
+        {
+            Print(text, font, color, rect, options, TextAlignment.Near, TextDirection.LeftToRight);
+        }
+
+        public void Print(string text, Font font, Color color, RectangleF rect, TextPrinterOptions options, TextAlignment alignment)
+        {
+            Print(text, font, color, rect, options, alignment, TextDirection.LeftToRight);
+        }
+
+        public void Print(string text, Font font, Color color, RectangleF rect, TextPrinterOptions options, TextAlignment alignment, TextDirection direction)
         {
             if (disposed)
                 throw new ObjectDisposedException(this.GetType().ToString());
 
-            if (!ValidateParameters(text, font, size))
+            if (!ValidateParameters(text, font, rect))
                 return;
 
-            TextOutput.Print(new TextBlock(text, font, options, size), color, Rasterizer);
+            TextOutput.Print(new TextBlock(text, font, rect, options, alignment, direction), color, Rasterizer);
         }
 
         #endregion
@@ -89,23 +99,34 @@ namespace OpenTK.Graphics
 
         public TextExtents Measure(string text, Font font)
         {
-            return Measure(text, font, SizeF.Empty, TextPrinterOptions.Default);
+            return Measure(text, font, RectangleF.Empty, TextPrinterOptions.Default, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
-        public TextExtents Measure(string text, Font font, SizeF size)
+        public TextExtents Measure(string text, Font font, RectangleF rect)
         {
-            return Measure(text, font, size, TextPrinterOptions.Default);
+            return Measure(text, font, rect, TextPrinterOptions.Default, TextAlignment.Near, TextDirection.LeftToRight);
         }
 
-        public TextExtents Measure(string text, Font font, SizeF size, TextPrinterOptions options)
+        public TextExtents Measure(string text, Font font, RectangleF rect, TextPrinterOptions options)
+        {
+            return Measure(text, font, rect, options, TextAlignment.Near, TextDirection.LeftToRight);
+        }
+
+
+        public TextExtents Measure(string text, Font font, RectangleF rect, TextPrinterOptions options, TextAlignment alignment)
+        {
+            return Measure(text, font, rect, options, alignment, TextDirection.LeftToRight);
+        }
+
+        public TextExtents Measure(string text, Font font, RectangleF rect, TextPrinterOptions options, TextAlignment alignment, TextDirection direction)
         {
             if (disposed)
                 throw new ObjectDisposedException(this.GetType().ToString());
 
-            if (!ValidateParameters(text, font, size))
+            if (!ValidateParameters(text, font, rect))
                 return TextExtents.Empty;
 
-            return Rasterizer.MeasureText(new TextBlock(text, font, options, size));
+            return Rasterizer.MeasureText(new TextBlock(text, font, rect, options, alignment, direction));
         }
 
         #endregion
@@ -223,13 +244,13 @@ namespace OpenTK.Graphics
 
         #region Static Members
 
-        static bool ValidateParameters(string text, Font font, SizeF size)
+        static bool ValidateParameters(string text, Font font, RectangleF rect)
         {
             if (String.IsNullOrEmpty(text))
                 return false;
             if (font == null)
                 throw new ArgumentNullException("font");
-            if (size.Width < 0 || size.Height < 0)
+            if (rect.Width < 0 || rect.Height < 0)
                 throw new ArgumentOutOfRangeException("size");
 
             return true;
