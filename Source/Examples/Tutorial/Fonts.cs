@@ -96,7 +96,7 @@ namespace Examples.Tutorial
         /// <param name="e"></param>
         public override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(Color.SteelBlue);
+            GL.ClearColor(Color.MidnightBlue);
         }
 
         #endregion
