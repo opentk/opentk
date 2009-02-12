@@ -128,13 +128,25 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region Obsolete
+        #region Begin
 
-        [Obsolete]
+        /// <summary>
+        /// Sets up a resolution-dependent orthographic projection.
+        /// </summary>
         void Begin();
 
-        [Obsolete]
+        #endregion
+
+        /// <summary>
+        /// Restores the projection and modelview matrices to their previous state.
+        /// </summary>
+        #region End
+
         void End();
+
+        #endregion
+
+        #region Obsolete
 
         [Obsolete("Use TextPrinter.Print instead")]
         void Draw(TextHandle handle);
