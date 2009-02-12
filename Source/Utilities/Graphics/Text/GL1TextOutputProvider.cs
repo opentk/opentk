@@ -32,7 +32,7 @@ using System;
 
 namespace OpenTK.Graphics.Text
 {
-    class GL1TextOutputProvider : ITextOutputProvider
+    abstract class GL1TextOutputProvider : ITextOutputProvider
     {
         #region Fields
 
@@ -57,22 +57,17 @@ namespace OpenTK.Graphics.Text
 
         #region Print
 
-        public void Print(TextBlock block, PointF location, Color color, IGlyphRasterizer rasterizer, GlyphCache cache)
+        public void Print(TextBlock block, Color color, IGlyphRasterizer rasterizer)
         {
             GL.PushAttrib(AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit | AttribMask.DepthBufferBit);
 
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactorSrc.ConstantColorExt, BlendingFactorDest.OneMinusSrcColor);   // For subpixel with color
+            SetBlendFunction();
 
             GL.Disable(EnableCap.DepthTest);
 
-            //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Modulate);
-            //GL.Enable(EnableCap.ColorMaterial);
-            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);  // For grayscale
-            //GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);   // For subpixel
-
-            using (TextExtents extents = rasterizer.MeasureText(block, location))
+            using (TextExtents extents = rasterizer.MeasureText(block))
             {
                 // Build layout
                 int current = 0;
@@ -83,10 +78,10 @@ namespace OpenTK.Graphics.Text
                         current++;
                         continue;
                     }
-                    else if (!cache.Contains(glyph))
-                        cache.Add(glyph);
+                    else if (!Cache.Contains(glyph))
+                        Cache.Add(glyph, rasterizer, TextQuality);
 
-                    CachedGlyphInfo info = cache[glyph];
+                    CachedGlyphInfo info = Cache[glyph];
                     RectangleF position = extents[current++];
 
                     // Use the real glyph width instead of the measured one (we want to achieve pixel perfect output).
@@ -123,12 +118,12 @@ namespace OpenTK.Graphics.Text
                 
                 key.Bind();
 
-                GL.Translate(location.X, location.Y, 0);
                 if (!legacy_mode)
                 {
                     GL.Scale(2.0 / (viewport[2] - viewport[0]), -2.0 / (viewport[3] - viewport[1]), 1);
                 }
-                GL.BlendColor(color);
+
+                SetColor(color);
 
                 GL.Begin(BeginMode.Triangles);
 
@@ -199,6 +194,30 @@ namespace OpenTK.Graphics.Text
         }
 
         #endregion
+
+        #endregion
+
+        #region Protected Members
+
+        protected abstract void SetBlendFunction();
+
+        protected abstract void SetColor(Color color);
+
+        protected abstract TextQuality TextQuality { get; }
+
+        protected abstract GlyphCache Cache { get; }
+
+        #endregion
+
+        #region Static Members
+
+        public static GL1TextOutputProvider Create(TextQuality quality)
+        {
+            if (!GL.SupportsFunction("BlendFunc") || quality == TextQuality.Low || quality == TextQuality.Medium)
+                return new GL11TextOutputProvider(quality);
+            else
+                return new GL12TextOutputProvider(quality);
+        }
 
         #endregion
     }

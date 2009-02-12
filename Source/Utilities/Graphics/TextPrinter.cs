@@ -30,9 +30,9 @@ namespace OpenTK.Graphics
     {
         #region Fields
 
-        GlyphCache glyph_cache;
         IGlyphRasterizer glyph_rasterizer;
         ITextOutputProvider text_output;
+        TextQuality text_quality;
 
         #endregion
 
@@ -42,21 +42,16 @@ namespace OpenTK.Graphics
         /// Constructs a new TextPrinter object.
         /// </summary>
         public TextPrinter()
-            : this(null, null)
+            : this(null, null, TextQuality.Default) { }
+
+        public TextPrinter(TextQuality quality)
+            : this(null, null, quality) { }
+
+        TextPrinter(IGlyphRasterizer rasterizer, ITextOutputProvider output, TextQuality quality)
         {
-        }
-
-        TextPrinter(IGlyphRasterizer rasterizer, ITextOutputProvider output/*, IGlyphCacheProvider, ITextOutputProvider */)
-        {
-            if (rasterizer == null)
-                rasterizer = new GdiPlusGlyphRasterizer();
-
-            if (output == null)
-                output = new GL1TextOutputProvider();
-
             glyph_rasterizer = rasterizer;
-            glyph_cache = new GlyphCache(rasterizer);
             text_output = output;
+            text_quality = quality;
         }
 
         #endregion
@@ -71,7 +66,7 @@ namespace OpenTK.Graphics
         [Obsolete]
         public void Begin()
         {
-            text_output.Begin();
+            TextOutput.Begin();
         }
 
         #endregion
@@ -84,7 +79,7 @@ namespace OpenTK.Graphics
         [Obsolete]
         public void End()
         {
-            text_output.End();
+            TextOutput.End();
         }
 
         #endregion
@@ -93,25 +88,20 @@ namespace OpenTK.Graphics
 
         public void Print(string text, Font font, Color color)
         {
-            Print(text, font, color, RectangleF.Empty, TextPrinterOptions.Default);
+            Print(text, font, color, SizeF.Empty, TextPrinterOptions.Default);
         }
 
-        public void Print(string text, Font font, Color color, RectangleF layoutRectangle)
+        public void Print(string text, Font font, Color color, SizeF size)
         {
-            Print(text, font, color, layoutRectangle, TextPrinterOptions.Default);
+            Print(text, font, color, size, TextPrinterOptions.Default);
         }
 
-        public void Print(string text, Font font, Color color, RectangleF layoutRectangle, TextPrinterOptions options)
+        public void Print(string text, Font font, Color color, SizeF size, TextPrinterOptions options)
         {
-            if (String.IsNullOrEmpty(text))
+            if (!ValidateParameters(text, font, size))
                 return;
 
-            if (font == null)
-                throw new ArgumentNullException("font");
-
-            //text_output.Begin();
-            text_output.Print(new TextBlock(text, font, options, layoutRectangle.Size), layoutRectangle.Location, color, glyph_rasterizer, glyph_cache);
-            //text_output.End();
+            text_output.Print(new TextBlock(text, font, options, size), color, Rasterizer);
         }
 
         #endregion
@@ -120,17 +110,30 @@ namespace OpenTK.Graphics
 
         public TextExtents Measure(string text, Font font)
         {
-            return Measure(text, font, RectangleF.Empty, TextPrinterOptions.Default);
+            return Measure(text, font, SizeF.Empty, TextPrinterOptions.Default);
         }
 
-        public TextExtents Measure(string text, Font font, RectangleF layoutRectangle)
+        public TextExtents Measure(string text, Font font, SizeF size)
         {
-            return Measure(text, font, layoutRectangle, TextPrinterOptions.Default);
+            return Measure(text, font, size, TextPrinterOptions.Default);
         }
 
-        public TextExtents Measure(string text, Font font, RectangleF layoutRectangle, TextPrinterOptions options)
+        public TextExtents Measure(string text, Font font, SizeF size, TextPrinterOptions options)
         {
-            return glyph_rasterizer.MeasureText(new TextBlock(text, font, options, layoutRectangle.Size), layoutRectangle.Location);
+            if (!ValidateParameters(text, font, size))
+                return TextExtents.Empty;
+
+            return Rasterizer.MeasureText(new TextBlock(text, font, options, size));
+        }
+
+        #endregion
+
+        #region Clear()
+
+        public void Clear()
+        {
+            //glyph_cache.Clear();
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -156,6 +159,49 @@ namespace OpenTK.Graphics
         }
 
         #endregion
+
+        #endregion
+
+        #region Private Members
+
+        IGlyphRasterizer Rasterizer
+        {
+            get
+            {
+                if (glyph_rasterizer == null)
+                    glyph_rasterizer = new GdiPlusGlyphRasterizer();
+
+                return glyph_rasterizer;
+            }
+
+        }
+
+        ITextOutputProvider TextOutput
+        {
+            get
+            {
+                if (text_output == null)
+                    text_output = GL1TextOutputProvider.Create(text_quality);
+
+                return text_output;
+            }
+        }
+
+        #endregion
+
+        #region Static Members
+
+        static bool ValidateParameters(string text, Font font, SizeF size)
+        {
+            if (String.IsNullOrEmpty(text))
+                return false;
+            if (font == null)
+                throw new ArgumentNullException("font");
+            if (size.Width < 0 || size.Height < 0)
+                throw new ArgumentOutOfRangeException("size");
+
+            return true;
+        }
 
         #endregion
     }

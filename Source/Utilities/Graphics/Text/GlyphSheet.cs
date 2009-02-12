@@ -32,35 +32,35 @@ using System.Drawing;
 
 namespace OpenTK.Graphics.Text
 {
-    class GlyphSheet
+    class GlyphSheet<T> where T : Texture2D
     {
         #region Fields
 
-        //AlphaTexture2D texture;
-        RgbaTexture2D texture = new RgbaTexture2D(512, 512);
-        GlyphPacker packer = new GlyphPacker(512, 512);
+        readonly T texture;
+        readonly GlyphPacker packer;
 
         #endregion
 
         #region Constructors
 
-        public GlyphSheet()
-        { }
+        public GlyphSheet(int width, int height)
+        {
+            texture = (T)typeof(T).GetConstructor(new Type[] { typeof(int), typeof(int) }).Invoke(new object[] { width, height });
+             packer = new GlyphPacker(width, height);
+        }
 
         #endregion
 
         #region Public Members
 
-        public Texture2D Texture
+        public T Texture
         {
             get { return texture; }
-            private set { texture = (RgbaTexture2D)value; }
         }
 
         public GlyphPacker Packer
         {
             get { return packer; }
-            private set { packer = value; }
         }
 
         #endregion
