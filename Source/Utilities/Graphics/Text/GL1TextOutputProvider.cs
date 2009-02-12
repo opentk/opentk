@@ -28,6 +28,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using OpenTK.Math;
+using System;
 
 namespace OpenTK.Graphics.Text
 {
@@ -39,6 +40,7 @@ namespace OpenTK.Graphics.Text
         Dictionary<Texture2D, List<Vector2>> active_lists = new Dictionary<Texture2D, List<Vector2>>();
         Queue<List<Vector2>> inactive_lists = new Queue<List<Vector2>>();
         float[] viewport = new float[4];
+        bool legacy_mode = false;
 
         #endregion
 
@@ -57,6 +59,19 @@ namespace OpenTK.Graphics.Text
 
         public void Print(TextBlock block, PointF location, Color color, IGlyphRasterizer rasterizer, GlyphCache cache)
         {
+            GL.PushAttrib(AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit | AttribMask.DepthBufferBit);
+
+            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.ConstantColorExt, BlendingFactorDest.OneMinusSrcColor);   // For subpixel with color
+
+            GL.Disable(EnableCap.DepthTest);
+
+            //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Modulate);
+            //GL.Enable(EnableCap.ColorMaterial);
+            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);  // For grayscale
+            //GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);   // For subpixel
+
             using (TextExtents extents = rasterizer.MeasureText(block, location))
             {
                 // Build layout
@@ -109,6 +124,11 @@ namespace OpenTK.Graphics.Text
                 key.Bind();
 
                 GL.Translate(location.X, location.Y, 0);
+                if (!legacy_mode)
+                {
+                    GL.Scale(2.0 / (viewport[2] - viewport[0]), -2.0 / (viewport[3] - viewport[1]), 1);
+                }
+                GL.BlendColor(color);
 
                 GL.Begin(BeginMode.Triangles);
 
@@ -129,16 +149,20 @@ namespace OpenTK.Graphics.Text
             }
 
             active_lists.Clear();
+
+            GL.PopAttrib();
         }
 
         #endregion
 
         #region Begin
 
+        [Obsolete]
         public void Begin()
         {
-            if (GraphicsContext.CurrentContext == null)
-                throw new GraphicsContextException("No GraphicsContext is current in the calling thread.");
+            GraphicsContext.Assert();
+
+            legacy_mode = true;
 
             GL.GetFloat(GetPName.Viewport, viewport);
 
@@ -154,29 +178,18 @@ namespace OpenTK.Graphics.Text
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PushMatrix();
             GL.LoadIdentity();
-
-            GL.PushAttrib(AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit);
-
-            //GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Modulate);
-
-            //GL.Enable(EnableCap.ColorMaterial);
-            GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
-            //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);  // For grayscale
-            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcColor);   // For subpixel
-            //GL.BlendFunc(BlendingFactorSrc.ConstantColorExt, BlendingFactorDest.OneMinusSrcColor);   // For subpixel with color
-
-
-            GL.Disable(EnableCap.DepthTest);
         }
 
         #endregion
 
         #region End
 
+        [Obsolete]
         public void End()
         {
-            GL.PopAttrib();
+            GraphicsContext.Assert();
+
+            legacy_mode = false;
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PopMatrix();
