@@ -36,5 +36,7 @@ namespace OpenTK.Graphics.Text
     {
         void Print(TextBlock block, Color color, IGlyphRasterizer rasterizer);
         void Clear();
+        void Begin();
+        void End();
     }
 }

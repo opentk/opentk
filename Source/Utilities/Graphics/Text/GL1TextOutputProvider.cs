@@ -40,6 +40,12 @@ namespace OpenTK.Graphics.Text
         Dictionary<Texture2D, List<Vector2>> active_lists = new Dictionary<Texture2D, List<Vector2>>();
         Queue<List<Vector2>> inactive_lists = new Queue<List<Vector2>>();
 
+        #pragma warning disable 0649
+
+        struct Viewport { public float Left, Top, Right, Bottom; }
+
+        #pragma warning restore 0649
+
         bool disposed;
 
         #endregion
@@ -160,6 +166,62 @@ namespace OpenTK.Graphics.Text
         public void Clear()
         {
             Cache.Clear();
+        }
+
+        #endregion
+
+        #region Begin
+
+        public void Begin()
+        {
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().ToString());
+
+            GraphicsContext.Assert();
+
+            int current_matrix;
+            GL.GetInteger(GetPName.MatrixMode, out current_matrix);
+
+            Viewport viewport = new Viewport();
+            GL.GetFloat(GetPName.Viewport, out viewport.Left);
+
+            // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
+            // with size equal to the window (in pixels). 
+            // While we could also render text in 3D mode, it would be very hard to get
+            // pixel-perfect precision.
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PushMatrix();
+            GL.LoadIdentity();
+            GL.Ortho(viewport.Left, viewport.Right, viewport.Bottom, viewport.Top, -1.0, 1.0);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PushMatrix();
+            GL.LoadIdentity();
+
+            GL.MatrixMode((MatrixMode)current_matrix);
+        }
+
+        #endregion
+
+        #region End
+
+        public void End()
+        {
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().ToString());
+
+            GraphicsContext.Assert();
+
+            int current_matrix;
+            GL.GetInteger(GetPName.MatrixMode, out current_matrix);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PopMatrix();
+
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PopMatrix();
+
+            GL.MatrixMode((MatrixMode)current_matrix);
         }
 
         #endregion

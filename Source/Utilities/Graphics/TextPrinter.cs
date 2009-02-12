@@ -214,7 +214,7 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region Clear()
+        #region Clear
 
         public void Clear()
         {
@@ -227,54 +227,31 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region Obsolete
+        #region Begin
 
         /// <summary>
-        /// Sets up OpenGL state for drawing text.
+        /// Sets up a resolution-dependent orthographic projection.
         /// </summary>
-        [Obsolete]
         public void Begin()
         {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().ToString());
-
-            GraphicsContext.Assert();
-
-            float[] viewport = new float[4];
-
-            GL.GetFloat(GetPName.Viewport, viewport);
-
-            // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
-            // with size equal to the window (in pixels). 
-            // While we could also render text in 3D mode, it would be very hard to get
-            // pixel-perfect precision.
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PushMatrix();
-            GL.LoadIdentity();
-            GL.Ortho(viewport[0], viewport[2], viewport[3], viewport[1], -1.0, 1.0);
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PushMatrix();
-            GL.LoadIdentity();
+            TextOutput.Begin();
         }
+
+        #endregion
+
+        #region Begin
 
         /// <summary>
-        /// Restores OpenGL state.
+        /// Restores the projection and modelview matrices to their previous state.
         /// </summary>
-        [Obsolete]
         public void End()
         {
-            if (disposed)
-                throw new ObjectDisposedException(this.GetType().ToString());
-
-            GraphicsContext.Assert();
-
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PopMatrix();
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PopMatrix();
+            TextOutput.End();
         }
+
+        #endregion
+
+        #region Obsolete
 
         [Obsolete("Use TextPrinter.Print instead")]
         public void Draw(TextHandle handle)
