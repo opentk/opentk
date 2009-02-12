@@ -20,11 +20,11 @@ namespace OpenTK.Graphics
         void Begin();
         void End();
         void Print(string text, Font font, Color color);
-        void Print(string text, Font font, Color color, RectangleF layoutRectangle);
-        void Print(string text, Font font, Color color, RectangleF layoutRectangle, TextPrinterOptions options);
+        void Print(string text, Font font, Color color, SizeF size);
+        void Print(string text, Font font, Color color, SizeF size, TextPrinterOptions options);
         TextExtents Measure(string text, Font font);
-        TextExtents Measure(string text, Font font, RectangleF layoutRectangle);
-        TextExtents Measure(string text, Font font, RectangleF layoutRectangle, TextPrinterOptions options);
+        TextExtents Measure(string text, Font font, SizeF size);
+        TextExtents Measure(string text, Font font, SizeF size, TextPrinterOptions options);
 
         [Obsolete("Use TextPrinter.Print instead")]
         void Draw(TextHandle handle);

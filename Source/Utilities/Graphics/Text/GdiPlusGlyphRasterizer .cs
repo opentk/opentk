@@ -48,6 +48,8 @@ namespace OpenTK.Graphics.Text
         Bitmap glyph_surface;
         System.Drawing.Graphics glyph_renderer;
 
+        readonly List<RectangleF> measured_glyphs = new List<RectangleF>(256);
+
         readonly ObjectPool<PoolableTextExtents> text_extents_pool = new ObjectPool<PoolableTextExtents>();
 
         // Check the constructor, too, for additional flags.
@@ -73,8 +75,7 @@ namespace OpenTK.Graphics.Text
             }
         }
 
-        public GdiPlusGlyphRasterizer()
-        { }
+        public GdiPlusGlyphRasterizer() { }
 
         #endregion
 
@@ -84,15 +85,13 @@ namespace OpenTK.Graphics.Text
 
         public Bitmap Rasterize(Glyph glyph)
         {
-            //RectangleF r = MeasureText(
-            //    new TextBlock(
-            //        glyph.Character.ToString(), glyph.Font,
-            //        TextPrinterOptions.NoCache, SizeF.Empty),
-            //    PointF.Empty).BoundingBox;
+            return Rasterize(glyph, TextQuality.Default);
+        }
 
+        public Bitmap Rasterize(Glyph glyph, TextQuality quality)
+        {
             EnsureSurfaceSize(ref glyph_surface, ref glyph_renderer, glyph.Font);
-
-            SetTextRenderingOptions(glyph_renderer, glyph.Font);
+            SetTextRenderingOptions(glyph_renderer, glyph.Font, quality);
 
             glyph_renderer.Clear(Color.Transparent);
             glyph_renderer.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty,
@@ -103,32 +102,16 @@ namespace OpenTK.Graphics.Text
             return glyph_surface.Clone(r2, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
         }
 
-        public void Rasterize(Glyph glyph, ref Bitmap bmp, out Rectangle rect)
-        {
-            EnsureSurfaceSize(ref bmp, ref glyph_renderer, glyph.Font);
-
-            using (System.Drawing.Graphics gfx = System.Drawing.Graphics.FromImage(bmp))
-            {
-                SetTextRenderingOptions(gfx, glyph.Font);
-
-                //gfx.Clear(Color.Transparent);
-                //gfx.Clear(Color.FromArgb(255, 0, 0, 0));
-                //gfx.DrawString(glyph.Character.ToString(), glyph.Font, Brushes.White, PointF.Empty,
-                //    glyph.Font.Style & FontStyle.Italic != 0 ? load_glyph_string_format : default_string_format);
-                System.Windows.Forms.TextRenderer.DrawText(gfx, glyph.Character.ToString(), glyph.Font, Point.Empty, Color.White);
-                //,
-                //    (glyph.Font.Style & FontStyle.Italic) != 0 ?
-                //    System.Windows.Forms.TextFormatFlags.GlyphOverhangPadding :
-                //    System.Windows.Forms.TextFormatFlags.Default);
-                rect = FindEdges(bmp);
-            }
-        }
-
         #endregion
 
         #region MeasureText
 
-        public TextExtents MeasureText(TextBlock block, PointF location)
+        public TextExtents MeasureText(TextBlock block)
+        {
+            return MeasureText(block, TextQuality.Default);
+        }
+
+        public TextExtents MeasureText(TextBlock block, TextQuality quality)
         {
             // First, check if we have cached this text block. Do not use block_cache.TryGetValue, to avoid thrashing
             // the user's TextBlockExtents struct.
@@ -136,7 +119,7 @@ namespace OpenTK.Graphics.Text
                 return block_cache[block];
 
             // If this block is not cached, we have to measure it and (potentially) place it in the cache.
-            TextExtents extents = MeasureTextExtents(block);
+            TextExtents extents = MeasureTextExtents(block, quality);
             
             if ((block.Options & TextPrinterOptions.NoCache) == 0)
                 block_cache.Add(block, extents);
@@ -171,21 +154,39 @@ namespace OpenTK.Graphics.Text
         #region SetRenderingOptions
 
         // Modify rendering settings (antialiasing, grid fitting) to improve appearance.
-        void SetTextRenderingOptions(System.Drawing.Graphics gfx, Font font)
+        void SetTextRenderingOptions(System.Drawing.Graphics gfx, Font font, TextQuality quality)
         {
-            // Small sizes look blurry without gridfitting, so turn that on. 
-            //if (font.Size <= 18.0f)
-            //    gfx.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            //else
-            gfx.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            //gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+            switch (quality)
+            {
+                case TextQuality.Default:
+                    gfx.TextRenderingHint = TextRenderingHint.SystemDefault;
+                    break;
+
+                case TextQuality.High:
+                    gfx.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+                    break;
+                    
+                case TextQuality.Medium:
+                    if (font.Size <= 18.0f)
+                        gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                    else
+                        gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
+                    break;
+
+                case TextQuality.Low:
+                    if (font.Size <= 18.0f)
+                        gfx.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                    else
+                        gfx.TextRenderingHint = TextRenderingHint.SingleBitPerPixel;
+                    break;
+            }
         }
 
         #endregion
 
         #region MeasureTextExtents
 
-        TextExtents MeasureTextExtents(TextBlock block)
+        TextExtents MeasureTextExtents(TextBlock block, TextQuality quality)
         {
             // Todo: Parse layout options:
             //StringFormat format = default_string_format;
@@ -199,7 +200,7 @@ namespace OpenTK.Graphics.Text
             if (block.Bounds == SizeF.Empty)
                 rect.Size = MaximumGraphicsClipSize;
 
-            SetTextRenderingOptions(graphics, block.Font);
+            SetTextRenderingOptions(graphics, block.Font, quality);
 
             IntPtr native_graphics = GdiPlus.GetNativeGraphics(graphics);
             IntPtr native_font = GdiPlus.GetNativeFont(block.Font);
@@ -239,6 +240,8 @@ namespace OpenTK.Graphics.Text
         IEnumerable<RectangleF> MeasureGlyphExtents(string text, int height,
             RectangleF layoutRect, IntPtr native_graphics, IntPtr native_font, IntPtr native_string_format)
         {
+            measured_glyphs.Clear();
+
              RectangleF rect = new RectangleF();
              int current = 0;
              while (current < text.Length)
@@ -277,11 +280,14 @@ namespace OpenTK.Graphics.Text
 
                     rect.Y += height;
                     
-                    yield return rect;
+                    //yield return rect;
+                    measured_glyphs.Add(rect);
                 }
 
                 current += num_characters;
             }
+
+            return measured_glyphs;
         }
 
         #endregion

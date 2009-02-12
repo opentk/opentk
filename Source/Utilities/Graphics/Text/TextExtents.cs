@@ -40,6 +40,8 @@ namespace OpenTK.Graphics.Text
         protected RectangleF text_extents;
         protected List<RectangleF> glyph_extents = new List<RectangleF>();
 
+        public static readonly TextExtents Empty = new TextExtents();
+
         #endregion
 
         #region Constructors

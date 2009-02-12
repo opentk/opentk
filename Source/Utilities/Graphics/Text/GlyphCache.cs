@@ -31,41 +31,54 @@ using System.Drawing;
 
 namespace OpenTK.Graphics.Text
 {
-    class GlyphCache : IGlyphCache
+    abstract class GlyphCache : IGlyphCache
+    {
+        #region IGlyphCache Members
+
+        public abstract void Add(Glyph glyph, IGlyphRasterizer rasterizer, TextQuality quality);
+
+        public abstract bool Contains(Glyph glyph);
+
+        public abstract CachedGlyphInfo this[Glyph glyph] { get; }
+
+        #endregion
+    }
+
+    class GlyphCache<T> : GlyphCache where T : Texture2D
     {
         #region Fields
 
-        IGlyphRasterizer rasterizer;
-        List<GlyphSheet> sheets = new List<GlyphSheet>();
+        List<GlyphSheet<T>> sheets = new List<GlyphSheet<T>>();
         Bitmap bmp = new Bitmap(32, 32);
 
         Dictionary<Glyph, CachedGlyphInfo> cached_glyphs = new Dictionary<Glyph, CachedGlyphInfo>();
+
+        const int SheetWidth = 512, SheetHeight = 512;
 
         #endregion
 
         #region Constructors
 
-        public GlyphCache(IGlyphRasterizer rasterizer)
+        public GlyphCache()
         {
-            if (rasterizer == null)
-                throw new ArgumentNullException("rasterizer");
-
-            this.rasterizer = rasterizer;
-            sheets.Add(new GlyphSheet());
+            sheets.Add(new GlyphSheet<T>(SheetWidth, SheetHeight));
         }
 
         #endregion
 
         #region IGlyphCache Members
 
-        public void Add(Glyph glyph)
+        public override void Add(Glyph glyph, IGlyphRasterizer rasterizer, TextQuality quality)
         {
+            if (rasterizer == null)
+                throw new ArgumentNullException("rasterizer");
+
             bool inserted = false;
 
-            using (Bitmap bmp = rasterizer.Rasterize(glyph))
+            using (Bitmap bmp = rasterizer.Rasterize(glyph, quality))
             {
                 Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-                foreach (GlyphSheet sheet in sheets)
+                foreach (GlyphSheet<T> sheet in sheets)
                 {
                      inserted = InsertGlyph(glyph, bmp, rect, sheet);
                      if (inserted)
@@ -74,19 +87,19 @@ namespace OpenTK.Graphics.Text
 
                 if (!inserted)
                 {
-                    GlyphSheet sheet = new GlyphSheet();
+                    GlyphSheet<T> sheet = new GlyphSheet<T>(SheetWidth, SheetHeight);
                     sheets.Add(sheet);
                     InsertGlyph(glyph, bmp, rect, sheet);
                 }
             }
         }
 
-        public bool Contains(Glyph glyph)
+        public override bool Contains(Glyph glyph)
         {
             return cached_glyphs.ContainsKey(glyph);
         }
 
-        public CachedGlyphInfo this[Glyph glyph]
+        public override CachedGlyphInfo this[Glyph glyph]
         {
             get
             {
@@ -99,7 +112,7 @@ namespace OpenTK.Graphics.Text
         #region Private Members
 
         // Asks the packer for an empty space and writes the glyph there.
-        bool InsertGlyph(Glyph glyph, Bitmap bmp, Rectangle source, GlyphSheet sheet)
+        bool InsertGlyph(Glyph glyph, Bitmap bmp, Rectangle source, GlyphSheet<T> sheet)
         {
             Rectangle target = new Rectangle();
             if (!sheet.Packer.TryAdd(source, out target))

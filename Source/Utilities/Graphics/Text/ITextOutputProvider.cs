@@ -34,7 +34,7 @@ namespace OpenTK.Graphics.Text
 {
     interface ITextOutputProvider
     {
-        void Print(TextBlock block, PointF location, Color color, IGlyphRasterizer rasterizer, GlyphCache cache);
+        void Print(TextBlock block, Color color, IGlyphRasterizer rasterizer);
         void Begin();
         void End();
     }

@@ -29,7 +29,7 @@ namespace OpenTK.Graphics.Text
 {
     interface IGlyphCache
     {
-        void Add(Glyph glyph);
+        void Add(Glyph glyph, IGlyphRasterizer rasterizer, TextQuality quality);
         bool Contains(Glyph glyph);
         CachedGlyphInfo this[Glyph glyph] { get; }
     }
