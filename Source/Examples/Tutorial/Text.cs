@@ -24,11 +24,10 @@ namespace Examples.Tutorial
     public class Text : GameWindow
     {
         Font serif = new Font(FontFamily.GenericSerif, 16.0f);
-        Font sans = new Font(FontFamily.GenericSansSerif, 48.0f, FontStyle.Italic);
+        Font sans = new Font(FontFamily.GenericSansSerif, 18.0f);
         TextPrinter text = new TextPrinter();
 
- 	    //string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
-        string poem = "The quick brown fox jumped over the lazy dogs!\n\nKerning: Wo\nLigatures: ffi, fft";
+ 	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
         int lines;  // How many lines the poem contains.
         
         float scroll_speed;
@@ -44,7 +43,7 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(Color.SteelBlue);
+            GL.ClearColor(Color.MidnightBlue);
 
             current_position = initial_position;
             scroll_speed = -1.0f;
@@ -57,8 +56,7 @@ namespace Examples.Tutorial
                 if (c == '\n')
                     lines++;
 
-            warparound_position =
-                -(lines + 1) * serif.Height;
+            warparound_position = -(lines + 1) * serif.Height;
         }
 
         #endregion
@@ -82,9 +80,7 @@ namespace Examples.Tutorial
             GL.Viewport(0, 0, Width, Height);
 
             initial_position = Height + serif.Height;   // Start one line below the screen.
-
-            warparound_position =
-                -(lines + 1) * serif.Height;
+            warparound_position = -(lines + 1) * serif.Height;
         }
 
         #endregion
@@ -94,11 +90,11 @@ namespace Examples.Tutorial
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
             if (Keyboard[Key.Space])
-                scroll_speed = 0.0f;
+                scroll_speed = 0;
             if (Keyboard[Key.Down])
-                scroll_speed += 1;
+                scroll_speed += 10;
             if (Keyboard[Key.Up])
-                scroll_speed -= 1;
+                scroll_speed -= 10;
             if (Keyboard[Key.Escape])
                 this.Exit();
         }
@@ -111,10 +107,17 @@ namespace Examples.Tutorial
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(-1, 1, -1, 1, -1, 1);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+
             // We'll start printing from the lower left corner of the screen. The text
             // will slowly move updwards - the user can control the movement speed with
             // the keyboard arrows and the space bar.
-            current_position += scroll_speed * (float)e.ScaleFactor;
+            current_position += scroll_speed * (float)e.Time;
             if (scroll_speed > 0.0f && current_position > initial_position)
                 current_position = warparound_position;
             else if (scroll_speed < 0.0f && current_position < warparound_position)
@@ -129,11 +132,13 @@ namespace Examples.Tutorial
 
             // Print FPS counter. Since the counter changes per frame,
             // it shouldn't be cached (TextPrinterOptions.NoCache).
-            text.Print((1.0 / e.Time).ToString("F2"), sans, Color.LightYellow, RectangleF.Empty, TextPrinterOptions.NoCache);
-            
+            text.Print((1.0 / e.Time).ToString("F2"), sans, Color.SpringGreen, new RectangleF(0, 0, Width, 0), TextPrinterOptions.NoCache, TextAlignment.Far);
+
             // Print the actual text.
-            text.Print(poem, serif, Color.White, new RectangleF(0, current_position, 0, 0), TextPrinterOptions.Default);
-            
+            GL.Translate(0, current_position, 0);
+            text.Print(poem, serif, Color.White, new RectangleF(Width / 2, 0, Width / 2, 0), TextPrinterOptions.Default, TextAlignment.Far);
+            text.Print(poem, serif, Color.White, new RectangleF(0, 0, Width / 2, 0));
+
             text.End();
             
             SwapBuffers();
