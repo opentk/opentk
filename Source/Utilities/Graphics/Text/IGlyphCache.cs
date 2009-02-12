@@ -25,12 +25,15 @@
 //
 #endregion
 
+using System;
+
 namespace OpenTK.Graphics.Text
 {
-    interface IGlyphCache
+    interface IGlyphCache : IDisposable
     {
         void Add(Glyph glyph, IGlyphRasterizer rasterizer, TextQuality quality);
         bool Contains(Glyph glyph);
         CachedGlyphInfo this[Glyph glyph] { get; }
+        void Clear();
     }
 }

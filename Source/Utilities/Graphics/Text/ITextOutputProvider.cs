@@ -32,10 +32,9 @@ using System.Drawing;
 
 namespace OpenTK.Graphics.Text
 {
-    interface ITextOutputProvider
+    interface ITextOutputProvider : IDisposable
     {
         void Print(TextBlock block, Color color, IGlyphRasterizer rasterizer);
-        void Begin();
-        void End();
+        void Clear();
     }
 }

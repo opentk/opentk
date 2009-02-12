@@ -35,7 +35,7 @@ using OpenTK.Platform;
 
 namespace OpenTK.Graphics.Text
 {
-    class GdiPlusGlyphRasterizer : IGlyphRasterizer
+    sealed class GdiPlusGlyphRasterizer : IGlyphRasterizer
     {
         #region Fields
 
@@ -128,6 +128,11 @@ namespace OpenTK.Graphics.Text
         }
 
         #endregion
+
+        public void Clear()
+        {
+            block_cache.Clear();
+        }
 
         #endregion
 
