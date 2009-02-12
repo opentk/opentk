@@ -867,7 +867,7 @@ namespace OpenTK.Graphics
                 GL.GetShader(shader, ShaderParameter.InfoLogLength, out length);
                 if (length == 0)
                 {
-                    info = "";
+                    info = String.Empty;
                     return;
                 }
                 StringBuilder sb = new StringBuilder(length);
@@ -888,7 +888,7 @@ namespace OpenTK.Graphics
                 GL.GetProgram(program, ProgramParameter.InfoLogLength, out length);
                 if (length == 0)
                 {
-                    info = "";
+                    info = String.Empty;
                     return;
                 }
                 StringBuilder sb = new StringBuilder(length);
