@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Graphics.Text
+namespace OpenTK.Graphics
 {
     public enum TextQuality
     {

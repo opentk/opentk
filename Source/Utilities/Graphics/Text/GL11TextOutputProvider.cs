@@ -37,7 +37,7 @@ namespace OpenTK.Graphics.Text
 
         protected override void SetColor(Color color)
         {
-            GL.Color4(color);
+            GL.Color3(color);
         }
 
         protected override TextQuality TextQuality

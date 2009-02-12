@@ -27,7 +27,7 @@ namespace OpenTK.Graphics.Text
 
         protected override void SetBlendFunction()
         {
-            GL.BlendFunc(BlendingFactorSrc.ConstantColorExt, BlendingFactorDest.OneMinusSrcColor);   // For subpixel with color
+            GL.BlendFunc(BlendingFactorSrc.ConstantColorExt, BlendingFactorDest.OneMinusSrcColor);
         }
 
         protected override void SetColor(Color color)
