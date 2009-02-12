@@ -30,9 +30,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 
-namespace OpenTK.Graphics.Text
+namespace OpenTK.Graphics
 {
-    // Holds layout information about a TextBlock.
+    /// <summary>
+    /// Holds the results of a text measurement.
+    /// </summary>
     public class TextExtents : IDisposable
     {
         #region Fields
@@ -54,37 +56,40 @@ namespace OpenTK.Graphics.Text
 
         #region Public Members
 
+        /// <summary>
+        /// Gets the bounding box of the measured text.
+        /// </summary>
         public RectangleF BoundingBox
         {
             get { return text_extents; }
             internal set { text_extents = value; }
         }
 
+        /// <summary>
+        /// Gets the extents of each glyph in the measured text.
+        /// </summary>
+        /// <param name="i">The index of the glyph.</param>
+        /// <returns>The extents of the specified glyph.</returns>
         public RectangleF this[int i]
         {
             get { return glyph_extents[i]; }
             internal set { glyph_extents[i] = value; }
         }
 
+        /// <summary>
+        /// Gets the extents of each glyph in the measured text.
+        /// </summary>
         public IEnumerable<RectangleF> GlyphExtents
         {
-            get
-            {
-                return (IEnumerable<RectangleF>)glyph_extents;
-            }
+            get { return (IEnumerable<RectangleF>)glyph_extents; }
         }
 
+        /// <summary>
+        /// Gets the number of the measured glyphs.
+        /// </summary>
         public int Count
         {
             get { return glyph_extents.Count; }
-        }
-
-        public TextExtents Clone()
-        {
-            TextExtents extents = new TextExtents();
-            extents.glyph_extents.AddRange(GlyphExtents);
-            extents.BoundingBox = BoundingBox;
-            return extents;
         }
 
         #endregion
@@ -107,10 +112,21 @@ namespace OpenTK.Graphics.Text
             glyph_extents.Clear();
         }
 
+        internal TextExtents Clone()
+        {
+            TextExtents extents = new TextExtents();
+            extents.glyph_extents.AddRange(GlyphExtents);
+            extents.BoundingBox = BoundingBox;
+            return extents;
+        }
+
         #endregion
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Frees the resources consumed by this TextExtents instance.
+        /// </summary>
         public virtual void Dispose()
         {
         }
