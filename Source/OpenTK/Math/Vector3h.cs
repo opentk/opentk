@@ -26,11 +26,13 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace OpenTK.Math
 {
-
-    /// <summary>3-component Vector of the Half type. Occupies 6 Byte total.</summary>
+    /// <summary>
+    /// 3-component Vector of the Half type. Occupies 6 Byte total.
+    /// </summary>
     [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Vector3h : ISerializable, IEquatable<Vector3h>
     {
@@ -194,6 +196,7 @@ namespace OpenTK.Math
         /// <summary>
         /// Gets or sets an OpenTK.Math.Vector2h with the X and Y components of this instance.
         /// </summary>
+        [XmlIgnore]
         public Vector2h Xy { get { return new Vector2h(X, Y); } set { X = value.X; Y = value.Y; } }
 
         #endregion

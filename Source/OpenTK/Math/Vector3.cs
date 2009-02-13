@@ -24,10 +24,13 @@ SOFTWARE.
 
 using System;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK.Math
 {
-	/// <summary>Represents a 3D vector using three single-precision floating-point numbers.</summary>
+	/// <summary>
+    /// Represents a 3D vector using three single-precision floating-point numbers.
+    /// </summary>
     /// <remarks>
     /// The Vector3 structure is suitable for interoperation with unmanaged code requiring three consecutive floats.
     /// </remarks>
@@ -1009,6 +1012,7 @@ namespace OpenTK.Math
         /// <summary>
         /// Gets or sets an OpenTK.Math.Vector2 with the X and Y components of this instance.
         /// </summary>
+        [XmlIgnore]
         public Vector2 Xy { get { return new Vector2(X, Y); } set { X = value.X; Y = value.Y; } }
 
         #endregion
