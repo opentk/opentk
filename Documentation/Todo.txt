@@ -24,19 +24,18 @@ Generic Todos:
 
 
 Bind:
-* Get ready for OpenGL 3.0 (Long Peaks).
 * Implement Glx bindings.
 
 
 OpenTK.Graphics todos:
-* Improve call performance for functions that use GCHandles.
+* Improve performance for functions that return StringBuilders.
+* Improve performance for functions that use GCHandles.
 * Inline XML documentation.
 
 
 OpenTK.Platform:
 * GLContext class:
 	+ FSAA support.
-	+ Add native support for the MacOS X platform (now goes through X).
 * GLControl class:
 	+ Improve the designer interface.
 
