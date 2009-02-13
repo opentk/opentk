@@ -3,6 +3,9 @@
 ---------------------
 OpenTK 0.9.1 -> 0.9.2
 ---------------------
++ Bind
+    + Added the Half type to the typemaps.
+
 + OpenTK
     + Platform
         + Added GdiPlus bindings.
@@ -12,10 +15,14 @@ OpenTK 0.9.1 -> 0.9.2
     + Graphics
         + Added Color4 struct that can hold floating-point ARGB colors.
         + Added several new overloads to the GL class. Most deal with OpenTK.Math and System.Drawing.Color interoperation.
+        + Added support for the Half type.
     + Math
         + Added half and double precision structures.
         + Added missing ref overloads.
-        + All structs now implement the IEquatable and ISerializable interfaces.
+        + All structs now implement the IEquatable interface.
+        + Added the SerializableAttribute to the Quaternion and Quaterniond structs.
+        + Fixed Quaternion/Quaterniond.ToAxisAngle with an angle of 0 degrees.
+        + Quaternion/Quaterniond now follow the recommended class library naming conventions.
     + General
         + Fixed build warnings.
         + Eliminated per-frame memory allocations in release builds.
