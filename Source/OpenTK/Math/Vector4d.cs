@@ -903,6 +903,22 @@ namespace OpenTK.Math
             }
         }
 
+        /// <summary>Converts OpenTK.Math.Vector4 to OpenTK.Math.Vector4d.</summary>
+        /// <param name="v4">The Vector4 to convert.</param>
+        /// <returns>The resulting Vector4d.</returns>
+        public static explicit operator Vector4d( Vector4 v4 )
+        {
+            return new Vector4d( v4.X, v4.Y, v4.Z, v4.W );
+        }
+
+        /// <summary>Converts OpenTK.Math.Vector4d to OpenTK.Math.Vector4.</summary>
+        /// <param name="v4d">The Vector4d to convert.</param>
+        /// <returns>The resulting Vector4.</returns>
+        public static explicit operator Vector4( Vector4d v4d )
+        {
+            return new Vector4( (float)v4d.X, (float)v4d.Y, (float)v4d.Z, (float)v4d.W );
+        }
+
         #endregion
 
         #region Overrides
