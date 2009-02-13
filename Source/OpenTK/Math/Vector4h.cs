@@ -206,6 +206,20 @@ namespace OpenTK.Math
 
         #endregion Constructors
 
+        #region Swizzle
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Math.Vector2h with the X and Y components of this instance.
+        /// </summary>
+        public Vector2h Xy { get { return new Vector2h(X, Y); } set { X = value.X; Y = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Math.Vector3h with the X, Y and Z components of this instance.
+        /// </summary>
+        public Vector3h Xyz { get { return new Vector3h(X, Y, Z); } set { X = value.X; Y = value.Y; Z = value.Z; } }
+
+        #endregion
+
         #region Half -> Single
 
         /// <summary>

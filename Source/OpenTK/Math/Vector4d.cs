@@ -822,6 +822,20 @@ namespace OpenTK.Math
 
         #endregion
 
+        #region Swizzle
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Math.Vector2d with the X and Y components of this instance.
+        /// </summary>
+        public Vector2d Xy { get { return new Vector2d(X, Y); } set { X = value.X; Y = value.Y; } }
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Math.Vector3d with the X, Y and Z components of this instance.
+        /// </summary>
+        public Vector3d Xyz { get { return new Vector3d(X, Y, Z); } set { X = value.X; Y = value.Y; Z = value.Z; } }
+
+        #endregion
+
         #region Operators
 
         public static Vector4d operator +(Vector4d left, Vector4d right)
