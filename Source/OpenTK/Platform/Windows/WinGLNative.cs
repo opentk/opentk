@@ -88,6 +88,10 @@ namespace OpenTK.Platform.Windows
                 case WindowMessage.ACTIVATE:
                     break;
 
+                case WindowMessage.NCCALCSIZE:
+                    // Need to update the client rectangle, because it has the wrong size on Vista with Aero enabled.
+                    break;
+
                 case WindowMessage.WINDOWPOSCHANGED:
                     WindowPosition pos = (WindowPosition)Marshal.PtrToStructure(m.LParam, typeof(WindowPosition));
                     position.X = pos.x;
@@ -363,7 +367,7 @@ namespace OpenTK.Platform.Windows
                     "Could not create native window and/or context. Handle: {0}",
                     this.Handle));
 
-            Functions.SetWindowPos(this.Handle, WindowPlacementOptions.TOP, Left, Top, rect.right - rect.left,
+            Functions.SetWindowPos(this.Handle, IntPtr.Zero, Left, Top, rect.right - rect.left,
                                    rect.bottom - rect.top, SetWindowPosFlags.SHOWWINDOW);
 
             context = new GraphicsContext(mode, window);
@@ -509,7 +513,7 @@ namespace OpenTK.Platform.Windows
                 }
 
                 Functions.ShowWindow(Handle, command);
-                Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, new_width, new_height, flags);
+                Functions.SetWindowPos(Handle, IntPtr.Zero, 0, 0, new_width, new_height, flags);
 
                 //windowState = value;
             }
@@ -549,8 +553,9 @@ namespace OpenTK.Platform.Windows
                 }
 
                 Functions.SetWindowLong(Handle, GetWindowLongOffsets.STYLE, (IntPtr)(int)style);
-                Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, 0, 0, SetWindowPosFlags.NOMOVE |
-                    SetWindowPosFlags.NOSIZE | SetWindowPosFlags.FRAMECHANGED | SetWindowPosFlags.SHOWWINDOW);
+                Functions.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0,
+                    SetWindowPosFlags.NOMOVE | SetWindowPosFlags.NOSIZE | SetWindowPosFlags.NOZORDER | SetWindowPosFlags.NOACTIVATE |
+                    SetWindowPosFlags.FRAMECHANGED | SetWindowPosFlags.SHOWWINDOW | SetWindowPosFlags.DRAWFRAME);
 
                 //windowBorder = value;
             }
@@ -576,7 +581,7 @@ namespace OpenTK.Platform.Windows
                 if (value <= 0) throw new ArgumentOutOfRangeException("Window width must be higher than zero.");
                 //if (WindowState == WindowState.Fullscreen || WindowState == WindowState.Maximized)
                 //    throw new InvalidOperationException("Cannot resize a fullscreen or maximized window.");
-                Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, value, Height, SetWindowPosFlags.NOMOVE);
+                Functions.SetWindowPos(Handle, IntPtr.Zero, 0, 0, value, Height, SetWindowPosFlags.NOMOVE);
             }
         }
 
@@ -594,7 +599,7 @@ namespace OpenTK.Platform.Windows
             set
             {
                 if (value <= 0) throw new ArgumentOutOfRangeException("Window height must be higher than zero.");
-                Functions.SetWindowPos(Handle, WindowPlacementOptions.TOP, 0, 0, Width, value, SetWindowPosFlags.NOMOVE);
+                Functions.SetWindowPos(Handle, IntPtr.Zero, 0, 0, Width, value, SetWindowPosFlags.NOMOVE);
             }
         }
 

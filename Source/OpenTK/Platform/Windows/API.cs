@@ -104,7 +104,7 @@ namespace OpenTK.Platform.Windows
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetWindowPos(
             IntPtr handle,
-            WindowPlacementOptions placement,
+            IntPtr insertAfter,
             int x, int y, int cx, int cy,
             SetWindowPosFlags flags
         );
@@ -2459,6 +2459,22 @@ namespace OpenTK.Platform.Windows
     #endregion
 
     #region --- Enums ---
+
+    #region 
+    
+    internal enum NcCalcSizeOptions
+    {
+        ALIGNTOP = 0x10,
+        ALIGNRIGHT = 0x80,
+        ALIGNLEFT = 0x20,
+        ALIGNBOTTOM = 0x40,
+        HREDRAW = 0x100,
+        VREDRAW = 0x200,
+        REDRAW = (HREDRAW | VREDRAW),
+        VALIDRECTS = 0x400
+    }
+
+    #endregion
 
     #region internal enum DisplayModeSettingsEnum
 
