@@ -16,6 +16,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Provides text printing through OpenGL 1.1 Display Lists.
     /// </summary>
+    [Obsolete()]
     class DisplayListTextPrinter : ITextPrinterImplementation
     {
         #region IPrinter Members

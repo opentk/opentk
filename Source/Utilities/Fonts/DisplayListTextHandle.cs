@@ -11,6 +11,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Graphics
 {
+    [Obsolete()]
     class DisplayListTextHandle : TextHandle
     {
         public DisplayListTextHandle(int handle) : base(handle) { }

@@ -53,7 +53,7 @@ namespace Examples.WinForms
                 GL.GetString(StringName.Renderer) + " " +
                 GL.GetString(StringName.Version);
 
-            GL.ClearColor(Color.SteelBlue);
+            GL.ClearColor(Color.MidnightBlue);
             GL.Enable(EnableCap.DepthTest);
 
             Application.Idle += Application_Idle;

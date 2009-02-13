@@ -6,10 +6,31 @@ OpenTK 0.9.1 -> 0.9.2
 + OpenTK
     + Platform
         + Added GdiPlus bindings.
-        
+        + Fixed a bug where the KeypardEnter key was reported as Enter on X11.
+        + Changed the Time X11 struct from int to IntPtr.
+        + Improved GLControl implementations.
+    + Graphics
+        + Added Color4 struct that can hold floating-point ARGB colors.
+        + Added several new overloads to the GL class. Most deal with OpenTK.Math and System.Drawing.Color interoperation.
+    + Math
+        + Added half and double precision structures.
+        + Added missing ref overloads.
+        + All structs now implement the IEquatable and ISerializable interfaces.
+    + General
+        + Fixed build warnings.
+        + Eliminated per-frame memory allocations in release builds.
+
 + Utilities
     + Fonts
         + Updated the layout code to use the new GdiPlus bindings.
+        + Added support for near-, far- and center-aligned text.
+        + Added support for right-to-left and vertical text (not 100% complete).
+        + Added support for subpixel antialiasing (requires GL 1.2 or higher).
+
++ Examples
+    + Improved ExampleLauncher behavior on recent Mono/Linux releases.
+    + Switched to the new TextPrinter implementation.
+    + Changed background color from SteelBlue to MidnightBlue.
 
 ---------------------
 OpenTK 0.9.0 -> 0.9.1

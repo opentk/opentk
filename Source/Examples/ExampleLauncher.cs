@@ -247,7 +247,7 @@ namespace Examples
                 //fileIO.Demand();
 
                 Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(true);
+                Application.SetCompatibleTextRenderingDefault(false);
                 using (Form exampleLauncher = new ExampleLauncher())
                 {
                     Application.Run(exampleLauncher);
