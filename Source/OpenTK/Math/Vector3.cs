@@ -1004,6 +1004,15 @@ namespace OpenTK.Math
 
         #endregion
 
+        #region Swizzle
+
+        /// <summary>
+        /// Gets or sets an OpenTK.Math.Vector2 with the X and Y components of this instance.
+        /// </summary>
+        public Vector2 Xy { get { return new Vector2(X, Y); } set { X = value.X; Y = value.Y; } }
+
+        #endregion
+
         #region Operators
 
         public static Vector3 operator +(Vector3 left, Vector3 right)
