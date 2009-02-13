@@ -13,15 +13,25 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Represents a handle to cached text.
     /// </summary>
-    public abstract class TextHandle : IDisposable
+    [Obsolete("Use TextPrinter.Print instead")]
+    public class TextHandle : IDisposable
     {
+        internal string Text;
+        internal System.Drawing.Font GdiPFont;
+
         /// <summary>
         /// Constructs a new TextHandle,
         /// </summary>
         /// <param name="handle"></param>
-        public TextHandle(int handle)
+        internal TextHandle(int handle)
         {
             Handle = handle;
+        }
+
+        internal TextHandle(string text, System.Drawing.Font font)
+        {
+            Text = text;
+            GdiPFont = font;
         }
 
         private int handle;

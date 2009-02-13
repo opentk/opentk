@@ -8,6 +8,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Drawing;
 
 using OpenTK;
 using OpenTK.Input;
@@ -25,7 +26,7 @@ namespace Examples.Tutorial
         {
         }
 
-        TextureFont sans = new TextureFont(new System.Drawing.Font(System.Drawing.FontFamily.GenericSansSerif, 14.0f));
+        Font sans = new Font(System.Drawing.FontFamily.GenericSansSerif, 16.0f);
         ITextPrinter text = new TextPrinter();
         
         uint ColorTexture;
@@ -236,7 +237,7 @@ namespace Examples.Tutorial
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
             text.Begin();
-            text.Draw((1.0 / e.Time).ToString("F2"), sans);
+            text.Print((1.0 / e.Time).ToString("F2"), sans, Color.White);
             text.End();
 
             GL.PushMatrix();

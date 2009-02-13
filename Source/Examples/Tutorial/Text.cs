@@ -23,10 +23,9 @@ namespace Examples.Tutorial
     [Example("Text", ExampleCategory.Tutorial, 4)]
     public class Text : GameWindow
     {
-        TextureFont serif = new TextureFont(new Font(FontFamily.GenericSerif, 24.0f));
-        TextureFont sans = new TextureFont(new Font(FontFamily.GenericSansSerif, 14.0f));
-        TextHandle poem_handle;
-        ITextPrinter text = new TextPrinter();
+        Font serif = new Font(FontFamily.GenericSerif, 16.0f);
+        Font sans = new Font(FontFamily.GenericSansSerif, 18.0f);
+        TextPrinter text = new TextPrinter();
 
  	    string poem = new StreamReader("Data/Poem.txt").ReadToEnd();
         int lines;  // How many lines the poem contains.
@@ -44,11 +43,10 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(Color.SteelBlue);
+            GL.ClearColor(Color.MidnightBlue);
 
             current_position = initial_position;
             scroll_speed = -1.0f;
-            text.Prepare(poem, serif, out poem_handle);
 
             // Count the amount of lines in the text, to find out the correct
             // warparound position. We want the text to scroll until the last
@@ -58,8 +56,7 @@ namespace Examples.Tutorial
                 if (c == '\n')
                     lines++;
 
-            warparound_position =
-                -(lines + 1) * serif.Height;
+            warparound_position = -(lines + 1) * serif.Height;
         }
 
         #endregion
@@ -68,8 +65,10 @@ namespace Examples.Tutorial
 
         public override void OnUnload(EventArgs e)
         {
-            if (poem_handle != null) poem_handle.Dispose();
-            if (serif != null) serif.Dispose();
+            if (serif != null)
+                serif.Dispose();
+            if (sans != null)
+                sans.Dispose();
         }
 
         #endregion
@@ -81,9 +80,7 @@ namespace Examples.Tutorial
             GL.Viewport(0, 0, Width, Height);
 
             initial_position = Height + serif.Height;   // Start one line below the screen.
-
-            warparound_position =
-                -(lines + 1) * serif.Height;
+            warparound_position = -(lines + 1) * serif.Height;
         }
 
         #endregion
@@ -93,11 +90,11 @@ namespace Examples.Tutorial
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
             if (Keyboard[Key.Space])
-                scroll_speed = 0.0f;
+                scroll_speed = 0;
             if (Keyboard[Key.Down])
-                scroll_speed += 1;
+                scroll_speed += 10;
             if (Keyboard[Key.Up])
-                scroll_speed -= 1;
+                scroll_speed -= 10;
             if (Keyboard[Key.Escape])
                 this.Exit();
         }
@@ -113,7 +110,7 @@ namespace Examples.Tutorial
             // We'll start printing from the lower left corner of the screen. The text
             // will slowly move updwards - the user can control the movement speed with
             // the keyboard arrows and the space bar.
-            current_position += scroll_speed * (float)e.ScaleFactor;
+            current_position += scroll_speed * (float)e.Time;
             if (scroll_speed > 0.0f && current_position > initial_position)
                 current_position = warparound_position;
             else if (scroll_speed < 0.0f && current_position < warparound_position)
@@ -125,13 +122,18 @@ namespace Examples.Tutorial
             // used in 2d graphics, and is necessary for achieving pixel-perfect glyph rendering.
             // TextPrinter.End() restores your previous projection/modelview matrices.
             text.Begin();
-            GL.Color3(Color.LightBlue);
-            text.Draw((1.0 / e.Time).ToString("F2"), sans);
-            GL.Translate(0.0f, current_position, 0.0f);
-            GL.Color3(Color.White);
-            text.Draw(poem_handle);
+
+            // Print FPS counter. Since the counter changes per frame,
+            // it shouldn't be cached (TextPrinterOptions.NoCache).
+            text.Print((1.0 / e.Time).ToString("F2"), sans, Color.SpringGreen, new RectangleF(0, 0, Width, 0), TextPrinterOptions.NoCache, TextAlignment.Far);
+
+            // Print the actual text.
+            GL.Translate(0, current_position, 0);
+            text.Print(poem, serif, Color.White, new RectangleF(Width / 2, 0, Width / 2, 0), TextPrinterOptions.Default, TextAlignment.Far);
+            text.Print(poem, serif, Color.White, new RectangleF(0, 0, Width / 2, 0));
+
             text.End();
-            
+
             SwapBuffers();
         }
 

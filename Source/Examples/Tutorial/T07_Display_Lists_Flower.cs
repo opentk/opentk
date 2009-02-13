@@ -45,7 +45,7 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(Color.SteelBlue);
+            GL.ClearColor(Color.MidnightBlue);
             GL.Enable(EnableCap.DepthTest);
 
             GL.MatrixMode(MatrixMode.Modelview);

@@ -58,7 +58,7 @@ namespace Examples.Tutorial
         /// <param name="e">Not used.</param>
         public override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(Color.SteelBlue);
+            GL.ClearColor(Color.MidnightBlue);
         }
 
         #endregion
@@ -110,7 +110,7 @@ namespace Examples.Tutorial
 
             GL.Begin(BeginMode.Triangles);
 
-            GL.Color3(Color.LightSteelBlue);
+            GL.Color3(Color.MidnightBlue);
             GL.Vertex2(-1.0f, 1.0f);
             GL.Color3(Color.SpringGreen);
             GL.Vertex2(0.0f, -1.0f);

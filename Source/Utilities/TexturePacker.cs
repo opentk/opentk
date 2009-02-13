@@ -54,7 +54,7 @@ namespace OpenTK
 
                 // Tree is full and insertion failed:
                 if (node == null)
-                    throw new InvalidOperationException("There is not enough space to add this item. Consider calling the Clear() method.");
+                    throw new TexturePackerFullException();
 
                 //items.Add(item, node);
                 rect = node.Rect;
@@ -192,5 +192,10 @@ namespace OpenTK
         }
 
         #endregion
+    }
+
+    class TexturePackerFullException : Exception
+    {
+        public TexturePackerFullException() : base("There is not enough space to add this item. Consider calling the Clear() method.") { }
     }
 }
