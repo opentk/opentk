@@ -32,7 +32,7 @@ namespace OpenTK.Math
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Quaternion
+    public struct Quaternion : IEquatable<Quaternion>
     {
         #region Fields
 
@@ -111,7 +111,7 @@ namespace OpenTK.Math
 
         #region Instance
 
-        #region pubilc void ToAxisAngle(out Vector3 axis, out float angle)
+        #region ToAxisAngle
 
         /// <summary>
 		/// Convert the current quaternion to axis angle representation
@@ -120,18 +120,38 @@ namespace OpenTK.Math
 		/// <param name="angle">The resultant angle</param>
 		public void ToAxisAngle(out Vector3 axis, out float angle)
 		{
-			Quaternion q = this;
-			if (q.W > 1.0f)
-				q.Normalize();
-
-			angle = 2.0f * (float)System.Math.Acos(q.W);
-			float den = (float)System.Math.Sqrt(1.0 - q.W * q.W);
-			axis = q.XYZ;
-			if (den > 0.0001f)
-			{
-				axis = q.XYZ / den;
-			}
+            Vector4 result = ToAxisAngle();
+            axis = result.Xyz;
+            angle = result.W;
 		}
+
+        /// <summary>
+        /// Convert this instance to an axis-angle representation.
+        /// </summary>
+        /// <returns>A Vector4 that is the axis-angle representation of this quaternion.</returns>
+        public Vector4 ToAxisAngle()
+        {
+            Quaternion q = this;
+            if (q.W > 1.0f)
+                q.Normalize();
+
+            Vector4 result = new Vector4();
+
+            result.W = 2.0f * (float)System.Math.Acos(q.W); // angle
+            float den = (float)System.Math.Sqrt(1.0 - q.W * q.W);
+            if (den > 0.0001f)
+            {
+                result.Xyz = q.XYZ / den;
+            }
+            else
+            {
+                // This occurs when the angle is zero. 
+                // Not a problem: just set an arbitrary normalized axis.
+                result.Xyz = Vector3.UnitX;
+            }
+
+            return result;
+        }
 
 		#endregion
 
@@ -483,18 +503,14 @@ namespace OpenTK.Math
 			return left;
 		}
 
-		[CLSCompliant(false)]
-		unsafe public static explicit operator float*(Quaternion q)
+        public static bool operator ==(Quaternion left, Quaternion right)
         {
-            return &q.XYZ.X;
+            return left.Equals(right);
         }
 
-		public static explicit operator IntPtr(Quaternion q)
+        public static bool operator !=(Quaternion left, Quaternion right)
         {
-			unsafe
-			{
-				return (IntPtr)(&q.XYZ.X);
-			}
+            return !left.Equals(right);
         }
 
         #endregion
@@ -514,7 +530,49 @@ namespace OpenTK.Math
 
         #endregion
 
+        #region public override bool Equals (object o)
+
+        /// <summary>
+        /// Compares this object instance to another object for equality. 
+        /// </summary>
+        /// <param name="other">The other object to be used in the comparison.</param>
+        /// <returns>True if both objects are Quaternions of equal value. Otherwise it returns false.</returns>
+        public override bool Equals(object o)
+        {
+               if (o is Quaternion == false) return false;
+               return this == (Quaternion)o;
+        }
+
         #endregion
+
+        #region public override int GetHashCode ()
+
+        /// <summary>
+        /// Provides the hash code for this object. 
+        /// </summary>
+        /// <returns>A hash code formed from the bitwise XOR of this objects members.</returns>
+        public override int GetHashCode()
+        {
+               return XYZ.GetHashCode() ^ W.GetHashCode();
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region IEquatable<Quaternion> Members
+
+        /// <summary>
+        /// Compares this Quaternion instance to another Quaternion for equality. 
+        /// </summary>
+        /// <param name="other">The other Quaternion to be used in the comparison.</param>
+        /// <returns>True if both instances are equal; false otherwise.</returns>
+        public bool Equals(Quaternion other)
+        {
+            return XYZ == other.XYZ && W == other.W;
+        }
 
         #endregion
     }
