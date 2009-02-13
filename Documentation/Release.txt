@@ -1,90 +1,38 @@
 #################################################################################
-#                       OpenTK 0.9.1 Alpha Release notes                        #
+#                       OpenTK 0.9.2 Alpha Release notes                        #
 #################################################################################
 
-IMPORTANT: This release is intended for testing and experimentation only. Use at
-your own risk!
+
+IMPORTANT: The Open Toolkit is not feature-complete at this time. Future releases may add/remove features and introduce breaking changes. Use at your own risk!
            
-0.9.1 contains updates to OpenAL (EFX/EAX extensions, AudioContext) and OpenGL
-(enums for FBOs and multiple GraphicsContexts). Resolution changes and fullscreen
-modes are now supported, and work has begun on a native Mac OS X port. Many long-
-standing bugs have been fixed, and last, but not least, new OpenAL and GLSL
-examples have been added to the Example launcher - don't forget to check these
-out!
+0.9.2 improves performance and stability, introduces a new TextPrinter implementation and adds support for the half- and double-precision math structures. All OpenTK.Math structures now support serialization and implement the IEquatable interface and OpenTK.Graphics contains many new helper functions.
 
-See below for the full changelog, in case you are interested, as well as the
-porting guidelines below (there are several breaking changes, but all are
-thankfully simple to fix).
+This release should contain few, if any, breaking changes.
 
-This release marks the third development milestone (fullscreen support). One
-missing feature, Joystick support, left to enter beta state.
+Please report bugs any bugs you encounter at http://www.opentk.com. Development will now focus on MacOS, GL3.0 and Joystick support. 
 
-Don't forget to visit our homepage at http://www.opentk.com for the latest
-developments.
-
-Till next time!
- - Stephen A.
-
----------------------------------------------------------------------------------
-
-#################################################################################
-#                            Porting from 0.9.0                                 #
-#################################################################################
-
-Updating to Mono 1.2.6 is strongly recommended
-
-To facilitate future development (e.g. OpenGL 3 support), some namespaces and
-class names have been altered. Please, run the following project-wide search and
-replace operations:
-1. "GLContext"     -> "GraphicsContext"
-2. "OpenTK.OpenGL" -> "OpenTK.Graphics"
-3. "OpenTK.OpenAL" -> "OpenTK.Audio"
-4. "GL.ReadPixel"  -> "GL.ReadPixels"
-
-The "DisplayMode" class has been marked as obsolete. Its functionality has been
-split into two classes: "DisplayResolution" and "GraphicsMode". This is mostly
-an internal change and should only affect your GameWindow constructor (a 1-line
-change to fix the warning).
-
-The "ColorMode" class has been moved to "OpenTK.Graphics.ColorDepth"; please,
-replace references with the latter.
-
-Alc and Alut will be removed in future versions. Please use
-OpenTK.Audio.AudioContext and OpenTK.Audio.AudioReader instead.
-
----------------------------------------------------------------------------------
 
 #################################################################################
 #                            Release highlights                                 #
 #################################################################################
 
- * Feature: EFX/EAX/XRAM OpenAL extensions.
- * Feature: AudioContext class to create and use OpenAL contexts.
- * Feature: AudioReader class to load audio resources. Wav/PCM formats are
-            supported, while Ogg support will be added in the future.
- * Feature: Enumerate and change resolutions through DisplayDevice and
-            DisplayResolution.
- * Feature: GameWindow Fullscreen support.
- * Feature: GameWindow borders can be made fixed or hidden.
- * Feature: VSync support under Linux.
- * Feature: Improved mode selection for OpenGL contexts.
- * Feature: Improved handling of multiple GraphicsContexts and resource sharing.
- * Feature: Improved Frame Buffer Objects (FBO) API.
- * Feature: New GLSL example (Julia Set).
- * Feature: New OpenAL example (Playback).
- * Feature: New Tests (Input Logger, GameWindow States, Resolutions).
- 
- * Fix: Improved adaptive VSync behavior in low-fps situtations.
- * Fix: Mouse movement deltas are correctly reported now.
- * Fix: Matrix4.Frustum was invalid for skewed matrices.
- * Fix (Windows): Mouse cursor no longer remains in an invalid state when
-                  entering a GameWindow.
+Features:
+  * New TextPrinter implementation with support for subpixel rendering and advanced layout.
+  * New example for testing the new TextPrinter with custom fonts.
+  * More overloads for common OpenGL functions.
+  * New half- and double-precision structures in OpenTK.Math.
+  * New properties and methods for vector structures.
 
- * Known issue: Many font layout options are not implemented.
- * Known issue: Some commandline arguments in "Bind" do not work.
- * Known issue: Audio may crack or even crash when using the obsolete Sample
-                Implementation. Upgrade to OpenAL Soft to fix this issue.
- * Known issue: Fonts are not snapped to the pixel grid and may look blurry.
- * Known issue (Linux): OpenTK may segfault while loading, on some Xorg/video
-                        driver combinations. This is known to occur on fglrx
-                        7.10-8.4.
+Bug fixes:
+  * OpenTK should no longer generate garbage when running.
+  * TextPrinter can now use an unlimited amount of fonts.
+  * KeypadEnter now reported on X11.
+  * Several platform-specific function and structure definitions have been updated.
+  * Quaternion.ToAxisString should now work for 0-degree angles.
+  * The ExampleLauncher should now behave better on X11.
+
+Known issues:
+  * Some slanted but non-italic fonts may be display cut-off overhangs.
+  * Text layout may generate garbage if TextPrinterOptions.NoCache is set.
+  * There is no MouseDevice.Move. This will be fixed in 0.9.3.
+  * GameWindow may display an invalid client area after changing the WindowBorder on Vista.

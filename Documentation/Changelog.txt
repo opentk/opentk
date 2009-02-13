@@ -39,6 +39,8 @@ OpenTK 0.9.1 -> 0.9.2
     + Switched to the new TextPrinter implementation.
     + Changed background color from SteelBlue to MidnightBlue.
 
+
+
 ---------------------
 OpenTK 0.9.0 -> 0.9.1
 ---------------------
@@ -83,6 +85,8 @@ OpenTK 0.9.0 -> 0.9.1
 	+ Added Inertia's OpenAL Playback example.
 	+ Made several tests public (Input Logger, Resolutions, GameWindow states).
 
+
+
 -----------------------
 OpenTK 0.3.13 -> 0.9.0
 -----------------------
@@ -120,6 +124,8 @@ Minor version changed to reflect current progress.
 	+ Hidden examples now displayed on Ctrl+F1.
 	+ Bugfixes to GLSL and VBO examples.
 	+ Input logger works again (hidden example).
+
+
 
 -----------------------
 OpenTK 0.3.12 -> 0.3.13
