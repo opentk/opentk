@@ -20,7 +20,7 @@ namespace Examples.Tests
     [Example("GameWindow states", ExampleCategory.Test)]
     public class GameWindowStates : GameWindow
     {
-        TextureFont font = new TextureFont(new Font(FontFamily.GenericSansSerif, 16.0f));
+        Font font = new Font(FontFamily.GenericSansSerif, 16.0f);
         TextPrinter printer = new TextPrinter();
         
         #region GetNext and GetPrevious methods for enums.         
@@ -67,7 +67,7 @@ namespace Examples.Tests
             this.Keyboard.KeyRepeat = true;
             this.Keyboard.KeyUp += new OpenTK.Input.KeyUpEvent(Keyboard_KeyUp);
 
-            GL.ClearColor(System.Drawing.Color.SteelBlue);
+            GL.ClearColor(System.Drawing.Color.MidnightBlue);
         }
 
         void Keyboard_KeyUp(KeyboardDevice sender, Key key)
@@ -118,13 +118,14 @@ namespace Examples.Tests
 
             printer.Begin();
 
-            printer.Draw("Instructions:", font); GL.Translate(0, font.Height, 0);
-            printer.Draw(String.Format("1 - cycle through window styles (current: {0}).", this.WindowState), font);
+            printer.Print("Instructions:", font, Color.White);
             GL.Translate(0, font.Height, 0);
-            printer.Draw(String.Format("2 - cycle through window borders (current: {0}).", this.WindowBorder), font);
+            printer.Print(String.Format("1 - cycle through window styles (current: {0}).", this.WindowState), font, Color.White, RectangleF.Empty);
             GL.Translate(0, font.Height, 0);
-            printer.Draw(String.Format("3 - toggle fullscreen (current: {0}).",
-                                       this.WindowState == WindowState.Fullscreen ? "enabled" : "disabled"), font);
+            printer.Print(String.Format("2 - cycle through window borders (current: {0}).", this.WindowBorder), font, Color.White, RectangleF.Empty);
+            GL.Translate(0, font.Height, 0);
+            printer.Print(String.Format("3 - toggle fullscreen (current: {0}).",
+                                       this.WindowState == WindowState.Fullscreen ? "enabled" : "disabled"), font, Color.White, RectangleF.Empty);
             
 
             printer.End();

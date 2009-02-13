@@ -48,7 +48,7 @@ namespace Examples.Tutorial
         {
             base.OnLoad(e);
 
-            GL.ClearColor(Color.SteelBlue);
+            GL.ClearColor(Color.MidnightBlue);
             GL.Enable(EnableCap.DepthTest);
         }
 

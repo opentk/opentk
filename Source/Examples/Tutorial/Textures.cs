@@ -39,7 +39,7 @@ namespace Examples.Tutorial
         /// <param name="e">Not used.</param>
         public override void OnLoad(EventArgs e)
         {
-            GL.ClearColor(Color.SteelBlue);
+            GL.ClearColor(Color.MidnightBlue);
             GL.Enable(EnableCap.Texture2D);
 
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);

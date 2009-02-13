@@ -16,6 +16,7 @@ namespace OpenTK.Graphics
     /// <summary>
     /// Represents a single character of a specific Font.
     /// </summary>
+    [Obsolete]
     struct Glyph : IPackable<Glyph>
     {
         char character;
@@ -111,9 +112,26 @@ namespace OpenTK.Graphics
         /// <returns>A System.Int32 containing a hashcode that uniquely identifies this Glyph.</returns>
         public override int GetHashCode()
         {
-            //return character.GetHashCode() ^ font.Style.GetHashCode() ^ font.Size.GetHashCode() ^ font.Unit.GetHashCode();
             return character.GetHashCode() ^ font.GetHashCode() ^ size.GetHashCode();
         }
+
+        #endregion
+
+        #region public SizeF Size
+
+        /// <summary>
+        /// Gets the size of this Glyph.
+        /// </summary>
+        public SizeF Size { get { return size; } }
+
+        #endregion
+
+        #region public RectangleF Rectangle
+
+        /// <summary>
+        /// Gets the bounding box of this Glyph.
+        /// </summary>
+        public RectangleF Rectangle { get { return new RectangleF(PointF.Empty, Size); } }
 
         #endregion
 
@@ -154,7 +172,7 @@ namespace OpenTK.Graphics
         /// <returns>True if both Glyphs represent the same character of the same Font, false otherwise.</returns>
         public bool Equals(Glyph other)
         {
-            return Character == other.Character && Font == other.Font;
+            return Character == other.Character && Font == other.Font && Size == other.Size;
         }
 
         #endregion

@@ -168,7 +168,7 @@ namespace Examples
                 new double[] {400.0, 150.0, 0.0, 0.0, 1.0, 0.0}
             };
 
-            GL.ClearColor(System.Drawing.Color.SteelBlue);
+            GL.ClearColor(System.Drawing.Color.MidnightBlue);
 
             tess = Glu.NewTess();
             startList = GL.GenLists(3);

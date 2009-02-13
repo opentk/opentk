@@ -14,6 +14,8 @@ using System.Reflection;
 
 namespace OpenTK.Platform.X11
 {
+    // Note: This class is Mono-specific, not X11-specific!
+    // It works on all platforms (windows, linux, macos) as long as we are running on Mono.
     class X11GdiPlusInternals : IGdiPlusInternals
     {
         static readonly PropertyInfo native_graphics_property, native_font_property, native_string_format_property;

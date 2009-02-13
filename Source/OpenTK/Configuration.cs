@@ -62,6 +62,10 @@ namespace OpenTK
             Type t = Type.GetType("Mono.Runtime");
             if (t != null)
                 runningOnMono = true;
+
+            Debug.Print("Detected configuration: {0} / {1}",
+                RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnOSX ? "MacOS" : RunningOnX11 ? "X11" : "Unknown Platform",
+                RunningOnMono ? "Mono" : ".Net");
         }
 
         #endregion

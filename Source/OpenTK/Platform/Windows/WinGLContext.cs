@@ -140,8 +140,8 @@ namespace OpenTK.Platform.Windows
 
         public void SwapBuffers()
         {
-
-            Functions.SwapBuffers(currentWindow.DeviceContext);
+            if (!Functions.SwapBuffers(currentWindow.DeviceContext))
+                Debug.Print("SwapBuffers failed, error: {0}", Marshal.GetLastWin32Error());
         }
 
         #endregion
