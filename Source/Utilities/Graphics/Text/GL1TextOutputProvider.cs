@@ -65,7 +65,7 @@ namespace OpenTK.Graphics.Text
 
         public void Print(TextBlock block, Color color, IGlyphRasterizer rasterizer)
         {
-            GL.PushAttrib(AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit | AttribMask.DepthBufferBit);
+            GL.PushAttrib(AttribMask.CurrentBit | AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit | AttribMask.DepthBufferBit);
 
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
