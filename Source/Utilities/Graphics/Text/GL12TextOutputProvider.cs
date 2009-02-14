@@ -32,6 +32,7 @@ namespace OpenTK.Graphics.Text
 
         protected override void SetColor(Color color)
         {
+            GL.Color3(Color.White);
             GL.BlendColor(color);
         }
 
