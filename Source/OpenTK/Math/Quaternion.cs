@@ -51,7 +51,6 @@ namespace OpenTK.Math
 		/// <param name="v">The vector part</param>
 		/// <param name="w">The w part</param>
         public Quaternion(Vector3 v, float w)
-            : this(v.X, v.Y, v.Z, w)
         {
             this.xyz = v;
             this.w = w;
