@@ -329,14 +329,19 @@
             // 
             // MouseButtonsBox
             // 
+            this.MouseButtonsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.MouseButtonsBox.FormattingEnabled = true;
-            this.MouseButtonsBox.Location = new System.Drawing.Point(256, 44);
+            this.MouseButtonsBox.Location = new System.Drawing.Point(190, 44);
             this.MouseButtonsBox.Name = "MouseButtonsBox";
-            this.MouseButtonsBox.Size = new System.Drawing.Size(160, 134);
+            this.MouseButtonsBox.Size = new System.Drawing.Size(226, 303);
             this.MouseButtonsBox.TabIndex = 1;
             // 
             // ChooseMouse
             // 
+            this.ChooseMouse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.ChooseMouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ChooseMouse.FormattingEnabled = true;
             this.ChooseMouse.Location = new System.Drawing.Point(7, 7);
@@ -365,7 +370,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(432, 378);
             this.Controls.Add(this.tabControl);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "InputLogger";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "S04: Input Logger";
