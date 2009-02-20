@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace OpenTK.Platform.MacOS
+{
+    using Graphics;
+
+    class MacOSFactory : IPlatformFactory 
+    {
+        #region IPlatformFactory Members
+
+        public INativeGLWindow CreateGLNative()
+        {
+            return new CarbonGLNative();
+        }
+
+        public IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
+        {
+            return new CarbonGLControl(mode, owner);
+        }
+
+        public IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        {
+            return new QuartzDisplayDeviceDriver();
+        }
+
+        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering)
+        {
+            return new AglContext(mode, window, shareContext);
+        }
+
+        public IGraphicsMode CreateGraphicsMode()
+        {
+            return new MacOSGraphicsMode();
+        }
+
+        #endregion
+    }
+}

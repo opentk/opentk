@@ -72,12 +72,8 @@ namespace OpenTK.Graphics
 
                 if (designMode)
                     implementation = new Platform.Dummy.DummyGLContext(mode);
-                else if (Configuration.RunningOnWindows)
-                    implementation = new Platform.Windows.WinGLContext(mode, window, shareContext);
-                else if (Configuration.RunningOnX11)
-                    implementation = new Platform.X11.X11GLContext(mode, window, shareContext, DirectRendering);
                 else
-                    throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+                    implementation = Factory.CreateGLContext(mode, window, shareContext, DirectRendering);
 
                 lock (context_lock)
                 {
@@ -236,6 +232,10 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        internal IGraphicsContext Implementation
+        {
+            get { return implementation; }
+        }
         #region --- IGraphicsContext Members ---
 
         /// <summary>
@@ -315,6 +315,16 @@ namespace OpenTK.Graphics
             set { implementation.VSync = value;  }
         }
 
+        /// <summary>
+        /// Updates the graphics context.  This must be called when the render target
+        /// is resized for proper behavior on Mac OS X.
+        /// </summary>
+        /// <param name="window"></param>
+        public void Update(IWindowInfo window)
+        {
+            implementation.Update(window);
+        }
+        
         #endregion
 
         #region --- IGraphicsContextInternal Members ---

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("OpenTK.Utilities")]
@@ -20,7 +21,7 @@ namespace OpenTK
     /// <summary>Provides information about the underlying OS and runtime.</summary>
     public static class Configuration
     {
-        static bool runningOnWindows, runningOnX11, runningOnOSX, runningOnLinux, runningOnMono;
+        static bool runningOnWindows, runningOnX11, runningOnMacOS, runningOnLinux, runningOnMono;
 
         #region --- Constructors ---
 
@@ -47,7 +48,7 @@ namespace OpenTK
                         break;
 
                     case "Darwin":
-                        runningOnOSX = true;
+                        runningOnMacOS = true;
                         break;
 
                     default:
@@ -64,7 +65,7 @@ namespace OpenTK
                 runningOnMono = true;
 
             Debug.Print("Detected configuration: {0} / {1}",
-                RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnOSX ? "MacOS" : RunningOnX11 ? "X11" : "Unknown Platform",
+                RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" : RunningOnX11 ? "X11" : "Unknown Platform",
                 RunningOnMono ? "Mono" : ".Net");
         }
 
@@ -79,7 +80,7 @@ namespace OpenTK
 
         #endregion
 
-        #region public static bool  RunningOnX11
+        #region public static bool RunningOnX11
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on an X11 platform.</summary>
         public static bool RunningOnX11 { get { return runningOnX11; } }
@@ -93,10 +94,10 @@ namespace OpenTK
 
         #endregion
 
-        #region public static bool  RunningOnOSX
+        #region public static bool RunningOnMacOS
 
         /// <summary>Gets a System.Boolean indicating whether OpenTK is running on a MacOS platform.</summary>
-        public static bool RunningOnOSX { get { return runningOnOSX; } }
+        public static bool RunningOnMacOS { get { return runningOnMacOS; } }
 
         #endregion
 
@@ -113,40 +114,54 @@ namespace OpenTK
 
         #region private static string DetectUnixKernel()
 
-        // <summary>
-        // Executes "uname" which returns a string representing the name of the
-        // underlying Unix kernel.
-        // </summary>
-        // <returns>"Unix", "Linux", "Darwin" or null.</returns>
-        // <remarks>Source code from "Mono: A Developer's Notebook"</remarks>
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+        struct utsname
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public string sysname;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public string nodename;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public string release;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public string version;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+            public string machine;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1024)]
+            public string extraJustInCase;
+
+        }
+
+        /// <summary>
+        /// Detects the unix kernel by p/invoking the uname call in libc.
+        /// </summary>
+        /// <returns></returns>
         private static string DetectUnixKernel()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.Arguments = "-s";
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            startInfo.UseShellExecute = false;
-            foreach (string unameprog in new string[] { "/usr/bin/uname", "/bin/uname", "uname" })
-            {
-                try
-                {
-                    startInfo.FileName = unameprog;
-                    Process uname = Process.Start(startInfo);
-                    StreamReader stdout = uname.StandardOutput;
-                    return stdout.ReadLine().Trim();
-                }
-                catch (System.IO.FileNotFoundException)
-                {
-                    // The requested executable doesn't exist, try next one.
-                    continue;
-                }
-                catch (System.ComponentModel.Win32Exception)
-                {
-                    continue;
-                }
-            }
-            return null;
+            Debug.Print("Size: {0}", Marshal.SizeOf(typeof(utsname)).ToString());
+            Debug.Flush();
+            utsname uts = new utsname();
+            uname(out uts);
+
+            Debug.WriteLine("System:");
+            Debug.Indent();
+            Debug.WriteLine(uts.sysname);
+            Debug.WriteLine(uts.nodename);
+            Debug.WriteLine(uts.release);
+            Debug.WriteLine(uts.version);
+            Debug.WriteLine(uts.machine);
+            Debug.Unindent();
+
+            return uts.sysname.ToString();
         }
+
+        [DllImport("libc")]
+        private static extern void uname(out utsname uname_struct);
 
         #endregion
 
