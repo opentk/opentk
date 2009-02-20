@@ -12,13 +12,15 @@ using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics;
 using Examples.Shapes;
+using OpenTK.Math;
 
 namespace Examples.Tutorial
 {
     /// <summary>
     /// Demonstrates fixed-function OpenGL lighting.  Example is incomplete (documentation).
     /// </summary>
-    class T04_Vertex_Lighting : GameWindow, IExample
+    [Example("Vertex Lighting", ExampleCategory.OpenGL)]
+    public class T04_Vertex_Lighting : GameWindow
     {
         float x_angle, zoom;
         Shape shape = new Plane(16, 16, 4.0f, 4.0f);
@@ -116,13 +118,11 @@ namespace Examples.Tutorial
                     WindowState = WindowState.Normal;
 
             if (Mouse[OpenTK.Input.MouseButton.Left])
-                x_angle += Mouse.XDelta;
+                x_angle = Mouse.X;
             else
                 x_angle += 0.5f;
 
-            // zoom = Mouse.Wheel * 0.5f;   // Mouse.Wheel is broken on both Linux and Windows.
-            if (Mouse[OpenTK.Input.MouseButton.Right])
-                zoom += Mouse.YDelta;
+             zoom = Mouse.Wheel * 0.5f;   // Mouse.Wheel is broken on both Linux and Windows.
 
             // Do not leave x_angle drift too far away, as this will cause inaccuracies.
             if (x_angle > 360.0f)
@@ -149,9 +149,13 @@ namespace Examples.Tutorial
                        0.0, 1.0, 0.0);
             GL.Rotate(x_angle, 0.0f, 1.0f, 0.0f);
 
-            //GL.DrawElements(GL.Enums.BeginMode.TRIANGLES, shape.Indices.Length,
-            //    GL.Enums.All.UNSIGNED_INT, shape.Indices);
-            GL.DrawArrays(BeginMode.Points, 0, shape.Vertices.Length);
+            GL.Begin(BeginMode.Triangles);
+            foreach (int index in shape.Indices)
+            {
+                GL.Normal3(shape.Normals[index]);
+                GL.Vertex3(shape.Vertices[index]);
+            }
+            GL.End();
 
             SwapBuffers();
         }
@@ -166,14 +170,15 @@ namespace Examples.Tutorial
         /// <remarks>
         /// Provides a simple way for the example launcher to launch the examples.
         /// </remarks>
-        public void Launch()
+        public static void Main()
         {
-            // Lock UpdateFrame and RenderFrame at 60Hz.
-            Run(60.0, 60.0);
+            using (T04_Vertex_Lighting example = new T04_Vertex_Lighting())
+            {
+                Utilities.SetWindowTitle(example);
+                example.Run(30.0, 0.0);
+            }
         }
 
         #endregion
-
-        public static readonly int order = 4;
     }
 }
