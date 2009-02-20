@@ -76,8 +76,6 @@ namespace Examples.Tests
             while (!start)
                 Thread.Sleep(100);
 
-            //WindowInfo info = new WindowInfo(this);
-
             keyboardListBoxes.Add(hidden.Keyboard.DeviceID, listBox1);
 
             // Add available mice to the mouse input logger.
@@ -104,6 +102,8 @@ namespace Examples.Tests
 
             e.Cancel = false;
         }
+
+        #region Logging Delegates
 
         delegate void ControlLogMouseKey(GameWindow input_window, InputLogger control, object sender, MouseButtonEventArgs e);
         ControlLogMouseKey ControlLogMouseKeyDown =
@@ -152,14 +152,18 @@ namespace Examples.Tests
                 control.keyboardListBoxes[sender.DeviceID].Items.Remove(key);
             };
 
+        #endregion
+
+        #region Input Event Handlers
+
         void LogMouseMove(object sender, MouseMoveEventArgs e)
         {
-            this.BeginInvoke(ControlLogMouseMoveChanges, hidden, this, e);
+            this.BeginInvoke(ControlLogMouseMoveChanges, hidden, this, sender, e);
         }
 
         void LogMouseWheelChanged(object sender, MouseWheelEventArgs e)
         {
-            this.BeginInvoke(ControlLogMouseWheelChanges, hidden, this, e);
+            this.BeginInvoke(ControlLogMouseWheelChanges, hidden, this, sender, e);
         }
 
         void LogMouseButtonDown(object sender, MouseButtonEventArgs e)
@@ -181,6 +185,8 @@ namespace Examples.Tests
         {
             this.BeginInvoke(ControlLogKeyboardUp, hidden, this, sender, key);
         }
+
+        #endregion
 
         private void ChooseMouse_SelectedIndexChanged(object sender, EventArgs e)
         {
