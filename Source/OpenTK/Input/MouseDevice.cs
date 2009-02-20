@@ -1,4 +1,6 @@
-﻿#region --- License ---
+﻿#define COMPAT_REV1519 // Keeps compatibility with revision 1519
+
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
@@ -8,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace OpenTK.Input
 {
@@ -16,14 +19,20 @@ namespace OpenTK.Input
     /// </summary>
     public sealed class MouseDevice : IInputDevice
     {
-        private string description;
-        private int numButtons, numWheels;
-        private IntPtr id;
-        private bool[] button = new bool[(int)MouseButton.LastButton];
-        private int wheel, wheel_last_accessed = 0;
-        private Point pos = new Point();
-        private Point pos_last_accessed = new Point();
-        internal int last_x, last_y;
+        #region --- Fields ---
+
+        string description;
+        IntPtr id;
+        int numButtons, numWheels;
+        readonly bool[] button_state = new bool[Enum.GetValues(typeof(MouseButton)).Length];
+        int wheel, last_wheel;
+        Point pos = new Point(), last_pos = new Point();
+#if COMPAT_REV1519
+        int wheel_last_accessed = 0;
+        Point pos_last_accessed = new Point();
+#endif
+
+        #endregion
 
         #region --- IInputDevice Members ---
 
@@ -106,25 +115,17 @@ namespace OpenTK.Input
             internal set
             {
                 wheel = value;
-                //if (Move != null)
-                //    Move(this, EventArgs.Empty);
-            }
-        }
-
-        #endregion
-
-        #region public int WheelDelta
-
-        /// <summary>
-        /// Gets an integer representing the relative wheel movement.
-        /// </summary>
-        public int WheelDelta
-        {
-            get
-            {
-                int result = wheel - wheel_last_accessed;
-                wheel_last_accessed = wheel;
-                return result;
+                if (WheelChanged != null)
+                    WheelChanged(
+                        this,
+                        new MouseWheelEventArgs(
+                            pos.X,
+                            pos.Y,
+                            wheel,
+                            wheel - last_wheel
+                        )
+                    );
+                last_wheel = wheel;
             }
         }
 
@@ -154,39 +155,37 @@ namespace OpenTK.Input
 
         #endregion
 
-        #region public int XDelta
+        #region public bool this[MouseButton b]
 
         /// <summary>
-        /// Gets an integer representing the relative x movement of the pointer, in pixel coordinates.
+        /// Gets a System.Boolean indicating the state of the specified MouseButton.
         /// </summary>
-        public int XDelta
+        /// <param name="key">The MouseButton to check.</param>
+        /// <returns>True if the MouseButton is pressed, false otherwise.</returns>
+        public bool this[MouseButton button]
         {
             get
             {
-                int result = pos.X - pos_last_accessed.X;
-                pos_last_accessed.X = pos.X;
-                return result;
+                return button_state[(int)button];
+            }
+            internal set
+            {
+                bool previous_state = button_state[(int)button];
+                button_state[(int)button] = value;
+
+                MouseButtonEventArgs e = new MouseButtonEventArgs(pos.X, pos.Y, button, value);
+                if (value && !previous_state)
+                    ButtonDown(this, e);
+                else if (!value && previous_state)
+                    ButtonUp(this, e);
             }
         }
 
         #endregion
 
-        #region public int YDelta
-
-        /// <summary>
-        /// Gets an integer representing the relative y movement of the pointer, in pixel coordinates.
-        /// </summary>
-        public int YDelta
-        {
-            get
-            {
-                int result = pos.Y - pos_last_accessed.Y;
-                pos_last_accessed.Y = pos.Y;
-                return result;
-            }
-        }
-
         #endregion
+
+        #region --- Internal Members ---
 
         #region internal Point Position
 
@@ -198,54 +197,37 @@ namespace OpenTK.Input
             set
             {
                 pos = value;
-                //if (Move != null)
-                //    Move(this, EventArgs.Empty);
+                last_pos = pos;
+
+                Move(this, new MouseMoveEventArgs(pos.X, pos.Y, pos.X - last_pos.X, pos.Y - last_pos.Y));
             }
         }
 
         #endregion
 
-        ///// <summary>
-        /// Occurs when the mouse, or one of its wheels, is moved.
+        #endregion
+
+        #region --- Events ---
+
+        /// <summary>
+        /// Occurs when the mouse's position is moved.
         /// </summary>
-        //public event MouseMoveEvent Move;
+        public event MouseMoveEventHandler Move = delegate(object sender, MouseMoveEventArgs e) { };
 
         /// <summary>
         /// Occurs when a button is pressed.
         /// </summary>
-        public event MouseButtonDownEvent ButtonDown;
+        public event MouseButtonEventHandler ButtonDown = delegate(object sender, MouseButtonEventArgs e) { };
 
         /// <summary>
         /// Occurs when a button is released.
         /// </summary>
-        public event MouseButtonUpEvent ButtonUp;
-
-        #region public bool this[MouseButton b]
+        public event MouseButtonEventHandler ButtonUp = delegate(object sender, MouseButtonEventArgs e) { };
 
         /// <summary>
-        /// Gets a value indicating the status of the specified MouseButton.
+        /// Occurs when one of the mouse wheels is moved.
         /// </summary>
-        /// <param name="key">The MouseButton to check.</param>
-        /// <returns>True if the MouseButton is pressed, false otherwise.</returns>
-        public bool this[MouseButton b]
-        {
-            get
-            {
-                return button[(int)b];
-            }
-            internal set
-            {
-                if (ButtonDown != null && value && !button[(int)b])
-                    ButtonDown(this, b);
-                else if (ButtonUp != null && !value && button[(int)b])
-                    ButtonUp(this, b);
-                button[(int)b] = value;
-
-                //System.Diagnostics.Debug.Print("Mouse button {0} {1}", b, value ? "down" : "up");
-            }
-        }
-
-        #endregion
+        public event MouseWheelEventHandler WheelChanged = delegate(object sender, MouseWheelEventArgs e) { };
 
         #region --- Overrides ---
 
@@ -264,26 +246,278 @@ namespace OpenTK.Input
         #endregion
 
         #endregion
+
+        #region COMPAT_REV1519
+
+#if COMPAT_REV1519
+
+        #region public int WheelDelta
+
+        /// <summary>
+        /// Gets an integer representing the relative wheel movement.
+        /// </summary>
+        [Obsolete("WheelDelta is only defined for a single WheelChanged event.  Use the OpenTK.Input.MouseWheelEventArgs::Delta property with the OpenTK.Input.MouseDevice::WheelChanged event.", false)]
+        public int WheelDelta
+        {
+            get
+            {
+                int result = wheel - wheel_last_accessed;
+                wheel_last_accessed = wheel;
+                return result;
+            }
+        }
+
+        #endregion
+
+        #region public int XDelta
+
+        /// <summary>
+        /// Gets an integer representing the relative x movement of the pointer, in pixel coordinates.
+        /// </summary>
+        [Obsolete("XDelta is only defined for a single Move event.  Use the OpenTK.Input.MouseMoveEventArgs::Delta property with the OpenTK.Input.MouseDevice::Move event.", false)]
+        public int XDelta
+        {
+            get
+            {
+                int result = pos.X - pos_last_accessed.X;
+                pos_last_accessed.X = pos.X;
+                return result;
+            }
+        }
+
+        #endregion
+
+        #region public int YDelta
+
+        /// <summary>
+        /// Gets an integer representing the relative y movement of the pointer, in pixel coordinates.
+        /// </summary>
+        [Obsolete("YDelta is only defined for a single Move event.  Use the OpenTK.Input.MouseMoveEventArgs::Delta property with the OpenTK.Input.MouseDevice::Move event.", false)]
+        public int YDelta
+        {
+            get
+            {
+                int result = pos.Y - pos_last_accessed.Y;
+                pos_last_accessed.Y = pos.Y;
+                return result;
+            }
+        }
+
+        #endregion
+
+#endif
+
+        #endregion
+    }
+
+    #region Event Arguments
+
+    public struct MouseMoveEventArgs
+    {
+        #region Fields
+
+        int x, y;
+        int x_delta, y_delta;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
+        /// </summary>
+        /// <param name="x">The X position.</param>
+        /// <param name="y">The Y position.</param>
+        /// <param name="xDelta">The change in X position produced by this event.</param>
+        /// <param name="yDelta">The change in Y position produced by this event.</param>
+        public MouseMoveEventArgs(int x, int y, int xDelta, int yDelta)
+        {
+            this.x = x;
+            this.y = y;
+            this.x_delta = xDelta;
+            this.y_delta = yDelta;
+        }
+
+        #endregion
+
+        #region Public Members
+
+        /// <summary>
+        /// Gets the X position of the mouse for the event.
+        /// </summary>
+        public int X { get { return x; } }
+
+        /// <summary>
+        /// Gets the Y position of the mouse for the event.
+        /// </summary>
+        public int Y { get { return y; } }
+
+        /// <summary>
+        /// Gets a System.Drawing.Points representing the location of the mouse for the event.
+        /// </summary>
+        public Point Position { get { return new Point(x, y); } }
+
+        /// <summary>
+        /// Gets the change in X position produced by this event.
+        /// </summary>
+        public int XDelta { get { return x_delta; } }
+
+        /// <summary>
+        /// Gets the change in Y position produced by this event.
+        /// </summary>
+        public int YDelta { get { return y_delta; } }
+
+        #endregion
     }
 
     /// <summary>
-    /// Defines a MouseMove event.
+    /// Provides data for the <see cref="MouseDevice.ButtonDown"/> and <see cref="MouseDevice.ButtonUp"/> events.
     /// </summary>
-    /// <param name="sender">The MouseDevice that generated this event.</param>
-    /// <param name="e">Not used.</param>
-    public delegate void MouseMoveEvent(MouseDevice sender, EventArgs e);
+    public struct MouseButtonEventArgs
+    {
+        #region Fields
+
+        MouseButton button;
+        bool pressed;
+        int x, y;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MouseButtonEventArgs"/> class.
+        /// </summary>
+        /// <param name="x">The X position.</param>
+        /// <param name="y">The Y position.</param>
+        /// <param name="button">The mouse button for the event.</param>
+        /// <param name="pressed">The current state of the button.</param>
+        internal MouseButtonEventArgs(int x, int y, MouseButton button, bool pressed)
+        {
+            this.x = x;
+            this.y = y;
+            this.button = button;
+            this.pressed = pressed;
+        }
+
+        #endregion
+
+        #region Public Members
+
+        /// <summary>
+        /// Gets the X position of the mouse for the event.
+        /// </summary>
+        public int X { get { return x; } }
+
+        /// <summary>
+        /// Gets the Y position of the mouse for the event.
+        /// </summary>
+        public int Y { get { return y; } }
+
+        /// <summary>
+        /// Gets a System.Drawing.Points representing the location of the mouse for the event.
+        /// </summary>
+        public Point Position { get { return new Point(x, y); } }
+
+        /// <summary>
+        /// The mouse button for the event.
+        /// </summary>
+        public MouseButton Button { get { return this.button; } }
+
+        /// <summary>
+        /// Gets a System.Boolean representing the state of the mouse button for the event.
+        /// </summary>
+        public bool IsPressed { get { return pressed; } }
+
+        #endregion
+    }
 
     /// <summary>
-    /// Defines the MouseButtonDown event.
+    /// Provides data for the <see cref="MouseDevice.WheelChanged"/> event.
     /// </summary>
-    /// <param name="sender">The MouseDevice that generated this event.</param>
-    /// <param name="button">The MouseButton that was pressed.</param>
-    public delegate void MouseButtonDownEvent(MouseDevice sender, MouseButton button);
+    public struct MouseWheelEventArgs
+    {
+        #region Fields
+
+        int value;
+        int delta;
+        int x, y;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
+        /// </summary>
+        /// <param name="x">The X position.</param>
+        /// <param name="y">The Y position.</param>
+        /// <param name="value">The value of the wheel.</param>
+        /// <param name="delta">The change in value of the wheel for this event.</param>
+        public MouseWheelEventArgs(int x, int y, int value, int delta)
+        {
+            this.x = x;
+            this.y = y;
+            this.value = value;
+            this.delta = delta;
+        }
+
+        #endregion
+
+        #region Public Members
+
+        /// <summary>
+        /// Gets the X position of the mouse for the event.
+        /// </summary>
+        public int X { get { return x; } }
+
+        /// <summary>
+        /// Gets the Y position of the mouse for the event.
+        /// </summary>
+        public int Y { get { return y; } }
+
+        /// <summary>
+        /// Gets a System.Drawing.Points representing the location of the mouse for the event.
+        /// </summary>
+        public Point Position { get { return new Point(x, y); } }
+
+        /// <summary>
+        /// The value of the wheel.
+        /// </summary>
+        public int Value { get { return value; } }
+
+        /// <summary>
+        /// The change in value of the wheel for this event.
+        /// </summary>
+        public int Delta { get { return delta; } }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region Event Handlers
 
     /// <summary>
-    /// Defines the MouseButtonUp event.
+    /// Defines a <see cref="MouseDevice.Move"/> event.
     /// </summary>
     /// <param name="sender">The MouseDevice that generated this event.</param>
-    /// <param name="button">The MouseButton that was released.</param>
-    public delegate void MouseButtonUpEvent(MouseDevice sender, MouseButton button);
+    /// <param name="e">A <see cref="MouseMoveEventArgs"/> that contains the event data.</param>
+    public delegate void MouseMoveEventHandler(object sender, MouseMoveEventArgs e);
+
+    /// <summary>
+    /// Defines a <see cref="MouseDevice.WheelChanged"/> event.
+    /// </summary>
+    /// <param name="sender">The MouseDevice that generated this event.</param>
+    /// <param name="e">A <see>MouseWheelEventArgs</see> that contains the event data.</param>
+    public delegate void MouseWheelEventHandler(object sender, MouseWheelEventArgs e);
+
+    /// <summary>
+    /// Defines the <see cref="MouseDevice.ButtonDown"/> and <see cref="MouseDevice.ButtonUp"/> events.
+    /// </summary>
+    /// <param name="sender">The MouseDevice that generated this event.</param>
+    /// <param name="e">A <see cref="MouseButtonEventArgs"/> that contains the event data.</param>
+    public delegate void MouseButtonEventHandler(object sender, MouseButtonEventArgs e);
+
+    #endregion
 }
