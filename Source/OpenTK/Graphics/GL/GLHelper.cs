@@ -420,32 +420,32 @@ namespace OpenTK.Graphics
             else if (version.StartsWith("1.3"))
             {
                 AvailableExtensions.Add("glversion11", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
+                AvailableExtensions.Add("glversion12", true);
+                AvailableExtensions.Add("glversion13", true);
             }
             else if (version.StartsWith("1.4"))
             {
                 AvailableExtensions.Add("glversion11", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
-                AvailableExtensions.Add("gl_version_1_4", true);
+                AvailableExtensions.Add("glversion12", true);
+                AvailableExtensions.Add("glversion13", true);
+                AvailableExtensions.Add("glversion14", true);
             }
             else if (version.StartsWith("1.5"))
             {
-                AvailableExtensions.Add("gl_version_1_1", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
-                AvailableExtensions.Add("gl_version_1_4", true);
-                AvailableExtensions.Add("gl_version_1_5", true);
+                AvailableExtensions.Add("glversion11", true);
+                AvailableExtensions.Add("glversion12", true);
+                AvailableExtensions.Add("glversion13", true);
+                AvailableExtensions.Add("glversion14", true);
+                AvailableExtensions.Add("glversion15", true);
             }
             else if (version.StartsWith("2.0"))
             {
                 AvailableExtensions.Add("glversion11", true);
-                AvailableExtensions.Add("gl_version_1_2", true);
-                AvailableExtensions.Add("gl_version_1_3", true);
-                AvailableExtensions.Add("gl_version_1_4", true);
-                AvailableExtensions.Add("gl_version_1_5", true);
-                AvailableExtensions.Add("gl_version_2_0", true);
+                AvailableExtensions.Add("glversion12", true);
+                AvailableExtensions.Add("glversion13", true);
+                AvailableExtensions.Add("glversion14", true);
+                AvailableExtensions.Add("glversion15", true);
+                AvailableExtensions.Add("glversion20", true);
             }
             else if (version.StartsWith("2.1"))
             {
