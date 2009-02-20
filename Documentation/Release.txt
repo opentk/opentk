@@ -1,38 +1,28 @@
-#################################################################################
-#                       OpenTK 0.9.2 Alpha Release notes                        #
-#################################################################################
+The Open Toolkit 0.9.3 Beta Release notes
+
+This version introduces joystick support and improves improves the mouse and 
+keyboard interfaces.
+
+Please report bugs any bugs you encounter at http://www.opentk.com.
 
 
-IMPORTANT: The Open Toolkit is not feature-complete at this time. Future releases may add/remove features and introduce breaking changes. Use at your own risk!
-           
-0.9.2 improves performance and stability, introduces a new TextPrinter implementation and adds support for the half- and double-precision math structures. All OpenTK.Math structures now support serialization and implement the IEquatable interface and OpenTK.Graphics contains many new helper functions.
 
-This release should contain few, if any, breaking changes.
+API changes
 
-Please report bugs any bugs you encounter at http://www.opentk.com. Development will now focus on MacOS, GL3.0 and Joystick support. 
+The MouseDevice.ButtonDown and .ButtonUp events have changed signatures to better 
+conform to the BCL conventions. This is a breaking change. Please change your relevant 
+event handlers signatures from:
 
+void ButtonHandler(MouseDevice sender, MouseButton button)
+{
+}
 
-#################################################################################
-#                            Release highlights                                 #
-#################################################################################
+to:
 
-Features:
-  * New TextPrinter implementation with support for subpixel rendering and advanced layout.
-  * New example for testing the new TextPrinter with custom fonts.
-  * More overloads for common OpenGL functions.
-  * New half- and double-precision structures in OpenTK.Math.
-  * New properties and methods for vector structures.
+void ButtonHandler(object sender, MouseButtonEventArgs e)
+{
+}
 
-Bug fixes:
-  * OpenTK should no longer generate garbage when running.
-  * TextPrinter can now use an unlimited amount of fonts.
-  * KeypadEnter now reported on X11.
-  * Several platform-specific function and structure definitions have been updated.
-  * Quaternion.ToAxisString should now work for 0-degree angles.
-  * The ExampleLauncher should now behave better on X11.
-
-Known issues:
-  * Some slanted but non-italic fonts may be display cut-off overhangs.
-  * Text layout may generate garbage if TextPrinterOptions.NoCache is set.
-  * There is no MouseDevice.Move. This will be fixed in 0.9.3.
-  * GameWindow may display an invalid client area after changing the WindowBorder on Vista.
+The MouseDevice.XDelta, .YDelta and .WheelDelta properties have been deprecated and 
+will be removed at a later version. Please use the Move and WheelChanged events 
+instead, or track mouse deltas manually.
