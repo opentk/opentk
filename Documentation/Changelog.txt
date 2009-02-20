@@ -4,6 +4,8 @@
 OpenTK 0.9.2 -> 0.9.3
 ---------------------
 + OpenTK
+	+ Graphics
+		+ Fixed version strings in GL.SupportsExtension().
 	+ Input
 		+ Added support for the MouseDevice.Move and .WheelChanged events and improved MouseDevice interface (patches by ALyman).
 		
