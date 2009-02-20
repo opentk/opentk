@@ -235,6 +235,12 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public void Update
+        public void Update(IWindowInfo window)
+        {
+        }
+        #endregion
+
         public void RegisterForDisposal(IDisposable resource)
         {
             throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");

@@ -64,24 +64,35 @@ namespace OpenTK
 
             // On Windows, you first need to create the window, then set the pixel format.
             // On X11, you first need to select the visual, then create the window.
-            // On OSX, ???
+            // On OSX, the pixel format needs to be selected before the GL context.
             // Right now, pixel formats/visuals are selected during context creation. In the future,
             // it would be better to decouple selection from context creation, which will allow us
             // to clean up this hacky code. The best option is to do this along with multisampling
             // support.
             if (DesignMode)
                 implementation = new Platform.Dummy.DummyGLControl();
-            else if (Configuration.RunningOnWindows)
-                implementation = new Platform.Windows.WinGLControl(mode, this);
-            else if (Configuration.RunningOnX11)
-                implementation = new Platform.X11.X11GLControl(mode, this);
-            else if (Configuration.RunningOnOSX)
-                throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
+            else
+                implementation = Platform.Factory.CreateGLControl(mode, this);
 
             this.CreateControl();
         }
 
         #endregion
+
+        protected override void OnResize(EventArgs e)
+        {
+            if (context != null)
+                context.Update(window_info);
+
+            base.OnResize(e);
+        }
+        protected override void OnParentChanged(EventArgs e)
+        {
+            if (context != null)
+                context.Update(window_info);
+            
+            base.OnParentChanged(e);
+        }
 
         #region --- Protected Methods ---
 

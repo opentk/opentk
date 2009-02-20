@@ -1,4 +1,4 @@
-﻿#region --- License ---
+#region --- License ---
 /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
@@ -265,7 +265,7 @@ namespace OpenTK.Platform
         {
             if (Configuration.RunningOnWindows) return CreateWinWindowInfo(controlHandle);
             else if (Configuration.RunningOnX11) return CreateX11WindowInfo(mode, controlHandle);
-            else if (Configuration.RunningOnOSX) return CreateOSXWindowInfo(controlHandle);
+            else if (Configuration.RunningOnMacOS) return CreateMacOSCarbonWindowInfo(controlHandle);
             else
                 throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
         }
@@ -316,9 +316,9 @@ namespace OpenTK.Platform
         #endregion
         #region --- Mac OS X Platform-specific implementation ---
 
-        private static IWindowInfo CreateOSXWindowInfo(IntPtr controlHandle)
+        private static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr controlHandle)
         {
-            throw new PlatformNotSupportedException("Refer to http://www.opentk.com for more information.");
+            return new OpenTK.Platform.MacOS.CarbonWindowInfo(controlHandle, false, true);
         }
 
         #endregion
