@@ -84,14 +84,13 @@ namespace Examples.Tests
             ChooseMouse.Items.Add(String.Format("Mouse {0} ({1})", 0, hidden.Mouse.Description));
             ChooseMouse.SelectedIndex = 0;
 
-            //hidden.Mouse.Move += LogMouseMove;
+            hidden.Mouse.Move += LogMouseMove;
+            hidden.Mouse.WheelChanged += LogMouseWheelChanged;
             hidden.Mouse.ButtonDown += LogMouseButtonDown;
             hidden.Mouse.ButtonUp += LogMouseButtonUp;
 
             hidden.Keyboard.KeyDown += LogKeyDown;
             hidden.Keyboard.KeyUp += LogKeyUp;
-
-            hidden.UpdateFrame += hidden_UpdateFrame;
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -106,41 +105,39 @@ namespace Examples.Tests
             e.Cancel = false;
         }
 
-        delegate void ControlLogMouseKey(GameWindow input_window, InputLogger control, MouseDevice sender, MouseButton button);
+        delegate void ControlLogMouseKey(GameWindow input_window, InputLogger control, object sender, MouseButtonEventArgs e);
         ControlLogMouseKey ControlLogMouseKeyDown =
-            delegate(GameWindow input_window, InputLogger control, MouseDevice sender, MouseButton button)
+            delegate(GameWindow input_window, InputLogger control, object sender, MouseButtonEventArgs e)
             {
-                if (sender.DeviceID == input_window.Mouse.DeviceID)
+                if ((sender as MouseDevice).DeviceID == input_window.Mouse.DeviceID)
                 {
-                    control.MouseButtonsBox.Items.Add(button);
-                    System.Diagnostics.Debug.Print("Button down: {0}", button);
+                    control.MouseButtonsBox.Items.Add(e.Button);
+                    System.Diagnostics.Debug.Print("Button down: {0}", e.Button);
                 }
             };
-        ControlLogMouseKey ControlLogMouseKeyUp = 
-            delegate(GameWindow input_window, InputLogger control, MouseDevice sender, MouseButton button)
+        ControlLogMouseKey ControlLogMouseKeyUp =
+            delegate(GameWindow input_window, InputLogger control, object sender, MouseButtonEventArgs e)
             {
-                if (sender.DeviceID == input_window.Mouse.DeviceID)
+                if ((sender as MouseDevice).DeviceID == input_window.Mouse.DeviceID)
                 {
-                    control.MouseButtonsBox.Items.Remove(button);
-                    System.Diagnostics.Debug.Print("Button up: {0}", button);
+                    control.MouseButtonsBox.Items.Remove(e.Button);
+                    System.Diagnostics.Debug.Print("Button up: {0}", e.Button);
                 }
             };
 
-        delegate void ControlLogMousePosition(GameWindow input_window, InputLogger control);
-        ControlLogMousePosition ControlLogMousePositionChanges =
-            delegate(GameWindow input_window, InputLogger control)
+        delegate void ControlLogMouseMove(GameWindow input_window, InputLogger control, object sender, MouseMoveEventArgs e);
+        ControlLogMouseMove ControlLogMouseMoveChanges =
+            delegate(GameWindow input_window, InputLogger control, object sender, MouseMoveEventArgs e)
             {
-                // Update mouse coordinates.
-                control.MouseXText.Text = input_window.Mouse.X.ToString();
-                control.MouseYText.Text = input_window.Mouse.Y.ToString();
-                control.MouseDXText.Text = input_window.Mouse.XDelta.ToString();
-                control.MouseDYText.Text = input_window.Mouse.YDelta.ToString();
-                control.MouseWheelText.Text = input_window.Mouse.Wheel.ToString();
-                //System.Drawing.Point p = input_window.PointToClient(input_window.Mouse.Position);
-                //System.Drawing.Point p = control.PointToClient(input_window.Mouse.Position);
-                //control.MouseXWindow.Text = p.X.ToString();
-                //control.MouseYWindow.Text = p.Y.ToString();
-                control.MouseWheelDelta.Text = input_window.Mouse.WheelDelta.ToString();
+                control.MouseXText.Text = e.X.ToString();
+                control.MouseYText.Text = e.Y.ToString();
+            };
+
+        delegate void ControlLogMouseWheel(GameWindow input_window, InputLogger control, object sender, MouseWheelEventArgs e);
+        ControlLogMouseWheel ControlLogMouseWheelChanges =
+            delegate(GameWindow input_window, InputLogger control, object sender, MouseWheelEventArgs e)
+            {
+                control.MouseWheelText.Text = e.Value.ToString();
             };
 
         delegate void ControlLogKeyboard(GameWindow input_window, InputLogger control, OpenTK.Input.KeyboardDevice sender, Key key);
@@ -155,25 +152,24 @@ namespace Examples.Tests
                 control.keyboardListBoxes[sender.DeviceID].Items.Remove(key);
             };
 
-        void hidden_UpdateFrame(object sender, UpdateFrameEventArgs e)
+        void LogMouseMove(object sender, MouseMoveEventArgs e)
         {
-            this.BeginInvoke(ControlLogMousePositionChanges, hidden, this);
-            //Thread.Sleep(0);
+            this.BeginInvoke(ControlLogMouseMoveChanges, hidden, this, e);
         }
 
-        void LogMouseMove(MouseDevice sender, EventArgs e)
+        void LogMouseWheelChanged(object sender, MouseWheelEventArgs e)
         {
-            //this.BeginInvoke(ControlLogMousePositionChanges, hidden, this);
+            this.BeginInvoke(ControlLogMouseWheelChanges, hidden, this, e);
         }
 
-        void LogMouseButtonDown(MouseDevice sender, MouseButton button)
+        void LogMouseButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.BeginInvoke(ControlLogMouseKeyDown, hidden, this, sender, button);
+            this.BeginInvoke(ControlLogMouseKeyDown, hidden, this, sender, e);
         }
 
-        void LogMouseButtonUp(MouseDevice sender, MouseButton button)
+        void LogMouseButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.BeginInvoke(ControlLogMouseKeyUp, hidden, this, sender, button);
+            this.BeginInvoke(ControlLogMouseKeyUp, hidden, this, sender, e);
         }
 
         void LogKeyDown(KeyboardDevice sender, Key key)
