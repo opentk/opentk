@@ -153,14 +153,7 @@ namespace OpenTK
             if (device == null)
                 device = DisplayDevice.Default;
 
-            if (Configuration.RunningOnWindows)
-                glWindow = new OpenTK.Platform.Windows.WinGLNative();
-            else if (Configuration.RunningOnX11)
-                glWindow = new OpenTK.Platform.X11.X11GLNative();
-            else
-                throw new PlatformNotSupportedException(
-                    "Your platform is not supported currently. Please, refer to http://www.opentk.com for more information.");
-
+            glWindow = Platform.Factory.CreateNativeGLWindow();                
             glWindow.Destroy += glWindow_Destroy;
 
             try
@@ -182,13 +175,22 @@ namespace OpenTK
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
                 device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
-                //this.Fullscreen = true;
-                throw new NotImplementedException();
+                this.WindowState = WindowState.Fullscreen;
+                //throw new NotImplementedException();
             }
             
             this.VSync = VSyncMode.On; //VSyncMode.Adaptive;
+            glWindow.Resize += new ResizeEvent(glWindow_Resize);
 
         }
+
+        void glWindow_Resize(object sender, ResizeEventArgs e)
+        {
+            Debug.Print("glWindow_Resize event fired.");
+
+            OnResizeInternal(e);
+        }
+
 
         #endregion
 
@@ -230,9 +232,17 @@ namespace OpenTK
         /// <summary>Stops the main loop.</summary>
         void ExitInternal()
         {
-            //Debug.Print("Firing GameWindowExitException");  
-            throw new GameWindowExitException();
+            //Debug.Print("Firing GameWindowExitException");
+            if (HasMainLoop)
+            {
+                throw new GameWindowExitException();
+            }
+            if (CloseWindow != null)
+            {
+                CloseWindow(this, EventArgs.Empty);
+            }
         }
+        public event EventHandler CloseWindow;
 
         void CallExitInternal(GameWindow sender, UpdateFrameEventArgs e)
         {
@@ -1268,11 +1278,7 @@ namespace OpenTK
         /// <summary>
         /// Occurs when the GameWindow is resized. Derived classes should override the OnResize method for better performance.
         /// </summary>
-        public event ResizeEvent Resize
-        {
-            add { if (disposed) throw new ObjectDisposedException("GameWindow"); glWindow.Resize += value; }
-            remove { if (disposed) throw new ObjectDisposedException("GameWindow"); glWindow.Resize -= value; }
-        }
+        public event ResizeEvent Resize;
 
         /// <summary>
         /// Raises the Resize event.
@@ -1285,8 +1291,8 @@ namespace OpenTK
             this.width = e.Width;
             this.height = e.Height;
 
-            //if (this.Resize != null)
-            //    this.Resize(this, e);
+            if (this.Resize != null)
+                this.Resize(this, e);
 
             OnResize(e);
         }

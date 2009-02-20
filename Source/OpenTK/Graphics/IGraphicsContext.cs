@@ -44,6 +44,13 @@ namespace OpenTK.Graphics
         /// Gets or sets a value indicating whether VSyncing is enabled.
         /// </summary>
         bool VSync { get; set; }
+
+        /// <summary>
+        /// Updates the graphics context.  This must be called when the region the graphics context
+        /// is drawn to is resized.
+        /// </summary>
+        /// <param name="window"></param>
+        void Update(IWindowInfo window);
     }
 
     public delegate void DestroyEvent<T>(T sender, EventArgs e);

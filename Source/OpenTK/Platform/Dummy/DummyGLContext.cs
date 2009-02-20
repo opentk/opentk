@@ -67,6 +67,10 @@ namespace OpenTK.Platform.Dummy
 
         public bool VSync { get { return vsync; } set { vsync = value; } }
 
+        public void Update(IWindowInfo window)
+        {
+        }
+
         #endregion
 
         #region --- IDisposable Members ---
@@ -87,5 +91,6 @@ namespace OpenTK.Platform.Dummy
         }
 
         #endregion
+
     }
 }

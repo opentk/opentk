@@ -82,6 +82,10 @@ namespace Examples.Tests
                     
                     if (sender[Key.ShiftLeft] || sender[Key.ShiftRight])
                         WindowState = GetPrevious(WindowState);
+                    else if (sender[Key.AltLeft] || sender[Key.AltRight])
+                        WindowState = GetNext(GetNext(WindowState));
+                    else if (sender[Key.ControlLeft] || sender[Key.ControlRight])
+                        WindowState = GetPrevious(GetPrevious(WindowState));
                     else
                         WindowState = GetNext(WindowState);
                     

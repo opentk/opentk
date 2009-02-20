@@ -569,21 +569,22 @@ namespace OpenTK.Graphics
         {
             if (getProcAddress == null)
             {
-                if (System.Environment.OSVersion.Platform == PlatformID.Win32NT ||
-                    System.Environment.OSVersion.Platform == PlatformID.Win32S ||
-                    System.Environment.OSVersion.Platform == PlatformID.Win32Windows ||
-                    System.Environment.OSVersion.Platform == PlatformID.WinCE)
+            		if (Configuration.RunningOnWindows)
                 {
                     getProcAddress = new GetProcAddressWindows();
                 }
-                else if (System.Environment.OSVersion.Platform == PlatformID.Unix)
+                else if (Configuration.RunningOnMacOS)
+                {
+                		getProcAddress = new GetProcAddressOSX();
+                }
+                else if (Configuration.RunningOnX11)
                 {
                     getProcAddress = new GetProcAddressX11();
                 }
                 else
                 {
                     throw new PlatformNotSupportedException(
-                        "Extension loading is only supported under X11 and Windows. We are sorry for the inconvience.");
+                        "Extension loading is only supported under Mac OS X, X11 and Windows. We are sorry for the inconvience.");
                 }
             }
 

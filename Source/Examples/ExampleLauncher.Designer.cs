@@ -1,4 +1,4 @@
-﻿namespace Examples
+namespace Examples
 {
     partial class ExampleLauncher
     {
@@ -85,9 +85,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 266);
+            this.ClientSize = new System.Drawing.Size(292, 366);
             this.Controls.Add(this.splitContainer1);
-            this.MinimumSize = new System.Drawing.Size(300, 300);
+            this.MinimumSize = new System.Drawing.Size(300, 400);
             this.Name = "ExampleLauncher";
             this.Text = "OpenTK Example Launcher";
             this.Load += new System.EventHandler(this.ExampleLauncher_Load);
