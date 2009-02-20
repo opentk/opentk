@@ -1,6 +1,14 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
 ---------------------
+OpenTK 0.9.2 -> 0.9.3
+---------------------
++ OpenTK
+	+ Input
+		+ Added support for the MouseDevice.Move and .WheelChanged events and improved MouseDevice interface (patches by ALyman).
+		
+
+---------------------
 OpenTK 0.9.1 -> 0.9.2
 ---------------------
 + Bind
