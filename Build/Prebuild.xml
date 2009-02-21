@@ -18,7 +18,6 @@
         <OptimizeCode>true</OptimizeCode>
         <!--<OutputPath>../../Binaries/Release/Libraries</OutputPath>-->
         <DebugInformation>false</DebugInformation>
-        <XmlDocFile>OpenTK.xml</XmlDocFile>
       </Options>
     </Configuration>
 
@@ -90,6 +89,7 @@
         <Options>
           <OutputPath>../../Binaries/Release/Libraries</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.xml</XmlDocFile>
         </Options>
       </Configuration>
 
@@ -119,6 +119,7 @@
         <Options>
           <OutputPath>../../Binaries/Release/Libraries</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.Utilities.xml</XmlDocFile>
         </Options>
       </Configuration>
 
