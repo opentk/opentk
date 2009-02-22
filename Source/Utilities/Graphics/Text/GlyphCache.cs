@@ -53,7 +53,6 @@ namespace OpenTK.Graphics.Text
         #region Fields
 
         List<GlyphSheet<T>> sheets = new List<GlyphSheet<T>>();
-        Bitmap bmp = new Bitmap(32, 32);
 
         Dictionary<Glyph, CachedGlyphInfo> cached_glyphs = new Dictionary<Glyph, CachedGlyphInfo>();
 
