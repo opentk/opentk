@@ -95,7 +95,7 @@ namespace Examples.Tests
         {
             base.OnClosing(e);
 
-            hidden.ExitAsync();
+            hidden.Exit();
 
             while (hidden.Exists)
                 Thread.Sleep(100);
