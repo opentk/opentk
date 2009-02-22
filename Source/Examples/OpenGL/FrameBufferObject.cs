@@ -18,7 +18,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tutorial
 {
-    [Example("Simple FrameBuffer Object.", ExampleCategory.OpenGL)]
+    [Example("Framebuffer Objects.", ExampleCategory.OpenGL)]
     public class SimpleFBO : GameWindow
     {
         public SimpleFBO()
@@ -56,6 +56,15 @@ namespace Examples.Tutorial
 
         public override void OnLoad(EventArgs e)
         {
+            if (!GL.SupportsExtension("EXT_framebuffer_object"))
+            {
+                System.Windows.Forms.MessageBox.Show(
+                     "Your video card does not support Framebuffer Objects. Please update your drivers.",
+                     "FBOs not supported",
+                     System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation);
+                Exit();
+            }
+            
             GL.Enable(EnableCap.DepthTest);
             GL.ClearDepth(1.0f);
             GL.DepthFunc(DepthFunction.Lequal);
