@@ -206,11 +206,14 @@ namespace Examples.Tutorial
         public override void OnUnload(EventArgs e)
         {
             // Clean up what we allocated before exiting
-            GL.DeleteTextures(1, ref ColorTexture);
-            GL.DeleteTextures(1, ref DepthTexture);
-            GL.Ext.DeleteFramebuffers(1, ref FBOHandle);
+            if (ColorTexture != 0)
+                GL.DeleteTextures(1, ref ColorTexture);
 
-            base.OnUnload(e);
+            if (DepthTexture != 0)
+                GL.DeleteTextures(1, ref DepthTexture);
+
+            if (FBOHandle != 0)
+                GL.Ext.DeleteFramebuffers(1, ref FBOHandle);
         }
 
         protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)

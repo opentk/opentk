@@ -191,12 +191,15 @@ namespace Examples.Tutorial
         
         #endregion
 
-        #region OnUnLoad
+        #region OnUnload
 
         public override void OnUnload(EventArgs e)
         {
-            GL.DeleteTextures(1, ref TextureObject);
-            GL.DeleteProgram(ProgramObject); // implies deleting the previously flagged ShaderObjects
+            if (TextureObject != 0)
+                GL.DeleteTextures(1, ref TextureObject);
+
+            if (ProgramObject != 0)
+                GL.DeleteProgram(ProgramObject); // implies deleting the previously flagged ShaderObjects
         }
 
         #endregion
