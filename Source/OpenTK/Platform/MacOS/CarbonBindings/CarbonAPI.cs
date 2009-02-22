@@ -45,36 +45,36 @@ namespace OpenTK.Platform.MacOS.Carbon
             right = (short)(_left + _width);
         }
 
-		internal short X
-		{
-			get { return left; }
-			set
-			{
-				short width = Width;
-				left = value;
-				right = (short)(left + width);
-			}
-		}
-		internal short Y
-		{
-			get { return top; }
-			set
-			{
-				short height = Height;
-				top = value;
-				bottom = (short)(top + height);
-			}
-		}
+        internal short X
+        {
+            get { return left; }
+            set
+            {
+                short width = Width;
+                left = value;
+                right = (short)(left + width);
+            }
+        }
+        internal short Y
+        {
+            get { return top; }
+            set
+            {
+                short height = Height;
+                top = value;
+                bottom = (short)(top + height);
+            }
+        }
         internal short Width 
         { 
-        	get { return (short)(right - left); } 
-        	set { right = (short)(left + value); }
+            get { return (short)(right - left); } 
+            set { right = (short)(left + value); }
         }
         internal short Height 
         { 
-        	get { return (short)(bottom - top); } 
-        	set { bottom = (short)(top + value); }
-       	}
+            get { return (short)(bottom - top); } 
+            set { bottom = (short)(top + value); }
+           }
 
         public override string ToString()
         {
@@ -792,15 +792,15 @@ namespace OpenTK.Platform.MacOS.Carbon
         
         [DllImport(carbon,EntryPoint="ChangeWindowAttributes")]
         static extern OSStatus _ChangeWindowAttributes(IntPtr windowRef, WindowAttributes setTheseAttributes, WindowAttributes clearTheseAttributes); 
-  		internal static void ChangeWindowAttributes(IntPtr windowRef, WindowAttributes setTheseAttributes, WindowAttributes clearTheseAttributes)
-  		{
-  			OSStatus error = _ChangeWindowAttributes(windowRef, setTheseAttributes, clearTheseAttributes);
-  			
+          internal static void ChangeWindowAttributes(IntPtr windowRef, WindowAttributes setTheseAttributes, WindowAttributes clearTheseAttributes)
+          {
+              OSStatus error = _ChangeWindowAttributes(windowRef, setTheseAttributes, clearTheseAttributes);
+              
             if (error != OSStatus.NoError)
             {
                 throw new MacOSException(error);
             }
-  		}
+          }
   
         [DllImport(carbon)]
         static extern IntPtr __CFStringMakeConstantString(string cStr);
@@ -876,7 +876,7 @@ namespace OpenTK.Platform.MacOS.Carbon
     }
 
     #endregion
-	
+    
 }
 
 

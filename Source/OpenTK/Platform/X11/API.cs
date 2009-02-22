@@ -11,6 +11,11 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
+#pragma warning disable 3019    // CLS-compliance checking
+#pragma warning disable 0649    // struct members not explicitly initialized
+#pragma warning disable 0169    // field / method is never used.
+#pragma warning disable 0414    // field assigned but never used.
+
 namespace OpenTK.Platform.X11
 {
     #region Types
@@ -700,21 +705,15 @@ XF86VidModeGetGammaRampSize(
 
     #region internal struct XRRScreenSize
 
-    #pragma warning disable 0169, 0649
-
     internal struct XRRScreenSize
     {
         internal int Width, Height;
         internal int MWidth, MHeight;
     };
 
-    #pragma warning restore 0169, 0649
-
     #endregion
 
     #region unsafe internal struct Screen
-
-    #pragma warning disable 0169
 
     unsafe internal struct Screen
     {
@@ -737,13 +736,9 @@ XF86VidModeGetGammaRampSize(
         long root_input_mask;    /* initial root input mask */
     }
 
-    #pragma warning restore 0169
-
     #endregion
 
     #region unsafe internal class XExtData
-
-    #pragma warning disable 0169, 0649
 
     unsafe internal class XExtData
     {
@@ -753,8 +748,6 @@ XF86VidModeGetGammaRampSize(
         FreePrivateDelegate FreePrivate;    /* called to free private storage */
         XPointer private_data;    /* buffer private to this extension. */
     };
-
-    #pragma warning restore 0169, 0649
 
     #endregion
     
@@ -1593,3 +1586,8 @@ XF86VidModeGetGammaRampSize(
     }
     */
 }
+
+#pragma warning restore 3019
+#pragma warning restore 0649
+#pragma warning restore 0169
+#pragma warning restore 0414
