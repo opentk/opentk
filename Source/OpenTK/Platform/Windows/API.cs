@@ -18,11 +18,11 @@ using System.Security;
 
 #pragma warning disable 3019    // CLS-compliance checking
 #pragma warning disable 0649    // struct members not explicitly initialized
+#pragma warning disable 0169    // field / method is never used.
+#pragma warning disable 0414    // field assigned but never used.
 
 namespace OpenTK.Platform.Windows
 {
-    #pragma warning disable 3019
-
     #region Type aliases
 
     using HWND = System.IntPtr;
@@ -296,7 +296,7 @@ namespace OpenTK.Platform.Windows
         /// <returns>
         /// Nonzero indicates that the function retrieves a message other than WM_QUIT.
         /// Zero indicates that the function retrieves the WM_QUIT message, or that lpMsg is an invalid pointer.
-        /// –1 indicates that an error occurred — for example, the function fails if hWnd is an invalid window handle.
+        /// Â–1 indicates that an error occurred Â— for example, the function fails if hWnd is an invalid window handle.
         /// To get extended error information, call GetLastError.
         /// </returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
@@ -1431,8 +1431,6 @@ namespace OpenTK.Platform.Windows
 
     #region PixelFormatDescriptor
 
-    #pragma warning disable 0169    
-    
     /// <summary>
     /// Describes a pixel format. It is used when interfacing with the WINAPI to create a new Context.
     /// Found in WinGDI.h
@@ -1468,8 +1466,6 @@ namespace OpenTK.Platform.Windows
         internal int DamageMask;
     }
     
-    #pragma warning restore 0169
-
     #endregion
     
     #region internal class LayerPlaneDescriptor
@@ -1481,31 +1477,31 @@ namespace OpenTK.Platform.Windows
     internal struct LayerPlaneDescriptor
     {
         internal static readonly WORD Size = (WORD)Marshal.SizeOf(typeof(LayerPlaneDescriptor)); 
-		internal WORD  Version; 
-		internal DWORD Flags; 
-		internal BYTE  PixelType; 
-		internal BYTE  ColorBits; 
-		internal BYTE  RedBits; 
-		internal BYTE  RedShift; 
-		internal BYTE  GreenBits; 
-		internal BYTE  GreenShift; 
-		internal BYTE  BlueBits; 
-		internal BYTE  BlueShift; 
-		internal BYTE  AlphaBits; 
-		internal BYTE  AlphaShift; 
-		internal BYTE  AccumBits; 
-		internal BYTE  AccumRedBits; 
-		internal BYTE  AccumGreenBits; 
-		internal BYTE  AccumBlueBits; 
-		internal BYTE  AccumAlphaBits; 
-		internal BYTE  DepthBits; 
-		internal BYTE  StencilBits; 
-		internal BYTE  AuxBuffers; 
-		internal BYTE  LayerPlane; 
-		BYTE  Reserved; 
-		internal COLORREF crTransparent; 
-	}
-    
+        internal WORD  Version; 
+        internal DWORD Flags; 
+        internal BYTE  PixelType; 
+        internal BYTE  ColorBits; 
+        internal BYTE  RedBits; 
+        internal BYTE  RedShift; 
+        internal BYTE  GreenBits; 
+        internal BYTE  GreenShift; 
+        internal BYTE  BlueBits; 
+        internal BYTE  BlueShift; 
+        internal BYTE  AlphaBits; 
+        internal BYTE  AlphaShift; 
+        internal BYTE  AccumBits; 
+        internal BYTE  AccumRedBits; 
+        internal BYTE  AccumGreenBits; 
+        internal BYTE  AccumBlueBits; 
+        internal BYTE  AccumAlphaBits; 
+        internal BYTE  DepthBits; 
+        internal BYTE  StencilBits; 
+        internal BYTE  AuxBuffers; 
+        internal BYTE  LayerPlane; 
+        BYTE  Reserved; 
+        internal COLORREF crTransparent; 
+    }
+
     #endregion
 
     #region GlyphMetricsFloat
@@ -3416,15 +3412,15 @@ namespace OpenTK.Platform.Windows
         /// <summary>
         /// Windows 2000 and higher only.
         /// </summary>
-	    XBUTTONDOWN		= 0x020B,
+        XBUTTONDOWN        = 0x020B,
         /// <summary>
         /// Windows 2000 and higher only.
         /// </summary>
-	    XBUTTONUP		= 0x020C,
+        XBUTTONUP        = 0x020C,
         /// <summary>
         /// Windows 2000 and higher only.
         /// </summary>
-	    XBUTTONDBLCLK	= 0x020D,
+        XBUTTONDBLCLK    = 0x020D,
         PARENTNOTIFY = 0x0210,
         ENTERMENULOOP = 0x0211,
         EXITMENULOOP = 0x0212,
@@ -3716,3 +3712,8 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 }
+
+#pragma warning restore 3019
+#pragma warning restore 0649
+#pragma warning restore 0169
+#pragma warning restore 0414
