@@ -17,6 +17,7 @@ using OpenTK.Input;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.OpenGL.Enums;
 using OpenTK.Graphics;
+using System.ComponentModel;
 
 namespace OpenTK
 {
@@ -66,7 +67,7 @@ namespace OpenTK
         bool disposed;
 
         double update_period, render_period;
-        double target_update_period, target_render_period, target_render_period_doubled;
+        double target_update_period, target_render_period;
         // TODO: Implement these:
         double update_time, render_time;//, event_time;
         //bool allow_sleep = true;    // If true, GameWindow will call Timer.Sleep() if there is enough time.
@@ -76,6 +77,9 @@ namespace OpenTK
         //InputDriver input_driver;
 
         IGraphicsContext glContext;
+
+        int main_loop_thread_id;
+        object exit_lock = new object();
 
         #endregion
 
@@ -221,34 +225,41 @@ namespace OpenTK
         void glWindow_Destroy(object sender, EventArgs e)
         {
             glWindow.Destroy -= glWindow_Destroy;
-            this.Exit();
+            ExitAsync();
         }
 
         #endregion
 
         #region void ExitInternal()
 
-        /// <internal />
-        /// <summary>Stops the main loop.</summary>
+        // Stops the main loop, if one exists.
         void ExitInternal()
         {
-            //Debug.Print("Firing GameWindowExitException");
             if (HasMainLoop)
             {
                 throw new GameWindowExitException();
             }
-            if (CloseWindow != null)
-            {
-                CloseWindow(this, EventArgs.Empty);
-            }
         }
-        public event EventHandler CloseWindow;
 
+        #region void ExitAsync()
+
+        // Gracefully exits the GameWindow. May be called from any thread.
+        void ExitAsync()
+        {
+            if (disposed)
+                throw new ObjectDisposedException("GameWindow");
+
+            UpdateFrame += CallExitInternal;
+        }
+
+        // Used in ExitAsync() to ensure ExitInternal() is called from the main thread.
         void CallExitInternal(GameWindow sender, UpdateFrameEventArgs e)
         {
             UpdateFrame -= CallExitInternal;
             sender.ExitInternal();
         }
+
+        #endregion
 
         #endregion
 
@@ -278,44 +289,35 @@ namespace OpenTK
         #region public virtual void Exit()
 
         /// <summary>
-        /// Gracefully exits the GameWindow. May only be called from the thread where the GameWindow was created.
-        /// </summary>
-        /// <remarks>
-        /// <para>Override if you want to provide yor own exit sequence.</para>
-        /// <para>If you override this method, place a call to base.Exit(), to ensure
-        /// proper OpenTK shutdown.</para>
-        /// </remarks>
-        public virtual void Exit()
-        {
-            if (disposed) throw new ObjectDisposedException("GameWindow");
-            //glWindow.DestroyWindow();
-            //while (glWindow.Exists)
-            //    glWindow.ProcessEvents();
-            if (HasMainLoop)
-                ExitAsync();
-            else
-                ExitInternal();
-            //isExiting = true;
-            //UpdateFrame += CallExitInternal;
-        }
-
-        #endregion
-
-        #region public virtual void ExitAsync()
-
-        /// <summary>
         /// Gracefully exits the GameWindow. May be called from any thread.
         /// </summary>
         /// <remarks>
-        /// <para>Override if you want to provide yor own exit sequence.</para>
-        /// <para>If you override this method, place a call to base.ExitAsync(), to ensure
-        /// proper OpenTK shutdown.</para>
+        /// <para>Override if you are not using <see cref="GameWindow.Run()"/>.</para>
+        /// <para>If you override this method, place a call to base.Exit(), to ensure proper OpenTK shutdown.</para>
         /// </remarks>
-        public virtual void ExitAsync()
+        public virtual void Exit()
         {
-            //isExiting = true;
-            if (disposed) throw new ObjectDisposedException("GameWindow");
-            UpdateFrame += CallExitInternal;
+            lock (exit_lock)
+            {
+                if (disposed)
+                    throw new ObjectDisposedException("GameWindow");
+
+                if (!IsExiting && Exists)
+                {
+                    CancelEventArgs e = new CancelEventArgs();
+                    Closing(this, e);
+                    if (e.Cancel)
+                        return;
+            
+                    if (HasMainLoop)
+                    {
+                        if (main_loop_thread_id == Thread.CurrentThread.ManagedThreadId)
+                            ExitInternal();
+                        else
+                            ExitAsync();
+                    }
+                }
+            }
         }
 
         #endregion
@@ -427,25 +429,6 @@ namespace OpenTK
 
         #endregion
 
-#if false
-
-        #region public IInputDriver InputDriver
-
-        /// <summary>
-        /// Gets an interface to the InputDriver used to obtain Keyboard, Mouse and Joystick input.
-        /// </summary>
-        public IInputDriver InputDriver
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        #endregion
-
-#endif
-
         #region public void Run()
 
         /// <summary>
@@ -484,13 +467,21 @@ namespace OpenTK
         /// <param name="frames_per_second">The frequency of RenderFrame events.</param>
         public void Run(double updates_per_second, double frames_per_second)
         {
-            if (disposed) throw new ObjectDisposedException("GameWindow");
+            if (disposed)
+                throw new ObjectDisposedException("GameWindow");
+
             try
             {
+                // Necessary to be here, otherwise Exit() wouldn't work correctly when called inside OnLoad().
+                hasMainLoop = true;
+                main_loop_thread_id = Thread.CurrentThread.ManagedThreadId;
+                
                 if (updates_per_second < 0.0 || updates_per_second > 200.0)
-                    throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second, "Parameter should be inside the range [0.0, 200.0]");
+                    throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second,
+                                                          "Parameter should be inside the range [0.0, 200.0]");
                 if (frames_per_second < 0.0 || frames_per_second > 200.0)
-                    throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second, "Parameter should be inside the range [0.0, 200.0]");
+                    throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second,
+                                                          "Parameter should be inside the range [0.0, 200.0]");
 
                 TargetUpdateFrequency = updates_per_second;
                 TargetRenderFrequency = frames_per_second;
@@ -520,21 +511,12 @@ namespace OpenTK
                 //sleep_granularity = System.Math.Round(1000.0 * update_watch.Elapsed.TotalSeconds / test_times, MidpointRounding.AwayFromZero) / 1000.0;
                 //update_watch.Reset();       // We don't want to affect the first UpdateFrame!
 
-                try
-                {
-                    OnLoadInternal(EventArgs.Empty);
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(String.Format("OnLoad failed: {0}", e.ToString()));
-                    return;
-                }
+                OnLoadInternal(EventArgs.Empty);
 
                 //Debug.Print("Elevating priority.");
                 //Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
 
                 Debug.Print("Entering main loop.");
-                hasMainLoop = true;
                 while (!isExiting)
                 {
                     ProcessEvents();
@@ -966,6 +948,15 @@ namespace OpenTK
 
         #endregion
 
+        #region --- Events ---
+
+        /// <summary>
+        /// Occurs when the GameWindow is about to close.
+        /// </summary>
+        public event EventHandler<CancelEventArgs> Closing = delegate(object sender, CancelEventArgs e) { };
+
+        #endregion
+
         #region --- GameWindow Timing ---
 
         // TODO: Disabled because it is not reliable enough. Use vsync as a workaround.
@@ -1000,12 +991,11 @@ namespace OpenTK
                 if (disposed) throw new ObjectDisposedException("GameWindow");
                 if (value <= 0.005)
                 {
-                    target_render_period = target_render_period_doubled = 0.0;
+                    target_render_period = 0.0;
                 }
                 else if (value <= 1.0)
                 {
                     target_render_period = value;
-                    target_render_period_doubled = 2.0 * target_render_period;
                 }
                 else Debug.Print("Target render period clamped to 1.0 seconds.");
             }
