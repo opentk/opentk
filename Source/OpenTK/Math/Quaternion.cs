@@ -45,27 +45,27 @@ namespace OpenTK.Math
 
         #region Constructors
 
-		/// <summary>
-		/// Construct a new Quaternion from vector and w components
-		/// </summary>
-		/// <param name="v">The vector part</param>
-		/// <param name="w">The w part</param>
+        /// <summary>
+        /// Construct a new Quaternion from vector and w components
+        /// </summary>
+        /// <param name="v">The vector part</param>
+        /// <param name="w">The w part</param>
         public Quaternion(Vector3 v, float w)
         {
             this.xyz = v;
             this.w = w;
         }
 
-		/// <summary>
-		/// Construct a new Quaternion
-		/// </summary>
-		/// <param name="x">The x component</param>
-		/// <param name="y">The y component</param>
-		/// <param name="z">The z component</param>
-		/// <param name="w">The w component</param>
-		public Quaternion(float x, float y, float z, float w)
+        /// <summary>
+        /// Construct a new Quaternion
+        /// </summary>
+        /// <param name="x">The x component</param>
+        /// <param name="y">The y component</param>
+        /// <param name="z">The z component</param>
+        /// <param name="w">The w component</param>
+        public Quaternion(float x, float y, float z, float w)
             : this(new Vector3(x, y, z), w)
-		{ }
+        { }
 
         #endregion
 
@@ -117,16 +117,16 @@ namespace OpenTK.Math
         #region ToAxisAngle
 
         /// <summary>
-		/// Convert the current quaternion to axis angle representation
-		/// </summary>
-		/// <param name="axis">The resultant axis</param>
-		/// <param name="angle">The resultant angle</param>
-		public void ToAxisAngle(out Vector3 axis, out float angle)
-		{
+        /// Convert the current quaternion to axis angle representation
+        /// </summary>
+        /// <param name="axis">The resultant axis</param>
+        /// <param name="angle">The resultant angle</param>
+        public void ToAxisAngle(out Vector3 axis, out float angle)
+        {
             Vector4 result = ToAxisAngle();
             axis = result.Xyz;
             angle = result.W;
-		}
+        }
 
         /// <summary>
         /// Convert this instance to an axis-angle representation.
@@ -156,34 +156,34 @@ namespace OpenTK.Math
             return result;
         }
 
-		#endregion
+        #endregion
 
-		#region public float Length
+        #region public float Length
 
-		/// <summary>
+        /// <summary>
         /// Gets the length (magnitude) of the quaternion.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-		public float Length
+        public float Length
         {
             get
             {
-                return (float)System.Math.Sqrt(W * W + XYZ.LengthSquared);
+                return (float)System.Math.Sqrt(W * W + Xyz.LengthSquared);
             }
         }
 
         #endregion
 
-		#region public float LengthSquared
+        #region public float LengthSquared
 
-		/// <summary>
+        /// <summary>
         /// Gets the square of the quaternion length (magnitude).
         /// </summary>
         public float LengthSquared
         {
             get
             {
-                return W * W + XYZ.LengthSquared;
+                return W * W + Xyz.LengthSquared;
             }
         }
 
@@ -203,19 +203,19 @@ namespace OpenTK.Math
 
         #endregion
 
-		#region public void Conjugate()
+        #region public void Conjugate()
 
-		/// <summary>
-		/// Convert this quaternion to its conjugate
-		/// </summary>
-		public void Conjugate()
-		{
+        /// <summary>
+        /// Convert this quaternion to its conjugate
+        /// </summary>
+        public void Conjugate()
+        {
             Xyz = -Xyz;
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#endregion
+        #endregion
 
         #region Static
 
@@ -474,29 +474,29 @@ namespace OpenTK.Math
 
         #endregion
 
-		#region Operators
+        #region Operators
 
-		public static Quaternion operator +(Quaternion left, Quaternion right)
+        public static Quaternion operator +(Quaternion left, Quaternion right)
         {
             left.Xyz += right.Xyz;
             left.W += right.W;
             return left;
         }
 
-		public static Quaternion operator -(Quaternion left, Quaternion right)
+        public static Quaternion operator -(Quaternion left, Quaternion right)
         {
             left.Xyz -= right.Xyz;
             left.W -= right.W;
             return left;
         }
 
-		public static Quaternion operator *(Quaternion left, Quaternion right)
-		{
+        public static Quaternion operator *(Quaternion left, Quaternion right)
+        {
             float w = left.W * right.W - Vector3.Dot(left.Xyz, right.Xyz);
             left.Xyz = right.W * left.Xyz + left.W * right.Xyz + Vector3.Cross(left.Xyz, right.Xyz);
-			left.W = w;
-			return left;
-		}
+            left.W = w;
+            return left;
+        }
 
         public static bool operator ==(Quaternion left, Quaternion right)
         {
