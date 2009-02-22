@@ -45,25 +45,25 @@ namespace OpenTK.Math
 
         #region Constructors
 
-		/// <summary>
-		/// Construct a new Quaterniond from vector and w components
-		/// </summary>
-		/// <param name="v">The vector part</param>
-		/// <param name="w">The w part</param>
-		public Quaterniond(Vector3d v, double w)
-		{
+        /// <summary>
+        /// Construct a new Quaterniond from vector and w components
+        /// </summary>
+        /// <param name="v">The vector part</param>
+        /// <param name="w">The w part</param>
+        public Quaterniond(Vector3d v, double w)
+        {
             this.xyz = v;
             this.w = w;
-		}
+        }
 
-		/// <summary>
-		/// Construct a new Quaterniond
-		/// </summary>
-		/// <param name="x">The x component</param>
-		/// <param name="y">The y component</param>
-		/// <param name="z">The z component</param>
-		/// <param name="w">The w component</param>
-		public Quaterniond(double x, double y, double z, double w)
+        /// <summary>
+        /// Construct a new Quaterniond
+        /// </summary>
+        /// <param name="x">The x component</param>
+        /// <param name="y">The y component</param>
+        /// <param name="z">The z component</param>
+        /// <param name="w">The w component</param>
+        public Quaterniond(double x, double y, double z, double w)
             : this(new Vector3d(x, y, z), w)
         { }
 
@@ -156,34 +156,34 @@ namespace OpenTK.Math
             return result;
         }
 
-		#endregion
+        #endregion
 
-		#region public double Length
+        #region public double Length
 
-		/// <summary>
+        /// <summary>
         /// Gets the length (magnitude) of the Quaterniond.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-		public double Length
+        public double Length
         {
             get
             {
-                return (double)System.Math.Sqrt(W * W + XYZ.LengthSquared);
+                return (double)System.Math.Sqrt(W * W + Xyz.LengthSquared);
             }
         }
 
         #endregion
 
-		#region public double LengthSquared
+        #region public double LengthSquared
 
-		/// <summary>
+        /// <summary>
         /// Gets the square of the Quaterniond length (magnitude).
         /// </summary>
         public double LengthSquared
         {
             get
             {
-                return W * W + XYZ.LengthSquared;
+                return W * W + Xyz.LengthSquared;
             }
         }
 
@@ -203,19 +203,19 @@ namespace OpenTK.Math
 
         #endregion
 
-		#region public void Conjugate()
+        #region public void Conjugate()
 
-		/// <summary>
-		/// Convert this Quaterniond to its conjugate
-		/// </summary>
-		public void Conjugate()
-		{
+        /// <summary>
+        /// Convert this Quaterniond to its conjugate
+        /// </summary>
+        public void Conjugate()
+        {
             Xyz = -Xyz;
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#endregion
+        #endregion
 
         #region Static
 
@@ -474,29 +474,29 @@ namespace OpenTK.Math
 
         #endregion
                 
-		#region Operators
+        #region Operators
 
-		public static Quaterniond operator +(Quaterniond left, Quaterniond right)
+        public static Quaterniond operator +(Quaterniond left, Quaterniond right)
         {
             left.Xyz += right.Xyz;
             left.W += right.W;
             return left;
         }
 
-		public static Quaterniond operator -(Quaterniond left, Quaterniond right)
+        public static Quaterniond operator -(Quaterniond left, Quaterniond right)
         {
             left.Xyz -= right.Xyz;
             left.W -= right.W;
             return left;
         }
 
-		public static Quaterniond operator *(Quaterniond left, Quaterniond right)
-		{
+        public static Quaterniond operator *(Quaterniond left, Quaterniond right)
+        {
             double w = left.W * right.W - Vector3d.Dot(left.Xyz, right.Xyz);
             left.Xyz = right.W * left.Xyz + left.W * right.Xyz + Vector3d.Cross(left.Xyz, right.Xyz);
-			left.W = w;
-			return left;
-		}
+            left.W = w;
+            return left;
+        }
 
         public static bool operator ==(Quaterniond left, Quaterniond right)
         {
@@ -619,14 +619,14 @@ namespace OpenTK.Math
         /// <summary>Constructs left Quaterniond from the given array of double-precision floating point numbers.</summary>
         /// <param name="doubleArray">The array of doubles for the components of the Quaterniond.</param>
         public Quaterniond(double[] doubleArray)
-		{
+        {
             if (doubleArray == null || doubleArray.GetLength(0) < 4) throw new MissingFieldException();
 
             this.W = doubleArray[0];
             this.X = doubleArray[1];
             this.Y = doubleArray[2];
             this.Z = doubleArray[3];
-		}
+        }
 
         /// <summary>Constructs left Quaterniond from the given matrix.  Only contains rotation information.</summary>
         /// <param name="matrix">The matrix for the components of the Quaterniond.</param>
@@ -795,10 +795,10 @@ namespace OpenTK.Math
             }
         }
 
-		public static double DotProduct(Quaterniond left, Quaterniond right)
-		{
-			return left.W * right.W + left.X * right.X + left.Y * right.Y + left.Z * right.Z;
-		}
+        public static double DotProduct(Quaterniond left, Quaterniond right)
+        {
+            return left.W * right.W + left.X * right.X + left.Y * right.Y + left.Z * right.Z;
+        }
 
         public void Normalize()
         {
@@ -1045,7 +1045,7 @@ namespace OpenTK.Math
         }
 
         public static void Slerp(ref Quaterniond start, ref Quaterniond end, double blend, out Quaterniond result)
-		{
+        {
             if (start.W == 0 && start.X == 0 && start.Y == 0 && start.Z == 0)
             {
                 if (end.W == 0 && end.X == 0 && end.Y == 0 && end.Z == 0)
@@ -1069,37 +1069,37 @@ namespace OpenTK.Math
             Vector3d endVector = new Vector3d(end.X, end.Y, end.Z);
             double cosHalfAngle = start.W * end.W + Vector3d.Dot(startVector, endVector);
 
-			if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
-			{
-				// angle = 0.0f, so just return one input.
+            if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
+            {
+                // angle = 0.0f, so just return one input.
                 result = start;
-			}
-			else if (cosHalfAngle < 0.0f)
-			{
+            }
+            else if (cosHalfAngle < 0.0f)
+            {
                 end.W = -end.W;
                 end.X = -end.X;
                 end.Y = -end.Y;
                 end.Z = -end.Z;
                 cosHalfAngle = -cosHalfAngle;
-			}
+            }
 
-			double blendA;
+            double blendA;
             double blendB;
-			if (cosHalfAngle < 0.99f)
-			{
-				// do proper slerp for big angles
+            if (cosHalfAngle < 0.99f)
+            {
+                // do proper slerp for big angles
                 double halfAngle = (double)System.Math.Acos(cosHalfAngle);
                 double sinHalfAngle = (double)System.Math.Sin(halfAngle);
                 double oneOverSinHalfAngle = 1.0f / sinHalfAngle;
                 blendA = (double)System.Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
                 blendB = (double)System.Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
-			}
-			else
-			{
-				// do lerp if angle is really small.
-				blendA = 1.0f - blend;
-				blendB = blend;
-			}
+            }
+            else
+            {
+                // do lerp if angle is really small.
+                blendA = 1.0f - blend;
+                blendB = blend;
+            }
 
             result.W = blendA * start.W + blendB * end.W;
             result.X = blendA * start.X + blendB * end.X;
@@ -1117,7 +1117,7 @@ namespace OpenTK.Math
                 result.Y = 0;
                 result.Z = 0;
             }
-		}
+        }
 
         #endregion
         
