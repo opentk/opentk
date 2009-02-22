@@ -1,9 +1,11 @@
 The Open Toolkit 0.9.3 Beta Release notes
 
-This version introduces joystick support and improves improves the mouse and 
-keyboard interfaces.
+This release introduces Mac OS X support, improves the MouseDevice and
+GameWindow APIs and fixes several occurences of bitrot in the codebase.
 
-Please report bugs any bugs you encounter at http://www.opentk.com.
+Work will now focus on joystick and GL3.0 support.
+
+Please report any issues you may encounter at http://www.opentk.com.
 
 
 
@@ -11,7 +13,7 @@ API changes
 
 The MouseDevice.ButtonDown and .ButtonUp events have changed signatures to better 
 conform to the BCL conventions. This is a breaking change. Please change your relevant 
-event handlers signatures from:
+event handler signatures from:
 
 void ButtonHandler(MouseDevice sender, MouseButton button)
 {
@@ -26,3 +28,6 @@ void ButtonHandler(object sender, MouseButtonEventArgs e)
 The MouseDevice.XDelta, .YDelta and .WheelDelta properties have been deprecated and 
 will be removed at a later version. Please use the Move and WheelChanged events 
 instead, or track mouse deltas manually.
+
+GameWindow.ExitAsync() is no longer available. Please use GameWindow.Exit(),
+instead.
