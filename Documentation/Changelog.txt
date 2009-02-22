@@ -3,11 +3,27 @@
 ---------------------
 OpenTK 0.9.2 -> 0.9.3
 ---------------------
+
 + OpenTK
+	+ GameWindow
+		+ Added cancelable Closing event.
+		+ Exit() method is now thread-safe.
+		+ Removed ExitAsync() method - use Exit() instead.
 	+ Graphics
 		+ Fixed version strings in GL.SupportsExtension().
 	+ Input
 		+ Added support for the MouseDevice.Move and .WheelChanged events and improved MouseDevice interface (patches by ALyman).
+	+ Platform
+		+ MacOS support.
+		+ Suppressed build warnings for unused methods and fields in the platform bindings.
+
++ Examples
+	+ Fixed the JuliaSetFractal and Framebuffer Object examples when the video cards don't support GLSL and FBOs, respectively.
+
++ General
+	+ Set mime-type and eol-style properties for .cs and .txt files.
+	+ Replaced stray tabs with spaces in several files.
+
 		
 
 ---------------------
