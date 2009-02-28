@@ -1,6 +1,6 @@
 ﻿namespace Examples.WinForms
 {
-    partial class W03_Extensions
+    partial class Extensions
     {
         /// <summary>
         /// Required designer variable.
