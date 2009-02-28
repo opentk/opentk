@@ -26,10 +26,10 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal sealed class WinGLContext : IGraphicsContext, IGraphicsContextInternal//, IGLContextCreationHack
     {
-        //IntPtr deviceContext;
         WinWindowInfo currentWindow;
         ContextHandle renderContext;
         static IntPtr opengl32Handle;
+        static bool wgl_loaded;
         const string opengl32Name = "OPENGL32.DLL";
         //WinWindowInfo windowInfo = new WinWindowInfo();
 
@@ -61,29 +61,66 @@ namespace OpenTK.Platform.Windows
 
         public WinGLContext(GraphicsMode format, IWindowInfo window, IGraphicsContext sharedContext)
         {
-            if (window == null) throw new ArgumentNullException("window", "Must point to a valid window.");
-
+            if (window == null)
+                throw new ArgumentNullException("window", "Must point to a valid window.");
             currentWindow = (WinWindowInfo)window;
-            if (currentWindow.WindowHandle == IntPtr.Zero) throw new ArgumentException("window", "Must be a valid window.");
+            if (currentWindow.WindowHandle == IntPtr.Zero)
+                throw new ArgumentException("window", "Must be a valid window.");
 
             this.format = format;
 
             Debug.Print("OpenGL will be bound to handle: {0}", currentWindow.WindowHandle);
-
             Debug.Write("Setting pixel format... ");
             this.SetGraphicsModePFD(format, (WinWindowInfo)window);
 
-            // Do not rely on OpenTK.Platform.Windows.Wgl - the context is not ready yet,
-            // and Wgl extensions will fail to load.
-            Debug.Write("Creating render context... ");
-            renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
-            if (renderContext == ContextHandle.Zero)
-                renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
-            if (renderContext == ContextHandle.Zero)
-                throw new GraphicsContextException(String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
-                                                                 Marshal.GetLastWin32Error()));
+            if (!wgl_loaded)
+            {
+                // We need to create a temp context in order to load wgl extensions (e.g. for multisampling or GL3).
+                // We cannot rely on OpenTK.Platform.Wgl until we create the context and call Wgl.LoadAll().
+                Debug.Print("Creating temporary context for wgl extensions.");
 
-            Debug.WriteLine(String.Format("done! (id: {0})", renderContext));
+                ContextHandle temp_context = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
+                Wgl.Imports.MakeCurrent(currentWindow.DeviceContext, temp_context.Handle);
+                Wgl.LoadAll();
+                Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                Wgl.DeleteContext(temp_context.Handle);
+                wgl_loaded = true;
+            }
+
+            if (Wgl.Delegates.wglCreateContextAttribsARB != null)
+            {
+                try
+                {
+                    Debug.Write("Attempting to create GL3 render context... ");
+                    renderContext = new ContextHandle(
+                        Wgl.Arb.CreateContextAttribs(
+                            currentWindow.DeviceContext,
+                            sharedContext != null ? (sharedContext as IGraphicsContextInternal).Context.Handle : IntPtr.Zero,
+                            new int[]
+                        { 
+                            (int)ArbCreateContext.MajorVersion, 3,
+                            (int)ArbCreateContext.MinorVersion, 0,
+                            0
+                        }));
+                }
+                catch (EntryPointNotFoundException e) { Debug.Print(e.ToString()); }
+                catch (NullReferenceException e) { Debug.Print(e.ToString()); }
+            }
+
+            if (renderContext == ContextHandle.Zero)
+            {
+                // Failed to create GL3-level context, fall back to GL2.
+                Debug.Write("failed. Falling back to GL2... ");
+                renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
+                if (renderContext == ContextHandle.Zero)
+                    renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
+                if (renderContext == ContextHandle.Zero)
+                    throw new GraphicsContextException(
+                        String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
+                            Marshal.GetLastWin32Error()));
+            }
+             
+            Debug.WriteLine(String.Format("success! (id: {0})", renderContext));
 
             if (sharedContext != null)
             {
