@@ -244,7 +244,7 @@ namespace OpenTK.Graphics.Text
 
         public static GL1TextOutputProvider Create(TextQuality quality)
         {
-            if (!GL.SupportsFunction("BlendFunc") || quality == TextQuality.Low || quality == TextQuality.Medium)
+            if (!GL.SupportsExtension("Version12") || !GL.SupportsFunction("BlendColor") || quality == TextQuality.Low || quality == TextQuality.Medium)
                 return new GL11TextOutputProvider(quality);
             else
                 return new GL12TextOutputProvider(quality);
