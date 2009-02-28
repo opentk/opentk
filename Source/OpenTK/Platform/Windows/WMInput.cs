@@ -14,11 +14,12 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.Windows
 {
-    /// <summary>
-    /// Input driver for legacy (pre XP) Windows platforms.
-    /// </summary>
-    internal sealed class WMInput : NativeWindow, IInputDriver
+    // Input driver for legacy (pre XP) Windows platforms.
+    sealed class WMInput : NativeWindow, IInputDriver
     {
+        #region --- Fields ---
+
+        WinMMJoystick joystick_driver = new WinMMJoystick();
         // Driver supports only one keyboard and mouse;
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
@@ -29,6 +30,8 @@ namespace OpenTK.Platform.Windows
         const long ExtendedBit = 1 << 24;
         // Used to distinguish left and right shift keys.
         static readonly uint ShiftRightScanCode = Functions.MapVirtualKey(VirtualKeys.RSHIFT, 0);
+
+        #endregion
 
         #region --- Constructor ---
 
@@ -224,6 +227,8 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region --- IInputDriver Members ---
+
         #region IInputDriver Members
 
         public void Poll()
@@ -248,6 +253,17 @@ namespace OpenTK.Platform.Windows
         {
             get { return mice; }
         }
+
+        #endregion
+
+        #region IJoystickDriver Members
+
+        public IList<JoystickDevice> Joysticks
+        {
+            get { return joystick_driver.Joysticks; }
+        }
+
+        #endregion
 
         #endregion
 

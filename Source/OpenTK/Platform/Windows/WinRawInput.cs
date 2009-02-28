@@ -18,16 +18,13 @@ using OpenTK.Input;
 
 namespace OpenTK.Platform.Windows
 {
-    internal class WinRawInput : NativeWindow, IInputDriver
+    // Not complete.
+    sealed class WinRawInput : NativeWindow, IInputDriver
     {
-        /// <summary>
-        /// Input event data.
-        /// </summary>
-        private RawInput data = new RawInput();
-        /// <summary>
-        /// The total number of input devices connected to this system.
-        /// </summary>
-        private static int deviceCount;
+        // Input event data.
+        RawInput data = new RawInput();
+        // The total number of input devices connected to this system.
+        static int deviceCount;
         int rawInputStructSize = API.RawInputSize;
 
         private WinRawKeyboard keyboardDriver;
@@ -134,15 +131,7 @@ namespace OpenTK.Platform.Windows
 
         #region --- IInputDriver Members ---
 
-        public IList<KeyboardDevice> Keyboard
-        {
-            get { return keyboardDriver.Keyboard; }
-        }
-
-        public IList<MouseDevice> Mouse
-        {
-            get { return mouseDriver.Mouse; }
-        }
+        #region IInputDriver Members
 
         public void Poll()
         {
@@ -208,6 +197,35 @@ namespace OpenTK.Platform.Windows
             Marshal.FreeHGlobal(rin_data);
 #endif
         }
+
+        #endregion
+
+        #region IKeyboardDriver Members
+
+        public IList<KeyboardDevice> Keyboard
+        {
+            get { return keyboardDriver.Keyboard; }
+        }
+
+        #endregion
+
+        #region IMouseDriver Members
+
+        public IList<MouseDevice> Mouse
+        {
+            get { return mouseDriver.Mouse; }
+        }
+
+        #endregion
+
+        #region IJoystickDriver Members
+
+        public IList<JoystickDevice> Joysticks
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
 
         #endregion
 

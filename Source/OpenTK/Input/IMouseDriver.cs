@@ -10,10 +10,13 @@ using System.Text;
 
 namespace OpenTK.Input
 {
+    /// <summary>
+    /// Defines the interface for MouseDevice drivers.
+    /// </summary>
     public interface IMouseDriver
     {
         /// <summary>
-        /// Gets the list of available mouse devices.
+        /// Gets the list of available MouseDevices.
         /// </summary>
         IList<MouseDevice> Mouse { get; }
     }

@@ -5,6 +5,7 @@ using System.Text;
 namespace OpenTK.Platform.Windows
 {
     using Graphics;
+using OpenTK.Input;
 
     class WinFactory : IPlatformFactory 
     {
@@ -25,7 +26,7 @@ namespace OpenTK.Platform.Windows
             return new WinDisplayDeviceDriver();
         }
 
-        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering)
+        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering)
         {
             return new WinGLContext(mode, window, shareContext);
         }

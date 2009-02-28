@@ -10,9 +10,8 @@ using System.Text;
 
 namespace OpenTK.Input
 {
-    public interface IInputDriver : IKeyboardDriver, IMouseDriver, IDisposable
+    public interface IInputDriver : IKeyboardDriver, IMouseDriver, IJoystickDriver, IDisposable
     {
-        //IList<IInputDevice> InputDevices { get; }
         void Poll();
     }
 }

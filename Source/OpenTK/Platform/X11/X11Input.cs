@@ -226,6 +226,15 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        #region public IList<JoystickDevice> Joysticks
+
+        public IList<JoystickDevice> Joysticks
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
+
         #region public void Poll()
 
         /// <summary>
