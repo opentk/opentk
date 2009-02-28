@@ -522,6 +522,37 @@ namespace OpenTK.Platform.Windows
 
         public static partial class Arb
         {
+            [CLSCompliant(false)]
+            unsafe public static
+            IntPtr CreateContextAttribs(IntPtr hDC, IntPtr hShareContext, int* attribList)
+            {
+                return Delegates.wglCreateContextAttribsARB((IntPtr)hDC, (IntPtr)hShareContext, (int*)attribList);
+            }
+
+            public static
+            IntPtr CreateContextAttribs(IntPtr hDC, IntPtr hShareContext, ref int attribList)
+            {
+                unsafe
+                {
+                    fixed (int* attribList_ptr = &attribList)
+                    {
+                        return Delegates.wglCreateContextAttribsARB((IntPtr)hDC, (IntPtr)hShareContext, (int*)attribList_ptr);
+                    }
+                }
+            }
+
+            public static
+            IntPtr CreateContextAttribs(IntPtr hDC, IntPtr hShareContext, int[] attribList)
+            {
+                unsafe
+                {
+                    fixed (int* attribList_ptr = attribList)
+                    {
+                        return Delegates.wglCreateContextAttribsARB((IntPtr)hDC, (IntPtr)hShareContext, (int*)attribList_ptr);
+                    }
+                }
+            }
+            
             [System.CLSCompliant(false)]
             public static 
             IntPtr CreateBufferRegion(IntPtr hDC, int iLayerPlane, UInt32 uType)

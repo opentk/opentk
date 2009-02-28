@@ -83,6 +83,9 @@ namespace OpenTK.Platform.Windows
             internal unsafe delegate Boolean UseFontOutlinesW(IntPtr hDC, Int32 first, Int32 count, Int32 listBase, float thickness, float deviation, Int32 fontMode, GlyphMetricsFloat* glyphMetrics);
             internal unsafe static UseFontOutlinesW wglUseFontOutlinesW;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate IntPtr CreateContextAttribsARB(IntPtr hDC, IntPtr hShareContext, int* attribList);
+            internal unsafe static CreateContextAttribsARB wglCreateContextAttribsARB;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate IntPtr CreateBufferRegionARB(IntPtr hDC, int iLayerPlane, UInt32 uType);
             internal static CreateBufferRegionARB wglCreateBufferRegionARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
