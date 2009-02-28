@@ -28,41 +28,199 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.LabelVendor = new System.Windows.Forms.Label();
+            this.LabelRenderer = new System.Windows.Forms.Label();
+            this.LabelVersion = new System.Windows.Forms.Label();
+            this.TextBoxVendor = new System.Windows.Forms.TextBox();
+            this.TextBoxRenderer = new System.Windows.Forms.TextBox();
+            this.TextBoxVersion = new System.Windows.Forms.TextBox();
+            this.LabelSupport = new System.Windows.Forms.Label();
+            this.TextBoxSupport = new System.Windows.Forms.TextBox();
+            this.SupportedColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CategoryColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExtensionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // listBox1
-            // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(284, 264);
-            this.listBox1.TabIndex = 0;
             // 
             // backgroundWorker1
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SupportedColumn,
+            this.NameColumn,
+            this.CategoryColumn,
+            this.Version,
+            this.ExtensionColumn});
+            this.dataGridView1.Location = new System.Drawing.Point(0, 110);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(467, 454);
+            this.dataGridView1.TabIndex = 1;
+            // 
+            // LabelVendor
+            // 
+            this.LabelVendor.AutoSize = true;
+            this.LabelVendor.Location = new System.Drawing.Point(12, 9);
+            this.LabelVendor.Name = "LabelVendor";
+            this.LabelVendor.Size = new System.Drawing.Size(41, 13);
+            this.LabelVendor.TabIndex = 2;
+            this.LabelVendor.Text = "Vendor";
+            // 
+            // LabelRenderer
+            // 
+            this.LabelRenderer.AutoSize = true;
+            this.LabelRenderer.Location = new System.Drawing.Point(12, 35);
+            this.LabelRenderer.Name = "LabelRenderer";
+            this.LabelRenderer.Size = new System.Drawing.Size(51, 13);
+            this.LabelRenderer.TabIndex = 3;
+            this.LabelRenderer.Text = "Renderer";
+            // 
+            // LabelVersion
+            // 
+            this.LabelVersion.AutoSize = true;
+            this.LabelVersion.Location = new System.Drawing.Point(12, 61);
+            this.LabelVersion.Name = "LabelVersion";
+            this.LabelVersion.Size = new System.Drawing.Size(42, 13);
+            this.LabelVersion.TabIndex = 4;
+            this.LabelVersion.Text = "Version";
+            // 
+            // TextBoxVendor
+            // 
+            this.TextBoxVendor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxVendor.Location = new System.Drawing.Point(70, 6);
+            this.TextBoxVendor.Name = "TextBoxVendor";
+            this.TextBoxVendor.ReadOnly = true;
+            this.TextBoxVendor.Size = new System.Drawing.Size(385, 20);
+            this.TextBoxVendor.TabIndex = 5;
+            // 
+            // TextBoxRenderer
+            // 
+            this.TextBoxRenderer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxRenderer.Location = new System.Drawing.Point(70, 32);
+            this.TextBoxRenderer.Name = "TextBoxRenderer";
+            this.TextBoxRenderer.ReadOnly = true;
+            this.TextBoxRenderer.Size = new System.Drawing.Size(385, 20);
+            this.TextBoxRenderer.TabIndex = 6;
+            // 
+            // TextBoxVersion
+            // 
+            this.TextBoxVersion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxVersion.Location = new System.Drawing.Point(70, 58);
+            this.TextBoxVersion.Name = "TextBoxVersion";
+            this.TextBoxVersion.ReadOnly = true;
+            this.TextBoxVersion.Size = new System.Drawing.Size(385, 20);
+            this.TextBoxVersion.TabIndex = 7;
+            // 
+            // LabelSupport
+            // 
+            this.LabelSupport.AutoSize = true;
+            this.LabelSupport.Location = new System.Drawing.Point(12, 87);
+            this.LabelSupport.Name = "LabelSupport";
+            this.LabelSupport.Size = new System.Drawing.Size(44, 13);
+            this.LabelSupport.TabIndex = 8;
+            this.LabelSupport.Text = "Support";
+            // 
+            // TextBoxSupport
+            // 
+            this.TextBoxSupport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.TextBoxSupport.Location = new System.Drawing.Point(70, 84);
+            this.TextBoxSupport.Name = "TextBoxSupport";
+            this.TextBoxSupport.ReadOnly = true;
+            this.TextBoxSupport.Size = new System.Drawing.Size(385, 20);
+            this.TextBoxSupport.TabIndex = 9;
+            // 
+            // SupportedColumn
+            // 
+            this.SupportedColumn.HeaderText = "";
+            this.SupportedColumn.Name = "SupportedColumn";
+            this.SupportedColumn.ReadOnly = true;
+            this.SupportedColumn.Width = 24;
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.HeaderText = "Name";
+            this.NameColumn.Name = "NameColumn";
+            this.NameColumn.ReadOnly = true;
+            // 
+            // CategoryColumn
+            // 
+            this.CategoryColumn.HeaderText = "Category";
+            this.CategoryColumn.Name = "CategoryColumn";
+            this.CategoryColumn.ReadOnly = true;
+            // 
+            // Version
+            // 
+            this.Version.HeaderText = "Introduced";
+            this.Version.Name = "Version";
+            this.Version.ReadOnly = true;
+            // 
+            // ExtensionColumn
+            // 
+            this.ExtensionColumn.HeaderText = "Extension";
+            this.ExtensionColumn.Name = "ExtensionColumn";
+            this.ExtensionColumn.ReadOnly = true;
             // 
             // W03_Extensions
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 264);
-            this.Controls.Add(this.listBox1);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(467, 564);
+            this.Controls.Add(this.TextBoxSupport);
+            this.Controls.Add(this.LabelSupport);
+            this.Controls.Add(this.TextBoxVersion);
+            this.Controls.Add(this.TextBoxRenderer);
+            this.Controls.Add(this.TextBoxVendor);
+            this.Controls.Add(this.LabelVersion);
+            this.Controls.Add(this.LabelRenderer);
+            this.Controls.Add(this.LabelVendor);
+            this.Controls.Add(this.dataGridView1);
             this.Name = "W03_Extensions";
             this.Text = "W03_Extensions";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ListBox listBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnSupported;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCategory;
+        private System.Windows.Forms.Label LabelVendor;
+        private System.Windows.Forms.Label LabelRenderer;
+        private System.Windows.Forms.Label LabelVersion;
+        private System.Windows.Forms.TextBox TextBoxVendor;
+        private System.Windows.Forms.TextBox TextBoxRenderer;
+        private System.Windows.Forms.TextBox TextBoxVersion;
+        private System.Windows.Forms.Label LabelSupport;
+        private System.Windows.Forms.TextBox TextBoxSupport;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn SupportedColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CategoryColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Version;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ExtensionColumn;
     }
 }
