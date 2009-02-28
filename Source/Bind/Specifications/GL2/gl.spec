@@ -1,32 +1,11 @@
 # gl.spec file
 # DON'T REMOVE PREVIOUS LINE!!! libspec depends on it!
 #
-# License Applicability. Except to the extent portions of this file are
-# made subject to an alternative license as permitted in the SGI Free
-# Software License B, Version 1.1 (the "License"), the contents of this
-# file are subject only to the provisions of the License. You may not use
-# this file except in compliance with the License. You may obtain a copy
-# of the License at Silicon Graphics, Inc., attn: Legal Services, 1600
-# Amphitheatre Parkway, Mountain View, CA 94043-1351, or at:
+# Copyright (C) 1991-2005 Silicon Graphics, Inc. All Rights Reserved.
 #
-# http://oss.sgi.com/projects/FreeB
-#
-# Note that, as provided in the License, the Software is distributed on an
-# "AS IS" basis, with ALL EXPRESS AND IMPLIED WARRANTIES AND CONDITIONS
-# DISCLAIMED, INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES AND
-# CONDITIONS OF MERCHANTABILITY, SATISFACTORY QUALITY, FITNESS FOR A
-# PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
-#
-# Original Code. The Original Code is: OpenGL Sample Implementation,
-# Version 1.2.1, released January 26, 2000, developed by Silicon Graphics,
-# Inc. The Original Code is Copyright (c) 1991-2005 Silicon Graphics, Inc.
-# Copyright in any portions created by third parties is as indicated
-# elsewhere herein. All Rights Reserved.
-#
-# Additional Notice Provisions: This software was created using the
-# OpenGL(R) version 1.2.1 Sample Implementation published by SGI, but has
-# not been independently verified as being compliant with the OpenGL(R)
-# version 1.2.1 Specification.
+# This document is licensed under the SGI Free Software B License Version
+# 2.0. For details, see http://oss.sgi.com/projects/FreeB/ .
+
 
 # @@ NOTE - need to distinguish extensions via some (new?) flag for glext.pl
 # @@ NOTE - 'alias' commands are not yet used in SI generator scripts, but should be
@@ -38,16 +17,17 @@ param:		retval retained
 dlflags:	notlistable handcode
 glxflags:	client-intercept client-handcode server-handcode EXT SGI ignore ARB
 vectorequiv:	*
-category:	display-list drawing drawing-control feedback framebuf misc modeling pixel-op pixel-rw state-req xform 1_1 VERSION_1_2 VERSION_1_3 VERSION_1_4 VERSION_1_5 VERSION_2_0 VERSION_2_1 ATI_element_array ATI_envmap_bumpmap ATI_fragment_shader ATI_pn_triangles ATI_vertex_array_object ATI_vertex_streams EXT_blend_color EXT_blend_minmax EXT_convolution EXT_copy_texture EXT_histogram EXT_polygon_offset EXT_subtexture EXT_texture3D EXT_texture_object EXT_vertex_array EXT_vertex_shader SGIS_detail_texture SGIS_multisample SGIS_pixel_texture ARB_point_parameters EXT_point_parameters SGIS_point_parameters SGIS_sharpen_texture SGIS_texture4D SGIS_texture_filter4 SGIX_async SGIX_flush_raster SGIX_fragment_lighting SGIX_framezoom SGIX_igloo_interface SGIX_instruments SGIX_list_priority SGIX_pixel_texture SGIX_polynomial_ffd SGIX_reference_plane SGIX_sprite SGIX_tag_sample_buffer SGI_color_table ARB_multitexture ARB_multisample ARB_texture_compression ARB_transpose_matrix ARB_vertex_blend ARB_matrix_palette EXT_compiled_vertex_array EXT_cull_vertex EXT_index_func EXT_index_material EXT_draw_range_elements EXT_vertex_weighting INGR_blend_func_separate NV_evaluators NV_fence NV_occlusion_query NV_point_sprite NV_register_combiners NV_register_combiners2 NV_vertex_array_range NV_vertex_program NV_vertex_program1_1_dcc MESA_resize_buffers MESA_window_pos PGI_misc_hints EXT_fog_coord EXT_blend_func_separate EXT_color_subtable EXT_coordinate_frame EXT_light_texture EXT_multi_draw_arrays EXT_paletted_texture EXT_pixel_transform EXT_secondary_color EXT_texture_perturb_normal HP_image_transform IBM_multimode_draw_arrays IBM_vertex_array_lists INTEL_parallel_arrays SUNX_constant_data SUN_global_alpha SUN_mesh_array SUN_triangle_list SUN_vertex 3DFX_tbuffer EXT_multisample SGIS_fog_function SGIS_texture_color_mask ARB_window_pos EXT_stencil_two_side EXT_depth_bounds_test EXT_blend_equation_separate ARB_vertex_program ARB_fragment_program ARB_vertex_buffer_object ARB_occlusion_query ARB_shader_objects ARB_vertex_shader ARB_fragment_shader S3_s3tc ATI_draw_buffers ATI_texture_env_combine3 ATI_texture_float NV_float_buffer NV_fragment_program NV_half_float NV_pixel_data_range NV_primitive_restart NV_texture_expand_normal NV_texture_expand_normal NV_vertex_program2 APPLE_element_array APPLE_fence APPLE_vertex_array_object APPLE_vertex_array_range ATI_draw_buffers NV_fragment_program NV_half_float NV_pixel_data_range NV_primitive_restart ATI_map_object_buffer ATI_separate_stencil ATI_vertex_attrib_array_object ARB_draw_buffers ARB_texture_rectangle ARB_color_buffer_float EXT_framebuffer_object GREMEDY_string_marker EXT_stencil_clear_tag EXT_framebuffer_blit EXT_framebuffer_multisample MESAX_texture_stack EXT_timer_query EXT_gpu_program_parameters APPLE_flush_buffer_range NV_gpu_program4 NV_geometry_program4 EXT_geometry_shader4 NV_vertex_program4 EXT_gpu_shader4 EXT_draw_instanced EXT_texture_buffer_object NV_depth_buffer_float NV_framebuffer_multisample_coverage NV_parameter_buffer_object EXT_draw_buffers2 NV_transform_feedback EXT_bindable_uniform EXT_texture_integer
+category:	display-list drawing drawing-control feedback framebuf misc modeling pixel-op pixel-rw state-req xform 1_1 VERSION_1_2 VERSION_1_3 VERSION_1_4 VERSION_1_5 VERSION_2_0 VERSION_2_1 VERSION_3_0 ATI_element_array ATI_envmap_bumpmap ATI_fragment_shader ATI_pn_triangles ATI_vertex_array_object ATI_vertex_streams EXT_blend_color EXT_blend_minmax EXT_convolution EXT_copy_texture EXT_histogram EXT_polygon_offset EXT_subtexture EXT_texture3D EXT_texture_object EXT_vertex_array EXT_vertex_shader SGIS_detail_texture SGIS_multisample SGIS_pixel_texture ARB_point_parameters EXT_point_parameters SGIS_point_parameters SGIS_sharpen_texture SGIS_texture4D SGIS_texture_filter4 SGIX_async SGIX_flush_raster SGIX_fragment_lighting SGIX_framezoom SGIX_igloo_interface SGIX_instruments SGIX_list_priority SGIX_pixel_texture SGIX_polynomial_ffd SGIX_reference_plane SGIX_sprite SGIX_tag_sample_buffer SGI_color_table ARB_multitexture ARB_multisample ARB_texture_compression ARB_transpose_matrix ARB_vertex_blend ARB_matrix_palette EXT_compiled_vertex_array EXT_cull_vertex EXT_index_func EXT_index_material EXT_draw_range_elements EXT_vertex_weighting INGR_blend_func_separate NV_evaluators NV_fence NV_occlusion_query NV_point_sprite NV_register_combiners NV_register_combiners2 NV_vertex_array_range NV_vertex_program NV_vertex_program1_1_dcc MESA_resize_buffers MESA_window_pos PGI_misc_hints EXT_fog_coord EXT_blend_func_separate EXT_color_subtable EXT_coordinate_frame EXT_light_texture EXT_multi_draw_arrays EXT_paletted_texture EXT_pixel_transform EXT_secondary_color EXT_texture_perturb_normal HP_image_transform IBM_multimode_draw_arrays IBM_vertex_array_lists INTEL_parallel_arrays SUNX_constant_data SUN_global_alpha SUN_mesh_array SUN_triangle_list SUN_vertex 3DFX_tbuffer EXT_multisample SGIS_fog_function SGIS_texture_color_mask ARB_window_pos EXT_stencil_two_side EXT_depth_bounds_test EXT_blend_equation_separate ARB_vertex_program ARB_fragment_program ARB_vertex_buffer_object ARB_occlusion_query ARB_shader_objects ARB_vertex_shader ARB_fragment_shader S3_s3tc ATI_draw_buffers ATI_texture_env_combine3 ATI_texture_float NV_float_buffer NV_fragment_program NV_half_float NV_pixel_data_range NV_primitive_restart NV_texture_expand_normal NV_texture_expand_normal NV_vertex_program2 APPLE_element_array APPLE_fence APPLE_vertex_array_object APPLE_vertex_array_range ATI_draw_buffers NV_fragment_program NV_half_float NV_pixel_data_range NV_primitive_restart ATI_map_object_buffer ATI_separate_stencil ATI_vertex_attrib_array_object ARB_draw_buffers ARB_texture_rectangle ARB_color_buffer_float EXT_framebuffer_object GREMEDY_string_marker EXT_stencil_clear_tag EXT_framebuffer_blit EXT_framebuffer_multisample MESAX_texture_stack EXT_timer_query EXT_gpu_program_parameters APPLE_flush_buffer_range NV_gpu_program4 NV_geometry_program4 EXT_geometry_shader4 NV_vertex_program4 EXT_gpu_shader4 EXT_draw_instanced EXT_texture_buffer_object NV_depth_buffer_float NV_framebuffer_multisample_coverage NV_parameter_buffer_object EXT_draw_buffers2 NV_transform_feedback EXT_bindable_uniform EXT_texture_integer GREMEDY_frame_terminator NV_conditional_render NV_present_video EXT_transform_feedback ARB_depth_buffer_float ARB_draw_instanced ARB_framebuffer_object ARB_framebuffer_sRGB ARB_geometry_shader4 ARB_half_float_vertex ARB_instanced_arrays ARB_map_buffer_range ARB_texture_buffer_object ARB_texture_compression_rgtc ARB_texture_rg ARB_vertex_array_object EXT_direct_state_access EXT_vertex_array_bgra EXT_texture_swizzle NV_explicit_multisample NV_transform_feedback2
+
 
 # categories for extensions with no functions - need not be included now
-#   ARB_texture_env_add ARB_texture_cube_map ARB_texture_border_clamp ARB_shading_language_100 ARB_texture_non_power_of_two ARB_point_sprite ARB_half_float_pixel ARB_texture_float ARB_pixel_buffer_object EXT_abgr EXT_texture SGI_color_matrix SGI_texture_color_table EXT_cmyka EXT_packed_pixels SGIS_texture_lod EXT_rescale_normal EXT_misc_attribute SGIS_generate_mipmap SGIX_clipmap SGIX_shadow SGIS_texture_edge_clamp SGIS_texture_border_clamp EXT_blend_subtract EXT_blend_logic_op SGIX_async_histogram SGIX_async_pixel SGIX_interlace SGIX_pixel_tiles SGIX_texture_select SGIX_texture_multi_buffer SGIX_texture_scale_bias SGIX_depth_texture SGIX_fog_offset HP_convolution_border_modes SGIX_texture_add_env PGI_vertex_hints EXT_clip_volume_hint SGIX_ir_instrument1 SGIX_calligraphic_fragment SGIX_texture_lod_bias SGIX_shadow_ambient EXT_index_texture EXT_index_array_formats SGIX_ycrcb IBM_rasterpos_clip HP_texture_lighting WIN_phong_shading WIN_specular_fog SGIX_blend_alpha_minmax EXT_bgra HP_occlusion_test EXT_pixel_transform_color_table EXT_shared_texture_palette EXT_separate_specular_color EXT_texture_env REND_screen_coordinates EXT_texture_env_combine APPLE_specular_vector APPLE_transform_hint SGIX_fog_scale INGR_color_clamp INGR_interlace_read EXT_stencil_wrap EXT_422_pixels NV_texgen_reflection SUN_convolution_border_modes SUN_slice_accum EXT_texture_env_add EXT_texture_lod_bias EXT_texture_filter_anisotropic NV_light_max_exponent NV_fog_distance NV_texgen_emboss NV_blend_square NV_texture_env_combine4 NV_packed_depth_stencil NV_texture_compression_vtc NV_texture_rectangle NV_texture_shader NV_texture_shader2 NV_vertex_array_range2 IBM_cull_vertex SGIX_subsample SGIX_ycrcba SGIX_ycrcb_subsample SGIX_depth_pass_instrument 3DFX_texture_compression_FXT1 3DFX_multisample SGIX_vertex_preclip SGIX_convolution_accuracy SGIX_resample SGIX_scalebias_hint SGIX_texture_coordinate_clamp EXT_shadow_funcs MESA_pack_invert MESA_ycbcr_texture EXT_packed_float EXT_texture_array EXT_texture_compression_latc EXT_texture_compression_rgtc EXT_texture_shared_exponent NV_fragment_program4 EXT_framebuffer_sRGB NV_geometry_shader4
+#   ARB_texture_env_add ARB_texture_cube_map ARB_texture_border_clamp ARB_shading_language_100 ARB_texture_non_power_of_two ARB_point_sprite ARB_half_float_pixel ARB_texture_float ARB_pixel_buffer_object EXT_abgr EXT_texture SGI_color_matrix SGI_texture_color_table EXT_cmyka EXT_packed_pixels SGIS_texture_lod EXT_rescale_normal EXT_misc_attribute SGIS_generate_mipmap SGIX_clipmap SGIX_shadow SGIS_texture_edge_clamp SGIS_texture_border_clamp EXT_blend_subtract EXT_blend_logic_op SGIX_async_histogram SGIX_async_pixel SGIX_interlace SGIX_pixel_tiles SGIX_texture_select SGIX_texture_multi_buffer SGIX_texture_scale_bias SGIX_depth_texture SGIX_fog_offset HP_convolution_border_modes SGIX_texture_add_env PGI_vertex_hints EXT_clip_volume_hint SGIX_ir_instrument1 SGIX_calligraphic_fragment SGIX_texture_lod_bias SGIX_shadow_ambient EXT_index_texture EXT_index_array_formats SGIX_ycrcb IBM_rasterpos_clip HP_texture_lighting WIN_phong_shading WIN_specular_fog SGIX_blend_alpha_minmax EXT_bgra HP_occlusion_test EXT_pixel_transform_color_table EXT_shared_texture_palette EXT_separate_specular_color EXT_texture_env REND_screen_coordinates EXT_texture_env_combine APPLE_specular_vector APPLE_transform_hint SGIX_fog_scale INGR_color_clamp INGR_interlace_read EXT_stencil_wrap EXT_422_pixels NV_texgen_reflection SUN_convolution_border_modes SUN_slice_accum EXT_texture_env_add EXT_texture_lod_bias EXT_texture_filter_anisotropic NV_light_max_exponent NV_fog_distance NV_texgen_emboss NV_blend_square NV_texture_env_combine4 NV_packed_depth_stencil NV_texture_compression_vtc NV_texture_rectangle NV_texture_shader NV_texture_shader2 NV_vertex_array_range2 IBM_cull_vertex SGIX_subsample SGIX_ycrcba SGIX_ycrcb_subsample SGIX_depth_pass_instrument 3DFX_texture_compression_FXT1 3DFX_multisample SGIX_vertex_preclip SGIX_convolution_accuracy SGIX_resample SGIX_scalebias_hint SGIX_texture_coordinate_clamp EXT_shadow_funcs MESA_pack_invert MESA_ycbcr_texture EXT_packed_float EXT_texture_array EXT_texture_compression_latc EXT_texture_compression_rgtc EXT_texture_shared_exponent NV_fragment_program4 EXT_framebuffer_sRGB NV_geometry_shader4 EXT_vertex_array_bgra
 
-version:	1.0 1.1 1.2 1.3 1.4 1.5 2.0 2.1
+version:	1.0 1.1 1.2 1.3 1.4 1.5 2.0 2.1 3.0
 glxsingle:	*
 glxropcode:	*
 glxvendorpriv:	*
-glsflags:	capture-handcode client get gl-enum ignore matrix pixel-null pixel-pack pixel-unpack
+glsflags:	capture-handcode client client-state get gl-enum ignore matrix pixel-null pixel-pack pixel-unpack
 glsopcode:	*
 glsalias:	*
 wglflags:	client-handcode server-handcode small-data batchable
@@ -58,28 +38,18 @@ offset:		*
 glfflags:	*
 beginend:	*
 glxvectorequiv: *
+subcategory:	*
+glextmask:	*
 
 ###############################################################################
 #
-# GLX opcodes
-#	glxsingle:		101-159     (1.0-1.2 core)
-#				160	    (ARB_texture_compression)
-#	glxropcode:		1-196	    (1.2 core; ropcode 140 unused?!)
-#				197-213     (ARB_multitexture)
-#				214-219     (ARB_texture_compression)
-#				220-228     (ARB_vertex_blend)
-#				229	    (ARB_multisample)
-#				230	    (ARB_window_pos)
-#				2048-2082   (SGI extensions)
-#				4096-4123   (1.2 core and multivendor EXT)
-#				4124-4142   (EXT extensions)
+# glxsingle, glxropcode, and other GLX allocations to vendors
+# are used here, but the master registry for GLX is in
+# /ogl/trunk/doc/registry/extensions/extensions.reserved
+#
 # XFree86 dispatch offsets:	0-645
 #				578-641     NV_vertex_program
 # GLS opcodes:			0x0030-0x0269
-#
-# New opcodes and offsets must be allocated by SGI in the master registry file;
-#    a copy of this is in doc/registry/extensions/extensions.reserved, but only
-#    the copy maintained by SGI is the official and current version.
 #
 ###############################################################################
 
@@ -138,16 +108,16 @@ passthru: typedef unsigned short GLhalfNV;
 passthru: #endif
 passthru:
 passthru: #ifndef GLEXT_64_TYPES_DEFINED
-passthru: /* This code block is duplicated in glext.h, so must be protected */
+passthru: /* This code block is duplicated in glxext.h, so must be protected */
 passthru: #define GLEXT_64_TYPES_DEFINED
 passthru: /* Define int32_t, int64_t, and uint64_t types for UST/MSC */
 passthru: /* (as used in the GL_EXT_timer_query extension). */
 passthru: #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 passthru: #include <inttypes.h>
-passthru: #elif defined(__sun__)
+passthru: #elif defined(__sun__) || defined(__digital__)
 passthru: #include <inttypes.h>
 passthru: #if defined(__STDC__)
-passthru: #if defined(__arch64__)
+passthru: #if defined(__arch64__) || defined(_LP64)
 passthru: typedef long int int64_t;
 passthru: typedef unsigned long int uint64_t;
 passthru: #else
@@ -155,7 +125,7 @@ passthru: typedef long long int int64_t;
 passthru: typedef unsigned long long int uint64_t;
 passthru: #endif /* __arch64__ */
 passthru: #endif /* __STDC__ */
-passthru: #elif defined( __VMS )
+passthru: #elif defined( __VMS ) || defined(__sgi)
 passthru: #include <inttypes.h>
 passthru: #elif defined(__SCO__) || defined(__USLC__)
 passthru: #include <stdint.h>
@@ -5656,7 +5626,7 @@ GetQueryObjectiv(id, pname, params)
 
 GetQueryObjectuiv(id, pname, params)
 	return		void
-	param		id			UInt32 in value
+	param		id		UInt32 in value
 	param		pname		GetQueryObjectParam in value	# GLenum in value
 	param		params		UInt32 out array [pname]
 	category	VERSION_1_5
@@ -7045,6 +7015,7 @@ VertexAttribPointer(index, size, type, normalized, stride, pointer)
 # OpenGL 2.1 (EXT_texture_sRGB) commands - none
 
 # New commands in OpenGL 2.1
+
 UniformMatrix2x3fv(location, count, transpose, value)
 	return		void
 	param		location	Int32 in value
@@ -7129,6 +7100,768 @@ UniformMatrix4x3fv(location, count, transpose, value)
 	glsopcode	?
 	offset		?
 
+
+###############################################################################
+###############################################################################
+#
+# OpenGL 3.0 commands
+#
+###############################################################################
+###############################################################################
+
+# OpenGL 3.0 (EXT_draw_buffers2) commands
+
+ColorMaski(index, r, g, b, a)
+	return		void
+	param		index		UInt32 in value
+	param		r		Boolean in value
+	param		g		Boolean in value
+	param		b		Boolean in value
+	param		a		Boolean in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+GetBooleani_v(target, index, data)
+	return		void
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	param		data		Boolean out array [COMPSIZE(target)]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+GetIntegeri_v(target, index, data)
+	return		void
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	param		data		Int32 out array [COMPSIZE(target)]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+Enablei(target, index)
+	return		void
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+Disablei(target, index)
+	return		void
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+IsEnabledi(target, index)
+	return		Boolean
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+# OpenGL 3.0 (EXT_transform_feedback) commands
+
+BeginTransformFeedback(primitiveMode)
+	return		void
+	param		primitiveMode	GLenum in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+EndTransformFeedback()
+	return		void
+	category	VERSION_3_0
+	version		3.0
+	extension
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+BindBufferRange(target, index, buffer, offset, size)
+	return		void
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	param		buffer		UInt32 in value
+	param		offset		BufferOffset in value
+	param		size		BufferSize in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+BindBufferBase(target, index, buffer)
+	return		void
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	param		buffer		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+TransformFeedbackVaryings(program, count, locations, bufferMode)
+	return		void
+	param		program		UInt32 in value
+	param		count		SizeI in value
+	param		locations	Int32 in array [COMPSIZE(count)]
+	param		bufferMode	GLenum in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+GetTransformFeedbackVarying(program, index, location)
+	return		void
+	param		program		UInt32 in value
+	param		index		UInt32 in value
+	param		location	Int32 out array [1]
+	category	VERSION_3_0
+	dlflags		notlistable
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+ClampColor(target, clamp)
+	return		void
+	param		target		ClampColorTarget in value # ClampColorTargetARB in value
+	param		clamp		ClampColorMode in value # ClampColorModeARB in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glxropcode	234
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+BeginConditionalRender(id, mode)
+	return		void
+	param		id		UInt32 in value
+	param		mode		TypeEnum in value
+	category	VERSION_3_0
+	version		3.0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+EndConditionalRender()
+	return		void
+	category	VERSION_3_0
+	version		3.0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+# OpenGL 3.0 (NV_vertex_program4) commands
+
+VertexAttribI1i(index, x)
+	return		void
+	param		index		UInt32 in value
+	param		x		Int32 in value
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	vectorequiv	VertexAttribI1iv
+	glxvectorequiv	VertexAttribI1iv
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI2i(index, x, y)
+	return		void
+	param		index		UInt32 in value
+	param		x		Int32 in value
+	param		y		Int32 in value
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	vectorequiv	VertexAttribI2iv
+	glxvectorequiv	VertexAttribI2iv
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI3i(index, x, y, z)
+	return		void
+	param		index		UInt32 in value
+	param		x		Int32 in value
+	param		y		Int32 in value
+	param		z		Int32 in value
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	vectorequiv	VertexAttribI3iv
+	glxvectorequiv	VertexAttribI3iv
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI4i(index, x, y, z, w)
+	return		void
+	param		index		UInt32 in value
+	param		x		Int32 in value
+	param		y		Int32 in value
+	param		z		Int32 in value
+	param		w		Int32 in value
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	vectorequiv	VertexAttribI4iv
+	glxvectorequiv	VertexAttribI4iv
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI1ui(index, x)
+	return		void
+	param		index		UInt32 in value
+	param		x		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	vectorequiv	VertexAttribI1uiv
+	glxvectorequiv	VertexAttribI1uiv
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI2ui(index, x, y)
+	return		void
+	param		index		UInt32 in value
+	param		x		UInt32 in value
+	param		y		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	vectorequiv	VertexAttribI2uiv
+	glxvectorequiv	VertexAttribI2uiv
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI3ui(index, x, y, z)
+	return		void
+	param		index		UInt32 in value
+	param		x		UInt32 in value
+	param		y		UInt32 in value
+	param		z		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	vectorequiv	VertexAttribI3uiv
+	glxvectorequiv	VertexAttribI3uiv
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI4ui(index, x, y, z, w)
+	return		void
+	param		index		UInt32 in value
+	param		x		UInt32 in value
+	param		y		UInt32 in value
+	param		z		UInt32 in value
+	param		w		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	vectorequiv	VertexAttribI4uiv
+	glxvectorequiv	VertexAttribI4uiv
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI1iv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		Int32 in array [1]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI2iv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		Int32 in array [2]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI3iv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		Int32 in array [3]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI4iv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		Int32 in array [4]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI1uiv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		UInt32 in array [1]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI2uiv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		UInt32 in array [2]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI3uiv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		UInt32 in array [3]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI4uiv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		UInt32 in array [4]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI4bv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		Int8 in array [4]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI4sv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		Int16 in array [4]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI4ubv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		UInt8 in array [4]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribI4usv(index, v)
+	return		void
+	param		index		UInt32 in value
+	param		v		UInt16 in array [4]
+	category	VERSION_3_0
+	version		3.0
+	beginend	allow-inside
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+VertexAttribIPointer(index, size, type, stride, pointer)
+	return		void
+	param		index		UInt32 in value
+	param		size		Int32 in value
+	param		type		VertexAttribEnum in value
+	param		stride		SizeI in value
+	param		pointer		Void in array [COMPSIZE(size/type/stride)] retained
+	category	VERSION_3_0
+	version		3.0
+	dlflags		notlistable
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+GetVertexAttribIiv(index, pname, params)
+	return		void
+	param		index		UInt32 in value
+	param		pname		VertexAttribEnum in value
+	param		params		Int32 out array [1]
+	category	VERSION_3_0
+	version		3.0
+	dlflags		notlistable
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+GetVertexAttribIuiv(index, pname, params)
+	return		void
+	param		index		UInt32 in value
+	param		pname		VertexAttribEnum in value
+	param		params		UInt32 out array [1]
+	category	VERSION_3_0
+	version		3.0
+	dlflags		notlistable
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+# OpenGL 3.0 (EXT_gpu_shader4) commands
+
+GetUniformuiv(program, location, params)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		params		UInt32 out array [COMPSIZE(program/location)]
+	category	VERSION_3_0
+	dlflags		notlistable
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+BindFragDataLocation(program, color, name)
+	return		void
+	param		program		UInt32 in value
+	param		color		UInt32 in value
+	param		name		Char in array [COMPSIZE(name)]
+	category	VERSION_3_0
+	dlflags		notlistable
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+GetFragDataLocation(program, name)
+	return		Int32
+	param		program		UInt32 in value
+	param		name		Char in array [COMPSIZE(name)]
+	category	VERSION_3_0
+	dlflags		notlistable
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+Uniform1ui(location, v0)
+	return		void
+	param		location	Int32 in value
+	param		v0		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+Uniform2ui(location, v0, v1)
+	return		void
+	param		location	Int32 in value
+	param		v0		UInt32 in value
+	param		v1		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+Uniform3ui(location, v0, v1, v2)
+	return		void
+	param		location	Int32 in value
+	param		v0		UInt32 in value
+	param		v1		UInt32 in value
+	param		v2		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+Uniform4ui(location, v0, v1, v2, v3)
+	return		void
+	param		location	Int32 in value
+	param		v0		UInt32 in value
+	param		v1		UInt32 in value
+	param		v2		UInt32 in value
+	param		v3		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+Uniform1uiv(location, count, value)
+	return		void
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		UInt32 in array [count]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+Uniform2uiv(location, count, value)
+	return		void
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		UInt32 in array [count*2]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+Uniform3uiv(location, count, value)
+	return		void
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		UInt32 in array [count*3]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+Uniform4uiv(location, count, value)
+	return		void
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		UInt32 in array [count*4]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+# OpenGL 3.0 (EXT_texture_integer) commands
+
+TexParameterIiv(target, pname, params)
+	return		void
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		Int32 in array [COMPSIZE(pname)]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+TexParameterIuiv(target, pname, params)
+	return		void
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		UInt32 in array [COMPSIZE(pname)]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+GetTexParameterIiv(target, pname, params)
+	return		void
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	VERSION_3_0
+	dlflags		notlistable
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+GetTexParameterIuiv(target, pname, params)
+	return		void
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		UInt32 out array [COMPSIZE(pname)]
+	category	VERSION_3_0
+	dlflags		notlistable
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+# New commands in OpenGL 3.0
+
+ClearBufferiv(buffer, drawbuffer, value)
+	return		void
+	param		buffer		GLenum in value
+	param		drawbuffer	DrawBufferName in value
+	param		value		Int32 in array [COMPSIZE(buffer)]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+ClearBufferuiv(buffer, drawbuffer, value)
+	return		void
+	param		buffer		GLenum in value
+	param		drawbuffer	DrawBufferName in value
+	param		value		UInt32 in array [COMPSIZE(buffer)]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+ClearBufferfv(buffer, drawbuffer, value)
+	return		void
+	param		buffer		GLenum in value
+	param		drawbuffer	DrawBufferName in value
+	param		value		Float32 in array [COMPSIZE(buffer)]
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+ClearBufferfi(buffer, drawbuffer, depth, stencil)
+	return		void
+	param		buffer		GLenum in value
+	param		drawbuffer	DrawBufferName in value
+	param		depth		Float32 in value
+	param		stencil		Int32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+GetStringi(name, index)
+	return		String
+	param		name		GLenum in value
+	param		index		UInt32 in value
+	category	VERSION_3_0
+	version		3.0
+	extension
+	dlflags		notlistable
+	glxflags	client-handcode server-handcode
+	glfflags	ignore
+	glsflags	get
+	glxsingle	?
+
+passthru: /* OpenGL 3.0 also reuses entry points from these extensions: */
+passthru: /* ARB_framebuffer_object */
+passthru: /* ARB_map_buffer_range */
+passthru: /* ARB_vertex_array_object */
 
 
 ###############################################################################
@@ -9910,8 +10643,8 @@ ClampColorARB(target, clamp)
 	extension
 	glxropcode	234
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		ClampColor
+	glsalias	ClampColor
 
 ###############################################################################
 #
@@ -9942,6 +10675,563 @@ newcategory: ARB_texture_float
 
 # (none)
 newcategory: ARB_pixel_buffer_object
+
+###############################################################################
+#
+# ARB Extension #43
+# ARB_depth_buffer_float commands (also OpenGL 3.0)
+#
+###############################################################################
+
+# (none)
+newcategory: ARB_depth_buffer_float
+
+###############################################################################
+#
+# ARB Extension #44
+# ARB_draw_instanced commands
+#
+###############################################################################
+
+DrawArraysInstancedARB(mode, first, count, primcount)
+	return		void
+	param		mode		BeginMode in value
+	param		first		Int32 in value
+	param		count		SizeI in value
+	param		primcount	SizeI in value
+	category	ARB_draw_instanced
+	version		2.0
+	extension	soft WINSOFT
+	dlflags		notlistable
+	vectorequiv	ArrayElement
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+DrawElementsInstancedARB(mode, count, type, indices, primcount)
+	return		void
+	param		mode		BeginMode in value
+	param		count		SizeI in value
+	param		type		DrawElementsType in value
+	param		indices		Void in array [COMPSIZE(count/type)]
+	param		primcount	SizeI in value
+	category	ARB_draw_instanced
+	version		2.0
+	extension	soft WINSOFT
+	dlflags		notlistable
+	vectorequiv	ArrayElement
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+###############################################################################
+#
+# ARB Extension #45
+# ARB_framebuffer_object commands (also OpenGL 3.0)
+#
+###############################################################################
+
+# Promoted from EXT_framebuffer_object
+IsRenderbuffer(renderbuffer)
+	return		Boolean
+	param		renderbuffer	UInt32 in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxvendorpriv	1422
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+BindRenderbuffer(target, renderbuffer)
+	return		void
+	param		target		RenderbufferTarget in value
+	param		renderbuffer	UInt32 in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4316
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+DeleteRenderbuffers(n, renderbuffers)
+	return		void
+	param		n		SizeI in value
+	param		renderbuffers	UInt32 in array [n]
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4317
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+GenRenderbuffers(n, renderbuffers)
+	return		void
+	param		n		SizeI in value
+	param		renderbuffers	UInt32 out array [n]
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxvendorpriv	1423
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+RenderbufferStorage(target, internalformat, width, height)
+	return		void
+	param		target		RenderbufferTarget in value
+	param		internalformat	RenderbufferStorage in value # GLenum in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4318
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+GetRenderbufferParameteriv(target, pname, params)
+	return		void
+	param		target		RenderbufferTarget in value
+	param		pname		RenderbufferParameterName in value # GLenum in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	ARB_framebuffer_object
+	dlflags		notlistable
+	version		3.0
+	extension
+	glxvendorpriv	1424
+	glxflags	ignore
+	glsflags	get
+	glsopcode	?
+	offset		?
+
+IsFramebuffer(framebuffer)
+	return		Boolean
+	param		framebuffer	UInt32 in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxvendorpriv	1425
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+BindFramebuffer(target, framebuffer)
+	return		void
+	param		target		FramebufferTarget in value
+	param		framebuffer	UInt32 in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4319
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+DeleteFramebuffers(n, framebuffers)
+	return		void
+	param		n		SizeI in value
+	param		framebuffers	UInt32 in array [n]
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4320
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+GenFramebuffers(n, framebuffers)
+	return		void
+	param		n		SizeI in value
+	param		framebuffers	UInt32 out array [n]
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxvendorpriv	1426
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+CheckFramebufferStatus(target)
+	return		FramebufferErrorCode # GLenum
+	param		target		FramebufferTarget in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxvendorpriv	1427
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+FramebufferTexture1D(target, attachment, textarget, texture, level)
+	return		void
+	param		target		FramebufferTarget in value
+	param		attachment	FramebufferAttachment in value
+	param		textarget	TextureTarget in value # GLenum in value
+	param		texture		UInt32 in value
+	param		level		Int32 in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4321
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+FramebufferTexture2D(target, attachment, textarget, texture, level)
+	return		void
+	param		target		FramebufferTarget in value
+	param		attachment	FramebufferAttachment in value
+	param		textarget	TextureTarget in value # GLenum in value
+	param		texture		UInt32 in value
+	param		level		Int32 in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4322
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+FramebufferTexture3D(target, attachment, textarget, texture, level, zoffset)
+	return		void
+	param		target		FramebufferTarget in value
+	param		attachment	FramebufferAttachment in value
+	param		textarget	TextureTarget in value # GLenum in value
+	param		texture		UInt32 in value
+	param		level		Int32 in value
+	param		zoffset		Int32 in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4323
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+FramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer)
+	return		void
+	param		target		FramebufferTarget in value
+	param		attachment	FramebufferAttachment in value
+	param		renderbuffertarget	RenderbufferTarget in value
+	param		renderbuffer	UInt32 in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4324
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+GetFramebufferAttachmentParameteriv(target, attachment, pname, params)
+	return		void
+	param		target		FramebufferTarget in value
+	param		attachment	FramebufferAttachment in value
+	param		pname		FramebufferParameterName in value # GLenum in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	ARB_framebuffer_object
+	dlflags		notlistable
+	version		3.0
+	extension
+	glxvendorpriv	1428
+	glxflags	ignore
+	glsflags	get
+	glsopcode	?
+	offset		?
+
+Generate(target)
+	return		void
+	param		target		GenerateMipmapTarget in value # GLenum in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension
+	glxropcode	4325
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+# Promoted from EXT_framebuffer_blit
+BlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter)
+	return		void
+	param		srcX0		Int32 in value
+	param		srcY0		Int32 in value
+	param		srcX1		Int32 in value
+	param		srcY1		Int32 in value
+	param		dstX0		Int32 in value
+	param		dstY0		Int32 in value
+	param		dstX1		Int32 in value
+	param		dstY1		Int32 in value
+	param		mask		ClearBufferMask in value
+	param		filter		BlitFramebufferFilter in value # GLenum in value
+	category	ARB_framebuffer_object
+	version		3.0
+	glxropcode	4330
+	glsopcode	?
+	offset		?
+
+# Promoted from EXT_framebuffer_multisample
+RenderbufferStorageMultisample(target, samples, internalformat, width, height)
+	return		void
+	param		target	RenderbufferTarget in value #	GLenum in value
+	param		samples		SizeI in value
+	param		internalformat	RenderbufferStorage in value # GLenum in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	category	ARB_framebuffer_object
+	version		3.0
+	glxropcode	4331
+	glsopcode	?
+	offset		?
+
+# Promoted from ARB_geometry_shader4
+FramebufferTextureLayer(target, attachment, texture, level, layer)
+	return		void
+	param		target		FramebufferTarget in value
+	param		attachment	FramebufferAttachment in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	param		layer		CheckedInt32 in value
+	category	ARB_framebuffer_object
+	version		3.0
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+
+###############################################################################
+#
+# ARB Extension #46
+# ARB_framebuffer_sRGB commands (also OpenGL 3.0)
+#
+###############################################################################
+
+# (none)
+newcategory: ARB_framebuffer_sRGB
+
+###############################################################################
+#
+# ARB Extension #47
+# ARB_geometry_shader4 commands
+#
+###############################################################################
+
+ProgramParameteriARB(program, pname, value)
+	return		void
+	param		program		UInt32 in value
+	param		pname		ProgramParameterPName in value
+	param		value		Int32 in value
+	category	ARB_geometry_shader4
+	version		3.0
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+FramebufferTextureARB(target, attachment, texture, level)
+	return		void
+	param		target		FramebufferTarget in value
+	param		attachment	FramebufferAttachment in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	category	ARB_geometry_shader4
+	version		3.0
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+FramebufferTextureLayerARB(target, attachment, texture, level, layer)
+	return		void
+	param		target		FramebufferTarget in value
+	param		attachment	FramebufferAttachment in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	param		layer		CheckedInt32 in value
+	category	ARB_geometry_shader4
+	version		3.0
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glxflags	ignore
+	alias		FramebufferTextureLayer
+	glsalias	FramebufferTextureLayer
+
+FramebufferTextureFaceARB(target, attachment, texture, level, face)
+	return		void
+	param		target		FramebufferTarget in value
+	param		attachment	FramebufferAttachment in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	param		face		TextureTarget in value
+	category	ARB_geometry_shader4
+	version		3.0
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+###############################################################################
+#
+# ARB Extension #48
+# ARB_half_float_vertex commands (also OpenGL 3.0)
+#
+###############################################################################
+
+# (none)
+newcategory: ARB_half_float_vertex
+
+###############################################################################
+#
+# ARB Extension #49
+# ARB_instanced_arrays commands
+#
+###############################################################################
+
+VertexAttribDivisor(index, divisor)
+	return		void
+	param		index		UInt32 in value
+	param		divisor		UInt32 in value
+	category	ARB_instanced_arrays
+	version		2.0
+	extension
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+###############################################################################
+#
+# ARB Extension #50
+# ARB_map_buffer_range commands (also OpenGL 3.0)
+#
+###############################################################################
+
+MapBufferRange(target, offset, length, access)
+	return		void
+	param		target		BufferTargetARB in value
+	param		offset		BufferOffset in value
+	param		length		BufferSize in value
+	param		access		BufferAccessMask in value
+	category	ARB_map_buffer_range
+	version		3.0
+	extension
+	glxropcode	?
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+# Promoted from APPLE_flush_buffer_range
+FlushMappedBufferRange(target, offset, length)
+	return		void
+	param		target		BufferTargetARB in value
+	param		offset		BufferOffset in value
+	param		length		BufferSize in value
+	category	ARB_map_buffer_range
+	version		3.0
+	extension
+	glxropcode	?
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+###############################################################################
+#
+# ARB Extension #51
+# ARB_texture_buffer_object commands
+#
+###############################################################################
+
+TexBufferARB(target, internalformat, buffer)
+	return		void
+	param		target		TextureTarget in value
+	param		internalformat	GLenum in value
+	param		buffer		UInt32 in value
+	category	ARB_texture_buffer_object
+	version		3.0
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+###############################################################################
+#
+# ARB Extension #52
+# ARB_texture_compression_rgtc commands (also OpenGL 3.0)
+#
+###############################################################################
+
+# (none)
+newcategory: ARB_texture_compression_rgtc
+
+###############################################################################
+#
+# ARB Extension #53
+# ARB_texture_rg commands (also OpenGL 3.0)
+#
+###############################################################################
+
+# (none)
+newcategory: ARB_texture_rg
+
+###############################################################################
+#
+# ARB Extension #54
+# ARB_vertex_array_object commands (also OpenGL 3.0)
+#
+###############################################################################
+
+# Promoted from APPLE_vertex_array_object
+BindVertexArray(array)
+	return		void
+	param		array		UInt32 in value
+	category	ARB_vertex_array_object
+	version		3.0
+	extension
+	glxropcode	?
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+DeleteVertexArrays(n, arrays)
+	return		void
+	param		n		SizeI in value
+	param		arrays		UInt32 in array [n]
+	category	ARB_vertex_array_object
+	version		3.0
+	extension
+	glxropcode	?
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+GenVertexArrays(n, arrays)
+	return		void
+	param		n		SizeI in value
+	param		arrays		UInt32 out array [n]
+	category	ARB_vertex_array_object
+	version		3.0
+	extension
+	glxropcode	?
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+IsVertexArray(array)
+	return		Boolean
+	param		array		UInt32 in value
+	category	ARB_vertex_array_object
+	version		3.0
+	extension
+	glxropcode	?
+	glxflags	ignore
+	glsopcode	?
+	offset		?
 
 
 ###############################################################################
@@ -18906,9 +20196,6 @@ FinishObjectAPPLE(object, name)
 #
 ###############################################################################
 
-# @@ Need to verify/add GLX protocol
-
-# @@@ loosely derived from incomplete SGIX_vertex_array_object
 BindVertexArrayAPPLE(array)
 	return		void
 	param		array		UInt32 in value
@@ -18917,8 +20204,8 @@ BindVertexArrayAPPLE(array)
 	extension
 	glxropcode	?
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		BindVertexArray
+	glsalias	BindVertexArray
 
 DeleteVertexArraysAPPLE(n, arrays)
 	return		void
@@ -18929,8 +20216,8 @@ DeleteVertexArraysAPPLE(n, arrays)
 	extension
 	glxropcode	?
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		DeleteVertexArrays
+	glsalias	DeleteVertexArrays
 
 GenVertexArraysAPPLE(n, arrays)
 	return		void
@@ -18941,8 +20228,8 @@ GenVertexArraysAPPLE(n, arrays)
 	extension
 	glxropcode	?
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		GenVertexArray
+	glsalias	GenVertexArray
 
 IsVertexArrayAPPLE(array)
 	return		Boolean
@@ -18952,8 +20239,8 @@ IsVertexArrayAPPLE(array)
 	extension
 	glxropcode	?
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		IsVertexArray
+	glsalias	IsVertexArray
 
 ###############################################################################
 #
@@ -20195,8 +21482,8 @@ IsRenderbufferEXT(renderbuffer)
 	extension
 	glxvendorpriv	1422
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		IsRenderbuffer
+	glsalias	IsRenderbuffer
 
 BindRenderbufferEXT(target, renderbuffer)
 	return		void
@@ -20207,8 +21494,8 @@ BindRenderbufferEXT(target, renderbuffer)
 	extension
 	glxropcode	4316
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		BindRenderbuffer
+	glsalias	BindRenderbuffer
 
 DeleteRenderbuffersEXT(n, renderbuffers)
 	return		void
@@ -20219,8 +21506,8 @@ DeleteRenderbuffersEXT(n, renderbuffers)
 	extension
 	glxropcode	4317
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		DeleteRenderbuffers
+	glsalias	DeleteRenderbuffers
 
 GenRenderbuffersEXT(n, renderbuffers)
 	return		void
@@ -20231,8 +21518,8 @@ GenRenderbuffersEXT(n, renderbuffers)
 	extension
 	glxvendorpriv	1423
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		GenRenderbuffers
+	glsalias	GenRenderbuffers
 
 RenderbufferStorageEXT(target, internalformat, width, height)
 	return		void
@@ -20245,8 +21532,8 @@ RenderbufferStorageEXT(target, internalformat, width, height)
 	extension
 	glxropcode	4318
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		RenderbufferStorage
+	glsalias	RenderbufferStorage
 
 GetRenderbufferParameterivEXT(target, pname, params)
 	return		void
@@ -20260,8 +21547,8 @@ GetRenderbufferParameterivEXT(target, pname, params)
 	glxvendorpriv	1424
 	glxflags	ignore
 	glsflags	get
-	glsopcode	?
-	offset		?
+	alias		GetRenderbufferParameteriv
+	glsalias	GetRenderbufferParameteriv
 
 IsFramebufferEXT(framebuffer)
 	return		Boolean
@@ -20271,8 +21558,8 @@ IsFramebufferEXT(framebuffer)
 	extension
 	glxvendorpriv	1425
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		IsFramebuffer
+	glsalias	IsFramebuffer
 
 BindFramebufferEXT(target, framebuffer)
 	return		void
@@ -20283,8 +21570,8 @@ BindFramebufferEXT(target, framebuffer)
 	extension
 	glxropcode	4319
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		BindFramebuffer
+	glsalias	BindFramebuffer
 
 DeleteFramebuffersEXT(n, framebuffers)
 	return		void
@@ -20295,8 +21582,8 @@ DeleteFramebuffersEXT(n, framebuffers)
 	extension
 	glxropcode	4320
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		DeleteFramebuffers
+	glsalias	DeleteFramebuffers
 
 GenFramebuffersEXT(n, framebuffers)
 	return		void
@@ -20307,8 +21594,8 @@ GenFramebuffersEXT(n, framebuffers)
 	extension
 	glxvendorpriv	1426
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		GenFramebuffers
+	glsalias	GenFramebuffers
 
 CheckFramebufferStatusEXT(target)
 	return		FramebufferErrorCode
@@ -20318,8 +21605,8 @@ CheckFramebufferStatusEXT(target)
 	extension
 	glxvendorpriv	1427
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		CheckFramebufferStatus
+	glsalias	CheckFramebufferStatus
 
 FramebufferTexture1DEXT(target, attachment, textarget, texture, level)
 	return		void
@@ -20333,8 +21620,8 @@ FramebufferTexture1DEXT(target, attachment, textarget, texture, level)
 	extension
 	glxropcode	4321
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		FramebufferTexture1D
+	glsalias	FramebufferTexture1D
 
 FramebufferTexture2DEXT(target, attachment, textarget, texture, level)
 	return		void
@@ -20348,8 +21635,8 @@ FramebufferTexture2DEXT(target, attachment, textarget, texture, level)
 	extension
 	glxropcode	4322
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		FramebufferTexture2D
+	glsalias	FramebufferTexture2D
 
 FramebufferTexture3DEXT(target, attachment, textarget, texture, level, zoffset)
 	return		void
@@ -20364,8 +21651,8 @@ FramebufferTexture3DEXT(target, attachment, textarget, texture, level, zoffset)
 	extension
 	glxropcode	4323
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		FramebufferTexture3D
+	glsalias	FramebufferTexture3D
 
 FramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer)
 	return		void
@@ -20378,8 +21665,8 @@ FramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer)
 	extension
 	glxropcode	4324
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		FramebufferRenderbuffer
+	glsalias	FramebufferRenderbuffer
 
 GetFramebufferAttachmentParameterivEXT(target, attachment, pname, params)
 	return		void
@@ -20394,8 +21681,8 @@ GetFramebufferAttachmentParameterivEXT(target, attachment, pname, params)
 	glxvendorpriv	1428
 	glxflags	ignore
 	glsflags	get
-	glsopcode	?
-	offset		?
+	alias		GetFramebufferAttachmentParameteriv
+	glsalias	GetFramebufferAttachmentParameteriv
 
 GenerateMipmapEXT(target)
 	return		void
@@ -20405,8 +21692,8 @@ GenerateMipmapEXT(target)
 	extension
 	glxropcode	4325
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		GenerateMipmap
+	glsalias	GenerateMipmap
 
 
 ###############################################################################
@@ -20494,8 +21781,8 @@ BlitFramebufferEXT(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask,
 	category	EXT_framebuffer_blit
 	version		1.5
 	glxropcode	4330
-	glsopcode	?
-	offset		?
+	alias		BlitFramebuffer
+	glsalias	BlitFramebuffer
 
 ###############################################################################
 #
@@ -20514,8 +21801,8 @@ RenderbufferStorageMultisampleEXT(target, samples, internalformat, width, height
 	category	EXT_framebuffer_multisample
 	version		1.5
 	glxropcode	4331
-	glsopcode	?
-	offset		?
+	alias		RenderbufferStorageMultisample
+	glsalias	RenderbufferStorageMultisample
 
 ###############################################################################
 #
@@ -20623,8 +21910,8 @@ FlushMappedBufferRangeAPPLE(target, offset, size)
 	extension
 	glxropcode	?
 	glxflags	ignore
-	glsopcode	?
-	offset		?
+	alias		FlushMappedBufferRange
+	glsalias	FlushMappedBufferRange
 
 ###############################################################################
 #
@@ -20882,8 +22169,9 @@ FramebufferTextureEXT(target, attachment, texture, level)
 	extension	soft WINSOFT
 	dlflags		notlistable
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		FramebufferTextureARB
+	glsalias	FramebufferTextureARB
 
 FramebufferTextureLayerEXT(target, attachment, texture, level, layer)
 	return		void
@@ -20897,8 +22185,9 @@ FramebufferTextureLayerEXT(target, attachment, texture, level, layer)
 	extension	soft WINSOFT
 	dlflags		notlistable
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		FramebufferTextureLayer
+	glsalias	FramebufferTextureLayer
 
 FramebufferTextureFaceEXT(target, attachment, texture, level, face)
 	return		void
@@ -20912,8 +22201,9 @@ FramebufferTextureFaceEXT(target, attachment, texture, level, face)
 	extension	soft WINSOFT
 	dlflags		notlistable
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		FramebufferTextureFaceARB
+	glsalias	FramebufferTextureFaceARB
 
 ###############################################################################
 #
@@ -20931,8 +22221,9 @@ ProgramParameteriEXT(program, pname, value)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		ProgramParameteriARB
+	glsalias	ProgramParameteriARB
 
 ###############################################################################
 #
@@ -20951,8 +22242,9 @@ VertexAttribI1iEXT(index, x)
 	glxvectorequiv	VertexAttribI1ivEXT
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI1i
+	glsalias	VertexAttribI1i
 
 VertexAttribI2iEXT(index, x, y)
 	return		void
@@ -20965,8 +22257,9 @@ VertexAttribI2iEXT(index, x, y)
 	glxvectorequiv	VertexAttribI2ivEXT
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI2i
+	glsalias	VertexAttribI2i
 
 VertexAttribI3iEXT(index, x, y, z)
 	return		void
@@ -20980,8 +22273,9 @@ VertexAttribI3iEXT(index, x, y, z)
 	glxvectorequiv	VertexAttribI3ivEXT
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI3i
+	glsalias	VertexAttribI3i
 
 VertexAttribI4iEXT(index, x, y, z, w)
 	return		void
@@ -20996,8 +22290,9 @@ VertexAttribI4iEXT(index, x, y, z, w)
 	glxvectorequiv	VertexAttribI4ivEXT
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI4i
+	glsalias	VertexAttribI4i
 
 VertexAttribI1uiEXT(index, x)
 	return		void
@@ -21009,8 +22304,9 @@ VertexAttribI1uiEXT(index, x)
 	glxvectorequiv	VertexAttribI1uivEXT
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI1ui
+	glsalias	VertexAttribI1ui
 
 VertexAttribI2uiEXT(index, x, y)
 	return		void
@@ -21023,8 +22319,9 @@ VertexAttribI2uiEXT(index, x, y)
 	glxvectorequiv	VertexAttribI2uivEXT
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI2ui
+	glsalias	VertexAttribI2ui
 
 VertexAttribI3uiEXT(index, x, y, z)
 	return		void
@@ -21038,8 +22335,9 @@ VertexAttribI3uiEXT(index, x, y, z)
 	glxvectorequiv	VertexAttribI3uivEXT
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI3ui
+	glsalias	VertexAttribI3ui
 
 VertexAttribI4uiEXT(index, x, y, z, w)
 	return		void
@@ -21054,8 +22352,9 @@ VertexAttribI4uiEXT(index, x, y, z, w)
 	glxvectorequiv	VertexAttribI4uivEXT
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI4ui
+	glsalias	VertexAttribI4ui
 
 VertexAttribI1ivEXT(index, v)
 	return		void
@@ -21065,8 +22364,9 @@ VertexAttribI1ivEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI1iv
+	glsalias	VertexAttribI1iv
 
 VertexAttribI2ivEXT(index, v)
 	return		void
@@ -21076,8 +22376,9 @@ VertexAttribI2ivEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI2iv
+	glsalias	VertexAttribI2iv
 
 VertexAttribI3ivEXT(index, v)
 	return		void
@@ -21087,8 +22388,9 @@ VertexAttribI3ivEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI3iv
+	glsalias	VertexAttribI3iv
 
 VertexAttribI4ivEXT(index, v)
 	return		void
@@ -21098,8 +22400,9 @@ VertexAttribI4ivEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI4iv
+	glsalias	VertexAttribI4iv
 
 VertexAttribI1uivEXT(index, v)
 	return		void
@@ -21109,8 +22412,9 @@ VertexAttribI1uivEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI1uiv
+	glsalias	VertexAttribI1uiv
 
 VertexAttribI2uivEXT(index, v)
 	return		void
@@ -21120,8 +22424,9 @@ VertexAttribI2uivEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI2uiv
+	glsalias	VertexAttribI2uiv
 
 VertexAttribI3uivEXT(index, v)
 	return		void
@@ -21131,8 +22436,9 @@ VertexAttribI3uivEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI3uiv
+	glsalias	VertexAttribI3uiv
 
 VertexAttribI4uivEXT(index, v)
 	return		void
@@ -21142,8 +22448,9 @@ VertexAttribI4uivEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI4uiv
+	glsalias	VertexAttribI4uiv
 
 VertexAttribI4bvEXT(index, v)
 	return		void
@@ -21153,8 +22460,9 @@ VertexAttribI4bvEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI4bv
+	glsalias	VertexAttribI4bv
 
 VertexAttribI4svEXT(index, v)
 	return		void
@@ -21164,8 +22472,9 @@ VertexAttribI4svEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI4sv
+	glsalias	VertexAttribI4sv
 
 VertexAttribI4ubvEXT(index, v)
 	return		void
@@ -21175,8 +22484,9 @@ VertexAttribI4ubvEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI4ubv
+	glsalias	VertexAttribI4ubv
 
 VertexAttribI4usvEXT(index, v)
 	return		void
@@ -21186,8 +22496,9 @@ VertexAttribI4usvEXT(index, v)
 	beginend	allow-inside
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribI4usv
+	glsalias	VertexAttribI4usv
 
 VertexAttribIPointerEXT(index, size, type, stride, pointer)
 	return		void
@@ -21200,8 +22511,9 @@ VertexAttribIPointerEXT(index, size, type, stride, pointer)
 	dlflags		notlistable
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		VertexAttribIPointer
+	glsalias	VertexAttribIPointer
 
 GetVertexAttribIivEXT(index, pname, params)
 	return		void
@@ -21212,8 +22524,9 @@ GetVertexAttribIivEXT(index, pname, params)
 	dlflags		notlistable
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		GetVertexAttribIiv
+	glsalias	GetVertexAttribIiv
 
 GetVertexAttribIuivEXT(index, pname, params)
 	return		void
@@ -21224,8 +22537,9 @@ GetVertexAttribIuivEXT(index, pname, params)
 	dlflags		notlistable
 	extension	soft WINSOFT NV10
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		GetVertexAttribIuiv
+	glsalias	GetVertexAttribIuiv
 
 ###############################################################################
 #
@@ -21244,8 +22558,9 @@ GetUniformuivEXT(program, location, params)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		GetUniformuiv
+	glsalias	GetUniformuiv
 
 BindFragDataLocationEXT(program, color, name)
 	return		void
@@ -21257,8 +22572,9 @@ BindFragDataLocationEXT(program, color, name)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		BindFragDataLocation
+	glsalias	BindFragDataLocation
 
 GetFragDataLocationEXT(program, name)
 	return		Int32
@@ -21269,8 +22585,9 @@ GetFragDataLocationEXT(program, name)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		GetFragDataLocation
+	glsalias	GetFragDataLocation
 
 Uniform1uiEXT(location, v0)
 	return		void
@@ -21280,8 +22597,9 @@ Uniform1uiEXT(location, v0)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		Uniform1ui
+	glsalias	Uniform1ui
 
 Uniform2uiEXT(location, v0, v1)
 	return		void
@@ -21292,8 +22610,9 @@ Uniform2uiEXT(location, v0, v1)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		Uniform2ui
+	glsalias	Uniform2ui
 
 Uniform3uiEXT(location, v0, v1, v2)
 	return		void
@@ -21305,8 +22624,9 @@ Uniform3uiEXT(location, v0, v1, v2)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		Uniform3ui
+	glsalias	Uniform3ui
 
 Uniform4uiEXT(location, v0, v1, v2, v3)
 	return		void
@@ -21319,8 +22639,9 @@ Uniform4uiEXT(location, v0, v1, v2, v3)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		Uniform4ui
+	glsalias	Uniform4ui
 
 Uniform1uivEXT(location, count, value)
 	return		void
@@ -21331,8 +22652,9 @@ Uniform1uivEXT(location, count, value)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		Uniform1uiv
+	glsalias	Uniform1uiv
 
 Uniform2uivEXT(location, count, value)
 	return		void
@@ -21343,8 +22665,9 @@ Uniform2uivEXT(location, count, value)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		Uniform2uiv
+	glsalias	Uniform2uiv
 
 Uniform3uivEXT(location, count, value)
 	return		void
@@ -21355,8 +22678,9 @@ Uniform3uivEXT(location, count, value)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		Uniform3uiv
+	glsalias	Uniform3uiv
 
 Uniform4uivEXT(location, count, value)
 	return		void
@@ -21367,8 +22691,9 @@ Uniform4uivEXT(location, count, value)
 	version		2.0
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		Uniform4uiv
+	glsalias	Uniform4uiv
 
 ###############################################################################
 #
@@ -21389,8 +22714,9 @@ DrawArraysInstancedEXT(mode, start, count, primcount)
 	dlflags		notlistable
 	vectorequiv	ArrayElement
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		DrawArraysInstancedARB
+	glsalias	DrawArraysInstancedARB
 
 DrawElementsInstancedEXT(mode, count, type, indices, primcount)
 	return		void
@@ -21405,9 +22731,9 @@ DrawElementsInstancedEXT(mode, count, type, indices, primcount)
 	dlflags		notlistable
 	vectorequiv	ArrayElement
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
-
+	alias		DrawElementsInstancedARB
+	glsalias	DrawElementsInstancedARB
 
 ###############################################################################
 #
@@ -21445,8 +22771,9 @@ TexBufferEXT(target, internalformat, buffer)
 	version		2.0
 	extension	soft WINSOFT NV50
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		TexBufferARB
+	glsalias	TexBufferARB
 
 ###############################################################################
 #
@@ -21628,77 +22955,83 @@ ProgramBufferParametersIuivNV(target, buffer, index, count, params)
 
 ColorMaskIndexedEXT(index, r, g, b, a)
 	return		void
-	param		index  UInt32 in value
-	param		r      Boolean in value
-	param		g      Boolean in value
-	param		b      Boolean in value
-	param		a      Boolean in value
+	param		index		UInt32 in value
+	param		r		Boolean in value
+	param		g		Boolean in value
+	param		b		Boolean in value
+	param		a		Boolean in value
 	category	EXT_draw_buffers2
 	version		2.0
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		ColorMaski
+	glsalias	ColorMaski
 
 GetBooleanIndexedvEXT(target, index, data)
 	return		void
 	param		target		GLenum in value
-	param		index  UInt32 in value
-	param		data   Boolean out array [COMPSIZE(target)]
+	param		index		UInt32 in value
+	param		data		Boolean out array [COMPSIZE(target)]
 	category	EXT_draw_buffers2
 	version		2.0
 	dlflags		notlistable
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		GetBooleani_v
+	glsalias	GetBooleani_v
 
 GetIntegerIndexedvEXT(target, index, data)
 	return		void
 	param		target		GLenum in value
-	param		index  UInt32 in value
-	param		data   Int32 out array [COMPSIZE(target)]
+	param		index		UInt32 in value
+	param		data		Int32 out array [COMPSIZE(target)]
 	category	EXT_draw_buffers2
 	version		2.0
 	dlflags		notlistable
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		GetIntegeri_v
+	glsalias	GetIntegeri_v
 
 EnableIndexedEXT(target, index)
 	return		void
 	param		target		GLenum in value
-	param		index  UInt32 in value
+	param		index		UInt32 in value
 	category	EXT_draw_buffers2
 	version		2.0
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		Enablei
+	glsalias	Enablei
 
 DisableIndexedEXT(target, index)
 	return		void
 	param		target		GLenum in value
-	param		index  UInt32 in value
+	param		index		UInt32 in value
 	category	EXT_draw_buffers2
 	version		2.0
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		Disablei
+	glsalias	Disablei
 
 IsEnabledIndexedEXT(target, index)
 	return		Boolean
 	param		target		GLenum in value
-	param		index  UInt32 in value
+	param		index		UInt32 in value
 	category	EXT_draw_buffers2
 	version		2.0
 	dlflags		notlistable
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		IsEnabledi
+	glsalias	IsEnabledi
 
 ###############################################################################
 #
@@ -21715,8 +23048,9 @@ BeginTransformFeedbackNV(primitiveMode)
 	dlflags		notlistable
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		BeginTransformFeedback
+	glsalias	BeginTransformFeedback
 
 EndTransformFeedbackNV()
 	return		void
@@ -21725,8 +23059,9 @@ EndTransformFeedbackNV()
 	dlflags		notlistable
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		EndTransformFeedback
+	glsalias	EndTransformFeedback
 
 TransformFeedbackAttribsNV(count, attribs, bufferMode)
 	return		void
@@ -21753,8 +23088,9 @@ BindBufferRangeNV(target, index, buffer, offset, size)
 	dlflags		notlistable
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		BindBufferRange
+	glsalias	BindBufferRange
 
 BindBufferOffsetNV(target, index, buffer, offset)
 	return		void
@@ -21767,8 +23103,9 @@ BindBufferOffsetNV(target, index, buffer, offset)
 	dlflags		notlistable
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		BindBufferOffsetEXT
+	glsalias	BindBufferOffsetEXT
 
 BindBufferBaseNV(target, index, buffer)
 	return		void
@@ -21780,8 +23117,9 @@ BindBufferBaseNV(target, index, buffer)
 	dlflags		notlistable
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		BindBufferBase
+	glsalias	BindBufferBase
 
 TransformFeedbackVaryingsNV(program, count, locations, bufferMode)
 	return		void
@@ -21794,8 +23132,9 @@ TransformFeedbackVaryingsNV(program, count, locations, bufferMode)
 	dlflags		notlistable
 	glxflags	ignore
 	glfflags	ignore
-	glsflags	ignore
 	extension	soft WINSOFT
+	alias		TransformFeedbackVaryings
+	glsalias	TransformFeedbackVaryings
 
 ActiveVaryingNV(program, name)
 	return		void
@@ -21848,8 +23187,9 @@ GetTransformFeedbackVaryingNV(program, index, location)
 	version		1.5
 	extension	soft WINSOFT
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		GetTransformFeedbackVarying
+	glsalias	GetTransformFeedbackVarying
 
 ###############################################################################
 #
@@ -21910,8 +23250,9 @@ TexParameterIivEXT(target, pname, params)
 	version		2.0
 	extension	soft WINSOFT NV50
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		TexParameterIiv
+	glsalias	TexParameterIiv
 
 TexParameterIuivEXT(target, pname, params)
 	return		void
@@ -21922,8 +23263,9 @@ TexParameterIuivEXT(target, pname, params)
 	version		2.0
 	extension	soft WINSOFT NV50
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		TexParameterIuiv
+	glsalias	TexParameterIuiv
 
 GetTexParameterIivEXT(target, pname, params)
 	return		void
@@ -21936,8 +23278,9 @@ GetTexParameterIivEXT(target, pname, params)
 	version		2.0
 	extension	soft WINSOFT NV50
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		GetTexParameterIiv
+	glsalias	GetTexParameterIiv
 
 GetTexParameterIuivEXT(target, pname, params)
 	return		void
@@ -21950,8 +23293,9 @@ GetTexParameterIuivEXT(target, pname, params)
 	version		2.0
 	extension	soft WINSOFT NV50
 	glfflags	ignore
-	glsflags	ignore
 	glxflags	ignore
+	alias		GetTexParameterIuiv
+	glsalias	GetTexParameterIuiv
 
 ClearColorIiEXT(red, green, blue, alpha)
 	return		void
@@ -21985,3 +23329,3059 @@ ClearColorIuiEXT(red, green, blue, alpha)
 #
 ###############################################################################
 
+###############################################################################
+#
+# Extension #345
+# GREMEDY_frame_terminator commands
+#
+###############################################################################
+
+FrameTerminatorGREMEDY()
+	return		void
+	category	GREMEDY_frame_terminator
+	version		1.0
+	extension
+	glsflags	ignore
+	glxflags	ignore
+	offset		?
+
+###############################################################################
+#
+# Extension #346
+# NV_conditional_render commands
+#
+###############################################################################
+
+BeginConditionalRenderNV(id, mode)
+	return		void
+	param		id		UInt32 in value
+	param		mode		TypeEnum in value
+	category	NV_conditional_render
+	glfflags	ignore
+	glxflags	ignore
+	alias		BeginConditionalRender
+	glsalias	BeginConditionalRender
+
+EndConditionalRenderNV()
+	return		void
+	category	NV_conditional_render
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	alias		EndConditionalRender
+	glsalias	EndConditionalRender
+
+###############################################################################
+#
+# Extension #347
+# NV_present_video commands
+#
+###############################################################################
+
+# TBD
+newcategory: NV_present_video
+
+#    void PresentFrameKeyedNV(uint video_slot, uint64EXT minPresentTime,
+#			      uint beginPresentTimeId, uint
+#			      presentDurationId, enum type, enum target0,
+#			      uint fill0, uint key0, enum target1, uint
+#			      fill1, uint key1);
+#
+#    void PresentFrameDualFillNV(uint video_slot, uint64EXT
+#				 minPresentTime, uint beginPresentTimeId,
+#				 uint presentDurationId, enum type, enum
+#				 target0, uint fill0, enum target1, uint
+#				 fill1, enum target2, uint fill2, enum
+#				 target3, uint fill3);
+#
+#    void GetVideoivNV(uint video_slot, enum pname, int *params);
+#    void GetVideouivNV(uint video_slot, enum pname, uint *params);
+#    void GetVideoi64vNV(uint video_slot, enum pname, int64EXT *params);
+#    void GetVideoui64vNV(uint video_slot, enum pname, uint64EXT *params);
+#    void VideoParameterivNV(uint video_slot, enum pname, const int *params);
+
+###############################################################################
+#
+# Extension #348 - GLX_NV_video_out
+# Extension #349 - WGL_NV_video_out
+# Extension #350 - GLX_NV_swap_group
+# Extension #351 - WGL_NV_swap_group
+#
+###############################################################################
+
+###############################################################################
+#
+# Extension #352
+# EXT_transform_feedback commands
+#
+###############################################################################
+
+# From EXT_draw_buffers2:  GetBooleanIndexedvEXT / GetIntegerIndexedvEXT
+
+BeginTransformFeedbackEXT(primitiveMode)
+	return		void
+	param		primitiveMode	GLenum in value
+	category	EXT_transform_feedback
+	version		2.0
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	extension	soft WINSOFT
+	alias		BeginTransformFeedback
+	glsalias	BeginTransformFeedback
+
+EndTransformFeedbackEXT()
+	return		void
+	category	EXT_transform_feedback
+	version		2.0
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	extension	soft WINSOFT
+	alias		EndTransformFeedback
+	glsalias	EndTransformFeedback
+
+BindBufferRangeEXT(target, index, buffer, offset, size)
+	return		void
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	param		buffer		UInt32 in value
+	param		offset		BufferOffset in value
+	param		size		BufferSize in value
+	category	EXT_transform_feedback
+	version		2.0
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	extension	soft WINSOFT
+	alias		BindBufferRange
+	glsalias	BindBufferRange
+
+# Not promoted to the OpenGL 3.0 core
+BindBufferOffsetEXT(target, index, buffer, offset)
+	return		void
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	param		buffer		UInt32 in value
+	param		offset		BufferOffset in value
+	category	EXT_transform_feedback
+	version		2.0
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+BindBufferBaseEXT(target, index, buffer)
+	return		void
+	param		target		GLenum in value
+	param		index		UInt32 in value
+	param		buffer		UInt32 in value
+	category	EXT_transform_feedback
+	version		2.0
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	extension	soft WINSOFT
+	alias		BindBufferBase
+	glsalias	BindBufferBase
+
+TransformFeedbackVaryingsEXT(program, count, locations, bufferMode)
+	return		void
+	param		program		UInt32 in value
+	param		count		SizeI in value
+	param		locations	Int32 in array [COMPSIZE(count)]
+	param		bufferMode	GLenum in value
+	category	EXT_transform_feedback
+	version		2.0
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	extension	soft WINSOFT
+	alias		TransformFeedbackVaryings
+	glsalias	TransformFeedbackVaryings
+
+
+GetTransformFeedbackVaryingEXT(program, index, location)
+	return		void
+	param		program		UInt32 in value
+	param		index		UInt32 in value
+	param		location	Int32 out array [1]
+	category	EXT_transform_feedback
+	dlflags		notlistable
+	version		2.0
+	extension	soft WINSOFT
+	glfflags	ignore
+	glxflags	ignore
+	alias		GetTransformFeedbackVarying
+	glsalias	GetTransformFeedbackVarying
+
+###############################################################################
+#
+# Extension #353
+# EXT_direct_state_access commands
+#
+###############################################################################
+
+# New 1.1 client commands
+
+ClientAttribDefaultEXT(mask)
+	return		void
+	param		mask		ClientAttribMask in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore ### client-handcode client-intercept server-handcode
+	glsflags	client-state
+
+PushClientAttribDefaultEXT(mask)
+	return		void
+	param		mask		ClientAttribMask in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore ### client-handcode client-intercept server-handcode
+	glsflags	client-state
+
+# New 1.0 matrix commands
+
+MatrixLoadfEXT(mode, m)
+	return		void
+	param		mode		MatrixMode in value
+	param		m		Float32 in array [16]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixLoaddEXT(mode, m)
+	return		void
+	param		mode		MatrixMode in value
+	param		m		Float64 in array [16]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixMultfEXT(mode, m)
+	return		void
+	param		mode		MatrixMode in value
+	param		m		Float32 in array [16]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixMultdEXT(mode, m)
+	return		void
+	param		mode		MatrixMode in value
+	param		m		Float64 in array [16]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixLoadIdentityEXT(mode)
+	return		void
+	param		mode		MatrixMode in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixRotatefEXT(mode, angle, x, y, z)
+	return		void
+	param		mode		MatrixMode in value
+	param		angle		Float32 in value
+	param		x		Float32 in value
+	param		y		Float32 in value
+	param		z		Float32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixRotatedEXT(mode, angle, x, y, z)
+	return		void
+	param		mode		MatrixMode in value
+	param		angle		Float64 in value
+	param		x		Float64 in value
+	param		y		Float64 in value
+	param		z		Float64 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixScalefEXT(mode, x, y, z)
+	return		void
+	param		mode		MatrixMode in value
+	param		x		Float32 in value
+	param		y		Float32 in value
+	param		z		Float32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixScaledEXT(mode, x, y, z)
+	return		void
+	param		mode		MatrixMode in value
+	param		x		Float64 in value
+	param		y		Float64 in value
+	param		z		Float64 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixTranslatefEXT(mode, x, y, z)
+	return		void
+	param		mode		MatrixMode in value
+	param		x		Float32 in value
+	param		y		Float32 in value
+	param		z		Float32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixTranslatedEXT(mode, x, y, z)
+	return		void
+	param		mode		MatrixMode in value
+	param		x		Float64 in value
+	param		y		Float64 in value
+	param		z		Float64 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixFrustumEXT(mode, left, right, bottom, top, zNear, zFar)
+	return		void
+	param		mode		MatrixMode in value
+	param		left		Float64 in value
+	param		right		Float64 in value
+	param		bottom		Float64 in value
+	param		top		Float64 in value
+	param		zNear		Float64 in value
+	param		zFar		Float64 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixOrthoEXT(mode, left, right, bottom, top, zNear, zFar)
+	return		void
+	param		mode		MatrixMode in value
+	param		left		Float64 in value
+	param		right		Float64 in value
+	param		bottom		Float64 in value
+	param		top		Float64 in value
+	param		zNear		Float64 in value
+	param		zFar		Float64 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixPopEXT(mode)
+	return		void
+	param		mode		MatrixMode in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixPushEXT(mode)
+	return		void
+	param		mode		MatrixMode in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+# New 1.3 matrix transpose commands
+
+MatrixLoadTransposefEXT(mode, m)
+	return		void
+	param		mode		MatrixMode in value
+	param		m		Float32 in array [16]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixLoadTransposedEXT(mode, m)
+	return		void
+	param		mode		MatrixMode in value
+	param		m		Float64 in array [16]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixMultTransposefEXT(mode, m)
+	return		void
+	param		mode		MatrixMode in value
+	param		m		Float32 in array [16]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MatrixMultTransposedEXT(mode, m)
+	return		void
+	param		mode		MatrixMode in value
+	param		m		Float64 in array [16]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+# New 1.1 texture object commands
+
+TextureParameterfEXT(texture, target, pname, param)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		param		CheckedFloat32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	vectorequiv	TextureParameterfvEXT
+
+TextureParameterfvEXT(texture, target, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		CheckedFloat32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+TextureParameteriEXT(texture, target, pname, param)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		param		CheckedInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	vectorequiv	TextureParameterivEXT
+
+TextureParameterivEXT(texture, target, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		CheckedInt32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+TextureImage1DEXT(texture, target, level, internalformat, width, border, format, type, pixels)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		border		CheckedInt32 in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	extension	soft WINSOFT
+	glfflags	capture-handcode decode-handcode pixel-unpack
+	glsflags	pixel-null pixel-unpack
+
+TextureImage2DEXT(texture, target, level, internalformat, width, height, border, format, type, pixels)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		border		CheckedInt32 in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width/height)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	extension	soft WINSOFT
+	glfflags	capture-handcode decode-handcode pixel-unpack
+	glsflags	pixel-null pixel-unpack
+
+TextureSubImage1DEXT(texture, target, level, xoffset, width, format, type, pixels)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### EXT client-handcode server-handcode
+	glxflags	ignore
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	pixel-unpack
+
+TextureSubImage2DEXT(texture, target, level, xoffset, yoffset, width, height, format, type, pixels)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width/height)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### EXT client-handcode server-handcode
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	pixel-unpack
+
+CopyTextureImage1DEXT(texture, target, level, internalformat, x, y, width, border)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	param		border		CheckedInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore ### EXT
+
+CopyTextureImage2DEXT(texture, target, level, internalformat, x, y, width, height, border)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		border		CheckedInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore ### EXT
+
+CopyTextureSubImage1DEXT(texture, target, level, xoffset, x, y, width)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore ### EXT
+
+CopyTextureSubImage2DEXT(texture, target, level, xoffset, yoffset, x, y, width, height)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore ### EXT
+
+# New 1.1 texture object queries
+
+GetTextureImageEXT(texture, target, level, format, type, pixels)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void out array [COMPSIZE(target/level/format/type)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	glxflags	ignore ### client-handcode server-handcode
+	extension	soft WINSOFT
+	glfflags	capture-execute capture-handcode decode-handcode pixel-pack
+	glsflags	get pixel-pack
+
+GetTextureParameterfvEXT(texture, target, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		Float32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetTextureParameterivEXT(texture, target, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetTextureLevelParameterfvEXT(texture, target, level, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		pname		GetTextureParameter in value
+	param		params		Float32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetTextureLevelParameterivEXT(texture, target, level, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		pname		GetTextureParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+# New 1.2 3D texture object commands
+
+TextureImage3DEXT(texture, target, level, internalformat, width, height, depth, border, format, type, pixels)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		depth		SizeI in value
+	param		border		CheckedInt32 in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width/height/depth)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode EXT
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+
+TextureSubImage3DEXT(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		zoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		depth		SizeI in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width/height/depth)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode EXT
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+
+CopyTextureSubImage3DEXT(texture, target, level, xoffset, yoffset, zoffset, x, y, width, height)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		zoffset		CheckedInt32 in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	category	EXT_direct_state_access
+	glxflags	ignore ### EXT
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+
+# New 1.1 multitexture commands
+
+MultiTexParameterfEXT(texunit, target, pname, param)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		param		CheckedFloat32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	vectorequiv	MultiTexParameterfvEXT
+
+MultiTexParameterfvEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		CheckedFloat32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MultiTexParameteriEXT(texunit, target, pname, param)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		param		CheckedInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	vectorequiv	MultiTexParameterivEXT
+
+MultiTexParameterivEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		CheckedInt32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MultiTexImage1DEXT(texunit, target, level, internalformat, width, border, format, type, pixels)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		border		CheckedInt32 in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	extension	soft WINSOFT
+	glfflags	capture-handcode decode-handcode pixel-unpack
+	glsflags	pixel-null pixel-unpack
+
+MultiTexImage2DEXT(texunit, target, level, internalformat, width, height, border, format, type, pixels)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		border		CheckedInt32 in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width/height)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	extension	soft WINSOFT
+	glfflags	capture-handcode decode-handcode pixel-unpack
+	glsflags	pixel-null pixel-unpack
+
+MultiTexSubImage1DEXT(texunit, target, level, xoffset, width, format, type, pixels)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### EXT client-handcode server-handcode
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	pixel-unpack
+
+MultiTexSubImage2DEXT(texunit, target, level, xoffset, yoffset, width, height, format, type, pixels)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width/height)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### EXT client-handcode server-handcode
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	pixel-unpack
+
+CopyMultiTexImage1DEXT(texunit, target, level, internalformat, x, y, width, border)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	param		border		CheckedInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore ### EXT
+
+CopyMultiTexImage2DEXT(texunit, target, level, internalformat, x, y, width, height, border)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		border		CheckedInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore ### EXT
+
+CopyMultiTexSubImage1DEXT(texunit, target, level, xoffset, x, y, width)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore ### EXT
+
+CopyMultiTexSubImage2DEXT(texunit, target, level, xoffset, yoffset, x, y, width, height)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore ### EXT
+
+# New 1.1 multitexture queries
+
+GetMultiTexImageEXT(texunit, target, level, format, type, pixels)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void out array [COMPSIZE(target/level/format/type)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	glxflags	ignore ### client-handcode server-handcode
+	extension	soft WINSOFT
+	glfflags	capture-execute capture-handcode decode-handcode pixel-pack
+	glsflags	get pixel-pack
+
+GetMultiTexParameterfvEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		Float32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetMultiTexParameterivEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetMultiTexLevelParameterfvEXT(texunit, target, level, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		pname		GetTextureParameter in value
+	param		params		Float32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetMultiTexLevelParameterivEXT(texunit, target, level, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		pname		GetTextureParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+# New 1.2 3D multitexture commands
+
+MultiTexImage3DEXT(texunit, target, level, internalformat, width, height, depth, border, format, type, pixels)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		depth		SizeI in value
+	param		border		CheckedInt32 in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width/height/depth)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode EXT
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+
+MultiTexSubImage3DEXT(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		zoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		depth		SizeI in value
+	param		format		PixelFormat in value
+	param		type		PixelType in value
+	param		pixels		Void in array [COMPSIZE(format/type/width/height/depth)]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode EXT
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+
+CopyMultiTexSubImage3DEXT(texunit, target, level, xoffset, yoffset, zoffset, x, y, width, height)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		zoffset		CheckedInt32 in value
+	param		x		WinCoord in value
+	param		y		WinCoord in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	category	EXT_direct_state_access
+	glxflags	ignore ### EXT
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+
+# New 1.2.1 multitexture texture commands
+
+BindMultiTextureEXT(texunit, target, texture)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		texture		Texture in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore ### EXT
+
+EnableClientStateIndexedEXT(array, index)
+	return		void
+	param		array		EnableCap in value
+	param		index		UInt32 in value
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	glxflags	ignore ### client-handcode client-intercept server-handcode
+	extension	soft WINSOFT
+	glsflags	client-state
+
+DisableClientStateIndexedEXT(array, index)
+	return		void
+	param		array		EnableCap in value
+	param		index		UInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore ### client-handcode client-intercept server-handcode
+	glsflags	client-state
+
+MultiTexCoordPointerEXT(texunit, size, type, stride, pointer)
+	return		void
+	param		texunit		TextureUnit in value
+	param		size		Int32 in value
+	param		type		TexCoordPointerType in value
+	param		stride		SizeI in value
+	param		pointer		Void in array [COMPSIZE(size/type/stride)] retained
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	glxflags	ignore ### client-handcode client-intercept server-handcode
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	client-state
+
+MultiTexEnvfEXT(texunit, target, pname, param)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureEnvTarget in value
+	param		pname		TextureEnvParameter in value
+	param		param		CheckedFloat32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	vectorequiv	MultiTexEnvfvEXT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+MultiTexEnvfvEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureEnvTarget in value
+	param		pname		TextureEnvParameter in value
+	param		params		CheckedFloat32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+MultiTexEnviEXT(texunit, target, pname, param)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureEnvTarget in value
+	param		pname		TextureEnvParameter in value
+	param		param		CheckedInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	vectorequiv	MultiTexEnvivEXT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+MultiTexEnvivEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureEnvTarget in value
+	param		pname		TextureEnvParameter in value
+	param		params		CheckedInt32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+MultiTexGendEXT(texunit, coord, pname, param)
+	return		void
+	param		texunit		TextureUnit in value
+	param		coord		TextureCoordName in value
+	param		pname		TextureGenParameter in value
+	param		param		Float64 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	vectorequiv	MultiTexGendvEXT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+MultiTexGendvEXT(texunit, coord, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		coord		TextureCoordName in value
+	param		pname		TextureGenParameter in value
+	param		params		Float64 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+MultiTexGenfEXT(texunit, coord, pname, param)
+	return		void
+	param		texunit		TextureUnit in value
+	param		coord		TextureCoordName in value
+	param		pname		TextureGenParameter in value
+	param		param		CheckedFloat32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	vectorequiv	MultiTexGenfvEXT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+MultiTexGenfvEXT(texunit, coord, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		coord		TextureCoordName in value
+	param		pname		TextureGenParameter in value
+	param		params		CheckedFloat32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+MultiTexGeniEXT(texunit, coord, pname, param)
+	return		void
+	param		texunit		TextureUnit in value
+	param		coord		TextureCoordName in value
+	param		pname		TextureGenParameter in value
+	param		param		CheckedInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	vectorequiv	MultiTexGenivEXT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+MultiTexGenivEXT(texunit, coord, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		coord		TextureCoordName in value
+	param		pname		TextureGenParameter in value
+	param		params		CheckedInt32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	gl-enum
+	glsflags	gl-enum
+
+# New 1.2.1 multitexture texture queries
+
+GetMultiTexEnvfvEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureEnvTarget in value
+	param		pname		TextureEnvParameter in value
+	param		params		Float32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetMultiTexEnvivEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureEnvTarget in value
+	param		pname		TextureEnvParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetMultiTexGendvEXT(texunit, coord, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		coord		TextureCoordName in value
+	param		pname		TextureGenParameter in value
+	param		params		Float64 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetMultiTexGenfvEXT(texunit, coord, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		coord		TextureCoordName in value
+	param		pname		TextureGenParameter in value
+	param		params		Float32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+GetMultiTexGenivEXT(texunit, coord, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		coord		TextureCoordName in value
+	param		pname		TextureGenParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+# From EXT_draw_buffers2
+# EnableIndexedEXT
+# DisableIndexedEXT
+# IsEnabledIndexedEXT
+
+GetFloatIndexedvEXT(target, index, data)
+	return		void
+	param		target		TypeEnum in value
+	param		index		UInt32 in value
+	param		data		Float32 out array [COMPSIZE(target)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+GetDoubleIndexedvEXT(target, index, data)
+	return		void
+	param		target		TypeEnum in value
+	param		index		UInt32 in value
+	param		data		Float64 out array [COMPSIZE(target)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+GetPointerIndexedvEXT(target, index, data)
+	return		void
+	param		target		TypeEnum in value
+	param		index		UInt32 in value
+	param		data		VoidPointer out array [COMPSIZE(target)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+# New compressed texture commands
+
+CompressedTextureImage3DEXT(texture, target, level, internalformat, width, height, depth, border, imageSize, bits)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		depth		SizeI in value
+	param		border		CheckedInt32 in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedTextureImage2DEXT(texture, target, level, internalformat, width, height, border, imageSize, bits)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		border		CheckedInt32 in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedTextureImage1DEXT(texture, target, level, internalformat, width, border, imageSize, bits)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		border		CheckedInt32 in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedTextureSubImage3DEXT(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		zoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		depth		SizeI in value
+	param		format		PixelFormat in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedTextureSubImage2DEXT(texture, target, level, xoffset, yoffset, width, height, format, imageSize, bits)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		format		PixelFormat in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedTextureSubImage1DEXT(texture, target, level, xoffset, width, format, imageSize, bits)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		format		PixelFormat in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+# New compressed texture query
+
+GetCompressedTextureImageEXT(texture, target, lod, img)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		lod		CheckedInt32 in value
+	param		img		Void out array [COMPSIZE(target/lod)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	glxflags	ignore ### server-handcode
+	glsflags	ignore
+	extension	soft WINSOFT
+
+# New compressed multitexture commands
+
+CompressedMultiTexImage3DEXT(texunit, target, level, internalformat, width, height, depth, border, imageSize, bits)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		depth		SizeI in value
+	param		border		CheckedInt32 in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedMultiTexImage2DEXT(texunit, target, level, internalformat, width, height, border, imageSize, bits)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		border		CheckedInt32 in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedMultiTexImage1DEXT(texunit, target, level, internalformat, width, border, imageSize, bits)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		internalformat	TextureInternalFormat in value
+	param		width		SizeI in value
+	param		border		CheckedInt32 in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedMultiTexSubImage3DEXT(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		zoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		depth		SizeI in value
+	param		format		PixelFormat in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedMultiTexSubImage2DEXT(texunit, target, level, xoffset, yoffset, width, height, format, imageSize, bits)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		yoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	param		format		PixelFormat in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+CompressedMultiTexSubImage1DEXT(texunit, target, level, xoffset, width, format, imageSize, bits)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		level		CheckedInt32 in value
+	param		xoffset		CheckedInt32 in value
+	param		width		SizeI in value
+	param		format		PixelFormat in value
+	param		imageSize	SizeI in value
+	param		bits		Void in array [imageSize]
+	category	EXT_direct_state_access
+	dlflags		handcode
+	glxflags	ignore ### client-handcode server-handcode
+	glfflags	ignore
+	glsflags	ignore
+	extension	soft WINSOFT
+
+# New compressed multitexture query
+
+GetCompressedMultiTexImageEXT(texunit, target, lod, img)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		lod		CheckedInt32 in value
+	param		img		Void out array [COMPSIZE(target/lod)]
+	category	EXT_direct_state_access
+	dlflags		notlistable
+	glxflags	ignore ### server-handcode
+	glsflags	ignore
+	extension	soft WINSOFT
+
+# New ARB assembly program named commands
+
+NamedProgramStringEXT(program, target, format, len, string)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		format		ProgramFormat in value
+	param		len		SizeI in value
+	param		string		Void in array [len]
+	category	EXT_direct_state_access
+	subcategory	ARB_vertex_program
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore ### client-handcode server-handcode EXT
+	glextmask	GL_MASK_ARB_vertex_program|GL_MASK_ARB_fragment_program
+
+NamedProgramLocalParameter4dEXT(program, target, index, x, y, z, w)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		x		Float64 in value
+	param		y		Float64 in value
+	param		z		Float64 in value
+	param		w		Float64 in value
+	category	EXT_direct_state_access
+	subcategory	ARB_vertex_program
+	vectorequiv	NamedProgramLocalParameter4dvEXT
+	glxvectorequiv	NamedProgramLocalParameter4dvEXT
+	extension	soft WINSOFT NV10
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore ### EXT
+	glextmask	GL_MASK_ARB_vertex_program|GL_MASK_ARB_fragment_program
+
+NamedProgramLocalParameter4dvEXT(program, target, index, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		params		Float64 in array [4]
+	category	EXT_direct_state_access
+	subcategory	ARB_vertex_program
+	extension	soft WINSOFT NV10
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore ### EXT
+	glextmask	GL_MASK_ARB_vertex_program|GL_MASK_ARB_fragment_program
+
+NamedProgramLocalParameter4fEXT(program, target, index, x, y, z, w)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		x		Float32 in value
+	param		y		Float32 in value
+	param		z		Float32 in value
+	param		w		Float32 in value
+	category	EXT_direct_state_access
+	subcategory	ARB_vertex_program
+	vectorequiv	NamedProgramLocalParameter4fvEXT
+	glxvectorequiv	NamedProgramLocalParameter4fvEXT
+	extension	soft WINSOFT NV10
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore ### EXT
+	glextmask	GL_MASK_ARB_vertex_program|GL_MASK_ARB_fragment_program
+
+NamedProgramLocalParameter4fvEXT(program, target, index, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		params		Float32 in array [4]
+	category	EXT_direct_state_access
+	subcategory	ARB_vertex_program
+	extension	soft WINSOFT NV10
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore ### EXT
+	glextmask	GL_MASK_ARB_vertex_program|GL_MASK_ARB_fragment_program
+
+# New ARB assembly program named queries
+
+GetNamedProgramLocalParameterdvEXT(program, target, index, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		params		Float64 out array [4]
+	dlflags		notlistable
+	category	EXT_direct_state_access
+	subcategory	ARB_vertex_program
+	extension	soft WINSOFT NV10
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore ### client-handcode server-handcode EXT
+	glextmask	GL_MASK_ARB_vertex_program|GL_MASK_ARB_fragment_program
+
+GetNamedProgramLocalParameterfvEXT(program, target, index, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		params		Float32 out array [4]
+	dlflags		notlistable
+	category	EXT_direct_state_access
+	subcategory	ARB_vertex_program
+	extension	soft WINSOFT NV10
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore ### client-handcode server-handcode EXT
+	glextmask	GL_MASK_ARB_vertex_program|GL_MASK_ARB_fragment_program
+
+GetNamedProgramivEXT(program, target, pname, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		pname		ProgramProperty in value
+	param		params		Int32 out array [1]
+	dlflags		notlistable
+	category	EXT_direct_state_access
+	subcategory	ARB_vertex_program
+	extension	soft WINSOFT NV10
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore ### client-handcode server-handcode EXT
+	glextmask	GL_MASK_ARB_vertex_program|GL_MASK_ARB_fragment_program
+
+GetNamedProgramStringEXT(program, target, pname, string)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		pname		ProgramStringProperty in value
+	param		string		Void out array [COMPSIZE(program,pname)]
+	dlflags		notlistable
+	category	EXT_direct_state_access
+	subcategory	ARB_vertex_program
+	extension	soft WINSOFT NV10
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore ### client-handcode server-handcode EXT
+	glextmask	GL_MASK_ARB_vertex_program|GL_MASK_ARB_fragment_program
+
+# New EXT_gpu_program_parameters command
+
+NamedProgramLocalParameters4fvEXT(program, target, index, count, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		count		SizeI in value
+	param		params		Float32 in array [count*4]
+	category	EXT_direct_state_access
+	subcategory	EXT_gpu_program_parameters
+	extension	soft WINSOFT NV10
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_gpu_program_parameters
+
+# New NV_gpu_program4 commands
+
+NamedProgramLocalParameterI4iEXT(program, target, index, x, y, z, w)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		x		Int32 in value
+	param		y		Int32 in value
+	param		z		Int32 in value
+	param		w		Int32 in value
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	vectorequiv	NamedProgramLocalParameterI4ivEXT
+	glxvectorequiv	NamedProgramLocalParameterI4ivEXT
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+NamedProgramLocalParameterI4ivEXT(program, target, index, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		params		Int32 in array [4]
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+NamedProgramLocalParametersI4ivEXT(program, target, index, count, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		count		SizeI in value
+	param		params		Int32 in array [count*4]
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+NamedProgramLocalParameterI4uiEXT(program, target, index, x, y, z, w)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		x		UInt32 in value
+	param		y		UInt32 in value
+	param		z		UInt32 in value
+	param		w		UInt32 in value
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	vectorequiv	NamedProgramLocalParameterI4uivEXT
+	glxvectorequiv	NamedProgramLocalParameterI4uivEXT
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+NamedProgramLocalParameterI4uivEXT(program, target, index, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		params		UInt32 in array [4]
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+NamedProgramLocalParametersI4uivEXT(program, target, index, count, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		count		SizeI in value
+	param		params		UInt32 in array [count*4]
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+GetNamedProgramLocalParameterIivEXT(program, target, index, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		params		Int32 out array [4]
+	dlflags		notlistable
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+GetNamedProgramLocalParameterIuivEXT(program, target, index, params)
+	return		void
+	param		program		UInt32 in value
+	param		target		ProgramTarget in value
+	param		index		UInt32 in value
+	param		params		UInt32 out array [4]
+	dlflags		notlistable
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+# New EXT_texture_integer texture object commands
+
+TextureParameterIivEXT(texture, target, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		CheckedInt32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_integer
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	glextmask	GL_MASK_EXT_texture_integer
+
+TextureParameterIuivEXT(texture, target, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		UInt32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_integer
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	glextmask	GL_MASK_EXT_texture_integer
+
+# New EXT_texture_integer texture object queries
+
+GetTextureParameterIivEXT(texture, target, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_integer
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+	glextmask	GL_MASK_EXT_texture_integer
+
+GetTextureParameterIuivEXT(texture, target, pname, params)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		UInt32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_integer
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+	glextmask	GL_MASK_EXT_texture_integer
+
+# New EXT_texture_integer multitexture commands
+
+MultiTexParameterIivEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		CheckedInt32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_integer
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	glextmask	GL_MASK_EXT_texture_integer
+
+MultiTexParameterIuivEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		TextureParameterName in value
+	param		params		UInt32 in array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_integer
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+	glextmask	GL_MASK_EXT_texture_integer
+
+# New EXT_texture_integer multitexture queries
+
+GetMultiTexParameterIivEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_integer
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glfflags	capture-execute gl-enum
+	glsflags	get
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_texture_integer
+
+GetMultiTexParameterIuivEXT(texunit, target, pname, params)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		pname		GetTextureParameter in value
+	param		params		UInt32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_integer
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glfflags	capture-execute gl-enum
+	glsflags	get
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_texture_integer
+
+# New GLSL 2.0 uniform commands
+
+ProgramUniform1fEXT(program, location, v0)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		Float32 in value
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform2fEXT(program, location, v0, v1)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		Float32 in value
+	param		v1		Float32 in value
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform3fEXT(program, location, v0, v1, v2)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		Float32 in value
+	param		v1		Float32 in value
+	param		v2		Float32 in value
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform4fEXT(program, location, v0, v1, v2, v3)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		Float32 in value
+	param		v1		Float32 in value
+	param		v2		Float32 in value
+	param		v3		Float32 in value
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform1iEXT(program, location, v0)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		Int32 in value
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform2iEXT(program, location, v0, v1)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		Int32 in value
+	param		v1		Int32 in value
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform3iEXT(program, location, v0, v1, v2)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		Int32 in value
+	param		v1		Int32 in value
+	param		v2		Int32 in value
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform4iEXT(program, location, v0, v1, v2, v3)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		Int32 in value
+	param		v1		Int32 in value
+	param		v2		Int32 in value
+	param		v3		Int32 in value
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform1fvEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		Float32 in array [count]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform2fvEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		Float32 in array [count*2]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform3fvEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		Float32 in array [count*3]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform4fvEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		Float32 in array [count*4]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform1ivEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		Int32 in array [count]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform2ivEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		Int32 in array [count*2]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform3ivEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		Int32 in array [count*3]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform4ivEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		Int32 in array [count*4]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniformMatrix2fvEXT(program, location, count, transpose, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		transpose	Boolean in value
+	param		value		Float32 in array [count*4]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniformMatrix3fvEXT(program, location, count, transpose, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		transpose	Boolean in value
+	param		value		Float32 in array [count*9]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniformMatrix4fvEXT(program, location, count, transpose, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		transpose	Boolean in value
+	param		value		Float32 in array [count*16]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_0
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+# New GLSL 2.1 uniform commands
+
+ProgramUniformMatrix2x3fvEXT(program, location, count, transpose, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		transpose	Boolean in value
+	param		value		Float32 in array [count*6]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_1
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniformMatrix3x2fvEXT(program, location, count, transpose, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		transpose	Boolean in value
+	param		value		Float32 in array [count*6]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_1
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniformMatrix2x4fvEXT(program, location, count, transpose, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		transpose	Boolean in value
+	param		value		Float32 in array [count*8]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_1
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniformMatrix4x2fvEXT(program, location, count, transpose, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		transpose	Boolean in value
+	param		value		Float32 in array [count*8]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_1
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniformMatrix3x4fvEXT(program, location, count, transpose, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		transpose	Boolean in value
+	param		value		Float32 in array [count*12]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_1
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniformMatrix4x3fvEXT(program, location, count, transpose, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		transpose	Boolean in value
+	param		value		Float32 in array [count*12]
+	category	EXT_direct_state_access
+	subcategory	VERSION_2_1
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+# New EXT_gpu_shader4 commands
+
+ProgramUniform1uiEXT(program, location, v0)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		UInt32 in value
+	category	EXT_direct_state_access
+	subcategory	EXT_gpu_shader4
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform2uiEXT(program, location, v0, v1)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		UInt32 in value
+	param		v1		UInt32 in value
+	category	EXT_direct_state_access
+	subcategory	EXT_gpu_shader4
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform3uiEXT(program, location, v0, v1, v2)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		UInt32 in value
+	param		v1		UInt32 in value
+	param		v2		UInt32 in value
+	category	EXT_direct_state_access
+	subcategory	EXT_gpu_shader4
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform4uiEXT(program, location, v0, v1, v2, v3)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		v0		UInt32 in value
+	param		v1		UInt32 in value
+	param		v2		UInt32 in value
+	param		v3		UInt32 in value
+	category	EXT_direct_state_access
+	subcategory	EXT_gpu_shader4
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform1uivEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		UInt32 in array [count]
+	category	EXT_direct_state_access
+	subcategory	EXT_gpu_shader4
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform2uivEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		UInt32 in array [count*2]
+	category	EXT_direct_state_access
+	subcategory	EXT_gpu_shader4
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform3uivEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		UInt32 in array [count*3]
+	category	EXT_direct_state_access
+	subcategory	EXT_gpu_shader4
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+ProgramUniform4uivEXT(program, location, count, value)
+	return		void
+	param		program		UInt32 in value
+	param		location	Int32 in value
+	param		count		SizeI in value
+	param		value		UInt32 in array [count*4]
+	category	EXT_direct_state_access
+	subcategory	EXT_gpu_shader4
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	extension	soft WINSOFT
+	glextmask	GL_MASK_OpenGL_2_0
+
+# New named buffer commands
+
+NamedBufferDataEXT(buffer, size, data, usage)
+	return		void
+	param		buffer		UInt32 in value
+	param		size		Sizeiptr in value
+	param		data		Void in array [COMPSIZE(size)]
+	param		usage		VertexBufferObjectUsage in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+NamedBufferSubDataEXT(buffer, offset, size, data)
+	return		void
+	param		buffer		UInt32 in value
+	param		offset		Intptr in value
+	param		size		Sizeiptr in value
+	param		data		Void in array [COMPSIZE(size)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+MapNamedBufferEXT(buffer, access)
+	return		VoidPointer
+	param		buffer		UInt32 in value
+	param		access		VertexBufferObjectAccess in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+UnmapNamedBufferEXT(buffer)
+	return		Boolean
+	param		buffer		UInt32 in value
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+# New named buffer queries
+
+GetNamedBufferParameterivEXT(buffer, pname, params)
+	return		void
+	param		buffer		UInt32 in value
+	param		pname		VertexBufferObjectParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+GetNamedBufferPointervEXT(buffer, pname, params)
+	return		void
+	param		buffer		UInt32 in value
+	param		pname		VertexBufferObjectParameter in value
+	param		params		VoidPointer out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+GetNamedBufferSubDataEXT(buffer, offset, size, data)
+	return		void
+	param		buffer		UInt32 in value
+	param		offset		Intptr in value
+	param		size		Sizeiptr in value
+	param		data		Void out array [COMPSIZE(size)]
+	category	EXT_direct_state_access
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glxflags	ignore
+	glfflags	ignore
+	glsflags	ignore
+
+# New named texture buffer texture object command
+
+TextureBufferEXT(texture, target, internalformat, buffer)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		internalformat	TypeEnum in value
+	param		buffer		UInt32 in value
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_buffer_object
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_texture_buffer_object
+	dlflags		notlistable
+
+# New named texture buffer multitexture command
+
+MultiTexBufferEXT(texunit, target, internalformat, buffer)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		internalformat	TypeEnum in value
+	param		buffer		UInt32 in value
+	category	EXT_direct_state_access
+	subcategory	EXT_texture_buffer_object
+	extension	soft WINSOFT NV50
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_texture_buffer_object
+	dlflags		notlistable
+
+# New named frame buffer object commands
+
+NamedRenderbufferStorageEXT(renderbuffer, internalformat, width, height)
+	return		void
+	param		renderbuffer	Renderbuffer in value
+	param		internalformat	PixelInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+GetNamedRenderbufferParameterivEXT(renderbuffer, pname, params)
+	return		void
+	param		renderbuffer	Renderbuffer in value
+	param		pname		RenderbufferParameterName in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+CheckNamedFramebufferStatusEXT(framebuffer, target)
+	return		FramebufferStatus
+	param		framebuffer	Framebuffer in value
+	param		target		FramebufferTarget in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+NamedFramebufferTexture1DEXT(framebuffer, attachment, textarget, texture, level)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		attachment	FramebufferAttachment in value
+	param		textarget	TextureTarget in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+NamedFramebufferTexture2DEXT(framebuffer, attachment, textarget, texture, level)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		attachment	FramebufferAttachment in value
+	param		textarget	TextureTarget in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+NamedFramebufferTexture3DEXT(framebuffer, attachment, textarget, texture, level, zoffset)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		attachment	FramebufferAttachment in value
+	param		textarget	TextureTarget in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	param		zoffset		CheckedInt32 in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+NamedFramebufferRenderbufferEXT(framebuffer, attachment, renderbuffertarget, renderbuffer)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		attachment	FramebufferAttachment in value
+	param		renderbuffertarget RenderbufferTarget in value
+	param		renderbuffer	Renderbuffer in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+GetNamedFramebufferAttachmentParameterivEXT(framebuffer, attachment, pname, params)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		attachment	FramebufferAttachment in value
+	param		pname		FramebufferAttachmentParameterName in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+GenerateTextureMipmapEXT(texture, target)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+GenerateMultiTexMipmapEXT(texunit, target)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+FramebufferDrawBufferEXT(framebuffer, mode)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		mode		DrawBufferMode in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+FramebufferDrawBuffersEXT(framebuffer, n, bufs)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		n		SizeI in value
+	param		bufs		DrawBufferMode in array [n]
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+FramebufferReadBufferEXT(framebuffer, mode)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		mode		ReadBufferMode in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	extension	soft WINSOFT
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_object
+
+GetFramebufferParameterivEXT(framebuffer, pname, params)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		pname		GetFramebufferParameter in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_object
+	dlflags		notlistable
+	extension	soft WINSOFT
+	glxflags	ignore
+	glfflags	capture-execute gl-enum
+	glsflags	get
+
+# New named framebuffer multisample object commands
+
+NamedRenderbufferStorageMultisampleEXT(renderbuffer, samples, internalformat, width, height)
+	return		void
+	param		renderbuffer	Renderbuffer in value
+	param		samples		SizeI in value
+	param		internalformat	PixelInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	category	EXT_direct_state_access
+	subcategory	EXT_framebuffer_multisample
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_EXT_framebuffer_multisample
+
+# New named framebuffer multisample coverage object commands
+
+NamedRenderbufferStorageMultisampleCoverageEXT(renderbuffer, coverageSamples, colorSamples, internalformat, width, height)
+	return		void
+	param		renderbuffer	Renderbuffer in value
+	param		coverageSamples SizeI in value
+	param		colorSamples	SizeI in value
+	param		internalformat	PixelInternalFormat in value
+	param		width		SizeI in value
+	param		height		SizeI in value
+	category	EXT_direct_state_access
+	subcategory	NV_framebuffer_multisample_coverage
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_framebuffer_multisample_coverage
+
+# New named geometry program/shader frame buffer object commands
+
+NamedFramebufferTextureEXT(framebuffer, attachment, texture, level)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		attachment	FramebufferAttachment in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+NamedFramebufferTextureLayerEXT(framebuffer, attachment, texture, level, layer)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		attachment	FramebufferAttachment in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	param		layer		CheckedInt32 in value
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+NamedFramebufferTextureFaceEXT(framebuffer, attachment, texture, level, face)
+	return		void
+	param		framebuffer	Framebuffer in value
+	param		attachment	FramebufferAttachment in value
+	param		texture		Texture in value
+	param		level		CheckedInt32 in value
+	param		face		TextureTarget in value
+	category	EXT_direct_state_access
+	subcategory	NV_gpu_program4
+	extension	soft WINSOFT
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_gpu_program4
+
+# New explicit multisample query and commands
+
+TextureRenderbufferEXT(texture, target, renderbuffer)
+	return		void
+	param		texture		Texture in value
+	param		target		TextureTarget in value
+	param		renderbuffer	UInt32 in value
+	category	EXT_direct_state_access
+	subcategory	NV_explicit_multisample
+	extension	soft WINSOFT NV50
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_explicit_multisample
+
+MultiTexRenderbufferEXT(texunit, target, renderbuffer)
+	return		void
+	param		texunit		TextureUnit in value
+	param		target		TextureTarget in value
+	param		renderbuffer	UInt32 in value
+	category	EXT_direct_state_access
+	subcategory	NV_explicit_multisample
+	extension	soft WINSOFT NV50
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+	glextmask	GL_MASK_NV_explicit_multisample
+
+###############################################################################
+#
+# Extension #354
+# EXT_vertex_array_bgra commands
+#
+###############################################################################
+
+# (none)
+newcategory: EXT_vertex_array_bgra
+
+###############################################################################
+#
+# Extension #355 - WGL_NV_gpu_affinity
+#
+###############################################################################
+
+###############################################################################
+#
+# Extension #356
+# EXT_texture_swizzle commands
+#
+###############################################################################
+
+# (none)
+newcategory: EXT_texture_swizzle
+
+###############################################################################
+#
+# Extension #357
+# NV_explicit_multisample commands
+#
+###############################################################################
+
+# From EXT_draw_buffers2:  GetBooleanIndexedvEXT / GetIntegerIndexedvEXT
+
+GetMultisamplefvNV(pname, index, val)
+	return		void
+	param		pname		GetMultisamplePNameNV in value
+	param		index		UInt32 in value
+	param		val		Float32 out array [2]
+	category	NV_explicit_multisample
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+SampleMaskIndexedNV(index, mask)
+	return		void
+	param		index		UInt32 in value
+	param		mask		SampleMaskNV in value
+	category	NV_explicit_multisample
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+TexRenderbufferNV(target, renderbuffer)
+	return		void
+	param		target		TextureTarget in value
+	param		renderbuffer	UInt32 in value
+	category	NV_explicit_multisample
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+###############################################################################
+#
+# Extension #358
+# NV_transform_feedback2 commands
+#
+###############################################################################
+
+BindTransformFeedbackNV(target, id)
+	return		void
+	param		target		BufferTargetARB in value
+	param		id		UInt32 in value
+	category	NV_transform_feedback2
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+DeleteTransformFeedbacksNV(n, ids)
+	return		void
+	param		n		SizeI in value
+	param		ids		UInt32 in array [n]
+	category	NV_transform_feedback2
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+GenTransformFeedbacksNV(n, ids)
+	return		void
+	param		n		SizeI in value
+	param		ids		UInt32 out array [n]
+	category	NV_transform_feedback2
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+IsTransformFeedbackNV(id)
+	return		Boolean
+	param		id		UInt32 in value
+	category	NV_transform_feedback2
+	dlflags		notlistable
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+PauseTransformFeedbackNV()
+	return		void
+	category	NV_transform_feedback2
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+ResumeTransformFeedbackNV()
+	return		void
+	category	NV_transform_feedback2
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore
+
+DrawTransformFeedbackNV(mode, id)
+	return		void
+	param		mode		GLenum in value
+	param		id		UInt32 in value
+	category	NV_transform_feedback2
+	glfflags	ignore
+	glsflags	ignore
+	glxflags	ignore

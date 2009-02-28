@@ -14,7 +14,7 @@ namespace Bind.Glu
 {
     class Generator : Bind.GL2.Generator
     {
-        string enumSpecAux;// = "GL2\\enum.spec";
+        string enumSpecAux = null;// = "GL2\\enum.spec";
 
         #region --- Constructors ---
 

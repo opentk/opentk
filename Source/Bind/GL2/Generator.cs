@@ -60,7 +60,7 @@ namespace Bind.GL2
             // Matches functions that cannot have their trailing 'v' trimmed for CLS-Compliance reasons.
             // Built through trial and error :)
             Function.endingsAddV =
-                new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?)|(Point|Convolution|Transform|Sprite|List|Combiner|Tex)Parameter|Fog(Coord)?.*|VertexWeight|(Fragment)?Light(Model)?|Material|ReplacementCodeu?b?|Tex(Gen|Env)|Indexu?.v)",
+                new Regex(@"(Coord1|Attrib(I?)1(u?)|Stream1|Uniform2(u?)|(Point|Convolution|Transform|Sprite|List|Combiner|Tex)Parameter|Fog(Coord)?.*|VertexWeight|(Fragment)?Light(Model)?|Material|ReplacementCodeu?b?|Tex(Gen|Env)|Indexu?|TextureParameter.v)",
                 RegexOptions.Compiled);
 
             Bind.Structures.Type.Initialize(glTypemap, csTypemap);

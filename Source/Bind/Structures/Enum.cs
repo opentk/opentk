@@ -87,9 +87,9 @@ namespace Bind.Structures
 
         #endregion
 
-        System.Collections.Hashtable _constant_collection = new System.Collections.Hashtable();
+        Dictionary<string, Constant> _constant_collection = new Dictionary<string, Constant>();
 
-        public System.Collections.Hashtable ConstantCollection
+        public IDictionary<string, Constant> ConstantCollection
         {
             get { return _constant_collection; }
             //set { _constant_collection = value; }
@@ -140,11 +140,23 @@ namespace Bind.Structures
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            List<Constant> constants = new List<Constant>(ConstantCollection.Values);
+            constants.Sort(delegate(Constant c1, Constant c2)
+            {
+                int ret = String.Compare(c1.Value, c2.Value);
+                if (ret == 0)
+                    return String.Compare(c1.Name, c2.Name);
+                return ret;
+            });
 
             sb.AppendLine("public enum " + Name);
             sb.AppendLine("{");
-            foreach (Constant c in ConstantCollection.Values)
+
+            foreach (Constant c in constants)
             {
+                if (c.Name == "PointSmooth")
+                {
+                }
                 sb.Append("    ");
                 sb.Append(c.ToString());
                 if (!String.IsNullOrEmpty(c.ToString()))
@@ -224,39 +236,35 @@ namespace Bind.Structures
 
             if (Settings.DropMultipleTokens)
             {
-
                 // When there are multiple tokens with the same value but different extension
                 // drop the duplicates. Order of preference: core > ARB > EXT > vendor specific
+
+                List<Constant> removed_tokens = new List<Constant>();
+
                 foreach (Enum e in this.Values)
                 {
                     if (e.Name == "All")
                         continue;
 
+                    // This implementation is a not very bright O(n^2).
                     foreach (Constant c in e.ConstantCollection.Values)
                     {
                         foreach (Constant c2 in e.ConstantCollection.Values)
                         {
                             if (c.Name != c2.Name && c.Value == c2.Value)
                             {
-                                if (c.Name.Contains(Constant.Translate("TEXTURE_DEFORMATION_BIT_SGIX")) ||
-                                    c2.Name.Contains(Constant.Translate("TEXTURE_DEFORMATION_BIT_SGIX")))
-                                {
-                                }
-
                                 int prefer = OrderOfPreference(Utilities.GetGL2Extension(c.Name), Utilities.GetGL2Extension(c2.Name));
                                 if (prefer == -1)
-                                {
-                                    c2.Name = "";
-                                    c2.Value = "";
-                                }
+                                    removed_tokens.Add(c2);
                                 else if (prefer == 1)
-                                {
-                                    c.Name = "";
-                                    c.Value = "";
-                                }
+                                    removed_tokens.Add(c);
                             }
                         }
                     }
+
+                    foreach (Constant c in removed_tokens)
+                        e.ConstantCollection.Remove(c.Name);
+                    removed_tokens.Clear();
                 }
             }
         }
@@ -264,22 +272,24 @@ namespace Bind.Structures
         // Return -1 for ext1, 1 for ext2 or 0 if no preference.
         int OrderOfPreference(string ext1, string ext2)
         {
-            // If one is empty and the other note, prefer the empty one.
-            // (empty == core)
+            // If one is empty and the other not, prefer the empty one (empty == core)
             // Otherwise check for Arb and Ext. To reuse the logic for the
             // empty check, let's try to remove first Arb, then Ext from the strings.
-            int ret;
-            ret = OrderOfPreferenceInternal(ext1, ext2);
-            if (ret != 0) return ret;
+            int ret = PreferEmpty(ext1, ext2);
+            if (ret != 0)
+                return ret;
+            
             ext1 = ext1.Replace("Arb", ""); ext2 = ext2.Replace("Arb", "");
-            ret = OrderOfPreferenceInternal(ext1, ext2);
-            if (ret != 0) return ret;
+            ret = PreferEmpty(ext1, ext2);
+            if (ret != 0)
+                return ret;
+            
             ext1 = ext1.Replace("Ext", ""); ext2 = ext2.Replace("Ext", "");
-            return ret;
+            return PreferEmpty(ext1, ext2);
         }
 
         // Prefer the empty string over the non-empty.
-        int OrderOfPreferenceInternal(string ext1, string ext2)
+        int PreferEmpty(string ext1, string ext2)
         {
             if (String.IsNullOrEmpty(ext1) && !String.IsNullOrEmpty(ext2))
                 return -1;
