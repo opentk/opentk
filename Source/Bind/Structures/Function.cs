@@ -14,9 +14,11 @@ namespace Bind.Structures
 {
     public class Function : Delegate, IEquatable<Function>
     {
+        #region Static Members
+
         internal static FunctionCollection Wrappers;
 
-        private static bool loaded;
+        static bool loaded;
         
         #region internal static void Initialize()
         
@@ -34,6 +36,14 @@ namespace Bind.Structures
         static Regex endings = new Regex(@"((([df]|u?[isb])v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flagv|Tess|Status|Pixels)", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
+        #endregion
+
+        #region Fields
+
+        Delegate wrapped_delegate;
+
+        #endregion
+
         /// <summary>
         /// Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
         /// a 'type' and a 'ref type' (such overloads are not CLS Compliant).
@@ -45,12 +55,6 @@ namespace Bind.Structures
         
         #region --- Constructors ---
 
-        public Function()
-            : base()
-        {
-            Body = new FunctionBody();
-        }
-
         public Function(Delegate d)
             : base(d)
         {
@@ -59,9 +63,19 @@ namespace Bind.Structures
             else
                 this.Body = new FunctionBody();
             this.Name = d.Name;
+
+            WrappedDelegate = d;
         }
 
         #endregion
+
+        public Delegate WrappedDelegate
+        {
+            get { return wrapped_delegate; }
+            set { wrapped_delegate = value; }
+        }
+
+        #region public void TurnVoidPointersToIntPtr()
 
         public void TurnVoidPointersToIntPtr()
         {
@@ -74,6 +88,8 @@ namespace Bind.Structures
                 }
             }
         }
+
+        #endregion
 
         #region public override bool Unsafe
 
@@ -134,9 +150,6 @@ namespace Bind.Structures
                 {
                     TrimmedName = Utilities.StripGL2Extension(value);
 
-                    //if (Name.Contains("BooleanIndexed"))
-                    {
-                    }
                     Match m = endingsNotToTrim.Match(TrimmedName);
                     if ((m.Index + m.Length) != TrimmedName.Length)
                     {

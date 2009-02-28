@@ -113,7 +113,7 @@ namespace Bind.Structures
                 foreach (char c in name)
                 {
                     char char_to_add;
-                    if (c == '_')
+                    if (c == '_' || c == '-')
                         is_after_underscore_or_number = true;
                     else 
                     {
