@@ -40,6 +40,10 @@ namespace Examples.WinForms
             InitializeComponent();
 
             Application.Idle += StartAsync;
+
+            // Workaround for missing Idle event on Mono/Windows.
+            if (Configuration.RunningOnMono && Configuration.RunningOnWindows)
+                Application.RaiseIdle(EventArgs.Empty);
         }
 
         #endregion
@@ -61,6 +65,7 @@ namespace Examples.WinForms
             }
 
             backgroundWorker1.RunWorkerAsync();
+            TextBoxSupport.Text = "processing... (please be patient)";
         }
 
         void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)

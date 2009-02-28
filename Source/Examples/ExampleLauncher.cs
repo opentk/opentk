@@ -62,6 +62,7 @@ namespace Examples
 
         public ExampleLauncher()
         {
+            this.Font = SystemFonts.MessageBoxFont;
             InitializeComponent();
         }
 
