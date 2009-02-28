@@ -22,8 +22,8 @@ using System.Text.RegularExpressions;
 
 namespace Examples.WinForms
 {
-    [Example("Extensions", ExampleCategory.WinForms, 3)]
-    public partial class W03_Extensions : Form
+    [Example("Extensions", ExampleCategory.Test)]
+    public partial class Extensions : Form
     {
         #region Fields
 
@@ -34,7 +34,7 @@ namespace Examples.WinForms
 
         #region Constructors
 
-        public W03_Extensions()
+        public Extensions()
         {
             this.Font = SystemFonts.MessageBoxFont;
             InitializeComponent();
@@ -139,7 +139,7 @@ namespace Examples.WinForms
         [STAThread]
         public static void Main()
         {
-            using (W03_Extensions example = new W03_Extensions())
+            using (Extensions example = new Extensions())
             {
                 Utilities.SetWindowTitle(example);
                 example.ShowDialog();
