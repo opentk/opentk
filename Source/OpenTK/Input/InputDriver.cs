@@ -59,26 +59,38 @@ namespace OpenTK
 
         #region --- IInputDriver Members ---
 
+        public void Poll()
+        {
+            inputDriver.Poll();
+        }
+
+        #endregion
+
+        #region --- IKeyboardDriver Members ---
+
         public IList<KeyboardDevice> Keyboard
         {
             get { return inputDriver.Keyboard; }
         }
+
+        #endregion
+
+        #region --- IMouseDriver Members ---
 
         public IList<MouseDevice> Mouse
         {
             get { return inputDriver.Mouse; }
         }
 
-        public void Poll()
+        #endregion
+
+        #region --- IJoystickDriver Members ---
+
+        public IList<JoystickDevice> Joysticks
         {
-            inputDriver.Poll();
+            get { return inputDriver.Joysticks; }
         }
-        /*
-        int IMouseDriver.RegisterDevices()
-        {
-            return inputDriver.RegisterDevices();
-        }
-        */
+
         #endregion
 
         #region --- IDisposable Members ---

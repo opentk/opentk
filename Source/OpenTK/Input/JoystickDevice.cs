@@ -1,49 +1,121 @@
-﻿using System;
+﻿#region License
+//
+// The Open Toolkit Library License
+//
+// Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+#endregion
+
+using System;
 using System.Collections.Generic;
-using System.Text;
-using OpenTK.Math;
 
 namespace OpenTK.Input
 {
-#if false
-    /// <summary>
-    /// Represents a joystick device and provides methods to query its state.
-    /// </summary>
-    public class JoystickDevice : IInputDevice
+    public abstract class JoystickDevice : IInputDevice
     {
+        #region Fields
+
+        int id;
         string description;
-        Vector2[] axis_position;
+        List<float> axis = new List<float>();
+        List<bool> button = new List<bool>();
+        IList<float> axis_readonly;
+        IList<bool> button_readonly;
 
-    #region --- IInputDevice Members ---
+        #endregion
 
-        /// <summary>
-        /// Gets a string describing this JoystickDevice.
-        /// </summary>
+        #region Constructors
+
+        internal JoystickDevice(int id, int axes, int buttons)
+        {
+            if (axes <= 0)
+                throw new ArgumentOutOfRangeException("axes");
+
+            if (buttons <= 0)
+                throw new ArgumentOutOfRangeException("buttons");
+
+            Id = id;
+            axis.AddRange(new float[axes]);
+            button.AddRange(new bool[buttons]);
+
+            axis_readonly = axis.AsReadOnly();
+            button_readonly = button.AsReadOnly();
+        }
+
+        #endregion
+
+        #region Public Members
+
+        public IList<float> Axis { get { return axis_readonly; } }
+
+        public IList<bool> Button { get { return button_readonly; } }
+
+        #endregion
+
+        #region IInputDevice Members
+                
         public string Description
         {
             get { return description; }
             internal set { description = value; }
         }
 
-        /// <summary>
-        /// Gets a value indicating the InputDeviceType of this InputDevice. 
-        /// </summary>
         public InputDeviceType DeviceType
         {
-            get { return InputDeviceType.HID; }
+            get { return InputDeviceType.Hid; }
         }
 
         #endregion
 
-    #region --- Public Methods ---
+        #region Internal Members
 
-        //public Vector2 Axis1
-        //{
-        //    get { return axis_position.Clone(); }
-        //    internal set { 
-        //}
+        internal int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        internal void SetAxis(int num, float @value)
+        {
+            axis[num] = @value;
+        }
+
+        internal void SetButton(int num, bool @value)
+        {
+            button[num] = @value;
+        }
 
         #endregion
     }
-#endif
+
+    // Provides platform-specific information about the relevant JoystickDevice.
+    internal sealed class JoystickDevice<TDetail> : JoystickDevice
+    {
+        TDetail details;
+
+        internal JoystickDevice(int id, int axes, int buttons)
+            : base(id, axes, buttons)
+        { }
+
+        internal TDetail Details { get { return details; } set { details = value; } }
+    }
 }
