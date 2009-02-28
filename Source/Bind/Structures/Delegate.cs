@@ -104,7 +104,7 @@ namespace Bind.Structures
         public string Category
         {
             get { return _category; }
-            set { _category = value; }
+            set { _category = Enum.TranslateName(value); }
         }
 
         #endregion
@@ -345,10 +345,6 @@ namespace Bind.Structures
 
         public void CreateWrappers()
         {
-            if (this.Name.Contains("ReadPixels"))
-            {
-            }
-
             List<Function> wrappers = new List<Function>();
             if (!NeedsWrapper)
             {
@@ -509,9 +505,6 @@ namespace Bind.Structures
 
         internal void Translate()
         {
-            if (Name.Contains("GetError"))
-            {
-            }
             TranslateReturnType();
             TranslateParameters();
 
