@@ -183,7 +183,7 @@ namespace Bind
 Available switches:
 -in:         Input directory (e.g. -in:../specs/)
 -out:        Output directory (e.g. -out:out)
--ns:         Output namespace (e.g. -ns:OpenTK.Graphics.OpenGL).
+-ns:         Output namespace (e.g. -ns:OpenTK.Graphics).
              Default: OpenTK.Graphics.OpenGL
 -namespace:  Same as -ns
 -class:      Output class (e.g. -class:GL3).
