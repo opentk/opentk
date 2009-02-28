@@ -61,7 +61,7 @@ namespace OpenTK.Build
 
         static void PrintUsage()
         {
-            Console.WriteLine("Usage: Build.exe BuildMode BuildTarget");
+            Console.WriteLine("Usage: Build.exe BuildTarget [BuildMode]");
             Console.WriteLine("\tBuildMode: debug/release");
             Console.WriteLine("\tBuildTarget: mono/net/monodev/sharpdev/vs2005 or clean/distclean/svnclean");
         }
@@ -71,7 +71,13 @@ namespace OpenTK.Build
             if (args.Length == 0)
             {
                 PrintUsage();
-                return;
+
+                args = new string[2];
+                Console.Write("Select build target: ");
+                args[0] = Console.ReadLine();
+
+                Console.Write("Select build mode (optional): ");
+                args[1] = Console.ReadLine();
             }
 
             RootPath = Directory.GetCurrentDirectory();
