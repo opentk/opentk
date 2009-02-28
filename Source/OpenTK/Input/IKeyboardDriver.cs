@@ -10,8 +10,14 @@ using System.Text;
 
 namespace OpenTK.Input
 {
+    /// <summary>
+    /// Defines the interface for KeyboardDevice drivers.
+    /// </summary>
     public interface IKeyboardDriver
     {
+        /// <summary>
+        /// Gets the list of available KeyboardDevices.
+        /// </summary>
         IList<KeyboardDevice> Keyboard { get; }
     }
 }

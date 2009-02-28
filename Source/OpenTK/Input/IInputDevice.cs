@@ -10,9 +10,19 @@ using System.Text;
 
 namespace OpenTK.Input
 {
+    /// <summary>
+    /// Defines a common interface for all input devices.
+    /// </summary>
     public interface IInputDevice
     {
+        /// <summary>
+        /// Gets a System.String with a unique description of this IInputDevice instance.
+        /// </summary>
         string Description { get; }
+
+        /// <summary>
+        /// Gets an OpenTK.Input.InputDeviceType value, representing the device type of this IInputDevice instance.
+        /// </summary>
         InputDeviceType DeviceType { get; }
     }
 
@@ -33,6 +43,6 @@ namespace OpenTK.Input
         /// Device is a Human Interface Device. Joysticks, joypads, pens
         /// and some specific usb keyboards/mice fall into this category.
         /// </summary>
-        HID
+        Hid
     }
 }
