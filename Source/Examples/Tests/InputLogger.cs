@@ -108,19 +108,22 @@ namespace Examples.Tests
 
             foreach (JoystickDevice joystick in hidden.Joysticks)
             {
+                comboBoxActiveJoystick.Items.Add(joystick.Description);
+
                 joystick.Move += delegate(object sender, JoystickMoveEventArgs args)
                 {
-                    this.BeginInvoke(ControlLogJoystickMoved);
+                    this.BeginInvoke(ControlLogJoystickMoved, this, sender, args);
                 };
                 joystick.ButtonDown += delegate(object sender, JoystickButtonEventArgs args)
                 {
-                    this.BeginInvoke(ControlLogJoystickButtonDown);
+                    this.BeginInvoke(ControlLogJoystickButtonDown, this, sender, args);
                 };
                 joystick.ButtonUp += delegate(object sender, JoystickButtonEventArgs args)
                 {
-                    this.BeginInvoke(ControlLogJoystickButtonUp);
+                    this.BeginInvoke(ControlLogJoystickButtonUp, this, sender, args);
                 };
             }
+            comboBoxActiveJoystick.SelectedIndex = 0;
 
             #endregion
         }
@@ -207,29 +210,29 @@ namespace Examples.Tests
 
         #region Joysticks
 
-        delegate void ControlLogJoystickMove(GameWindow input_window, InputLogger control, OpenTK.Input.JoystickDevice sender, JoystickMoveEventArgs e);
+        delegate void ControlLogJoystickMove(InputLogger control, object sender, JoystickMoveEventArgs e);
         ControlLogJoystickMove ControlLogJoystickMoved =
-            delegate(GameWindow input_window, InputLogger control, OpenTK.Input.JoystickDevice sender, JoystickMoveEventArgs e)
+            delegate(InputLogger control, object sender, JoystickMoveEventArgs e)
             {
                 // Yes, there are things such as arrays. Tell that to the visual studio designer!
-                switch (e.Index)
+                switch (e.Axis)
                 {
-                    case 1: control.textBoxAxis1.Text = e.Value.ToString(); break;
-                    case 2: control.textBoxAxis2.Text = e.Value.ToString(); break;
-                    case 3: control.textBoxAxis3.Text = e.Value.ToString(); break;
-                    case 4: control.textBoxAxis4.Text = e.Value.ToString(); break;
-                    case 5: control.textBoxAxis5.Text = e.Value.ToString(); break;
-                    case 6: control.textBoxAxis6.Text = e.Value.ToString(); break;
-                    case 7: control.textBoxAxis7.Text = e.Value.ToString(); break;
-                    case 8: control.textBoxAxis8.Text = e.Value.ToString(); break;
-                    case 9: control.textBoxAxis9.Text = e.Value.ToString(); break;
-                    case 10: control.textBoxAxis10.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis0: control.textBoxAxis1.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis1: control.textBoxAxis2.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis2: control.textBoxAxis3.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis3: control.textBoxAxis4.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis4: control.textBoxAxis5.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis5: control.textBoxAxis6.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis6: control.textBoxAxis7.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis7: control.textBoxAxis8.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis8: control.textBoxAxis9.Text = e.Value.ToString(); break;
+                    case JoystickAxis.Axis9: control.textBoxAxis10.Text = e.Value.ToString(); break;
                 }
             };
 
-        delegate void ControlLogJoystickButton(InputLogger control, JoystickDevice sender, JoystickButtonEventArgs e);
+        delegate void ControlLogJoystickButton(InputLogger control, object sender, JoystickButtonEventArgs e);
         ControlLogJoystickButton ControlLogJoystickButtonDown =
-            delegate(InputLogger control, JoystickDevice sender, JoystickButtonEventArgs e)
+            delegate(InputLogger control, object sender, JoystickButtonEventArgs e)
             {
                 if ((sender as JoystickDevice).Description == control.comboBoxActiveJoystick.Text)
                 {
@@ -238,7 +241,7 @@ namespace Examples.Tests
                 }
             };
         ControlLogJoystickButton ControlLogJoystickButtonUp =
-            delegate(InputLogger control, JoystickDevice sender, JoystickButtonEventArgs e)
+            delegate(InputLogger control, object sender, JoystickButtonEventArgs e)
             {
                 if ((sender as JoystickDevice).Description == control.comboBoxActiveJoystick.Text)
                 {
