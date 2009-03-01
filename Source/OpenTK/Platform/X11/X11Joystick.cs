@@ -58,7 +58,8 @@ namespace OpenTK.Platform.X11
                 JoystickDevice stick = OpenJoystick(JoystickPath, number++);
                 if (stick != null)
                 {
-                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
+                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3})",
+                        number, stick.Axis.Count, stick.Button.Count, JoystickPath);
                     sticks.Add(stick);
                 }
             }
@@ -68,7 +69,11 @@ namespace OpenTK.Platform.X11
             {
                 JoystickDevice stick = OpenJoystick(JoystickPathLegacy, number++);
                 if (stick != null)
+                {
+                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3})",
+                        number, stick.Axis.Count, stick.Button.Count, JoystickPathLegacy);
                     sticks.Add(stick);
+                }
             }
         }
 
