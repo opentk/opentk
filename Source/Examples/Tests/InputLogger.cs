@@ -123,7 +123,8 @@ namespace Examples.Tests
                     this.BeginInvoke(ControlLogJoystickButtonUp, this, sender, args);
                 };
             }
-            comboBoxActiveJoystick.SelectedIndex = 0;
+            if (comboBoxActiveJoystick.Items.Count > 0)
+                comboBoxActiveJoystick.SelectedIndex = 0;
 
             #endregion
         }
