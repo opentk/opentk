@@ -89,17 +89,15 @@ namespace OpenTK.Platform.Windows
             stick.Details = new WinMMJoyDetails(num_axes);
 
             // Make sure to reverse the vertical axes, so that +1 points up and -1 points down.
-            // I don't know if this an artifact of my joypad, but RAxis is the second horizontal and
-            // ZAxis is the second vertical axis here (Saitek P880).
             int axis = 0;
             if (axis < caps.NumAxes)
             { stick.Details.Min[axis] = caps.XMin; stick.Details.Max[axis] = caps.XMax; axis++; }
             if (axis < caps.NumAxes)
             { stick.Details.Min[axis] = caps.YMax; stick.Details.Max[axis] = caps.YMin; axis++; }
             if (axis < caps.NumAxes)
-            { stick.Details.Min[axis] = caps.RMin; stick.Details.Max[axis] = caps.RMax; axis++; }
-            if (axis < caps.NumAxes)
             { stick.Details.Min[axis] = caps.ZMax; stick.Details.Max[axis] = caps.ZMin; axis++; }
+            if (axis < caps.NumAxes)
+            { stick.Details.Min[axis] = caps.RMin; stick.Details.Max[axis] = caps.RMax; axis++; }
             if (axis < caps.NumAxes)
             { stick.Details.Min[axis] = caps.UMin; stick.Details.Max[axis] = caps.UMax; axis++; }
             if (axis < caps.NumAxes)
