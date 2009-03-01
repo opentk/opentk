@@ -26,15 +26,25 @@ namespace Examples.Tests
     [Example("Input Logger", ExampleCategory.Test)]
     public partial class InputLogger : Form
     {
+        #region Fields
+
         Thread thread;
         GameWindow hidden;
         bool start;
         Dictionary<IntPtr, ListBox> keyboardListBoxes = new Dictionary<IntPtr, ListBox>(4);
 
+        #endregion
+
+        #region Constructors
+
         public InputLogger()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region GameWindow
 
         void LaunchGameWindow()
         {
@@ -42,18 +52,18 @@ namespace Examples.Tests
             hidden.Load += hidden_Load;
             hidden.Unload += hidden_Unload;
             hidden.RenderFrame += new OpenTK.RenderFrameEvent(hidden_RenderFrame);
-            hidden.Run(60.0, 10.0);
+            hidden.Run(60.0, 0.0);
         }
 
         void hidden_RenderFrame(GameWindow sender, RenderFrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
             sender.SwapBuffers();
-            //Thread.Sleep(1);
         }
 
         void hidden_Load(GameWindow sender, EventArgs e)
         {
+            hidden.VSync = VSyncMode.On;
             start = true;
             GL.ClearColor(Color.Black);
         }
@@ -65,6 +75,10 @@ namespace Examples.Tests
 
         delegate void CloseTrigger(GameWindow sender, EventArgs e, Form f);
         CloseTrigger on_hidden_unload = delegate(GameWindow sender, EventArgs e, Form f) { f.Close(); };
+
+        #endregion
+
+        #region Protected Members
 
         protected override void OnLoad(EventArgs e)
         {
@@ -89,6 +103,26 @@ namespace Examples.Tests
 
             hidden.Keyboard.KeyDown += LogKeyDown;
             hidden.Keyboard.KeyUp += LogKeyUp;
+
+            #region Joysticks
+
+            foreach (JoystickDevice joystick in hidden.Joysticks)
+            {
+                joystick.Move += delegate(object sender, JoystickMoveEventArgs args)
+                {
+                    this.BeginInvoke(ControlLogJoystickMoved);
+                };
+                joystick.ButtonDown += delegate(object sender, JoystickButtonEventArgs args)
+                {
+                    this.BeginInvoke(ControlLogJoystickButtonDown);
+                };
+                joystick.ButtonUp += delegate(object sender, JoystickButtonEventArgs args)
+                {
+                    this.BeginInvoke(ControlLogJoystickButtonUp);
+                };
+            }
+
+            #endregion
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -103,7 +137,20 @@ namespace Examples.Tests
             e.Cancel = false;
         }
 
+        #endregion
+
+        #region Private Members
+
+        private void ChooseMouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MouseButtonsBox.Items.Clear();
+        }
+
+        #endregion
+
         #region Logging Delegates
+
+        #region Mice
 
         delegate void ControlLogMouseKey(GameWindow input_window, InputLogger control, object sender, MouseButtonEventArgs e);
         ControlLogMouseKey ControlLogMouseKeyDown =
@@ -140,6 +187,10 @@ namespace Examples.Tests
                 control.MouseWheelText.Text = e.Value.ToString();
             };
 
+        #endregion
+
+        #region Keyboards
+
         delegate void ControlLogKeyboard(GameWindow input_window, InputLogger control, OpenTK.Input.KeyboardDevice sender, Key key);
         ControlLogKeyboard ControlLogKeyboardDown =
             delegate(GameWindow input_window, InputLogger control, KeyboardDevice sender, Key key)
@@ -151,6 +202,52 @@ namespace Examples.Tests
             {
                 control.keyboardListBoxes[sender.DeviceID].Items.Remove(key);
             };
+
+        #endregion
+
+        #region Joysticks
+
+        delegate void ControlLogJoystickMove(GameWindow input_window, InputLogger control, OpenTK.Input.JoystickDevice sender, JoystickMoveEventArgs e);
+        ControlLogJoystickMove ControlLogJoystickMoved =
+            delegate(GameWindow input_window, InputLogger control, OpenTK.Input.JoystickDevice sender, JoystickMoveEventArgs e)
+            {
+                // Yes, there are things such as arrays. Tell that to the visual studio designer!
+                switch (e.Index)
+                {
+                    case 1: control.textBoxAxis1.Text = e.Value.ToString(); break;
+                    case 2: control.textBoxAxis2.Text = e.Value.ToString(); break;
+                    case 3: control.textBoxAxis3.Text = e.Value.ToString(); break;
+                    case 4: control.textBoxAxis4.Text = e.Value.ToString(); break;
+                    case 5: control.textBoxAxis5.Text = e.Value.ToString(); break;
+                    case 6: control.textBoxAxis6.Text = e.Value.ToString(); break;
+                    case 7: control.textBoxAxis7.Text = e.Value.ToString(); break;
+                    case 8: control.textBoxAxis8.Text = e.Value.ToString(); break;
+                    case 9: control.textBoxAxis9.Text = e.Value.ToString(); break;
+                    case 10: control.textBoxAxis10.Text = e.Value.ToString(); break;
+                }
+            };
+
+        delegate void ControlLogJoystickButton(InputLogger control, JoystickDevice sender, JoystickButtonEventArgs e);
+        ControlLogJoystickButton ControlLogJoystickButtonDown =
+            delegate(InputLogger control, JoystickDevice sender, JoystickButtonEventArgs e)
+            {
+                if ((sender as JoystickDevice).Description == control.comboBoxActiveJoystick.Text)
+                {
+                    control.JoystickButtonsBox.Items.Add(e.Button);
+                    System.Diagnostics.Debug.Print("Joystick button down: {0}", e.Button);
+                }
+            };
+        ControlLogJoystickButton ControlLogJoystickButtonUp =
+            delegate(InputLogger control, JoystickDevice sender, JoystickButtonEventArgs e)
+            {
+                if ((sender as JoystickDevice).Description == control.comboBoxActiveJoystick.Text)
+                {
+                    control.JoystickButtonsBox.Items.Remove(e.Button);
+                    System.Diagnostics.Debug.Print("Joystick button down: {0}", e.Button);
+                }
+            };
+
+        #endregion
 
         #endregion
 
@@ -187,11 +284,6 @@ namespace Examples.Tests
         }
 
         #endregion
-
-        private void ChooseMouse_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            MouseButtonsBox.Items.Clear();
-        }
 
         #region public static void Main()
 

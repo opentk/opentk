@@ -828,12 +828,6 @@ namespace OpenTK
         {
             get
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
-                //if (input_driver.Keyboard.Count > 0)
-                //    return input_driver.Keyboard[0];
-                //else
-                //    return null;
-                
                 if (glWindow.InputDriver.Keyboard.Count > 0)
                     return glWindow.InputDriver.Keyboard[0];
                 else
@@ -852,17 +846,23 @@ namespace OpenTK
         {
             get
             {
-                if (disposed) throw new ObjectDisposedException("GameWindow");
-                //if (input_driver.Mouse.Count > 0)
-                //    return input_driver.Mouse[0];
-                //else
-                //    return null;
-
                 if (glWindow.InputDriver.Mouse.Count > 0)
                     return glWindow.InputDriver.Mouse[0];
                 else
                     return null;
             }
+        }
+
+        #endregion
+
+        #region public IList<JoystickDevice> Joysticks
+
+        /// <summary>
+        /// Gets a readonly IList containing all available OpenTK.Input.JoystickDevices.
+        /// </summary>
+        public IList<JoystickDevice> Joysticks
+        {
+            get { return glWindow.InputDriver.Joysticks; }
         }
 
         #endregion
