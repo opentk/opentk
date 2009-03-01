@@ -20,6 +20,7 @@ namespace OpenTK.Platform.X11
     /// </summary>
     internal sealed class X11Input : IInputDriver
     {
+        X11Joystick joystick_driver = new X11Joystick();
         //X11WindowInfo window;
         KeyboardDevice keyboard = new KeyboardDevice();
         MouseDevice mouse = new MouseDevice();
@@ -199,15 +200,6 @@ namespace OpenTK.Platform.X11
 
         #region --- IInputDriver Members ---
 
-        #region public IList<IInputDevice> InputDevices
-
-        public IList<IInputDevice> InputDevices
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
-        }
-
-        #endregion
-
         #region public IList<Keyboard> Keyboard
 
         public IList<KeyboardDevice> Keyboard
@@ -230,7 +222,7 @@ namespace OpenTK.Platform.X11
 
         public IList<JoystickDevice> Joysticks
         {
-            get { throw new NotImplementedException(); }
+            get { return joystick_driver.Joysticks; }
         }
 
         #endregion
@@ -242,7 +234,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         public void Poll()
         {
-            //mouseDriver.Poll();
+            joystick_driver.Poll();
         }
 
         #endregion

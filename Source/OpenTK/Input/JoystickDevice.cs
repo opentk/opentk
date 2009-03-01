@@ -39,10 +39,8 @@ namespace OpenTK.Input
 
         int id;
         string description;
-        List<float> axis = new List<float>();
-        List<bool> button = new List<bool>();
-        IList<float> axis_readonly;
-        IList<bool> button_readonly;
+        JoystickAxisCollection axis_collection;
+        JoystickButtonCollection button_collection;
         JoystickMoveEventArgs move_args = new JoystickMoveEventArgs(0, 0, 0);
         JoystickButtonEventArgs button_args = new JoystickButtonEventArgs(0, false);
 
@@ -59,11 +57,8 @@ namespace OpenTK.Input
                 throw new ArgumentOutOfRangeException("buttons");
 
             Id = id;
-            axis.AddRange(new float[axes]);
-            button.AddRange(new bool[buttons]);
-
-            axis_readonly = axis.AsReadOnly();
-            button_readonly = button.AsReadOnly();
+            axis_collection = new JoystickAxisCollection(axes);
+            button_collection = new JoystickButtonCollection(buttons);
         }
 
         #endregion
@@ -71,14 +66,14 @@ namespace OpenTK.Input
         #region Public Members
 
         /// <summary>
-        /// Gets a readonly IList containing the state of each axis on this instance. Values are normalized in the [-1, 1] range.
+        /// Gets a JoystickAxisCollection containing the state of each axis on this instance. Values are normalized in the [-1, 1] range.
         /// </summary>
-        public IList<float> Axis { get { return axis_readonly; } }
+        public JoystickAxisCollection Axis { get { return axis_collection; } }
 
         /// <summary>
-        /// Gets a readonly IList containing the state of each button on this instance. True indicates that the button is pressed.
+        /// Gets JoystickButtonCollection containing the state of each button on this instance. True indicates that the button is pressed.
         /// </summary>
-        public IList<bool> Button { get { return button_readonly; } }
+        public JoystickButtonCollection Button { get { return button_collection; } }
 
         #endregion
 
@@ -133,20 +128,20 @@ namespace OpenTK.Input
             set { id = value; }
         }
 
-        internal void SetAxis(int num, float @value)
+        internal void SetAxis(JoystickAxis axis, float @value)
         {
-            move_args.Index = num;
+            move_args.Axis = axis;
             move_args.Delta = move_args.Value - @value;
-            axis[num] = move_args.Value = @value;
+            axis_collection[axis] = move_args.Value = @value;
             Move(this, move_args);
         }
 
-        internal void SetButton(int num, bool @value)
+        internal void SetButton(JoystickButton button, bool @value)
         {
-            if (button[num] != @value)
+            if (button_collection[button] != @value)
             {
-                button_args.Button = num;
-                button[num] = button_args.Pressed = @value;
+                button_args.Button = button;
+                button_collection[button] = button_args.Pressed = @value;
                 if (@value)
                     ButtonDown(this, button_args);
                 else
@@ -190,7 +185,7 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        int button;
+        JoystickButton button;
         bool pressed;
 
         #endregion
@@ -202,7 +197,7 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="button">The index of the joystick button for the event.</param>
         /// <param name="pressed">The current state of the button.</param>
-        internal JoystickButtonEventArgs(int button, bool pressed)
+        internal JoystickButtonEventArgs(JoystickButton button, bool pressed)
         {
             this.button = button;
             this.pressed = pressed;
@@ -215,7 +210,7 @@ namespace OpenTK.Input
         /// <summary>
         /// The index of the joystick button for the event.
         /// </summary>
-        public int Button { get { return this.button; } internal set { this.button = value; } }
+        public JoystickButton Button { get { return this.button; } internal set { this.button = value; } }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the button for the event.
@@ -233,7 +228,7 @@ namespace OpenTK.Input
     {
         #region Fields
 
-        int index;
+        JoystickAxis axis;
         float value;
         float delta;
 
@@ -247,9 +242,9 @@ namespace OpenTK.Input
         /// <param name="index">The index of the joystick axis that was moved.</param>
         /// <param name="value">The absolute value of the joystick axis.</param>
         /// <param name="delta">The relative change in value of the joystick axis.</param>
-        public JoystickMoveEventArgs(int index, float value, float delta)
+        public JoystickMoveEventArgs(JoystickAxis axis, float value, float delta)
         {
-            this.index = index;
+            this.axis = axis;
             this.value = value;
             this.delta = delta;
         }
@@ -261,7 +256,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a System.Int32 representing the index of the axis that was moved.
         /// </summary>
-        public int Index { get { return index; } internal set { this.index = value; } }
+        public JoystickAxis Axis { get { return axis; } internal set { this.axis = value; } }
 
         /// <summary>
         /// Gets a System.Single representing the absolute position of the axis.
@@ -271,7 +266,205 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a System.Single representing the relative change in the position of the axis.
         /// </summary>
-        public float Delta { get { return delta; } internal set { this.delta = delta; } }
+        public float Delta { get { return delta; } internal set { this.delta = value; } }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region JoystickButton
+
+    /// <summary>
+    /// Defines available JoystickDevice buttons.
+    /// </summary>
+    public enum JoystickButton
+    {
+        /// <summary>The first button of the JoystickDevice.</summary>
+        Button0 = 0,
+        /// <summary>The second button of the JoystickDevice.</summary>
+        Button1,
+        /// <summary>The third button of the JoystickDevice.</summary>
+        Button2,
+        /// <summary>The fourth button of the JoystickDevice.</summary>
+        Button3,
+        /// <summary>The fifth button of the JoystickDevice.</summary>
+        Button4,
+        /// <summary>The sixth button of the JoystickDevice.</summary>
+        Button5,
+        /// <summary>The seventh button of the JoystickDevice.</summary>
+        Button6,
+        /// <summary>The eighth button of the JoystickDevice.</summary>
+        Button7,
+        /// <summary>The ninth button of the JoystickDevice.</summary>
+        Button8,
+        /// <summary>The tenth button of the JoystickDevice.</summary>
+        Button9,
+        /// <summary>The eleventh button of the JoystickDevice.</summary>
+        Button10,
+        /// <summary>The twelfth button of the JoystickDevice.</summary>
+        Button11,
+        /// <summary>The thirteenth button of the JoystickDevice.</summary>
+        Button12,
+        /// <summary>The fourteenth button of the JoystickDevice.</summary>
+        Button13,
+        /// <summary>The fifteenth button of the JoystickDevice.</summary>
+        Button14,
+        /// <summary>The sixteenth button of the JoystickDevice.</summary>
+        Button15,
+    }
+
+    #endregion
+
+    #region JoystickButtonCollection
+
+    /// <summary>
+    /// Defines a collection of JoystickButtons.
+    /// </summary>
+    public sealed class JoystickButtonCollection
+    {
+        #region Fields
+
+        bool[] button_state;
+
+        #endregion
+
+        #region Constructors
+
+        internal JoystickButtonCollection(int numButtons)
+        {
+            if (numButtons <= 0)
+                throw new ArgumentOutOfRangeException("numButtons");
+
+            button_state = new bool[numButtons];
+        }
+
+        #endregion
+
+        #region Public Members
+
+        /// <summary>
+        /// Gets a System.Boolean indicating whether the JoystickButton with the specified index is pressed.
+        /// </summary>
+        /// <param name="index">The index of the JoystickButton to check.</param>
+        /// <returns>True if the JoystickButton is pressed; false otherwise.</returns>
+        public bool this[int index]
+        {
+            get { return button_state[index]; }
+            internal set { button_state[index] = value; }
+        }
+
+        /// <summary>
+        /// Gets a System.Boolean indicating whether the specified JoystickButton is pressed.
+        /// </summary>
+        /// <param name="index">The JoystickButton to check.</param>
+        /// <returns>True if the JoystickButton is pressed; false otherwise.</returns>
+        public bool this[JoystickButton button]
+        {
+            get { return button_state[(int)button]; }
+            internal set { button_state[(int)button] = value; }
+        }
+
+        /// <summary>
+        /// Gets a System.Int32 indicating the available amount of JoystickButtons.
+        /// </summary>
+        public int Count
+        {
+            get { return button_state.Length; }
+        }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region JoystickAxis
+
+    /// <summary>
+    /// Defines available JoystickDevice axes.
+    /// </summary>
+    public enum JoystickAxis
+    {
+        /// <summary>The first axis of the JoystickDevice.</summary>
+        Axis0 = 0,
+        /// <summary>The second axis of the JoystickDevice.</summary>
+        Axis1,
+        /// <summary>The third axis of the JoystickDevice.</summary>
+        Axis2,
+        /// <summary>The fourth axis of the JoystickDevice.</summary>
+        Axis3,
+        /// <summary>The fifth axis of the JoystickDevice.</summary>
+        Axis4,
+        /// <summary>The sixth axis of the JoystickDevice.</summary>
+        Axis5,
+        /// <summary>The seventh axis of the JoystickDevice.</summary>
+        Axis6,
+        /// <summary>The eighth axis of the JoystickDevice.</summary>
+        Axis7,
+        /// <summary>The ninth axis of the JoystickDevice.</summary>
+        Axis8,
+        /// <summary>The tenth axis of the JoystickDevice.</summary>
+        Axis9,
+    }
+
+    #endregion
+
+    #region JoystickAxisCollection
+
+    /// <summary>
+    /// Defines a collection of JoystickAxes.
+    /// </summary>
+    public sealed class JoystickAxisCollection
+    {
+        #region Fields
+
+        float[] axis_state;
+
+        #endregion
+
+        #region Constructors
+
+        internal JoystickAxisCollection(int numAxes)
+        {
+            if (numAxes <= 0)
+                throw new ArgumentOutOfRangeException("numAxes");
+
+            axis_state = new float[numAxes];
+        }
+
+        #endregion
+
+        #region Public Members
+
+        /// <summary>
+        /// Gets a System.Single indicating the absolute position of the JoystickAxis with the specified index.
+        /// </summary>
+        /// <param name="index">The index of the JoystickAxis to check.</param>
+        /// <returns>A System.Single in the range [-1, 1].</returns>
+        public float this[int index]
+        {
+            get { return axis_state[index]; }
+            internal set { axis_state[index] = value; }
+        }
+
+        /// <summary>
+        /// Gets a System.Single indicating the absolute position of the JoystickAxis.
+        /// </summary>
+        /// <param name="index">The JoystickAxis to check.</param>
+        /// <returns>A System.Single in the range [-1, 1].</returns>
+        public float this[JoystickAxis axis]
+        {
+            get { return axis_state[(int)axis]; }
+            internal set { axis_state[(int)axis] = value; }
+        }
+
+        /// <summary>
+        /// Gets a System.Int32 indicating the available amount of JoystickAxes.
+        /// </summary>
+        public int Count
+        {
+            get { return axis_state.Length; }
+        }
 
         #endregion
     }
