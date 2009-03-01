@@ -163,7 +163,7 @@ namespace OpenTK.Input
             : base(id, axes, buttons)
         { }
 
-        internal TDetail Details { get { return details; } set { details = value; } }
+        internal TDetail Details;
     }
 
     #endregion
