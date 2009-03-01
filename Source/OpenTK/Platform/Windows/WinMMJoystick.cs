@@ -55,7 +55,10 @@ namespace OpenTK.Platform.Windows
             {
                 JoystickDevice<WinMMJoyDetails> stick = OpenJoystick(number++);
                 if (stick != null)
+                {
+                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
                     sticks.Add(stick);
+                }
             }
         }
 
@@ -116,22 +119,22 @@ namespace OpenTK.Platform.Windows
 
                 int axis = 0;
                 if (axis < js.Axis.Count)
-                { js.SetAxis(axis, js.Details.CalculateOffset((float)info.XPos, axis)); axis++; }
+                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.XPos, axis)); axis++; }
                 if (axis < js.Axis.Count)
-                { js.SetAxis(axis, js.Details.CalculateOffset((float)info.YPos, axis)); axis++; }
+                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.YPos, axis)); axis++; }
                 if (axis < js.Axis.Count)
-                { js.SetAxis(axis, js.Details.CalculateOffset((float)info.ZPos, axis)); axis++; }
+                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.ZPos, axis)); axis++; }
                 if (axis < js.Axis.Count)
-                { js.SetAxis(axis, js.Details.CalculateOffset((float)info.RPos, axis)); axis++; }
+                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.RPos, axis)); axis++; }
                 if (axis < js.Axis.Count)
-                { js.SetAxis(axis, js.Details.CalculateOffset((float)info.UPos, axis)); axis++; }
+                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.UPos, axis)); axis++; }
                 if (axis < js.Axis.Count)
-                { js.SetAxis(axis, js.Details.CalculateOffset((float)info.VPos, axis)); axis++; }
+                { js.SetAxis((JoystickAxis)axis, js.Details.CalculateOffset((float)info.VPos, axis)); axis++; }
 
                 int button = 0;
                 while (button < js.Button.Count)
                 {
-                    js.SetButton(button, (info.Buttons & (1 << button)) != 0);
+                    js.SetButton((JoystickButton)button, (info.Buttons & (1 << button)) != 0);
                     button++;
                 }
             }
