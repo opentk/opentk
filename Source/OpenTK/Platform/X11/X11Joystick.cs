@@ -58,7 +58,7 @@ namespace OpenTK.Platform.X11
                 JoystickDevice stick = OpenJoystick(JoystickPath, number++);
                 if (stick != null)
                 {
-                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3})",
+                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
                         number, stick.Axis.Count, stick.Button.Count, JoystickPath);
                     sticks.Add(stick);
                 }
@@ -70,7 +70,7 @@ namespace OpenTK.Platform.X11
                 JoystickDevice stick = OpenJoystick(JoystickPathLegacy, number++);
                 if (stick != null)
                 {
-                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3})",
+                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons, {3}{0})",
                         number, stick.Axis.Count, stick.Button.Count, JoystickPathLegacy);
                     sticks.Add(stick);
                 }
@@ -106,7 +106,11 @@ namespace OpenTK.Platform.X11
                         switch (e.Type)
                         {
                             case JoystickEventType.Axis:
-                                js.SetAxis((JoystickAxis)e.Number, e.Value / 32767.0f);
+                                // Flip vertical axes so that +1 point up.
+                                if (e.Number % 2 == 0)
+                                    js.SetAxis((JoystickAxis)e.Number, e.Value / 32767.0f);
+                                else
+                                    js.SetAxis((JoystickAxis)e.Number, -e.Value / 32767.0f);
                                 break;
 
                             case JoystickEventType.Button:
