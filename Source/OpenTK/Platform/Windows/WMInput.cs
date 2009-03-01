@@ -233,7 +233,7 @@ namespace OpenTK.Platform.Windows
 
         public void Poll()
         {
-            // No polling needed.
+            joystick_driver.Poll();
         }
 
         #endregion

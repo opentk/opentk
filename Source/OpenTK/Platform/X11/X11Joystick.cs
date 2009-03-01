@@ -35,7 +35,7 @@ namespace OpenTK.Platform.X11
 {
     struct X11JoyDetails { }
 
-    sealed class X11JoystickDriver : IJoystickDriver
+    sealed class X11Joystick : IJoystickDriver
     {
         #region Fields
 
@@ -48,7 +48,7 @@ namespace OpenTK.Platform.X11
 
         #region Constructors
 
-        public X11JoystickDriver()
+        public X11Joystick()
         {
             sticks_readonly = sticks.AsReadOnly();
 
@@ -57,7 +57,10 @@ namespace OpenTK.Platform.X11
             {
                 JoystickDevice stick = OpenJoystick(JoystickPath, number++);
                 if (stick != null)
+                {
+                    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
                     sticks.Add(stick);
+                }
             }
 
             number = 0;
@@ -98,11 +101,11 @@ namespace OpenTK.Platform.X11
                         switch (e.Type)
                         {
                             case JoystickEventType.Axis:
-                                js.SetAxis(e.Number, e.Value / 32767.0f);
+                                js.SetAxis((JoystickAxis)e.Number, e.Value / 32767.0f);
                                 break;
 
                             case JoystickEventType.Button:
-                                js.SetButton(e.Number, e.Value != 0);
+                                js.SetButton((JoystickButton)e.Number, e.Value != 0);
                                 break;
                         }
                     }
@@ -233,7 +236,7 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        ~X11JoystickDriver()
+        ~X11Joystick()
         {
             Dispose(false);
         }
