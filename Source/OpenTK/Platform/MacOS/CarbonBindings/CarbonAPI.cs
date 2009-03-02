@@ -371,6 +371,17 @@ namespace OpenTK.Platform.MacOS.Carbon
     }
 
     #endregion
+    #region --- Enums from gestalt.h ---
+
+    internal enum GestaltSelector
+    {
+        SystemVersion       = 0x73797376,  // FOUR_CHAR_CODE("sysv"), /* system version*/
+        SystemVersionMajor  = 0x73797331,  // FOUR_CHAR_CODE("sys1"), /* The major system version number; in 10.4.17 this would be the decimal value 10 */
+        SystemVersionMinor  = 0x73797332,  // FOUR_CHAR_CODE("sys2"), /* The minor system version number; in 10.4.17 this would be the decimal value 4 */
+        SystemVersionBugFix = 0x73797333,  // FOUR_CHAR_CODE("sys3") /* The bug fix system version number; in 10.4.17 this would be the decimal value 17 */
+    };
+
+    #endregion
 
     #region --- Carbon API Methods ---
 
@@ -872,6 +883,12 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal unsafe static extern OSStatus DMGetGDeviceByDisplayID(
             IntPtr displayID, out IntPtr displayDevice, Boolean failToMain);
 
+
+        const string gestaltlib = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
+
+
+        [DllImport(gestaltlib)]
+        internal static extern OSStatus Gestalt(GestaltSelector selector, out int response);
 
     }
 

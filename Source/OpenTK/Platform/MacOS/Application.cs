@@ -20,6 +20,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         static bool mInitialized = false;
         static IntPtr uppHandler;
         static CarbonGLNative eventHandler;
+        static int osMajor, osMinor, osBugfix;
 
         static Application()
         {
@@ -32,7 +33,13 @@ namespace OpenTK.Platform.MacOS.Carbon
 			
             API.AcquireRootMenu();
 
-            ConnectEvents();    
+            ConnectEvents();
+
+            API.Gestalt(GestaltSelector.SystemVersionMajor, out osMajor);
+            API.Gestalt(GestaltSelector.SystemVersionMinor, out osMinor);
+            API.Gestalt(GestaltSelector.SystemVersionBugFix, out osBugfix);
+
+            Debug.Print("Running on Mac OS X {0}.{1}.{2}.", osMajor, osMinor, osBugfix);
         }
 
         internal static CarbonGLNative WindowEventHandler
