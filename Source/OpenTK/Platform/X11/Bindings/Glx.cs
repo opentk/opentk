@@ -227,6 +227,17 @@ namespace OpenTK.Platform.X11
         PIXMAP_BIT_SGIX = 0x00000002,
     }
 
+    public enum ArbCreateContext : int
+    {
+        DebugBit = 0x0001,
+        ForwardCompatibleBit = 0x0002,
+        MajorVersion = 0x2091,
+        MinorVersion = 0x2092,
+        LayerPlane = 0x2093,
+        Flags = 0x2094,
+        ErrorInvalidVersion = 0x2095,
+    }
+
     #endregion
 
     /// <summary>
@@ -322,7 +333,7 @@ namespace OpenTK.Platform.X11
 
             unsafe public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int* attribs)
             {
-                return Delegates.glxCreateContextAttribsARB(display, fbconfig, share_context, direct, attribs);
+                return Delegates.glXCreateContextAttribsARB(display, fbconfig, share_context, direct, attribs);
             }
 
             public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int[] attribs)
@@ -331,7 +342,7 @@ namespace OpenTK.Platform.X11
                 {
                     fixed (int* attribs_ptr = attribs)
                     {
-                        return Delegates.glxCreateContextAttribsARB(display, fbconfig, share_context, direct, attribs_ptr);
+                        return Delegates.glXCreateContextAttribsARB(display, fbconfig, share_context, direct, attribs_ptr);
                     }
                 }
             }
@@ -339,7 +350,7 @@ namespace OpenTK.Platform.X11
             #endregion
         }
 
-        partial class Delegates
+        internal static partial class Delegates
         {
             [SuppressUnmanagedCodeSecurity]
             public delegate int SwapIntervalSGI(int interval);
@@ -347,7 +358,7 @@ namespace OpenTK.Platform.X11
 
             [SuppressUnmanagedCodeSecurity]
             unsafe public delegate IntPtr CreateContextAttribsARB(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int* attribs);
-            unsafe public static CreateContextAttribsARB glxCreateContextAttribsARB = null;
+            unsafe public static CreateContextAttribsARB glXCreateContextAttribsARB = null;
         }
 
         #endregion

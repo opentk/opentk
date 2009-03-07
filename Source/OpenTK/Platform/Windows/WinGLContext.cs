@@ -59,7 +59,8 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public WinGLContext(GraphicsMode format, IWindowInfo window, IGraphicsContext sharedContext)
+        public WinGLContext(GraphicsMode format, IWindowInfo window, IGraphicsContext sharedContext,
+            int major, int minor, GraphicsContextFlags flags)
         {
             if (window == null)
                 throw new ArgumentNullException("window", "Must point to a valid window.");
@@ -91,17 +92,24 @@ namespace OpenTK.Platform.Windows
             {
                 try
                 {
-                    Debug.Write("Attempting to create GL3 render context... ");
+                    Debug.WriteLine("Using WGL_ARB_create_context...");
+
+                    List<int> attributes = new List<int>();
+                    attributes.Add((int)ArbCreateContext.MajorVersion);
+                    attributes.Add(major);
+                    attributes.Add((int)ArbCreateContext.MinorVersion);
+                    attributes.Add(minor);
+                    if (flags != 0)
+                    {
+                        attributes.Add((int)ArbCreateContext.Flags);
+                        attributes.Add((int)flags);
+                    }
+
                     renderContext = new ContextHandle(
                         Wgl.Arb.CreateContextAttribs(
                             currentWindow.DeviceContext,
                             sharedContext != null ? (sharedContext as IGraphicsContextInternal).Context.Handle : IntPtr.Zero,
-                            new int[]
-                        { 
-                            (int)ArbCreateContext.MajorVersion, 3,
-                            (int)ArbCreateContext.MinorVersion, 0,
-                            0
-                        }));
+                            attributes.ToArray()));
                 }
                 catch (EntryPointNotFoundException e) { Debug.Print(e.ToString()); }
                 catch (NullReferenceException e) { Debug.Print(e.ToString()); }
@@ -129,49 +137,9 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public WinGLContext(IWindowInfo window)
-        {
-            if (window == null) throw new ArgumentNullException("window");
-
-            renderContext = new ContextHandle(Wgl.GetCurrentContext());
-            if (renderContext == ContextHandle.Zero)
-                throw new InvalidOperationException("No OpenGL context is current in the calling thread.");
-
-            currentWindow = (WinWindowInfo)window;
-        }
-
         #endregion
 
         #region --- IGraphicsContext Members ---
-
-        #region public void CreateContext()
-
-        public void CreateContext()
-        {
-            throw new NotSupportedException();
-            //this.CreateContext(true, null);
-        }
-
-        #endregion
-
-        #region public void CreateContext(bool direct)
-
-        public void CreateContext(bool direct)
-        {
-            throw new NotSupportedException();
-            //this.CreateContext(direct, null);
-        }
-
-        #endregion
-
-        #region public void CreateContext(bool direct, IGraphicsContext source)
-
-        public void CreateContext(bool direct, IGraphicsContext source)
-        {
-            throw new NotSupportedException();
-        }
-
-        #endregion
 
         #region public void SwapBuffers()
 
@@ -253,12 +221,20 @@ namespace OpenTK.Platform.Windows
         }
         #endregion
 
-
         public event DestroyEvent<IGraphicsContext> Destroy;
 
         #endregion
 
         #region --- IGLContextInternal Members ---
+
+        #region Implementation
+
+        IGraphicsContext IGraphicsContextInternal.Implementation
+        {
+            get { return this; }
+        }
+
+        #endregion
 
         #region void LoadAll()
 
@@ -480,12 +456,6 @@ namespace OpenTK.Platform.Windows
         }
 
         #endregion
-
-        #endregion
-
-        #region IGraphicsContext Members
-
-
 
         #endregion
     }

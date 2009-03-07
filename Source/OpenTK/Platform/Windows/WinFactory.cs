@@ -26,9 +26,9 @@ using OpenTK.Input;
             return new WinDisplayDeviceDriver();
         }
 
-        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering)
+        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return new WinGLContext(mode, window, shareContext);
+            return new WinGLContext(mode, window, shareContext, major, minor, flags);
         }
 
         public IGraphicsMode CreateGraphicsMode()

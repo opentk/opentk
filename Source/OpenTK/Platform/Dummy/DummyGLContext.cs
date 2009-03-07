@@ -81,7 +81,12 @@ namespace OpenTK.Platform.Dummy
 
         #region IGraphicsContextInternal Members
 
-        public void LoadAll()
+        IGraphicsContext IGraphicsContextInternal.Implementation
+        {
+            get { return this; }
+        }
+
+        void IGraphicsContextInternal.LoadAll()
         {
         }
 
@@ -91,6 +96,5 @@ namespace OpenTK.Platform.Dummy
         }
 
         #endregion
-
     }
 }
