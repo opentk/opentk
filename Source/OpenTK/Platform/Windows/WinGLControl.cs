@@ -29,10 +29,10 @@ namespace OpenTK.Platform.Windows
 
         #region --- IGLControl Members ---
 
-        public GraphicsContext CreateContext()
+        public GraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
             WinWindowInfo window = new WinWindowInfo(control.Handle, null);
-            return new GraphicsContext(mode, window);
+            return new GraphicsContext(mode, window, major, minor, flags);
         }
 
         public bool IsIdle
