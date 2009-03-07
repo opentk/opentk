@@ -18,16 +18,22 @@ namespace OpenTK.Platform.X11
 {
     class X11GraphicsMode : IGraphicsMode
     {
-        internal X11GraphicsMode()
+        #region Constructors
+
+        public X11GraphicsMode()
         {
         }
+
+        #endregion
+
+        #region IGraphicsMode Members
 
         public GraphicsMode SelectGraphicsMode(ColorFormat color, int depth, int stencil, int samples, ColorFormat accum,
                                                int buffers, bool stereo)
         {
             GraphicsMode gfx;                               // The actual GraphicsMode that will be selected.
             List<int> visualAttributes = new List<int>();
-            IntPtr visual;
+            IntPtr visual = IntPtr.Zero;
 
             Debug.Print("Bits per pixel: {0}", color.BitsPerPixel);
 
@@ -90,7 +96,34 @@ namespace OpenTK.Platform.X11
                 IntPtr root = Functions.XRootWindow(display, screen);
                 Debug.Print("Display: {0}, Screen: {1}, RootWindow: {2}", display, screen, root);
 
-                visual = Glx.ChooseVisual(display, screen, visualAttributes.ToArray());
+                try
+                {
+                    unsafe
+                    {
+                        Debug.Print("Getting FB config.");
+                        int fbcount;
+                        // Note that ChooseFBConfig returns an array of GLXFBConfig opaque structures (i.e. mapped to IntPtrs).
+                        IntPtr* fbconfigs = Glx.ChooseFBConfig(display, screen, visualAttributes.ToArray(), out fbcount);
+                        if (fbcount > 0 && fbconfigs != null)
+                        {
+                            // We want to use the first GLXFBConfig from the fbconfigs array (the first one is the best match).
+                            visual = Glx.GetVisualFromFBConfig(display, *fbconfigs);
+                            Functions.XFree((IntPtr)fbconfigs);
+                        }
+                    }
+                }
+                catch (EntryPointNotFoundException)
+                {
+                    Debug.Print("Functions glXChooseFBConfig not supported.");
+                }
+
+                // Older drivers don't support glXChooseFBConfig and glXGetVisualFromFBConfig.
+                // Fall back to the old glXChooseVisual method.
+                if (visual == IntPtr.Zero)
+                {
+                    Debug.Print("Falling back to glXChooseVisual.");
+                    visual = Glx.ChooseVisual(display, screen, visualAttributes.ToArray());
+                }
 
                 if (visual == IntPtr.Zero)
                     throw new GraphicsContextException("Requested GraphicsMode not available.");
@@ -156,5 +189,7 @@ namespace OpenTK.Platform.X11
             
             return gfx;
         }
+
+        #endregion
     }
 }
