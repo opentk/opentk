@@ -157,8 +157,6 @@ namespace OpenTK.Input
     // Provides platform-specific information about the relevant JoystickDevice.
     internal sealed class JoystickDevice<TDetail> : JoystickDevice
     {
-        TDetail details;
-
         internal JoystickDevice(int id, int axes, int buttons)
             : base(id, axes, buttons)
         { }
