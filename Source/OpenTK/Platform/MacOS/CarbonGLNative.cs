@@ -728,7 +728,7 @@ namespace OpenTK.Platform.MacOS
 
         private void SetFullscreen()
         {
-            ((AglContext)context.Implementation).SetFullScreen(window);
+            ((AglContext)(context as IGraphicsContextInternal).Implementation).SetFullScreen(window);
 
             mWindowedWidth = mWidth;
             mWindowedHeight = mHeight;
@@ -743,7 +743,7 @@ namespace OpenTK.Platform.MacOS
         }
         private void UnsetFullscreen()
         {
-            ((AglContext)context.Implementation).UnsetFullScreen(window);
+            ((AglContext)(context as IGraphicsContextInternal).Implementation).UnsetFullScreen(window);
             SetSize(mWindowedWidth, mWindowedHeight);
         }
 

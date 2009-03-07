@@ -25,9 +25,9 @@ namespace OpenTK.Platform.X11
             return new X11XrandrDisplayDevice();
         }
 
-        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering)
+        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return new X11GLContext(mode, window, shareContext, DirectRendering);
+            return new X11GLContext(mode, window, shareContext, DirectRendering, major, minor, flags);
         }
 
         public IGraphicsMode CreateGraphicsMode()

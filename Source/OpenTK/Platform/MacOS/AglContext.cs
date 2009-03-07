@@ -389,6 +389,11 @@ namespace OpenTK.Platform.MacOS
 
         #region IGraphicsContextInternal Members
 
+        IGraphicsContext IGraphicsContextInternal.Implementation
+        {
+            get { return this; }
+        }
+
         void IGraphicsContextInternal.LoadAll()
         {
             GL.LoadAll();
@@ -421,6 +426,5 @@ namespace OpenTK.Platform.MacOS
         }
 
         #endregion
-
     }
 }
