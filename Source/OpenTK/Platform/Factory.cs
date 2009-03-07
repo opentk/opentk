@@ -33,9 +33,9 @@ namespace OpenTK.Platform
             return implementation.CreateDisplayDeviceDriver();
         }
 
-        internal static IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering)
+        internal static IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            return implementation.CreateGLContext(mode, window, shareContext, directRendering);
+            return implementation.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
         internal static IGraphicsMode CreateGraphicsMode()
@@ -62,7 +62,7 @@ namespace OpenTK.Platform
                 throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
             }
 
-            public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering)
+            public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
             }

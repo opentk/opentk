@@ -36,7 +36,7 @@ namespace OpenTK.Platform.X11
         static Delegate LoadDelegate(string name, Type signature)
         {
             Delegate d;
-            string realName = name.StartsWith("glx") ? name.Substring(3) : name;
+            string realName = name.ToLower().StartsWith("glx") ? name.Substring(3) : name;
 
             if (typeof(Glx).GetMethod(realName,
                 BindingFlags.NonPublic | BindingFlags.Static) != null)

@@ -63,6 +63,8 @@ namespace OpenTK.Graphics
     /// </summary>
     public interface IGraphicsContextInternal
     {
+        IGraphicsContext Implementation { get; }
+
         ///// <summary>
         ///// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
         ///// specified IGraphicsContext.
@@ -80,9 +82,9 @@ namespace OpenTK.Graphics
         /// </summary>
         ContextHandle Context { get; }
 
-        /// <summary>
-        /// Gets the IWindowInfo describing the window associated with this context.
-        /// </summary>
+        // <summary>
+        // Gets the IWindowInfo describing the window associated with this context.
+        // </summary>
         //IWindowInfo Info { get; }
 
         /// <summary>Gets the GraphicsMode of the context.</summary>

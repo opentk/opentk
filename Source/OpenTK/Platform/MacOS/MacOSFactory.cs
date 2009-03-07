@@ -25,7 +25,7 @@ namespace OpenTK.Platform.MacOS
             return new QuartzDisplayDeviceDriver();
         }
 
-        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering)
+        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new AglContext(mode, window, shareContext);
         }
