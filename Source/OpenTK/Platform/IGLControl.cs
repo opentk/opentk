@@ -16,7 +16,7 @@ namespace OpenTK.Platform
 {
     internal interface IGLControl
     {
-        GraphicsContext CreateContext();
+        GraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags);
         bool IsIdle { get; }
         IWindowInfo WindowInfo { get; }
     }

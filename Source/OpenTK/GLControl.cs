@@ -30,8 +30,10 @@ namespace OpenTK
         IGLControl implementation;
         GraphicsMode format;
         IWindowInfo window_info;
+        int major, minor;
+        GraphicsContextFlags flags;
 
-        #region --- Constructor ---
+        #region --- Constructors ---
 
         /// <summary>
         /// Constructs a new GLControl.
@@ -40,18 +42,22 @@ namespace OpenTK
             : this(GraphicsMode.Default)
         { }
 
-        /// <summary>This method is obsolete and will be removed in future versions.</summary>
-        /// <param name="mode">Obsolete.</param>
-        [Obsolete]
-        public GLControl(DisplayMode mode)
-            : this(mode.ToGraphicsMode())
+        /// <summary>
+        /// Constructs a new GLControl with the specified GraphicsMode.
+        /// </summary>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the control.</param>
+        public GLControl(GraphicsMode mode)
+            : this(mode, 1, 0, GraphicsContextFlags.Default)
         { }
 
         /// <summary>
         /// Constructs a new GLControl with the specified GraphicsMode.
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the control.</param>
-        public GLControl(GraphicsMode mode)
+        /// <param name="major">The major version for the OpenGL GraphicsContext.</param>
+        /// <param name="major">The minor version for the OpenGL GraphicsContext.</param>
+        /// <param name="major">The GraphicsContextFlags for the OpenGL GraphicsContext.</param>
+        public GLControl(GraphicsMode mode, int major, int minor, GraphicsContextFlags flags)
         {
             SetStyle(ControlStyles.Opaque, true);
             SetStyle(ControlStyles.UserPaint, true);
@@ -61,6 +67,9 @@ namespace OpenTK
             InitializeComponent();
 
             this.format = mode;
+            this.major = major;
+            this.minor = minor;
+            this.flags = flags;
 
             // On Windows, you first need to create the window, then set the pixel format.
             // On X11, you first need to select the visual, then create the window.
@@ -77,22 +86,18 @@ namespace OpenTK
             this.CreateControl();
         }
 
+        #region Obsolete
+
+        /// <summary>This method is obsolete and will be removed in future versions.</summary>
+        /// <param name="mode">Obsolete.</param>v
+        [Obsolete]
+        public GLControl(DisplayMode mode)
+            : this(mode.ToGraphicsMode())
+        { }
+
         #endregion
 
-        protected override void OnResize(EventArgs e)
-        {
-            if (context != null)
-                context.Update(window_info);
-
-            base.OnResize(e);
-        }
-        protected override void OnParentChanged(EventArgs e)
-        {
-            if (context != null)
-                context.Update(window_info);
-            
-            base.OnParentChanged(e);
-        }
+        #endregion
 
         #region --- Protected Methods ---
 
@@ -102,7 +107,7 @@ namespace OpenTK
         {
             base.OnHandleCreated(e);
 
-            this.Context = implementation.CreateContext();
+            this.Context = implementation.CreateContext(major, minor, flags);
 
             this.window_info = implementation.WindowInfo;
             this.MakeCurrent();
@@ -131,6 +136,30 @@ namespace OpenTK
             if (DesignMode)
                 e.Graphics.Clear(BackColor);
             base.OnPaint(e);
+        }
+
+        /// <summary>
+        /// Raises the Resize event.
+        /// </summary>
+        /// <param name="e">A System.EventArgs that contains the event data.</param>
+        protected override void OnResize(EventArgs e)
+        {
+            if (context != null)
+                context.Update(window_info);
+
+            base.OnResize(e);
+        }
+
+        /// <summary>
+        /// Raises the ParentChanged event.
+        /// </summary>
+        /// <param name="e">A System.EventArgs that contains the event data.</param>
+        protected override void OnParentChanged(EventArgs e)
+        {
+            if (context != null)
+                context.Update(window_info);
+
+            base.OnParentChanged(e);
         }
 
         #endregion

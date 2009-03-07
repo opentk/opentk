@@ -20,9 +20,9 @@ namespace OpenTK.Platform.MacOS
 
         #region IGLControl Members
 
-        public OpenTK.Graphics.GraphicsContext CreateContext()
+        public OpenTK.Graphics.GraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            return new GraphicsContext(mode, WindowInfo);
+            return new GraphicsContext(mode, WindowInfo, major, minor, flags);
         }
 
 		// TODO: Fix this

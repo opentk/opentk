@@ -44,9 +44,9 @@ namespace OpenTK.Platform.X11
 
         #region --- IGLControl Members ---
 
-        public GraphicsContext CreateContext()
+        public GraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            return new GraphicsContext(mode, this.WindowInfo);
+            return new GraphicsContext(mode, this.WindowInfo, major, minor, flags);
         }
 
         public bool IsIdle

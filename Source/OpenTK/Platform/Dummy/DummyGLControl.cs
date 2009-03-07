@@ -6,7 +6,7 @@ namespace OpenTK.Platform.Dummy
     {
         #region IGLControl Members
 
-        public OpenTK.Graphics.GraphicsContext CreateContext()
+        public OpenTK.Graphics.GraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
             return new GraphicsContext(null, null);
         }
