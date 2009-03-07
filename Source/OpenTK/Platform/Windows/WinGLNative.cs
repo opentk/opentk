@@ -311,7 +311,7 @@ namespace OpenTK.Platform.Windows
 
         #region public void CreateWindow(int width, int height, GraphicsMode mode, out IGraphicsContext context)
 
-        public void CreateWindow(int width, int height, GraphicsMode mode, out IGraphicsContext context)
+        public void CreateWindow(int width, int height, GraphicsMode mode, int major, int minor, GraphicsContextFlags flags, out IGraphicsContext context)
         {
             Debug.Print("Creating native window.");
             Debug.Indent();
@@ -370,7 +370,7 @@ namespace OpenTK.Platform.Windows
             Functions.SetWindowPos(this.Handle, IntPtr.Zero, Left, Top, rect.right - rect.left,
                                    rect.bottom - rect.top, SetWindowPosFlags.SHOWWINDOW);
 
-            context = new GraphicsContext(mode, window);
+            context = new GraphicsContext(mode, window, major, minor, flags);
 
             Cursor.Current = Cursors.Default;
 

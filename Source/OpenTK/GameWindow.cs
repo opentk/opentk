@@ -149,6 +149,25 @@ namespace OpenTK
         /// <param name="options">GameWindow options regarding window appearance and behavior.</param>
         /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the GameWindow in.</param>
         public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device)
+            : this(width, height, mode, title, options, device, 1, 0, GraphicsContextFlags.Default)
+        { }
+
+        #endregion
+
+        #region public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device, int major, int minor, GraphicsContextFlags flags)
+
+        /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
+        /// <param name="width">The width of the GameWindow in pixels.</param>
+        /// <param name="height">The height of the GameWindow in pixels.</param>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
+        /// <param name="title">The title of the GameWindow.</param>
+        /// <param name="options">GameWindow options regarding window appearance and behavior.</param>
+        /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the GameWindow in.</param>
+        /// <param name="major">The major version for the OpenGL GraphicsContext.</param>
+        /// <param name="major">The minor version for the OpenGL GraphicsContext.</param>
+        /// <param name="flags">The GraphicsContextFlags version for the OpenGL GraphicsContext.</param>
+        public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device,
+            int major, int minor, GraphicsContextFlags flags)
         {
             if (width <= 0) throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
             if (height <= 0) throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
@@ -157,12 +176,12 @@ namespace OpenTK
             if (device == null)
                 device = DisplayDevice.Default;
 
-            glWindow = Platform.Factory.CreateNativeGLWindow();                
+            glWindow = Platform.Factory.CreateNativeGLWindow();
             glWindow.Destroy += glWindow_Destroy;
 
             try
             {
-                glWindow.CreateWindow(width, height, mode, out glContext);
+                glWindow.CreateWindow(width, height, mode, major, minor, flags, out glContext);
                 glContext.MakeCurrent(this.WindowInfo);
                 (glContext as IGraphicsContextInternal).LoadAll();
             }
@@ -173,30 +192,23 @@ namespace OpenTK
                 glWindow.DestroyWindow();
                 throw;
             }
-            
+
             this.Title = title;
-            
+
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
                 device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
                 this.WindowState = WindowState.Fullscreen;
                 //throw new NotImplementedException();
             }
-            
+
             this.VSync = VSyncMode.On; //VSyncMode.Adaptive;
-            glWindow.Resize += new ResizeEvent(glWindow_Resize);
-
+            glWindow.Resize += delegate(object sender, ResizeEventArgs e) { OnResizeInternal(e); };
         }
-
-        void glWindow_Resize(object sender, ResizeEventArgs e)
-        {
-            Debug.Print("glWindow_Resize event fired.");
-
-            OnResizeInternal(e);
-        }
-
 
         #endregion
+ 
+        #region Obsolete
 
         /// <summary>
         /// Constructs a new GameWindow, and opens a render window with the specified DisplayMode.
@@ -215,6 +227,8 @@ namespace OpenTK
         [Obsolete]
         public GameWindow(DisplayMode mode, string title)
             : this(mode.Width, mode.Height, mode.ToGraphicsMode(), title, mode.Fullscreen ? GameWindowFlags.Fullscreen : 0) { }
+
+        #endregion
 
         #endregion
 
