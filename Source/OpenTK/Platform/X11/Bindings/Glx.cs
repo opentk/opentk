@@ -9,39 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Security;
 
 #pragma warning disable 1591
 
 namespace OpenTK.Platform.X11
 {
-    #region Types
-    using GLsizeiptrARB = System.IntPtr;
-    using GLintptrARB = System.IntPtr;
-    using GLhandleARB = System.Int32;
-    using GLhalfARB = System.Int16;
-    using GLhalfNV = System.Int16;
-    using GLcharARB = System.Char;
-    using GLsizei = System.Int32;
-    using GLsizeiptr = System.IntPtr;
-    using GLintptr = System.IntPtr;
-    using GLenum = System.Int32;
-    using GLboolean = System.Boolean;
-    using GLbitfield = System.Int32;
-    using GLchar = System.Char;
-    using GLbyte = System.Byte;
-    using GLubyte = System.Byte;
-    using GLshort = System.Int16;
-    using GLushort = System.Int16;
-    using GLint = System.Int32;
-    using GLuint = System.Int32;
-    using GLfloat = System.Single;
-    using GLclampf = System.Single;
-    using GLdouble = System.Double;
-    using GLclampd = System.Double;
-    using GLstring = System.String;
-    using System.Security;
-    #endregion
-
     #region Enums
 
     public enum GLXAttribute : int
@@ -323,6 +296,14 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        // Returns an array of GLXFBConfig structures.
+        [DllImport(Library, EntryPoint = "glXChooseFBConfig")]
+        unsafe public extern static IntPtr* ChooseFBConfig(IntPtr dpy, int screen, int[] attriblist, out int fbount);
+
+        // Returns a pointer to an XVisualInfo structure.
+        [DllImport(Library, EntryPoint = "glXGetVisualFromFBConfig")]
+        public unsafe extern static IntPtr GetVisualFromFBConfig(IntPtr dpy, IntPtr fbconfig);
+
         #endregion
 
         #region Extensions
@@ -335,11 +316,38 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        public partial class Arb
+        {
+            #region CreateContextAttribs
+
+            unsafe public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int* attribs)
+            {
+                return Delegates.glxCreateContextAttribsARB(display, fbconfig, share_context, direct, attribs);
+            }
+
+            public static IntPtr CreateContextAttribs(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int[] attribs)
+            {
+                unsafe
+                {
+                    fixed (int* attribs_ptr = attribs)
+                    {
+                        return Delegates.glxCreateContextAttribsARB(display, fbconfig, share_context, direct, attribs_ptr);
+                    }
+                }
+            }
+
+            #endregion
+        }
+
         partial class Delegates
         {
             [SuppressUnmanagedCodeSecurity]
-            internal delegate int SwapIntervalSGI(int interval);
-            internal static SwapIntervalSGI glXSwapIntervalSGI = null;
+            public delegate int SwapIntervalSGI(int interval);
+            public static SwapIntervalSGI glXSwapIntervalSGI = null;
+
+            [SuppressUnmanagedCodeSecurity]
+            unsafe public delegate IntPtr CreateContextAttribsARB(IntPtr display, IntPtr fbconfig, IntPtr share_context, bool direct, int* attribs);
+            unsafe public static CreateContextAttribsARB glxCreateContextAttribsARB = null;
         }
 
         #endregion
