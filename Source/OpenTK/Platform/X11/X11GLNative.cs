@@ -199,9 +199,9 @@ namespace OpenTK.Platform.X11
 
         #region --- INativeGLWindow Members ---
 
-        #region public void CreateWindow(int width, int height, GraphicsMode mode, out IGraphicsContext context)
+        #region CreateWindow
 
-        public void CreateWindow(int width, int height, GraphicsMode mode, out IGraphicsContext context)
+        public void CreateWindow(int width, int height, GraphicsMode mode, int major, int minor, GraphicsContextFlags flags, out IGraphicsContext context)
         {
             if (width <= 0) throw new ArgumentOutOfRangeException("width", "Must be higher than zero.");
             if (height <= 0) throw new ArgumentOutOfRangeException("height", "Must be higher than zero.");
@@ -244,7 +244,7 @@ namespace OpenTK.Platform.X11
                 //XVisualInfo vis = window.VisualInfo;
                 //Glx.CreateContext(window.Display, ref vis, IntPtr.Zero, true);
             }
-            context = new GraphicsContext(mode, window);
+            context = new GraphicsContext(mode, window, major, minor, flags);
 
             // Set the window hints
             SetWindowMinMax(_min_width, _min_height, -1, -1);            

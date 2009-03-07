@@ -15,12 +15,9 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform
 {
-    /// <summary>
-    /// This interface supports OpenTK, and is not intended for use by OpenTK programs.
-    /// </summary>
     internal interface INativeGLWindow : IResizable, IDisposable
     {
-        void CreateWindow(int width, int height, GraphicsMode mode, out IGraphicsContext context);
+        void CreateWindow(int width, int height, GraphicsMode mode, int major, int minor, GraphicsContextFlags flags, out IGraphicsContext context);
         void DestroyWindow();
         void ProcessEvents();
         void PointToClient(ref System.Drawing.Point p);
@@ -32,9 +29,7 @@ namespace OpenTK.Platform
         string Title { get; set; }
         bool Visible { get; set; }
         bool IsIdle { get; }
-        //IGraphicsContext Context { get; }
         IInputDriver InputDriver { get; }
-        //bool Fullscreen { get; set; }
         WindowState WindowState { get; set; }
         WindowBorder WindowBorder { get; set; }
 
