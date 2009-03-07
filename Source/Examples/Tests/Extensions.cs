@@ -57,7 +57,7 @@ namespace Examples.WinForms
             Application.Idle -= StartAsync;
 
             // Create a context in order to load all GL methods (GL.LoadAll() is called automatically.)
-            using (GLControl control = new GLControl(GraphicsMode.Default))
+            using (GLControl control = new GLControl(GraphicsMode.Default, 3, 0, GraphicsContextFlags.Default))
             {
                 TextBoxVendor.Text = GL.GetString(StringName.Vendor);
                 TextBoxRenderer.Text = GL.GetString(StringName.Renderer);
