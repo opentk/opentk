@@ -30,6 +30,12 @@
         {
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.SupportedColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CategoryColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExtensionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Entry = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LabelVendor = new System.Windows.Forms.Label();
             this.LabelRenderer = new System.Windows.Forms.Label();
             this.LabelVersion = new System.Windows.Forms.Label();
@@ -38,11 +44,6 @@
             this.TextBoxVersion = new System.Windows.Forms.TextBox();
             this.LabelSupport = new System.Windows.Forms.Label();
             this.TextBoxSupport = new System.Windows.Forms.TextBox();
-            this.SupportedColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CategoryColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Version = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ExtensionColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,12 +66,55 @@
             this.NameColumn,
             this.CategoryColumn,
             this.Version,
-            this.ExtensionColumn});
+            this.ExtensionColumn,
+            this.Entry});
             this.dataGridView1.Location = new System.Drawing.Point(0, 110);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(467, 454);
+            this.dataGridView1.Size = new System.Drawing.Size(939, 397);
             this.dataGridView1.TabIndex = 1;
+            // 
+            // SupportedColumn
+            // 
+            this.SupportedColumn.HeaderText = "";
+            this.SupportedColumn.Name = "SupportedColumn";
+            this.SupportedColumn.ReadOnly = true;
+            this.SupportedColumn.Width = 24;
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.HeaderText = "Name";
+            this.NameColumn.Name = "NameColumn";
+            this.NameColumn.ReadOnly = true;
+            this.NameColumn.Width = 852;
+            // 
+            // CategoryColumn
+            // 
+            this.CategoryColumn.HeaderText = "Category";
+            this.CategoryColumn.Name = "CategoryColumn";
+            this.CategoryColumn.ReadOnly = true;
+            this.CategoryColumn.Width = 5;
+            // 
+            // Version
+            // 
+            this.Version.HeaderText = "Introduced";
+            this.Version.Name = "Version";
+            this.Version.ReadOnly = true;
+            this.Version.Width = 5;
+            // 
+            // ExtensionColumn
+            // 
+            this.ExtensionColumn.HeaderText = "Extension";
+            this.ExtensionColumn.Name = "ExtensionColumn";
+            this.ExtensionColumn.ReadOnly = true;
+            this.ExtensionColumn.Width = 5;
+            // 
+            // Entry
+            // 
+            this.Entry.HeaderText = "Entry";
+            this.Entry.Name = "Entry";
+            this.Entry.ReadOnly = true;
+            this.Entry.Width = 5;
             // 
             // LabelVendor
             // 
@@ -106,7 +150,7 @@
             this.TextBoxVendor.Location = new System.Drawing.Point(70, 6);
             this.TextBoxVendor.Name = "TextBoxVendor";
             this.TextBoxVendor.ReadOnly = true;
-            this.TextBoxVendor.Size = new System.Drawing.Size(385, 20);
+            this.TextBoxVendor.Size = new System.Drawing.Size(856, 20);
             this.TextBoxVendor.TabIndex = 5;
             // 
             // TextBoxRenderer
@@ -116,7 +160,7 @@
             this.TextBoxRenderer.Location = new System.Drawing.Point(70, 32);
             this.TextBoxRenderer.Name = "TextBoxRenderer";
             this.TextBoxRenderer.ReadOnly = true;
-            this.TextBoxRenderer.Size = new System.Drawing.Size(385, 20);
+            this.TextBoxRenderer.Size = new System.Drawing.Size(856, 20);
             this.TextBoxRenderer.TabIndex = 6;
             // 
             // TextBoxVersion
@@ -126,7 +170,7 @@
             this.TextBoxVersion.Location = new System.Drawing.Point(70, 58);
             this.TextBoxVersion.Name = "TextBoxVersion";
             this.TextBoxVersion.ReadOnly = true;
-            this.TextBoxVersion.Size = new System.Drawing.Size(385, 20);
+            this.TextBoxVersion.Size = new System.Drawing.Size(856, 20);
             this.TextBoxVersion.TabIndex = 7;
             // 
             // LabelSupport
@@ -145,46 +189,14 @@
             this.TextBoxSupport.Location = new System.Drawing.Point(70, 84);
             this.TextBoxSupport.Name = "TextBoxSupport";
             this.TextBoxSupport.ReadOnly = true;
-            this.TextBoxSupport.Size = new System.Drawing.Size(385, 20);
+            this.TextBoxSupport.Size = new System.Drawing.Size(856, 20);
             this.TextBoxSupport.TabIndex = 9;
             // 
-            // SupportedColumn
-            // 
-            this.SupportedColumn.HeaderText = "";
-            this.SupportedColumn.Name = "SupportedColumn";
-            this.SupportedColumn.ReadOnly = true;
-            this.SupportedColumn.Width = 24;
-            // 
-            // NameColumn
-            // 
-            this.NameColumn.HeaderText = "Name";
-            this.NameColumn.Name = "NameColumn";
-            this.NameColumn.ReadOnly = true;
-            // 
-            // CategoryColumn
-            // 
-            this.CategoryColumn.HeaderText = "Category";
-            this.CategoryColumn.Name = "CategoryColumn";
-            this.CategoryColumn.ReadOnly = true;
-            // 
-            // Version
-            // 
-            this.Version.HeaderText = "Introduced";
-            this.Version.Name = "Version";
-            this.Version.ReadOnly = true;
-            // 
-            // ExtensionColumn
-            // 
-            this.ExtensionColumn.HeaderText = "Extension";
-            this.ExtensionColumn.Name = "ExtensionColumn";
-            this.ExtensionColumn.ReadOnly = true;
-            // 
-            // W03_Extensions
+            // Extensions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(467, 564);
+            this.ClientSize = new System.Drawing.Size(938, 508);
             this.Controls.Add(this.TextBoxSupport);
             this.Controls.Add(this.LabelSupport);
             this.Controls.Add(this.TextBoxVersion);
@@ -194,7 +206,7 @@
             this.Controls.Add(this.LabelRenderer);
             this.Controls.Add(this.LabelVendor);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "W03_Extensions";
+            this.Name = "Extensions";
             this.Text = "W03_Extensions";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -219,5 +231,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn CategoryColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Version;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExtensionColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Entry;
     }
 }
