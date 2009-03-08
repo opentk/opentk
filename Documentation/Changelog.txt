@@ -1,6 +1,36 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
 ---------------------
+OpenTK 0.9.4 -> 0.9.5
+---------------------
+
++ Bind
+	+ Added support for inline OpenGL documentation.
+	+ Fixed mapping between signed / unsigned wrappers -> signed / unsigned entry points (casts should no longer be necessary).
+
++ Build
+	+ Added System.Xml reference to Bind project.
+	+ Added new documentation files to Bind project.
+
++ OpenTK
+	+ GameWindow / GLControl
+		+ Added new constructors to select the desired GraphicsContext version and flags.
+	+ Graphics
+		+ The GL class now contains inline documentation.
+		+ It is now possible to specify desired version and flags for the OpenGL context (forward-compatible, debug).
+	+ Input
+		+ It is now possible to use devices without axes and/or buttons (e.g. keyboard extensions, tablets).
+	+ Platform
+		+ X11 platform driver now uses glXChooseFBConfig for visual selection, if available.
+		+ X11 platform driver now supports GLX_ARB_create_context (OpenGL 3.0).
+
++ Examples
+	+ Extension test now requests an OpenGL 3.0 context.
+	+ Extension test now shows the parameters of each OpenTK.Graphics.GL function.
+
+
+
+---------------------
 OpenTK 0.9.3 -> 0.9.4
 ---------------------
 

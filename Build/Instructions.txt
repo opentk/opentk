@@ -7,13 +7,11 @@ Usage
 
 To use OpenTK, you need to reference OpenTK.dll from your project. The way you do this changes from IDE to IDE - refer to http://www.opentk.com/doc for specific instructions.
 
-In any case, make sure the OpenTK.dll.config file is copied to the output directory along OpenTK.dll. This file is *required* for OpenTK to work on Linux and Mac OS X.
+In any case, make sure the OpenTK.dll.config file is copied to the output directory along with OpenTK.dll. This file is *required* for OpenTK to function on Linux and Mac OS X.
 
 
 Build instructions
 
-If you have Visual Studio 2005/2008 or MonoDevelop 2 (post-beta1), simply open OpenTK.sln in the Build/ folder.
+If you have Visual Studio 2005/2008 or MonoDevelop 2 (post-beta1), simply open OpenTK.sln in the Build/ folder. If you wish build from the commandline, install nant (http://nant.sourceforge.net) and execute Build.exe in the Build/ folder.
 
-If you wish build from the commandline, install nant (http://nant.sourceforge.net) and execute Build.exe in the Build/ folder.
-
-The resulting binaries are placed in the Binaries/Release or Binaries/Debug folder.
+The resulting binaries are placed into the Binaries/Release or Binaries/Debug folder.
