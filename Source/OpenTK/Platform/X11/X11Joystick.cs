@@ -131,8 +131,6 @@ namespace OpenTK.Platform.X11
             string path = base_path + number.ToString();
             JoystickDevice<X11JoyDetails> stick = null;
 
-            Debug.Write(String.Format("Attempting to open joystick {0}... ", path));
-
             int fd = -1;
             try
             {
@@ -155,13 +153,12 @@ namespace OpenTK.Platform.X11
                 UnsafeNativeMethods.ioctl(fd, JoystickIoctlCode.Buttons, ref buttons);
 
                 stick = new JoystickDevice<X11JoyDetails>(fd, axes, buttons);
+                Debug.Print("Found joystick on path {0}", path);
             }
             finally
             {
                 if (stick == null && fd != -1)
                     UnsafeNativeMethods.close(fd);
-
-                Debug.Print(stick != null ? "success!" : "failed.");
             }
 
             return stick;

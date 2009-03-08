@@ -86,12 +86,6 @@ namespace OpenTK.Platform.Windows
             if ((caps.Capabilities & JoystCapsFlags.HasPov) != 0)
                 num_axes += 2;
 
-            if (num_axes == 0)
-            {
-                Debug.Print("WinMM device {0} has 0 axes. Device will not be used.");
-                return null;
-            }
-
             stick = new JoystickDevice<WinMMJoyDetails>(number, num_axes, caps.NumButtons);            
             stick.Details = new WinMMJoyDetails(num_axes);
 
@@ -131,6 +125,8 @@ namespace OpenTK.Platform.Windows
                 key.Close();
             }
 
+            if (stick != null)
+                Debug.Print("Found joystick on device number {0}", number);
             return stick;
         }
 
