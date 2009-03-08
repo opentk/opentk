@@ -76,7 +76,10 @@ namespace Bind
 
         internal static StreamReader OpenSpecFile(string folder, string file)
         {
+            Console.WriteLine(folder);
+            Console.WriteLine(file);
             string path = Path.Combine(folder, file);
+            Console.WriteLine(path);
             return new StreamReader(path);
         }
 

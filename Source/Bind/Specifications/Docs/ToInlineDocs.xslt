@@ -13,22 +13,22 @@
   <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
 
   <xsl:template name ="summary" match="refentry">
-/// <summary>
-/// <xsl:value-of select="concat(translate(
+        /// <summary>
+        /// <xsl:value-of select="concat(translate(
                   substring(refnamediv/refpurpose, 1, 1), $lowercase, $uppercase),
                   substring(refnamediv/refpurpose, 2, string-length(refnamediv/refpurpose) - 1))"/>
-/// </summary>
+        /// </summary>
 
     <xsl:for-each select="refsect1/variablelist/varlistentry">
       <xsl:choose>
         <xsl:when test="../../@id = 'parameters'">
-/// <param name="{term/parameter}">
+        /// <param name="{term/parameter}">
             <xsl:for-each select="listitem/para">
-/// <para>
-/// <xsl:value-of select="normalize-space(.)"/>
-/// </para>
+        /// <para>
+        /// <xsl:value-of select="normalize-space(.)"/>
+        /// </para>
             </xsl:for-each>
-/// </param>
+        /// </param>
         </xsl:when>
       </xsl:choose>
     </xsl:for-each>

@@ -19,11 +19,11 @@ namespace Bind.GL2
     {
         #region --- Fields ---
 
-        protected static string glTypemap = "GL2\\gl.tm";
+        protected static string glTypemap = "GL2/gl.tm";
         protected static string csTypemap = "csharp.tm";
-        protected static string enumSpec = "GL2\\enum.spec";
-        protected static string enumSpecExt = "GL2\\enumext.spec";
-        protected static string glSpec = "GL2\\gl.spec";
+        protected static string enumSpec = "GL2/enum.spec";
+        protected static string enumSpecExt = "GL2/enumext.spec";
+        protected static string glSpec = "GL2/gl.spec";
         protected static string glSpecExt = "";
 
         protected static string importsFile = "GLCore.cs";
@@ -455,13 +455,14 @@ namespace Bind.GL2
 
         public void WriteBindings(DelegateCollection delegates, FunctionCollection functions, EnumCollection enums)
         {
+            Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
             if (!Directory.Exists(Settings.OutputPath))
                 Directory.CreateDirectory(Settings.OutputPath);
 
             // Enums
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, enumsFile)))
             {
-                WriteLicense(sw, Resources.License);
+                WriteLicense(sw);
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
                 {
                     sw.WriteLine("namespace {0}", Settings.OutputNamespace);
@@ -490,7 +491,7 @@ namespace Bind.GL2
             // Delegates
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, delegatesFile)))
             {
-                WriteLicense(sw, Resources.License);
+                WriteLicense(sw);
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
                 sw.Indent();
@@ -508,7 +509,7 @@ namespace Bind.GL2
             // Core
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, importsFile)))
             {
-                WriteLicense(sw, Resources.License);
+                WriteLicense(sw);
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
                 sw.Indent();
@@ -525,7 +526,7 @@ namespace Bind.GL2
             // Wrappers
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, wrappersFile)))
             {
-                WriteLicense(sw, Resources.License);
+                WriteLicense(sw);
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
                 sw.WriteLine("{");
                 sw.Indent();
@@ -770,9 +771,9 @@ namespace Bind.GL2
 
         #region void WriteLicense
 
-        public void WriteLicense(BindStreamWriter sw, string license)
+        public void WriteLicense(BindStreamWriter sw)
         {
-            sw.WriteLine(Resources.License);
+            sw.WriteLine(File.ReadAllText(Path.Combine(Settings.InputPath, Settings.LicenseFile)));
             sw.WriteLine();
         }
 
