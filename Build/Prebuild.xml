@@ -45,7 +45,7 @@
       </Configuration>
 
       <Reference name="System"/>
-      
+
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
       </Files>
@@ -67,11 +67,15 @@
       </Configuration>
 
       <Reference name="System"/>
+      <Reference name="System.Xml"/>
 
       <Files>
         <Match path="." pattern="*.cs" recurse="true"/>
         <Match path="." pattern="*.spec" recurse="true" buildAction="None"/>
         <Match path="." pattern="*.tm" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.xml" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.xslt" recurse="true" buildAction="None"/>
+        <Match path="." pattern="*.txt" recurse="true" buildAction="None"/>
       </Files>
 
     </Project>
