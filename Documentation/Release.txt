@@ -1,11 +1,11 @@
-The Open Toolkit 0.9.4 Beta Release notes
+The Open Toolkit 0.9.5 Beta -- Release notes
 
 [ Overview]
 
-This release adds Joystick support for Windows and Linux, introduces GL3
-functions and tokens and adds support for creating GL3 contexts on Windows.
-
-Some minor TextPrinter bugs have also been fixed.
+This release adds inline documentation to OpenTK.Graphics.GL, 
+adds support for OpenGL 3.0 on Linux, improves joystick
+support on all platforms and fixes the mapping between unsigned
+and signed OpenGL functions (e.g. Uniform1ui vs Uniform1i).
 
 Please report any issues you may encounter at http://www.opentk.com.
 
@@ -13,9 +13,9 @@ Please report any issues you may encounter at http://www.opentk.com.
 
 [API changes]
 
-No source-level breaking changes were introduced in OpenTK 0.9.4.
-Binary-level compatibility is not preserved in beta releases.
+No breaking changes were introduced in OpenTK 0.9.5. Please note
+that binary compatibility is not preserved between beta releases.
 
-GL3 support may expose your applications to driver bugs. A future
-release will make it possible to choose between GL2- and GL3-
-compatible contexts.
+It is now possible to use joystick-like devices that contain 0 axes
+and / or buttons (e.g. tablets). Make sure that your application
+checks device capabilities before trying to use a joystick.
