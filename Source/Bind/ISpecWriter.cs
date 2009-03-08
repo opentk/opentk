@@ -20,6 +20,6 @@ namespace Bind
         void WriteWrappers(BindStreamWriter sw, FunctionCollection wrappers, Dictionary<string, string> CSTypes);
         void WriteEnums(BindStreamWriter sw, EnumCollection enums);
         void WriteTypes(BindStreamWriter sw, Dictionary<string, string> CSTypes);
-        void WriteLicense(BindStreamWriter sw, string license);
+        void WriteLicense(BindStreamWriter sw);
     }
 }
