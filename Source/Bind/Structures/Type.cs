@@ -155,7 +155,7 @@ namespace Bind.Structures
         {
             get
             {
-                bool compliant = !Unsigned;
+                bool compliant = !(CurrentType.Contains("UInt") || CurrentType.Contains("SByte"));
                 if (Pointer)
                 {
                     compliant &= CurrentType.Contains("IntPtr");    // IntPtr's are CLSCompliant.
@@ -189,7 +189,7 @@ namespace Bind.Structures
         {
             get
             {
-                return (CurrentType.Contains("UInt") || CurrentType.Contains("SByte"));
+                return (CurrentType.Contains("UInt") || CurrentType.Contains("Byte"));
             }
         }
 

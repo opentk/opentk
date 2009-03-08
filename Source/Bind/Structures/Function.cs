@@ -731,7 +731,7 @@ namespace Bind.Structures
         /// <param name="f">The Function to add.</param>
         public void AddChecked(Function f)
         {
-            if (f.Name.Contains("Uniform1u"))
+            if (f.Name.Contains("Color3ub"))
             {
             }
 
@@ -741,6 +741,16 @@ namespace Bind.Structures
                 if (index == -1)
                 {
                     Bind.Structures.Function.Wrappers.Add(f);
+                }
+                else
+                {
+                    Function existing = Bind.Structures.Function.Wrappers[f.Extension][index];
+                    if ((existing.Parameters.HasUnsignedParameters && !unsignedFunctions.IsMatch(existing.Name) && unsignedFunctions.IsMatch(f.Name)) ||
+                        (!existing.Parameters.HasUnsignedParameters && unsignedFunctions.IsMatch(existing.Name) && !unsignedFunctions.IsMatch(f.Name)))
+                    {
+                        Bind.Structures.Function.Wrappers[f.Extension].RemoveAt(index);
+                        Bind.Structures.Function.Wrappers[f.Extension].Add(f);
+                    }
                 }
             }
             else
