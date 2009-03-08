@@ -50,10 +50,10 @@ namespace OpenTK.Input
 
         internal JoystickDevice(int id, int axes, int buttons)
         {
-            if (axes <= 0)
+            if (axes < 0)
                 throw new ArgumentOutOfRangeException("axes");
 
-            if (buttons <= 0)
+            if (buttons < 0)
                 throw new ArgumentOutOfRangeException("buttons");
 
             Id = id;
@@ -331,7 +331,7 @@ namespace OpenTK.Input
 
         internal JoystickButtonCollection(int numButtons)
         {
-            if (numButtons <= 0)
+            if (numButtons < 0)
                 throw new ArgumentOutOfRangeException("numButtons");
 
             button_state = new bool[numButtons];
@@ -424,7 +424,7 @@ namespace OpenTK.Input
 
         internal JoystickAxisCollection(int numAxes)
         {
-            if (numAxes <= 0)
+            if (numAxes < 0)
                 throw new ArgumentOutOfRangeException("numAxes");
 
             axis_state = new float[numAxes];
