@@ -498,10 +498,6 @@ namespace Bind.Structures
             fixed_statements.Clear();
             assign_statements.Clear();
 
-            if (f.Name == "TessVertex")
-            { 
-            }
-
             // Obtain pointers by pinning the parameters
             foreach (Parameter p in f.Parameters)
             {
@@ -730,13 +726,12 @@ namespace Bind.Structures
         }
 
         /// <summary>
-        /// Adds the function to the collection, if a function with the same
-        /// name and parameters doesn't already exist.
+        /// Adds the function to the collection, if a function with the same name and parameters doesn't already exist.
         /// </summary>
         /// <param name="f">The Function to add.</param>
         public void AddChecked(Function f)
         {
-            if (f.Name.Contains("Bitmap"))
+            if (f.Name.Contains("Uniform1u"))
             {
             }
 
@@ -746,16 +741,6 @@ namespace Bind.Structures
                 if (index == -1)
                 {
                     Bind.Structures.Function.Wrappers.Add(f);
-                }
-                else
-                {
-                    if (unsignedFunctions.IsMatch(Utilities.StripGL2Extension(f.Name)))// &&
-                        //!unsignedFunctions.IsMatch(
-                        //    Utilities.StripGL2Extension(Bind.Structures.Function.Wrappers[f.Extension][index].Name)))
-                    {
-                        Bind.Structures.Function.Wrappers[f.Extension].RemoveAt(index);
-                        Bind.Structures.Function.Wrappers[f.Extension].Add(f);
-                    }
                 }
             }
             else
