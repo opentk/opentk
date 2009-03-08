@@ -15,17 +15,19 @@ namespace Bind
         // Disable BeforeFieldInit.
         static Settings() { }
 
-        public const string DefaultInputPath = "..\\..\\..\\Source\\Bind\\Specifications";
-        public const string DefaultOutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
+        public const string DefaultInputPath = "../../../Source/Bind/Specifications";
+        public const string DefaultOutputPath = "../../../Source/OpenTK/OpenGL/Bindings";
         public const string DefaultOutputNamespace = "OpenTK.Graphics";
-        public static string DefaultDocPath = "..\\..\\..\\Source\\Bind\\Specifications\\Docs";
-        public static string DefaultDocFile = "ToInlineDocs.xslt";
+        public const string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
+        public const string DefaultDocFile = "ToInlineDocs.xslt";
+        public const string DefaultLicenseFile = "License.txt";
 
         public static string InputPath = DefaultInputPath;
         public static string OutputPath = DefaultOutputPath;
         public static string OutputNamespace = DefaultOutputNamespace;
         public static string DocPath = DefaultDocPath;
         public static string DocFile = DefaultDocFile;
+        public static string LicenseFile = DefaultLicenseFile;
 
         public static string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".

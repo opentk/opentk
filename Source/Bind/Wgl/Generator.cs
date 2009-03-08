@@ -20,12 +20,12 @@ namespace Bind.Wgl
         public Generator()
             : base()
         {
-            glTypemap = "Wgl\\wgl.tm";
+            glTypemap = "Wgl/wgl.tm";
             csTypemap = "csharp.tm";
-            enumSpec = "Wgl\\wglenum.spec";
-            enumSpecExt = "Wgl\\wglenumext.spec";
-            glSpec = "Wgl\\wgl.spec";
-            glSpecExt = "Wgl\\wglext.spec";
+            enumSpec = "Wgl/wglenum.spec";
+            enumSpecExt = "Wgl/wglenumext.spec";
+            glSpec = "Wgl/wgl.spec";
+            glSpecExt = "Wgl/wglext.spec";
             
             importsFile = "WglCore.cs";
             delegatesFile = "WglDelegates.cs";
