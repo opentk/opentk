@@ -71,7 +71,7 @@ namespace Bind.Structures
 
         #endregion
 
-        #region UnmanagedType property
+        #region UnmanagedType
 
         UnmanagedType _unmanaged_type;
         /// <summary>
@@ -174,10 +174,14 @@ namespace Bind.Structures
 
         #endregion
 
+        #region public override string ToString()
+
         public override string ToString()
         {
             return ToString(false);
         }
+
+        #endregion
 
         #region public string ToString(bool override_unsafe_setting)
 
@@ -294,6 +298,7 @@ namespace Bind.Structures
         private bool rebuild = true;
         bool hasPointerParameters;
         bool hasReferenceParameters;
+        bool hasUnsignedParameters;
         bool unsafe_types_allowed;
         public bool Rebuild
         {
@@ -335,15 +340,10 @@ namespace Bind.Structures
         {
             get
             {
-                if (!rebuild)
-                {
-                    return hasPointerParameters;
-                }
-                else
-                {
+                if (Rebuild)
                     BuildCache();
-                    return hasPointerParameters;
-                }
+
+                return hasPointerParameters;
             }
         }
 
@@ -355,15 +355,25 @@ namespace Bind.Structures
         {
             get
             {
-                if (!Rebuild)
-                {
-                    return hasReferenceParameters;
-                }
-                else
-                {
+                if (Rebuild)
                     BuildCache();
-                    return hasReferenceParameters;
-                }
+                
+                return hasReferenceParameters;
+            }
+        }
+
+        #endregion
+
+        #region public bool HasUnsignedParameters
+
+        public bool HasUnsignedParameters
+        {
+            get
+            {
+                if (Rebuild)
+                    BuildCache();
+
+                return hasUnsignedParameters;
             }
         }
 
@@ -380,6 +390,9 @@ namespace Bind.Structures
 
                 if (p.Reference)
                     hasReferenceParameters = true;
+
+                if (p.Unsigned)
+                    hasUnsignedParameters = true;
             }
         }
 
