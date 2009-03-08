@@ -102,7 +102,7 @@ namespace Examples.WinForms
                     continue;
                 string returnType = method.ReturnParameter.ToString();
                 List<string> args = new List<string>();
-                foreach (var item in method.GetParameters())
+                foreach (ParameterInfo item in method.GetParameters())
                 {
                     args.Add(item.ToString());
                 }
@@ -160,8 +160,9 @@ namespace Examples.WinForms
                 example.ShowDialog();
             }
         }
-    }
+
         #endregion
+    }
 
     #region class Function
 
