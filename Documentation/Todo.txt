@@ -5,10 +5,8 @@
 
 [OpenTK.Graphics.GL]
 + Improve performance for functions that return StringBuilders.
-+ Inline XML documentation.
 
 [OpenTK.Graphics.GraphicsContext]
-+ Make it possible to choose between GL2 and GL3 contexts.
 + FSAA support (very simple, now that GL3 support has been added.)
 
 [OpenTK.GLControl]
