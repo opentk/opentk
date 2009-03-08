@@ -12,13 +12,20 @@ namespace Bind
 {
     static class Settings
     {
-        public static string InputPath = DefaultInputPath;
-        public static string OutputPath = DefaultOutputPath;
-        public static string OutputNamespace = DefaultOutputNamespace;
+        // Disable BeforeFieldInit.
+        static Settings() { }
 
         public const string DefaultInputPath = "..\\..\\..\\Source\\Bind\\Specifications";
         public const string DefaultOutputPath = "..\\..\\..\\Source\\OpenTK\\OpenGL\\Bindings";
         public const string DefaultOutputNamespace = "OpenTK.Graphics";
+        public static string DefaultDocPath = "..\\..\\..\\Source\\Bind\\Specifications\\Docs";
+        public static string DefaultDocFile = "ToInlineDocs.xslt";
+
+        public static string InputPath = DefaultInputPath;
+        public static string OutputPath = DefaultOutputPath;
+        public static string OutputNamespace = DefaultOutputNamespace;
+        public static string DocPath = DefaultDocPath;
+        public static string DocFile = DefaultDocFile;
 
         public static string GLClass = "GL";        // Needed by Glu for the AuxEnumsClass. Can be set through -gl:"xxx".
         public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
@@ -113,6 +120,8 @@ namespace Bind
             NoBoolParameters = 0x100,
             /// <summary>Keep all enum tokens, even if same value (e.g. FooARB, FooEXT and FooSGI).</summary>
             NoDropMultipleTokens = 0x200,
+            /// <summary>Do not emit inline documentation.</summary>
+            NoDocumentation = 0x400,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |
@@ -122,7 +131,8 @@ namespace Bind
                   TurnVoidPointersToIntPtr |
                   NestedEnums |
                   NoBoolParameters |
-                  NoDropMultipleTokens,
+                  NoDropMultipleTokens |
+                  NoDocumentation
                   /*GenerateAllPermutations,*/
         }
 
