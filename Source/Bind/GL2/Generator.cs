@@ -35,6 +35,8 @@ namespace Bind.GL2
 
         protected static Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
 
+        DocProcessor doc_processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+
         #endregion
 
         #region --- Constructors ---
@@ -69,10 +71,6 @@ namespace Bind.GL2
             Bind.Structures.Enum.GLEnums.Translate();
             Bind.Structures.Function.Initialize();
             Bind.Structures.Delegate.Initialize(glSpec, glSpecExt);
-
-            // Process enums and delegates - create wrappers.
-            Trace.WriteLine("Processing specs, please wait...");
-            //this.Translate();
 
             this.WriteBindings(
                 Bind.Structures.Delegate.Delegates,
@@ -460,6 +458,7 @@ namespace Bind.GL2
             if (!Directory.Exists(Settings.OutputPath))
                 Directory.CreateDirectory(Settings.OutputPath);
 
+            // Enums
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, enumsFile)))
             {
                 WriteLicense(sw, Resources.License);
@@ -487,6 +486,8 @@ namespace Bind.GL2
 
                 sw.WriteLine("}");
             }
+
+            // Delegates
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, delegatesFile)))
             {
                 WriteLicense(sw, Resources.License);
@@ -503,6 +504,8 @@ namespace Bind.GL2
                 sw.Unindent();
                 sw.WriteLine("}");
             }
+
+            // Core
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, importsFile)))
             {
                 WriteLicense(sw, Resources.License);
@@ -518,6 +521,8 @@ namespace Bind.GL2
                 sw.Unindent();
                 sw.WriteLine("}");
             }
+
+            // Wrappers
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, wrappersFile)))
             {
                 WriteLicense(sw, Resources.License);
@@ -632,6 +637,9 @@ namespace Bind.GL2
             sw.Indent();
             //sw.WriteLine("static {0}() {1} {2}", className, "{", "}");    // Static init in GLHelper.cs
             sw.WriteLine();
+
+            int current = 0;
+            int y = Console.CursorTop;
             foreach (string key in wrappers.Keys)
             {
                 if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
@@ -651,6 +659,18 @@ namespace Bind.GL2
 
                 foreach (Function f in wrappers[key])
                 {
+                    if ((Settings.Compatibility & Settings.Legacy.NoDocumentation) == 0)
+                    {
+                        Console.SetCursorPosition(0, y);
+                        Console.WriteLine("Creating docs for #{0} ({1})                        ", current++, f.Name);
+                        try
+                        {
+                            sw.WriteLine(doc_processor.ProcessFile(Path.Combine(Settings.DocPath, "gl" + f.WrappedDelegate.Name + ".xml")));
+                        }
+                        catch (FileNotFoundException)
+                        { }
+                    }
+
                     if (!f.CLSCompliant)
                     {
                         sw.WriteLine("[System.CLSCompliant(false)]");

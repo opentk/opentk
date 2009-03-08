@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glGetBufferPointerv">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2005</year>
+                <holder>Sams Publishing</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetBufferPointerv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetBufferPointerv</refname>
+        <refpurpose>return the pointer to a mapped buffer object's data store</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetBufferPointerv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLvoid ** <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target buffer object.
+                    The symbolic constant must be <constant>GL_ARRAY_BUFFER</constant>, 
+                    <constant>GL_ELEMENT_ARRAY_BUFFER</constant>,
+                    <constant>GL_PIXEL_PACK_BUFFER</constant>, or
+                    <constant>GL_PIXEL_UNPACK_BUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the pointer to be returned.  The symbolic constant must be <constant>GL_BUFFER_MAP_POINTER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Returns the pointer value specified by <parameter>pname</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glGetBufferPointerv</function> returns pointer information. <parameter>pname</parameter> is a symbolic constant
+            indicating the pointer to be returned, which must be <constant>GL_BUFFER_MAP_POINTER</constant>, the pointer
+            to which the buffer object's data store is mapped.  If the data store is not currently mapped, <constant>NULL</constant> is returned.
+            <parameter>params</parameter> is a pointer to a location in which to place the returned pointer value.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>params</parameter>.
+        </para>
+        <para>
+            <function>glGetBufferPointerv</function> is available only if the GL version is 1.5 or greater.
+        </para>
+        <para>
+            Targets <constant>GL_PIXEL_PACK_BUFFER</constant> and <constant>GL_PIXEL_UNPACK_BUFFER</constant> are available 
+            only if the GL version is 2.1 or greater.
+        </para>
+        <para>
+            The initial value for the pointer is <constant>NULL</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> or <parameter>pname</parameter> is not an
+            accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the reserved buffer object name 0 is bound to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetBufferParameteriv</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2005 Addison-Wesley. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>
