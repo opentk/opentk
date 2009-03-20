@@ -17,7 +17,7 @@ namespace OpenTK.Platform.X11
 {
     #region Enums
 
-    public enum GLXAttribute : int
+    enum GLXAttribute : int
     {
         TRANSPARENT_BLUE_VALUE_EXT = 0x27,
         GRAY_SCALE = 0x8006,
@@ -136,7 +136,7 @@ namespace OpenTK.Platform.X11
         RENDER_TYPE_SGIX = 0x8011,
     }
 
-    public enum GLXHyperpipeAttrib : int
+    enum GLXHyperpipeAttrib : int
     {
         PIPE_RECT_LIMITS_SGIX = 0x00000002,
         PIPE_RECT_SGIX = 0x00000001,
@@ -144,20 +144,20 @@ namespace OpenTK.Platform.X11
         HYPERPIPE_PIXEL_AVERAGE_SGIX = 0x00000004,
     }
 
-    public enum GLXStringName : int
+    enum GLXStringName : int
     {
         EXTENSIONS = 0x3,
         VERSION = 0x2,
         VENDOR = 0x1,
     }
 
-    public enum GLXEventMask : int
+    enum GLXEventMask : int
     {
         PBUFFER_CLOBBER_MASK = 0x08000000,
         BUFFER_CLOBBER_MASK_SGIX = 0x08000000,
     }
 
-    public enum GLXRenderTypeMask : int
+    enum GLXRenderTypeMask : int
     {
         COLOR_INDEX_BIT_SGIX = 0x00000002,
         RGBA_BIT = 0x00000001,
@@ -166,13 +166,13 @@ namespace OpenTK.Platform.X11
         COLOR_INDEX_BIT = 0x00000002,
     }
 
-    public enum GLXHyperpipeTypeMask : int
+    enum GLXHyperpipeTypeMask : int
     {
         HYPERPIPE_RENDER_PIPE_SGIX = 0x00000002,
         HYPERPIPE_DISPLAY_PIPE_SGIX = 0x00000001,
     }
 
-    public enum GLXPbufferClobberMask : int
+    enum GLXPbufferClobberMask : int
     {
         ACCUM_BUFFER_BIT_SGIX = 0x00000080,
         FRONT_LEFT_BUFFER_BIT = 0x00000001,
@@ -193,12 +193,12 @@ namespace OpenTK.Platform.X11
         FRONT_RIGHT_BUFFER_BIT = 0x00000002,
     }
 
-    public enum GLXHyperpipeMisc : int
+    enum GLXHyperpipeMisc : int
     {
         HYPERPIPE_PIPE_NAME_LENGTH_SGIX = 80,
     }
 
-    public enum GLXErrorCode : int
+    enum GLXErrorCode : int
     {
         BAD_CONTEXT = 5,
         NO_EXTENSION = 3,
@@ -211,13 +211,13 @@ namespace OpenTK.Platform.X11
         BAD_HYPERPIPE_CONFIG_SGIX = 91,
     }
 
-    public enum GLXSyncType : int
+    enum GLXSyncType : int
     {
         SYNC_SWAP_SGIX = 0x00000001,
         SYNC_FRAME_SGIX = 0x00000000,
     }
 
-    public enum GLXDrawableTypeMask : int
+    enum GLXDrawableTypeMask : int
     {
         WINDOW_BIT = 0x00000001,
         PIXMAP_BIT = 0x00000002,
@@ -227,7 +227,7 @@ namespace OpenTK.Platform.X11
         PIXMAP_BIT_SGIX = 0x00000002,
     }
 
-    public enum ArbCreateContext : int
+    enum ArbCreateContext : int
     {
         DebugBit = 0x0001,
         ForwardCompatibleBit = 0x0002,
@@ -236,6 +236,18 @@ namespace OpenTK.Platform.X11
         LayerPlane = 0x2093,
         Flags = 0x2094,
         ErrorInvalidVersion = 0x2095,
+    }
+
+    enum ErrorCode : int
+    {
+        NO_ERROR       = 0,
+        BAD_SCREEN     = 1,   /* screen # is bad */
+        BAD_ATTRIBUTE  = 2,   /* attribute to get is bad */
+        NO_EXTENSION   = 3,   /* no glx extension on server */
+        BAD_VISUAL     = 4,   /* visual # not known by GLX */
+        BAD_CONTEXT    = 5,   /* returned only by import_context EXT? */
+        BAD_VALUE      = 6,   /* returned only by glXSwapIntervalSGI? */
+        BAD_ENUM       = 7,   /* unused? */
     }
 
     #endregion
@@ -247,6 +259,9 @@ namespace OpenTK.Platform.X11
     {
         #region GLX functions
 
+        [DllImport(Library, EntryPoint = "glXIsDirect")]
+        public static extern bool IsDirect(IntPtr dpy, IntPtr context);
+        
         [DllImport(Library, EntryPoint = "glXQueryExtension")]
         public static extern bool QueryExtension(IntPtr dpy, ref int errorBase, ref int eventBase);
 
@@ -321,9 +336,9 @@ namespace OpenTK.Platform.X11
 
         public partial class Sgi
         {
-            public static int SwapInterval(int interval)
+            public static ErrorCode SwapInterval(int interval)
             {
-                return Delegates.glXSwapIntervalSGI(interval);
+                return (ErrorCode)Delegates.glXSwapIntervalSGI(interval);
             }
         }
 
