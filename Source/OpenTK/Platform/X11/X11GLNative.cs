@@ -272,30 +272,15 @@ namespace OpenTK.Platform.X11
             //Functions.XSetWMName(window.Display, window.Handle, ref text);
             //Functions.XSetWMProperties(display, window, name, name, 0,  /*None*/ null, 0, hints);
 
-            Debug.Print("done! (id: {0})", window.WindowHandle);
-
             lock (API.Lock)
             {
                 API.MapRaised(window.Display, window.WindowHandle);
             }
             mapped = true;
 
-            //context.CreateContext(true, null);
-
             driver = new X11Input(window);
             
-            // HACK: This seems to reduce thread issues on Linux, due to race conditions.
-            // It does *not* solve the root cause, which is unknown at this point.
-            //
-            // What I suspect happens, is that either the glXChooseContext or glXCreateContext functions are called
-            // before the window is ready - or maybe before the window size is set which renders the viewport invalid?
-            // (can this happen?) or that there are pending events that somehow botch context creation up (seems like
-            // the fglrx driver is spawning a new thread, or waiting on something?)
-            // This issue *must* be resolved before the 1.0 release.            
-            // Note that this has the side effect that sometimes, a resize event is missed.
-            //Functions.XSync(window.Display, true);
-            
-            Debug.WriteLine("X11GLNative window created successfully!");
+            Debug.WriteLine(String.Format("X11GLNative window created successfully (id: {0}).", Handle));
             Debug.Unindent();
             
             exists = true;
