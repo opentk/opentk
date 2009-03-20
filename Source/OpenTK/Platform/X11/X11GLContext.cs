@@ -10,7 +10,6 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 
 namespace OpenTK.Platform.X11
@@ -59,7 +58,7 @@ namespace OpenTK.Platform.X11
 
             if (!glx_loaded)
             {
-                Debug.WriteLine("Loading GLX extensions.");
+                Debug.WriteLine("Creating temporary context to load GLX extensions.");
                 
                 // Create a temporary context to obtain the necessary function pointers.
                 XVisualInfo visual = currentWindow.VisualInfo;
@@ -71,7 +70,7 @@ namespace OpenTK.Platform.X11
                 {
                     Glx.LoadAll();
                     Glx.MakeCurrent(currentWindow.Display, IntPtr.Zero, IntPtr.Zero);
-                    Glx.DestroyContext(currentWindow.Display, ctx);
+                    //Glx.DestroyContext(currentWindow.Display, ctx);
                     glx_loaded = true;
                 }
             }
@@ -79,9 +78,12 @@ namespace OpenTK.Platform.X11
             // Try using the new context creation method. If it fails, fall back to the old one.
             // For each of these methods, we try two times to create a context:
             // one with the "direct" flag intact, the other with the flag inversed.
-            if (Glx.Delegates.glXCreateContextAttribsARB != null)
+            // HACK: It seems that Catalyst 9.1 - 9.4 on Linux have problems with contexts created through
+            // GLX_ARB_create_context, including hideous input lag, no vsync and other. Use legacy context
+            // creation if the user doesn't request a 3.0+ context.
+            if ((major * 10 + minor >= 30) && Glx.Delegates.glXCreateContextAttribsARB != null)
             {
-                Debug.WriteLine("Using GLX_ARB_create_context...");
+                Debug.Write("Using GLX_ARB_create_context... ");
 
                 unsafe
                 {
@@ -102,13 +104,22 @@ namespace OpenTK.Platform.X11
                             attributes.Add((int)ArbCreateContext.Flags);
                             attributes.Add((int)flags);
                         }
+                        attributes.Add(0);
 
                         context = new ContextHandle(Glx.Arb.CreateContextAttribs(currentWindow.Display, *fbconfigs,
                                 shareHandle.Handle, direct, attributes.ToArray()));
 
                         if (context == ContextHandle.Zero)
+                        {
+                            Debug.Write(String.Format("failed. Trying direct: {0}... ", !direct));
                             context = new ContextHandle(Glx.Arb.CreateContextAttribs(currentWindow.Display, *fbconfigs,
                                     shareHandle.Handle, !direct, attributes.ToArray()));
+                        }
+
+                        if (context == ContextHandle.Zero)
+                            Debug.WriteLine("failed.");
+                        else
+                            Debug.WriteLine("success!");
 
                         Functions.XFree((IntPtr)fbconfigs);
                     }
@@ -117,19 +128,25 @@ namespace OpenTK.Platform.X11
 
             if (context == ContextHandle.Zero)
             {
-                Debug.WriteLine("Using legacy context creation.");
+                Debug.Write("Using legacy context creation... ");
 
                 XVisualInfo info = currentWindow.VisualInfo;   // Cannot pass a Property by reference.
                 context = new ContextHandle(Glx.CreateContext(currentWindow.Display, ref info, shareHandle.Handle, direct));
 
                 if (context == ContextHandle.Zero)
+                {
+                    Debug.WriteLine(String.Format("failed. Trying direct: {0}... ", !direct));
                     context = new ContextHandle(Glx.CreateContext(currentWindow.Display, ref info, IntPtr.Zero, !direct));
+                }
             }
 
             if (context != ContextHandle.Zero)
-                Debug.Print("Success! (id: {0})", context);
+                Debug.Print("Context created (id: {0}).", context);
             else
                 throw new GraphicsContextException("Failed to create OpenGL context. Glx.CreateContext call returned 0.");
+
+            if (!Glx.IsDirect(currentWindow.Display, context.Handle))
+                Debug.Print("Warning: Context is not direct.");
         }
 
         #endregion
@@ -229,15 +246,15 @@ namespace OpenTK.Platform.X11
         {
             get
             {
-                return vsync_supported && vsync_interval > 0;
+                return vsync_supported && vsync_interval != 0;
             }
             set
             {
                 if (vsync_supported)
                 {
-                    int error_code = Glx.Sgi.SwapInterval(value ? 1 : 0);
-                    if (error_code != 0)
-                        throw new GraphicsException(String.Format("Could not set vsync, error code: {0}", error_code));
+                    ErrorCode error_code = Glx.Sgi.SwapInterval(value ? 1 : 0);
+                    if (error_code != X11.ErrorCode.NO_ERROR)
+                        Debug.Print("VSync = {0} failed, error code: {1}.", value, error_code);
                     vsync_interval = value ? 1 : 0;
                 }
             }
@@ -292,8 +309,8 @@ namespace OpenTK.Platform.X11
             GL.LoadAll();
             Glu.LoadAll();
             Glx.LoadAll();
-            vsync_supported = this.SupportsExtension(currentWindow, "SGI_swap_control") &&
-                              this.GetAddress("glXSwapControlSGI") != IntPtr.Zero;
+            vsync_supported = this.GetAddress("glXSwapIntervalSGI") != IntPtr.Zero;
+            Debug.Print("Context supports vsync: {0}.", vsync_supported);
         }
 
         #endregion
