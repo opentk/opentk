@@ -13,7 +13,6 @@ namespace Bind
     {
         static readonly Regex remove_mathml = new Regex(@"<(mml:math)[^>]*?>(?:.|\n)*?</\s*\1\s*>",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
-        static readonly StreamWriter output_stream = new StreamWriter(new MemoryStream());
 
         static readonly XslCompiledTransform xslt = new System.Xml.Xsl.XslCompiledTransform();
         static readonly XmlReaderSettings settings = new XmlReaderSettings();

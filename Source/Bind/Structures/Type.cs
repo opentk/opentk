@@ -65,7 +65,7 @@ namespace Bind.Structures
         
         #endregion
 
-        #region public string Type
+        #region public string CurrentType
 
         string type;
         /// <summary>
@@ -125,7 +125,7 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public bool Array
+        #region public int Array
 
         int array;
 
@@ -203,30 +203,6 @@ namespace Bind.Structures
         {
             get { return _wrapper_type; }
             set { _wrapper_type = value; }
-        }
-
-        #endregion
-
-        #region public string GetFullType()
-
-        public string GetFullType(Dictionary<string, string> CSTypes, bool compliant)
-        {
-            //if (Pointer && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
-            //    return "IntPtr";
-
-            if (!compliant)
-            {
-                return
-                    CurrentType +
-                    (Pointer ? "*" : "") +
-                    (Array > 0 ? "[]" : "");
-            }
-
-            return
-                GetCLSCompliantType() +
-                (Pointer ? "*" : "") +
-                (Array > 0 ? "[]" : "");
-
         }
 
         #endregion
