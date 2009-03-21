@@ -362,10 +362,7 @@ namespace Bind.Structures
             {
                 Function f = new Function(this);
                 f.WrapReturnType();
-                if ((Settings.Compatibility & Settings.Legacy.GenerateAllPermutations) == Settings.Legacy.None)
-                    f.WrapParameters(wrappers);
-                else
-                    f.WrapParametersComplete(wrappers);
+                f.WrapParameters(wrappers);
             }
 
             // If the function is not CLS-compliant (e.g. it contains unsigned parameters)
@@ -459,22 +456,6 @@ namespace Bind.Structures
                     ReturnType.CurrentType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
                 else
                     ReturnType.CurrentType = "int";
-            }
-
-            if (ReturnType.CurrentType.ToLower().Contains("bool"))
-            {
-                // TODO: Is the translation to 'int' needed 100%? It breaks WGL.
-                /*
-                if (Settings.Compatibility == Settings.Legacy.Tao)
-                {
-                    ReturnType.CurrentType = "int";
-                }
-                else
-                {
-                }
-                */
-
-                //ReturnType.WrapperType = WrapperTypes.ReturnsBool;
             }
 
             ReturnType.CurrentType = ReturnType.GetCLSCompliantType();
