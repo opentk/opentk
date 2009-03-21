@@ -35,6 +35,9 @@ namespace Bind.GL2
 
         protected static Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
 
+        protected static readonly char[] numbers = "0123456789".ToCharArray();
+        //protected static readonly Dictionary<string, string> doc_replacements;
+
         DocProcessor doc_processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
 
         #endregion
@@ -662,11 +665,19 @@ namespace Bind.GL2
                 {
                     if ((Settings.Compatibility & Settings.Legacy.NoDocumentation) == 0)
                     {
-                        Console.SetCursorPosition(0, y);
-                        Console.WriteLine("Creating docs for #{0} ({1})                        ", current++, f.Name);
+                        Console.WriteLine("Creating docs for #{0} ({1})", current++, f.Name);
                         try
                         {
-                            sw.WriteLine(doc_processor.ProcessFile(Path.Combine(Settings.DocPath, "gl" + f.WrappedDelegate.Name + ".xml")));
+                            string path = Path.Combine(Settings.DocPath, "gl" + f.WrappedDelegate.Name + ".xml");
+                            if (!File.Exists(path))
+                                path = Path.Combine(Settings.DocPath, "gl" +
+                                    f.TrimmedName + ".xml");
+
+                            if (!File.Exists(path))
+                                path = Path.Combine(Settings.DocPath, "gl" + f.TrimmedName.TrimEnd(numbers) + ".xml");
+
+                            if (File.Exists(path))
+                                sw.WriteLine(doc_processor.ProcessFile(path));
                         }
                         catch (FileNotFoundException)
                         { }

@@ -1507,7 +1507,7 @@ namespace OpenTK.Graphics
             internal extern static void AttachShader(UInt32 program, UInt32 shader);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindAttribLocation", ExactSpelling = true)]
-            internal extern static void BindAttribLocation(UInt32 program, UInt32 index, System.String name);
+            internal extern static void BindAttribLocation(UInt32 program, UInt32 index, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCompileShader", ExactSpelling = true)]
             internal extern static void CompileShader(UInt32 shader);
@@ -1543,7 +1543,7 @@ namespace OpenTK.Graphics
             internal extern static unsafe void GetAttachedShaders(UInt32 program, Int32 maxCount, [Out] Int32* count, [Out] UInt32* obj);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetAttribLocation", ExactSpelling = true)]
-            internal extern static Int32 GetAttribLocation(UInt32 program, System.String name);
+            internal extern static Int32 GetAttribLocation(UInt32 program, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetProgramiv", ExactSpelling = true)]
             internal extern static unsafe void GetProgramiv(UInt32 program, OpenTK.Graphics.ProgramParameter pname, [Out] Int32* @params);
@@ -1561,7 +1561,7 @@ namespace OpenTK.Graphics
             internal extern static unsafe void GetShaderSource(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder[] source);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformLocation", ExactSpelling = true)]
-            internal extern static Int32 GetUniformLocation(UInt32 program, System.String name);
+            internal extern static Int32 GetUniformLocation(UInt32 program, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformfv", ExactSpelling = true)]
             internal extern static unsafe void GetUniformfv(UInt32 program, Int32 location, [Out] Single* @params);
@@ -1591,7 +1591,7 @@ namespace OpenTK.Graphics
             internal extern static void LinkProgram(UInt32 program);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glShaderSource", ExactSpelling = true)]
-            internal extern static unsafe void ShaderSource(UInt32 shader, Int32 count, System.String[] @string, Int32* length);
+            internal extern static unsafe void ShaderSource(UInt32 shader, Int32 count, String[] @string, Int32* length);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUseProgram", ExactSpelling = true)]
             internal extern static void UseProgram(UInt32 program);
@@ -1903,10 +1903,10 @@ namespace OpenTK.Graphics
             internal extern static unsafe void GetUniformuiv(UInt32 program, Int32 location, [Out] UInt32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindFragDataLocation", ExactSpelling = true)]
-            internal extern static void BindFragDataLocation(UInt32 program, UInt32 color, System.String name);
+            internal extern static void BindFragDataLocation(UInt32 program, UInt32 color, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetFragDataLocation", ExactSpelling = true)]
-            internal extern static Int32 GetFragDataLocation(UInt32 program, System.String name);
+            internal extern static Int32 GetFragDataLocation(UInt32 program, String name);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniform1ui", ExactSpelling = true)]
             internal extern static void Uniform1ui(Int32 location, UInt32 v0);

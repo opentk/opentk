@@ -154,9 +154,6 @@ namespace Bind.Structures
 
             foreach (Constant c in constants)
             {
-                if (c.Name == "PointSmooth")
-                {
-                }
                 sb.Append("    ");
                 sb.Append(c.ToString());
                 if (!String.IsNullOrEmpty(c.ToString()))

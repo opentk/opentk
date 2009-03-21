@@ -43,6 +43,7 @@ namespace Bind.Structures
             this.Name = p.Name;
             this.Unchecked = p.Unchecked;
             this.UnmanagedType = p.UnmanagedType;
+            this.Generic = p.Generic;
             this.Flow = p.Flow;
             this.cache = p.cache;
             //this.rebuild = false;
@@ -157,6 +158,17 @@ namespace Bind.Structures
 
         #endregion
 
+        #region public bool Generic
+        
+        bool generic;
+        public bool Generic
+        {
+            get { return generic; }
+            set { generic = value; }
+        }
+
+        #endregion
+
         #region public override string CurrentType
 
         public override string CurrentType
@@ -221,7 +233,12 @@ namespace Bind.Structures
                     {
                         sb.Append(CurrentType);
                         if (Array > 0)
-                            sb.Append("[]");
+                        {
+                            sb.Append("[");
+                            for (int i = 1; i < Array; i++)
+                                sb.Append(",");
+                            sb.Append("]");
+                        }
                     }
                 }
                 else
@@ -230,7 +247,12 @@ namespace Bind.Structures
                     if (Pointer)
                         sb.Append("*");
                     if (Array > 0)
-                        sb.Append("[]");
+                    {
+                        sb.Append("[");
+                        for (int i = 1; i < Array; i++)
+                            sb.Append(",");
+                        sb.Append("]");
+                    }
                 }
                 if (!String.IsNullOrEmpty(Name))
                 {
@@ -263,7 +285,7 @@ namespace Bind.Structures
                     CurrentType =
                         Flow == Parameter.FlowDirection.Out ?
                         "System.Text.StringBuilder" :
-                        "System.String";
+                        "String";
 
                     Pointer = false;
                     WrapperType = WrapperTypes.None;
@@ -299,6 +321,7 @@ namespace Bind.Structures
         bool hasPointerParameters;
         bool hasReferenceParameters;
         bool hasUnsignedParameters;
+        bool hasGenericParameters;
         bool unsafe_types_allowed;
         public bool Rebuild
         {
@@ -326,9 +349,9 @@ namespace Bind.Structures
 
         void BuildCache()
         {
+            BuildReferenceAndPointerParametersCache();
             BuildCallStringCache();
             BuildToStringCache(unsafe_types_allowed);
-            BuildReferenceAndPointerParametersCache();
             Rebuild = false;
         }
 
@@ -379,6 +402,21 @@ namespace Bind.Structures
 
         #endregion
 
+        #region public bool HasGenericParameters
+
+        public bool HasGenericParameters
+        {
+            get
+            {
+                if (Rebuild)
+                    BuildCache();
+
+                return hasGenericParameters;
+            }
+        }
+        
+        #endregion
+
         #region void BuildReferenceAndPointerParametersCache()
 
         void BuildReferenceAndPointerParametersCache()
@@ -393,6 +431,9 @@ namespace Bind.Structures
 
                 if (p.Unsigned)
                     hasUnsignedParameters = true;
+
+                if (p.Generic)
+                    hasGenericParameters = true;
             }
         }
 
@@ -500,7 +541,7 @@ namespace Bind.Structures
                     if (p.Unchecked)
                         sb.Append("unchecked((" + p.CurrentType + ")");
 
-                    if (p.CurrentType != "object")
+                    if (!p.Generic && p.CurrentType != "object")
                     {
                         if (p.CurrentType.ToLower().Contains("string"))
                         {
@@ -521,9 +562,7 @@ namespace Bind.Structures
                         }
                     }
 
-                    sb.Append(
-                        Utilities.Keywords.Contains(p.Name) ? "@" + p.Name : p.Name
-                    );
+                    sb.Append(Utilities.Keywords.Contains(p.Name) ? "@" + p.Name : p.Name);
 
                     if (p.Unchecked)
                         sb.Append(")");

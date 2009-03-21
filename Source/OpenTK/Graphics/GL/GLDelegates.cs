@@ -1508,7 +1508,7 @@ namespace OpenTK.Graphics
             internal delegate void AttachShader(UInt32 program, UInt32 shader);
             internal static AttachShader glAttachShader;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindAttribLocation(UInt32 program, UInt32 index, System.String name);
+            internal delegate void BindAttribLocation(UInt32 program, UInt32 index, String name);
             internal static BindAttribLocation glBindAttribLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CompileShader(UInt32 shader);
@@ -1544,7 +1544,7 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetAttachedShaders(UInt32 program, Int32 maxCount, [Out] Int32* count, [Out] UInt32* obj);
             internal unsafe static GetAttachedShaders glGetAttachedShaders;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetAttribLocation(UInt32 program, System.String name);
+            internal delegate Int32 GetAttribLocation(UInt32 program, String name);
             internal static GetAttribLocation glGetAttribLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetProgramiv(UInt32 program, OpenTK.Graphics.ProgramParameter pname, [Out] Int32* @params);
@@ -1562,7 +1562,7 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetShaderSource(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder[] source);
             internal unsafe static GetShaderSource glGetShaderSource;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetUniformLocation(UInt32 program, System.String name);
+            internal delegate Int32 GetUniformLocation(UInt32 program, String name);
             internal static GetUniformLocation glGetUniformLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetUniformfv(UInt32 program, Int32 location, [Out] Single* @params);
@@ -1592,7 +1592,7 @@ namespace OpenTK.Graphics
             internal delegate void LinkProgram(UInt32 program);
             internal static LinkProgram glLinkProgram;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ShaderSource(UInt32 shader, Int32 count, System.String[] @string, Int32* length);
+            internal unsafe delegate void ShaderSource(UInt32 shader, Int32 count, String[] @string, Int32* length);
             internal unsafe static ShaderSource glShaderSource;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void UseProgram(UInt32 program);
@@ -1904,10 +1904,10 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetUniformuiv(UInt32 program, Int32 location, [Out] UInt32* @params);
             internal unsafe static GetUniformuiv glGetUniformuiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindFragDataLocation(UInt32 program, UInt32 color, System.String name);
+            internal delegate void BindFragDataLocation(UInt32 program, UInt32 color, String name);
             internal static BindFragDataLocation glBindFragDataLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetFragDataLocation(UInt32 program, System.String name);
+            internal delegate Int32 GetFragDataLocation(UInt32 program, String name);
             internal static GetFragDataLocation glGetFragDataLocation;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Uniform1ui(Int32 location, UInt32 v0);
@@ -2453,7 +2453,7 @@ namespace OpenTK.Graphics
             internal delegate Int32 CreateShaderObjectARB(OpenTK.Graphics.ArbShaderObjects shaderType);
             internal static CreateShaderObjectARB glCreateShaderObjectARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ShaderSourceARB(UInt32 shaderObj, Int32 count, System.String[] @string, Int32* length);
+            internal unsafe delegate void ShaderSourceARB(UInt32 shaderObj, Int32 count, String[] @string, Int32* length);
             internal unsafe static ShaderSourceARB glShaderSourceARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void CompileShaderARB(UInt32 shaderObj);
@@ -2543,7 +2543,7 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetAttachedObjectsARB(UInt32 containerObj, Int32 maxCount, [Out] Int32* count, [Out] UInt32* obj);
             internal unsafe static GetAttachedObjectsARB glGetAttachedObjectsARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetUniformLocationARB(UInt32 programObj, System.String name);
+            internal delegate Int32 GetUniformLocationARB(UInt32 programObj, String name);
             internal static GetUniformLocationARB glGetUniformLocationARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetActiveUniformARB(UInt32 programObj, UInt32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.Graphics.ArbShaderObjects* type, [Out] System.Text.StringBuilder name);
@@ -2558,13 +2558,13 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetShaderSourceARB(UInt32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder[] source);
             internal unsafe static GetShaderSourceARB glGetShaderSourceARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindAttribLocationARB(UInt32 programObj, UInt32 index, System.String name);
+            internal delegate void BindAttribLocationARB(UInt32 programObj, UInt32 index, String name);
             internal static BindAttribLocationARB glBindAttribLocationARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetActiveAttribARB(UInt32 programObj, UInt32 index, Int32 maxLength, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.Graphics.ArbVertexShader* type, [Out] System.Text.StringBuilder name);
             internal unsafe static GetActiveAttribARB glGetActiveAttribARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetAttribLocationARB(UInt32 programObj, System.String name);
+            internal delegate Int32 GetAttribLocationARB(UInt32 programObj, String name);
             internal static GetAttribLocationARB glGetAttribLocationARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void DrawBuffersARB(Int32 n, OpenTK.Graphics.ArbDrawBuffers* bufs);
@@ -4760,10 +4760,10 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetUniformuivEXT(UInt32 program, Int32 location, [Out] UInt32* @params);
             internal unsafe static GetUniformuivEXT glGetUniformuivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindFragDataLocationEXT(UInt32 program, UInt32 color, System.String name);
+            internal delegate void BindFragDataLocationEXT(UInt32 program, UInt32 color, String name);
             internal static BindFragDataLocationEXT glBindFragDataLocationEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetFragDataLocationEXT(UInt32 program, System.String name);
+            internal delegate Int32 GetFragDataLocationEXT(UInt32 program, String name);
             internal static GetFragDataLocationEXT glGetFragDataLocationEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Uniform1uiEXT(Int32 location, UInt32 v0);
@@ -4859,10 +4859,10 @@ namespace OpenTK.Graphics
             internal unsafe delegate void TransformFeedbackVaryingsNV(UInt32 program, Int32 count, Int32* locations, OpenTK.Graphics.NvTransformFeedback bufferMode);
             internal unsafe static TransformFeedbackVaryingsNV glTransformFeedbackVaryingsNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ActiveVaryingNV(UInt32 program, System.String name);
+            internal delegate void ActiveVaryingNV(UInt32 program, String name);
             internal static ActiveVaryingNV glActiveVaryingNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate Int32 GetVaryingLocationNV(UInt32 program, System.String name);
+            internal delegate Int32 GetVaryingLocationNV(UInt32 program, String name);
             internal static GetVaryingLocationNV glGetVaryingLocationNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetActiveVaryingNV(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.Graphics.NvTransformFeedback* type, [Out] System.Text.StringBuilder name);
