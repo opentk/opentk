@@ -25,6 +25,7 @@ namespace OpenTK.Platform.X11
         bool vsync_supported;
         int vsync_interval;
         bool glx_loaded;
+        GraphicsMode graphics_mode;
 
         bool disposed;
 
@@ -147,6 +148,8 @@ namespace OpenTK.Platform.X11
 
             if (!Glx.IsDirect(currentWindow.Display, context.Handle))
                 Debug.Print("Warning: Context is not direct.");
+
+            graphics_mode = mode;
         }
 
         #endregion
@@ -279,6 +282,15 @@ namespace OpenTK.Platform.X11
         }
         #endregion
 
+        #region public DisplayMode Mode
+
+        GraphicsMode IGraphicsContext.GraphicsMode
+        {
+            get { return graphics_mode; }
+        }
+
+        #endregion
+
         public void RegisterForDisposal(IDisposable resource)
         {
             throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
@@ -311,15 +323,6 @@ namespace OpenTK.Platform.X11
             Glx.LoadAll();
             vsync_supported = this.GetAddress("glXSwapIntervalSGI") != IntPtr.Zero;
             Debug.Print("Context supports vsync: {0}.", vsync_supported);
-        }
-
-        #endregion
-
-        #region public DisplayMode Mode
-
-        GraphicsMode IGraphicsContextInternal.GraphicsMode
-        {
-            get { return null; }
         }
 
         #endregion
