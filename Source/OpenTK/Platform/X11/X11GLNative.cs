@@ -282,6 +282,9 @@ namespace OpenTK.Platform.X11
             
             Debug.WriteLine(String.Format("X11GLNative window created successfully (id: {0}).", Handle));
             Debug.Unindent();
+
+            this.width = width;
+            this.height = height;
             
             exists = true;
         }
