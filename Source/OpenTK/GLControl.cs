@@ -330,7 +330,7 @@ namespace OpenTK
         /// </remarks>
         public GraphicsMode GraphicsMode
         {
-            get { return (Context as IGraphicsContextInternal).GraphicsMode; }
+            get { return Context.GraphicsMode; }
         }
 
         #endregion

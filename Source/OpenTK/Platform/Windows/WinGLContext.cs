@@ -221,6 +221,15 @@ namespace OpenTK.Platform.Windows
         }
         #endregion
 
+        #region GraphicsMode IGLContext.GraphicsMode
+
+        GraphicsMode IGraphicsContext.GraphicsMode
+        {
+            get { return format; }
+        }
+
+        #endregion
+
         public event DestroyEvent<IGraphicsContext> Destroy;
 
         #endregion
@@ -266,15 +275,6 @@ namespace OpenTK.Platform.Windows
             get { return (IWindowInfo)windowInfo; }
         }
         */
-        #endregion
-
-        #region GraphicsMode IGLContextInternal.GraphicsMode
-
-        GraphicsMode IGraphicsContextInternal.GraphicsMode
-        {
-            get { return format; }
-        }
-
         #endregion
 
         #region public IntPtr GetAddress(string function_string)

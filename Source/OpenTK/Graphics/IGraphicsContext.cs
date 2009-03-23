@@ -51,6 +51,9 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="window"></param>
         void Update(IWindowInfo window);
+
+        /// <summary>Gets the GraphicsMode of this instance.</summary>
+        GraphicsMode GraphicsMode { get; }
     }
 
     public delegate void DestroyEvent<T>(T sender, EventArgs e);
@@ -86,9 +89,6 @@ namespace OpenTK.Graphics
         // Gets the IWindowInfo describing the window associated with this context.
         // </summary>
         //IWindowInfo Info { get; }
-
-        /// <summary>Gets the GraphicsMode of the context.</summary>
-        GraphicsMode GraphicsMode { get; }
 
         ///// <summary>
         ///// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
