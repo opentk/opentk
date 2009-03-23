@@ -31,9 +31,9 @@ namespace OpenTK.Platform.MacOS
         bool mVSync = false;
         IntPtr displayID;
         
-        GraphicsMode mode;
-		CarbonWindowInfo carbonWindow;
-		IntPtr shareContextRef;
+        GraphicsMode graphics_mode;
+        CarbonWindowInfo carbonWindow;
+        IntPtr shareContextRef;
 
         static AglContext()
         {
@@ -45,13 +45,13 @@ namespace OpenTK.Platform.MacOS
             Debug.Print("Context Type: {0}", shareContext);
             Debug.Print("Window info: {0}", window);
 
-        	this.mode = mode;
-        	this.carbonWindow = (CarbonWindowInfo)window;
+            this.graphics_mode = mode;
+            this.carbonWindow = (CarbonWindowInfo)window;
 
             if (shareContext is AglContext)
                 shareContextRef = ((AglContext)shareContext).contextRef;
             
-        	CreateContext(mode, carbonWindow, shareContextRef, true);
+            CreateContext(mode, carbonWindow, shareContextRef, true);
         }
 
 
@@ -72,7 +72,7 @@ namespace OpenTK.Platform.MacOS
             IntPtr shareContextRef, bool fullscreen)
         {
             List<int> aglAttributes = new  List<int>();
-			
+            
             Debug.Print("AGL pixel format attributes:");
             Debug.Indent();
 
@@ -97,10 +97,10 @@ namespace OpenTK.Platform.MacOS
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
             }
 
-			if (fullscreen)
-			{
-            	AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
-			}
+            if (fullscreen)
+            {
+                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_FULLSCREEN);
+            }
             AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_NONE);
 
             Debug.Unindent();
@@ -113,19 +113,19 @@ namespace OpenTK.Platform.MacOS
             AGLPixelFormat myAGLPixelFormat;
 
             // Choose a pixel format with the attributes we specified.
-			if (fullscreen)
-			{
-	            IntPtr gdevice;
-	
-	            OSStatus status = Carbon.API.DMGetGDeviceByDisplayID(
-	                QuartzDisplayDeviceDriver.MainDisplay, out gdevice, false);
-				
-	            if (status != OSStatus.NoError)
-	                throw new MacOSException(status, "DMGetGDeviceByDisplayID failed.");
+            if (fullscreen)
+            {
+                IntPtr gdevice;
+    
+                OSStatus status = Carbon.API.DMGetGDeviceByDisplayID(
+                    QuartzDisplayDeviceDriver.MainDisplay, out gdevice, false);
+                
+                if (status != OSStatus.NoError)
+                    throw new MacOSException(status, "DMGetGDeviceByDisplayID failed.");
 
-				myAGLPixelFormat = Agl.aglChoosePixelFormat(
-	                ref gdevice, 1,
-	                aglAttributes.ToArray());
+                myAGLPixelFormat = Agl.aglChoosePixelFormat(
+                    ref gdevice, 1,
+                    aglAttributes.ToArray());
 
                 Agl.AglError err = Agl.GetError();
 
@@ -137,16 +137,16 @@ namespace OpenTK.Platform.MacOS
                     CreateContext(mode, carbonWindow, shareContextRef, false);
                     return;
                 }
-			}
-			else
-			{
-				myAGLPixelFormat = Agl.aglChoosePixelFormat(
-	                IntPtr.Zero, 0, 
-	                aglAttributes.ToArray());
+            }
+            else
+            {
+                myAGLPixelFormat = Agl.aglChoosePixelFormat(
+                    IntPtr.Zero, 0, 
+                    aglAttributes.ToArray());
 
                 MyAGLReportError("aglChoosePixelFormat");
-			}
-			
+            }
+            
             
             // create the context and share it with the share reference.
             this.contextRef = Agl.aglCreateContext(myAGLPixelFormat, shareContextRef);
@@ -160,8 +160,8 @@ namespace OpenTK.Platform.MacOS
             
             SetDrawable(carbonWindow);
             SetBufferRect(carbonWindow);
-			Update(carbonWindow);
-			
+            Update(carbonWindow);
+            
             MakeCurrent(carbonWindow);
 
             Debug.Print("context: {0}", contextRef);
@@ -170,17 +170,17 @@ namespace OpenTK.Platform.MacOS
         void SetBufferRect(CarbonWindowInfo carbonWindow)
         {
             if (carbonWindow.IsControl == false)
-            	return;
+                return;
             
             System.Windows.Forms.Control ctrl = Control.FromHandle(carbonWindow.WindowRef);
-				
+                
             if (ctrl.TopLevelControl == null)
-            	return;
-            	
+                return;
+                
             Rect rect = API.GetControlBounds(carbonWindow.WindowRef);
 
-			rect.X = (short)ctrl.Left;
-			rect.Y = (short)ctrl.Top;
+            rect.X = (short)ctrl.Left;
+            rect.Y = (short)ctrl.Top;
             
             Debug.Print("Setting buffer_rect for control.");
             Debug.Print("MacOS Coordinate Rect:   {0}", rect);
@@ -202,15 +202,15 @@ namespace OpenTK.Platform.MacOS
             MyAGLReportError("aglEnable");
   
         }
-		void SetDrawable(CarbonWindowInfo carbonWindow)
-		{
-			IntPtr windowPort = GetWindowPortForWindowInfo(carbonWindow);
+        void SetDrawable(CarbonWindowInfo carbonWindow)
+        {
+            IntPtr windowPort = GetWindowPortForWindowInfo(carbonWindow);
 
             Agl.aglSetDrawable(contextRef, windowPort);
 
             MyAGLReportError("aglSetDrawable");
-		
-		}
+        
+        }
 
         private static IntPtr GetWindowPortForWindowInfo(CarbonWindowInfo carbonWindow)
         {
@@ -230,8 +230,8 @@ namespace OpenTK.Platform.MacOS
             CarbonWindowInfo carbonWindow = (CarbonWindowInfo)window;
 
             SetDrawable(carbonWindow);
-			SetBufferRect(carbonWindow);
-			
+            SetBufferRect(carbonWindow);
+            
             Agl.aglUpdateContext(contextRef);
         }
 
@@ -274,23 +274,23 @@ namespace OpenTK.Platform.MacOS
 
         #region IGraphicsContext Members
 
-		bool firstSwap = false;
+        bool firstSwap = false;
         public void SwapBuffers()
         {
             // this is part of the hack to avoid dropping the first frame when
             // using multiple GLControls.
-        	if (firstSwap == false && carbonWindow.IsControl)
-        	{
-        		Debug.WriteLine("--> Resetting drawable. <--");
-        		firstSwap = true;
-        		SetDrawable(carbonWindow); 
+            if (firstSwap == false && carbonWindow.IsControl)
+            {
+                Debug.WriteLine("--> Resetting drawable. <--");
+                firstSwap = true;
+                SetDrawable(carbonWindow); 
                 Update(carbonWindow);    
             }       
 
             Agl.aglSwapBuffers(contextRef);  
             MyAGLReportError("aglSwapBuffers");       
         }
-		
+        
         public void MakeCurrent(IWindowInfo window)
         {
             if (Agl.aglSetCurrentContext(contextRef) == false)
@@ -330,6 +330,11 @@ namespace OpenTK.Platform.MacOS
 
                 mVSync = value;
             }
+        }
+        
+        GraphicsMode IGraphicsContext.GraphicsMode
+        {
+            get { return graphics_mode; }
         }
 
         #endregion
@@ -403,11 +408,6 @@ namespace OpenTK.Platform.MacOS
         ContextHandle IGraphicsContextInternal.Context
         {
             get { return (ContextHandle)contextRef; }
-        }
-
-        GraphicsMode IGraphicsContextInternal.GraphicsMode
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
         }
 
         void IGraphicsContextInternal.RegisterForDisposal(IDisposable resource)
