@@ -244,7 +244,7 @@ namespace OpenTK.Graphics
         public static void Assert()
         {
             if (GraphicsContext.CurrentContext == null)
-                throw new GraphicsContextException();
+                throw new GraphicsContextMissingException();
         }
 
         #endregion
