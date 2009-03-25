@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -2491,8 +2491,14 @@ namespace OpenTK.Graphics
 
     public enum Version12
     {
+        SmoothPointSizeRange = ((int)0X0b12),
+        SmoothPointSizeGranularity = ((int)0X0b13),
+        SmoothLineWidthRange = ((int)0X0b22),
+        SmoothLineWidthGranularity = ((int)0X0b23),
         MaxElementsVertices = ((int)0X80e8),
         MaxElementsIndices = ((int)0X80e9),
+        AliasedPointSizeRange = ((int)0X846d),
+        AliasedLineWidthRange = ((int)0X846e),
     }
 
     public enum SgisTextureSelect
@@ -2743,10 +2749,13 @@ namespace OpenTK.Graphics
     public enum SgixDepthTexture
     {
         DepthComponent16 = ((int)0X81a5),
+        DepthComponent16Arb = ((int)0X81a5),
         DepthComponent16Sgix = ((int)0X81a5),
         DepthComponent24 = ((int)0X81a6),
+        DepthComponent24Arb = ((int)0X81a6),
         DepthComponent24Sgix = ((int)0X81a6),
         DepthComponent32 = ((int)0X81a7),
+        DepthComponent32Arb = ((int)0X81a7),
         DepthComponent32Sgix = ((int)0X81a7),
     }
 
@@ -5134,6 +5143,9 @@ namespace OpenTK.Graphics
         PnTrianglesPointModeCubicAti = ((int)0X87f6),
         PnTrianglesNormalModeLinearAti = ((int)0X87f7),
         PnTrianglesNormalModeQuadraticAti = ((int)0X87f8),
+        VboFreeMemoryAti = ((int)0X87fb),
+        TextureFreeMemoryAti = ((int)0X87fc),
+        RenderbufferFreeMemoryAti = ((int)0X87fd),
         StencilBackFunc = ((int)0X8800),
         StencilBackFuncAti = ((int)0X8800),
         StencilBackFail = ((int)0X8801),
@@ -5704,6 +5716,13 @@ namespace OpenTK.Graphics
         CurrentProgram = ((int)0X8b8d),
         ImplementationColorReadTypeOes = ((int)0X8b9a),
         ImplementationColorReadFormatOes = ((int)0X8b9b),
+        CounterTypeAmd = ((int)0X8bc0),
+        CounterRangeAmd = ((int)0X8bc1),
+        UnsignedInt64Amd = ((int)0X8bc2),
+        PercentageAmd = ((int)0X8bc3),
+        PerfmonResultAvailableAmd = ((int)0X8bc4),
+        PerfmonResultSizeAmd = ((int)0X8bc5),
+        PerfmonResultAmd = ((int)0X8bc6),
         TextureRedType = ((int)0X8c10),
         TextureRedTypeArb = ((int)0X8c10),
         TextureGreenType = ((int)0X8c11),
@@ -6159,6 +6178,10 @@ namespace OpenTK.Graphics
         TextureSwizzleBExt = ((int)0X8e44),
         TextureSwizzleAExt = ((int)0X8e45),
         TextureSwizzleRgbaExt = ((int)0X8e46),
+        QuadsFollowProvokingVertexConventionExt = ((int)0X8e4c),
+        FirstVertexConventionExt = ((int)0X8e4d),
+        LastVertexConventionExt = ((int)0X8e4e),
+        ProvokingVertexExt = ((int)0X8e4f),
         SamplePositionNv = ((int)0X8e50),
         SampleMaskNv = ((int)0X8e51),
         SampleMaskValueNv = ((int)0X8e52),
@@ -6169,6 +6192,13 @@ namespace OpenTK.Graphics
         IntSamplerRenderbufferNv = ((int)0X8e57),
         UnsignedIntSamplerRenderbufferNv = ((int)0X8e58),
         MaxSampleMaskWordsNv = ((int)0X8e59),
+        SamplerBufferAmd = ((int)0X9001),
+        IntSamplerBufferAmd = ((int)0X9002),
+        UnsignedIntSamplerBufferAmd = ((int)0X9003),
+        TessellationModeAmd = ((int)0X9004),
+        TessellationFactorAmd = ((int)0X9005),
+        DiscreteAmd = ((int)0X9006),
+        ContinuousAmd = ((int)0X9007),
         AllAttribBits = unchecked((int)0Xffffffff),
         ClientAllAttribBits = unchecked((int)0Xffffffff),
         One = ((int)1),
@@ -6202,7 +6232,12 @@ namespace OpenTK.Graphics
         ConstantAlpha = ((int)0X8003),
         OneMinusConstantAlpha = ((int)0X8004),
         BlendColor = ((int)0X8005),
+        FuncAdd = ((int)0X8006),
+        Min = ((int)0X8007),
+        Max = ((int)0X8008),
         BlendEquation = ((int)0X8009),
+        FuncSubtract = ((int)0X800a),
+        FuncReverseSubtract = ((int)0X800b),
         Convolution1D = ((int)0X8010),
         Convolution2D = ((int)0X8011),
         Separable2D = ((int)0X8012),
@@ -9327,6 +9362,47 @@ namespace OpenTK.Graphics
         TransformFeedbackBufferPausedNv = ((int)0X8e23),
         TransformFeedbackBufferActiveNv = ((int)0X8e24),
         TransformFeedbackBindingNv = ((int)0X8e25),
+    }
+
+    public enum AtiMeminfo
+    {
+        VboFreeMemoryAti = ((int)0X87fb),
+        TextureFreeMemoryAti = ((int)0X87fc),
+        RenderbufferFreeMemoryAti = ((int)0X87fd),
+    }
+
+    public enum AmdPerformanceMonitor
+    {
+        CounterTypeAmd = ((int)0X8bc0),
+        CounterRangeAmd = ((int)0X8bc1),
+        UnsignedInt64Amd = ((int)0X8bc2),
+        PercentageAmd = ((int)0X8bc3),
+        PerfmonResultAvailableAmd = ((int)0X8bc4),
+        PerfmonResultSizeAmd = ((int)0X8bc5),
+        PerfmonResultAmd = ((int)0X8bc6),
+    }
+
+    public enum AmdTextureTexture4
+    {
+    }
+
+    public enum AmdVertexShaderTesselator
+    {
+        SamplerBufferAmd = ((int)0X9001),
+        IntSamplerBufferAmd = ((int)0X9002),
+        UnsignedIntSamplerBufferAmd = ((int)0X9003),
+        TessellationModeAmd = ((int)0X9004),
+        TessellationFactorAmd = ((int)0X9005),
+        DiscreteAmd = ((int)0X9006),
+        ContinuousAmd = ((int)0X9007),
+    }
+
+    public enum ExtProvokingVertex
+    {
+        QuadsFollowProvokingVertexConventionExt = ((int)0X8e4c),
+        FirstVertexConventionExt = ((int)0X8e4d),
+        LastVertexConventionExt = ((int)0X8e4e),
+        ProvokingVertexExt = ((int)0X8e4f),
     }
 
     public enum BlendEquationMode
