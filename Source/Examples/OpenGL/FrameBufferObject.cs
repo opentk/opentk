@@ -18,7 +18,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tutorial
 {
-    [Example("Framebuffer Objects.", ExampleCategory.OpenGL)]
+    [Example("Framebuffer Objects", ExampleCategory.OpenGL)]
     public class SimpleFBO : GameWindow
     {
         public SimpleFBO()
