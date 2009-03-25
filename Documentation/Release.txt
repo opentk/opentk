@@ -1,21 +1,71 @@
-The Open Toolkit 0.9.5 Beta -- Release notes
+The Open Toolkit 0.9.6 Beta -- Release notes
 
 [ Overview]
 
-This release adds inline documentation to OpenTK.Graphics.GL, 
-adds support for OpenGL 3.0 on Linux, improves joystick
-support on all platforms and fixes the mapping between unsigned
-and signed OpenGL functions (e.g. Uniform1ui vs Uniform1i).
+This release introduces:
+* automatic OpenGL error checking;
+* generics for improved type-safety in the OpenGL bindings
+* bug fixes related to OpenGL 3.0 contexts on Linux
+* improved documentation in OpenTK.Graphics
+* a new EFX example ("EFX: Reverb").
 
 Please report any issues you may encounter at http://www.opentk.com.
 
 
-
 [API changes]
 
-No breaking changes were introduced in OpenTK 0.9.5. Please note
-that binary compatibility is not preserved between beta releases.
+Please note that binary compatibility is not preserved between
+beta releases.
 
-It is now possible to use joystick-like devices that contain 0 axes
-and / or buttons (e.g. tablets). Make sure that your application
-checks device capabilities before trying to use a joystick.
+OpenTK 0.9.6 replaces object overloads in OpenTK.Graphics
+with generics. For example GL.CallLists changes from:
+
+void CallLists(int n, object data)
+
+to:
+
+void CallLists<T>(int n, ref T data) where T : struct
+void CallLists<T>(int n, T[] data) where T : struct
+void CallLists<T>(int n, T[,] data) where T : struct
+void CallLists<T>(int n, T[,,] data) where T : struct
+
+This change is intended to improve performance (no boxing)
+and type-safety in the OpenGL bindings.
+
+This is a breaking change in the following cases:
+
+Case: You pass parameters to the relevant function by value.
+Solution: Please pass the parameters by reference.
+
+Case: You use 4d or higher-dimension arrays.
+Solution: Consider reducing the dimension of the array. If
+this is not possible, please pin the array and pass a pointer
+instead.
+
+Case: You use jagged arrays.
+Solution: Jagged arrays are not safe for use with OpenGL.
+Please change to multi-dimension arrays.
+
+Case: You use objects that do not satisfy the struct constraint.
+Solution: Reference types are not safe for use with OpenGL.
+Please use pure value types instead.
+
+Pure value types are value types that recursively reference other
+value types only. For example, the following are pure value types:
+
+struct Vector3 { public float X, Y, Z; }
+struct Color4 { public float R, G, B, A; }
+struct Vertex {
+	public Vector3 Position;
+	public Color4 Color;
+}
+
+while the following are not:
+// reference type
+class Player { public Vector3 Position; }
+// value type that contains reference type
+struct Item { public Player Player; }
+
+Only pure value types are safe for use with OpenGL. Future OpenTK
+releases will contain additional runtime checks to enforce this
+constraint.
