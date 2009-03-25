@@ -28,7 +28,7 @@ namespace Bind
 
     static class MainClass
     {
-        static GeneratorMode mode;
+        static GeneratorMode mode = GeneratorMode.GL2;
 
         static internal IBind Generator;
 
@@ -70,15 +70,10 @@ namespace Bind
                                 break;
                             case "mode":
                                 string arg = b[1].ToLower();
-                                mode =
-                                    arg == "gl" ? GeneratorMode.GL2 : 
-                                    arg == "gl2" ? GeneratorMode.GL2 : 
-                                    arg == "gl3" ? GeneratorMode.GL3 :
-                                    arg == "wgl" ? GeneratorMode.Wgl : 
-                                    arg == "glu" ? GeneratorMode.Glu :
-                                    arg == "glx" ? GeneratorMode.Glx : GeneratorMode.Unknown;
-                                if (mode == GeneratorMode.Unknown)
-                                    throw new ArgumentException(String.Format("Mode {0} unknown.", arg));
+                                if (arg.StartsWith("gl"))
+                                    mode = GeneratorMode.GL2;
+                                else
+                                    throw new NotImplementedException();
                                 break;
                             case "namespace":
                             case "ns":
@@ -179,7 +174,7 @@ namespace Bind
         private static void ShowHelp()
         {
             Console.WriteLine(
-@"Usage: bind -mode:[gl/gl2/gl3/glu/wgl/glx] [switches]
+@"Usage: bind [-in:path] [-out:path] [switches]
 Available switches:
 -in:         Input directory (e.g. -in:../specs/)
 -out:        Output directory (e.g. -out:out)
@@ -192,8 +187,6 @@ Available switches:
     -o:tao   Tao compatibility mode.
     -o:enums Follow OpenGL instead .Net naming conventions.
     -o:safe  Do not generate public unsafe functions.
-    -o:permutations
-             Generate all possible parameter permutations.
     -o:enums_in_class
              Place enums in a nested class (i.e. GL.Enums)
              instead of a namespace (i.e. OpenTK.Graphics.OpenGL.Enums)
