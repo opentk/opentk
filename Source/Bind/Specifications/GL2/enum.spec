@@ -98,6 +98,7 @@ Extensions define:
 	VERSION_2_0					= 1
 	VERSION_2_1					= 1
 	VERSION_3_0					= 1
+	VERSION_3_1					= 1
 	ARB_imaging					= 1
 	EXT_abgr					= 1
 	EXT_blend_color					= 1
@@ -462,6 +463,10 @@ DrawBufferMode enum:
 	AUX2						= 0x040B
 	AUX3						= 0x040C
 
+# Aliases DrawBufferMode enum above
+# OES_framebuffer_object enum: (OpenGL ES only; additional; see below)
+#	NONE_OES					= 0
+
 ###############################################################################
 
 EnableCap enum:
@@ -592,6 +597,10 @@ ErrorCode enum:
 # EXT_framebuffer_object enum:
 #	INVALID_FRAMEBUFFER_OPERATION			= 0x0506	# 3.0 / ARB_fbo
 #	INVALID_FRAMEBUFFER_OPERATION_EXT		= 0x0506
+
+# Aliases EXT_fbo enum above
+# OES_framebuffer_object enum: (OpenGL ES only; additional; see below)
+#	INVALID_FRAMEBUFFER_OPERATION_OES		= 0x0506
 
 ###############################################################################
 
@@ -1379,6 +1388,15 @@ DataType enum:
 	DOUBLE						= 0x140A
 	DOUBLE_EXT					= 0x140A
 
+# OES_byte_coordinates: (OpenGL ES only)
+#	use DataType BYTE
+
+# OES_element_index_uint enum: (OpenGL ES only)
+#	use DataType UNSIGNED_INT
+
+# OES_texture_float enum: (OpenGL ES only; additional; see below)
+#	use DataType FLOAT
+
 # VERSION_3_0 enum:
 # ARB_half_float_vertex enum: (note: no ARB suffixes)
 # ARB_half_float_pixel enum:
@@ -1387,7 +1405,7 @@ DataType enum:
 #	HALF_FLOAT_ARB					= 0x140B
 #	HALF_FLOAT_NV					= 0x140B
 
-# OES_fixed_point enum:
+# OES_fixed_point enum: (OpenGL ES only)
 #	FIXED_OES					= 0x140C
 
 ###############################################################################
@@ -1537,6 +1555,11 @@ PixelFormat enum:
 	use SGIX_icc_texture LUMINANCE16_ALPHA8_ICC_SGIX
 	use SGIX_ycrcb YCRCB_422_SGIX
 	use SGIX_ycrcb YCRCB_444_SGIX
+
+# OES_depth_texture enum: (OpenGL ES only)
+#	use DataType UNSIGNED_SHORT
+#	use DataType UNSIGNED_INT
+#	use PixelFormat DEPTH_COMPONENT
 
 ###############################################################################
 
@@ -1825,6 +1848,10 @@ TextureGenParameter enum:
 	use SGIS_point_line_texgen EYE_LINE_SGIS
 	use SGIS_point_line_texgen OBJECT_LINE_SGIS
 
+# Aliases TextureGenParameter enum above
+# OES_texture_cube_map enum: (OpenGL ES only; additional; see below)
+#	TEXTURE_GEN_MODE				= 0x2500
+
 ###############################################################################
 
 TextureMagFilter enum:
@@ -2110,6 +2137,10 @@ EXT_blend_minmax enum:
 #	BLEND_EQUATION_RGB				= GL_BLEND_EQUATION # VERSION_2_0
 #	BLEND_EQUATION_RGB_EXT				= GL_BLEND_EQUATION
 
+# Aliases EXT_blend_equation_separate enum above
+# OES_blend_equation_separate enum: (OpenGL ES only; additional; see below)
+#	BLEND_EQUATION_RGB_OES				= 0x8009 # 1 I
+
 ###############################################################################
 
 # VERSION_1_2 enum: (Promoted for OpenGL 1.2)
@@ -2118,6 +2149,13 @@ EXT_blend_subtract enum:
 	FUNC_SUBTRACT_EXT				= 0x800A
 	FUNC_REVERSE_SUBTRACT				= 0x800B
 	FUNC_REVERSE_SUBTRACT_EXT			= 0x800B
+
+# Aliases EXT_blend_minmax and EXT_blend_subtract enums above
+# OES_blend_subtract enum: (OpenGL ES only)
+#	FUNC_ADD_OES					= 0x8006
+#	BLEND_EQUATION_OES				= 0x8009 # 1 I
+#	FUNC_SUBTRACT_OES				= 0x800A
+#	FUNC_REVERSE_SUBTRACT_OES			= 0x800B
 
 ###############################################################################
 
@@ -2234,6 +2272,9 @@ EXT_packed_pixels enum:
 	UNSIGNED_INT_2_10_10_10_REV			= 0x8368
 	UNSIGNED_INT_2_10_10_10_REV_EXT			= 0x8368
 
+# EXT_texture_type_2_10_10_10_REV enum: (OpenGL ES only)
+#	use EXT_packed_pixels UNSIGNED_INT_2_10_10_10_REV_EXT
+
 ###############################################################################
 
 EXT_polygon_offset enum:
@@ -2295,6 +2336,11 @@ EXT_texture enum:
 	PROXY_TEXTURE_2D_EXT				= 0x8064
 	TEXTURE_TOO_LARGE_EXT				= 0x8065
 
+# Aliases EXT_texture enums above
+# OES_framebuffer_object enum: (OpenGL ES only; additional; see below)
+#	RGBA4_OES					= 0x8056
+#	RGB5_A1_OES					= 0x8057
+
 ###############################################################################
 
 EXT_texture_object enum:
@@ -2326,6 +2372,13 @@ EXT_texture3D enum:
 	TEXTURE_WRAP_R_EXT				= 0x8072
 	MAX_3D_TEXTURE_SIZE				= 0x8073 # 1 I
 	MAX_3D_TEXTURE_SIZE_EXT				= 0x8073 # 1 I
+
+# Aliases EXT_texture_object, EXT_texture3D enums above
+# OES_texture3D enum: (OpenGL ES only)
+#	TEXTURE_3D_BINDING_OES				= 0x806A # 1 I
+#	TEXTURE_3D_OES					= 0x806F # 1 I
+#	TEXTURE_WRAP_R_OES				= 0x8072
+#	MAX_3D_TEXTURE_SIZE_OES				= 0x8073 # 1 I
 
 ###############################################################################
 
@@ -2422,23 +2475,23 @@ SGIS_multisample enum:
 
 # Reuses SGIS_multisample values.
 # EXT_multisample enum:
-#	  MULTISAMPLE_EXT				  = 0x809D
-#	  SAMPLE_ALPHA_TO_MASK_EXT			  = 0x809E
-#	  SAMPLE_ALPHA_TO_ONE_EXT			  = 0x809F
-#	  SAMPLE_MASK_EXT				  = 0x80A0
-#	  1PASS_EXT					  = 0x80A1
-#	  2PASS_0_EXT					  = 0x80A2
-#	  2PASS_1_EXT					  = 0x80A3
-#	  4PASS_0_EXT					  = 0x80A4
-#	  4PASS_1_EXT					  = 0x80A5
-#	  4PASS_2_EXT					  = 0x80A6
-#	  4PASS_3_EXT					  = 0x80A7
-#	  SAMPLE_BUFFERS_EXT				  = 0x80A8 # 1 I
-#	  SAMPLES_EXT					  = 0x80A9 # 1 I
-#	  SAMPLE_MASK_VALUE_EXT				  = 0x80AA # 1 F
-#	  SAMPLE_MASK_INVERT_EXT			  = 0x80AB # 1 I
-#	  SAMPLE_PATTERN_EXT				  = 0x80AC # 1 I
-#	  MULTISAMPLE_BIT_EXT				  = 0x20000000
+#	MULTISAMPLE_EXT					= 0x809D
+#	SAMPLE_ALPHA_TO_MASK_EXT			= 0x809E
+#	SAMPLE_ALPHA_TO_ONE_EXT				= 0x809F
+#	SAMPLE_MASK_EXT					= 0x80A0
+#	1PASS_EXT					= 0x80A1
+#	2PASS_0_EXT					= 0x80A2
+#	2PASS_1_EXT					= 0x80A3
+#	4PASS_0_EXT					= 0x80A4
+#	4PASS_1_EXT					= 0x80A5
+#	4PASS_2_EXT					= 0x80A6
+#	4PASS_3_EXT					= 0x80A7
+#	SAMPLE_BUFFERS_EXT				= 0x80A8 # 1 I
+#	SAMPLES_EXT					= 0x80A9 # 1 I
+#	SAMPLE_MASK_VALUE_EXT				= 0x80AA # 1 F
+#	SAMPLE_MASK_INVERT_EXT				= 0x80AB # 1 I
+#	SAMPLE_PATTERN_EXT				= 0x80AC # 1 I
+#	MULTISAMPLE_BIT_EXT				= 0x20000000
 
 ###############################################################################
 
@@ -2507,6 +2560,13 @@ SGIX_shadow_ambient enum:
 #	BLEND_DST_ALPHA_EXT				= 0x80CA
 #	BLEND_SRC_ALPHA					= 0x80CB
 #	BLEND_SRC_ALPHA_EXT				= 0x80CB
+
+# Aliases EXT_blend_func_separate enums above
+# OES_blend_func_separate enum: (OpenGL ES only)
+#	BLEND_DST_RGB_OES				= 0x80C8
+#	BLEND_SRC_RGB_OES				= 0x80C9
+#	BLEND_DST_ALPHA_OES				= 0x80CA
+#	BLEND_SRC_ALPHA_OES				= 0x80CB
 
 # EXT_422_pixels enum:
 #	422_EXT						= 0x80CC
@@ -2726,7 +2786,7 @@ HP_convolution_border_modes enum:
 	IGNORE_BORDER_HP				= 0x8150
 	CONSTANT_BORDER					= 0x8151
 	CONSTANT_BORDER_HP				= 0x8151
-#	 WRAP_BORDER					 = 0x8152   # Not actually promoted?
+#	WRAP_BORDER					= 0x8152   # Not actually promoted
 	REPLICATE_BORDER				= 0x8153
 	REPLICATE_BORDER_HP				= 0x8153
 	CONVOLUTION_BORDER_COLOR			= 0x8154
@@ -2867,53 +2927,68 @@ SGIX_shadow enum:
 # ARB_depth_texture enum:
 SGIX_depth_texture enum:
 	DEPTH_COMPONENT16				= 0x81A5
+	DEPTH_COMPONENT16_ARB				= 0x81A5
 	DEPTH_COMPONENT16_SGIX				= 0x81A5
 	DEPTH_COMPONENT24				= 0x81A6
+	DEPTH_COMPONENT24_ARB				= 0x81A6
 	DEPTH_COMPONENT24_SGIX				= 0x81A6
 	DEPTH_COMPONENT32				= 0x81A7
+	DEPTH_COMPONENT32_ARB				= 0x81A7
 	DEPTH_COMPONENT32_SGIX				= 0x81A7
+
+# Aliases ARB_depth_texture enum above
+# OES_framebuffer_object enum: (OpenGL ES only; additional; see below)
+#	DEPTH_COMPONENT16_OES				= 0x81A5
+
+# Aliases ARB_depth_texture enum above
+# OES_depth24 enum: (OpenGL ES only)
+#	DEPTH_COMPONENT24_OES				= 0x81A6
+
+# Aliases ARB_depth_texture enum above
+# OES_depth32 enum: (OpenGL ES only)
+#	DEPTH_COMPONENT32_OES				= 0x81A7
 
 ###############################################################################
 
 #EXT_compiled_vertex_array enum:
-#	 ARRAY_ELEMENT_LOCK_FIRST_EXT			 = 0x81A8
-#	 ARRAY_ELEMENT_LOCK_COUNT_EXT			 = 0x81A9
+#	ARRAY_ELEMENT_LOCK_FIRST_EXT			= 0x81A8
+#	ARRAY_ELEMENT_LOCK_COUNT_EXT			= 0x81A9
 
 ###############################################################################
 
 #EXT_cull_vertex enum:
-#	 CULL_VERTEX_EXT				 = 0x81AA
-#	 CULL_VERTEX_EYE_POSITION_EXT			 = 0x81AB
-#	 CULL_VERTEX_OBJECT_POSITION_EXT		 = 0x81AC
+#	CULL_VERTEX_EXT					= 0x81AA
+#	CULL_VERTEX_EYE_POSITION_EXT			= 0x81AB
+#	CULL_VERTEX_OBJECT_POSITION_EXT			= 0x81AC
 
 ###############################################################################
 
 # Promoted from SGI?
 #EXT_index_array_formats enum:
-#	 IUI_V2F_EXT					 = 0x81AD
-#	 IUI_V3F_EXT					 = 0x81AE
-#	 IUI_N3F_V2F_EXT				 = 0x81AF
-#	 IUI_N3F_V3F_EXT				 = 0x81B0
-#	 T2F_IUI_V2F_EXT				 = 0x81B1
-#	 T2F_IUI_V3F_EXT				 = 0x81B2
-#	 T2F_IUI_N3F_V2F_EXT				 = 0x81B3
-#	 T2F_IUI_N3F_V3F_EXT				 = 0x81B4
+#	IUI_V2F_EXT					= 0x81AD
+#	IUI_V3F_EXT					= 0x81AE
+#	IUI_N3F_V2F_EXT					= 0x81AF
+#	IUI_N3F_V3F_EXT					= 0x81B0
+#	T2F_IUI_V2F_EXT					= 0x81B1
+#	T2F_IUI_V3F_EXT					= 0x81B2
+#	T2F_IUI_N3F_V2F_EXT				= 0x81B3
+#	T2F_IUI_N3F_V3F_EXT				= 0x81B4
 
 ###############################################################################
 
 # Promoted from SGI?
 #EXT_index_func enum:
-#	 INDEX_TEST_EXT					 = 0x81B5
-#	 INDEX_TEST_FUNC_EXT				 = 0x81B6
-#	 INDEX_TEST_REF_EXT				 = 0x81B7
+#	INDEX_TEST_EXT					= 0x81B5
+#	INDEX_TEST_FUNC_EXT				= 0x81B6
+#	INDEX_TEST_REF_EXT				= 0x81B7
 
 ###############################################################################
 
 # Promoted from SGI?
 #EXT_index_material enum:
-#	 INDEX_MATERIAL_EXT				 = 0x81B8
-#	 INDEX_MATERIAL_PARAMETER_EXT			 = 0x81B9
-#	 INDEX_MATERIAL_FACE_EXT			 = 0x81BA
+#	INDEX_MATERIAL_EXT				= 0x81B8
+#	INDEX_MATERIAL_PARAMETER_EXT			= 0x81B9
+#	INDEX_MATERIAL_FACE_EXT				= 0x81BA
 
 ###############################################################################
 
@@ -3264,7 +3339,7 @@ EXT_pixel_transform enum:
 
 # Unfortunately, there was a collision promoting to EXT from SGIX.
 # Use fog_coord's value of 0x8452 instead of the previously
-#   assigned FRAGMENT_DEPTH_EXT = 0x834B.
+#   assigned FRAGMENT_DEPTH_EXT -> 0x834B.
 # EXT_light_texture: 0x8349-0x8352
 #	FRAGMENT_MATERIAL_EXT				= 0x8349
 #	FRAGMENT_NORMAL_EXT				= 0x834A
@@ -3354,6 +3429,10 @@ SGIX_texture_coordinate_clamp enum:
 #	MIRRORED_REPEAT					= 0x8370
 #	MIRRORED_REPEAT_ARB				= 0x8370
 #	MIRRORED_REPEAT_IBM				= 0x8370
+
+# Aliases ARB_texture_mirrored_repeat enum above
+# OES_texture_mirrored_repeat enum: (OpenGL ES only)
+#	MIRRORED_REPEAT_OES				= 0x8370
 
 ###############################################################################
 
@@ -3593,13 +3672,13 @@ SGIX_icc_texture enum:
 ###############################################################################
 
 # SMOOTH_* enums are new names for pre-1.2 enums.
-#VERSION_1_2 enum:
-#	SMOOTH_POINT_SIZE_RANGE				= 0x0B12 # 2 F
-#	SMOOTH_POINT_SIZE_GRANULARITY			= 0x0B13 # 1 F
-#	SMOOTH_LINE_WIDTH_RANGE				= 0x0B22 # 2 F
-#	SMOOTH_LINE_WIDTH_GRANULARITY			= 0x0B23 # 1 F
-#	ALIASED_POINT_SIZE_RANGE			= 0x846D # 2 F
-#	ALIASED_LINE_WIDTH_RANGE			= 0x846E # 2 F
+VERSION_1_2 enum:
+	SMOOTH_POINT_SIZE_RANGE				= 0x0B12 # 2 F
+	SMOOTH_POINT_SIZE_GRANULARITY			= 0x0B13 # 1 F
+	SMOOTH_LINE_WIDTH_RANGE				= 0x0B22 # 2 F
+	SMOOTH_LINE_WIDTH_GRANULARITY			= 0x0B23 # 1 F
+	ALIASED_POINT_SIZE_RANGE			= 0x846D # 2 F
+	ALIASED_LINE_WIDTH_RANGE			= 0x846E # 2 F
 
 ###############################################################################
 
@@ -3698,8 +3777,41 @@ SGIX_icc_texture enum:
 #	MAX_TEXTURE_UNITS				= 0x84E2 # 1 I
 #	MAX_TEXTURE_UNITS_ARB				= 0x84E2 # 1 I
 
-
-
+# These are really core ES 1.1 enums, but haven't included
+# ES core enums in enum.spec yet
+# OES_texture_env_crossbar: (OpenGL ES only)
+#	use VERSION_1_3 TEXTURE0
+#	use VERSION_1_3 TEXTURE1
+#	use VERSION_1_3 TEXTURE2
+#	use VERSION_1_3 TEXTURE3
+#	use VERSION_1_3 TEXTURE4
+#	use VERSION_1_3 TEXTURE5
+#	use VERSION_1_3 TEXTURE6
+#	use VERSION_1_3 TEXTURE7
+#	use VERSION_1_3 TEXTURE8
+#	use VERSION_1_3 TEXTURE9
+#	use VERSION_1_3 TEXTURE10
+#	use VERSION_1_3 TEXTURE11
+#	use VERSION_1_3 TEXTURE12
+#	use VERSION_1_3 TEXTURE13
+#	use VERSION_1_3 TEXTURE14
+#	use VERSION_1_3 TEXTURE15
+#	use VERSION_1_3 TEXTURE16
+#	use VERSION_1_3 TEXTURE17
+#	use VERSION_1_3 TEXTURE18
+#	use VERSION_1_3 TEXTURE19
+#	use VERSION_1_3 TEXTURE20
+#	use VERSION_1_3 TEXTURE21
+#	use VERSION_1_3 TEXTURE22
+#	use VERSION_1_3 TEXTURE23
+#	use VERSION_1_3 TEXTURE24
+#	use VERSION_1_3 TEXTURE25
+#	use VERSION_1_3 TEXTURE26
+#	use VERSION_1_3 TEXTURE27
+#	use VERSION_1_3 TEXTURE28
+#	use VERSION_1_3 TEXTURE29
+#	use VERSION_1_3 TEXTURE30
+#	use VERSION_1_3 TEXTURE31
 
 ###############################################################################
 
@@ -3724,6 +3836,10 @@ SGIX_icc_texture enum:
 # EXT_framebuffer_object (additional; see below):
 #	MAX_RENDERBUFFER_SIZE				= 0x84E8	# 3.0 / ARB_fbo
 #	MAX_RENDERBUFFER_SIZE_EXT			= 0x84E8
+
+# Aliases EXT_framebuffer_object enum above
+# OES_framebuffer_object enum: (OpenGL ES only; additional; see below)
+#	MAX_RENDERBUFFER_SIZE_OES			= 0x84E8
 
 # VERSION_1_3 enum: (Promoted for OpenGL 1.3)
 # ARB_texture_compression enum:
@@ -3783,6 +3899,11 @@ SGIX_icc_texture enum:
 #	UNSIGNED_INT_24_8_EXT				= 0x84FA
 #	UNSIGNED_INT_24_8_NV				= 0x84FA
 
+# Aliases EXT_packed_depth_stencil enums above
+# OES_packed_depth_stencil enum: (OpenGL ES only)
+#	DEPTH_STENCIL_OES				= 0x84F9
+#	UNSIGNED_INT_24_8_OES				= 0x84FA
+
 # NV_future_use: 0x84FB-0x84FC
 
 # VERSION_1_4 enum: (Promoted for OpenGL 1.4)
@@ -3819,6 +3940,11 @@ SGIX_icc_texture enum:
 #	INCR_WRAP_EXT					= 0x8507
 #	DECR_WRAP					= 0x8508
 #	DECR_WRAP_EXT					= 0x8508
+
+# Aliases EXT_stencil_wrap enums above
+# OES_stencil_wrap enum: (OpenGL ES only)
+#	INCR_WRAP_OES					= 0x8507
+#	DECR_WRAP_OES					= 0x8508
 
 # EXT_vertex_weighting enum:
 #	VERTEX_WEIGHTING_EXT				= 0x8509
@@ -3859,6 +3985,20 @@ SGIX_icc_texture enum:
 #	PROXY_TEXTURE_CUBE_MAP_ARB			= 0x851B
 #	MAX_CUBE_MAP_TEXTURE_SIZE			= 0x851C
 #	MAX_CUBE_MAP_TEXTURE_SIZE_ARB			= 0x851C
+
+# Aliases ARB_texture_cube_map enums above
+# OES_texture_cube_map enum: (OpenGL ES only; additional; see below)
+#	NORMAL_MAP_OES					= 0x8511
+#	REFLECTION_MAP_OES				= 0x8512
+#	TEXTURE_CUBE_MAP_OES				= 0x8513
+#	TEXTURE_BINDING_CUBE_MAP_OES			= 0x8514
+#	TEXTURE_CUBE_MAP_POSITIVE_X_OES			= 0x8515
+#	TEXTURE_CUBE_MAP_NEGATIVE_X_OES			= 0x8516
+#	TEXTURE_CUBE_MAP_POSITIVE_Y_OES			= 0x8517
+#	TEXTURE_CUBE_MAP_NEGATIVE_Y_OES			= 0x8518
+#	TEXTURE_CUBE_MAP_POSITIVE_Z_OES			= 0x8519
+#	TEXTURE_CUBE_MAP_NEGATIVE_Z_OES			= 0x851A
+#	MAX_CUBE_MAP_TEXTURE_SIZE_OES			= 0x851C
 
 # NV_vertex_array_range enum:
 #	VERTEX_ARRAY_RANGE_NV				= 0x851D
@@ -4379,6 +4519,15 @@ SGIX_subsample enum:
 #	MODELVIEW30_ARB					= 0x873E
 #	MODELVIEW31_ARB					= 0x873F
 
+# Aliases ARB_vertex_blend enums above
+# OES_matrix_palette enum: (OpenGL ES only; additional; see below)
+#	MAX_VERTEX_UNITS_OES				= 0x86A4
+#	WEIGHT_ARRAY_OES				= 0x86AD
+#	WEIGHT_ARRAY_TYPE_OES				= 0x86A9
+#	WEIGHT_ARRAY_STRIDE_OES				= 0x86AA
+#	WEIGHT_ARRAY_SIZE_OES				= 0x86AB
+#	WEIGHT_ARRAY_POINTER_OES			= 0x86AC
+
 # VERSION_1_3 enum: (Promoted for OpenGL 1.3)
 # ARB_texture_env_dot3
 #	DOT3_RGB					= 0x86AE
@@ -4527,6 +4676,14 @@ SGIX_subsample enum:
 # EXT_texture_env_dot3 enum:
 #	DOT3_RGB_EXT					= 0x8740
 #	DOT3_RGBA_EXT					= 0x8741
+
+# There's a collision between AMD_program_binary_Z400 and EXT_texture_env_dot3!
+# AMD_program_binary_Z400 enum: (OpenGL ES only)
+#	Z400_BINARY_AMD					= 0x8740
+
+# There's a collision between OES_get_program_binary and EXT_texture_env_dot3!
+# OES_get_program_binary: (OpenGL ES only; additional; see below)
+#	PROGRAM_BINARY_LENGTH_OES			= 0x8741
 
 # ATI_texture_mirror_once enum:
 #	MIRROR_CLAMP_ATI				= 0x8742
@@ -4754,6 +4911,9 @@ SGIX_subsample enum:
 #	LOCAL_CONSTANT_VALUE_EXT			= 0x87EC
 #	LOCAL_CONSTANT_DATATYPE_EXT			= 0x87ED
 
+# AMD_compressed_ATC_texture (OpenGL ES only) (additional; see below)
+#	ATC_RGBA_INTERPOLATED_ALPHA_AMD			= 0x87EE
+
 # ATI_pn_triangles enum:
 #	PN_TRIANGLES_ATI				= 0x87F0
 #	MAX_PN_TRIANGLES_TESSELATION_LEVEL_ATI		= 0x87F1
@@ -4765,7 +4925,18 @@ SGIX_subsample enum:
 #	PN_TRIANGLES_NORMAL_MODE_LINEAR_ATI		= 0x87F7
 #	PN_TRIANGLES_NORMAL_MODE_QUADRATIC_ATI		= 0x87F8
 
-# ATI_future_use: 0x87F9-0x87FF
+# AMD_compressed_3DC_texture (OpenGL ES only)
+#	3DC_X_AMD					= 0x87F9
+#	3DC_XY_AMD					= 0x87FA
+
+# ATI_meminfo enum:
+#	VBO_FREE_MEMORY_ATI				= 0x87FB
+#	TEXTURE_FREE_MEMORY_ATI				= 0x87FC
+#	RENDERBUFFER_FREE_MEMORY_ATI			= 0x87FD
+
+# OES_get_program_binary: (OpenGL ES only;
+#	NUM_PROGRAM_BINARY_FORMATS_OES			= 0x87FE
+#	PROGRAM_BINARY_FORMATS_OES			= 0x87FF
 
 # VERSION_2_0 enum: (Promoted for OpenGL 2.0)
 # ATI_separate_stencil enum:
@@ -4899,6 +5070,10 @@ SGIX_subsample enum:
 #	BLEND_EQUATION_ALPHA				= 0x883D    # VERSION_2_0
 #	BLEND_EQUATION_ALPHA_EXT			= 0x883D
 
+# Aliases EXT_blend_equation_separate enum above
+# OES_blend_equation_separate enum: (OpenGL ES only)
+#	BLEND_EQUATION_ALPHA_OES			= 0x883D
+
 ###############################################################################
 
 # ARB: 0x8840-0x884F
@@ -4914,6 +5089,17 @@ SGIX_subsample enum:
 #	MATRIX_INDEX_ARRAY_TYPE_ARB			= 0x8847
 #	MATRIX_INDEX_ARRAY_STRIDE_ARB			= 0x8848
 #	MATRIX_INDEX_ARRAY_POINTER_ARB			= 0x8849
+
+# Aliases ARB_matrix_palette enums above
+# OES_matrix_palette enum: (OpenGL ES only; additional; see below)
+#	MATRIX_PALETTE_OES				= 0x8840
+#	MAX_PALETTE_MATRICES_OES			= 0x8842
+#	CURRENT_PALETTE_MATRIX_OES			= 0x8843
+#	MATRIX_INDEX_ARRAY_OES				= 0x8844
+#	MATRIX_INDEX_ARRAY_SIZE_OES			= 0x8846
+#	MATRIX_INDEX_ARRAY_TYPE_OES			= 0x8847
+#	MATRIX_INDEX_ARRAY_STRIDE_OES			= 0x8848
+#	MATRIX_INDEX_ARRAY_POINTER_OES			= 0x8849
 
 # VERSION_1_4 enum: (Promoted for OpenGL 1.4)
 # ARB_depth_texture enum:
@@ -4969,6 +5155,11 @@ SGIX_subsample enum:
 #	COORD_REPLACE					= 0x8862    # VERSION_2_0
 #	COORD_REPLACE_ARB				= 0x8862
 #	COORD_REPLACE_NV				= 0x8862
+
+# Aliases ARB_point_sprite enums above
+# OES_point_sprite enum: (OpenGL ES only)
+#	POINT_SPRITE_ARB				= 0x8861
+#	COORD_REPLACE_ARB				= 0x8862
 
 # NV_point_sprite enum:
 #	POINT_SPRITE_R_MODE_NV				= 0x8863
@@ -5090,6 +5281,10 @@ SGIX_subsample enum:
 #	VERTEX_ATTRIB_ARRAY_BUFFER_BINDING		= 0x889F
 #	VERTEX_ATTRIB_ARRAY_BUFFER_BINDING_ARB		= 0x889F
 
+# Aliases ARB_vertex_buffer_object enum above
+# OES_matrix_palette enum: (OpenGL ES only; additional; see below)
+#	WEIGHT_ARRAY_BUFFER_BINDING_OES			= 0x889E
+
 # ARB_vertex_program enum: (additional; see above)
 # ARB_fragment_program enum: (additional; see above)
 #	PROGRAM_INSTRUCTIONS_ARB			= 0x88A0
@@ -5131,6 +5326,13 @@ SGIX_subsample enum:
 #	BUFFER_MAPPED_ARB				= 0x88BC
 #	BUFFER_MAP_POINTER				= 0x88BD
 #	BUFFER_MAP_POINTER_ARB				= 0x88BD
+
+# Aliases ARB_vertex_buffer_object enums above
+# OES_mapbuffer enum: (OpenGL ES only)
+#	WRITE_ONLY_OES					= 0x88B9
+#	BUFFER_ACCESS_OES				= 0x88BB
+#	BUFFER_MAPPED_OES				= 0x88BC
+#	BUFFER_MAP_POINTER_OES				= 0x88BD
 
 # NV_future_use: 0x88BE
 
@@ -5219,6 +5421,10 @@ SGIX_subsample enum:
 #	DEPTH24_STENCIL8_EXT				= 0x88F0
 #	TEXTURE_STENCIL_SIZE				= 0x88F1    # 3.0 / ARB_fbo
 #	TEXTURE_STENCIL_SIZE_EXT			= 0x88F1
+
+# Aliases EXT_packed_depth_stencil enum above
+# OES_packed_depth_stencil enum: (OpenGL ES only; additional; see above)
+#	DEPTH24_STENCIL8_OES				= 0x88F0
 
 # EXT_stencil_clear_tag enum:
 #	STENCIL_TAG_BITS_EXT				= 0x88F2
@@ -5405,7 +5611,7 @@ SGIX_subsample enum:
 
 ###############################################################################
 
-# Khronos OpenML WG: 0x8980-0x898F
+# Khronos OpenML WG / OpenGL ES WG: 0x8980-0x898F
 
 # OML_interlace enum:
 #	INTERLACE_OML					= 0x8980
@@ -5423,9 +5629,15 @@ SGIX_subsample enum:
 #	RESAMPLE_AVERAGE_OML				= 0x8988
 #	RESAMPLE_DECIMATE_OML				= 0x8989
 
-# Assigned to Affie Munshi for OES_point_size_array/OES_matrix_get extensions
-# OES_point_size_array enum:	0x898A-
-# OES_matrix_get enum:		0x898F
+# OES_point_size_array enum: (OpenGL ES only)
+#	POINT_SIZE_ARRAY_TYPE_OES			= 0x898A
+#	POINT_SIZE_ARRAY_STRIDE_OES			= 0x898B
+#	POINT_SIZE_ARRAY_POINTER_OES			= 0x898C
+
+# OES_matrix_get enum: (OpenGL ES only)
+#	MODELVIEW_MATRIX_FLOAT_AS_INT_BITS_OES		= 0x898D
+#	PROJECTION_MATRIX_FLOAT_AS_INT_BITS_OES		= 0x898E
+#	TEXTURE_MATRIX_FLOAT_AS_INT_BITS_OES		= 0x898F
 
 ###############################################################################
 
@@ -5573,6 +5785,14 @@ SGIX_subsample enum:
 #	SHADING_LANGUAGE_VERSION			= 0x8B8C    # VERSION_2_0
 #	SHADING_LANGUAGE_VERSION_ARB			= 0x8B8C    # ARB_shading_language_100
 
+# Aliases ARB_shader_objects enum above
+# OES_texture3D enum: (OpenGL ES only; additional; see above)
+#	SAMPLER_3D_OES					= 0x8B5F    # ARB_shader_objects
+
+# Aliases ARB_fragment_shader enum above
+# OES_standard_derivatives enum: (OpenGL ES only)
+#	FRAGMENT_SHADER_DERIVATIVE_HINT_OES		= 0x8B8B
+
 # VERSION_3_0 enum:
 # ARB_geometry_shader4 enum: (additional; see below; note: no ARB suffixes)
 #	MAX_VARYING_COMPONENTS				= GL_MAX_VARYING_FLOATS     # 3.0
@@ -5588,7 +5808,7 @@ SGIX_subsample enum:
 
 # Khronos OpenGL ES WG: 0x8B90-0x8B9F
 
-# OES_compressed_paletted_texture enum:
+# OES_compressed_paletted_texture enum: (OpenGL ES only)
 #	PALETTE4_RGB8_OES				= 0x8B90
 #	PALETTE4_RGBA8_OES				= 0x8B91
 #	PALETTE4_R5_G6_B5_OES				= 0x8B92
@@ -5600,18 +5820,21 @@ SGIX_subsample enum:
 #	PALETTE8_RGBA4_OES				= 0x8B98
 #	PALETTE8_RGB5_A1_OES				= 0x8B99
 
-# OES_read_format enum:
+# OES_read_format enum: (OpenGL ES, also implemented in Mesa)
 #	IMPLEMENTATION_COLOR_READ_TYPE_OES		= 0x8B9A
 #	IMPLEMENTATION_COLOR_READ_FORMAT_OES		= 0x8B9B
 
-# Extensions names TBD, for OpenGL ES 1.1
-# These need to go in enumext.spec as well
+# OES_point_size_array enum: (OpenGL ES only; additional; see above)
 #	POINT_SIZE_ARRAY_OES				= 0x8B9C
+
+# OES_draw_texture enum: (OpenGL ES only)
 #	TEXTURE_CROP_RECT_OES				= 0x8B9D
 
-# More Khronos extensions, need to go in enumext.spec
+# OES_matrix_palette enum: (OpenGL ES only)
 #	MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES		= 0x8B9E
-#	WEIGHT_INDEX_ARRAY_BUFFER_BINDING_OES		= 0x8B9F
+
+# OES_point_size_array enum: (OpenGL ES only; additional; see above)
+#	POINT_SIZE_ARRAY_BUFFER_BINDING_OES		= 0x8B9F
 
 ###############################################################################
 
@@ -5635,6 +5858,15 @@ SGIX_subsample enum:
 ###############################################################################
 
 # ATI: 0x8BC0-0x8BFF
+
+# AMD_performance_monitor enum:
+#	COUNTER_TYPE_AMD				= 0x8BC0
+#	COUNTER_RANGE_AMD				= 0x8BC1
+#	UNSIGNED_INT64_AMD				= 0x8BC2
+#	PERCENTAGE_AMD					= 0x8BC3
+#	PERFMON_RESULT_AVAILABLE_AMD			= 0x8BC4
+#	PERFMON_RESULT_SIZE_AMD				= 0x8BC5
+#	PERFMON_RESULT_AMD				= 0x8BC6
 
 ###############################################################################
 
@@ -5802,7 +6034,7 @@ SGIX_subsample enum:
 #	RASTERIZER_DISCARD				= 0x8C89    # 3.0
 #	RASTERIZER_DISCARD_EXT				= 0x8C89
 #	RASTERIZER_DISCARD_NV				= 0x8C89
-#	MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS	  = 0x8C8A  # 3.0
+#	MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS	= 0x8C8A    # 3.0
 #	MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS_EXT = 0x8C8A
 #	MAX_TRANSFORM_FEEDBACK_INTERLEAVED_ATTRIBS_NV	= 0x8C8A
 #	MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS		= 0x8C8B    # 3.0
@@ -5825,6 +6057,14 @@ SGIX_subsample enum:
 
 # ATI: 0x8C90-0x8C9F (Affie Munshi, OpenGL ES extensions)
 
+# AMD_future_use: 0x8C90-0x8C91
+
+# AMD_compressed_ATC_texture (OpenGL ES only)
+#	ATC_RGB_AMD					= 0x8C92
+#	ATC_RGBA_EXPLICIT_ALPHA_AMD			= 0x8C93
+
+# AMD_future_use: 0x8C94-0x8C9F
+
 ###############################################################################
 
 # OpenGL ARB: 0x8CA0-0x8CAF
@@ -5845,6 +6085,11 @@ SGIX_subsample enum:
 #	DRAW_FRAMEBUFFER_BINDING			= GL_FRAMEBUFFER_BINDING    # 3.0 / ARB_fbo
 #	RENDERBUFFER_BINDING				= 0x8CA7    # 3.0 / ARB_fbo
 #	RENDERBUFFER_BINDING_EXT			= 0x8CA7
+
+# Aliases EXT_framebuffer_object enums above
+# OES_framebuffer_object enum: (OpenGL ES only; additional; see below)
+#	FRAMEBUFFER_BINDING_OES				= 0x8CA6
+#	RENDERBUFFER_BINDING_OES			= 0x8CA7
 
 # VERSION_3_0 enum:
 # ARB_framebuffer_object enum: (note: no ARB suffixes)
@@ -5891,7 +6136,7 @@ SGIX_subsample enum:
 #	FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_EXT		= 0x8CD1
 #	FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL		= 0x8CD2    # 3.0 / ARB_fbo
 #	FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_EXT	= 0x8CD2
-#	FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE	 = 0x8CD3   # 3.0 / ARB_fbo
+#	FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE	= 0x8CD3    # 3.0 / ARB_fbo
 #	FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_EXT = 0x8CD3
 #	FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER		= 0x8CD4    # 3.0 / ARB_fbo
 #	FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_EXT	= 0x8CD4
@@ -5988,6 +6233,54 @@ SGIX_subsample enum:
 #	RENDERBUFFER_STENCIL_SIZE			= 0x8D55    # 3.0 / ARB_fbo
 #	RENDERBUFFER_STENCIL_SIZE_EXT			= 0x8D55
 
+# Aliases EXT_framebuffer_object enum above
+# OES_texture3D enum: (OpenGL ES only; additional; see above)
+#	FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_OES	= 0x8CD4
+# @@@??? does this appear in OES_texture3D, or OES_framebuffer_object?
+# extension spec & gl2ext.h disagree!
+
+# Aliases EXT_framebuffer_object enums above
+# OES_framebuffer_object enum: (OpenGL ES only; additional; see below)
+#	FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_OES		= 0x8CD0
+#	FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_OES		= 0x8CD1
+#	FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_OES	= 0x8CD2
+#	FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_OES = 0x8CD3
+#	FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_OES	= 0x8CD4
+#	FRAMEBUFFER_COMPLETE_OES			= 0x8CD5
+#	FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES		= 0x8CD6
+#	FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_OES	= 0x8CD7
+#	FRAMEBUFFER_INCOMPLETE_DIMENSIONS_OES		= 0x8CD9
+#	FRAMEBUFFER_INCOMPLETE_FORMATS_OES		= 0x8CDA
+#	FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_OES		= 0x8CDB
+#	FRAMEBUFFER_INCOMPLETE_READ_BUFFER_OES		= 0x8CDC
+#	FRAMEBUFFER_UNSUPPORTED_OES			= 0x8CDD
+#	COLOR_ATTACHMENT0_OES				= 0x8CE0
+#	DEPTH_ATTACHMENT_OES				= 0x8D00
+#	STENCIL_ATTACHMENT_OES				= 0x8D20
+#	FRAMEBUFFER_OES					= 0x8D40
+#	RENDERBUFFER_OES				= 0x8D41
+#	RENDERBUFFER_WIDTH_OES				= 0x8D42
+#	RENDERBUFFER_HEIGHT_OES				= 0x8D43
+#	RENDERBUFFER_INTERNAL_FORMAT_OES		= 0x8D44
+#	STENCIL_INDEX1_OES				= 0x8D46
+#	STENCIL_INDEX4_OES				= 0x8D47
+#	STENCIL_INDEX8_OES				= 0x8D48
+#	RENDERBUFFER_RED_SIZE_OES			= 0x8D50
+#	RENDERBUFFER_GREEN_SIZE_OES			= 0x8D51
+#	RENDERBUFFER_BLUE_SIZE_OES			= 0x8D52
+#	RENDERBUFFER_ALPHA_SIZE_OES			= 0x8D53
+#	RENDERBUFFER_DEPTH_SIZE_OES			= 0x8D54
+#	RENDERBUFFER_STENCIL_SIZE_OES			= 0x8D55
+
+# OES_stencil1 enum: (OpenGL ES only; additional; see below)
+#	use OES_framebuffer_object STENCIL_INDEX1_OES
+
+# OES_stencil4 enum: (OpenGL ES only; additional; see below)
+#	use OES_framebuffer_object STENCIL_INDEX4_OES
+
+# OES_stencil8 enum: (OpenGL ES only; additional; see below)
+#	use OES_framebuffer_object STENCIL_INDEX8_OES
+
 # VERSION_3_0 enum:
 # ARB_framebuffer_object enum: (note: no ARB suffixes)
 # EXT_framebuffer_multisample enum: (additional; see above)
@@ -6005,7 +6298,24 @@ SGIX_subsample enum:
 
 # Khronos OpenGL ES WG: 0x8D60-0x8D6F
 
-# Khronos_future_use: 0x8D60-0x8D6F
+# OES_texture_cube_map enum: (OpenGL ES only)
+#	TEXTURE_GEN_STR_OES				= 0x8D60
+
+# OES_texture_float enum: (OpenGL ES only)
+#	HALF_FLOAT_OES					= 0x8D61
+
+# OES_vertex_half_float enum: (OpenGL ES only)
+#	use OES_texture_float HALF_FLOAT_OES
+
+# OES_framebuffer_object enum: (OpenGL ES only)
+#	RGB565_OES					= 0x8D62
+
+# Khronos_future_use: 0x8D63
+
+# OES_compressed_ETC1_RGB8_texture (OpenGL ES only)
+#	ETC1_RGB8_OES					= 0x8D64
+
+# Khronos_future_use: 0x8D65-0x8D6F
 
 ###############################################################################
 
@@ -6230,7 +6540,13 @@ SGIX_subsample enum:
 
 # Khronos OpenGL ES WG: 0x8DF0-0x8E0F
 
-# Khronos_future_use: 0x8DF0-0x8E0F
+# Khronos_future_use: 0x8DF0-0x8DF5
+
+# OES_vertex_type_10_10_10_2 enum: (OpenGL ES only)
+#	UNSIGNED_INT_10_10_10_2_OES			= 0x8DF6
+#	INT_10_10_10_2_OES				= 0x8DF7
+
+# Khronos_future_use: 0x8DF8-0x8E0F
 
 ###############################################################################
 
@@ -6285,7 +6601,13 @@ SGIX_subsample enum:
 #	TEXTURE_SWIZZLE_A_EXT				= 0x8E45
 #	TEXTURE_SWIZZLE_RGBA_EXT			= 0x8E46
 
-# NV_future_use: 0x8E47-0x8E4F
+# NV_future_use: 0x8E47-0x8E4B
+
+# EXT_provoking_vertex enum:
+#	QUADS_FOLLOW_PROVOKING_VERTEX_CONVENTION_EXT	= 0x8E4C
+#	FIRST_VERTEX_CONVENTION_EXT			= 0x8E4D
+#	LAST_VERTEX_CONVENTION_EXT			= 0x8E4E
+#	PROVOKING_VERTEX_EXT				= 0x8E4F
 
 # NV_explicit_multisample enum:
 #	SAMPLE_POSITION_NV				= 0x8E50
@@ -6348,16 +6670,68 @@ SGIX_subsample enum:
 # Assigned for Mike Weiblen (Khronos public bug 91)
 
 ###############################################################################
+
+# OpenGL ARB: 0x8F90-0x8F9F (SNORM textures, 3.1 primitive restart server state)
+# VERSION_3_1 enum:
+#	RED_SNORM					= 0x8F90    # 3.1
+#	RG_SNORM					= 0x8F91    # 3.1
+#	RGB_SNORM					= 0x8F92    # 3.1
+#	RGBA_SNORM					= 0x8F93    # 3.1
+#	R8_SNORM					= 0x8F94    # 3.1
+#	RG8_SNORM					= 0x8F95    # 3.1
+#	RGB8_SNORM					= 0x8F96    # 3.1
+#	RGBA8_SNORM					= 0x8F97    # 3.1
+#	R16_SNORM					= 0x8F98    # 3.1
+#	RG16_SNORM					= 0x8F99    # 3.1
+#	RGB16_SNORM					= 0x8F9A    # 3.1
+#	RGBA16_SNORM					= 0x8F9B    # 3.1
+#	SIGNED_NORMALIZED				= 0x8F9C    # 3.1
+#	PRIMITIVE_RESTART				= 0x8F9D    # Different from NV_primitive_restart value
+#	PRIMITIVE_RESTART_INDEX				= 0x8F9E    # Different from NV_primitive_restart value
+
+###############################################################################
+
+# Qualcomm: 0x8FA0-0x8FBF
+# Assigned for Maurice Ribble (Khronos bug 4512)
+
+###############################################################################
+
+# Vivante: 0x8FC0-0x8FDF
+# Assigned for Frido Garritsen	(Khronos bug 4526)
+
+###############################################################################
+
+# Any_vendor_future_use: 0x8FE0-0x8FFF
+
+###############################################################################
+
+# AMD: 0x9000-0x900F
+# Assigned for Bill Licea-Kane
+
+# AMD_vertex_shader_tesselator enum:
+#	SAMPLER_BUFFER_AMD				= 0x9001
+#	INT_SAMPLER_BUFFER_AMD				= 0x9002
+#	UNSIGNED_INT_SAMPLER_BUFFER_AMD			= 0x9003
+#	TESSELLATION_MODE_AMD				= 0x9004
+#	TESSELLATION_FACTOR_AMD				= 0x9005
+#	DISCRETE_AMD					= 0x9006
+#	CONTINUOUS_AMD					= 0x9007
+
+# AMD_future_use: 0x9008-0x900F
+
+###############################################################################
 ### Please remember that new enumerant allocations must be obtained by request
 ### to the Khronos API registrar (see comments at the top of this file)
 ### File requests in the Khronos Bugzilla, OpenGL project, Registry component.
 ###############################################################################
 
-# Any_vendor_future_use: 0x8F90-0xFFFF
+# Any_vendor_future_use: 0x9010-0xFFFF
 #
 #   This range must be the last range in the file.  To generate a new
 #   range, allocate multiples of 16 from the beginning of the
 #   Any_vendor_future_use range and update enum.spec
+
+# (NOTE: first fill the gap from 0x8FE0-0x8FFF before proceeding here)
 
 ###############################################################################
 
