@@ -266,7 +266,6 @@ namespace OpenTK.Graphics
             MethodInfo m;
             return
                 GetExtensionDelegate(name, signature) ??
-                /*((m = importsClass.GetMethod(name.Substring(2), BindingFlags.Static | BindingFlags.NonPublic)) != null ?*/
                 (Imports.FunctionMap.TryGetValue((name.Substring(2)), out m) ?
                 Delegate.CreateDelegate(signature, m) : null);
         }

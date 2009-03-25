@@ -350,11 +350,7 @@ namespace Bind.Structures
             {
                 // No special wrapper needed - just call this delegate:
                 Function f = new Function(this);
-
-                if (f.ReturnType.CurrentType.ToLower().Contains("void"))
-                    f.Body.Add(String.Format("{0};", f.CallString()));
-                else
-                    f.Body.Add(String.Format("return {0};", f.CallString()));
+                f.CreateBody(false);
 
                 wrappers.Add(f);
             }

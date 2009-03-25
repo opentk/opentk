@@ -120,6 +120,8 @@ namespace OpenTK.Graphics
 
         #region --- Static Members ---
 
+        #region public static GraphicsContext CreateDummyContext()
+
         /// <summary>
         /// Creates a dummy GraphicsContext to allow OpenTK to work with contexts created by external libraries.
         /// </summary>
@@ -143,26 +145,19 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region --- Private Members ---
-
-        #region void ContextDestroyed(IGraphicsContext context, EventArgs e)
+        #region public static void Assert()
 
         /// <summary>
-        /// Handles the Destroy event.
+        /// Checks if a GraphicsContext exists in the calling thread and throws a GraphicsContextException if it doesn't.
         /// </summary>
-        /// <param name="context">The OpenTK.Platform.IGraphicsContext that was destroyed.</param>
-        /// <param name="e">Not used.</param>
-        void ContextDestroyed(IGraphicsContext context, EventArgs e)
+        /// <exception cref="GraphicsContextMissingException">Generated when no GraphicsContext is current in the calling thread.</exception>
+        public static void Assert()
         {
-            this.Destroy -= ContextDestroyed;
-            //available_contexts.Remove(((IGraphicsContextInternal)this).Context);
+            if (GraphicsContext.CurrentContext == null)
+                throw new GraphicsContextMissingException();
         }
 
         #endregion
-
-        #endregion
-
-        #region --- Public Members ---
 
         #region public static IGraphicsContext CurrentContext
 
@@ -170,7 +165,7 @@ namespace OpenTK.Graphics
         internal static GetCurrentContextDelegate GetCurrentContext;
 
         /// <summary>
-        /// Gets or sets the current GraphicsContext in the calling thread.
+        /// Gets the GraphicsContext that is current in the calling thread.
         /// </summary>
         public static GraphicsContext CurrentContext
         {
@@ -187,13 +182,6 @@ namespace OpenTK.Graphics
                     return null;
                 }
             }
-            //set
-            //{
-            //    if (value != null)
-            //        value.MakeCurrent();
-            //    else if (CurrentContext != null)
-            //        CurrentContext.IsCurrent = false;
-            //}
         }
 
         #endregion
@@ -231,20 +219,84 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region public static AvailableDisplayFormats
+        #endregion
 
+        #region --- Internal Members ---
+
+        bool inside_begin_region;
+        List<ErrorCode> error_list = new List<ErrorCode>();
+
+        // Indicates that we entered a GL.Begin() - GL.End() region.
+        [Conditional("DEBUG")]
+        internal void EnterBeginRegion()
+        {
+            inside_begin_region = true;
+        }
+
+        // Indicates that we left a GL.Begin() - GL.End() region.
+        [Conditional("DEBUG")]
+        internal void ExitBeginRegion()
+        {
+            inside_begin_region = false;
+        }
+
+        // Retrieve all OpenGL errors to clear the error list.
+        // See http://www.opengl.org/documentation/specs/man_pages/hardcopy/GL/html/gl/geterror.html
+        [Conditional("DEBUG")]
+        internal void ResetErrors()
+        {
+            if (!inside_begin_region)
+            {
+                while (GL.GetError() != ErrorCode.NoError)
+                { }
+            }
+        }
+
+        // Retrieve all OpenGL errors and throw an exception if anything other than NoError is returned.
+        [Conditional("DEBUG")]
+        internal void CheckErrors()
+        {
+            if (!inside_begin_region)
+            {
+                error_list.Clear();
+                ErrorCode error;
+                do
+                {
+                    error = GL.GetError();
+                    error_list.Add(error);
+                } while (error != ErrorCode.NoError);
+
+                if (error_list.Count != 1)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    foreach (ErrorCode e in error_list)
+                    {
+                        sb.Append(e.ToString());
+                        sb.Append(", ");
+                    }
+                    sb.Remove(sb.Length - 2, 2);
+
+                    Debug.Assert(error_list.Count == 1, "OpenTK detected an OpenGL error.",
+                        String.Format("The following errors where reported: \"{0}\"", sb.ToString()));
+                }
+            }
+        }
 
         #endregion
 
-        #region public static void Assert()
+        #region --- Private Members ---
+
+        #region void ContextDestroyed(IGraphicsContext context, EventArgs e)
 
         /// <summary>
-        /// Checks if a GraphicsContext exists in the calling thread and throws a GraphicsContextException if it doesn't.
+        /// Handles the Destroy event.
         /// </summary>
-        public static void Assert()
+        /// <param name="context">The OpenTK.Platform.IGraphicsContext that was destroyed.</param>
+        /// <param name="e">Not used.</param>
+        void ContextDestroyed(IGraphicsContext context, EventArgs e)
         {
-            if (GraphicsContext.CurrentContext == null)
-                throw new GraphicsContextMissingException();
+            this.Destroy -= ContextDestroyed;
+            //available_contexts.Remove(((IGraphicsContextInternal)this).Context);
         }
 
         #endregion
@@ -344,59 +396,37 @@ namespace OpenTK.Graphics
 
         #region --- IGraphicsContextInternal Members ---
 
-        #region Implementation
-
+        /// <summary>
+        /// Gets the platform-specific implementation of this IGraphicsContext.
+        /// </summary>
         IGraphicsContext IGraphicsContextInternal.Implementation
         {
             get { return implementation; }
         }
 
-        #endregion
-
-        #region void LoadAll()
-
+        /// <summary>
+        /// Loads all OpenGL extensions.
+        /// </summary>
         void IGraphicsContextInternal.LoadAll()
         {
             (implementation as IGraphicsContextInternal).LoadAll();
         }
 
-        #endregion
-
-        /// <internal />
-        /// <summary>Gets a handle to the OpenGL rendering context.</summary>
+        /// <summary>
+        /// Gets a handle to the OpenGL rendering context.
+        /// </summary>
         ContextHandle IGraphicsContextInternal.Context
         {
             get { return ((IGraphicsContextInternal)implementation).Context; }
         }
-
-        /*
-        /// <summary>
-        /// Gets the IWindowInfo describing the window associated with this context.
-        /// </summary>
-        IWindowInfo IGraphicsContextInternal.Info
-        {
-            get { return (implementation as IGraphicsContextInternal).Info; }
-            //internal set { (implementation as IGLContextInternal).Info = value; }
-        }
-        */
 
         /// <summary>
         /// Gets the GraphicsMode of the context.
         /// </summary>
         public GraphicsMode GraphicsMode
         {
-            get { return implementation.GraphicsMode; }
+            get { return (implementation as IGraphicsContextInternal).GraphicsMode; }
         }
-
-        ///// <summary>
-        ///// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
-        ///// calling thread, or IntPtr.Zero if no OpenGL context is current.
-        ///// </summary>
-        ///// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
-        //ContextHandle IGLContextInternal.GetCurrentContext()
-        //{
-        //    return (implementation as IGLContextInternal).GetCurrentContext();
-        //}
 
         /// <summary>
         /// Registers an OpenGL resource for disposal.

@@ -36,6 +36,11 @@ namespace Bind.Structures
         static Regex endings = new Regex(@"((([df]|u?[isb])v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flagv|Tess|Status|Pixels)", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
+        // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
+        // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
+        // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior. 
+        internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
+
         #endregion
 
         #region Fields
@@ -44,15 +49,6 @@ namespace Bind.Structures
         int index;
 
         #endregion
-
-        /// <summary>
-        /// Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
-        /// a 'type' and a 'ref type' (such overloads are not CLS Compliant).
-        /// </summary>
-        /// <remarks>
-        /// The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior. 
-        /// </remarks>
-        internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
         
         #region --- Constructors ---
 
@@ -72,11 +68,15 @@ namespace Bind.Structures
 
         #endregion
 
+        #region public Delegate WrappedDelegate
+
         public Delegate WrappedDelegate
         {
             get { return wrapped_delegate; }
             set { wrapped_delegate = value; }
         }
+
+        #endregion
 
         #region public void TurnVoidPointersToIntPtr()
 
@@ -394,10 +394,10 @@ namespace Bind.Structures
 
         #region public void CreateBody(bool wantCLSCompliance)
 
-        static List<string> handle_statements = new List<string>();
-        static List<string> handle_release_statements = new List<string>();
-        static List<string> fixed_statements = new List<string>();
-        static List<string> assign_statements = new List<string>();
+        readonly List<string> handle_statements = new List<string>();
+        readonly List<string> handle_release_statements = new List<string>();
+        readonly List<string> fixed_statements = new List<string>();
+        readonly List<string> assign_statements = new List<string>();
 
         public void CreateBody(bool wantCLSCompliance)
         {
@@ -459,7 +459,21 @@ namespace Bind.Structures
                 }
             }
 
-            if (!f.Unsafe || fixed_statements.Count > 0)
+            // Automatic OpenGL error checking.
+            // See OpenTK.Graphics.ErrorHelper for more information.
+            // Make sure that no error checking is added to the GetError function,
+            // as that would cause infinite recursion!
+            if (f.TrimmedName != "GetError")
+            {
+                f.Body.Add("#if DEBUG");
+                f.Body.Add("using (new ErrorHelper(GraphicsContext.CurrentContext))");
+                f.Body.Add("{");
+                if (f.TrimmedName == "Begin")
+                    f.Body.Add("GraphicsContext.CurrentContext.EnterBeginRegion();");
+                f.Body.Add("#endif");
+            }
+
+            if (!f.Unsafe && fixed_statements.Count > 0)
             {
                 f.Body.Add("unsafe");
                 f.Body.Add("{");
@@ -529,7 +543,7 @@ namespace Bind.Structures
                 f.Body.Add("}");
             }
 
-            if (!f.Unsafe || fixed_statements.Count > 0)
+            if (!f.Unsafe && fixed_statements.Count > 0)
             {
                 f.Body.Unindent();
                 f.Body.Add("}");
@@ -539,6 +553,15 @@ namespace Bind.Structures
             {
                 f.Body.Unindent();
                 f.Body.Add("}");
+            }
+
+            if (f.TrimmedName != "GetError")
+            {
+                f.Body.Add("#if DEBUG");
+                if (f.TrimmedName == "End")
+                    f.Body.Add("GraphicsContext.CurrentContext.ExitBeginRegion();");
+                f.Body.Add("}");
+                f.Body.Add("#endif");
             }
 
             this.Body = f.Body;
