@@ -425,7 +425,7 @@ namespace OpenTK.Graphics
         /// </summary>
         public GraphicsMode GraphicsMode
         {
-            get { return (implementation as IGraphicsContextInternal).GraphicsMode; }
+            get { return (implementation as IGraphicsContext).GraphicsMode; }
         }
 
         /// <summary>
