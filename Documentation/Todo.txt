@@ -5,9 +5,14 @@
 
 [OpenTK.Graphics.GL]
 + Improve performance for functions that return StringBuilders.
++ Enforce PureValue constraint in generic classes.
++ Improve performance for functions that take generic arrays.
++ Fix documentation - parameter mismatches.
++ Add GL3.1 support.
 
 [OpenTK.Graphics.GraphicsContext]
 + FSAA support (very simple, now that GL3 support has been added.)
++ Implement GL3 support on Mac OS X.
 
 [OpenTK.GLControl]
 + Improve the designer interface.
@@ -23,26 +28,3 @@
 
 [OpenTK.Compute]
 + Begin the implementation.
-
-
-[Call performance]
-
-AMD Venice 3200+ @2250MHz, Vista Business x64, .Net 2.0 x64 optimized build (+-5%):
-+ Dummy managed call:
-	+ Inline function:		 100000000 calls/second.
-	+ Function with try:	  74500000 calls/second.			<--- With try { } finally { } block
-+ Delegates loaded with reflection:
-	+ GL.Vertex2f:			  21878992 calls/second.			(wrapper->delegate->import->unmanaged)
-	+ GL.Vertex2fv:			  23237133 calls/second.			<--- 'fixed' statement.
-	+ GL.ARB.ActiveTexture:	  20133679 calls/second.			(wrapper->delegate->unmanaged)
-	* GL.ColorPointer:		   2870254 calls/second.			<--- GCHandle.Alloc and Free
-+ Delegates loaded with constructors:
-	+ GL.Vertex2f:			  22396040 calls/second.
-	+ GL.Vertex2fv:			  22448539 calls/second.			<--- fixed statement
-	+ GL.ARB.ActiveTexture:	  19920181 calls/second.
-	* GL.ColorPointer:		   2340392 calls/second.			<--- GCHandle.Alloc and Free
-	* GL.Vertex2fv:			   2260000 calls/second.			<--- GCHandle.Alloc and Free
-+ Direct DllImport (import->unmanaged)
-	+ glVertex2f_1:			  10445125 calls/second.			<--- Unmanaged Code Security active
-	+ glVertex2f_2:			  24684893 calls/second.			<--- Unmanaged Code Security suppressed
-	+ glVertex2fv:			  25896611 calls/second.			<--- Unmanaged Code Security suppressed
