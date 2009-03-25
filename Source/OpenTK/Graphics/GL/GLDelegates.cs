@@ -2,7 +2,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -1817,10 +1817,10 @@ namespace OpenTK.Graphics
             internal delegate void BindBufferBase(OpenTK.Graphics.Version30 target, UInt32 index, UInt32 buffer);
             internal static BindBufferBase glBindBufferBase;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void TransformFeedbackVaryings(UInt32 program, Int32 count, Int32* locations, OpenTK.Graphics.Version30 bufferMode);
-            internal unsafe static TransformFeedbackVaryings glTransformFeedbackVaryings;
+            internal delegate void TransformFeedbackVaryings(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.Version30 bufferMode);
+            internal static TransformFeedbackVaryings glTransformFeedbackVaryings;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTransformFeedbackVarying(UInt32 program, UInt32 index, [Out] Int32* location);
+            internal unsafe delegate void GetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.Graphics.Version30* type, [Out] System.Text.StringBuilder name);
             internal unsafe static GetTransformFeedbackVarying glGetTransformFeedbackVarying;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ClampColor(OpenTK.Graphics.ClampColorTarget target, OpenTK.Graphics.ClampColorMode clamp);
@@ -2627,8 +2627,8 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetFramebufferAttachmentParameteriv(OpenTK.Graphics.FramebufferTarget target, OpenTK.Graphics.FramebufferAttachment attachment, OpenTK.Graphics.FramebufferParameterName pname, [Out] Int32* @params);
             internal unsafe static GetFramebufferAttachmentParameteriv glGetFramebufferAttachmentParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void Generate(OpenTK.Graphics.GenerateMipmapTarget target);
-            internal static Generate glGenerate;
+            internal delegate void GenerateMipmap(OpenTK.Graphics.GenerateMipmapTarget target);
+            internal static GenerateMipmap glGenerateMipmap;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlitFramebuffer(Int32 srcX0, Int32 srcY0, Int32 srcX1, Int32 srcY1, Int32 dstX0, Int32 dstY0, Int32 dstX1, Int32 dstY1, OpenTK.Graphics.ClearBufferMask mask, OpenTK.Graphics.BlitFramebufferFilter filter);
             internal static BlitFramebuffer glBlitFramebuffer;
@@ -2654,8 +2654,8 @@ namespace OpenTK.Graphics
             internal delegate void VertexAttribDivisor(UInt32 index, UInt32 divisor);
             internal static VertexAttribDivisor glVertexAttribDivisor;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void MapBufferRange(OpenTK.Graphics.ArbMapBufferRange target, IntPtr offset, IntPtr length, UInt32 access);
-            internal static MapBufferRange glMapBufferRange;
+            internal unsafe delegate IntPtr MapBufferRange(OpenTK.Graphics.ArbMapBufferRange target, IntPtr offset, IntPtr length, UInt32 access);
+            internal unsafe static MapBufferRange glMapBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FlushMappedBufferRange(OpenTK.Graphics.ArbMapBufferRange target, IntPtr offset, IntPtr length);
             internal static FlushMappedBufferRange glFlushMappedBufferRange;
@@ -4907,6 +4907,27 @@ namespace OpenTK.Graphics
             internal delegate void EndConditionalRenderNV();
             internal static EndConditionalRenderNV glEndConditionalRenderNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void PresentFrameKeyedNV(UInt32 video_slot, UInt64 minPresentTime, UInt32 beginPresentTimeId, UInt32 presentDurationId, OpenTK.Graphics.NvPresentVideo type, OpenTK.Graphics.NvPresentVideo target0, UInt32 fill0, UInt32 key0, OpenTK.Graphics.NvPresentVideo target1, UInt32 fill1, UInt32 key1);
+            internal static PresentFrameKeyedNV glPresentFrameKeyedNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void PresentFrameDualFillNV(UInt32 video_slot, UInt64 minPresentTime, UInt32 beginPresentTimeId, UInt32 presentDurationId, OpenTK.Graphics.NvPresentVideo type, OpenTK.Graphics.NvPresentVideo target0, UInt32 fill0, OpenTK.Graphics.NvPresentVideo target1, UInt32 fill1, OpenTK.Graphics.NvPresentVideo target2, UInt32 fill2, OpenTK.Graphics.NvPresentVideo target3, UInt32 fill3);
+            internal static PresentFrameDualFillNV glPresentFrameDualFillNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetVideoivNV(UInt32 video_slot, OpenTK.Graphics.NvPresentVideo pname, [Out] Int32* @params);
+            internal unsafe static GetVideoivNV glGetVideoivNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetVideouivNV(UInt32 video_slot, OpenTK.Graphics.NvPresentVideo pname, [Out] UInt32* @params);
+            internal unsafe static GetVideouivNV glGetVideouivNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetVideoi64vNV(UInt32 video_slot, OpenTK.Graphics.NvPresentVideo pname, [Out] Int64* @params);
+            internal unsafe static GetVideoi64vNV glGetVideoi64vNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetVideoui64vNV(UInt32 video_slot, OpenTK.Graphics.NvPresentVideo pname, [Out] UInt64* @params);
+            internal unsafe static GetVideoui64vNV glGetVideoui64vNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void VideoParameterivNV(UInt32 video_slot, OpenTK.Graphics.NvPresentVideo pname, Int32* @params);
+            internal unsafe static VideoParameterivNV glVideoParameterivNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BeginTransformFeedbackEXT(OpenTK.Graphics.ExtTransformFeedback primitiveMode);
             internal static BeginTransformFeedbackEXT glBeginTransformFeedbackEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4922,10 +4943,10 @@ namespace OpenTK.Graphics
             internal delegate void BindBufferBaseEXT(OpenTK.Graphics.ExtTransformFeedback target, UInt32 index, UInt32 buffer);
             internal static BindBufferBaseEXT glBindBufferBaseEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void TransformFeedbackVaryingsEXT(UInt32 program, Int32 count, Int32* locations, OpenTK.Graphics.ExtTransformFeedback bufferMode);
-            internal unsafe static TransformFeedbackVaryingsEXT glTransformFeedbackVaryingsEXT;
+            internal delegate void TransformFeedbackVaryingsEXT(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.ExtTransformFeedback bufferMode);
+            internal static TransformFeedbackVaryingsEXT glTransformFeedbackVaryingsEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTransformFeedbackVaryingEXT(UInt32 program, UInt32 index, [Out] Int32* location);
+            internal unsafe delegate void GetTransformFeedbackVaryingEXT(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.Graphics.ExtTransformFeedback* type, [Out] System.Text.StringBuilder name);
             internal unsafe static GetTransformFeedbackVaryingEXT glGetTransformFeedbackVaryingEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ClientAttribDefaultEXT(OpenTK.Graphics.ClientAttribMask mask);
@@ -5515,6 +5536,48 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawTransformFeedbackNV(OpenTK.Graphics.NvTransformFeedback2 mode, UInt32 id);
             internal static DrawTransformFeedbackNV glDrawTransformFeedbackNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetPerfMonitorGroupsAMD([Out] Int32* numGroups, Int32 groupsSize, [Out] UInt32* groups);
+            internal unsafe static GetPerfMonitorGroupsAMD glGetPerfMonitorGroupsAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetPerfMonitorCountersAMD(UInt32 group, [Out] Int32* numCounters, [Out] Int32* maxActiveCounters, Int32 counterSize, [Out] UInt32* counters);
+            internal unsafe static GetPerfMonitorCountersAMD glGetPerfMonitorCountersAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetPerfMonitorGroupStringAMD(UInt32 group, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder groupString);
+            internal unsafe static GetPerfMonitorGroupStringAMD glGetPerfMonitorGroupStringAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetPerfMonitorCounterStringAMD(UInt32 group, UInt32 counter, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder counterString);
+            internal unsafe static GetPerfMonitorCounterStringAMD glGetPerfMonitorCounterStringAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void GetPerfMonitorCounterInfoAMD(UInt32 group, UInt32 counter, OpenTK.Graphics.AmdPerformanceMonitor pname, [Out] IntPtr data);
+            internal static GetPerfMonitorCounterInfoAMD glGetPerfMonitorCounterInfoAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GenPerfMonitorsAMD(Int32 n, [Out] UInt32* monitors);
+            internal unsafe static GenPerfMonitorsAMD glGenPerfMonitorsAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void DeletePerfMonitorsAMD(Int32 n, [Out] UInt32* monitors);
+            internal unsafe static DeletePerfMonitorsAMD glDeletePerfMonitorsAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void SelectPerfMonitorCountersAMD(UInt32 monitor, bool enable, UInt32 group, Int32 numCounters, [Out] UInt32* counterList);
+            internal unsafe static SelectPerfMonitorCountersAMD glSelectPerfMonitorCountersAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BeginPerfMonitorAMD(UInt32 monitor);
+            internal static BeginPerfMonitorAMD glBeginPerfMonitorAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void EndPerfMonitorAMD(UInt32 monitor);
+            internal static EndPerfMonitorAMD glEndPerfMonitorAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetPerfMonitorCounterDataAMD(UInt32 monitor, OpenTK.Graphics.AmdPerformanceMonitor pname, Int32 dataSize, [Out] UInt32* data, [Out] Int32* bytesWritten);
+            internal unsafe static GetPerfMonitorCounterDataAMD glGetPerfMonitorCounterDataAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TessellationFactorAMD(Single factor);
+            internal static TessellationFactorAMD glTessellationFactorAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TessellationModeAMD(OpenTK.Graphics.AmdVertexShaderTesselator mode);
+            internal static TessellationModeAMD glTessellationModeAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void ProvokingVertexEXT(OpenTK.Graphics.ExtProvokingVertex mode);
+            internal static ProvokingVertexEXT glProvokingVertexEXT;
         }
     }
 }
