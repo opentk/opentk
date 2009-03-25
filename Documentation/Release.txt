@@ -12,6 +12,13 @@ This release introduces:
 Please report any issues you may encounter at http://www.opentk.com.
 
 
+[Known issues]
+
+This release cannot be compiled on Mono due to a compiler bug
+(https://bugzilla.novell.com/show_bug.cgi?id=488960). Please
+use the precompiled binaries included in the release package.
+
+
 [API changes]
 
 Please note that binary compatibility is not preserved between
