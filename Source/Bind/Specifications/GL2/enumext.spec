@@ -19,7 +19,7 @@ passthru:
 passthru: /* Header file version number, required by OpenGL ABI for Linux */
 passthru: /* glext.h last updated 2008/11/14 */
 passthru: /* Current version at http://www.opengl.org/registry/ */
-passthru: #define GL_GLEXT_VERSION 44
+passthru: #define GL_GLEXT_VERSION 48
 
 ###############################################################################
 #
@@ -76,12 +76,12 @@ ARB_imaging enum:
 	CONSTANT_ALPHA					= 0x8003
 	ONE_MINUS_CONSTANT_ALPHA			= 0x8004
 	BLEND_COLOR					= 0x8005 # 4 F
-#	FUNC_ADD					= 0x8006 # Equivalent to EXT_blend_minmax
-#	MIN						= 0x8007
-#	MAX						= 0x8008
+	FUNC_ADD					= 0x8006 # Equivalent to EXT_blend_minmax
+	MIN						= 0x8007
+	MAX						= 0x8008
 	BLEND_EQUATION					= 0x8009 # 1 I
-#	FUNC_SUBTRACT					= 0x800A # Equivalent to EXT_blend_subtract
-#	FUNC_REVERSE_SUBTRACT				= 0x800B
+	FUNC_SUBTRACT					= 0x800A # Equivalent to EXT_blend_subtract
+	FUNC_REVERSE_SUBTRACT				= 0x800B
 	CONVOLUTION_1D					= 0x8010 # 1 I # Equivalent to EXT_convolution
 	CONVOLUTION_2D					= 0x8011 # 1 I
 	SEPARABLE_2D					= 0x8012 # 1 I
@@ -727,6 +727,16 @@ passthru: /* Reuse tokens from ARB_texture_rg */
 #	use ARB_texture_rg		    RG32UI
 passthru: /* Reuse tokens from ARB_vertex_array_object */
 	use ARB_vertex_array_object	    VERTEX_ARRAY_BINDING
+
+
+###############################################################################
+#
+# OpenGL 3.1 enums
+#
+###############################################################################
+
+# TBD
+# VERSION_3_1 enum:
 
 
 ###############################################################################
@@ -2735,7 +2745,7 @@ EXT_light_texture enum:
 	TEXTURE_LIGHT_EXT				= 0x8350 # 1 I
 	TEXTURE_MATERIAL_FACE_EXT			= 0x8351 # 1 I
 	TEXTURE_MATERIAL_PARAMETER_EXT			= 0x8352 # 1 I
-	use EXT_fog_coord FRAGMENT_DEPTH_EXT
+	use EXT_fog_coord		    FRAGMENT_DEPTH_EXT
 
 ###############################################################################
 
@@ -3277,11 +3287,11 @@ NV_register_combiners enum:
 	COMBINER5_NV					= 0x8555
 	COMBINER6_NV					= 0x8556
 	COMBINER7_NV					= 0x8557
-	use ARB_multitexture TEXTURE0_ARB
-	use ARB_multitexture TEXTURE1_ARB
-	use BlendingFactorDest ZERO
-	use DrawBufferMode NONE
-	use GetPName FOG
+	use ARB_multitexture		    TEXTURE0_ARB
+	use ARB_multitexture		    TEXTURE1_ARB
+	use BlendingFactorDest		    ZERO
+	use DrawBufferMode		    NONE
+	use GetPName			    FOG
 
 ###############################################################################
 
@@ -3290,7 +3300,7 @@ NV_fog_distance enum:
 	FOG_DISTANCE_MODE_NV				= 0x855A
 	EYE_RADIAL_NV					= 0x855B
 	EYE_PLANE_ABSOLUTE_NV				= 0x855C
-	use TextureGenParameter EYE_PLANE
+	use TextureGenParameter		    EYE_PLANE
 
 ###############################################################################
 
@@ -3942,6 +3952,7 @@ ATI_fragment_shader enum:
 	QUARTER_BIT_ATI					= 0x00000010
 	EIGHTH_BIT_ATI					= 0x00000020
 	SATURATE_BIT_ATI				= 0x00000040
+	2X_BIT_ATI					= 0x00000001
 	COMP_BIT_ATI					= 0x00000002
 	NEGATE_BIT_ATI					= 0x00000004
 	BIAS_BIT_ATI					= 0x00000008
@@ -5118,21 +5129,21 @@ NV_present_video enum:
 
 # Extension #352
 EXT_transform_feedback enum:
-      TRANSFORM_FEEDBACK_BUFFER_EXT			= 0x8C8E
-      TRANSFORM_FEEDBACK_BUFFER_START_EXT		= 0x8C84
-      TRANSFORM_FEEDBACK_BUFFER_SIZE_EXT		= 0x8C85
-      TRANSFORM_FEEDBACK_BUFFER_BINDING_EXT		= 0x8C8F
-      INTERLEAVED_ATTRIBS_EXT				= 0x8C8C
-      SEPARATE_ATTRIBS_EXT				= 0x8C8D
-      PRIMITIVES_GENERATED_EXT				= 0x8C87
-      TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN_EXT		= 0x8C88
-      RASTERIZER_DISCARD_EXT				= 0x8C89
-      MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS_EXT = 0x8C8A
-      MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS_EXT	= 0x8C8B
-      MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS_EXT	= 0x8C80
-      TRANSFORM_FEEDBACK_VARYINGS_EXT			= 0x8C83
-      TRANSFORM_FEEDBACK_BUFFER_MODE_EXT		= 0x8C7F
-      TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH_EXT		= 0x8C76
+	TRANSFORM_FEEDBACK_BUFFER_EXT			= 0x8C8E
+	TRANSFORM_FEEDBACK_BUFFER_START_EXT		= 0x8C84
+	TRANSFORM_FEEDBACK_BUFFER_SIZE_EXT		= 0x8C85
+	TRANSFORM_FEEDBACK_BUFFER_BINDING_EXT		= 0x8C8F
+	INTERLEAVED_ATTRIBS_EXT				= 0x8C8C
+	SEPARATE_ATTRIBS_EXT				= 0x8C8D
+	PRIMITIVES_GENERATED_EXT			= 0x8C87
+	TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN_EXT	= 0x8C88
+	RASTERIZER_DISCARD_EXT				= 0x8C89
+	MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS_EXT = 0x8C8A
+	MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS_EXT	= 0x8C8B
+	MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS_EXT	= 0x8C80
+	TRANSFORM_FEEDBACK_VARYINGS_EXT			= 0x8C83
+	TRANSFORM_FEEDBACK_BUFFER_MODE_EXT		= 0x8C7F
+	TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH_EXT	= 0x8C76
 
 ###############################################################################
 
@@ -5181,37 +5192,85 @@ NV_explicit_multisample enum:
 
 # Extension #358
 NV_transform_feedback2 enum:
-      TRANSFORM_FEEDBACK_NV				= 0x8E22
-      TRANSFORM_FEEDBACK_BUFFER_PAUSED_NV		= 0x8E23
-      TRANSFORM_FEEDBACK_BUFFER_ACTIVE_NV		= 0x8E24
-      TRANSFORM_FEEDBACK_BINDING_NV			= 0x8E25
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	TRANSFORM_FEEDBACK_NV				= 0x8E22
+	TRANSFORM_FEEDBACK_BUFFER_PAUSED_NV		= 0x8E23
+	TRANSFORM_FEEDBACK_BUFFER_ACTIVE_NV		= 0x8E24
+	TRANSFORM_FEEDBACK_BINDING_NV			= 0x8E25
 
 ###############################################################################
+
+# Extension #359
+ATI_meminfo enum:
+	VBO_FREE_MEMORY_ATI				= 0x87FB
+	TEXTURE_FREE_MEMORY_ATI				= 0x87FC
+	RENDERBUFFER_FREE_MEMORY_ATI			= 0x87FD
+
+###############################################################################
+
+# Extension #360
+AMD_performance_monitor enum:
+	COUNTER_TYPE_AMD				= 0x8BC0
+	COUNTER_RANGE_AMD				= 0x8BC1
+	UNSIGNED_INT64_AMD				= 0x8BC2
+	PERCENTAGE_AMD					= 0x8BC3
+	PERFMON_RESULT_AVAILABLE_AMD			= 0x8BC4
+	PERFMON_RESULT_SIZE_AMD				= 0x8BC5
+	PERFMON_RESULT_AMD				= 0x8BC6
+
+###############################################################################
+
+# Extension #361 - WGL_AMD_gpu_association
+
+###############################################################################
+
+# No new tokens
+# Extension #362
+AMD_texture_texture4 enum:
+
+###############################################################################
+
+# Extension #363
+AMD_vertex_shader_tesselator enum:
+	SAMPLER_BUFFER_AMD				= 0x9001
+	INT_SAMPLER_BUFFER_AMD				= 0x9002
+	UNSIGNED_INT_SAMPLER_BUFFER_AMD			= 0x9003
+	TESSELLATION_MODE_AMD				= 0x9004
+	TESSELLATION_FACTOR_AMD				= 0x9005
+	DISCRETE_AMD					= 0x9006
+	CONTINUOUS_AMD					= 0x9007
+
+###############################################################################
+
+# Extension #364
+EXT_provoking_vertex enum:
+	QUADS_FOLLOW_PROVOKING_VERTEX_CONVENTION_EXT	= 0x8E4C
+	FIRST_VERTEX_CONVENTION_EXT			= 0x8E4D
+	LAST_VERTEX_CONVENTION_EXT			= 0x8E4E
+	PROVOKING_VERTEX_EXT				= 0x8E4F
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#------------------------------------------------------------------------------
 #
 # OpenTK edits for type safety
 #
-###############################################################################
+#------------------------------------------------------------------------------
 
 # Version 1.2
 
