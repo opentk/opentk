@@ -16,7 +16,7 @@ namespace Bind
         static Settings() { }
 
         public const string DefaultInputPath = "../../../Source/Bind/Specifications";
-        public const string DefaultOutputPath = "../../../Source/OpenTK/OpenGL/Bindings";
+        public const string DefaultOutputPath = "../../../Source/OpenTK/Graphics/Bindings";
         public const string DefaultOutputNamespace = "OpenTK.Graphics";
         public const string DefaultDocPath = "../../../Source/Bind/Specifications/Docs";
         public const string DefaultDocFile = "ToInlineDocs.xslt";

@@ -11,7 +11,6 @@ using System.IO;
 using Bind.Structures;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using Bind.Properties;
 
 namespace Bind.GL2
 {
@@ -633,6 +632,8 @@ namespace Bind.GL2
 
             sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
             sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
+            sw.WriteLine("#pragma warning disable 1572");   // Wrong param comments
+            sw.WriteLine("#pragma warning disable 1573");   // Missing param comments
 
             sw.WriteLine();
             sw.WriteLine("static partial class {0}", Settings.OutputClass);
