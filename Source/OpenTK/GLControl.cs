@@ -55,8 +55,8 @@ namespace OpenTK
         /// </summary>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the control.</param>
         /// <param name="major">The major version for the OpenGL GraphicsContext.</param>
-        /// <param name="major">The minor version for the OpenGL GraphicsContext.</param>
-        /// <param name="major">The GraphicsContextFlags for the OpenGL GraphicsContext.</param>
+        /// <param name="minor">The minor version for the OpenGL GraphicsContext.</param>
+        /// <param name="flags">The GraphicsContextFlags for the OpenGL GraphicsContext.</param>
         public GLControl(GraphicsMode mode, int major, int minor, GraphicsContextFlags flags)
         {
             SetStyle(ControlStyles.Opaque, true);

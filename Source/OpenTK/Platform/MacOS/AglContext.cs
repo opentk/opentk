@@ -29,7 +29,8 @@ namespace OpenTK.Platform.MacOS
         IntPtr contextRef;
 
         bool mVSync = false;
-        IntPtr displayID;
+        // Todo: keep track of which display adapter was specified when the context was created.
+        // IntPtr displayID;
         
         GraphicsMode graphics_mode;
         CarbonWindowInfo carbonWindow;

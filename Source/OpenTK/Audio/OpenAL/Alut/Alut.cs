@@ -100,7 +100,7 @@ namespace OpenTK.Audio
         /// <param name="length">Size in Bytes of the sound buffer.</param>
         /// <returns>OpenAL Buffer, 0 on failure.</returns>
         [CLSCompliant(false), DllImport(Alut.Lib, EntryPoint = "alutCreateBufferFromFileImage", ExactSpelling = true, CallingConvention = Alut.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern uint CreateBufferFromFileImage([In] IntPtr data, int length);
+        public static extern uint CreateBufferFromFileImage([In] IntPtr buffer, int length);
         // ALUT_API ALuint ALUT_APIENTRY alutCreateBufferFromFileImage (const ALvoid *buffer, ALsizei length);
 
 

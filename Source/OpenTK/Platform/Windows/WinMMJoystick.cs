@@ -43,9 +43,10 @@ namespace OpenTK.Platform.Windows
         List<JoystickDevice> sticks = new List<JoystickDevice>();
         IList<JoystickDevice> sticks_readonly;
 
-        static readonly string RegistryJoyConfig = @"Joystick%dConfiguration";
-        static readonly string RegistryJoyName = @"Joystick%dOEMName";
-        static readonly string RegstryJoyCurrent = @"CurrentJoystickSettings";
+        // Todo: Read the joystick name from the registry.
+        //static readonly string RegistryJoyConfig = @"Joystick%dConfiguration";
+        //static readonly string RegistryJoyName = @"Joystick%dOEMName";
+        //static readonly string RegstryJoyCurrent = @"CurrentJoystickSettings";
 
         bool disposed;
 
@@ -113,17 +114,17 @@ namespace OpenTK.Platform.Windows
                     stick.Details.PovType |= PovType.Continuous;
             }
 
-            // Try to get the device name from the registry. Oh joy!
-            string key_path = String.Format("{0}\\{1}\\{2}", RegistryJoyConfig, caps.RegKey, RegstryJoyCurrent);
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(key_path, false);
-            if (key == null)
-                key = Registry.CurrentUser.OpenSubKey(key_path, false);
-            if (key == null)
-                stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
-            else
-            {
-                key.Close();
-            }
+            // Todo: Try to get the device name from the registry. Oh joy!
+            //string key_path = String.Format("{0}\\{1}\\{2}", RegistryJoyConfig, caps.RegKey, RegstryJoyCurrent);
+            //RegistryKey key = Registry.LocalMachine.OpenSubKey(key_path, false);
+            //if (key == null)
+            //    key = Registry.CurrentUser.OpenSubKey(key_path, false);
+            //if (key == null)
+            //    stick.Description = String.Format("USB Joystick {0} ({1} axes, {2} buttons)", number, stick.Axis.Count, stick.Button.Count);
+            //else
+            //{
+            //    key.Close();
+            //}
 
             if (stick != null)
                 Debug.Print("Found joystick on device number {0}", number);

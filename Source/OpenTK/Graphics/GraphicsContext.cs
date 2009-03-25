@@ -46,7 +46,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Constructs a new GraphicsContext with the specified GraphicsMode and attaches it to the specified window.
         /// </summary>
-        /// <param name="format">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
         /// <param name="window">The OpenTK.Platform.IWindowInfo to attach the GraphicsContext to.</param>
         public GraphicsContext(GraphicsMode mode, IWindowInfo window)
             : this(mode, window, 1, 0, GraphicsContextFlags.Default)
@@ -55,7 +55,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Constructs a new GraphicsContext with the specified GraphicsMode, version and flags,  and attaches it to the specified window.
         /// </summary>
-        /// <param name="format">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
+        /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GraphicsContext.</param>
         /// <param name="window">The OpenTK.Platform.IWindowInfo to attach the GraphicsContext to.</param>
         /// <param name="major">The major version of the new GraphicsContext.</param>
         /// <param name="minor">The minor version of the new GraphicsContext.</param>
@@ -457,7 +457,6 @@ namespace OpenTK.Graphics
         /// A pointer to the specified function or IntPtr.Zero if the function isn't
         /// available in the current opengl context.
         /// </returns>
-        /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
         IntPtr IGraphicsContextInternal.GetAddress(string function)
         {
             return (implementation as IGraphicsContextInternal).GetAddress(function);

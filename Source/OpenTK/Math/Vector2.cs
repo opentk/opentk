@@ -173,7 +173,7 @@ namespace OpenTK.Math
         /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
-        /// <see cref="FastLength"/>
+        /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
         public float Length
         {
@@ -196,7 +196,6 @@ namespace OpenTK.Math
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        /// <seealso cref="OpenTK.Math.FastSqrt"/>
         public float LengthFast
         {
 			get
@@ -217,7 +216,7 @@ namespace OpenTK.Math
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
-        /// <seealso cref="FastLength"/>
+        /// <seealso cref="LengthFast"/>
         public float LengthSquared
         {
 			get
@@ -849,7 +848,7 @@ namespace OpenTK.Math
         #region IEquatable<Vector2> Members
 
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>
-        /// <param name="vector">A vector to compare with this vector.</param>
+        /// <param name="other">A vector to compare with this vector.</param>
         /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
         public bool Equals(Vector2 other)
         {

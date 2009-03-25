@@ -33,7 +33,7 @@ using System.Drawing;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-/// X11 Version
+// X11 Version
 namespace OpenTK.Platform.X11
 {
     //

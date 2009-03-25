@@ -423,8 +423,9 @@ namespace OpenTK.Math
         /// <summary>
         /// Post multiply this matrix by another matrix
         /// </summary>
-        /// <param name="right">The matrix to multiply</param>
-        /// <returns>A new Matrix44 that is the result of the multiplication</returns>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix4d Mult(Matrix4d left, Matrix4d right)
         {
             Vector4d  col0 = right.Column0;
@@ -585,6 +586,7 @@ namespace OpenTK.Math
         /// Calculate the transpose of the given matrix
         /// </summary>
         /// <param name="mat">The matrix to transpose</param>
+        /// <param name="result">The result of the calculation</param>
         public static void Transpose(ref Matrix4d mat, out Matrix4d result)
         {
             result.Row0 = mat.Column0;
@@ -674,7 +676,7 @@ namespace OpenTK.Math
         #region IEquatable<Matrix4d> Members
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
-        /// <param name="matrix">An matrix to compare with this matrix.</param>
+        /// <param name="other">An matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(Matrix4d other)
         {
