@@ -267,7 +267,7 @@ namespace OpenTK.Audio
 
             CheckForAlcErrors();
 
-            device_name = device;
+            device_name = Alc.GetString(device_handle, AlcGetString.DeviceSpecifier);
 
             // Build the attribute list
             List<int> attributes = new List<int>();

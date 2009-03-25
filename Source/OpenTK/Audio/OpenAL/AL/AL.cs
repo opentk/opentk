@@ -444,10 +444,10 @@ namespace OpenTK.Audio
 
         /// <summary>This function generates one source only. References to sources are uint values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>
         /// <param name="source">Pointer to an uint value which will store the name of the new source.</param>
-        [CLSCompliant( false )]
-        public static void GenSource( out uint source )
+        [CLSCompliant(false)]
+        public static void GenSource(out uint source)
         {
-            GenSources( 1, out source );
+            GenSources(1, out source);
         }
 
         #endregion GenSources()
@@ -499,7 +499,7 @@ namespace OpenTK.Audio
         /// <summary>This function deletes one source only.</summary>
         /// <param name="source">Pointer to a source name identifying the source to be deleted.</param>
         [CLSCompliant(false)]
-        public static void DeleteSource( ref uint source)
+        public static void DeleteSource(ref uint source)
         {
             DeleteSources(1, ref source);
         }
@@ -1316,10 +1316,10 @@ namespace OpenTK.Audio
 
         /// <summary>This function generates one buffer only, which contain audio data (see AL.BufferData). References to buffers are uint values, which are used wherever a buffer reference is needed (in calls such as AL.DeleteBuffers, AL.Source with parameter ALSourcei, AL.SourceQueueBuffers, and AL.SourceUnqueueBuffers).</summary>
         /// <param name="buffers">Pointer to an uint value which will store the names of the new buffer.</param>
-        [CLSCompliant( false )]
-        public static void GenBuffer( out uint buffer )
+        [CLSCompliant(false)]
+        public static void GenBuffer(out uint buffer)
         {
-            GenBuffers( 1, out buffer );
+            GenBuffers(1, out buffer);
         }
 
         #endregion GenBuffers
@@ -1372,7 +1372,7 @@ namespace OpenTK.Audio
         /// <summary>This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
         /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
         [CLSCompliant(false)]
-        public static void DeleteBuffer( ref uint buffer)
+        public static void DeleteBuffer(ref uint buffer)
         {
             DeleteBuffers(1, ref buffer);
         }
@@ -1380,7 +1380,7 @@ namespace OpenTK.Audio
         /// <summary>This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
         /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
         [CLSCompliant(true)]
-        public static void DeleteBuffer( int buffer)
+        public static void DeleteBuffer(int buffer)
         {
             DeleteBuffers(1, ref buffer);
         }
@@ -1583,51 +1583,51 @@ namespace OpenTK.Audio
         /// <summary>(Helper) Returns Source state information.</summary>
         /// <param name="sid">The source to be queried.</param>
         /// <returns>state information from OpenAL.</returns>
-        [CLSCompliant( false )]
-        public static ALSourceState GetSourceState( uint sid )
+        [CLSCompliant(false)]
+        public static ALSourceState GetSourceState(uint sid)
         {
             int temp;
-            AL.GetSource( sid, ALGetSourcei.SourceState, out temp );
-            return (ALSourceState) temp;
+            AL.GetSource(sid, ALGetSourcei.SourceState, out temp);
+            return (ALSourceState)temp;
         }
 
         /// <summary>(Helper) Returns Source state information.</summary>
         /// <param name="sid">The source to be queried.</param>
         /// <returns>state information from OpenAL.</returns>
-        [CLSCompliant( true )]
-        public static ALSourceState GetSourceState( int sid )
+        [CLSCompliant(true)]
+        public static ALSourceState GetSourceState(int sid)
         {
             int temp;
-            AL.GetSource( sid, ALGetSourcei.SourceState, out temp );
-            return (ALSourceState) temp;
+            AL.GetSource(sid, ALGetSourcei.SourceState, out temp);
+            return (ALSourceState)temp;
         }
 
         /// <summary>(Helper) Returns Source type information.</summary>
         /// <param name="sid">The source to be queried.</param>
         /// <returns>type information from OpenAL.</returns>
-        [CLSCompliant( false )]
-        public static ALSourceType GetSourceType( uint sid )
+        [CLSCompliant(false)]
+        public static ALSourceType GetSourceType(uint sid)
         {
             int temp;
-            AL.GetSource( sid, ALGetSourcei.SourceType, out temp );
-            return (ALSourceType) temp;
+            AL.GetSource(sid, ALGetSourcei.SourceType, out temp);
+            return (ALSourceType)temp;
         }
 
         /// <summary>(Helper) Returns Source type information.</summary>
         /// <param name="sid">The source to be queried.</param>
         /// <returns>type information from OpenAL.</returns>
-        [CLSCompliant( true )]
-        public static ALSourceType GetSourceType( int sid )
+        [CLSCompliant(true)]
+        public static ALSourceType GetSourceType(int sid)
         {
             int temp;
-            AL.GetSource( sid, ALGetSourcei.SourceType, out temp );
-            return (ALSourceType) temp;
+            AL.GetSource(sid, ALGetSourcei.SourceType, out temp);
+            return (ALSourceType)temp;
         }
 
-        [CLSCompliant( true )]
-        public static ALDistanceModel GetDistanceModel( )
+        [CLSCompliant(true)]
+        public static ALDistanceModel GetDistanceModel()
         {
-            return (ALDistanceModel) AL.Get( ALGetInteger.DistanceModel );
+            return (ALDistanceModel)AL.Get(ALGetInteger.DistanceModel);
         }
 
         #endregion Helpers
