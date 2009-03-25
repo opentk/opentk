@@ -1,6 +1,32 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
 ---------------------
+OpenTK 0.9.5 -> 0.9.6
+---------------------
++ Bind
+	+ Improved heuristics for inline OpenGL documentation.
+	* Void pointers are now mapped to generic arrays (T[]) or references (ref T), where T : struct. Work in progress (see http://www.opentk.com/node/703).
+	+ Generated bindings now automatically check for OpenGL errors, when compiled in debug mode.
+	+ Disabled all generator modes except for GL.
+
++ OpenTK
+	+ Fixed all build warnings (apart from missing documentation comments).
+	+ Graphics
+		+ Improved inline documentation.
+		+ Added automatic OpenGL error checking in debug builds.
+		+ Replaced object overloads with generics for improved type-safety and performance.
+		+ Updated to version 48 specs (fixed some problems with the transform feedback extension).
+	+ Platform
+		+ Fixed GLX context attributes in the GLX_ARB_create_context code path.
+		+ Revert to the legacy GLX code path for pre-GL3.0 contexts (AMD drivers do not support vsync on GL3.0+).
+	+ Audio
+		+ AudioContext now initializes the maximum number of effect slots supported by the drivers.
+		+ Added IsSynchronized property.
+
++ Examples
+	+ New OpenAL example (EFX reverb).
+
+---------------------
 OpenTK 0.9.4 -> 0.9.5
 ---------------------
 
