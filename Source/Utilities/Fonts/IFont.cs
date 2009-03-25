@@ -12,6 +12,7 @@ using OpenTK.Math;
 
 namespace OpenTK.Graphics
 {
+    [Obsolete]
     public interface IFont : IDisposable
     {
         void LoadGlyphs(string glyphs);
