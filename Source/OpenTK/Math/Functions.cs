@@ -130,7 +130,7 @@ namespace OpenTK.Math
         /// <summary>
         /// Convert radians to degrees
         /// </summary>
-        /// <param name="degrees">An angle in radians</param>
+        /// <param name="radians">An angle in radians</param>
         /// <returns>The angle expressed in degrees</returns>
         public static float RadiansToDegrees(float radians)
         {

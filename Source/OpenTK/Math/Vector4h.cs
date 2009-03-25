@@ -238,7 +238,6 @@ namespace OpenTK.Math
         /// <summary>
         /// Returns this Half4 instance's contents as Vector4d.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector4d</param>
         public Vector4d ToVector4d()
         {
             return new Vector4d(X, Y, Z, W);

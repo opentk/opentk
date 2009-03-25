@@ -249,7 +249,8 @@ namespace OpenTK.Platform
         /// currently running on.  This will create a handle for the control, so it is not
         /// recommended that this be called in the constructor of a custom control.
         /// </summary>
-        /// <param name="cntrl"></param>
+        /// <param name="mode">The desired GraphicsMode for this window.</param>
+        /// <param name="cntrl">A <see cref="System.Windows.Forms.Control"/> to get the IWindowInfo from.</param>
         /// <returns></returns>
         public static IWindowInfo CreateWindowInfo(Graphics.GraphicsMode mode, Control cntrl)
         {
@@ -259,6 +260,7 @@ namespace OpenTK.Platform
         /// Creates an object which implements the IWindowInfo interface for the platform
         /// currently running on.  
         /// </summary>
+        /// <param name="mode">The desired GraphicsMode for this window.</param>
         /// <param name="controlHandle">The handle to the control, obtained from Control.Handle.</param>
         /// <returns></returns>
         public static IWindowInfo CreateWindowInfo(Graphics.GraphicsMode mode, IntPtr controlHandle)

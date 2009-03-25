@@ -160,7 +160,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a System.Boolean indicating the state of the specified MouseButton.
         /// </summary>
-        /// <param name="key">The MouseButton to check.</param>
+        /// <param name="button">The MouseButton to check.</param>
         /// <returns>True if the MouseButton is pressed, false otherwise.</returns>
         public bool this[MouseButton button]
         {

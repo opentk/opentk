@@ -144,7 +144,6 @@ namespace OpenTK.Graphics
         /// base OpenGL name of the function (e.g. "glVertex3fv" instead of "Vertex3").
         /// </summary>
         /// <param name="name">The name of the OpenGL function (eg. "glNewList")</param>
-        /// <param name="signature">The signature of the OpenGL function.</param>
         /// <returns>
         /// A System.Delegate that can be used to call this OpenGL function or null, if the specified
         /// function name does not correspond to an OpenGL function or if the function is not
@@ -212,7 +211,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Tries to reload the given OpenGL function (core or extension).
         /// </summary>
-        /// <param name="name">The name of the OpenGL function (i.e. glShaderSource)</param>
+        /// <param name="function">The name of the OpenGL function (i.e. glShaderSource)</param>
         /// <returns>True if the function was found and reloaded, false otherwise.</returns>
         /// <remarks>
         /// <para>
@@ -339,7 +338,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Checks if a given OpenGL function is supported by the current context.
         /// </summary>
-        /// <param name="method">The System.Reflection.MethodInfo for the OpenGL function.</param>
+        /// <param name="function">The System.Reflection.MethodInfo for the OpenGL function.</param>
         /// <returns>True if the function is supported, false otherwise.</returns>
         static bool SupportsFunction(MethodInfo function)
         {
@@ -532,7 +531,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Retrieves the entry point for a dynamically exported OpenGL function.
         /// </summary>
-        /// <param name="name">The function string for the OpenGL function (eg. "glNewList")</param>
+        /// <param name="function">The function string for the OpenGL function (eg. "glNewList")</param>
         /// <returns>
         /// An IntPtr contaning the address for the entry point, or IntPtr.Zero if the specified
         /// OpenGL function is not dynamically exported.
@@ -546,8 +545,6 @@ namespace OpenTK.Graphics
         /// This function is cross-platform. It determines the underlying platform and uses the
         /// correct wgl, glx or agl GetAddress function to retrieve the function pointer.
         /// </para>
-        /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
-        /// <seealso cref="Gl.GetDelegateForExtensionMethod"/>
         /// </remarks>
         private static IntPtr GetAddress(string function)
         {
