@@ -308,9 +308,9 @@ namespace OpenTK.Graphics
 
         #region public override bool Equals(object obj)
 
-        /// <summary>Determines whether the specified DisplayDevices are equal.</summary>
-        /// <param name="obj">The System.Object to check against.</param>
-        /// <returns>True if the System.Object is an equal DisplayDevice; false otherwise.</returns>
+        ///// <summary>Determines whether the specified DisplayDevices are equal.</summary>
+        ///// <param name="obj">The System.Object to check against.</param>
+        ///// <returns>True if the System.Object is an equal DisplayDevice; false otherwise.</returns>
         //public override bool Equals(object obj)
         //{
         //    if (obj is DisplayDevice)
@@ -329,9 +329,9 @@ namespace OpenTK.Graphics
 
         #region public override int GetHashCode()
 
-        /// <summary>Returns a unique hash representing this DisplayDevice.</summary>
-        /// <returns>A System.Int32 that may serve as a hash code for this DisplayDevice.</returns>
-        //public override int GetHashCode()
+        ///// <summary>Returns a unique hash representing this DisplayDevice.</summary>
+        ///// <returns>A System.Int32 that may serve as a hash code for this DisplayDevice.</returns>
+        ////public override int GetHashCode()
         //{
         //    return current_resolution.GetHashCode() ^ IsPrimary.GetHashCode() ^ available_resolutions.Count;
         //}

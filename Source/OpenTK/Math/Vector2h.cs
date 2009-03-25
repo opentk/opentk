@@ -186,7 +186,6 @@ namespace OpenTK.Math
         /// <summary>
         /// Returns this Half2 instance's contents as Vector2d.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector2d</param>
         public Vector2d ToVector2d()
         {
             return new Vector2d(X, Y);
@@ -197,7 +196,7 @@ namespace OpenTK.Math
         #region Conversions
 
         /// <summary>Converts OpenTK.Math.Vector2 to OpenTK.Math.Half2.</summary>
-        /// <param name="v4f">The Vector2 to convert.</param>
+        /// <param name="v">The Vector2 to convert.</param>
         /// <returns>The resulting Half vector.</returns>
         public static explicit operator Vector2h(Vector2 v)
         {
@@ -205,7 +204,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>Converts OpenTK.Math.Vector2d to OpenTK.Math.Half2.</summary>
-        /// <param name="v4d">The Vector2d to convert.</param>
+        /// <param name="v">The Vector2d to convert.</param>
         /// <returns>The resulting Half vector.</returns>
         public static explicit operator Vector2h(Vector2d v)
         {
@@ -213,7 +212,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>Converts OpenTK.Math.Half2 to OpenTK.Math.Vector2.</summary>
-        /// <param name="h4">The Half2 to convert.</param>
+        /// <param name="h">The Half2 to convert.</param>
         /// <returns>The resulting Vector2.</returns>
         public static explicit operator Vector2(Vector2h h)
         {
@@ -221,7 +220,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>Converts OpenTK.Math.Half2 to OpenTK.Math.Vector2d.</summary>
-        /// <param name="h4">The Half2 to convert.</param>
+        /// <param name="h">The Half2 to convert.</param>
         /// <returns>The resulting Vector2d.</returns>
         public static explicit operator Vector2d(Vector2h h)
         {

@@ -23,7 +23,8 @@ namespace OpenTK.Audio
 
         /// <internal />
         /// <summary>Constructs a new SoundData object.</summary>
-        /// <param name="buffer">An array of PCM buffer.</param>
+        /// <param name="format">The SoundFormat of these SoundData.</param>
+        /// <param name="data">An array of PCM buffer.</param>
         internal SoundData(SoundFormat format, byte[] data)
         {
             if (data == null) throw new ArgumentNullException("buffer", "Must be a valid array of samples.");

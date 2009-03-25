@@ -81,7 +81,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Tries to reload the given GLU function (core or extension).
         /// </summary>
-        /// <param name="name">The name of the GLU function.</param>
+        /// <param name="function">The name of the GLU function.</param>
         /// <returns>True if the function was found and reloaded, false otherwise.</returns>
         /// <remarks>
         /// <para>

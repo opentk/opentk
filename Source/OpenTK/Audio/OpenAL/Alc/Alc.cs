@@ -94,7 +94,7 @@ namespace OpenTK.Audio
 
         /// <summary>This function creates a context using a specified device.</summary>
         /// <param name="device">a pointer to a device</param>
-        /// <param name="attrlist">an array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC</param>
+        /// <param name="attriblist">an array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC</param>
         /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
         /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
         public static ContextHandle CreateContext(IntPtr device, int[] attriblist)
@@ -267,7 +267,7 @@ namespace OpenTK.Audio
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">an attribute to be retrieved: ALC_MAJOR_VERSION, ALC_MINOR_VERSION, ALC_ATTRIBUTES_SIZE, ALC_ALL_ATTRIBUTES</param>
         /// <param name="size">the size of the destination buffer provided. In bytes.</param>
-        /// <param name="buffer">a pointer to the buffer to be returned</param>
+        /// <param name="data">a pointer to the buffer to be returned</param>
         [DllImport(Alc.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
         public static extern void GetInteger([In] IntPtr device, AlcGetInteger param, int size, [Out] out int data);
         // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *buffer );

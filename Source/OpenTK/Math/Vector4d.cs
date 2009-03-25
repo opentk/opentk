@@ -58,7 +58,7 @@ namespace OpenTK.Math
         /// <summary>
         /// Defines a unit-length Vector4d that points towards the X-axis.
         /// </summary>
-		public static Vector4d UnitX = new Vector4d(1, 0, 0, 0);
+        public static Vector4d UnitX = new Vector4d(1, 0, 0, 0);
 
         /// <summary>
         /// Defines a unit-length Vector4d that points towards the Y-axis.
@@ -68,17 +68,17 @@ namespace OpenTK.Math
         /// <summary>
         /// Defines a unit-length Vector4d that points towards the Z-axis.
         /// </summary>
-		public static Vector4d UnitZ = new Vector4d(0, 0, 1, 0);
+        public static Vector4d UnitZ = new Vector4d(0, 0, 1, 0);
 
         /// <summary>
         /// Defines a unit-length Vector4d that points towards the W-axis.
         /// </summary>
-		public static Vector4d UnitW = new Vector4d(0, 0, 0, 1);
+        public static Vector4d UnitW = new Vector4d(0, 0, 0, 1);
 
         /// <summary>
         /// Defines a zero-length Vector4d.
         /// </summary>
-		public static Vector4d Zero = new Vector4d(0, 0, 0, 0);
+        public static Vector4d Zero = new Vector4d(0, 0, 0, 0);
 
         /// <summary>
         /// Defines the size of the Vector4d struct in bytes.
@@ -163,7 +163,7 @@ namespace OpenTK.Math
 
         /// <summary>Add the Vector passed as parameter to this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
-        public void Add( Vector4d right )
+        public void Add(Vector4d right)
         {
             this.X += right.X;
             this.Y += right.Y;
@@ -174,7 +174,7 @@ namespace OpenTK.Math
         /// <summary>Add the Vector passed as parameter to this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
         [CLSCompliant(false)]
-        public void Add( ref Vector4d right )
+        public void Add(ref Vector4d right)
         {
             this.X += right.X;
             this.Y += right.Y;
@@ -188,7 +188,7 @@ namespace OpenTK.Math
 
         /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
-        public void Sub( Vector4d right )
+        public void Sub(Vector4d right)
         {
             this.X -= right.X;
             this.Y -= right.Y;
@@ -199,7 +199,7 @@ namespace OpenTK.Math
         /// <summary>Subtract the Vector passed as parameter from this instance.</summary>
         /// <param name="right">Right operand. This parameter is only read from.</param>
         [CLSCompliant(false)]
-        public void Sub( ref Vector4d right )
+        public void Sub(ref Vector4d right)
         {
             this.X -= right.X;
             this.Y -= right.Y;
@@ -213,7 +213,7 @@ namespace OpenTK.Math
 
         /// <summary>Multiply this instance by a scalar.</summary>
         /// <param name="f">Scalar operand.</param>
-        public void Mult( double f )
+        public void Mult(double f)
         {
             this.X *= f;
             this.Y *= f;
@@ -227,7 +227,7 @@ namespace OpenTK.Math
 
         /// <summary>Divide this instance by a scalar.</summary>
         /// <param name="f">Scalar operand.</param>
-        public void Div( double f )
+        public void Div(double f)
         {
             double mult = 1.0 / f;
             this.X *= mult;
@@ -243,7 +243,7 @@ namespace OpenTK.Math
         /// <summary>
         /// Gets the length (magnitude) of the vector.
         /// </summary>
-        /// <see cref="FastLength"/>
+        /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
         public double Length
         {
@@ -266,7 +266,6 @@ namespace OpenTK.Math
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        /// <seealso cref="OpenTK.Math.FastSqrt"/>
         public double LengthFast
         {
             get
@@ -287,7 +286,6 @@ namespace OpenTK.Math
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
-        /// <seealso cref="FastLength"/>
         public double LengthSquared
         {
             get
@@ -349,7 +347,7 @@ namespace OpenTK.Math
 
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
-        public void Scale( Vector4d scale )
+        public void Scale(Vector4d scale)
         {
             this.X *= scale.X;
             this.Y *= scale.Y;
@@ -360,7 +358,7 @@ namespace OpenTK.Math
         /// <summary>Scales this instance by the given parameter.</summary>
         /// <param name="scale">The scaling of the individual components.</param>
         [CLSCompliant(false)]
-        public void Scale( ref Vector4d scale )
+        public void Scale(ref Vector4d scale)
         {
             this.X *= scale.X;
             this.Y *= scale.Y;
@@ -694,7 +692,7 @@ namespace OpenTK.Math
         /// <param name="left">First operand</param>
         /// <param name="right">Second operand</param>
         /// <param name="result">The dot product of the two inputs</param>
-        public static void Dot( ref Vector4d left, ref Vector4d right, out double result )
+        public static void Dot(ref Vector4d left, ref Vector4d right, out double result)
         {
             result = left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
         }
@@ -726,12 +724,12 @@ namespace OpenTK.Math
         /// <param name="b">Second input vector</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
-        public static void Lerp( ref Vector4d a, ref Vector4d b, double blend, out Vector4d result )
+        public static void Lerp(ref Vector4d a, ref Vector4d b, double blend, out Vector4d result)
         {
-            result.X = blend * ( b.X - a.X ) + a.X;
-            result.Y = blend * ( b.Y - a.Y ) + a.Y;
-            result.Z = blend * ( b.Z - a.Z ) + a.Z;
-            result.W = blend * ( b.W - a.W ) + a.W;
+            result.X = blend * (b.X - a.X) + a.X;
+            result.Y = blend * (b.Y - a.Y) + a.Y;
+            result.Z = blend * (b.Z - a.Z) + a.Z;
+            result.W = blend * (b.W - a.W) + a.W;
         }
 
         #endregion
@@ -759,19 +757,19 @@ namespace OpenTK.Math
         /// <param name="u">First Barycentric Coordinate.</param>
         /// <param name="v">Second Barycentric Coordinate.</param>
         /// <param name="result">Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</param>
-        public static void BaryCentric( ref Vector4d a, ref Vector4d b, ref Vector4d c, float u, float v, out Vector4d result )
+        public static void BaryCentric(ref Vector4d a, ref Vector4d b, ref Vector4d c, float u, float v, out Vector4d result)
         {
             result = a; // copy
 
             Vector4d temp = b; // copy
-            temp.Sub( ref a );
-            temp.Mult( u );
-            result.Add( ref temp );
+            temp.Sub(ref a);
+            temp.Mult(u);
+            result.Add(ref temp);
 
             temp = c; // copy
-            temp.Sub( ref a );
-            temp.Mult( v );
-            result.Add( ref temp );
+            temp.Sub(ref a);
+            temp.Mult(v);
+            result.Add(ref temp);
         }
 
         #endregion
@@ -779,7 +777,7 @@ namespace OpenTK.Math
         #region Transform
 
         /// <summary>Transform a Vector by the given Matrix</summary>
-        /// <param name="pos">The vector to transform</param>
+        /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns>The transformed vector</returns>
         public static Vector4d Transform(Vector4d vec, Matrix4d mat)
@@ -793,10 +791,10 @@ namespace OpenTK.Math
         }
 
         /// <summary>Transform a Vector by the given Matrix</summary>
-        /// <param name="pos">The vector to transform</param>
+        /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <param name="result">The transformed vector</param>
-        public static void Transform( ref Vector4d vec, ref Matrix4d mat, out Vector4d result )
+        public static void Transform(ref Vector4d vec, ref Matrix4d mat, out Vector4d result)
         {
             result.X = vec.X * mat.Row0.X +
                        vec.Y * mat.Row1.X +
@@ -843,58 +841,58 @@ namespace OpenTK.Math
 
         public static Vector4d operator +(Vector4d left, Vector4d right)
         {
-			left.X += right.X;
-			left.Y += right.Y;
-			left.Z += right.Z;
-			left.W += right.W;
-			return left;
+            left.X += right.X;
+            left.Y += right.Y;
+            left.Z += right.Z;
+            left.W += right.W;
+            return left;
         }
 
         public static Vector4d operator -(Vector4d left, Vector4d right)
         {
-			left.X -= right.X;
-			left.Y -= right.Y;
-			left.Z -= right.Z;
-			left.W -= right.W;
-			return left;
+            left.X -= right.X;
+            left.Y -= right.Y;
+            left.Z -= right.Z;
+            left.W -= right.W;
+            return left;
         }
 
-		public static Vector4d operator -(Vector4d vec)
-		{
-			vec.X = -vec.X;
-			vec.Y = -vec.Y;
-			vec.Z = -vec.Z;
-			vec.W = -vec.W;
-			return vec;
-		}
+        public static Vector4d operator -(Vector4d vec)
+        {
+            vec.X = -vec.X;
+            vec.Y = -vec.Y;
+            vec.Z = -vec.Z;
+            vec.W = -vec.W;
+            return vec;
+        }
 
-		public static Vector4d operator *(Vector4d vec, double f)
-		{
-			vec.X *= f;
-			vec.Y *= f;
-			vec.Z *= f;
-			vec.W *= f;
-			return vec;
-		}
+        public static Vector4d operator *(Vector4d vec, double f)
+        {
+            vec.X *= f;
+            vec.Y *= f;
+            vec.Z *= f;
+            vec.W *= f;
+            return vec;
+        }
 
-		public static Vector4d operator *(double f, Vector4d vec)
-		{
-			vec.X *= f;
-			vec.Y *= f;
-			vec.Z *= f;
-			vec.W *= f;
-			return vec;
-		}
+        public static Vector4d operator *(double f, Vector4d vec)
+        {
+            vec.X *= f;
+            vec.Y *= f;
+            vec.Z *= f;
+            vec.W *= f;
+            return vec;
+        }
 
-		public static Vector4d operator /(Vector4d vec, double f)
-		{
-			double mult = 1.0f / f;
-			vec.X *= mult;
-			vec.Y *= mult;
-			vec.Z *= mult;
-			vec.W *= mult;
-			return vec;
-		}
+        public static Vector4d operator /(Vector4d vec, double f)
+        {
+            double mult = 1.0f / f;
+            vec.X *= mult;
+            vec.Y *= mult;
+            vec.Z *= mult;
+            vec.W *= mult;
+            return vec;
+        }
 
         public static bool operator ==(Vector4d left, Vector4d right)
         {
@@ -923,17 +921,17 @@ namespace OpenTK.Math
         /// <summary>Converts OpenTK.Math.Vector4 to OpenTK.Math.Vector4d.</summary>
         /// <param name="v4">The Vector4 to convert.</param>
         /// <returns>The resulting Vector4d.</returns>
-        public static explicit operator Vector4d( Vector4 v4 )
+        public static explicit operator Vector4d(Vector4 v4)
         {
-            return new Vector4d( v4.X, v4.Y, v4.Z, v4.W );
+            return new Vector4d(v4.X, v4.Y, v4.Z, v4.W);
         }
 
         /// <summary>Converts OpenTK.Math.Vector4d to OpenTK.Math.Vector4.</summary>
         /// <param name="v4d">The Vector4d to convert.</param>
         /// <returns>The resulting Vector4.</returns>
-        public static explicit operator Vector4( Vector4d v4d )
+        public static explicit operator Vector4(Vector4d v4d)
         {
-            return new Vector4( (float)v4d.X, (float)v4d.Y, (float)v4d.Z, (float)v4d.W );
+            return new Vector4((float)v4d.X, (float)v4d.Y, (float)v4d.Z, (float)v4d.W);
         }
 
         #endregion
@@ -943,15 +941,15 @@ namespace OpenTK.Math
         #region public override string ToString()
 
         /// <summary>
-		/// Returns a System.String that represents the current Vector4d.
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
+        /// Returns a System.String that represents the current Vector4d.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
         {
             return String.Format("({0}, {1}, {2}, {3})", X, Y, Z, W);
-		}
+        }
 
-		#endregion
+        #endregion
 
         #region public override int GetHashCode()
 
@@ -990,7 +988,7 @@ namespace OpenTK.Math
         #region IEquatable<Vector4d> Members
 
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>
-        /// <param name="vector">A vector to compare with this vector.</param>
+        /// <param name="other">A vector to compare with this vector.</param>
         /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
         public bool Equals(Vector4d other)
         {

@@ -170,7 +170,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         /// <param name="buffer">A pointer to the structure that will be freed.</param>
         [DllImport(_dll_name, EntryPoint = "XFree")]
-        extern public static void Free(IntPtr data);
+        extern public static void Free(IntPtr buffer);
 
         #endregion
 

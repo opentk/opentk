@@ -164,7 +164,7 @@ namespace OpenTK
         /// <param name="options">GameWindow options regarding window appearance and behavior.</param>
         /// <param name="device">The OpenTK.Graphics.DisplayDevice to construct the GameWindow in.</param>
         /// <param name="major">The major version for the OpenGL GraphicsContext.</param>
-        /// <param name="major">The minor version for the OpenGL GraphicsContext.</param>
+        /// <param name="minor">The minor version for the OpenGL GraphicsContext.</param>
         /// <param name="flags">The GraphicsContextFlags version for the OpenGL GraphicsContext.</param>
         public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device,
             int major, int minor, GraphicsContextFlags flags)
@@ -351,10 +351,10 @@ namespace OpenTK
 
         #region public bool Fullscreen
 
-        /// <summary>
-        /// TODO: This property is not implemented.
-        /// Gets or sets a value indicating whether the GameWindow is in fullscrren mode.
-        /// </summary>
+        ///// <summary>
+        ///// TODO: This property is not implemented.
+        ///// Gets or sets a value indicating whether the GameWindow is in fullscrren mode.
+        ///// </summary>
         //public bool Fullscreen
         //{
         //    get { if (disposed) throw new ObjectDisposedException("GameWindow"); return glWindow.Fullscreen; }
@@ -448,7 +448,7 @@ namespace OpenTK
         /// <summary>
         /// Enters the game loop of the GameWindow updating and rendering at the maximum possible frequency.
         /// </summary>
-        /// <see cref="public virtual void Run(double update_frequency, double render_frequency)"/>
+        /// <see cref="Run(double, double)"/>
         public void Run()
         {
             if (disposed) throw new ObjectDisposedException("GameWindow");
@@ -463,7 +463,7 @@ namespace OpenTK
         /// Enters the game loop of the GameWindow updating the specified update frequency, while maintaining the
         /// maximum possible render frequency.
         /// </summary>
-        /// <see cref="public virtual void Run(double updateFrequency, double renderFrequency)"/>
+        /// <see cref="Run(double, double)"/>
         public void Run(double updateFrequency)
         {
             if (disposed) throw new ObjectDisposedException("GameWindow");
@@ -990,6 +990,7 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets a double representing the target render period, in seconds.
         /// </summary>
+        /// <remarks>
         /// <para>A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only limited by the hardware's capabilities).</para>
         /// <para>Values lower than 0.005 seconds (200Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped to 1.0.</para>
         /// </remarks>

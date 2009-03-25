@@ -532,10 +532,10 @@ namespace OpenTK.Math
         /// </summary>
         /// <param name="other">The other object to be used in the comparison.</param>
         /// <returns>True if both objects are Quaternions of equal value. Otherwise it returns false.</returns>
-        public override bool Equals(object o)
+        public override bool Equals(object other)
         {
-               if (o is Quaternion == false) return false;
-               return this == (Quaternion)o;
+            if (other is Quaternion == false) return false;
+               return this == (Quaternion)other;
         }
 
         #endregion

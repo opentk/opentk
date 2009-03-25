@@ -172,7 +172,6 @@ namespace OpenTK.Math
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
-        /// <seealso cref="FastLength"/>
         public double LengthSquared
         {
             get
@@ -327,7 +326,7 @@ namespace OpenTK.Math
         /// Multiply a vector and a scalar
         /// </summary>
         /// <param name="a">Vector operand</param>
-        /// <param name="f">Scalar operand</param>
+        /// <param name="d">Scalar operand</param>
         /// <returns>Result of the multiplication</returns>
         public static Vector2d Mult(Vector2d a, double d)
         {
@@ -340,7 +339,7 @@ namespace OpenTK.Math
         /// Multiply a vector and a scalar
         /// </summary>
         /// <param name="a">Vector operand</param>
-        /// <param name="f">Scalar operand</param>
+        /// <param name="d">Scalar operand</param>
         /// <param name="result">Result of the multiplication</param>
         public static void Mult(ref Vector2d a, double d, out Vector2d result)
         {
@@ -356,7 +355,7 @@ namespace OpenTK.Math
         /// Divide a vector by a scalar
         /// </summary>
         /// <param name="a">Vector operand</param>
-        /// <param name="f">Scalar operand</param>
+        /// <param name="d">Scalar operand</param>
         /// <returns>Result of the division</returns>
         public static Vector2d Div(Vector2d a, double d)
         {
@@ -370,7 +369,7 @@ namespace OpenTK.Math
         /// Divide a vector by a scalar
         /// </summary>
         /// <param name="a">Vector operand</param>
-        /// <param name="f">Scalar operand</param>
+        /// <param name="d">Scalar operand</param>
         /// <param name="result">Result of the division</param>
         public static void Div(ref Vector2d a, double d, out Vector2d result)
         {
@@ -752,7 +751,7 @@ namespace OpenTK.Math
         #region IEquatable<Vector2d> Members
 
         /// <summary>Indicates whether the current vector is equal to another vector.</summary>
-        /// <param name="vector">A vector to compare with this vector.</param>
+        /// <param name="other">A vector to compare with this vector.</param>
         /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
         public bool Equals(Vector2d other)
         {

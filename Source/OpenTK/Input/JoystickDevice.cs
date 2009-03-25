@@ -237,7 +237,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Initializes a new instance of the <see cref="JoystickMoveEventArgs"/> class.
         /// </summary>
-        /// <param name="index">The index of the joystick axis that was moved.</param>
+        /// <param name="axis">The index of the joystick axis that was moved.</param>
         /// <param name="value">The absolute value of the joystick axis.</param>
         /// <param name="delta">The relative change in value of the joystick axis.</param>
         public JoystickMoveEventArgs(JoystickAxis axis, float value, float delta)
@@ -355,7 +355,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a System.Boolean indicating whether the specified JoystickButton is pressed.
         /// </summary>
-        /// <param name="index">The JoystickButton to check.</param>
+        /// <param name="button">The JoystickButton to check.</param>
         /// <returns>True if the JoystickButton is pressed; false otherwise.</returns>
         public bool this[JoystickButton button]
         {
@@ -448,7 +448,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a System.Single indicating the absolute position of the JoystickAxis.
         /// </summary>
-        /// <param name="index">The JoystickAxis to check.</param>
+        /// <param name="axis">The JoystickAxis to check.</param>
         /// <returns>A System.Single in the range [-1, 1].</returns>
         public float this[JoystickAxis axis]
         {

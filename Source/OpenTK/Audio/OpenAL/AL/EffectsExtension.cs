@@ -494,8 +494,8 @@ namespace OpenTK.Audio
 
         /// <summary>This function is used to retrieve 3 floating point properties from Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
-        /// <param name="pname">Effect property to retrieve.</param>
-        /// <param name="value">A Math.Vector3 to hold the values.</param>
+        /// <param name="param">Effect property to retrieve.</param>
+        /// <param name="values">A Math.Vector3 to hold the values.</param>
         [CLSCompliant(false)]
         public void GetEffect(uint eid, EfxEffect3f param, out Vector3 values)
         {
@@ -513,8 +513,8 @@ namespace OpenTK.Audio
 
         /// <summary>This function is used to retrieve 3 floating point properties from Effect objects.</summary>
         /// <param name="eid">Effect object identifier.</param>
-        /// <param name="pname">Effect property to retrieve.</param>
-        /// <param name="value">A Math.Vector3 to hold the values.</param>
+        /// <param name="param">Effect property to retrieve.</param>
+        /// <param name="values">A Math.Vector3 to hold the values.</param>
 
         public void GetEffect(int eid, EfxEffect3f param, out Vector3 values)
         {
@@ -652,7 +652,7 @@ namespace OpenTK.Audio
         }
 
         /// <summary>This function deletes one Filter only.</summary>
-        /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
+        /// <param name="filters">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         [CLSCompliant(false)]
         public void DeleteFilters(uint[] filters)
         {
@@ -661,7 +661,7 @@ namespace OpenTK.Audio
         }
 
         /// <summary>This function deletes one Filter only.</summary>
-        /// <param name="filter">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
+        /// <param name="filters">Pointer to an filter name/handle identifying the Filter Object to be deleted.</param>
         public void DeleteFilters(int[] filters)
         {
             if (filters == null) throw new ArgumentNullException("filters");
@@ -983,7 +983,6 @@ namespace OpenTK.Audio
         }
 
         /// <summary>The DeleteAuxiliaryEffectSlots function is used to delete and free resources for Auxiliary Effect Slots previously created with GenAuxiliaryEffectSlots.</summary>
-        /// <param name="n">Number of Auxiliary Effect Slots to be deleted.</param>
         /// <param name="slots">Pointer to n Effect Slot object identifiers.</param>
         public void DeleteAuxiliaryEffectSlots(int[] slots)
         {
@@ -992,7 +991,7 @@ namespace OpenTK.Audio
         }
 
         /// <summary>This function deletes one AuxiliaryEffectSlot only.</summary>
-        /// <param name="slot">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
+        /// <param name="slots">Pointer to an auxiliary effect slot name/handle identifying the Auxiliary Effect Slot Object to be deleted.</param>
         [CLSCompliant(false)]
         public void DeleteAuxiliaryEffectSlots(uint[] slots)
         {

@@ -585,7 +585,6 @@ namespace OpenTK.Platform.MacOS
             this.context.MakeCurrent(window);
 
             context = this.context;
-
         }
 
         public void DestroyWindow()
@@ -641,8 +640,8 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public event CreateEvent Create;
-        public event DestroyEvent Destroy;
+        public event CreateEvent Create = delegate(object sender, EventArgs e) { };
+        public event DestroyEvent Destroy = delegate(object sender, EventArgs e) { };
 
         #endregion
 
@@ -653,7 +652,6 @@ namespace OpenTK.Platform.MacOS
         #endregion
 
         #region INativeGLWindow Members
-
 
         public WindowState WindowState
         {
