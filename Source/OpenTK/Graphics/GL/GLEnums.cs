@@ -1540,6 +1540,7 @@ namespace OpenTK.Graphics
         UnsignedInt8888Reversed = ((int)0X8367),
         UnsignedInt2101010Reversed = ((int)0X8368),
         UnsignedInt248 = ((int)0X84fa),
+        Float32UnsignedInt248Rev = ((int)0X8Dad),
     }
 
     public enum PointParameterNameSgis

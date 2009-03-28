@@ -6383,5 +6383,12 @@ GetTextureParameter enum:
 	use ARB_framebuffer_object	    TEXTURE_LUMINANCE_TYPE
 	use ARB_framebuffer_object	    TEXTURE_INTENSITY_TYPE
 	use ARB_framebuffer_object	    TEXTURE_DEPTH_TYPE
+
+
+# Promoted from ARB_depth_buffer_float
+PixelType enum:
+	use ARB_depth_buffer_float	    FLOAT_32_UNSIGNED_INT_24_8_REV
+
+
 	
 # End (don't remove, or the last token may be missed!)
