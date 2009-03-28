@@ -392,6 +392,7 @@ namespace OpenTK.Graphics
         VertexProgramPointSize = ((int)0X8642),
         VertexProgramTwoSide = ((int)0X8643),
         PointSprite = ((int)0X8861),
+        FramebufferSrgb = ((int)0X8Db9),
     }
 
     public enum ErrorCode
@@ -1050,6 +1051,7 @@ namespace OpenTK.Graphics
         MaxColorAttachments = ((int)0X8cdf),
         MaxColorAttachmentsExt = ((int)0X8cdf),
         MaxSamples = ((int)0X8D57),
+        FramebufferSrgb = ((int)0X8Db9),
     }
 
     public enum GetTextureParameter
@@ -6387,7 +6389,6 @@ namespace OpenTK.Graphics
         SeparateAttribs = ((int)0X8c8d),
         TransformFeedbackBuffer = ((int)0X8c8e),
         TransformFeedbackBufferBinding = ((int)0X8c8f),
-        FramebufferSrgb = ((int)0X8Db9),
         SamplerCubeShadow = ((int)0X8dc5),
         UnsignedIntVec2 = ((int)0X8dc6),
         UnsignedIntVec3 = ((int)0X8dc7),
