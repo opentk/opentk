@@ -689,7 +689,7 @@ passthru: /* Reuse tokens from ARB_framebuffer_object */
 passthru: /* Reuse tokens from ARB_framebuffer_sRGB */
 #	use ARB_framebuffer_sRGB	    FRAMEBUFFER_SRGB
 passthru: /* Reuse tokens from ARB_half_float_vertex */
-	use ARB_half_float_vertex	    HALF_FLOAT
+#	use ARB_half_float_vertex	    HALF_FLOAT
 passthru: /* Reuse tokens from ARB_map_buffer_range */
 	use ARB_map_buffer_range	    MAP_READ_BIT
 	use ARB_map_buffer_range	    MAP_WRITE_BIT
@@ -6384,7 +6384,6 @@ GetTextureParameter enum:
 	use ARB_framebuffer_object	    TEXTURE_INTENSITY_TYPE
 	use ARB_framebuffer_object	    TEXTURE_DEPTH_TYPE
 
-
 # Promoted from ARB_depth_buffer_float
 PixelType enum:
 	use ARB_depth_buffer_float	    FLOAT_32_UNSIGNED_INT_24_8_REV
@@ -6395,6 +6394,25 @@ EnableCap enum:
 
 GetPName enum:	
 	use ARB_framebuffer_sRGB	    FRAMEBUFFER_SRGB
+
+# Promoted from ARB_half_float_vertex
+VertexAttribPointerType enum:
+	use ARB_half_float_vertex	    HALF_FLOAT
+
+VertexPointerType enum:
+	use ARB_half_float_vertex	    HALF_FLOAT
+
+NormalPointerType enum:
+	use ARB_half_float_vertex	    HALF_FLOAT
+
+ColorPointerType enum:
+	use ARB_half_float_vertex	    HALF_FLOAT
+
+FogPointerType enum:
+	use ARB_half_float_vertex	    HALF_FLOAT
+
+TexCoordPointerType enum:
+	use ARB_half_float_vertex	    HALF_FLOAT
 
 
 # End (don't remove, or the last token may be missed!)

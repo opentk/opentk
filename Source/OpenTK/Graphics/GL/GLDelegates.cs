@@ -3248,7 +3248,7 @@ namespace OpenTK.Graphics
             internal unsafe delegate void FogCoorddvEXT(Double* coord);
             internal unsafe static FogCoorddvEXT glFogCoorddvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FogCoordPointerEXT(OpenTK.Graphics.ExtFogCoord type, Int32 stride, IntPtr pointer);
+            internal delegate void FogCoordPointerEXT(OpenTK.Graphics.FogPointerType type, Int32 stride, IntPtr pointer);
             internal static FogCoordPointerEXT glFogCoordPointerEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Tangent3bEXT(SByte tx, SByte ty, SByte tz);
@@ -3311,10 +3311,10 @@ namespace OpenTK.Graphics
             internal unsafe delegate void Binormal3svEXT(Int16* v);
             internal unsafe static Binormal3svEXT glBinormal3svEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TangentPointerEXT(OpenTK.Graphics.ExtCoordinateFrame type, Int32 stride, IntPtr pointer);
+            internal delegate void TangentPointerEXT(OpenTK.Graphics.NormalPointerType type, Int32 stride, IntPtr pointer);
             internal static TangentPointerEXT glTangentPointerEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BinormalPointerEXT(OpenTK.Graphics.ExtCoordinateFrame type, Int32 stride, IntPtr pointer);
+            internal delegate void BinormalPointerEXT(OpenTK.Graphics.NormalPointerType type, Int32 stride, IntPtr pointer);
             internal static BinormalPointerEXT glBinormalPointerEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FinishTextureSUNX();
@@ -3635,7 +3635,7 @@ namespace OpenTK.Graphics
             internal unsafe delegate void EdgeFlagPointerListIBM(Int32 stride, bool* pointer, Int32 ptrstride);
             internal unsafe static EdgeFlagPointerListIBM glEdgeFlagPointerListIBM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FogCoordPointerListIBM(OpenTK.Graphics.IbmVertexArrayLists type, Int32 stride, IntPtr pointer, Int32 ptrstride);
+            internal delegate void FogCoordPointerListIBM(OpenTK.Graphics.FogPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride);
             internal static FogCoordPointerListIBM glFogCoordPointerListIBM;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void IndexPointerListIBM(OpenTK.Graphics.IndexPointerType type, Int32 stride, IntPtr pointer, Int32 ptrstride);
