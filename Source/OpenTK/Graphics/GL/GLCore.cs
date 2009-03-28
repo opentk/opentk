@@ -2040,6 +2040,30 @@ namespace OpenTK.Graphics
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsVertexArray", ExactSpelling = true)]
             internal extern static bool IsVertexArray(UInt32 array);
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformIndices", ExactSpelling = true)]
+            internal extern static unsafe void GetUniformIndices(UInt32 program, Int32 uniformCount, String uniformNames, [Out] UInt32* uniformIndices);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetActiveUniformsiv", ExactSpelling = true)]
+            internal extern static unsafe void GetActiveUniformsiv(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, OpenTK.Graphics.ArbUniformBufferObject pname, [Out] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetActiveUniformName", ExactSpelling = true)]
+            internal extern static unsafe void GetActiveUniformName(UInt32 program, UInt32 uniformIndex, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder uniformName);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformBlockIndex", ExactSpelling = true)]
+            internal extern static Int32 GetUniformBlockIndex(UInt32 program, String uniformBlockName);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetActiveUniformBlockiv", ExactSpelling = true)]
+            internal extern static unsafe void GetActiveUniformBlockiv(UInt32 program, UInt32 uniformBlockIndex, OpenTK.Graphics.ArbUniformBufferObject pname, [Out] Int32* @params);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetActiveUniformBlockName", ExactSpelling = true)]
+            internal extern static unsafe void GetActiveUniformBlockName(UInt32 program, UInt32 uniformBlockIndex, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder uniformBlockName);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glUniformBlockBinding", ExactSpelling = true)]
+            internal extern static void UniformBlockBinding(UInt32 program, UInt32 uniformBlockIndex, UInt32 uniformBlockBinding);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyBufferSubData", ExactSpelling = true)]
+            internal extern static void CopyBufferSubData(OpenTK.Graphics.ArbCopyBuffer readTarget, OpenTK.Graphics.ArbCopyBuffer writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetPerfMonitorGroupsAMD", ExactSpelling = true)]
             internal extern static unsafe void GetPerfMonitorGroupsAMD([Out] Int32* numGroups, Int32 groupsSize, [Out] UInt32* groups);
             [System.Security.SuppressUnmanagedCodeSecurity()]

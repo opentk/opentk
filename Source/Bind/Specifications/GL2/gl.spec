@@ -1,7 +1,8 @@
 # gl.spec file
 # DON'T REMOVE PREVIOUS LINE!!! libspec depends on it!
 #
-# Copyright (C) 1991-2005 Silicon Graphics, Inc. All Rights Reserved.
+# Copyright (c) 1991-2005 Silicon Graphics, Inc. All Rights Reserved.
+# Copyright (c) 2006-2009 The Khronos Group Inc.
 #
 # This document is licensed under the SGI Free Software B License Version
 # 2.0. For details, see http://oss.sgi.com/projects/FreeB/ .
@@ -17,8 +18,7 @@ param:		retval retained
 dlflags:	notlistable handcode
 glxflags:	client-intercept client-handcode server-handcode EXT SGI ignore ARB
 vectorequiv:	*
-category:	display-list drawing drawing-control feedback framebuf misc modeling pixel-op pixel-rw state-req xform 1_1 VERSION_1_2 VERSION_1_3 VERSION_1_4 VERSION_1_5 VERSION_2_0 VERSION_2_1 VERSION_3_0 ATI_element_array ATI_envmap_bumpmap ATI_fragment_shader ATI_pn_triangles ATI_vertex_array_object ATI_vertex_streams EXT_blend_color EXT_blend_minmax EXT_convolution EXT_copy_texture EXT_histogram EXT_polygon_offset EXT_subtexture EXT_texture3D EXT_texture_object EXT_vertex_array EXT_vertex_shader SGIS_detail_texture SGIS_multisample SGIS_pixel_texture ARB_point_parameters EXT_point_parameters SGIS_point_parameters SGIS_sharpen_texture SGIS_texture4D SGIS_texture_filter4 SGIX_async SGIX_flush_raster SGIX_fragment_lighting SGIX_framezoom SGIX_igloo_interface SGIX_instruments SGIX_list_priority SGIX_pixel_texture SGIX_polynomial_ffd SGIX_reference_plane SGIX_sprite SGIX_tag_sample_buffer SGI_color_table ARB_multitexture ARB_multisample ARB_texture_compression ARB_transpose_matrix ARB_vertex_blend ARB_matrix_palette EXT_compiled_vertex_array EXT_cull_vertex EXT_index_func EXT_index_material EXT_draw_range_elements EXT_vertex_weighting INGR_blend_func_separate NV_evaluators NV_fence NV_occlusion_query NV_point_sprite NV_register_combiners NV_register_combiners2 NV_vertex_array_range NV_vertex_program NV_vertex_program1_1_dcc MESA_resize_buffers MESA_window_pos PGI_misc_hints EXT_fog_coord EXT_blend_func_separate EXT_color_subtable EXT_coordinate_frame EXT_light_texture EXT_multi_draw_arrays EXT_paletted_texture EXT_pixel_transform EXT_secondary_color EXT_texture_perturb_normal HP_image_transform IBM_multimode_draw_arrays IBM_vertex_array_lists INTEL_parallel_arrays SUNX_constant_data SUN_global_alpha SUN_mesh_array SUN_triangle_list SUN_vertex 3DFX_tbuffer EXT_multisample SGIS_fog_function SGIS_texture_color_mask ARB_window_pos EXT_stencil_two_side EXT_depth_bounds_test EXT_blend_equation_separate ARB_vertex_program ARB_fragment_program ARB_vertex_buffer_object ARB_occlusion_query ARB_shader_objects ARB_vertex_shader ARB_fragment_shader S3_s3tc ATI_draw_buffers ATI_texture_env_combine3 ATI_texture_float NV_float_buffer NV_fragment_program NV_half_float NV_pixel_data_range NV_primitive_restart NV_texture_expand_normal NV_texture_expand_normal NV_vertex_program2 APPLE_element_array APPLE_fence APPLE_vertex_array_object APPLE_vertex_array_range ATI_draw_buffers NV_fragment_program NV_half_float NV_pixel_data_range NV_primitive_restart ATI_map_object_buffer ATI_separate_stencil ATI_vertex_attrib_array_object ARB_draw_buffers ARB_texture_rectangle ARB_color_buffer_float EXT_framebuffer_object GREMEDY_string_marker EXT_stencil_clear_tag EXT_framebuffer_blit EXT_framebuffer_multisample MESAX_texture_stack EXT_timer_query EXT_gpu_program_parameters APPLE_flush_buffer_range NV_gpu_program4 NV_geometry_program4 EXT_geometry_shader4 NV_vertex_program4 EXT_gpu_shader4 EXT_draw_instanced EXT_texture_buffer_object NV_depth_buffer_float NV_framebuffer_multisample_coverage NV_parameter_buffer_object EXT_draw_buffers2 NV_transform_feedback EXT_bindable_uniform EXT_texture_integer GREMEDY_frame_terminator NV_conditional_render NV_present_video EXT_transform_feedback ARB_depth_buffer_float ARB_draw_instanced ARB_framebuffer_object ARB_framebuffer_sRGB ARB_geometry_shader4 ARB_half_float_vertex ARB_instanced_arrays ARB_map_buffer_range ARB_texture_buffer_object ARB_texture_compression_rgtc ARB_texture_rg ARB_vertex_array_object EXT_direct_state_access EXT_vertex_array_bgra EXT_texture_swizzle NV_explicit_multisample NV_transform_feedback2 ATI_meminfo AMD_performance_monitor AMD_vertex_shader_tesselator EXT_provoking_vertex
-
+category:	display-list drawing drawing-control feedback framebuf misc modeling pixel-op pixel-rw state-req xform 1_1 VERSION_1_2 VERSION_1_3 VERSION_1_4 VERSION_1_5 VERSION_2_0 VERSION_2_1 VERSION_3_0 ATI_element_array ATI_envmap_bumpmap ATI_fragment_shader ATI_pn_triangles ATI_vertex_array_object ATI_vertex_streams EXT_blend_color EXT_blend_minmax EXT_convolution EXT_copy_texture EXT_histogram EXT_polygon_offset EXT_subtexture EXT_texture3D EXT_texture_object EXT_vertex_array EXT_vertex_shader SGIS_detail_texture SGIS_multisample SGIS_pixel_texture ARB_point_parameters EXT_point_parameters SGIS_point_parameters SGIS_sharpen_texture SGIS_texture4D SGIS_texture_filter4 SGIX_async SGIX_flush_raster SGIX_fragment_lighting SGIX_framezoom SGIX_igloo_interface SGIX_instruments SGIX_list_priority SGIX_pixel_texture SGIX_polynomial_ffd SGIX_reference_plane SGIX_sprite SGIX_tag_sample_buffer SGI_color_table ARB_multitexture ARB_multisample ARB_texture_compression ARB_transpose_matrix ARB_vertex_blend ARB_matrix_palette EXT_compiled_vertex_array EXT_cull_vertex EXT_index_func EXT_index_material EXT_draw_range_elements EXT_vertex_weighting INGR_blend_func_separate NV_evaluators NV_fence NV_occlusion_query NV_point_sprite NV_register_combiners NV_register_combiners2 NV_vertex_array_range NV_vertex_program NV_vertex_program1_1_dcc MESA_resize_buffers MESA_window_pos PGI_misc_hints EXT_fog_coord EXT_blend_func_separate EXT_color_subtable EXT_coordinate_frame EXT_light_texture EXT_multi_draw_arrays EXT_paletted_texture EXT_pixel_transform EXT_secondary_color EXT_texture_perturb_normal HP_image_transform IBM_multimode_draw_arrays IBM_vertex_array_lists INTEL_parallel_arrays SUNX_constant_data SUN_global_alpha SUN_mesh_array SUN_triangle_list SUN_vertex 3DFX_tbuffer EXT_multisample SGIS_fog_function SGIS_texture_color_mask ARB_window_pos EXT_stencil_two_side EXT_depth_bounds_test EXT_blend_equation_separate ARB_vertex_program ARB_fragment_program ARB_vertex_buffer_object ARB_occlusion_query ARB_shader_objects ARB_vertex_shader ARB_fragment_shader S3_s3tc ATI_draw_buffers ATI_texture_env_combine3 ATI_texture_float NV_float_buffer NV_fragment_program NV_half_float NV_pixel_data_range NV_primitive_restart NV_texture_expand_normal NV_texture_expand_normal NV_vertex_program2 APPLE_element_array APPLE_fence APPLE_vertex_array_object APPLE_vertex_array_range ATI_draw_buffers NV_fragment_program NV_half_float NV_pixel_data_range NV_primitive_restart ATI_map_object_buffer ATI_separate_stencil ATI_vertex_attrib_array_object ARB_draw_buffers ARB_texture_rectangle ARB_color_buffer_float EXT_framebuffer_object GREMEDY_string_marker EXT_stencil_clear_tag EXT_framebuffer_blit EXT_framebuffer_multisample MESAX_texture_stack EXT_timer_query EXT_gpu_program_parameters APPLE_flush_buffer_range NV_gpu_program4 NV_geometry_program4 EXT_geometry_shader4 NV_vertex_program4 EXT_gpu_shader4 EXT_draw_instanced EXT_texture_buffer_object NV_depth_buffer_float NV_framebuffer_multisample_coverage NV_parameter_buffer_object EXT_draw_buffers2 NV_transform_feedback EXT_bindable_uniform EXT_texture_integer GREMEDY_frame_terminator NV_conditional_render NV_present_video EXT_transform_feedback ARB_depth_buffer_float ARB_draw_instanced ARB_framebuffer_object ARB_framebuffer_sRGB ARB_geometry_shader4 ARB_half_float_vertex ARB_instanced_arrays ARB_map_buffer_range ARB_texture_buffer_object ARB_texture_compression_rgtc ARB_texture_rg ARB_vertex_array_object EXT_direct_state_access EXT_vertex_array_bgra EXT_texture_swizzle NV_explicit_multisample NV_transform_feedback2 ATI_meminfo AMD_performance_monitor AMD_vertex_shader_tesselator EXT_provoking_vertex ARB_uniform_buffer_object ARB_copy_buffer
 
 # categories for extensions with no functions - need not be included now
 #   ARB_texture_env_add ARB_texture_cube_map ARB_texture_border_clamp ARB_shading_language_100 ARB_texture_non_power_of_two ARB_point_sprite ARB_half_float_pixel ARB_texture_float ARB_pixel_buffer_object EXT_abgr EXT_texture SGI_color_matrix SGI_texture_color_table EXT_cmyka EXT_packed_pixels SGIS_texture_lod EXT_rescale_normal EXT_misc_attribute SGIS_generate_mipmap SGIX_clipmap SGIX_shadow SGIS_texture_edge_clamp SGIS_texture_border_clamp EXT_blend_subtract EXT_blend_logic_op SGIX_async_histogram SGIX_async_pixel SGIX_interlace SGIX_pixel_tiles SGIX_texture_select SGIX_texture_multi_buffer SGIX_texture_scale_bias SGIX_depth_texture SGIX_fog_offset HP_convolution_border_modes SGIX_texture_add_env PGI_vertex_hints EXT_clip_volume_hint SGIX_ir_instrument1 SGIX_calligraphic_fragment SGIX_texture_lod_bias SGIX_shadow_ambient EXT_index_texture EXT_index_array_formats SGIX_ycrcb IBM_rasterpos_clip HP_texture_lighting WIN_phong_shading WIN_specular_fog SGIX_blend_alpha_minmax EXT_bgra HP_occlusion_test EXT_pixel_transform_color_table EXT_shared_texture_palette EXT_separate_specular_color EXT_texture_env REND_screen_coordinates EXT_texture_env_combine APPLE_specular_vector APPLE_transform_hint SGIX_fog_scale INGR_color_clamp INGR_interlace_read EXT_stencil_wrap EXT_422_pixels NV_texgen_reflection SUN_convolution_border_modes SUN_slice_accum EXT_texture_env_add EXT_texture_lod_bias EXT_texture_filter_anisotropic NV_light_max_exponent NV_fog_distance NV_texgen_emboss NV_blend_square NV_texture_env_combine4 NV_packed_depth_stencil NV_texture_compression_vtc NV_texture_rectangle NV_texture_shader NV_texture_shader2 NV_vertex_array_range2 IBM_cull_vertex SGIX_subsample SGIX_ycrcba SGIX_ycrcb_subsample SGIX_depth_pass_instrument 3DFX_texture_compression_FXT1 3DFX_multisample SGIX_vertex_preclip SGIX_convolution_accuracy SGIX_resample SGIX_scalebias_hint SGIX_texture_coordinate_clamp EXT_shadow_funcs MESA_pack_invert MESA_ycbcr_texture EXT_packed_float EXT_texture_array EXT_texture_compression_latc EXT_texture_compression_rgtc EXT_texture_shared_exponent NV_fragment_program4 EXT_framebuffer_sRGB NV_geometry_shader4 EXT_vertex_array_bgra
@@ -8980,7 +8980,6 @@ WindowPos3svARB(v)
 #
 # ARB Extension #26
 # ARB_vertex_program commands
-# Edited for OpenTK
 #
 ###############################################################################
 
@@ -11236,6 +11235,164 @@ IsVertexArray(array)
 	glxflags	ignore
 	glsopcode	?
 	offset		?
+
+###############################################################################
+#
+# ARB Extension #55 - WGL_ARB_create_context
+# ARB Extension #56 - GLX_ARB_create_context
+#
+###############################################################################
+
+###############################################################################
+#
+# ARB Extension #57
+# ARB_uniform_buffer_object commands
+#
+###############################################################################
+
+GetUniformIndices(program, uniformCount, uniformNames, uniformIndices)
+	return		void
+	param		program		UInt32 in value
+	param		uniformCount	SizeI in value
+	param		uniformNames	CharPointer in array [COMPSIZE(uniformCount)]
+	param		uniformIndices	UInt32 out array [COMPSIZE(uniformCount)]
+	category	ARB_uniform_buffer_object
+	dlflags		notlistable
+	version		2.0
+	extension
+	glxsingle	?
+	glxflags	ignore
+	glsflags	get
+	glsopcode	?
+	offset		?
+
+GetActiveUniformsiv(program, uniformCount, uniformIndices, pname, params)
+	return		void
+	param		program		UInt32 in value
+	param		uniformCount	SizeI in value
+	param		uniformIndices	UInt32 in array [COMPSIZE(uniformCount)]
+	param		pname		GLenum in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	ARB_uniform_buffer_object
+	dlflags		notlistable
+	version		2.0
+	extension
+	glxsingle	?
+	glxflags	ignore
+	glsflags	get
+	glsopcode	?
+	offset		?
+
+GetActiveUniformName(program, uniformIndex, bufSize, length, uniformName)
+	return		void
+	param		program		UInt32 in value
+	param		uniformIndex	UInt32 in value
+	param		bufSize		SizeI in value
+	param		length		SizeI out array [1]
+	param		uniformName	Char out array [bufSize]
+	category	ARB_uniform_buffer_object
+	dlflags		notlistable
+	version		2.0
+	extension
+	glxsingle	?
+	glxflags	ignore
+	glsflags	get
+	glsopcode	?
+	offset		?
+
+GetUniformBlockIndex(program, uniformBlockName)
+	return		UInt32
+	param		program		UInt32 in value
+	param		uniformBlockName	Char in array [COMPSIZE()]
+	category	ARB_uniform_buffer_object
+	dlflags		notlistable
+	version		2.0
+	extension
+	glxsingle	?
+	glxflags	ignore
+	glsflags	get
+	glsopcode	?
+	offset		?
+
+GetActiveUniformBlockiv(program, uniformBlockIndex, pname, params)
+	return		void
+	param		program		UInt32 in value
+	param		uniformBlockIndex	UInt32 in value
+	param		pname		GLenum in value
+	param		params		Int32 out array [COMPSIZE(pname)]
+	category	ARB_uniform_buffer_object
+	dlflags		notlistable
+	version		2.0
+	extension
+	glxsingle	?
+	glxflags	ignore
+	glsflags	get
+	glsopcode	?
+	offset		?
+
+GetActiveUniformBlockName(program, uniformBlockIndex, bufSize, length, uniformBlockName)
+	return		void
+	param		program		UInt32 in value
+	param		uniformBlockIndex	UInt32 in value
+	param		bufSize		SizeI in value
+	param		length		SizeI out array [1]
+	param		uniformBlockName	Char out array [bufSize]
+	category	ARB_uniform_buffer_object
+	dlflags		notlistable
+	version		2.0
+	extension
+	glxsingle	?
+	glxflags	ignore
+	glsflags	get
+	glsopcode	?
+	offset		?
+
+UniformBlockBinding(program, uniformBlockIndex, uniformBlockBinding)
+	return		void
+	param		program		UInt32 in value
+	param		uniformBlockIndex	UInt32 in value
+	param		uniformBlockBinding	UInt32 in value
+	category	ARB_uniform_buffer_object
+	version		2.0
+	extension
+	glxropcode	?
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
+
+###############################################################################
+#
+# ARB Extension #58
+# ARB_compatibility commands
+#
+###############################################################################
+
+# (none)
+newcategory: ARB_compatibility
+
+###############################################################################
+#
+# ARB Extension #59
+# ARB_copy_buffer commands
+#
+###############################################################################
+
+CopyBufferSubData(readTarget, writeTarget, readOffset, writeOffset, size)
+	return		void
+	param		readTarget	GLenum in value
+	param		writeTarget	GLenum in value
+	param		readOffset	BufferOffset in value
+	param		writeOffset	BufferOffset in value
+	param		size		BufferSize in value
+	category	ARB_copy_buffer
+	version		3.0
+	extension
+	glxropcode	?
+	glxflags	ignore
+	glsopcode	?
+	offset		?
+
 
 
 ###############################################################################

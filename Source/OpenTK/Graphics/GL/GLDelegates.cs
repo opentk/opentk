@@ -2675,6 +2675,30 @@ namespace OpenTK.Graphics
             internal delegate bool IsVertexArray(UInt32 array);
             internal static IsVertexArray glIsVertexArray;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetUniformIndices(UInt32 program, Int32 uniformCount, String uniformNames, [Out] UInt32* uniformIndices);
+            internal unsafe static GetUniformIndices glGetUniformIndices;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetActiveUniformsiv(UInt32 program, Int32 uniformCount, UInt32* uniformIndices, OpenTK.Graphics.ArbUniformBufferObject pname, [Out] Int32* @params);
+            internal unsafe static GetActiveUniformsiv glGetActiveUniformsiv;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetActiveUniformName(UInt32 program, UInt32 uniformIndex, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder uniformName);
+            internal unsafe static GetActiveUniformName glGetActiveUniformName;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate Int32 GetUniformBlockIndex(UInt32 program, String uniformBlockName);
+            internal static GetUniformBlockIndex glGetUniformBlockIndex;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetActiveUniformBlockiv(UInt32 program, UInt32 uniformBlockIndex, OpenTK.Graphics.ArbUniformBufferObject pname, [Out] Int32* @params);
+            internal unsafe static GetActiveUniformBlockiv glGetActiveUniformBlockiv;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetActiveUniformBlockName(UInt32 program, UInt32 uniformBlockIndex, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder uniformBlockName);
+            internal unsafe static GetActiveUniformBlockName glGetActiveUniformBlockName;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void UniformBlockBinding(UInt32 program, UInt32 uniformBlockIndex, UInt32 uniformBlockBinding);
+            internal static UniformBlockBinding glUniformBlockBinding;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void CopyBufferSubData(OpenTK.Graphics.ArbCopyBuffer readTarget, OpenTK.Graphics.ArbCopyBuffer writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+            internal static CopyBufferSubData glCopyBufferSubData;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendColorEXT(Single red, Single green, Single blue, Single alpha);
             internal static BlendColorEXT glBlendColorEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]

@@ -5492,6 +5492,7 @@ namespace OpenTK.Graphics
         MaxProgramLoopCountNv = ((int)0X88f8),
         VertexAttribArrayInteger = ((int)0X88fd),
         VertexAttribArrayIntegerNv = ((int)0X88fd),
+        VertexAttribArrayDivisorArb = ((int)0X88fe),
         MaxArrayTextureLayers = ((int)0X88ff),
         MaxArrayTextureLayersExt = ((int)0X88ff),
         MinProgramTexelOffset = ((int)0X8904),
@@ -5618,8 +5619,40 @@ namespace OpenTK.Graphics
         ResampleDecimateOml = ((int)0X8989),
         DrawPixelsApple = ((int)0X8a0a),
         FenceApple = ((int)0X8a0b),
+        UniformBuffer = ((int)0X8a11),
         BufferSerializedModifyApple = ((int)0X8a12),
         BufferFlushingUnmapApple = ((int)0X8a13),
+        UniformBufferBinding = ((int)0X8a28),
+        UniformBufferStart = ((int)0X8a29),
+        UniformBufferSize = ((int)0X8a2a),
+        MaxVertexUniformBlocks = ((int)0X8a2b),
+        MaxGeometryUniformBlocks = ((int)0X8a2c),
+        MaxFragmentUniformBlocks = ((int)0X8a2d),
+        MaxCombinedUniformBlocks = ((int)0X8a2e),
+        MaxUniformBufferBindings = ((int)0X8a2f),
+        MaxUniformBlockSize = ((int)0X8a30),
+        MaxCombinedVertexUniformComponents = ((int)0X8a31),
+        MaxCombinedGeometryUniformComponents = ((int)0X8a32),
+        MaxCombinedFragmentUniformComponents = ((int)0X8a33),
+        UniformBufferOffsetAlignment = ((int)0X8a34),
+        ActiveUniformBlockMaxNameLength = ((int)0X8a35),
+        ActiveUniformBlocks = ((int)0X8a36),
+        UniformType = ((int)0X8a37),
+        UniformSize = ((int)0X8a38),
+        UniformNameLength = ((int)0X8a39),
+        UniformBlockIndex = ((int)0X8a3a),
+        UniformOffset = ((int)0X8a3b),
+        UniformArrayStride = ((int)0X8a3c),
+        UniformMatrixStride = ((int)0X8a3d),
+        UniformIsRowMajor = ((int)0X8a3e),
+        UniformBlockBinding = ((int)0X8a3f),
+        UniformBlockDataSize = ((int)0X8a40),
+        UniformBlockNameLength = ((int)0X8a41),
+        UniformBlockActiveUniforms = ((int)0X8a42),
+        UniformBlockActiveUniformIndices = ((int)0X8a43),
+        UniformBlockReferencedByVertexShader = ((int)0X8a44),
+        UniformBlockReferencedByGeometryShader = ((int)0X8a45),
+        UniformBlockReferencedByFragmentShader = ((int)0X8a46),
         FragmentShader = ((int)0X8b30),
         FragmentShaderArb = ((int)0X8b30),
         VertexShader = ((int)0X8b31),
@@ -6192,6 +6225,8 @@ namespace OpenTK.Graphics
         IntSamplerRenderbufferNv = ((int)0X8e57),
         UnsignedIntSamplerRenderbufferNv = ((int)0X8e58),
         MaxSampleMaskWordsNv = ((int)0X8e59),
+        CopyReadBuffer = ((int)0X8f36),
+        CopyWriteBuffer = ((int)0X8f37),
         SamplerBufferAmd = ((int)0X9001),
         IntSamplerBufferAmd = ((int)0X9002),
         UnsignedIntSamplerBufferAmd = ((int)0X9003),
@@ -6201,6 +6236,7 @@ namespace OpenTK.Graphics
         ContinuousAmd = ((int)0X9007),
         AllAttribBits = unchecked((int)0Xffffffff),
         ClientAllAttribBits = unchecked((int)0Xffffffff),
+        InvalidIndexArb = unchecked((int)0Xffffffff),
         One = ((int)1),
         True = ((int)1),
         CullVertexIbm = ((int)103050),
@@ -7106,6 +7142,7 @@ namespace OpenTK.Graphics
 
     public enum ArbInstancedArrays
     {
+        VertexAttribArrayDivisorArb = ((int)0X88fe),
     }
 
     public enum ArbMapBufferRange
@@ -7164,6 +7201,53 @@ namespace OpenTK.Graphics
     public enum ArbVertexArrayObject
     {
         VertexArrayBinding = ((int)0X85b5),
+    }
+
+    public enum ArbUniformBufferObject
+    {
+        UniformBuffer = ((int)0X8a11),
+        UniformBufferBinding = ((int)0X8a28),
+        UniformBufferStart = ((int)0X8a29),
+        UniformBufferSize = ((int)0X8a2a),
+        MaxVertexUniformBlocks = ((int)0X8a2b),
+        MaxGeometryUniformBlocks = ((int)0X8a2c),
+        MaxFragmentUniformBlocks = ((int)0X8a2d),
+        MaxCombinedUniformBlocks = ((int)0X8a2e),
+        MaxUniformBufferBindings = ((int)0X8a2f),
+        MaxUniformBlockSize = ((int)0X8a30),
+        MaxCombinedVertexUniformComponents = ((int)0X8a31),
+        MaxCombinedGeometryUniformComponents = ((int)0X8a32),
+        MaxCombinedFragmentUniformComponents = ((int)0X8a33),
+        UniformBufferOffsetAlignment = ((int)0X8a34),
+        ActiveUniformBlockMaxNameLength = ((int)0X8a35),
+        ActiveUniformBlocks = ((int)0X8a36),
+        UniformType = ((int)0X8a37),
+        UniformSize = ((int)0X8a38),
+        UniformNameLength = ((int)0X8a39),
+        UniformBlockIndex = ((int)0X8a3a),
+        UniformOffset = ((int)0X8a3b),
+        UniformArrayStride = ((int)0X8a3c),
+        UniformMatrixStride = ((int)0X8a3d),
+        UniformIsRowMajor = ((int)0X8a3e),
+        UniformBlockBinding = ((int)0X8a3f),
+        UniformBlockDataSize = ((int)0X8a40),
+        UniformBlockNameLength = ((int)0X8a41),
+        UniformBlockActiveUniforms = ((int)0X8a42),
+        UniformBlockActiveUniformIndices = ((int)0X8a43),
+        UniformBlockReferencedByVertexShader = ((int)0X8a44),
+        UniformBlockReferencedByGeometryShader = ((int)0X8a45),
+        UniformBlockReferencedByFragmentShader = ((int)0X8a46),
+        InvalidIndexArb = unchecked((int)0Xffffffff),
+    }
+
+    public enum ArbCompatibility
+    {
+    }
+
+    public enum ArbCopyBuffer
+    {
+        CopyReadBuffer = ((int)0X8f36),
+        CopyWriteBuffer = ((int)0X8f37),
     }
 
     public enum ExtSubtexture

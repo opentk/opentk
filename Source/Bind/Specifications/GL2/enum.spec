@@ -192,7 +192,6 @@ DrawElementsType enum:
 	use DataType UNSIGNED_INT
 
 ###############################################################################
-
 AttribMask enum:
 	CURRENT_BIT					= 0x00000001
 	POINT_BIT					= 0x00000002
@@ -544,7 +543,7 @@ EnableCap enum:
 	use EXT_rescale_normal RESCALE_NORMAL_EXT
 	use EXT_shared_texture_palette SHARED_TEXTURE_PALETTE_EXT
 	use EXT_texture3D TEXTURE_3D_EXT
-	use VERSION_1_3 MULTISAMPLE
+	use ARB_multisample MULTISAMPLE
 	use SGIS_multisample SAMPLE_ALPHA_TO_MASK_SGIS
 	use SGIS_multisample SAMPLE_ALPHA_TO_ONE_SGIS
 	use SGIS_multisample SAMPLE_MASK_SGIS
@@ -3664,7 +3663,6 @@ SGIX_icc_texture enum:
 	LUMINANCE16_ICC_SGIX				= 0x8469
 	INTENSITY16_ICC_SGIX				= 0x846A
 	LUMINANCE16_ALPHA8_ICC_SGIX			= 0x846B
-
 ###############################################################################
 
 # SGI_future_use: 0x846C
@@ -5665,11 +5663,53 @@ SGIX_subsample enum:
 #	MIN_PBUFFER_VIEWPORT_DIMS_APPLE			= 0x8A10
 #	ELEMENT_BUFFER_BINDING_APPLE			= 0x8A11
 
+# There's a potential collision with ELEMENT_BUFFER_BINDING_APPLE.
+# Unclear whether the enums above ever actually shipped from Apple,
+# checking...
+# ARB_uniform_buffer_object enum: (additional; see above)
+#	UNIFORM_BUFFER					= 0x8A11
+
 # APPLE_flush_buffer_range enum:
 #	BUFFER_SERIALIZED_MODIFY_APPLE			= 0x8A12
 #	BUFFER_FLUSHING_UNMAP_APPLE			= 0x8A13
 
-# APPLE_future_use: 0x8A14-0x8A7F
+# APPLE_future_use: 0x8A14-0x8A27
+
+# ARB_uniform_buffer_object enum:
+#	UNIFORM_BUFFER_BINDING				= 0x8A28
+#	UNIFORM_BUFFER_START				= 0x8A29
+#	UNIFORM_BUFFER_SIZE				= 0x8A2A
+#	MAX_VERTEX_UNIFORM_BLOCKS			= 0x8A2B
+#	MAX_GEOMETRY_UNIFORM_BLOCKS			= 0x8A2C
+#	MAX_FRAGMENT_UNIFORM_BLOCKS			= 0x8A2D
+#	MAX_COMBINED_UNIFORM_BLOCKS			= 0x8A2E
+#	MAX_UNIFORM_BUFFER_BINDINGS			= 0x8A2F
+#	MAX_UNIFORM_BLOCK_SIZE				= 0x8A30
+#	MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS		= 0x8A31
+#	MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS	= 0x8A32
+#	MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS	= 0x8A33
+#	UNIFORM_BUFFER_OFFSET_ALIGNMENT			= 0x8A34
+#	ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH		= 0x8A35
+#	ACTIVE_UNIFORM_BLOCKS				= 0x8A36
+#	UNIFORM_TYPE					= 0x8A37
+#	UNIFORM_SIZE					= 0x8A38
+#	UNIFORM_NAME_LENGTH				= 0x8A39
+#	UNIFORM_BLOCK_INDEX				= 0x8A3A
+#	UNIFORM_OFFSET					= 0x8A3B
+#	UNIFORM_ARRAY_STRIDE				= 0x8A3C
+#	UNIFORM_MATRIX_STRIDE				= 0x8A3D
+#	UNIFORM_IS_ROW_MAJOR				= 0x8A3E
+#	UNIFORM_BLOCK_BINDING				= 0x8A3F
+#	UNIFORM_BLOCK_DATA_SIZE				= 0x8A40
+#	UNIFORM_BLOCK_NAME_LENGTH			= 0x8A41
+#	UNIFORM_BLOCK_ACTIVE_UNIFORMS			= 0x8A42
+#	UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES		= 0x8A43
+#	UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER	= 0x8A44
+#	UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER	= 0x8A45
+#	UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER	= 0x8A46
+#	INVALID_INDEX					= 0xFFFFFFFFu
+
+# APPLE_future_use: 0x8A47-0x8A7F
 
 ###############################################################################
 
@@ -6626,8 +6666,8 @@ SGIX_subsample enum:
 ###############################################################################
 
 # QNX: 0x8E90-0x8E9F
-# https://cvs.khronos.org/bugzilla/show_bug.cgi?id=696
 # For GL_QNX_texture_tiling, GL_QNX_complex_polygon, GL_QNX_stippled_lines
+# (Khronos bug 696)
 
 # QNX_future_use: 0x8E90-0x8E9F
 
@@ -6648,6 +6688,14 @@ SGIX_subsample enum:
 
 # NVIDIA: 0x8ED0-0x8F4F
 # Assigned for Pat Brown (Khronos bug 3191)
+
+# NV_future_use: 0x8ED0-0x8F35
+
+# ARB_copy_buffer enum:
+#	COPY_READ_BUFFER				= 0x8F36
+#	COPY_WRITE_BUFFER				= 0x8F37
+
+# NVIDIA_future_use: 0x8F38-0x8F4F
 
 ###############################################################################
 
