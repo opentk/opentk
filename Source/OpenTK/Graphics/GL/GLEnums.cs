@@ -198,6 +198,7 @@ namespace OpenTK.Graphics
         UnsignedInt = ((int)0X1405),
         Float = ((int)0X1406),
         Double = ((int)0X140a),
+        HalfFloat = ((int)0X140b),
     }
 
     public enum ColorTableParameterPNameSgi
@@ -1347,6 +1348,7 @@ namespace OpenTK.Graphics
         Int = ((int)0X1404),
         Float = ((int)0X1406),
         Double = ((int)0X140a),
+        HalfFloat = ((int)0X140b),
     }
 
     public enum PixelCopyType
@@ -1644,6 +1646,7 @@ namespace OpenTK.Graphics
         Int = ((int)0X1404),
         Float = ((int)0X1406),
         Double = ((int)0X140a),
+        HalfFloat = ((int)0X140b),
     }
 
     public enum TextureCoordName
@@ -2030,6 +2033,7 @@ namespace OpenTK.Graphics
         Int = ((int)0X1404),
         Float = ((int)0X1406),
         Double = ((int)0X140a),
+        HalfFloat = ((int)0X140b),
     }
 
     public enum ClipPlaneName
@@ -6353,7 +6357,6 @@ namespace OpenTK.Graphics
         MapFlushExplicitBit = ((int)0X0010),
         MapUnsynchronizedBit = ((int)0X0020),
         MaxClipDistances = ((int)0X0D32),
-        HalfFloat = ((int)0X140b),
         ClipDistance0 = ((int)0X3000),
         ClipDistance1 = ((int)0X3001),
         ClipDistance2 = ((int)0X3002),
@@ -9619,6 +9622,7 @@ namespace OpenTK.Graphics
     {
         Float = ((int)0X1406),
         Double = ((int)0X140a),
+        HalfFloat = ((int)0X140b),
     }
 
     public enum PointParameterName
@@ -9751,6 +9755,7 @@ namespace OpenTK.Graphics
         UnsignedInt = ((int)0X1405),
         Float = ((int)0X1406),
         Double = ((int)0X140a),
+        HalfFloat = ((int)0X140b),
     }
 
     public enum ShaderParameter

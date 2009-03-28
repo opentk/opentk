@@ -14768,7 +14768,7 @@ FogCoorddvEXT(coord)
 
 FogCoordPointerEXT(type, stride, pointer)
 	return		void
-	param		type		FogPointerTypeEXT in value
+	param		type		FogPointerType in value # FogPointerTypeEXT in value
 	param		stride		SizeI in value
 	param		pointer		Void in array [COMPSIZE(type/stride)] retained
 	category	EXT_fog_coord
@@ -15007,7 +15007,7 @@ Binormal3svEXT(v)
 
 TangentPointerEXT(type, stride, pointer)
 	return		void
-	param		type		TangentPointerTypeEXT in value
+	param		type		NormalPointerType in value # TangentPointerTypeEXT in value
 	param		stride		SizeI in value
 	param		pointer		Void in array [COMPSIZE(type/stride)] retained
 	category	EXT_coordinate_frame
@@ -15019,7 +15019,7 @@ TangentPointerEXT(type, stride, pointer)
 
 BinormalPointerEXT(type, stride, pointer)
 	return		void
-	param		type		BinormalPointerTypeEXT in value
+	param		type		NormalPointerType in value # BinormalPointerTypeEXT in value
 	param		stride		SizeI in value
 	param		pointer		Void in array [COMPSIZE(type/stride)] retained
 	category	EXT_coordinate_frame
@@ -16644,7 +16644,7 @@ EdgeFlagPointerListIBM(stride, pointer, ptrstride)
 
 FogCoordPointerListIBM(type, stride, pointer, ptrstride)
 	return		void
-	param		type		FogPointerTypeIBM in value
+	param		type		FogPointerType in value # FogPointerTypeIBM in value
 	param		stride		Int32 in value
 	param		pointer		VoidPointer in array [COMPSIZE(type/stride)] retained
 	param		ptrstride	Int32 in value
