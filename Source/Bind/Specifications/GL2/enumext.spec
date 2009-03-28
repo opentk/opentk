@@ -687,7 +687,7 @@ passthru: /* Reuse tokens from ARB_framebuffer_object */
 #	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_MULTISAMPLE
 #	use ARB_framebuffer_object	    MAX_SAMPLES
 passthru: /* Reuse tokens from ARB_framebuffer_sRGB */
-	use ARB_framebuffer_sRGB	    FRAMEBUFFER_SRGB
+#	use ARB_framebuffer_sRGB	    FRAMEBUFFER_SRGB
 passthru: /* Reuse tokens from ARB_half_float_vertex */
 	use ARB_half_float_vertex	    HALF_FLOAT
 passthru: /* Reuse tokens from ARB_map_buffer_range */
@@ -6389,6 +6389,12 @@ GetTextureParameter enum:
 PixelType enum:
 	use ARB_depth_buffer_float	    FLOAT_32_UNSIGNED_INT_24_8_REV
 
+# Promoted from ARB_framebuffer_sRGB
+EnableCap enum:
+	use ARB_framebuffer_sRGB	    FRAMEBUFFER_SRGB
 
-	
+GetPName enum:	
+	use ARB_framebuffer_sRGB	    FRAMEBUFFER_SRGB
+
+
 # End (don't remove, or the last token may be missed!)
