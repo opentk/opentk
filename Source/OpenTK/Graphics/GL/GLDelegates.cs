@@ -1805,7 +1805,7 @@ namespace OpenTK.Graphics
             internal delegate bool IsEnabledi(OpenTK.Graphics.IndexedEnableCap target, UInt32 index);
             internal static IsEnabledi glIsEnabledi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BeginTransformFeedback(OpenTK.Graphics.Version30 primitiveMode);
+            internal delegate void BeginTransformFeedback(OpenTK.Graphics.BeginFeedbackMode primitiveMode);
             internal static BeginTransformFeedback glBeginTransformFeedback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void EndTransformFeedback();
@@ -1817,7 +1817,7 @@ namespace OpenTK.Graphics
             internal delegate void BindBufferBase(OpenTK.Graphics.BufferTarget target, UInt32 index, UInt32 buffer);
             internal static BindBufferBase glBindBufferBase;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TransformFeedbackVaryings(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.Version30 bufferMode);
+            internal delegate void TransformFeedbackVaryings(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.TransformFeedbackMode bufferMode);
             internal static TransformFeedbackVaryings glTransformFeedbackVaryings;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.Graphics.Version30* type, [Out] System.Text.StringBuilder name);

@@ -7189,7 +7189,7 @@ IsEnabledi(target, index)
 
 BeginTransformFeedback(primitiveMode)
 	return		void
-	param		primitiveMode	GLenum in value
+	param		primitiveMode	BeginFeedbackMode in value # GLenum in value
 	category	VERSION_3_0
 	version		3.0
 	extension
@@ -7241,7 +7241,7 @@ TransformFeedbackVaryings(program, count, varyings, bufferMode)
 	param		program		UInt32 in value
 	param		count		SizeI in value
 	param		varyings	CharPointer in array [count]
-	param		bufferMode	GLenum in value
+	param		bufferMode	TransformFeedbackMode in value # GLenum in value
 	category	VERSION_3_0
 	version		3.0
 	extension
