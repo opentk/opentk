@@ -501,10 +501,10 @@ VERSION_3_0 enum:
 	CLIP_DISTANCE4					= GL_CLIP_PLANE4
 	CLIP_DISTANCE5					= GL_CLIP_PLANE5
 	MAX_CLIP_DISTANCES				= GL_MAX_CLIP_PLANES
-	MAJOR_VERSION					= 0x821B
-	MINOR_VERSION					= 0x821C
-	NUM_EXTENSIONS					= 0x821D
-	CONTEXT_FLAGS					= 0x821E
+#	MAJOR_VERSION					= 0x821B
+#	MINOR_VERSION					= 0x821C
+#	NUM_EXTENSIONS					= 0x821D
+#	CONTEXT_FLAGS					= 0x821E
 	DEPTH_BUFFER					= 0x8223
 	STENCIL_BUFFER					= 0x8224
 #	COMPRESSED_RED					= 0x8225
@@ -538,9 +538,9 @@ VERSION_3_0 enum:
 #	TEXTURE_BINDING_1D_ARRAY			= 0x8C1C
 #	TEXTURE_BINDING_2D_ARRAY			= 0x8C1D
 #	R11F_G11F_B10F					= 0x8C3A
-	UNSIGNED_INT_10F_11F_11F_REV			= 0x8C3B
+#	UNSIGNED_INT_10F_11F_11F_REV			= 0x8C3B
 #	RGB9_E5						= 0x8C3D
-	UNSIGNED_INT_5_9_9_9_REV			= 0x8C3E
+#	UNSIGNED_INT_5_9_9_9_REV			= 0x8C3E
 #	TEXTURE_SHARED_SIZE				= 0x8C3F
 	TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH		= 0x8C76
 	TRANSFORM_FEEDBACK_BUFFER_MODE			= 0x8C7F
@@ -6104,8 +6104,6 @@ PixelInternalFormat enum:
 	RGB32F = 0x8815
 	RGBA16F = 0x881A
 	RGB16F = 0x881B
-	R11F_G11F_B10F = 0x8C3A
-	RGB9_E5 = 0x8C3D
 	use ARB_depth_buffer_float	    DEPTH_COMPONENT32F
 	use ARB_depth_buffer_float	    DEPTH32F_STENCIL8
 	use ARB_depth_buffer_float	    FLOAT_32_UNSIGNED_INT_24_8_REV
@@ -6374,7 +6372,6 @@ PixelType enum:
 	use ARB_framebuffer_object	    UNSIGNED_INT_24_8
 
 GetTextureParameter enum:
-	TEXTURE_SHARED_SIZE			= 0x8C3F
 	use ARB_framebuffer_object	    TEXTURE_STENCIL_SIZE
 	use ARB_framebuffer_object	    TEXTURE_RED_TYPE
 	use ARB_framebuffer_object	    TEXTURE_GREEN_TYPE
@@ -6443,5 +6440,38 @@ ActiveUniformType enum:
 GetPName enum:
 	MIN_PROGRAM_TEXEL_OFFSET			= 0x8904
 	MAX_PROGRAM_TEXEL_OFFSET			= 0x8905
+	
+# Promoted from EXT_packed_float
+PixelType enum:
+	UNSIGNED_INT_10F_11F_11F_REV			= 0x8C3B
+
+PixelInternalFormat enum:
+	R11F_G11F_B10F = 0x8C3A	
+
+RenderbufferStorage enum:
+	use PixelInternalFormat R11F_G11F_B10F
+
+# Promoted from EXT_texture_ shared_exponent
+PixelType enum:
+	UNSIGNED_INT_5_9_9_9_REV			= 0x8C3E
+	
+PixelInternalFormat enum:
+	RGB9_E5 = 0x8C3D
+
+RenderbufferStorage enum:
+	use PixelInternalFormat RGB9_E5
+
+GetTextureParameter enum:
+	TEXTURE_SHARED_SIZE			= 0x8C3F
+
+# Other OpenGL 3.0 changes:
+GetPName enum:
+	MAJOR_VERSION					= 0x821B
+	MINOR_VERSION					= 0x821C
+	NUM_EXTENSIONS					= 0x821D
+	CONTEXT_FLAGS					= 0x821E
+
+IndexedStringName enum:
+	use StringName EXTENSIONS				# Used in GetStringi
 
 # End (don't remove, or the last token may be missed!)
