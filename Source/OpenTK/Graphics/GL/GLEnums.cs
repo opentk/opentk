@@ -5508,6 +5508,7 @@ namespace OpenTK.Graphics
         MaxProgramLoopCountNv = ((int)0X88f8),
         VertexAttribArrayInteger = ((int)0X88fd),
         VertexAttribArrayIntegerNv = ((int)0X88fd),
+        ArrayDivisor = ((int)0X88fe),
         VertexAttribArrayDivisorArb = ((int)0X88fe),
         MaxArrayTextureLayers = ((int)0X88ff),
         MaxArrayTextureLayersExt = ((int)0X88ff),
@@ -6735,6 +6736,7 @@ namespace OpenTK.Graphics
         ArrayType = ((int)0X8625),
         CurrentVertexAttrib = ((int)0X8626),
         ArrayNormalized = ((int)0X886a),
+        ArrayDivisor = ((int)0X88fe),
     }
 
     public enum VertexAttribPointerParameterArb

@@ -3722,76 +3722,76 @@ namespace OpenTK.Graphics
             internal unsafe delegate bool AreProgramsResidentNV(Int32 n, UInt32* programs, [Out] bool* residences);
             internal unsafe static AreProgramsResidentNV glAreProgramsResidentNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindProgramNV(OpenTK.Graphics.NvVertexProgram target, UInt32 id);
+            internal delegate void BindProgramNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 id);
             internal static BindProgramNV glBindProgramNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void DeleteProgramsNV(Int32 n, UInt32* programs);
             internal unsafe static DeleteProgramsNV glDeleteProgramsNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ExecuteProgramNV(OpenTK.Graphics.NvVertexProgram target, UInt32 id, Single* @params);
+            internal unsafe delegate void ExecuteProgramNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 id, Single* @params);
             internal unsafe static ExecuteProgramNV glExecuteProgramNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GenProgramsNV(Int32 n, [Out] UInt32* programs);
             internal unsafe static GenProgramsNV glGenProgramsNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetProgramParameterdvNV(OpenTK.Graphics.NvVertexProgram target, UInt32 index, OpenTK.Graphics.NvVertexProgram pname, [Out] Double* @params);
+            internal unsafe delegate void GetProgramParameterdvNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 index, OpenTK.Graphics.VertexAttribParameterArb pname, [Out] Double* @params);
             internal unsafe static GetProgramParameterdvNV glGetProgramParameterdvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetProgramParameterfvNV(OpenTK.Graphics.NvVertexProgram target, UInt32 index, OpenTK.Graphics.NvVertexProgram pname, [Out] Single* @params);
+            internal unsafe delegate void GetProgramParameterfvNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 index, OpenTK.Graphics.VertexAttribParameterArb pname, [Out] Single* @params);
             internal unsafe static GetProgramParameterfvNV glGetProgramParameterfvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetProgramivNV(UInt32 id, OpenTK.Graphics.NvVertexProgram pname, [Out] Int32* @params);
+            internal unsafe delegate void GetProgramivNV(UInt32 id, OpenTK.Graphics.VertexAttribParameterArb pname, [Out] Int32* @params);
             internal unsafe static GetProgramivNV glGetProgramivNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetProgramStringNV(UInt32 id, OpenTK.Graphics.NvVertexProgram pname, [Out] Byte* program);
+            internal unsafe delegate void GetProgramStringNV(UInt32 id, OpenTK.Graphics.VertexAttribParameterArb pname, [Out] Byte* program);
             internal unsafe static GetProgramStringNV glGetProgramStringNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetTrackMatrixivNV(OpenTK.Graphics.NvVertexProgram target, UInt32 address, OpenTK.Graphics.NvVertexProgram pname, [Out] Int32* @params);
+            internal unsafe delegate void GetTrackMatrixivNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 address, OpenTK.Graphics.VertexAttribParameterArb pname, [Out] Int32* @params);
             internal unsafe static GetTrackMatrixivNV glGetTrackMatrixivNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetVertexAttribdvNV(UInt32 index, OpenTK.Graphics.NvVertexProgram pname, [Out] Double* @params);
+            internal unsafe delegate void GetVertexAttribdvNV(UInt32 index, OpenTK.Graphics.VertexAttribParameterArb pname, [Out] Double* @params);
             internal unsafe static GetVertexAttribdvNV glGetVertexAttribdvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetVertexAttribfvNV(UInt32 index, OpenTK.Graphics.NvVertexProgram pname, [Out] Single* @params);
+            internal unsafe delegate void GetVertexAttribfvNV(UInt32 index, OpenTK.Graphics.VertexAttribParameterArb pname, [Out] Single* @params);
             internal unsafe static GetVertexAttribfvNV glGetVertexAttribfvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetVertexAttribivNV(UInt32 index, OpenTK.Graphics.NvVertexProgram pname, [Out] Int32* @params);
+            internal unsafe delegate void GetVertexAttribivNV(UInt32 index, OpenTK.Graphics.VertexAttribParameterArb pname, [Out] Int32* @params);
             internal unsafe static GetVertexAttribivNV glGetVertexAttribivNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetVertexAttribPointervNV(UInt32 index, OpenTK.Graphics.NvVertexProgram pname, [Out] IntPtr pointer);
+            internal delegate void GetVertexAttribPointervNV(UInt32 index, OpenTK.Graphics.VertexAttribParameterArb pname, [Out] IntPtr pointer);
             internal static GetVertexAttribPointervNV glGetVertexAttribPointervNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate bool IsProgramNV(UInt32 id);
             internal static IsProgramNV glIsProgramNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void LoadProgramNV(OpenTK.Graphics.NvVertexProgram target, UInt32 id, Int32 len, Byte* program);
+            internal unsafe delegate void LoadProgramNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 id, Int32 len, Byte* program);
             internal unsafe static LoadProgramNV glLoadProgramNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ProgramParameter4dNV(OpenTK.Graphics.NvVertexProgram target, UInt32 index, Double x, Double y, Double z, Double w);
+            internal delegate void ProgramParameter4dNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 index, Double x, Double y, Double z, Double w);
             internal static ProgramParameter4dNV glProgramParameter4dNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ProgramParameter4dvNV(OpenTK.Graphics.NvVertexProgram target, UInt32 index, Double* v);
+            internal unsafe delegate void ProgramParameter4dvNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 index, Double* v);
             internal unsafe static ProgramParameter4dvNV glProgramParameter4dvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ProgramParameter4fNV(OpenTK.Graphics.NvVertexProgram target, UInt32 index, Single x, Single y, Single z, Single w);
+            internal delegate void ProgramParameter4fNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 index, Single x, Single y, Single z, Single w);
             internal static ProgramParameter4fNV glProgramParameter4fNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ProgramParameter4fvNV(OpenTK.Graphics.NvVertexProgram target, UInt32 index, Single* v);
+            internal unsafe delegate void ProgramParameter4fvNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 index, Single* v);
             internal unsafe static ProgramParameter4fvNV glProgramParameter4fvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ProgramParameters4dvNV(OpenTK.Graphics.NvVertexProgram target, UInt32 index, UInt32 count, Double* v);
+            internal unsafe delegate void ProgramParameters4dvNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 index, UInt32 count, Double* v);
             internal unsafe static ProgramParameters4dvNV glProgramParameters4dvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ProgramParameters4fvNV(OpenTK.Graphics.NvVertexProgram target, UInt32 index, UInt32 count, Single* v);
+            internal unsafe delegate void ProgramParameters4fvNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 index, UInt32 count, Single* v);
             internal unsafe static ProgramParameters4fvNV glProgramParameters4fvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void RequestResidentProgramsNV(Int32 n, UInt32* programs);
             internal unsafe static RequestResidentProgramsNV glRequestResidentProgramsNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TrackMatrixNV(OpenTK.Graphics.NvVertexProgram target, UInt32 address, OpenTK.Graphics.NvVertexProgram matrix, OpenTK.Graphics.NvVertexProgram transform);
+            internal delegate void TrackMatrixNV(OpenTK.Graphics.VertexAttribParameterArb target, UInt32 address, OpenTK.Graphics.VertexAttribParameterArb matrix, OpenTK.Graphics.VertexAttribParameterArb transform);
             internal static TrackMatrixNV glTrackMatrixNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void VertexAttribPointerNV(UInt32 index, Int32 fsize, OpenTK.Graphics.NvVertexProgram type, Int32 stride, IntPtr pointer);
+            internal delegate void VertexAttribPointerNV(UInt32 index, Int32 fsize, OpenTK.Graphics.VertexAttribParameterArb type, Int32 stride, IntPtr pointer);
             internal static VertexAttribPointerNV glVertexAttribPointerNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void VertexAttrib1dNV(UInt32 index, Double x);
