@@ -11380,8 +11380,8 @@ newcategory: ARB_compatibility
 
 CopyBufferSubData(readTarget, writeTarget, readOffset, writeOffset, size)
 	return		void
-	param		readTarget	GLenum in value
-	param		writeTarget	GLenum in value
+	param		readTarget		BufferTarget in value # GLenum in value
+	param		writeTarget	BufferTarget in value # GLenum in value
 	param		readOffset	BufferOffset in value
 	param		writeOffset	BufferOffset in value
 	param		size		BufferSize in value

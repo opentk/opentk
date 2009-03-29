@@ -2696,7 +2696,7 @@ namespace OpenTK.Graphics
             internal delegate void UniformBlockBinding(UInt32 program, UInt32 uniformBlockIndex, UInt32 uniformBlockBinding);
             internal static UniformBlockBinding glUniformBlockBinding;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyBufferSubData(OpenTK.Graphics.ArbCopyBuffer readTarget, OpenTK.Graphics.ArbCopyBuffer writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
+            internal delegate void CopyBufferSubData(OpenTK.Graphics.BufferTarget readTarget, OpenTK.Graphics.BufferTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, IntPtr size);
             internal static CopyBufferSubData glCopyBufferSubData;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendColorEXT(Single red, Single green, Single blue, Single alpha);
