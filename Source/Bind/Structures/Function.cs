@@ -33,7 +33,7 @@ namespace Bind.Structures
         
         #endregion
 
-        static Regex endings = new Regex(@"((([df]|u?[isb])v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        static Regex endings = new Regex(@"((([df]|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
         static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flagv|Tess|Status|Pixels|Instanced|Indexed)", RegexOptions.Compiled | RegexOptions.RightToLeft);
 
         // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
