@@ -1,78 +1,24 @@
-The Open Toolkit 0.9.6 Beta -- Release notes
+The Open Toolkit 0.9.7 Beta -- Release notes
 
 [ Overview]
 
 This release introduces:
-* automatic OpenGL error checking;
-* generics for improved type-safety in the OpenGL bindings
-* bug fixes related to OpenGL 3.0 contexts on Linux
-* improved documentation in OpenTK.Graphics
-* a new EFX example ("EFX: Reverb").
+* OpenGL 3.1 support
+* improved OpenGL 3.0 bindings (type-safety)
+* improved automatic error checking (stack traces, better coverage)
 
 Please report any issues you may encounter at http://www.opentk.com.
 
 
 [Known issues]
 
-This release cannot be compiled on Mono due to a compiler bug
-(https://bugzilla.novell.com/show_bug.cgi?id=488960). Please
-use the precompiled binaries included in the release package.
+This release cannot be compiled on Mono due to a compiler bug (https://bugzilla.novell.com/show_bug.cgi?id=488960). Please use the precompiled binaries included in the release package.
 
 
 [API changes]
 
-Please note that binary compatibility is not preserved between
-beta releases.
+Please note that binary compatibility is not preserved between beta releases.
 
-OpenTK 0.9.6 replaces object overloads in OpenTK.Graphics
-with generics. For example GL.CallLists changes from:
+OpenTK 0.9.7 replaces several instances of the "All" and "Version30" enums with strongly-typed equivalents. This is a breaking change that potentially affects programs using OpenGL 3.0 functionality. If you are affected by this change, please replace the relevant instances of "All" or "Version30" with the correct enum, as reported by your IDE.
 
-void CallLists(int n, object data)
-
-to:
-
-void CallLists<T>(int n, ref T data) where T : struct
-void CallLists<T>(int n, T[] data) where T : struct
-void CallLists<T>(int n, T[,] data) where T : struct
-void CallLists<T>(int n, T[,,] data) where T : struct
-
-This change is intended to improve performance (no boxing)
-and type-safety in the OpenGL bindings.
-
-This is a breaking change in the following cases:
-
-Case: You pass parameters to the relevant function by value.
-Solution: Please pass the parameters by reference.
-
-Case: You use 4d or higher-dimension arrays.
-Solution: Consider reducing the dimension of the array. If
-this is not possible, please pin the array and pass a pointer
-instead.
-
-Case: You use jagged arrays.
-Solution: Jagged arrays are not safe for use with OpenGL.
-Please change to multi-dimension arrays.
-
-Case: You use objects that do not satisfy the struct constraint.
-Solution: Reference types are not safe for use with OpenGL.
-Please use pure value types instead.
-
-Pure value types are value types that recursively reference other
-value types only. For example, the following are pure value types:
-
-struct Vector3 { public float X, Y, Z; }
-struct Color4 { public float R, G, B, A; }
-struct Vertex {
-	public Vector3 Position;
-	public Color4 Color;
-}
-
-while the following are not:
-// reference type
-class Player { public Vector3 Position; }
-// value type that contains reference type
-struct Item { public Player Player; }
-
-Only pure value types are safe for use with OpenGL. Future OpenTK
-releases will contain additional runtime checks to enforce this
-constraint.
+OpenTK 0.9.7 also fixes the naming of several core and extension functions ending in "Instanced", "Indexed" or "Varyings". If you are affected by this change, please add the missing 'd' or 's' to the relevant functions.
