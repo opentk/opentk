@@ -1958,7 +1958,7 @@ namespace OpenTK.Graphics
             internal delegate void ClearBufferfi(OpenTK.Graphics.Version30 buffer, Int32 drawbuffer, Single depth, Int32 stencil);
             internal static ClearBufferfi glClearBufferfi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate IntPtr GetStringi(OpenTK.Graphics.Version30 name, UInt32 index);
+            internal delegate IntPtr GetStringi(OpenTK.Graphics.IndexedStringName name, UInt32 index);
             internal static GetStringi glGetStringi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ActiveTextureARB(OpenTK.Graphics.TextureUnit texture);
