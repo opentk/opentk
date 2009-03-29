@@ -8,7 +8,6 @@
 + Enforce PureValue constraint in generic classes.
 + Improve performance for functions that take generic arrays.
 + Fix documentation - parameter mismatches.
-+ Add GL3.1 support.
 
 [OpenTK.Graphics.GraphicsContext]
 + FSAA support (very simple, now that GL3 support has been added.)
