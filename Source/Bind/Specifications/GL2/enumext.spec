@@ -6490,12 +6490,40 @@ GetPName enum:
 IndexedStringName enum:
 	use StringName EXTENSIONS		# Used in GetStringi
 
+IndexedEnableCap enum:	
+    use GetPName BLEND
+
 # Version 3.1 
 
 # Promoted from ARB_copy_buffer
 BufferTarget enum:
     use ARB_copy_buffer COPY_READ_BUFFER
     use ARB_copy_buffer COPY_WRITE_BUFFER
+
+# Promoted from ARB_uniform_buffer_object
+BufferTarget enum:
+	use ARB_uniform_buffer_object UNIFORM_BUFFER
+
+GetPName enum:
+    use ARB_uniform_buffer_object MAX_VERTEX_UNIFORM_BLOCKS
+    use ARB_uniform_buffer_object MAX_GEOMETRY_UNIFORM_BLOCKS
+    use ARB_uniform_buffer_object MAX_FRAGMENT_UNIFORM_BLOCKS
+    use ARB_uniform_buffer_object MAX_COMBINED_UNIFORM_BLOCKS
+    use ARB_uniform_buffer_object MAX_UNIFORM_BUFFER_BINDINGS
+    use ARB_uniform_buffer_object MAX_UNIFORM_BLOCK_SIZE
+    use ARB_uniform_buffer_object MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS
+    use ARB_uniform_buffer_object MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS
+    use ARB_uniform_buffer_object MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS
+    use ARB_uniform_buffer_object UNIFORM_BUFFER_OFFSET_ALIGNMENT
+
+GetIndexedPName enum:
+    use ARB_uniform_buffer_object UNIFORM_BUFFER_BINDING
+    use ARB_uniform_buffer_object UNIFORM_BUFFER_START
+    use ARB_uniform_buffer_object UNIFORM_BUFFER_SIZE
+
+AssemblyProgramParameterARB enum:
+    use ARB_uniform_buffer_object ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH
+    use ARB_uniform_buffer_object ACTIVE_UNIFORM_BLOCKS
 
 # Non-core 
 

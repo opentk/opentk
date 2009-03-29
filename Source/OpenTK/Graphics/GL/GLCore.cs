@@ -1789,19 +1789,19 @@ namespace OpenTK.Graphics
             internal extern static void ColorMaski(UInt32 index, bool r, bool g, bool b, bool a);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetBooleani_v", ExactSpelling = true)]
-            internal extern static unsafe void GetBooleani_v(OpenTK.Graphics.Version30 target, UInt32 index, [Out] bool* data);
+            internal extern static unsafe void GetBooleani_v(OpenTK.Graphics.GetIndexedPName target, UInt32 index, [Out] bool* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetIntegeri_v", ExactSpelling = true)]
-            internal extern static unsafe void GetIntegeri_v(OpenTK.Graphics.Version30 target, UInt32 index, [Out] Int32* data);
+            internal extern static unsafe void GetIntegeri_v(OpenTK.Graphics.GetIndexedPName target, UInt32 index, [Out] Int32* data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEnablei", ExactSpelling = true)]
-            internal extern static void Enablei(OpenTK.Graphics.Version30 target, UInt32 index);
+            internal extern static void Enablei(OpenTK.Graphics.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDisablei", ExactSpelling = true)]
-            internal extern static void Disablei(OpenTK.Graphics.Version30 target, UInt32 index);
+            internal extern static void Disablei(OpenTK.Graphics.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsEnabledi", ExactSpelling = true)]
-            internal extern static bool IsEnabledi(OpenTK.Graphics.Version30 target, UInt32 index);
+            internal extern static bool IsEnabledi(OpenTK.Graphics.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBeginTransformFeedback", ExactSpelling = true)]
             internal extern static void BeginTransformFeedback(OpenTK.Graphics.Version30 primitiveMode);
@@ -1810,10 +1810,10 @@ namespace OpenTK.Graphics
             internal extern static void EndTransformFeedback();
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindBufferRange", ExactSpelling = true)]
-            internal extern static void BindBufferRange(OpenTK.Graphics.Version30 target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
+            internal extern static void BindBufferRange(OpenTK.Graphics.BufferTarget target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindBufferBase", ExactSpelling = true)]
-            internal extern static void BindBufferBase(OpenTK.Graphics.Version30 target, UInt32 index, UInt32 buffer);
+            internal extern static void BindBufferBase(OpenTK.Graphics.BufferTarget target, UInt32 index, UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTransformFeedbackVaryings", ExactSpelling = true)]
             internal extern static void TransformFeedbackVaryings(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.Version30 bufferMode);
