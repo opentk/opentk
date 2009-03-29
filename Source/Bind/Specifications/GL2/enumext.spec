@@ -6483,4 +6483,10 @@ GetPName enum:
 IndexedStringName enum:
 	use StringName EXTENSIONS				# Used in GetStringi
 
+# Non-core  changes:
+# APPLE_flush_buffer_range
+Buffer_Parameter_Apple enum:
+	use APPLE_flush_buffer_range BUFFER_SERIALIZED_MODIFY_APPLE
+	use APPLE_flush_buffer_range BUFFER_FLUSHING_UNMAP_APPLE
+
 # End (don't remove, or the last token may be missed!)
