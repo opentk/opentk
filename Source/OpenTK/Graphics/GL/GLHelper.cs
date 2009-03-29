@@ -107,7 +107,7 @@ namespace OpenTK.Graphics
 
         #endregion
 
-        #region --- Public Methods ---
+        #region --- Public Members ---
 
         #region public static bool SupportsExtension(string name)
 

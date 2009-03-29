@@ -71,6 +71,12 @@ namespace OpenTK.Platform.Dummy
         {
         }
 
+        public bool ErrorChecking
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         #endregion
 
         #region --- IDisposable Members ---

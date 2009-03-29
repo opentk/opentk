@@ -338,6 +338,12 @@ namespace OpenTK.Platform.MacOS
             get { return graphics_mode; }
         }
 
+        public bool ErrorChecking
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         #endregion
 
         #region IDisposable Members

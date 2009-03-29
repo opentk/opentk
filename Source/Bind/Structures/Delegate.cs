@@ -368,22 +368,13 @@ namespace Bind.Structures
             foreach (Function f in wrappers)
             {
                 Bind.Structures.Function.Wrappers.AddChecked(f);
-                //Bind.Structures.Function.Wrappers.Add(f);
 
                 if (!f.CLSCompliant)
                 {
                     Function cls = new Function(f);
 
                     cls.Body.Clear();
-                    if (!cls.NeedsWrapper)
-                    {
-                        cls.Body.Add((f.ReturnType.CurrentType != "void" ? "return " + this.CallString() : this.CallString()) + ";");
-                    }
-                    else
-                    {
-                        cls.CreateBody(true);
-                        //cls.Body.AddRange(this.CreateBody(cls, true));
-                    }
+                    cls.CreateBody(true);
 
                     bool somethingChanged = false;
                     for (int i = 0; i < f.Parameters.Count; i++)
