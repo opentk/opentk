@@ -1038,6 +1038,16 @@ namespace OpenTK.Graphics
         ClampVertexColor = ((int)0X891a),
         ClampFragmentColor = ((int)0X891b),
         ClampReadColor = ((int)0X891c),
+        MaxVertexUniformBlocks = ((int)0X8a2b),
+        MaxGeometryUniformBlocks = ((int)0X8a2c),
+        MaxFragmentUniformBlocks = ((int)0X8a2D),
+        MaxCombinedUniformBlocks = ((int)0X8a2e),
+        MaxUniformBufferBindings = ((int)0X8a2f),
+        MaxUniformBlockSize = ((int)0X8a30),
+        MaxCombinedVertexUniformComponents = ((int)0X8a31),
+        MaxCombinedGeometryUniformComponents = ((int)0X8a32),
+        MaxCombinedFragmentUniformComponents = ((int)0X8a33),
+        UniformBufferOffsetAlignment = ((int)0X8a34),
         MaxFragmentUniformComponents = ((int)0X8b49),
         MaxVertexUniformComponents = ((int)0X8b4a),
         MaxVaryingFloats = ((int)0X8b4b),
@@ -6677,6 +6687,8 @@ namespace OpenTK.Graphics
         MaxProgramLocalParameters = ((int)0X88b4),
         MaxProgramEnvParameters = ((int)0X88b5),
         ProgramUnderNativeLimits = ((int)0X88b6),
+        ActiveUniformBlockMaxNameLength = ((int)0X8a35),
+        ActiveUniformBlocks = ((int)0X8a36),
     }
 
     public enum AssemblyProgramStringParameterArb
@@ -9632,6 +9644,7 @@ namespace OpenTK.Graphics
         ElementArrayBuffer = ((int)0X8893),
         PixelPackBuffer = ((int)0X88eb),
         PixelUnpackBuffer = ((int)0X88ec),
+        UniformBuffer = ((int)0X8a11),
         CopyReadBuffer = ((int)0X8f36),
         CopyWriteBuffer = ((int)0X8f37),
     }
@@ -9871,6 +9884,18 @@ namespace OpenTK.Graphics
     public enum IndexedStringName
     {
         Extensions = ((int)0X1f03),
+    }
+
+    public enum IndexedEnableCap
+    {
+        Blend = ((int)0X0be2),
+    }
+
+    public enum GetIndexedPName
+    {
+        UniformBufferBinding = ((int)0X8a28),
+        UniformBufferStart = ((int)0X8a29),
+        UniformBufferSize = ((int)0X8a2a),
     }
 
     public enum BufferParameterApple

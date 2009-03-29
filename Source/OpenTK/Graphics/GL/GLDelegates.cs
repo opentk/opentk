@@ -1790,19 +1790,19 @@ namespace OpenTK.Graphics
             internal delegate void ColorMaski(UInt32 index, bool r, bool g, bool b, bool a);
             internal static ColorMaski glColorMaski;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetBooleani_v(OpenTK.Graphics.Version30 target, UInt32 index, [Out] bool* data);
+            internal unsafe delegate void GetBooleani_v(OpenTK.Graphics.GetIndexedPName target, UInt32 index, [Out] bool* data);
             internal unsafe static GetBooleani_v glGetBooleani_v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetIntegeri_v(OpenTK.Graphics.Version30 target, UInt32 index, [Out] Int32* data);
+            internal unsafe delegate void GetIntegeri_v(OpenTK.Graphics.GetIndexedPName target, UInt32 index, [Out] Int32* data);
             internal unsafe static GetIntegeri_v glGetIntegeri_v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void Enablei(OpenTK.Graphics.Version30 target, UInt32 index);
+            internal delegate void Enablei(OpenTK.Graphics.IndexedEnableCap target, UInt32 index);
             internal static Enablei glEnablei;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void Disablei(OpenTK.Graphics.Version30 target, UInt32 index);
+            internal delegate void Disablei(OpenTK.Graphics.IndexedEnableCap target, UInt32 index);
             internal static Disablei glDisablei;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate bool IsEnabledi(OpenTK.Graphics.Version30 target, UInt32 index);
+            internal delegate bool IsEnabledi(OpenTK.Graphics.IndexedEnableCap target, UInt32 index);
             internal static IsEnabledi glIsEnabledi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BeginTransformFeedback(OpenTK.Graphics.Version30 primitiveMode);
@@ -1811,10 +1811,10 @@ namespace OpenTK.Graphics
             internal delegate void EndTransformFeedback();
             internal static EndTransformFeedback glEndTransformFeedback;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindBufferRange(OpenTK.Graphics.Version30 target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
+            internal delegate void BindBufferRange(OpenTK.Graphics.BufferTarget target, UInt32 index, UInt32 buffer, IntPtr offset, IntPtr size);
             internal static BindBufferRange glBindBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BindBufferBase(OpenTK.Graphics.Version30 target, UInt32 index, UInt32 buffer);
+            internal delegate void BindBufferBase(OpenTK.Graphics.BufferTarget target, UInt32 index, UInt32 buffer);
             internal static BindBufferBase glBindBufferBase;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TransformFeedbackVaryings(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.Version30 bufferMode);

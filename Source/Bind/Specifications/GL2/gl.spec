@@ -7127,7 +7127,7 @@ ColorMaski(index, r, g, b, a)
 
 GetBooleani_v(target, index, data)
 	return		void
-	param		target		GLenum in value
+	param		target		GetIndexedPName in value # GLenum in value
 	param		index		UInt32 in value
 	param		data		Boolean out array [COMPSIZE(target)]
 	category	VERSION_3_0
@@ -7140,7 +7140,7 @@ GetBooleani_v(target, index, data)
 
 GetIntegeri_v(target, index, data)
 	return		void
-	param		target		GLenum in value
+	param		target		GetIndexedPName in value # GLenum in value
 	param		index		UInt32 in value
 	param		data		Int32 out array [COMPSIZE(target)]
 	category	VERSION_3_0
@@ -7153,7 +7153,7 @@ GetIntegeri_v(target, index, data)
 
 Enablei(target, index)
 	return		void
-	param		target		GLenum in value
+	param		target		IndexedEnableCap in value # GLenum in value
 	param		index		UInt32 in value
 	category	VERSION_3_0
 	version		3.0
@@ -7164,7 +7164,7 @@ Enablei(target, index)
 
 Disablei(target, index)
 	return		void
-	param		target		GLenum in value
+	param		target		IndexedEnableCap in value # GLenum in value
 	param		index		UInt32 in value
 	category	VERSION_3_0
 	version		3.0
@@ -7175,7 +7175,7 @@ Disablei(target, index)
 
 IsEnabledi(target, index)
 	return		Boolean
-	param		target		GLenum in value
+	param		target		IndexedEnableCap in value # GLenum in value
 	param		index		UInt32 in value
 	category	VERSION_3_0
 	version		3.0
@@ -7210,7 +7210,7 @@ EndTransformFeedback()
 
 BindBufferRange(target, index, buffer, offset, size)
 	return		void
-	param		target		GLenum in value
+	param		target		BufferTarget in value # GLenum in value
 	param		index		UInt32 in value
 	param		buffer		UInt32 in value
 	param		offset		BufferOffset in value
@@ -7225,7 +7225,7 @@ BindBufferRange(target, index, buffer, offset, size)
 
 BindBufferBase(target, index, buffer)
 	return		void
-	param		target		GLenum in value
+	param		target		BufferTarget in value # GLenum in value
 	param		index		UInt32 in value
 	param		buffer		UInt32 in value
 	category	VERSION_3_0
