@@ -726,7 +726,7 @@ passthru: /* Reuse tokens from ARB_texture_rg */
 #	use ARB_texture_rg		    RG32I
 #	use ARB_texture_rg		    RG32UI
 passthru: /* Reuse tokens from ARB_vertex_array_object */
-	use ARB_vertex_array_object	    VERTEX_ARRAY_BINDING
+#	use ARB_vertex_array_object	    VERTEX_ARRAY_BINDING
 
 
 ###############################################################################
@@ -6414,5 +6414,8 @@ FogPointerType enum:
 TexCoordPointerType enum:
 	use ARB_half_float_vertex	    HALF_FLOAT
 
+# Promoted from ARB_vertex_array_objects
+GetPName enum:
+	use ARB_vertex_array_object	    VERTEX_ARRAY_BINDING
 
 # End (don't remove, or the last token may be missed!)
