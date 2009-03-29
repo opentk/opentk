@@ -401,6 +401,10 @@ namespace Bind.Structures
 
         public void CreateBody(bool wantCLSCompliance)
         {
+            if (this.Name.Contains("NewList"))
+            {
+            }
+
             Function f = new Function(this);
 
             f.Body.Clear();
