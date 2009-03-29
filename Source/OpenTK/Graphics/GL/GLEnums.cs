@@ -9634,6 +9634,8 @@ namespace OpenTK.Graphics
         ElementArrayBuffer = ((int)0X8893),
         PixelPackBuffer = ((int)0X88eb),
         PixelUnpackBuffer = ((int)0X88ec),
+        CopyReadBuffer = ((int)0X8f36),
+        CopyWriteBuffer = ((int)0X8f37),
     }
 
     public enum BufferUsageHint

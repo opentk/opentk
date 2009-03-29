@@ -6483,7 +6483,15 @@ GetPName enum:
 IndexedStringName enum:
 	use StringName EXTENSIONS				# Used in GetStringi
 
-# Non-core  changes:
+# Version 3.1 
+
+# Promoted from ARB_copy_buffer
+BufferTarget enum:
+    use ARB_copy_buffer COPY_READ_BUFFER
+    use ARB_copy_buffer COPY_WRITE_BUFFER
+
+# Non-core 
+
 # APPLE_flush_buffer_range
 Buffer_Parameter_Apple enum:
 	use APPLE_flush_buffer_range BUFFER_SERIALIZED_MODIFY_APPLE
