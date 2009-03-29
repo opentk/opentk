@@ -2654,10 +2654,10 @@ namespace OpenTK.Graphics
             internal delegate void VertexAttribDivisor(UInt32 index, UInt32 divisor);
             internal static VertexAttribDivisor glVertexAttribDivisor;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate IntPtr MapBufferRange(OpenTK.Graphics.ArbMapBufferRange target, IntPtr offset, IntPtr length, UInt32 access);
+            internal unsafe delegate IntPtr MapBufferRange(OpenTK.Graphics.BufferTarget target, IntPtr offset, IntPtr length, OpenTK.Graphics.BufferAccessMask access);
             internal unsafe static MapBufferRange glMapBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FlushMappedBufferRange(OpenTK.Graphics.ArbMapBufferRange target, IntPtr offset, IntPtr length);
+            internal delegate void FlushMappedBufferRange(OpenTK.Graphics.BufferTarget target, IntPtr offset, IntPtr length);
             internal static FlushMappedBufferRange glFlushMappedBufferRange;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexBufferARB(OpenTK.Graphics.TextureTarget target, OpenTK.Graphics.ArbTextureBufferObject internalformat, UInt32 buffer);
