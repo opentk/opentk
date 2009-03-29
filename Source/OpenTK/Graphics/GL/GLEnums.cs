@@ -6359,12 +6359,6 @@ namespace OpenTK.Graphics
     public enum Version30
     {
         ContextFlagForwardCompatibleBit = ((int)0X0001),
-        MapReadBit = ((int)0X0001),
-        MapWriteBit = ((int)0X0002),
-        MapInvalidateRangeBit = ((int)0X0004),
-        MapInvalidateBufferBit = ((int)0X0008),
-        MapFlushExplicitBit = ((int)0X0010),
-        MapUnsynchronizedBit = ((int)0X0020),
         MaxClipDistances = ((int)0X0D32),
         ClipDistance0 = ((int)0X3000),
         ClipDistance1 = ((int)0X3001),
@@ -9854,6 +9848,16 @@ namespace OpenTK.Graphics
         Float = ((int)0X1406),
         Index = ((int)0X8222),
         UnsignedNormalized = ((int)0X8c17),
+    }
+
+    public enum BufferAccessMask
+    {
+        MapReadBit = ((int)0X0001),
+        MapWriteBit = ((int)0X0002),
+        MapInvalidateRangeBit = ((int)0X0004),
+        MapInvalidateBufferBit = ((int)0X0008),
+        MapFlushExplicitBit = ((int)0X0010),
+        MapUnsynchronizedBit = ((int)0X0020),
     }
 
     public enum IndexedStringName

@@ -691,12 +691,12 @@ passthru: /* Reuse tokens from ARB_framebuffer_sRGB */
 passthru: /* Reuse tokens from ARB_half_float_vertex */
 #	use ARB_half_float_vertex	    HALF_FLOAT
 passthru: /* Reuse tokens from ARB_map_buffer_range */
-	use ARB_map_buffer_range	    MAP_READ_BIT
-	use ARB_map_buffer_range	    MAP_WRITE_BIT
-	use ARB_map_buffer_range	    MAP_INVALIDATE_RANGE_BIT
-	use ARB_map_buffer_range	    MAP_INVALIDATE_BUFFER_BIT
-	use ARB_map_buffer_range	    MAP_FLUSH_EXPLICIT_BIT
-	use ARB_map_buffer_range	    MAP_UNSYNCHRONIZED_BIT
+#	use ARB_map_buffer_range	    MAP_READ_BIT
+#	use ARB_map_buffer_range	    MAP_WRITE_BIT
+#	use ARB_map_buffer_range	    MAP_INVALIDATE_RANGE_BIT
+#	use ARB_map_buffer_range	    MAP_INVALIDATE_BUFFER_BIT
+#	use ARB_map_buffer_range	    MAP_FLUSH_EXPLICIT_BIT
+#	use ARB_map_buffer_range	    MAP_UNSYNCHRONIZED_BIT
 passthru: /* Reuse tokens from ARB_texture_compression_rgtc */
 #	use ARB_texture_compression_rgtc    COMPRESSED_RED_RGTC1
 #	use ARB_texture_compression_rgtc    COMPRESSED_SIGNED_RED_RGTC1
@@ -6463,6 +6463,15 @@ RenderbufferStorage enum:
 
 GetTextureParameter enum:
 	TEXTURE_SHARED_SIZE			= 0x8C3F
+
+# Promoted from ARB_map_buffer_range
+BufferAccessMask enum:
+	use ARB_map_buffer_range	    MAP_READ_BIT
+	use ARB_map_buffer_range	    MAP_WRITE_BIT
+	use ARB_map_buffer_range	    MAP_INVALIDATE_RANGE_BIT
+	use ARB_map_buffer_range	    MAP_INVALIDATE_BUFFER_BIT
+	use ARB_map_buffer_range	    MAP_FLUSH_EXPLICIT_BIT
+	use ARB_map_buffer_range	    MAP_UNSYNCHRONIZED_BIT
 
 # Other OpenGL 3.0 changes:
 GetPName enum:
