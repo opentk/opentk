@@ -4643,10 +4643,10 @@ namespace OpenTK.Graphics
             internal unsafe delegate void ProgramLocalParameters4fvEXT(OpenTK.Graphics.ExtGpuProgramParameters target, UInt32 index, Int32 count, Single* @params);
             internal unsafe static ProgramLocalParameters4fvEXT glProgramLocalParameters4fvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BufferParameteriAPPLE(OpenTK.Graphics.AppleFlushBufferRange target, OpenTK.Graphics.AppleFlushBufferRange pname, Int32 param);
+            internal delegate void BufferParameteriAPPLE(OpenTK.Graphics.BufferTarget target, OpenTK.Graphics.BufferParameterApple pname, Int32 param);
             internal static BufferParameteriAPPLE glBufferParameteriAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void FlushMappedBufferRangeAPPLE(OpenTK.Graphics.AppleFlushBufferRange target, IntPtr offset, IntPtr size);
+            internal delegate void FlushMappedBufferRangeAPPLE(OpenTK.Graphics.BufferTarget target, IntPtr offset, IntPtr size);
             internal static FlushMappedBufferRangeAPPLE glFlushMappedBufferRangeAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ProgramLocalParameterI4iNV(OpenTK.Graphics.NvGpuProgram4 target, UInt32 index, Int32 x, Int32 y, Int32 z, Int32 w);

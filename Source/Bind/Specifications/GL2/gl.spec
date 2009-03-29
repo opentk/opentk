@@ -22050,8 +22050,8 @@ ProgramLocalParameters4fvEXT(target, index, count, params)
 
 BufferParameteriAPPLE(target, pname, param)
 	return		void
-	param		target		GLenum in value
-	param		pname		GLenum in value
+	param		target		BufferTarget in value # GLenum in value
+	param		pname		BufferParameterApple in value # GLenum in value
 	param		param		Int32 in value
 	category	APPLE_flush_buffer_range
 	version		1.5
@@ -22063,7 +22063,7 @@ BufferParameteriAPPLE(target, pname, param)
 
 FlushMappedBufferRangeAPPLE(target, offset, size)
 	return		void
-	param		target		GLenum in value
+	param		target		BufferTarget in value # GLenum in value
 	param		offset		BufferOffset in value
 	param		size		BufferSize in value
 	category	APPLE_flush_buffer_range

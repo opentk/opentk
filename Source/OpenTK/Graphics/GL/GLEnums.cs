@@ -9865,4 +9865,10 @@ namespace OpenTK.Graphics
         Extensions = ((int)0X1f03),
     }
 
+    public enum BufferParameterApple
+    {
+        BufferSerializedModifyApple = ((int)0X8a12),
+        BufferFlushingUnmapApple = ((int)0X8a13),
+    }
+
 }
