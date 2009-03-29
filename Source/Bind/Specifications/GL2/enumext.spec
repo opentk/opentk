@@ -597,10 +597,10 @@ VERSION_3_0 enum:
 #	UNSIGNED_INT_SAMPLER_CUBE			= 0x8DD4
 #	UNSIGNED_INT_SAMPLER_1D_ARRAY			= 0x8DD6
 #	UNSIGNED_INT_SAMPLER_2D_ARRAY			= 0x8DD7
-	QUERY_WAIT					= 0x8E13
-	QUERY_NO_WAIT					= 0x8E14
-	QUERY_BY_REGION_WAIT				= 0x8E15
-	QUERY_BY_REGION_NO_WAIT				= 0x8E16
+#	QUERY_WAIT					= 0x8E13
+#	QUERY_NO_WAIT					= 0x8E14
+#	QUERY_BY_REGION_WAIT				= 0x8E15
+#	QUERY_BY_REGION_NO_WAIT				= 0x8E16
 passthru: /* Reuse tokens from ARB_depth_buffer_float */
 #	use ARB_depth_buffer_float	    DEPTH_COMPONENT32F
 #	use ARB_depth_buffer_float	    DEPTH32F_STENCIL8
@@ -6473,15 +6473,22 @@ BufferAccessMask enum:
 	use ARB_map_buffer_range	    MAP_FLUSH_EXPLICIT_BIT
 	use ARB_map_buffer_range	    MAP_UNSYNCHRONIZED_BIT
 
+# Promoted from NV_conditional_render:
+ConditionalRenderType enum:
+	QUERY_WAIT						= 0x8E13
+	QUERY_NO_WAIT					= 0x8E14
+	QUERY_BY_REGION_WAIT		= 0x8E15
+	QUERY_BY_REGION_NO_WAIT	= 0x8E16    
+
 # Other OpenGL 3.0 changes:
 GetPName enum:
 	MAJOR_VERSION					= 0x821B
 	MINOR_VERSION					= 0x821C
-	NUM_EXTENSIONS					= 0x821D
+	NUM_EXTENSIONS				= 0x821D
 	CONTEXT_FLAGS					= 0x821E
 
 IndexedStringName enum:
-	use StringName EXTENSIONS				# Used in GetStringi
+	use StringName EXTENSIONS		# Used in GetStringi
 
 # Version 3.1 
 
