@@ -1804,7 +1804,7 @@ namespace OpenTK.Graphics
             internal extern static bool IsEnabledi(OpenTK.Graphics.IndexedEnableCap target, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBeginTransformFeedback", ExactSpelling = true)]
-            internal extern static void BeginTransformFeedback(OpenTK.Graphics.Version30 primitiveMode);
+            internal extern static void BeginTransformFeedback(OpenTK.Graphics.BeginFeedbackMode primitiveMode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glEndTransformFeedback", ExactSpelling = true)]
             internal extern static void EndTransformFeedback();
@@ -1816,7 +1816,7 @@ namespace OpenTK.Graphics
             internal extern static void BindBufferBase(OpenTK.Graphics.BufferTarget target, UInt32 index, UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTransformFeedbackVaryings", ExactSpelling = true)]
-            internal extern static void TransformFeedbackVaryings(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.Version30 bufferMode);
+            internal extern static void TransformFeedbackVaryings(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.TransformFeedbackMode bufferMode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetTransformFeedbackVarying", ExactSpelling = true)]
             internal extern static unsafe void GetTransformFeedbackVarying(UInt32 program, UInt32 index, Int32 bufSize, [Out] Int32* length, [Out] Int32* size, [Out] OpenTK.Graphics.Version30* type, [Out] System.Text.StringBuilder name);

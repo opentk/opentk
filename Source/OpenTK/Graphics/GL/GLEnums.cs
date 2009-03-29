@@ -393,6 +393,7 @@ namespace OpenTK.Graphics
         VertexProgramPointSize = ((int)0X8642),
         VertexProgramTwoSide = ((int)0X8643),
         PointSprite = ((int)0X8861),
+        RasterizerDiscard = ((int)0X8c89),
         FramebufferSrgb = ((int)0X8Db9),
     }
 
@@ -1057,6 +1058,9 @@ namespace OpenTK.Graphics
         CurrentProgram = ((int)0X8b8d),
         TextureBinding1DArray = ((int)0X8c1c),
         TextureBinding2DArray = ((int)0X8c1d),
+        MaxTransformFeedbackSeparateComponents = ((int)0X8c80),
+        MaxTransformFeedbackInterleavedComponents = ((int)0X8c8a),
+        MaxTransformFeedbackSeparateAttribs = ((int)0X8c8b),
         StencilBackRef = ((int)0X8ca3),
         StencilBackValueMask = ((int)0X8ca4),
         StencilBackWritemask = ((int)0X8ca5),
@@ -6381,21 +6385,6 @@ namespace OpenTK.Graphics
         StencilBuffer = ((int)0X8224),
         MaxVaryingComponents = ((int)0X8b4b),
         UnsignedNormalized = ((int)0X8c17),
-        TransformFeedbackVaryingMaxLength = ((int)0X8c76),
-        TransformFeedbackBufferMode = ((int)0X8c7f),
-        MaxTransformFeedbackSeparateComponents = ((int)0X8c80),
-        TransformFeedbackVaryings = ((int)0X8c83),
-        TransformFeedbackBufferStart = ((int)0X8c84),
-        TransformFeedbackBufferSize = ((int)0X8c85),
-        PrimitivesGenerated = ((int)0X8c87),
-        TransformFeedbackPrimitivesWritten = ((int)0X8c88),
-        RasterizerDiscard = ((int)0X8c89),
-        MaxTransformFeedbackInterleavedComponents = ((int)0X8c8a),
-        MaxTransformFeedbackSeparateAttribs = ((int)0X8c8b),
-        InterleavedAttribs = ((int)0X8c8c),
-        SeparateAttribs = ((int)0X8c8d),
-        TransformFeedbackBuffer = ((int)0X8c8e),
-        TransformFeedbackBufferBinding = ((int)0X8c8f),
     }
 
     public enum ArbMultitexture
@@ -6687,8 +6676,6 @@ namespace OpenTK.Graphics
         MaxProgramLocalParameters = ((int)0X88b4),
         MaxProgramEnvParameters = ((int)0X88b5),
         ProgramUnderNativeLimits = ((int)0X88b6),
-        ActiveUniformBlockMaxNameLength = ((int)0X8a35),
-        ActiveUniformBlocks = ((int)0X8a36),
     }
 
     public enum AssemblyProgramStringParameterArb
@@ -9624,6 +9611,8 @@ namespace OpenTK.Graphics
     public enum QueryTarget
     {
         SamplesPassed = ((int)0X8914),
+        PrimitivesGenerated = ((int)0X8c87),
+        TransformFeedbackPrimitivesWritten = ((int)0X8c88),
     }
 
     public enum GetQueryParam
@@ -9645,6 +9634,7 @@ namespace OpenTK.Graphics
         PixelPackBuffer = ((int)0X88eb),
         PixelUnpackBuffer = ((int)0X88ec),
         UniformBuffer = ((int)0X8a11),
+        TransformFeedbackBuffer = ((int)0X8c8e),
         CopyReadBuffer = ((int)0X8f36),
         CopyWriteBuffer = ((int)0X8f37),
     }
@@ -9775,6 +9765,8 @@ namespace OpenTK.Graphics
 
     public enum ProgramParameter
     {
+        ActiveUniformBlockMaxNameLength = ((int)0X8a35),
+        ActiveUniformBlocks = ((int)0X8a36),
         DeleteStatus = ((int)0X8b80),
         LinkStatus = ((int)0X8b82),
         ValidateStatus = ((int)0X8b83),
@@ -9784,6 +9776,9 @@ namespace OpenTK.Graphics
         ActiveUniformMaxLength = ((int)0X8b87),
         ActiveAttributes = ((int)0X8b89),
         ActiveAttributeMaxLength = ((int)0X8b8a),
+        TransformFeedbackVaryingMaxLength = ((int)0X8c76),
+        TransformFeedbackBufferMode = ((int)0X8c7f),
+        TransformFeedbackVaryings = ((int)0X8c83),
     }
 
     public enum VertexAttribParameter
@@ -9881,6 +9876,29 @@ namespace OpenTK.Graphics
         QueryByRegionNoWait = ((int)0X8e16),
     }
 
+    public enum GetIndexedPName
+    {
+        UniformBufferBinding = ((int)0X8a28),
+        UniformBufferStart = ((int)0X8a29),
+        UniformBufferSize = ((int)0X8a2a),
+        TransformFeedbackBufferStart = ((int)0X8c84),
+        TransformFeedbackBufferSize = ((int)0X8c85),
+        TransformFeedbackBufferBinding = ((int)0X8c8f),
+    }
+
+    public enum TransformFeedbackMode
+    {
+        InterleavedAttribs = ((int)0X8c8c),
+        SeparateAttribs = ((int)0X8c8d),
+    }
+
+    public enum BeginFeedbackMode
+    {
+        Points = ((int)0X0000),
+        Lines = ((int)0X0001),
+        Triangles = ((int)0X0004),
+    }
+
     public enum IndexedStringName
     {
         Extensions = ((int)0X1f03),
@@ -9889,13 +9907,6 @@ namespace OpenTK.Graphics
     public enum IndexedEnableCap
     {
         Blend = ((int)0X0be2),
-    }
-
-    public enum GetIndexedPName
-    {
-        UniformBufferBinding = ((int)0X8a28),
-        UniformBufferStart = ((int)0X8a29),
-        UniformBufferSize = ((int)0X8a2a),
     }
 
     public enum BufferParameterApple
