@@ -1,6 +1,19 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
 ---------------------
+OpenTK 0.9.6 -> 0.9.7
+---------------------
++ Bind
+    + Fixed several suffixes that were incorrectly trimmed ("Instanced", "Indexed", "Varyings").
+    + CLS-compliant overloads now contain debugging stubs.
+    
++ OpenTK
+    + Graphics
+	* Initial support for OpenGL 3.1. Some functions and tokens aren't yet available in the specs - these will be added in due time.
+	* Improved type-safety in the OpenGL 3.0 bindings.
+	+ Automatic error checks now display stacktraces.
+
+---------------------
 OpenTK 0.9.5 -> 0.9.6
 ---------------------
 + Bind
