@@ -6497,4 +6497,8 @@ Buffer_Parameter_Apple enum:
 	use APPLE_flush_buffer_range BUFFER_SERIALIZED_MODIFY_APPLE
 	use APPLE_flush_buffer_range BUFFER_FLUSHING_UNMAP_APPLE
 
+# ARB_instanced_arrays
+VertexAttribParameterARB enum:
+    ARRAY_DIVISOR = 0x88FE
+
 # End (don't remove, or the last token may be missed!)
