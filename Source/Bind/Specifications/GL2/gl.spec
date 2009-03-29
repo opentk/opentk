@@ -7851,7 +7851,7 @@ ClearBufferfi(buffer, drawbuffer, depth, stencil)
 
 GetStringi(name, index)
 	return		String
-	param		name		GLenum in value
+	param		name		IndexedStringName in value
 	param		index		UInt32 in value
 	category	VERSION_3_0
 	version		3.0

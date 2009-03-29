@@ -929,6 +929,10 @@ namespace OpenTK.Graphics
         FogOffsetValueSgix = ((int)0X8199),
         LightModelColorControl = ((int)0X81f8),
         SharedTexturePaletteExt = ((int)0X81fb),
+        MajorVersion = ((int)0X821b),
+        MinorVersion = ((int)0X821c),
+        NumExtensions = ((int)0X821d),
+        ContextFlags = ((int)0X821e),
         ConvolutionHintSgix = ((int)0X8316),
         AsyncMarkerSgix = ((int)0X8329),
         PixelTexGenModeSgix = ((int)0X832b),
@@ -1547,6 +1551,8 @@ namespace OpenTK.Graphics
         UnsignedInt8888Reversed = ((int)0X8367),
         UnsignedInt2101010Reversed = ((int)0X8368),
         UnsignedInt248 = ((int)0X84fa),
+        UnsignedInt10F11F11FRev = ((int)0X8c3b),
+        UnsignedInt5999Rev = ((int)0X8c3e),
         Float32UnsignedInt248Rev = ((int)0X8Dad),
     }
 
@@ -6366,16 +6372,10 @@ namespace OpenTK.Graphics
         ClipDistance3 = ((int)0X3003),
         ClipDistance4 = ((int)0X3004),
         ClipDistance5 = ((int)0X3005),
-        MajorVersion = ((int)0X821b),
-        MinorVersion = ((int)0X821c),
-        NumExtensions = ((int)0X821d),
-        ContextFlags = ((int)0X821e),
         DepthBuffer = ((int)0X8223),
         StencilBuffer = ((int)0X8224),
         MaxVaryingComponents = ((int)0X8b4b),
         UnsignedNormalized = ((int)0X8c17),
-        UnsignedInt10F11F11FRev = ((int)0X8c3b),
-        UnsignedInt5999Rev = ((int)0X8c3e),
         TransformFeedbackVaryingMaxLength = ((int)0X8c76),
         TransformFeedbackBufferMode = ((int)0X8c7f),
         MaxTransformFeedbackSeparateComponents = ((int)0X8c80),
@@ -9854,6 +9854,11 @@ namespace OpenTK.Graphics
         Float = ((int)0X1406),
         Index = ((int)0X8222),
         UnsignedNormalized = ((int)0X8c17),
+    }
+
+    public enum IndexedStringName
+    {
+        Extensions = ((int)0X1f03),
     }
 
 }

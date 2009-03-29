@@ -1957,7 +1957,7 @@ namespace OpenTK.Graphics
             internal extern static void ClearBufferfi(OpenTK.Graphics.Version30 buffer, Int32 drawbuffer, Single depth, Int32 stencil);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetStringi", ExactSpelling = true)]
-            internal extern static IntPtr GetStringi(OpenTK.Graphics.Version30 name, UInt32 index);
+            internal extern static IntPtr GetStringi(OpenTK.Graphics.IndexedStringName name, UInt32 index);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glIsRenderbuffer", ExactSpelling = true)]
             internal extern static bool IsRenderbuffer(UInt32 renderbuffer);
