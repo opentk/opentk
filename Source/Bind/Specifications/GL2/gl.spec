@@ -5800,8 +5800,8 @@ GetBufferPointerv(target, pname, params)
 
 BlendEquationSeparate(modeRGB, modeAlpha)
 	return		void
-	param		modeRGB		BlendEquationModeEXT in value
-	param		modeAlpha	BlendEquationModeEXT in value
+	param		modeRGB		BlendEquationMode in value # BlendEquationModeEXT in value
+	param		modeAlpha		BlendEquationMode in value # BlendEquationModeEXT in value
 	category	VERSION_2_0
 	version		2.0
 	extension
@@ -7571,7 +7571,7 @@ VertexAttribIPointer(index, size, type, stride, pointer)
 	return		void
 	param		index		UInt32 in value
 	param		size		Int32 in value
-	param		type		VertexAttribEnum in value
+	param		type		VertexAttribParameter in value # VertexAttribEnum in value
 	param		stride		SizeI in value
 	param		pointer		Void in array [COMPSIZE(size/type/stride)] retained
 	category	VERSION_3_0
@@ -7585,7 +7585,7 @@ VertexAttribIPointer(index, size, type, stride, pointer)
 GetVertexAttribIiv(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribEnum in value
+	param		pname		VertexAttribParameter in value # VertexAttribEnum in value
 	param		params		Int32 out array [1]
 	category	VERSION_3_0
 	version		3.0
@@ -7598,7 +7598,7 @@ GetVertexAttribIiv(index, pname, params)
 GetVertexAttribIuiv(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribEnum in value
+	param		pname		VertexAttribParameter in value # VertexAttribEnum in value
 	param		params		UInt32 out array [1]
 	category	VERSION_3_0
 	version		3.0

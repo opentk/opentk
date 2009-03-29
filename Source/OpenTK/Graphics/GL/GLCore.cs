@@ -1489,7 +1489,7 @@ namespace OpenTK.Graphics
             internal extern static void GetBufferPointerv(OpenTK.Graphics.BufferTarget target, OpenTK.Graphics.BufferPointer pname, [Out] IntPtr @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBlendEquationSeparate", ExactSpelling = true)]
-            internal extern static void BlendEquationSeparate(OpenTK.Graphics.All modeRGB, OpenTK.Graphics.All modeAlpha);
+            internal extern static void BlendEquationSeparate(OpenTK.Graphics.BlendEquationMode modeRGB, OpenTK.Graphics.BlendEquationMode modeAlpha);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glDrawBuffers", ExactSpelling = true)]
             internal extern static unsafe void DrawBuffers(Int32 n, OpenTK.Graphics.DrawBuffersEnum* bufs);
@@ -1891,13 +1891,13 @@ namespace OpenTK.Graphics
             internal extern static unsafe void VertexAttribI4usv(UInt32 index, UInt16* v);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glVertexAttribIPointer", ExactSpelling = true)]
-            internal extern static void VertexAttribIPointer(UInt32 index, Int32 size, OpenTK.Graphics.Version30 type, Int32 stride, IntPtr pointer);
+            internal extern static void VertexAttribIPointer(UInt32 index, Int32 size, OpenTK.Graphics.VertexAttribParameter type, Int32 stride, IntPtr pointer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribIiv", ExactSpelling = true)]
-            internal extern static unsafe void GetVertexAttribIiv(UInt32 index, OpenTK.Graphics.Version30 pname, [Out] Int32* @params);
+            internal extern static unsafe void GetVertexAttribIiv(UInt32 index, OpenTK.Graphics.VertexAttribParameter pname, [Out] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetVertexAttribIuiv", ExactSpelling = true)]
-            internal extern static unsafe void GetVertexAttribIuiv(UInt32 index, OpenTK.Graphics.Version30 pname, [Out] UInt32* @params);
+            internal extern static unsafe void GetVertexAttribIuiv(UInt32 index, OpenTK.Graphics.VertexAttribParameter pname, [Out] UInt32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetUniformuiv", ExactSpelling = true)]
             internal extern static unsafe void GetUniformuiv(UInt32 program, Int32 location, [Out] UInt32* @params);
