@@ -17273,7 +17273,7 @@ AreProgramsResidentNV(n, programs, residences)
 
 BindProgramNV(target, id)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		id		UInt32 in value
 	category	NV_vertex_program
 	version		1.2
@@ -17298,7 +17298,7 @@ DeleteProgramsNV(n, programs)
 
 ExecuteProgramNV(target, id, params)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		id		UInt32 in value
 	param		params		Float32 in array [4]
 	category	NV_vertex_program
@@ -17324,9 +17324,9 @@ GenProgramsNV(n, programs)
 
 GetProgramParameterdvNV(target, index, pname, params)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		index		UInt32 in value
-	param		pname		VertexAttribEnumNV in value
+	param		pname		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		params		Float64 out array [4]
 	category	NV_vertex_program
 	dlflags		notlistable
@@ -17340,9 +17340,9 @@ GetProgramParameterdvNV(target, index, pname, params)
 
 GetProgramParameterfvNV(target, index, pname, params)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		index		UInt32 in value
-	param		pname		VertexAttribEnumNV in value
+	param		pname		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		params		Float32 out array [4]
 	category	NV_vertex_program
 	dlflags		notlistable
@@ -17356,9 +17356,9 @@ GetProgramParameterfvNV(target, index, pname, params)
 
 # GetProgramParameterSigneddvNV(target, index, pname, params)
 #	  return	  void
-#	  param		  target	  VertexAttribEnumNV in value
+#	  param		  target	  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  index		  Int32 in value
-#	  param		  pname		  VertexAttribEnumNV in value
+#	  param		  pname		  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  params	  Float64 out array [4]
 #	  category	  NV_vertex_program1_1_dcc
 #	  dlflags	  notlistable
@@ -17370,9 +17370,9 @@ GetProgramParameterfvNV(target, index, pname, params)
 #
 # GetProgramParameterSignedfvNV(target, index, pname, params)
 #	  return	  void
-#	  param		  target	  VertexAttribEnumNV in value
+#	  param		  target	  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  index		  Int32 in value
-#	  param		  pname		  VertexAttribEnumNV in value
+#	  param		  pname		  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  params	  Float32 out array [4]
 #	  category	  NV_vertex_program1_1_dcc
 #	  dlflags	  notlistable
@@ -17385,7 +17385,7 @@ GetProgramParameterfvNV(target, index, pname, params)
 GetProgramivNV(id, pname, params)
 	return		void
 	param		id		UInt32 in value
-	param		pname		VertexAttribEnumNV in value
+	param		pname		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		params		Int32 out array [4]
 	category	NV_vertex_program
 	dlflags		notlistable
@@ -17400,7 +17400,7 @@ GetProgramivNV(id, pname, params)
 GetProgramStringNV(id, pname, program)
 	return		void
 	param		id		UInt32 in value
-	param		pname		VertexAttribEnumNV in value
+	param		pname		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		program		ProgramCharacterNV out array [COMPSIZE(id/pname)]
 	category	NV_vertex_program
 	dlflags		notlistable
@@ -17414,9 +17414,9 @@ GetProgramStringNV(id, pname, program)
 
 GetTrackMatrixivNV(target, address, pname, params)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		address		UInt32 in value
-	param		pname		VertexAttribEnumNV in value
+	param		pname		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		params		Int32 out array [1]
 	category	NV_vertex_program
 	dlflags		notlistable
@@ -17431,7 +17431,7 @@ GetTrackMatrixivNV(target, address, pname, params)
 GetVertexAttribdvNV(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribEnumNV in value
+	param		pname		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		params		Float64 out array [1]
 	category	NV_vertex_program
 	dlflags		notlistable
@@ -17446,7 +17446,7 @@ GetVertexAttribdvNV(index, pname, params)
 GetVertexAttribfvNV(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribEnumNV in value
+	param		pname		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		params		Float32 out array [1]
 	category	NV_vertex_program
 	dlflags		notlistable
@@ -17461,7 +17461,7 @@ GetVertexAttribfvNV(index, pname, params)
 GetVertexAttribivNV(index, pname, params)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribEnumNV in value
+	param		pname		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		params		Int32 out array [1]
 	category	NV_vertex_program
 	dlflags		notlistable
@@ -17476,7 +17476,7 @@ GetVertexAttribivNV(index, pname, params)
 GetVertexAttribPointervNV(index, pname, pointer)
 	return		void
 	param		index		UInt32 in value
-	param		pname		VertexAttribEnumNV in value
+	param		pname		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		pointer		VoidPointer out array [1]
 	category	NV_vertex_program
 	dlflags		notlistable
@@ -17503,7 +17503,7 @@ IsProgramNV(id)
 
 LoadProgramNV(target, id, len, program)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		id		UInt32 in value
 	param		len		SizeI in value
 	param		program		UInt8 in array [len]
@@ -17516,7 +17516,7 @@ LoadProgramNV(target, id, len, program)
 
 ProgramParameter4dNV(target, index, x, y, z, w)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		index		UInt32 in value
 	param		x		Float64 in value
 	param		y		Float64 in value
@@ -17530,7 +17530,7 @@ ProgramParameter4dNV(target, index, x, y, z, w)
 
 ProgramParameter4dvNV(target, index, v)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		index		UInt32 in value
 	param		v		Float64 in array [4]
 	category	NV_vertex_program
@@ -17542,7 +17542,7 @@ ProgramParameter4dvNV(target, index, v)
 
 ProgramParameter4fNV(target, index, x, y, z, w)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		index		UInt32 in value
 	param		x		Float32 in value
 	param		y		Float32 in value
@@ -17556,7 +17556,7 @@ ProgramParameter4fNV(target, index, x, y, z, w)
 
 ProgramParameter4fvNV(target, index, v)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		index		UInt32 in value
 	param		v		Float32 in array [4]
 	category	NV_vertex_program
@@ -17570,7 +17570,7 @@ ProgramParameter4fvNV(target, index, v)
 #??? extension specification in the registry.
 ProgramParameters4dvNV(target, index, count, v)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		index		UInt32 in value
 	param		count		UInt32 in value
 	param		v		Float64 in array [count*4]
@@ -17585,7 +17585,7 @@ ProgramParameters4dvNV(target, index, count, v)
 #??? extension specification in the registry.
 ProgramParameters4fvNV(target, index, count, v)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		index		UInt32 in value
 	param		count		UInt32 in value
 	param		v		Float32 in array [count*4]
@@ -17598,7 +17598,7 @@ ProgramParameters4fvNV(target, index, count, v)
 
 # ProgramParameterSigned4dNV(target, index, x, y, z, w)
 #	  return	  void
-#	  param		  target	  VertexAttribEnumNV in value
+#	  param		  target	  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  index		  Int32 in value
 #	  param		  x		  Float64 in value
 #	  param		  y		  Float64 in value
@@ -17612,7 +17612,7 @@ ProgramParameters4fvNV(target, index, count, v)
 #
 # ProgramParameterSigned4dvNV(target, index, v)
 #	  return	  void
-#	  param		  target	  VertexAttribEnumNV in value
+#	  param		  target	  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  index		  Int32 in value
 #	  param		  v		  Float64 in array [4]
 #	  category	  NV_vertex_program1_1_dcc
@@ -17624,7 +17624,7 @@ ProgramParameters4fvNV(target, index, count, v)
 #
 # ProgramParameterSigned4fNV(target, index, x, y, z, w)
 #	  return	  void
-#	  param		  target	  VertexAttribEnumNV in value
+#	  param		  target	  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  index		  Int32 in value
 #	  param		  x		  Float32 in value
 #	  param		  y		  Float32 in value
@@ -17638,7 +17638,7 @@ ProgramParameters4fvNV(target, index, count, v)
 #
 # ProgramParameterSigned4fvNV(target, index, v)
 #	  return	  void
-#	  param		  target	  VertexAttribEnumNV in value
+#	  param		  target	  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  index		  Int32 in value
 #	  param		  v		  Float32 in array [4]
 #	  category	  NV_vertex_program1_1_dcc
@@ -17650,7 +17650,7 @@ ProgramParameters4fvNV(target, index, count, v)
 #
 # ProgramParametersSigned4dvNV(target, index, count, v)
 #	  return	  void
-#	  param		  target	  VertexAttribEnumNV in value
+#	  param		  target	  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  index		  Int32 in value
 #	  param		  count		  SizeI in value
 #	  param		  v		  Float64 in array [count*4]
@@ -17663,7 +17663,7 @@ ProgramParameters4fvNV(target, index, count, v)
 #
 # ProgramParametersSigned4fvNV(target, index, count, v)
 #	  return	  void
-#	  param		  target	  VertexAttribEnumNV in value
+#	  param		  target	  VertexAttribParameterArb in value # VertexAttribEnumNV in value
 #	  param		  index		  Int32 in value
 #	  param		  count		  SizeI in value
 #	  param		  v		  Float32 in array [count*4]
@@ -17687,10 +17687,10 @@ RequestResidentProgramsNV(n, programs)
 
 TrackMatrixNV(target, address, matrix, transform)
 	return		void
-	param		target		VertexAttribEnumNV in value
+	param		target		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		address		UInt32 in value
-	param		matrix		VertexAttribEnumNV in value
-	param		transform	VertexAttribEnumNV in value
+	param		matrix		VertexAttribParameterArb in value # VertexAttribEnumNV in value
+	param		transform	VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	category	NV_vertex_program
 	version		1.2
 	extension	soft WINSOFT NV10
@@ -17702,7 +17702,7 @@ VertexAttribPointerNV(index, fsize, type, stride, pointer)
 	return		void
 	param		index		UInt32 in value
 	param		fsize		Int32 in value
-	param		type		VertexAttribEnumNV in value
+	param		type		VertexAttribParameterArb in value # VertexAttribEnumNV in value
 	param		stride		SizeI in value
 	param		pointer		Void in array [COMPSIZE(fsize/type/stride)] retained
 	category	NV_vertex_program
