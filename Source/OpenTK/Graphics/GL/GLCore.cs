@@ -2023,10 +2023,10 @@ namespace OpenTK.Graphics
             internal extern static void VertexAttribDivisor(UInt32 index, UInt32 divisor);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glMapBufferRange", ExactSpelling = true)]
-            internal extern static unsafe IntPtr MapBufferRange(OpenTK.Graphics.ArbMapBufferRange target, IntPtr offset, IntPtr length, UInt32 access);
+            internal extern static unsafe IntPtr MapBufferRange(OpenTK.Graphics.BufferTarget target, IntPtr offset, IntPtr length, OpenTK.Graphics.BufferAccessMask access);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glFlushMappedBufferRange", ExactSpelling = true)]
-            internal extern static void FlushMappedBufferRange(OpenTK.Graphics.ArbMapBufferRange target, IntPtr offset, IntPtr length);
+            internal extern static void FlushMappedBufferRange(OpenTK.Graphics.BufferTarget target, IntPtr offset, IntPtr length);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glBindVertexArray", ExactSpelling = true)]
             internal extern static void BindVertexArray(UInt32 array);

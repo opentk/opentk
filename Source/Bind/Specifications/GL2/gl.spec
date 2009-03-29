@@ -11117,7 +11117,7 @@ VertexAttribDivisor(index, divisor)
 
 MapBufferRange(target, offset, length, access)
 	return		VoidPointer
-	param		target		BufferTargetARB in value
+	param		target		BufferTarget in value # BufferTargetARB in value
 	param		offset		BufferOffset in value
 	param		length		BufferSize in value
 	param		access		BufferAccessMask in value
@@ -11132,7 +11132,7 @@ MapBufferRange(target, offset, length, access)
 # Promoted from APPLE_flush_buffer_range
 FlushMappedBufferRange(target, offset, length)
 	return		void
-	param		target		BufferTargetARB in value
+	param		target		BufferTarget in value # BufferTargetARB in value
 	param		offset		BufferOffset in value
 	param		length		BufferSize in value
 	category	ARB_map_buffer_range
