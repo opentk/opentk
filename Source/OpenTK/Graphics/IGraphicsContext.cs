@@ -54,6 +54,12 @@ namespace OpenTK.Graphics
 
         /// <summary>Gets the GraphicsMode of this instance.</summary>
         GraphicsMode GraphicsMode { get; }
+
+        /// <summary>
+        /// Gets or sets a System.Boolean, indicating whether automatic error checking should be performed.
+        /// Influences the debug version of OpenTK.dll, only.
+        /// </summary>
+        bool ErrorChecking { get; set; }
     }
 
     public delegate void DestroyEvent<T>(T sender, EventArgs e);

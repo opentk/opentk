@@ -230,6 +230,12 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        public bool ErrorChecking
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         public event DestroyEvent<IGraphicsContext> Destroy;
 
         #endregion

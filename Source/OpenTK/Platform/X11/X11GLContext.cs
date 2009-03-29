@@ -301,6 +301,12 @@ namespace OpenTK.Platform.X11
             throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
         }
 
+        public bool ErrorChecking
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         #endregion
 
         #region --- IGLContextInternal Members ---

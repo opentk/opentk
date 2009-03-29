@@ -28,7 +28,8 @@ namespace OpenTK.Graphics
         // Indicates that this context was created through external means, e.g. Tao.Sdl or GLWidget#.
         // In this case, We'll assume that the external program will manage the lifetime of this
         // context - we'll not destroy it manually.
-        bool is_external;
+        //bool is_external;
+        bool check_errors = true;
 
         static bool share_contexts = true;
         static bool direct_rendering = true;
@@ -132,7 +133,6 @@ namespace OpenTK.Graphics
         public static GraphicsContext CreateDummyContext()
         {
             GraphicsContext context = new GraphicsContext();
-            context.is_external = true;
             context.implementation = new OpenTK.Platform.Dummy.DummyGLContext(GraphicsMode.Default);
 
             lock (context_lock)
@@ -245,7 +245,7 @@ namespace OpenTK.Graphics
         [Conditional("DEBUG")]
         internal void ResetErrors()
         {
-            if (!inside_begin_region)
+            if (check_errors && !inside_begin_region)
             {
                 while (GL.GetError() != ErrorCode.NoError)
                 { }
@@ -256,7 +256,7 @@ namespace OpenTK.Graphics
         [Conditional("DEBUG")]
         internal void CheckErrors()
         {
-            if (!inside_begin_region)
+            if (check_errors && !inside_begin_region)
             {
                 error_list.Clear();
                 ErrorCode error;
@@ -271,13 +271,20 @@ namespace OpenTK.Graphics
                     StringBuilder sb = new StringBuilder();
                     foreach (ErrorCode e in error_list)
                     {
-                        sb.Append(e.ToString());
-                        sb.Append(", ");
+                        if (e != ErrorCode.NoError)
+                        {
+                            sb.Append(e.ToString());
+                            sb.Append(", ");
+                        }
+                        else
+                            break;
                     }
-                    sb.Remove(sb.Length - 2, 2);
+                    sb.Remove(sb.Length - 2, 2); // Remove the last comma
 
-                    Debug.Assert(error_list.Count == 1, "OpenTK detected an OpenGL error.",
-                        String.Format("The following errors where reported: \"{0}\"", sb.ToString()));
+                    Debug.Print(String.Format("OpenGL error(s) detected: {0}", sb.ToString()));
+                    Debug.Indent();
+                    Debug.WriteLine(new StackTrace(true).ToString());
+                    Debug.Unindent();
                 }
             }
         }
@@ -305,6 +312,17 @@ namespace OpenTK.Graphics
 
         #region --- IGraphicsContext Members ---
 
+        /// <summary>
+        /// Gets or sets a System.Boolean, indicating whether automatic error checking should be performed.
+        /// Influences the debug version of OpenTK.dll, only.
+        /// </summary>
+        /// <remarks>Automatic error checking will clear the OpenGL error state. Set CheckErrors to false if you use
+        /// the OpenGL error state in your code flow (e.g. for checking supported texture formats).</remarks>
+        public bool ErrorChecking
+        {
+            get { return check_errors; }
+            set { check_errors = value; }
+        }
         /// <summary>
         /// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
         /// specified IGraphicsContext.
@@ -485,7 +503,7 @@ namespace OpenTK.Graphics
                     available_contexts.Remove((this as IGraphicsContextInternal).Context);
                 }
 
-                if (manual && !is_external)
+                if (manual)
                 {
                     if (implementation != null)
                         implementation.Dispose();
