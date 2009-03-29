@@ -1826,7 +1826,7 @@ namespace OpenTK.Graphics
             internal delegate void ClampColor(OpenTK.Graphics.ClampColorTarget target, OpenTK.Graphics.ClampColorMode clamp);
             internal static ClampColor glClampColor;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void BeginConditionalRender(UInt32 id, OpenTK.Graphics.Version30 mode);
+            internal delegate void BeginConditionalRender(UInt32 id, OpenTK.Graphics.ConditionalRenderType mode);
             internal static BeginConditionalRender glBeginConditionalRender;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void EndConditionalRender();

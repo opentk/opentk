@@ -6386,10 +6386,6 @@ namespace OpenTK.Graphics
         SeparateAttribs = ((int)0X8c8d),
         TransformFeedbackBuffer = ((int)0X8c8e),
         TransformFeedbackBufferBinding = ((int)0X8c8f),
-        QueryWait = ((int)0X8e13),
-        QueryNoWait = ((int)0X8e14),
-        QueryByRegionWait = ((int)0X8e15),
-        QueryByRegionNoWait = ((int)0X8e16),
     }
 
     public enum ArbMultitexture
@@ -9862,6 +9858,14 @@ namespace OpenTK.Graphics
         MapInvalidateBufferBit = ((int)0X0008),
         MapFlushExplicitBit = ((int)0X0010),
         MapUnsynchronizedBit = ((int)0X0020),
+    }
+
+    public enum ConditionalRenderType
+    {
+        QueryWait = ((int)0X8e13),
+        QueryNoWait = ((int)0X8e14),
+        QueryByRegionWait = ((int)0X8e15),
+        QueryByRegionNoWait = ((int)0X8e16),
     }
 
     public enum IndexedStringName

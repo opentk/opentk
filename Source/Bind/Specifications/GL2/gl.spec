@@ -7282,7 +7282,7 @@ ClampColor(target, clamp)
 BeginConditionalRender(id, mode)
 	return		void
 	param		id		UInt32 in value
-	param		mode		TypeEnum in value
+	param		mode	ConditionalRenderType in value # TypeEnum in value
 	category	VERSION_3_0
 	version		3.0
 	glfflags	ignore
