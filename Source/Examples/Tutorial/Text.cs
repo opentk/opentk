@@ -32,7 +32,7 @@ namespace Examples.Tutorial
         
         float scroll_speed;
         float initial_position;
-        float warparound_position;
+        float wraparound_position;
         float current_position;
 
         public Text()
@@ -56,7 +56,7 @@ namespace Examples.Tutorial
                 if (c == '\n')
                     lines++;
 
-            warparound_position = -(lines + 1) * serif.Height;
+            wraparound_position = -(lines + 1) * serif.Height;
         }
 
         #endregion
@@ -80,7 +80,7 @@ namespace Examples.Tutorial
             GL.Viewport(0, 0, Width, Height);
 
             initial_position = Height + serif.Height;   // Start one line below the screen.
-            warparound_position = -(lines + 1) * serif.Height;
+            wraparound_position = -(lines + 1) * serif.Height;
         }
 
         #endregion
@@ -112,8 +112,8 @@ namespace Examples.Tutorial
             // the keyboard arrows and the space bar.
             current_position += scroll_speed * (float)e.Time;
             if (scroll_speed > 0.0f && current_position > initial_position)
-                current_position = warparound_position;
-            else if (scroll_speed < 0.0f && current_position < warparound_position)
+                current_position = wraparound_position;
+            else if (scroll_speed < 0.0f && current_position < wraparound_position)
                 current_position = initial_position;
 
             // TextPrinter.Begin() sets up a 2d orthographic projection, with the x axis
