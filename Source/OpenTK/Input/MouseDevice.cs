@@ -197,9 +197,8 @@ namespace OpenTK.Input
             set
             {
                 pos = value;
-                last_pos = pos;
-
                 Move(this, new MouseMoveEventArgs(pos.X, pos.Y, pos.X - last_pos.X, pos.Y - last_pos.Y));
+                last_pos = pos;
             }
         }
 
