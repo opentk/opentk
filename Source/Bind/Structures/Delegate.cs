@@ -22,6 +22,7 @@ namespace Bind.Structures
         internal static DelegateCollection Delegates;
 
         private static bool delegatesLoaded;
+        bool? cls_compliance_overriden;
         
         #region internal static void Initialize(string glSpec, string glSpecExt)
         
@@ -44,6 +45,8 @@ namespace Bind.Structures
                         }
                     }
                 }
+                Console.WriteLine("Marking CLS compliance for wrappers.");
+                MarkCLSCompliance(Function.Wrappers);
                 delegatesLoaded = true;
             }
         }
@@ -80,6 +83,9 @@ namespace Bind.Structures
         {
             get
             {
+                if (cls_compliance_overriden != null)
+                    return (bool)cls_compliance_overriden;
+
                 if (Unsafe)
                     return false;
 
@@ -92,6 +98,10 @@ namespace Bind.Structures
                         return false;
                 }
                 return true;
+            }
+            set
+            {
+                cls_compliance_overriden = value;
             }
         }
 
@@ -341,9 +351,52 @@ namespace Bind.Structures
 
         #region --- Wrapper Creation ---
 
-        #region public IEnumerable<Function> CreateWrappers()
+        #region MarkCLSCompliance
 
-        public void CreateWrappers()
+        static void MarkCLSCompliance(FunctionCollection collection)
+        {
+            foreach (List<Function> wrappers in Function.Wrappers.Values)
+            {
+                for (int i = 0; i < wrappers.Count; i++)
+                {
+                    for (int j = i + 1; j < wrappers.Count; j++)
+                    {
+                        if (wrappers[i].TrimmedName == wrappers[j].TrimmedName && wrappers[i].Parameters.Count == wrappers[j].Parameters.Count)
+                        {
+                            bool function_i_is_problematic = false;
+                            bool function_j_is_problematic = false;
+
+                            int k;
+                            for (k = 0; k < wrappers[i].Parameters.Count; k++)
+                            {
+                                if (wrappers[i].Parameters[k].CurrentType != wrappers[j].Parameters[k].CurrentType)
+                                    break;
+
+                                if (wrappers[i].Parameters[k].DiffersOnlyOnReference(wrappers[j].Parameters[k]))
+                                    if (wrappers[i].Parameters[k].Reference)
+                                        function_i_is_problematic = true;
+                                    else
+                                        function_j_is_problematic = true;
+                            }
+
+                            if (k == wrappers[i].Parameters.Count)
+                            {
+                                if (function_i_is_problematic)
+                                    wrappers[i].CLSCompliant = false;
+                                if (function_j_is_problematic)
+                                    wrappers[j].CLSCompliant = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region CreateWrappers
+
+        void CreateWrappers()
         {
             List<Function> wrappers = new List<Function>();
             if (!NeedsWrapper)

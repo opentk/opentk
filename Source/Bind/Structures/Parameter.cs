@@ -186,6 +186,24 @@ namespace Bind.Structures
 
         #endregion
 
+        #region public bool DiffersOnlyOnReference
+
+        // Returns true if this parameter differs only on reference compared to another parameter, i.e:
+        // returns true for 'int' & 'ref int'
+        // returns true for 'ref float' & 'float'
+        // returns false 'int' & 'int*'
+        // returns false 'int' & 'int[]'
+        // returns false 'int' & 'float'
+        public bool DiffersOnlyOnReference(Parameter other)
+        {
+            return
+                CurrentType == other.CurrentType &&
+                (Reference && !(other.Reference || other.Array > 0 || other.Pointer) ||
+                other.Reference && !(Reference || Array > 0 || Pointer));
+        }
+
+        #endregion
+
         #region public override string ToString()
 
         public override string ToString()
