@@ -29,11 +29,11 @@ namespace OpenTK.Graphics.OpenGL.Enums
 namespace OpenTK.Graphics
 {
     /// <summary>
-    /// OpenGL binding for .NET, implementing OpenGL 2.1, plus extensions.
+    /// OpenGL bindings for .NET, implementing OpenGL 3.1, plus extensions.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This class contains all OpenGL enums and functions defined in the 2.1 specification.
+    /// This class contains all OpenGL enums and functions defined in the 3.1 specification.
     /// The official .spec files can be found at: http://opengl.org/registry/.
     /// </para>
     /// <para> A valid OpenGL context must be created before calling any OpenGL function.</para>
@@ -121,7 +121,7 @@ namespace OpenTK.Graphics
         {
             if (rebuildExtensionList)
                 BuildExtensionList();
-            
+
             lock (gl_lock)
             {
                 sb.Remove(0, sb.Length);
@@ -550,13 +550,13 @@ namespace OpenTK.Graphics
         {
             if (getProcAddress == null)
             {
-            		if (Configuration.RunningOnWindows)
+                if (Configuration.RunningOnWindows)
                 {
                     getProcAddress = new GetProcAddressWindows();
                 }
                 else if (Configuration.RunningOnMacOS)
                 {
-                		getProcAddress = new GetProcAddressOSX();
+                    getProcAddress = new GetProcAddressOSX();
                 }
                 else if (Configuration.RunningOnX11)
                 {
@@ -636,7 +636,7 @@ namespace OpenTK.Graphics
 
         public static void ClearColor(System.Drawing.Color color)
         {
-            GL.ClearColor(color.R/255.0f, color.G/255.0f, color.B/255.0f, color.A/255.0f);
+            GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
         #endregion
@@ -652,28 +652,28 @@ namespace OpenTK.Graphics
 
         #region public static void Material() overloads
 
-        public static void Materialv(MaterialFace face, MaterialParameter pname, Vector4 @params)
+        public static void Material(MaterialFace face, MaterialParameter pname, Vector4 @params)
         {
-            Materialv(face, pname, ref @params.X);
+            Material(face, pname, ref @params.X);
         }
 
-        public static void Materialv(MaterialFace face, MaterialParameter pname, Color4 @params)
+        public static void Material(MaterialFace face, MaterialParameter pname, Color4 @params)
         {
-            unsafe { GL.Materialv(face, pname, (float*)&@params); }
+            unsafe { GL.Material(face, pname, (float*)&@params); }
         }
 
         #endregion
 
         #region public static void Light() overloads
 
-        public static void Lightv(LightName name, LightParameter pname, Vector4 @params)
+        public static void Light(LightName name, LightParameter pname, Vector4 @params)
         {
-            GL.Lightv(name, pname, ref @params.X);
+            GL.Light(name, pname, ref @params.X);
         }
 
-        public static void Lightv(LightName name, LightParameter pname, Color4 @params)
+        public static void Light(LightName name, LightParameter pname, Color4 @params)
         {
-            unsafe { GL.Lightv(name, pname, (float*)&@params); }
+            unsafe { GL.Light(name, pname, (float*)&@params); }
         }
 
         #endregion
@@ -788,51 +788,126 @@ namespace OpenTK.Graphics
                 }
             }
         }
-        
-         public static void MultMatrix(ref Matrix4d mat)
-         {
-             unsafe
-             {
-                 fixed (Double* m_ptr = &mat.Row0.X)
-                 {
-                     Delegates.glMultMatrixd((Double*)m_ptr);
-                 }
-             }
-         }
- 
-         public static void LoadMatrix(ref Matrix4d mat)
-         {
-             unsafe
-             {
-                 fixed (Double* m_ptr = &mat.Row0.X)
-                 {
-                     Delegates.glLoadMatrixd((Double*)m_ptr);
-                 }
-             }
-         }
- 
-         public static void LoadTransposeMatrix(ref Matrix4d mat)
-         {
-             unsafe
-             {
-                 fixed (Double* m_ptr = &mat.Row0.X)
-                 {
-                     Delegates.glLoadTransposeMatrixd((Double*)m_ptr);
-                 }
-             }
-         }
- 
-         public static void MultTransposeMatrix(ref Matrix4d mat)
-         {
-             unsafe
-             {
-                 fixed (Double* m_ptr = &mat.Row0.X)
-                 {
-                     Delegates.glMultTransposeMatrixd((Double*)m_ptr);
-                 }
-             }
-         }
- 
+
+        public static void MultMatrix(ref Matrix4d mat)
+        {
+            unsafe
+            {
+                fixed (Double* m_ptr = &mat.Row0.X)
+                {
+                    Delegates.glMultMatrixd((Double*)m_ptr);
+                }
+            }
+        }
+
+        public static void LoadMatrix(ref Matrix4d mat)
+        {
+            unsafe
+            {
+                fixed (Double* m_ptr = &mat.Row0.X)
+                {
+                    Delegates.glLoadMatrixd((Double*)m_ptr);
+                }
+            }
+        }
+
+        public static void LoadTransposeMatrix(ref Matrix4d mat)
+        {
+            unsafe
+            {
+                fixed (Double* m_ptr = &mat.Row0.X)
+                {
+                    Delegates.glLoadTransposeMatrixd((Double*)m_ptr);
+                }
+            }
+        }
+
+        public static void MultTransposeMatrix(ref Matrix4d mat)
+        {
+            unsafe
+            {
+                fixed (Double* m_ptr = &mat.Row0.X)
+                {
+                    Delegates.glMultTransposeMatrixd((Double*)m_ptr);
+                }
+            }
+        }
+
+        public static void UniformMatrix4(int location, int count, bool transpose, ref Matrix4 matrix)
+        {
+            unsafe
+            {
+                fixed (float* matrix_ptr = &matrix.Row0.X)
+                {
+                    GL.UniformMatrix4(location, count, transpose, matrix_ptr);
+                }
+            }
+        }
+
+        #region Uniform
+
+        [CLSCompliant(false)]
+        public static void Uniform2(int location, ref Vector2 vector)
+        {
+            unsafe
+            {
+                fixed (float* vector_ptr = &vector.X)
+                {
+                    GL.Uniform2(location, 2, vector_ptr);
+                }
+            }
+        }
+
+        [CLSCompliant(false)]
+        public static void Uniform2(int location, ref Vector3 vector)
+        {
+            unsafe
+            {
+                fixed (float* vector_ptr = &vector.X)
+                {
+                    GL.Uniform3(location, 3, vector_ptr);
+                }
+            }
+        }
+
+        [CLSCompliant(false)]
+        public static void Uniform2(int location, ref Vector4 vector)
+        {
+            unsafe
+            {
+                fixed (float* vector_ptr = &vector.X)
+                {
+                    GL.Uniform4(location, 4, vector_ptr);
+                }
+            }
+        }
+
+        public static void Uniform2(int location, Vector2 vector)
+        {
+            unsafe
+            {
+                GL.Uniform2(location, 2, &vector.X);
+            }
+        }
+
+        public static void Uniform2(int location, Vector3 vector)
+        {
+            unsafe
+            {
+                GL.Uniform3(location, 3, &vector.X);
+            }
+        }
+
+        public static void Uniform2(int location, Vector4 vector)
+        {
+            unsafe
+            {
+                GL.Uniform4(location, 4, &vector.X);
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region public static void ShaderSource(Int32 shader, System.String @string)
@@ -868,9 +943,9 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-        
+
         #region public static void GetProgramInfoLog(Int32 program, out string info)
-        
+
         public static void GetProgramInfoLog(Int32 program, out string info)
         {
             unsafe
@@ -887,7 +962,7 @@ namespace OpenTK.Graphics
                 info = sb.ToString();
             }
         }
-        
+
         #endregion
 
         #region public static void PointParameter(PointSpriteCoordOriginParameter param)
@@ -905,59 +980,89 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-        
+
         #region public static void VertexAttrib2(Int32 index, ref Vector2 v)
-        
+
+        [CLSCompliant(false)]
         public static void VertexAttrib2(Int32 index, ref Vector2 v)
         {
             GL.VertexAttrib2(index, v.X, v.Y);
         }
-        
+
         #endregion
-        
+
         #region public static void VertexAttrib3(Int32 index, ref Vector3 v)
 
+        [CLSCompliant(false)]
         public static void VertexAttrib3(Int32 index, ref Vector3 v)
         {
             GL.VertexAttrib3(index, v.X, v.Y, v.Z);
         }
-        
+
         #endregion
-        
+
         #region public static void VertexAttrib4(Int32 index, ref Vector4 v)
 
+        [CLSCompliant(false)]
         public static void VertexAttrib4(Int32 index, ref Vector4 v)
         {
             GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
         }
-        
+
         #endregion
 
-        #region public static void MultiTexCoord2(TextureUnit target, ref Vector2 v)        
-        
+        #region public static void VertexAttrib2(Int32 index, Vector2 v)
+
+        public static void VertexAttrib2(Int32 index, Vector2 v)
+        {
+            GL.VertexAttrib2(index, v.X, v.Y);
+        }
+
+        #endregion
+
+        #region public static void VertexAttrib3(Int32 index, Vector3 v)
+
+        public static void VertexAttrib3(Int32 index, Vector3 v)
+        {
+            GL.VertexAttrib3(index, v.X, v.Y, v.Z);
+        }
+
+        #endregion
+
+        #region public static void VertexAttrib4(Int32 index, Vector4 v)
+
+        public static void VertexAttrib4(Int32 index, Vector4 v)
+        {
+            GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
+        }
+
+        #endregion
+
+        #region public static void MultiTexCoord2(TextureUnit target, ref Vector2 v)
+
         public static void MultiTexCoord2(TextureUnit target, ref Vector2 v)
         {
             GL.MultiTexCoord2(target, v.X, v.Y);
         }
-        
+
         #endregion
-                
+
         #region public static void MultiTexCoord3(TextureUnit target, ref Vector3 v)
 
         public static void MultiTexCoord3(TextureUnit target, ref Vector3 v)
         {
             GL.MultiTexCoord3(target, v.X, v.Y, v.Z);
         }
-        
+
         #endregion
 
         #region public static void MultiTexCoord4(TextureUnit target, ref Vector4 v)
-        
+
         public static void MultiTexCoord4(TextureUnit target, ref Vector4 v)
         {
             GL.MultiTexCoord4(target, v.X, v.Y, v.Z, v.W);
         }
-        
+
         #endregion
 
         #region public static void Rect(System.Drawing.RectangleF rect)
