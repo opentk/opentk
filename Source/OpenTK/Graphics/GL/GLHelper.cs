@@ -833,13 +833,13 @@ namespace OpenTK.Graphics
             }
         }
 
-        public static void UniformMatrix4(int location, int count, bool transpose, ref Matrix4 matrix)
+        public static void UniformMatrix4(int location, bool transpose, ref Matrix4 matrix)
         {
             unsafe
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix4(location, count, transpose, matrix_ptr);
+                    GL.UniformMatrix4(location, 16, transpose, matrix_ptr);
                 }
             }
         }
@@ -890,7 +890,7 @@ namespace OpenTK.Graphics
             }
         }
 
-        public static void Uniform2(int location, Vector3 vector)
+        public static void Uniform3(int location, Vector3 vector)
         {
             unsafe
             {
@@ -898,7 +898,7 @@ namespace OpenTK.Graphics
             }
         }
 
-        public static void Uniform2(int location, Vector4 vector)
+        public static void Uniform4(int location, Vector4 vector)
         {
             unsafe
             {
