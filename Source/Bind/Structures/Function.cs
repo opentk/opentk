@@ -257,7 +257,7 @@ namespace Bind.Structures
                 // Array overloads
                 foreach (Parameter p in this.Parameters)
                 {
-                    if (p.WrapperType == WrapperTypes.ArrayParameter)
+                    if (p.WrapperType == WrapperTypes.ArrayParameter && p.ElementCount != 1)
                     {
                         p.Reference = false;
                         p.Array = 1;
@@ -325,7 +325,7 @@ namespace Bind.Structures
                     WrapVoidPointers(wrappers);
                     --index;
 
-                    // On stack rewind, create object wrappers
+                    // On stack rewind, create generic wrappers
                     Parameters[index].Reference = true;
                     Parameters[index].Array = 0;
                     Parameters[index].Pointer = false;
