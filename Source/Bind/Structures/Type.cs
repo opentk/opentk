@@ -60,6 +60,7 @@ namespace Bind.Structures
                 this.Array = t.Array;
                 this.Pointer = t.Pointer;
                 this.Reference = t.Reference;
+                this.ElementCount = t.ElementCount;
             }
         }
         
@@ -133,6 +134,19 @@ namespace Bind.Structures
         {
             get { return array; }
             set { array = value > 0 ? value : 0; }
+        }
+
+        #endregion
+
+        #region public int ElementCount
+
+        int element_count;
+
+        // If the type is an array and ElementCount > 0, then ElemenCount defines the expected array length.
+        public int ElementCount
+        {
+            get { return element_count; }
+            set { element_count = value > 0 ? value : 0; }
         }
 
         #endregion

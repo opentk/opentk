@@ -146,6 +146,8 @@ namespace Bind.GL2
                                 p.Name = Utilities.Keywords.Contains(words[1]) ? "@" + words[1] : words[1];
                                 p.CurrentType = words[2];
                                 p.Pointer = words[4].Contains("array") ? true : words[4].Contains("reference") ? true : false;
+                                if (p.Pointer && words[5].Contains("[1]"))
+                                    p.ElementCount = 1;
                                 p.Flow = words[3] == "in" ? Parameter.FlowDirection.In : Parameter.FlowDirection.Out;
 
                                 d.Parameters.Add(p);
@@ -312,7 +314,6 @@ namespace Bind.GL2
                     else
                     {
                         // The enum already exists, merge constants.
-                        Trace.WriteLine(String.Format("Enum {0} already defined, merging constants.", e.Name));
                         foreach (Constant t in e.ConstantCollection.Values)
                             Utilities.Merge(enums[e.Name], t);
                     }

@@ -295,8 +295,6 @@ namespace Bind.Structures
             // Find out the necessary wrapper types.
             if (Pointer)/* || CurrentType == "IntPtr")*/
             {
-                WrapperType = WrapperTypes.ArrayParameter;
-
                 if (CurrentType.ToLower().Contains("char") || CurrentType.ToLower().Contains("string"))
                 {
                     // char* or string -> [In] String or [Out] StringBuilder
@@ -309,11 +307,15 @@ namespace Bind.Structures
                     WrapperType = WrapperTypes.None;
                 }
                 else if (CurrentType.ToLower().Contains("void") ||
-                         (!String.IsNullOrEmpty(PreviousType) && PreviousType.ToLower().Contains("void"))) /*|| CurrentType.Contains("IntPtr"))*/
+                    (!String.IsNullOrEmpty(PreviousType) && PreviousType.ToLower().Contains("void"))) /*|| CurrentType.Contains("IntPtr"))*/
                 {
                     CurrentType = "IntPtr";
                     Pointer = false;
                     WrapperType = WrapperTypes.GenericParameter;
+                }
+                else
+                {
+                    WrapperType = WrapperTypes.ArrayParameter;
                 }
             }
 
