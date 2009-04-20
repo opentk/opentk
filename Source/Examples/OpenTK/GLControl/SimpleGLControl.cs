@@ -21,10 +21,10 @@ using OpenTK.Graphics;
 
 namespace Examples.WinForms
 {
-    [Example("Simple GLControl", ExampleCategory.OpenTK, "GLControl", 1)]
-    public partial class W01_First_Window : Form
+    [Example("Simple GLControl", ExampleCategory.OpenTK, "GLControl", 1, Documentation="SimpleGLControl")]
+    public partial class SimpleForm : Form
     {
-        public W01_First_Window()
+        public SimpleForm()
         {
             InitializeComponent();
         }
@@ -93,7 +93,7 @@ namespace Examples.WinForms
         [STAThread]
         public static void Main()
         {
-            using (W01_First_Window example = new W01_First_Window())
+            using (SimpleForm example = new SimpleForm())
             {
                 Utilities.SetWindowTitle(example);
                 example.ShowDialog();

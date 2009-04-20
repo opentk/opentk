@@ -50,8 +50,6 @@ namespace Examples.Tests
                 Console.WriteLine(color2);
                 Console.WriteLine(color.Equals(color2));
             }
-
-            Console.ReadKey(true);
         }
     }
 }

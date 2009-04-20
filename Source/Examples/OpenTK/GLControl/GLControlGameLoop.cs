@@ -23,14 +23,14 @@ using OpenTK.Platform;
 
 namespace Examples.WinForms
 {
-    [Example("GLControl game loop", ExampleCategory.OpenTK, "GLControl")]
-    public partial class W02_Immediate_Mode_Cube : Form
+    [Example("Simple GLControl Game Loop", ExampleCategory.OpenTK, "GLControl", 2, Documentation="GLControlGameLoop")]
+    public partial class GameLoopForm : Form
     {
         static float angle = 0.0f;
 
         #region --- Constructor ---
 
-        public W02_Immediate_Mode_Cube()
+        public GameLoopForm()
         {
             InitializeComponent();
         }
@@ -45,7 +45,7 @@ namespace Examples.WinForms
 
             glControl.KeyDown += new KeyEventHandler(glControl_KeyDown);
             glControl.KeyUp += new KeyEventHandler(glControl_KeyUp);
-            //glControl.Resize += new EventHandler(glControl_Resize);
+            glControl.Resize += new EventHandler(glControl_Resize);
             glControl.Paint += new PaintEventHandler(glControl_Paint);
 
             Text =
@@ -58,7 +58,8 @@ namespace Examples.WinForms
 
             Application.Idle += Application_Idle;
 
-            //glControl_Resize(glControl, EventArgs.Empty);
+            // Ensure that the viewport and projection matrix are set correctly.
+            glControl_Resize(glControl, EventArgs.Empty);
         }
 
         void glControl_KeyUp(object sender, KeyEventArgs e)
@@ -207,11 +208,6 @@ namespace Examples.WinForms
 
         #endregion
 
-        private void glControl_Layout(object sender, LayoutEventArgs e)
-        {
-            glControl_Resize(sender, EventArgs.Empty);
-        }
-
         #region public static void Main()
 
         /// <summary>
@@ -220,7 +216,7 @@ namespace Examples.WinForms
         [STAThread]
         public static void Main()
         {
-            using (W02_Immediate_Mode_Cube example = new W02_Immediate_Mode_Cube())
+            using (GameLoopForm example = new GameLoopForm())
             {
                 // Get the title and category  of this example using reflection.
                 ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);

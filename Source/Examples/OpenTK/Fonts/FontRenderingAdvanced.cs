@@ -20,8 +20,8 @@ namespace Examples.Tutorial
     /// <summary>
     /// Shows how to render and scroll large amounts of text.
     /// </summary>
-    [Example("Font rendering (advanced)", ExampleCategory.OpenTK, "Fonts", 2)]
-    public class Text : GameWindow
+    [Example("Font rendering (advanced)", ExampleCategory.OpenTK, "Fonts", 2, Documentation="FontRenderingAdvanced")]
+    public class FontRenderingAdvanced : GameWindow
     {
         Font serif = new Font(FontFamily.GenericSerif, 16.0f);
         Font sans = new Font(FontFamily.GenericSansSerif, 18.0f);
@@ -35,7 +35,7 @@ namespace Examples.Tutorial
         float wraparound_position;
         float current_position;
 
-        public Text()
+        public FontRenderingAdvanced()
             : base(800, 600)
         { }
 
@@ -147,7 +147,7 @@ namespace Examples.Tutorial
         [STAThread]
         public static void Main()
         {
-            using (Text example = new Text())
+            using (FontRenderingAdvanced example = new FontRenderingAdvanced())
             {
                 // Get the title and category  of this example using reflection.
                 ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);

@@ -1,6 +1,6 @@
 ﻿namespace Examples.WinForms
 {
-    partial class W01_First_Window
+    partial class SimpleForm
     {
         /// <summary>
         /// Required designer variable.

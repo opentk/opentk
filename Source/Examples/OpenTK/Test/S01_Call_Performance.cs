@@ -18,7 +18,8 @@ using OpenTK.Graphics;
 
 namespace Examples.Tests
 {
-    public class S01_Call_Performance : IExample
+    // This test is obsolete.
+    public class S01_Call_Performance
     {
         const int num_calls = 1000000;
         float[] v = new float[] { 0.0f, 0.0f };

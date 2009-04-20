@@ -1,6 +1,6 @@
 ﻿namespace Examples.WinForms
 {
-    partial class W04_Multiple_GLControls
+    partial class MultipleGLControlsForm
     {
         /// <summary>
         /// Required designer variable.

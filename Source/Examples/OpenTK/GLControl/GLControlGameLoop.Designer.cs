@@ -1,6 +1,6 @@
 ﻿namespace Examples.WinForms
 {
-    partial class W02_Immediate_Mode_Cube
+    partial class GameLoopForm
     {
         /// <summary>
         /// Required designer variable.
@@ -40,7 +40,6 @@
             this.glControl.Size = new System.Drawing.Size(784, 564);
             this.glControl.TabIndex = 0;
             this.glControl.VSync = false;
-            this.glControl.Layout += new System.Windows.Forms.LayoutEventHandler(this.glControl_Layout);
             // 
             // W02_Immediate_Mode_Cube
             // 

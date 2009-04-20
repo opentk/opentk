@@ -11,17 +11,17 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.WinForms
 {
-    [Example("Multiple GLControls test", ExampleCategory.OpenTK, "GLControl", 4)]
-    public partial class W04_Multiple_GLControls : Form
+    [Example("Multiple GLControls", ExampleCategory.OpenTK, "GLControl", 3, Documentation="MultipleGLControls.cs")]
+    public partial class MultipleGLControlsForm : Form
     {
-        public W04_Multiple_GLControls()
+        public MultipleGLControlsForm()
         {
             InitializeComponent();
         }
 
         public static void Main()
         {
-            using (W04_Multiple_GLControls example = new W04_Multiple_GLControls())
+            using (MultipleGLControlsForm example = new MultipleGLControlsForm())
             {
                 Utilities.SetWindowTitle(example);
                 example.ShowDialog();

@@ -7,48 +7,29 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Drawing;
 using System.Diagnostics;
+using System.IO;
+
+using System.Drawing;
+using System.Drawing.Imaging;
 
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL.Enums;
-using OpenTK.Input;
 
 namespace Examples.Tutorial
 {
     /// <summary>
-    /// Demonstrates the GameWindow class.
+    /// Demonstrates simple OpenGL Texturing.
     /// </summary>
-    [Example("Simple Window", ExampleCategory.OpenTK, "GameWindow")]
-    public class T01_Simple_Window : GameWindow
+    [Example("Texture mapping", ExampleCategory.OpenGL, "1.1", Documentation="Textures")]
+    public class Textures : GameWindow
     {
-        public T01_Simple_Window() : base(800, 600)
-        {
-            Keyboard.KeyDown += new OpenTK.Input.KeyDownEvent(Keyboard_KeyDown);
-        }
+        Bitmap bitmap = new Bitmap("Data/logo.jpg");
+        int texture;
 
-        #region Keyboard_KeyDown
-
-        /// <summary>
-        /// Occurs when a key is pressed.
-        /// </summary>
-        /// <param name="sender">The KeyboardDevice which generated this event.</param>
-        /// <param name="key">The key that was pressed.</param>
-        void Keyboard_KeyDown(KeyboardDevice sender, Key key)
-        {
-            if (sender[Key.Escape])
-                this.Exit();
-
-            if ((sender[Key.AltLeft] || sender[Key.AltRight]) && (sender[Key.Enter] || sender[Key.KeypadEnter]))
-                if (this.WindowState == WindowState.Fullscreen)
-                    this.WindowState = WindowState.Normal;
-                else
-                    this.WindowState = WindowState.Fullscreen;
-        }
-
-        #endregion
+        public Textures() : base(800, 600) { }
 
         #region OnLoad
 
@@ -59,6 +40,32 @@ namespace Examples.Tutorial
         public override void OnLoad(EventArgs e)
         {
             GL.ClearColor(Color.MidnightBlue);
+            GL.Enable(EnableCap.Texture2D);
+
+            GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
+            
+            GL.GenTextures(1, out texture);
+            GL.BindTexture(TextureTarget.Texture2D, texture);
+
+            BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
+                OpenTK.Graphics.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+            
+            bitmap.UnlockBits(data);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+        }
+
+        #endregion
+
+        #region OnUnload
+
+        public override void OnUnload(EventArgs e)
+        {
+            GL.DeleteTextures(1, ref texture);
         }
 
         #endregion
@@ -77,8 +84,6 @@ namespace Examples.Tutorial
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
             GL.Ortho(-1.0, 1.0, -1.0, 1.0, 0.0, 4.0);
-
-            base.OnResize(e);
         }
 
         #endregion
@@ -92,7 +97,8 @@ namespace Examples.Tutorial
         /// <remarks>There is no need to call the base implementation.</remarks>
         public override void OnUpdateFrame(UpdateFrameEventArgs e)
         {
-            // Nothing to do!
+            if (Keyboard[OpenTK.Input.Key.Escape])
+                this.Exit();
         }
 
         #endregion
@@ -108,22 +114,24 @@ namespace Examples.Tutorial
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            GL.Begin(BeginMode.Triangles);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+            GL.BindTexture(TextureTarget.Texture2D, texture);
 
-            GL.Color3(Color.MidnightBlue);
-            GL.Vertex2(-1.0f, 1.0f);
-            GL.Color3(Color.SpringGreen);
-            GL.Vertex2(0.0f, -1.0f);
-            GL.Color3(Color.Ivory);
-            GL.Vertex2(1.0f, 1.0f);
+            GL.Begin(BeginMode.Quads);
+
+            GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(-0.6f, -0.4f);
+            GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(0.6f, -0.4f);
+            GL.TexCoord2(1.0f, 0.0f); GL.Vertex2(0.6f, 0.4f);
+            GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(-0.6f, 0.4f);
 
             GL.End();
 
-            this.SwapBuffers();
+            SwapBuffers();
         }
 
         #endregion
-        
+
         #region public static void Main()
 
         /// <summary>
@@ -132,10 +140,11 @@ namespace Examples.Tutorial
         [STAThread]
         public static void Main()
         {
-            using (T01_Simple_Window example = new T01_Simple_Window())
+            using (Textures example = new Textures())
             {
                 // Get the title and category  of this example using reflection.
-                Utilities.SetWindowTitle(example);
+                ExampleAttribute info = ((ExampleAttribute)typeof(Textures).GetCustomAttributes(false)[0]);
+                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
                 example.Run(30.0, 0.0);
             }
         }
