@@ -497,15 +497,12 @@ namespace Examples.Properties {
         ///
         ///namespace Examples.WinForms
         ///{
-        ///    [Example(&quot;Multiple GLControls&quot;, ExampleCategory.OpenTK, &quot;GLControl&quot;, 3)]
+        ///    [Example(&quot;Multiple GLControls&quot;, ExampleCategory.OpenTK, &quot;GLControl&quot;, 3, Documentation=&quot;MultipleGLControls.cs&quot;)]
         ///    public partial class MultipleGLControlsForm : Form
         ///    {
         ///        public MultipleGLControlsForm()
         ///        {
-        ///            InitializeComponent();
-        ///        }
-        ///
-        ///        public s [rest of string was truncated]&quot;;.
+        ///            InitializeComp [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MultipleGLControls {
             get {
@@ -584,8 +581,7 @@ namespace Examples.Properties {
         ///
         ///namespace Examples.WinForms
         ///{
-        ///    [Example(&quot;Simple GLControl&quot;, ExampleCategory.OpenTK, &quot;GLControl&quot;, 1)]
-        ///    pu [rest of string was truncated]&quot;;.
+        ///    [Example(&quot;Simple GLControl&quot;, ExampleCategory.OpenTK, &quot;GLControl&quot;, 1, Document [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SimpleGLControl {
             get {
