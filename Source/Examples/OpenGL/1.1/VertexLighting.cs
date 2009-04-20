@@ -19,7 +19,7 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates fixed-function OpenGL lighting.  Example is incomplete (documentation).
     /// </summary>
-    [Example("Vertex Lighting", ExampleCategory.OpenGL, "1.1")]
+    [Example("Vertex Lighting", ExampleCategory.OpenGL, "1.1", false)]
     public class T04_Vertex_Lighting : GameWindow
     {
         float x_angle, zoom;

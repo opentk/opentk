@@ -25,7 +25,7 @@ namespace Examples.Tutorial
     /// <summary>
     /// Demonstrates immediate mode rendering.
     /// </summary>
-    [Example("Immediate mode", ExampleCategory.OpenGL, "1.1")]
+    [Example("Immediate mode", ExampleCategory.OpenGL, "1.1", Documentation="ImmediateMode")]
     public class T03_Immediate_Mode_Cube : GameWindow
     {
         #region --- Fields ---

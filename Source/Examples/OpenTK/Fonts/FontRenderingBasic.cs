@@ -9,8 +9,8 @@ using OpenTK.Graphics;
 
 namespace Examples.WinForms
 {
-    [Example("Font rendering (basic)", ExampleCategory.OpenTK, "Fonts", Difficulty = 1, Documentation = "FontRendering")]
-    public partial class FontRendering : Form
+    [Example("Font rendering (basic)", ExampleCategory.OpenTK, "Fonts", Difficulty = 1, Documentation = "FontRenderingBasic")]
+    public partial class FontRenderingBasic : Form
     {
         #region Fields
 
@@ -23,7 +23,7 @@ namespace Examples.WinForms
 
         #region Constructors
 
-        public FontRendering()
+        public FontRenderingBasic()
         {
             InitializeComponent();
             ResizeRedraw = true;
@@ -111,7 +111,7 @@ namespace Examples.WinForms
         [STAThread]
         public static void Main()
         {
-            using (FontRendering example = new FontRendering())
+            using (FontRenderingBasic example = new FontRenderingBasic())
             {
                 Utilities.SetWindowTitle(example);
                 example.ShowDialog();

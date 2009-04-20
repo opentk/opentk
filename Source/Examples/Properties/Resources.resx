@@ -118,16 +118,94 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="FontRendering" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\winforms\fontrendering.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="Color4Serialization" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\test\color4serialization.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="FontRenderingDoc" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\winforms\fontrendering.rtf;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="DisplayLists" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\1.1\displaylists.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="FramebufferObject" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OpenGL\FrameBufferObject.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="EFXReverb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\openal\efx\efxreverb.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="FramebufferObjectDoc" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\OpenGL\FramebufferObject.rtf;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  <data name="Extensions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\test\extensions.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="FontRenderingAdvanced" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\fonts\fontrenderingadvanced.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="FontRenderingBasic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\fonts\fontrenderingbasic.rtf;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="FontRenderingBasic1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\fonts\fontrenderingbasic.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="FontRenderingBasic2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\fonts\fontrenderingbasic.resx;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="FontRenderingBasic_Designer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\fonts\fontrenderingbasic.designer.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="FrameBufferObject" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\ext\framebufferobject.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="FramebufferObject1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\ext\framebufferobject.rtf;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1253</value>
+  </data>
+  <data name="GameWindowStates" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\test\gamewindowstates.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="GLControlGameLoop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\glcontrol\glcontrolgameloop.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="ImmediateMode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\1.1\immediatemode.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="InputLogger" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\test\inputlogger.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="JuliaSetFractal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\glsl\juliasetfractal.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="MultipleGLControls" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\glcontrol\multipleglcontrols.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Playback" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\openal\1.1\playback.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="PlayStatic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\openal\1.1\playstatic.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SimpleGLControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\glcontrol\simpleglcontrol.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SimpleWindow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\gamewindow\simplewindow.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="StreamingPlayback" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\openal\1.1\streamingplayback.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Tessellation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\glu\tessellation.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="TestAudioContext" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\openal\test\testaudiocontext.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="TestResolutionChanges" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opentk\test\testresolutionchanges.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Textures" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\1.1\textures.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VertexArrays" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\1.1\vertexarrays.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VertexBufferObject" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\1.5\vertexbufferobject.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VertexLighting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\1.1\vertexlighting.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SimpleGLSL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\opengl\glsl\simpleglsl.cs;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>
