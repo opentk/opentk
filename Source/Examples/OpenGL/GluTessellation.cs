@@ -16,7 +16,7 @@ using OpenTK.Input;
 
 namespace Examples
 {
-    [Example("GLU Tesselation Functions Test", ExampleCategory.OpenGL, Visible = false)]
+    [Example("GLU Tesselation Functions Test", ExampleCategory.OpenGL, "GLU", Visible = false)]
     public class Test : GameWindow
     {
         int startList;

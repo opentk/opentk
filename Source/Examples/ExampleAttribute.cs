@@ -17,19 +17,22 @@ namespace Examples
         bool visible = true;
         public string Title { get { return title; } internal set { title = value; } }
         public readonly ExampleCategory Category;
-        public readonly int Difficulty;
+        public readonly string Subcategory;
+        public int Difficulty;
+        public string Documentation;
         public bool Visible { get { return visible; } set { visible = value; } }
 
-        public ExampleAttribute(string title, ExampleCategory category)
-            : this(title, category, 0, true) { }
+        public ExampleAttribute(string title, ExampleCategory category, string subcategory)
+            : this(title, category, subcategory, 0, true) { }
 
-        public ExampleAttribute(string title, ExampleCategory category, int difficulty)
-            : this(title, category, difficulty, true) { }
+        public ExampleAttribute(string title, ExampleCategory category, string subcategory, int difficulty)
+            : this(title, category, subcategory, difficulty, true) { }
 
-        public ExampleAttribute(string title, ExampleCategory category, int difficulty, bool visible)
+        public ExampleAttribute(string title, ExampleCategory category, string subcategory, int difficulty, bool visible)
         {
             this.Title = title;
             this.Category = category;
+            this.Subcategory = subcategory;
             this.Difficulty = difficulty;
             this.Visible = visible;
         }
@@ -44,12 +47,9 @@ namespace Examples
 
     public enum ExampleCategory
     {
-        OpenGL = 0,
+        Default = 0,
+        OpenTK = Default,
+        OpenGL,
         OpenAL,
-        Tutorial,
-        GLSL,
-        WinForms,
-        Test,
-        Last
     }
 }

@@ -22,7 +22,7 @@ namespace Examples.Tutorial
     /// <summary>
     /// Tests Font loading and rendering.
     /// </summary>
-    [Example("Fonts", ExampleCategory.Tutorial, 3)]
+    [Example("Fonts", ExampleCategory.OpenTK, "Fonts", Visible = false)]
     class Fonts : GameWindow
     {
         public Fonts() : base(800, 600)

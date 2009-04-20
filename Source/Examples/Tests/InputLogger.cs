@@ -23,7 +23,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.Tests
 {
-    [Example("Input Logger", ExampleCategory.Test)]
+    [Example("Input Logger", ExampleCategory.OpenTK, "Test")]
     public partial class InputLogger : Form
     {
         #region Fields

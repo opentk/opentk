@@ -29,34 +29,11 @@ using OpenTK;
 
 namespace Examples
 {
+    [Obsolete]
     public partial class ExampleLauncher : Form
     {
         bool show_hidden;
         List<ExampleInfo> hidden_items = new List<ExampleInfo>();
-
-        #region class ExampleInfo
-
-        /// <summary>
-        /// Contains the information necessary to display and launch an example thorugh the ExampleLauncer.
-        /// </summary>
-        class ExampleInfo
-        {
-            public Type Example;
-            public ExampleAttribute Attributes;
-
-            public ExampleInfo(Type example, ExampleAttribute attr)
-            {
-                Example = example;
-                Attributes = attr;
-            }
-
-            public override string ToString()
-            {
-                return Attributes.ToString();
-            }
-        }
-
-        #endregion
 
         #region --- Constructor ---
 
@@ -72,21 +49,6 @@ namespace Examples
 
         public void ExampleLauncher_Load(object sender, EventArgs e)
         {
-            try
-            {
-                if (File.Exists("debug.log"))
-                    File.Delete("debug.log");
-            }
-            catch (Exception expt)
-            {
-                MessageBox.Show("Could not access debug.log", expt.ToString());
-            }
-
-            Debug.Listeners.Clear();
-            Debug.Listeners.Add(new TextWriterTraceListener("debug.log"));
-            Debug.Listeners.Add(new ConsoleTraceListener());
-            Debug.AutoFlush = true;
-
             // Get all examples
             Type[] types = Assembly.GetExecutingAssembly().GetTypes();
             StringBuilder sb = new StringBuilder();
@@ -110,7 +72,9 @@ namespace Examples
                     //sb.Append(example.Title);
 
                     if (example.Visible)
+                    {
                         listBox1.Items.Add(new ExampleInfo(type, example));
+                    }
                     else
                     {
 #if DEBUG
@@ -235,32 +199,5 @@ namespace Examples
         }
 
         #endregion
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            try
-            {
-                //FileIOPermission fileIO = new FileIOPermission(FileIOPermissionAccess.AllAccess, ".");
-                //fileIO.Demand();
-
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                using (Form exampleLauncher = new ExampleLauncher())
-                {
-                    Application.Run(exampleLauncher);
-                }
-
-            }
-            catch (System.Security.SecurityException e)
-            {
-                MessageBox.Show("The Example Launcher failed to start, due to insufficient permissions. This may happen if you execute the application from a network share.", "OpenTK Example Launcher failed to start.",
-                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                Trace.WriteLine(e.ToString());
-            }
-        }
     }
 }

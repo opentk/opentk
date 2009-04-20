@@ -23,7 +23,7 @@ namespace Examples.Tutorial
     /// Demonstrates Vertex Arrays (in system memory).  Example is incomplete (documentation).
     /// Broken since release 0.3.12.
     /// </summary>
-    [Example("Vertex Arrays", ExampleCategory.OpenGL, 5, false)]
+    [Example("Vertex Arrays", ExampleCategory.OpenGL, "1.1", 5, false)]
     class T02_Vertex_Arrays : GameWindow
     {
         float rotation_speed = 3.0f;
