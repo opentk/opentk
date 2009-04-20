@@ -389,8 +389,6 @@ namespace OpenTK.Graphics
             //else
             //    version = version_string.TrimStart(' ');
 
-            Debug.Print(version);
-
             if (version.StartsWith("1.1"))
             {
                 AvailableExtensions.Add("glversion11", true);
@@ -451,6 +449,18 @@ namespace OpenTK.Graphics
                 AvailableExtensions.Add("glversion21", true);
                 AvailableExtensions.Add("glversion30", true);
             }
+            else if (version.StartsWith("3.1"))
+            {
+                AvailableExtensions.Add("glversion11", true);
+                AvailableExtensions.Add("glversion12", true);
+                AvailableExtensions.Add("glversion13", true);
+                AvailableExtensions.Add("glversion14", true);
+                AvailableExtensions.Add("glversion15", true);
+                AvailableExtensions.Add("glversion20", true);
+                AvailableExtensions.Add("glversion21", true);
+                AvailableExtensions.Add("glversion30", true);
+                AvailableExtensions.Add("glversion31", true);
+            }
 
             string extension_string = GL.GetString(StringName.Extensions);
             if (String.IsNullOrEmpty(extension_string))
@@ -459,9 +469,6 @@ namespace OpenTK.Graphics
             string[] extensions = extension_string.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string ext in extensions)
                 AvailableExtensions.Add(ext.Replace("_", String.Empty).ToLower(), true);
-
-            foreach (string s in AvailableExtensions.Keys)
-                Debug.Print(s);
 
             rebuildExtensionList = false;
         }
