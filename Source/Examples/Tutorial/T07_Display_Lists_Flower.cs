@@ -22,7 +22,7 @@ using OpenTK.Graphics;
 
 namespace Examples.Tutorial
 {
-    [Example("Display Lists", ExampleCategory.Tutorial, 3)]
+    [Example("Display Lists", ExampleCategory.OpenGL, "1.1")]
     public class T07_Display_Lists_Flower : GameWindow
     {
         #region --- Fields ---

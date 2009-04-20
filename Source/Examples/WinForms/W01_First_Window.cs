@@ -21,7 +21,7 @@ using OpenTK.Graphics;
 
 namespace Examples.WinForms
 {
-    [Example("Simple GLControl", ExampleCategory.WinForms, 1)]
+    [Example("Simple GLControl", ExampleCategory.OpenTK, "GLControl", 1)]
     public partial class W01_First_Window : Form
     {
         public W01_First_Window()

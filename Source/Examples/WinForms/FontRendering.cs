@@ -9,12 +9,11 @@ using OpenTK.Graphics;
 
 namespace Examples.WinForms
 {
-    [Example("Font rendering sample", ExampleCategory.WinForms)]
+    [Example("Font rendering (basic)", ExampleCategory.OpenTK, "Fonts", Difficulty = 1, Documentation = "FontRendering")]
     public partial class FontRendering : Form
     {
         #region Fields
 
-        //float[] sizes = new float[] { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 28, 32, 36, 42, 48 };
         float[] sizes = new float[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 24 };
         List<Font> fonts = new List<Font>();
 

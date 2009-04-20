@@ -22,7 +22,7 @@ using System.Text.RegularExpressions;
 
 namespace Examples.WinForms
 {
-    [Example("Extensions", ExampleCategory.Test)]
+    [Example("OpenGL Extensions", ExampleCategory.OpenTK, "Test")]
     public partial class Extensions : Form
     {
         #region Fields

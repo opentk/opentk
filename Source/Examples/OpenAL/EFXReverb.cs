@@ -32,7 +32,7 @@ using OpenTK.Audio;
 
 namespace Examples
 {
-    [Example("EFX: Reverb", ExampleCategory.OpenAL)]
+    [Example("EFX: Reverb", ExampleCategory.OpenAL, "EFX")]
     public class ReverbExample
     {
         static readonly string filename = Path.Combine(Path.Combine("Data", "Audio"), "the_ring_that_fell.wav");

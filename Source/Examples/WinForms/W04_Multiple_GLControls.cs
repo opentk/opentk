@@ -11,7 +11,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Examples.WinForms
 {
-    [Example("Multiple GLControls test", ExampleCategory.WinForms, 4)]
+    [Example("Multiple GLControls test", ExampleCategory.OpenTK, "GLControl", 4)]
     public partial class W04_Multiple_GLControls : Form
     {
         public W04_Multiple_GLControls()
