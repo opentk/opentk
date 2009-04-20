@@ -66,11 +66,6 @@ namespace OpenTK.Graphics
 
             Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
                 available_displays.Count, primary ? "primary" : "secondary", available_resolutions.Count);
-            
-            Debug.Indent();
-            foreach (DisplayResolution res in available_resolutions)
-                Debug.Print(res == current_resolution ? String.Format(">> {0} <<", res.ToString()) : res.ToString());
-            Debug.Unindent();
 
             lock (display_lock)
             {
