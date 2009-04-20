@@ -23,9 +23,9 @@ using OpenTK.Graphics.OpenGL;
 namespace Examples.Tutorial
 {
     /// <summary>
-    /// Demonstrates immediate mode rendering. Example is incomplete, and will probably go away in the future.
+    /// Demonstrates immediate mode rendering.
     /// </summary>
-    [Example("Immediate mode", ExampleCategory.Tutorial, 2)]
+    [Example("Immediate mode", ExampleCategory.OpenGL, "1.1")]
     public class T03_Immediate_Mode_Cube : GameWindow
     {
         #region --- Fields ---
@@ -69,11 +69,19 @@ namespace Examples.Tutorial
 
             GL.Viewport(0, 0, Width, Height);
 
-            double ratio = e.Width / (double)e.Height;
+            double aspect_ratio = e.Width / (double)e.Height;
 
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            Glu.Perspective(45.0, ratio, 1.0, 64.0);
+            if (Keyboard[OpenTK.Input.Key.Space])
+            {
+                OpenTK.Math.Matrix4 perspective = OpenTK.Math.Matrix4.Perspective(45, (float)aspect_ratio, 1, 64);
+                GL.LoadMatrix(ref perspective);
+            }
+            else
+            {
+                GL.LoadIdentity();
+                Glu.Perspective(45, (float)aspect_ratio, 1, 64);
+            }
         }
 
         #endregion

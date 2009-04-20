@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace Examples
 {
-    [Example("AudioContext Test", ExampleCategory.Test, 0, false)]
+    [Example("AudioContext Test", ExampleCategory.OpenTK, "Test", 0, false)]
     class TestApp
     {
         public static void PrintOpenALErrors( IntPtr device )

@@ -20,7 +20,7 @@ namespace Examples.Tutorial
     /// <summary>
     /// Shows how to render and scroll large amounts of text.
     /// </summary>
-    [Example("Text", ExampleCategory.Tutorial, 4)]
+    [Example("Font rendering (advanced)", ExampleCategory.OpenTK, "Fonts", 2)]
     public class Text : GameWindow
     {
         Font serif = new Font(FontFamily.GenericSerif, 16.0f);
