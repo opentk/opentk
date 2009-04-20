@@ -139,7 +139,7 @@
 
     </Project>
 
-    <Project name="Examples" path="../Source/Examples" language="C#" type="Exe" startupObject="Examples.ExampleLauncher">
+    <Project name="Examples" path="../Source/Examples" language="C#" type="WinExe" startupObject="Examples.Program">
 
       <Configuration name="Debug">
         <Options>
