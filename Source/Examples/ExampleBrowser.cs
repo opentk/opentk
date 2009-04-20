@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.Reflection;
-using Examples.Properties;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Text;
+using System.Reflection;
+using System.Windows.Forms;
+using Examples.Properties;
 
 namespace Examples
 {
@@ -47,9 +43,11 @@ namespace Examples
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            LoadSamplesFromAssembly(Assembly.GetExecutingAssembly());
+
             Debug.Listeners.Add(new TextBoxTraceListener(textBoxOutput));
             treeViewSamples.TreeViewNodeSorter = new SamplesTreeViewSorter();
+
+            LoadSamplesFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         #endregion
@@ -70,6 +68,7 @@ namespace Examples
             else
             {
                 richTextBoxDescription.Rtf = String.Empty;
+                richTextBoxDescription.Text = "Documentation has not been entered.";
                 richTextBoxSource.Rtf = String.Empty;
             }
         }

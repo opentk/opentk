@@ -26,7 +26,7 @@ namespace Examples.Tutorial
     /// One more major optimization could be applied (exploit the symmetry of the image with RTT), but
     /// that would make the program alot more complicated to follow. You can do this as an exercise.
     /// </summary>
-    [Example("GLSL Animated Julia Set", ExampleCategory.OpenGL, "GLSL")]
+    [Example("GLSL Animated Julia Set", ExampleCategory.OpenGL, "GLSL", Documentation="JuliaSetFractal.cs")]
     public class JuliaSetFractal : GameWindow
     {
         public JuliaSetFractal()

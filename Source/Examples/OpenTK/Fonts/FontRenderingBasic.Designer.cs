@@ -1,6 +1,6 @@
 ﻿namespace Examples.WinForms
 {
-    partial class FontRendering
+    partial class FontRenderingBasic
     {
         /// <summary>
         /// Required designer variable.

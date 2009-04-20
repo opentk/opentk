@@ -21,7 +21,7 @@ using OpenTK.Math;
 
 namespace Examples.Tutorial
 {
-    [Example("Vertex Buffer Objects", ExampleCategory.OpenGL, "1.5")]
+    [Example("Vertex Buffer Objects", ExampleCategory.OpenGL, "1.5", Documentation="VertexBufferObjects")]
     public class T08_VBO : GameWindow
     {
         #region --- Private Fields ---
