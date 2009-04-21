@@ -21,20 +21,18 @@ using OpenTK.Math;
 
 namespace Examples.Tutorial
 {
-    [Example("Vertex Buffer Objects", ExampleCategory.OpenGL, "1.5", Documentation="VertexBufferObjects")]
+    [Example("Vertex Buffer Objects", ExampleCategory.OpenGL, "1.5", false, Documentation="VertexBufferObject")]
     public class T08_VBO : GameWindow
     {
         #region --- Private Fields ---
 
         Shapes.Shape cube = new Examples.Shapes.Cube();
-        //Shapes.Shape plane = new Examples.Shapes.Plane(16, 16, 2.0f, 2.0f);
 
         struct Vbo
         {
             public int VboID, EboID, NumElements;
         }
         Vbo[] vbo = new Vbo[2];
-        //float angle;
 
         public static readonly int order = 8;
 

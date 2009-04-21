@@ -14,7 +14,7 @@ using OpenTK.Audio;
 
 namespace Examples
 {
-    [Example("Playback", ExampleCategory.OpenAL, "1.1")]
+    [Example("Playback", ExampleCategory.OpenAL, "1.1", Documentation="Playback")]
     public class Playback
     {
         static readonly string filename = Path.Combine(Path.Combine("Data", "Audio"), "the_ring_that_fell.wav");

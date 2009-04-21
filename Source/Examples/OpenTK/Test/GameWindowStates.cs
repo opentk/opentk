@@ -17,7 +17,7 @@ using OpenTK.Input;
 
 namespace Examples.Tests
 {
-    [Example("GameWindow states", ExampleCategory.OpenTK, "Test")]
+    [Example("GameWindow states", ExampleCategory.OpenTK, "Test", Documentation="GameWindowStates")]
     public class GameWindowStates : GameWindow
     {
         Font font = new Font(FontFamily.GenericSansSerif, 16.0f);
