@@ -17,7 +17,7 @@ using System.Threading;
 
 namespace Examples.Tests
 {
-    [Example("Test Resolution Changes", ExampleCategory.OpenTK, "Test")]
+    [Example("Test Resolution Changes", ExampleCategory.OpenTK, "Test", Documentation="TestResolutionChanges")]
     public class TestResolutionChanges
     {
         public static void Main()

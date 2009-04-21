@@ -32,7 +32,7 @@ using OpenTK.Graphics;
 
 namespace Examples.Tests
 {
-    [Example("Color4 Serialization", ExampleCategory.OpenTK, "Test")]
+    [Example("Color4 Serialization", ExampleCategory.OpenTK, "Test", Documentation="Color4Serialization")]
     public class Color4Serialization
     {
         public static void Main()
