@@ -60,16 +60,28 @@ namespace Examples
 
         private void treeViewSamples_AfterSelect(object sender, TreeViewEventArgs e)
         {
+			const string no_docs = "Documentation has not been entered.";
+			const string no_source = "Source code has not been entered.";
+			
             if (e.Node.Tag != null && !String.IsNullOrEmpty(((ExampleInfo)e.Node.Tag).Attribute.Documentation))
             {
-                richTextBoxDescription.Rtf = (string)Resources.ResourceManager.GetObject(((ExampleInfo)e.Node.Tag).Attribute.Documentation + "Doc");
-                richTextBoxSource.Text = (string)Resources.ResourceManager.GetObject(((ExampleInfo)e.Node.Tag).Attribute.Documentation);
+				string docs = (string)Resources.ResourceManager.GetObject(((ExampleInfo)e.Node.Tag).Attribute.Documentation + "Doc");
+				string source = (string)Resources.ResourceManager.GetObject(((ExampleInfo)e.Node.Tag).Attribute.Documentation);
+				
+				if (String.IsNullOrEmpty(docs))
+					richTextBoxDescription.Text = no_docs;
+				else
+                	richTextBoxDescription.Rtf = docs;
+				
+				if (String.IsNullOrEmpty(source))
+					richTextBoxSource.Text = no_source;
+				else
+					richTextBoxSource.Text = source;
             }
             else
             {
-                richTextBoxDescription.Rtf = String.Empty;
-                richTextBoxDescription.Text = "Documentation has not been entered.";
-                richTextBoxSource.Rtf = String.Empty;
+                richTextBoxDescription.Text = no_docs;
+                richTextBoxSource.Text = no_source;
             }
         }
 
