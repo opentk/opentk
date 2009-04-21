@@ -187,7 +187,7 @@
             // 
             // richTextBoxDescription
             // 
-            this.richTextBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.richTextBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.richTextBoxDescription.ContextMenuStrip = this.contextMenuStripDescription;
             this.richTextBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxDescription.Location = new System.Drawing.Point(3, 3);
@@ -226,7 +226,7 @@
             // richTextBoxSource
             // 
             this.richTextBoxSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(242)))), ((int)(((byte)(240)))));
-            this.richTextBoxSource.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.richTextBoxSource.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.richTextBoxSource.ContextMenuStrip = this.contextMenuStripSource;
             this.richTextBoxSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxSource.Location = new System.Drawing.Point(3, 3);
@@ -265,7 +265,7 @@
             // textBoxOutput
             // 
             this.textBoxOutput.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(242)))), ((int)(((byte)(240)))));
-            this.textBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxOutput.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.textBoxOutput.ContextMenuStrip = this.contextMenuStripOutput;
             this.textBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxOutput.Location = new System.Drawing.Point(3, 3);
