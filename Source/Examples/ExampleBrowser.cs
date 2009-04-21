@@ -24,15 +24,17 @@ namespace Examples
 
             InitializeComponent();
 
-            // Windows 6 (Vista) and higher come with Consolas, a high-quality monospace font. Use that or fallback to the generic
-            // monospace font on other systems.
-            if (System.Environment.OSVersion.Platform == PlatformID.Win32NT && System.Environment.OSVersion.Version.Major >= 6)
+            // Windows 6 (Vista) and higher come with Consolas, a high-quality monospace font. Use that or fallback to
+            // the generic monospace font on other systems.
+            if (System.Environment.OSVersion.Platform == PlatformID.Win32NT &&
+                System.Environment.OSVersion.Version.Major >= 6)
             {
-                richTextBoxSource.Font = new Font("Consolas", 10.0f, FontStyle.Regular);
+                textBoxOutput.Font = richTextBoxSource.Font = new Font("Consolas", 10.0f, FontStyle.Regular);
             }
             else
             {
-                richTextBoxSource.Font = new Font(FontFamily.GenericMonospace, 10.0f, FontStyle.Regular);
+                textBoxOutput.Font = richTextBoxSource.Font =
+                    new Font(FontFamily.GenericMonospace, 10.0f, FontStyle.Regular);
             }
         }
 
