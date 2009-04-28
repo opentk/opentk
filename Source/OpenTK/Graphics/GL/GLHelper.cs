@@ -913,6 +913,11 @@ namespace OpenTK.Graphics
             }
         }
 
+        public static void Uniform4(int location, Color4 color)
+        {
+            unsafe { GL.Uniform4(location, 4, &color.R); }
+        }
+
         #endregion
 
         #endregion
