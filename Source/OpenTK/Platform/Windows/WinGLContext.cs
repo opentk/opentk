@@ -104,6 +104,7 @@ namespace OpenTK.Platform.Windows
                         attributes.Add((int)ArbCreateContext.Flags);
                         attributes.Add((int)flags);
                     }
+                    attributes.Add(0);
 
                     renderContext = new ContextHandle(
                         Wgl.Arb.CreateContextAttribs(
