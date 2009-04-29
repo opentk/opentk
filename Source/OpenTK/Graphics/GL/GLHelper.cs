@@ -846,7 +846,7 @@ namespace OpenTK.Graphics
             {
                 fixed (float* matrix_ptr = &matrix.Row0.X)
                 {
-                    GL.UniformMatrix4(location, 16, transpose, matrix_ptr);
+                    GL.UniformMatrix4(location, 1, transpose, matrix_ptr);
                 }
             }
         }
