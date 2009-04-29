@@ -856,66 +856,39 @@ namespace OpenTK.Graphics
         [CLSCompliant(false)]
         public static void Uniform2(int location, ref Vector2 vector)
         {
-            unsafe
-            {
-                fixed (float* vector_ptr = &vector.X)
-                {
-                    GL.Uniform2(location, 2, vector_ptr);
-                }
-            }
+            GL.Uniform2(location, vector.X, vector.Y);
         }
 
         [CLSCompliant(false)]
-        public static void Uniform2(int location, ref Vector3 vector)
+        public static void Uniform3(int location, ref Vector3 vector)
         {
-            unsafe
-            {
-                fixed (float* vector_ptr = &vector.X)
-                {
-                    GL.Uniform3(location, 3, vector_ptr);
-                }
-            }
+            GL.Uniform3(location, vector.X, vector.Y, vector.Z);
         }
 
         [CLSCompliant(false)]
-        public static void Uniform2(int location, ref Vector4 vector)
+        public static void Uniform4(int location, ref Vector4 vector)
         {
-            unsafe
-            {
-                fixed (float* vector_ptr = &vector.X)
-                {
-                    GL.Uniform4(location, 4, vector_ptr);
-                }
-            }
+            GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
         public static void Uniform2(int location, Vector2 vector)
         {
-            unsafe
-            {
-                GL.Uniform2(location, 2, &vector.X);
-            }
+            GL.Uniform2(location, vector.X, vector.Y);
         }
 
         public static void Uniform3(int location, Vector3 vector)
         {
-            unsafe
-            {
-                GL.Uniform3(location, 3, &vector.X);
-            }
+            GL.Uniform3(location, vector.X, vector.Y, vector.Z);
         }
 
         public static void Uniform4(int location, Vector4 vector)
         {
-            unsafe
-            {
-                GL.Uniform4(location, 4, &vector.X);
-            }
+            GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
-
+        
         public static void Uniform4(int location, Color4 color)
         {
-            unsafe { GL.Uniform4(location, 4, &color.R); }
+            GL.Uniform4(location, color.R, color.G, color.B, color.A);
         }
 
         #endregion
