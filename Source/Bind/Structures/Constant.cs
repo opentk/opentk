@@ -51,16 +51,6 @@ namespace Bind.Structures
         {
             get 
             {
-                //if (String.IsNullOrEmpty(Reference))
-                //    return _value;
-                //else
-                //{
-                //    Enum @ref;
-                //    if (Enum.GLEnums.TryGetValue(Reference, out @ref) || Enum.AuxEnums.TryGetValue(Reference, out @ref))
-                //        if (@ref.ConstantCollection.ContainsKey(_value))
-                //            return (@ref.ConstantCollection[_value] as Constant).Value;
-                //}
-
                 return _value;
             }
             set

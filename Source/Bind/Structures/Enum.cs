@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Globalization;
 
 namespace Bind.Structures
 {
@@ -77,6 +78,20 @@ namespace Bind.Structures
 
         #endregion
 
+        #region Public Members
+
+        // Returns true if the enum contains a collection of flags, i.e. 1, 2, 4, 8, ...
+        public bool IsFlagCollection
+        {
+            get
+            {
+                // It seems that all flag collections contain "Mask" in their names.
+                // This looks like a heuristic, but it holds 100% in practice
+                // (checked all enums to make sure).
+                return Name.Contains("Mask");
+            }
+        }
+
         #region public string Name
 
         public string Name
@@ -87,13 +102,18 @@ namespace Bind.Structures
 
         #endregion
 
+        #region ConstantCollection
+
         Dictionary<string, Constant> _constant_collection = new Dictionary<string, Constant>();
 
         public IDictionary<string, Constant> ConstantCollection
         {
             get { return _constant_collection; }
-            //set { _constant_collection = value; }
         }
+
+        #endregion
+
+        #region TranslateName
 
         public static string TranslateName(string name)
         {
@@ -137,6 +157,10 @@ namespace Bind.Structures
             return translator.ToString();
         }
 
+        #endregion
+
+        #region ToString
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -149,6 +173,8 @@ namespace Bind.Structures
                 return ret;
             });
 
+            if (IsFlagCollection)
+                sb.AppendLine("[Flags]");
             sb.AppendLine("public enum " + Name);
             sb.AppendLine("{");
 
@@ -163,6 +189,10 @@ namespace Bind.Structures
 
             return sb.ToString();
         }
+
+        #endregion
+
+        #endregion
     }
 
     #endregion

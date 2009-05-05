@@ -25,6 +25,8 @@
 //
 #endregion
 
+using System;
+
 namespace OpenTK.Graphics
 {
     #pragma warning disable 1591
@@ -43,6 +45,7 @@ namespace OpenTK.Graphics
         UnsignedInt = ((int)0X1405),
     }
 
+    [Flags]
     public enum AttribMask
     {
         CurrentBit = ((int)0X00000001),
@@ -69,6 +72,7 @@ namespace OpenTK.Graphics
         AllAttribBits = unchecked((int)0Xffffffff),
     }
 
+    [Flags]
     public enum ClearBufferMask
     {
         DepthBufferBit = ((int)0X00000100),
@@ -77,6 +81,7 @@ namespace OpenTK.Graphics
         ColorBufferBit = ((int)0X00004000),
     }
 
+    [Flags]
     public enum ClientAttribMask
     {
         ClientPixelStoreBit = ((int)0X00000001),
@@ -441,6 +446,7 @@ namespace OpenTK.Graphics
         LineResetToken = ((int)0X0707),
     }
 
+    [Flags]
     public enum FfdMaskSgix
     {
         TextureDeformationBitSgix = ((int)0X00000001),
@@ -2804,6 +2810,7 @@ namespace OpenTK.Graphics
         Ycrcb444Sgix = ((int)0X81bc),
     }
 
+    [Flags]
     public enum SgisTextureColorMask
     {
         TextureColorWritemaskSgis = ((int)0X81ef),
@@ -9867,6 +9874,7 @@ namespace OpenTK.Graphics
         UnsignedNormalized = ((int)0X8c17),
     }
 
+    [Flags]
     public enum BufferAccessMask
     {
         MapReadBit = ((int)0X0001),
