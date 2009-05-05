@@ -5421,6 +5421,19 @@ BlendEquationMode enum:
 	MAX							= 0x8008
 	FUNC_SUBTRACT				= 0x800A # Equivalent to EXT_blend_subtract
 	FUNC_REVERSE_SUBTRACT		= 0x800B
+
+# Promoted from EXT_blend_color (pg. 178 of GL3.1 spec).
+BlendingFactorDest enum:
+	CONSTANT_COLOR										= 0x8001
+	ONE_MINUS_CONSTANT_COLOR			= 0x8002
+	CONSTANT_ALPHA										= 0x8003
+	ONE_MINUS_CONSTANT_ALPHA			= 0x8004
+
+BlendingFactorSrc enum:
+	CONSTANT_COLOR										= 0x8001
+	ONE_MINUS_CONSTANT_COLOR			= 0x8002
+	CONSTANT_ALPHA										= 0x8003
+	ONE_MINUS_CONSTANT_ALPHA			= 0x8004
 	
 	
 # Version 1.3
@@ -5871,6 +5884,9 @@ GetPName enum:
 	MAX_VERTEX_ATTRIBS				= 0x8869    # ARB_vertex_shader
 	CURRENT_PROGRAM					= 0x8B8D    # ARB_shader_objects (added for 2.0)
 	
+HintTarget enum:
+	FRAGMENT_SHADER_DERIVATIVE_HINT	= 0x8B8B    # ARB_fragment_shader
+
 ActiveUniformType enum:
 	use DataType FLOAT
 	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
@@ -6494,7 +6510,7 @@ GetPName enum:
 	MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS				= 0x8C8B
 
 ProgramParameter enum:
-    	TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH	= 0x8C76
+	TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH	= 0x8C76
 	TRANSFORM_FEEDBACK_BUFFER_MODE			= 0x8C7F
 	TRANSFORM_FEEDBACK_VARYINGS					= 0x8C83
 
