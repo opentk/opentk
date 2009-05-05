@@ -466,6 +466,10 @@ namespace Bind.GL2
             using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, enumsFile)))
             {
                 WriteLicense(sw);
+                
+                sw.WriteLine("using System;");
+                sw.WriteLine();
+
                 if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
                 {
                     sw.WriteLine("namespace {0}", Settings.OutputNamespace);
