@@ -136,9 +136,13 @@ namespace OpenTK.Graphics
         OneMinusDstAlpha = ((int)0X0305),
         DstColor = ((int)0X0306),
         OneMinusDstColor = ((int)0X0307),
+        ConstantColor = ((int)0X8001),
         ConstantColorExt = ((int)0X8001),
+        OneMinusConstantColor = ((int)0X8002),
         OneMinusConstantColorExt = ((int)0X8002),
+        ConstantAlpha = ((int)0X8003),
         ConstantAlphaExt = ((int)0X8003),
+        OneMinusConstantAlpha = ((int)0X8004),
         OneMinusConstantAlphaExt = ((int)0X8004),
         One = ((int)1),
     }
@@ -153,9 +157,13 @@ namespace OpenTK.Graphics
         DstColor = ((int)0X0306),
         OneMinusDstColor = ((int)0X0307),
         SrcAlphaSaturate = ((int)0X0308),
+        ConstantColor = ((int)0X8001),
         ConstantColorExt = ((int)0X8001),
+        OneMinusConstantColor = ((int)0X8002),
         OneMinusConstantColorExt = ((int)0X8002),
+        ConstantAlpha = ((int)0X8003),
         ConstantAlphaExt = ((int)0X8003),
+        OneMinusConstantAlpha = ((int)0X8004),
         OneMinusConstantAlphaExt = ((int)0X8004),
         One = ((int)1),
     }
@@ -1177,6 +1185,7 @@ namespace OpenTK.Graphics
         ConvolutionHintSgix = ((int)0X8316),
         VertexPreclipHintSgix = ((int)0X83ef),
         TextureCompressionHint = ((int)0X84ef),
+        FragmentShaderDerivativeHint = ((int)0X8b8b),
     }
 
     public enum HistogramTargetExt
