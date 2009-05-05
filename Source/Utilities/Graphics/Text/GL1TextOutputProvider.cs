@@ -198,6 +198,10 @@ namespace OpenTK.Graphics.Text
             GL.PushMatrix();
             GL.LoadIdentity();
 
+            GL.MatrixMode(MatrixMode.Texture);
+            GL.PushMatrix();
+            GL.LoadIdentity();
+
             GL.MatrixMode((MatrixMode)current_matrix);
         }
 
@@ -214,6 +218,9 @@ namespace OpenTK.Graphics.Text
 
             int current_matrix;
             GL.GetInteger(GetPName.MatrixMode, out current_matrix);
+
+            GL.MatrixMode(MatrixMode.Texture);
+            GL.PopMatrix();
 
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PopMatrix();
