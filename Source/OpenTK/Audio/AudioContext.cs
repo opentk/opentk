@@ -259,7 +259,7 @@ namespace OpenTK.Audio
                 device_handle = Alc.OpenDevice(available_devices[0]);
             if (device_handle == IntPtr.Zero)
                 throw new AudioDeviceException(String.Format("Audio device '{0}' does not exist or is tied up by another application.",
-                                                             String.IsNullOrEmpty(device) ? "default" : device));
+                    String.IsNullOrEmpty(device) ? "default" : device));
 
             CheckForAlcErrors();
 
@@ -278,7 +278,7 @@ namespace OpenTK.Audio
                 attributes.Add(refresh);
             }
             
-            attributes.Add((int)AlcContextAttributes.Frequency);
+            attributes.Add((int)AlcContextAttributes.Sync);
             attributes.Add(sync ? 1 : 0);
 
             if (enableEfx && Alc.IsExtensionPresent(device_handle, "ALC_EXT_EFX"))
