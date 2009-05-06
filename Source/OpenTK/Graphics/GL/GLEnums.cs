@@ -372,8 +372,11 @@ namespace OpenTK.Graphics
         SampleCoverage = ((int)0X80a0),
         SampleMaskSgis = ((int)0X80a0),
         TextureColorTableSgi = ((int)0X80bc),
+        ColorTable = ((int)0X80D0),
         ColorTableSgi = ((int)0X80D0),
+        PostConvolutionColorTable = ((int)0X80D1),
         PostConvolutionColorTableSgi = ((int)0X80D1),
+        PostColorMatrixColorTable = ((int)0X80D2),
         PostColorMatrixColorTableSgi = ((int)0X80D2),
         Texture4DSgis = ((int)0X8134),
         PixelTexGenSgix = ((int)0X8139),
@@ -9491,6 +9494,49 @@ namespace OpenTK.Graphics
         Max = ((int)0X8008),
         FuncSubtract = ((int)0X800a),
         FuncReverseSubtract = ((int)0X800b),
+    }
+
+    public enum ColorTableTarget
+    {
+        ColorTable = ((int)0X80D0),
+        PostConvolutionColorTable = ((int)0X80D1),
+        PostColorMatrixColorTable = ((int)0X80D2),
+        ProxyColorTable = ((int)0X80D3),
+        ProxyPostConvolutionColorTable = ((int)0X80D4),
+        ProxyPostColorMatrixColorTable = ((int)0X80D5),
+    }
+
+    public enum ColorTableParameterPName
+    {
+        ColorTableScale = ((int)0X80D6),
+        ColorTableBias = ((int)0X80D7),
+    }
+
+    public enum GetColorTableParameterPName
+    {
+        ColorTableScale = ((int)0X80D6),
+        ColorTableBias = ((int)0X80D7),
+        ColorTableFormat = ((int)0X80D8),
+        ColorTableWidth = ((int)0X80D9),
+        ColorTableRedSize = ((int)0X80Da),
+        ColorTableGreenSize = ((int)0X80Db),
+        ColorTableBlueSize = ((int)0X80Dc),
+        ColorTableAlphaSize = ((int)0X80Dd),
+        ColorTableLuminanceSize = ((int)0X80De),
+        ColorTableIntensitySize = ((int)0X80Df),
+    }
+
+    public enum ConvolutionParameter
+    {
+        ConvolutionBorderMode = ((int)0X8013),
+        ConvolutionFilterScale = ((int)0X8014),
+        ConvolutionFilterBias = ((int)0X8015),
+    }
+
+    public enum ConvolutionTarget
+    {
+        Convolution1D = ((int)0X8010),
+        Convolution2D = ((int)0X8011),
     }
 
     public enum TextureEnvModeCombine
