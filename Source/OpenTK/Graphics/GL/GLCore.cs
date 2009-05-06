@@ -1054,64 +1054,64 @@ namespace OpenTK.Graphics
             internal extern static void DrawRangeElements(OpenTK.Graphics.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorTable", ExactSpelling = true)]
-            internal extern static void ColorTable(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr table);
+            internal extern static void ColorTable(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr table);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorTableParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void ColorTableParameterfv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Single* @params);
+            internal extern static unsafe void ColorTableParameterfv(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.ColorTableParameterPName pname, Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorTableParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void ColorTableParameteriv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Int32* @params);
+            internal extern static unsafe void ColorTableParameteriv(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.ColorTableParameterPName pname, Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyColorTable", ExactSpelling = true)]
-            internal extern static void CopyColorTable(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
+            internal extern static void CopyColorTable(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetColorTable", ExactSpelling = true)]
-            internal extern static void GetColorTable(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr table);
+            internal extern static void GetColorTable(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr table);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetColorTableParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void GetColorTableParameterfv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, [Out] Single* @params);
+            internal extern static unsafe void GetColorTableParameterfv(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.GetColorTableParameterPName pname, [Out] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetColorTableParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void GetColorTableParameteriv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, [Out] Int32* @params);
+            internal extern static unsafe void GetColorTableParameteriv(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.GetColorTableParameterPName pname, [Out] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glColorSubTable", ExactSpelling = true)]
-            internal extern static void ColorSubTable(OpenTK.Graphics.Version12 target, Int32 start, Int32 count, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr data);
+            internal extern static void ColorSubTable(OpenTK.Graphics.ColorTableTarget target, Int32 start, Int32 count, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyColorSubTable", ExactSpelling = true)]
-            internal extern static void CopyColorSubTable(OpenTK.Graphics.Version12 target, Int32 start, Int32 x, Int32 y, Int32 width);
+            internal extern static void CopyColorSubTable(OpenTK.Graphics.ColorTableTarget target, Int32 start, Int32 x, Int32 y, Int32 width);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glConvolutionFilter1D", ExactSpelling = true)]
-            internal extern static void ConvolutionFilter1D(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr image);
+            internal extern static void ConvolutionFilter1D(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glConvolutionFilter2D", ExactSpelling = true)]
-            internal extern static void ConvolutionFilter2D(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr image);
+            internal extern static void ConvolutionFilter2D(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glConvolutionParameterf", ExactSpelling = true)]
-            internal extern static void ConvolutionParameterf(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Single @params);
+            internal extern static void ConvolutionParameterf(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.ConvolutionParameter pname, Single @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glConvolutionParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void ConvolutionParameterfv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Single* @params);
+            internal extern static unsafe void ConvolutionParameterfv(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.ConvolutionParameter pname, Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glConvolutionParameteri", ExactSpelling = true)]
-            internal extern static void ConvolutionParameteri(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Int32 @params);
+            internal extern static void ConvolutionParameteri(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.ConvolutionParameter pname, Int32 @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glConvolutionParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void ConvolutionParameteriv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Int32* @params);
+            internal extern static unsafe void ConvolutionParameteriv(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.ConvolutionParameter pname, Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyConvolutionFilter1D", ExactSpelling = true)]
-            internal extern static void CopyConvolutionFilter1D(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
+            internal extern static void CopyConvolutionFilter1D(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glCopyConvolutionFilter2D", ExactSpelling = true)]
-            internal extern static void CopyConvolutionFilter2D(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal extern static void CopyConvolutionFilter2D(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetConvolutionFilter", ExactSpelling = true)]
-            internal extern static void GetConvolutionFilter(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr image);
+            internal extern static void GetConvolutionFilter(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr image);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetConvolutionParameterfv", ExactSpelling = true)]
-            internal extern static unsafe void GetConvolutionParameterfv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, [Out] Single* @params);
+            internal extern static unsafe void GetConvolutionParameterfv(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.Version12 pname, [Out] Single* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetConvolutionParameteriv", ExactSpelling = true)]
-            internal extern static unsafe void GetConvolutionParameteriv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, [Out] Int32* @params);
+            internal extern static unsafe void GetConvolutionParameteriv(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.Version12 pname, [Out] Int32* @params);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glGetSeparableFilter", ExactSpelling = true)]
             internal extern static void GetSeparableFilter(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr row, [Out] IntPtr column, [Out] IntPtr span);

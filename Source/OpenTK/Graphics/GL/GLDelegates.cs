@@ -1055,64 +1055,64 @@ namespace OpenTK.Graphics
             internal delegate void DrawRangeElements(OpenTK.Graphics.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices);
             internal static DrawRangeElements glDrawRangeElements;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ColorTable(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr table);
+            internal delegate void ColorTable(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr table);
             internal static ColorTable glColorTable;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ColorTableParameterfv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Single* @params);
+            internal unsafe delegate void ColorTableParameterfv(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.ColorTableParameterPName pname, Single* @params);
             internal unsafe static ColorTableParameterfv glColorTableParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ColorTableParameteriv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Int32* @params);
+            internal unsafe delegate void ColorTableParameteriv(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.ColorTableParameterPName pname, Int32* @params);
             internal unsafe static ColorTableParameteriv glColorTableParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyColorTable(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
+            internal delegate void CopyColorTable(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
             internal static CopyColorTable glCopyColorTable;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetColorTable(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr table);
+            internal delegate void GetColorTable(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr table);
             internal static GetColorTable glGetColorTable;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetColorTableParameterfv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, [Out] Single* @params);
+            internal unsafe delegate void GetColorTableParameterfv(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.GetColorTableParameterPName pname, [Out] Single* @params);
             internal unsafe static GetColorTableParameterfv glGetColorTableParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetColorTableParameteriv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, [Out] Int32* @params);
+            internal unsafe delegate void GetColorTableParameteriv(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.GetColorTableParameterPName pname, [Out] Int32* @params);
             internal unsafe static GetColorTableParameteriv glGetColorTableParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ColorSubTable(OpenTK.Graphics.Version12 target, Int32 start, Int32 count, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr data);
+            internal delegate void ColorSubTable(OpenTK.Graphics.ColorTableTarget target, Int32 start, Int32 count, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr data);
             internal static ColorSubTable glColorSubTable;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyColorSubTable(OpenTK.Graphics.Version12 target, Int32 start, Int32 x, Int32 y, Int32 width);
+            internal delegate void CopyColorSubTable(OpenTK.Graphics.ColorTableTarget target, Int32 start, Int32 x, Int32 y, Int32 width);
             internal static CopyColorSubTable glCopyColorSubTable;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ConvolutionFilter1D(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr image);
+            internal delegate void ConvolutionFilter1D(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr image);
             internal static ConvolutionFilter1D glConvolutionFilter1D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ConvolutionFilter2D(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr image);
+            internal delegate void ConvolutionFilter2D(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, Int32 height, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr image);
             internal static ConvolutionFilter2D glConvolutionFilter2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ConvolutionParameterf(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Single @params);
+            internal delegate void ConvolutionParameterf(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.ConvolutionParameter pname, Single @params);
             internal static ConvolutionParameterf glConvolutionParameterf;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ConvolutionParameterfv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Single* @params);
+            internal unsafe delegate void ConvolutionParameterfv(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.ConvolutionParameter pname, Single* @params);
             internal unsafe static ConvolutionParameterfv glConvolutionParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ConvolutionParameteri(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Int32 @params);
+            internal delegate void ConvolutionParameteri(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.ConvolutionParameter pname, Int32 @params);
             internal static ConvolutionParameteri glConvolutionParameteri;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void ConvolutionParameteriv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, Int32* @params);
+            internal unsafe delegate void ConvolutionParameteriv(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.ConvolutionParameter pname, Int32* @params);
             internal unsafe static ConvolutionParameteriv glConvolutionParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyConvolutionFilter1D(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
+            internal delegate void CopyConvolutionFilter1D(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width);
             internal static CopyConvolutionFilter1D glCopyConvolutionFilter1D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyConvolutionFilter2D(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
+            internal delegate void CopyConvolutionFilter2D(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 x, Int32 y, Int32 width, Int32 height);
             internal static CopyConvolutionFilter2D glCopyConvolutionFilter2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetConvolutionFilter(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr image);
+            internal delegate void GetConvolutionFilter(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr image);
             internal static GetConvolutionFilter glGetConvolutionFilter;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetConvolutionParameterfv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, [Out] Single* @params);
+            internal unsafe delegate void GetConvolutionParameterfv(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.Version12 pname, [Out] Single* @params);
             internal unsafe static GetConvolutionParameterfv glGetConvolutionParameterfv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetConvolutionParameteriv(OpenTK.Graphics.Version12 target, OpenTK.Graphics.Version12 pname, [Out] Int32* @params);
+            internal unsafe delegate void GetConvolutionParameteriv(OpenTK.Graphics.ConvolutionTarget target, OpenTK.Graphics.Version12 pname, [Out] Int32* @params);
             internal unsafe static GetConvolutionParameteriv glGetConvolutionParameteriv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void GetSeparableFilter(OpenTK.Graphics.Version12 target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr row, [Out] IntPtr column, [Out] IntPtr span);
@@ -3011,25 +3011,25 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetImageTransformParameterfvHP(OpenTK.Graphics.HpImageTransform target, OpenTK.Graphics.HpImageTransform pname, [Out] Single* @params);
             internal unsafe static GetImageTransformParameterfvHP glGetImageTransformParameterfvHP;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ColorSubTableEXT(OpenTK.Graphics.ExtColorSubtable target, Int32 start, Int32 count, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr data);
+            internal delegate void ColorSubTableEXT(OpenTK.Graphics.ColorTableTarget target, Int32 start, Int32 count, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr data);
             internal static ColorSubTableEXT glColorSubTableEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void CopyColorSubTableEXT(OpenTK.Graphics.ExtColorSubtable target, Int32 start, Int32 x, Int32 y, Int32 width);
+            internal delegate void CopyColorSubTableEXT(OpenTK.Graphics.ColorTableTarget target, Int32 start, Int32 x, Int32 y, Int32 width);
             internal static CopyColorSubTableEXT glCopyColorSubTableEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void HintPGI(OpenTK.Graphics.PgiMiscHints target, Int32 mode);
             internal static HintPGI glHintPGI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void ColorTableEXT(OpenTK.Graphics.ExtPalettedTexture target, OpenTK.Graphics.PixelInternalFormat internalFormat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr table);
+            internal delegate void ColorTableEXT(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.PixelInternalFormat internalFormat, Int32 width, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr table);
             internal static ColorTableEXT glColorTableEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void GetColorTableEXT(OpenTK.Graphics.ExtPalettedTexture target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr data);
+            internal delegate void GetColorTableEXT(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr data);
             internal static GetColorTableEXT glGetColorTableEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetColorTableParameterivEXT(OpenTK.Graphics.ExtPalettedTexture target, OpenTK.Graphics.ExtPalettedTexture pname, [Out] Int32* @params);
+            internal unsafe delegate void GetColorTableParameterivEXT(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.GetColorTableParameterPName pname, [Out] Int32* @params);
             internal unsafe static GetColorTableParameterivEXT glGetColorTableParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetColorTableParameterfvEXT(OpenTK.Graphics.ExtPalettedTexture target, OpenTK.Graphics.ExtPalettedTexture pname, [Out] Single* @params);
+            internal unsafe delegate void GetColorTableParameterfvEXT(OpenTK.Graphics.ColorTableTarget target, OpenTK.Graphics.GetColorTableParameterPName pname, [Out] Single* @params);
             internal unsafe static GetColorTableParameterfvEXT glGetColorTableParameterfvEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetListParameterfvSGIX(UInt32 list, OpenTK.Graphics.ListParameterName pname, [Out] Single* @params);
