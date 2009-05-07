@@ -16,6 +16,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using OpenTK.Platform.Windows;
 using OpenTK.Graphics;
+using System.Drawing;
 
 //using OpenTK.Graphics.OpenGL;
 
@@ -601,21 +602,24 @@ namespace OpenTK.Platform.X11
 
         #region PointToClient
 
-        public void PointToClient(ref System.Drawing.Point p)
+        public Point PointToClient(Point point)
         {
-            /*
-            if (!Functions.ScreenToClient(this.Handle, p))
-                throw new InvalidOperationException(String.Format(
-                    "Could not convert point {0} from client to screen coordinates. Windows error: {1}",
-                    p.ToString(), Marshal.GetLastWin32Error()));
-            */
+            int ox, oy;
+            IntPtr child;
+
+            Functions.XTranslateCoordinates(window.Display, window.RootWindow, window.WindowHandle, point.X, point.Y, out ox, out oy, out child);
+
+            point.X = ox;
+            point.Y = oy;
+
+            return point;
         }
 
         #endregion
 
         #region PointToScreen
 
-        public void PointToScreen(ref System.Drawing.Point p)
+        public Point PointToScreen(Point p)
         {
             throw new NotImplementedException();
         }
@@ -792,41 +796,6 @@ namespace OpenTK.Platform.X11
         #endregion
         
         #endregion
-        
-        void SetWindowMinMax(short min_width, short min_height, short max_width, short max_height)
-        {
-            IntPtr dummy;
-        	XSizeHints hints = new XSizeHints();
-
-        	Functions.XGetWMNormalHints(window.Display, window.WindowHandle, ref hints, out dummy);
-            
-            if (min_width > 0 || min_height > 0)            
-            {
-        		hints.flags = (IntPtr)((int)hints.flags | (int)XSizeHintsFlags.PMinSize);
-        		hints.min_width = min_width;
-        		hints.min_height = min_height;
-            }
-            else
-                hints.flags = (IntPtr)((int)hints.flags & ~(int)XSizeHintsFlags.PMinSize);
-            
-            if (max_width > 0 || max_height > 0)            
-            {
-        		hints.flags = (IntPtr)((int)hints.flags | (int)XSizeHintsFlags.PMaxSize);
-        		hints.max_width = max_width;
-        		hints.max_height = max_height;
-            }
-            else
-                hints.flags = (IntPtr)((int)hints.flags & ~(int)XSizeHintsFlags.PMaxSize);
-
-
-        	if (hints.flags != IntPtr.Zero)
-            {
-        		// The Metacity team has decided that they won't care about this when clicking the maximize
-                // icon, will maximize the window to fill the screen/parent no matter what.
-        		// http://bugzilla.ximian.com/show_bug.cgi?id=80021
-        		Functions.XSetWMNormalHints(window.Display, window.WindowHandle, ref hints);
-        	}
-        }
 
         #region --- IResizable Members ---
 
@@ -972,6 +941,41 @@ namespace OpenTK.Platform.X11
         #endregion
 
         #region --- Private Methods ---
+
+        void SetWindowMinMax(short min_width, short min_height, short max_width, short max_height)
+        {
+            IntPtr dummy;
+            XSizeHints hints = new XSizeHints();
+
+            Functions.XGetWMNormalHints(window.Display, window.WindowHandle, ref hints, out dummy);
+
+            if (min_width > 0 || min_height > 0)
+            {
+                hints.flags = (IntPtr)((int)hints.flags | (int)XSizeHintsFlags.PMinSize);
+                hints.min_width = min_width;
+                hints.min_height = min_height;
+            }
+            else
+                hints.flags = (IntPtr)((int)hints.flags & ~(int)XSizeHintsFlags.PMinSize);
+
+            if (max_width > 0 || max_height > 0)
+            {
+                hints.flags = (IntPtr)((int)hints.flags | (int)XSizeHintsFlags.PMaxSize);
+                hints.max_width = max_width;
+                hints.max_height = max_height;
+            }
+            else
+                hints.flags = (IntPtr)((int)hints.flags & ~(int)XSizeHintsFlags.PMaxSize);
+
+
+            if (hints.flags != IntPtr.Zero)
+            {
+                // The Metacity team has decided that they won't care about this when clicking the maximize
+                // icon, will maximize the window to fill the screen/parent no matter what.
+                // http://bugzilla.ximian.com/show_bug.cgi?id=80021
+                Functions.XSetWMNormalHints(window.Display, window.WindowHandle, ref hints);
+            }
+        }
 
         bool IsWindowBorderResizable
         {

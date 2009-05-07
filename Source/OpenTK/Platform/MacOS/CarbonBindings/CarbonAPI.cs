@@ -883,13 +883,33 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal unsafe static extern OSStatus DMGetGDeviceByDisplayID(
             IntPtr displayID, out IntPtr displayDevice, Boolean failToMain);
 
+        [DllImport(carbon, EntryPoint = "HIViewConvertPoint")]
+        extern static OSStatus _HIViewConvertPoint(ref HIPoint point, IntPtr pView, IntPtr cView);
+
+        internal static HIPoint HIViewConvertPoint(IntPtr handle, HIPoint point)
+        {
+            Carbon.Rect window_bounds = new Carbon.Rect();
+            Carbon.API.GetWindowBounds(handle, WindowRegionCode.StructureRegion /*32*/, out window_bounds);
+
+            point.X -= window_bounds.X;
+            point.Y -= window_bounds.Y;
+
+            OSStatus error = _HIViewConvertPoint(ref point, IntPtr.Zero, handle);
+
+            if (error != OSStatus.NoError)
+            {
+                throw new MacOSException(error);
+            }
+
+           return point;
+        }
+
 
         const string gestaltlib = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
 
 
         [DllImport(gestaltlib)]
         internal static extern OSStatus Gestalt(GestaltSelector selector, out int response);
-
     }
 
     #endregion

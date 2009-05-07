@@ -596,13 +596,23 @@ namespace OpenTK.Platform.MacOS
             Application.ProcessEvents();
         }
 
-        public void PointToClient(ref System.Drawing.Point p)
+        public System.Drawing.Point PointToClient(System.Drawing.Point point)
         {
-            throw new Exception("The method or operation is not implemented.");
+            IntPtr handle = window.WindowRef;
+
+            HIPoint native_point = new HIPoint();
+            native_point.X = (float)point.X;
+            native_point.Y = (float)point.Y;
+            native_point = Carbon.API.HIViewConvertPoint(handle, native_point);
+            
+            point.X = (int)native_point.X;
+            point.Y = (int)native_point.Y;
+
+            return point;
         }
-        public void PointToScreen(ref System.Drawing.Point p)
+        public System.Drawing.Point PointToScreen(System.Drawing.Point point)
         {
-            throw new Exception("The method or operation is not implemented.");
+            throw new NotImplementedException();
         }
 
         public bool Exists

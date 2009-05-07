@@ -1347,24 +1347,27 @@ namespace OpenTK
         }
         */
         #endregion
-#if false       // TODO: 0.9.2 (Linux support missing)
+
         #region PointToClient
 
         /// <summary>
         /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
         /// </summary>
-        /// <param name="p">A System.Drawing.Point structure that specifies the screen coordinates to be converted</param>
+        /// <param name="point">A System.Drawing.Point structure that specifies the screen coordinates to be converted</param>
         /// <returns>The client-area coordinates of the point. The new coordinates are relative to the upper-left corner of the GameWindow's client area.</returns>
-        public System.Drawing.Point PointToClient(System.Drawing.Point p)
+        public System.Drawing.Point PointToClient(System.Drawing.Point point)
         {
-            glWindow.PointToClient(ref p);
-            return p;
+            point = glWindow.PointToClient(point);
+            point.X = Width - point.X;
+            point.Y = Height - point.Y;
+
+            return point;
         }
 
         #endregion
 
         #region PointToScreen
-
+#if false       // Todo: Linux / Mac OS X support missing.
         /// <summary>
         /// Converts the client-area coordinates of a specified point to screen coordinates.
         /// </summary>
@@ -1372,12 +1375,11 @@ namespace OpenTK
         /// <returns>The screen coordinates of the point, relative to the upper-left corner of the screen. Note, a screen-coordinate point that is above the window's client area has a negative y-coordinate. Similarly, a screen coordinate to the left of a client area has a negative x-coordinate.</returns>
         public System.Drawing.Point PointToScreen(System.Drawing.Point p)
         {
-            glWindow.PointToScreen(ref p);
-            return p;
+            return glWindow.PointToScreen(p);
         }
-
-        #endregion
 #endif
+        #endregion
+
         #region --- IDisposable Members ---
 
         /// <summary>
