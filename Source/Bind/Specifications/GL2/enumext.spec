@@ -5434,8 +5434,49 @@ BlendingFactorSrc enum:
 	ONE_MINUS_CONSTANT_COLOR			= 0x8002
 	CONSTANT_ALPHA										= 0x8003
 	ONE_MINUS_CONSTANT_ALPHA			= 0x8004
+
+# Promoted from SGI_color_table
+ColorTableTarget enum:
+	use SGI_color_table COLOR_TABLE
+	use SGI_color_table POST_CONVOLUTION_COLOR_TABLE
+	use SGI_color_table POST_COLOR_MATRIX_COLOR_TABLE
+	use SGI_color_table PROXY_COLOR_TABLE
+	use SGI_color_table PROXY_POST_CONVOLUTION_COLOR_TABLE
+	use SGI_color_table PROXY_POST_COLOR_MATRIX_COLOR_TABLE
+
+ColorTableParameterPName enum:
+	use SGI_color_table COLOR_TABLE_SCALE
+	use SGI_color_table COLOR_TABLE_BIAS
+	
+GetColorTableParameterPName enum:
+	use SGI_color_table COLOR_TABLE_SCALE
+	use SGI_color_table COLOR_TABLE_BIAS
+	use SGI_color_table COLOR_TABLE_FORMAT
+	use SGI_color_table COLOR_TABLE_WIDTH
+	use SGI_color_table COLOR_TABLE_RED_SIZE
+	use SGI_color_table COLOR_TABLE_GREEN_SIZE
+	use SGI_color_table COLOR_TABLE_BLUE_SIZE
+	use SGI_color_table COLOR_TABLE_ALPHA_SIZE
+	use SGI_color_table COLOR_TABLE_LUMINANCE_SIZE
+	use SGI_color_table COLOR_TABLE_INTENSITY_SIZE
+	
+EnableCap enum:
+	use SGI_color_table COLOR_TABLE
+	use SGI_color_table POST_CONVOLUTION_COLOR_TABLE
+	use SGI_color_table POST_COLOR_MATRIX_COLOR_TABLE
+
+# Promoted from EXT_convolution
+ConvolutionParameter enum:
+	use EXT_convolution CONVOLUTION_BORDER_MODE
+	use EXT_convolution CONVOLUTION_FILTER_SCALE
+	use EXT_convolution CONVOLUTION_FILTER_BIAS
+
+ConvolutionTarget enum:
+	use EXT_convolution CONVOLUTION_1D
+	use EXT_convolution CONVOLUTION_2D
 	
 	
+
 # Version 1.3
 
 # Texture Parameter (http://www.opengl.org/sdk/docs/man/xhtml/glTexParameter.xml)
