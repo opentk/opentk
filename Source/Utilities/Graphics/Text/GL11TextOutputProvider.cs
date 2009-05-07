@@ -22,8 +22,6 @@ namespace OpenTK.Graphics.Text
                 this.quality = TextQuality.Medium;
             else
                 this.quality = quality;
-
-            cache = new GlyphCache<AlphaTexture2D>();
         }
 
         #endregion
@@ -47,7 +45,17 @@ namespace OpenTK.Graphics.Text
 
         protected override GlyphCache Cache
         {
-            get { return cache; }
+            get
+            {
+                if (cache == null)
+                {
+                    if (GL.GetString(StringName.Renderer).Contains("ProSavage/Twister"))
+                        cache = new GlyphCache<RgbaTexture2D>();
+                    else
+                        cache = new GlyphCache<AlphaTexture2D>();
+                }
+                return cache;
+            }
         }
 
         #endregion
