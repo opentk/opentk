@@ -437,19 +437,21 @@ namespace OpenTK.Platform.Windows
 
         #region PointToClient
 
-        public void PointToClient(ref System.Drawing.Point p)
+        public Point PointToClient(Point point)
         {
-            if (!Functions.ScreenToClient(this.Handle, ref p))
+            if (!Functions.ScreenToClient(this.Handle, ref point))
                 throw new InvalidOperationException(String.Format(
                     "Could not convert point {0} from client to screen coordinates. Windows error: {1}",
-                    p.ToString(), Marshal.GetLastWin32Error()));
+                    point.ToString(), Marshal.GetLastWin32Error()));
+
+            return point;
         }
 
         #endregion
 
         #region PointToScreen
 
-        public void PointToScreen(ref System.Drawing.Point p)
+        public Point PointToScreen(Point p)
         {
             throw new NotImplementedException();
         }
