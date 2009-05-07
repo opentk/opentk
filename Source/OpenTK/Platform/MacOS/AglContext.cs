@@ -179,9 +179,13 @@ namespace OpenTK.Platform.MacOS
                 return;
                 
             Rect rect = API.GetControlBounds(carbonWindow.WindowRef);
+            System.Windows.Forms.Form frm = (System.Windows.Forms.Form) ctrl.TopLevelControl;
 
-            rect.X = (short)ctrl.Left;
-            rect.Y = (short)ctrl.Top;
+            System.Drawing.Point loc =
+                frm.PointToClient(ctrl.PointToScreen(System.Drawing.Point.Empty));
+
+            rect.X = (short)loc.X;
+            rect.Y = (short)loc.Y;
             
             Debug.Print("Setting buffer_rect for control.");
             Debug.Print("MacOS Coordinate Rect:   {0}", rect);
@@ -219,7 +223,7 @@ namespace OpenTK.Platform.MacOS
             if (carbonWindow.IsControl)
             {
                 IntPtr controlOwner = API.GetControlOwner(carbonWindow.WindowRef);
-
+                
                 windowPort = API.GetWindowPort(controlOwner);
             }
             else
