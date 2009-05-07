@@ -12,6 +12,7 @@ using System.Text;
 
 using OpenTK.Input;
 using OpenTK.Graphics;
+using System.Drawing;
 
 namespace OpenTK.Platform
 {
@@ -20,8 +21,8 @@ namespace OpenTK.Platform
         void CreateWindow(int width, int height, GraphicsMode mode, int major, int minor, GraphicsContextFlags flags, out IGraphicsContext context);
         void DestroyWindow();
         void ProcessEvents();
-        void PointToClient(ref System.Drawing.Point p);
-        void PointToScreen(ref System.Drawing.Point p);
+        Point PointToClient(Point point);
+        Point PointToScreen(Point point);
 
         bool Exists { get; }
         IWindowInfo WindowInfo { get; }
