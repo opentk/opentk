@@ -89,7 +89,7 @@ namespace OpenTK.Platform
                 throw new InvalidOperationException(type.ToString() + " does not contain a static LoadDelegate method.");
             LoadDelegateFunction LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(
                 typeof(LoadDelegateFunction), load_delegate_method_info);
-                
+
             Debug.Write("Load extensions for " + type.ToString() + "... ");
 
             System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
@@ -214,36 +214,65 @@ namespace OpenTK.Platform
 
         #endregion
 
-        #region --- Creating an Graphics Context ---
-        #region --- CreateWindowInfo ---
-		
-		/// <summary>
-		/// Creates GraphicsContext and IWindowInfo objects for a WinForms control.
-		/// </summary>
+        #region --- Creating a Graphics Context ---
+
+        /// <summary>
+        /// Creates a Graphics context and for a window or control.
+        /// </summary>
+        /// <param name="mode"></param>
+        ///
+        /// <param name="major">Major version number of OpenGL context to create.</param>
+        /// <param name="minor">Minor version number of OpenGL context to create.</param>
+        /// <param name="flags"></param>
+        /// <param name="context"></param>
+        /// <param name="info"></param>
+        public static Graphics.GraphicsContext CreateGraphicsContext(
+            Graphics.GraphicsMode mode, IWindowInfo info,
+            int major, int minor, OpenTK.Graphics.GraphicsContextFlags flags)
+        {
+            Graphics.GraphicsContext context = new Graphics.GraphicsContext(mode, info, major, minor, flags);
+            context.MakeCurrent(info);
+
+            (context as OpenTK.Graphics.IGraphicsContextInternal).LoadAll();
+
+            return context;
+        }
+
+        /// <summary>
+        /// Creates GraphicsContext and IWindowInfo objects for a WinForms control.
+        /// </summary>
         /// <param name="cntrl"></param>
         /// <param name="context"></param>
         /// <param name="info"></param>
         /// <param name="mode"></param>
-		public static void CreateGraphicsContext(Graphics.GraphicsMode mode, Control cntrl, out Graphics.GraphicsContext context, out IWindowInfo info)
-		{
-			CreateGraphicsContext(mode, cntrl.Handle, out context, out info);	
-		}
-		/// <summary>
-		/// Creates GraphicsContext and IWindowInfo objects for a WinForms control.
-		/// </summary>
+		[Obsolete("Create the IWindowInfo object first by calling CreateWindowInfo, then use the CreateGraphicsContext overload which takes major, minor and flags parameters.")]
+        public static void CreateGraphicsContext(Graphics.GraphicsMode mode, Control cntrl,
+            out Graphics.GraphicsContext context, out IWindowInfo info)
+        {
+            CreateGraphicsContext(mode, cntrl.Handle, out context, out info);
+        }
+
+        /// <summary>
+        /// Creates GraphicsContext and IWindowInfo objects for a WinForms control.
+        /// </summary>
         /// <param name="cntrlHandle"></param>
         /// <param name="context"></param>
         /// <param name="info"></param>
         /// <param name="mode"></param>
-		public static void CreateGraphicsContext(Graphics.GraphicsMode mode, IntPtr cntrlHandle, out Graphics.GraphicsContext context, out IWindowInfo info)
-		{
-			info = CreateWindowInfo(mode, cntrlHandle);
-            
+		[Obsolete("Create the IWindowInfo object first by calling CreateWindowInfo, then use the CreateGraphicsContext overload which takes major, minor and flags parameters.")]
+		public static void CreateGraphicsContext(Graphics.GraphicsMode mode, IntPtr cntrlHandle,
+            out Graphics.GraphicsContext context, out IWindowInfo info)
+        {
+            info = CreateWindowInfo(mode, cntrlHandle);
+
             context = new Graphics.GraphicsContext(mode, info);
             context.MakeCurrent(info);
 
-            (context as OpenTK.Graphics.IGraphicsContextInternal).LoadAll();			
-		}
+            (context as OpenTK.Graphics.IGraphicsContextInternal).LoadAll();
+        }
+
+        #region --- CreateWindowInfo ---
+
         /// <summary>
         /// Creates an object which implements the IWindowInfo interface for the platform
         /// currently running on.  This will create a handle for the control, so it is not
@@ -296,12 +325,12 @@ namespace OpenTK.Platform
             info.visualid = mode.Index;
             int dummy;
             window.VisualInfo = (Platform.X11.XVisualInfo)Marshal.PtrToStructure(
-                Platform.X11.Functions.XGetVisualInfo(window.Display, Platform.X11.XVisualInfoMask.ID, 
+                Platform.X11.Functions.XGetVisualInfo(window.Display, Platform.X11.XVisualInfoMask.ID,
                                          ref info, out dummy), typeof(Platform.X11.XVisualInfo));
 
             // set the X11 colormap.
             SetStaticFieldValue(xplatui, "CustomVisual", window.VisualInfo.visual);
-            SetStaticFieldValue(xplatui, "CustomColormap", 
+            SetStaticFieldValue(xplatui, "CustomColormap",
                 Platform.X11.Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0));
 
             return window;
