@@ -383,6 +383,14 @@ namespace OpenTK.Platform.MacOS.Carbon
 
     #endregion
 
+    enum HICoordinateSpace 
+    {
+        _72DPIGlobal      = 1,
+        ScreenPixel      = 2,
+        Window           = 3,
+        View             = 4
+};
+
     #region --- Carbon API Methods ---
 
     public partial class API
@@ -883,27 +891,52 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal unsafe static extern OSStatus DMGetGDeviceByDisplayID(
             IntPtr displayID, out IntPtr displayDevice, Boolean failToMain);
 
-        [DllImport(carbon, EntryPoint = "HIViewConvertPoint")]
-        extern static OSStatus _HIViewConvertPoint(ref HIPoint point, IntPtr pView, IntPtr cView);
+        #region Nonworking HIPointConvert routines
 
-        internal static HIPoint HIViewConvertPoint(IntPtr handle, HIPoint point)
-        {
-            Carbon.Rect window_bounds = new Carbon.Rect();
-            Carbon.API.GetWindowBounds(handle, WindowRegionCode.StructureRegion /*32*/, out window_bounds);
+        // These seem to crash when called, and I haven't figured out why.
+        // Currently a workaround is used to convert from screen to client coordinates.
 
-            point.X -= window_bounds.X;
-            point.Y -= window_bounds.Y;
+        //[DllImport(carbon, EntryPoint="HIPointConvert")]
+        //extern static OSStatus _HIPointConvert(ref HIPoint ioPoint,
+        //    HICoordinateSpace inSourceSpace, IntPtr inSourceObject,
+        //    HICoordinateSpace inDestinationSpace, IntPtr inDestinationObject);
 
-            OSStatus error = _HIViewConvertPoint(ref point, IntPtr.Zero, handle);
+        //internal static HIPoint HIPointConvert(HIPoint inPoint,
+        //    HICoordinateSpace inSourceSpace, IntPtr inSourceObject,
+        //    HICoordinateSpace inDestinationSpace, IntPtr inDestinationObject)
+        //{
+        //    OSStatus error = _HIPointConvert(ref inPoint, inSourceSpace, inSourceObject, inDestinationSpace, inDestinationObject);
 
-            if (error != OSStatus.NoError)
-            {
-                throw new MacOSException(error);
-            }
+        //    if (error != OSStatus.NoError)
+        //    {
+        //        throw new MacOSException(error);
+        //    }
 
-           return point;
-        }
+        //    return inPoint;
+        //}
 
+        //[DllImport(carbon, EntryPoint = "HIViewConvertPoint")]
+        //extern static OSStatus _HIViewConvertPoint(ref HIPoint inPoint, IntPtr inSourceView, IntPtr inDestView);
+
+        //internal static HIPoint HIViewConvertPoint( HIPoint point, IntPtr sourceHandle, IntPtr destHandle)
+        //{
+        //    //Carbon.Rect window_bounds = new Carbon.Rect();
+        //    //Carbon.API.GetWindowBounds(handle, WindowRegionCode.StructureRegion /*32*/, out window_bounds);
+
+        //    //point.X -= window_bounds.X;
+        //    //point.Y -= window_bounds.Y;
+
+        //    OSStatus error = _HIViewConvertPoint(ref point, sourceHandle, destHandle);
+
+        //    if (error != OSStatus.NoError)
+        //    {
+        //        throw new MacOSException(error);
+        //    }
+
+        //   return point;
+        //}
+
+        #endregion
 
         const string gestaltlib = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
 
