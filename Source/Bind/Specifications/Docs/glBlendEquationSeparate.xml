@@ -193,128 +193,100 @@
                         </entry>
                         <entry align="left">
                         <informalequation><mml:math>
-                            <!-- eqn: Rr  =      min (1,  R sub s s sub R  +  R sub d d sub R ):-->
+                            <!-- eqn: Rr  =      R sub s s sub R  +  R sub d d sub R :-->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Rr</mml:mi>
                                 <mml:mo>=</mml:mo>
                                 <mml:mrow>
-                                    <mml:mi mathvariant="italic">min</mml:mi>
-                                    <mml:mo>&af;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mn>1</mml:mn>
-                                        <mml:mrow>
-                                            <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                                            <mml:mi mathvariant="italic">s</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                            <mml:mi mathvariant="italic">R</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>+</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                                            <mml:mi mathvariant="italic">d</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                            <mml:mi mathvariant="italic">R</mml:mi>
-                                            </mml:msub>
-                                        </mml:mrow>
-                                    </mml:mfenced>
+									<mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+									<mml:mi mathvariant="italic">s</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+									<mml:mi mathvariant="italic">R</mml:mi>
+									</mml:msub>
+									<mml:mo>+</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+									<mml:mi mathvariant="italic">d</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+									<mml:mi mathvariant="italic">R</mml:mi>
+									</mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
                         </mml:math></informalequation>
                         <informalequation><mml:math>
-                            <!-- eqn: Gr  =    min (1,  G sub s s sub G  +  G sub d d sub G ):-->
+                            <!-- eqn: Gr  =    G sub s s sub G  +  G sub d d sub G :-->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Gr</mml:mi>
                                 <mml:mo>=</mml:mo>
                                 <mml:mrow>
-                                    <mml:mi mathvariant="italic">min</mml:mi>
-                                    <mml:mo>&af;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mn>1</mml:mn>
-                                        <mml:mrow>
-                                            <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                                            <mml:mi mathvariant="italic">s</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                            <mml:mi mathvariant="italic">G</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>+</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                                            <mml:mi mathvariant="italic">d</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                            <mml:mi mathvariant="italic">G</mml:mi>
-                                            </mml:msub>
-                                        </mml:mrow>
-                                    </mml:mfenced>
+									<mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+									<mml:mi mathvariant="italic">s</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+									<mml:mi mathvariant="italic">G</mml:mi>
+									</mml:msub>
+									<mml:mo>+</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+									<mml:mi mathvariant="italic">d</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+									<mml:mi mathvariant="italic">G</mml:mi>
+									</mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
                         </mml:math></informalequation>
                         <informalequation><mml:math>
-                            <!-- eqn: Br  =    min (1,  B sub s s sub B  +  B sub d d sub B ):-->
+                            <!-- eqn: Br  =    B sub s s sub B  +  B sub d d sub B :-->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Br</mml:mi>
                                 <mml:mo>=</mml:mo>
                                 <mml:mrow>
-                                    <mml:mi mathvariant="italic">min</mml:mi>
-                                    <mml:mo>&af;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mn>1</mml:mn>
-                                        <mml:mrow>
-                                            <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                                            <mml:mi mathvariant="italic">s</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                            <mml:mi mathvariant="italic">B</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>+</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                                            <mml:mi mathvariant="italic">d</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                            <mml:mi mathvariant="italic">B</mml:mi>
-                                            </mml:msub>
-                                        </mml:mrow>
-                                    </mml:mfenced>
+									<mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+									<mml:mi mathvariant="italic">s</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+									<mml:mi mathvariant="italic">B</mml:mi>
+									</mml:msub>
+									<mml:mo>+</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+									<mml:mi mathvariant="italic">d</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+									<mml:mi mathvariant="italic">B</mml:mi>
+									</mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
                         </mml:math></informalequation>
                         </entry>
                         <entry align="left">
                         <informalequation><mml:math>
-                            <!-- eqn: Ar  =    min (1,  A sub s s sub A  +  A sub d d sub A ):-->
+                            <!-- eqn: Ar  =    A sub s s sub A  +  A sub d d sub A :-->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Ar</mml:mi>
                                 <mml:mo>=</mml:mo>
                                 <mml:mrow>
-                                    <mml:mi mathvariant="italic">min</mml:mi>
-                                    <mml:mo>&af;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mn>1</mml:mn>
-                                        <mml:mrow>
-                                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                            <mml:mi mathvariant="italic">s</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                            <mml:mi mathvariant="italic">A</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>+</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                            <mml:mi mathvariant="italic">d</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                            <mml:mi mathvariant="italic">A</mml:mi>
-                                            </mml:msub>
-                                        </mml:mrow>
-                                    </mml:mfenced>
+									<mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+									<mml:mi mathvariant="italic">s</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+									<mml:mi mathvariant="italic">A</mml:mi>
+									</mml:msub>
+									<mml:mo>+</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+									<mml:mi mathvariant="italic">d</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+									<mml:mi mathvariant="italic">A</mml:mi>
+									</mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
                         </mml:math></informalequation>
@@ -326,128 +298,100 @@
                         </entry>
                         <entry align="left">
                         <informalequation><mml:math>
-                            <!-- eqn: Rr  =      max (0 ,  R sub s s sub R  -  R sub d d sub R ):-->
+                            <!-- eqn: Rr  =      R sub s s sub R  -  R sub d d sub R :-->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Rr</mml:mi>
                                 <mml:mo>=</mml:mo>
                                 <mml:mrow>
-                                    <mml:mi mathvariant="italic">max</mml:mi>
-                                    <mml:mo>&af;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mn>0</mml:mn>
-                                        <mml:mrow>
-                                            <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                                            <mml:mi mathvariant="italic">s</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                            <mml:mi mathvariant="italic">R</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>-</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                                            <mml:mi mathvariant="italic">d</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                            <mml:mi mathvariant="italic">R</mml:mi>
-                                            </mml:msub>
-                                        </mml:mrow>
-                                    </mml:mfenced>
+									<mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+									<mml:mi mathvariant="italic">s</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+									<mml:mi mathvariant="italic">R</mml:mi>
+									</mml:msub>
+									<mml:mo>-</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+									<mml:mi mathvariant="italic">d</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+									<mml:mi mathvariant="italic">R</mml:mi>
+									</mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
                         </mml:math></informalequation>
                         <informalequation><mml:math>
-                            <!-- eqn: Gr  =    max (0 ,  G sub s s sub G  -  G sub d d sub G ):-->
+                            <!-- eqn: Gr  =    G sub s s sub G  -  G sub d d sub G :-->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Gr</mml:mi>
                                 <mml:mo>=</mml:mo>
                                 <mml:mrow>
-                                    <mml:mi mathvariant="italic">max</mml:mi>
-                                    <mml:mo>&af;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mn>0</mml:mn>
-                                        <mml:mrow>
-                                            <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                                            <mml:mi mathvariant="italic">s</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                            <mml:mi mathvariant="italic">G</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>-</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                                            <mml:mi mathvariant="italic">d</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                            <mml:mi mathvariant="italic">G</mml:mi>
-                                            </mml:msub>
-                                        </mml:mrow>
-                                    </mml:mfenced>
+									<mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+									<mml:mi mathvariant="italic">s</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+									<mml:mi mathvariant="italic">G</mml:mi>
+									</mml:msub>
+									<mml:mo>-</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+									<mml:mi mathvariant="italic">d</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+									<mml:mi mathvariant="italic">G</mml:mi>
+									</mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
                         </mml:math></informalequation>
                         <informalequation><mml:math>
-                            <!-- eqn: Br  =    max (0 ,  B sub s s sub B  -  B sub d d sub B ):-->
+                            <!-- eqn: Br  =    B sub s s sub B  -  B sub d d sub B :-->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Br</mml:mi>
                                 <mml:mo>=</mml:mo>
                                 <mml:mrow>
-                                    <mml:mi mathvariant="italic">max</mml:mi>
-                                    <mml:mo>&af;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mn>0</mml:mn>
-                                        <mml:mrow>
-                                            <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                                            <mml:mi mathvariant="italic">s</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                            <mml:mi mathvariant="italic">B</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>-</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                                            <mml:mi mathvariant="italic">d</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                            <mml:mi mathvariant="italic">B</mml:mi>
-                                            </mml:msub>
-                                        </mml:mrow>
-                                    </mml:mfenced>
+									<mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+									<mml:mi mathvariant="italic">s</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+									<mml:mi mathvariant="italic">B</mml:mi>
+									</mml:msub>
+									<mml:mo>-</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+									<mml:mi mathvariant="italic">d</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+									<mml:mi mathvariant="italic">B</mml:mi>
+									</mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
                         </mml:math></informalequation>
                         </entry>
                         <entry align="left">
                         <informalequation><mml:math>
-                            <!-- eqn: Ar  =    max (0 ,  A sub s s sub A  -  A sub d d sub A ):-->
+                            <!-- eqn: Ar  =    A sub s s sub A  -  A sub d d sub A :-->
                             <mml:mrow>
                                 <mml:mi mathvariant="italic">Ar</mml:mi>
                                 <mml:mo>=</mml:mo>
                                 <mml:mrow>
-                                    <mml:mi mathvariant="italic">max</mml:mi>
-                                    <mml:mo>&af;</mml:mo>
-                                    <mml:mfenced open="(" close=")">
-                                        <mml:mn>0</mml:mn>
-                                        <mml:mrow>
-                                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                            <mml:mi mathvariant="italic">s</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                            <mml:mi mathvariant="italic">A</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>-</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                            <mml:mi mathvariant="italic">d</mml:mi>
-                                            </mml:msub>
-                                            <mml:mo>&it;</mml:mo>
-                                            <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                            <mml:mi mathvariant="italic">A</mml:mi>
-                                            </mml:msub>
-                                        </mml:mrow>
-                                    </mml:mfenced>
+									<mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+									<mml:mi mathvariant="italic">s</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+									<mml:mi mathvariant="italic">A</mml:mi>
+									</mml:msub>
+									<mml:mo>-</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+									<mml:mi mathvariant="italic">d</mml:mi>
+									</mml:msub>
+									<mml:mo>&it;</mml:mo>
+									<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+									<mml:mi mathvariant="italic">A</mml:mi>
+									</mml:msub>
                                 </mml:mrow>
                             </mml:mrow>
                         </mml:math></informalequation>
@@ -459,128 +403,100 @@
                         </entry>
                         <entry align="left">
                             <informalequation><mml:math>
-                                <!-- eqn: Rr  =      max (0 ,  R sub d d sub R  -  R sub s s sub R ):-->
+                                <!-- eqn: Rr  =      R sub d d sub R  -  R sub s s sub R :-->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Rr</mml:mi>
                                     <mml:mo>=</mml:mo>
                                     <mml:mrow>
-                                        <mml:mi mathvariant="italic">max</mml:mi>
-                                        <mml:mo>&af;</mml:mo>
-                                        <mml:mfenced open="(" close=")">
-                                            <mml:mn>0</mml:mn>
-                                            <mml:mrow>
-                                                <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                                                <mml:mi mathvariant="italic">d</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>&it;</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                                <mml:mi mathvariant="italic">R</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>-</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
-                                                <mml:mi mathvariant="italic">s</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>&it;</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                                <mml:mi mathvariant="italic">R</mml:mi>
-                                                </mml:msub>
-                                            </mml:mrow>
-                                        </mml:mfenced>
+										<mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+										<mml:mi mathvariant="italic">d</mml:mi>
+										</mml:msub>
+										<mml:mo>&it;</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+										<mml:mi mathvariant="italic">R</mml:mi>
+										</mml:msub>
+										<mml:mo>-</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+										<mml:mi mathvariant="italic">s</mml:mi>
+										</mml:msub>
+										<mml:mo>&it;</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+										<mml:mi mathvariant="italic">R</mml:mi>
+										</mml:msub>
                                     </mml:mrow>
                                 </mml:mrow>
                             </mml:math></informalequation>
                             <informalequation><mml:math>
-                                <!-- eqn: Gr  =    max (0 ,  G sub d d sub G  -  G sub s s sub G ):-->
+                                <!-- eqn: Gr  =    G sub d d sub G  -  G sub s s sub G :-->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Gr</mml:mi>
                                     <mml:mo>=</mml:mo>
                                     <mml:mrow>
-                                        <mml:mi mathvariant="italic">max</mml:mi>
-                                        <mml:mo>&af;</mml:mo>
-                                        <mml:mfenced open="(" close=")">
-                                            <mml:mn>0</mml:mn>
-                                            <mml:mrow>
-                                                <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                                                <mml:mi mathvariant="italic">d</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>&it;</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                                <mml:mi mathvariant="italic">G</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>-</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
-                                                <mml:mi mathvariant="italic">s</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>&it;</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                                <mml:mi mathvariant="italic">G</mml:mi>
-                                                </mml:msub>
-                                            </mml:mrow>
-                                        </mml:mfenced>
+										<mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+										<mml:mi mathvariant="italic">d</mml:mi>
+										</mml:msub>
+										<mml:mo>&it;</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+										<mml:mi mathvariant="italic">G</mml:mi>
+										</mml:msub>
+										<mml:mo>-</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+										<mml:mi mathvariant="italic">s</mml:mi>
+										</mml:msub>
+										<mml:mo>&it;</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+										<mml:mi mathvariant="italic">G</mml:mi>
+										</mml:msub>
                                     </mml:mrow>
                                 </mml:mrow>
                             </mml:math></informalequation>
                             <informalequation><mml:math>
-                                <!-- eqn: Br  =    max (0 ,  B sub d d sub B  -  B sub s s sub B ):-->
+                                <!-- eqn: Br  =    B sub d d sub B  -  B sub s s sub B :-->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Br</mml:mi>
                                     <mml:mo>=</mml:mo>
                                     <mml:mrow>
-                                        <mml:mi mathvariant="italic">max</mml:mi>
-                                        <mml:mo>&af;</mml:mo>
-                                        <mml:mfenced open="(" close=")">
-                                            <mml:mn>0</mml:mn>
-                                            <mml:mrow>
-                                                <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                                                <mml:mi mathvariant="italic">d</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>&it;</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                                <mml:mi mathvariant="italic">B</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>-</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
-                                                <mml:mi mathvariant="italic">s</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>&it;</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                                <mml:mi mathvariant="italic">B</mml:mi>
-                                                </mml:msub>
-                                            </mml:mrow>
-                                        </mml:mfenced>
+										<mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+										<mml:mi mathvariant="italic">d</mml:mi>
+										</mml:msub>
+										<mml:mo>&it;</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+										<mml:mi mathvariant="italic">B</mml:mi>
+										</mml:msub>
+										<mml:mo>-</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+										<mml:mi mathvariant="italic">s</mml:mi>
+										</mml:msub>
+										<mml:mo>&it;</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+										<mml:mi mathvariant="italic">B</mml:mi>
+										</mml:msub>
                                     </mml:mrow>
                                 </mml:mrow>
                             </mml:math></informalequation>
                         </entry>
                         <entry align="left">
                             <informalequation><mml:math>
-                                <!-- eqn: Ar  =    max (0 ,  A sub d d sub A  -  A sub s s sub A ):-->
+                                <!-- eqn: Ar  =    A sub d d sub A  -  A sub s s sub A :-->
                                 <mml:mrow>
                                     <mml:mi mathvariant="italic">Ar</mml:mi>
                                     <mml:mo>=</mml:mo>
                                     <mml:mrow>
-                                        <mml:mi mathvariant="italic">max</mml:mi>
-                                        <mml:mo>&af;</mml:mo>
-                                        <mml:mfenced open="(" close=")">
-                                            <mml:mn>0</mml:mn>
-                                            <mml:mrow>
-                                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                                <mml:mi mathvariant="italic">d</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>&it;</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
-                                                <mml:mi mathvariant="italic">A</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>-</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
-                                                <mml:mi mathvariant="italic">s</mml:mi>
-                                                </mml:msub>
-                                                <mml:mo>&it;</mml:mo>
-                                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
-                                                <mml:mi mathvariant="italic">A</mml:mi>
-                                                </mml:msub>
-                                            </mml:mrow>
-                                        </mml:mfenced>
+										<mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+										<mml:mi mathvariant="italic">d</mml:mi>
+										</mml:msub>
+										<mml:mo>&it;</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+										<mml:mi mathvariant="italic">A</mml:mi>
+										</mml:msub>
+										<mml:mo>-</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+										<mml:mi mathvariant="italic">s</mml:mi>
+										</mml:msub>
+										<mml:mo>&it;</mml:mo>
+										<mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+										<mml:mi mathvariant="italic">A</mml:mi>
+										</mml:msub>
                                     </mml:mrow>
                                 </mml:mrow>
                             </mml:math></informalequation>
