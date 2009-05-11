@@ -34,7 +34,7 @@
                     Specifies the number of buffer objects to be deleted.
                 </para>
             </listitem>
-          </varlistentry>
+        </varlistentry>
         <varlistentry>
             <term><parameter>buffers</parameter></term>
             <listitem>
