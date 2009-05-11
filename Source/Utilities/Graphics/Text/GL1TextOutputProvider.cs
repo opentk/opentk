@@ -41,10 +41,18 @@ namespace OpenTK.Graphics.Text
         Queue<List<Vector2>> inactive_lists = new Queue<List<Vector2>>();
 
         #pragma warning disable 0649
-
-        struct Viewport { public float Left, Top, Right, Bottom; }
-
+        struct Viewport { public int X, Y, Width, Height; }
         #pragma warning restore 0649
+
+        // Used to save the current state in Begin() and restore it in End()
+        Stack<Matrix4> projection_stack = new Stack<Matrix4>();
+        Stack<Matrix4> modelview_stack = new Stack<Matrix4>();
+        Stack<Matrix4> texture_stack = new Stack<Matrix4>();
+        Stack<Viewport> viewport_stack = new Stack<Viewport>();
+
+        // Used as temporary storage when saving / restoring the current state.
+        Viewport viewport = new Viewport();
+        Matrix4 matrix = new Matrix4();
 
         bool disposed;
 
@@ -179,27 +187,34 @@ namespace OpenTK.Graphics.Text
 
             GraphicsContext.Assert();
 
+            // Save the state of everything we are going to modify:
+            // the current matrix mode, viewport state and the projection, modelview and texture matrices.
+            // All these will be restored in the TextPrinter.End() method.
             int current_matrix;
             GL.GetInteger(GetPName.MatrixMode, out current_matrix);
 
-            Viewport viewport = new Viewport();
-            GL.GetFloat(GetPName.Viewport, out viewport.Left);
+            GL.GetInteger(GetPName.Viewport, out viewport.X);
+            viewport_stack.Push(viewport);
+
+            GL.GetFloat(GetPName.ProjectionMatrix, out matrix.Row0.X);
+            projection_stack.Push(matrix);
+            GL.GetFloat(GetPName.ModelviewMatrix, out matrix.Row0.X);
+            modelview_stack.Push(matrix);
+            GL.GetFloat(GetPName.TextureMatrix, out matrix.Row0.X);
+            texture_stack.Push(matrix);
 
             // Prepare to draw text. We want pixel perfect precision, so we setup a 2D mode,
             // with size equal to the window (in pixels). 
             // While we could also render text in 3D mode, it would be very hard to get
             // pixel-perfect precision.
             GL.MatrixMode(MatrixMode.Projection);
-            GL.PushMatrix();
             GL.LoadIdentity();
-            GL.Ortho(viewport.Left, viewport.Right, viewport.Bottom, viewport.Top, -1.0, 1.0);
+            GL.Ortho(viewport.X, viewport.Width, viewport.Height, viewport.Y, -1.0, 1.0);
 
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.PushMatrix();
             GL.LoadIdentity();
 
             GL.MatrixMode(MatrixMode.Texture);
-            GL.PushMatrix();
             GL.LoadIdentity();
 
             GL.MatrixMode((MatrixMode)current_matrix);
@@ -219,14 +234,20 @@ namespace OpenTK.Graphics.Text
             int current_matrix;
             GL.GetInteger(GetPName.MatrixMode, out current_matrix);
 
+            viewport = viewport_stack.Pop();
+            GL.Viewport(viewport.X, viewport.Y, viewport.Width, viewport.Height);
+
             GL.MatrixMode(MatrixMode.Texture);
-            GL.PopMatrix();
+            matrix = texture_stack.Pop();
+            GL.LoadMatrix(ref matrix);
 
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.PopMatrix();
+            matrix = modelview_stack.Pop();
+            GL.LoadMatrix(ref matrix);
 
             GL.MatrixMode(MatrixMode.Projection);
-            GL.PopMatrix();
+            matrix = projection_stack.Pop();
+            GL.LoadMatrix(ref matrix);
 
             GL.MatrixMode((MatrixMode)current_matrix);
         }
