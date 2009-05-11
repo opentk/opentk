@@ -1365,7 +1365,7 @@ namespace OpenTK
         #endregion
 
         #region PointToScreen
-#if false       // Todo: Linux / Mac OS X support missing.
+
         /// <summary>
         /// Converts the client-area coordinates of a specified point to screen coordinates.
         /// </summary>
@@ -1373,9 +1373,14 @@ namespace OpenTK
         /// <returns>The screen coordinates of the point, relative to the upper-left corner of the screen. Note, a screen-coordinate point that is above the window's client area has a negative y-coordinate. Similarly, a screen coordinate to the left of a client area has a negative x-coordinate.</returns>
         public System.Drawing.Point PointToScreen(System.Drawing.Point p)
         {
-            return glWindow.PointToScreen(p);
+			// Here we use the fact that PointToClient just translates the point, and PointToScreen
+			// should perform the inverse operation.
+			System.Drawing.Point trans = PointToClient(System.Drawing.Point.Empty);
+			p.X -= trans.X;
+			p.Y -= trans.Y;
+			return p;
         }
-#endif
+
         #endregion
 
         #region --- IDisposable Members ---
