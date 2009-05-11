@@ -1358,8 +1358,6 @@ namespace OpenTK
         public System.Drawing.Point PointToClient(System.Drawing.Point point)
         {
             point = glWindow.PointToClient(point);
-            point.X = Width - point.X;
-            point.Y = Height - point.Y;
 
             return point;
         }
