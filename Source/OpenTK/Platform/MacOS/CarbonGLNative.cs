@@ -600,15 +600,10 @@ namespace OpenTK.Platform.MacOS
         {
             IntPtr handle = window.WindowRef;
 
-            HIPoint native_point = new HIPoint();
-            native_point.X = (float)point.X;
-            native_point.Y = (float)point.Y;
-            native_point = Carbon.API.HIViewConvertPoint(handle, native_point);
-            
-            point.X = (int)native_point.X;
-            point.Y = (int)native_point.Y;
+            Rect r = Carbon.API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
+            Console.WriteLine("Rect: {0}", r);
 
-            return point;
+            return new System.Drawing.Point(point.X - r.X, point.Y - r.Y);
         }
         public System.Drawing.Point PointToScreen(System.Drawing.Point point)
         {
