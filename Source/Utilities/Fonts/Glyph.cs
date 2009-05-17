@@ -25,11 +25,7 @@ namespace OpenTK.Graphics
 
         #region --- Constructors ---
 
-        /// <summary>
-        /// Constructs a new Glyph that represents the given character and Font.
-        /// </summary>
-        /// <param name="c">The character to represent.</param>
-        /// <param name="f">The Font of the character.</param>
+        // Constructs a new Glyph that represents the given character and Font.
         public Glyph(char c, Font f, SizeF s)
         {
             if (f == null)

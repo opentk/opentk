@@ -16,7 +16,6 @@ namespace OpenTK.Audio
     /// <summary>
     /// Encapsulates a sound stream and provides decoding and streaming capabilities.
     /// </summary>
-    /// <typeparam name="SampleType"></typeparam>
     public class AudioReader : IDisposable
     {
         static object reader_lock = new object();
@@ -119,7 +118,7 @@ namespace OpenTK.Audio
         /// <summary>
         /// When overriden in a derived class, reads and decodes the specified number of samples from the sound stream.
         /// </summary>
-        /// <param name="samples">The number of samples to read and decode.</param>
+        /// <param name="count">The number of samples to read and decode.</param>
         /// <returns>An OpenTK.Audio.SoundData object that contains the decoded buffer.</returns>
         public virtual SoundData ReadSamples(long count)
         {
