@@ -43,7 +43,7 @@ namespace OpenTK.Graphics.Text
         /// Constructs a new Glyph that represents the given character and Font.
         /// </summary>
         /// <param name="c">The character to represent.</param>
-        /// <param name="f">The Font of the character.</param>
+        /// <param name="font">The Font of the character.</param>
         public Glyph(char c, Font font)
         {
             if (font == null)

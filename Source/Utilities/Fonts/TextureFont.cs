@@ -81,7 +81,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Constructs a new TextureFont, using the specified parameters.
         /// </summary>
-        /// <param name="font">The System.Drawing.FontFamily to use for the typeface.</param>
+        /// <param name="family">The System.Drawing.FontFamily to use for the typeface.</param>
         /// <param name="emSize">The em size to use for the typeface.</param>
         public TextureFont(FontFamily family, float emSize)
             : this(new Font(family, emSize))
@@ -90,9 +90,9 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Constructs a new TextureFont, using the specified parameters.
         /// </summary>
-        /// <param name="font">The System.Drawing.FontFamily to use for the typeface.</param>
+        /// <param name="family">The System.Drawing.FontFamily to use for the typeface.</param>
         /// <param name="emSize">The em size to use for the typeface.</param>
-        /// <param name="family">The style to use for the typeface.</param>
+        /// <param name="style">The style to use for the typeface.</param>
         public TextureFont(FontFamily family, float emSize, FontStyle style)
             : this(new Font(family, emSize, style))
         { }
@@ -135,7 +135,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Prepares the specified glyph for rendering.
         /// </summary>
-        /// <param name="glyphs">The glyph to prepare for rendering.</param>
+        /// <param name="glyph">The glyph to prepare for rendering.</param>
         public void LoadGlyph(char glyph)
         {
             RectangleF rect = new RectangleF();
@@ -225,7 +225,7 @@ namespace OpenTK.Graphics
         /// <param name="str">The string to measure.</param>
         /// <param name="width">The measured width.</param>
         /// <param name="height">The measured height.</param>
-        /// <seealso cref="public void MeasureString(string str, out float width, out float height, bool accountForOverhangs)"/>
+        /// <seealso cref="MeasureString(string, out float, out float, bool)"/>
         [Obsolete("Returns invalid results - use MeasureText() instead")]
         public void MeasureString(string str, out float width, out float height)
         {

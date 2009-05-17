@@ -78,7 +78,6 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="text">The System.String to measure.</param>
         /// <param name="font">The System.Drawing.Font that will be used to measure text.</param>
-        /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
         /// <returns>An OpenTK.Graphics.TextExtents instance that contains the results of the measurement.</returns>
         TextExtents Measure(string text, Font font);
 
@@ -88,7 +87,6 @@ namespace OpenTK.Graphics
         /// <param name="text">The System.String to measure.</param>
         /// <param name="font">The System.Drawing.Font that will be used to measure text.</param>
         /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
-        /// <param name="options">The OpenTK.Graphics.TextPrinterOptions that will be used to measure text.</param>
         /// <returns>An OpenTK.Graphics.TextExtents instance that contains the results of the measurement.</returns>
         TextExtents Measure(string text, Font font, RectangleF rect);
 
@@ -99,7 +97,6 @@ namespace OpenTK.Graphics
         /// <param name="font">The System.Drawing.Font that will be used to measure text.</param>
         /// <param name="rect">The System.Drawing.Rectangle that defines the bounds for text layout.</param>
         /// <param name="options">The OpenTK.Graphics.TextPrinterOptions that will be used to measure text.</param>
-        /// <param name="alignment">The OpenTK.Graphics.TextAlignment that will be used to measure text.</param>
         /// <returns>An OpenTK.Graphics.TextExtents instance that contains the results of the measurement.</returns>
         TextExtents Measure(string text, Font font, RectangleF rect, TextPrinterOptions options);
 
