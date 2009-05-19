@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Windows
 {
@@ -95,7 +97,8 @@ namespace OpenTK.Platform.Windows
             if (!disposed)
             {
                 if (this.dc != IntPtr.Zero)
-                    Functions.ReleaseDC(this.handle, this.dc);
+                    if (!Functions.ReleaseDC(this.handle, this.dc))
+                        Debug.Print("[Warning] Failed to release device context {0}. Windows error: {1}.", this.dc, Marshal.GetLastWin32Error());
 
                 if (manual)
                 {
