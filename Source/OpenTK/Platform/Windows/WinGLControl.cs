@@ -20,19 +20,37 @@ namespace OpenTK.Platform.Windows
         MSG msg = new MSG();
         GraphicsMode mode;
         Control control;
+        WinWindowInfo window_info;
 
         internal WinGLControl(GraphicsMode mode, Control control)
         {
             this.mode = mode;
             this.control = control;
+            this.control.HandleCreated += delegate(object sender, EventArgs e)
+            {
+                if (window_info != null)
+                    window_info.Dispose();
+                window_info = new WinWindowInfo(this.control.Handle, null);
+            };
+            this.control.HandleDestroyed += delegate(object sender, EventArgs e)
+            {
+                if (window_info != null)
+                {
+                    window_info.Dispose();
+                    window_info = null;
+                }
+            };
         }
 
         #region --- IGLControl Members ---
 
         public GraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            WinWindowInfo window = new WinWindowInfo(control.Handle, null);
-            return new GraphicsContext(mode, window, major, minor, flags);
+            // Make sure the Control exists before creating the context.
+            if (window_info == null)
+                window_info = new WinWindowInfo(control.Handle, null);
+
+            return new GraphicsContext(mode, window_info, major, minor, flags);
         }
 
         public bool IsIdle
@@ -45,7 +63,7 @@ namespace OpenTK.Platform.Windows
             get
             {
                 // This method forces the creation of the control. Beware of this side-effect!
-                return new WinWindowInfo(control.Handle, null);
+                return window_info;
             }
         }
 
