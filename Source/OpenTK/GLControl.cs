@@ -124,6 +124,7 @@ namespace OpenTK
                 this.Context.Dispose();
                 this.Context = null;
             }
+            this.window_info.Dispose();
             this.window_info = null;
         }
 
@@ -135,6 +136,7 @@ namespace OpenTK
         {
             if (DesignMode)
                 e.Graphics.Clear(BackColor);
+
             base.OnPaint(e);
         }
 
