@@ -141,11 +141,15 @@ namespace OpenTK.Platform.Windows
             {
                 if (Wgl.Delegates.wglGetExtensionsStringARB != null)
                 {
-                    if (extensions == null || rebuildExtensionList)
+                    if (rebuildExtensionList)
                     {
-                        extensions = Wgl.Arb.GetExtensionsString(context.DeviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                        Array.Sort(extensions);
                         rebuildExtensionList = false;
+
+                        extensions = Wgl.Arb.GetExtensionsString(context.DeviceContext).Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                        if (extensions == null || extensions.Length == 0)
+                            return false;
+
+                        Array.Sort(extensions);
                     }
 
                     return Array.BinarySearch(extensions, ext) != -1;
