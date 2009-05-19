@@ -147,7 +147,8 @@ namespace OpenTK.Platform.Windows
         public void SwapBuffers()
         {
             if (!Functions.SwapBuffers(currentWindow.DeviceContext))
-                Debug.Print("SwapBuffers failed, error: {0}", Marshal.GetLastWin32Error());
+                throw new GraphicsContextException(String.Format(
+                    "Failed to swap buffers for context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
         }
 
         #endregion
@@ -395,11 +396,13 @@ namespace OpenTK.Platform.Windows
         {
             if (!disposed)
             {
-                DestroyContext();
-
                 if (calledManually)
                 {
-                    // Safe to clean managed resources
+                    DestroyContext();
+                }
+                else
+                {
+                    Debug.Print("[Warning] OpenGL context {0} leaked. Did you forget to call IGraphicsContext.Dispose()?", renderContext.Handle);
                 }
                 disposed = true;
             }
@@ -421,10 +424,7 @@ namespace OpenTK.Platform.Windows
             {
                 try
                 {
-                    if (!Wgl.Imports.MakeCurrent(IntPtr.Zero, IntPtr.Zero))
-                        Debug.Print("Failed to make OpenGL context {0} non current. Error: {1}",
-                            renderContext.ToString(), Marshal.GetLastWin32Error());
-
+                    // This will fail if the user calls Dispose() on thread X when the context is current on thread Y.
                     if (!Wgl.Imports.DeleteContext(renderContext.Handle))
                         Debug.Print("Failed to destroy OpenGL context {0}. Error: {1}",
                             renderContext.ToString(), Marshal.GetLastWin32Error());
@@ -439,27 +439,6 @@ namespace OpenTK.Platform.Windows
                 }
                 renderContext = ContextHandle.Zero;
             }
-
-            //if (deviceContext != IntPtr.Zero)
-            //{
-            //    if (!Functions.ReleaseDC(this.windowInfo.Handle, deviceContext))
-            //    {
-            //        //throw new ApplicationException("Could not release device context. Error: " + Marshal.GetLastWin32Error());
-            //        //Debug.Print("Could not destroy the device context. Error: {0}", Marshal.GetLastWin32Error());
-            //    }
-            //}
-
-            /*
-            if (opengl32Handle != IntPtr.Zero)
-            {
-                if (!Functions.FreeLibrary(opengl32Handle))
-                {
-                    //throw new ApplicationException("FreeLibray call failed ('opengl32.dll'), Error: " + Marshal.GetLastWin32Error());
-                    //Debug.Print("Could not release {0}. Error: {1}", opengl32Name, Marshal.GetLastWin32Error());
-                }
-                opengl32Handle = IntPtr.Zero;
-            }
-            */
         }
 
         #endregion
