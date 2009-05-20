@@ -63,7 +63,7 @@ namespace OpenTK.Build
         {
             Console.WriteLine("Usage: Build.exe BuildTarget [BuildMode]");
             Console.WriteLine("\tBuildMode: debug/release");
-            Console.WriteLine("\tBuildTarget: mono/net/monodev/sharpdev/vs2005 or clean/distclean/svnclean");
+            Console.WriteLine("\tBuildTarget: vs/vs2005 or clean/distclean");
         }
 
         static void Main(string[] args)
@@ -76,8 +76,8 @@ namespace OpenTK.Build
                 Console.Write("Select build target: ");
                 args[0] = Console.ReadLine();
 
-                Console.Write("Select build mode (optional): ");
-                args[1] = Console.ReadLine();
+                //Console.Write("Select build mode (optional): ");
+                //args[1] = Console.ReadLine();
             }
 
             RootPath = Directory.GetCurrentDirectory();
@@ -98,23 +98,23 @@ namespace OpenTK.Build
                 string arg = s.ToLower();
                 switch (arg)
                 {
-                    case "debug":
-                    case "d":
-                        mode = BuildMode.Debug;
-                        break;
+                    //case "debug":
+                    //case "d":
+                    //    mode = BuildMode.Debug;
+                    //    break;
 
-                    case "release":
-                    case "r":
-                        mode = BuildMode.Release;
-                        break;
+                    //case "release":
+                    //case "r":
+                    //    mode = BuildMode.Release;
+                    //    break;
 
-                    case "mono":
-                        target = BuildTarget.Mono;
-                        break;
+                    //case "mono":
+                    //    target = BuildTarget.Mono;
+                    //    break;
 
-                    case "net":
-                        target = BuildTarget.Net;
-                        break;
+                    //case "net":
+                    //    target = BuildTarget.Net;
+                    //    break;
 
                     case "monodev":
                     case "monodevelop":
@@ -143,9 +143,9 @@ namespace OpenTK.Build
                         target = BuildTarget.Clean;
                         break;
 
-                    case "svnclean":
-                        target = BuildTarget.SVNClean;
-                        break;
+                    //case "svnclean":
+                    //    target = BuildTarget.SVNClean;
+                    //    break;
 
                     case "distclean":
                         target = BuildTarget.DistClean;
