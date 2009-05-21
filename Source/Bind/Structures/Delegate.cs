@@ -357,6 +357,7 @@ namespace Bind.Structures
         {
             foreach (List<Function> wrappers in Function.Wrappers.Values)
             {
+            restart:
                 for (int i = 0; i < wrappers.Count; i++)
                 {
                     for (int j = i + 1; j < wrappers.Count; j++)
@@ -382,9 +383,14 @@ namespace Bind.Structures
                             if (k == wrappers[i].Parameters.Count)
                             {
                                 if (function_i_is_problematic)
-                                    wrappers[i].CLSCompliant = false;
+                                    wrappers.RemoveAt(i);
+                                //wrappers[i].CLSCompliant = false;
                                 if (function_j_is_problematic)
-                                    wrappers[j].CLSCompliant = false;
+                                    wrappers.RemoveAt(j);
+                                //wrappers[j].CLSCompliant = false;
+
+                                if (function_i_is_problematic || function_j_is_problematic)
+                                    goto restart;
                             }
                         }
                     }
