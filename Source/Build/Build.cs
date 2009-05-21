@@ -62,8 +62,8 @@ namespace OpenTK.Build
         static void PrintUsage()
         {
             Console.WriteLine("Usage: Build.exe BuildTarget [BuildMode]");
+            Console.WriteLine("\tBuildTarget: vs (recommended) or one of clean/distclean/mono/net");
             Console.WriteLine("\tBuildMode: debug/release");
-            Console.WriteLine("\tBuildTarget: vs/vs2005 or clean/distclean");
         }
 
         static void Main(string[] args)
@@ -75,21 +75,21 @@ namespace OpenTK.Build
                 args = new string[2];
                 Console.Write("Select build target: ");
                 args[0] = Console.ReadLine();
+                if (args[0] == String.Empty)
+                    args[0] = "vs";
 
-                //Console.Write("Select build mode (optional): ");
-                //args[1] = Console.ReadLine();
+                Console.Write("Select build mode (optional): ");
+                args[1] = Console.ReadLine();
+                if (args[0] == String.Empty)
+                    args[0] = "release";
             }
 
-            RootPath = Directory.GetCurrentDirectory();
-            RootPath = RootPath.Substring(
-                0,
-                Directory.GetCurrentDirectory().LastIndexOf("Build"));
+            RootPath = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
             Directory.SetCurrentDirectory(RootPath);
             SourcePath = Path.Combine(RootPath, "Source");
             DataSourcePath = Path.Combine(SourcePath, Path.Combine("Examples", "Data"));
 
-            // Workaroung for nant on x64 windows (safe for other platforms too, as this affects
-            // only the current process).
+            // Workaroung for nant on x64 windows (safe for other platforms too, as this affects only the current process).
             Environment.SetEnvironmentVariable("CommonProgramFiles(x86)", String.Empty, EnvironmentVariableTarget.Process);
             Environment.SetEnvironmentVariable("ProgramFiles(x86)", String.Empty, EnvironmentVariableTarget.Process);
 
@@ -98,23 +98,23 @@ namespace OpenTK.Build
                 string arg = s.ToLower();
                 switch (arg)
                 {
-                    //case "debug":
-                    //case "d":
-                    //    mode = BuildMode.Debug;
-                    //    break;
+                    case "debug":
+                    case "d":
+                        mode = BuildMode.Debug;
+                        break;
 
-                    //case "release":
-                    //case "r":
-                    //    mode = BuildMode.Release;
-                    //    break;
+                    case "release":
+                    case "r":
+                        mode = BuildMode.Release;
+                        break;
 
-                    //case "mono":
-                    //    target = BuildTarget.Mono;
-                    //    break;
+                    case "mono":
+                        target = BuildTarget.Mono;
+                        break;
 
-                    //case "net":
-                    //    target = BuildTarget.Net;
-                    //    break;
+                    case "net":
+                        target = BuildTarget.Net;
+                        break;
 
                     case "monodev":
                     case "monodevelop":
@@ -142,10 +142,6 @@ namespace OpenTK.Build
                     case "clean":
                         target = BuildTarget.Clean;
                         break;
-
-                    //case "svnclean":
-                    //    target = BuildTarget.SVNClean;
-                    //    break;
 
                     case "distclean":
                         target = BuildTarget.DistClean;
