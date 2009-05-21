@@ -661,7 +661,7 @@ namespace OpenTK.Graphics
 
         public static void Material(MaterialFace face, MaterialParameter pname, Vector4 @params)
         {
-            Material(face, pname, ref @params.X);
+            unsafe { Material(face, pname, (float*)&@params.X); }
         }
 
         public static void Material(MaterialFace face, MaterialParameter pname, Color4 @params)
@@ -675,7 +675,7 @@ namespace OpenTK.Graphics
 
         public static void Light(LightName name, LightParameter pname, Vector4 @params)
         {
-            GL.Light(name, pname, ref @params.X);
+            unsafe { GL.Light(name, pname, (float*)&@params.X); }
         }
 
         public static void Light(LightName name, LightParameter pname, Color4 @params)
