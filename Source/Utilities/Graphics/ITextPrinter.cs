@@ -134,11 +134,11 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region End
+
         /// <summary>
         /// Restores the projection and modelview matrices to their previous state.
         /// </summary>
-        #region End
-
         void End();
 
         #endregion
