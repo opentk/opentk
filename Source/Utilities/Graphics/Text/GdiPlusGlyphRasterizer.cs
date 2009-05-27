@@ -39,7 +39,8 @@ namespace OpenTK.Graphics.Text
     {
         #region Fields
 
-        Dictionary<TextBlock, TextExtents> block_cache = new Dictionary<TextBlock, TextExtents>();
+        // Note: as an optimization, we store the TextBlock hashcode instead of the TextBlock itself.
+        Dictionary<int, TextExtents> block_cache = new Dictionary<int, TextExtents>();
         System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1));
 
         IntPtr[] regions = new IntPtr[GdiPlus.MaxMeasurableCharacterRanges];
@@ -130,23 +131,24 @@ namespace OpenTK.Graphics.Text
 
         #region MeasureText
 
-        public TextExtents MeasureText(TextBlock block)
+        public TextExtents MeasureText(ref TextBlock block)
         {
-            return MeasureText(block, TextQuality.Default);
+            return MeasureText(ref block, TextQuality.Default);
         }
 
-        public TextExtents MeasureText(TextBlock block, TextQuality quality)
+        public TextExtents MeasureText(ref TextBlock block, TextQuality quality)
         {
             // First, check if we have cached this text block. Do not use block_cache.TryGetValue, to avoid thrashing
             // the user's TextBlockExtents struct.
-            if (block_cache.ContainsKey(block))
-                return block_cache[block];
+            int hashcode = block.GetHashCode();
+            if (block_cache.ContainsKey(hashcode))
+                return block_cache[hashcode];
 
             // If this block is not cached, we have to measure it and (potentially) place it in the cache.
-            TextExtents extents = MeasureTextExtents(block, quality);
+            TextExtents extents = MeasureTextExtents(ref block, quality);
             
             if ((block.Options & TextPrinterOptions.NoCache) == 0)
-                block_cache.Add(block, extents);
+                block_cache.Add(hashcode, extents);
 
             return extents;
         }
@@ -219,7 +221,7 @@ namespace OpenTK.Graphics.Text
 
         #region MeasureTextExtents
 
-        TextExtents MeasureTextExtents(TextBlock block, TextQuality quality)
+        TextExtents MeasureTextExtents(ref TextBlock block, TextQuality quality)
         {
             // Todo: Parse layout options:
             StringFormat format = block.Font.Italic ? measure_string_format : measure_string_format_tight;
@@ -288,7 +290,10 @@ namespace OpenTK.Graphics.Text
                 }
             }
 
-            extents.BoundingBox = new RectangleF(extents[0].X, extents[0].Y, max_width, max_height);
+            if (extents.Count > 0)
+                extents.BoundingBox = new RectangleF(extents[0].X, extents[0].Y, max_width, max_height);
+            else
+                extents.BoundingBox = RectangleF.Empty;
 
             return extents;
         }

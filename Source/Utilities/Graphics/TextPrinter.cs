@@ -209,7 +209,8 @@ namespace OpenTK.Graphics
             if (!ValidateParameters(text, font, rect))
                 return TextExtents.Empty;
 
-            return Rasterizer.MeasureText(new TextBlock(text, font, rect, options, alignment, direction));
+            TextBlock block = new TextBlock(text, font, rect, options, alignment, direction);
+            return Rasterizer.MeasureText(ref block);
         }
 
         #endregion
@@ -311,7 +312,7 @@ namespace OpenTK.Graphics
             if (font == null)
                 throw new ArgumentNullException("font");
             if (rect.Width < 0 || rect.Height < 0)
-                throw new ArgumentOutOfRangeException("size");
+                throw new ArgumentOutOfRangeException("rect");
 
             return true;
         }
