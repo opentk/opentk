@@ -81,7 +81,9 @@ namespace OpenTK.Graphics.Text
 
             GL.Disable(EnableCap.DepthTest);
 
-            using (TextExtents extents = rasterizer.MeasureText(block))
+            RectangleF position;
+
+            using (TextExtents extents = rasterizer.MeasureText(ref block))
             {
                 // Build layout
                 int current = 0;
@@ -96,31 +98,41 @@ namespace OpenTK.Graphics.Text
                         Cache.Add(glyph, rasterizer, TextQuality);
 
                     CachedGlyphInfo info = Cache[glyph];
-                    RectangleF position = extents[current++];
+                    position = extents[current++];
 
                     // Use the real glyph width instead of the measured one (we want to achieve pixel perfect output).
                     position.Size = info.Rectangle.Size;
 
                     if (!active_lists.ContainsKey(info.Texture))
+                    {
                         if (inactive_lists.Count > 0)
-                            active_lists.Add(info.Texture, inactive_lists.Dequeue());
+                        {
+                            List<Vector2> list = inactive_lists.Dequeue();
+                            list.Clear();
+                            active_lists.Add(info.Texture, list);
+                        }
                         else
+                        {
                             active_lists.Add(info.Texture, new List<Vector2>());
+                        }
+                    }
+
                     {
                         // Interleaved array: Vertex, TexCoord, Vertex, ...
-                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
-                        active_lists[info.Texture].Add(new Vector2(position.Left, position.Top));
-                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Bottom));
-                        active_lists[info.Texture].Add(new Vector2(position.Left, position.Bottom));
-                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
-                        active_lists[info.Texture].Add(new Vector2(position.Right, position.Bottom));
+                        List<Vector2> current_list = active_lists[info.Texture];
+                        current_list.Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
+                        current_list.Add(new Vector2(position.Left, position.Top));
+                        current_list.Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Bottom));
+                        current_list.Add(new Vector2(position.Left, position.Bottom));
+                        current_list.Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
+                        current_list.Add(new Vector2(position.Right, position.Bottom));
 
-                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
-                        active_lists[info.Texture].Add(new Vector2(position.Right, position.Bottom));
-                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Top));
-                        active_lists[info.Texture].Add(new Vector2(position.Right, position.Top));
-                        active_lists[info.Texture].Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
-                        active_lists[info.Texture].Add(new Vector2(position.Left, position.Top));
+                        current_list.Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
+                        current_list.Add(new Vector2(position.Right, position.Bottom));
+                        current_list.Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Top));
+                        current_list.Add(new Vector2(position.Right, position.Top));
+                        current_list.Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
+                        current_list.Add(new Vector2(position.Left, position.Top));
                     }
                 }
             }
@@ -131,13 +143,6 @@ namespace OpenTK.Graphics.Text
                 List<Vector2> list = active_lists[key];
                 
                 key.Bind();
-
-                //if (!legacy_mode)
-                //{
-                //    GL.PushMatrix();
-                //    GL.GetFloat(GetPName.Viewport, viewport);
-                //    GL.Scale(2.0 / (viewport[2] - viewport[0]), -2.0 / (viewport[3] - viewport[1]), 1);
-                //}
 
                 SetColor(color);
 
@@ -150,15 +155,12 @@ namespace OpenTK.Graphics.Text
                 }
 
                 GL.End();
-
-                //if (!legacy_mode)
-                //    GL.PopMatrix();
             }
 
             // Clean layout
             foreach (List<Vector2> list in active_lists.Values)
             {
-                list.Clear();
+                //list.Clear();
                 inactive_lists.Enqueue(list);
             }
 

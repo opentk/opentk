@@ -494,7 +494,7 @@ namespace OpenTK.Graphics
         {
             if (!disposed)
             {
-                Debug.WriteLine("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
+                Debug.Print("Disposing context {0}.", (this as IGraphicsContextInternal).Context.ToString());
                 lock (context_lock)
                 {
                     available_contexts.Remove((this as IGraphicsContextInternal).Context);
