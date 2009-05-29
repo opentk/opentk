@@ -163,6 +163,86 @@ namespace OpenTK.Math
             get { return new Vector4(Row0.W, Row1.W, Row2.W, Row3.W); }
         }
 
+        /// <summary>
+        /// Gets or sets the value at row 1, column 1 of this instance.
+        /// </summary>
+        public float M11 { get { return Row0.X; } set { Row0.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 1, column 2 of this instance.
+        /// </summary>
+        public float M12 { get { return Row0.Y; } set { Row0.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 1, column 3 of this instance.
+        /// </summary>
+        public float M13 { get { return Row0.Z; } set { Row0.Z = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 1, column 4 of this instance.
+        /// </summary>
+        public float M14 { get { return Row0.W; } set { Row0.W = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 1 of this instance.
+        /// </summary>
+        public float M21 { get { return Row1.X; } set { Row1.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 2 of this instance.
+        /// </summary>
+        public float M22 { get { return Row1.Y; } set { Row1.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 3 of this instance.
+        /// </summary>
+        public float M23 { get { return Row1.Z; } set { Row1.Z = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 2, column 4 of this instance.
+        /// </summary>
+        public float M24 { get { return Row1.W; } set { Row1.W = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 3, column 1 of this instance.
+        /// </summary>
+        public float M31 { get { return Row2.X; } set { Row2.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 3, column 2 of this instance.
+        /// </summary>
+        public float M32 { get { return Row2.Y; } set { Row2.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 3, column 3 of this instance.
+        /// </summary>
+        public float M33 { get { return Row2.Z; } set { Row2.Z = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 3, column 4 of this instance.
+        /// </summary>
+        public float M34 { get { return Row2.W; } set { Row2.W = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 4, column 1 of this instance.
+        /// </summary>
+        public float M41 { get { return Row3.X; } set { Row3.X = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 4, column 3 of this instance.
+        /// </summary>
+        public float M42 { get { return Row3.Y; } set { Row3.Y = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 4, column 3 of this instance.
+        /// </summary>
+        public float M43 { get { return Row3.Z; } set { Row3.Z = value; } }
+
+        /// <summary>
+        /// Gets or sets the value at row 4, column 4 of this instance.
+        /// </summary>
+        public float M44 { get { return Row3.W; } set { Row3.W = value; } }
+
         #endregion
 
         #region Instance
@@ -188,6 +268,174 @@ namespace OpenTK.Math
         #endregion
 
         #region Static
+
+        #region CreateTranslation
+
+        /// <summary>
+        /// Creates a translation matrix.
+        /// </summary>
+        /// <param name="x">X translation.</param>
+        /// <param name="y">Y translation.</param>
+        /// <param name="z">Z translation.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateTranslation(float x, float y, float z, out Matrix4 result)
+        {
+            result = Identity;
+            result.Row3 = new Vector4(x, y, z, 1);
+        }
+
+        /// <summary>
+        /// Creates a translation matrix.
+        /// </summary>
+        /// <param name="vector">The translation vector.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateTranslation(ref Vector3 vector, out Matrix4 result)
+        {
+            result = Identity;
+            result.Row3 = new Vector4(vector.X, vector.Y, vector.Z, 1);
+        }
+
+        /// <summary>
+        /// Creates a translation matrix.
+        /// </summary>
+        /// <param name="x">X translation.</param>
+        /// <param name="y">Y translation.</param>
+        /// <param name="z">Z translation.</param>
+        /// <returns>The resulting Matrix4 instance.</returns>
+        public static Matrix4 CreateTranslation(float x, float y, float z)
+        {
+            Matrix4 result;
+            CreateTranslation(x, y, z, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a translation matrix.
+        /// </summary>
+        /// <param name="vector">The translation vector.</param>
+        /// <returns>The resulting Matrix4 instance.</returns>
+        public static Matrix4 CreateTranslation(Vector3 vector)
+        {
+            Matrix4 result;
+            CreateTranslation(vector.X, vector.Y, vector.Z, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region CreateOrthographic
+
+        /// <summary>
+        /// Creates an orthographic projection matrix.
+        /// </summary>
+        /// <param name="width">The width of the projection volume.</param>
+        /// <param name="height">The height of the projection volume.</param>
+        /// <param name="zNear">The near edge of the projection volume.</param>
+        /// <param name="zFar">The far edge of the projection volume.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateOrthographic(float width, float height, float zNear, float zFar, out Matrix4 result)
+        {
+            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out result);
+        }
+
+        /// <summary>
+        /// Creates an orthographic projection matrix.
+        /// </summary>
+        /// <param name="width">The width of the projection volume.</param>
+        /// <param name="height">The height of the projection volume.</param>
+        /// <param name="zNear">The near edge of the projection volume.</param>
+        /// <param name="zFar">The far edge of the projection volume.</param>
+        /// <rereturns>The resulting Matrix4 instance.</rereturns>
+        public static Matrix4 CreateOrthographic(float width, float height, float zNear, float zFar)
+        {
+            Matrix4 result;
+            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region CreateOrthographicOffCenter
+
+        /// <summary>
+        /// Creates an orthographic projection matrix.
+        /// </summary>
+        /// <param name="left">The left edge of the projection volume.</param>
+        /// <param name="right">The right edge of the projection volume.</param>
+        /// <param name="bottom">The bottom edge of the projection volume.</param>
+        /// <param name="top">The top edge of the projection volume.</param>
+        /// <param name="zNear">The near edge of the projection volume.</param>
+        /// <param name="zFar">The far edge of the projection volume.</param>
+        /// <param name="result">The resulting Matrix4 instance.</param>
+        public static void CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNear, float zFar, out Matrix4 result)
+        {
+            result = new Matrix4();
+
+            float invRL = 1 / (right - left);
+            float invTB = 1 / (top - bottom);
+            float invFN = 1 / (zFar - zNear);
+
+            result.M11 = 2 * invRL;
+            result.M22 = 2 * invTB;
+            result.M33 = -2 * invFN;
+
+            result.M41 = -(right + left) * invRL;
+            result.M42 = -(top + bottom) * invTB;
+            result.M43 = -(zFar + zNear) * invFN;
+        }
+
+        /// <summary>
+        /// Creates an orthographic projection matrix.
+        /// </summary>
+        /// <param name="left">The left edge of the projection volume.</param>
+        /// <param name="right">The right edge of the projection volume.</param>
+        /// <param name="bottom">The bottom edge of the projection volume.</param>
+        /// <param name="top">The top edge of the projection volume.</param>
+        /// <param name="zNear">The near edge of the projection volume.</param>
+        /// <param name="zFar">The far edge of the projection volume.</param>
+        /// <returns>The resulting Matrix4 instance.</returns>
+        public static Matrix4 CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNear, float zFar)
+        {
+            Matrix4 result;
+            CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out result);
+            return result;
+        }
+
+        #endregion
+
+        #region Obsolete Functions
+
+        #region Translation Functions
+
+        /// <summary>
+        /// Builds a translation matrix.
+        /// </summary>
+        /// <param name="trans">The translation vector.</param>
+        /// <returns>A new Matrix4 instance.</returns>
+        [Obsolete("Use CreateTranslation instead.")]
+        public static Matrix4 Translation(Vector3 trans)
+        {
+            return Translation(trans.X, trans.Y, trans.Z);
+        }
+
+        /// <summary>
+        /// Build a translation matrix with the given translation
+        /// </summary>
+        /// <param name="x">X translation</param>
+        /// <param name="y">Y translation</param>
+        /// <param name="z">Z translation</param>
+        /// <returns>A Translation matrix</returns>
+        [Obsolete("Use CreateTranslation instead.")]
+        public static Matrix4 Translation(float x, float y, float z)
+        {
+            Matrix4 result = Identity;
+            result.Row3 = new Vector4(x, y, z, 1.0f);
+            return result;
+        }
+
+        #endregion
+
+        #endregion
 
         #region Scale Functions
 
@@ -225,34 +473,6 @@ namespace OpenTK.Math
             result.Row1 = Vector4.UnitY * y;
             result.Row2 = Vector4.UnitZ * z;
             result.Row3 = Vector4.UnitW;
-            return result;
-        }
-
-        #endregion
-
-        #region Translation Functions
-
-        /// <summary>
-        /// Build a translation matrix with the given translation
-        /// </summary>
-        /// <param name="trans">The vector to translate along</param>
-        /// <returns>A Translation matrix</returns>
-        public static Matrix4 Translation(Vector3 trans)
-        {
-            return Translation(trans.X, trans.Y, trans.Z);
-        }
-
-        /// <summary>
-        /// Build a translation matrix with the given translation
-        /// </summary>
-        /// <param name="x">X translation</param>
-        /// <param name="y">Y translation</param>
-        /// <param name="z">Z translation</param>
-        /// <returns>A Translation matrix</returns>
-        public static Matrix4 Translation(float x, float y, float z)
-        {
-            Matrix4 result = Identity;
-            result.Row3 = new Vector4(x, y, z, 1.0f);
             return result;
         }
 
@@ -371,7 +591,7 @@ namespace OpenTK.Math
                                         new Vector4(x.Z, y.Z, z.Z, 0.0f),
                                         Vector4.UnitW);
 
-            Matrix4 trans = Matrix4.Translation(-eye);
+            Matrix4 trans = Matrix4.CreateTranslation(-eye);
 
             return trans * rot;
         }
