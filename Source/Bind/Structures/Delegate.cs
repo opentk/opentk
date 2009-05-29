@@ -10,6 +10,9 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.IO;
+using System.Xml;
+using System.Xml.XPath;
+using System.Text.RegularExpressions;
 
 namespace Bind.Structures
 {
@@ -23,6 +26,15 @@ namespace Bind.Structures
 
         private static bool delegatesLoaded;
         bool? cls_compliance_overriden;
+
+        protected static Regex endings = new Regex(@"((((d|f|fi)|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+        protected static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flagv|Tess|Status|Pixels|Instanced|Indexed|Varyings)", RegexOptions.Compiled | RegexOptions.RightToLeft);
+
+        // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
+        // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
+        // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior. 
+        internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
+
         
         #region internal static void Initialize(string glSpec, string glSpecExt)
         
@@ -451,7 +463,49 @@ namespace Bind.Structures
 
         #endregion
 
-        #region void TranslateReturnType()
+        #region TrimName
+
+        // Trims unecessary suffices from the specified OpenGL function name.
+        protected static string TrimName(string name, bool keep_extension)
+        {
+            string trimmed_name = Utilities.StripGL2Extension(name);
+            string extension = Utilities.GetGL2Extension(name);
+
+            // Note: some endings should not be trimmed, for example: 'b' from Attrib.
+            // Check the endingsNotToTrim regex for details.
+            Match m = endingsNotToTrim.Match(trimmed_name);
+            if ((m.Index + m.Length) != trimmed_name.Length)
+            {
+                m = endings.Match(trimmed_name);
+
+                if (m.Length > 0 && m.Index + m.Length == trimmed_name.Length)
+                {
+                    // Only trim endings, not internal matches.
+                    if (m.Value[m.Length - 1] == 'v' && endingsAddV.IsMatch(name) &&
+                        !name.StartsWith("Get") && !name.StartsWith("MatrixIndex"))
+                    {
+                        // Only trim ending 'v' when there is a number
+                        trimmed_name = trimmed_name.Substring(0, m.Index) + "v";
+                    }
+                    else
+                    {
+                        if (!trimmed_name.EndsWith("xedv"))
+                            trimmed_name = trimmed_name.Substring(0, m.Index);
+                        else
+                            trimmed_name = trimmed_name.Substring(0, m.Index + 1);
+                    }
+                }
+            }
+
+            if (keep_extension)
+                return trimmed_name + extension;
+            else
+                return trimmed_name;
+        }
+
+        #endregion
+
+        #region TranslateReturnType
 
         /// <summary>
         /// Translates the opengl return type to the equivalent C# type.
@@ -466,7 +520,7 @@ namespace Bind.Structures
         /// 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
         /// Return types must always be CLS-compliant, because .Net does not support overloading on return types.
         /// </remarks>
-        void TranslateReturnType()
+        void TranslateReturnType(XPathNavigator function_override)
         {
             /*
             if (Bind.Structures.Type.GLTypes.ContainsKey(ReturnType.CurrentType))
@@ -475,6 +529,15 @@ namespace Bind.Structures
             if (Bind.Structures.Type.CSTypes.ContainsKey(ReturnType.CurrentType))
                 ReturnType.CurrentType = Bind.Structures.Type.CSTypes[ReturnType.CurrentType];
             */
+
+            if (function_override != null)
+            {
+                XPathNavigator return_override = function_override.SelectSingleNode("return");
+                if (return_override != null)
+                {
+                    ReturnType.CurrentType = return_override.Value;
+                }
+            }
 
             ReturnType.Translate(this.Category);
 
@@ -509,20 +572,35 @@ namespace Bind.Structures
 
         #endregion
 
-        #region protected virtual void TranslateParameters()
+        #region TranslateParameters
 
-        protected virtual void TranslateParameters()
+        protected virtual void TranslateParameters(XPathNavigator function_override)
         {
-            // Iterates through all parameters, calling the Parameter.Translate() function.
-
             for (int i = 0; i < Parameters.Count; i++)
             {
+                if (function_override != null)
+                {
+                    XPathNavigator param_override = function_override.SelectSingleNode(String.Format("param[@name='{0}']", Parameters[i].Name));
+                    if (param_override != null)
+                    {
+                        foreach (XPathNavigator node in param_override.SelectChildren(XPathNodeType.Element))
+                        {
+                            switch (node.Name)
+                            {
+                                case "type": Parameters[i].CurrentType = (string)node.TypedValue; break;
+                                case "name": Parameters[i].Name = (string)node.TypedValue; break;
+                            }
+                        }
+                    }
+                }
+
                 Parameters[i].Translate(this.Category);
 
                 if (Parameters[i].CurrentType == "UInt16" && Name.Contains("LineStipple"))
                     Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
 
-                // Special case: these functions take a string[]
+                // Special case: these functions take a string[] that should stay as is.
+                // Todo: move to gloverrides.xml
                 if (Name.Contains("ShaderSource") && Parameters[i].CurrentType.ToLower().Contains("string"))
                     Parameters[i].Array = 1;
             }
@@ -530,10 +608,17 @@ namespace Bind.Structures
 
         #endregion
 
-        internal void Translate()
+        internal void Translate(XPathDocument overrides)
         {
-            TranslateReturnType();
-            TranslateParameters();
+            if (overrides == null)
+                throw new ArgumentNullException("overrides");
+
+            XPathNavigator navigator = overrides.CreateNavigator();
+            string path = "/override/function[@name='{0}' and @extension='{1}']";
+            string name = TrimName(Name, false);
+            XPathNavigator function_override = overrides.CreateNavigator().SelectSingleNode(String.Format(path, name, Extension));
+            TranslateReturnType(function_override);
+            TranslateParameters(function_override);
 
             CreateWrappers();
         }
@@ -541,9 +626,9 @@ namespace Bind.Structures
         #endregion
     }
 
-    #region class DelegateCollection : Dictionary<string, Delegate>
+    #region class DelegateCollection : SortedDictionary<string, Delegate>
 
-    class DelegateCollection : Dictionary<string, Delegate>
+    class DelegateCollection : SortedDictionary<string, Delegate>
     {
         public void Add(Delegate d)
         {

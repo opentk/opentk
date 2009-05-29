@@ -162,28 +162,37 @@ namespace Bind.Structures
         /// <param name="c">The Constant to translate</param>
         /// <param name="enums">The list of enums to check.</param>
         /// <param name="auxEnums">The list of auxilliary enums to check.</param>
-        public static void TranslateConstantWithReference(Constant c, EnumCollection enums, EnumCollection auxEnums)
+        /// <returns>True if the reference was found; false otherwise.</returns>
+        public static bool TranslateConstantWithReference(Constant c, EnumCollection enums, EnumCollection auxEnums)
         {
             if (!String.IsNullOrEmpty(c.Reference))
             {
-                string value;
+                Constant referenced_constant;
 
-                if (enums[c.Reference].ConstantCollection.ContainsKey(c.Value))
+                if (enums.ContainsKey(c.Reference) && enums[c.Reference].ConstantCollection.ContainsKey(c.Value))
                 {
                     TranslateConstantWithReference(enums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
-                    value = (enums[c.Reference].ConstantCollection[c.Value] as Constant).Value;
+                    referenced_constant = (enums[c.Reference].ConstantCollection[c.Value] as Constant);
                 }
-                else if (auxEnums.Count > 0 && auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
+                else if (auxEnums.ContainsKey(c.Reference) && auxEnums[c.Reference].ConstantCollection.ContainsKey(c.Value))
                 {
                     TranslateConstantWithReference(auxEnums[c.Reference].ConstantCollection[c.Value] as Constant, enums, auxEnums);
-                    value = (auxEnums[c.Reference].ConstantCollection[c.Value] as Constant).Value;
+                    referenced_constant = (auxEnums[c.Reference].ConstantCollection[c.Value] as Constant);
                 }
-                else throw new InvalidOperationException(String.Format("Unknown Enum \"{0}\" referenced by Constant \"{1}\"",
-                                                                       c.Reference, c.ToString()));
+                else
+                {
+                    Console.WriteLine("[Warning] Reference {0} not found for token {1}.", c.Reference, c);
+                    return false;
+                }
+                //else throw new InvalidOperationException(String.Format("Unknown Enum \"{0}\" referenced by Constant \"{1}\"",
+                //                                                       c.Reference, c.ToString()));
 
-                c.Value = value;
+                c.Value = referenced_constant.Value;
                 c.Reference = null;
+                c.Unchecked = referenced_constant.Unchecked;
             }
+
+            return true;
         }
 
         #region public override string ToString()
