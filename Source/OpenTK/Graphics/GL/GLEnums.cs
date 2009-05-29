@@ -5213,6 +5213,22 @@ namespace OpenTK.Graphics
         Aux1 = ((int)0X040a),
         Aux2 = ((int)0X040b),
         Aux3 = ((int)0X040c),
+        ColorAttachment0 = ((int)0X8ce0),
+        ColorAttachment1 = ((int)0X8ce1),
+        ColorAttachment2 = ((int)0X8ce2),
+        ColorAttachment3 = ((int)0X8ce3),
+        ColorAttachment4 = ((int)0X8ce4),
+        ColorAttachment5 = ((int)0X8ce5),
+        ColorAttachment6 = ((int)0X8ce6),
+        ColorAttachment7 = ((int)0X8ce7),
+        ColorAttachment8 = ((int)0X8ce8),
+        ColorAttachment9 = ((int)0X8ce9),
+        ColorAttachment10 = ((int)0X8cea),
+        ColorAttachment11 = ((int)0X8ceb),
+        ColorAttachment12 = ((int)0X8cec),
+        ColorAttachment13 = ((int)0X8ced),
+        ColorAttachment14 = ((int)0X8cee),
+        ColorAttachment15 = ((int)0X8cef),
     }
 
     public enum DrawBuffersEnum
