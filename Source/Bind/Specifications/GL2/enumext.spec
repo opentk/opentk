@@ -7106,7 +7106,10 @@ ProgramParameter enum:
     use ARB_uniform_buffer_object ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH
     use ARB_uniform_buffer_object ACTIVE_UNIFORM_BLOCKS
 
-# Used in TexBuffer    
+# Used in TexBuffer
+TextureBufferTarget enum:
+	use VERSION_3_1 TEXTURE_BUFFER
+
 SizedInternalFormat enum:
 	use PixelInternalFormat R8
 	use PixelInternalFormat R16
