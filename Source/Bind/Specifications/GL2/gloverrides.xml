@@ -261,7 +261,9 @@
   </function>
 
   <!-- Version 3.1 -->
+  
   <function name="TexBuffer" extension="Core">
+    <param name="target"><type>TextureBufferTarget</type></param>
     <param name="internalformat"><type>SizedInternalFormat</type></param>
   </function>
   

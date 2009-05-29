@@ -4064,7 +4064,7 @@ namespace OpenTK.Graphics
             internal delegate bool TestObjectAPPLE(OpenTK.Graphics.AppleFence @object, UInt32 name);
             internal static TestObjectAPPLE glTestObjectAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TexBuffer(OpenTK.Graphics.TextureTarget target, OpenTK.Graphics.SizedInternalFormat internalformat, UInt32 buffer);
+            internal delegate void TexBuffer(OpenTK.Graphics.TextureBufferTarget target, OpenTK.Graphics.SizedInternalFormat internalformat, UInt32 buffer);
             internal static TexBuffer glTexBuffer;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexBufferARB(OpenTK.Graphics.TextureTarget target, OpenTK.Graphics.ArbTextureBufferObject internalformat, UInt32 buffer);

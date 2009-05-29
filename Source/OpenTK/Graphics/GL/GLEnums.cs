@@ -9665,6 +9665,11 @@ namespace OpenTK.Graphics
         HalfFloat = ((int)0X140b),
     }
 
+    public enum TextureBufferTarget
+    {
+        TextureBuffer = ((int)0X8c2a),
+    }
+
     public enum TextureCompareMode
     {
         CompareRefToTexture = ((int)0X884e),

@@ -1525,7 +1525,7 @@ namespace OpenTK.Graphics
             internal extern static void TessellationModeAMD(OpenTK.Graphics.AmdVertexShaderTesselator mode);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexBuffer", ExactSpelling = true)]
-            internal extern static void TexBuffer(OpenTK.Graphics.TextureTarget target, OpenTK.Graphics.SizedInternalFormat internalformat, UInt32 buffer);
+            internal extern static void TexBuffer(OpenTK.Graphics.TextureBufferTarget target, OpenTK.Graphics.SizedInternalFormat internalformat, UInt32 buffer);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(GL.Library, EntryPoint = "glTexCoord1d", ExactSpelling = true)]
             internal extern static void TexCoord1d(Double s);
