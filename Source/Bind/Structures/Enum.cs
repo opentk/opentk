@@ -199,7 +199,7 @@ namespace Bind.Structures
 
     #region class EnumCollection
 
-    public class EnumCollection : Dictionary<string, Enum>
+    public class EnumCollection : SortedDictionary<string, Enum>
     {
         internal void AddRange(EnumCollection enums)
         {
@@ -258,8 +258,18 @@ namespace Bind.Structures
             }
 
             foreach (Enum e in this.Values)
+            {
+            restart:
                 foreach (Constant c in e.ConstantCollection.Values)
-                    Constant.TranslateConstantWithReference(c, Enum.GLEnums, Enum.AuxEnums);
+                {
+                    bool result = Constant.TranslateConstantWithReference(c, Enum.GLEnums, Enum.AuxEnums);
+                    if (!result)
+                    {
+                        e.ConstantCollection.Remove(c.Name);
+                        goto restart;
+                    }
+                }
+            }
 
             if (Settings.DropMultipleTokens)
             {

@@ -11,6 +11,7 @@ using System.IO;
 using Bind.Structures;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Xml.XPath;
 
 namespace Bind.GL2
 {
@@ -30,6 +31,8 @@ namespace Bind.GL2
         protected static string enumsFile = "GLEnums.cs";
         protected static string wrappersFile = "GL.cs";
 
+        protected static readonly string functionOverridesFile = "GL2/gloverrides.xml";
+
         protected static string loadAllFuncName = "LoadAll";
 
         protected static Regex enumToDotNet = new Regex("_[a-z|A-Z]?", RegexOptions.Compiled);
@@ -38,6 +41,7 @@ namespace Bind.GL2
         //protected static readonly Dictionary<string, string> doc_replacements;
 
         DocProcessor doc_processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
+        XPathDocument function_overrides = new XPathDocument(Path.Combine(Settings.InputPath, functionOverridesFile));
 
         #endregion
 
@@ -117,10 +121,6 @@ namespace Bind.GL2
                     // Get function name:
                     d.Name = line.Split(Utilities.Separators, StringSplitOptions.RemoveEmptyEntries)[0];
 
-                    //if (d.Name.Contains("QueryHyperpipeBestAttribSGIX"))
-                    //{
-                    //}
-
                     do
                     {
                         // Get function parameters and return value
@@ -165,7 +165,7 @@ namespace Bind.GL2
                     }
                     while (!specFile.EndOfStream);
 
-                    d.Translate();
+                    d.Translate(function_overrides);
 
                     delegates.Add(d);
                 }

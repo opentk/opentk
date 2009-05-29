@@ -33,14 +33,6 @@ namespace Bind.Structures
         
         #endregion
 
-        static Regex endings = new Regex(@"((([df]|u?[isb])_?v?)|v)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-        static Regex endingsNotToTrim = new Regex("(ib|[tdrey]s|[eE]n[vd]|bled|Flagv|Tess|Status|Pixels|Instanced|Indexed|Varyings)", RegexOptions.Compiled | RegexOptions.RightToLeft);
-
-        // Add a trailing v to functions matching this regex. Used to differntiate between overloads taking both
-        // a 'type' and a 'ref type' (such overloads are not CLS Compliant).
-        // The default Regex matches no functions. Create a new Regex in Bind.Generator classes to override the default behavior. 
-        internal static Regex endingsAddV = new Regex("^0", RegexOptions.Compiled);
-
         #endregion
 
         #region Fields
@@ -636,9 +628,9 @@ namespace Bind.Structures
 
     #endregion
 
-    #region class FunctionCollection : Dictionary<string, List<Function>>
+    #region class FunctionCollection : SortedDictionary<string, List<Function>>
 
-    class FunctionCollection : Dictionary<string, List<Function>>
+    class FunctionCollection : SortedDictionary<string, List<Function>>
     {
         Regex unsignedFunctions = new Regex(@".+(u[dfisb]v?)", RegexOptions.Compiled);
 
@@ -669,10 +661,6 @@ namespace Bind.Structures
         /// <param name="f">The Function to add.</param>
         public void AddChecked(Function f)
         {
-            if (f.Name.Contains("Color3ub"))
-            {
-            }
-
             if (Bind.Structures.Function.Wrappers.ContainsKey(f.Extension))
             {
                 int index = Bind.Structures.Function.Wrappers[f.Extension].IndexOf(f);

@@ -1,11 +1,13 @@
 # List of GL enumerants for glext.h header
 #
-# This is NOT the master GL enumerant registry (enum.spec).
+# This is derived from the master GL enumerant registry (enum.spec).
 #
 # Unlike enum.spec, enumext.spec is
-#   (1) In order by extension number
-#   (2) Includes only extensions and 1.2/1.3 core enumerants, since
-#	it's assumed all <gl.h> today support at least OpenGL 1.1
+#   (1) Grouped by GL core version or extension number
+#   (2) While it includes all extension and core enumerants, the
+#	generator scripts for glext.h leave out VERSION_1_1
+#	tokens since it's assumed all <gl.h> today support at least
+#	OpenGL 1.1
 #   (3) Has no 'Extensions' section, since enums are always
 #	conditionally protected against multiple definition
 #	by glextenum.pl.
@@ -15,11 +17,604 @@
 # glext.h version number - this should be automatically updated,
 #   when changing either enum or template spec files.
 
-passthru:
-passthru: /* Header file version number, required by OpenGL ABI for Linux */
-passthru: /* glext.h last updated 2008/11/14 */
-passthru: /* Current version at http://www.opengl.org/registry/ */
-passthru: #define GL_GLEXT_VERSION 48
+###############################################################################
+#
+# OpenGL 1.0/1.1 enums (there is no VERSION_1_0 token)
+#
+###############################################################################
+
+VERSION_1_1 enum:
+passthru: /* AttribMask */
+	DEPTH_BUFFER_BIT				= 0x00000100	# AttribMask
+	STENCIL_BUFFER_BIT				= 0x00000400	# AttribMask
+	COLOR_BUFFER_BIT				= 0x00004000	# AttribMask
+passthru: /* Boolean */
+	FALSE						= 0		# Boolean
+	TRUE						= 1		# Boolean
+passthru: /* BeginMode */
+	POINTS						= 0x0000	# BeginMode
+	LINES						= 0x0001	# BeginMode
+	LINE_LOOP					= 0x0002	# BeginMode
+	LINE_STRIP					= 0x0003	# BeginMode
+	TRIANGLES					= 0x0004	# BeginMode
+	TRIANGLE_STRIP					= 0x0005	# BeginMode
+	TRIANGLE_FAN					= 0x0006	# BeginMode
+passthru: /* AlphaFunction */
+	NEVER						= 0x0200	# AlphaFunction
+	LESS						= 0x0201	# AlphaFunction
+	EQUAL						= 0x0202	# AlphaFunction
+	LEQUAL						= 0x0203	# AlphaFunction
+	GREATER						= 0x0204	# AlphaFunction
+	NOTEQUAL					= 0x0205	# AlphaFunction
+	GEQUAL						= 0x0206	# AlphaFunction
+	ALWAYS						= 0x0207	# AlphaFunction
+passthru: /* BlendingFactorDest */
+	ZERO						= 0		# BlendingFactorDest
+	ONE						= 1		# BlendingFactorDest
+	SRC_COLOR					= 0x0300	# BlendingFactorDest
+	ONE_MINUS_SRC_COLOR				= 0x0301	# BlendingFactorDest
+	SRC_ALPHA					= 0x0302	# BlendingFactorDest
+	ONE_MINUS_SRC_ALPHA				= 0x0303	# BlendingFactorDest
+	DST_ALPHA					= 0x0304	# BlendingFactorDest
+	ONE_MINUS_DST_ALPHA				= 0x0305	# BlendingFactorDest
+passthru: /* BlendingFactorSrc */
+	DST_COLOR					= 0x0306	# BlendingFactorSrc
+	ONE_MINUS_DST_COLOR				= 0x0307	# BlendingFactorSrc
+	SRC_ALPHA_SATURATE				= 0x0308	# BlendingFactorSrc
+passthru: /* DrawBufferMode */
+	NONE						= 0		# DrawBufferMode
+	FRONT_LEFT					= 0x0400	# DrawBufferMode
+	FRONT_RIGHT					= 0x0401	# DrawBufferMode
+	BACK_LEFT					= 0x0402	# DrawBufferMode
+	BACK_RIGHT					= 0x0403	# DrawBufferMode
+	FRONT						= 0x0404	# DrawBufferMode
+	BACK						= 0x0405	# DrawBufferMode
+	LEFT						= 0x0406	# DrawBufferMode
+	RIGHT						= 0x0407	# DrawBufferMode
+	FRONT_AND_BACK					= 0x0408	# DrawBufferMode
+passthru: /* ErrorCode */
+	NO_ERROR					= 0		# ErrorCode
+	INVALID_ENUM					= 0x0500	# ErrorCode
+	INVALID_VALUE					= 0x0501	# ErrorCode
+	INVALID_OPERATION				= 0x0502	# ErrorCode
+	OUT_OF_MEMORY					= 0x0505	# ErrorCode
+passthru: /* FrontFaceDirection */
+	CW						= 0x0900	# FrontFaceDirection
+	CCW						= 0x0901	# FrontFaceDirection
+passthru: /* GetPName */
+	POINT_SIZE					= 0x0B11 # 1 F	# GetPName
+	POINT_SIZE_RANGE				= 0x0B12 # 2 F	# GetPName
+	POINT_SIZE_GRANULARITY				= 0x0B13 # 1 F	# GetPName
+	LINE_SMOOTH					= 0x0B20 # 1 I	# GetPName
+	LINE_WIDTH					= 0x0B21 # 1 F	# GetPName
+	LINE_WIDTH_RANGE				= 0x0B22 # 2 F	# GetPName
+	LINE_WIDTH_GRANULARITY				= 0x0B23 # 1 F	# GetPName
+	POLYGON_SMOOTH					= 0x0B41 # 1 I	# GetPName
+	CULL_FACE					= 0x0B44 # 1 I	# GetPName
+	CULL_FACE_MODE					= 0x0B45 # 1 I	# GetPName
+	FRONT_FACE					= 0x0B46 # 1 I	# GetPName
+	DEPTH_RANGE					= 0x0B70 # 2 F	# GetPName
+	DEPTH_TEST					= 0x0B71 # 1 I	# GetPName
+	DEPTH_WRITEMASK					= 0x0B72 # 1 I	# GetPName
+	DEPTH_CLEAR_VALUE				= 0x0B73 # 1 F	# GetPName
+	DEPTH_FUNC					= 0x0B74 # 1 I	# GetPName
+	STENCIL_TEST					= 0x0B90 # 1 I	# GetPName
+	STENCIL_CLEAR_VALUE				= 0x0B91 # 1 I	# GetPName
+	STENCIL_FUNC					= 0x0B92 # 1 I	# GetPName
+	STENCIL_VALUE_MASK				= 0x0B93 # 1 I	# GetPName
+	STENCIL_FAIL					= 0x0B94 # 1 I	# GetPName
+	STENCIL_PASS_DEPTH_FAIL				= 0x0B95 # 1 I	# GetPName
+	STENCIL_PASS_DEPTH_PASS				= 0x0B96 # 1 I	# GetPName
+	STENCIL_REF					= 0x0B97 # 1 I	# GetPName
+	STENCIL_WRITEMASK				= 0x0B98 # 1 I	# GetPName
+	VIEWPORT					= 0x0BA2 # 4 I	# GetPName
+	DITHER						= 0x0BD0 # 1 I	# GetPName
+	BLEND_DST					= 0x0BE0 # 1 I	# GetPName
+	BLEND_SRC					= 0x0BE1 # 1 I	# GetPName
+	BLEND						= 0x0BE2 # 1 I	# GetPName
+	LOGIC_OP_MODE					= 0x0BF0 # 1 I	# GetPName
+	COLOR_LOGIC_OP					= 0x0BF2 # 1 I	# GetPName
+	DRAW_BUFFER					= 0x0C01 # 1 I	# GetPName
+	READ_BUFFER					= 0x0C02 # 1 I	# GetPName
+	SCISSOR_BOX					= 0x0C10 # 4 I	# GetPName
+	SCISSOR_TEST					= 0x0C11 # 1 I	# GetPName
+	COLOR_CLEAR_VALUE				= 0x0C22 # 4 F	# GetPName
+	COLOR_WRITEMASK					= 0x0C23 # 4 I	# GetPName
+	DOUBLEBUFFER					= 0x0C32 # 1 I	# GetPName
+	STEREO						= 0x0C33 # 1 I	# GetPName
+	LINE_SMOOTH_HINT				= 0x0C52 # 1 I	# GetPName
+	POLYGON_SMOOTH_HINT				= 0x0C53 # 1 I	# GetPName
+	UNPACK_SWAP_BYTES				= 0x0CF0 # 1 I	# GetPName
+	UNPACK_LSB_FIRST				= 0x0CF1 # 1 I	# GetPName
+	UNPACK_ROW_LENGTH				= 0x0CF2 # 1 I	# GetPName
+	UNPACK_SKIP_ROWS				= 0x0CF3 # 1 I	# GetPName
+	UNPACK_SKIP_PIXELS				= 0x0CF4 # 1 I	# GetPName
+	UNPACK_ALIGNMENT				= 0x0CF5 # 1 I	# GetPName
+	PACK_SWAP_BYTES					= 0x0D00 # 1 I	# GetPName
+	PACK_LSB_FIRST					= 0x0D01 # 1 I	# GetPName
+	PACK_ROW_LENGTH					= 0x0D02 # 1 I	# GetPName
+	PACK_SKIP_ROWS					= 0x0D03 # 1 I	# GetPName
+	PACK_SKIP_PIXELS				= 0x0D04 # 1 I	# GetPName
+	PACK_ALIGNMENT					= 0x0D05 # 1 I	# GetPName
+	MAX_TEXTURE_SIZE				= 0x0D33 # 1 I	# GetPName
+	MAX_VIEWPORT_DIMS				= 0x0D3A # 2 F	# GetPName
+	SUBPIXEL_BITS					= 0x0D50 # 1 I	# GetPName
+	TEXTURE_1D					= 0x0DE0 # 1 I	# GetPName
+	TEXTURE_2D					= 0x0DE1 # 1 I	# GetPName
+	POLYGON_OFFSET_UNITS				= 0x2A00 # 1 F	# GetPName
+	POLYGON_OFFSET_POINT				= 0x2A01 # 1 I	# GetPName
+	POLYGON_OFFSET_LINE				= 0x2A02 # 1 I	# GetPName
+	POLYGON_OFFSET_FILL				= 0x8037 # 1 I	# GetPName
+	POLYGON_OFFSET_FACTOR				= 0x8038 # 1 F	# GetPName
+	TEXTURE_BINDING_1D				= 0x8068 # 1 I	# GetPName
+	TEXTURE_BINDING_2D				= 0x8069 # 1 I	# GetPName
+passthru: /* GetTextureParameter */
+	TEXTURE_WIDTH					= 0x1000	# GetTextureParameter
+	TEXTURE_HEIGHT					= 0x1001	# GetTextureParameter
+	TEXTURE_INTERNAL_FORMAT				= 0x1003	# GetTextureParameter
+	TEXTURE_BORDER_COLOR				= 0x1004	# GetTextureParameter
+	TEXTURE_BORDER					= 0x1005	# GetTextureParameter
+	TEXTURE_RED_SIZE				= 0x805C	# GetTextureParameter
+	TEXTURE_GREEN_SIZE				= 0x805D	# GetTextureParameter
+	TEXTURE_BLUE_SIZE				= 0x805E	# GetTextureParameter
+	TEXTURE_ALPHA_SIZE				= 0x805F	# GetTextureParameter
+passthru: /* HintMode */
+	DONT_CARE					= 0x1100	# HintMode
+	FASTEST						= 0x1101	# HintMode
+	NICEST						= 0x1102	# HintMode
+passthru: /* DataType */
+	BYTE						= 0x1400	# DataType
+	UNSIGNED_BYTE					= 0x1401	# DataType
+	SHORT						= 0x1402	# DataType
+	UNSIGNED_SHORT					= 0x1403	# DataType
+	INT						= 0x1404	# DataType
+	UNSIGNED_INT					= 0x1405	# DataType
+	FLOAT						= 0x1406	# DataType
+	DOUBLE						= 0x140A	# DataType
+passthru: /* LogicOp */
+	CLEAR						= 0x1500	# LogicOp
+	AND						= 0x1501	# LogicOp
+	AND_REVERSE					= 0x1502	# LogicOp
+	COPY						= 0x1503	# LogicOp
+	AND_INVERTED					= 0x1504	# LogicOp
+	NOOP						= 0x1505	# LogicOp
+	XOR						= 0x1506	# LogicOp
+	OR						= 0x1507	# LogicOp
+	NOR						= 0x1508	# LogicOp
+	EQUIV						= 0x1509	# LogicOp
+	INVERT						= 0x150A	# LogicOp
+	OR_REVERSE					= 0x150B	# LogicOp
+	COPY_INVERTED					= 0x150C	# LogicOp
+	OR_INVERTED					= 0x150D	# LogicOp
+	NAND						= 0x150E	# LogicOp
+	SET						= 0x150F	# LogicOp
+passthru: /* MatrixMode (for gl3.h, FBO attachment type) */
+	TEXTURE						= 0x1702	# MatrixMode
+passthru: /* PixelCopyType */
+	COLOR						= 0x1800	# PixelCopyType
+	DEPTH						= 0x1801	# PixelCopyType
+	STENCIL						= 0x1802	# PixelCopyType
+passthru: /* PixelFormat */
+	STENCIL_INDEX					= 0x1901	# PixelFormat
+	DEPTH_COMPONENT					= 0x1902	# PixelFormat
+	RED						= 0x1903	# PixelFormat
+	GREEN						= 0x1904	# PixelFormat
+	BLUE						= 0x1905	# PixelFormat
+	ALPHA						= 0x1906	# PixelFormat
+	RGB						= 0x1907	# PixelFormat
+	RGBA						= 0x1908	# PixelFormat
+passthru: /* PolygonMode */
+	POINT						= 0x1B00	# PolygonMode
+	LINE						= 0x1B01	# PolygonMode
+	FILL						= 0x1B02	# PolygonMode
+passthru: /* StencilOp */
+	KEEP						= 0x1E00	# StencilOp
+	REPLACE						= 0x1E01	# StencilOp
+	INCR						= 0x1E02	# StencilOp
+	DECR						= 0x1E03	# StencilOp
+passthru: /* StringName */
+	VENDOR						= 0x1F00	# StringName
+	RENDERER					= 0x1F01	# StringName
+	VERSION						= 0x1F02	# StringName
+	EXTENSIONS					= 0x1F03	# StringName
+passthru: /* TextureMagFilter */
+	NEAREST						= 0x2600	# TextureMagFilter
+	LINEAR						= 0x2601	# TextureMagFilter
+passthru: /* TextureMinFilter */
+	NEAREST_MIPMAP_NEAREST				= 0x2700	# TextureMinFilter
+	LINEAR_MIPMAP_NEAREST				= 0x2701	# TextureMinFilter
+	NEAREST_MIPMAP_LINEAR				= 0x2702	# TextureMinFilter
+	LINEAR_MIPMAP_LINEAR				= 0x2703	# TextureMinFilter
+passthru: /* TextureParameterName */
+	TEXTURE_MAG_FILTER				= 0x2800	# TextureParameterName
+	TEXTURE_MIN_FILTER				= 0x2801	# TextureParameterName
+	TEXTURE_WRAP_S					= 0x2802	# TextureParameterName
+	TEXTURE_WRAP_T					= 0x2803	# TextureParameterName
+passthru: /* TextureTarget */
+	PROXY_TEXTURE_1D				= 0x8063	# TextureTarget
+	PROXY_TEXTURE_2D				= 0x8064	# TextureTarget
+passthru: /* TextureWrapMode */
+	REPEAT						= 0x2901	# TextureWrapMode
+passthru: /* PixelInternalFormat */
+	R3_G3_B2					= 0x2A10	# PixelInternalFormat
+	RGB4						= 0x804F	# PixelInternalFormat
+	RGB5						= 0x8050	# PixelInternalFormat
+	RGB8						= 0x8051	# PixelInternalFormat
+	RGB10						= 0x8052	# PixelInternalFormat
+	RGB12						= 0x8053	# PixelInternalFormat
+	RGB16						= 0x8054	# PixelInternalFormat
+	RGBA2						= 0x8055	# PixelInternalFormat
+	RGBA4						= 0x8056	# PixelInternalFormat
+	RGB5_A1						= 0x8057	# PixelInternalFormat
+	RGBA8						= 0x8058	# PixelInternalFormat
+	RGB10_A2					= 0x8059	# PixelInternalFormat
+	RGBA12						= 0x805A	# PixelInternalFormat
+	RGBA16						= 0x805B	# PixelInternalFormat
+
+VERSION_1_1_DEPRECATED enum:
+passthru: /* AttribMask */
+	CURRENT_BIT					= 0x00000001	# AttribMask
+	POINT_BIT					= 0x00000002	# AttribMask
+	LINE_BIT					= 0x00000004	# AttribMask
+	POLYGON_BIT					= 0x00000008	# AttribMask
+	POLYGON_STIPPLE_BIT				= 0x00000010	# AttribMask
+	PIXEL_MODE_BIT					= 0x00000020	# AttribMask
+	LIGHTING_BIT					= 0x00000040	# AttribMask
+	FOG_BIT						= 0x00000080	# AttribMask
+	ACCUM_BUFFER_BIT				= 0x00000200	# AttribMask
+	VIEWPORT_BIT					= 0x00000800	# AttribMask
+	TRANSFORM_BIT					= 0x00001000	# AttribMask
+	ENABLE_BIT					= 0x00002000	# AttribMask
+	HINT_BIT					= 0x00008000	# AttribMask
+	EVAL_BIT					= 0x00010000	# AttribMask
+	LIST_BIT					= 0x00020000	# AttribMask
+	TEXTURE_BIT					= 0x00040000	# AttribMask
+	SCISSOR_BIT					= 0x00080000	# AttribMask
+	ALL_ATTRIB_BITS					= 0xFFFFFFFF	# AttribMask
+passthru: /* ClientAttribMask */
+	CLIENT_PIXEL_STORE_BIT				= 0x00000001	# ClientAttribMask
+	CLIENT_VERTEX_ARRAY_BIT				= 0x00000002	# ClientAttribMask
+	CLIENT_ALL_ATTRIB_BITS				= 0xFFFFFFFF	# ClientAttribMask
+passthru: /* BeginMode */
+	QUADS						= 0x0007	# BeginMode
+	QUAD_STRIP					= 0x0008	# BeginMode
+	POLYGON						= 0x0009	# BeginMode
+passthru: /* AccumOp */
+	ACCUM						= 0x0100	# AccumOp
+	LOAD						= 0x0101	# AccumOp
+	RETURN						= 0x0102	# AccumOp
+	MULT						= 0x0103	# AccumOp
+	ADD						= 0x0104	# AccumOp
+passthru: /* DrawBufferMode */
+	AUX0						= 0x0409	# DrawBufferMode
+	AUX1						= 0x040A	# DrawBufferMode
+	AUX2						= 0x040B	# DrawBufferMode
+	AUX3						= 0x040C	# DrawBufferMode
+passthru: /* ErrorCode */
+	STACK_OVERFLOW					= 0x0503	# ErrorCode
+	STACK_UNDERFLOW					= 0x0504	# ErrorCode
+passthru: /* FeedbackType */
+	2D						= 0x0600	# FeedbackType
+	3D						= 0x0601	# FeedbackType
+	3D_COLOR					= 0x0602	# FeedbackType
+	3D_COLOR_TEXTURE				= 0x0603	# FeedbackType
+	4D_COLOR_TEXTURE				= 0x0604	# FeedbackType
+passthru: /* FeedBackToken */
+	PASS_THROUGH_TOKEN				= 0x0700	# FeedBackToken
+	POINT_TOKEN					= 0x0701	# FeedBackToken
+	LINE_TOKEN					= 0x0702	# FeedBackToken
+	POLYGON_TOKEN					= 0x0703	# FeedBackToken
+	BITMAP_TOKEN					= 0x0704	# FeedBackToken
+	DRAW_PIXEL_TOKEN				= 0x0705	# FeedBackToken
+	COPY_PIXEL_TOKEN				= 0x0706	# FeedBackToken
+	LINE_RESET_TOKEN				= 0x0707	# FeedBackToken
+passthru: /* FogMode */
+	EXP						= 0x0800	# FogMode
+	EXP2						= 0x0801	# FogMode
+passthru: /* GetMapQuery */
+	COEFF						= 0x0A00	# GetMapQuery
+	ORDER						= 0x0A01	# GetMapQuery
+	DOMAIN						= 0x0A02	# GetMapQuery
+passthru: /* GetPixelMap */
+	PIXEL_MAP_I_TO_I				= 0x0C70	# GetPixelMap
+	PIXEL_MAP_S_TO_S				= 0x0C71	# GetPixelMap
+	PIXEL_MAP_I_TO_R				= 0x0C72	# GetPixelMap
+	PIXEL_MAP_I_TO_G				= 0x0C73	# GetPixelMap
+	PIXEL_MAP_I_TO_B				= 0x0C74	# GetPixelMap
+	PIXEL_MAP_I_TO_A				= 0x0C75	# GetPixelMap
+	PIXEL_MAP_R_TO_R				= 0x0C76	# GetPixelMap
+	PIXEL_MAP_G_TO_G				= 0x0C77	# GetPixelMap
+	PIXEL_MAP_B_TO_B				= 0x0C78	# GetPixelMap
+	PIXEL_MAP_A_TO_A				= 0x0C79	# GetPixelMap
+passthru: /* GetPointervPName */
+	VERTEX_ARRAY_POINTER				= 0x808E	# GetPointervPName
+	NORMAL_ARRAY_POINTER				= 0x808F	# GetPointervPName
+	COLOR_ARRAY_POINTER				= 0x8090	# GetPointervPName
+	INDEX_ARRAY_POINTER				= 0x8091	# GetPointervPName
+	TEXTURE_COORD_ARRAY_POINTER			= 0x8092	# GetPointervPName
+	EDGE_FLAG_ARRAY_POINTER				= 0x8093	# GetPointervPName
+	FEEDBACK_BUFFER_POINTER				= 0x0DF0	# GetPointervPName
+	SELECTION_BUFFER_POINTER			= 0x0DF3	# GetPointervPName
+passthru: /* GetPName */
+	CURRENT_COLOR					= 0x0B00 # 4 F	# GetPName
+	CURRENT_INDEX					= 0x0B01 # 1 F	# GetPName
+	CURRENT_NORMAL					= 0x0B02 # 3 F	# GetPName
+	CURRENT_TEXTURE_COORDS				= 0x0B03 # 4 F	# GetPName
+	CURRENT_RASTER_COLOR				= 0x0B04 # 4 F	# GetPName
+	CURRENT_RASTER_INDEX				= 0x0B05 # 1 F	# GetPName
+	CURRENT_RASTER_TEXTURE_COORDS			= 0x0B06 # 4 F	# GetPName
+	CURRENT_RASTER_POSITION				= 0x0B07 # 4 F	# GetPName
+	CURRENT_RASTER_POSITION_VALID			= 0x0B08 # 1 I	# GetPName
+	CURRENT_RASTER_DISTANCE				= 0x0B09 # 1 F	# GetPName
+	POINT_SMOOTH					= 0x0B10 # 1 I	# GetPName
+	LINE_STIPPLE					= 0x0B24 # 1 I	# GetPName
+	LINE_STIPPLE_PATTERN				= 0x0B25 # 1 I	# GetPName
+	LINE_STIPPLE_REPEAT				= 0x0B26 # 1 I	# GetPName
+	LIST_MODE					= 0x0B30 # 1 I	# GetPName
+	MAX_LIST_NESTING				= 0x0B31 # 1 I	# GetPName
+	LIST_BASE					= 0x0B32 # 1 I	# GetPName
+	LIST_INDEX					= 0x0B33 # 1 I	# GetPName
+	POLYGON_MODE					= 0x0B40 # 2 I	# GetPName
+	POLYGON_STIPPLE					= 0x0B42 # 1 I	# GetPName
+	EDGE_FLAG					= 0x0B43 # 1 I	# GetPName
+	LIGHTING					= 0x0B50 # 1 I	# GetPName
+	LIGHT_MODEL_LOCAL_VIEWER			= 0x0B51 # 1 I	# GetPName
+	LIGHT_MODEL_TWO_SIDE				= 0x0B52 # 1 I	# GetPName
+	LIGHT_MODEL_AMBIENT				= 0x0B53 # 4 F	# GetPName
+	SHADE_MODEL					= 0x0B54 # 1 I	# GetPName
+	COLOR_MATERIAL_FACE				= 0x0B55 # 1 I	# GetPName
+	COLOR_MATERIAL_PARAMETER			= 0x0B56 # 1 I	# GetPName
+	COLOR_MATERIAL					= 0x0B57 # 1 I	# GetPName
+	FOG						= 0x0B60 # 1 I	# GetPName
+	FOG_INDEX					= 0x0B61 # 1 I	# GetPName
+	FOG_DENSITY					= 0x0B62 # 1 F	# GetPName
+	FOG_START					= 0x0B63 # 1 F	# GetPName
+	FOG_END						= 0x0B64 # 1 F	# GetPName
+	FOG_MODE					= 0x0B65 # 1 I	# GetPName
+	FOG_COLOR					= 0x0B66 # 4 F	# GetPName
+	ACCUM_CLEAR_VALUE				= 0x0B80 # 4 F	# GetPName
+	MATRIX_MODE					= 0x0BA0 # 1 I	# GetPName
+	NORMALIZE					= 0x0BA1 # 1 I	# GetPName
+	MODELVIEW_STACK_DEPTH				= 0x0BA3 # 1 I	# GetPName
+	PROJECTION_STACK_DEPTH				= 0x0BA4 # 1 I	# GetPName
+	TEXTURE_STACK_DEPTH				= 0x0BA5 # 1 I	# GetPName
+	MODELVIEW_MATRIX				= 0x0BA6 # 16 F # GetPName
+	PROJECTION_MATRIX				= 0x0BA7 # 16 F # GetPName
+	TEXTURE_MATRIX					= 0x0BA8 # 16 F # GetPName
+	ATTRIB_STACK_DEPTH				= 0x0BB0 # 1 I	# GetPName
+	CLIENT_ATTRIB_STACK_DEPTH			= 0x0BB1 # 1 I	# GetPName
+	ALPHA_TEST					= 0x0BC0 # 1 I	# GetPName
+	ALPHA_TEST_FUNC					= 0x0BC1 # 1 I	# GetPName
+	ALPHA_TEST_REF					= 0x0BC2 # 1 F	# GetPName
+	INDEX_LOGIC_OP					= 0x0BF1 # 1 I	# GetPName
+	LOGIC_OP					= 0x0BF1 # 1 I	# GetPName
+	AUX_BUFFERS					= 0x0C00 # 1 I	# GetPName
+	INDEX_CLEAR_VALUE				= 0x0C20 # 1 I	# GetPName
+	INDEX_WRITEMASK					= 0x0C21 # 1 I	# GetPName
+	INDEX_MODE					= 0x0C30 # 1 I	# GetPName
+	RGBA_MODE					= 0x0C31 # 1 I	# GetPName
+	RENDER_MODE					= 0x0C40 # 1 I	# GetPName
+	PERSPECTIVE_CORRECTION_HINT			= 0x0C50 # 1 I	# GetPName
+	POINT_SMOOTH_HINT				= 0x0C51 # 1 I	# GetPName
+	FOG_HINT					= 0x0C54 # 1 I	# GetPName
+	TEXTURE_GEN_S					= 0x0C60 # 1 I	# GetPName
+	TEXTURE_GEN_T					= 0x0C61 # 1 I	# GetPName
+	TEXTURE_GEN_R					= 0x0C62 # 1 I	# GetPName
+	TEXTURE_GEN_Q					= 0x0C63 # 1 I	# GetPName
+	PIXEL_MAP_I_TO_I_SIZE				= 0x0CB0 # 1 I	# GetPName
+	PIXEL_MAP_S_TO_S_SIZE				= 0x0CB1 # 1 I	# GetPName
+	PIXEL_MAP_I_TO_R_SIZE				= 0x0CB2 # 1 I	# GetPName
+	PIXEL_MAP_I_TO_G_SIZE				= 0x0CB3 # 1 I	# GetPName
+	PIXEL_MAP_I_TO_B_SIZE				= 0x0CB4 # 1 I	# GetPName
+	PIXEL_MAP_I_TO_A_SIZE				= 0x0CB5 # 1 I	# GetPName
+	PIXEL_MAP_R_TO_R_SIZE				= 0x0CB6 # 1 I	# GetPName
+	PIXEL_MAP_G_TO_G_SIZE				= 0x0CB7 # 1 I	# GetPName
+	PIXEL_MAP_B_TO_B_SIZE				= 0x0CB8 # 1 I	# GetPName
+	PIXEL_MAP_A_TO_A_SIZE				= 0x0CB9 # 1 I	# GetPName
+	MAP_COLOR					= 0x0D10 # 1 I	# GetPName
+	MAP_STENCIL					= 0x0D11 # 1 I	# GetPName
+	INDEX_SHIFT					= 0x0D12 # 1 I	# GetPName
+	INDEX_OFFSET					= 0x0D13 # 1 I	# GetPName
+	RED_SCALE					= 0x0D14 # 1 F	# GetPName
+	RED_BIAS					= 0x0D15 # 1 F	# GetPName
+	ZOOM_X						= 0x0D16 # 1 F	# GetPName
+	ZOOM_Y						= 0x0D17 # 1 F	# GetPName
+	GREEN_SCALE					= 0x0D18 # 1 F	# GetPName
+	GREEN_BIAS					= 0x0D19 # 1 F	# GetPName
+	BLUE_SCALE					= 0x0D1A # 1 F	# GetPName
+	BLUE_BIAS					= 0x0D1B # 1 F	# GetPName
+	ALPHA_SCALE					= 0x0D1C # 1 F	# GetPName
+	ALPHA_BIAS					= 0x0D1D # 1 F	# GetPName
+	DEPTH_SCALE					= 0x0D1E # 1 F	# GetPName
+	DEPTH_BIAS					= 0x0D1F # 1 F	# GetPName
+	MAX_EVAL_ORDER					= 0x0D30 # 1 I	# GetPName
+	MAX_LIGHTS					= 0x0D31 # 1 I	# GetPName
+	MAX_CLIP_PLANES					= 0x0D32 # 1 I	# GetPName
+	MAX_PIXEL_MAP_TABLE				= 0x0D34 # 1 I	# GetPName
+	MAX_ATTRIB_STACK_DEPTH				= 0x0D35 # 1 I	# GetPName
+	MAX_MODELVIEW_STACK_DEPTH			= 0x0D36 # 1 I	# GetPName
+	MAX_NAME_STACK_DEPTH				= 0x0D37 # 1 I	# GetPName
+	MAX_PROJECTION_STACK_DEPTH			= 0x0D38 # 1 I	# GetPName
+	MAX_TEXTURE_STACK_DEPTH				= 0x0D39 # 1 I	# GetPName
+	MAX_CLIENT_ATTRIB_STACK_DEPTH			= 0x0D3B # 1 I	# GetPName
+	INDEX_BITS					= 0x0D51 # 1 I	# GetPName
+	RED_BITS					= 0x0D52 # 1 I	# GetPName
+	GREEN_BITS					= 0x0D53 # 1 I	# GetPName
+	BLUE_BITS					= 0x0D54 # 1 I	# GetPName
+	ALPHA_BITS					= 0x0D55 # 1 I	# GetPName
+	DEPTH_BITS					= 0x0D56 # 1 I	# GetPName
+	STENCIL_BITS					= 0x0D57 # 1 I	# GetPName
+	ACCUM_RED_BITS					= 0x0D58 # 1 I	# GetPName
+	ACCUM_GREEN_BITS				= 0x0D59 # 1 I	# GetPName
+	ACCUM_BLUE_BITS					= 0x0D5A # 1 I	# GetPName
+	ACCUM_ALPHA_BITS				= 0x0D5B # 1 I	# GetPName
+	NAME_STACK_DEPTH				= 0x0D70 # 1 I	# GetPName
+	AUTO_NORMAL					= 0x0D80 # 1 I	# GetPName
+	MAP1_COLOR_4					= 0x0D90 # 1 I	# GetPName
+	MAP1_INDEX					= 0x0D91 # 1 I	# GetPName
+	MAP1_NORMAL					= 0x0D92 # 1 I	# GetPName
+	MAP1_TEXTURE_COORD_1				= 0x0D93 # 1 I	# GetPName
+	MAP1_TEXTURE_COORD_2				= 0x0D94 # 1 I	# GetPName
+	MAP1_TEXTURE_COORD_3				= 0x0D95 # 1 I	# GetPName
+	MAP1_TEXTURE_COORD_4				= 0x0D96 # 1 I	# GetPName
+	MAP1_VERTEX_3					= 0x0D97 # 1 I	# GetPName
+	MAP1_VERTEX_4					= 0x0D98 # 1 I	# GetPName
+	MAP2_COLOR_4					= 0x0DB0 # 1 I	# GetPName
+	MAP2_INDEX					= 0x0DB1 # 1 I	# GetPName
+	MAP2_NORMAL					= 0x0DB2 # 1 I	# GetPName
+	MAP2_TEXTURE_COORD_1				= 0x0DB3 # 1 I	# GetPName
+	MAP2_TEXTURE_COORD_2				= 0x0DB4 # 1 I	# GetPName
+	MAP2_TEXTURE_COORD_3				= 0x0DB5 # 1 I	# GetPName
+	MAP2_TEXTURE_COORD_4				= 0x0DB6 # 1 I	# GetPName
+	MAP2_VERTEX_3					= 0x0DB7 # 1 I	# GetPName
+	MAP2_VERTEX_4					= 0x0DB8 # 1 I	# GetPName
+	MAP1_GRID_DOMAIN				= 0x0DD0 # 2 F	# GetPName
+	MAP1_GRID_SEGMENTS				= 0x0DD1 # 1 I	# GetPName
+	MAP2_GRID_DOMAIN				= 0x0DD2 # 4 F	# GetPName
+	MAP2_GRID_SEGMENTS				= 0x0DD3 # 2 I	# GetPName
+	FEEDBACK_BUFFER_SIZE				= 0x0DF1 # 1 I	# GetPName
+	FEEDBACK_BUFFER_TYPE				= 0x0DF2 # 1 I	# GetPName
+	SELECTION_BUFFER_SIZE				= 0x0DF4 # 1 I	# GetPName
+	VERTEX_ARRAY					= 0x8074 # 1 I	# GetPName
+	NORMAL_ARRAY					= 0x8075 # 1 I	# GetPName
+	COLOR_ARRAY					= 0x8076 # 1 I	# GetPName
+	INDEX_ARRAY					= 0x8077 # 1 I	# GetPName
+	TEXTURE_COORD_ARRAY				= 0x8078 # 1 I	# GetPName
+	EDGE_FLAG_ARRAY					= 0x8079 # 1 I	# GetPName
+	VERTEX_ARRAY_SIZE				= 0x807A # 1 I	# GetPName
+	VERTEX_ARRAY_TYPE				= 0x807B # 1 I	# GetPName
+	VERTEX_ARRAY_STRIDE				= 0x807C # 1 I	# GetPName
+	NORMAL_ARRAY_TYPE				= 0x807E # 1 I	# GetPName
+	NORMAL_ARRAY_STRIDE				= 0x807F # 1 I	# GetPName
+	COLOR_ARRAY_SIZE				= 0x8081 # 1 I	# GetPName
+	COLOR_ARRAY_TYPE				= 0x8082 # 1 I	# GetPName
+	COLOR_ARRAY_STRIDE				= 0x8083 # 1 I	# GetPName
+	INDEX_ARRAY_TYPE				= 0x8085 # 1 I	# GetPName
+	INDEX_ARRAY_STRIDE				= 0x8086 # 1 I	# GetPName
+	TEXTURE_COORD_ARRAY_SIZE			= 0x8088 # 1 I	# GetPName
+	TEXTURE_COORD_ARRAY_TYPE			= 0x8089 # 1 I	# GetPName
+	TEXTURE_COORD_ARRAY_STRIDE			= 0x808A # 1 I	# GetPName
+	EDGE_FLAG_ARRAY_STRIDE				= 0x808C # 1 I	# GetPName
+passthru: /* GetTextureParameter */
+	TEXTURE_COMPONENTS				= 0x1003	# GetTextureParameter
+	TEXTURE_LUMINANCE_SIZE				= 0x8060	# GetTextureParameter
+	TEXTURE_INTENSITY_SIZE				= 0x8061	# GetTextureParameter
+	TEXTURE_PRIORITY				= 0x8066	# GetTextureParameter
+	TEXTURE_RESIDENT				= 0x8067	# GetTextureParameter
+passthru: /* LightParameter */
+	AMBIENT						= 0x1200	# LightParameter
+	DIFFUSE						= 0x1201	# LightParameter
+	SPECULAR					= 0x1202	# LightParameter
+	POSITION					= 0x1203	# LightParameter
+	SPOT_DIRECTION					= 0x1204	# LightParameter
+	SPOT_EXPONENT					= 0x1205	# LightParameter
+	SPOT_CUTOFF					= 0x1206	# LightParameter
+	CONSTANT_ATTENUATION				= 0x1207	# LightParameter
+	LINEAR_ATTENUATION				= 0x1208	# LightParameter
+	QUADRATIC_ATTENUATION				= 0x1209	# LightParameter
+passthru: /* ListMode */
+	COMPILE						= 0x1300	# ListMode
+	COMPILE_AND_EXECUTE				= 0x1301	# ListMode
+passthru: /* DataType */
+	2_BYTES						= 0x1407	# DataType
+	3_BYTES						= 0x1408	# DataType
+	4_BYTES						= 0x1409	# DataType
+passthru: /* MaterialParameter */
+	EMISSION					= 0x1600	# MaterialParameter
+	SHININESS					= 0x1601	# MaterialParameter
+	AMBIENT_AND_DIFFUSE				= 0x1602	# MaterialParameter
+	COLOR_INDEXES					= 0x1603	# MaterialParameter
+passthru: /* MatrixMode */
+	MODELVIEW					= 0x1700	# MatrixMode
+	PROJECTION					= 0x1701	# MatrixMode
+passthru: /* PixelFormat */
+	COLOR_INDEX					= 0x1900	# PixelFormat
+	LUMINANCE					= 0x1909	# PixelFormat
+	LUMINANCE_ALPHA					= 0x190A	# PixelFormat
+passthru: /* PixelType */
+	BITMAP						= 0x1A00	# PixelType
+passthru: /* RenderingMode */
+	RENDER						= 0x1C00	# RenderingMode
+	FEEDBACK					= 0x1C01	# RenderingMode
+	SELECT						= 0x1C02	# RenderingMode
+passthru: /* ShadingModel */
+	FLAT						= 0x1D00	# ShadingModel
+	SMOOTH						= 0x1D01	# ShadingModel
+passthru: /* TextureCoordName */
+	S						= 0x2000	# TextureCoordName
+	T						= 0x2001	# TextureCoordName
+	R						= 0x2002	# TextureCoordName
+	Q						= 0x2003	# TextureCoordName
+passthru: /* TextureEnvMode */
+	MODULATE					= 0x2100	# TextureEnvMode
+	DECAL						= 0x2101	# TextureEnvMode
+passthru: /* TextureEnvParameter */
+	TEXTURE_ENV_MODE				= 0x2200	# TextureEnvParameter
+	TEXTURE_ENV_COLOR				= 0x2201	# TextureEnvParameter
+passthru: /* TextureEnvTarget */
+	TEXTURE_ENV					= 0x2300	# TextureEnvTarget
+passthru: /* TextureGenMode */
+	EYE_LINEAR					= 0x2400	# TextureGenMode
+	OBJECT_LINEAR					= 0x2401	# TextureGenMode
+	SPHERE_MAP					= 0x2402	# TextureGenMode
+passthru: /* TextureGenParameter */
+	TEXTURE_GEN_MODE				= 0x2500	# TextureGenParameter
+	OBJECT_PLANE					= 0x2501	# TextureGenParameter
+	EYE_PLANE					= 0x2502	# TextureGenParameter
+passthru: /* TextureWrapMode */
+	CLAMP						= 0x2900	# TextureWrapMode
+passthru: /* PixelInternalFormat */
+	ALPHA4						= 0x803B	# PixelInternalFormat
+	ALPHA8						= 0x803C	# PixelInternalFormat
+	ALPHA12						= 0x803D	# PixelInternalFormat
+	ALPHA16						= 0x803E	# PixelInternalFormat
+	LUMINANCE4					= 0x803F	# PixelInternalFormat
+	LUMINANCE8					= 0x8040	# PixelInternalFormat
+	LUMINANCE12					= 0x8041	# PixelInternalFormat
+	LUMINANCE16					= 0x8042	# PixelInternalFormat
+	LUMINANCE4_ALPHA4				= 0x8043	# PixelInternalFormat
+	LUMINANCE6_ALPHA2				= 0x8044	# PixelInternalFormat
+	LUMINANCE8_ALPHA8				= 0x8045	# PixelInternalFormat
+	LUMINANCE12_ALPHA4				= 0x8046	# PixelInternalFormat
+	LUMINANCE12_ALPHA12				= 0x8047	# PixelInternalFormat
+	LUMINANCE16_ALPHA16				= 0x8048	# PixelInternalFormat
+	INTENSITY					= 0x8049	# PixelInternalFormat
+	INTENSITY4					= 0x804A	# PixelInternalFormat
+	INTENSITY8					= 0x804B	# PixelInternalFormat
+	INTENSITY12					= 0x804C	# PixelInternalFormat
+	INTENSITY16					= 0x804D	# PixelInternalFormat
+passthru: /* InterleavedArrayFormat */
+	V2F						= 0x2A20	# InterleavedArrayFormat
+	V3F						= 0x2A21	# InterleavedArrayFormat
+	C4UB_V2F					= 0x2A22	# InterleavedArrayFormat
+	C4UB_V3F					= 0x2A23	# InterleavedArrayFormat
+	C3F_V3F						= 0x2A24	# InterleavedArrayFormat
+	N3F_V3F						= 0x2A25	# InterleavedArrayFormat
+	C4F_N3F_V3F					= 0x2A26	# InterleavedArrayFormat
+	T2F_V3F						= 0x2A27	# InterleavedArrayFormat
+	T4F_V4F						= 0x2A28	# InterleavedArrayFormat
+	T2F_C4UB_V3F					= 0x2A29	# InterleavedArrayFormat
+	T2F_C3F_V3F					= 0x2A2A	# InterleavedArrayFormat
+	T2F_N3F_V3F					= 0x2A2B	# InterleavedArrayFormat
+	T2F_C4F_N3F_V3F					= 0x2A2C	# InterleavedArrayFormat
+	T4F_C4F_N3F_V4F					= 0x2A2D	# InterleavedArrayFormat
+passthru: /* ClipPlaneName */
+	CLIP_PLANE0					= 0x3000 # 1 I	# ClipPlaneName
+	CLIP_PLANE1					= 0x3001 # 1 I	# ClipPlaneName
+	CLIP_PLANE2					= 0x3002 # 1 I	# ClipPlaneName
+	CLIP_PLANE3					= 0x3003 # 1 I	# ClipPlaneName
+	CLIP_PLANE4					= 0x3004 # 1 I	# ClipPlaneName
+	CLIP_PLANE5					= 0x3005 # 1 I	# ClipPlaneName
+passthru: /* LightName */
+	LIGHT0						= 0x4000 # 1 I	# LightName
+	LIGHT1						= 0x4001 # 1 I	# LightName
+	LIGHT2						= 0x4002 # 1 I	# LightName
+	LIGHT3						= 0x4003 # 1 I	# LightName
+	LIGHT4						= 0x4004 # 1 I	# LightName
+	LIGHT5						= 0x4005 # 1 I	# LightName
+	LIGHT6						= 0x4006 # 1 I	# LightName
+	LIGHT7						= 0x4007 # 1 I	# LightName
+
 
 ###############################################################################
 #
@@ -27,48 +622,50 @@ passthru: #define GL_GLEXT_VERSION 48
 #
 ###############################################################################
 
-#VERSION_1_2 enum:
-#	UNSIGNED_BYTE_3_3_2				= 0x8032 # Equivalent to EXT_packed_pixels
-#	UNSIGNED_SHORT_4_4_4_4				= 0x8033
-#	UNSIGNED_SHORT_5_5_5_1				= 0x8034
-#	UNSIGNED_INT_8_8_8_8				= 0x8035
-#	UNSIGNED_INT_10_10_10_2				= 0x8036
-#	RESCALE_NORMAL					= 0x803A # 1 I # Equivalent to EXT_rescale_normal
-#	TEXTURE_BINDING_3D				= 0x806A # 1 I
-#	PACK_SKIP_IMAGES				= 0x806B # 1 I
-#	PACK_IMAGE_HEIGHT				= 0x806C # 1 F
-#	UNPACK_SKIP_IMAGES				= 0x806D # 1 I
-#	UNPACK_IMAGE_HEIGHT				= 0x806E # 1 F
-#	TEXTURE_3D					= 0x806F # 1 I
-#	PROXY_TEXTURE_3D				= 0x8070
-#	TEXTURE_DEPTH					= 0x8071
-#	TEXTURE_WRAP_R					= 0x8072
-#	MAX_3D_TEXTURE_SIZE				= 0x8073 # 1 I
-#	UNSIGNED_BYTE_2_3_3_REV				= 0x8362 # New for OpenGL 1.2
-#	UNSIGNED_SHORT_5_6_5				= 0x8363
-#	UNSIGNED_SHORT_5_6_5_REV			= 0x8364
-#	UNSIGNED_SHORT_4_4_4_4_REV			= 0x8365
-#	UNSIGNED_SHORT_1_5_5_5_REV			= 0x8366
-#	UNSIGNED_INT_8_8_8_8_REV			= 0x8367
-#	UNSIGNED_INT_2_10_10_10_REV			= 0x8368
-#	BGR						= 0x80E0
-#	BGRA						= 0x80E1
-#	MAX_ELEMENTS_VERTICES				= 0x80E8
-#	MAX_ELEMENTS_INDICES				= 0x80E9
-#	CLAMP_TO_EDGE					= 0x812F # Equivalent to SGIS_texture_edge_clamp
-#	TEXTURE_MIN_LOD					= 0x813A # Equivalent to SGIS_texture_lod
-#	TEXTURE_MAX_LOD					= 0x813B
-#	TEXTURE_BASE_LEVEL				= 0x813C
-#	TEXTURE_MAX_LEVEL				= 0x813D
-#	LIGHT_MODEL_COLOR_CONTROL			= 0x81F8 # 1 I
-#	SINGLE_COLOR					= 0x81F9
-#	SEPARATE_SPECULAR_COLOR				= 0x81FA
-#	SMOOTH_POINT_SIZE_RANGE				= 0x0B12 # 2 F
-#	SMOOTH_POINT_SIZE_GRANULARITY			= 0x0B13 # 1 F
-#	SMOOTH_LINE_WIDTH_RANGE				= 0x0B22 # 2 F
-#	SMOOTH_LINE_WIDTH_GRANULARITY			= 0x0B23 # 1 F
-#	ALIASED_POINT_SIZE_RANGE			= 0x846D # 2 F
-#	ALIASED_LINE_WIDTH_RANGE			= 0x846E # 2 F
+VERSION_1_2 enum:
+	UNSIGNED_BYTE_3_3_2				= 0x8032 # Equivalent to EXT_packed_pixels
+	UNSIGNED_SHORT_4_4_4_4				= 0x8033
+	UNSIGNED_SHORT_5_5_5_1				= 0x8034
+	UNSIGNED_INT_8_8_8_8				= 0x8035
+	UNSIGNED_INT_10_10_10_2				= 0x8036
+	TEXTURE_BINDING_3D				= 0x806A # 1 I
+	PACK_SKIP_IMAGES				= 0x806B # 1 I
+	PACK_IMAGE_HEIGHT				= 0x806C # 1 F
+	UNPACK_SKIP_IMAGES				= 0x806D # 1 I
+	UNPACK_IMAGE_HEIGHT				= 0x806E # 1 F
+	TEXTURE_3D					= 0x806F # 1 I
+	PROXY_TEXTURE_3D				= 0x8070
+	TEXTURE_DEPTH					= 0x8071
+	TEXTURE_WRAP_R					= 0x8072
+	MAX_3D_TEXTURE_SIZE				= 0x8073 # 1 I
+	UNSIGNED_BYTE_2_3_3_REV				= 0x8362 # New for OpenGL 1.2
+	UNSIGNED_SHORT_5_6_5				= 0x8363
+	UNSIGNED_SHORT_5_6_5_REV			= 0x8364
+	UNSIGNED_SHORT_4_4_4_4_REV			= 0x8365
+	UNSIGNED_SHORT_1_5_5_5_REV			= 0x8366
+	UNSIGNED_INT_8_8_8_8_REV			= 0x8367
+	UNSIGNED_INT_2_10_10_10_REV			= 0x8368
+	BGR						= 0x80E0
+	BGRA						= 0x80E1
+	MAX_ELEMENTS_VERTICES				= 0x80E8
+	MAX_ELEMENTS_INDICES				= 0x80E9
+	CLAMP_TO_EDGE					= 0x812F # Equivalent to SGIS_texture_edge_clamp
+	TEXTURE_MIN_LOD					= 0x813A # Equivalent to SGIS_texture_lod
+	TEXTURE_MAX_LOD					= 0x813B
+	TEXTURE_BASE_LEVEL				= 0x813C
+	TEXTURE_MAX_LEVEL				= 0x813D
+	SMOOTH_POINT_SIZE_RANGE				= 0x0B12 # 2 F
+	SMOOTH_POINT_SIZE_GRANULARITY			= 0x0B13 # 1 F
+	SMOOTH_LINE_WIDTH_RANGE				= 0x0B22 # 2 F
+	SMOOTH_LINE_WIDTH_GRANULARITY			= 0x0B23 # 1 F
+	ALIASED_LINE_WIDTH_RANGE			= 0x846E # 2 F
+
+VERSION_1_2_DEPRECATED enum:
+	RESCALE_NORMAL					= 0x803A # 1 I # Equivalent to EXT_rescale_normal
+	LIGHT_MODEL_COLOR_CONTROL			= 0x81F8 # 1 I
+	SINGLE_COLOR					= 0x81F9
+	SEPARATE_SPECULAR_COLOR				= 0x81FA
+	ALIASED_POINT_SIZE_RANGE			= 0x846D # 2 F
 
 ARB_imaging enum:
 	CONSTANT_COLOR					= 0x8001 # Equivalent to EXT_blend_color
@@ -82,6 +679,8 @@ ARB_imaging enum:
 	BLEND_EQUATION					= 0x8009 # 1 I
 	FUNC_SUBTRACT					= 0x800A # Equivalent to EXT_blend_subtract
 	FUNC_REVERSE_SUBTRACT				= 0x800B
+
+ARB_imaging_DEPRECATED enum:
 	CONVOLUTION_1D					= 0x8010 # 1 I # Equivalent to EXT_convolution
 	CONVOLUTION_2D					= 0x8011 # 1 I
 	SEPARABLE_2D					= 0x8012 # 1 I
@@ -154,103 +753,105 @@ ARB_imaging enum:
 #
 ###############################################################################
 
-#VERSION_1_3 enum:
-#	TEXTURE0					= 0x84C0	# Promoted from ARB_multitexture
-#	TEXTURE1					= 0x84C1
-#	TEXTURE2					= 0x84C2
-#	TEXTURE3					= 0x84C3
-#	TEXTURE4					= 0x84C4
-#	TEXTURE5					= 0x84C5
-#	TEXTURE6					= 0x84C6
-#	TEXTURE7					= 0x84C7
-#	TEXTURE8					= 0x84C8
-#	TEXTURE9					= 0x84C9
-#	TEXTURE10					= 0x84CA
-#	TEXTURE11					= 0x84CB
-#	TEXTURE12					= 0x84CC
-#	TEXTURE13					= 0x84CD
-#	TEXTURE14					= 0x84CE
-#	TEXTURE15					= 0x84CF
-#	TEXTURE16					= 0x84D0
-#	TEXTURE17					= 0x84D1
-#	TEXTURE18					= 0x84D2
-#	TEXTURE19					= 0x84D3
-#	TEXTURE20					= 0x84D4
-#	TEXTURE21					= 0x84D5
-#	TEXTURE22					= 0x84D6
-#	TEXTURE23					= 0x84D7
-#	TEXTURE24					= 0x84D8
-#	TEXTURE25					= 0x84D9
-#	TEXTURE26					= 0x84DA
-#	TEXTURE27					= 0x84DB
-#	TEXTURE28					= 0x84DC
-#	TEXTURE29					= 0x84DD
-#	TEXTURE30					= 0x84DE
-#	TEXTURE31					= 0x84DF
-#	ACTIVE_TEXTURE					= 0x84E0 # 1 I
-#	CLIENT_ACTIVE_TEXTURE				= 0x84E1 # 1 I
-#	MAX_TEXTURE_UNITS				= 0x84E2 # 1 I
-#	TRANSPOSE_MODELVIEW_MATRIX			= 0x84E3 # 16 F # Promoted from ARB_transpose_matrix
-#	TRANSPOSE_PROJECTION_MATRIX			= 0x84E4 # 16 F
-#	TRANSPOSE_TEXTURE_MATRIX			= 0x84E5 # 16 F
-#	TRANSPOSE_COLOR_MATRIX				= 0x84E6 # 16 F
-#	MULTISAMPLE					= 0x809D	# Promoted from ARB_multisample
-#	SAMPLE_ALPHA_TO_COVERAGE			= 0x809E
-#	SAMPLE_ALPHA_TO_ONE				= 0x809F
-#	SAMPLE_COVERAGE					= 0x80A0
-#	SAMPLE_BUFFERS					= 0x80A8
-#	SAMPLES						= 0x80A9
-#	SAMPLE_COVERAGE_VALUE				= 0x80AA
-#	SAMPLE_COVERAGE_INVERT				= 0x80AB
-#	MULTISAMPLE_BIT					= 0x20000000
-#	NORMAL_MAP					= 0x8511	# Promoted from ARB_texture_cube_map
-#	REFLECTION_MAP					= 0x8512
-#	TEXTURE_CUBE_MAP				= 0x8513
-#	TEXTURE_BINDING_CUBE_MAP			= 0x8514
-#	TEXTURE_CUBE_MAP_POSITIVE_X			= 0x8515
-#	TEXTURE_CUBE_MAP_NEGATIVE_X			= 0x8516
-#	TEXTURE_CUBE_MAP_POSITIVE_Y			= 0x8517
-#	TEXTURE_CUBE_MAP_NEGATIVE_Y			= 0x8518
-#	TEXTURE_CUBE_MAP_POSITIVE_Z			= 0x8519
-#	TEXTURE_CUBE_MAP_NEGATIVE_Z			= 0x851A
-#	PROXY_TEXTURE_CUBE_MAP				= 0x851B
-#	MAX_CUBE_MAP_TEXTURE_SIZE			= 0x851C
-#	COMPRESSED_ALPHA				= 0x84E9	# Promoted from ARB_texture_compression
-#	COMPRESSED_LUMINANCE				= 0x84EA
-#	COMPRESSED_LUMINANCE_ALPHA			= 0x84EB
-#	COMPRESSED_INTENSITY				= 0x84EC
-#	COMPRESSED_RGB					= 0x84ED
-#	COMPRESSED_RGBA					= 0x84EE
-#	TEXTURE_COMPRESSION_HINT			= 0x84EF
-#	TEXTURE_COMPRESSED_IMAGE_SIZE			= 0x86A0
-#	TEXTURE_COMPRESSED				= 0x86A1
-#	NUM_COMPRESSED_TEXTURE_FORMATS			= 0x86A2
-#	COMPRESSED_TEXTURE_FORMATS			= 0x86A3
-#	CLAMP_TO_BORDER					= 0x812D	# Promoted from ARB_texture_border_clamp
-#	COMBINE						= 0x8570	# Promoted from ARB_texture_env_combine
-#	COMBINE_RGB					= 0x8571
-#	COMBINE_ALPHA					= 0x8572
-#	SOURCE0_RGB					= 0x8580
-#	SOURCE1_RGB					= 0x8581
-#	SOURCE2_RGB					= 0x8582
-#	SOURCE0_ALPHA					= 0x8588
-#	SOURCE1_ALPHA					= 0x8589
-#	SOURCE2_ALPHA					= 0x858A
-#	OPERAND0_RGB					= 0x8590
-#	OPERAND1_RGB					= 0x8591
-#	OPERAND2_RGB					= 0x8592
-#	OPERAND0_ALPHA					= 0x8598
-#	OPERAND1_ALPHA					= 0x8599
-#	OPERAND2_ALPHA					= 0x859A
-#	RGB_SCALE					= 0x8573
-#	ADD_SIGNED					= 0x8574
-#	INTERPOLATE					= 0x8575
-#	SUBTRACT					= 0x84E7
-#	CONSTANT					= 0x8576
-#	PRIMARY_COLOR					= 0x8577
-#	PREVIOUS					= 0x8578
-#	DOT3_RGB					= 0x86AE	# Promoted from ARB_texture_env_dot3
-#	DOT3_RGBA					= 0x86AF
+VERSION_1_3 enum:
+	TEXTURE0					= 0x84C0	# Promoted from ARB_multitexture
+	TEXTURE1					= 0x84C1
+	TEXTURE2					= 0x84C2
+	TEXTURE3					= 0x84C3
+	TEXTURE4					= 0x84C4
+	TEXTURE5					= 0x84C5
+	TEXTURE6					= 0x84C6
+	TEXTURE7					= 0x84C7
+	TEXTURE8					= 0x84C8
+	TEXTURE9					= 0x84C9
+	TEXTURE10					= 0x84CA
+	TEXTURE11					= 0x84CB
+	TEXTURE12					= 0x84CC
+	TEXTURE13					= 0x84CD
+	TEXTURE14					= 0x84CE
+	TEXTURE15					= 0x84CF
+	TEXTURE16					= 0x84D0
+	TEXTURE17					= 0x84D1
+	TEXTURE18					= 0x84D2
+	TEXTURE19					= 0x84D3
+	TEXTURE20					= 0x84D4
+	TEXTURE21					= 0x84D5
+	TEXTURE22					= 0x84D6
+	TEXTURE23					= 0x84D7
+	TEXTURE24					= 0x84D8
+	TEXTURE25					= 0x84D9
+	TEXTURE26					= 0x84DA
+	TEXTURE27					= 0x84DB
+	TEXTURE28					= 0x84DC
+	TEXTURE29					= 0x84DD
+	TEXTURE30					= 0x84DE
+	TEXTURE31					= 0x84DF
+	ACTIVE_TEXTURE					= 0x84E0 # 1 I
+	MULTISAMPLE					= 0x809D	# Promoted from ARB_multisample
+	SAMPLE_ALPHA_TO_COVERAGE			= 0x809E
+	SAMPLE_ALPHA_TO_ONE				= 0x809F
+	SAMPLE_COVERAGE					= 0x80A0
+	SAMPLE_BUFFERS					= 0x80A8
+	SAMPLES						= 0x80A9
+	SAMPLE_COVERAGE_VALUE				= 0x80AA
+	SAMPLE_COVERAGE_INVERT				= 0x80AB
+	TEXTURE_CUBE_MAP				= 0x8513
+	TEXTURE_BINDING_CUBE_MAP			= 0x8514
+	TEXTURE_CUBE_MAP_POSITIVE_X			= 0x8515
+	TEXTURE_CUBE_MAP_NEGATIVE_X			= 0x8516
+	TEXTURE_CUBE_MAP_POSITIVE_Y			= 0x8517
+	TEXTURE_CUBE_MAP_NEGATIVE_Y			= 0x8518
+	TEXTURE_CUBE_MAP_POSITIVE_Z			= 0x8519
+	TEXTURE_CUBE_MAP_NEGATIVE_Z			= 0x851A
+	PROXY_TEXTURE_CUBE_MAP				= 0x851B
+	MAX_CUBE_MAP_TEXTURE_SIZE			= 0x851C
+	COMPRESSED_RGB					= 0x84ED
+	COMPRESSED_RGBA					= 0x84EE
+	TEXTURE_COMPRESSION_HINT			= 0x84EF
+	TEXTURE_COMPRESSED_IMAGE_SIZE			= 0x86A0
+	TEXTURE_COMPRESSED				= 0x86A1
+	NUM_COMPRESSED_TEXTURE_FORMATS			= 0x86A2
+	COMPRESSED_TEXTURE_FORMATS			= 0x86A3
+	CLAMP_TO_BORDER					= 0x812D	# Promoted from ARB_texture_border_clamp
+
+VERSION_1_3_DEPRECATED enum:
+	CLIENT_ACTIVE_TEXTURE				= 0x84E1 # 1 I
+	MAX_TEXTURE_UNITS				= 0x84E2 # 1 I
+	TRANSPOSE_MODELVIEW_MATRIX			= 0x84E3 # 16 F # Promoted from ARB_transpose_matrix
+	TRANSPOSE_PROJECTION_MATRIX			= 0x84E4 # 16 F
+	TRANSPOSE_TEXTURE_MATRIX			= 0x84E5 # 16 F
+	TRANSPOSE_COLOR_MATRIX				= 0x84E6 # 16 F
+	MULTISAMPLE_BIT					= 0x20000000
+	NORMAL_MAP					= 0x8511	# Promoted from ARB_texture_cube_map
+	REFLECTION_MAP					= 0x8512
+	COMPRESSED_ALPHA				= 0x84E9	# Promoted from ARB_texture_compression
+	COMPRESSED_LUMINANCE				= 0x84EA
+	COMPRESSED_LUMINANCE_ALPHA			= 0x84EB
+	COMPRESSED_INTENSITY				= 0x84EC
+	COMBINE						= 0x8570	# Promoted from ARB_texture_env_combine
+	COMBINE_RGB					= 0x8571
+	COMBINE_ALPHA					= 0x8572
+	SOURCE0_RGB					= 0x8580
+	SOURCE1_RGB					= 0x8581
+	SOURCE2_RGB					= 0x8582
+	SOURCE0_ALPHA					= 0x8588
+	SOURCE1_ALPHA					= 0x8589
+	SOURCE2_ALPHA					= 0x858A
+	OPERAND0_RGB					= 0x8590
+	OPERAND1_RGB					= 0x8591
+	OPERAND2_RGB					= 0x8592
+	OPERAND0_ALPHA					= 0x8598
+	OPERAND1_ALPHA					= 0x8599
+	OPERAND2_ALPHA					= 0x859A
+	RGB_SCALE					= 0x8573
+	ADD_SIGNED					= 0x8574
+	INTERPOLATE					= 0x8575
+	SUBTRACT					= 0x84E7
+	CONSTANT					= 0x8576
+	PRIMARY_COLOR					= 0x8577
+	PREVIOUS					= 0x8578
+	DOT3_RGB					= 0x86AE	# Promoted from ARB_texture_env_dot3
+	DOT3_RGBA					= 0x86AF
 
 
 ###############################################################################
@@ -259,46 +860,48 @@ ARB_imaging enum:
 #
 ###############################################################################
 
-#VERSION_1_4 enum:
-#	BLEND_DST_RGB					= 0x80C8
-#	BLEND_SRC_RGB					= 0x80C9
-#	BLEND_DST_ALPHA					= 0x80CA
-#	BLEND_SRC_ALPHA					= 0x80CB
-#	POINT_SIZE_MIN					= 0x8126 # 1 F
-#	POINT_SIZE_MAX					= 0x8127 # 1 F
-#	POINT_FADE_THRESHOLD_SIZE			= 0x8128 # 1 F
-#	POINT_DISTANCE_ATTENUATION			= 0x8129 # 3 F
-#	GENERATE_MIPMAP					= 0x8191
-#	GENERATE_MIPMAP_HINT				= 0x8192 # 1 I
-#	DEPTH_COMPONENT16				= 0x81A5	# PixelInternalFormat
-#	DEPTH_COMPONENT24				= 0x81A6	# PixelInternalFormat
-#	DEPTH_COMPONENT32				= 0x81A7	# PixelInternalFormat
-#	MIRRORED_REPEAT					= 0x8370
-#	FOG_COORDINATE_SOURCE				= 0x8450 # 1 I
-#	FOG_COORDINATE					= 0x8451
-#	FRAGMENT_DEPTH					= 0x8452
-#	CURRENT_FOG_COORDINATE				= 0x8453 # 1 F
-#	FOG_COORDINATE_ARRAY_TYPE			= 0x8454 # 1 I
-#	FOG_COORDINATE_ARRAY_STRIDE			= 0x8455 # 1 I
-#	FOG_COORDINATE_ARRAY_POINTER			= 0x8456
-#	FOG_COORDINATE_ARRAY				= 0x8457 # 1 I
-#	COLOR_SUM					= 0x8458 # 1 I
-#	CURRENT_SECONDARY_COLOR				= 0x8459 # 3 F
-#	SECONDARY_COLOR_ARRAY_SIZE			= 0x845A # 1 I
-#	SECONDARY_COLOR_ARRAY_TYPE			= 0x845B # 1 I
-#	SECONDARY_COLOR_ARRAY_STRIDE			= 0x845C # 1 I
-#	SECONDARY_COLOR_ARRAY_POINTER			= 0x845D
-#	SECONDARY_COLOR_ARRAY				= 0x845E # 1 I
-#	MAX_TEXTURE_LOD_BIAS				= 0x84FD
-#	TEXTURE_FILTER_CONTROL				= 0x8500
-#	TEXTURE_LOD_BIAS				= 0x8501
-#	INCR_WRAP					= 0x8507
-#	DECR_WRAP					= 0x8508
-#	TEXTURE_DEPTH_SIZE				= 0x884A
-#	DEPTH_TEXTURE_MODE				= 0x884B
-#	TEXTURE_COMPARE_MODE				= 0x884C
-#	TEXTURE_COMPARE_FUNC				= 0x884D
-#	COMPARE_R_TO_TEXTURE				= 0x884E
+VERSION_1_4 enum:
+	BLEND_DST_RGB					= 0x80C8
+	BLEND_SRC_RGB					= 0x80C9
+	BLEND_DST_ALPHA					= 0x80CA
+	BLEND_SRC_ALPHA					= 0x80CB
+	POINT_FADE_THRESHOLD_SIZE			= 0x8128 # 1 F
+	DEPTH_COMPONENT16				= 0x81A5
+	DEPTH_COMPONENT24				= 0x81A6
+	DEPTH_COMPONENT32				= 0x81A7
+	MIRRORED_REPEAT					= 0x8370
+	MAX_TEXTURE_LOD_BIAS				= 0x84FD
+	TEXTURE_LOD_BIAS				= 0x8501
+	INCR_WRAP					= 0x8507
+	DECR_WRAP					= 0x8508
+	TEXTURE_DEPTH_SIZE				= 0x884A
+	TEXTURE_COMPARE_MODE				= 0x884C
+	TEXTURE_COMPARE_FUNC				= 0x884D
+
+VERSION_1_4_DEPRECATED enum:
+	POINT_SIZE_MIN					= 0x8126 # 1 F
+	POINT_SIZE_MAX					= 0x8127 # 1 F
+	POINT_DISTANCE_ATTENUATION			= 0x8129 # 3 F
+	GENERATE_MIPMAP					= 0x8191
+	GENERATE_MIPMAP_HINT				= 0x8192 # 1 I
+	FOG_COORDINATE_SOURCE				= 0x8450 # 1 I
+	FOG_COORDINATE					= 0x8451
+	FRAGMENT_DEPTH					= 0x8452
+	CURRENT_FOG_COORDINATE				= 0x8453 # 1 F
+	FOG_COORDINATE_ARRAY_TYPE			= 0x8454 # 1 I
+	FOG_COORDINATE_ARRAY_STRIDE			= 0x8455 # 1 I
+	FOG_COORDINATE_ARRAY_POINTER			= 0x8456
+	FOG_COORDINATE_ARRAY				= 0x8457 # 1 I
+	COLOR_SUM					= 0x8458 # 1 I
+	CURRENT_SECONDARY_COLOR				= 0x8459 # 3 F
+	SECONDARY_COLOR_ARRAY_SIZE			= 0x845A # 1 I
+	SECONDARY_COLOR_ARRAY_TYPE			= 0x845B # 1 I
+	SECONDARY_COLOR_ARRAY_STRIDE			= 0x845C # 1 I
+	SECONDARY_COLOR_ARRAY_POINTER			= 0x845D
+	SECONDARY_COLOR_ARRAY				= 0x845E # 1 I
+	TEXTURE_FILTER_CONTROL				= 0x8500
+	DEPTH_TEXTURE_MODE				= 0x884B
+	COMPARE_R_TO_TEXTURE				= 0x884E
 
 
 ###############################################################################
@@ -307,59 +910,60 @@ ARB_imaging enum:
 #
 ###############################################################################
 
-#VERSION_1_5 enum:
-#	BUFFER_SIZE					= 0x8764 # ARB_vertex_buffer_object
-#	BUFFER_USAGE					= 0x8765 # ARB_vertex_buffer_object
-#	QUERY_COUNTER_BITS				= 0x8864 # ARB_occlusion_query
-#	CURRENT_QUERY					= 0x8865 # ARB_occlusion_query
-#	QUERY_RESULT					= 0x8866 # ARB_occlusion_query
-#	QUERY_RESULT_AVAILABLE				= 0x8867 # ARB_occlusion_query
-#	ARRAY_BUFFER					= 0x8892 # ARB_vertex_buffer_object
-#	ELEMENT_ARRAY_BUFFER				= 0x8893 # ARB_vertex_buffer_object
-#	ARRAY_BUFFER_BINDING				= 0x8894 # ARB_vertex_buffer_object
-#	ELEMENT_ARRAY_BUFFER_BINDING			= 0x8895 # ARB_vertex_buffer_object
-#	VERTEX_ARRAY_BUFFER_BINDING			= 0x8896 # ARB_vertex_buffer_object
-#	NORMAL_ARRAY_BUFFER_BINDING			= 0x8897 # ARB_vertex_buffer_object
-#	COLOR_ARRAY_BUFFER_BINDING			= 0x8898 # ARB_vertex_buffer_object
-#	INDEX_ARRAY_BUFFER_BINDING			= 0x8899 # ARB_vertex_buffer_object
-#	TEXTURE_COORD_ARRAY_BUFFER_BINDING		= 0x889A # ARB_vertex_buffer_object
-#	EDGE_FLAG_ARRAY_BUFFER_BINDING			= 0x889B # ARB_vertex_buffer_object
-#	SECONDARY_COLOR_ARRAY_BUFFER_BINDING		= 0x889C # ARB_vertex_buffer_object
-#	FOG_COORDINATE_ARRAY_BUFFER_BINDING		= 0x889D # ARB_vertex_buffer_object
-#	WEIGHT_ARRAY_BUFFER_BINDING			= 0x889E # ARB_vertex_buffer_object
-#	VERTEX_ATTRIB_ARRAY_BUFFER_BINDING		= 0x889F # ARB_vertex_buffer_object
-#	READ_ONLY					= 0x88B8 # ARB_vertex_buffer_object
-#	WRITE_ONLY					= 0x88B9 # ARB_vertex_buffer_object
-#	READ_WRITE					= 0x88BA # ARB_vertex_buffer_object
-#	BUFFER_ACCESS					= 0x88BB # ARB_vertex_buffer_object
-#	BUFFER_MAPPED					= 0x88BC # ARB_vertex_buffer_object
-#	BUFFER_MAP_POINTER				= 0x88BD # ARB_vertex_buffer_object
-#	STREAM_DRAW					= 0x88E0 # ARB_vertex_buffer_object
-#	STREAM_READ					= 0x88E1 # ARB_vertex_buffer_object
-#	STREAM_COPY					= 0x88E2 # ARB_vertex_buffer_object
-#	STATIC_DRAW					= 0x88E4 # ARB_vertex_buffer_object
-#	STATIC_READ					= 0x88E5 # ARB_vertex_buffer_object
-#	STATIC_COPY					= 0x88E6 # ARB_vertex_buffer_object
-#	DYNAMIC_DRAW					= 0x88E8 # ARB_vertex_buffer_object
-#	DYNAMIC_READ					= 0x88E9 # ARB_vertex_buffer_object
-#	DYNAMIC_COPY					= 0x88EA # ARB_vertex_buffer_object
-#	SAMPLES_PASSED					= 0x8914 # ARB_occlusion_query
-# New naming scheme
-#	FOG_COORD_SRC					= GL_FOG_COORDINATE_SOURCE
-#	FOG_COORD					= GL_FOG_COORDINATE
-#	CURRENT_FOG_COORD				= GL_CURRENT_FOG_COORDINATE
-#	FOG_COORD_ARRAY_TYPE				= GL_FOG_COORDINATE_ARRAY_TYPE
-#	FOG_COORD_ARRAY_STRIDE				= GL_FOG_COORDINATE_ARRAY_STRIDE
-#	FOG_COORD_ARRAY_POINTER				= GL_FOG_COORDINATE_ARRAY_POINTER
-#	FOG_COORD_ARRAY					= GL_FOG_COORDINATE_ARRAY
-#	FOG_COORD_ARRAY_BUFFER_BINDING			= GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING
-#	SRC0_RGB					= GL_SOURCE0_RGB
-#	SRC1_RGB					= GL_SOURCE1_RGB
-#	SRC2_RGB					= GL_SOURCE2_RGB
-#	SRC0_ALPHA					= GL_SOURCE0_ALPHA
-#	SRC1_ALPHA					= GL_SOURCE1_ALPHA
-#	SRC2_ALPHA					= GL_SOURCE2_ALPHA
+VERSION_1_5 enum:
+	BUFFER_SIZE					= 0x8764 # ARB_vertex_buffer_object
+	BUFFER_USAGE					= 0x8765 # ARB_vertex_buffer_object
+	QUERY_COUNTER_BITS				= 0x8864 # ARB_occlusion_query
+	CURRENT_QUERY					= 0x8865 # ARB_occlusion_query
+	QUERY_RESULT					= 0x8866 # ARB_occlusion_query
+	QUERY_RESULT_AVAILABLE				= 0x8867 # ARB_occlusion_query
+	ARRAY_BUFFER					= 0x8892 # ARB_vertex_buffer_object
+	ELEMENT_ARRAY_BUFFER				= 0x8893 # ARB_vertex_buffer_object
+	ARRAY_BUFFER_BINDING				= 0x8894 # ARB_vertex_buffer_object
+	ELEMENT_ARRAY_BUFFER_BINDING			= 0x8895 # ARB_vertex_buffer_object
+	VERTEX_ATTRIB_ARRAY_BUFFER_BINDING		= 0x889F # ARB_vertex_buffer_object
+	READ_ONLY					= 0x88B8 # ARB_vertex_buffer_object
+	WRITE_ONLY					= 0x88B9 # ARB_vertex_buffer_object
+	READ_WRITE					= 0x88BA # ARB_vertex_buffer_object
+	BUFFER_ACCESS					= 0x88BB # ARB_vertex_buffer_object
+	BUFFER_MAPPED					= 0x88BC # ARB_vertex_buffer_object
+	BUFFER_MAP_POINTER				= 0x88BD # ARB_vertex_buffer_object
+	STREAM_DRAW					= 0x88E0 # ARB_vertex_buffer_object
+	STREAM_READ					= 0x88E1 # ARB_vertex_buffer_object
+	STREAM_COPY					= 0x88E2 # ARB_vertex_buffer_object
+	STATIC_DRAW					= 0x88E4 # ARB_vertex_buffer_object
+	STATIC_READ					= 0x88E5 # ARB_vertex_buffer_object
+	STATIC_COPY					= 0x88E6 # ARB_vertex_buffer_object
+	DYNAMIC_DRAW					= 0x88E8 # ARB_vertex_buffer_object
+	DYNAMIC_READ					= 0x88E9 # ARB_vertex_buffer_object
+	DYNAMIC_COPY					= 0x88EA # ARB_vertex_buffer_object
+	SAMPLES_PASSED					= 0x8914 # ARB_occlusion_query
 
+VERSION_1_5_DEPRECATED enum:
+	VERTEX_ARRAY_BUFFER_BINDING			= 0x8896 # ARB_vertex_buffer_object
+	NORMAL_ARRAY_BUFFER_BINDING			= 0x8897 # ARB_vertex_buffer_object
+	COLOR_ARRAY_BUFFER_BINDING			= 0x8898 # ARB_vertex_buffer_object
+	INDEX_ARRAY_BUFFER_BINDING			= 0x8899 # ARB_vertex_buffer_object
+	TEXTURE_COORD_ARRAY_BUFFER_BINDING		= 0x889A # ARB_vertex_buffer_object
+	EDGE_FLAG_ARRAY_BUFFER_BINDING			= 0x889B # ARB_vertex_buffer_object
+	SECONDARY_COLOR_ARRAY_BUFFER_BINDING		= 0x889C # ARB_vertex_buffer_object
+	FOG_COORDINATE_ARRAY_BUFFER_BINDING		= 0x889D # ARB_vertex_buffer_object
+	WEIGHT_ARRAY_BUFFER_BINDING			= 0x889E # ARB_vertex_buffer_object
+	FOG_COORD_SRC					= 0x8450    # alias GL_FOG_COORDINATE_SOURCE
+	FOG_COORD					= 0x8451    # alias GL_FOG_COORDINATE
+	CURRENT_FOG_COORD				= 0x8453    # alias GL_CURRENT_FOG_COORDINATE
+	FOG_COORD_ARRAY_TYPE				= 0x8454    # alias GL_FOG_COORDINATE_ARRAY_TYPE
+	FOG_COORD_ARRAY_STRIDE				= 0x8455    # alias GL_FOG_COORDINATE_ARRAY_STRIDE
+	FOG_COORD_ARRAY_POINTER				= 0x8456    # alias GL_FOG_COORDINATE_ARRAY_POINTER
+	FOG_COORD_ARRAY					= 0x8457    # alias GL_FOG_COORDINATE_ARRAY
+	FOG_COORD_ARRAY_BUFFER_BINDING			= 0x889D    # alias GL_FOG_COORDINATE_ARRAY_BUFFER_BINDING
+# New naming scheme
+	SRC0_RGB					= 0x8580    # alias GL_SOURCE0_RGB
+	SRC1_RGB					= 0x8581    # alias GL_SOURCE1_RGB
+	SRC2_RGB					= 0x8582    # alias GL_SOURCE2_RGB
+	SRC0_ALPHA					= 0x8588    # alias GL_SOURCE0_ALPHA
+	SRC1_ALPHA					= 0x8589    # alias GL_SOURCE1_ALPHA
+	SRC2_ALPHA					= 0x858A    # alias GL_SOURCE2_ALPHA
 
 ###############################################################################
 #
@@ -367,366 +971,365 @@ ARB_imaging enum:
 #
 ###############################################################################
 
-#VERSION_2_0 enum:
-#	BLEND_EQUATION_RGB				= GL_BLEND_EQUATION # EXT_blend_equation_separate
-#	VERTEX_ATTRIB_ARRAY_ENABLED			= 0x8622    # ARB_vertex_shader
-#	VERTEX_ATTRIB_ARRAY_SIZE			= 0x8623    # ARB_vertex_shader
-#	VERTEX_ATTRIB_ARRAY_STRIDE			= 0x8624    # ARB_vertex_shader
-#	VERTEX_ATTRIB_ARRAY_TYPE			= 0x8625    # ARB_vertex_shader
-#	CURRENT_VERTEX_ATTRIB				= 0x8626    # ARB_vertex_shader
-#	VERTEX_PROGRAM_POINT_SIZE			= 0x8642    # ARB_vertex_shader
-#	VERTEX_PROGRAM_TWO_SIDE				= 0x8643    # ARB_vertex_shader
-#	VERTEX_ATTRIB_ARRAY_POINTER			= 0x8645    # ARB_vertex_shader
-#	STENCIL_BACK_FUNC				= 0x8800    # ARB_stencil_two_side
-#	STENCIL_BACK_FAIL				= 0x8801    # ARB_stencil_two_side
-#	STENCIL_BACK_PASS_DEPTH_FAIL			= 0x8802    # ARB_stencil_two_side
-#	STENCIL_BACK_PASS_DEPTH_PASS			= 0x8803    # ARB_stencil_two_side
-#	MAX_DRAW_BUFFERS				= 0x8824    # ARB_draw_buffers
-#	DRAW_BUFFER0					= 0x8825    # ARB_draw_buffers
-#	DRAW_BUFFER1					= 0x8826    # ARB_draw_buffers
-#	DRAW_BUFFER2					= 0x8827    # ARB_draw_buffers
-#	DRAW_BUFFER3					= 0x8828    # ARB_draw_buffers
-#	DRAW_BUFFER4					= 0x8829    # ARB_draw_buffers
-#	DRAW_BUFFER5					= 0x882A    # ARB_draw_buffers
-#	DRAW_BUFFER6					= 0x882B    # ARB_draw_buffers
-#	DRAW_BUFFER7					= 0x882C    # ARB_draw_buffers
-#	DRAW_BUFFER8					= 0x882D    # ARB_draw_buffers
-#	DRAW_BUFFER9					= 0x882E    # ARB_draw_buffers
-#	DRAW_BUFFER10					= 0x882F    # ARB_draw_buffers
-#	DRAW_BUFFER11					= 0x8830    # ARB_draw_buffers
-#	DRAW_BUFFER12					= 0x8831    # ARB_draw_buffers
-#	DRAW_BUFFER13					= 0x8832    # ARB_draw_buffers
-#	DRAW_BUFFER14					= 0x8833    # ARB_draw_buffers
-#	DRAW_BUFFER15					= 0x8834    # ARB_draw_buffers
-#	BLEND_EQUATION_ALPHA				= 0x883D    # EXT_blend_equation_separate
-#	POINT_SPRITE					= 0x8861    # ARB_point_sprite
-#	COORD_REPLACE					= 0x8862    # ARB_point_sprite
-#	MAX_VERTEX_ATTRIBS				= 0x8869    # ARB_vertex_shader
-#	VERTEX_ATTRIB_ARRAY_NORMALIZED			= 0x886A    # ARB_vertex_shader
-#	MAX_TEXTURE_COORDS				= 0x8871    # ARB_vertex_shader, ARB_fragment_shader
-#	MAX_TEXTURE_IMAGE_UNITS				= 0x8872    # ARB_vertex_shader, ARB_fragment_shader
-#	FRAGMENT_SHADER					= 0x8B30    # ARB_fragment_shader
-#	VERTEX_SHADER					= 0x8B31    # ARB_vertex_shader
-#	MAX_FRAGMENT_UNIFORM_COMPONENTS			= 0x8B49    # ARB_fragment_shader
-#	MAX_VERTEX_UNIFORM_COMPONENTS			= 0x8B4A    # ARB_vertex_shader
-#	MAX_VARYING_FLOATS				= 0x8B4B    # ARB_vertex_shader
-#	MAX_VERTEX_TEXTURE_IMAGE_UNITS			= 0x8B4C    # ARB_vertex_shader
-#	MAX_COMBINED_TEXTURE_IMAGE_UNITS		= 0x8B4D    # ARB_vertex_shader
-#	SHADER_TYPE					= 0x8B4F    # ARB_shader_objects
-#	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
-#	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
-#	FLOAT_VEC4					= 0x8B52    # ARB_shader_objects
-#	INT_VEC2					= 0x8B53    # ARB_shader_objects
-#	INT_VEC3					= 0x8B54    # ARB_shader_objects
-#	INT_VEC4					= 0x8B55    # ARB_shader_objects
-#	BOOL						= 0x8B56    # ARB_shader_objects
-#	BOOL_VEC2					= 0x8B57    # ARB_shader_objects
-#	BOOL_VEC3					= 0x8B58    # ARB_shader_objects
-#	BOOL_VEC4					= 0x8B59    # ARB_shader_objects
-#	FLOAT_MAT2					= 0x8B5A    # ARB_shader_objects
-#	FLOAT_MAT3					= 0x8B5B    # ARB_shader_objects
-#	FLOAT_MAT4					= 0x8B5C    # ARB_shader_objects
-#	SAMPLER_1D					= 0x8B5D    # ARB_shader_objects
-#	SAMPLER_2D					= 0x8B5E    # ARB_shader_objects
-#	SAMPLER_3D					= 0x8B5F    # ARB_shader_objects
-#	SAMPLER_CUBE					= 0x8B60    # ARB_shader_objects
-#	SAMPLER_1D_SHADOW				= 0x8B61    # ARB_shader_objects
-#	SAMPLER_2D_SHADOW				= 0x8B62    # ARB_shader_objects
-#	DELETE_STATUS					= 0x8B80    # ARB_shader_objects
-#	COMPILE_STATUS					= 0x8B81    # ARB_shader_objects
-#	LINK_STATUS					= 0x8B82    # ARB_shader_objects
-#	VALIDATE_STATUS					= 0x8B83    # ARB_shader_objects
-#	INFO_LOG_LENGTH					= 0x8B84    # ARB_shader_objects
-#	ATTACHED_SHADERS				= 0x8B85    # ARB_shader_objects
-#	ACTIVE_UNIFORMS					= 0x8B86    # ARB_shader_objects
-#	ACTIVE_UNIFORM_MAX_LENGTH			= 0x8B87    # ARB_shader_objects
-#	SHADER_SOURCE_LENGTH				= 0x8B88    # ARB_shader_objects
-#	ACTIVE_ATTRIBUTES				= 0x8B89    # ARB_vertex_shader
-#	ACTIVE_ATTRIBUTE_MAX_LENGTH			= 0x8B8A    # ARB_vertex_shader
-#	FRAGMENT_SHADER_DERIVATIVE_HINT			= 0x8B8B    # ARB_fragment_shader
-#	SHADING_LANGUAGE_VERSION			= 0x8B8C    # ARB_shading_language_100
-#	CURRENT_PROGRAM					= 0x8B8D    # ARB_shader_objects (added for 2.0)
-#	POINT_SPRITE_COORD_ORIGIN			= 0x8CA0    # ARB_point_sprite (added for 2.0)
-#	LOWER_LEFT					= 0x8CA1    # ARB_point_sprite (added for 2.0)
-#	UPPER_LEFT					= 0x8CA2    # ARB_point_sprite (added for 2.0)
-#	STENCIL_BACK_REF				= 0x8CA3    # ARB_stencil_two_side
-#	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
-#	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
+VERSION_2_0 enum:
+	BLEND_EQUATION_RGB				= 0x8009    # EXT_blend_equation_separate   # alias GL_BLEND_EQUATION
+	VERTEX_ATTRIB_ARRAY_ENABLED			= 0x8622    # ARB_vertex_shader
+	VERTEX_ATTRIB_ARRAY_SIZE			= 0x8623    # ARB_vertex_shader
+	VERTEX_ATTRIB_ARRAY_STRIDE			= 0x8624    # ARB_vertex_shader
+	VERTEX_ATTRIB_ARRAY_TYPE			= 0x8625    # ARB_vertex_shader
+	CURRENT_VERTEX_ATTRIB				= 0x8626    # ARB_vertex_shader
+	VERTEX_PROGRAM_POINT_SIZE			= 0x8642    # ARB_vertex_shader
+	VERTEX_ATTRIB_ARRAY_POINTER			= 0x8645    # ARB_vertex_shader
+	STENCIL_BACK_FUNC				= 0x8800    # ARB_stencil_two_side
+	STENCIL_BACK_FAIL				= 0x8801    # ARB_stencil_two_side
+	STENCIL_BACK_PASS_DEPTH_FAIL			= 0x8802    # ARB_stencil_two_side
+	STENCIL_BACK_PASS_DEPTH_PASS			= 0x8803    # ARB_stencil_two_side
+	MAX_DRAW_BUFFERS				= 0x8824    # ARB_draw_buffers
+	DRAW_BUFFER0					= 0x8825    # ARB_draw_buffers
+	DRAW_BUFFER1					= 0x8826    # ARB_draw_buffers
+	DRAW_BUFFER2					= 0x8827    # ARB_draw_buffers
+	DRAW_BUFFER3					= 0x8828    # ARB_draw_buffers
+	DRAW_BUFFER4					= 0x8829    # ARB_draw_buffers
+	DRAW_BUFFER5					= 0x882A    # ARB_draw_buffers
+	DRAW_BUFFER6					= 0x882B    # ARB_draw_buffers
+	DRAW_BUFFER7					= 0x882C    # ARB_draw_buffers
+	DRAW_BUFFER8					= 0x882D    # ARB_draw_buffers
+	DRAW_BUFFER9					= 0x882E    # ARB_draw_buffers
+	DRAW_BUFFER10					= 0x882F    # ARB_draw_buffers
+	DRAW_BUFFER11					= 0x8830    # ARB_draw_buffers
+	DRAW_BUFFER12					= 0x8831    # ARB_draw_buffers
+	DRAW_BUFFER13					= 0x8832    # ARB_draw_buffers
+	DRAW_BUFFER14					= 0x8833    # ARB_draw_buffers
+	DRAW_BUFFER15					= 0x8834    # ARB_draw_buffers
+	BLEND_EQUATION_ALPHA				= 0x883D    # EXT_blend_equation_separate
+	MAX_VERTEX_ATTRIBS				= 0x8869    # ARB_vertex_shader
+	VERTEX_ATTRIB_ARRAY_NORMALIZED			= 0x886A    # ARB_vertex_shader
+	MAX_TEXTURE_IMAGE_UNITS				= 0x8872    # ARB_vertex_shader, ARB_fragment_shader
+	FRAGMENT_SHADER					= 0x8B30    # ARB_fragment_shader
+	VERTEX_SHADER					= 0x8B31    # ARB_vertex_shader
+	MAX_FRAGMENT_UNIFORM_COMPONENTS			= 0x8B49    # ARB_fragment_shader
+	MAX_VERTEX_UNIFORM_COMPONENTS			= 0x8B4A    # ARB_vertex_shader
+	MAX_VARYING_FLOATS				= 0x8B4B    # ARB_vertex_shader
+	MAX_VERTEX_TEXTURE_IMAGE_UNITS			= 0x8B4C    # ARB_vertex_shader
+	MAX_COMBINED_TEXTURE_IMAGE_UNITS		= 0x8B4D    # ARB_vertex_shader
+	SHADER_TYPE					= 0x8B4F    # ARB_shader_objects
+	FLOAT_VEC2					= 0x8B50    # ARB_shader_objects
+	FLOAT_VEC3					= 0x8B51    # ARB_shader_objects
+	FLOAT_VEC4					= 0x8B52    # ARB_shader_objects
+	INT_VEC2					= 0x8B53    # ARB_shader_objects
+	INT_VEC3					= 0x8B54    # ARB_shader_objects
+	INT_VEC4					= 0x8B55    # ARB_shader_objects
+	BOOL						= 0x8B56    # ARB_shader_objects
+	BOOL_VEC2					= 0x8B57    # ARB_shader_objects
+	BOOL_VEC3					= 0x8B58    # ARB_shader_objects
+	BOOL_VEC4					= 0x8B59    # ARB_shader_objects
+	FLOAT_MAT2					= 0x8B5A    # ARB_shader_objects
+	FLOAT_MAT3					= 0x8B5B    # ARB_shader_objects
+	FLOAT_MAT4					= 0x8B5C    # ARB_shader_objects
+	SAMPLER_1D					= 0x8B5D    # ARB_shader_objects
+	SAMPLER_2D					= 0x8B5E    # ARB_shader_objects
+	SAMPLER_3D					= 0x8B5F    # ARB_shader_objects
+	SAMPLER_CUBE					= 0x8B60    # ARB_shader_objects
+	SAMPLER_1D_SHADOW				= 0x8B61    # ARB_shader_objects
+	SAMPLER_2D_SHADOW				= 0x8B62    # ARB_shader_objects
+	DELETE_STATUS					= 0x8B80    # ARB_shader_objects
+	COMPILE_STATUS					= 0x8B81    # ARB_shader_objects
+	LINK_STATUS					= 0x8B82    # ARB_shader_objects
+	VALIDATE_STATUS					= 0x8B83    # ARB_shader_objects
+	INFO_LOG_LENGTH					= 0x8B84    # ARB_shader_objects
+	ATTACHED_SHADERS				= 0x8B85    # ARB_shader_objects
+	ACTIVE_UNIFORMS					= 0x8B86    # ARB_shader_objects
+	ACTIVE_UNIFORM_MAX_LENGTH			= 0x8B87    # ARB_shader_objects
+	SHADER_SOURCE_LENGTH				= 0x8B88    # ARB_shader_objects
+	ACTIVE_ATTRIBUTES				= 0x8B89    # ARB_vertex_shader
+	ACTIVE_ATTRIBUTE_MAX_LENGTH			= 0x8B8A    # ARB_vertex_shader
+	FRAGMENT_SHADER_DERIVATIVE_HINT			= 0x8B8B    # ARB_fragment_shader
+	SHADING_LANGUAGE_VERSION			= 0x8B8C    # ARB_shading_language_100
+	CURRENT_PROGRAM					= 0x8B8D    # ARB_shader_objects (added for 2.0)
+	POINT_SPRITE_COORD_ORIGIN			= 0x8CA0    # ARB_point_sprite (added for 2.0)
+	LOWER_LEFT					= 0x8CA1    # ARB_point_sprite (added for 2.0)
+	UPPER_LEFT					= 0x8CA2    # ARB_point_sprite (added for 2.0)
+	STENCIL_BACK_REF				= 0x8CA3    # ARB_stencil_two_side
+	STENCIL_BACK_VALUE_MASK				= 0x8CA4    # ARB_stencil_two_side
+	STENCIL_BACK_WRITEMASK				= 0x8CA5    # ARB_stencil_two_side
+
+VERSION_2_0_DEPRECATED enum:
+	VERTEX_PROGRAM_TWO_SIDE				= 0x8643    # ARB_vertex_shader
+	POINT_SPRITE					= 0x8861    # ARB_point_sprite
+	COORD_REPLACE					= 0x8862    # ARB_point_sprite
+	MAX_TEXTURE_COORDS				= 0x8871    # ARB_vertex_shader, ARB_fragment_shader
 
 
 ###############################################################################
 #
-# OpenGL 2.1 enums (edited for OpenTK)
+# OpenGL 2.1 enums
 #
 ###############################################################################
 
-#VERSION_2_1 enum:
-#	CURRENT_RASTER_SECONDARY_COLOR			= 0x845F    # New for 2.1
-#	PIXEL_PACK_BUFFER				= 0x88EB    # ARB_pixel_buffer_object
-#	PIXEL_UNPACK_BUFFER				= 0x88EC    # ARB_pixel_buffer_object
-#	PIXEL_PACK_BUFFER_BINDING			= 0x88ED    # ARB_pixel_buffer_object
-#	PIXEL_UNPACK_BUFFER_BINDING			= 0x88EF    # ARB_pixel_buffer_object
-#	FLOAT_MAT2x3					= 0x8B65    # New for 2.1
-#	FLOAT_MAT2x4					= 0x8B66    # New for 2.1
-#	FLOAT_MAT3x2					= 0x8B67    # New for 2.1
-#	FLOAT_MAT3x4					= 0x8B68    # New for 2.1
-#	FLOAT_MAT4x2					= 0x8B69    # New for 2.1
-#	FLOAT_MAT4x3					= 0x8B6A    # New for 2.1
-#	SRGB						= 0x8C40    # EXT_texture_sRGB
-#	SRGB8						= 0x8C41    # EXT_texture_sRGB
-#	SRGB_ALPHA					= 0x8C42    # EXT_texture_sRGB
-#	SRGB8_ALPHA8					= 0x8C43    # EXT_texture_sRGB
-#	SLUMINANCE_ALPHA				= 0x8C44    # EXT_texture_sRGB
-#	SLUMINANCE8_ALPHA8				= 0x8C45    # EXT_texture_sRGB
-#	SLUMINANCE					= 0x8C46    # EXT_texture_sRGB
-#	SLUMINANCE8					= 0x8C47    # EXT_texture_sRGB
-#	COMPRESSED_SRGB					= 0x8C48    # EXT_texture_sRGB
-#	COMPRESSED_SRGB_ALPHA				= 0x8C49    # EXT_texture_sRGB
-#	COMPRESSED_SLUMINANCE				= 0x8C4A    # EXT_texture_sRGB
-#	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # EXT_texture_sRGB
+VERSION_2_1 enum:
+	PIXEL_PACK_BUFFER				= 0x88EB    # ARB_pixel_buffer_object
+	PIXEL_UNPACK_BUFFER				= 0x88EC    # ARB_pixel_buffer_object
+	PIXEL_PACK_BUFFER_BINDING			= 0x88ED    # ARB_pixel_buffer_object
+	PIXEL_UNPACK_BUFFER_BINDING			= 0x88EF    # ARB_pixel_buffer_object
+	FLOAT_MAT2x3					= 0x8B65    # New for 2.1
+	FLOAT_MAT2x4					= 0x8B66    # New for 2.1
+	FLOAT_MAT3x2					= 0x8B67    # New for 2.1
+	FLOAT_MAT3x4					= 0x8B68    # New for 2.1
+	FLOAT_MAT4x2					= 0x8B69    # New for 2.1
+	FLOAT_MAT4x3					= 0x8B6A    # New for 2.1
+	SRGB						= 0x8C40    # EXT_texture_sRGB
+	SRGB8						= 0x8C41    # EXT_texture_sRGB
+	SRGB_ALPHA					= 0x8C42    # EXT_texture_sRGB
+	SRGB8_ALPHA8					= 0x8C43    # EXT_texture_sRGB
+	COMPRESSED_SRGB					= 0x8C48    # EXT_texture_sRGB
+	COMPRESSED_SRGB_ALPHA				= 0x8C49    # EXT_texture_sRGB
+
+VERSION_2_1_DEPRECATED enum:
+	CURRENT_RASTER_SECONDARY_COLOR			= 0x845F    # New for 2.1
+	SLUMINANCE_ALPHA				= 0x8C44    # EXT_texture_sRGB
+	SLUMINANCE8_ALPHA8				= 0x8C45    # EXT_texture_sRGB
+	SLUMINANCE					= 0x8C46    # EXT_texture_sRGB
+	SLUMINANCE8					= 0x8C47    # EXT_texture_sRGB
+	COMPRESSED_SLUMINANCE				= 0x8C4A    # EXT_texture_sRGB
+	COMPRESSED_SLUMINANCE_ALPHA			= 0x8C4B    # EXT_texture_sRGB
 
 
 ###############################################################################
 #
-# OpenGL 3.0 enums (edited for OpenTK)
+# OpenGL 3.0 enums
 #
 ###############################################################################
 
 VERSION_3_0 enum:
-#	COMPARE_REF_TO_TEXTURE				= GL_COMPARE_R_TO_TEXTURE_ARB
-	CLIP_DISTANCE0					= GL_CLIP_PLANE0
-	CLIP_DISTANCE1					= GL_CLIP_PLANE1
-	CLIP_DISTANCE2					= GL_CLIP_PLANE2
-	CLIP_DISTANCE3					= GL_CLIP_PLANE3
-	CLIP_DISTANCE4					= GL_CLIP_PLANE4
-	CLIP_DISTANCE5					= GL_CLIP_PLANE5
-	MAX_CLIP_DISTANCES				= GL_MAX_CLIP_PLANES
-#	MAJOR_VERSION					= 0x821B
-#	MINOR_VERSION					= 0x821C
-#	NUM_EXTENSIONS					= 0x821D
-#	CONTEXT_FLAGS					= 0x821E
+	COMPARE_REF_TO_TEXTURE				= 0x884E    # alias GL_COMPARE_R_TO_TEXTURE_ARB
+	CLIP_DISTANCE0					= 0x3000    # alias GL_CLIP_PLANE0
+	CLIP_DISTANCE1					= 0x3001    # alias GL_CLIP_PLANE1
+	CLIP_DISTANCE2					= 0x3002    # alias GL_CLIP_PLANE2
+	CLIP_DISTANCE3					= 0x3003    # alias GL_CLIP_PLANE3
+	CLIP_DISTANCE4					= 0x3004    # alias GL_CLIP_PLANE4
+	CLIP_DISTANCE5					= 0x3005    # alias GL_CLIP_PLANE5
+	MAX_CLIP_DISTANCES				= 0x0D32    # alias GL_MAX_CLIP_PLANES
+	MAJOR_VERSION					= 0x821B
+	MINOR_VERSION					= 0x821C
+	NUM_EXTENSIONS					= 0x821D
+	CONTEXT_FLAGS					= 0x821E
 	DEPTH_BUFFER					= 0x8223
 	STENCIL_BUFFER					= 0x8224
-#	COMPRESSED_RED					= 0x8225
-#	COMPRESSED_RG					= 0x8226
+	COMPRESSED_RED					= 0x8225
+	COMPRESSED_RG					= 0x8226
 	CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT		= 0x0001
-#	RGBA32F						= 0x8814
-#	RGB32F						= 0x8815
-#	RGBA16F						= 0x881A
-#	RGB16F						= 0x881B
-#	VERTEX_ATTRIB_ARRAY_INTEGER			= 0x88FD
-#	MAX_ARRAY_TEXTURE_LAYERS			= 0x88FF
-#	MIN_PROGRAM_TEXEL_OFFSET			= 0x8904
-#	MAX_PROGRAM_TEXEL_OFFSET			= 0x8905
-#	CLAMP_VERTEX_COLOR				= 0x891A
-#	CLAMP_FRAGMENT_COLOR				= 0x891B
-#	CLAMP_READ_COLOR				= 0x891C
-#	FIXED_ONLY					= 0x891D
-	MAX_VARYING_COMPONENTS				= GL_MAX_VARYING_FLOATS
-#	TEXTURE_RED_TYPE				= 0x8C10
-#	TEXTURE_GREEN_TYPE				= 0x8C11
-#	TEXTURE_BLUE_TYPE				= 0x8C12
-#	TEXTURE_ALPHA_TYPE				= 0x8C13
-#	TEXTURE_LUMINANCE_TYPE				= 0x8C14
-#	TEXTURE_INTENSITY_TYPE				= 0x8C15
-#	TEXTURE_DEPTH_TYPE				= 0x8C16
-	UNSIGNED_NORMALIZED				= 0x8C17
-#	TEXTURE_1D_ARRAY				= 0x8C18
-#	PROXY_TEXTURE_1D_ARRAY				= 0x8C19
-#	TEXTURE_2D_ARRAY				= 0x8C1A
-#	PROXY_TEXTURE_2D_ARRAY				= 0x8C1B
-#	TEXTURE_BINDING_1D_ARRAY			= 0x8C1C
-#	TEXTURE_BINDING_2D_ARRAY			= 0x8C1D
-#	R11F_G11F_B10F					= 0x8C3A
-#	UNSIGNED_INT_10F_11F_11F_REV			= 0x8C3B
-#	RGB9_E5						= 0x8C3D
-#	UNSIGNED_INT_5_9_9_9_REV			= 0x8C3E
-#	TEXTURE_SHARED_SIZE				= 0x8C3F
-#	TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH		= 0x8C76
-#	TRANSFORM_FEEDBACK_BUFFER_MODE			= 0x8C7F
-#	MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS	= 0x8C80
-#	TRANSFORM_FEEDBACK_VARYINGS			= 0x8C83
-#	TRANSFORM_FEEDBACK_BUFFER_START			= 0x8C84
-#	TRANSFORM_FEEDBACK_BUFFER_SIZE			= 0x8C85
-#	PRIMITIVES_GENERATED				= 0x8C87
-#	TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN		= 0x8C88
-#	RASTERIZER_DISCARD				= 0x8C89
-#	MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS	= 0x8C8A
-#	MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS		= 0x8C8B
-#	INTERLEAVED_ATTRIBS				= 0x8C8C
-#	SEPARATE_ATTRIBS				= 0x8C8D
-#	TRANSFORM_FEEDBACK_BUFFER			= 0x8C8E
-#	TRANSFORM_FEEDBACK_BUFFER_BINDING		= 0x8C8F
-#	RGBA32UI					= 0x8D70
-#	RGB32UI						= 0x8D71
-#	RGBA16UI					= 0x8D76
-#	RGB16UI						= 0x8D77
-#	RGBA8UI						= 0x8D7C
-#	RGB8UI						= 0x8D7D
-#	RGBA32I						= 0x8D82
-#	RGB32I						= 0x8D83
-#	RGBA16I						= 0x8D88
-#	RGB16I						= 0x8D89
-#	RGBA8I						= 0x8D8E
-#	RGB8I						= 0x8D8F
-#	RED_INTEGER					= 0x8D94
-#	GREEN_INTEGER					= 0x8D95
-#	BLUE_INTEGER					= 0x8D96
-#	ALPHA_INTEGER					= 0x8D97
-#	RGB_INTEGER					= 0x8D98
-#	RGBA_INTEGER					= 0x8D99
-#	BGR_INTEGER					= 0x8D9A
-#	BGRA_INTEGER					= 0x8D9B
-#	SAMPLER_1D_ARRAY				= 0x8DC0
-#	SAMPLER_2D_ARRAY				= 0x8DC1
-#	SAMPLER_1D_ARRAY_SHADOW				= 0x8DC3
-#	SAMPLER_2D_ARRAY_SHADOW				= 0x8DC4
-#	SAMPLER_CUBE_SHADOW				= 0x8DC5
-#	UNSIGNED_INT_VEC2				= 0x8DC6
-#	UNSIGNED_INT_VEC3				= 0x8DC7
-#	UNSIGNED_INT_VEC4				= 0x8DC8
-#	INT_SAMPLER_1D					= 0x8DC9
-#	INT_SAMPLER_2D					= 0x8DCA
-#	INT_SAMPLER_3D					= 0x8DCB
-#	INT_SAMPLER_CUBE				= 0x8DCC
-#	INT_SAMPLER_1D_ARRAY				= 0x8DCE
-#	INT_SAMPLER_2D_ARRAY				= 0x8DCF
-#	UNSIGNED_INT_SAMPLER_1D				= 0x8DD1
-#	UNSIGNED_INT_SAMPLER_2D				= 0x8DD2
-#	UNSIGNED_INT_SAMPLER_3D				= 0x8DD3
-#	UNSIGNED_INT_SAMPLER_CUBE			= 0x8DD4
-#	UNSIGNED_INT_SAMPLER_1D_ARRAY			= 0x8DD6
-#	UNSIGNED_INT_SAMPLER_2D_ARRAY			= 0x8DD7
-#	QUERY_WAIT					= 0x8E13
-#	QUERY_NO_WAIT					= 0x8E14
-#	QUERY_BY_REGION_WAIT				= 0x8E15
-#	QUERY_BY_REGION_NO_WAIT				= 0x8E16
+	RGBA32F						= 0x8814
+	RGB32F						= 0x8815
+	RGBA16F						= 0x881A
+	RGB16F						= 0x881B
+	VERTEX_ATTRIB_ARRAY_INTEGER			= 0x88FD
+	MAX_ARRAY_TEXTURE_LAYERS			= 0x88FF
+	MIN_PROGRAM_TEXEL_OFFSET			= 0x8904
+	MAX_PROGRAM_TEXEL_OFFSET			= 0x8905
+	CLAMP_READ_COLOR				= 0x891C
+	FIXED_ONLY					= 0x891D
+	MAX_VARYING_COMPONENTS				= 0x8B4B    # alias GL_MAX_VARYING_FLOATS
+	TEXTURE_1D_ARRAY				= 0x8C18
+	PROXY_TEXTURE_1D_ARRAY				= 0x8C19
+	TEXTURE_2D_ARRAY				= 0x8C1A
+	PROXY_TEXTURE_2D_ARRAY				= 0x8C1B
+	TEXTURE_BINDING_1D_ARRAY			= 0x8C1C
+	TEXTURE_BINDING_2D_ARRAY			= 0x8C1D
+	R11F_G11F_B10F					= 0x8C3A
+	UNSIGNED_INT_10F_11F_11F_REV			= 0x8C3B
+	RGB9_E5						= 0x8C3D
+	UNSIGNED_INT_5_9_9_9_REV			= 0x8C3E
+	TEXTURE_SHARED_SIZE				= 0x8C3F
+	TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH		= 0x8C76
+	TRANSFORM_FEEDBACK_BUFFER_MODE			= 0x8C7F
+	MAX_TRANSFORM_FEEDBACK_SEPARATE_COMPONENTS	= 0x8C80
+	TRANSFORM_FEEDBACK_VARYINGS			= 0x8C83
+	TRANSFORM_FEEDBACK_BUFFER_START			= 0x8C84
+	TRANSFORM_FEEDBACK_BUFFER_SIZE			= 0x8C85
+	PRIMITIVES_GENERATED				= 0x8C87
+	TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN		= 0x8C88
+	RASTERIZER_DISCARD				= 0x8C89
+	MAX_TRANSFORM_FEEDBACK_INTERLEAVED_COMPONENTS	= 0x8C8A
+	MAX_TRANSFORM_FEEDBACK_SEPARATE_ATTRIBS		= 0x8C8B
+	INTERLEAVED_ATTRIBS				= 0x8C8C
+	SEPARATE_ATTRIBS				= 0x8C8D
+	TRANSFORM_FEEDBACK_BUFFER			= 0x8C8E
+	TRANSFORM_FEEDBACK_BUFFER_BINDING		= 0x8C8F
+	RGBA32UI					= 0x8D70
+	RGB32UI						= 0x8D71
+	RGBA16UI					= 0x8D76
+	RGB16UI						= 0x8D77
+	RGBA8UI						= 0x8D7C
+	RGB8UI						= 0x8D7D
+	RGBA32I						= 0x8D82
+	RGB32I						= 0x8D83
+	RGBA16I						= 0x8D88
+	RGB16I						= 0x8D89
+	RGBA8I						= 0x8D8E
+	RGB8I						= 0x8D8F
+	RED_INTEGER					= 0x8D94
+	GREEN_INTEGER					= 0x8D95
+	BLUE_INTEGER					= 0x8D96
+	RGB_INTEGER					= 0x8D98
+	RGBA_INTEGER					= 0x8D99
+	BGR_INTEGER					= 0x8D9A
+	BGRA_INTEGER					= 0x8D9B
+	SAMPLER_1D_ARRAY				= 0x8DC0
+	SAMPLER_2D_ARRAY				= 0x8DC1
+	SAMPLER_1D_ARRAY_SHADOW				= 0x8DC3
+	SAMPLER_2D_ARRAY_SHADOW				= 0x8DC4
+	SAMPLER_CUBE_SHADOW				= 0x8DC5
+	UNSIGNED_INT_VEC2				= 0x8DC6
+	UNSIGNED_INT_VEC3				= 0x8DC7
+	UNSIGNED_INT_VEC4				= 0x8DC8
+	INT_SAMPLER_1D					= 0x8DC9
+	INT_SAMPLER_2D					= 0x8DCA
+	INT_SAMPLER_3D					= 0x8DCB
+	INT_SAMPLER_CUBE				= 0x8DCC
+	INT_SAMPLER_1D_ARRAY				= 0x8DCE
+	INT_SAMPLER_2D_ARRAY				= 0x8DCF
+	UNSIGNED_INT_SAMPLER_1D				= 0x8DD1
+	UNSIGNED_INT_SAMPLER_2D				= 0x8DD2
+	UNSIGNED_INT_SAMPLER_3D				= 0x8DD3
+	UNSIGNED_INT_SAMPLER_CUBE			= 0x8DD4
+	UNSIGNED_INT_SAMPLER_1D_ARRAY			= 0x8DD6
+	UNSIGNED_INT_SAMPLER_2D_ARRAY			= 0x8DD7
+	QUERY_WAIT					= 0x8E13
+	QUERY_NO_WAIT					= 0x8E14
+	QUERY_BY_REGION_WAIT				= 0x8E15
+	QUERY_BY_REGION_NO_WAIT				= 0x8E16
 passthru: /* Reuse tokens from ARB_depth_buffer_float */
-#	use ARB_depth_buffer_float	    DEPTH_COMPONENT32F
-#	use ARB_depth_buffer_float	    DEPTH32F_STENCIL8
-#	use ARB_depth_buffer_float	    FLOAT_32_UNSIGNED_INT_24_8_REV
+	use ARB_depth_buffer_float	    DEPTH_COMPONENT32F
+	use ARB_depth_buffer_float	    DEPTH32F_STENCIL8
+	use ARB_depth_buffer_float	    FLOAT_32_UNSIGNED_INT_24_8_REV
 passthru: /* Reuse tokens from ARB_framebuffer_object */
-#	use ARB_framebuffer_object	    INVALID_FRAMEBUFFER_OPERATION
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_RED_SIZE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_GREEN_SIZE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_BLUE_SIZE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_DEFAULT
-#	use ARB_framebuffer_object	    FRAMEBUFFER_UNDEFINED
-#	use ARB_framebuffer_object	    DEPTH_STENCIL_ATTACHMENT
-#	use ARB_framebuffer_object	    INDEX
-#	use ARB_framebuffer_object	    MAX_RENDERBUFFER_SIZE
-#	use ARB_framebuffer_object	    DEPTH_STENCIL
-#	use ARB_framebuffer_object	    UNSIGNED_INT_24_8
-#	use ARB_framebuffer_object	    DEPTH24_STENCIL8
-#	use ARB_framebuffer_object	    TEXTURE_STENCIL_SIZE
-#	use ARB_framebuffer_object	    TEXTURE_RED_TYPE
-#	use ARB_framebuffer_object	    TEXTURE_GREEN_TYPE
-#	use ARB_framebuffer_object	    TEXTURE_BLUE_TYPE
-#	use ARB_framebuffer_object	    TEXTURE_ALPHA_TYPE
-#	use ARB_framebuffer_object	    TEXTURE_LUMINANCE_TYPE
-#	use ARB_framebuffer_object	    TEXTURE_INTENSITY_TYPE
-#	use ARB_framebuffer_object	    TEXTURE_DEPTH_TYPE
-#	use ARB_framebuffer_object	    UNSIGNED_NORMALIZED
-#	use ARB_framebuffer_object	    FRAMEBUFFER_BINDING
-#	use ARB_framebuffer_object	    DRAW_FRAMEBUFFER_BINDING
-#	use ARB_framebuffer_object	    RENDERBUFFER_BINDING
-#	use ARB_framebuffer_object	    READ_FRAMEBUFFER
-#	use ARB_framebuffer_object	    DRAW_FRAMEBUFFER
-#	use ARB_framebuffer_object	    READ_FRAMEBUFFER_BINDING
-#	use ARB_framebuffer_object	    RENDERBUFFER_SAMPLES
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_OBJECT_NAME
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER
-#	use ARB_framebuffer_object	    FRAMEBUFFER_COMPLETE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_ATTACHMENT
-#	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT
-#	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER
-#	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_READ_BUFFER
-#	use ARB_framebuffer_object	    FRAMEBUFFER_UNSUPPORTED
-#	use ARB_framebuffer_object	    MAX_COLOR_ATTACHMENTS
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT0
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT1
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT2
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT3
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT4
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT5
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT6
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT7
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT8
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT9
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT10
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT11
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT12
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT13
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT14
-#	use ARB_framebuffer_object	    COLOR_ATTACHMENT15
-#	use ARB_framebuffer_object	    DEPTH_ATTACHMENT
-#	use ARB_framebuffer_object	    STENCIL_ATTACHMENT
-#	use ARB_framebuffer_object	    FRAMEBUFFER
-#	use ARB_framebuffer_object	    RENDERBUFFER
-#	use ARB_framebuffer_object	    RENDERBUFFER_WIDTH
-#	use ARB_framebuffer_object	    RENDERBUFFER_HEIGHT
-#	use ARB_framebuffer_object	    RENDERBUFFER_INTERNAL_FORMAT
-#	use ARB_framebuffer_object	    STENCIL_INDEX1
-#	use ARB_framebuffer_object	    STENCIL_INDEX4
-#	use ARB_framebuffer_object	    STENCIL_INDEX8
-#	use ARB_framebuffer_object	    STENCIL_INDEX16
-#	use ARB_framebuffer_object	    RENDERBUFFER_RED_SIZE
-#	use ARB_framebuffer_object	    RENDERBUFFER_GREEN_SIZE
-#	use ARB_framebuffer_object	    RENDERBUFFER_BLUE_SIZE
-#	use ARB_framebuffer_object	    RENDERBUFFER_ALPHA_SIZE
-#	use ARB_framebuffer_object	    RENDERBUFFER_DEPTH_SIZE
-#	use ARB_framebuffer_object	    RENDERBUFFER_STENCIL_SIZE
-#	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_MULTISAMPLE
-#	use ARB_framebuffer_object	    MAX_SAMPLES
+	use ARB_framebuffer_object	    INVALID_FRAMEBUFFER_OPERATION
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_RED_SIZE
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_GREEN_SIZE
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_BLUE_SIZE
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE
+	use ARB_framebuffer_object	    FRAMEBUFFER_DEFAULT
+	use ARB_framebuffer_object	    FRAMEBUFFER_UNDEFINED
+	use ARB_framebuffer_object	    DEPTH_STENCIL_ATTACHMENT
+	use ARB_framebuffer_object	    INDEX
+	use ARB_framebuffer_object	    MAX_RENDERBUFFER_SIZE
+	use ARB_framebuffer_object	    DEPTH_STENCIL
+	use ARB_framebuffer_object	    UNSIGNED_INT_24_8
+	use ARB_framebuffer_object	    DEPTH24_STENCIL8
+	use ARB_framebuffer_object	    TEXTURE_STENCIL_SIZE
+	use ARB_framebuffer_object	    TEXTURE_RED_TYPE
+	use ARB_framebuffer_object	    TEXTURE_GREEN_TYPE
+	use ARB_framebuffer_object	    TEXTURE_BLUE_TYPE
+	use ARB_framebuffer_object	    TEXTURE_ALPHA_TYPE
+	use ARB_framebuffer_object	    TEXTURE_DEPTH_TYPE
+	use ARB_framebuffer_object	    UNSIGNED_NORMALIZED
+	use ARB_framebuffer_object	    FRAMEBUFFER_BINDING
+	use ARB_framebuffer_object	    DRAW_FRAMEBUFFER_BINDING
+	use ARB_framebuffer_object	    RENDERBUFFER_BINDING
+	use ARB_framebuffer_object	    READ_FRAMEBUFFER
+	use ARB_framebuffer_object	    DRAW_FRAMEBUFFER
+	use ARB_framebuffer_object	    READ_FRAMEBUFFER_BINDING
+	use ARB_framebuffer_object	    RENDERBUFFER_SAMPLES
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_OBJECT_NAME
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE
+	use ARB_framebuffer_object	    FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER
+	use ARB_framebuffer_object	    FRAMEBUFFER_COMPLETE
+	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_ATTACHMENT
+	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT
+	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER
+	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_READ_BUFFER
+	use ARB_framebuffer_object	    FRAMEBUFFER_UNSUPPORTED
+	use ARB_framebuffer_object	    MAX_COLOR_ATTACHMENTS
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT0
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT1
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT2
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT3
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT4
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT5
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT6
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT7
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT8
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT9
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT10
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT11
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT12
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT13
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT14
+	use ARB_framebuffer_object	    COLOR_ATTACHMENT15
+	use ARB_framebuffer_object	    DEPTH_ATTACHMENT
+	use ARB_framebuffer_object	    STENCIL_ATTACHMENT
+	use ARB_framebuffer_object	    FRAMEBUFFER
+	use ARB_framebuffer_object	    RENDERBUFFER
+	use ARB_framebuffer_object	    RENDERBUFFER_WIDTH
+	use ARB_framebuffer_object	    RENDERBUFFER_HEIGHT
+	use ARB_framebuffer_object	    RENDERBUFFER_INTERNAL_FORMAT
+	use ARB_framebuffer_object	    STENCIL_INDEX1
+	use ARB_framebuffer_object	    STENCIL_INDEX4
+	use ARB_framebuffer_object	    STENCIL_INDEX8
+	use ARB_framebuffer_object	    STENCIL_INDEX16
+	use ARB_framebuffer_object	    RENDERBUFFER_RED_SIZE
+	use ARB_framebuffer_object	    RENDERBUFFER_GREEN_SIZE
+	use ARB_framebuffer_object	    RENDERBUFFER_BLUE_SIZE
+	use ARB_framebuffer_object	    RENDERBUFFER_ALPHA_SIZE
+	use ARB_framebuffer_object	    RENDERBUFFER_DEPTH_SIZE
+	use ARB_framebuffer_object	    RENDERBUFFER_STENCIL_SIZE
+	use ARB_framebuffer_object	    FRAMEBUFFER_INCOMPLETE_MULTISAMPLE
+	use ARB_framebuffer_object	    MAX_SAMPLES
 passthru: /* Reuse tokens from ARB_framebuffer_sRGB */
-#	use ARB_framebuffer_sRGB	    FRAMEBUFFER_SRGB
+	use ARB_framebuffer_sRGB	    FRAMEBUFFER_SRGB
 passthru: /* Reuse tokens from ARB_half_float_vertex */
-#	use ARB_half_float_vertex	    HALF_FLOAT
+	use ARB_half_float_vertex	    HALF_FLOAT
 passthru: /* Reuse tokens from ARB_map_buffer_range */
-#	use ARB_map_buffer_range	    MAP_READ_BIT
-#	use ARB_map_buffer_range	    MAP_WRITE_BIT
-#	use ARB_map_buffer_range	    MAP_INVALIDATE_RANGE_BIT
-#	use ARB_map_buffer_range	    MAP_INVALIDATE_BUFFER_BIT
-#	use ARB_map_buffer_range	    MAP_FLUSH_EXPLICIT_BIT
-#	use ARB_map_buffer_range	    MAP_UNSYNCHRONIZED_BIT
+	use ARB_map_buffer_range	    MAP_READ_BIT
+	use ARB_map_buffer_range	    MAP_WRITE_BIT
+	use ARB_map_buffer_range	    MAP_INVALIDATE_RANGE_BIT
+	use ARB_map_buffer_range	    MAP_INVALIDATE_BUFFER_BIT
+	use ARB_map_buffer_range	    MAP_FLUSH_EXPLICIT_BIT
+	use ARB_map_buffer_range	    MAP_UNSYNCHRONIZED_BIT
 passthru: /* Reuse tokens from ARB_texture_compression_rgtc */
-#	use ARB_texture_compression_rgtc    COMPRESSED_RED_RGTC1
-#	use ARB_texture_compression_rgtc    COMPRESSED_SIGNED_RED_RGTC1
-#	use ARB_texture_compression_rgtc    COMPRESSED_RG_RGTC2
-#	use ARB_texture_compression_rgtc    COMPRESSED_SIGNED_RG_RGTC2
+	use ARB_texture_compression_rgtc    COMPRESSED_RED_RGTC1
+	use ARB_texture_compression_rgtc    COMPRESSED_SIGNED_RED_RGTC1
+	use ARB_texture_compression_rgtc    COMPRESSED_RG_RGTC2
+	use ARB_texture_compression_rgtc    COMPRESSED_SIGNED_RG_RGTC2
 passthru: /* Reuse tokens from ARB_texture_rg */
-#	use ARB_texture_rg		    RG
-#	use ARB_texture_rg		    RG_INTEGER
-#	use ARB_texture_rg		    R8
-#	use ARB_texture_rg		    R16
-#	use ARB_texture_rg		    RG8
-#	use ARB_texture_rg		    RG16
-#	use ARB_texture_rg		    R16F
-#	use ARB_texture_rg		    R32F
-#	use ARB_texture_rg		    RG16F
-#	use ARB_texture_rg		    RG32F
-#	use ARB_texture_rg		    R8I
-#	use ARB_texture_rg		    R8UI
-#	use ARB_texture_rg		    R16I
-#	use ARB_texture_rg		    R16UI
-#	use ARB_texture_rg		    R32I
-#	use ARB_texture_rg		    R32UI
-#	use ARB_texture_rg		    RG8I
-#	use ARB_texture_rg		    RG8UI
-#	use ARB_texture_rg		    RG16I
-#	use ARB_texture_rg		    RG16UI
-#	use ARB_texture_rg		    RG32I
-#	use ARB_texture_rg		    RG32UI
+	use ARB_texture_rg		    RG
+	use ARB_texture_rg		    RG_INTEGER
+	use ARB_texture_rg		    R8
+	use ARB_texture_rg		    R16
+	use ARB_texture_rg		    RG8
+	use ARB_texture_rg		    RG16
+	use ARB_texture_rg		    R16F
+	use ARB_texture_rg		    R32F
+	use ARB_texture_rg		    RG16F
+	use ARB_texture_rg		    RG32F
+	use ARB_texture_rg		    R8I
+	use ARB_texture_rg		    R8UI
+	use ARB_texture_rg		    R16I
+	use ARB_texture_rg		    R16UI
+	use ARB_texture_rg		    R32I
+	use ARB_texture_rg		    R32UI
+	use ARB_texture_rg		    RG8I
+	use ARB_texture_rg		    RG8UI
+	use ARB_texture_rg		    RG16I
+	use ARB_texture_rg		    RG16UI
+	use ARB_texture_rg		    RG32I
+	use ARB_texture_rg		    RG32UI
 passthru: /* Reuse tokens from ARB_vertex_array_object */
-#	use ARB_vertex_array_object	    VERTEX_ARRAY_BINDING
+	use ARB_vertex_array_object	    VERTEX_ARRAY_BINDING
+
+VERSION_3_0_DEPRECATED enum:
+	CLAMP_VERTEX_COLOR				= 0x891A
+	CLAMP_FRAGMENT_COLOR				= 0x891B
+	ALPHA_INTEGER					= 0x8D97
+passthru: /* Reuse tokens from ARB_framebuffer_object */
+	use ARB_framebuffer_object	    TEXTURE_LUMINANCE_TYPE
+	use ARB_framebuffer_object	    TEXTURE_INTENSITY_TYPE
 
 
 ###############################################################################
@@ -735,8 +1338,73 @@ passthru: /* Reuse tokens from ARB_vertex_array_object */
 #
 ###############################################################################
 
-# TBD
-# VERSION_3_1 enum:
+VERSION_3_1 enum:
+	SAMPLER_2D_RECT					= 0x8B63    # ARB_shader_objects + ARB_texture_rectangle
+	SAMPLER_2D_RECT_SHADOW				= 0x8B64    # ARB_shader_objects + ARB_texture_rectangle
+	SAMPLER_BUFFER					= 0x8DC2    # EXT_gpu_shader4 + ARB_texture_buffer_object
+	INT_SAMPLER_2D_RECT				= 0x8DCD    # EXT_gpu_shader4 + ARB_texture_rectangle
+	INT_SAMPLER_BUFFER				= 0x8DD0    # EXT_gpu_shader4 + ARB_texture_buffer_object
+	UNSIGNED_INT_SAMPLER_2D_RECT			= 0x8DD5    # EXT_gpu_shader4 + ARB_texture_rectangle
+	UNSIGNED_INT_SAMPLER_BUFFER			= 0x8DD8    # EXT_gpu_shader4 + ARB_texture_buffer_object
+	TEXTURE_BUFFER					= 0x8C2A    # ARB_texture_buffer_object
+	MAX_TEXTURE_BUFFER_SIZE				= 0x8C2B    # ARB_texture_buffer_object
+	TEXTURE_BINDING_BUFFER				= 0x8C2C    # ARB_texture_buffer_object
+	TEXTURE_BUFFER_DATA_STORE_BINDING		= 0x8C2D    # ARB_texture_buffer_object
+	TEXTURE_BUFFER_FORMAT				= 0x8C2E    # ARB_texture_buffer_object
+	TEXTURE_RECTANGLE				= 0x84F5    # ARB_texture_rectangle
+	TEXTURE_BINDING_RECTANGLE			= 0x84F6    # ARB_texture_rectangle
+	PROXY_TEXTURE_RECTANGLE				= 0x84F7    # ARB_texture_rectangle
+	MAX_RECTANGLE_TEXTURE_SIZE			= 0x84F8    # ARB_texture_rectangle
+	RED_SNORM					= 0x8F90    # 3.1
+	RG_SNORM					= 0x8F91    # 3.1
+	RGB_SNORM					= 0x8F92    # 3.1
+	RGBA_SNORM					= 0x8F93    # 3.1
+	R8_SNORM					= 0x8F94    # 3.1
+	RG8_SNORM					= 0x8F95    # 3.1
+	RGB8_SNORM					= 0x8F96    # 3.1
+	RGBA8_SNORM					= 0x8F97    # 3.1
+	R16_SNORM					= 0x8F98    # 3.1
+	RG16_SNORM					= 0x8F99    # 3.1
+	RGB16_SNORM					= 0x8F9A    # 3.1
+	RGBA16_SNORM					= 0x8F9B    # 3.1
+	SIGNED_NORMALIZED				= 0x8F9C    # 3.1
+	PRIMITIVE_RESTART				= 0x8F9D    # 3.1 (different from NV_primitive_restart)
+	PRIMITIVE_RESTART_INDEX				= 0x8F9E    # 3.1 (different from NV_primitive_restart)
+passthru: /* Reuse tokens from ARB_copy_buffer */
+	use ARB_copy_buffer		    COPY_READ_BUFFER
+	use ARB_copy_buffer		    COPY_WRITE_BUFFER
+passthru: /* Would reuse tokens from ARB_draw_instanced, but it has none */
+passthru: /* Reuse tokens from ARB_uniform_buffer_object */
+	use ARB_uniform_buffer_object	    UNIFORM_BUFFER
+	use ARB_uniform_buffer_object	    UNIFORM_BUFFER_BINDING
+	use ARB_uniform_buffer_object	    UNIFORM_BUFFER_START
+	use ARB_uniform_buffer_object	    UNIFORM_BUFFER_SIZE
+	use ARB_uniform_buffer_object	    MAX_VERTEX_UNIFORM_BLOCKS
+	use ARB_uniform_buffer_object	    MAX_FRAGMENT_UNIFORM_BLOCKS
+	use ARB_uniform_buffer_object	    MAX_COMBINED_UNIFORM_BLOCKS
+	use ARB_uniform_buffer_object	    MAX_UNIFORM_BUFFER_BINDINGS
+	use ARB_uniform_buffer_object	    MAX_UNIFORM_BLOCK_SIZE
+	use ARB_uniform_buffer_object	    MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS
+	use ARB_uniform_buffer_object	    MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS
+	use ARB_uniform_buffer_object	    UNIFORM_BUFFER_OFFSET_ALIGNMENT
+	use ARB_uniform_buffer_object	    ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH
+	use ARB_uniform_buffer_object	    ACTIVE_UNIFORM_BLOCKS
+	use ARB_uniform_buffer_object	    UNIFORM_TYPE
+	use ARB_uniform_buffer_object	    UNIFORM_SIZE
+	use ARB_uniform_buffer_object	    UNIFORM_NAME_LENGTH
+	use ARB_uniform_buffer_object	    UNIFORM_BLOCK_INDEX
+	use ARB_uniform_buffer_object	    UNIFORM_OFFSET
+	use ARB_uniform_buffer_object	    UNIFORM_ARRAY_STRIDE
+	use ARB_uniform_buffer_object	    UNIFORM_MATRIX_STRIDE
+	use ARB_uniform_buffer_object	    UNIFORM_IS_ROW_MAJOR
+	use ARB_uniform_buffer_object	    UNIFORM_BLOCK_BINDING
+	use ARB_uniform_buffer_object	    UNIFORM_BLOCK_DATA_SIZE
+	use ARB_uniform_buffer_object	    UNIFORM_BLOCK_NAME_LENGTH
+	use ARB_uniform_buffer_object	    UNIFORM_BLOCK_ACTIVE_UNIFORMS
+	use ARB_uniform_buffer_object	    UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES
+	use ARB_uniform_buffer_object	    UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER
+	use ARB_uniform_buffer_object	    UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER
+	use ARB_uniform_buffer_object	    INVALID_INDEX
 
 
 ###############################################################################
@@ -1033,205 +1701,92 @@ ARB_window_pos enum:
 # ARB_vertex_program enums are shared by ARB_fragment_program are so marked.
 # Unfortunately, PROGRAM_BINDING_ARB does accidentally reuse 0x8677 -
 #   this was a spec editing typo that's now uncorrectable.
-# Edited for OpenTK
 ARB_vertex_program enum:
 	COLOR_SUM_ARB					= 0x8458
-#	VERTEX_PROGRAM_ARB				= 0x8620
-#	VERTEX_ATTRIB_ARRAY_ENABLED_ARB			= 0x8622
-#	VERTEX_ATTRIB_ARRAY_SIZE_ARB			= 0x8623
-#	VERTEX_ATTRIB_ARRAY_STRIDE_ARB			= 0x8624
-#	VERTEX_ATTRIB_ARRAY_TYPE_ARB			= 0x8625
-#	CURRENT_VERTEX_ATTRIB_ARB			= 0x8626
-#	PROGRAM_LENGTH_ARB				= 0x8627    # shared
-#	PROGRAM_STRING_ARB				= 0x8628    # shared
+	VERTEX_PROGRAM_ARB				= 0x8620
+	VERTEX_ATTRIB_ARRAY_ENABLED_ARB			= 0x8622
+	VERTEX_ATTRIB_ARRAY_SIZE_ARB			= 0x8623
+	VERTEX_ATTRIB_ARRAY_STRIDE_ARB			= 0x8624
+	VERTEX_ATTRIB_ARRAY_TYPE_ARB			= 0x8625
+	CURRENT_VERTEX_ATTRIB_ARB			= 0x8626
+	PROGRAM_LENGTH_ARB				= 0x8627    # shared
+	PROGRAM_STRING_ARB				= 0x8628    # shared
 	MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB		= 0x862E    # shared
 	MAX_PROGRAM_MATRICES_ARB			= 0x862F    # shared
 	CURRENT_MATRIX_STACK_DEPTH_ARB			= 0x8640    # shared
 	CURRENT_MATRIX_ARB				= 0x8641    # shared
 	VERTEX_PROGRAM_POINT_SIZE_ARB			= 0x8642
 	VERTEX_PROGRAM_TWO_SIDE_ARB			= 0x8643
-#	VERTEX_ATTRIB_ARRAY_POINTER_ARB			= 0x8645
+	VERTEX_ATTRIB_ARRAY_POINTER_ARB			= 0x8645
 	PROGRAM_ERROR_POSITION_ARB			= 0x864B    # shared
-#	PROGRAM_BINDING_ARB				= 0x8677    # shared
+	PROGRAM_BINDING_ARB				= 0x8677    # shared
 	MAX_VERTEX_ATTRIBS_ARB				= 0x8869
-#	VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB		= 0x886A
+	VERTEX_ATTRIB_ARRAY_NORMALIZED_ARB		= 0x886A
 	PROGRAM_ERROR_STRING_ARB			= 0x8874    # shared
 	PROGRAM_FORMAT_ASCII_ARB			= 0x8875    # shared
-#	PROGRAM_FORMAT_ARB				= 0x8876    # shared
-#	PROGRAM_INSTRUCTIONS_ARB			= 0x88A0    # shared
-#	MAX_PROGRAM_INSTRUCTIONS_ARB			= 0x88A1    # shared
-#	PROGRAM_NATIVE_INSTRUCTIONS_ARB			= 0x88A2    # shared
-#	MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB		= 0x88A3    # shared
-#	PROGRAM_TEMPORARIES_ARB				= 0x88A4    # shared
-#	MAX_PROGRAM_TEMPORARIES_ARB			= 0x88A5    # shared
-#	PROGRAM_NATIVE_TEMPORARIES_ARB			= 0x88A6    # shared
-#	MAX_PROGRAM_NATIVE_TEMPORARIES_ARB		= 0x88A7    # shared
-#	PROGRAM_PARAMETERS_ARB				= 0x88A8    # shared
-#	MAX_PROGRAM_PARAMETERS_ARB			= 0x88A9    # shared
-#	PROGRAM_NATIVE_PARAMETERS_ARB			= 0x88AA    # shared
-#	MAX_PROGRAM_NATIVE_PARAMETERS_ARB		= 0x88AB    # shared
-#	PROGRAM_ATTRIBS_ARB				= 0x88AC    # shared
-#	MAX_PROGRAM_ATTRIBS_ARB				= 0x88AD    # shared
-#	PROGRAM_NATIVE_ATTRIBS_ARB			= 0x88AE    # shared
-#	MAX_PROGRAM_NATIVE_ATTRIBS_ARB			= 0x88AF    # shared
-#	PROGRAM_ADDRESS_REGISTERS_ARB			= 0x88B0    # shared
-#	MAX_PROGRAM_ADDRESS_REGISTERS_ARB		= 0x88B1    # shared
-#	PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB		= 0x88B2    # shared
-#	MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB	= 0x88B3    # shared
-#	MAX_PROGRAM_LOCAL_PARAMETERS_ARB		= 0x88B4    # shared
-#	MAX_PROGRAM_ENV_PARAMETERS_ARB			= 0x88B5    # shared
-#	PROGRAM_UNDER_NATIVE_LIMITS_ARB			= 0x88B6    # shared
+	PROGRAM_FORMAT_ARB				= 0x8876    # shared
+	PROGRAM_INSTRUCTIONS_ARB			= 0x88A0    # shared
+	MAX_PROGRAM_INSTRUCTIONS_ARB			= 0x88A1    # shared
+	PROGRAM_NATIVE_INSTRUCTIONS_ARB			= 0x88A2    # shared
+	MAX_PROGRAM_NATIVE_INSTRUCTIONS_ARB		= 0x88A3    # shared
+	PROGRAM_TEMPORARIES_ARB				= 0x88A4    # shared
+	MAX_PROGRAM_TEMPORARIES_ARB			= 0x88A5    # shared
+	PROGRAM_NATIVE_TEMPORARIES_ARB			= 0x88A6    # shared
+	MAX_PROGRAM_NATIVE_TEMPORARIES_ARB		= 0x88A7    # shared
+	PROGRAM_PARAMETERS_ARB				= 0x88A8    # shared
+	MAX_PROGRAM_PARAMETERS_ARB			= 0x88A9    # shared
+	PROGRAM_NATIVE_PARAMETERS_ARB			= 0x88AA    # shared
+	MAX_PROGRAM_NATIVE_PARAMETERS_ARB		= 0x88AB    # shared
+	PROGRAM_ATTRIBS_ARB				= 0x88AC    # shared
+	MAX_PROGRAM_ATTRIBS_ARB				= 0x88AD    # shared
+	PROGRAM_NATIVE_ATTRIBS_ARB			= 0x88AE    # shared
+	MAX_PROGRAM_NATIVE_ATTRIBS_ARB			= 0x88AF    # shared
+	PROGRAM_ADDRESS_REGISTERS_ARB			= 0x88B0    # shared
+	MAX_PROGRAM_ADDRESS_REGISTERS_ARB		= 0x88B1    # shared
+	PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB		= 0x88B2    # shared
+	MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS_ARB	= 0x88B3    # shared
+	MAX_PROGRAM_LOCAL_PARAMETERS_ARB		= 0x88B4    # shared
+	MAX_PROGRAM_ENV_PARAMETERS_ARB			= 0x88B5    # shared
+	PROGRAM_UNDER_NATIVE_LIMITS_ARB			= 0x88B6    # shared
 	TRANSPOSE_CURRENT_MATRIX_ARB			= 0x88B7    # shared
-#	MATRIX0_ARB					= 0x88C0    # shared
-#	MATRIX1_ARB					= 0x88C1    # shared
-#	MATRIX2_ARB					= 0x88C2    # shared
-#	MATRIX3_ARB					= 0x88C3    # shared
-#	MATRIX4_ARB					= 0x88C4    # shared
-#	MATRIX5_ARB					= 0x88C5    # shared
-#	MATRIX6_ARB					= 0x88C6    # shared
-#	MATRIX7_ARB					= 0x88C7    # shared
-#	MATRIX8_ARB					= 0x88C8    # shared
-#	MATRIX9_ARB					= 0x88C9    # shared
-#	MATRIX10_ARB					= 0x88CA    # shared
-#	MATRIX11_ARB					= 0x88CB    # shared
-#	MATRIX12_ARB					= 0x88CC    # shared
-#	MATRIX13_ARB					= 0x88CD    # shared
-#	MATRIX14_ARB					= 0x88CE    # shared
-#	MATRIX15_ARB					= 0x88CF    # shared
-#	MATRIX16_ARB					= 0x88D0    # shared
-#	MATRIX17_ARB					= 0x88D1    # shared
-#	MATRIX18_ARB					= 0x88D2    # shared
-#	MATRIX19_ARB					= 0x88D3    # shared
-#	MATRIX20_ARB					= 0x88D4    # shared
-#	MATRIX21_ARB					= 0x88D5    # shared
-#	MATRIX22_ARB					= 0x88D6    # shared
-#	MATRIX23_ARB					= 0x88D7    # shared
-#	MATRIX24_ARB					= 0x88D8    # shared
-#	MATRIX25_ARB					= 0x88D9    # shared
-#	MATRIX26_ARB					= 0x88DA    # shared
-#	MATRIX27_ARB					= 0x88DB    # shared
-#	MATRIX28_ARB					= 0x88DC    # shared
-#	MATRIX29_ARB					= 0x88DD    # shared
-#	MATRIX30_ARB					= 0x88DE    # shared
-#	MATRIX31_ARB					= 0x88DF    # shared
-	
-AssemblyProgramTargetARB enum:
-	FRAGMENT_PROGRAM				= 0x8804
-	VERTEX_PROGRAM					= 0x8620
-	use NV_geometry_program4 GEOMETRY_PROGRAM_NV
-
-AssemblyProgramFormatARB enum:
-	PROGRAM_FORMAT_ASCII_ARB		= 0x8875    # shared
-
-AssemblyProgramParameterARB enum:
-    PROGRAM_LENGTH					= 0x8627
-    PROGRAM_FORMAT					= 0x8876
-    PROGRAM_BINDING					= 0x8677
-    PROGRAM_INSTRUCTION				= 0x88A0
-    MAX_PROGRAM_INSTRUCTIONS		= 0x88A1
-    PROGRAM_NATIVE_INSTRUCTIONS		= 0x88A2
-    MAX_PROGRAM_NATIVE_INSTRUCTIONS	= 0x88A3
-	PROGRAM_TEMPORARIES				= 0x88A4
-	MAX_PROGRAM_TEMPORARIES			= 0x88A5
-	PROGRAM_NATIVE_TEMPORARIES		= 0x88A6
-	MAX_PROGRAM_NATIVE_TEMPORARIES	= 0x88A7
-	PROGRAM_PARAMETERS				= 0x88A8
-	MAX_PROGRAM_PARAMETERS			= 0x88A9
-	PROGRAM_NATIVE_PARAMETERS		= 0x88AA
-	MAX_PROGRAM_NATIVE_PARAMETERS	= 0x88AB
-	PROGRAM_ATTRIBS					= 0x88AC
-	MAX_PROGRAM_ATTRIBS				= 0x88AD
-	PROGRAM_NATIVE_ATTRIBS			= 0x88AE
-	MAX_PROGRAM_NATIVE_ATTRIBS		= 0x88AF
-	PROGRAM_ADDRESS_REGISTERS		= 0x88B0
-	MAX_PROGRAM_ADDRESS_REGISTERS	= 0x88B1
-	PROGRAM_NATIVE_ADDRESS_REGISTERS	= 0x88B2
-	MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS	= 0x88B3
-	MAX_PROGRAM_LOCAL_PARAMETERS	= 0x88B4
-	MAX_PROGRAM_ENV_PARAMETERS		= 0x88B5
-	PROGRAM_UNDER_NATIVE_LIMITS		= 0x88B6
-
-	PROGRAM_ALU_INSTRUCTIONS_ARB	= 0x8805
-	PROGRAM_TEX_INSTRUCTIONS_ARB	= 0x8806
-	PROGRAM_TEX_INDIRECTIONS_ARB	= 0x8807
-	PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB	= 0x8808
-	PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB	= 0x8809
-	PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB	= 0x880A
-	MAX_PROGRAM_ALU_INSTRUCTIONS_ARB	= 0x880B
-	MAX_PROGRAM_TEX_INSTRUCTIONS_ARB	= 0x880C
-	MAX_PROGRAM_TEX_INDIRECTIONS_ARB	= 0x880D
-	MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB	= 0x880E
-	MAX_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB	= 0x880F
-	MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB	= 0x8810
-
-AssemblyProgramStringParameterARB enum:
-	PROGRAM_STRING				= 0x8628
-
-MatrixModeARB enum:
-	use MatrixMode MODELVIEW
-	use MatrixMode PROJECTION
-	use MatrixMode TEXTURE
-	use MatrixMode COLOR
-	MATRIX0						= 0x88C0
-	MATRIX1						= 0x88C1
-	MATRIX2						= 0x88C2
-	MATRIX3						= 0x88C3
-	MATRIX4						= 0x88C4
-	MATRIX5						= 0x88C5
-	MATRIX6						= 0x88C6
-	MATRIX7						= 0x88C7
-	MATRIX8						= 0x88C8
-	MATRIX9						= 0x88C9
-	MATRIX10					= 0x88CA
-	MATRIX11					= 0x88CB
-	MATRIX12					= 0x88CC
-	MATRIX13					= 0x88CD
-	MATRIX14					= 0x88CE
-	MATRIX15					= 0x88CF
-	MATRIX16					= 0x88D0
-	MATRIX17					= 0x88D1
-	MATRIX18					= 0x88D2
-	MATRIX19					= 0x88D3
-	MATRIX20					= 0x88D4
-	MATRIX21					= 0x88D5
-	MATRIX22					= 0x88D6
-	MATRIX23					= 0x88D7
-	MATRIX24					= 0x88D8
-	MATRIX25					= 0x88D9
-	MATRIX26					= 0x88DA
-	MATRIX27					= 0x88DB
-	MATRIX28					= 0x88DC
-	MATRIX29					= 0x88DD
-	MATRIX30					= 0x88DE
-	MATRIX31					= 0x88DF
-
-VertexAttribParameterARB enum:
-	ARRAY_ENABLED				= 0x8622
-	ARRAY_SIZE					= 0x8623
-	ARRAY_STRIDE				= 0x8624
-	ARRAY_TYPE					= 0x8625
-	CURRENT_VERTEX_ATTRIB		= 0x8626
-	ARRAY_NORMALIZED			= 0x886A
-	
-VertexAttribPointerParameterARB enum:
-	ARRAY_POINTER				= 0x8645	
-	
-VertexAttribPointerTypeARB enum:
-	use DataType BYTE
-	use DataType UNSIGNED_BYTE
-	use DataType SHORT
-	use DataType UNSIGNED_SHORT
-	use DataType INT
-	use DataType UNSIGNED_INT
-	use DataType FLOAT
-	use DataType DOUBLE
+	MATRIX0_ARB					= 0x88C0    # shared
+	MATRIX1_ARB					= 0x88C1    # shared
+	MATRIX2_ARB					= 0x88C2    # shared
+	MATRIX3_ARB					= 0x88C3    # shared
+	MATRIX4_ARB					= 0x88C4    # shared
+	MATRIX5_ARB					= 0x88C5    # shared
+	MATRIX6_ARB					= 0x88C6    # shared
+	MATRIX7_ARB					= 0x88C7    # shared
+	MATRIX8_ARB					= 0x88C8    # shared
+	MATRIX9_ARB					= 0x88C9    # shared
+	MATRIX10_ARB					= 0x88CA    # shared
+	MATRIX11_ARB					= 0x88CB    # shared
+	MATRIX12_ARB					= 0x88CC    # shared
+	MATRIX13_ARB					= 0x88CD    # shared
+	MATRIX14_ARB					= 0x88CE    # shared
+	MATRIX15_ARB					= 0x88CF    # shared
+	MATRIX16_ARB					= 0x88D0    # shared
+	MATRIX17_ARB					= 0x88D1    # shared
+	MATRIX18_ARB					= 0x88D2    # shared
+	MATRIX19_ARB					= 0x88D3    # shared
+	MATRIX20_ARB					= 0x88D4    # shared
+	MATRIX21_ARB					= 0x88D5    # shared
+	MATRIX22_ARB					= 0x88D6    # shared
+	MATRIX23_ARB					= 0x88D7    # shared
+	MATRIX24_ARB					= 0x88D8    # shared
+	MATRIX25_ARB					= 0x88D9    # shared
+	MATRIX26_ARB					= 0x88DA    # shared
+	MATRIX27_ARB					= 0x88DB    # shared
+	MATRIX28_ARB					= 0x88DC    # shared
+	MATRIX29_ARB					= 0x88DD    # shared
+	MATRIX30_ARB					= 0x88DE    # shared
+	MATRIX31_ARB					= 0x88DF    # shared
 
 ###############################################################################
 
 # ARB Extension #27
 # Some ARB_fragment_program enums are shared with ARB_vertex_program,
 #   and are only included in that #define block, for now.
-# Edited for OpenTK
 ARB_fragment_program enum:
 #	PROGRAM_LENGTH_ARB				= 0x8627    # shared
 #	PROGRAM_STRING_ARB				= 0x8628    # shared
@@ -1241,19 +1796,19 @@ ARB_fragment_program enum:
 #	CURRENT_MATRIX_ARB				= 0x8641    # shared
 #	PROGRAM_ERROR_POSITION_ARB			= 0x864B    # shared
 #	PROGRAM_BINDING_ARB				= 0x8677    # shared
-#	FRAGMENT_PROGRAM_ARB				= 0x8804
-#	PROGRAM_ALU_INSTRUCTIONS_ARB			= 0x8805
-#	PROGRAM_TEX_INSTRUCTIONS_ARB			= 0x8806
-#	PROGRAM_TEX_INDIRECTIONS_ARB			= 0x8807
-#	PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB		= 0x8808
-#	PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB		= 0x8809
-#	PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB		= 0x880A
-#	MAX_PROGRAM_ALU_INSTRUCTIONS_ARB		= 0x880B
-#	MAX_PROGRAM_TEX_INSTRUCTIONS_ARB		= 0x880C
-#	MAX_PROGRAM_TEX_INDIRECTIONS_ARB		= 0x880D
-#	MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB		= 0x880E
-#	MAX_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB		= 0x880F
-#	MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB		= 0x8810
+	FRAGMENT_PROGRAM_ARB				= 0x8804
+	PROGRAM_ALU_INSTRUCTIONS_ARB			= 0x8805
+	PROGRAM_TEX_INSTRUCTIONS_ARB			= 0x8806
+	PROGRAM_TEX_INDIRECTIONS_ARB			= 0x8807
+	PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB		= 0x8808
+	PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB		= 0x8809
+	PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB		= 0x880A
+	MAX_PROGRAM_ALU_INSTRUCTIONS_ARB		= 0x880B
+	MAX_PROGRAM_TEX_INSTRUCTIONS_ARB		= 0x880C
+	MAX_PROGRAM_TEX_INDIRECTIONS_ARB		= 0x880D
+	MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB		= 0x880E
+	MAX_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB		= 0x880F
+	MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB		= 0x8810
 	MAX_TEXTURE_COORDS_ARB				= 0x8871
 	MAX_TEXTURE_IMAGE_UNITS_ARB			= 0x8872
 #	PROGRAM_ERROR_STRING_ARB			= 0x8874    # shared
@@ -1316,34 +1871,6 @@ ARB_fragment_program enum:
 #	MATRIX30_ARB					= 0x88DE    # shared
 #	MATRIX31_ARB					= 0x88DF    # shared
 
-BufferTargetARB enum:
-    ARRAY_BUFFER                    = 0x8892
-    ELEMENT_ARRAY_BUFFER            = 0x8893
-
-BufferUsageARB enum:
-    STREAM_DRAW                     = 0x88E0
-    STREAM_READ                     = 0x88E1
-    STREAM_COPY                     = 0x88E2
-    STATIC_DRAW                     = 0x88E4
-    STATIC_READ                     = 0x88E5
-    STATIC_COPY                     = 0x88E6
-    DYNAMIC_DRAW                    = 0x88E8
-    DYNAMIC_READ                    = 0x88E9
-    DYNAMIC_COPY                    = 0x88EA
-
-BufferAccessARB enum:
-	READ_ONLY                       = 0x88B8
-	WRITE_ONLY                      = 0x88B9
-	READ_WRITE                      = 0x88BA
-	
-BufferParameterNameARB enum:
-    BUFFER_SIZE						= 0x8764
-    BUFFER_USAGE					= 0x8765
-    BUFFER_ACCESS					= 0x88BB
-    BUFFER_MAPPED					= 0x88BC
-
-BufferPointerNameARB enum:
-	BUFFER_MAP_POINTER				= 0x88BD
 
 ###############################################################################
 
@@ -1588,7 +2115,6 @@ ARB_framebuffer_object enum:
 	FRAMEBUFFER_DEFAULT				= 0x8218
 	FRAMEBUFFER_UNDEFINED				= 0x8219
 	DEPTH_STENCIL_ATTACHMENT			= 0x821A
-	INDEX						= 0x8222
 	MAX_RENDERBUFFER_SIZE				= 0x84E8
 	DEPTH_STENCIL					= 0x84F9
 	UNSIGNED_INT_24_8				= 0x84FA
@@ -1598,8 +2124,6 @@ ARB_framebuffer_object enum:
 	TEXTURE_GREEN_TYPE				= 0x8C11
 	TEXTURE_BLUE_TYPE				= 0x8C12
 	TEXTURE_ALPHA_TYPE				= 0x8C13
-	TEXTURE_LUMINANCE_TYPE				= 0x8C14
-	TEXTURE_INTENSITY_TYPE				= 0x8C15
 	TEXTURE_DEPTH_TYPE				= 0x8C16
 	UNSIGNED_NORMALIZED				= 0x8C17
 	FRAMEBUFFER_BINDING				= 0x8CA6
@@ -1656,6 +2180,11 @@ ARB_framebuffer_object enum:
 	RENDERBUFFER_STENCIL_SIZE			= 0x8D55
 	FRAMEBUFFER_INCOMPLETE_MULTISAMPLE		= 0x8D56
 	MAX_SAMPLES					= 0x8D57
+
+ARB_framebuffer_object_DEPRECATED enum:
+	INDEX						= 0x8222
+	TEXTURE_LUMINANCE_TYPE				= 0x8C14
+	TEXTURE_INTENSITY_TYPE				= 0x8C15
 
 ###############################################################################
 
@@ -1805,7 +2334,7 @@ ARB_uniform_buffer_object enum:
 	UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER	= 0x8A44
 	UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER	= 0x8A45
 	UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER	= 0x8A46
-	INVALID_INDEX_ARB				= 0xFFFFFFFF
+	INVALID_INDEX					= 0xFFFFFFFF
 
 ###############################################################################
 
@@ -1820,6 +2349,12 @@ passthru: /* ARB_compatibility just defines tokens from core 3.0 */
 ARB_copy_buffer enum:
 	COPY_READ_BUFFER				= 0x8F36
 	COPY_WRITE_BUFFER				= 0x8F37
+
+###############################################################################
+
+# ARB Extension #60
+# No new tokens
+ARB_shader_texture_lod enum:
 
 
 ###############################################################################
@@ -4548,7 +5083,7 @@ EXT_texture_mirror_clamp enum:
 
 # Extension #299
 EXT_blend_equation_separate enum:
-	BLEND_EQUATION_RGB_EXT				= GL_BLEND_EQUATION
+	BLEND_EQUATION_RGB_EXT				= 0x8009    # alias GL_BLEND_EQUATION_EXT
 	BLEND_EQUATION_ALPHA_EXT			= 0x883D
 
 ###############################################################################
@@ -4612,138 +5147,63 @@ NV_vertex_program3 enum:
 ###############################################################################
 
 # Extension #310
-#EXT_framebuffer_object enum:
-#	INVALID_FRAMEBUFFER_OPERATION_EXT		= 0x0506
-#	MAX_RENDERBUFFER_SIZE_EXT			= 0x84E8
-#	FRAMEBUFFER_BINDING_EXT				= 0x8CA6
-#	RENDERBUFFER_BINDING_EXT			= 0x8CA7
-#	FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_EXT		= 0x8CD0
-#	FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_EXT		= 0x8CD1
-#	FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_EXT	= 0x8CD2
-#	FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_EXT = 0x8CD3
-#	FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_EXT	= 0x8CD4
-#	FRAMEBUFFER_COMPLETE_EXT			= 0x8CD5
-#	FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT		= 0x8CD6
-#	FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT	= 0x8CD7
+EXT_framebuffer_object enum:
+	INVALID_FRAMEBUFFER_OPERATION_EXT		= 0x0506
+	MAX_RENDERBUFFER_SIZE_EXT			= 0x84E8
+	FRAMEBUFFER_BINDING_EXT				= 0x8CA6
+	RENDERBUFFER_BINDING_EXT			= 0x8CA7
+	FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_EXT		= 0x8CD0
+	FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_EXT		= 0x8CD1
+	FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_EXT	= 0x8CD2
+	FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_EXT = 0x8CD3
+	FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_EXT	= 0x8CD4
+	FRAMEBUFFER_COMPLETE_EXT			= 0x8CD5
+	FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT		= 0x8CD6
+	FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT	= 0x8CD7
 ## Removed 2005/09/26 in revision #117 of the extension:
 ##	  FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT = 0x8CD8
-#	FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT		= 0x8CD9
-#	FRAMEBUFFER_INCOMPLETE_FORMATS_EXT		= 0x8CDA
-#	FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT		= 0x8CDB
-#	FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT		= 0x8CDC
-#	FRAMEBUFFER_UNSUPPORTED_EXT			= 0x8CDD
+	FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT		= 0x8CD9
+	FRAMEBUFFER_INCOMPLETE_FORMATS_EXT		= 0x8CDA
+	FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT		= 0x8CDB
+	FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT		= 0x8CDC
+	FRAMEBUFFER_UNSUPPORTED_EXT			= 0x8CDD
 ## Removed 2005/05/31 in revision #113 of the extension:
 ##	  FRAMEBUFFER_STATUS_ERROR_EXT			  = 0x8CDE
-#	MAX_COLOR_ATTACHMENTS_EXT			= 0x8CDF
-#	COLOR_ATTACHMENT0_EXT				= 0x8CE0
-#	COLOR_ATTACHMENT1_EXT				= 0x8CE1
-#	COLOR_ATTACHMENT2_EXT				= 0x8CE2
-#	COLOR_ATTACHMENT3_EXT				= 0x8CE3
-#	COLOR_ATTACHMENT4_EXT				= 0x8CE4
-#	COLOR_ATTACHMENT5_EXT				= 0x8CE5
-#	COLOR_ATTACHMENT6_EXT				= 0x8CE6
-#	COLOR_ATTACHMENT7_EXT				= 0x8CE7
-#	COLOR_ATTACHMENT8_EXT				= 0x8CE8
-#	COLOR_ATTACHMENT9_EXT				= 0x8CE9
-#	COLOR_ATTACHMENT10_EXT				= 0x8CEA
-#	COLOR_ATTACHMENT11_EXT				= 0x8CEB
-#	COLOR_ATTACHMENT12_EXT				= 0x8CEC
-#	COLOR_ATTACHMENT13_EXT				= 0x8CED
-#	COLOR_ATTACHMENT14_EXT				= 0x8CEE
-#	COLOR_ATTACHMENT15_EXT				= 0x8CEF
-#	DEPTH_ATTACHMENT_EXT				= 0x8D00
-#	STENCIL_ATTACHMENT_EXT				= 0x8D20
-#	FRAMEBUFFER_EXT					= 0x8D40
-#	RENDERBUFFER_EXT				= 0x8D41
-#	RENDERBUFFER_WIDTH_EXT				= 0x8D42
-#	RENDERBUFFER_HEIGHT_EXT				= 0x8D43
-#	RENDERBUFFER_INTERNAL_FORMAT_EXT		= 0x8D44
+	MAX_COLOR_ATTACHMENTS_EXT			= 0x8CDF
+	COLOR_ATTACHMENT0_EXT				= 0x8CE0
+	COLOR_ATTACHMENT1_EXT				= 0x8CE1
+	COLOR_ATTACHMENT2_EXT				= 0x8CE2
+	COLOR_ATTACHMENT3_EXT				= 0x8CE3
+	COLOR_ATTACHMENT4_EXT				= 0x8CE4
+	COLOR_ATTACHMENT5_EXT				= 0x8CE5
+	COLOR_ATTACHMENT6_EXT				= 0x8CE6
+	COLOR_ATTACHMENT7_EXT				= 0x8CE7
+	COLOR_ATTACHMENT8_EXT				= 0x8CE8
+	COLOR_ATTACHMENT9_EXT				= 0x8CE9
+	COLOR_ATTACHMENT10_EXT				= 0x8CEA
+	COLOR_ATTACHMENT11_EXT				= 0x8CEB
+	COLOR_ATTACHMENT12_EXT				= 0x8CEC
+	COLOR_ATTACHMENT13_EXT				= 0x8CED
+	COLOR_ATTACHMENT14_EXT				= 0x8CEE
+	COLOR_ATTACHMENT15_EXT				= 0x8CEF
+	DEPTH_ATTACHMENT_EXT				= 0x8D00
+	STENCIL_ATTACHMENT_EXT				= 0x8D20
+	FRAMEBUFFER_EXT					= 0x8D40
+	RENDERBUFFER_EXT				= 0x8D41
+	RENDERBUFFER_WIDTH_EXT				= 0x8D42
+	RENDERBUFFER_HEIGHT_EXT				= 0x8D43
+	RENDERBUFFER_INTERNAL_FORMAT_EXT		= 0x8D44
 # removed STENCIL_INDEX_EXT = 0x8D45 in rev. #114 of the spec
-#	STENCIL_INDEX1_EXT				= 0x8D46
-#	STENCIL_INDEX4_EXT				= 0x8D47
-#	STENCIL_INDEX8_EXT				= 0x8D48
-#	STENCIL_INDEX16_EXT				= 0x8D49
-#	RENDERBUFFER_RED_SIZE_EXT			= 0x8D50
-#	RENDERBUFFER_GREEN_SIZE_EXT			= 0x8D51
-#	RENDERBUFFER_BLUE_SIZE_EXT			= 0x8D52
-#	RENDERBUFFER_ALPHA_SIZE_EXT			= 0x8D53
-#	RENDERBUFFER_DEPTH_SIZE_EXT			= 0x8D54
-#	RENDERBUFFER_STENCIL_SIZE_EXT			= 0x8D55
-	
-GenerateMipmapTarget enum:
-	use TextureTarget TEXTURE_1D
-	use TextureTarget TEXTURE_2D
-	use TextureTarget TEXTURE_3D
-	use TextureTarget TEXTURE_CUBE_MAP
-
-FramebufferTarget enum:
-	FRAMEBUFFER_EXT						= 0x8D40
-
-RenderbufferTarget enum:
-	RENDERBUFFER_EXT					= 0x8D41
-	
-RenderbufferStorage enum:
-	STENCIL_INDEX1_EXT = 0x8D46
-	STENCIL_INDEX4_EXT = 0x8D47
-	STENCIL_INDEX8_EXT = 0x8D48
-	STENCIL_INDEX16_EXT = 0x8D49
-	
-FramebufferErrorCode enum:
-	FRAMEBUFFER_COMPLETE_EXT = 0x8CD5
-	FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT = 0x8CD6
-	FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT = 0x8CD7
-	FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT = 0x8CD9
-	FRAMEBUFFER_INCOMPLETE_FORMATS_EXT = 0x8CDA
-	FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT = 0x8CDB
-	FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT = 0x8CDC
-	FRAMEBUFFER_UNSUPPORTED_EXT = 0x8CDD
-
-FramebufferAttachment enum:
-	COLOR_ATTACHMENT0_EXT = 0x8CE0
-	COLOR_ATTACHMENT1_EXT = 0x8CE1
-	COLOR_ATTACHMENT2_EXT = 0x8CE2
-	COLOR_ATTACHMENT3_EXT = 0x8CE3
-	COLOR_ATTACHMENT4_EXT = 0x8CE4
-	COLOR_ATTACHMENT5_EXT = 0x8CE5
-	COLOR_ATTACHMENT6_EXT = 0x8CE6
-	COLOR_ATTACHMENT7_EXT = 0x8CE7
-	COLOR_ATTACHMENT8_EXT = 0x8CE8
-	COLOR_ATTACHMENT9_EXT = 0x8CE9
-	COLOR_ATTACHMENT10_EXT = 0x8CEA
-	COLOR_ATTACHMENT11_EXT = 0x8CEB
-	COLOR_ATTACHMENT12_EXT = 0x8CEC
-	COLOR_ATTACHMENT13_EXT = 0x8CED
-	COLOR_ATTACHMENT14_EXT = 0x8CEE
-	COLOR_ATTACHMENT15_EXT = 0x8CEF
-	DEPTH_ATTACHMENT_EXT = 0x8D00
-	STENCIL_ATTACHMENT_EXT = 0x8D20
-
-FramebufferParameterName enum:
-	FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_EXT = 0x8CD0
-	FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_EXT = 0x8CD1
-	FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_EXT = 0x8CD2
-	FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_EXT = 0x8CD3
-	FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_EXT = 0x8CD4
-
-RenderbufferParameterName enum:
-	RENDERBUFFER_WIDTH_EXT = 0x8D42
-	RENDERBUFFER_HEIGHT_EXT = 0x8D43
-	RENDERBUFFER_INTERNAL_FORMAT_EXT = 0x8D44
-	RENDERBUFFER_RED_SIZE_EXT = 0x8D50
-	RENDERBUFFER_GREEN_SIZE_EXT = 0x8D51
-	RENDERBUFFER_BLUE_SIZE_EXT = 0x8D52
-	RENDERBUFFER_ALPHA_SIZE_EXT = 0x8D53
-	RENDERBUFFER_DEPTH_SIZE_EXT = 0x8D54
-	RENDERBUFFER_STENCIL_SIZE_EXT = 0x8D55
-
-GetPName enum:
-	FRAMEBUFFER_BINDING_EXT           = 0x8CA6
-	RENDERBUFFER_BINDING_EXT          = 0x8CA7
-	MAX_COLOR_ATTACHMENTS_EXT         = 0x8CDF
-	MAX_RENDERBUFFER_SIZE_EXT         = 0x84E8
-          
-ErrorCode enum:             
-	INVALID_FRAMEBUFFER_OPERATION_EXT = 0x0506
+	STENCIL_INDEX1_EXT				= 0x8D46
+	STENCIL_INDEX4_EXT				= 0x8D47
+	STENCIL_INDEX8_EXT				= 0x8D48
+	STENCIL_INDEX16_EXT				= 0x8D49
+	RENDERBUFFER_RED_SIZE_EXT			= 0x8D50
+	RENDERBUFFER_GREEN_SIZE_EXT			= 0x8D51
+	RENDERBUFFER_BLUE_SIZE_EXT			= 0x8D52
+	RENDERBUFFER_ALPHA_SIZE_EXT			= 0x8D53
+	RENDERBUFFER_DEPTH_SIZE_EXT			= 0x8D54
+	RENDERBUFFER_STENCIL_SIZE_EXT			= 0x8D55
 
 ###############################################################################
 
@@ -5214,7 +5674,7 @@ EXT_direct_state_access enum:
 
 # Extension #354
 EXT_vertex_array_bgra enum:
-	use EXT_bgra			    BGRA		# OpenTK
+	use VERSION_1_2			    BGRA
 
 ###############################################################################
 
@@ -5304,7 +5764,6 @@ EXT_provoking_vertex enum:
 	FIRST_VERTEX_CONVENTION_EXT			= 0x8E4D
 	LAST_VERTEX_CONVENTION_EXT			= 0x8E4E
 	PROVOKING_VERTEX_EXT				= 0x8E4F
-
 
 
 
@@ -6220,7 +6679,7 @@ PixelFormat enum:
 
 TextureParameterName enum:
 	RED = 0x1903
-
+	
 # Promoted from ARB_texture_compression_rgtc
 PixelInternalFormat enum:
 	use ARB_texture_compression_rgtc    COMPRESSED_RED_RGTC1
@@ -6602,12 +7061,19 @@ GetPName enum:
 	NUM_EXTENSIONS				= 0x821D
 	CONTEXT_FLAGS					= 0x821E
 
-IndexedStringName enum:
+StringName enum:
 	use StringName EXTENSIONS		# Used in GetStringi
 
 IndexedEnableCap enum:	
     use GetPName BLEND
-
+    
+# For ClearBuffer function, see specs pg. 189.
+ClearBuffer enum:
+	use VERSION_1_1 COLOR
+	use VERSION_1_1 DEPTH
+	use VERSION_1_1 STENCIL
+	use VERSION_3_0 DEPTH_STENCIL
+	
 # Version 3.1 
 
 # Promoted from ARB_copy_buffer
@@ -6640,6 +7106,39 @@ ProgramParameter enum:
     use ARB_uniform_buffer_object ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH
     use ARB_uniform_buffer_object ACTIVE_UNIFORM_BLOCKS
 
+# Used in TexBuffer    
+SizedInternalFormat enum:
+	use PixelInternalFormat R8
+	use PixelInternalFormat R16
+	use PixelInternalFormat R16F
+	use PixelInternalFormat R32F
+	use PixelInternalFormat R8I
+	use PixelInternalFormat R16I
+	use PixelInternalFormat R32I
+	use PixelInternalFormat R8UI
+	use PixelInternalFormat R16UI
+	use PixelInternalFormat R32UI
+	use PixelInternalFormat RG8
+	use PixelInternalFormat RG16
+	use PixelInternalFormat RG16F
+	use PixelInternalFormat RG32F
+	use PixelInternalFormat RG8I
+	use PixelInternalFormat RG16I
+	use PixelInternalFormat RG32I
+	use PixelInternalFormat RG8UI
+	use PixelInternalFormat RG16UI
+	use PixelInternalFormat RG32UI
+	use PixelInternalFormat RGBA8
+	use PixelInternalFormat RGBA16
+	use PixelInternalFormat RGBA16F
+	use PixelInternalFormat RGBA32F
+	use PixelInternalFormat RGBA8I
+	use PixelInternalFormat RGBA16I
+	use PixelInternalFormat RGBA32I
+	use PixelInternalFormat RGBA8UI
+	use PixelInternalFormat RGBA16UI
+	use PixelInternalFormat RGBA32UI
+
 # Non-core 
 
 # APPLE_flush_buffer_range
@@ -6650,5 +7149,231 @@ Buffer_Parameter_Apple enum:
 # ARB_instanced_arrays
 VertexAttribParameterARB enum:
     ARRAY_DIVISOR = 0x88FE
+
+# Version ARB
+
+# ARB_vertex_program
+
+AssemblyProgramTargetARB enum:
+	FRAGMENT_PROGRAM				= 0x8804
+	VERTEX_PROGRAM					= 0x8620
+	use NV_geometry_program4 GEOMETRY_PROGRAM_NV
+
+AssemblyProgramFormatARB enum:
+	PROGRAM_FORMAT_ASCII_ARB		= 0x8875    # shared
+
+AssemblyProgramParameterARB enum:
+    PROGRAM_LENGTH					= 0x8627
+    PROGRAM_FORMAT					= 0x8876
+    PROGRAM_BINDING					= 0x8677
+    PROGRAM_INSTRUCTION				= 0x88A0
+    MAX_PROGRAM_INSTRUCTIONS		= 0x88A1
+    PROGRAM_NATIVE_INSTRUCTIONS		= 0x88A2
+    MAX_PROGRAM_NATIVE_INSTRUCTIONS	= 0x88A3
+	PROGRAM_TEMPORARIES				= 0x88A4
+	MAX_PROGRAM_TEMPORARIES			= 0x88A5
+	PROGRAM_NATIVE_TEMPORARIES		= 0x88A6
+	MAX_PROGRAM_NATIVE_TEMPORARIES	= 0x88A7
+	PROGRAM_PARAMETERS				= 0x88A8
+	MAX_PROGRAM_PARAMETERS			= 0x88A9
+	PROGRAM_NATIVE_PARAMETERS		= 0x88AA
+	MAX_PROGRAM_NATIVE_PARAMETERS	= 0x88AB
+	PROGRAM_ATTRIBS					= 0x88AC
+	MAX_PROGRAM_ATTRIBS				= 0x88AD
+	PROGRAM_NATIVE_ATTRIBS			= 0x88AE
+	MAX_PROGRAM_NATIVE_ATTRIBS		= 0x88AF
+	PROGRAM_ADDRESS_REGISTERS		= 0x88B0
+	MAX_PROGRAM_ADDRESS_REGISTERS	= 0x88B1
+	PROGRAM_NATIVE_ADDRESS_REGISTERS	= 0x88B2
+	MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS	= 0x88B3
+	MAX_PROGRAM_LOCAL_PARAMETERS	= 0x88B4
+	MAX_PROGRAM_ENV_PARAMETERS		= 0x88B5
+	PROGRAM_UNDER_NATIVE_LIMITS		= 0x88B6
+
+	PROGRAM_ALU_INSTRUCTIONS_ARB	= 0x8805
+	PROGRAM_TEX_INSTRUCTIONS_ARB	= 0x8806
+	PROGRAM_TEX_INDIRECTIONS_ARB	= 0x8807
+	PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB	= 0x8808
+	PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB	= 0x8809
+	PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB	= 0x880A
+	MAX_PROGRAM_ALU_INSTRUCTIONS_ARB	= 0x880B
+	MAX_PROGRAM_TEX_INSTRUCTIONS_ARB	= 0x880C
+	MAX_PROGRAM_TEX_INDIRECTIONS_ARB	= 0x880D
+	MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB	= 0x880E
+	MAX_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB	= 0x880F
+	MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB	= 0x8810
+
+AssemblyProgramStringParameterARB enum:
+	PROGRAM_STRING				= 0x8628
+
+MatrixModeARB enum:
+	use MatrixMode MODELVIEW
+	use MatrixMode PROJECTION
+	use MatrixMode TEXTURE
+	use MatrixMode COLOR
+	MATRIX0						= 0x88C0
+	MATRIX1						= 0x88C1
+	MATRIX2						= 0x88C2
+	MATRIX3						= 0x88C3
+	MATRIX4						= 0x88C4
+	MATRIX5						= 0x88C5
+	MATRIX6						= 0x88C6
+	MATRIX7						= 0x88C7
+	MATRIX8						= 0x88C8
+	MATRIX9						= 0x88C9
+	MATRIX10					= 0x88CA
+	MATRIX11					= 0x88CB
+	MATRIX12					= 0x88CC
+	MATRIX13					= 0x88CD
+	MATRIX14					= 0x88CE
+	MATRIX15					= 0x88CF
+	MATRIX16					= 0x88D0
+	MATRIX17					= 0x88D1
+	MATRIX18					= 0x88D2
+	MATRIX19					= 0x88D3
+	MATRIX20					= 0x88D4
+	MATRIX21					= 0x88D5
+	MATRIX22					= 0x88D6
+	MATRIX23					= 0x88D7
+	MATRIX24					= 0x88D8
+	MATRIX25					= 0x88D9
+	MATRIX26					= 0x88DA
+	MATRIX27					= 0x88DB
+	MATRIX28					= 0x88DC
+	MATRIX29					= 0x88DD
+	MATRIX30					= 0x88DE
+	MATRIX31					= 0x88DF
+
+VertexAttribParameterARB enum:
+	ARRAY_ENABLED				= 0x8622
+	ARRAY_SIZE					= 0x8623
+	ARRAY_STRIDE				= 0x8624
+	ARRAY_TYPE					= 0x8625
+	CURRENT_VERTEX_ATTRIB		= 0x8626
+	ARRAY_NORMALIZED			= 0x886A
+	
+VertexAttribPointerParameterARB enum:
+	ARRAY_POINTER				= 0x8645	
+	
+VertexAttribPointerTypeARB enum:
+	use DataType BYTE
+	use DataType UNSIGNED_BYTE
+	use DataType SHORT
+	use DataType UNSIGNED_SHORT
+	use DataType INT
+	use DataType UNSIGNED_INT
+	use DataType FLOAT
+	use DataType DOUBLE
+
+# ARB_fragment_program:
+
+BufferTargetARB enum:
+    ARRAY_BUFFER                    = 0x8892
+    ELEMENT_ARRAY_BUFFER            = 0x8893
+
+BufferUsageARB enum:
+    STREAM_DRAW                     = 0x88E0
+    STREAM_READ                     = 0x88E1
+    STREAM_COPY                     = 0x88E2
+    STATIC_DRAW                     = 0x88E4
+    STATIC_READ                     = 0x88E5
+    STATIC_COPY                     = 0x88E6
+    DYNAMIC_DRAW                    = 0x88E8
+    DYNAMIC_READ                    = 0x88E9
+    DYNAMIC_COPY                    = 0x88EA
+
+BufferAccessARB enum:
+	READ_ONLY                       = 0x88B8
+	WRITE_ONLY                      = 0x88B9
+	READ_WRITE                      = 0x88BA
+	
+BufferParameterNameARB enum:
+    BUFFER_SIZE						= 0x8764
+    BUFFER_USAGE					= 0x8765
+    BUFFER_ACCESS					= 0x88BB
+    BUFFER_MAPPED					= 0x88BC
+
+BufferPointerNameARB enum:
+	BUFFER_MAP_POINTER				= 0x88BD
+
+
+# Version EXT
+
+# EXT_framebuffer:
+
+GenerateMipmapTarget enum:
+	use TextureTarget TEXTURE_1D
+	use TextureTarget TEXTURE_2D
+	use TextureTarget TEXTURE_3D
+	use TextureTarget TEXTURE_CUBE_MAP
+
+FramebufferTarget enum:
+	FRAMEBUFFER_EXT						= 0x8D40
+
+RenderbufferTarget enum:
+	RENDERBUFFER_EXT					= 0x8D41
+	
+RenderbufferStorage enum:
+	STENCIL_INDEX1_EXT = 0x8D46
+	STENCIL_INDEX4_EXT = 0x8D47
+	STENCIL_INDEX8_EXT = 0x8D48
+	STENCIL_INDEX16_EXT = 0x8D49
+	
+FramebufferErrorCode enum:
+	FRAMEBUFFER_COMPLETE_EXT = 0x8CD5
+	FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT = 0x8CD6
+	FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT = 0x8CD7
+	FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT = 0x8CD9
+	FRAMEBUFFER_INCOMPLETE_FORMATS_EXT = 0x8CDA
+	FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT = 0x8CDB
+	FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT = 0x8CDC
+	FRAMEBUFFER_UNSUPPORTED_EXT = 0x8CDD
+
+FramebufferAttachment enum:
+	COLOR_ATTACHMENT0_EXT = 0x8CE0
+	COLOR_ATTACHMENT1_EXT = 0x8CE1
+	COLOR_ATTACHMENT2_EXT = 0x8CE2
+	COLOR_ATTACHMENT3_EXT = 0x8CE3
+	COLOR_ATTACHMENT4_EXT = 0x8CE4
+	COLOR_ATTACHMENT5_EXT = 0x8CE5
+	COLOR_ATTACHMENT6_EXT = 0x8CE6
+	COLOR_ATTACHMENT7_EXT = 0x8CE7
+	COLOR_ATTACHMENT8_EXT = 0x8CE8
+	COLOR_ATTACHMENT9_EXT = 0x8CE9
+	COLOR_ATTACHMENT10_EXT = 0x8CEA
+	COLOR_ATTACHMENT11_EXT = 0x8CEB
+	COLOR_ATTACHMENT12_EXT = 0x8CEC
+	COLOR_ATTACHMENT13_EXT = 0x8CED
+	COLOR_ATTACHMENT14_EXT = 0x8CEE
+	COLOR_ATTACHMENT15_EXT = 0x8CEF
+	DEPTH_ATTACHMENT_EXT = 0x8D00
+	STENCIL_ATTACHMENT_EXT = 0x8D20
+
+FramebufferParameterName enum:
+	FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_EXT = 0x8CD0
+	FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_EXT = 0x8CD1
+	FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_EXT = 0x8CD2
+	FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_EXT = 0x8CD3
+	FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_EXT = 0x8CD4
+
+RenderbufferParameterName enum:
+	RENDERBUFFER_WIDTH_EXT = 0x8D42
+	RENDERBUFFER_HEIGHT_EXT = 0x8D43
+	RENDERBUFFER_INTERNAL_FORMAT_EXT = 0x8D44
+	RENDERBUFFER_RED_SIZE_EXT = 0x8D50
+	RENDERBUFFER_GREEN_SIZE_EXT = 0x8D51
+	RENDERBUFFER_BLUE_SIZE_EXT = 0x8D52
+	RENDERBUFFER_ALPHA_SIZE_EXT = 0x8D53
+	RENDERBUFFER_DEPTH_SIZE_EXT = 0x8D54
+	RENDERBUFFER_STENCIL_SIZE_EXT = 0x8D55
+
+GetPName enum:
+	FRAMEBUFFER_BINDING_EXT           = 0x8CA6
+	RENDERBUFFER_BINDING_EXT          = 0x8CA7
+	MAX_COLOR_ATTACHMENTS_EXT         = 0x8CDF
+	MAX_RENDERBUFFER_SIZE_EXT         = 0x84E8
+          
+ErrorCode enum:             
+	INVALID_FRAMEBUFFER_OPERATION_EXT = 0x0506
 
 # End (don't remove, or the last token may be missed!)
