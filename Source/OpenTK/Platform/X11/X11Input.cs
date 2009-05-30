@@ -78,6 +78,8 @@ namespace OpenTK.Platform.X11
             keyboard.DeviceID = IntPtr.Zero;
             dummy_keyboard_list.Add(keyboard);
 
+            Functions.XAutoRepeatOff(window.Display);
+
             Debug.Unindent();
         }
 
