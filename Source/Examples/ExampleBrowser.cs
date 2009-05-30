@@ -12,7 +12,7 @@ namespace Examples
     {
         #region Fields
 
-        PrivateFontCollection font_collection = new PrivateFontCollection();
+        //PrivateFontCollection font_collection = new PrivateFontCollection();
 
         #endregion
 
