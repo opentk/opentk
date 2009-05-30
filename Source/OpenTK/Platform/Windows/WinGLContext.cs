@@ -43,11 +43,6 @@ namespace OpenTK.Platform.Windows
 
         static WinGLContext()
         {
-            // Set the GetCurrentContext implementation.
-            // TODO: Does this belong here?
-            if (GraphicsContext.GetCurrentContext == null)
-                GraphicsContext.GetCurrentContext = WinGLContext.GetCurrentContext;
-
             // Dynamically load the OpenGL32.dll in order to use the extension loading capabilities of Wgl.
             if (opengl32Handle == IntPtr.Zero)
             {
@@ -363,15 +358,6 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-
-        #endregion
-
-        #region static ContextHandle GetCurrentContext()
-
-        static ContextHandle GetCurrentContext()
-        {
-            return new ContextHandle(Wgl.GetCurrentContext());
-        }
 
         #endregion
 

@@ -200,6 +200,8 @@ namespace OpenTK
         /// </summary>
         public void CreateContext()
         {
+            // Todo: This function seems unused. Should we remove it?
+            
             if (context != null) throw new InvalidOperationException("GLControl already contains an OpenGL context.");
             if (format == null) format = GraphicsMode.Default;
 
@@ -234,7 +236,7 @@ namespace OpenTK
                 }
             }
             else
-                context = new Platform.Dummy.DummyGLContext(format);
+                context = new Platform.Dummy.DummyGLContext();
 
             this.MakeCurrent();
             (context as IGraphicsContextInternal).LoadAll();

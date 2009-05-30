@@ -26,7 +26,15 @@ namespace OpenTK.Platform.Dummy
 
         #region --- Constructors ---
 
-        public DummyGLContext(GraphicsMode format) { this.format = format; }
+        public DummyGLContext()
+        {
+            this.handle = new ContextHandle(new IntPtr(++handle_count));
+        }
+        
+        public DummyGLContext(ContextHandle handle)
+        {
+            this.handle = handle;
+        }
 
         #endregion
 
@@ -47,7 +55,6 @@ namespace OpenTK.Platform.Dummy
         public void SwapBuffers() { }
         public void MakeCurrent(IWindowInfo info) { }
         public bool IsCurrent { get { return true; } set { } }
-        public IntPtr GetCurrentContext() { return IntPtr.Zero; }
 
         public event DestroyEvent<IGraphicsContext> Destroy;
         void OnDestroy() { if (Destroy != null) Destroy(this, EventArgs.Empty); }

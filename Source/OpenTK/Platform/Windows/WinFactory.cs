@@ -31,6 +31,14 @@ using OpenTK.Input;
             return new WinGLContext(mode, window, shareContext, major, minor, flags);
         }
 
+        public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        {
+            return (GraphicsContext.GetCurrentContextDelegate)delegate
+            {
+                return new ContextHandle(Wgl.GetCurrentContext());
+            };
+        }
+
         public IGraphicsMode CreateGraphicsMode()
         {
             return new WinGraphicsMode();
