@@ -397,7 +397,7 @@ namespace OpenTK.Platform.X11
         public extern static bool XFilterEvent(ref XEvent xevent, IntPtr window);
 
         [DllImport("libX11")]
-        public extern static void XkbSetDetectableAutoRepeat(IntPtr display, bool detectable, IntPtr supported);
+        public extern static bool XkbSetDetectableAutoRepeat(IntPtr display, bool detectable, out bool supported);
 
         [DllImport("libX11")]
         public extern static void XPeekEvent(IntPtr display, ref XEvent xevent);
@@ -427,7 +427,10 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11")]
         public static extern void XAutoRepeatOff(IntPtr display);
-        
+
+        [DllImport("libX11")]
+        public static extern void XAutoRepeatOn(IntPtr display);
+
         public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)
         {
             XEvent xev;
