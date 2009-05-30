@@ -30,6 +30,14 @@ namespace OpenTK.Platform.X11
             return new X11GLContext(mode, window, shareContext, DirectRendering, major, minor, flags);
         }
 
+        public OpenTK.Graphics.GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        {
+            return (GraphicsContext.GetCurrentContextDelegate)delegate
+            {
+                return new ContextHandle(Glx.GetCurrentContext());
+            };
+        }
+
         public IGraphicsMode CreateGraphicsMode()
         {
             return new X11GraphicsMode();

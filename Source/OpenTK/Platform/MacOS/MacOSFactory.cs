@@ -30,6 +30,14 @@ namespace OpenTK.Platform.MacOS
             return new AglContext(mode, window, shareContext);
         }
 
+        public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        {
+            return (GraphicsContext.GetCurrentContextDelegate)delegate
+            {
+                return new ContextHandle(Agl.aglGetCurrentContext());
+            };
+        }
+
         public IGraphicsMode CreateGraphicsMode()
         {
             return new MacOSGraphicsMode();

@@ -14,6 +14,8 @@ namespace OpenTK.Platform
 
         OpenTK.Graphics.IGraphicsContext CreateGLContext(OpenTK.Graphics.GraphicsMode mode, IWindowInfo window, OpenTK.Graphics.IGraphicsContext shareContext, bool DirectRendering, int major, int minor, OpenTK.Graphics.GraphicsContextFlags flags);
 
+        OpenTK.Graphics.GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext();
+        
         OpenTK.Graphics.IGraphicsMode CreateGraphicsMode();
     }
 }

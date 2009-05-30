@@ -36,11 +36,6 @@ namespace OpenTK.Platform.MacOS
         CarbonWindowInfo carbonWindow;
         IntPtr shareContextRef;
 
-        static AglContext()
-        {
-            if (GraphicsContext.GetCurrentContext == null)
-                GraphicsContext.GetCurrentContext = AglContext.GetCurrentContext;
-        }
         public AglContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext)
         {
             Debug.Print("Context Type: {0}", shareContext);
@@ -250,10 +245,6 @@ namespace OpenTK.Platform.MacOS
                     function, err, Agl.ErrorString(err)));
         }
 
-        static ContextHandle GetCurrentContext()
-        {
-            return (ContextHandle)Agl.aglGetCurrentContext();
-        }
         bool firstFullScreen = false;
 
         internal void SetFullScreen(CarbonWindowInfo info)

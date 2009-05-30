@@ -121,7 +121,7 @@ namespace OpenTK.Platform.X11
 
                         case XEventName.DestroyNotify:
                             Functions.XPutBackEvent(window.Display, ref e);
-                            //pollingThread.Abort();
+                            Functions.XAutoRepeatOn(window.Display);
                             return;
                     }
                 }
