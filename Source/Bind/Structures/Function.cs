@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace Bind.Structures
 {
-    public class Function : Delegate, IEquatable<Function>
+    public class Function : Delegate, IEquatable<Function>, IComparable<Function>
     {
         #region Static Members
 
@@ -561,6 +561,15 @@ namespace Bind.Structures
             }
 
             this.Body = f.Body;
+        }
+
+        #endregion
+
+        #region IComparable<Function> Members
+
+        public int CompareTo(Function other)
+        {
+            return Name.CompareTo(other.Name);
         }
 
         #endregion

@@ -20,7 +20,7 @@ namespace Bind.Structures
     /// Represents an opengl function.
     /// The return value, function name, function parameters and opengl version can be retrieved or set.
     /// </summary>
-    public class Delegate
+    public class Delegate : IComparable<Delegate>
     {
         internal static DelegateCollection Delegates;
 
@@ -621,6 +621,15 @@ namespace Bind.Structures
             TranslateParameters(function_override);
 
             CreateWrappers();
+        }
+
+        #endregion
+
+        #region IComparable<Delegate> Members
+
+        public int CompareTo(Delegate other)
+        {
+            return Name.CompareTo(other.Name);
         }
 
         #endregion

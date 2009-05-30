@@ -462,8 +462,13 @@ namespace Bind.GL2
             if (!Directory.Exists(Settings.OutputPath))
                 Directory.CreateDirectory(Settings.OutputPath);
 
+            string temp_enums_file = Path.GetTempFileName();
+            string temp_delegates_file = Path.GetTempFileName();
+            string temp_core_file = Path.GetTempFileName();
+            string temp_wrappers_file = Path.GetTempFileName();
+
             // Enums
-            using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, enumsFile)))
+            using (BindStreamWriter sw = new BindStreamWriter(temp_enums_file))
             {
                 WriteLicense(sw);
                 
@@ -496,7 +501,7 @@ namespace Bind.GL2
             }
 
             // Delegates
-            using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, delegatesFile)))
+            using (BindStreamWriter sw = new BindStreamWriter(temp_delegates_file))
             {
                 WriteLicense(sw);
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
@@ -514,7 +519,7 @@ namespace Bind.GL2
             }
 
             // Core
-            using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, importsFile)))
+            using (BindStreamWriter sw = new BindStreamWriter(temp_core_file))
             {
                 WriteLicense(sw);
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
@@ -531,7 +536,7 @@ namespace Bind.GL2
             }
 
             // Wrappers
-            using (BindStreamWriter sw = new BindStreamWriter(Path.Combine(Settings.OutputPath, wrappersFile)))
+            using (BindStreamWriter sw = new BindStreamWriter(temp_wrappers_file))
             {
                 WriteLicense(sw);
                 sw.WriteLine("namespace {0}", Settings.OutputNamespace);
@@ -546,6 +551,11 @@ namespace Bind.GL2
                 sw.Unindent();
                 sw.WriteLine("}");
             }
+
+            File.Replace(temp_enums_file, Path.Combine(Settings.OutputPath, enumsFile), null);
+            File.Replace(temp_delegates_file, Path.Combine(Settings.OutputPath, delegatesFile), null);
+            File.Replace(temp_core_file, Path.Combine(Settings.OutputPath, importsFile), null);
+            File.Replace(temp_wrappers_file, Path.Combine(Settings.OutputPath, wrappersFile), null);
         }
 
         #endregion
@@ -667,6 +677,7 @@ namespace Bind.GL2
                     sw.Indent();
                 }
 
+                wrappers[key].Sort();
                 foreach (Function f in wrappers[key])
                 {
                     if ((Settings.Compatibility & Settings.Legacy.NoDocumentation) == 0)
