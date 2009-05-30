@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Examples
 {
     public class TextBoxTraceListener : TraceListener
     {
-        private TextBox _target;
-        private StringSendDelegate _invokeWrite;
+        TextBox _target;
+        StringSendDelegate _invokeWrite;
 
         public TextBoxTraceListener(TextBox target)
         {
@@ -20,13 +21,13 @@ namespace Examples
         public override void Write(string message)
         {
             if (_target.Created)
-                _target.Invoke(_invokeWrite, new object[] { message });
+                _target.BeginInvoke(_invokeWrite, new object[] { message });
         }
 
         public override void WriteLine(string message)
         {
             if (_target.Created)
-                _target.Invoke(_invokeWrite, new object[] { message + Environment.NewLine });
+                _target.BeginInvoke(_invokeWrite, new object[] { message + Environment.NewLine });
         }
 
         private delegate void StringSendDelegate(string message);
