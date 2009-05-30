@@ -89,7 +89,8 @@ namespace OpenTK.Graphics.Text
                 int current = 0;
                 foreach (Glyph glyph in block)
                 {
-                    if (glyph.IsWhiteSpace)
+                    // Do not render whitespace characters or characters outside the clip rectangle.
+                    if (glyph.IsWhiteSpace || extents[current].Width == 0 || extents[current].Height == 0)
                     {
                         current++;
                         continue;
