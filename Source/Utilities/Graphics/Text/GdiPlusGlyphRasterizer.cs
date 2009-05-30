@@ -385,6 +385,22 @@ namespace OpenTK.Graphics.Text
                  }
              }
 
+            // Mono's GDI+ implementation suffers from an issue where the specified layoutRect is not taken into
+            // account. We will try to improve the situation by moving text to the correct location on this
+            // error condition. This will not help word wrapping, but it is better than nothing.
+            // Todo: Mono 2.8 is supposed to ship with a Pango-based GDI+ text renderer, which should not
+            // suffer from this bug. Verify that this is the case and remove the hack.
+            if (Configuration.RunningOnMono && (layoutRect.X != 0 || layoutRect.Y != 0) && measured_glyphs.Count > 0)
+            {
+                for (int i = 0; i < measured_glyphs.Count; i++)
+                {
+                    RectangleF rect = measured_glyphs[i];
+                    rect.X += layoutRect.X;
+                    rect.Y += layoutRect.Y;
+                    measured_glyphs[i] = rect;
+                }
+            }
+
             return measured_glyphs;
         }
 
