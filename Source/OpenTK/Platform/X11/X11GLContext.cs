@@ -31,13 +31,6 @@ namespace OpenTK.Platform.X11
 
         #region --- Constructors ---
 
-        static X11GLContext()
-        {
-            // Set the GetCurrentContext implementation.
-            if (GraphicsContext.GetCurrentContext == null)
-                GraphicsContext.GetCurrentContext = X11GLContext.GetCurrentContext;
-        }
-
         public X11GLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shared, bool direct,
             int major, int minor, GraphicsContextFlags flags)
         {
@@ -358,15 +351,6 @@ namespace OpenTK.Platform.X11
             if (Destroy != null)
                 Destroy(this, EventArgs.Empty);
         }
-
-        #region static ContextHandle GetCurrentContext()
-
-        static ContextHandle GetCurrentContext()
-        {
-            return (ContextHandle)Glx.GetCurrentContext();
-        }
-
-        #endregion
 
         #endregion
 

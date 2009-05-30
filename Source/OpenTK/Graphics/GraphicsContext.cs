@@ -41,9 +41,22 @@ namespace OpenTK.Graphics
 
         #region --- Constructors ---
 
+        static GraphicsContext()
+        {
+            GetCurrentContext = Factory.CreateGetCurrentGraphicsContext();
+        }
+        
         // Necessary to allow creation of dummy GraphicsContexts (see CreateDummyContext static method).
-        GraphicsContext() { }
+        GraphicsContext(ContextHandle handle)
+        {
+            implementation = new OpenTK.Platform.Dummy.DummyGLContext(handle);
 
+            lock (context_lock)
+            {
+                available_contexts.Add((implementation as IGraphicsContextInternal).Context, new WeakReference(this));
+            }
+        }
+        
         /// <summary>
         /// Constructs a new GraphicsContext with the specified GraphicsMode and attaches it to the specified window.
         /// </summary>
@@ -101,7 +114,7 @@ namespace OpenTK.Graphics
 
                 // Todo: Add a DummyFactory implementing IPlatformFactory.
                 if (designMode)
-                    implementation = new Platform.Dummy.DummyGLContext(mode);
+                    implementation = new Platform.Dummy.DummyGLContext();
                 else
                     implementation = Factory.CreateGLContext(mode, window, shareContext, DirectRendering, major, minor, flags);
 
@@ -132,15 +145,19 @@ namespace OpenTK.Graphics
         /// </remarks>
         public static GraphicsContext CreateDummyContext()
         {
-            GraphicsContext context = new GraphicsContext();
-            context.implementation = new OpenTK.Platform.Dummy.DummyGLContext(GraphicsMode.Default);
+            ContextHandle handle = GetCurrentContext();
+            if (handle == ContextHandle.Zero)
+                throw new InvalidOperationException("No GraphicsContext is current on the calling thread.");
 
-            lock (context_lock)
-            {
-                available_contexts.Add((context as IGraphicsContextInternal).Context, new WeakReference(context));
-            }
+            return CreateDummyContext(handle);
+        }
 
-            return context;
+        public static GraphicsContext CreateDummyContext(ContextHandle handle)
+        {
+            if (handle == ContextHandle.Zero)
+                throw new ArgumentOutOfRangeException("handle");
+
+            return new GraphicsContext(handle);
         }
 
         #endregion

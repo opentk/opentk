@@ -38,6 +38,11 @@ namespace OpenTK.Platform
             return implementation.CreateGLContext(mode, window, shareContext, directRendering, major, minor, flags);
         }
 
+        internal static GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        {
+            return implementation.CreateGetCurrentGraphicsContext();
+        }
+        
         internal static IGraphicsMode CreateGraphicsMode()
         {
             return implementation.CreateGraphicsMode();
@@ -66,6 +71,12 @@ namespace OpenTK.Platform
             {
                 throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
             }
+
+            public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+            {
+                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+            }
+
 
             public IGraphicsMode CreateGraphicsMode()
             {
