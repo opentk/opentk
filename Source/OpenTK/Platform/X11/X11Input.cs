@@ -78,7 +78,12 @@ namespace OpenTK.Platform.X11
             keyboard.DeviceID = IntPtr.Zero;
             dummy_keyboard_list.Add(keyboard);
 
-            Functions.XAutoRepeatOff(window.Display);
+            // Request that auto-repeat is only set on devices that support it physically.
+            // This typically means that it's turned off for keyboards (which is what we want).
+            // We prefer this method over XAutoRepeatOff/On, because the latter needs to
+            // be reset before the program exits.
+            bool supported;
+            Functions.XkbSetDetectableAutoRepeat(window.Display, true, out supported);
 
             Debug.Unindent();
         }
