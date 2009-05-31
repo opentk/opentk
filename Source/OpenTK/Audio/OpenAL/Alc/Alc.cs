@@ -311,7 +311,7 @@ namespace OpenTK.Audio
         /// <param name="buffer">a pointer to a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
         [DllImport(Alc.Lib, EntryPoint = "alcCaptureSamples", ExactSpelling = true, CallingConvention = Alc.Style), SuppressUnmanagedCodeSecurity()]
-        public static extern void CaptureSamples(IntPtr device, IntPtr buffer, IntPtr samples);
+        public static extern void CaptureSamples(IntPtr device, IntPtr buffer, int samples);
         // ALC_API void            ALC_APIENTRY alcCaptureSamples( ALCdevice *device, ALCvoid *buffer, ALCsizei samples );
 
         /// <summary>This function completes a capture operation, and does not block.</summary>
@@ -324,7 +324,7 @@ namespace OpenTK.Audio
             GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try
             {
-                CaptureSamples(device, handle.AddrOfPinnedObject(), new IntPtr(samples));
+                CaptureSamples(device, handle.AddrOfPinnedObject(), samples);
             }
             finally
             {
