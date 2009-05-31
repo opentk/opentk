@@ -17,7 +17,7 @@ namespace Examples
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                //using (Form browser = new ExampleLauncher())
+
                 using (Form browser = new ExampleBrowser())
                 {
                     try
