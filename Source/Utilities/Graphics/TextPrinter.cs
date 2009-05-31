@@ -134,7 +134,8 @@ namespace OpenTK.Graphics
             if (!ValidateParameters(text, font, rect))
                 return;
 
-            TextOutput.Print(new TextBlock(text, font, rect, options, alignment, direction), color, Rasterizer);
+            TextBlock block = new TextBlock(text, font, rect, options, alignment, direction);
+            TextOutput.Print(ref block, color, Rasterizer);
         }
 
         #endregion

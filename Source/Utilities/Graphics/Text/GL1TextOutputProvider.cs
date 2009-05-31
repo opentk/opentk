@@ -54,6 +54,11 @@ namespace OpenTK.Graphics.Text
         Viewport viewport = new Viewport();
         Matrix4 matrix = new Matrix4();
 
+        // TextBlock - display list cache.
+        // Todo: we need a cache eviction strategy.
+        const int block_cache_capacity = 32;
+        readonly Dictionary<int, int> block_cache = new Dictionary<int, int>(block_cache_capacity);
+
         bool disposed;
 
         #endregion
@@ -71,7 +76,7 @@ namespace OpenTK.Graphics.Text
 
         #region Print
 
-        public void Print(TextBlock block, Color color, IGlyphRasterizer rasterizer)
+        public void Print(ref TextBlock block, Color color, IGlyphRasterizer rasterizer)
         {
             GL.PushAttrib(AttribMask.CurrentBit | AttribMask.TextureBit | AttribMask.EnableBit | AttribMask.ColorBufferBit | AttribMask.DepthBufferBit);
 
@@ -83,90 +88,109 @@ namespace OpenTK.Graphics.Text
 
             RectangleF position;
 
-            using (TextExtents extents = rasterizer.MeasureText(ref block))
+            int block_hash = block.GetHashCode();
+            if (block_cache.ContainsKey(block_hash))
             {
-                // Build layout
-                int current = 0;
-                foreach (Glyph glyph in block)
+                GL.CallList(block_cache[block_hash]);
+            }
+            else
+            {
+                using (TextExtents extents = rasterizer.MeasureText(ref block))
                 {
-                    // Do not render whitespace characters or characters outside the clip rectangle.
-                    if (glyph.IsWhiteSpace || extents[current].Width == 0 || extents[current].Height == 0)
+                    // Build layout
+                    int current = 0;
+                    foreach (Glyph glyph in block)
                     {
-                        current++;
-                        continue;
-                    }
-                    else if (!Cache.Contains(glyph))
-                        Cache.Add(glyph, rasterizer, TextQuality);
-
-                    CachedGlyphInfo info = Cache[glyph];
-                    position = extents[current++];
-
-                    // Use the real glyph width instead of the measured one (we want to achieve pixel perfect output).
-                    position.Size = info.Rectangle.Size;
-
-                    if (!active_lists.ContainsKey(info.Texture))
-                    {
-                        if (inactive_lists.Count > 0)
+                        // Do not render whitespace characters or characters outside the clip rectangle.
+                        if (glyph.IsWhiteSpace || extents[current].Width == 0 || extents[current].Height == 0)
                         {
-                            List<Vector2> list = inactive_lists.Dequeue();
-                            list.Clear();
-                            active_lists.Add(info.Texture, list);
+                            current++;
+                            continue;
                         }
-                        else
+                        else if (!Cache.Contains(glyph))
+                            Cache.Add(glyph, rasterizer, TextQuality);
+
+                        CachedGlyphInfo info = Cache[glyph];
+                        position = extents[current++];
+
+                        // Use the real glyph width instead of the measured one (we want to achieve pixel perfect output).
+                        position.Size = info.Rectangle.Size;
+
+                        if (!active_lists.ContainsKey(info.Texture))
                         {
-                            active_lists.Add(info.Texture, new List<Vector2>());
+                            if (inactive_lists.Count > 0)
+                            {
+                                List<Vector2> list = inactive_lists.Dequeue();
+                                list.Clear();
+                                active_lists.Add(info.Texture, list);
+                            }
+                            else
+                            {
+                                active_lists.Add(info.Texture, new List<Vector2>());
+                            }
                         }
-                    }
 
-                    {
-                        // Interleaved array: Vertex, TexCoord, Vertex, ...
-                        List<Vector2> current_list = active_lists[info.Texture];
-                        current_list.Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
-                        current_list.Add(new Vector2(position.Left, position.Top));
-                        current_list.Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Bottom));
-                        current_list.Add(new Vector2(position.Left, position.Bottom));
-                        current_list.Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
-                        current_list.Add(new Vector2(position.Right, position.Bottom));
+                        {
+                            // Interleaved array: Vertex, TexCoord, Vertex, ...
+                            List<Vector2> current_list = active_lists[info.Texture];
+                            current_list.Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
+                            current_list.Add(new Vector2(position.Left, position.Top));
+                            current_list.Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Bottom));
+                            current_list.Add(new Vector2(position.Left, position.Bottom));
+                            current_list.Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
+                            current_list.Add(new Vector2(position.Right, position.Bottom));
 
-                        current_list.Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
-                        current_list.Add(new Vector2(position.Right, position.Bottom));
-                        current_list.Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Top));
-                        current_list.Add(new Vector2(position.Right, position.Top));
-                        current_list.Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
-                        current_list.Add(new Vector2(position.Left, position.Top));
+                            current_list.Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Bottom));
+                            current_list.Add(new Vector2(position.Right, position.Bottom));
+                            current_list.Add(new Vector2(info.RectangleNormalized.Right, info.RectangleNormalized.Top));
+                            current_list.Add(new Vector2(position.Right, position.Top));
+                            current_list.Add(new Vector2(info.RectangleNormalized.Left, info.RectangleNormalized.Top));
+                            current_list.Add(new Vector2(position.Left, position.Top));
+                        }
                     }
                 }
-            }
 
-            // Render
-            foreach (Texture2D key in active_lists.Keys)
-            {
-                List<Vector2> list = active_lists[key];
-                
-                key.Bind();
-
-                SetColor(color);
-
-                GL.Begin(BeginMode.Triangles);
-
-                for (int i = 0; i < list.Count; i += 2)
+                // Render
+                int display_list = 0;
+                if ((block.Options & TextPrinterOptions.NoCache) == 0)
                 {
-                    GL.TexCoord2(list[i]);
-                    GL.Vertex2(list[i + 1]);
+                    display_list = GL.GenLists(1);
+                    GL.NewList(display_list, ListMode.CompileAndExecute);
+                }
+                foreach (Texture2D key in active_lists.Keys)
+                {
+                    List<Vector2> list = active_lists[key];
+
+                    key.Bind();
+
+                    SetColor(color);
+
+                    GL.Begin(BeginMode.Triangles);
+
+                    for (int i = 0; i < list.Count; i += 2)
+                    {
+                        GL.TexCoord2(list[i]);
+                        GL.Vertex2(list[i + 1]);
+                    }
+
+                    GL.End();
+                }
+                if ((block.Options & TextPrinterOptions.NoCache) == 0)
+                {
+                    GL.EndList();
+                    block_cache.Add(block_hash, display_list);
                 }
 
-                GL.End();
+                // Clean layout
+                foreach (List<Vector2> list in active_lists.Values)
+                {
+                    //list.Clear();
+                    inactive_lists.Enqueue(list);
+                }
+
+                active_lists.Clear();
             }
-
-            // Clean layout
-            foreach (List<Vector2> list in active_lists.Values)
-            {
-                //list.Clear();
-                inactive_lists.Enqueue(list);
-            }
-
-            active_lists.Clear();
-
+            
             GL.PopAttrib();
         }
 
