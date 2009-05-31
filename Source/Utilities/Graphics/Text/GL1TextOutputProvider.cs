@@ -155,7 +155,10 @@ namespace OpenTK.Graphics.Text
                 if ((block.Options & TextPrinterOptions.NoCache) == 0)
                 {
                     display_list = GL.GenLists(1);
-                    GL.NewList(display_list, ListMode.CompileAndExecute);
+                    // Mesa Indirect gerates an InvalidOperation error right after
+                    // GL.EndList() when using ListMode.CompileAndExecute.
+                    // Using ListMode.Compile as a workaround.
+                    GL.NewList(display_list, ListMode.Compile);
                 }
                 foreach (Texture2D key in active_lists.Keys)
                 {
@@ -179,6 +182,7 @@ namespace OpenTK.Graphics.Text
                 {
                     GL.EndList();
                     block_cache.Add(block_hash, display_list);
+                    GL.CallList(display_list);
                 }
 
                 // Clean layout
