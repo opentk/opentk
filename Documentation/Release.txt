@@ -1,24 +1,58 @@
-The Open Toolkit 0.9.7 Beta -- Release notes
+The Open Toolkit 0.9.8 Beta
+Sunday, 31 May 2009
+
 
 [ Overview]
 
 This release introduces:
-* OpenGL 3.1 support
-* improved OpenGL 3.0 bindings (type-safety)
-* improved automatic error checking (stack traces, better coverage)
+* Full OpenGL 3.1 support
+* New example browser with source code and documentation display.
+* Minor cleanups to the OpenGL API
+* Improved stability
+* Significantly improved TextPrinter performance
+* OpenGLErrorExceptions thrown on OpenGL errors (debug builds only)
+* A large number of bug fixes. Refer to the [Resolved issues] sections.
 
-Please report any issues you may encounter at http://www.opentk.com.
+Please visit http://www.opentk.com to report issues or request features.
+
+
+[Resolved issues]
+
+To visit an issue report, type "http://www.opentk.com/node/{id}", where {id} is the issue number. For example, http://www.opentk.com/node/749
+
+[#749]
+[#772]
+[#774]
+[#776]
+[#779]
+[#792]
+[#794]
+[#810]
+[#827]
+[#830]
+[#834]
+[#841]
+[#844]
+[#847]
+[#851]
+[#870]
 
 
 [Known issues]
 
-This release cannot be compiled on Mono due to a compiler bug (https://bugzilla.novell.com/show_bug.cgi?id=488960). Please use the precompiled binaries included in the release package.
+Mono 2.2 and 2.4 cannot compile this release (bug report: https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0 or 2.4.2+, or use the precompiled binaries.
+
+OpenTK.Graphics.TextPrinter fails to render text with newlines or a layout rectangle on Mono. This is a Mono GDI+ bug.
+
+Example documentation may not show up correctly when running on Mono.
 
 
 [API changes]
 
 Please note that binary compatibility is not preserved between beta releases.
 
-OpenTK 0.9.7 replaces several instances of the "All" and "Version30" enums with strongly-typed equivalents. This is a breaking change that potentially affects programs using OpenGL 3.0 functionality. If you are affected by this change, please replace the relevant instances of "All" or "Version30" with the correct enum, as reported by your IDE.
+OpenTK 0.9.8 replaces several instances of the "All" and "Version*" enums with strongly-typed equivalents. This is a breaking change. If you are affected by this change, replace these enums with the ones suggested by your compiler.
 
-OpenTK 0.9.7 also fixes the naming of several core and extension functions ending in "Instanced", "Indexed" or "Varyings". If you are affected by this change, please add the missing 'd' or 's' to the relevant functions.
+OpenTK 0.9.8 removes several OpenGL overloads that take arrays of a single item. This is a breaking change. If you are affected by this change, please use the 'ref' or 'out' overload for the relevant function.
+
+OpenTK 0.9.8 removes or replaces several invalid tokens in the DrawBuffer(s) methods. This is a breaking change.
