@@ -19,7 +19,7 @@ namespace OpenTK.Platform.Dummy
     /// </summary>
     internal sealed class DummyGLContext : IGraphicsContext, IGraphicsContextInternal
     {
-        GraphicsMode format;
+        GraphicsMode format = GraphicsMode.Default;
         bool vsync;
         ContextHandle handle;
         static int handle_count;
