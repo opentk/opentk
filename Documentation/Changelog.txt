@@ -16,6 +16,7 @@ OpenTK 0.9.7 -> 0.9.8
 		+ All instances of Version* enums have now been replaced. Only a few Version12Deprecated enums remain, pertaining to the ARB_imaging subset.
 		+ Debug builds now throw an exception whenever an OpenGL error is encountered. Simplifies debugging.
 		+ GraphicsContext.CreateDummyContext() no longer causes a NullReferenceException.
+		+ Several new helpers for getting matrices, vectors or setting the viewport.
 	+ Input 
 		+ Keyboard repeat is now turned off on X11.
 		+ Mouse deltas are now reported correctly during mouse movements..
