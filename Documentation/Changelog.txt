@@ -1,6 +1,40 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
 ---------------------
+OpenTK 0.9.7 -> 0.9.8
+---------------------
++ Bind
+	+ Merged 3.1 specs.
+	+ Function overrides are now specified in 'gloverrides.xml' instead of gl.spec. Merging updated specs should now be much easier.
+	+ Bindings are now generated in alphabetical order. This makes side-by-side comparisons easier whenever the generator or the specs are updated.
+
++ OpenTK
+	+ Audio
+		+ Fixed Alc.CaptureSamples signature and added convenience overloads.
+	+ Graphics
+		+ Full OpenGL 3.1 support.
+		+ All instances of Version* enums have now been replaced. Only a few Version12Deprecated enums remain, pertaining to the ARB_imaging subset.
+		+ Debug builds now throw an exception whenever an OpenGL error is encountered. Simplifies debugging.
+		+ GraphicsContext.CreateDummyContext() no longer causes a NullReferenceException.
+	+ Input 
+		+ Keyboard repeat is now turned off on X11.
+		+ Mouse deltas are now reported correctly during mouse movements..
+	+ Platform
+		+ Device contexts are no longer leaked on Windows. This significantly improves stability of long-running processes and processes with multiple OpenGL contexts.
+		+ Internal improvements to DummyGLContext.
+		+ Internal improvements to IPlatformFactory.
+
++ OpenTK.Utilities
+	+ TextPrinter
+		+ Up to 2x better performance with TextPrinterOptions.NoCache.
+		+ Up to 20x better performance with TextPrinterOptions.Default.
+		+ Specifying text location now works on Mono. Text width and height is still broken (Mono GDI+ bug).
+
++ Examples
+	+ New sample browser that includes documentation and source code (in progress).
+	+ Removed the console window. Debug messages are now shown inside the sample browser.
+
+---------------------
 OpenTK 0.9.6 -> 0.9.7
 ---------------------
 + Bind
