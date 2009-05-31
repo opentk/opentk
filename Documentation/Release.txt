@@ -2,7 +2,7 @@ The Open Toolkit 0.9.8 Beta
 Sunday, 31 May 2009
 
 
-[ Overview]
+[Overview]
 
 This release introduces:
 * Full OpenGL 3.1 support
