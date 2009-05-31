@@ -29,6 +29,8 @@ OpenTK 0.9.7 -> 0.9.8
 		+ Up to 2x better performance with TextPrinterOptions.NoCache.
 		+ Up to 20x better performance with TextPrinterOptions.Default.
 		+ Specifying text location now works on Mono. Text width and height is still broken (Mono GDI+ bug).
+		+ Replaced matrix stack with custom implementation for improved compatibility with buggy drivers or newer OpenGL versions.
+		+ GL1TextOutputProvider now resets / restores the TextureMatrix.
 
 + Examples
 	+ New sample browser that includes documentation and source code (in progress).
