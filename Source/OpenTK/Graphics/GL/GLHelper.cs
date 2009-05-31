@@ -1147,6 +1147,101 @@ namespace OpenTK.Graphics
 
         #endregion
 
+        #region Get[Float|Double]
+
+        public static void GetFloat(GetPName pname, out Vector2 vector)
+        {
+            unsafe
+            {
+                fixed (Vector2* ptr = &vector)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetFloat(GetPName pname, out Vector3 vector)
+        {
+            unsafe
+            {
+                fixed (Vector3* ptr = &vector)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetFloat(GetPName pname, out Vector4 vector)
+        {
+            unsafe
+            {
+                fixed (Vector4* ptr = &vector)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetFloat(GetPName pname, out Matrix4 matrix)
+        {
+            unsafe
+            {
+                fixed (Matrix4* ptr = &matrix)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetDouble(GetPName pname, out Vector2d vector)
+        {
+            unsafe
+            {
+                fixed (Vector2d* ptr = &vector)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetDouble(GetPName pname, out Vector3d vector)
+        {
+            unsafe
+            {
+                fixed (Vector3d* ptr = &vector)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetDouble(GetPName pname, out Vector4d vector)
+        {
+            unsafe
+            {
+                fixed (Vector4d* ptr = &vector)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        public static void GetDouble(GetPName pname, out Matrix4d matrix)
+        {
+            unsafe
+            {
+                fixed (Matrix4d* ptr = &matrix)
+                    GetFloat(pname, (float*)ptr);
+            }
+        }
+
+        #endregion
+
+        #region Viewport
+
+        public static void Viewport(System.Drawing.Size size)
+        {
+            GL.Viewport(0, 0, size.Width, size.Height);
+        }
+
+        public static void Viewport(System.Drawing.Point location, System.Drawing.Size size)
+        {
+            GL.Viewport(location.X, location.Y, size.Width, size.Height);
+        }
+
+        public static void Viewport(System.Drawing.Rectangle rectangle)
+        {
+            GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+        }
+
+        #endregion
+
         #endregion
     }
 }
