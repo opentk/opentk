@@ -72,16 +72,19 @@ namespace OpenTK.Build
             {
                 PrintUsage();
 
-                args = new string[2];
+                args = new string[2] { String.Empty, String.Empty };
                 Console.Write("Select build target: ");
                 args[0] = Console.ReadLine();
                 if (args[0] == String.Empty)
                     args[0] = "vs";
 
-                Console.Write("Select build mode (optional): ");
-                args[1] = Console.ReadLine();
-                if (args[0] == String.Empty)
-                    args[0] = "release";
+                if (args[0] != "vs")
+                {
+                    Console.Write("Select build mode (optional): ");
+                    args[1] = Console.ReadLine();
+                    if (args[1] == String.Empty)
+                        args[1] = "release";
+                }
             }
 
             RootPath = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
@@ -95,7 +98,7 @@ namespace OpenTK.Build
 
             foreach (string s in args)
             {
-                string arg = s.ToLower();
+                string arg = s.ToLower().Trim();
                 switch (arg)
                 {
                     case "debug":
@@ -147,89 +150,92 @@ namespace OpenTK.Build
                         target = BuildTarget.DistClean;
                         break;
 
+                    case "":
+                        break;
+
                     default:
                         Console.WriteLine("Unknown command: {0}", s);
                         PrintUsage();
                         return;
                 }
-
-                BinPath = Path.Combine("Binaries", mode == BuildMode.Debug ? "Debug" : "Release");
-                ExePath = Path.Combine(BinPath, "Exe");
-                LibPath = Path.Combine(BinPath, "Libraries");
-                ExamplePath = Path.Combine(BinPath, "Examples");
-                DataPath = Path.Combine(ExamplePath, "Data");
-
-                switch (target)
-                {
-                    case BuildTarget.Mono:
-                        Console.WriteLine("Building OpenTK using Mono.");
-                        ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
-                        Console.WriteLine();
-                        ExecuteProcess(
-                            "nant",
-                            "-buildfile:./Build/OpenTK.build -t:mono-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
-                        CopyBinaries();
-                        break;
-
-                    case BuildTarget.Net:
-                        Console.WriteLine("Building OpenTK using .Net");
-                        ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
-                        Console.WriteLine();
-                        ExecuteProcess(
-                            "nant",
-                            "-buildfile:./Build/OpenTK.build -t:net-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
-                        CopyBinaries();
-                        break;
-
-                    case BuildTarget.MonoDevelop:
-                        Console.WriteLine("Creating MonoDevelop project files");
-                        ExecuteProcess(PrebuildPath, "/target monodev /file " + PrebuildXml);
-                        break;
-
-                    case BuildTarget.SharpDevelop:
-                        Console.WriteLine("Creating SharpDevelop project files");
-                        ExecuteProcess(PrebuildPath, "/target sharpdev /file " + PrebuildXml);
-                        break;
-                        
-                    case BuildTarget.SharpDevelop2:
-                        Console.WriteLine("Creating SharpDevelop project files");
-                        ExecuteProcess(PrebuildPath, "/target sharpdev2 /file " + PrebuildXml);
-                        break;
-
-                    case BuildTarget.VS2005:
-                        Console.WriteLine("Creating VS2005 project files");
-                        ExecuteProcess(PrebuildPath, "/target vs2005 /file " + PrebuildXml);
-                        break;
-
-                    case BuildTarget.Clean:
-                        Console.WriteLine("Cleaning intermediate object files.");
-                        ExecuteProcess(PrebuildPath, "/clean /yes /file " + PrebuildXml);
-                        DeleteDirectories(RootPath, "obj");
-                        break;
-
-                    case BuildTarget.DistClean:
-                        Console.WriteLine("Cleaning intermediate and final object files.");
-                        ExecuteProcess(PrebuildPath, "/clean /yes /file " + PrebuildXml);
-                        DeleteDirectories(RootPath, "obj");
-                        DeleteDirectories(RootPath, "bin");
-                        if (Directory.Exists(RootPath + "Binaries"))
-                            Directory.Delete(RootPath + "Binaries", true);
-                        break;
-
-                    case BuildTarget.SVNClean:
-                        Console.WriteLine("Deleting svn directories.");
-                        DeleteDirectories(RootPath, ".svn");
-                        break;
-
-                    default:
-                        Console.WriteLine("Unknown target: {0}", target);
-                        PrintUsage();
-                        return;
-                }
-
-                //Console.WriteLine("Press any key to continue...");
-                //Console.ReadKey(true);
             }
+
+            BinPath = Path.Combine("Binaries", mode == BuildMode.Debug ? "Debug" : "Release");
+            ExePath = Path.Combine(BinPath, "Exe");
+            LibPath = Path.Combine(BinPath, "Libraries");
+            ExamplePath = Path.Combine(BinPath, "Examples");
+            DataPath = Path.Combine(ExamplePath, "Data");
+
+            switch (target)
+            {
+                case BuildTarget.Mono:
+                    Console.WriteLine("Building OpenTK using Mono.");
+                    ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
+                    Console.WriteLine();
+                    ExecuteProcess(
+                        "nant",
+                        "-buildfile:./Build/OpenTK.build -t:mono-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
+                    CopyBinaries();
+                    break;
+
+                case BuildTarget.Net:
+                    Console.WriteLine("Building OpenTK using .Net");
+                    ExecuteProcess(PrebuildPath, "/target nant /file " + PrebuildXml);
+                    Console.WriteLine();
+                    ExecuteProcess(
+                        "nant",
+                        "-buildfile:./Build/OpenTK.build -t:net-2.0 " + (mode == BuildMode.Debug ? "build-debug" : "build-release"));
+                    CopyBinaries();
+                    break;
+
+                case BuildTarget.MonoDevelop:
+                    Console.WriteLine("Creating MonoDevelop project files");
+                    ExecuteProcess(PrebuildPath, "/target monodev /file " + PrebuildXml);
+                    break;
+
+                case BuildTarget.SharpDevelop:
+                    Console.WriteLine("Creating SharpDevelop project files");
+                    ExecuteProcess(PrebuildPath, "/target sharpdev /file " + PrebuildXml);
+                    break;
+
+                case BuildTarget.SharpDevelop2:
+                    Console.WriteLine("Creating SharpDevelop project files");
+                    ExecuteProcess(PrebuildPath, "/target sharpdev2 /file " + PrebuildXml);
+                    break;
+
+                case BuildTarget.VS2005:
+                    Console.WriteLine("Creating VS2005 project files");
+                    ExecuteProcess(PrebuildPath, "/target vs2005 /file " + PrebuildXml);
+                    break;
+
+                case BuildTarget.Clean:
+                    Console.WriteLine("Cleaning intermediate object files.");
+                    ExecuteProcess(PrebuildPath, "/clean /yes /file " + PrebuildXml);
+                    DeleteDirectories(RootPath, "obj");
+                    break;
+
+                case BuildTarget.DistClean:
+                    Console.WriteLine("Cleaning intermediate and final object files.");
+                    ExecuteProcess(PrebuildPath, "/clean /yes /file " + PrebuildXml);
+                    DeleteDirectories(RootPath, "obj");
+                    DeleteDirectories(RootPath, "bin");
+                    if (Directory.Exists(RootPath + "Binaries"))
+                        Directory.Delete(RootPath + "Binaries", true);
+                    break;
+
+                case BuildTarget.SVNClean:
+                    Console.WriteLine("Deleting svn directories.");
+                    DeleteDirectories(RootPath, ".svn");
+                    break;
+
+                default:
+                    Console.WriteLine("Unknown target: {0}", target);
+                    PrintUsage();
+                    return;
+            }
+
+            //Console.WriteLine("Press any key to continue...");
+            //Console.ReadKey(true);
         }
 
         static void DeleteDirectories(string root_path, string search)
@@ -336,11 +342,11 @@ namespace OpenTK.Build
         
         static void ExecuteProcess(string path, string args)
         {
+            ProcessStartInfo sinfo = new ProcessStartInfo();
             using (Process p = new Process())
             {
                 try
                 {
-                    ProcessStartInfo sinfo = new ProcessStartInfo();
                     if (Environment.OSVersion.Platform == PlatformID.Unix && !path.ToLower().Contains("nant"))
                     {
                         sinfo.FileName = "mono";
@@ -371,7 +377,7 @@ namespace OpenTK.Build
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Failed to execute process: {0}", p.ProcessName);
+                    Console.WriteLine("Failed to execute process: {0}", sinfo.FileName);
                 }
             }
 
