@@ -326,7 +326,7 @@ namespace OpenTK.Graphics
         public override string ToString()
         {
             return String.Format("Index: {0}, Color: {1}, Depth: {2}, Stencil: {3}, Samples: {4}, Accum: {5}, Buffers: {6}, Stereo: {7}",
-                Index, ColorFormat, Depth, Stereo, Samples, AccumulatorFormat, Buffers, Stereo);
+                Index, ColorFormat, Depth, Stencil, Samples, AccumulatorFormat, Buffers, Stereo);
         }
 
         #endregion
