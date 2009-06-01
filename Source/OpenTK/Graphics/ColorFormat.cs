@@ -90,7 +90,7 @@ namespace OpenTK.Graphics
             this.alpha = (byte)alpha;
             this.bitsPerPixel = red + green + blue + alpha;
             this.isIndexed = false;
-            if (this.bitsPerPixel < 15)
+            if (this.bitsPerPixel < 15 && this.bitsPerPixel != 0)
                 this.isIndexed = true;
         }
 
