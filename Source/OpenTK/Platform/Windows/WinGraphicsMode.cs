@@ -156,7 +156,7 @@ namespace OpenTK.Platform.Windows
         {
             using (Control native_window = new Control())
             using (WinWindowInfo window = new WinWindowInfo(native_window.Handle, null))
-            using (WinGLContext context = new WinGLContext(GraphicsMode.Default, window, null, 1, 0, GraphicsContextFlags.Default))
+            using (WinGLContext context = new WinGLContext(new GraphicsMode(new ColorFormat(), 0, 0, 0, new ColorFormat(), 2, false), window, null, 1, 0, GraphicsContextFlags.Default))
             {
                 Debug.Write("Selecting pixel format (ARB)... ");
                 if (Wgl.Delegates.wglChoosePixelFormatARB == null || Wgl.Delegates.wglGetPixelFormatAttribivARB == null)
@@ -196,7 +196,7 @@ namespace OpenTK.Platform.Windows
 
                 int[] attribs_values = new int[]
                 {
-                    (int)WGL_ARB_pixel_format.AccelerationArb, 1,
+                    (int)WGL_ARB_pixel_format.AccelerationArb, (int)WGL_ARB_pixel_format.FullAccelerationArb,
 
                     (int)WGL_ARB_pixel_format.RedBitsArb, color.Red,
                     (int)WGL_ARB_pixel_format.GreenBitsArb, color.Green,
@@ -223,6 +223,12 @@ namespace OpenTK.Platform.Windows
 
                 int[] pixel = new int[1], num_formats = new int[1];
                 Wgl.Arb.ChoosePixelFormat(window.DeviceContext, attribs_values, null, 1, pixel, num_formats);
+                if (num_formats[0] == 0 || pixel[0] == 0)
+                {
+                    // Try again without an accumulator. Many modern cards cannot accelerate multisampled formats with accumulator buffers.
+                    attribs_values[10 * 2 + 1] = attribs_values[11 * 2 + 1] = attribs_values[12 * 2 + 1] = attribs_values[13 * 2 + 1] = attribs_values[14 * 2 + 1] = 0;
+                    Wgl.Arb.ChoosePixelFormat(window.DeviceContext, attribs_values, null, 1, pixel, num_formats);
+                }
                 if (num_formats[0] == 0 || pixel[0] == 0)
                 {
                     Debug.WriteLine("failed");
