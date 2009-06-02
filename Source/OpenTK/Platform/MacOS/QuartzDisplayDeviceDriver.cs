@@ -83,7 +83,7 @@ namespace OpenTK.Platform.MacOS
 
                         //Debug.Print("Mode {0} is {1}x{2}x{3} @ {4}.", j, width, height, bpp, freq);
 
-                        DisplayResolution thisRes = new DisplayResolution(width, height, bpp, (float)freq);
+                        DisplayResolution thisRes = new DisplayResolution(0, 0, width, height, bpp, (float)freq);
                         opentk_dev_available_res.Add(thisRes);
 
                         if (current)

@@ -211,7 +211,7 @@ namespace Examples.Tutorial
         /// </summary>
         /// <param name="e">Contains information on the new GameWindow size.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
+        protected override void OnResize(EventArgs e)
         {
             // Magic numbers so the fractal almost fits inside the window.
             // If changing this, also change the -1.6f offset in the fragment shader accordingly.
@@ -237,7 +237,7 @@ namespace Examples.Tutorial
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        public override void OnUpdateFrame(UpdateFrameEventArgs e)
+        protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
 
@@ -256,7 +256,7 @@ namespace Examples.Tutorial
         /// </summary>
         /// <param name="e">Contains timing information.</param>
         /// <remarks>There is no need to call the base implementation.</remarks>
-        public override void OnRenderFrame(RenderFrameEventArgs e)
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
             //this.Title = "FPS: " + 1 / e.Time;
             GL.Clear(ClearBufferMask.ColorBufferBit);

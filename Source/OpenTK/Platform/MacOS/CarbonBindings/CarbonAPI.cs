@@ -81,6 +81,11 @@ namespace OpenTK.Platform.MacOS.Carbon
             return string.Format(
                 "Rect: [{0}, {1}, {2}, {3}]", X, Y, Width, Height);
         }
+
+        public System.Drawing.Rectangle ToRectangle()
+        {
+            return new System.Drawing.Rectangle(X, Y, Width, Height);
+        }
     }
 
     #endregion
@@ -444,6 +449,8 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static extern OSStatus RepositionWindow(IntPtr window, IntPtr parentWindow, WindowPositionMethod method);
         [DllImport(carbon)]
         internal static extern void SizeWindow(IntPtr window, short w, short h, bool fUpdate);
+        [DllImport(carbon)]
+        internal static extern void MoveWindow(IntPtr window, short x, short y, bool fUpdate);
 
         [DllImport(carbon)]
         static extern OSStatus GetWindowBounds(IntPtr window, WindowRegionCode regionCode, out Rect globalBounds);

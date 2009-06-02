@@ -81,7 +81,7 @@ namespace OpenTK
             if (DesignMode)
                 implementation = new Platform.Dummy.DummyGLControl();
             else
-                implementation = Platform.Factory.CreateGLControl(mode, this);
+                implementation = Platform.Factory.Default.CreateGLControl(mode, this);
 
             this.CreateControl();
         }

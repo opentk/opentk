@@ -124,9 +124,14 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11", EntryPoint = "XReparentWindow")]
         public extern static int XReparentWindow(IntPtr display, IntPtr window, IntPtr parent, int x, int y);
+
         [DllImport("libX11", EntryPoint = "XMoveResizeWindow")]
         public extern static int XMoveResizeWindow(IntPtr display, IntPtr window, int x, int y, int width, int height);
 
+        
+        [DllImport("libX11", EntryPoint = "XResizeWindow")]
+        public extern static int XMoveWindow(IntPtr display, IntPtr w, int x, int y);
+        
         [DllImport("libX11", EntryPoint = "XResizeWindow")]
         public extern static int XResizeWindow(IntPtr display, IntPtr window, int width, int height);
 

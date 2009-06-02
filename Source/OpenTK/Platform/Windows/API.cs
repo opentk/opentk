@@ -28,6 +28,9 @@ namespace OpenTK.Platform.Windows
     using HWND = System.IntPtr;
     using HINSTANCE = System.IntPtr;
     using HMENU = System.IntPtr;
+    using HICON = System.IntPtr;
+    using HBRUSH = System.IntPtr;
+    using HCURSOR = System.IntPtr;
 
     using LRESULT = System.IntPtr;
     using LPVOID = System.IntPtr;
@@ -55,6 +58,8 @@ namespace OpenTK.Platform.Windows
     using RECT = OpenTK.Platform.Windows.Rectangle;
     using WNDPROC = System.IntPtr;
     using LPDEVMODE = DeviceMode;
+
+    using HRESULT = System.IntPtr;
 
     #endregion
 
@@ -130,7 +135,10 @@ namespace OpenTK.Platform.Windows
         /// Found Winuser.h, user32.dll
         /// </remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern BOOL AdjustWindowRect([In, Out] ref RECT lpRect, WindowStyle dwStyle, BOOL bMenu);
+        internal static extern BOOL AdjustWindowRect([In, Out] ref Rectangle lpRect, WindowStyle dwStyle, BOOL bMenu);
+
+        [DllImport("user32.dll", EntryPoint = "AdjustWindowRectEx", CallingConvention = CallingConvention.StdCall, SetLastError = true), SuppressUnmanagedCodeSecurity]
+        internal static extern bool AdjustWindowRectEx(ref Rectangle lpRect, WindowStyle dwStyle, bool bMenu, ExtendedWindowStyle dwExStyle);
 
         #endregion
 
@@ -138,16 +146,16 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern IntPtr CreateWindowEx(
-            [In]ExtendedWindowStyle ExStyle,
-            [In]string className,
-            [In]string windowName,
-            [In]WindowStyle Style,
-            [In]int X, int Y,
-            [In]int Width, int Height,
-            [In]IntPtr HandleToParentWindow,
-            [In]IntPtr Menu,
-            [In]IntPtr Instance,
-            [In]IntPtr Param);
+            ExtendedWindowStyle ExStyle,
+            [MarshalAs(UnmanagedType.LPTStr)] string className,
+            [MarshalAs(UnmanagedType.LPTStr)] string windowName,
+            WindowStyle Style,
+            int X, int Y,
+            int Width, int Height,
+            IntPtr HandleToParentWindow,
+            IntPtr Menu,
+            IntPtr Instance,
+            IntPtr Param);
         /*
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern int CreateWindowEx(
@@ -165,7 +173,7 @@ namespace OpenTK.Platform.Windows
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern IntPtr CreateWindowEx(
             ExtendedWindowStyle ExStyle,
-            IntPtr ClassName,
+            IntPtr ClassAtom,
             IntPtr WindowName,
             WindowStyle Style,
             int X, int Y,
@@ -185,79 +193,128 @@ namespace OpenTK.Platform.Windows
 
         #region RegisterClass
 
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern short RegisterClass(WindowClass window_class);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        internal static extern ushort RegisterClass(ref WindowClass window_class);
+
+        #endregion
+
+        #region RegisterClassEx
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        internal static extern ushort RegisterClassEx(ref ExtendedWindowClass window_class);
 
         #endregion
 
         #region UnregisterClass
 
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern short UnregisterClass(string className, IntPtr instance);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        internal static extern short UnregisterClass([MarshalAs(UnmanagedType.LPTStr)] LPCTSTR className, IntPtr instance);
 
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern short UnregisterClass(IntPtr className, IntPtr instance);
 
         #endregion
 
-        [CLSCompliant(false)]
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern LRESULT CallWindowProc(
-            WNDPROC lpPrevWndFunc,
-            HWND hWnd,
-            UINT Msg,
-            WPARAM wParam,
-            LPARAM lParam
-        );
+        #region GetClassInfoEx
 
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        internal static extern BOOL GetClassInfoEx(HINSTANCE hinst,
+            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpszClass, ref ExtendedWindowClass lpwcx);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        internal static extern BOOL GetClassInfoEx(HINSTANCE hinst, UIntPtr lpszClass, ref ExtendedWindowClass lpwcx);
+
+        #endregion
+
+        #region CallWindowProc
+
+#if RELEASE
         [SuppressUnmanagedCodeSecurity]
+#endif
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern LRESULT CallWindowProc(
-            WNDPROC lpPrevWndFunc,
-            HWND hWnd,
-            INT Msg,
-            WPARAM wParam,
-            LPARAM lParam
-        );
+        internal static extern LRESULT CallWindowProc(WNDPROC lpPrevWndFunc, HWND hWnd, WindowMessage Msg,
+            WPARAM wParam, LPARAM lParam);
+
+        #endregion
 
         #region SetWindowLong
 
-        internal static IntPtr SetWindowLong(IntPtr handle, GetWindowLongOffsets index, IntPtr newValue)
+        // SetWindowLongPtr does not exist on x86 platforms (it's a macro that resolves to SetWindowLong).
+        // We need to detect if we are on x86 or x64 at runtime and call the correct function
+        // (SetWindowLongPtr on x64 or SetWindowLong on x86). Fun!
+        internal static IntPtr SetWindowLong(IntPtr handle, GetWindowLongOffsets item, IntPtr newValue)
         {
-            if (IntPtr.Size == 4)
-                return (IntPtr)SetWindowLong(handle, index, (LONG)newValue);
+            // SetWindowPos defines its error condition as an IntPtr.Zero retval and a non-0 GetLastError.
+            // We need to SetLastError(0) to ensure we are not detecting on older error condition (from another function).
 
-            return SetWindowLongPtr(handle, index, newValue);
+            IntPtr retval = IntPtr.Zero;
+            SetLastError(0);
+
+            if (IntPtr.Size == 4)
+                retval = new IntPtr(SetWindowLong(handle, item, newValue.ToInt32()));
+            else
+                retval = SetWindowLongPtr(handle, item, newValue);
+
+            if (retval == IntPtr.Zero)
+            {
+                int error = Marshal.GetLastWin32Error();
+                if (error != 0)
+                    throw new PlatformException(String.Format("Failed to modify window border. Error: {0}", error));
+            }
+
+            return retval;
         }
 
+        internal static IntPtr SetWindowLong(IntPtr handle, WindowProcedure newValue)
+        {
+            return SetWindowLong(handle, GetWindowLongOffsets.WNDPROC, Marshal.GetFunctionPointerForDelegate(newValue));
+        }
+
+#if RELASE
         [SuppressUnmanagedCodeSecurity]
+#endif
         [DllImport("user32.dll", SetLastError = true)]
         static extern LONG SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex, LONG dwNewLong);
 
+#if RELASE
         [SuppressUnmanagedCodeSecurity]
+#endif
         [DllImport("user32.dll", SetLastError = true)]
         static extern LONG_PTR SetWindowLongPtr(HWND hWnd, GetWindowLongOffsets nIndex, LONG_PTR dwNewLong);
+
+#if RELASE
+        [SuppressUnmanagedCodeSecurity]
+#endif
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern LONG SetWindowLong(HWND hWnd, GetWindowLongOffsets nIndex,
+            [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
+
+#if RELASE
+        [SuppressUnmanagedCodeSecurity]
+#endif
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern LONG_PTR SetWindowLongPtr(HWND hWnd, GetWindowLongOffsets nIndex,
+            [MarshalAs(UnmanagedType.FunctionPtr)]WindowProcedure dwNewLong);
 
         #endregion
 
         #region GetWindowLong
 
-        internal static IntPtr GetWindowLong(IntPtr handle, GetWindowLongOffsets index)
+        internal static UIntPtr GetWindowLong(IntPtr handle, GetWindowLongOffsets index)
         {
             if (IntPtr.Size == 4)
-                return (IntPtr)GetWindowLongInternal(handle, index);
+                return (UIntPtr)GetWindowLongInternal(handle, index);
 
             return GetWindowLongPtrInternal(handle, index);
         }
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true, EntryPoint="GetWindowLong")]
-        static extern LONG GetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex);
+        static extern ULONG GetWindowLongInternal(HWND hWnd, GetWindowLongOffsets nIndex);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "GetWindowLongPtr")]
-        static extern LONG_PTR GetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex);
+        static extern UIntPtr GetWindowLongPtrInternal(HWND hWnd, GetWindowLongOffsets nIndex);
 
         #endregion
 
@@ -306,6 +363,13 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region SendMessage
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        internal static extern LRESULT SendMessage(HWND hWnd, WindowMessage Msg, WPARAM wParam, LPARAM lParam);
+
+        #endregion
+
         #region PostMessage
 
         [CLSCompliant(false)]
@@ -330,9 +394,21 @@ namespace OpenTK.Platform.Windows
 
         #region DispatchMessage
 
+#if RELEASE
         [System.Security.SuppressUnmanagedCodeSecurity]
+#endif
         [DllImport("User32.dll"), CLSCompliant(false)]
         internal static extern LRESULT DispatchMessage(ref MSG msg);
+
+        #endregion
+
+        #region TranslateMessage
+
+#if RELEASE
+        [System.Security.SuppressUnmanagedCodeSecurity]
+#endif
+        [DllImport("User32.dll"), CLSCompliant(false)]
+        internal static extern BOOL TranslateMessage(ref MSG lpMsg);
 
         #endregion
 
@@ -364,6 +440,13 @@ namespace OpenTK.Platform.Windows
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         internal static extern DWORD GetQueueStatus([MarshalAs(UnmanagedType.U4)] QueueStatusFlags flags);
+
+        #endregion
+
+        #region DefWindowProc
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public extern static IntPtr DefWindowProc(HWND hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
 
         #endregion
 
@@ -425,6 +508,13 @@ namespace OpenTK.Platform.Windows
         /// <returns></returns>
         [DllImport("user32.dll")]
         internal static extern IntPtr GetDC(IntPtr hwnd);
+
+        #endregion
+
+        #region GetWindowDC
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr GetWindowDC(IntPtr hwnd);
 
         #endregion
 
@@ -492,6 +582,13 @@ namespace OpenTK.Platform.Windows
         #endregion
 
         #region DLL handling
+
+        #region SetLastError
+
+        [DllImport("kernel32.dll")]
+        internal static extern void SetLastError(DWORD dwErrCode);
+
+        #endregion
 
         #region GetModuleHandle
 
@@ -594,8 +691,8 @@ namespace OpenTK.Platform.Windows
         /// <para>The SetWindowText function does not expand tab characters (ASCII code 0x09). Tab characters are displayed as vertical bar (|) characters. </para>
         /// <para>Windows 95/98/Me: SetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me Systems .</para>
         /// </remarks>
-        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern BOOL SetWindowText(HWND hWnd, LPCTSTR lpString);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        internal static extern BOOL SetWindowText(HWND hWnd, [MarshalAs(UnmanagedType.LPTStr)] string lpString);
 
         #endregion
 
@@ -616,9 +713,8 @@ namespace OpenTK.Platform.Windows
         /// <para>To retrieve the text of a control in another process, send a WM_GETTEXT message directly instead of calling GetWindowText.</para>
         /// <para>Windows 95/98/Me: GetWindowTextW is supported by the Microsoft Layer for Unicode (MSLU). To use this, you must add certain files to your application, as outlined in Microsoft Layer for Unicode on Windows 95/98/Me</para>
         /// </remarks>
-        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal static extern int GetWindowText(HWND hWnd,
-            [MarshalAs(UnmanagedType.LPTStr), Out] StringBuilder lpString, int nMaxCount);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        internal static extern int GetWindowText(HWND hWnd, [MarshalAs(UnmanagedType.LPTStr), In, Out] StringBuilder lpString, int nMaxCount);
 
         #endregion
 
@@ -672,7 +768,24 @@ namespace OpenTK.Platform.Windows
         /// </returns>
         /// <remarks>In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.</remarks>
         [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
-        internal extern static BOOL GetClientRect(HWND windowHandle, out RECT clientRectangle);
+        internal extern static BOOL GetClientRect(HWND windowHandle, out Rectangle clientRectangle);
+
+        #endregion
+
+        #region GetWindowRect
+
+        /// <summary>
+        /// The GetWindowRect function retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
+        /// </summary>
+        /// <param name="windowHandle">Handle to the window whose client coordinates are to be retrieved.</param>
+        /// <param name="windowRectangle"> Pointer to a structure that receives the screen coordinates of the upper-left and lower-right corners of the window.</param>
+        /// <returns>
+        /// <para>If the function succeeds, the return value is nonzero.</para>
+        /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+        /// </returns>
+        /// <remarks>In conformance with conventions for the RECT structure, the bottom-right coordinates of the returned rectangle are exclusive. In other words, the pixel at (right, bottom) lies immediately outside the rectangle.</remarks>
+        [DllImport("user32.dll", SetLastError = true), SuppressUnmanagedCodeSecurity]
+        internal extern static BOOL GetWindowRect(HWND windowHandle, out Rectangle windowRectangle);
 
         #endregion
 
@@ -680,6 +793,20 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("user32.dll"), SuppressUnmanagedCodeSecurity]
         internal static extern BOOL GetWindowInfo(HWND hwnd, ref WindowInfo wi);
+
+        #endregion
+
+        #region DwmGetWindowAttribute
+
+        [DllImport("dwmapi.dll")]
+        unsafe public static extern HRESULT DwmGetWindowAttribute(HWND hwnd, DwmWindowAttribute dwAttribute, void* pvAttribute, DWORD cbAttribute);
+
+        #endregion
+
+        #region GetFocus
+
+        [DllImport("user32.dll")]
+        public static extern HWND GetFocus();
 
         #endregion
 
@@ -706,40 +833,47 @@ namespace OpenTK.Platform.Windows
 
         #region ChangeDisplaySettingsEx
 
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern LONG ChangeDisplaySettingsEx(LPCTSTR lpszDeviceName, LPDEVMODE lpDevMode,
-            HWND hwnd, ChangeDisplaySettingsEnum dwflags, LPVOID lParam);
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern LONG ChangeDisplaySettingsEx([MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpszDeviceName,
+            LPDEVMODE lpDevMode, HWND hwnd, ChangeDisplaySettingsEnum dwflags, LPVOID lParam);
 
         #endregion
 
         #region EnumDisplayDevices
 
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = true, CharSet=CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL EnumDisplayDevices([MarshalAs(UnmanagedType.LPStr)] LPCTSTR lpDevice,
+        public static extern BOOL EnumDisplayDevices([MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpDevice,
             DWORD iDevNum, [In, Out] WindowsDisplayDevice lpDisplayDevice, DWORD dwFlags);
 
         #endregion
 
         #region EnumDisplaySettings
 
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern BOOL EnumDisplaySettings([MarshalAs(UnmanagedType.LPStr)] string device_name,
-            int graphics_mode, [Out] DeviceMode device_mode);
+        internal static extern BOOL EnumDisplaySettings([MarshalAs(UnmanagedType.LPTStr)] string device_name,
+            int graphics_mode, [In, Out] DeviceMode device_mode);
 
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern BOOL EnumDisplaySettings([MarshalAs(UnmanagedType.LPStr)] string device_name,
-             DisplayModeSettingsEnum graphics_mode, [Out] DeviceMode device_mode);
+        internal static extern BOOL EnumDisplaySettings([MarshalAs(UnmanagedType.LPTStr)] string device_name,
+             DisplayModeSettingsEnum graphics_mode, [In, Out] DeviceMode device_mode);
 
         #endregion
 
         #region EnumDisplaySettingsEx
 
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern BOOL EnumDisplaySettingsEx([MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpszDeviceName, DisplayModeSettingsEnum iModeNum,
+            [In, Out] DeviceMode lpDevMode, DWORD dwFlags);
+
+        #endregion
+
+        #region GetMonitorInfo
+
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern BOOL EnumDisplaySettingsEx([MarshalAs(UnmanagedType.LPStr)] LPCTSTR lpszDeviceName, DisplayModeSettingsEnum iModeNum,
-            [Out] DeviceMode lpDevMode, DWORD dwFlags);
+        public static extern BOOL GetMonitorInfo(IntPtr hMonitor, ref MonitorInfo lpmi);
 
         #endregion
 
@@ -1240,6 +1374,17 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        #region GDI functions
+
+        #region GetStockObject
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern IntPtr GetStockObject(int index);
+
+        #endregion
+
+        #endregion
+
         #endregion
     }
 
@@ -1424,6 +1569,26 @@ namespace OpenTK.Platform.Windows
         /// Specifies the extended window style for the new window.
         /// </summary>
         internal DWORD dwExStyle;
+    }
+
+    #endregion
+
+    #region StyleStruct
+
+    struct StyleStruct
+    {
+        public WindowStyle Old;
+        public WindowStyle New;
+    }
+
+    #endregion
+
+    #region ExtendedStyleStruct
+
+    struct ExtendedStyleStruct
+    {
+        public ExtendedWindowStyle Old;
+        public ExtendedWindowStyle New;
     }
 
     #endregion
@@ -1613,7 +1778,7 @@ namespace OpenTK.Platform.Windows
     #endif 
     } DEVMODE; 
     */
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     internal class DeviceMode
     {
         internal DeviceMode()
@@ -1629,14 +1794,18 @@ namespace OpenTK.Platform.Windows
         internal short DriverExtra;
         internal int Fields;
 
-        internal short Orientation;
-        internal short PaperSize;
-        internal short PaperLength;
-        internal short PaperWidth;
-        internal short Scale;
-        internal short Copies;
-        internal short DefaultSource;
-        internal short PrintQuality;
+        //internal short Orientation;
+        //internal short PaperSize;
+        //internal short PaperLength;
+        //internal short PaperWidth;
+        //internal short Scale;
+        //internal short Copies;
+        //internal short DefaultSource;
+        //internal short PrintQuality;
+
+        internal POINT Position;
+        internal DWORD DisplayOrientation;
+        internal DWORD DisplayFixedOutput;
 
         internal short Color;
         internal short Duplex;
@@ -1668,7 +1837,7 @@ namespace OpenTK.Platform.Windows
     /// <summary>
     /// The DISPLAY_DEVICE structure receives information about the display device specified by the iDevNum parameter of the EnumDisplayDevices function.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
     internal class WindowsDisplayDevice
     {
         internal WindowsDisplayDevice()
@@ -1693,11 +1862,11 @@ namespace OpenTK.Platform.Windows
 
     #region WindowClass
     [StructLayout(LayoutKind.Sequential)]
-    internal class WindowClass
+    internal struct WindowClass
     {
-        internal WindowClassStyle style = WindowClassStyle.VRedraw | WindowClassStyle.HRedraw | WindowClassStyle.OwnDC;
+        internal ClassStyle Style;
         [MarshalAs(UnmanagedType.FunctionPtr)]
-        internal WindowProcedureEventHandler WindowProcedure;
+        internal WindowProcedure WindowProcedure;
         internal int ClassExtraBytes;
         internal int WindowExtraBytes;
         //[MarshalAs(UnmanagedType.
@@ -1707,10 +1876,37 @@ namespace OpenTK.Platform.Windows
         internal IntPtr BackgroundBrush;
         //[MarshalAs(UnmanagedType.LPStr)]
         internal IntPtr MenuName;
-        //[MarshalAs(UnmanagedType.LPStr)]
-        internal IntPtr ClassName;
+        [MarshalAs(UnmanagedType.LPTStr)]
+        internal string ClassName;
         //internal string ClassName;
+
+        internal static int SizeInBytes = Marshal.SizeOf(default(WindowClass));
     }
+    #endregion
+
+    #region ExtendedWindowClass
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    struct ExtendedWindowClass
+    {
+        public UINT Size;
+        public ClassStyle Style;
+        //public WNDPROC WndProc;
+        [MarshalAs(UnmanagedType.FunctionPtr)]
+        public WindowProcedure WndProc;
+        public int cbClsExtra;
+        public int cbWndExtra;
+        public HINSTANCE Instance;
+        public HICON Icon;
+        public HCURSOR Cursor;
+        public HBRUSH Background;
+        public IntPtr MenuName;
+        public IntPtr ClassName;
+        public HICON IconSm;
+
+        public static uint SizeInBytes = (uint)Marshal.SizeOf(default(ExtendedWindowClass));
+    }
+
     #endregion
 
     #region internal struct MinMaxInfo
@@ -1721,11 +1917,11 @@ namespace OpenTK.Platform.Windows
     [StructLayout(LayoutKind.Sequential)]
     internal struct MINMAXINFO
     {
-        System.Drawing.Point ptReserved;
-        System.Drawing.Point ptMaxSize;
-        System.Drawing.Point ptMaxPosition;
-        System.Drawing.Point ptMinTrackSize;
-        System.Drawing.Point ptMaxTrackSize;
+        System.Drawing.Point Reserved;
+        public System.Drawing.Size MaxSize;
+        public System.Drawing.Point MaxPosition;
+        public System.Drawing.Size MinTrackSize;
+        public System.Drawing.Size MaxTrackSize;
     }
 
     #endregion
@@ -2326,30 +2522,6 @@ namespace OpenTK.Platform.Windows
 
     #region GetWindowLongOffsets
 
-    /// <summary>
-    /// Window field offsets for GetWindowLong() and GetWindowLongPtr().
-    /// </summary>
-    internal static class GWL
-    {
-        private static bool x64;
-        static GWL()
-        {
-            unsafe
-            {
-                x64 = sizeof(void*) == 8;
-            }
-
-        }
-
-        internal static readonly int WNDPROC       = (-4);
-        internal static readonly int HINSTANCE     = (-6);
-        internal static readonly int HWNDPARENT    = (-8);
-        internal static readonly int STYLE         = (-16);
-        internal static readonly int EXSTYLE       = (-20);
-        internal static readonly int USERDATA      = (-21);
-        internal static readonly int ID            = (-12);
-    }
-
     #endregion
 
     #region Rectangle
@@ -2393,6 +2565,31 @@ namespace OpenTK.Platform.Windows
         public override string ToString()
         {
             return String.Format("({0},{1})-({2},{3})", left, top, right, bottom);
+        }
+
+        internal System.Drawing.Rectangle ToRectangle()
+        {
+            return System.Drawing.Rectangle.FromLTRB(left, top, right, bottom);
+        }
+
+        internal static Rectangle From(System.Drawing.Rectangle value)
+        {
+            Rectangle rect = new Rectangle();
+            rect.left = value.Left;
+            rect.right = value.Right;
+            rect.top = value.Top;
+            rect.bottom = value.Bottom;
+            return rect;
+        }
+
+        internal static Rectangle From(System.Drawing.Size value)
+        {
+            Rectangle rect = new Rectangle();
+            rect.left = 0;
+            rect.right = value.Width;
+            rect.top = 0;
+            rect.bottom = value.Height;
+            return rect;
         }
     }
 
@@ -2450,12 +2647,70 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    #region MonitorInfo
+
+    struct MonitorInfo
+    {
+        public DWORD Size;
+        public RECT Monitor;
+        public RECT Work;
+        public DWORD Flags;
+
+        public static readonly int SizeInBytes = Marshal.SizeOf(default(MonitorInfo));
+    }
+
+    #endregion
+
+    #region NcCalculateSize
+
+    [StructLayout(LayoutKind.Sequential, Pack=1)]
+    internal struct NcCalculateSize
+    {
+        public Rectangle NewBounds;
+        public Rectangle OldBounds;
+        public Rectangle OldClientRectangle;
+        unsafe public WindowPosition* Position;
+    }
+
+    #endregion
+
     #endregion
 
     #region --- Enums ---
 
-    #region 
-    
+    #region GetWindowLongOffset
+
+    /// <summary>
+    /// Window field offsets for GetWindowLong() and GetWindowLongPtr().
+    /// </summary>
+    enum GWL
+    {
+        WNDPROC = (-4),
+        HINSTANCE = (-6),
+        HWNDPARENT = (-8),
+        STYLE = (-16),
+        EXSTYLE = (-20),
+        USERDATA = (-21),
+        ID = (-12),
+    }
+
+    #endregion
+
+    #region SizeMessage
+
+    internal enum SizeMessage
+    {
+        MAXHIDE = 4,
+        MAXIMIZED = 2,
+        MAXSHOW = 3,
+        MINIMIZED = 1,
+        RESTORED = 0
+    }
+
+    #endregion
+
+    #region NcCalcSizeOptions
+
     internal enum NcCalcSizeOptions
     {
         ALIGNTOP = 0x10,
@@ -2516,13 +2771,13 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
-    #region internal enum WindowStyle : int
+    #region internal enum WindowStyle : uint
 
     [Flags]
-    internal enum WindowStyle : int
+    internal enum WindowStyle : uint
     {
         Overlapped = 0x00000000,
-        Popup = unchecked((int)0x80000000),
+        Popup = 0x80000000,
         Child = 0x40000000,
         Minimize = 0x20000000,
         Visible = 0x10000000,
@@ -2556,10 +2811,10 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
-    #region internal enum ExtendedWindowStyle : int
+    #region internal enum ExtendedWindowStyle : uint
 
     [Flags]
-    internal enum ExtendedWindowStyle : int
+    internal enum ExtendedWindowStyle : uint
     {
         DialogModalFrame = 0x00000001,
         NoParentNotify = 0x00000004,
@@ -2675,9 +2930,9 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
-    #region WindowClassStyle enum
+    #region ClassStyle enum
     [Flags]
-    internal enum WindowClassStyle
+    internal enum ClassStyle
     {
         //None            = 0x0000,
         VRedraw = 0x0001,
@@ -3232,7 +3487,7 @@ namespace OpenTK.Platform.Windows
 
     #region WindowMessage
 
-    internal enum WindowMessage
+    internal enum WindowMessage : uint
     {
         NULL = 0x0000,
         CREATE = 0x0001,
@@ -3523,7 +3778,7 @@ namespace OpenTK.Platform.Windows
         /// Activates and displays a window. If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when displaying the window for the first time.
         /// </summary>
         SHOWNORMAL      = 1,
-        //NORMAL          = 1,
+        NORMAL          = 1,
         /// <summary>
         /// Activates the window and displays it as a minimized window.
         /// </summary>
@@ -3532,7 +3787,7 @@ namespace OpenTK.Platform.Windows
         /// Activates the window and displays it as a maximized window.
         /// </summary>
         SHOWMAXIMIZED   = 3,
-        //MAXIMIZE        = 3,
+        MAXIMIZE        = 3,
         /// <summary>
         /// Displays the window as a minimized window. This value is similar to SW_SHOWMINIMIZED, except the window is not activated.
         /// </summary>
@@ -3641,24 +3896,32 @@ namespace OpenTK.Platform.Windows
 
     #endregion
 
+    #region DwmWindowAttribute
+
+    enum DwmWindowAttribute
+    {
+        NCRENDERING_ENABLED = 1,
+        NCRENDERING_POLICY,
+        TRANSITIONS_FORCEDISABLED,
+        ALLOW_NCPAINT,
+        CAPTION_BUTTON_BOUNDS,
+        NONCLIENT_RTL_LAYOUT,
+        FORCE_ICONIC_REPRESENTATION,
+        FLIP3D_POLICY,
+        EXTENDED_FRAME_BOUNDS,
+        HAS_ICONIC_BITMAP,
+        DISALLOW_PEEK,
+        EXCLUDED_FROM_PEEK,
+        LAST
+    }
+
+    #endregion
+
     #endregion
 
     #region --- Callbacks ---
 
-    internal delegate void WindowProcedure(ref System.Windows.Forms.Message msg);
-
-        [UnmanagedFunctionPointerAttribute(CallingConvention.Winapi)]
-        internal delegate void WindowProcedureEventHandler(object sender, WindowProcedureEventArgs e);
-
-        internal class WindowProcedureEventArgs : EventArgs
-        {
-            private System.Windows.Forms.Message msg;
-            internal System.Windows.Forms.Message Message
-            {
-                get { return msg; }
-                set { msg = value; }
-            }
-        }
+    internal delegate IntPtr WindowProcedure(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam);
 
     #region Message
 

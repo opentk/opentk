@@ -5,13 +5,34 @@ OpenTK does not require installation. Simply decompress the archive to a folder 
 
 Usage
 
-To use OpenTK, you need to reference OpenTK.dll from your project. The way you do this changes from IDE to IDE - refer to http://www.opentk.com/doc for specific instructions.
+To use OpenTK, you need to reference "OpenTK.dll". Refer to http://www.opentk.com/doc for specific instructions.
 
-In any case, make sure the OpenTK.dll.config file is copied to the output directory along with OpenTK.dll. This file is *required* for OpenTK to function on Linux and Mac OS X.
+Regardless of your development environment and operating system, ensure that you copy "OpenTK.dll.config" to the output directory. Without OpenTK.dll.config, your application will not function on Linux or MacOS.
 
 
 Build instructions
 
-If you have Visual Studio 2005/2008 or MonoDevelop 2 (post-beta1), simply open OpenTK.sln in the Build/ folder. If you wish build from the commandline, install nant (http://nant.sourceforge.net) and execute Build.exe in the Build/ folder.
+You can build OpenTK using Visual Studio 2005+, SharpDevelop 2.0+, MonoDevelop 2.0+, msbuild or nant. Instructions:
 
-The resulting binaries are placed into the Binaries/Release or Binaries/Debug folder.
+1a. Open the Build/ folder.
+
+1b. If you are using a fresh SVN checkout, double click "Build.exe", type "vs" and press enter twice to create OpenTK.sln. This step is not necessary if you are using a released version of OpenTK.
+
+2a. If you are using Visual Studio, SharpDevelop or MonoDevelop, double-click OpenTK.sln, select a build configuration (debug/release) and build the project.
+
+2b. If you wish to build from the commandline:
+
+[Windows]
+Make sure msbuild is in your path and type:
+
+cd Build
+Build.exe vs
+msbuild
+
+[Linux / MacOS]
+Make sure nant (http://nant.sourceforge.net) is in your path and type:
+
+cd Build/
+mono Build.exe nant release
+
+4. The resulting binaries are placed into the Binaries/Release or Binaries/Debug folder.

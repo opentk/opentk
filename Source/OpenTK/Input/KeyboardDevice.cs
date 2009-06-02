@@ -203,8 +203,10 @@ namespace OpenTK.Input
     /// </summary>
     public enum Key : int
     {
+        None = 0,
+
         // Modifiers
-        ShiftLeft = 0,
+        ShiftLeft,
         ShiftRight,
         ControlLeft,
         ControlRight,

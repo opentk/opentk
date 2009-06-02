@@ -28,8 +28,7 @@ namespace Examples.Tests
         T GetNext<T>(T t)
         {
             if (!(t is Enum))
-                throw new ArgumentException(String.Format("Should be an Enum type (is {0}).", t.GetType().ToString()),
-                                            "t");
+                throw new ArgumentException(String.Format("Should be an Enum type (is {0}).", t.GetType().ToString()), "t");
             
             string[] names = Enum.GetNames(t.GetType());
             T[] values = (T[])Enum.GetValues(t.GetType());
@@ -45,8 +44,7 @@ namespace Examples.Tests
         T GetPrevious<T>(T t)
         {
             if (!(t is Enum))
-                throw new ArgumentException(String.Format("Should be an Enum type (is {0}).", t.GetType().ToString()),
-                                            "t");
+                throw new ArgumentException(String.Format("Should be an Enum type (is {0}).", t.GetType().ToString()), "t");
                      
             string[] names = Enum.GetNames(t.GetType());
             T[] values = (T[])Enum.GetValues(t.GetType());
@@ -111,12 +109,12 @@ namespace Examples.Tests
             }
         }
 
-        protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
+        protected override void OnResize(EventArgs e)
         {
             GL.Viewport(0, 0, Width, Height);
         }
 
-        public override void OnRenderFrame(RenderFrameEventArgs e)
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
 

@@ -201,21 +201,28 @@ namespace OpenTK.Platform.X11
 
         public void MakeCurrent(IWindowInfo window)
         {
-            X11WindowInfo w = (X11WindowInfo)window;
-            bool result;
-
-            Debug.Write(String.Format("Making context {0} current on thread {1} (Display: {2}, Screen: {3}, Window: {4})... ",
-                    context, System.Threading.Thread.CurrentThread.ManagedThreadId, w.Display, w.Screen, w.WindowHandle));
-
-            if (w.Display == IntPtr.Zero || w.WindowHandle == IntPtr.Zero || context == ContextHandle.Zero)
-                throw new InvalidOperationException("Invalid display, window or context.");
-
-            result = Glx.MakeCurrent(w.Display, w.WindowHandle, context);
-
-            if (!result)
-                throw new GraphicsContextException("Failed to make context current.");
+            if (window == null)
+            {
+                Glx.MakeCurrent(currentWindow.Display, IntPtr.Zero, IntPtr.Zero);
+            }
             else
-                Debug.WriteLine("done!");
+            {
+                X11WindowInfo w = (X11WindowInfo)window;
+                bool result;
+    
+                Debug.Write(String.Format("Making context {0} current on thread {1} (Display: {2}, Screen: {3}, Window: {4})... ",
+                        context, System.Threading.Thread.CurrentThread.ManagedThreadId, w.Display, w.Screen, w.WindowHandle));
+    
+                if (w.Display == IntPtr.Zero || w.WindowHandle == IntPtr.Zero || context == ContextHandle.Zero)
+                    throw new InvalidOperationException("Invalid display, window or context.");
+    
+                result = Glx.MakeCurrent(w.Display, w.WindowHandle, context);
+    
+                if (!result)
+                    throw new GraphicsContextException("Failed to make context current.");
+                else
+                    Debug.WriteLine("done!");
+            }
         }
 
         #endregion
@@ -366,24 +373,20 @@ namespace OpenTK.Platform.X11
         {
             if (!disposed)
             {
-                // Clean unmanaged resources:
-                try
-                {
-                    Functions.XLockDisplay(currentWindow.Display);
-                    Glx.MakeCurrent(currentWindow.Display, IntPtr.Zero, IntPtr.Zero);
-                    Glx.DestroyContext(currentWindow.Display, context);
-                    //Functions.XFree(visual);
-                }
-                finally
-                {
-                    Functions.XUnlockDisplay(currentWindow.Display);               
-                }
-
                 if (manuallyCalled)
                 {
+                    if (GraphicsContext.CurrentContext != null && 
+                        ((IGraphicsContextInternal)GraphicsContext.CurrentContext).Context == context)
+                        GraphicsContext.CurrentContext.MakeCurrent(null);
+                    
+                    Glx.DestroyContext(currentWindow.Display, context);
                 }
+                else
+                {
+                    Debug.Print("[Warning] {0} leaked.", this.GetType().Name);
+                }
+                disposed = true;
             }
-            disposed = true;
         }
 
         ~X11GLContext()
