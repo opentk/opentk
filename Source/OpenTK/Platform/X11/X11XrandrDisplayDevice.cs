@@ -38,6 +38,7 @@ namespace OpenTK.Platform.X11
             // Get available resolutions. Then, for each resolution get all
             // available rates.
             // TODO: Global X11 lock.
+            // TODO: Use xinerama to get the bounds of each monitor.
             for (int screen = 0; screen < API.ScreenCount; screen++)
             {
                 IntPtr timestamp_of_last_update;
@@ -63,11 +64,11 @@ namespace OpenTK.Platform.X11
                     {
                         if (rate != 0)
                             foreach (int depth in depths)
-                                available_res.Add(new DisplayResolution(size.Width, size.Height, depth, (float)rate));
+                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate));
                     }
                     // Keep the index of this resolution - we will need it for resolution changes later.
                     foreach (int depth in depths)
-                        screenResolutionToIndex[screen].Add(new DisplayResolution(size.Width, size.Height, depth, 0),
+                        screenResolutionToIndex[screen].Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, 0),
                             resolution_count);
                     
                     ++resolution_count;
@@ -84,8 +85,10 @@ namespace OpenTK.Platform.X11
                 int current_resolution_index = Functions.XRRConfigCurrentConfiguration(screen_config, out current_rotation);
                 
                 DisplayDevice current_device = new DisplayDevice(
-                    new DisplayResolution(available_res[current_resolution_index].Width, available_res[current_resolution_index].Height,
-                                          current_depth, current_refresh_rate),
+                    new DisplayResolution(
+                        0, 0,
+                        available_res[current_resolution_index].Width, available_res[current_resolution_index].Height,
+                        current_depth, current_refresh_rate),
                     screen == Functions.XDefaultScreen(API.DefaultDisplay),
                     available_res);
 
@@ -162,7 +165,7 @@ namespace OpenTK.Platform.X11
             int new_resolution_index;
             if (resolution != null)
                 new_resolution_index = screenResolutionToIndex[screen]
-                    [new DisplayResolution(resolution.Width, resolution.Height, resolution.BitsPerPixel, 0)];
+                    [new DisplayResolution(0, 0, resolution.Width, resolution.Height, resolution.BitsPerPixel, 0)];
             else
                 new_resolution_index = deviceToDefaultResolution[device];
 

@@ -307,10 +307,14 @@ namespace OpenTK
 
         #endregion
 
+        #region --- Internal Members ---
+
         internal GraphicsMode ToGraphicsMode()
         {
             return new GraphicsMode(this.Color.BitsPerPixel, this.DepthBits, this.StencilBits, 0, this.AuxBits, this.Buffers, this.Stereo);
         }
+
+        #endregion
 
         #region --- Overrides ---
 

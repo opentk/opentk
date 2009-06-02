@@ -84,13 +84,13 @@ namespace Examples.Tutorial
         /// <remarks>
         /// You want the OpenGL viewport to match the window. This is the place to do it!
         /// </remarks>
-        protected override void OnResize(OpenTK.Platform.ResizeEventArgs e)
+        protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
 
             GL.Viewport(0, 0, Width, Height);
 
-            double ratio = e.Width / (double)e.Height;
+            double ratio = Width / (double)Height;
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
@@ -108,7 +108,7 @@ namespace Examples.Tutorial
         /// Place your control logic here. This is the place to respond to user input,
         /// update object positions etc.
         /// </remarks>
-        public override void OnUpdateFrame(UpdateFrameEventArgs e)
+        protected override void OnUpdateFrame(FrameEventArgs e)
         {
             // Escape quits.
             if (Keyboard[Key.Escape])
@@ -143,7 +143,7 @@ namespace Examples.Tutorial
         /// <summary>
         /// Place your rendering code here.
         /// </summary>
-        public override void OnRenderFrame(RenderFrameEventArgs e)
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -155,7 +155,7 @@ namespace Examples.Tutorial
                 0.0, 1.0, 0.0
             );
 
-            angle += rotation_speed * (float)e.ScaleFactor;
+            angle += rotation_speed * (float)e.Time;
 
             if (angle >= 360.0f)
                 angle -= 360.0f;

@@ -26,12 +26,10 @@ namespace OpenTK.Platform.Windows
     /// </summary>
     internal sealed class WinGLContext : IGraphicsContext, IGraphicsContextInternal//, IGLContextCreationHack
     {
-        WinWindowInfo currentWindow;
         ContextHandle renderContext;
         static IntPtr opengl32Handle;
         static bool wgl_loaded;
         const string opengl32Name = "OPENGL32.DLL";
-        //WinWindowInfo windowInfo = new WinWindowInfo();
 
         GraphicsMode format;
         //DisplayMode mode = null;
@@ -54,18 +52,17 @@ namespace OpenTK.Platform.Windows
             }
         }
 
-        public WinGLContext(GraphicsMode format, IWindowInfo window, IGraphicsContext sharedContext,
+        public WinGLContext(GraphicsMode format, WinWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
         {
             if (window == null)
                 throw new ArgumentNullException("window", "Must point to a valid window.");
-            currentWindow = (WinWindowInfo)window;
-            if (currentWindow.WindowHandle == IntPtr.Zero)
+            if (window.WindowHandle == IntPtr.Zero)
                 throw new ArgumentException("window", "Must be a valid window.");
 
             this.format = format;
 
-            Debug.Print("OpenGL will be bound to handle: {0}", currentWindow.WindowHandle);
+            Debug.Print("OpenGL will be bound to handle: {0}", window.WindowHandle);
             Debug.Write("Setting pixel format... ");
             this.SetGraphicsModePFD(format, (WinWindowInfo)window);
 
@@ -75,8 +72,8 @@ namespace OpenTK.Platform.Windows
                 // We cannot rely on OpenTK.Platform.Wgl until we create the context and call Wgl.LoadAll().
                 Debug.Print("Creating temporary context for wgl extensions.");
 
-                ContextHandle temp_context = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
-                Wgl.Imports.MakeCurrent(currentWindow.DeviceContext, temp_context.Handle);
+                ContextHandle temp_context = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
+                Wgl.Imports.MakeCurrent(window.DeviceContext, temp_context.Handle);
                 Wgl.LoadAll();
                 Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
                 Wgl.DeleteContext(temp_context.Handle);
@@ -103,7 +100,7 @@ namespace OpenTK.Platform.Windows
 
                     renderContext = new ContextHandle(
                         Wgl.Arb.CreateContextAttribs(
-                            currentWindow.DeviceContext,
+                            window.DeviceContext,
                             sharedContext != null ? (sharedContext as IGraphicsContextInternal).Context.Handle : IntPtr.Zero,
                             attributes.ToArray()));
                     if (renderContext == ContextHandle.Zero)
@@ -119,9 +116,9 @@ namespace OpenTK.Platform.Windows
             {
                 // Failed to create GL3-level context, fall back to GL2.
                 Debug.Write("Falling back to GL2... ");
-                renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
+                renderContext = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
                 if (renderContext == ContextHandle.Zero)
-                    renderContext = new ContextHandle(Wgl.Imports.CreateContext(currentWindow.DeviceContext));
+                    renderContext = new ContextHandle(Wgl.Imports.CreateContext(window.DeviceContext));
                 if (renderContext == ContextHandle.Zero)
                     throw new GraphicsContextException(
                         String.Format("Context creation failed. Wgl.CreateContext() error: {0}.",
@@ -145,7 +142,7 @@ namespace OpenTK.Platform.Windows
 
         public void SwapBuffers()
         {
-            if (!Functions.SwapBuffers(currentWindow.DeviceContext))
+            if (!Functions.SwapBuffers(Wgl.GetCurrentDC()))
                 throw new GraphicsContextException(String.Format(
                     "Failed to swap buffers for context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
         }
@@ -163,7 +160,6 @@ namespace OpenTK.Platform.Windows
                 if (((WinWindowInfo)window).WindowHandle == IntPtr.Zero)
                     throw new ArgumentException("window", "Must point to a valid window.");
                 
-                currentWindow = (WinWindowInfo)window;
                 success = Wgl.Imports.MakeCurrent(((WinWindowInfo)window).DeviceContext, this.renderContext.Handle);
             }
             else
@@ -352,9 +348,7 @@ namespace OpenTK.Platform.Windows
         {
             get
             {
-                if (currentWindow != null)
-                    return currentWindow.DeviceContext;
-                return IntPtr.Zero;
+                return Wgl.GetCurrentDC();
             }
         }
 
@@ -392,7 +386,8 @@ namespace OpenTK.Platform.Windows
                 }
                 else
                 {
-                    Debug.Print("[Warning] OpenGL context {0} leaked. Did you forget to call IGraphicsContext.Dispose()?", renderContext.Handle);
+                    Debug.Print("[Warning] OpenGL context {0} leaked. Did you forget to call IGraphicsContext.Dispose()?",
+                        renderContext.Handle);
                 }
                 disposed = true;
             }

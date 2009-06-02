@@ -12,6 +12,7 @@
 [OpenTK.Graphics.GraphicsContext]
 + FSAA support (very simple, now that GL3 support has been added.)
 + Implement GL3 support on Mac OS X.
++ Improve API for context sharing (add a sharedContext parameter to the context constructor).
 
 [OpenTK.GLControl]
 + Improve the designer interface.

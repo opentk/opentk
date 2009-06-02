@@ -51,24 +51,24 @@ namespace Examples.Tests
             hidden = new GameWindow(320, 240, GraphicsMode.Default, "OpenTK | Hidden input window");
             hidden.Load += hidden_Load;
             hidden.Unload += hidden_Unload;
-            hidden.RenderFrame += new OpenTK.RenderFrameEvent(hidden_RenderFrame);
+            hidden.RenderFrame += hidden_RenderFrame;
             hidden.Run(60.0, 0.0);
         }
 
-        void hidden_RenderFrame(GameWindow sender, RenderFrameEventArgs e)
+        void hidden_RenderFrame(object sender, FrameEventArgs e)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            sender.SwapBuffers();
+            ((GameWindow)sender).SwapBuffers();
         }
 
-        void hidden_Load(GameWindow sender, EventArgs e)
+        void hidden_Load(object sender, EventArgs e)
         {
             hidden.VSync = VSyncMode.On;
             start = true;
             GL.ClearColor(Color.Black);
         }
 
-        void hidden_Unload(GameWindow sender, EventArgs e)
+        void hidden_Unload(object sender, EventArgs e)
         {
             this.BeginInvoke(on_hidden_unload, sender, e, this);
         }

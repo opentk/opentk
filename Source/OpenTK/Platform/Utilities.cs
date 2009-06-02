@@ -217,21 +217,20 @@ namespace OpenTK.Platform
         #region --- Creating a Graphics Context ---
 
         /// <summary>
-        /// Creates a Graphics context and for a window or control.
+        /// Creates an IGraphicsContext instance for the specified window.
         /// </summary>
-        /// <param name="mode"></param>
-        ///
-        /// <param name="major">Major version number of OpenGL context to create.</param>
-        /// <param name="minor">Minor version number of OpenGL context to create.</param>
-        /// <param name="flags"></param>
-        /// <param name="context"></param>
-        /// <param name="info"></param>
-        public static Graphics.GraphicsContext CreateGraphicsContext(
-            Graphics.GraphicsMode mode, IWindowInfo info,
-            int major, int minor, OpenTK.Graphics.GraphicsContextFlags flags)
+        /// <param name="mode">The GraphicsMode for the GraphicsContext.</param>
+        /// <param name="window">An IWindowInfo instance describing the parent window for this IGraphicsContext.</param>
+        /// <param name="major">The major OpenGL version number for this IGraphicsContext.</param>
+        /// <param name="minor">The minor OpenGL version number for this IGraphicsContext.</param>
+        /// <param name="flags">A bitwise collection of GraphicsContextFlags with specific options for this IGraphicsContext.</param>
+        /// <returns>A new IGraphicsContext instance.</returns>
+        public static Graphics.IGraphicsContext CreateGraphicsContext(
+            Graphics.GraphicsMode mode, IWindowInfo window,
+            int major, int minor, Graphics.GraphicsContextFlags flags)
         {
-            Graphics.GraphicsContext context = new Graphics.GraphicsContext(mode, info, major, minor, flags);
-            context.MakeCurrent(info);
+            Graphics.GraphicsContext context = new Graphics.GraphicsContext(mode, window, major, minor, flags);
+            context.MakeCurrent(window);
 
             (context as OpenTK.Graphics.IGraphicsContextInternal).LoadAll();
 
@@ -239,29 +238,29 @@ namespace OpenTK.Platform
         }
 
         /// <summary>
-        /// Creates GraphicsContext and IWindowInfo objects for a WinForms control.
+        /// Creates an IGraphicsContext instance for the specified System.Windows.Forms.Control.
         /// </summary>
-        /// <param name="cntrl"></param>
-        /// <param name="context"></param>
-        /// <param name="info"></param>
-        /// <param name="mode"></param>
+        /// <param name="mode">The GraphicsMode for the GraphicsContext.</param>
+        /// <param name="cntrl">A System.Windows.Forms.Control.</param>
+        /// <param name="context">A new IGraphicsContext instance.</param>
+        /// <param name="info">An IWindowInfo instance for the specified cntrl.</param>
 		[Obsolete("Create the IWindowInfo object first by calling CreateWindowInfo, then use the CreateGraphicsContext overload which takes major, minor and flags parameters.")]
         public static void CreateGraphicsContext(Graphics.GraphicsMode mode, Control cntrl,
-            out Graphics.GraphicsContext context, out IWindowInfo info)
+            out Graphics.IGraphicsContext context, out IWindowInfo info)
         {
             CreateGraphicsContext(mode, cntrl.Handle, out context, out info);
         }
 
         /// <summary>
-        /// Creates GraphicsContext and IWindowInfo objects for a WinForms control.
+        /// Creates an IGraphicsContext instance for the specified System.Windows.Forms.Control.
         /// </summary>
-        /// <param name="cntrlHandle"></param>
-        /// <param name="context"></param>
-        /// <param name="info"></param>
-        /// <param name="mode"></param>
+        /// <param name="mode">The GraphicsMode for the GraphicsContext.</param>
+        /// <param name="cntrlHandle">A System.IntPtr that contains the handle for a System.Windows.Forms.Control.</param>
+        /// <param name="context">A new IGraphicsContext instance.</param>
+        /// <param name="info">An IWindowInfo instance for the specified ctrl.</param>
 		[Obsolete("Create the IWindowInfo object first by calling CreateWindowInfo, then use the CreateGraphicsContext overload which takes major, minor and flags parameters.")]
 		public static void CreateGraphicsContext(Graphics.GraphicsMode mode, IntPtr cntrlHandle,
-            out Graphics.GraphicsContext context, out IWindowInfo info)
+            out Graphics.IGraphicsContext context, out IWindowInfo info)
         {
             info = CreateWindowInfo(mode, cntrlHandle);
 

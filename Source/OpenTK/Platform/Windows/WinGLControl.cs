@@ -46,7 +46,7 @@ namespace OpenTK.Platform.Windows
 
         public GraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
         {
-            // Make sure the Control exists before creating the context.
+            // Make sure the Control exists before create the context.
             if (window_info == null)
                 window_info = new WinWindowInfo(control.Handle, null);
 
