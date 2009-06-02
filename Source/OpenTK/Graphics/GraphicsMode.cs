@@ -31,7 +31,7 @@ namespace OpenTK.Graphics
         
         static GraphicsMode()
         {
-            implementation = Platform.Factory.CreateGraphicsMode();
+            implementation = Platform.Factory.Default.CreateGraphicsMode();
         }
 
         #endregion

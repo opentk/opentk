@@ -43,7 +43,7 @@ namespace OpenTK.Graphics
 
         static GraphicsContext()
         {
-            GetCurrentContext = Factory.CreateGetCurrentGraphicsContext();
+            GetCurrentContext = Factory.Default.CreateGetCurrentGraphicsContext();
         }
         
         // Necessary to allow creation of dummy GraphicsContexts (see CreateDummyContext static method).
@@ -116,7 +116,7 @@ namespace OpenTK.Graphics
                 if (designMode)
                     implementation = new Platform.Dummy.DummyGLContext();
                 else
-                    implementation = Factory.CreateGLContext(mode, window, shareContext, DirectRendering, major, minor, flags);
+                    implementation = Factory.Default.CreateGLContext(mode, window, shareContext, DirectRendering, major, minor, flags);
 
                 lock (context_lock)
                 {
@@ -378,13 +378,13 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Makes the GraphicsContext the current rendering target.
         /// </summary>
-        /// <param name="info">A System.Platform.IWindowInfo structure for the window this context is bound to.</param>
+        /// <param name="window">A valid <see cref="OpenTK.Platform.IWindowInfo" /> structure.</param>
         /// <remarks>
         /// You can use this method to bind the GraphicsContext to a different window than the one it was created from.
         /// </remarks>
-        public void MakeCurrent(IWindowInfo info)
+        public void MakeCurrent(IWindowInfo window)
         {
-            implementation.MakeCurrent(info);
+            implementation.MakeCurrent(window);
         }
 
         /// <summary>

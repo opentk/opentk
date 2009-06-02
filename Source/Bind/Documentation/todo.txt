@@ -1,11 +1,3 @@
-OpenTK.OpenGL.Bind 0.9.4 todos:
-
-Major:
-+ Change the output of extensions from GL.BlahARB to GL.ARB.Blah
-+ Use generics instead of object overloads.
-+ Add ref overloads for arrays
-
 Minor:
-+ Clean up the reader.
-+ Add more settings to Settings.cs (the name of the files to read).
-+ Comment the code.
++ Improve inline documentation for function overloads (parameters are incorrect).
++ Clean up the code.

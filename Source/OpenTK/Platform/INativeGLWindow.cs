@@ -16,8 +16,9 @@ using System.Drawing;
 
 namespace OpenTK.Platform
 {
-    internal interface INativeGLWindow : IResizable, IDisposable
+    internal interface INativeGLWindow : IDisposable
     {
+        [Obsolete]
         void CreateWindow(int width, int height, GraphicsMode mode, int major, int minor, GraphicsContextFlags flags, out IGraphicsContext context);
         void DestroyWindow();
         void ProcessEvents();

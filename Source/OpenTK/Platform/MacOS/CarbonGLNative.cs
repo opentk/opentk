@@ -1,11 +1,29 @@
+#region License
 //
-//  
-//  xCSCarbon
+// The Open Toolkit Library License
 //
-//  Created by Erik Ylvisaker on 3/17/08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights to 
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
 //
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+// OTHER DEALINGS IN THE SOFTWARE.
+//
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -18,8 +36,10 @@ namespace OpenTK.Platform.MacOS
     using Carbon;
     using Graphics;
 
-    class CarbonGLNative : INativeGLWindow
+    class CarbonGLNative : INativeGLWindow, INativeWindow
     {
+        #region Fields
+
         CarbonWindowInfo window;
         CarbonInput mInputDriver;
         GraphicsContext context;
@@ -29,8 +49,7 @@ namespace OpenTK.Platform.MacOS
         IntPtr uppHandler;
 
         string title = "OpenTK Window";
-        short mWidth, mHeight;
-        short mWindowedWidth, mWindowedHeight;
+        System.Drawing.Rectangle bounds, windowedBounds, clientRectangle;
         bool mIsDisposed = false;
 
         WindowAttributes mWindowAttrib;
@@ -42,36 +61,48 @@ namespace OpenTK.Platform.MacOS
 
         static Dictionary<IntPtr, WeakReference> mWindows = new Dictionary<IntPtr, WeakReference>();
 
+        #endregion
+
+        #region Constructors
+
         static CarbonGLNative()
         {
             Application.Initialize();
         }
-        public CarbonGLNative()
+
+        CarbonGLNative()
             : this(WindowClass.Document,
             WindowAttributes.StandardDocument |
             WindowAttributes.StandardHandler |
             WindowAttributes.InWindowMenu |
             WindowAttributes.LiveResize)
-        {
+        { }
 
-        }
-        private CarbonGLNative(WindowClass @class, WindowAttributes attrib)
+
+        CarbonGLNative(WindowClass @class, WindowAttributes attrib)
         {
             mWindowClass = @class;
             mWindowAttrib = attrib;
-
-
         }
-        ~CarbonGLNative()
+
+        public CarbonGLNative(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            Dispose(false);
+            CreateNativeWindow(WindowClass.Document,
+                WindowAttributes.StandardDocument | WindowAttributes.StandardHandler |
+                WindowAttributes.InWindowMenu | WindowAttributes.LiveResize,
+                new Rect((short)x, (short)y, (short)width, (short)height));
         }
+
+        #endregion
+
+        #region IDisposable
 
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         protected virtual void Dispose(bool disposing)
         {
             if (mIsDisposed)
@@ -92,18 +123,25 @@ namespace OpenTK.Platform.MacOS
             DisposeUPP();
         }
 
-        private void DisposeUPP()
+        ~CarbonGLNative()
+        {
+            Dispose(false);
+        }
+
+        #endregion
+
+        #region Private Members
+
+        void DisposeUPP()
         {
             if (uppHandler != IntPtr.Zero)
             {
                 //API.RemoveEventHandler(uppHandler);
                 //API.DisposeEventHandlerUPP(uppHandler);
-
             }
 
             uppHandler = IntPtr.Zero;
         }
-
 
         void CreateNativeWindow(WindowClass @class, WindowAttributes attrib, Rect r)
         {
@@ -115,6 +153,7 @@ namespace OpenTK.Platform.MacOS
 
             window = new CarbonWindowInfo(windowRef, true, false);
 
+            SetLocation(r.X, r.Y);
             SetSize(r.Width, r.Height);
 
             Debug.Unindent();
@@ -133,6 +172,7 @@ namespace OpenTK.Platform.MacOS
 
             System.Diagnostics.Debug.Print("Attached window events.");
         }
+
         void ConnectEvents()
         {
             mInputDriver = new CarbonInput();
@@ -165,25 +205,12 @@ namespace OpenTK.Platform.MacOS
             Application.WindowEventHandler = this;
         }
 
-
-        public string Title
-        {
-            get
-            {
-                return title;
-            }
-            set
-            {
-                API.SetWindowTitle(window.WindowRef, value);
-                title = value;
-            }
-        }
-
-        public void Activate()
+        void Activate()
         {
             API.SelectWindow(window.WindowRef);
         }
-        public void Show()
+
+        void Show()
         {
             IntPtr parent = IntPtr.Zero;
 
@@ -191,27 +218,37 @@ namespace OpenTK.Platform.MacOS
             API.RepositionWindow(window.WindowRef, parent, WindowPositionMethod);
             API.SelectWindow(window.WindowRef);
         }
-        public void Hide()
+
+        void Hide()
         {
             API.HideWindow(window.WindowRef);
         }
-        public bool Visible
+
+        void SetFullscreen()
         {
-            get { return API.IsWindowVisible(window.WindowRef); }
-            set
-            {
-                if (value && Visible == false)
-                    Show();
-                else
-                    Hide();
-            }
+            windowedBounds = bounds;
+
+            ((AglContext)(context as IGraphicsContextInternal).Implementation).SetFullScreen(window);
+
+            Debug.Print("Prev Size: {0}, {1}", Width, Height);
+
+            bounds = DisplayDevice.Default.Bounds;
+
+            Debug.Print("New Size: {0}, {1}", Width, Height);
         }
-        public bool IsDisposed
+
+        void UnsetFullscreen()
+        {
+            ((AglContext)(context as IGraphicsContextInternal).Implementation).UnsetFullScreen(window);
+            SetSize((short)windowedBounds.Width, (short)windowedBounds.Height);
+        }
+
+        bool IsDisposed
         {
             get { return mIsDisposed; }
         }
 
-        public WindowPositionMethod WindowPositionMethod
+        WindowPositionMethod WindowPositionMethod
         {
             get { return mPositionMethod; }
             set { mPositionMethod = value; }
@@ -276,7 +313,6 @@ namespace OpenTK.Platform.MacOS
                 default:
                     return OSStatus.EventNotHandled;
             }
-
         }
 
         private OSStatus ProcessKeyboardEvent(IntPtr inCaller, IntPtr inEvent, EventInfo evt, IntPtr userData)
@@ -321,7 +357,7 @@ namespace OpenTK.Platform.MacOS
             {
                 case WindowEventKind.WindowClose:
                     CancelEventArgs cancel = new CancelEventArgs();
-                    OnQueryWindowClose(cancel);
+                    OnClosing(cancel);
 
                     if (cancel.Cancel)
                         return OSStatus.NoError;
@@ -329,7 +365,7 @@ namespace OpenTK.Platform.MacOS
                         return OSStatus.EventNotHandled;
 
                 case WindowEventKind.WindowClosed:
-                    OnWindowClosed();
+                    OnClosed();
 
                     return OSStatus.NoError;
 
@@ -356,7 +392,7 @@ namespace OpenTK.Platform.MacOS
             MouseButton button = MouseButton.Primary;
             HIPoint pt = new HIPoint();
 
-            OSStatus err ;
+            OSStatus err;
 
             if (this.windowState == WindowState.Fullscreen)
             {
@@ -498,31 +534,29 @@ namespace OpenTK.Platform.MacOS
             return retval;
         }
 
-        public int Width
+        void SetLocation(short x, short y)
         {
-            get { return mWidth; }
-            set { SetSize(value, mHeight); }
+            if (windowState == WindowState.Fullscreen)
+                return;
+
+            API.MoveWindow(window.WindowRef, x, y, false);
         }
-        public int Height
-        {
-            get { return mHeight; }
-            set { SetSize(mWidth, value); }
-        }
-        public void SetSize(int width, int height)
+
+        void SetSize(short width, short height)
         {
             if (WindowState == WindowState.Fullscreen)
                 return;
 
-            mWidth = (short)width;
-            mHeight = (short)height;
-
-            API.SizeWindow(window.WindowRef, mWidth, mHeight, true);
+            // Todo: why call SizeWindow twice?
+            API.SizeWindow(window.WindowRef, width, height, true);
+            bounds.Width = (short)width;
+            bounds.Height = (short)height;
 
             Rect contentBounds = API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
 
             Rect newSize = new Rect(0, 0,
-                (short)(2 * mWidth - contentBounds.Width),
-                (short)(2 * mHeight - contentBounds.Height));
+                (short)(2 * width - contentBounds.Width),
+                (short)(2 * height - contentBounds.Height));
 
             Debug.Print("Content region was: {0}", contentBounds);
             Debug.Print("Resizing window to: {0}", newSize);
@@ -531,6 +565,7 @@ namespace OpenTK.Platform.MacOS
 
             contentBounds = API.GetWindowBounds(window.WindowRef, WindowRegionCode.ContentRegion);
             Debug.Print("New content region size: {0}", contentBounds);
+            clientRectangle = contentBounds.ToRectangle();
         }
 
         protected void OnResize()
@@ -551,26 +586,22 @@ namespace OpenTK.Platform.MacOS
             if (WindowState == WindowState.Fullscreen)
                 return;
 
-            Rect region = GetRegion();
-
-            mWidth = (short)(region.Width);
-            mHeight = (short)(region.Height);
+            bounds = GetRegion().ToRectangle();
         }
 
-        protected virtual void OnQueryWindowClose(CancelEventArgs e)
+        protected virtual void OnClosing(CancelEventArgs e)
         {
-            if (QueryWindowClose != null)
-                QueryWindowClose(this, e);
+            if (Closing != null)
+                Closing(this, e);
         }
-        protected virtual void OnWindowClosed()
+
+        protected virtual void OnClosed()
         {
-            if (Destroy != null)
-                Destroy(this, EventArgs.Empty);
-
+            if (Closed != null)
+                Closed(this, EventArgs.Empty);
         }
 
-        public event CancelEventHandler QueryWindowClose;
-
+        #endregion
 
         #region INativeGLWindow Members
 
@@ -650,12 +681,6 @@ namespace OpenTK.Platform.MacOS
 
         #endregion
 
-        #region IResizable Members
-
-        public event ResizeEvent Resize;
-
-        #endregion
-
         #region INativeGLWindow Members
 
         public WindowState WindowState
@@ -728,28 +753,6 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-
-        private void SetFullscreen()
-        {
-            ((AglContext)(context as IGraphicsContextInternal).Implementation).SetFullScreen(window);
-
-            mWindowedWidth = mWidth;
-            mWindowedHeight = mHeight;
-
-            Debug.Print("Prev Size: {0}, {1}", Width, Height);
-
-            mWidth = (short)DisplayDevice.Default.Width;
-            mHeight = (short)DisplayDevice.Default.Height;
-
-            Debug.Print("New Size: {0}, {1}", Width, Height);
-
-        }
-        private void UnsetFullscreen()
-        {
-            ((AglContext)(context as IGraphicsContextInternal).Implementation).UnsetFullScreen(window);
-            SetSize(mWindowedWidth, mWindowedHeight);
-        }
-
         public WindowBorder WindowBorder
         {
             get
@@ -775,5 +778,180 @@ namespace OpenTK.Platform.MacOS
 
         #endregion
 
+        #region INativeWindow Members
+
+        public string Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                API.SetWindowTitle(window.WindowRef, value);
+                title = value;
+            }
+        }
+
+        public bool Visible
+        {
+            get { return API.IsWindowVisible(window.WindowRef); }
+            set
+            {
+                if (value && Visible == false)
+                    Show();
+                else
+                    Hide();
+            }
+        }
+
+        public System.Drawing.Icon Icon
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool Focused
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public System.Drawing.Rectangle Bounds
+        {
+            get
+            {
+                return bounds;
+            }
+            set
+            {
+                Location = value.Location;
+                Size = value.Size;
+            }
+        }
+
+        public System.Drawing.Point Location
+        {
+            get
+            {
+                return bounds.Location;
+            }
+            set
+            {
+                SetLocation((short)value.X, (short)value.Y);
+            }
+        }
+
+        public System.Drawing.Size Size
+        {
+            get
+            {
+                return bounds.Size;
+            }
+            set
+            {
+                SetSize((short)value.Width, (short)value.Height);
+            }
+        }
+
+        public int Width
+        {
+            get { return Bounds.Width; }
+            set { Size = new System.Drawing.Size(value, Height); }
+        }
+
+        public int Height
+        {
+            get { return Bounds.Height; }
+            set { Size = new System.Drawing.Size(Width, value); }
+        }
+
+        public int X
+        {
+            get
+            {
+                return bounds.X;
+            }
+            set
+            {
+                Location = new System.Drawing.Point(value, Y);
+            }
+        }
+
+        public int Y
+        {
+            get
+            {
+                return bounds.Y;
+            }
+            set
+            {
+                Location = new System.Drawing.Point(X, value);
+            }
+        }
+
+        public System.Drawing.Rectangle ClientRectangle
+        {
+            get
+            {
+                return clientRectangle;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public System.Drawing.Size ClientSize
+        {
+            get
+            {
+                return clientRectangle.Size;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void Close()
+        {
+            throw new NotImplementedException();
+        }
+
+        public event EventHandler<EventArgs> Idle;
+
+        public event EventHandler<EventArgs> Load;
+
+        public event EventHandler<EventArgs> Unload;
+
+        public event EventHandler<EventArgs> Move;
+
+        public event EventHandler<EventArgs> Resize;
+
+        public event EventHandler<CancelEventArgs> Closing;
+
+        public event EventHandler<EventArgs> Closed;
+
+        public event EventHandler<EventArgs> Disposed;
+
+        public event EventHandler<EventArgs> IconChanged;
+
+        public event EventHandler<EventArgs> TitleChanged;
+
+        public event EventHandler<EventArgs> ClientSizeChanged;
+
+        public event EventHandler<EventArgs> VisibleChanged;
+
+        public event EventHandler<EventArgs> WindowInfoChanged;
+
+        public event EventHandler<EventArgs> FocusedChanged;
+
+        #endregion
     }
 }

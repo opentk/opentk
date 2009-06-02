@@ -38,6 +38,7 @@ To visit an issue report, type "http://www.opentk.com/node/{id}", where {id} is 
 [#870]
 
 
+
 [Known issues]
 
 Mono 2.2 and 2.4 cannot compile this release (bug report: https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0 or 2.4.2+, or use the precompiled binaries.
@@ -46,13 +47,48 @@ OpenTK.Graphics.TextPrinter fails to render text with newlines or a layout recta
 
 Example documentation may not show up correctly when running on Mono.
 
+Joystick input is not supported on MacOS at this time.
+
+OpenGL 3.0 is not supported on MacOS at this time.
+
+
 
 [API changes]
 
 Please note that binary compatibility is not preserved between beta releases.
 
-OpenTK 0.9.8 replaces several instances of the "All" and "Version*" enums with strongly-typed equivalents. This is a breaking change. If you are affected by this change, replace these enums with the ones suggested by your compiler.
 
-OpenTK 0.9.8 removes several OpenGL overloads that take arrays of a single item. This is a breaking change. If you are affected by this change, please use the 'ref' or 'out' overload for the relevant function.
+[0.9.9]
 
-OpenTK 0.9.8 removes or replaces several invalid tokens in the DrawBuffer(s) methods. This is a breaking change.
+1. GameWindow.Resize and GameWindow.OnResize have changed signatures:
+
+ResizeEventHandler Resize(object, ResizeEventArgs) -> EventHandler<EventArgs> Resize(object, EventArgs)
+OnResize(ResizeEventArgs) -> OnResize(EventArgs)
+
+Please replace all instances of "ResizeEventHandler" by "EventHandler<EventArgs> and replace "e.Width" / "e.Height" by "this.Width" and "this.Height".
+
+
+[0.9.8]
+
+1. OpenTK 0.9.8 replaces several instances of the "All" and "Version*" enums with strongly-typed equivalents. This is a breaking change. If you are affected by this change, replace these enums with the ones suggested by your compiler.
+
+The 'v' suffix has been removed from several OpenTK.Graphics.GL functions. Please search and replace any of the following functions (list non-inclusive):
+
+Uniform1v -> Uniform1
+Materialv -> Material
+Lightv    -> Light
+
+
+2. Several instances of the "Version12" enum have been replaced with strongly-typed equivalents. This is a breaking change that affects programs using the imaging subset of OpenGL 1.2.
+
+If you are affected by this change, please replace all relevant instances of "Version12" with the correct enum, as indicated by your compiler.
+
+
+3. OpenTK 0.9.8 removes several OpenGL overloads that take arrays of a single item. This is a breaking change. If you are affected by this change, please use the 'ref' or 'out' overload for the relevant function.
+
+
+[0.9.7]
+
+OpenTK 0.9.7 replaces several instances of the "All" and "Version30" enums with strongly-typed equivalents. This is a breaking change that potentially affects programs using OpenGL 3.0 functionality. If you are affected by this change, please replace the relevant instances of "All" or "Version30" with the correct enum, as reported by your IDE.
+
+OpenTK 0.9.7 also fixes the naming of several core and extension functions ending in "Instanced", "Indexed" or "Varyings". If you are affected by this change, please add the missing 'd' or 's' to the relevant functions.
