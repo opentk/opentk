@@ -184,7 +184,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the GraphicsContext that is current in the calling thread.
         /// </summary>
-        public static GraphicsContext CurrentContext
+        public static IGraphicsContext CurrentContext
         {
             get
             {
@@ -240,29 +240,14 @@ namespace OpenTK.Graphics
 
         #region --- Internal Members ---
 
-        bool inside_begin_region;
         List<ErrorCode> error_list = new List<ErrorCode>();
-
-        // Indicates that we entered a GL.Begin() - GL.End() region.
-        [Conditional("DEBUG")]
-        internal void EnterBeginRegion()
-        {
-            inside_begin_region = true;
-        }
-
-        // Indicates that we left a GL.Begin() - GL.End() region.
-        [Conditional("DEBUG")]
-        internal void ExitBeginRegion()
-        {
-            inside_begin_region = false;
-        }
 
         // Retrieve all OpenGL errors to clear the error list.
         // See http://www.opengl.org/documentation/specs/man_pages/hardcopy/GL/html/gl/geterror.html
         [Conditional("DEBUG")]
         internal void ResetErrors()
         {
-            if (check_errors && !inside_begin_region)
+            if (check_errors)
             {
                 while (GL.GetError() != ErrorCode.NoError)
                 { }
@@ -273,7 +258,7 @@ namespace OpenTK.Graphics
         [Conditional("DEBUG")]
         internal void CheckErrors()
         {
-            if (check_errors && !inside_begin_region)
+            if (check_errors)
             {
                 error_list.Clear();
                 ErrorCode error;
