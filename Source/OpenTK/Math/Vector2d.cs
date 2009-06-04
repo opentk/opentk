@@ -56,6 +56,11 @@ namespace OpenTK.Math
         public static Vector2d Zero = new Vector2d(0, 0);
 
         /// <summary>
+        /// Defines an instance with all components set to 1.
+        /// </summary>
+        public static readonly Vector2d One = new Vector2d(1, 1);
+
+        /// <summary>
         /// Defines the size of the Vector2d struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf(new Vector2d());
