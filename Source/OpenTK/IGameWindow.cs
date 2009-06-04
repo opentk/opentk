@@ -77,9 +77,4 @@ namespace OpenTK.Platform
         /// </summary>
         event EventHandler<FrameEventArgs> RenderFrame;
     }
-
-    [Obsolete] public delegate void UpdateFrameEvent(GameWindow sender, UpdateFrameEventArgs e);
-    [Obsolete] public delegate void RenderFrameEvent(GameWindow sender, RenderFrameEventArgs e);
-    [Obsolete] public delegate void LoadEvent(GameWindow sender, EventArgs e);
-    [Obsolete] public delegate void UnloadEvent(GameWindow sender, EventArgs e);
 }

@@ -99,6 +99,17 @@ namespace OpenTK.Math
             }
         }
 
+        /// <summary>
+        /// Returns an approximation of the inverse square root of left number.
+        /// </summary>
+        /// <param name="x">A number.</param>
+        /// <returns>An approximation of the inverse square root of the specified number, with an upper error bound of 0.001</returns>
+        /// <remarks>
+        /// This is an improved implementation of the the method known as Carmack's inverse square root
+        /// which is found in the Quake III source code. This implementation comes from
+        /// http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
+        /// http://www.beyond3d.com/content/articles/8/
+        /// </remarks>
         public static double InverseSqrtFast(double x)
         {
             return InverseSqrtFast((float)x);

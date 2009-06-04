@@ -25,14 +25,7 @@ namespace OpenTK.Graphics
 
         #region public DisplayResolution(int width, int height, int bitsPerPixel, float refreshRate)
 
-        /// <summary>
-        /// Creates a new DisplayResolution object for the primary DisplayDevice.
-        /// </summary>
-        /// <param name="width">The requested width in pixels.</param>
-        /// <param name="height">The requested height in pixels.</param>
-        /// <param name="bitsPerPixel">The requested bits per pixel in bits.</param>
-        /// <param name="refreshRate">The requested refresh rate in Herz.</param>
-        /// <remarks>OpenTK will select the closest match between all available resolutions on the primary DisplayDevice.</remarks>
+        // Creates a new DisplayResolution object for the primary DisplayDevice.
         internal DisplayResolution(int x, int y, int width, int height, int bitsPerPixel, float refreshRate)
         {
             // Refresh rate may be zero, since this information may not be available on some platforms.
