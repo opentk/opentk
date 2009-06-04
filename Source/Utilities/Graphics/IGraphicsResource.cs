@@ -39,7 +39,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the GraphicsContext that owns this resource.
         /// </summary>
-        GraphicsContext Context { get; }
+        IGraphicsContext Context { get; }
 
         /// <summary>
         /// Gets the Id of this IGraphicsResource.
