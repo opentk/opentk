@@ -5,7 +5,7 @@ using System.Text;
 namespace OpenTK.Platform.X11
 {
     /// <summary>Describes an X11 window.</summary>
-    public sealed class X11WindowInfo : IWindowInfo
+    internal sealed class X11WindowInfo : IWindowInfo
     {
         IntPtr handle, rootWindow, display;
         X11WindowInfo parent;
