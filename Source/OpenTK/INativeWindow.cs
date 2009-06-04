@@ -70,12 +70,12 @@ namespace OpenTK
         IWindowInfo WindowInfo { get; }
         
         /// <summary>
-        /// Gets or sets the <see cref="OpenTK.WindowState"> for this window.
+        /// Gets or sets the <see cref="OpenTK.WindowState"/> for this window.
         /// </summary>
         WindowState WindowState { get; set; }
         
         /// <summary>
-        /// Gets or sets the <see cref="OpenTK.WindowBorder"> for this window.
+        /// Gets or sets the <see cref="OpenTK.WindowBorder"/> for this window.
         /// </summary>
         WindowBorder WindowBorder { get; set; }
 
@@ -86,12 +86,12 @@ namespace OpenTK
         Rectangle Bounds { get; set; }
         
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Point"> structure that contains the location of this window on the desktop.
+        /// Gets or sets a <see cref="System.Drawing.Point"/> structure that contains the location of this window on the desktop.
         /// </summary>
         Point Location { get; set; }
         
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Size"> structure that contains the external size of this window.
+        /// Gets or sets a <see cref="System.Drawing.Size"/> structure that contains the external size of this window.
         /// </summary>
         Size Size { get; set; }
         
