@@ -465,7 +465,7 @@ namespace Bind.Structures
                 f.Body.Add("using (new ErrorHelper(GraphicsContext.CurrentContext))");
                 f.Body.Add("{");
                 if (f.TrimmedName == "Begin")
-                    f.Body.Add("GraphicsContext.CurrentContext.EnterBeginRegion();");
+                    f.Body.Add("GraphicsContext.CurrentContext.ErrorChecking = false;");
                 f.Body.Add("#endif");
             }
 
@@ -555,7 +555,7 @@ namespace Bind.Structures
             {
                 f.Body.Add("#if DEBUG");
                 if (f.TrimmedName == "End")
-                    f.Body.Add("GraphicsContext.CurrentContext.ExitBeginRegion();");
+                    f.Body.Add("GraphicsContext.CurrentContext.ErrorChecking = true;");
                 f.Body.Add("}");
                 f.Body.Add("#endif");
             }
