@@ -11,7 +11,9 @@ using System;
 
 namespace OpenTK.Audio
 {
-
+    /// <summary>
+    /// Defines available context attributes.
+    /// </summary>
     public enum AlcContextAttributes : int
     {
         ///<summary>Followed by System.Int32 Hz</summary>
@@ -33,6 +35,9 @@ namespace OpenTK.Audio
         EfxMaxAuxiliarySends = 0x20003,
     }
 
+    /// <summary>
+    /// Defines OpenAL context errors.
+    /// </summary>
     public enum AlcError : int
     {
         ///<summary>There is no current error.</summary>
@@ -54,6 +59,9 @@ namespace OpenTK.Audio
         OutOfMemory = 0xA005,
     }
 
+    /// <summary>
+    /// Defines available parameters for <see cref="OpenTK.Audio.Alc.GetString(IntPtr, AlcGetString)"/>.
+    /// </summary>
     public enum AlcGetString : int
     {
         ///<summary>The specifier string for the default device.</summary>
@@ -80,6 +88,9 @@ namespace OpenTK.Audio
         AllDevicesSpecifier = 0x1013,
     }
 
+    /// <summary>
+    /// Defines available parameters for <see cref="OpenTK.Audio.Alc.GetString(IntPtr, AlcGetStringList)"/>.
+    /// </summary>
     public enum AlcGetStringList : int
     {
         ///<summary>The name of the specified capture device, or a list of all available capture devices if no capture device is specified. ALC_EXT_CAPTURE_EXT </summary>
@@ -92,6 +103,9 @@ namespace OpenTK.Audio
         AllDevicesSpecifier = 0x1013,
     }
 
+    /// <summary>
+    /// Defines available parameters for <see cref="OpenTK.Audio.Alc.GetInteger(IntPtr, AlcGetInteger, int, out int)"/>.
+    /// </summary>
     public enum AlcGetInteger : int
     {
         ///<summary>The specification revision for this implementation (major version). NULL is an acceptable device.</summary>
