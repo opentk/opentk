@@ -252,28 +252,6 @@ namespace OpenTK
 
         #endregion
  
-        #region Obsolete
-
-        /// <summary>
-        /// Constructs a new GameWindow, and opens a render window with the specified DisplayMode.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the GameWindow.</param>
-        [Obsolete]
-        public GameWindow(DisplayMode mode)
-            : this(mode.Width, mode.Height, mode.ToGraphicsMode(), "OpenTK Game Window", mode.Fullscreen ? GameWindowFlags.Fullscreen : 0) { }
-
-        /// <summary>
-        /// Constructs a new GameWindow with the specified title, and opens a render window with the
-        /// specified DisplayMode.
-        /// </summary>
-        /// <param name="mode">The DisplayMode of the GameWindow.</param>
-        /// <param name="title">The Title of the GameWindow.</param>
-        [Obsolete]
-        public GameWindow(DisplayMode mode, string title)
-            : this(mode.Width, mode.Height, mode.ToGraphicsMode(), title, mode.Fullscreen ? GameWindowFlags.Fullscreen : 0) { }
-
-        #endregion
-
         #endregion
 
         #region --- Private Methods ---
@@ -1818,59 +1796,6 @@ namespace OpenTK
         /// VSync enabled, but automatically disabled if framerate falls below a specified limit.
         /// </summary>
         Adaptive,
-    }
-
-    #endregion
-
-    #region --- GameWindow Events ---
-
-    public delegate void UpdateFrameEvent(GameWindow sender, UpdateFrameEventArgs e);
-    public delegate void RenderFrameEvent(GameWindow sender, RenderFrameEventArgs e);
-    public delegate void LoadEvent(GameWindow sender, EventArgs e);
-    public delegate void UnloadEvent(GameWindow sender, EventArgs e);
-
-    public class UpdateFrameEventArgs : EventArgs
-    {
-        private double time;
-
-        /// <summary>
-        /// Gets the Time elapsed between frame updates, in seconds.
-        /// </summary>
-        public double Time
-        {
-            get { return time; }
-            internal set { time = value; }
-        }
-    }
-
-    public class RenderFrameEventArgs : EventArgs
-    {
-        private double time;
-        private double scale_factor;
-
-        /// <summary>
-        /// Gets the Time elapsed between frame updates, in seconds.
-        /// </summary>
-        public double Time
-        {
-            get { return time; }
-            internal set { time = value; }
-        }
-
-        public double ScaleFactor
-        {
-            get
-            {
-                return scale_factor;
-            }
-            internal set
-            {
-                if (value != 0.0 && !Double.IsNaN(value))
-                    scale_factor = value;
-                else
-                    scale_factor = 1.0;
-            }
-        }
     }
 
     #endregion

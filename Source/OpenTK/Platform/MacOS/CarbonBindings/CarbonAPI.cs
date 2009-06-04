@@ -398,7 +398,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
     #region --- Carbon API Methods ---
 
-    public partial class API
+    internal partial class API
     {
         const string carbon = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
         
