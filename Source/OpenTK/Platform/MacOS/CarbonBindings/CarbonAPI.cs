@@ -153,7 +153,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal uint EventKind;
     }
 
-    public enum EventClass : int
+    internal enum EventClass : int
     {
         /*
         kEventClassMouse            = FOUR_CHAR_CODE('mous'),
@@ -173,7 +173,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         Menu = 0x6d656e75,
         Window = 0x77696e64,
     }
-    public enum WindowEventKind : int
+    internal enum WindowEventKind : int
     {
         // window events
         WindowUpdate = 1,
@@ -195,7 +195,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         WindowClose = 72,
         WindowClosed = 73,
     }
-    public enum MouseEventKind : int
+    internal enum MouseEventKind : int
     {
         MouseDown = 1,
         MouseUp = 2,
@@ -205,14 +205,14 @@ namespace OpenTK.Platform.MacOS.Carbon
         MouseExited = 9,
         WheelMoved = 10,
     }
-    public enum MouseButton : short
+    internal enum MouseButton : short
     {
         Primary = 1,
         Secondary = 2,
         Tertiary = 3,
     }
 
-    public enum KeyboardEventKind : int
+    internal enum KeyboardEventKind : int
     {
         // raw keyboard events
         RawKeyDown = 1,
@@ -221,7 +221,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         RawKeyModifiersChanged = 4,
     }
 
-    public enum AppEventKind : int
+    internal enum AppEventKind : int
     {
         // application events
         AppActivated = 1,
@@ -270,7 +270,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         typeIEEE64BitFloatingPoint = 0x646f7562,
     }
 
-    public enum EventMouseButton : int
+    internal enum EventMouseButton : int
     {
         Primary = 0,
         Secondary = 1,
