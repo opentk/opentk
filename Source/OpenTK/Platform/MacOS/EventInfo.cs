@@ -14,7 +14,7 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS.Carbon
 {
-    public struct EventInfo
+    internal struct EventInfo
     {
         internal EventInfo(IntPtr eventRef)
         {

@@ -16,9 +16,9 @@ using System.Drawing;
 
 namespace OpenTK.Platform
 {
+    [Obsolete]
     internal interface INativeGLWindow : IDisposable
     {
-        [Obsolete]
         void CreateWindow(int width, int height, GraphicsMode mode, int major, int minor, GraphicsContextFlags flags, out IGraphicsContext context);
         void DestroyWindow();
         void ProcessEvents();
@@ -39,6 +39,8 @@ namespace OpenTK.Platform
         event DestroyEvent Destroy;
     }
 
-    public delegate void CreateEvent(object sender, EventArgs e);
-    public delegate void DestroyEvent(object sender, EventArgs e);
+    [Obsolete]
+    internal delegate void CreateEvent(object sender, EventArgs e);
+    [Obsolete]
+    internal delegate void DestroyEvent(object sender, EventArgs e);
 }

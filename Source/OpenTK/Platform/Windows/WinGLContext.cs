@@ -233,6 +233,7 @@ namespace OpenTK.Platform.Windows
             set { throw new NotImplementedException(); }
         }
 
+        [Obsolete]
         public event DestroyEvent<IGraphicsContext> Destroy;
 
         #endregion
