@@ -134,11 +134,22 @@ namespace OpenTK.Graphics
 
         #region --- Overrides ---
 
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">Another object to compare to.</param>
+        /// <returns>True if this instance is equal to obj; false otherwise.</returns>
         public override bool Equals(object obj)
         {
             return (obj is ColorFormat) ? (this == (ColorFormat)obj) : false;
         }
 
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>True if both instances are equal; false otherwise.</returns>
         public static bool operator ==(ColorFormat left, ColorFormat right)
         {
             if ((object)left == (object)null && (object)right != (object)null ||
@@ -154,11 +165,21 @@ namespace OpenTK.Graphics
                    left.Alpha == right.Alpha;
         }
 
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
+        /// <returns>True if both instances are not equal; false otherwise.</returns>
         public static bool operator !=(ColorFormat left, ColorFormat right)
         {
             return !(left == right);
         }
 
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>A System.Int32 with the hash code of this instance.</returns>
         public override int GetHashCode()
         {
             return Red ^ Green ^ Blue ^ Alpha;
