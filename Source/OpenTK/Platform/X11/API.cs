@@ -311,10 +311,10 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
-        #region Xf86VidMode public structures
+        #region Xf86VidMode internal structures
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct XF86VidModeModeLine
+        internal struct XF86VidModeModeLine
         {
             short hdisplay;   /* Number of display pixels horizontally */
             short hsyncstart; /* Horizontal sync start */
@@ -333,7 +333,7 @@ namespace OpenTK.Platform.X11
         /// Specifies an XF86 display mode.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        public struct XF86VidModeModeInfo
+        internal struct XF86VidModeModeInfo
         {
             /// <summary>
             /// Pixel clock.
@@ -401,7 +401,7 @@ namespace OpenTK.Platform.X11
 
         //Monitor information:
         [StructLayout(LayoutKind.Sequential)]
-        public struct XF86VidModeMonitor
+        internal struct XF86VidModeMonitor
         {
             [MarshalAs(UnmanagedType.LPStr)]
             string vendor;     /* Name of manufacturer */
@@ -417,14 +417,14 @@ namespace OpenTK.Platform.X11
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct XF86VidModeSyncRange
+        internal struct XF86VidModeSyncRange
         {
             float hi;         /* Top of range */
             float lo;         /* Bottom of range */
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct XF86VidModeNotifyEvent
+        internal struct XF86VidModeNotifyEvent
         {
             int type;                      /* of event */
             ulong serial;          /* # of last request processed by server */
@@ -439,7 +439,7 @@ namespace OpenTK.Platform.X11
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct XF86VidModeGamma
+        internal struct XF86VidModeGamma
         {
             float red;                     /* Red Gamma value */
             float green;                   /* Green Gamma value */
@@ -587,7 +587,7 @@ XF86VidModeGetGammaRampSize(
     #region internal class XVisualInfo
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct XVisualInfo
+    internal struct XVisualInfo
     {
         public IntPtr visual;
         public VisualID visualid;
@@ -692,7 +692,7 @@ XF86VidModeGetGammaRampSize(
         public Rectangle min_aspect, max_aspect;
         public int base_width, base_height;
         public int win_gravity;
-        public struct Rectangle
+        internal struct Rectangle
         {
             public int x;       /* numerator */
             public int y;       /* denominator */
@@ -816,7 +816,7 @@ XF86VidModeGetGammaRampSize(
 
     #region X11 Constants and Enums
 
-    public struct Constants
+    internal struct Constants
     {
         public const int QueuedAlready = 0;
         public const int QueuedAfterReading = 1;
@@ -844,7 +844,7 @@ XF86VidModeGetGammaRampSize(
         public const string XA_WIN_SUPPORTING_WM_CHECK = "_WIN_SUPPORTING_WM_CHECK";
     }
 
-    public enum WindowLayer
+    internal enum WindowLayer
     {
         Desktop    = 0,
         Below      = 2,
@@ -855,7 +855,7 @@ XF86VidModeGetGammaRampSize(
         Menu       = 12,
     }
 
-    public enum WindowState
+    internal enum WindowState
     {
         Sticky           = (1<<0), /* everyone knows sticky */
         Minimized        = (1<<1), /* ??? */
@@ -869,7 +869,7 @@ XF86VidModeGetGammaRampSize(
         ArrangeIgnore    = (1<<9),  /* ignore for auto arranging */
     }
 
-    public enum WindowHints
+    internal enum WindowHints
     {
         SkipFocus = (1<<0), /* "alt-tab" skips this win */
         SkipWinlist = (1<<1), /* not in win list */
@@ -879,7 +879,7 @@ XF86VidModeGetGammaRampSize(
         DoNotCover = (1<<5),  /* attempt to not cover this window */
     }
 
-    public enum ErrorCodes : int
+    internal enum ErrorCodes : int
     {
         Success = 0,
         BadRequest = 1,
@@ -902,7 +902,7 @@ XF86VidModeGetGammaRampSize(
     }
 
     [Flags]
-    public enum CreateWindowMask : long//: ulong
+    internal enum CreateWindowMask : long//: ulong
     {
         CWBackPixmap    = (1L<<0),
         CWBackPixel     = (1L<<1),
@@ -934,7 +934,7 @@ XF86VidModeGetGammaRampSize(
     /// Defines LATIN-1 and miscellaneous keys.
     /// </summary>
     [CLSCompliant(false)]
-    public enum XKey
+    internal enum XKey
     {
         /*
          * TTY function keys, cleverly chosen to map to ASCII, for convenience of
@@ -1254,7 +1254,7 @@ XF86VidModeGetGammaRampSize(
 
     #endregion
 
-    public enum XVisualClass : int
+    internal enum XVisualClass : int
     {
         StaticGray = 0,
         GrayScale = 1,
@@ -1265,7 +1265,7 @@ XF86VidModeGetGammaRampSize(
     }
 
     [Flags]
-    public enum XVisualInfoMask
+    internal enum XVisualInfoMask
     {
         No = 0x0,
         ID = 0x1,
@@ -1280,9 +1280,9 @@ XF86VidModeGetGammaRampSize(
         All = 0x1FF,
     }
 
-    #region public enum MouseMask
+    #region internal enum MouseMask
 
-    public enum MouseMask
+    internal enum MouseMask
     {
         Button1MotionMask = (1 << 8),
         Button2MotionMask = (1 << 9),
@@ -1566,7 +1566,7 @@ XF86VidModeGetGammaRampSize(
     }
     /*
     [StructLayout(LayoutKind.Sequential)]
-    public struct Keymap
+    internal struct Keymap
     {
         unsafe fixed byte bits[32];
 
