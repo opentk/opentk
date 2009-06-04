@@ -86,17 +86,6 @@ namespace OpenTK
             this.CreateControl();
         }
 
-        #region Obsolete
-
-        /// <summary>This method is obsolete and will be removed in future versions.</summary>
-        /// <param name="mode">Obsolete.</param>v
-        [Obsolete]
-        public GLControl(DisplayMode mode)
-            : this(mode.ToGraphicsMode())
-        { }
-
-        #endregion
-
         #endregion
 
         #region --- Protected Methods ---

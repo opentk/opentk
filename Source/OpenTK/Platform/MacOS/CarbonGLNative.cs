@@ -577,7 +577,7 @@ namespace OpenTK.Platform.MacOS
 
             if (Resize != null)
             {
-                Resize(this, new ResizeEventArgs(Width, Height));
+                Resize(this, EventArgs.Empty);
             }
         }
 
