@@ -10,6 +10,7 @@ using System.Text;
 
 namespace OpenTK.Platform
 {
+    [Obsolete]
     public interface IResizable
     {
         int Height { get; set; }
@@ -23,8 +24,10 @@ namespace OpenTK.Platform
         event ResizeEvent Resize;
     }
 
+    [Obsolete]
     public delegate void ResizeEvent(object sender, ResizeEventArgs e);
-    
+
+    [Obsolete]
     public class ResizeEventArgs : EventArgs
     {
         public int Width, Height;
