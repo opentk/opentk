@@ -81,6 +81,11 @@ namespace OpenTK.Math
         public static Vector4d Zero = new Vector4d(0, 0, 0, 0);
 
         /// <summary>
+        /// Defines an instance with all components set to 1.
+        /// </summary>
+        public static readonly Vector4d One = new Vector4d(1, 1, 1, 1);
+
+        /// <summary>
         /// Defines the size of the Vector4d struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf(new Vector4d());
