@@ -57,8 +57,11 @@ namespace OpenTK.Graphics
 
         /// <summary>
         /// Gets or sets a System.Boolean, indicating whether automatic error checking should be performed.
-        /// Influences the debug version of OpenTK.dll, only.
         /// </summary>
+        /// <remarks>
+        /// <para>It is an error to enable error checking inside a Begin()-End() region.</para>
+        /// <para>This method only affects the debug version of OpenTK.dll.</para>
+        /// </remarks>
         bool ErrorChecking { get; set; }
     }
 
