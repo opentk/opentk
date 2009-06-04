@@ -265,6 +265,7 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        [Obsolete]
         public event DestroyEvent<IGraphicsContext> Destroy;
 
         #region public IntPtr GetAddress(string function)
@@ -291,11 +292,13 @@ namespace OpenTK.Platform.X11
 
         #endregion
 
+        [Obsolete]
         public void RegisterForDisposal(IDisposable resource)
         {
             throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");
         }
 
+        [Obsolete]
         public void DisposeResources()
         {
             throw new NotSupportedException("Use OpenTK.GraphicsContext instead.");

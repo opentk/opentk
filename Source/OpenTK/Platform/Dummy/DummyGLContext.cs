@@ -56,14 +56,18 @@ namespace OpenTK.Platform.Dummy
         public void MakeCurrent(IWindowInfo info) { }
         public bool IsCurrent { get { return true; } set { } }
 
+        [Obsolete]
         public event DestroyEvent<IGraphicsContext> Destroy;
+        [Obsolete]
         void OnDestroy() { if (Destroy != null) Destroy(this, EventArgs.Empty); }
 
+        [Obsolete]
         public void RegisterForDisposal(IDisposable resource)
         {
             throw new NotImplementedException("Use the general GraphicsContext class instead.");
         }
 
+        [Obsolete]
         public void DisposeResources()
         {
             throw new NotImplementedException("Use the general GraphicsContext class instead.");

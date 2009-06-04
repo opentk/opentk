@@ -712,13 +712,13 @@ namespace OpenTK.Platform.X11
         public IntPtr nitems;
     }
 
-    public enum XWindowClass
+    internal enum XWindowClass
     {
         InputOutput = 1,
         InputOnly = 2
     }
 
-    public enum XEventName
+    internal enum XEventName
     {
         KeyPress = 2,
         KeyRelease = 3,
@@ -758,7 +758,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    public enum SetWindowValuemask
+    internal enum SetWindowValuemask
     {
         Nothing = 0,
         BackPixmap = 1,
@@ -778,7 +778,7 @@ namespace OpenTK.Platform.X11
         Cursor = 16384
     }
 
-    public enum CreateWindowArgs
+    internal enum CreateWindowArgs
     {
         CopyFromParent = 0,
         ParentRelative = 1,
@@ -786,7 +786,7 @@ namespace OpenTK.Platform.X11
         InputOnly = 2
     }
 
-    public enum Gravity
+    internal enum Gravity
     {
         ForgetGravity = 0,
         NorthWestGravity = 1,
@@ -802,7 +802,7 @@ namespace OpenTK.Platform.X11
     }
 
     [CLSCompliant(false)]
-    public enum XKeySym : uint
+    internal enum XKeySym : uint
     {
         XK_BackSpace = 0xFF08,
         XK_Tab = 0xFF09,
@@ -835,7 +835,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    public enum EventMask
+    internal enum EventMask
     {
         NoEventMask = 0,
         KeyPressMask = 1 << 0,
@@ -865,7 +865,7 @@ namespace OpenTK.Platform.X11
         OwnerGrabButtonMask = 1 << 24
     }
 
-    public enum GrabMode
+    internal enum GrabMode
     {
         GrabModeSync = 0,
         GrabModeAsync = 1
@@ -897,7 +897,7 @@ namespace OpenTK.Platform.X11
         public byte pad;
     }
 
-    public enum Atom
+    internal enum Atom
     {
         AnyPropertyType = 0,
         XA_PRIMARY = 1,
@@ -998,7 +998,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    public enum ChangeWindowAttributes
+    internal enum ChangeWindowAttributes
     {
         X = 1 << 0,
         Y = 1 << 1,
@@ -1025,7 +1025,7 @@ namespace OpenTK.Platform.X11
         OverrideRedirect = 1<<9,
     }
 
-    public enum StackMode
+    internal enum StackMode
     {
         Above = 0,
         Below = 1,
@@ -1047,21 +1047,21 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    public enum ColorFlags
+    internal enum ColorFlags
     {
         DoRed = 1 << 0,
         DoGreen = 1 << 1,
         DoBlue = 1 << 2
     }
 
-    public enum NotifyMode
+    internal enum NotifyMode
     {
         NotifyNormal = 0,
         NotifyGrab = 1,
         NotifyUngrab = 2
     }
 
-    public enum NotifyDetail
+    internal enum NotifyDetail
     {
         NotifyAncestor = 0,
         NotifyVirtual = 1,
@@ -1074,7 +1074,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    public enum KeyMasks
+    internal enum KeyMasks
     {
         ShiftMask = (1 << 0),
         LockMask = (1 << 1),
@@ -1095,7 +1095,7 @@ namespace OpenTK.Platform.X11
         public IntPtr modifiermap;
     }
 
-    public enum PropertyMode
+    internal enum PropertyMode
     {
         Replace = 0,
         Prepend = 1,
@@ -1124,7 +1124,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    public enum GCFunction
+    internal enum GCFunction
     {
         GCFunction = 1 << 0,
         GCPlaneMask = 1 << 1,
@@ -1151,21 +1151,21 @@ namespace OpenTK.Platform.X11
         GCArcMode = 1 << 22
     }
 
-    public enum GCJoinStyle
+    internal enum GCJoinStyle
     {
         JoinMiter = 0,
         JoinRound = 1,
         JoinBevel = 2
     }
 
-    public enum GCLineStyle
+    internal enum GCLineStyle
     {
         LineSolid = 0,
         LineOnOffDash = 1,
         LineDoubleDash = 2
     }
 
-    public enum GCCapStyle
+    internal enum GCCapStyle
     {
         CapNotLast = 0,
         CapButt = 1,
@@ -1173,7 +1173,7 @@ namespace OpenTK.Platform.X11
         CapProjecting = 3
     }
 
-    public enum GCFillStyle
+    internal enum GCFillStyle
     {
         FillSolid = 0,
         FillTiled = 1,
@@ -1181,19 +1181,19 @@ namespace OpenTK.Platform.X11
         FillOpaqueStppled = 3
     }
 
-    public enum GCFillRule
+    internal enum GCFillRule
     {
         EvenOddRule = 0,
         WindingRule = 1
     }
 
-    public enum GCArcMode
+    internal enum GCArcMode
     {
         ArcChord = 0,
         ArcPieSlice = 1
     }
 
-    public enum GCSubwindowMode
+    internal enum GCSubwindowMode
     {
         ClipByChildren = 0,
         IncludeInferiors = 1
@@ -1227,7 +1227,7 @@ namespace OpenTK.Platform.X11
         public byte dashes;
     }
 
-    public enum GXFunction
+    internal enum GXFunction
     {
         GXclear = 0x0,		/* 0 */
         GXand = 0x1,		/* src AND dst */
@@ -1247,28 +1247,28 @@ namespace OpenTK.Platform.X11
         GXset = 0xf		/* 1 */
     }
 
-    public enum NetWindowManagerState
+    internal enum NetWindowManagerState
     {
         Remove = 0,
         Add = 1,
         Toggle = 2
     }
 
-    public enum RevertTo
+    internal enum RevertTo
     {
         None = 0,
         PointerRoot = 1,
         Parent = 2
     }
 
-    public enum MapState
+    internal enum MapState
     {
         IsUnmapped = 0,
         IsUnviewable = 1,
         IsViewable = 2
     }
 
-    public enum CursorFontShape
+    internal enum CursorFontShape
     {
         XC_X_cursor = 0,
         XC_arrow = 2,
@@ -1356,7 +1356,7 @@ namespace OpenTK.Platform.X11
         XC_num_glyphs = 154
     }
 
-    public enum SystrayRequest
+    internal enum SystrayRequest
     {
         SYSTEM_TRAY_REQUEST_DOCK = 0,
         SYSTEM_TRAY_BEGIN_MESSAGE = 1,
@@ -1364,7 +1364,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    public enum XSizeHintsFlags
+    internal enum XSizeHintsFlags
     {
         USPosition = (1 << 0),
         USSize = (1 << 1),
@@ -1403,7 +1403,7 @@ namespace OpenTK.Platform.X11
     }
 
     [Flags]
-    public enum XWMHintsFlags
+    internal enum XWMHintsFlags
     {
         InputHint = (1 << 0),
         StateHint = (1 << 1),
@@ -1415,7 +1415,7 @@ namespace OpenTK.Platform.X11
         AllHints = (InputHint | StateHint | IconPixmapHint | IconWindowHint | IconPositionHint | IconMaskHint | WindowGroupHint)
     }
 
-    public enum XInitialState
+    internal enum XInitialState
     {
         DontCareState = 0,
         NormalState = 1,

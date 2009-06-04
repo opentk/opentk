@@ -12,7 +12,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
     }
 
-    public static class CG
+    internal static class CG
     {
         const string appServices = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
 
