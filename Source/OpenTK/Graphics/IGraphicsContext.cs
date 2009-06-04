@@ -65,6 +65,7 @@ namespace OpenTK.Graphics
         bool ErrorChecking { get; set; }
     }
 
+    [Obsolete]
     public delegate void DestroyEvent<T>(T sender, EventArgs e);
 
     // Functions for internal use by OpenTK.
@@ -75,36 +76,20 @@ namespace OpenTK.Graphics
     /// </summary>
     public interface IGraphicsContextInternal
     {
+        /// <summary>
+        /// Gets the internal implementation of the current instance.
+        /// </summary>
         IGraphicsContext Implementation { get; }
 
-        ///// <summary>
-        ///// Creates an OpenGL context with the specified direct/indirect rendering mode and sharing state with the
-        ///// specified IGraphicsContext.
-        ///// </summary>
-        ///// <param name="direct">Set to true for direct rendering or false otherwise.</param>
-        ///// <param name="source">The source IGraphicsContext to share state from.</param>.
-        ///// <seealso cref="CreateContext(bool)"/>
-        //void CreateContext(bool direct, IGraphicsContext source);
-
-        /// <summary>Prepares the entry points for OpenGL.</summary>
+        /// <summary>
+        /// Prepares the entry points for OpenGL.
+        /// </summary>
         void LoadAll();
 
         /// <summary>
         /// Gets a handle to the OpenGL rendering context.
         /// </summary>
         ContextHandle Context { get; }
-
-        // <summary>
-        // Gets the IWindowInfo describing the window associated with this context.
-        // </summary>
-        //IWindowInfo Info { get; }
-
-        ///// <summary>
-        ///// Gets a System.IntPtr containing the handle to the OpenGL context which is current in the
-        ///// calling thread, or IntPtr.Zero if no OpenGL context is current.
-        ///// </summary>
-        ///// <returns>A System.IntPtr that holds the handle to the current OpenGL context.</returns>
-        //ContextHandle GetCurrentContext();
 
         /// <summary>
         /// Registers an OpenGL resource for disposal.
@@ -116,11 +101,13 @@ namespace OpenTK.Graphics
         /// a resource for disposal during the finalizer call, and call DisposeResources()
         /// from the main thread to dispose it.
         /// </remarks>
+        [Obsolete]
         void RegisterForDisposal(IDisposable resource);
 
         /// <summary>
         /// Disposes all registered OpenGL resources.
         /// </summary>
+        [Obsolete]
         void DisposeResources();
 
         /// <summary>
@@ -131,7 +118,6 @@ namespace OpenTK.Graphics
         /// A pointer to the specified function or IntPtr.Zero if the function isn't
         /// available in the current opengl context.
         /// </returns>
-        // /// <see cref="Marshal.GetDelegateForFunctionPointer"/>
         IntPtr GetAddress(string function);
     }
 }

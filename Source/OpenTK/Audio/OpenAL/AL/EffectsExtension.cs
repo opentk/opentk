@@ -15,9 +15,11 @@ using OpenTK.Math;
 
 namespace OpenTK.Audio
 {
+    /// <summary>
+    /// Provides access to the OpenAL effects extension.
+    /// </summary>
     public partial class EffectsExtension
     {
-
         #region Helpers
 
         #region BindEffect

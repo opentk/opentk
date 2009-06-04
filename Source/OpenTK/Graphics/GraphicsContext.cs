@@ -384,6 +384,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Raised when a Context is destroyed.
         /// </summary>
+        [Obsolete]
         public event DestroyEvent<IGraphicsContext> Destroy
         {
             add { implementation.Destroy += value; }
