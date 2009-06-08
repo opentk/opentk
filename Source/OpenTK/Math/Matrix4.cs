@@ -382,6 +382,7 @@ namespace OpenTK.Math
             result.M41 = -(right + left) * invRL;
             result.M42 = -(top + bottom) * invTB;
             result.M43 = -(zFar + zNear) * invFN;
+            result.M44 = 1;
         }
 
         /// <summary>
