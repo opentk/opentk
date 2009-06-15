@@ -17,6 +17,7 @@ using OpenTK.Math;
 
 namespace OpenTK.Graphics
 {
+    [Obsolete("Use OpenTK math functions instead.")]
     public static partial class Glu
     {
         private const string Library = "glu32.dll";
