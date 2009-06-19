@@ -205,6 +205,9 @@ namespace OpenTK.Graphics.Text
         public void Clear()
         {
             Cache.Clear();
+			foreach (int display_list in block_cache.Keys)
+				GL.DeleteLists(display_list, 1);
+			block_cache.Clear();
         }
 
         #endregion
