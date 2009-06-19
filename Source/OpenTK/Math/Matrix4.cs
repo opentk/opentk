@@ -649,7 +649,7 @@ namespace OpenTK.Math
         public static Matrix4 Mult(Matrix4 left, Matrix4 right)
         {
             Matrix4 result;
-			Matrix4.Mult(ref left, ref right, out result);
+			Mult(ref left, ref right, out result);
 			return result;
         }
 
