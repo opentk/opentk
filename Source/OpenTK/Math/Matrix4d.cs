@@ -672,36 +672,43 @@ namespace OpenTK.Math
         #region Multiply Functions
 
         /// <summary>
-        /// Post multiply this matrix by another matrix
+        /// Multiplies two instances.
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication</returns>
         public static Matrix4d Mult(Matrix4d left, Matrix4d right)
         {
-            Vector4d  col0 = right.Column0;
-            Vector4d  col1 = right.Column1;
-            Vector4d  col2 = right.Column2;
-            Vector4d  col3 = right.Column3;
-
-            left.Row0 = new Vector4d (Vector4d .Dot(left.Row0, col0), Vector4d .Dot(left.Row0, col1), Vector4d .Dot(left.Row0, col2), Vector4d .Dot(left.Row0, col3));
-            left.Row1 = new Vector4d (Vector4d .Dot(left.Row1, col0), Vector4d .Dot(left.Row1, col1), Vector4d .Dot(left.Row1, col2), Vector4d .Dot(left.Row1, col3));
-            left.Row2 = new Vector4d (Vector4d .Dot(left.Row2, col0), Vector4d .Dot(left.Row2, col1), Vector4d .Dot(left.Row2, col2), Vector4d .Dot(left.Row2, col3));
-            left.Row3 = new Vector4d (Vector4d .Dot(left.Row3, col0), Vector4d .Dot(left.Row3, col1), Vector4d .Dot(left.Row3, col2), Vector4d .Dot(left.Row3, col3));
-            return left;
+            Matrix4d result;
+			Mult(ref left, ref right, out result);
+			return result;
         }
 
+		/// <summary>
+		/// Multiplies two instances.
+		/// </summary>
+        /// <param name="left">The left operand of the multiplication.</param>
+        /// <param name="right">The right operand of the multiplication.</param>
+        /// <param name="result">A new instance that is the result of the multiplication</param>
         public static void Mult(ref Matrix4d left, ref Matrix4d right, out Matrix4d result)
         {
-            Vector4d  col0 = right.Column0;
-            Vector4d  col1 = right.Column1;
-            Vector4d  col2 = right.Column2;
-            Vector4d  col3 = right.Column3;
-
-            result.Row0 = new Vector4d (Vector4d .Dot(left.Row0, col0), Vector4d .Dot(left.Row0, col1), Vector4d .Dot(left.Row0, col2), Vector4d .Dot(left.Row0, col3));
-            result.Row1 = new Vector4d (Vector4d .Dot(left.Row1, col0), Vector4d .Dot(left.Row1, col1), Vector4d .Dot(left.Row1, col2), Vector4d .Dot(left.Row1, col3));
-            result.Row2 = new Vector4d (Vector4d .Dot(left.Row2, col0), Vector4d .Dot(left.Row2, col1), Vector4d .Dot(left.Row2, col2), Vector4d .Dot(left.Row2, col3));
-            result.Row3 = new Vector4d (Vector4d .Dot(left.Row3, col0), Vector4d .Dot(left.Row3, col1), Vector4d .Dot(left.Row3, col2), Vector4d .Dot(left.Row3, col3));
+			result = new Matrix4d();
+			result.M11 = left.M11 * right.M11 + left.M12 * right.M21 + left.M13 * right.M31 + left.M14 * right.M41;
+			result.M12 = left.M11 * right.M12 + left.M12 * right.M22 + left.M13 * right.M32 + left.M14 * right.M42;
+			result.M13 = left.M11 * right.M13 + left.M12 * right.M23 + left.M13 * right.M33 + left.M14 * right.M43;
+			result.M14 = left.M11 * right.M14 + left.M12 * right.M24 + left.M13 * right.M34 + left.M14 * right.M44;
+			result.M21 = left.M21 * right.M11 + left.M22 * right.M21 + left.M23 * right.M31 + left.M24 * right.M41;
+			result.M22 = left.M21 * right.M12 + left.M22 * right.M22 + left.M23 * right.M32 + left.M24 * right.M42;
+			result.M23 = left.M21 * right.M13 + left.M22 * right.M23 + left.M23 * right.M33 + left.M24 * right.M43;
+			result.M24 = left.M21 * right.M14 + left.M22 * right.M24 + left.M23 * right.M34 + left.M24 * right.M44;
+			result.M31 = left.M31 * right.M11 + left.M32 * right.M21 + left.M33 * right.M31 + left.M34 * right.M41;
+			result.M32 = left.M31 * right.M12 + left.M32 * right.M22 + left.M33 * right.M32 + left.M34 * right.M42;
+			result.M33 = left.M31 * right.M13 + left.M32 * right.M23 + left.M33 * right.M33 + left.M34 * right.M43;
+			result.M34 = left.M31 * right.M14 + left.M32 * right.M24 + left.M33 * right.M34 + left.M34 * right.M44;
+			result.M41 = left.M41 * right.M11 + left.M42 * right.M21 + left.M43 * right.M31 + left.M44 * right.M41;
+			result.M42 = left.M41 * right.M12 + left.M42 * right.M22 + left.M43 * right.M32 + left.M44 * right.M42;
+			result.M43 = left.M41 * right.M13 + left.M42 * right.M23 + left.M43 * right.M33 + left.M44 * right.M43;
+			result.M44 = left.M41 * right.M14 + left.M42 * right.M24 + left.M43 * right.M34 + left.M44 * right.M44;
         }
 
         #endregion
