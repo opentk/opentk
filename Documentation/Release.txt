@@ -1,55 +1,35 @@
-The Open Toolkit 0.9.8 Beta
+The Open Toolkit 0.9.8-1 Beta
 Sunday, 31 May 2009
 
 
 [Overview]
 
-This release introduces:
-* Full OpenGL 3.1 support
-* New example browser with source code and documentation display.
-* Minor cleanups to the OpenGL API
-* Improved stability
-* Significantly improved TextPrinter performance
-* OpenGLErrorExceptions thrown on OpenGL errors (debug builds only)
-* A large number of bug fixes. Refer to the [Resolved issues] sections.
+This release fixes issues identified in OpenTK 0.9.8:
+* GL.GetBoolea is renamed to GL.GetBoolean
+* TextPrinter.Clear() no longer results in text corruption.
+* Matrix4.Mult() performance is increased.
 
 Please visit http://www.opentk.com to report issues or request features.
 
 
-[Resolved issues]
-
-To visit an issue report, type "http://www.opentk.com/node/{id}", where {id} is the issue number. For example, http://www.opentk.com/node/749
-
-[#749]
-[#772]
-[#774]
-[#776]
-[#779]
-[#792]
-[#794]
-[#810]
-[#827]
-[#830]
-[#834]
-[#841]
-[#844]
-[#847]
-[#851]
-[#870]
-
-
 [Known issues]
 
-Mono 2.2 and 2.4 cannot compile this release (bug report: https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0 or 2.4.2+, or use the precompiled binaries.
+Mono 2.2 and 2.4 fail to compile this release (bug report: https://bugzilla.novell.com/show_bug.cgi?id=488960). Please compile with Mono 2.0 or 2.4.2+, or use the precompiled binaries.
 
 OpenTK.Graphics.TextPrinter fails to render text with newlines or a layout rectangle on Mono. This is a Mono GDI+ bug.
 
-Example documentation may not show up correctly when running on Mono.
+Example documentation may not show up correctly when running on Mono. This is a Mono issue with RTF parsing.
 
 
 [API changes]
 
 Please note that binary compatibility is not preserved between beta releases.
+
+[0.9.8-1]
+
+This release renames GL.GetBoolea to the correct GL.GetBoolean.
+
+[0.9.8]
 
 OpenTK 0.9.8 replaces several instances of the "All" and "Version*" enums with strongly-typed equivalents. This is a breaking change. If you are affected by this change, replace these enums with the ones suggested by your compiler.
 
