@@ -299,6 +299,7 @@ namespace OpenTK.Graphics
         /// </summary>
         /// <param name="context">The OpenTK.Platform.IGraphicsContext that was destroyed.</param>
         /// <param name="e">Not used.</param>
+        [Obsolete]
         void ContextDestroyed(IGraphicsContext context, EventArgs e)
         {
             this.Destroy -= ContextDestroyed;
