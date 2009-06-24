@@ -36,7 +36,7 @@ namespace OpenTK.Platform.MacOS
     using Carbon;
     using Graphics;
 
-    class CarbonGLNative : INativeGLWindow, INativeWindow
+    class CarbonGLNative : INativeWindow
     {
         #region Fields
 
