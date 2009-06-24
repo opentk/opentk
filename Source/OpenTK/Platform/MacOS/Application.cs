@@ -114,12 +114,12 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         public static void Run(CarbonGLNative window)
         {
-            window.Destroy += MainWindowClosed;
+            window.Closed += MainWindowClosed;
             window.Visible = true;
 
             API.RunApplicationEventLoop();
 
-            window.Destroy -= MainWindowClosed;
+            window.Closed -= MainWindowClosed;
         }
 
         static void MainWindowClosed(object sender, EventArgs e)

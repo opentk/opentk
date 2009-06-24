@@ -99,11 +99,6 @@ namespace OpenTK.Platform
         {
             #region IPlatformFactory Members
 
-            public INativeGLWindow CreateGLNative()
-            {
-                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
-            }
-
             public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             {
                 throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");

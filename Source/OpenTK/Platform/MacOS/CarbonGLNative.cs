@@ -676,9 +676,6 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public event CreateEvent Create = delegate(object sender, EventArgs e) { };
-        public event DestroyEvent Destroy = delegate(object sender, EventArgs e) { };
-
         #endregion
 
         #region INativeGLWindow Members
