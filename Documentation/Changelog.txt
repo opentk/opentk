@@ -1,6 +1,23 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
 -------------------------
+ OpenTK 0.9.8-1 -> 0.9.9
+-------------------------
++ OpenTK
+	+ Compute
+		+ Initial support for the OpenCL flat API.
+	+ Input
+		+ Keyboard/Mouse/JoystickDevice are now marked as obsolete.
+	+ GameWindow
+		+ New properties: Bounds, Size, Location, ClientRectangle, ClientSize, Icon.
+		+ Size should now contain the correct value inside the GameWindow constructor.
+		+ The GameWindow should now start at the center of the specified DisplayDevice (Windows-only at the moment).
+		+ GameWindow no longer relies on Windows.Forms.
+	+ Graphics
+		+ Glu is now marked as obsolete.
+		+ Support for multisampled contexts (Windows-only at the moment).
+
+-------------------------
  OpenTK 0.9.8 -> 0.9.8-1
 -------------------------
 + Bind
