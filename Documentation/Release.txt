@@ -1,15 +1,18 @@
-The Open Toolkit 0.9.8-1 Beta
-Sunday, 31 May 2009
+The Open Toolkit 0.9.9 Beta
+
 
 
 [Overview]
 
-This release fixes issues identified in OpenTK 0.9.8:
-* GL.GetBoolea is renamed to GL.GetBoolean
-* TextPrinter.Clear() no longer results in text corruption.
-* Matrix4.Mult() performance is increased.
+This is the first preview release of what will become OpenTK 1.0. Major changes:
+* Initial support for the OpenCL flat API (OpenTK.Compute).
+* New, more versatile GameWindow implementation.
+* Support for fullscreen antialiasing.
+* Reduced reliance on Windows.Forms (dependency will be removed completely before OpenTK 1.0).
 
-Please visit http://www.opentk.com to report issues or request features.
+Please note that this is a work-in-progress snapshot release and should only be used for testing purposes.
+
+Visit http://www.opentk.com to report issues or request features.
 
 
 
@@ -25,6 +28,7 @@ Joystick input is not supported on MacOS at this time.
 
 OpenGL 3.0 is not supported on MacOS at this time.
 
+The new GameWindow implementation may not function correctly on Mac OS X.
 
 
 [API changes]
@@ -40,6 +44,25 @@ ResizeEventHandler Resize(object, ResizeEventArgs) -> EventHandler<EventArgs> Re
 OnResize(ResizeEventArgs) -> OnResize(EventArgs)
 
 Please replace all instances of "ResizeEventHandler" by "EventHandler<EventArgs> and replace "e.Width" / "e.Height" by "this.Width" and "this.Height".
+
+2. All GameWindow.On* functions are now 'protected' instead of 'public'.
+
+Please mark all relevant overrides as 'protected'.
+
+3. Glu is now marked as deprecated.
+
+Please use OpenTK.Math instead.
+
+4. OpenTK.Input.[Keyboard|Mouse|Joystick]Device are marked as obsolete.
+
+Please continue using these classes normally. A future update will provide a much more versatile input API.
+
+
+[0.9.8-1]
+
+1. GL.GetBoolea is renamed to GL.GetBoolean.
+
+Please replace all instances of the former by GL.GetBoolean.
 
 
 [0.9.8]
