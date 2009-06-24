@@ -1,5 +1,21 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
+-------------------------
+ OpenTK 0.9.8 -> 0.9.8-1
+-------------------------
++ Bind
+	+ Fixed wrappers for methods ending in "nv" without being "NV" extensions (e.g. Booleanv).
+
++ OpenTK
+	+ Graphics
+		+ Fixed wrappers for methods ending in "nv" without being "NV" extensions (e.g. GetBooleanv).
+	+ Math
+		+ Improved performance for Matrix4/Matrix4d.Mult().
+
++ OpenTK.Utilities
+	+ TextPrinter
+		+ Fixed corruption after calling TextPrinter.Clear()
+
 ---------------------
 OpenTK 0.9.7 -> 0.9.8
 ---------------------
