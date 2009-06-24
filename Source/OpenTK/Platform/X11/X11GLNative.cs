@@ -778,6 +778,9 @@ namespace OpenTK.Platform.X11
             }
             set
             {
+                if (value == icon)
+                    return;
+
                 if (value == null)
                 {
                     Functions.XDeleteProperty(window.Display, window.WindowHandle, _atom_net_wm_icon);
@@ -807,6 +810,7 @@ namespace OpenTK.Platform.X11
                 }
 
                 icon = value;
+                IconChanged(this, EventArgs.Empty);
             }
         }
 

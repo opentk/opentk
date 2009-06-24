@@ -954,20 +954,6 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
-        #region OnDestroy
-
-        public void OnDestroy(EventArgs e)
-        {
-            Debug.Print("Destroy event fired from window: {0}", window.ToString());
-
-            if (this.Destroy != null)
-                this.Destroy(this, e);
-        }
-
-        public event DestroyEvent Destroy;
-
-        #endregion
-
         #endregion
 
         #region IInputDriver Members
