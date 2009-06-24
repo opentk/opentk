@@ -33,14 +33,9 @@ namespace OpenTK.Platform.MacOS
 {
     using Graphics;
 
-    class MacOSFactory : IPlatformFactory 
+    class MacOSFactory : IPlatformFactory
     {
         #region IPlatformFactory Members
-
-        public INativeGLWindow CreateGLNative()
-        {
-            throw new NotImplementedException();
-        }
 
         public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
