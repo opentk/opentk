@@ -2,6 +2,7 @@
 + Split OpenTK.Utilities from the core OpenTK.
 + Change all public APIs to conform to the class library interface guidelines.
 + Revisit all classes and make sure IDisposable is correctly implemented.
++ Remove System.Windows.Forms dependence.
 
 [OpenTK.Graphics.GL]
 + Improve performance for functions that return StringBuilders.
@@ -16,11 +17,17 @@
 
 [OpenTK.GLControl]
 + Improve the designer interface.
++ Move to a separate assembly.
 
 [OpenTK.Input]
 + Implement joystick support on Mac OS X.
 + Implement GameWindow-independent input drivers.
 + Implement support for multiple mice and keyboards.
+
+[OpenTK.Math]
++ Move to the OpenTK namespace instead of OpenTK.Math.
++ Improve performance.
++ Improve API.
 
 [Examples]
 + Add GL3 examples.
