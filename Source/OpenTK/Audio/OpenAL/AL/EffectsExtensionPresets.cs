@@ -9,7 +9,6 @@
 
 using System;
 
-using OpenTK.Math;
 
 namespace OpenTK.Audio
 {

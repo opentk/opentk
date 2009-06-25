@@ -27,7 +27,7 @@
 
 using System.Collections.Generic;
 using System.Drawing;
-using OpenTK.Math;
+
 using System;
 
 namespace OpenTK.Graphics.Text

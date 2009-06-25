@@ -26,7 +26,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>Represents a 4D vector using four double-precision floating-point numbers.</summary>
     [Serializable]
@@ -275,7 +275,7 @@ namespace OpenTK.Math
         {
             get
             {
-                return 1.0f / OpenTK.Math.Functions.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
+                return 1.0f / OpenTK.Functions.InverseSqrtFast(X * X + Y * Y + Z * Z + W * W);
             }
         }
 
@@ -829,13 +829,13 @@ namespace OpenTK.Math
         #region Swizzle
 
         /// <summary>
-        /// Gets or sets an OpenTK.Math.Vector2d with the X and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Xy { get { return new Vector2d(X, Y); } set { X = value.X; Y = value.Y; } }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Math.Vector3d with the X, Y and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3d with the X, Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Xyz { get { return new Vector3d(X, Y, Z); } set { X = value.X; Y = value.Y; Z = value.Z; } }
@@ -923,7 +923,7 @@ namespace OpenTK.Math
             }
         }
 
-        /// <summary>Converts OpenTK.Math.Vector4 to OpenTK.Math.Vector4d.</summary>
+        /// <summary>Converts OpenTK.Vector4 to OpenTK.Vector4d.</summary>
         /// <param name="v4">The Vector4 to convert.</param>
         /// <returns>The resulting Vector4d.</returns>
         public static explicit operator Vector4d(Vector4 v4)
@@ -931,7 +931,7 @@ namespace OpenTK.Math
             return new Vector4d(v4.X, v4.Y, v4.Z, v4.W);
         }
 
-        /// <summary>Converts OpenTK.Math.Vector4d to OpenTK.Math.Vector4.</summary>
+        /// <summary>Converts OpenTK.Vector4d to OpenTK.Vector4.</summary>
         /// <param name="v4d">The Vector4d to convert.</param>
         /// <returns>The resulting Vector4.</returns>
         public static explicit operator Vector4(Vector4d v4d)

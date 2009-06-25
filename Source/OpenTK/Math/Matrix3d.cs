@@ -25,7 +25,7 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
     // Todo: Remove this warning when the code goes public.
     #pragma warning disable 3019
@@ -321,7 +321,7 @@ namespace OpenTK.Math
         #region Equality
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
-        /// <param name="matrix">The OpenTK.Math.Matrix3d structure to compare with.</param>
+        /// <param name="matrix">The OpenTK.Matrix3d structure to compare with.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         [CLSCompliant(false)]
         public bool Equals(Matrix3d matrix)
@@ -339,7 +339,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>Indicates whether the current matrix is equal to another matrix.</summary>
-        /// <param name="matrix">The OpenTK.Math.Matrix3d structure to compare to.</param>
+        /// <param name="matrix">The OpenTK.Matrix3d structure to compare to.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         public bool Equals(ref Matrix3d matrix)
         {
@@ -374,7 +374,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>Indicates whether the current matrix is approximately equal to another matrix.</summary>
-        /// <param name="matrix">The OpenTK.Math.Matrix3d structure to compare with.</param>
+        /// <param name="matrix">The OpenTK.Matrix3d structure to compare with.</param>
         /// <param name="tolerance">The limit below which the matrices are considered equal.</param>
         /// <returns>true if the current matrix is approximately equal to the matrix parameter; otherwise, false.</returns>
         public bool EqualsApprox(ref Matrix3d matrix, double tolerance)

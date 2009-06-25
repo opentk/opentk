@@ -8,8 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>
     /// Defines a 2d box (rectangle).
@@ -40,8 +39,8 @@ namespace OpenTK.Math
         /// <summary>
         /// Constructs a new Box2 with the specified dimensions.
         /// </summary>
-        /// <param name="topLeft">An OpenTK.Math.Vector2 describing the top-left corner of the Box2.</param>
-        /// <param name="bottomRight">An OpenTK.Math.Vector2 describing the bottom-right corner of the Box2.</param>
+        /// <param name="topLeft">AnOpenTK.Vector2 describing the top-left corner of the Box2.</param>
+        /// <param name="bottomRight">An OpenTK.Vector2 describing the bottom-right corner of the Box2.</param>
         public Box2(Vector2 topLeft, Vector2 bottomRight)
         {
             Left = topLeft.X;
@@ -72,7 +71,7 @@ namespace OpenTK.Math
         /// <param name="left">The position of the left boundary.</param>
         /// <param name="right">The position of the right boundary.</param>
         /// <param name="bottom">The position of the bottom boundary.</param>
-        /// <returns>A new OpenTK.Math.Box2 with the specfied dimensions.</returns>
+        /// <returns>A new OpenTK.Box2 with the specfied dimensions.</returns>
         public static Box2 FromTLRB(float top, float left, float right, float bottom)
         {
             return new Box2(left, top, right, bottom);

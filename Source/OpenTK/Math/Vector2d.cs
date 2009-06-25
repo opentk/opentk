@@ -25,7 +25,7 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>Represents a 2D vector using two double-precision floating-point numbers.</summary>
     [Serializable]
@@ -686,7 +686,7 @@ namespace OpenTK.Math
             return !left.Equals(right);
         }
 
-        /// <summary>Converts OpenTK.Math.Vector2 to OpenTK.Math.Vector2d.</summary>
+        /// <summary>Converts OpenTK.Vector2 to OpenTK.Vector2d.</summary>
         /// <param name="v2">The Vector2 to convert.</param>
         /// <returns>The resulting Vector2d.</returns>
         public static explicit operator Vector2d(Vector2 v2)
@@ -694,7 +694,7 @@ namespace OpenTK.Math
             return new Vector2d(v2.X, v2.Y);
         }
 
-        /// <summary>Converts OpenTK.Math.Vector2d to OpenTK.Math.Vector2.</summary>
+        /// <summary>Converts OpenTK.Vector2d to OpenTK.Vector2.</summary>
         /// <param name="v2d">The Vector2d to convert.</param>
         /// <returns>The resulting Vector2.</returns>
         public static explicit operator Vector2(Vector2d v2d)

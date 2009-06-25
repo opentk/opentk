@@ -14,7 +14,6 @@ using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-using OpenTK.Math;
 using OpenTK.Graphics;
 using OpenTK.Graphics.Text;
 using OpenTK.Platform;

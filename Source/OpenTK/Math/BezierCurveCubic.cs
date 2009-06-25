@@ -4,7 +4,7 @@
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  * 
- * Contributions by Georg Wächter.
+ * Contributions by Georg Wï¿½chter.
  */
 #endregion
 
@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
 	/// <summary>
 	/// Represents a cubic bezier curve with two anchor and two control points.

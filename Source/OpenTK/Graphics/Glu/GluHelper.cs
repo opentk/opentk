@@ -13,7 +13,6 @@ using System.Runtime.InteropServices;
 using System.Reflection.Emit;
 
 using OpenTK.Platform;
-using OpenTK.Math;
 
 namespace OpenTK.Graphics
 {

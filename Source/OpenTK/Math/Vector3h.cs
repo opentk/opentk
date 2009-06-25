@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>
     /// 3-component Vector of the Half type. Occupies 6 Byte total.
@@ -94,7 +94,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half3 instance will convert the Vector3 into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector3</param>
+        /// <param name="v">OpenTK.Vector3</param>
         [CLSCompliant(false)]
         public Vector3h(Vector3 v)
         {
@@ -106,7 +106,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half3 instance will convert the Vector3 into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector3</param>
+        /// <param name="v">OpenTK.Vector3</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         [CLSCompliant(false)]
         public Vector3h(Vector3 v, bool throwOnError)
@@ -120,7 +120,7 @@ namespace OpenTK.Math
         /// The new Half3 instance will convert the Vector3 into 16-Bit Half precision floating point.
         /// This is the fastest constructor.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector3</param>
+        /// <param name="v">OpenTK.Vector3</param>
         public Vector3h(ref Vector3 v)
         {
             X = new Half(v.X);
@@ -131,7 +131,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half3 instance will convert the Vector3 into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector3</param>
+        /// <param name="v">OpenTK.Vector3</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector3h(ref Vector3 v, bool throwOnError)
         {
@@ -143,7 +143,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half3 instance will convert the Vector3d into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector3d</param>
+        /// <param name="v">OpenTK.Vector3d</param>
         public Vector3h(Vector3d v)
         {
             X = new Half(v.X);
@@ -154,7 +154,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half3 instance will convert the Vector3d into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector3d</param>
+        /// <param name="v">OpenTK.Vector3d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector3h(Vector3d v, bool throwOnError)
         {
@@ -167,7 +167,7 @@ namespace OpenTK.Math
         /// The new Half3 instance will convert the Vector3d into 16-Bit Half precision floating point.
         /// This is the faster constructor.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector3d</param>
+        /// <param name="v">OpenTK.Vector3d</param>
         [CLSCompliant(false)]
         public Vector3h(ref Vector3d v)
         {
@@ -179,7 +179,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half3 instance will convert the Vector3d into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector3d</param>
+        /// <param name="v">OpenTK.Vector3d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         [CLSCompliant(false)]
         public Vector3h(ref Vector3d v, bool throwOnError)
@@ -194,7 +194,7 @@ namespace OpenTK.Math
         #region Swizzle
 
         /// <summary>
-        /// Gets or sets an OpenTK.Math.Vector2h with the X and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector2h with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Xy { get { return new Vector2h(X, Y); } set { X = value.X; Y = value.Y; } }
@@ -206,7 +206,7 @@ namespace OpenTK.Math
         /// <summary>
         /// Returns this Half3 instance's contents as Vector3.
         /// </summary>
-        /// <returns>OpenTK.Math.Vector3</returns>
+        /// <returns>OpenTK.Vector3</returns>
         public Vector3 ToVector3()
         {
             return new Vector3(X, Y, Z);
@@ -224,7 +224,7 @@ namespace OpenTK.Math
 
         #region Conversions
 
-        /// <summary>Converts OpenTK.Math.Vector3 to OpenTK.Math.Half3.</summary>
+        /// <summary>Converts OpenTK.Vector3 to OpenTK.Half3.</summary>
         /// <param name="v3f">The Vector3 to convert.</param>
         /// <returns>The resulting Half vector.</returns>
         public static explicit operator Vector3h(Vector3 v3f)
@@ -232,7 +232,7 @@ namespace OpenTK.Math
             return new Vector3h(v3f);
         }
 
-        /// <summary>Converts OpenTK.Math.Vector3d to OpenTK.Math.Half3.</summary>
+        /// <summary>Converts OpenTK.Vector3d to OpenTK.Half3.</summary>
         /// <param name="v3d">The Vector3d to convert.</param>
         /// <returns>The resulting Half vector.</returns>
         public static explicit operator Vector3h(Vector3d v3d)
@@ -240,7 +240,7 @@ namespace OpenTK.Math
             return new Vector3h(v3d);
         }
 
-        /// <summary>Converts OpenTK.Math.Half3 to OpenTK.Math.Vector3.</summary>
+        /// <summary>Converts OpenTK.Half3 to OpenTK.Vector3.</summary>
         /// <param name="h3">The Half3 to convert.</param>
         /// <returns>The resulting Vector3.</returns>
         public static explicit operator Vector3(Vector3h h3)
@@ -252,7 +252,7 @@ namespace OpenTK.Math
             return result;
         }
 
-        /// <summary>Converts OpenTK.Math.Half3 to OpenTK.Math.Vector3d.</summary>
+        /// <summary>Converts OpenTK.Half3 to OpenTK.Vector3d.</summary>
         /// <param name="h3">The Half3 to convert.</param>
         /// <returns>The resulting Vector3d.</returns>
         public static explicit operator Vector3d(Vector3h h3)
@@ -321,8 +321,8 @@ namespace OpenTK.Math
 
         #region IEquatable<Half3> Members
 
-        /// <summary>Returns a value indicating whether this instance is equal to a specified OpenTK.Math.Half3 vector.</summary>
-        /// <param name="other">OpenTK.Math.Half3 to compare to this instance..</param>
+        /// <summary>Returns a value indicating whether this instance is equal to a specified OpenTK.Half3 vector.</summary>
+        /// <param name="other">OpenTK.Half3 to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector3h other)
         {

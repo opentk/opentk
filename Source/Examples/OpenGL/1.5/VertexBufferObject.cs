@@ -15,7 +15,6 @@ using System.Threading;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Platform;
-using OpenTK.Math;
 
 #endregion
 

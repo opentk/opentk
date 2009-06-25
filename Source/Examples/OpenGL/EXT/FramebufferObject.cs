@@ -12,7 +12,6 @@ using System.Drawing;
 
 using OpenTK;
 using OpenTK.Input;
-using OpenTK.Math;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 

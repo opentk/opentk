@@ -61,7 +61,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
 
     /// <summary>
@@ -320,7 +320,7 @@ namespace OpenTK.Math
         #region Conversions
 
         /// <summary>
-        /// Converts a System.Single to a OpenTK.Math.Half.
+        /// Converts a System.Single to a OpenTK.Half.
         /// </summary>
         /// <param name="f">The value to convert.
         /// A <see cref="System.Single"/>
@@ -334,7 +334,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// Converts a System.Double to a OpenTK.Math.Half.
+        /// Converts a System.Double to a OpenTK.Half.
         /// </summary>
         /// <param name="d">The value to convert.
         /// A <see cref="System.Double"/>
@@ -348,7 +348,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// Converts a OpenTK.Math.Half to a System.Single.
+        /// Converts a OpenTK.Half to a System.Single.
         /// </summary>
         /// <param name="h">The value to convert.
         /// A <see cref="Half"/>
@@ -362,7 +362,7 @@ namespace OpenTK.Math
         }
 
         /// <summary>
-        /// Converts a OpenTK.Math.Half to a System.Double.
+        /// Converts a OpenTK.Half to a System.Double.
         /// </summary>
         /// <param name="h">The value to convert.
         /// A <see cref="Half"/>
@@ -440,9 +440,9 @@ namespace OpenTK.Math
         const int maxUlps = 1;
 
         /// <summary>
-        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Math.Half value.
+        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half value.
         /// </summary>
-        /// <param name="other">OpenTK.Math.Half object to compare to this instance..</param>
+        /// <param name="other">OpenTK.Half object to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Half other)
         {
@@ -480,12 +480,12 @@ namespace OpenTK.Math
         /// <returns>
         /// A signed number indicating the relative values of this instance and value. If the number is:
         /// <para>Less than zero, then this instance is less than other, or this instance is not a number
-        /// (OpenTK.Math.Half.NaN) and other is a number.</para>
+        /// (OpenTK.Half.NaN) and other is a number.</para>
         /// <para>Zero: this instance is equal to value, or both this instance and other
-        /// are not a number (OpenTK.Math.Half.NaN), OpenTK.Math.Half.PositiveInfinity, or
-        /// OpenTK.Math.Half.NegativeInfinity.</para>
+        /// are not a number (OpenTK.Half.NaN), OpenTK.Half.PositiveInfinity, or
+        /// OpenTK.Half.NegativeInfinity.</para>
         /// <para>Greater than zero: this instance is greater than othrs, or this instance is a number
-        /// and other is not a number (OpenTK.Math.Half.NaN).</para>
+        /// and other is not a number (OpenTK.Half.NaN).</para>
         /// </returns>
         public int CompareTo(Half other)
         {
