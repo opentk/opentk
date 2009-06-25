@@ -94,7 +94,7 @@ namespace OpenTK.Compute
     }
 
     [Flags]
-    public enum DeviceType
+    public enum DeviceType : long
     {
         DeviceTypeDefault = (1 << 0),
         DeviceTypeCpu = (1 << 1),
@@ -157,14 +157,14 @@ namespace OpenTK.Compute
     }
 
     [Flags]
-    public enum DeviceAddressInfo
+    public enum DeviceAddressInfo : long
     {
         DeviceAddress32Bits = (1 << 0),
         DeviceAddress64Bits = (1 << 1),
     }
 
     [Flags]
-    public enum DeviceFpConfig
+    public enum DeviceFpConfig : long
     {
         FpDenorm = (1 << 0),
         FpInfNan = (1 << 1),
@@ -188,14 +188,14 @@ namespace OpenTK.Compute
     }
 
     [Flags]
-    public enum DeviceExecCapabilities
+    public enum DeviceExecCapabilities : long
     {
         ExecKernel = (1 << 0),
         ExecNativeFnAsKernel = (1 << 1),
     }
 
     [Flags]
-    public enum CommandQueueProperties
+    public enum CommandQueueProperties : long
     {
         QueueOutOfOrderExecModeEnable = (1 << 0),
         QueueProfilingEnable = (1 << 1),
@@ -218,7 +218,7 @@ namespace OpenTK.Compute
     }
 
     [Flags]
-    public enum MemFlags
+    public enum MemFlags : long
     {
         MemReadWrite = (1 << 0),
         MemWriteOnly = (1 << 1),
@@ -312,7 +312,7 @@ namespace OpenTK.Compute
     }
 
     [Flags]
-    public enum MapFlags
+    public enum MapFlags : long
     {
         MapRead = (1 << 0),
         MapWrite = (1 << 1),
