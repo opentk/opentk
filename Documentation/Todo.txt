@@ -24,8 +24,8 @@
 + Implement GameWindow-independent input drivers.
 + Implement support for multiple mice and keyboards.
 
-[OpenTK.Math]
-+ Move to the OpenTK namespace instead of OpenTK.Math.
+[OpenTK]
++ Move to the OpenTK namespace instead of OpenTK.
 + Improve performance.
 + Improve API.
 

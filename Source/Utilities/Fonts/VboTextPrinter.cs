@@ -10,7 +10,6 @@ using System.Text;
 using System.Runtime.InteropServices;
 
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Math;
 
 namespace OpenTK.Graphics
 {

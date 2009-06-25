@@ -27,7 +27,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
 
     /// <summary>2-component Vector of the Half type. Occupies 4 Byte total.</summary>
@@ -83,7 +83,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half2 instance will convert the Vector2 into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector2</param>
+        /// <param name="v">OpenTK.Vector2</param>
         [CLSCompliant(false)]
         public Vector2h(Vector2 v)
         {
@@ -94,7 +94,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half2 instance will convert the Vector2 into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector2</param>
+        /// <param name="v">OpenTK.Vector2</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         [CLSCompliant(false)]
         public Vector2h(Vector2 v, bool throwOnError)
@@ -107,7 +107,7 @@ namespace OpenTK.Math
         /// The new Half2 instance will convert the Vector2 into 16-Bit Half precision floating point.
         /// This is the fastest constructor.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector2</param>
+        /// <param name="v">OpenTK.Vector2</param>
         public Vector2h(ref Vector2 v)
         {
             X = new Half(v.X);
@@ -117,7 +117,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half2 instance will convert the Vector2 into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector2</param>
+        /// <param name="v">OpenTK.Vector2</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector2h(ref Vector2 v, bool throwOnError)
         {
@@ -128,7 +128,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half2 instance will convert the Vector2d into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector2d</param>
+        /// <param name="v">OpenTK.Vector2d</param>
         public Vector2h(Vector2d v)
         {
             X = new Half(v.X);
@@ -138,7 +138,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half2 instance will convert the Vector2d into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector2d</param>
+        /// <param name="v">OpenTK.Vector2d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector2h(Vector2d v, bool throwOnError)
         {
@@ -150,7 +150,7 @@ namespace OpenTK.Math
         /// The new Half2 instance will convert the Vector2d into 16-Bit Half precision floating point.
         /// This is the faster constructor.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector2d</param>
+        /// <param name="v">OpenTK.Vector2d</param>
         [CLSCompliant(false)]
         public Vector2h(ref Vector2d v)
         {
@@ -161,7 +161,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half2 instance will convert the Vector2d into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector2d</param>
+        /// <param name="v">OpenTK.Vector2d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         [CLSCompliant(false)]
         public Vector2h(ref Vector2d v, bool throwOnError)
@@ -177,7 +177,7 @@ namespace OpenTK.Math
         /// <summary>
         /// Returns this Half2 instance's contents as Vector2.
         /// </summary>
-        /// <returns>OpenTK.Math.Vector2</returns>
+        /// <returns>OpenTK.Vector2</returns>
         public Vector2 ToVector2()
         {
             return new Vector2(X, Y);
@@ -195,7 +195,7 @@ namespace OpenTK.Math
 
         #region Conversions
 
-        /// <summary>Converts OpenTK.Math.Vector2 to OpenTK.Math.Half2.</summary>
+        /// <summary>Converts OpenTK.Vector2 to OpenTK.Half2.</summary>
         /// <param name="v">The Vector2 to convert.</param>
         /// <returns>The resulting Half vector.</returns>
         public static explicit operator Vector2h(Vector2 v)
@@ -203,7 +203,7 @@ namespace OpenTK.Math
             return new Vector2h(v);
         }
 
-        /// <summary>Converts OpenTK.Math.Vector2d to OpenTK.Math.Half2.</summary>
+        /// <summary>Converts OpenTK.Vector2d to OpenTK.Half2.</summary>
         /// <param name="v">The Vector2d to convert.</param>
         /// <returns>The resulting Half vector.</returns>
         public static explicit operator Vector2h(Vector2d v)
@@ -211,7 +211,7 @@ namespace OpenTK.Math
             return new Vector2h(v);
         }
 
-        /// <summary>Converts OpenTK.Math.Half2 to OpenTK.Math.Vector2.</summary>
+        /// <summary>Converts OpenTK.Half2 to OpenTK.Vector2.</summary>
         /// <param name="h">The Half2 to convert.</param>
         /// <returns>The resulting Vector2.</returns>
         public static explicit operator Vector2(Vector2h h)
@@ -219,7 +219,7 @@ namespace OpenTK.Math
             return new Vector2(h.X, h.Y);
         }
 
-        /// <summary>Converts OpenTK.Math.Half2 to OpenTK.Math.Vector2d.</summary>
+        /// <summary>Converts OpenTK.Half2 to OpenTK.Vector2d.</summary>
         /// <param name="h">The Half2 to convert.</param>
         /// <returns>The resulting Vector2d.</returns>
         public static explicit operator Vector2d(Vector2h h)
@@ -280,8 +280,8 @@ namespace OpenTK.Math
 
         #region IEquatable<Half2> Members
 
-        /// <summary>Returns a value indicating whether this instance is equal to a specified OpenTK.Math.Half2 vector.</summary>
-        /// <param name="other">OpenTK.Math.Half2 to compare to this instance..</param>
+        /// <summary>Returns a value indicating whether this instance is equal to a specified OpenTK.Half2 vector.</summary>
+        /// <param name="other">OpenTK.Half2 to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector2h other)
         {

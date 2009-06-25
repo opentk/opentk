@@ -6,6 +6,7 @@ The Open Toolkit 0.9.9-1 Beta
 
 This is the first preview release of what will become OpenTK 1.0. Major changes:
 * OpenCL bugfixes.
+* Math API improvements.
 
 Please note that this is a work-in-progress snapshot release and should only be used for testing purposes.
 
@@ -42,7 +43,12 @@ Please note that binary compatibility is not preserved between beta releases.
 
 [0.9.9-1]
 
-1. OpenCL bitfields are now mapped to 'long' instead of 'int'. Casts from [Flags] enums to 'int' may now fail. Please avoid such casts or use 'long' instead.
+1. The OpenTK.Math namespace no longer exists. Please replace all references by 'OpenTK'. This can be easily achieved with the following Search & Replace operations:
+
+'using OpenTK.Math;' -> 'using OpenTK;'
+'OpenTK.Math.' -> 'OpenTK.'
+
+2. OpenCL bitfields are now mapped to 'long' instead of 'int'. Casts from [Flags] enums to 'int' may now fail. Please avoid such casts or use 'long' instead.
 
 
 [0.9.9]
@@ -60,7 +66,7 @@ Please mark all relevant overrides as 'protected'.
 
 3. Glu is now marked as deprecated.
 
-Please use OpenTK.Math instead.
+Please use OpenTK instead.
 
 4. OpenTK.Input.[Keyboard|Mouse|Joystick]Device are marked as obsolete.
 

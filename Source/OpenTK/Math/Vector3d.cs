@@ -26,7 +26,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>
     /// Represents a 3D vector using three double-precision floating-point numbers.
@@ -214,7 +214,7 @@ namespace OpenTK.Math
         {
             get
             {
-                return 1.0f / OpenTK.Math.Functions.InverseSqrtFast(X * X + Y * Y + Z * Z);
+                return 1.0f / OpenTK.Functions.InverseSqrtFast(X * X + Y * Y + Z * Z);
             }
         }
 
@@ -1010,7 +1010,7 @@ namespace OpenTK.Math
         #region Swizzle
 
         /// <summary>
-        /// Gets or sets an OpenTK.Math.Vector2d with the X and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Xy { get { return new Vector2d(X, Y); } set { X = value.X; Y = value.Y; } }
@@ -1078,7 +1078,7 @@ namespace OpenTK.Math
             return !left.Equals(right);
         }
 
-        /// <summary>Converts OpenTK.Math.Vector3 to OpenTK.Math.Vector3d.</summary>
+        /// <summary>Converts OpenTK.Vector3 to OpenTK.Vector3d.</summary>
         /// <param name="v3">The Vector3 to convert.</param>
         /// <returns>The resulting Vector3d.</returns>
         public static explicit operator Vector3d(Vector3 v3)
@@ -1086,7 +1086,7 @@ namespace OpenTK.Math
             return new Vector3d(v3.X, v3.Y, v3.Z);
         }
 
-        /// <summary>Converts OpenTK.Math.Vector3d to OpenTK.Math.Vector3.</summary>
+        /// <summary>Converts OpenTK.Vector3d to OpenTK.Vector3.</summary>
         /// <param name="v3d">The Vector3d to convert.</param>
         /// <returns>The resulting Vector3.</returns>
         public static explicit operator Vector3(Vector3d v3d)

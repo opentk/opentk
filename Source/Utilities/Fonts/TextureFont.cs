@@ -13,7 +13,6 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-using OpenTK.Math;
 using OpenTK.Graphics;
 using OpenTK.Platform;
 

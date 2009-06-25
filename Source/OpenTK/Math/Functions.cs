@@ -11,8 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>
     /// Contains mathematical functions for the OpenTK.Math toolkit.

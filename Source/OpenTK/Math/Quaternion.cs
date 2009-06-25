@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>
     /// Represents a Quaternion.
@@ -74,7 +74,7 @@ namespace OpenTK.Math
         #region Properties
 
         /// <summary>
-        /// Gets or sets an OpenTK.Math.Vector3 with the X, Y and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3 with the X, Y and Z components of this instance.
         /// </summary>
         [Obsolete("Use Xyz property instead.")]
         [CLSCompliant(false)]
@@ -83,7 +83,7 @@ namespace OpenTK.Math
         public Vector3 XYZ { get { return Xyz; } set { Xyz = value; } }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Math.Vector3 with the X, Y and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3 with the X, Y and Z components of this instance.
         /// </summary>
         public Vector3 Xyz { get { return xyz; } set { xyz = value; } }
 

@@ -12,7 +12,6 @@ using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics;
 using Examples.Shapes;
-using OpenTK.Math;
 
 namespace Examples.Tutorial
 {

@@ -7,7 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenTK.Math;
+
+using OpenTK;
 
 namespace Examples.Shapes
 {

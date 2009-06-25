@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Text;
 
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Math;
 
 namespace OpenTK.Graphics
 {
