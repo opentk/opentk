@@ -72,7 +72,7 @@ namespace Examples.Tutorial
             GL.MatrixMode(MatrixMode.Projection);
             if (Keyboard[OpenTK.Input.Key.Space])
             {
-                OpenTK.Math.Matrix4 perspective = OpenTK.Math.Matrix4.Perspective(45, (float)aspect_ratio, 1, 64);
+               OpenTK.Matrix4 perspective = OpenTK.Matrix4.Perspective(45, (float)aspect_ratio, 1, 64);
                 GL.LoadMatrix(ref perspective);
             }
             else

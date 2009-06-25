@@ -16,7 +16,6 @@ using System.Xml;
 
 using System.Xml.Serialization;
 
-using OpenTK.Math;
 
 namespace Examples.Tests
 {

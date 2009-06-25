@@ -249,7 +249,7 @@ namespace Examples.Properties {
         ///
         ///using OpenTK;
         ///using OpenTK.Input;
-        ///using OpenTK.Math;
+        //
         ///using OpenTK.Graphics;
         ///using OpenTK.Graphics.OpenGL;
         ///
@@ -791,7 +791,7 @@ namespace Examples.Properties {
         ///using OpenTK;
         ///using OpenTK.Graphics;
         ///using OpenTK.Platform;
-        ///using OpenTK.Math;
+        ///
         ///
         ///#endregion
         ///
@@ -820,7 +820,7 @@ namespace Examples.Properties {
         ///using OpenTK;
         ///using OpenTK.Graphics;
         ///using Examples.Shapes;
-        ///using OpenTK.Math;
+        ///
         ///
         ///namespace Examples.Tutorial
         ///{

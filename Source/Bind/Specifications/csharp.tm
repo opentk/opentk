@@ -26,8 +26,8 @@ PixelInternalFormat,	PixelInternalFormat
 GLsizeiptrARB,      IntPtr
 GLintptrARB,        IntPtr
 GLhandleARB,        UInt32
-GLhalfARB,          OpenTK.Math.Half
-GLhalfNV,           OpenTK.Math.Half
+GLhalfARB,          OpenTK.Half
+GLhalfNV,           OpenTK.Half
 GLcharARB,          Char
 
 # 64 bit types (introduced in 2.1)

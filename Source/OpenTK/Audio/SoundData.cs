@@ -37,7 +37,7 @@ namespace OpenTK.Audio
 
             this.SoundFormat = format;
 
-            buffer = new byte[OpenTK.Math.Functions.NextPowerOfTwo(data.Length)];
+            buffer = new byte[OpenTK.Functions.NextPowerOfTwo(data.Length)];
             Array.Copy(data, buffer, data.Length);
             //buffer = (byte[])data.Clone();
         }

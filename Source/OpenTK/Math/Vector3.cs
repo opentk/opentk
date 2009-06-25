@@ -25,8 +25,7 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
-
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>
     /// Represents a 3D vector using three single-precision floating-point numbers.
@@ -216,7 +215,7 @@ namespace OpenTK.Math
         {
             get
             {
-                return 1.0f / OpenTK.Math.Functions.InverseSqrtFast(X * X + Y * Y + Z * Z);
+                return 1.0f /OpenTK.Functions.InverseSqrtFast(X * X + Y * Y + Z * Z);
             }
         }
 
@@ -1014,7 +1013,7 @@ namespace OpenTK.Math
         #region Swizzle
 
         /// <summary>
-        /// Gets or sets an OpenTK.Math.Vector2 with the X and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2 Xy { get { return new Vector2(X, Y); } set { X = value.X; Y = value.Y; } }

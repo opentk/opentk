@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>
     /// 4-component Vector of the Half type. Occupies 8 Byte total.
@@ -103,7 +103,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half4 instance will convert the Vector4 into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector4</param>
+        /// <param name="v">OpenTK.Vector4</param>
         [CLSCompliant(false)]
         public Vector4h(Vector4 v)
         {
@@ -116,7 +116,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half4 instance will convert the Vector4 into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector4</param>
+        /// <param name="v">OpenTK.Vector4</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         [CLSCompliant(false)]
         public Vector4h(Vector4 v, bool throwOnError)
@@ -131,7 +131,7 @@ namespace OpenTK.Math
         /// The new Half4 instance will convert the Vector4 into 16-Bit Half precision floating point.
         /// This is the fastest constructor.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector4</param>
+        /// <param name="v">OpenTK.Vector4</param>
         public Vector4h(ref Vector4 v)
         {
             X = new Half(v.X);
@@ -143,7 +143,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half4 instance will convert the Vector4 into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector4</param>
+        /// <param name="v">OpenTK.Vector4</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector4h(ref Vector4 v, bool throwOnError)
         {
@@ -156,7 +156,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half4 instance will convert the Vector4d into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector4d</param>
+        /// <param name="v">OpenTK.Vector4d</param>
         public Vector4h(Vector4d v)
         {
             X = new Half(v.X);
@@ -168,7 +168,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half4 instance will convert the Vector4d into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector4d</param>
+        /// <param name="v">OpenTK.Vector4d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector4h(Vector4d v, bool throwOnError)
         {
@@ -182,7 +182,7 @@ namespace OpenTK.Math
         /// The new Half4 instance will convert the Vector4d into 16-Bit Half precision floating point.
         /// This is the faster constructor.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector4d</param>
+        /// <param name="v">OpenTK.Vector4d</param>
         [CLSCompliant(false)]
         public Vector4h(ref Vector4d v)
         {
@@ -195,7 +195,7 @@ namespace OpenTK.Math
         /// <summary>
         /// The new Half4 instance will convert the Vector4d into 16-Bit Half precision floating point.
         /// </summary>
-        /// <param name="v">OpenTK.Math.Vector4d</param>
+        /// <param name="v">OpenTK.Vector4d</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         [CLSCompliant(false)]
         public Vector4h(ref Vector4d v, bool throwOnError)
@@ -211,13 +211,13 @@ namespace OpenTK.Math
         #region Swizzle
 
         /// <summary>
-        /// Gets or sets an OpenTK.Math.Vector2h with the X and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector2h with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Xy { get { return new Vector2h(X, Y); } set { X = value.X; Y = value.Y; } }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Math.Vector3h with the X, Y and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3h with the X, Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Xyz { get { return new Vector3h(X, Y, Z); } set { X = value.X; Y = value.Y; Z = value.Z; } }
@@ -229,7 +229,7 @@ namespace OpenTK.Math
         /// <summary>
         /// Returns this Half4 instance's contents as Vector4.
         /// </summary>
-        /// <returns>OpenTK.Math.Vector4</returns>
+        /// <returns>OpenTK.Vector4</returns>
         public Vector4 ToVector4()
         {
             return new Vector4(X, Y, Z, W);
@@ -247,7 +247,7 @@ namespace OpenTK.Math
 
         #region Conversions
 
-        /// <summary>Converts OpenTK.Math.Vector4 to OpenTK.Math.Half4.</summary>
+        /// <summary>Converts OpenTK.Vector4 to OpenTK.Half4.</summary>
         /// <param name="v4f">The Vector4 to convert.</param>
         /// <returns>The resulting Half vector.</returns>
         public static explicit operator Vector4h(Vector4 v4f)
@@ -255,7 +255,7 @@ namespace OpenTK.Math
             return new Vector4h(v4f);
         }
 
-        /// <summary>Converts OpenTK.Math.Vector4d to OpenTK.Math.Half4.</summary>
+        /// <summary>Converts OpenTK.Vector4d to OpenTK.Half4.</summary>
         /// <param name="v4d">The Vector4d to convert.</param>
         /// <returns>The resulting Half vector.</returns>
         public static explicit operator Vector4h(Vector4d v4d)
@@ -263,7 +263,7 @@ namespace OpenTK.Math
             return new Vector4h(v4d);
         }
 
-        /// <summary>Converts OpenTK.Math.Half4 to OpenTK.Math.Vector4.</summary>
+        /// <summary>Converts OpenTK.Half4 to OpenTK.Vector4.</summary>
         /// <param name="h4">The Half4 to convert.</param>
         /// <returns>The resulting Vector4.</returns>
         public static explicit operator Vector4(Vector4h h4)
@@ -276,7 +276,7 @@ namespace OpenTK.Math
             return result;
         }
 
-        /// <summary>Converts OpenTK.Math.Half4 to OpenTK.Math.Vector4d.</summary>
+        /// <summary>Converts OpenTK.Half4 to OpenTK.Vector4d.</summary>
         /// <param name="h4">The Half4 to convert.</param>
         /// <returns>The resulting Vector4d.</returns>
         public static explicit operator Vector4d(Vector4h h4)
@@ -350,8 +350,8 @@ namespace OpenTK.Math
 
         #region IEquatable<Half4> Members
 
-        /// <summary>Returns a value indicating whether this instance is equal to a specified OpenTK.Math.Half4 vector.</summary>
-        /// <param name="other">OpenTK.Math.Half4 to compare to this instance..</param>
+        /// <summary>Returns a value indicating whether this instance is equal to a specified OpenTK.Half4 vector.</summary>
+        /// <param name="other">OpenTK.Half4 to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector4h other)
         {

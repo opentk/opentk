@@ -7,6 +7,8 @@
     + Enabled documentation generation in debug builds.
     + Compute
         + Bitfields are now mapped to 'long' instead of 'int'.
+    + Math
+        + Namespace OpenTK.Math no longer exists. Math functions are now placed directly inside the OpenTK namespace.
 
 -------------------------
  OpenTK 0.9.8-1 -> 0.9.9
@@ -229,7 +231,7 @@ OpenTK 0.9.1 -> 0.9.2
         + Improved GLControl implementations.
     + Graphics
         + Added Color4 struct that can hold floating-point ARGB colors.
-        + Added several new overloads to the GL class. Most deal with OpenTK.Math and System.Drawing.Color interoperation.
+        + Added several new overloads to the GL class. Most deal with OpenTK and System.Drawing.Color interoperation.
         + Added support for the Half type.
     + Math
         + Added half and double precision structures.
@@ -369,7 +371,7 @@ OpenTK 0.3.12 -> 0.3.13
 		+ Improved GameWindow.Exit() handling.
 		+ Removed obsolete GameWindow.Create and GameWindow.Destroy events.
 	+ Math
-		+ Andy Gill implemented Vector2/3/4, Matrix4 and Quaternion methods for OpenTK.Math.
+		+ Andy Gill implemented Vector2/3/4, Matrix4 and Quaternion methods for OpenTK.
 		+ Added Box2 struct which defines a rectangular region. Used in OpenTK.Fonts (see below).
 		- Removed (float*) and (IntPtr) cast operators from Vector234. Added this[] operator.
 	+ Fonts

@@ -25,7 +25,7 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>
     /// Represents a 4x4 Matrix

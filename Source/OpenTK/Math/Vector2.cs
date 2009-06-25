@@ -24,8 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Runtime.InteropServices;
-
-namespace OpenTK.Math
+namespace OpenTK
 {
     /// <summary>Represents a 2D vector using two single-precision floating-point numbers.</summary>
     /// <remarks>
@@ -200,7 +199,7 @@ namespace OpenTK.Math
         {
 			get
 			{
-				return 1.0f / OpenTK.Math.Functions.InverseSqrtFast(X * X + Y * Y);
+				return 1.0f /OpenTK.Functions.InverseSqrtFast(X * X + Y * Y);
 			}
         }
 
