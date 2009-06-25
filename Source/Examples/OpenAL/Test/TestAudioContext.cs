@@ -22,10 +22,7 @@ namespace Examples
         public static void PrintOpenALErrors( IntPtr device )
         {
             ALError AlErr = AL.GetError();
-            // AudioContext should throw on errors, so no need to test them manually.
-            //AlcError AlcErr = Alc.GetError(device);
-            AlutError AlutErr = Alut.GetError();
-            Console.WriteLine("Al: " + AlErr + " Alut: " + Alut.GetErrorString(AlutErr));
+            Console.WriteLine("OpenAL error: {0}", AlErr);
         }
 
         public static void Main()
