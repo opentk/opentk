@@ -1,6 +1,13 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
 -------------------------
+ OpenTK 0.9.9 -> 0.9.9-1
+-------------------------
++ OpenTK
+    + Compute
+        + Bitfields are now mapped to 'long' instead of 'int'.
+
+-------------------------
  OpenTK 0.9.8-1 -> 0.9.9
 -------------------------
 + OpenTK
