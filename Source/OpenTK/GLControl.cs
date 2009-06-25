@@ -182,71 +182,6 @@ namespace OpenTK
 
         #endregion
 
-        #region public void CreateContext()
-        
-        /// <summary>
-        /// Creates a GraphicsContext and attaches it to this GLControl.
-        /// </summary>
-        public void CreateContext()
-        {
-            // Todo: This function seems unused. Should we remove it?
-            
-            if (context != null) throw new InvalidOperationException("GLControl already contains an OpenGL context.");
-            if (format == null) format = GraphicsMode.Default;
-
-            if (!this.DesignMode)
-            {
-                // Note: Mono's implementation of Windows.Forms on X11 does not allow the context to
-                // have a different colordepth from the parent window.
-                //context = new GraphicsContext(format, helper.WindowInfo);
-                if (Configuration.RunningOnX11)
-                {
-                    //OpenTK.Platform.X11.X11WindowInfo info = 
-                    //    (context as IGraphicsContextInternal).Info as OpenTK.Platform.X11.X11WindowInfo;
-                    //IntPtr visual = info.VisualInfo.visual;
-                    //IntPtr colormap = OpenTK.Platform.X11.API.CreateColormap(info.Display, info.RootWindow, visual, 0);
-                    //IntPtr visual = ((OpenTK.Platform.X11.X11WindowInfo)helper.WindowInfo).VisualInfo.visual;
-                    //IntPtr colormap = OpenTK.Platform.X11.API.CreateColormap(info.Display, info.RootWindow, visual, 0);
-
-                    //Type xplatui = Type.GetType("System.Windows.Forms.XplatUIX11, System.Windows.Forms");
-                    //if (xplatui == null)
-                    //    throw new PlatformNotSupportedException(
-                    //        "System.Windows.Forms.XplatUIX11 missing. Unsupported platform or Mono runtime version, aborting.");
-
-                    //xplatui.GetField("CustomVisual",
-                    //                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                    //    .SetValue(null, visual);
-                    
-                    //xplatui.GetField("CustomColormap",
-                    //                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
-                    //    .SetValue(null, colormap);
-
-                    //Debug.Print("Mono/X11 System.Windows.Forms custom visual and colormap installed succesfully.");
-                }
-            }
-            else
-                context = new Platform.Dummy.DummyGLContext();
-
-            this.MakeCurrent();
-            (context as IGraphicsContextInternal).LoadAll();
-        }
-
-        #endregion
-
-        #region public void DestroyContext()
-
-        /// <summary>
-        /// Destroys the GraphicsContext attached to this GLControl.
-        /// </summary>
-        /// <exception cref="System.NullReferenceException">Occurs when no GraphicsContext is attached.</exception>
-        public void DestroyContext()
-        {
-            Context.Dispose();
-            Context = null;
-        }
-
-        #endregion
-
         #region public bool IsIdle
 
         /// <summary>
@@ -352,40 +287,4 @@ namespace OpenTK
 
         #endregion
     }
-
-    #region internal interface IPlatformIdle
-#if false
-    internal interface IPlatformIdle
-    {
-        bool IsIdle { get; }
-    }
-
-    internal class X11PlatformIdle : IPlatformIdle
-    {
-        object get_lock = new object();
-        IntPtr display;
-
-        public X11PlatformIdle(WindowInfo info)
-        {
-            display = new OpenTK.Platform.X11.WindowInfo(info).Display;//((OpenTK.Platform.X11.WindowInfo)info).Display;
-        }
-
-        #region IPlatformIdle Members
-
-        public bool IsIdle
-        {
-            get
-            {
-                lock (get_lock)
-                {
-                    return OpenTK.Platform.X11.Functions.XPending(display) == 0;
-                }
-            }
-        }
-
-        #endregion
-    }
-#endif
-
-    #endregion
 }
