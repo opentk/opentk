@@ -7,8 +7,12 @@
     + Enabled documentation generation in debug builds.
     + Compute
         + Bitfields are now mapped to 'long' instead of 'int'.
+    + GLControl
+        + Removed unused code.
     + Math
         + Namespace OpenTK.Math no longer exists. Math functions are now placed directly inside the OpenTK namespace.
+        + Matrix4.Frustum was obsoleted in favor of Matrix4.CreatePerspectiveOffCenter.
+        + Matrix4.Perspective was obsoleted in favor of Matrix4.CreatePerspectiveFieldOfView.
 
 -------------------------
  OpenTK 0.9.8-1 -> 0.9.9
