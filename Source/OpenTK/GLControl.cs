@@ -238,7 +238,7 @@ namespace OpenTK
         /// <summary>
         /// Destroys the GraphicsContext attached to this GLControl.
         /// </summary>
-        /// <exception cref="NullReferenceException">Occurs when no GraphicsContext is attached.</exception>
+        /// <exception cref="System.NullReferenceException">Occurs when no GraphicsContext is attached.</exception>
         public void DestroyContext()
         {
             Context.Dispose();
@@ -332,7 +332,7 @@ namespace OpenTK
 
         /// <summary>Grabs a screenshot of the frontbuffer contents.</summary>
         /// <returns>A System.Drawing.Bitmap, containing the contents of the frontbuffer.</returns>
-        /// <exception cref="GraphicsContextException">
+        /// <exception cref="OpenTK.Graphics.GraphicsContextException">
         /// Occurs when no OpenTK.Graphics.GraphicsContext is current in the calling thread.
         /// </exception>
         public Bitmap GrabScreenshot()

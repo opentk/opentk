@@ -4,6 +4,7 @@
  OpenTK 0.9.9 -> 0.9.9-1
 -------------------------
 + OpenTK
+    + Enabled documentation generation in debug builds.
     + Compute
         + Bitfields are now mapped to 'long' instead of 'int'.
 

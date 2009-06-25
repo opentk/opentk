@@ -34,13 +34,13 @@
 
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../Binaries/Debug/Exe</OutputPath>
+          <OutputPath>../../Binaries/Debug</OutputPath>
         </Options>
       </Configuration>
 
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../Binaries/Release/Exe</OutputPath>
+          <OutputPath>../../Binaries/Release</OutputPath>
         </Options>
       </Configuration>
 
@@ -56,13 +56,13 @@
 
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../Binaries/Debug/Exe</OutputPath>
+          <OutputPath>../../Binaries/Debug</OutputPath>
         </Options>
       </Configuration>
 
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../Binaries/Release/Exe</OutputPath>
+          <OutputPath>../../Binaries/Release</OutputPath>
         </Options>
       </Configuration>
 
@@ -84,14 +84,15 @@
 
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../Binaries/Debug/Libraries</OutputPath>
+          <OutputPath>../../Binaries/Debug</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.xml</XmlDocFile>
         </Options>
       </Configuration>
 
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../Binaries/Release/Libraries</OutputPath>
+          <OutputPath>../../Binaries/Release</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
           <XmlDocFile>OpenTK.xml</XmlDocFile>
         </Options>
@@ -114,14 +115,15 @@
 
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../Binaries/Debug/Libraries</OutputPath>
+          <OutputPath>../../Binaries/Debug</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
+          <XmlDocFile>OpenTK.Utilities.xml</XmlDocFile>
         </Options>
       </Configuration>
 
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../Binaries/Release/Libraries</OutputPath>
+          <OutputPath>../../Binaries/Release</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
           <XmlDocFile>OpenTK.Utilities.xml</XmlDocFile>
         </Options>
@@ -143,14 +145,14 @@
 
       <Configuration name="Debug">
         <Options>
-          <OutputPath>../../Binaries/Debug/Examples</OutputPath>
+          <OutputPath>../../Binaries/Debug</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
 
       <Configuration name="Release">
         <Options>
-          <OutputPath>../../Binaries/Release/Examples</OutputPath>
+          <OutputPath>../../Binaries/Release</OutputPath>
           <AllowUnsafe>true</AllowUnsafe>
         </Options>
       </Configuration>
