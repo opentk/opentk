@@ -403,6 +403,143 @@ namespace OpenTK
         }
 
         #endregion
+		
+		#region CreatePerspectiveFieldOfView
+		
+        /// <summary>
+        /// Creates a perspective projection matrix.
+        /// </summary>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
+        /// <param name="zNear">Distance to the near clip plane</param>
+        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        /// <list type="bullet">
+        /// <item>fovy is zero, less than zero or larger than Math.PI</item>
+        /// <item>aspect is negative or zero</item>
+        /// <item>zNear is negative or zero</item>
+        /// <item>zFar is negative or zero</item>
+        /// <item>zNear is larger than zFar</item>
+        /// </list>
+        /// </exception>
+        public static void CreatePerspectiveFieldOfView(float fovy, float aspect, float zNear, float zFar, out Matrix4 result)
+        {
+			if (fovy <= 0 || fovy > Math.PI)
+				throw new ArgumentOutOfRangeException("fovy");
+			if (aspect <= 0)
+				throw new ArgumentOutOfRangeException("aspect");
+			if (zNear <= 0)
+				throw new ArgumentOutOfRangeException("zNear");
+			if (zFar <= 0)
+				throw new ArgumentOutOfRangeException("zFar");
+			if (zNear >= zFar)
+				throw new ArgumentOutOfRangeException("zNear");
+			
+            float yMax = zNear * (float)System.Math.Tan(0.5f * fovy);
+            float yMin = -yMax;
+            float xMin = yMin * aspect;
+            float xMax = yMax * aspect;
+
+            CreatePerspectiveOffCenter(xMin, xMax, yMin, yMax, zNear, zFar, out result);
+        }
+		
+        /// <summary>
+        /// Creates a perspective projection matrix.
+        /// </summary>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
+        /// <param name="zNear">Distance to the near clip plane</param>
+        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <returns>A projection matrix that transforms camera space to raster space</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        /// <list type="bullet">
+        /// <item>fovy is zero, less than zero or larger than Math.PI</item>
+        /// <item>aspect is negative or zero</item>
+        /// <item>zNear is negative or zero</item>
+        /// <item>zFar is negative or zero</item>
+        /// <item>zNear is larger than zFar</item>
+        /// </list>
+        /// </exception>
+        public static Matrix4 CreatePerspectiveFieldOfView(float fovy, float aspect, float zNear, float zFar)
+        {
+			Matrix4 result;
+			CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out result);
+			return result;
+        }
+		
+		#endregion
+		
+		#region CreatePerspectiveOffCenter
+		
+        /// <summary>
+        /// Creates an perspective projection matrix.
+        /// </summary>
+        /// <param name="left">Left edge of the view frustum</param>
+        /// <param name="right">Right edge of the view frustum</param>
+        /// <param name="bottom">Bottom edge of the view frustum</param>
+        /// <param name="top">Top edge of the view frustum</param>
+        /// <param name="zNear">Distance to the near clip plane</param>
+        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        /// <list type="bullet">
+        /// <item>zNear is negative or zero</item>
+        /// <item>zFar is negative or zero</item>
+        /// <item>zNear is larger than zFar</item>
+        /// </list>
+        /// </exception>
+        public static void CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float zNear, float zFar, out Matrix4 result)
+        {
+			if (zNear <= 0)
+				throw new ArgumentOutOfRangeException("zNear");
+			if (zFar <= 0)
+				throw new ArgumentOutOfRangeException("zFar");
+			if (zNear >= zFar)
+				throw new ArgumentOutOfRangeException("zNear");
+			
+			float x = (2.0f * zNear) / (right - left);
+			float y = (2.0f * zNear) / (top - bottom);
+			float a = (right + left) / (right - left);
+			float b = (top + bottom) / (top - bottom);
+			float c = -(zFar + zNear) / (zFar - zNear);
+			float d = -(2.0f * zFar * zNear) / (zFar - zNear);
+			
+            result = new Matrix4(x, 0, 0,  0,
+                                 0, y, 0,  0,
+                                 a, b, c, -1,
+	                             0, 0, d,  0);
+        }
+		
+        /// <summary>
+        /// Creates an perspective projection matrix.
+        /// </summary>
+        /// <param name="left">Left edge of the view frustum</param>
+        /// <param name="right">Right edge of the view frustum</param>
+        /// <param name="bottom">Bottom edge of the view frustum</param>
+        /// <param name="top">Top edge of the view frustum</param>
+        /// <param name="zNear">Distance to the near clip plane</param>
+        /// <param name="zFar">Distance to the far clip plane</param>
+        /// <returns>A projection matrix that transforms camera space to raster space</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown under the following conditions:
+        /// <list type="bullet">
+        /// <item>zNear is negative or zero</item>
+        /// <item>zFar is negative or zero</item>
+        /// <item>zNear is larger than zFar</item>
+        /// </list>
+        /// </exception>
+        public static Matrix4 CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float zNear, float zFar)
+        {
+			Matrix4 result;
+			CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
+			return result;
+        }
+		
+		#endregion
 
         #region Obsolete Functions
 
@@ -607,6 +744,7 @@ namespace OpenTK
         /// <param name="near">Distance to the near clip plane</param>
         /// <param name="far">Distance to the far clip plane</param>
         /// <returns>A projection matrix that transforms camera space to raster space</returns>
+        [Obsolete("Use CreatePerspectiveOffCenter instead.")]
         public static Matrix4 Frustum(float left, float right, float bottom, float top, float near, float far)
         {
             float invRL = 1.0f / (right - left);
@@ -626,6 +764,7 @@ namespace OpenTK
         /// <param name="near">Distance to the near clip plane</param>
         /// <param name="far">Distance to the far clip plane</param>
         /// <returns>A projection matrix that transforms camera space to raster space</returns>
+        [Obsolete("Use CreatePerspectiveFieldOfView instead.")]
         public static Matrix4 Perspective(float fovy, float aspect, float near, float far)
         {
             float yMax = near * (float)System.Math.Tan(0.5f * fovy);
