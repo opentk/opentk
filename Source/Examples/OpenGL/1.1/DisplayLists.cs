@@ -97,14 +97,15 @@ namespace Examples.Tutorial
 
         protected override void OnResize(EventArgs e)
         {
-            GL.Viewport(0, 0, Width, Height);
+            GL.Viewport(ClientRectangle);
 
-            double ratio = 0.0;
-            ratio = this.Width / (double)this.Height;
+            float aspect = this.ClientSize.Width / (float)this.ClientSize.Height;
+
+			Matrix4 projection_matrix;
+			Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 1, 64, out projection_matrix);
 
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-            Glu.Perspective(45.0, ratio, 1.0, 64.0);
+            GL.LoadMatrix(ref projection_matrix);
         }
 
         #endregion
