@@ -1149,7 +1149,7 @@ namespace OpenTK
         #region Location
         
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Point"> structure that contains the location of this window on the desktop.
+        /// Gets or sets a <see cref="System.Drawing.Point"/> structure that contains the location of this window on the desktop.
         /// </summary>
         public Point Location
         {
@@ -1174,7 +1174,7 @@ namespace OpenTK
         #region Size
         
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Size"> structure that contains the external size of this window.
+        /// Gets or sets a <see cref="System.Drawing.Size"/> structure that contains the external size of this window.
         /// </summary>
         public Size Size
         {
@@ -1401,14 +1401,14 @@ namespace OpenTK
         /// <returns>
         /// The point transformed to screen coordinates.
         /// </returns>
-        public System.Drawing.Point PointToScreen(System.Drawing.Point p)
+        public System.Drawing.Point PointToScreen(System.Drawing.Point point)
         {
             // Here we use the fact that PointToClient just translates the point, and PointToScreen
             // should perform the inverse operation.
             System.Drawing.Point trans = PointToClient(System.Drawing.Point.Empty);
-            p.X -= trans.X;
-            p.Y -= trans.Y;
-            return p;
+            point.X -= trans.X;
+            point.Y -= trans.Y;
+            return point;
         }
 
         #endregion
