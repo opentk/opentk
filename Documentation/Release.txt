@@ -1,18 +1,21 @@
-The Open Toolkit 0.9.9 Beta
+The Open Toolkit 0.9.9-1 Beta
 
 
 
 [Overview]
 
 This is the first preview release of what will become OpenTK 1.0. Major changes:
-* Initial support for the OpenCL flat API (OpenTK.Compute).
-* New, more versatile GameWindow implementation.
-* Support for fullscreen antialiasing.
-* Reduced reliance on Windows.Forms (dependency will be removed completely before OpenTK 1.0).
+* OpenCL bugfixes.
 
 Please note that this is a work-in-progress snapshot release and should only be used for testing purposes.
 
 Visit http://www.opentk.com to report issues or request features.
+
+
+
+[Resolved issues]
+
+[#964]
 
 
 
@@ -31,9 +34,15 @@ OpenGL 3.0 is not supported on MacOS at this time.
 The new GameWindow implementation may not function correctly on Mac OS X.
 
 
+
 [API changes]
 
 Please note that binary compatibility is not preserved between beta releases.
+
+
+[0.9.9-1]
+
+1. OpenCL bitfields are now mapped to 'long' instead of 'int'. Casts from [Flags] enums to 'int' may now fail. Please avoid such casts or use 'long' instead.
 
 
 [0.9.9]
