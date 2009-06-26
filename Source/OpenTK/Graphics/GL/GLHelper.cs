@@ -912,6 +912,17 @@ namespace OpenTK.Graphics
         }
 
         #endregion
+		
+        #region public static string GetShaderInfoLog(Int32 shader)
+
+        public static string GetShaderInfoLog(Int32 shader)
+        {
+			string info;
+            GetShaderInfoLog(shader, out info);
+			return info;
+        }
+
+        #endregion
 
         #region public static void GetShaderInfoLog(Int32 shader, out string info)
 
@@ -930,6 +941,17 @@ namespace OpenTK.Graphics
                 Delegates.glGetShaderInfoLog((UInt32)shader, sb.Capacity, &length, sb);
                 info = sb.ToString();
             }
+        }
+
+        #endregion
+		
+        #region public static string GetProgramInfoLog(Int32 program)
+
+        public static string GetProgramInfoLog(Int32 program)
+        {
+			string info;
+            GetProgramInfoLog(program, out info);
+			return info;
         }
 
         #endregion
