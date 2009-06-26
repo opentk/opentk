@@ -268,6 +268,43 @@ namespace OpenTK
         #endregion
 
         #region Static
+		
+		#region CreateFromAxisAngle
+		
+        /// <summary>
+        /// Build a rotation matrix from the specified axis/angle rotation.
+        /// </summary>
+        /// <param name="axis">The axis to rotate about.</param>
+        /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
+        /// <param name="result">A matrix instance.</param>
+        public static void CreateFromAxisAngle(Vector3 axis, float angle, out Matrix4 result)
+        {
+            float cos = (float)System.Math.Cos(-angle);
+            float sin = (float)System.Math.Sin(-angle);
+            float t = 1.0f - cos;
+
+            axis.Normalize();
+
+            result = new Matrix4(t * axis.X * axis.X + cos, t * axis.X * axis.Y - sin * axis.Z, t * axis.X * axis.Z + sin * axis.Y, 0.0f,
+			                     t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos, t * axis.Y * axis.Z - sin * axis.X, 0.0f,
+			                     t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X, t * axis.Z * axis.Z + cos, 0.0f,
+			                     0, 0, 0, 1);
+        }
+		
+        /// <summary>
+        /// Build a rotation matrix from the specified axis/angle rotation.
+        /// </summary>
+        /// <param name="axis">The axis to rotate about.</param>
+        /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
+        /// <returns>A matrix instance.</returns>
+        public static Matrix4 CreateFromAxisAngle(Vector3 axis, float angle)
+        {
+            Matrix4 result;
+		    CreateFromAxisAngle(axis, angle, out result);
+			return result;
+        }
+		
+		#endregion
 
         #region CreateTranslation
 
@@ -623,6 +660,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="angle">angle in radians to rotate counter-clockwise around the x-axis</param>
         /// <returns>A rotation matrix</returns>
+        [Obsolete("Use CreateRotationX instead.")]
         public static Matrix4 RotateX(float angle)
         {
             float cos = (float)System.Math.Cos(angle);
@@ -641,6 +679,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="angle">angle in radians to rotate counter-clockwise around the y-axis</param>
         /// <returns>A rotation matrix</returns>
+        [Obsolete("Use CreateRotationY instead.")]
         public static Matrix4 RotateY(float angle)
         {
             float cos = (float)System.Math.Cos(angle);
@@ -659,6 +698,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="angle">angle in radians to rotate counter-clockwise around the z-axis</param>
         /// <returns>A rotation matrix</returns>
+        [Obsolete("Use CreateRotationZ instead.")]
         public static Matrix4 RotateZ(float angle)
         {
             float cos = (float)System.Math.Cos(angle);
@@ -678,6 +718,7 @@ namespace OpenTK
         /// <param name="axis">the axis to rotate about</param>
         /// <param name="angle">angle in radians to rotate counter-clockwise (looking in the direction of the given axis)</param>
         /// <returns>A rotation matrix</returns>
+        [Obsolete("Use CreateFromAxisAngle instead.")]
         public static Matrix4 Rotate(Vector3 axis, float angle)
         {
             float cos = (float)System.Math.Cos(-angle);
@@ -800,23 +841,23 @@ namespace OpenTK
         /// <param name="result">A new instance that is the result of the multiplication</param>
         public static void Mult(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
         {
-			result = new Matrix4();
-			result.M11 = left.M11 * right.M11 + left.M12 * right.M21 + left.M13 * right.M31 + left.M14 * right.M41;
-			result.M12 = left.M11 * right.M12 + left.M12 * right.M22 + left.M13 * right.M32 + left.M14 * right.M42;
-			result.M13 = left.M11 * right.M13 + left.M12 * right.M23 + left.M13 * right.M33 + left.M14 * right.M43;
-			result.M14 = left.M11 * right.M14 + left.M12 * right.M24 + left.M13 * right.M34 + left.M14 * right.M44;
-			result.M21 = left.M21 * right.M11 + left.M22 * right.M21 + left.M23 * right.M31 + left.M24 * right.M41;
-			result.M22 = left.M21 * right.M12 + left.M22 * right.M22 + left.M23 * right.M32 + left.M24 * right.M42;
-			result.M23 = left.M21 * right.M13 + left.M22 * right.M23 + left.M23 * right.M33 + left.M24 * right.M43;
-			result.M24 = left.M21 * right.M14 + left.M22 * right.M24 + left.M23 * right.M34 + left.M24 * right.M44;
-			result.M31 = left.M31 * right.M11 + left.M32 * right.M21 + left.M33 * right.M31 + left.M34 * right.M41;
-			result.M32 = left.M31 * right.M12 + left.M32 * right.M22 + left.M33 * right.M32 + left.M34 * right.M42;
-			result.M33 = left.M31 * right.M13 + left.M32 * right.M23 + left.M33 * right.M33 + left.M34 * right.M43;
-			result.M34 = left.M31 * right.M14 + left.M32 * right.M24 + left.M33 * right.M34 + left.M34 * right.M44;
-			result.M41 = left.M41 * right.M11 + left.M42 * right.M21 + left.M43 * right.M31 + left.M44 * right.M41;
-			result.M42 = left.M41 * right.M12 + left.M42 * right.M22 + left.M43 * right.M32 + left.M44 * right.M42;
-			result.M43 = left.M41 * right.M13 + left.M42 * right.M23 + left.M43 * right.M33 + left.M44 * right.M43;
-			result.M44 = left.M41 * right.M14 + left.M42 * right.M24 + left.M43 * right.M34 + left.M44 * right.M44;
+			result = new Matrix4(
+				left.M11 * right.M11 + left.M12 * right.M21 + left.M13 * right.M31 + left.M14 * right.M41,
+				left.M11 * right.M12 + left.M12 * right.M22 + left.M13 * right.M32 + left.M14 * right.M42,
+				left.M11 * right.M13 + left.M12 * right.M23 + left.M13 * right.M33 + left.M14 * right.M43,
+				left.M11 * right.M14 + left.M12 * right.M24 + left.M13 * right.M34 + left.M14 * right.M44,
+				left.M21 * right.M11 + left.M22 * right.M21 + left.M23 * right.M31 + left.M24 * right.M41,
+				left.M21 * right.M12 + left.M22 * right.M22 + left.M23 * right.M32 + left.M24 * right.M42,
+				left.M21 * right.M13 + left.M22 * right.M23 + left.M23 * right.M33 + left.M24 * right.M43,
+				left.M21 * right.M14 + left.M22 * right.M24 + left.M23 * right.M34 + left.M24 * right.M44,
+				left.M31 * right.M11 + left.M32 * right.M21 + left.M33 * right.M31 + left.M34 * right.M41,
+				left.M31 * right.M12 + left.M32 * right.M22 + left.M33 * right.M32 + left.M34 * right.M42,
+				left.M31 * right.M13 + left.M32 * right.M23 + left.M33 * right.M33 + left.M34 * right.M43,
+				left.M31 * right.M14 + left.M32 * right.M24 + left.M33 * right.M34 + left.M34 * right.M44,
+				left.M41 * right.M11 + left.M42 * right.M21 + left.M43 * right.M31 + left.M44 * right.M41,
+				left.M41 * right.M12 + left.M42 * right.M22 + left.M43 * right.M32 + left.M44 * right.M42,
+				left.M41 * right.M13 + left.M42 * right.M23 + left.M43 * right.M33 + left.M44 * right.M43,
+				left.M41 * right.M14 + left.M42 * right.M24 + left.M43 * right.M34 + left.M44 * right.M44);
         }
 
         #endregion
