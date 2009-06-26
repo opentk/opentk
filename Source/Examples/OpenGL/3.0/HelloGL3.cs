@@ -57,7 +57,7 @@ void main(void)
   
   gl_Position = projection_matrix * modelview_matrix * vec4(in_position, 1);
 }";
-		
+        
         string fragmentShaderSource = @"
 #version 130
 
@@ -118,10 +118,10 @@ void main(void)
             DisplayDevice.Default, 3, 0,
             GraphicsContextFlags.ForwardCompatible | GraphicsContextFlags.Debug)
         { }
-		
-		public override void OnLoad (System.EventArgs e)
-		{
-			// Create shaders
+        
+        public override void OnLoad (System.EventArgs e)
+        {
+            // Create shaders
             vertexShaderHandle = GL.CreateShader(ShaderType.VertexShader);
             fragmentShaderHandle = GL.CreateShader(ShaderType.FragmentShader);
 
@@ -130,11 +130,11 @@ void main(void)
 
             GL.CompileShader(vertexShaderHandle);
             GL.CompileShader(fragmentShaderHandle);
-			
-			Debug.WriteLine(GL.GetShaderInfoLog(vertexShaderHandle));
-			Debug.WriteLine(GL.GetShaderInfoLog(fragmentShaderHandle));
+            
+            Debug.WriteLine(GL.GetShaderInfoLog(vertexShaderHandle));
+            Debug.WriteLine(GL.GetShaderInfoLog(fragmentShaderHandle));
 
-			// Create program
+            // Create program
             shaderProgramHandle = GL.CreateProgram();
 
             GL.AttachShader(shaderProgramHandle, vertexShaderHandle);
@@ -146,18 +146,18 @@ void main(void)
 
             GL.UseProgram(shaderProgramHandle);
 
-			// Set uniforms
+            // Set uniforms
             projectionMatrixLocation = GL.GetUniformLocation(shaderProgramHandle, "projection_matrix");
             modelviewMatrixLocation = GL.GetUniformLocation(shaderProgramHandle, "modelview_matrix");
 
             float aspectRatio = ClientSize.Width / (float)(ClientSize.Height);
             Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspectRatio, 1, 100, out projectionMatrix);
             modelviewMatrix = Matrix4.LookAt(new Vector3(0, 3, 5), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-			
+            
             GL.UniformMatrix4(projectionMatrixLocation, false, ref projectionMatrix);
             GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
 
-			// Create vertex buffer
+            // Create vertex buffer
             GL.GenVertexArrays(1, out vaoHandle);
             GL.BindVertexArray(vaoHandle);
 
@@ -181,20 +181,20 @@ void main(void)
 
             GL.BindAttribLocation(shaderProgramHandle, 0, "in_position");
             GL.BindAttribLocation(shaderProgramHandle, 1, "in_normal");
-			
-			// Other state
-			GL.Enable(EnableCap.DepthTest);
-			GL.ClearColor(System.Drawing.Color.MidnightBlue);
-		}
+            
+            // Other state
+            GL.Enable(EnableCap.DepthTest);
+            GL.ClearColor(System.Drawing.Color.MidnightBlue);
+        }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-			Matrix4 rotation = Matrix4.RotateY((float)e.Time);
+            Matrix4 rotation = Matrix4.RotateY((float)e.Time);
             Matrix4.Mult(ref rotation, ref modelviewMatrix, out modelviewMatrix);
             GL.UniformMatrix4(modelviewMatrixLocation, false, ref modelviewMatrix);
-			
-			if (Keyboard[OpenTK.Input.Key.Escape])
-				Exit();
+            
+            if (Keyboard[OpenTK.Input.Key.Escape])
+                Exit();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -208,15 +208,15 @@ void main(void)
 
             SwapBuffers();
         }
-		
+        
         [STAThread]
         public static void Main()
         {
             using (HelloGL3 example = new HelloGL3())
-			{
+            {
                 Utilities.SetWindowTitle(example);
-				example.Run(30);
-			}
+                example.Run(30);
+            }
         }
     }
 }
