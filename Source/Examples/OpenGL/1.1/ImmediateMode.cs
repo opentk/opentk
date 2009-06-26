@@ -187,9 +187,7 @@ namespace Examples.Tutorial
         {
             using (T03_Immediate_Mode_Cube example = new T03_Immediate_Mode_Cube())
             {
-                // Get the title and category  of this example using reflection.
-                ExampleAttribute info = ((ExampleAttribute)example.GetType().GetCustomAttributes(false)[0]);
-                example.Title = String.Format("OpenTK | {0} {1}: {2}", info.Category, info.Difficulty, info.Title);
+                Utilities.SetWindowTitle(example);
                 example.Run(30.0, 0.0);
             }
         }
