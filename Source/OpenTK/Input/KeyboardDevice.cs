@@ -193,7 +193,9 @@ namespace OpenTK.Input
         #endregion
     }
 
+    [Obsolete]
     public delegate void KeyDownEvent(KeyboardDevice sender, Key key);
+    [Obsolete]
     public delegate void KeyUpEvent(KeyboardDevice sender, Key key);
 
     #region public enum Key : int
