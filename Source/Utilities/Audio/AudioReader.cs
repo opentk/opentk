@@ -171,6 +171,9 @@ namespace OpenTK.Audio
 
         #region public virtual bool EndOfFile
 
+        /// <summary>
+        /// Returns true if the AudioReader has reached the end of the file.
+        /// </summary>
         public virtual bool EndOfFile
         {
             get
@@ -187,6 +190,9 @@ namespace OpenTK.Audio
 
         #region --- Protected Members ---
 
+        /// <summary>
+        /// Gets or sets the input <see cref="System.IO.Stream"/> of the AudioReader.
+        /// </summary>
         protected virtual Stream Stream
         {
             get { return stream; }
@@ -216,6 +222,9 @@ namespace OpenTK.Audio
             }
         }
 
+        /// <summary>
+        /// Finalizes this AudioReader.
+        /// </summary>
         ~AudioReader()
         {
             this.Dispose(false);

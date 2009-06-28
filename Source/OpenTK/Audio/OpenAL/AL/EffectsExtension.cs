@@ -1209,6 +1209,9 @@ namespace OpenTK.Audio
             }
         }
 
+        /// <summary>
+        /// Constructs a new EffectsExtension instance.
+        /// </summary>
         public EffectsExtension()
         {
             _valid = false;
