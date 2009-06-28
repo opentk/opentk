@@ -10,8 +10,14 @@ using System.Text;
 
 namespace OpenTK.Input
 {
+    /// <summary>
+    /// Defines the interface for an input driver.
+    /// </summary>
     public interface IInputDriver : IKeyboardDriver, IMouseDriver, IJoystickDriver, IDisposable
     {
+        /// <summary>
+        /// Updates the state of the driver.
+        /// </summary>
         void Poll();
     }
 }
