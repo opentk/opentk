@@ -64,13 +64,15 @@ typedef void ALvoid;
 
 namespace OpenTK.Audio
 {
+    /// <summary>
+    /// Provides access to the OpenAL flat API.
+    /// </summary>
     public static partial class AL
     {
-
         #region Constants
 
-        public const string Lib = "openal32.dll";
-        private const CallingConvention Style = CallingConvention.Cdecl;
+        internal const string Lib = "openal32.dll";
+        const CallingConvention Style = CallingConvention.Cdecl;
 
         #endregion Constants
 
