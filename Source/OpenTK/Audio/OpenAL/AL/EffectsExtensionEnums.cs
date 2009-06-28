@@ -226,35 +226,125 @@ namespace OpenTK.Audio
     ///<summary>Vocal morpher effect parameters. If both parameters are set to the same phoneme, that determines the filtering effect that will be heard. If these two parameters are set to different phonemes, the filtering effect will morph between the two settings at a rate specified by EfxEffectf.VocalMorpherRate.</summary>
     public enum EfxFormantFilterSettings : int
     {
+        /// <summary>
+        /// Phoneme A of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeA = 0,
+        /// <summary>
+        /// Phoneme E of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeE = 1,
+        /// <summary>
+        /// Phoneme I of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeI = 2,
+        /// <summary>
+        /// Phoneme O of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeO = 3,
+        /// <summary>
+        /// Phoneme U of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeU = 4,
+        /// <summary>
+        /// Phoneme AA of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeAA = 5,
+        /// <summary>
+        /// Phoneme AE of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeAE = 6,
+        /// <summary>
+        /// Phoneme AH of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeAH = 7,
+        /// <summary>
+        /// Phoneme AO of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeAO = 8,
+        /// <summary>
+        /// Phoneme EH of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeEH = 9,
+        /// <summary>
+        /// Phoneme ER of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeER = 10,
+        /// <summary>
+        /// Phoneme IH of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeIH = 11,
+        /// <summary>
+        /// Phoneme IY of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeIY = 12,
+        /// <summary>
+        /// Phoneme UH of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeUH = 13,
+        /// <summary>
+        /// Phoneme UW of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeUW = 14,
+        /// <summary>
+        /// Phoneme B of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeB = 15,
+        /// <summary>
+        /// Phoneme D of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeD = 16,
+        /// <summary>
+        /// Phoneme F of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeF = 17,
+        /// <summary>
+        /// Phoneme G of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeG = 18,
+        /// <summary>
+        /// Phoneme J of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeJ = 19,
+        /// <summary>
+        /// Phoneme K of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeK = 20,
+        /// <summary>
+        /// Phoneme L of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeL = 21,
+        /// <summary>
+        /// Phoneme M of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeM = 22,
+        /// <summary>
+        /// Phoneme N of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeN = 23,
+        /// <summary>
+        /// Phoneme P of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeP = 24,
+        /// <summary>
+        /// Phoneme R of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeR = 25,
+        /// <summary>
+        /// Phoneme S of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeS = 26,
+        /// <summary>
+        /// Phoneme T of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeT = 27,
+        /// <summary>
+        /// Phoneme V of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeV = 28,
+        /// <summary>
+        /// Phoneme Z of the vocal morpher.
+        /// </summary>
         VocalMorpherPhonemeZ = 29,
     }
 

@@ -1349,6 +1349,9 @@ namespace OpenTK
 
         #region InputDriver
 
+        /// <summary>
+        /// This property is deprecated.
+        /// </summary>
         [Obsolete]
         public IInputDriver InputDriver
         {
@@ -1365,6 +1368,9 @@ namespace OpenTK
 
         #region Close
 
+        /// <summary>
+        /// Closes the GameWindow. Equivalent to calling <see cref="OpenTK.GameWindow.Exit()"/>.
+        /// </summary>
         public void Close()
         {
             Exit();

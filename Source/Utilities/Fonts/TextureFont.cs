@@ -550,6 +550,9 @@ namespace OpenTK.Graphics
             }
         }
 
+        /// <summary>
+        /// Finalizes this TextureFont.
+        /// </summary>
         ~TextureFont()
         {
             Dispose(false);
