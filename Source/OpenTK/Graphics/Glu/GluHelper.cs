@@ -16,6 +16,10 @@ using OpenTK.Platform;
 
 namespace OpenTK.Graphics
 {
+    /// <summary>
+    /// Provides access to the OpenGL Utilities library.
+    /// Methods i this library are considered deprecated and should be avoided.
+    /// </summary>
     [Obsolete("Use OpenTK math functions instead.")]
     public static partial class Glu
     {
