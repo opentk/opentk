@@ -1102,7 +1102,7 @@ namespace OpenTK.Platform.X11
         Append = 2
     }
 
-    [StructLayout(LayoutKind.Sequential), CLSCompliant(false)]
+    [StructLayout(LayoutKind.Sequential)]
     internal struct XKeyBoardState
     {
         public int key_click_percent;
