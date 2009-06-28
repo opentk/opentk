@@ -260,6 +260,12 @@ namespace OpenTK
 
         #region Sub
 
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>The result of the operation.</returns>
         public static Quaterniond Sub(Quaterniond left, Quaterniond right)
         {
             return new Quaterniond(
@@ -267,6 +273,12 @@ namespace OpenTK
                 left.W - right.W);
         }
 
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>The result of the operation.</returns>
         public static void Sub(ref Quaterniond left, ref Quaterniond right, out Quaterniond result)
         {
             result = new Quaterniond(
