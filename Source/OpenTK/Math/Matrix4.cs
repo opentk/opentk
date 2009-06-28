@@ -258,6 +258,9 @@ namespace OpenTK
 
         #region public void Transpose()
 
+        /// <summary>
+        /// Calculates the transpose of this instance.
+        /// </summary>
         public void Transpose()
         {
             this = Matrix4.Transpose(this);

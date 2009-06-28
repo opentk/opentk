@@ -633,6 +633,12 @@ namespace OpenTK
 
         #region Operators
 
+        /// <summary>
+        /// Adds two instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>The result of the operation.</returns>
         public static Vector2d operator +(Vector2d left, Vector2d right)
         {
             left.X += right.X;
@@ -640,6 +646,12 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Subtracts two instances.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>The result of the operation.</returns>
         public static Vector2d operator -(Vector2d left, Vector2d right)
         {
             left.X -= right.X;
@@ -647,6 +659,11 @@ namespace OpenTK
             return left;
         }
 
+        /// <summary>
+        /// Negates an instance.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <returns>The result of the operation.</returns>
         public static Vector2d operator -(Vector2d vec)
         {
             vec.X = -vec.X;
@@ -654,6 +671,12 @@ namespace OpenTK
             return vec;
         }
 
+        /// <summary>
+        /// Multiplies an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
         public static Vector2d operator *(Vector2d vec, double f)
         {
             vec.X *= f;
@@ -661,6 +684,12 @@ namespace OpenTK
             return vec;
         }
 
+        /// <summary>
+        /// Multiply an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The scalar.</param>
+        /// <param name="right">The instance.</param>
+        /// <returns>The result of the operation.</returns>
         public static Vector2d operator *(double f, Vector2d vec)
         {
             vec.X *= f;
@@ -668,6 +697,12 @@ namespace OpenTK
             return vec;
         }
 
+        /// <summary>
+        /// Divides an instance by a scalar.
+        /// </summary>
+        /// <param name="left">The instance.</param>
+        /// <param name="right">The scalar.</param>
+        /// <returns>The result of the operation.</returns>
         public static Vector2d operator /(Vector2d vec, double f)
         {
             double mult = 1.0f / f;
@@ -676,11 +711,23 @@ namespace OpenTK
             return vec;
         }
 
+        /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>True, if both instances are equal; false otherwise.</returns>
         public static bool operator ==(Vector2d left, Vector2d right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares two instances for ljequality.
+        /// </summary>
+        /// <param name="left">The left instance.</param>
+        /// <param name="right">The right instance.</param>
+        /// <returns>True, if the instances are not equal; false otherwise.</returns>
         public static bool operator !=(Vector2d left, Vector2d right)
         {
             return !left.Equals(right);
