@@ -5,10 +5,17 @@
 -------------------------
 + OpenTK
     + Enabled documentation generation in debug builds.
+    + Added several missing XML comments to OpenTK.Input, OpenTK.Audio, OpenTK.Math and other namespaces.
+    + Audio
+		+ AL.Lib is now internal, not public.
     + Compute
         + Bitfields are now mapped to 'long' instead of 'int'.
     + GLControl
         + Removed unused code.
+    + Input
+		+ Added Mouse and Keyboard stubs for the new input API.
+		+ Added common alternative names to OpenTK.Input.Key (e.g. LControl, RControl, ...)
+		+ Removed None and MaxKeys tokens from OpenTK.Input.Key. Adde Unknown token.
     + Math
         + Namespace OpenTK.Math no longer exists. Math functions are now placed directly inside the OpenTK namespace.
         + Matrix4.Frustum was obsoleted in favor of Matrix4.CreatePerspectiveOffCenter.
