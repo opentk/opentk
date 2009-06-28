@@ -662,7 +662,7 @@ namespace OpenTK
         /// <summary>
         /// Negates an instance.
         /// </summary>
-        /// <param name="left">The instance.</param>
+        /// <param name="vec">The instance.</param>
         /// <returns>The result of the operation.</returns>
         public static Vector2d operator -(Vector2d vec)
         {
@@ -674,8 +674,8 @@ namespace OpenTK
         /// <summary>
         /// Multiplies an instance by a scalar.
         /// </summary>
-        /// <param name="left">The instance.</param>
-        /// <param name="right">The scalar.</param>
+        /// <param name="vec">The instance.</param>
+        /// <param name="f">The scalar.</param>
         /// <returns>The result of the operation.</returns>
         public static Vector2d operator *(Vector2d vec, double f)
         {
@@ -687,8 +687,8 @@ namespace OpenTK
         /// <summary>
         /// Multiply an instance by a scalar.
         /// </summary>
-        /// <param name="left">The scalar.</param>
-        /// <param name="right">The instance.</param>
+        /// <param name="f">The scalar.</param>
+        /// <param name="vec">The instance.</param>
         /// <returns>The result of the operation.</returns>
         public static Vector2d operator *(double f, Vector2d vec)
         {
@@ -700,8 +700,8 @@ namespace OpenTK
         /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>
-        /// <param name="left">The instance.</param>
-        /// <param name="right">The scalar.</param>
+        /// <param name="vec">The instance.</param>
+        /// <param name="f">The scalar.</param>
         /// <returns>The result of the operation.</returns>
         public static Vector2d operator /(Vector2d vec, double f)
         {
@@ -723,7 +723,7 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Compares two instances for ljequality.
+        /// Compares two instances for ienquality.
         /// </summary>
         /// <param name="left">The left instance.</param>
         /// <param name="right">The right instance.</param>
