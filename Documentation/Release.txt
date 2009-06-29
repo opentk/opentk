@@ -75,9 +75,17 @@ Please continue using these classes normally. A future update will provide a muc
 
 [0.9.8-1]
 
-1. GL.GetBoolea is renamed to GL.GetBoolean.
+1. Parameters of OpenTK.Graphics.GL.GetShaderSource have been changed: you should now pass a single StringBuilder instead of a StringBuilder[] array.
 
-Please replace all instances of the former by GL.GetBoolean.
+2. Parameters of OpenTK.Graphics.GL.GetUniformIndices have been changed: you should now pass a string[] array instead of a single string.
+
+2. Parameters of OpenTK.Graphics.GL.TransformFeedbackVaryings have been changed: you should now pass a string[] array instead of a single string.
+
+
+[0.9.8-1]
+
+This release renames GL.GetBoolea to the correct GL.GetBoolean.
+
 
 
 [0.9.8]
