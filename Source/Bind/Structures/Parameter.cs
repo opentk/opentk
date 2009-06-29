@@ -295,13 +295,24 @@ namespace Bind.Structures
             // Find out the necessary wrapper types.
             if (Pointer)/* || CurrentType == "IntPtr")*/
             {
-                if (CurrentType.ToLower().Contains("char") || CurrentType.ToLower().Contains("string"))
+                if (CurrentType.ToLower().Contains("char"))
                 {
-                    // char* or string -> [In] String or [Out] StringBuilder
+                    // char* -> [In] String or [Out] StringBuilder
                     CurrentType =
                         Flow == Parameter.FlowDirection.Out ?
                         "System.Text.StringBuilder" :
                         "String";
+
+                    Pointer = false;
+                    WrapperType = WrapperTypes.None;
+                }
+                else if  (CurrentType.ToLower().Contains("string"))
+                {
+                    // string* -> [In] String[] or [Out] StringBuilder[]
+                    CurrentType =
+                        Flow == Parameter.FlowDirection.Out ?
+                        "System.Text.StringBuilder[]" :
+                        "String[]";
 
                     Pointer = false;
                     WrapperType = WrapperTypes.None;

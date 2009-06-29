@@ -2012,10 +2012,10 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetShaderiv(UInt32 shader, OpenTK.Graphics.ShaderParameter pname, [Out] Int32* @params);
             internal unsafe static GetShaderiv glGetShaderiv;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetShaderSource(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder[] source);
+            internal unsafe delegate void GetShaderSource(UInt32 shader, Int32 bufSize, [Out] Int32* length, [Out] System.Text.StringBuilder source);
             internal unsafe static GetShaderSource glGetShaderSource;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetShaderSourceARB(UInt32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder[] source);
+            internal unsafe delegate void GetShaderSourceARB(UInt32 obj, Int32 maxLength, [Out] Int32* length, [Out] System.Text.StringBuilder source);
             internal unsafe static GetShaderSourceARB glGetShaderSourceARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetSharpenTexFuncSGIS(OpenTK.Graphics.TextureTarget target, [Out] Single* points);
@@ -2123,7 +2123,7 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetUniformfvARB(UInt32 programObj, Int32 location, [Out] Single* @params);
             internal unsafe static GetUniformfvARB glGetUniformfvARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void GetUniformIndices(UInt32 program, Int32 uniformCount, String uniformNames, [Out] UInt32* uniformIndices);
+            internal unsafe delegate void GetUniformIndices(UInt32 program, Int32 uniformCount, String[] uniformNames, [Out] UInt32* uniformIndices);
             internal unsafe static GetUniformIndices glGetUniformIndices;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetUniformiv(UInt32 program, Int32 location, [Out] Int32* @params);
@@ -4409,10 +4409,10 @@ namespace OpenTK.Graphics
             internal unsafe delegate void TransformFeedbackAttribsNV(UInt32 count, Int32* attribs, OpenTK.Graphics.NvTransformFeedback bufferMode);
             internal unsafe static TransformFeedbackAttribsNV glTransformFeedbackAttribsNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TransformFeedbackVaryings(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.TransformFeedbackMode bufferMode);
+            internal delegate void TransformFeedbackVaryings(UInt32 program, Int32 count, String[] varyings, OpenTK.Graphics.TransformFeedbackMode bufferMode);
             internal static TransformFeedbackVaryings glTransformFeedbackVaryings;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal delegate void TransformFeedbackVaryingsEXT(UInt32 program, Int32 count, String varyings, OpenTK.Graphics.ExtTransformFeedback bufferMode);
+            internal delegate void TransformFeedbackVaryingsEXT(UInt32 program, Int32 count, String[] varyings, OpenTK.Graphics.ExtTransformFeedback bufferMode);
             internal static TransformFeedbackVaryingsEXT glTransformFeedbackVaryingsEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void TransformFeedbackVaryingsNV(UInt32 program, Int32 count, Int32* locations, OpenTK.Graphics.NvTransformFeedback bufferMode);
