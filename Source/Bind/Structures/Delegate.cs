@@ -601,8 +601,8 @@ namespace Bind.Structures
 
                 // Special case: these functions take a string[] that should stay as is.
                 // Todo: move to gloverrides.xml
-                if (Name.Contains("ShaderSource") && Parameters[i].CurrentType.ToLower().Contains("string"))
-                    Parameters[i].Array = 1;
+                //if (Name.Contains("ShaderSource") && Parameters[i].CurrentType.ToLower().Contains("string"))
+                //    Parameters[i].Array = 1;
             }
         }
 
