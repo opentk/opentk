@@ -25,8 +25,6 @@
 //
 #endregion
 
-using System;
-
 #if GLES20
 
 namespace OpekTN.Graphics.ES20
