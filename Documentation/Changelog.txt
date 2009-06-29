@@ -1,5 +1,15 @@
 [Legend: complete('+') | WIP('*') | missing('-')]
 
+---------------------------
+ OpenTK 0.9.8-1 -> 0.9.8-2
+---------------------------
++ Bind
+    + Fixed handling of string arrays.
+    
++ OpenTK
+    + Graphics
+	+ Fixed wrappers for functions taking string arrays: TranformFeedbackVaryings, GetUniformIndices, GetShaderSource.
+
 -------------------------
  OpenTK 0.9.8 -> 0.9.8-1
 -------------------------

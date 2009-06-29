@@ -145,8 +145,9 @@ namespace Bind.GL2
 
                                 p.Name = Utilities.Keywords.Contains(words[1]) ? "@" + words[1] : words[1];
                                 p.CurrentType = words[2];
-                                p.Pointer = words[4].Contains("array") ? true : words[4].Contains("reference") ? true : false;
-                                if (p.Pointer && words[5].Contains("[1]"))
+                                p.Pointer |= words[4].Contains("array");
+                                p.Pointer |= words[4].Contains("reference");
+                                if (p.Pointer && words.Count > 5 && words[5].Contains("[1]"))
                                     p.ElementCount = 1;
                                 p.Flow = words[3] == "in" ? Parameter.FlowDirection.In : Parameter.FlowDirection.Out;
 
@@ -356,11 +357,15 @@ namespace Bind.GL2
                     // "(Const)VoidPointer" -> "void*"
                     GLTypes.Add(words[0], "void*");
                 }
-                /*else if (words[0] == "CharPointer" || words[0] == "charPointerARB")
+                else if (words[0] == "CharPointer" || words[0] == "charPointerARB")
                 {
+                    // The typematching logic cannot handle pointers to pointers, e.g. CharPointer* -> char** -> string* -> string[].
+                    // Hence we give it a push.
+                    // Note: When both CurrentType == "String" and Pointer == true, the typematching is hardcoded to use
+                    // System.String[] or System.StringBuilder[].
                     GLTypes.Add(words[0], "System.String");
                 }
-                else if (words[0].Contains("Pointer"))
+                /*else if (words[0].Contains("Pointer"))
                 {
                     GLTypes.Add(words[0], words[1].Replace("Pointer", "*"));
                 }*/

@@ -1,13 +1,11 @@
-The Open Toolkit 0.9.8-1 Beta
+The Open Toolkit 0.9.8-2 Beta
 Sunday, 31 May 2009
 
 
 [Overview]
 
-This release fixes issues identified in OpenTK 0.9.8:
-* GL.GetBoolea is renamed to GL.GetBoolean
-* TextPrinter.Clear() no longer results in text corruption.
-* Matrix4.Mult() performance is increased.
+This release fixes issues identified in OpenTK 0.9.8-1:
+* Bind now handles string arrays correctly. Affects functions GetShaderSource, GetUniformIndices, TransformFeedbackVaryings.
 
 Please visit http://www.opentk.com to report issues or request features.
 
@@ -24,6 +22,15 @@ Example documentation may not show up correctly when running on Mono. This is a 
 [API changes]
 
 Please note that binary compatibility is not preserved between beta releases.
+
+[0.9.8-1]
+
+1. Parameters of OpenTK.Graphics.GL.GetShaderSource have been changed: you should now pass a single StringBuilder instead of a StringBuilder[] array.
+
+2. Parameters of OpenTK.Graphics.GL.GetUniformIndices have been changed: you should now pass a string[] array instead of a single string.
+
+2. Parameters of OpenTK.Graphics.GL.TransformFeedbackVaryings have been changed: you should now pass a string[] array instead of a single string.
+
 
 [0.9.8-1]
 
