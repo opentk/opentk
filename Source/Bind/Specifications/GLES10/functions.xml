@@ -204,8 +204,8 @@
     <returns type="void" />
     <param type="GLenum" name="pname" />
     <param type="GLint" name="*params" />
-  </function><function name="ubyte" extension="Core" version="1.0" category="">
-    <returns type="const" />
+  </function><function name="GetString" extension="Core" version="1.0" category="">
+    <returns type="GLubyte*" />
     <param type="GLenum" name="name" />
   </function><function name="Hint" extension="Core" version="1.0" category="">
     <returns type="void" />

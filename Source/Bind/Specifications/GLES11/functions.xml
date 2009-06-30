@@ -498,8 +498,8 @@
     <param type="GLenum" name="pname" />
     <param type="void" name="**params" />
   </function>
-  <function name="ubyte" extension="Core" version="1.1" category="Common, Lite">
-    <returns type="const" />
+  <function name="GetString" extension="Core" version="1.1" category="Common, Lite">
+    <returns type="GLubyte*" />
     <param type="GLenum" name="name" />
   </function>
   <function name="GetTexEnviv" extension="Core" version="1.1" category="Common, Lite">
