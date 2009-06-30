@@ -334,14 +334,14 @@ namespace Bind.Structures
                     else
                         CurrentType = s;
                 }
-
-                CurrentType =
-                    Bind.Structures.Type.CSTypes.ContainsKey(CurrentType) ?
-                    Bind.Structures.Type.CSTypes[CurrentType] : CurrentType;
-
-                if (CurrentType == "IntPtr" && String.IsNullOrEmpty(PreviousType))
-                    Pointer = false;
             }
+
+            CurrentType =
+                Bind.Structures.Type.CSTypes.ContainsKey(CurrentType) ?
+                Bind.Structures.Type.CSTypes[CurrentType] : CurrentType;
+
+            if (CurrentType == "IntPtr" && String.IsNullOrEmpty(PreviousType))
+                Pointer = false;
         }
 
         #endregion

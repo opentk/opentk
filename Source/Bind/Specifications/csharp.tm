@@ -3,7 +3,6 @@ GLsizei,            Int32
 GLsizeiptr,         IntPtr
 GLintptr,           IntPtr
 # GLenum,             Int32
-GLenum,             All
 GLboolean,          bool		# Boolean # Int32
 GLbitfield,         UInt32
 # GLvoid*,            IntPtr

@@ -31,7 +31,7 @@ namespace Bind.GL2
         protected static string enumsFile = "GLEnums.cs";
         protected static string wrappersFile = "GL.cs";
 
-        protected static readonly string functionOverridesFile = "GL2/gloverrides.xml";
+        protected static string functionOverridesFile = "GL2/gloverrides.xml";
 
         protected static string loadAllFuncName = "LoadAll";
 
@@ -39,10 +39,6 @@ namespace Bind.GL2
 
         protected static readonly char[] numbers = "0123456789".ToCharArray();
         //protected static readonly Dictionary<string, string> doc_replacements;
-
-        DocProcessor doc_processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
-        XPathDocument function_overrides = new XPathDocument(Path.Combine(Settings.InputPath, functionOverridesFile));
-
         #endregion
 
         #region --- Constructors ---
@@ -103,8 +99,9 @@ namespace Bind.GL2
         {
             Console.WriteLine("Reading function specs.");
 
-            //List<Bind.Structures.Delegate> delegates = new List<Bind.Structures.Delegate>();
             DelegateCollection delegates = new DelegateCollection();
+
+            XPathDocument function_overrides = new XPathDocument(Path.Combine(Settings.InputPath, functionOverridesFile));
 
             do
             {
@@ -699,7 +696,10 @@ namespace Bind.GL2
                                 path = Path.Combine(Settings.DocPath, "gl" + f.TrimmedName.TrimEnd(numbers) + ".xml");
 
                             if (File.Exists(path))
+                            {
+                                DocProcessor doc_processor = new DocProcessor(Path.Combine(Settings.DocPath, Settings.DocFile));
                                 sw.WriteLine(doc_processor.ProcessFile(path));
+                            }
                         }
                         catch (FileNotFoundException)
                         { }
