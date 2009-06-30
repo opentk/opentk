@@ -87,3 +87,7 @@ __GLXextFuncPtr IntPtr
 VLServer		IntPtr
 VLPath			IntPtr
 VLNode			IntPtr
+
+# Gles types.
+GLclampx, int
+GLfixed, int
