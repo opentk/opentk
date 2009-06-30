@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<functions>
-  <functions />
+<enums>
   <enum name="Version">
     <token name="EsVersion20" value="1" />
   </enum>
@@ -380,4 +379,4 @@
     <token name="MaxRenderbufferSize" value="0x84E8" />
     <token name="InvalidFramebufferOperation" value="0x0506" />
   </enum>
-</functions>
+</enums>

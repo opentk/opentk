@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<functions>
-  <functions />
+<enums>
   <enum name="OpenGLESCoreVersions">
     <token name="VersionEsCm10" value="1" />
     <token name="VersionEsCl10" value="1" />
@@ -448,4 +447,4 @@
     <token name="PointSpriteOes" value="0x8861" />
     <token name="CoordReplaceOes" value="0x8862" />
   </enum>
-</functions>
+</enums>
