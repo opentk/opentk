@@ -55,7 +55,7 @@
   <function name="GetClipPlanef" extension="Core" version="1.1" category="Common">
     <returns type="void" />
     <param type="GLenum" name="pname" />
-    <param type="GLfloat" name="eqn[4]" />
+    <param type="GLfloat*" name="eqn" elementcount="4"/>
   </function>
   <function name="GetFloatv" extension="Core" version="1.1" category="Common">
     <returns type="void" />
@@ -456,7 +456,7 @@
   <function name="GetClipPlanex" extension="Core" version="1.1" category="Common, Lite">
     <returns type="void" />
     <param type="GLenum" name="pname" />
-    <param type="GLfixed" name="eqn[4]" />
+    <param type="GLfixed*" name="eqn" elementcount="4"/>
   </function>
   <function name="GenBuffers" extension="Core" version="1.1" category="Common, Lite">
     <returns type="void" />

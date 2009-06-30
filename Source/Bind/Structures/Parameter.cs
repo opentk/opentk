@@ -64,6 +64,11 @@ namespace Bind.Structures
             {
                 if (_name != value)
                 {
+                    if (value.StartsWith("*"))
+                    {
+                        Pointer = true;
+                        value = value.TrimStart("*".ToCharArray());
+                    }
                     _name = value;
                     rebuild = true;
                 }
@@ -332,6 +337,9 @@ namespace Bind.Structures
 
             if (Reference)
                 WrapperType |= WrapperTypes.ReferenceParameter;
+
+            if (Name == "params")
+                Name = "@params";
 
             // This causes problems with bool arrays
             //if (CurrentType.ToLower().Contains("bool"))
