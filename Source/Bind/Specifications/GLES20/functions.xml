@@ -400,8 +400,8 @@
     <param type="GLsizei*" name="length" />
     <param type="char*" name="source" />
   </function>
-  <function name="ubyte*" extension="Core" version="2.0" category="">
-    <returns type="const" />
+  <function name="GetString" extension="Core" version="2.0" category="">
+    <returns type="GLubyte*" />
     <param type="GLenum" name="name" />
   </function>
   <function name="GetTexParameterfv" extension="Core" version="2.0" category="">
