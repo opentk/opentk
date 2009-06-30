@@ -1,117 +1,117 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <functions>
-  <function name="ActiveTexture" extension="Core" version="2.0" profile="">
+  <function name="ActiveTexture" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="texture" />
   </function>
-  <function name="AttachShader" extension="Core" version="2.0" profile="">
+  <function name="AttachShader" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLuint" name="shader" />
   </function>
-  <function name="BindAttribLocation" extension="Core" version="2.0" profile="">
+  <function name="BindAttribLocation" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLuint" name="index" />
     <param type="char*" name="name" />
   </function>
-  <function name="BindBuffer" extension="Core" version="2.0" profile="">
+  <function name="BindBuffer" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLuint" name="buffer" />
   </function>
-  <function name="BindFramebuffer" extension="Core" version="2.0" profile="">
+  <function name="BindFramebuffer" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLuint" name="framebuffer" />
   </function>
-  <function name="BindRenderbuffer" extension="Core" version="2.0" profile="">
+  <function name="BindRenderbuffer" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLuint" name="renderbuffer" />
   </function>
-  <function name="BindTexture" extension="Core" version="2.0" profile="">
+  <function name="BindTexture" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLuint" name="texture" />
   </function>
-  <function name="BlendColor" extension="Core" version="2.0" profile="">
+  <function name="BlendColor" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLclampf" name="red" />
     <param type="GLclampf" name="green" />
     <param type="GLclampf" name="blue" />
     <param type="GLclampf" name="alpha" />
   </function>
-  <function name="BlendEquation" extension="Core" version="2.0" profile="">
+  <function name="BlendEquation" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="mode" />
   </function>
-  <function name="BlendEquationSeparate" extension="Core" version="2.0" profile="">
+  <function name="BlendEquationSeparate" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="modeRGB" />
     <param type="GLenum" name="modeAlpha" />
   </function>
-  <function name="BlendFunc" extension="Core" version="2.0" profile="">
+  <function name="BlendFunc" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="sfactor" />
     <param type="GLenum" name="dfactor" />
   </function>
-  <function name="BlendFuncSeparate" extension="Core" version="2.0" profile="">
+  <function name="BlendFuncSeparate" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="srcRGB" />
     <param type="GLenum" name="dstRGB" />
     <param type="GLenum" name="srcAlpha" />
     <param type="GLenum" name="dstAlpha" />
   </function>
-  <function name="BufferData" extension="Core" version="2.0" profile="">
+  <function name="BufferData" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLsizeiptr" name="size" />
     <param type="void*" name="data" />
     <param type="GLenum" name="usage" />
   </function>
-  <function name="BufferSubData" extension="Core" version="2.0" profile="">
+  <function name="BufferSubData" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLintptr" name="offset" />
     <param type="GLsizeiptr" name="size" />
     <param type="void*" name="data" />
   </function>
-  <function name="CheckFramebufferStatus" extension="Core" version="2.0" profile="">
+  <function name="CheckFramebufferStatus" extension="Core" version="2.0" category="">
     <returns type="GLenum" />
     <param type="GLenum" name="target" />
   </function>
-  <function name="Clear" extension="Core" version="2.0" profile="">
+  <function name="Clear" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLbitfield" name="mask" />
   </function>
-  <function name="ClearColor" extension="Core" version="2.0" profile="">
+  <function name="ClearColor" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLclampf" name="red" />
     <param type="GLclampf" name="green" />
     <param type="GLclampf" name="blue" />
     <param type="GLclampf" name="alpha" />
   </function>
-  <function name="ClearDepthf" extension="Core" version="2.0" profile="">
+  <function name="ClearDepthf" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLclampf" name="depth" />
   </function>
-  <function name="ClearStencil" extension="Core" version="2.0" profile="">
+  <function name="ClearStencil" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="s" />
   </function>
-  <function name="ColorMask" extension="Core" version="2.0" profile="">
+  <function name="ColorMask" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLboolean" name="red" />
     <param type="GLboolean" name="green" />
     <param type="GLboolean" name="blue" />
     <param type="GLboolean" name="alpha" />
   </function>
-  <function name="CompileShader" extension="Core" version="2.0" profile="">
+  <function name="CompileShader" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="shader" />
   </function>
-  <function name="CompressedTexImage2D" extension="Core" version="2.0" profile="">
+  <function name="CompressedTexImage2D" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLint" name="level" />
@@ -122,7 +122,7 @@
     <param type="GLsizei" name="imageSize" />
     <param type="void*" name="data" />
   </function>
-  <function name="CompressedTexSubImage2D" extension="Core" version="2.0" profile="">
+  <function name="CompressedTexSubImage2D" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLint" name="level" />
@@ -134,7 +134,7 @@
     <param type="GLsizei" name="imageSize" />
     <param type="void*" name="data" />
   </function>
-  <function name="CopyTexImage2D" extension="Core" version="2.0" profile="">
+  <function name="CopyTexImage2D" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLint" name="level" />
@@ -145,7 +145,7 @@
     <param type="GLsizei" name="height" />
     <param type="GLint" name="border" />
   </function>
-  <function name="CopyTexSubImage2D" extension="Core" version="2.0" profile="">
+  <function name="CopyTexSubImage2D" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLint" name="level" />
@@ -156,106 +156,106 @@
     <param type="GLsizei" name="width" />
     <param type="GLsizei" name="height" />
   </function>
-  <function name="CreateProgram" extension="Core" version="2.0" profile="">
+  <function name="CreateProgram" extension="Core" version="2.0" category="">
     <returns type="GLuint" />
   </function>
-  <function name="CreateShader" extension="Core" version="2.0" profile="">
+  <function name="CreateShader" extension="Core" version="2.0" category="">
     <returns type="GLuint" />
     <param type="GLenum" name="type" />
   </function>
-  <function name="CullFace" extension="Core" version="2.0" profile="">
+  <function name="CullFace" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="mode" />
   </function>
-  <function name="DeleteBuffers" extension="Core" version="2.0" profile="">
+  <function name="DeleteBuffers" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLsizei" name="n" />
     <param type="GLuint*" name="buffers" />
   </function>
-  <function name="DeleteFramebuffers" extension="Core" version="2.0" profile="">
+  <function name="DeleteFramebuffers" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLsizei" name="n" />
     <param type="GLuint*" name="framebuffers" />
   </function>
-  <function name="DeleteProgram" extension="Core" version="2.0" profile="">
+  <function name="DeleteProgram" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
   </function>
-  <function name="DeleteRenderbuffers" extension="Core" version="2.0" profile="">
+  <function name="DeleteRenderbuffers" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLsizei" name="n" />
     <param type="GLuint*" name="renderbuffers" />
   </function>
-  <function name="DeleteShader" extension="Core" version="2.0" profile="">
+  <function name="DeleteShader" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="shader" />
   </function>
-  <function name="DeleteTextures" extension="Core" version="2.0" profile="">
+  <function name="DeleteTextures" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLsizei" name="n" />
     <param type="GLuint*" name="textures" />
   </function>
-  <function name="DepthFunc" extension="Core" version="2.0" profile="">
+  <function name="DepthFunc" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="func" />
   </function>
-  <function name="DepthMask" extension="Core" version="2.0" profile="">
+  <function name="DepthMask" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLboolean" name="flag" />
   </function>
-  <function name="DepthRangef" extension="Core" version="2.0" profile="">
+  <function name="DepthRangef" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLclampf" name="zNear" />
     <param type="GLclampf" name="zFar" />
   </function>
-  <function name="DetachShader" extension="Core" version="2.0" profile="">
+  <function name="DetachShader" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLuint" name="shader" />
   </function>
-  <function name="Disable" extension="Core" version="2.0" profile="">
+  <function name="Disable" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="cap" />
   </function>
-  <function name="DisableVertexAttribArray" extension="Core" version="2.0" profile="">
+  <function name="DisableVertexAttribArray" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="index" />
   </function>
-  <function name="DrawArrays" extension="Core" version="2.0" profile="">
+  <function name="DrawArrays" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="mode" />
     <param type="GLint" name="first" />
     <param type="GLsizei" name="count" />
   </function>
-  <function name="DrawElements" extension="Core" version="2.0" profile="">
+  <function name="DrawElements" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="mode" />
     <param type="GLsizei" name="count" />
     <param type="GLenum" name="type" />
     <param type="void*" name="indices" />
   </function>
-  <function name="Enable" extension="Core" version="2.0" profile="">
+  <function name="Enable" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="cap" />
   </function>
-  <function name="EnableVertexAttribArray" extension="Core" version="2.0" profile="">
+  <function name="EnableVertexAttribArray" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="index" />
   </function>
-  <function name="Finish" extension="Core" version="2.0" profile="">
+  <function name="Finish" extension="Core" version="2.0" category="">
     <returns type="void" />
   </function>
-  <function name="Flush" extension="Core" version="2.0" profile="">
+  <function name="Flush" extension="Core" version="2.0" category="">
     <returns type="void" />
   </function>
-  <function name="FramebufferRenderbuffer" extension="Core" version="2.0" profile="">
+  <function name="FramebufferRenderbuffer" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="attachment" />
     <param type="GLenum" name="renderbuffertarget" />
     <param type="GLuint" name="renderbuffer" />
   </function>
-  <function name="FramebufferTexture2D" extension="Core" version="2.0" profile="">
+  <function name="FramebufferTexture2D" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="attachment" />
@@ -263,35 +263,35 @@
     <param type="GLuint" name="texture" />
     <param type="GLint" name="level" />
   </function>
-  <function name="FrontFace" extension="Core" version="2.0" profile="">
+  <function name="FrontFace" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="mode" />
   </function>
-  <function name="GenBuffers" extension="Core" version="2.0" profile="">
+  <function name="GenBuffers" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLsizei" name="n" />
     <param type="GLuint*" name="buffers" />
   </function>
-  <function name="GenerateMipmap" extension="Core" version="2.0" profile="">
+  <function name="GenerateMipmap" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
   </function>
-  <function name="GenFramebuffers" extension="Core" version="2.0" profile="">
+  <function name="GenFramebuffers" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLsizei" name="n" />
     <param type="GLuint*" name="framebuffers" />
   </function>
-  <function name="GenRenderbuffers" extension="Core" version="2.0" profile="">
+  <function name="GenRenderbuffers" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLsizei" name="n" />
     <param type="GLuint*" name="renderbuffers" />
   </function>
-  <function name="GenTextures" extension="Core" version="2.0" profile="">
+  <function name="GenTextures" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLsizei" name="n" />
     <param type="GLuint*" name="textures" />
   </function>
-  <function name="GetActiveAttrib" extension="Core" version="2.0" profile="">
+  <function name="GetActiveAttrib" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLuint" name="index" />
@@ -301,7 +301,7 @@
     <param type="GLenum*" name="type" />
     <param type="char*" name="name" />
   </function>
-  <function name="GetActiveUniform" extension="Core" version="2.0" profile="">
+  <function name="GetActiveUniform" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLuint" name="index" />
@@ -311,198 +311,198 @@
     <param type="GLenum*" name="type" />
     <param type="char*" name="name" />
   </function>
-  <function name="GetAttachedShaders" extension="Core" version="2.0" profile="">
+  <function name="GetAttachedShaders" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLsizei" name="maxcount" />
     <param type="GLsizei*" name="count" />
     <param type="GLuint*" name="shaders" />
   </function>
-  <function name="GetAttribLocation" extension="Core" version="2.0" profile="">
+  <function name="GetAttribLocation" extension="Core" version="2.0" category="">
     <returns type="int" />
     <param type="GLuint" name="program" />
     <param type="char*" name="name" />
   </function>
-  <function name="GetBooleanv" extension="Core" version="2.0" profile="">
+  <function name="GetBooleanv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="pname" />
     <param type="GLboolean*" name="params" />
   </function>
-  <function name="GetBufferParameteriv" extension="Core" version="2.0" profile="">
+  <function name="GetBufferParameteriv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="pname" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="GetError" extension="Core" version="2.0" profile="">
+  <function name="GetError" extension="Core" version="2.0" category="">
     <returns type="GLenum" />
   </function>
-  <function name="GetFloatv" extension="Core" version="2.0" profile="">
+  <function name="GetFloatv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="pname" />
     <param type="GLfloat*" name="params" />
   </function>
-  <function name="GetFramebufferAttachmentParameteriv" extension="Core" version="2.0" profile="">
+  <function name="GetFramebufferAttachmentParameteriv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="attachment" />
     <param type="GLenum" name="pname" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="GetIntegerv" extension="Core" version="2.0" profile="">
+  <function name="GetIntegerv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="pname" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="GetProgramiv" extension="Core" version="2.0" profile="">
+  <function name="GetProgramiv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLenum" name="pname" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="GetProgramInfoLog" extension="Core" version="2.0" profile="">
+  <function name="GetProgramInfoLog" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLsizei" name="bufsize" />
     <param type="GLsizei*" name="length" />
     <param type="char*" name="infolog" />
   </function>
-  <function name="GetRenderbufferParameteriv" extension="Core" version="2.0" profile="">
+  <function name="GetRenderbufferParameteriv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="pname" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="GetShaderiv" extension="Core" version="2.0" profile="">
+  <function name="GetShaderiv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="shader" />
     <param type="GLenum" name="pname" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="GetShaderInfoLog" extension="Core" version="2.0" profile="">
+  <function name="GetShaderInfoLog" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="shader" />
     <param type="GLsizei" name="bufsize" />
     <param type="GLsizei*" name="length" />
     <param type="char*" name="infolog" />
   </function>
-  <function name="GetShaderPrecisionFormat" extension="Core" version="2.0" profile="">
+  <function name="GetShaderPrecisionFormat" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="shadertype" />
     <param type="GLenum" name="precisiontype" />
     <param type="GLint*" name="range" />
     <param type="GLint*" name="precision" />
   </function>
-  <function name="GetShaderSource" extension="Core" version="2.0" profile="">
+  <function name="GetShaderSource" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="shader" />
     <param type="GLsizei" name="bufsize" />
     <param type="GLsizei*" name="length" />
     <param type="char*" name="source" />
   </function>
-  <function name="ubyte*" extension="Core" version="2.0" profile="">
+  <function name="ubyte*" extension="Core" version="2.0" category="">
     <returns type="const" />
     <param type="GLenum" name="name" />
   </function>
-  <function name="GetTexParameterfv" extension="Core" version="2.0" profile="">
+  <function name="GetTexParameterfv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="pname" />
     <param type="GLfloat*" name="params" />
   </function>
-  <function name="GetTexParameteriv" extension="Core" version="2.0" profile="">
+  <function name="GetTexParameteriv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="pname" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="GetUniformfv" extension="Core" version="2.0" profile="">
+  <function name="GetUniformfv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLint" name="location" />
     <param type="GLfloat*" name="params" />
   </function>
-  <function name="GetUniformiv" extension="Core" version="2.0" profile="">
+  <function name="GetUniformiv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
     <param type="GLint" name="location" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="GetUniformLocation" extension="Core" version="2.0" profile="">
+  <function name="GetUniformLocation" extension="Core" version="2.0" category="">
     <returns type="int" />
     <param type="GLuint" name="program" />
     <param type="char*" name="name" />
   </function>
-  <function name="GetVertexAttribfv" extension="Core" version="2.0" profile="">
+  <function name="GetVertexAttribfv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="index" />
     <param type="GLenum" name="pname" />
     <param type="GLfloat*" name="params" />
   </function>
-  <function name="GetVertexAttribiv" extension="Core" version="2.0" profile="">
+  <function name="GetVertexAttribiv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="index" />
     <param type="GLenum" name="pname" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="GetVertexAttribPointerv" extension="Core" version="2.0" profile="">
+  <function name="GetVertexAttribPointerv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="index" />
     <param type="GLenum" name="pname" />
     <param type="void**" name="pointer" />
   </function>
-  <function name="Hint" extension="Core" version="2.0" profile="">
+  <function name="Hint" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="mode" />
   </function>
-  <function name="IsBuffer" extension="Core" version="2.0" profile="">
+  <function name="IsBuffer" extension="Core" version="2.0" category="">
     <returns type="GLboolean" />
     <param type="GLuint" name="buffer" />
   </function>
-  <function name="IsEnabled" extension="Core" version="2.0" profile="">
+  <function name="IsEnabled" extension="Core" version="2.0" category="">
     <returns type="GLboolean" />
     <param type="GLenum" name="cap" />
   </function>
-  <function name="IsFramebuffer" extension="Core" version="2.0" profile="">
+  <function name="IsFramebuffer" extension="Core" version="2.0" category="">
     <returns type="GLboolean" />
     <param type="GLuint" name="framebuffer" />
   </function>
-  <function name="IsProgram" extension="Core" version="2.0" profile="">
+  <function name="IsProgram" extension="Core" version="2.0" category="">
     <returns type="GLboolean" />
     <param type="GLuint" name="program" />
   </function>
-  <function name="IsRenderbuffer" extension="Core" version="2.0" profile="">
+  <function name="IsRenderbuffer" extension="Core" version="2.0" category="">
     <returns type="GLboolean" />
     <param type="GLuint" name="renderbuffer" />
   </function>
-  <function name="IsShader" extension="Core" version="2.0" profile="">
+  <function name="IsShader" extension="Core" version="2.0" category="">
     <returns type="GLboolean" />
     <param type="GLuint" name="shader" />
   </function>
-  <function name="IsTexture" extension="Core" version="2.0" profile="">
+  <function name="IsTexture" extension="Core" version="2.0" category="">
     <returns type="GLboolean" />
     <param type="GLuint" name="texture" />
   </function>
-  <function name="LineWidth" extension="Core" version="2.0" profile="">
+  <function name="LineWidth" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLfloat" name="width" />
   </function>
-  <function name="LinkProgram" extension="Core" version="2.0" profile="">
+  <function name="LinkProgram" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
   </function>
-  <function name="PixelStorei" extension="Core" version="2.0" profile="">
+  <function name="PixelStorei" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="pname" />
     <param type="GLint" name="param" />
   </function>
-  <function name="PolygonOffset" extension="Core" version="2.0" profile="">
+  <function name="PolygonOffset" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLfloat" name="factor" />
     <param type="GLfloat" name="units" />
   </function>
-  <function name="ReadPixels" extension="Core" version="2.0" profile="">
+  <function name="ReadPixels" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="x" />
     <param type="GLint" name="y" />
@@ -512,29 +512,29 @@
     <param type="GLenum" name="type" />
     <param type="void*" name="pixels" />
   </function>
-  <function name="ReleaseShaderCompiler" extension="Core" version="2.0" profile="">
+  <function name="ReleaseShaderCompiler" extension="Core" version="2.0" category="">
     <returns type="void" />
   </function>
-  <function name="RenderbufferStorage" extension="Core" version="2.0" profile="">
+  <function name="RenderbufferStorage" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="internalformat" />
     <param type="GLsizei" name="width" />
     <param type="GLsizei" name="height" />
   </function>
-  <function name="SampleCoverage" extension="Core" version="2.0" profile="">
+  <function name="SampleCoverage" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLclampf" name="value" />
     <param type="GLboolean" name="invert" />
   </function>
-  <function name="Scissor" extension="Core" version="2.0" profile="">
+  <function name="Scissor" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="x" />
     <param type="GLint" name="y" />
     <param type="GLsizei" name="width" />
     <param type="GLsizei" name="height" />
   </function>
-  <function name="ShaderBinary" extension="Core" version="2.0" profile="">
+  <function name="ShaderBinary" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLsizei" name="n" />
     <param type="GLuint*" name="shaders" />
@@ -542,49 +542,49 @@
     <param type="void*" name="binary" />
     <param type="GLsizei" name="length" />
   </function>
-  <function name="ShaderSource" extension="Core" version="2.0" profile="">
+  <function name="ShaderSource" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="shader" />
     <param type="GLsizei" name="count" />
     <param type="char**" name="string" />
     <param type="GLint*" name="length" />
   </function>
-  <function name="StencilFunc" extension="Core" version="2.0" profile="">
+  <function name="StencilFunc" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="func" />
     <param type="GLint" name="ref" />
     <param type="GLuint" name="mask" />
   </function>
-  <function name="StencilFuncSeparate" extension="Core" version="2.0" profile="">
+  <function name="StencilFuncSeparate" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="face" />
     <param type="GLenum" name="func" />
     <param type="GLint" name="ref" />
     <param type="GLuint" name="mask" />
   </function>
-  <function name="StencilMask" extension="Core" version="2.0" profile="">
+  <function name="StencilMask" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="mask" />
   </function>
-  <function name="StencilMaskSeparate" extension="Core" version="2.0" profile="">
+  <function name="StencilMaskSeparate" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="face" />
     <param type="GLuint" name="mask" />
   </function>
-  <function name="StencilOp" extension="Core" version="2.0" profile="">
+  <function name="StencilOp" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="fail" />
     <param type="GLenum" name="zfail" />
     <param type="GLenum" name="zpass" />
   </function>
-  <function name="StencilOpSeparate" extension="Core" version="2.0" profile="">
+  <function name="StencilOpSeparate" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="face" />
     <param type="GLenum" name="fail" />
     <param type="GLenum" name="zfail" />
     <param type="GLenum" name="zpass" />
   </function>
-  <function name="TexImage2D" extension="Core" version="2.0" profile="">
+  <function name="TexImage2D" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLint" name="level" />
@@ -596,31 +596,31 @@
     <param type="GLenum" name="type" />
     <param type="void*" name="pixels" />
   </function>
-  <function name="TexParameterf" extension="Core" version="2.0" profile="">
+  <function name="TexParameterf" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="pname" />
     <param type="GLfloat" name="param" />
   </function>
-  <function name="TexParameterfv" extension="Core" version="2.0" profile="">
+  <function name="TexParameterfv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="pname" />
     <param type="GLfloat*" name="params" />
   </function>
-  <function name="TexParameteri" extension="Core" version="2.0" profile="">
+  <function name="TexParameteri" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="pname" />
     <param type="GLint" name="param" />
   </function>
-  <function name="TexParameteriv" extension="Core" version="2.0" profile="">
+  <function name="TexParameteriv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLenum" name="pname" />
     <param type="GLint*" name="params" />
   </function>
-  <function name="TexSubImage2D" extension="Core" version="2.0" profile="">
+  <function name="TexSubImage2D" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLenum" name="target" />
     <param type="GLint" name="level" />
@@ -632,79 +632,79 @@
     <param type="GLenum" name="type" />
     <param type="void*" name="pixels" />
   </function>
-  <function name="Uniform1f" extension="Core" version="2.0" profile="">
+  <function name="Uniform1f" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLfloat" name="x" />
   </function>
-  <function name="Uniform1fv" extension="Core" version="2.0" profile="">
+  <function name="Uniform1fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLfloat*" name="v" />
   </function>
-  <function name="Uniform1i" extension="Core" version="2.0" profile="">
+  <function name="Uniform1i" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLint" name="x" />
   </function>
-  <function name="Uniform1iv" extension="Core" version="2.0" profile="">
+  <function name="Uniform1iv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLint*" name="v" />
   </function>
-  <function name="Uniform2f" extension="Core" version="2.0" profile="">
+  <function name="Uniform2f" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLfloat" name="x" />
     <param type="GLfloat" name="y" />
   </function>
-  <function name="Uniform2fv" extension="Core" version="2.0" profile="">
+  <function name="Uniform2fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLfloat*" name="v" />
   </function>
-  <function name="Uniform2i" extension="Core" version="2.0" profile="">
+  <function name="Uniform2i" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLint" name="x" />
     <param type="GLint" name="y" />
   </function>
-  <function name="Uniform2iv" extension="Core" version="2.0" profile="">
+  <function name="Uniform2iv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLint*" name="v" />
   </function>
-  <function name="Uniform3f" extension="Core" version="2.0" profile="">
+  <function name="Uniform3f" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLfloat" name="x" />
     <param type="GLfloat" name="y" />
     <param type="GLfloat" name="z" />
   </function>
-  <function name="Uniform3fv" extension="Core" version="2.0" profile="">
+  <function name="Uniform3fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLfloat*" name="v" />
   </function>
-  <function name="Uniform3i" extension="Core" version="2.0" profile="">
+  <function name="Uniform3i" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLint" name="x" />
     <param type="GLint" name="y" />
     <param type="GLint" name="z" />
   </function>
-  <function name="Uniform3iv" extension="Core" version="2.0" profile="">
+  <function name="Uniform3iv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLint*" name="v" />
   </function>
-  <function name="Uniform4f" extension="Core" version="2.0" profile="">
+  <function name="Uniform4f" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLfloat" name="x" />
@@ -712,13 +712,13 @@
     <param type="GLfloat" name="z" />
     <param type="GLfloat" name="w" />
   </function>
-  <function name="Uniform4fv" extension="Core" version="2.0" profile="">
+  <function name="Uniform4fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLfloat*" name="v" />
   </function>
-  <function name="Uniform4i" extension="Core" version="2.0" profile="">
+  <function name="Uniform4i" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLint" name="x" />
@@ -726,75 +726,75 @@
     <param type="GLint" name="z" />
     <param type="GLint" name="w" />
   </function>
-  <function name="Uniform4iv" extension="Core" version="2.0" profile="">
+  <function name="Uniform4iv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLint*" name="v" />
   </function>
-  <function name="UniformMatrix2fv" extension="Core" version="2.0" profile="">
+  <function name="UniformMatrix2fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLboolean" name="transpose" />
     <param type="GLfloat*" name="value" />
   </function>
-  <function name="UniformMatrix3fv" extension="Core" version="2.0" profile="">
+  <function name="UniformMatrix3fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLboolean" name="transpose" />
     <param type="GLfloat*" name="value" />
   </function>
-  <function name="UniformMatrix4fv" extension="Core" version="2.0" profile="">
+  <function name="UniformMatrix4fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="location" />
     <param type="GLsizei" name="count" />
     <param type="GLboolean" name="transpose" />
     <param type="GLfloat*" name="value" />
   </function>
-  <function name="UseProgram" extension="Core" version="2.0" profile="">
+  <function name="UseProgram" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
   </function>
-  <function name="ValidateProgram" extension="Core" version="2.0" profile="">
+  <function name="ValidateProgram" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="program" />
   </function>
-  <function name="VertexAttrib1f" extension="Core" version="2.0" profile="">
+  <function name="VertexAttrib1f" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="indx" />
     <param type="GLfloat" name="x" />
   </function>
-  <function name="VertexAttrib1fv" extension="Core" version="2.0" profile="">
+  <function name="VertexAttrib1fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="indx" />
     <param type="GLfloat*" name="values" />
   </function>
-  <function name="VertexAttrib2f" extension="Core" version="2.0" profile="">
+  <function name="VertexAttrib2f" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="indx" />
     <param type="GLfloat" name="x" />
     <param type="GLfloat" name="y" />
   </function>
-  <function name="VertexAttrib2fv" extension="Core" version="2.0" profile="">
+  <function name="VertexAttrib2fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="indx" />
     <param type="GLfloat*" name="values" />
   </function>
-  <function name="VertexAttrib3f" extension="Core" version="2.0" profile="">
+  <function name="VertexAttrib3f" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="indx" />
     <param type="GLfloat" name="x" />
     <param type="GLfloat" name="y" />
     <param type="GLfloat" name="z" />
   </function>
-  <function name="VertexAttrib3fv" extension="Core" version="2.0" profile="">
+  <function name="VertexAttrib3fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="indx" />
     <param type="GLfloat*" name="values" />
   </function>
-  <function name="VertexAttrib4f" extension="Core" version="2.0" profile="">
+  <function name="VertexAttrib4f" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="indx" />
     <param type="GLfloat" name="x" />
@@ -802,12 +802,12 @@
     <param type="GLfloat" name="z" />
     <param type="GLfloat" name="w" />
   </function>
-  <function name="VertexAttrib4fv" extension="Core" version="2.0" profile="">
+  <function name="VertexAttrib4fv" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="indx" />
     <param type="GLfloat*" name="values" />
   </function>
-  <function name="VertexAttribPointer" extension="Core" version="2.0" profile="">
+  <function name="VertexAttribPointer" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLuint" name="indx" />
     <param type="GLint" name="size" />
@@ -816,7 +816,7 @@
     <param type="GLsizei" name="stride" />
     <param type="void*" name="ptr" />
   </function>
-  <function name="Viewport" extension="Core" version="2.0" profile="">
+  <function name="Viewport" extension="Core" version="2.0" category="">
     <returns type="void" />
     <param type="GLint" name="x" />
     <param type="GLint" name="y" />
