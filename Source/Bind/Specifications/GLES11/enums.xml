@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<functions>
+  <functions />
+  <enum name="OpenGLESCoreVersions">
+    <token name="VersionEsCm10" value="1" />
+    <token name="VersionEsCl10" value="1" />
+    <token name="VersionEsCm11" value="1" />
+    <token name="VersionEsCl11" value="1" />
+  </enum>
+  <enum name="ClearBufferMask">
+    <token name="DepthBufferBit" value="0x00000100" />
+    <token name="StencilBufferBit" value="0x00000400" />
+    <token name="ColorBufferBit" value="0x00004000" />
+  </enum>
+  <enum name="Boolean">
+    <token name="False" value="0" />
+    <token name="True" value="1" />
+  </enum>
+  <enum name="BeginMode">
+    <token name="Points" value="0x0000" />
+    <token name="Lines" value="0x0001" />
+    <token name="LineLoop" value="0x0002" />
+    <token name="LineStrip" value="0x0003" />
+    <token name="Triangles" value="0x0004" />
+    <token name="TriangleStrip" value="0x0005" />
+    <token name="TriangleFan" value="0x0006" />
+  </enum>
+  <enum name="AlphaFunction">
+    <token name="Never" value="0x0200" />
+    <token name="Less" value="0x0201" />
+    <token name="Equal" value="0x0202" />
+    <token name="Lequal" value="0x0203" />
+    <token name="Greater" value="0x0204" />
+    <token name="Notequal" value="0x0205" />
+    <token name="Gequal" value="0x0206" />
+    <token name="Always" value="0x0207" />
+  </enum>
+  <enum name="BlendingFactorDest">
+    <token name="Zero" value="0" />
+    <token name="One" value="1" />
+    <token name="SrcColor" value="0x0300" />
+    <token name="OneMinusSrcColor" value="0x0301" />
+    <token name="SrcAlpha" value="0x0302" />
+    <token name="OneMinusSrcAlpha" value="0x0303" />
+    <token name="DstAlpha" value="0x0304" />
+    <token name="OneMinusDstAlpha" value="0x0305" />
+  </enum>
+  <enum name="BlendingFactorSrc">
+    <token name="DstColor" value="0x0306" />
+    <token name="OneMinusDstColor" value="0x0307" />
+    <token name="SrcAlphaSaturate" value="0x0308" />
+  </enum>
+  <enum name="ClipPlaneName">
+    <token name="ClipPlane0" value="0x3000" />
+    <token name="ClipPlane1" value="0x3001" />
+    <token name="ClipPlane2" value="0x3002" />
+    <token name="ClipPlane3" value="0x3003" />
+    <token name="ClipPlane4" value="0x3004" />
+    <token name="ClipPlane5" value="0x3005" />
+  </enum>
+  <enum name="CullFaceMode">
+    <token name="Front" value="0x0404" />
+    <token name="Back" value="0x0405" />
+    <token name="FrontAndBack" value="0x0408" />
+  </enum>
+  <enum name="EnableCap">
+    <token name="Fog" value="0x0B60" />
+    <token name="Lighting" value="0x0B50" />
+    <token name="Texture2d" value="0x0DE1" />
+    <token name="CullFace" value="0x0B44" />
+    <token name="AlphaTest" value="0x0BC0" />
+    <token name="Blend" value="0x0BE2" />
+    <token name="ColorLogicOp" value="0x0BF2" />
+    <token name="Dither" value="0x0BD0" />
+    <token name="StencilTest" value="0x0B90" />
+    <token name="DepthTest" value="0x0B71" />
+    <token name="PointSmooth" value="0x0B10" />
+    <token name="LineSmooth" value="0x0B20" />
+    <token name="ScissorTest" value="0x0C11" />
+    <token name="ColorMaterial" value="0x0B57" />
+    <token name="Normalize" value="0x0BA1" />
+    <token name="RescaleNormal" value="0x803A" />
+    <token name="PolygonOffsetFill" value="0x8037" />
+    <token name="VertexArray" value="0x8074" />
+    <token name="NormalArray" value="0x8075" />
+    <token name="ColorArray" value="0x8076" />
+    <token name="TextureCoordArray" value="0x8078" />
+    <token name="Multisample" value="0x809D" />
+    <token name="SampleAlphaToCoverage" value="0x809E" />
+    <token name="SampleAlphaToOne" value="0x809F" />
+    <token name="SampleCoverage" value="0x80A0" />
+  </enum>
+  <enum name="ErrorCode">
+    <token name="NoError" value="0" />
+    <token name="InvalidEnum" value="0x0500" />
+    <token name="InvalidValue" value="0x0501" />
+    <token name="InvalidOperation" value="0x0502" />
+    <token name="StackOverflow" value="0x0503" />
+    <token name="StackUnderflow" value="0x0504" />
+    <token name="OutOfMemory" value="0x0505" />
+  </enum>
+  <enum name="FogMode">
+    <token name="Exp" value="0x0800" />
+    <token name="Exp2" value="0x0801" />
+  </enum>
+  <enum name="FogParameter">
+    <token name="FogDensity" value="0x0B62" />
+    <token name="FogStart" value="0x0B63" />
+    <token name="FogEnd" value="0x0B64" />
+    <token name="FogMode" value="0x0B65" />
+    <token name="FogColor" value="0x0B66" />
+  </enum>
+  <enum name="FrontFaceDirection">
+    <token name="Cw" value="0x0900" />
+    <token name="Ccw" value="0x0901" />
+  </enum>
+  <enum name="GetPName">
+    <token name="CurrentColor" value="0x0B00" />
+    <token name="CurrentNormal" value="0x0B02" />
+    <token name="CurrentTextureCoords" value="0x0B03" />
+    <token name="PointSize" value="0x0B11" />
+    <token name="PointSizeMin" value="0x8126" />
+    <token name="PointSizeMax" value="0x8127" />
+    <token name="PointFadeThresholdSize" value="0x8128" />
+    <token name="PointDistanceAttenuation" value="0x8129" />
+    <token name="SmoothPointSizeRange" value="0x0B12" />
+    <token name="LineWidth" value="0x0B21" />
+    <token name="SmoothLineWidthRange" value="0x0B22" />
+    <token name="AliasedPointSizeRange" value="0x846D" />
+    <token name="AliasedLineWidthRange" value="0x846E" />
+    <token name="CullFaceMode" value="0x0B45" />
+    <token name="FrontFace" value="0x0B46" />
+    <token name="ShadeModel" value="0x0B54" />
+    <token name="DepthRange" value="0x0B70" />
+    <token name="DepthWritemask" value="0x0B72" />
+    <token name="DepthClearValue" value="0x0B73" />
+    <token name="DepthFunc" value="0x0B74" />
+    <token name="StencilClearValue" value="0x0B91" />
+    <token name="StencilFunc" value="0x0B92" />
+    <token name="StencilValueMask" value="0x0B93" />
+    <token name="StencilFail" value="0x0B94" />
+    <token name="StencilPassDepthFail" value="0x0B95" />
+    <token name="StencilPassDepthPass" value="0x0B96" />
+    <token name="StencilRef" value="0x0B97" />
+    <token name="StencilWritemask" value="0x0B98" />
+    <token name="MatrixMode" value="0x0BA0" />
+    <token name="Viewport" value="0x0BA2" />
+    <token name="ModelviewStackDepth" value="0x0BA3" />
+    <token name="ProjectionStackDepth" value="0x0BA4" />
+    <token name="TextureStackDepth" value="0x0BA5" />
+    <token name="ModelviewMatrix" value="0x0BA6" />
+    <token name="ProjectionMatrix" value="0x0BA7" />
+    <token name="TextureMatrix" value="0x0BA8" />
+    <token name="AlphaTestFunc" value="0x0BC1" />
+    <token name="AlphaTestRef" value="0x0BC2" />
+    <token name="BlendDst" value="0x0BE0" />
+    <token name="BlendSrc" value="0x0BE1" />
+    <token name="LogicOpMode" value="0x0BF0" />
+    <token name="ScissorBox" value="0x0C10" />
+    <token name="ScissorTest" value="0x0C11" />
+    <token name="ColorClearValue" value="0x0C22" />
+    <token name="ColorWritemask" value="0x0C23" />
+    <token name="UnpackAlignment" value="0x0CF5" />
+    <token name="PackAlignment" value="0x0D05" />
+    <token name="MaxLights" value="0x0D31" />
+    <token name="MaxClipPlanes" value="0x0D32" />
+    <token name="MaxTextureSize" value="0x0D33" />
+    <token name="MaxModelviewStackDepth" value="0x0D36" />
+    <token name="MaxProjectionStackDepth" value="0x0D38" />
+    <token name="MaxTextureStackDepth" value="0x0D39" />
+    <token name="MaxViewportDims" value="0x0D3A" />
+    <token name="MaxTextureUnits" value="0x84E2" />
+    <token name="SubpixelBits" value="0x0D50" />
+    <token name="RedBits" value="0x0D52" />
+    <token name="GreenBits" value="0x0D53" />
+    <token name="BlueBits" value="0x0D54" />
+    <token name="AlphaBits" value="0x0D55" />
+    <token name="DepthBits" value="0x0D56" />
+    <token name="StencilBits" value="0x0D57" />
+    <token name="PolygonOffsetUnits" value="0x2A00" />
+    <token name="PolygonOffsetFill" value="0x8037" />
+    <token name="PolygonOffsetFactor" value="0x8038" />
+    <token name="TextureBinding2d" value="0x8069" />
+    <token name="VertexArraySize" value="0x807A" />
+    <token name="VertexArrayType" value="0x807B" />
+    <token name="VertexArrayStride" value="0x807C" />
+    <token name="NormalArrayType" value="0x807E" />
+    <token name="NormalArrayStride" value="0x807F" />
+    <token name="ColorArraySize" value="0x8081" />
+    <token name="ColorArrayType" value="0x8082" />
+    <token name="ColorArrayStride" value="0x8083" />
+    <token name="TextureCoordArraySize" value="0x8088" />
+    <token name="TextureCoordArrayType" value="0x8089" />
+    <token name="TextureCoordArrayStride" value="0x808A" />
+    <token name="VertexArrayPointer" value="0x808E" />
+    <token name="NormalArrayPointer" value="0x808F" />
+    <token name="ColorArrayPointer" value="0x8090" />
+    <token name="TextureCoordArrayPointer" value="0x8092" />
+    <token name="SampleBuffers" value="0x80A8" />
+    <token name="Samples" value="0x80A9" />
+    <token name="SampleCoverageValue" value="0x80AA" />
+    <token name="SampleCoverageInvert" value="0x80AB" />
+  </enum>
+  <enum name="GetTextureParameter">
+    <token name="NumCompressedTextureFormats" value="0x86A2" />
+    <token name="CompressedTextureFormats" value="0x86A3" />
+  </enum>
+  <enum name="HintMode">
+    <token name="DontCare" value="0x1100" />
+    <token name="Fastest" value="0x1101" />
+    <token name="Nicest" value="0x1102" />
+  </enum>
+  <enum name="HintTarget">
+    <token name="PerspectiveCorrectionHint" value="0x0C50" />
+    <token name="PointSmoothHint" value="0x0C51" />
+    <token name="LineSmoothHint" value="0x0C52" />
+    <token name="FogHint" value="0x0C54" />
+    <token name="GenerateMipmapHint" value="0x8192" />
+  </enum>
+  <enum name="LightModelParameter">
+    <token name="LightModelAmbient" value="0x0B53" />
+    <token name="LightModelTwoSide" value="0x0B52" />
+  </enum>
+  <enum name="LightParameter">
+    <token name="Ambient" value="0x1200" />
+    <token name="Diffuse" value="0x1201" />
+    <token name="Specular" value="0x1202" />
+    <token name="Position" value="0x1203" />
+    <token name="SpotDirection" value="0x1204" />
+    <token name="SpotExponent" value="0x1205" />
+    <token name="SpotCutoff" value="0x1206" />
+    <token name="ConstantAttenuation" value="0x1207" />
+    <token name="LinearAttenuation" value="0x1208" />
+    <token name="QuadraticAttenuation" value="0x1209" />
+  </enum>
+  <enum name="DataType">
+    <token name="Byte" value="0x1400" />
+    <token name="UnsignedByte" value="0x1401" />
+    <token name="Short" value="0x1402" />
+    <token name="UnsignedShort" value="0x1403" />
+    <token name="Float" value="0x1406" />
+    <token name="Fixed" value="0x140C" />
+  </enum>
+  <enum name="LogicOp">
+    <token name="Clear" value="0x1500" />
+    <token name="And" value="0x1501" />
+    <token name="AndReverse" value="0x1502" />
+    <token name="Copy" value="0x1503" />
+    <token name="AndInverted" value="0x1504" />
+    <token name="Noop" value="0x1505" />
+    <token name="Xor" value="0x1506" />
+    <token name="Or" value="0x1507" />
+    <token name="Nor" value="0x1508" />
+    <token name="Equiv" value="0x1509" />
+    <token name="Invert" value="0x150A" />
+    <token name="OrReverse" value="0x150B" />
+    <token name="CopyInverted" value="0x150C" />
+    <token name="OrInverted" value="0x150D" />
+    <token name="Nand" value="0x150E" />
+    <token name="Set" value="0x150F" />
+  </enum>
+  <enum name="MaterialParameter">
+    <token name="Emission" value="0x1600" />
+    <token name="Shininess" value="0x1601" />
+    <token name="AmbientAndDiffuse" value="0x1602" />
+  </enum>
+  <enum name="MatrixMode">
+    <token name="Modelview" value="0x1700" />
+    <token name="Projection" value="0x1701" />
+    <token name="Texture" value="0x1702" />
+  </enum>
+  <enum name="PixelFormat">
+    <token name="Alpha" value="0x1906" />
+    <token name="Rgb" value="0x1907" />
+    <token name="Rgba" value="0x1908" />
+    <token name="Luminance" value="0x1909" />
+    <token name="LuminanceAlpha" value="0x190A" />
+  </enum>
+  <enum name="PixelStoreParameter">
+    <token name="UnpackAlignment" value="0x0CF5" />
+    <token name="PackAlignment" value="0x0D05" />
+  </enum>
+  <enum name="PixelType">
+    <token name="UnsignedShort4444" value="0x8033" />
+    <token name="UnsignedShort5551" value="0x8034" />
+    <token name="UnsignedShort565" value="0x8363" />
+  </enum>
+  <enum name="ShadingModel">
+    <token name="Flat" value="0x1D00" />
+    <token name="Smooth" value="0x1D01" />
+  </enum>
+  <enum name="StencilOp">
+    <token name="Keep" value="0x1E00" />
+    <token name="Replace" value="0x1E01" />
+    <token name="Incr" value="0x1E02" />
+    <token name="Decr" value="0x1E03" />
+  </enum>
+  <enum name="StringName">
+    <token name="Vendor" value="0x1F00" />
+    <token name="Renderer" value="0x1F01" />
+    <token name="Version" value="0x1F02" />
+    <token name="Extensions" value="0x1F03" />
+  </enum>
+  <enum name="TextureEnvMode">
+    <token name="Modulate" value="0x2100" />
+    <token name="Decal" value="0x2101" />
+    <token name="Add" value="0x0104" />
+  </enum>
+  <enum name="TextureEnvParameter">
+    <token name="TextureEnvMode" value="0x2200" />
+    <token name="TextureEnvColor" value="0x2201" />
+  </enum>
+  <enum name="TextureEnvTarget">
+    <token name="TextureEnv" value="0x2300" />
+  </enum>
+  <enum name="TextureMagFilter">
+    <token name="Nearest" value="0x2600" />
+    <token name="Linear" value="0x2601" />
+  </enum>
+  <enum name="TextureMinFilter">
+    <token name="NearestMipmapNearest" value="0x2700" />
+    <token name="LinearMipmapNearest" value="0x2701" />
+    <token name="NearestMipmapLinear" value="0x2702" />
+    <token name="LinearMipmapLinear" value="0x2703" />
+  </enum>
+  <enum name="TextureParameterName">
+    <token name="TextureMagFilter" value="0x2800" />
+    <token name="TextureMinFilter" value="0x2801" />
+    <token name="TextureWrapS" value="0x2802" />
+    <token name="TextureWrapT" value="0x2803" />
+    <token name="GenerateMipmap" value="0x8191" />
+  </enum>
+  <enum name="TextureUnit">
+    <token name="Texture0" value="0x84C0" />
+    <token name="Texture1" value="0x84C1" />
+    <token name="Texture2" value="0x84C2" />
+    <token name="Texture3" value="0x84C3" />
+    <token name="Texture4" value="0x84C4" />
+    <token name="Texture5" value="0x84C5" />
+    <token name="Texture6" value="0x84C6" />
+    <token name="Texture7" value="0x84C7" />
+    <token name="Texture8" value="0x84C8" />
+    <token name="Texture9" value="0x84C9" />
+    <token name="Texture10" value="0x84CA" />
+    <token name="Texture11" value="0x84CB" />
+    <token name="Texture12" value="0x84CC" />
+    <token name="Texture13" value="0x84CD" />
+    <token name="Texture14" value="0x84CE" />
+    <token name="Texture15" value="0x84CF" />
+    <token name="Texture16" value="0x84D0" />
+    <token name="Texture17" value="0x84D1" />
+    <token name="Texture18" value="0x84D2" />
+    <token name="Texture19" value="0x84D3" />
+    <token name="Texture20" value="0x84D4" />
+    <token name="Texture21" value="0x84D5" />
+    <token name="Texture22" value="0x84D6" />
+    <token name="Texture23" value="0x84D7" />
+    <token name="Texture24" value="0x84D8" />
+    <token name="Texture25" value="0x84D9" />
+    <token name="Texture26" value="0x84DA" />
+    <token name="Texture27" value="0x84DB" />
+    <token name="Texture28" value="0x84DC" />
+    <token name="Texture29" value="0x84DD" />
+    <token name="Texture30" value="0x84DE" />
+    <token name="Texture31" value="0x84DF" />
+    <token name="ActiveTexture" value="0x84E0" />
+    <token name="ClientActiveTexture" value="0x84E1" />
+  </enum>
+  <enum name="TextureWrapMode">
+    <token name="Repeat" value="0x2901" />
+    <token name="ClampToEdge" value="0x812F" />
+  </enum>
+  <enum name="LightName">
+    <token name="Light0" value="0x4000" />
+    <token name="Light1" value="0x4001" />
+    <token name="Light2" value="0x4002" />
+    <token name="Light3" value="0x4003" />
+    <token name="Light4" value="0x4004" />
+    <token name="Light5" value="0x4005" />
+    <token name="Light6" value="0x4006" />
+    <token name="Light7" value="0x4007" />
+  </enum>
+  <enum name="BufferObjects">
+    <token name="ArrayBuffer" value="0x8892" />
+    <token name="ElementArrayBuffer" value="0x8893" />
+    <token name="ArrayBufferBinding" value="0x8894" />
+    <token name="ElementArrayBufferBinding" value="0x8895" />
+    <token name="VertexArrayBufferBinding" value="0x8896" />
+    <token name="NormalArrayBufferBinding" value="0x8897" />
+    <token name="ColorArrayBufferBinding" value="0x8898" />
+    <token name="TextureCoordArrayBufferBinding" value="0x889A" />
+    <token name="StaticDraw" value="0x88E4" />
+    <token name="DynamicDraw" value="0x88E8" />
+    <token name="BufferSize" value="0x8764" />
+    <token name="BufferUsage" value="0x8765" />
+  </enum>
+  <enum name="TextureCombine">
+    <token name="Subtract" value="0x84E7" />
+    <token name="Combine" value="0x8570" />
+    <token name="CombineRgb" value="0x8571" />
+    <token name="CombineAlpha" value="0x8572" />
+    <token name="RgbScale" value="0x8573" />
+    <token name="AddSigned" value="0x8574" />
+    <token name="Interpolate" value="0x8575" />
+    <token name="Constant" value="0x8576" />
+    <token name="PrimaryColor" value="0x8577" />
+    <token name="Previous" value="0x8578" />
+    <token name="Operand0Rgb" value="0x8590" />
+    <token name="Operand1Rgb" value="0x8591" />
+    <token name="Operand2Rgb" value="0x8592" />
+    <token name="Operand0Alpha" value="0x8598" />
+    <token name="Operand1Alpha" value="0x8599" />
+    <token name="Operand2Alpha" value="0x859A" />
+    <token name="AlphaScale" value="0x0D1C" />
+    <token name="Src0Rgb" value="0x8580" />
+    <token name="Src1Rgb" value="0x8581" />
+    <token name="Src2Rgb" value="0x8582" />
+    <token name="Src0Alpha" value="0x8588" />
+    <token name="Src1Alpha" value="0x8589" />
+    <token name="Src2Alpha" value="0x858A" />
+    <token name="Dot3Rgb" value="0x86AE" />
+    <token name="Dot3Rgba" value="0x86AF" />
+  </enum>
+  <enum name="OesReadFormat">
+    <token name="ImplementationColorReadTypeOes" value="0x8B9A" />
+    <token name="ImplementationColorReadFormatOes" value="0x8B9B" />
+  </enum>
+  <enum name="OesCompressedPalettedTexture">
+    <token name="Palette4Rgb8Oes" value="0x8B90" />
+    <token name="Palette4Rgba8Oes" value="0x8B91" />
+    <token name="Palette4R5G6B5Oes" value="0x8B92" />
+    <token name="Palette4Rgba4Oes" value="0x8B93" />
+    <token name="Palette4Rgb5A1Oes" value="0x8B94" />
+    <token name="Palette8Rgb8Oes" value="0x8B95" />
+    <token name="Palette8Rgba8Oes" value="0x8B96" />
+    <token name="Palette8R5G6B5Oes" value="0x8B97" />
+    <token name="Palette8Rgba4Oes" value="0x8B98" />
+    <token name="Palette8Rgb5A1Oes" value="0x8B99" />
+  </enum>
+  <enum name="OesPointSizeArray">
+    <token name="PointSizeArrayOes" value="0x8B9C" />
+    <token name="PointSizeArrayTypeOes" value="0x898A" />
+    <token name="PointSizeArrayStrideOes" value="0x898B" />
+    <token name="PointSizeArrayPointerOes" value="0x898C" />
+    <token name="PointSizeArrayBufferBindingOes" value="0x8B9F" />
+  </enum>
+  <enum name="OesPointSprite">
+    <token name="PointSpriteOes" value="0x8861" />
+    <token name="CoordReplaceOes" value="0x8862" />
+  </enum>
+</functions>
