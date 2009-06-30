@@ -1,8 +1,8 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,475 +25,773 @@
 //
 #endregion
 
-#if GLES20
+using System;
 
-namespace OpekTN.Graphics.ES20
+namespace OpenTK.Graphics.GLES20
 {
-    public enum Version
-    {
-        EsVersion20 = 1,
-    }
+    #pragma warning disable 1591
 
-    public enum ClearBufferMask
+    public enum All
     {
-        DepthBufferBit = 0x00000100,
-        StencilBufferBit = 0x00000400,
-        ColorBufferBit = 0x00004000,
-    }
-
-    public enum Boolean
-    {
-        False = 0,
-        True = 1,
+        False = ((int)0),
+        Noerror = ((int)0),
+        None = ((int)0),
+        Zero = ((int)0),
+        Points = ((int)0X0000),
+        Depthbufferbit = ((int)0X00000100),
+        Stencilbufferbit = ((int)0X00000400),
+        Colorbufferbit = ((int)0X00004000),
+        Lines = ((int)0X0001),
+        Lineloop = ((int)0X0002),
+        Linestrip = ((int)0X0003),
+        Triangles = ((int)0X0004),
+        Trianglestrip = ((int)0X0005),
+        Trianglefan = ((int)0X0006),
+        Never = ((int)0X0200),
+        Less = ((int)0X0201),
+        Equal = ((int)0X0202),
+        Lequal = ((int)0X0203),
+        Greater = ((int)0X0204),
+        Notequal = ((int)0X0205),
+        Gequal = ((int)0X0206),
+        Always = ((int)0X0207),
+        Srccolor = ((int)0X0300),
+        Oneminussrccolor = ((int)0X0301),
+        Srcalpha = ((int)0X0302),
+        Oneminussrcalpha = ((int)0X0303),
+        Dstalpha = ((int)0X0304),
+        Oneminusdstalpha = ((int)0X0305),
+        Dstcolor = ((int)0X0306),
+        Oneminusdstcolor = ((int)0X0307),
+        Srcalphasaturate = ((int)0X0308),
+        Front = ((int)0X0404),
+        Back = ((int)0X0405),
+        Frontandback = ((int)0X0408),
+        Invalidenum = ((int)0X0500),
+        Invalidvalue = ((int)0X0501),
+        Invalidoperation = ((int)0X0502),
+        Outofmemory = ((int)0X0505),
+        Invalidframebufferoperation = ((int)0X0506),
+        Cw = ((int)0X0900),
+        Ccw = ((int)0X0901),
+        Linewidth = ((int)0X0b21),
+        Cullface = ((int)0X0b44),
+        Cullfacemode = ((int)0X0b45),
+        Frontface = ((int)0X0b46),
+        Depthrange = ((int)0X0b70),
+        Depthtest = ((int)0X0b71),
+        Depthwritemask = ((int)0X0b72),
+        Depthclearvalue = ((int)0X0b73),
+        Depthfunc = ((int)0X0b74),
+        Stenciltest = ((int)0X0b90),
+        Stencilclearvalue = ((int)0X0b91),
+        Stencilfunc = ((int)0X0b92),
+        Stencilvaluemask = ((int)0X0b93),
+        Stencilfail = ((int)0X0b94),
+        Stencilpassdepthfail = ((int)0X0b95),
+        Stencilpassdepthpass = ((int)0X0b96),
+        Stencilref = ((int)0X0b97),
+        Stencilwritemask = ((int)0X0b98),
+        Viewport = ((int)0X0ba2),
+        Dither = ((int)0X0bd0),
+        Blend = ((int)0X0be2),
+        Scissorbox = ((int)0X0c10),
+        Scissortest = ((int)0X0c11),
+        Colorclearvalue = ((int)0X0c22),
+        Colorwritemask = ((int)0X0c23),
+        Unpackalignment = ((int)0X0cf5),
+        Packalignment = ((int)0X0d05),
+        Maxtexturesize = ((int)0X0d33),
+        Maxviewportdims = ((int)0X0d3a),
+        Subpixelbits = ((int)0X0d50),
+        Redbits = ((int)0X0d52),
+        Greenbits = ((int)0X0d53),
+        Bluebits = ((int)0X0d54),
+        Alphabits = ((int)0X0d55),
+        Depthbits = ((int)0X0d56),
+        Stencilbits = ((int)0X0d57),
+        Texture2D = ((int)0X0de1),
+        Dontcare = ((int)0X1100),
+        Fastest = ((int)0X1101),
+        Nicest = ((int)0X1102),
+        Byte = ((int)0X1400),
+        Unsignedbyte = ((int)0X1401),
+        Short = ((int)0X1402),
+        Unsignedshort = ((int)0X1403),
+        Int = ((int)0X1404),
+        Unsignedint = ((int)0X1405),
+        Float = ((int)0X1406),
+        Fixed = ((int)0X140c),
+        Invert = ((int)0X150a),
+        Texture = ((int)0X1702),
+        Stencilindex = ((int)0X1901),
+        Depthcomponent = ((int)0X1902),
+        Alpha = ((int)0X1906),
+        Rgb = ((int)0X1907),
+        Rgba = ((int)0X1908),
+        Luminance = ((int)0X1909),
+        Luminancealpha = ((int)0X190a),
+        Keep = ((int)0X1e00),
+        Replace = ((int)0X1e01),
+        Incr = ((int)0X1e02),
+        Decr = ((int)0X1e03),
+        Vendor = ((int)0X1f00),
+        Renderer = ((int)0X1f01),
+        Version = ((int)0X1f02),
+        Extensions = ((int)0X1f03),
+        Nearest = ((int)0X2600),
+        Linear = ((int)0X2601),
+        Nearestmipmapnearest = ((int)0X2700),
+        Linearmipmapnearest = ((int)0X2701),
+        Nearestmipmaplinear = ((int)0X2702),
+        Linearmipmaplinear = ((int)0X2703),
+        Texturemagfilter = ((int)0X2800),
+        Textureminfilter = ((int)0X2801),
+        Texturewraps = ((int)0X2802),
+        Texturewrapt = ((int)0X2803),
+        Repeat = ((int)0X2901),
+        Polygonoffsetunits = ((int)0X2a00),
+        Constantcolor = ((int)0X8001),
+        Oneminusconstantcolor = ((int)0X8002),
+        Constantalpha = ((int)0X8003),
+        Oneminusconstantalpha = ((int)0X8004),
+        Blendcolor = ((int)0X8005),
+        Funcadd = ((int)0X8006),
+        Blendequation = ((int)0X8009),
+        Blendequationrgb = ((int)0X8009),
+        Funcsubtract = ((int)0X800a),
+        Funcreversesubtract = ((int)0X800b),
+        Unsignedshort4444 = ((int)0X8033),
+        Unsignedshort5551 = ((int)0X8034),
+        Polygonoffsetfill = ((int)0X8037),
+        Polygonoffsetfactor = ((int)0X8038),
+        Rgba4 = ((int)0X8056),
+        Rgb5a1 = ((int)0X8057),
+        Texturebinding2D = ((int)0X8069),
+        Samplealphatocoverage = ((int)0X809e),
+        Samplecoverage = ((int)0X80a0),
+        Samplebuffers = ((int)0X80a8),
+        Samples = ((int)0X80a9),
+        Samplecoveragevalue = ((int)0X80aa),
+        Samplecoverageinvert = ((int)0X80ab),
+        Blenddstrgb = ((int)0X80c8),
+        Blendsrcrgb = ((int)0X80c9),
+        Blenddstalpha = ((int)0X80ca),
+        Blendsrcalpha = ((int)0X80cb),
+        Clamptoedge = ((int)0X812f),
+        Generatemipmaphint = ((int)0X8192),
+        Depthcomponent16 = ((int)0X81a5),
+        Unsignedshort565 = ((int)0X8363),
+        Mirroredrepeat = ((int)0X8370),
+        Aliasedpointsizerange = ((int)0X846d),
+        Aliasedlinewidthrange = ((int)0X846e),
+        Texture0 = ((int)0X84c0),
+        Texture1 = ((int)0X84c1),
+        Texture2 = ((int)0X84c2),
+        Texture3 = ((int)0X84c3),
+        Texture4 = ((int)0X84c4),
+        Texture5 = ((int)0X84c5),
+        Texture6 = ((int)0X84c6),
+        Texture7 = ((int)0X84c7),
+        Texture8 = ((int)0X84c8),
+        Texture9 = ((int)0X84c9),
+        Texture10 = ((int)0X84ca),
+        Texture11 = ((int)0X84cb),
+        Texture12 = ((int)0X84cc),
+        Texture13 = ((int)0X84cd),
+        Texture14 = ((int)0X84ce),
+        Texture15 = ((int)0X84cf),
+        Texture16 = ((int)0X84d0),
+        Texture17 = ((int)0X84d1),
+        Texture18 = ((int)0X84d2),
+        Texture19 = ((int)0X84d3),
+        Texture20 = ((int)0X84d4),
+        Texture21 = ((int)0X84d5),
+        Texture22 = ((int)0X84d6),
+        Texture23 = ((int)0X84d7),
+        Texture24 = ((int)0X84d8),
+        Texture25 = ((int)0X84d9),
+        Texture26 = ((int)0X84da),
+        Texture27 = ((int)0X84db),
+        Texture28 = ((int)0X84dc),
+        Texture29 = ((int)0X84dd),
+        Texture30 = ((int)0X84de),
+        Texture31 = ((int)0X84df),
+        Activetexture = ((int)0X84e0),
+        Maxrenderbuffersize = ((int)0X84e8),
+        Incrwrap = ((int)0X8507),
+        Decrwrap = ((int)0X8508),
+        Texturecubemap = ((int)0X8513),
+        Texturebindingcubemap = ((int)0X8514),
+        Texturecubemappositivex = ((int)0X8515),
+        Texturecubemapnegativex = ((int)0X8516),
+        Texturecubemappositivey = ((int)0X8517),
+        Texturecubemapnegativey = ((int)0X8518),
+        Texturecubemappositivez = ((int)0X8519),
+        Texturecubemapnegativez = ((int)0X851a),
+        Maxcubemaptexturesize = ((int)0X851c),
+        Vertexattribarrayenabled = ((int)0X8622),
+        Vertexattribarraysize = ((int)0X8623),
+        Vertexattribarraystride = ((int)0X8624),
+        Vertexattribarraytype = ((int)0X8625),
+        Currentvertexattrib = ((int)0X8626),
+        Vertexattribarraypointer = ((int)0X8645),
+        Numcompressedtextureformats = ((int)0X86a2),
+        Compressedtextureformats = ((int)0X86a3),
+        Buffersize = ((int)0X8764),
+        Bufferusage = ((int)0X8765),
+        Stencilbackfunc = ((int)0X8800),
+        Stencilbackfail = ((int)0X8801),
+        Stencilbackpassdepthfail = ((int)0X8802),
+        Stencilbackpassdepthpass = ((int)0X8803),
+        Blendequationalpha = ((int)0X883d),
+        Maxvertexattribs = ((int)0X8869),
+        Vertexattribarraynormalized = ((int)0X886a),
+        Maxtextureimageunits = ((int)0X8872),
+        Arraybuffer = ((int)0X8892),
+        Elementarraybuffer = ((int)0X8893),
+        Arraybufferbinding = ((int)0X8894),
+        Elementarraybufferbinding = ((int)0X8895),
+        Vertexattribarraybufferbinding = ((int)0X889f),
+        Streamdraw = ((int)0X88e0),
+        Staticdraw = ((int)0X88e4),
+        Dynamicdraw = ((int)0X88e8),
+        Fragmentshader = ((int)0X8b30),
+        Vertexshader = ((int)0X8b31),
+        Maxvertextextureimageunits = ((int)0X8b4c),
+        Maxcombinedtextureimageunits = ((int)0X8b4d),
+        Shadertype = ((int)0X8b4f),
+        Floatvec2 = ((int)0X8b50),
+        Floatvec3 = ((int)0X8b51),
+        Floatvec4 = ((int)0X8b52),
+        Intvec2 = ((int)0X8b53),
+        Intvec3 = ((int)0X8b54),
+        Intvec4 = ((int)0X8b55),
+        Bool = ((int)0X8b56),
+        Boolvec2 = ((int)0X8b57),
+        Boolvec3 = ((int)0X8b58),
+        Boolvec4 = ((int)0X8b59),
+        Floatmat2 = ((int)0X8b5a),
+        Floatmat3 = ((int)0X8b5b),
+        Floatmat4 = ((int)0X8b5c),
+        Sampler2D = ((int)0X8b5e),
+        Samplercube = ((int)0X8b60),
+        Deletestatus = ((int)0X8b80),
+        Compilestatus = ((int)0X8b81),
+        Linkstatus = ((int)0X8b82),
+        Validatestatus = ((int)0X8b83),
+        Infologlength = ((int)0X8b84),
+        Attachedshaders = ((int)0X8b85),
+        Activeuniforms = ((int)0X8b86),
+        Activeuniformmaxlength = ((int)0X8b87),
+        Shadersourcelength = ((int)0X8b88),
+        Activeattributes = ((int)0X8b89),
+        Activeattributemaxlength = ((int)0X8b8a),
+        Shadinglanguageversion = ((int)0X8b8c),
+        Currentprogram = ((int)0X8b8d),
+        Implementationcolorreadtype = ((int)0X8b9a),
+        Implementationcolorreadformat = ((int)0X8b9b),
+        Stencilbackref = ((int)0X8ca3),
+        Stencilbackvaluemask = ((int)0X8ca4),
+        Stencilbackwritemask = ((int)0X8ca5),
+        Framebufferbinding = ((int)0X8ca6),
+        Renderbufferbinding = ((int)0X8ca7),
+        Framebufferattachmentobjecttype = ((int)0X8cd0),
+        Framebufferattachmentobjectname = ((int)0X8cd1),
+        Framebufferattachmenttexturelevel = ((int)0X8cd2),
+        Framebufferattachmenttexturecubemapface = ((int)0X8cd3),
+        Framebuffercomplete = ((int)0X8cd5),
+        Framebufferincompleteattachment = ((int)0X8cd6),
+        Framebufferincompletemissingattachment = ((int)0X8cd7),
+        Framebufferincompletedimensions = ((int)0X8cd9),
+        Framebufferunsupported = ((int)0X8cdd),
+        Colorattachment0 = ((int)0X8ce0),
+        Depthattachment = ((int)0X8d00),
+        Stencilattachment = ((int)0X8d20),
+        Framebuffer = ((int)0X8d40),
+        Renderbuffer = ((int)0X8d41),
+        Renderbufferwidth = ((int)0X8d42),
+        Renderbufferheight = ((int)0X8d43),
+        Renderbufferinternalformat = ((int)0X8d44),
+        Stencilindex8 = ((int)0X8d48),
+        Renderbufferredsize = ((int)0X8d50),
+        Renderbuffergreensize = ((int)0X8d51),
+        Renderbufferbluesize = ((int)0X8d52),
+        Renderbufferalphasize = ((int)0X8d53),
+        Renderbufferdepthsize = ((int)0X8d54),
+        Renderbufferstencilsize = ((int)0X8d55),
+        Rgb565 = ((int)0X8d62),
+        Lowfloat = ((int)0X8df0),
+        Mediumfloat = ((int)0X8df1),
+        Highfloat = ((int)0X8df2),
+        Lowint = ((int)0X8df3),
+        Mediumint = ((int)0X8df4),
+        Highint = ((int)0X8df5),
+        Shaderbinaryformats = ((int)0X8df8),
+        Numshaderbinaryformats = ((int)0X8df9),
+        Shadercompiler = ((int)0X8dfa),
+        Maxvertexuniformvectors = ((int)0X8dfb),
+        Maxvaryingvectors = ((int)0X8dfc),
+        Maxfragmentuniformvectors = ((int)0X8dfd),
+        Esversion20 = ((int)1),
+        One = ((int)1),
+        True = ((int)1),
     }
 
     public enum BeginMode
     {
-        Points = 0x0000,
-        Lines = 0x0001,
-        LineLoop = 0x0002,
-        LineStrip = 0x0003,
-        Triangles = 0x0004,
-        TriangleStrip = 0x0005,
-        TriangleFan = 0x0006,
-    }
-
-    public enum BlendingFactorDest
-    {
-        Zero = 0,
-        One = 1,
-        SrcColor = 0x0300,
-        OneMinusSrcColor = 0x0301,
-        SrcAlpha = 0x0302,
-        OneMinusSrcAlpha = 0x0303,
-        DstAlpha = 0x0304,
-        OneMinusDstAlpha = 0x0305,
-    }
-
-    public enum BlendingFactorSrc
-    {
-        DstColor = 0x0306,
-        OneMinusDstColor = 0x0307,
-        SrcAlphaSaturate = 0x0308,
+        Points = ((int)0X0000),
+        Lines = ((int)0X0001),
+        Lineloop = ((int)0X0002),
+        Linestrip = ((int)0X0003),
+        Triangles = ((int)0X0004),
+        Trianglestrip = ((int)0X0005),
+        Trianglefan = ((int)0X0006),
     }
 
     public enum BlendEquationSeparate
     {
-        FuncAdd = 0x8006,
-        BlendEquation = 0x8009,
-        BlendEquationRgb = 0x8009    /* same as BLEND_EQUATION */,
-        BlendEquationAlpha = 0x883D,
-    }
-
-    public enum BlendSubtract
-    {
-        FuncSubtract = 0x800A,
-        FuncReverseSubtract = 0x800B,
+        Funcadd = ((int)0X8006),
+        Blendequation = ((int)0X8009),
+        Blendequationrgb = ((int)0X8009),
+        Blendequationalpha = ((int)0X883d),
     }
 
     public enum BlendFunctionSeparate
     {
-        BlendDstRgb = 0x80C8,
-        BlendSrcRgb = 0x80C9,
-        BlendDstAlpha = 0x80CA,
-        BlendSrcAlpha = 0x80CB,
-        ConstantColor = 0x8001,
-        OneMinusConstantColor = 0x8002,
-        ConstantAlpha = 0x8003,
-        OneMinusConstantAlpha = 0x8004,
-        BlendColor = 0x8005,
+        Constantcolor = ((int)0X8001),
+        Oneminusconstantcolor = ((int)0X8002),
+        Constantalpha = ((int)0X8003),
+        Oneminusconstantalpha = ((int)0X8004),
+        Blendcolor = ((int)0X8005),
+        Blenddstrgb = ((int)0X80c8),
+        Blendsrcrgb = ((int)0X80c9),
+        Blenddstalpha = ((int)0X80ca),
+        Blendsrcalpha = ((int)0X80cb),
+    }
+
+    public enum BlendingFactorDest
+    {
+        Zero = ((int)0),
+        Srccolor = ((int)0X0300),
+        Oneminussrccolor = ((int)0X0301),
+        Srcalpha = ((int)0X0302),
+        Oneminussrcalpha = ((int)0X0303),
+        Dstalpha = ((int)0X0304),
+        Oneminusdstalpha = ((int)0X0305),
+        One = ((int)1),
+    }
+
+    public enum BlendingFactorSrc
+    {
+        Dstcolor = ((int)0X0306),
+        Oneminusdstcolor = ((int)0X0307),
+        Srcalphasaturate = ((int)0X0308),
+    }
+
+    public enum BlendSubtract
+    {
+        Funcsubtract = ((int)0X800a),
+        Funcreversesubtract = ((int)0X800b),
+    }
+
+    public enum Boolean
+    {
+        False = ((int)0),
+        True = ((int)1),
     }
 
     public enum BufferObjects
     {
-        ArrayBuffer = 0x8892,
-        ElementArrayBuffer = 0x8893,
-        ArrayBufferBinding = 0x8894,
-        ElementArrayBufferBinding = 0x8895,
+        Currentvertexattrib = ((int)0X8626),
+        Buffersize = ((int)0X8764),
+        Bufferusage = ((int)0X8765),
+        Arraybuffer = ((int)0X8892),
+        Elementarraybuffer = ((int)0X8893),
+        Arraybufferbinding = ((int)0X8894),
+        Elementarraybufferbinding = ((int)0X8895),
+        Streamdraw = ((int)0X88e0),
+        Staticdraw = ((int)0X88e4),
+        Dynamicdraw = ((int)0X88e8),
+    }
 
-        StreamDraw = 0x88E0,
-        StaticDraw = 0x88E4,
-        DynamicDraw = 0x88E8,
-
-        BufferSize = 0x8764,
-        BufferUsage = 0x8765,
-
-        CurrentVertexAttrib = 0x8626,
+    [Flags]
+    public enum ClearBufferMask
+    {
+        Depthbufferbit = ((int)0X00000100),
+        Stencilbufferbit = ((int)0X00000400),
+        Colorbufferbit = ((int)0X00004000),
     }
 
     public enum CullFaceMode
     {
-        Front = 0x0404,
-        Back = 0x0405,
-        FrontAndBack = 0x0408,
-    }
-
-    public enum EnableCap
-    {
-        Texture2d = 0x0DE1,
-        CullFace = 0x0B44,
-        Blend = 0x0BE2,
-        Dither = 0x0BD0,
-        StencilTest = 0x0B90,
-        DepthTest = 0x0B71,
-        ScissorTest = 0x0C11,
-        PolygonOffsetFill = 0x8037,
-        SampleAlphaToCoverage = 0x809E,
-        SampleCoverage = 0x80A0,
-    }
-
-    public enum ErrorCode
-    {
-        NoError = 0,
-        InvalidEnum = 0x0500,
-        InvalidValue = 0x0501,
-        InvalidOperation = 0x0502,
-        OutOfMemory = 0x0505,
-    }
-
-    public enum FrontFaceDirection
-    {
-        Cw = 0x0900,
-        Ccw = 0x0901,
-    }
-
-    public enum GetPName
-    {
-        LineWidth = 0x0B21,
-        AliasedPointSizeRange = 0x846D,
-        AliasedLineWidthRange = 0x846E,
-        CullFaceMode = 0x0B45,
-        FrontFace = 0x0B46,
-        DepthRange = 0x0B70,
-        DepthWritemask = 0x0B72,
-        DepthClearValue = 0x0B73,
-        DepthFunc = 0x0B74,
-        StencilClearValue = 0x0B91,
-        StencilFunc = 0x0B92,
-        StencilFail = 0x0B94,
-        StencilPassDepthFail = 0x0B95,
-        StencilPassDepthPass = 0x0B96,
-        StencilRef = 0x0B97,
-        StencilValueMask = 0x0B93,
-        StencilWritemask = 0x0B98,
-        StencilBackFunc = 0x8800,
-        StencilBackFail = 0x8801,
-        StencilBackPassDepthFail = 0x8802,
-        StencilBackPassDepthPass = 0x8803,
-        StencilBackRef = 0x8CA3,
-        StencilBackValueMask = 0x8CA4,
-        StencilBackWritemask = 0x8CA5,
-        Viewport = 0x0BA2,
-        ScissorBox = 0x0C10,
-        ColorClearValue = 0x0C22,
-        ColorWritemask = 0x0C23,
-        UnpackAlignment = 0x0CF5,
-        PackAlignment = 0x0D05,
-        MaxTextureSize = 0x0D33,
-        MaxViewportDims = 0x0D3A,
-        SubpixelBits = 0x0D50,
-        RedBits = 0x0D52,
-        GreenBits = 0x0D53,
-        BlueBits = 0x0D54,
-        AlphaBits = 0x0D55,
-        DepthBits = 0x0D56,
-        StencilBits = 0x0D57,
-        PolygonOffsetUnits = 0x2A00,
-        PolygonOffsetFactor = 0x8038,
-        TextureBinding2d = 0x8069,
-        SampleBuffers = 0x80A8,
-        Samples = 0x80A9,
-        SampleCoverageValue = 0x80AA,
-        SampleCoverageInvert = 0x80AB,
-    }
-
-    public enum GetTextureParameter
-    {
-        NumCompressedTextureFormats = 0x86A2,
-        CompressedTextureFormats = 0x86A3,
-    }
-
-    public enum HintMode
-    {
-        DontCare = 0x1100,
-        Fastest = 0x1101,
-        Nicest = 0x1102,
-    }
-
-    public enum HintTarget
-    {
-        GenerateMipmapHint = 0x8192,
+        Front = ((int)0X0404),
+        Back = ((int)0X0405),
+        Frontandback = ((int)0X0408),
     }
 
     public enum DataType
     {
-        Byte = 0x1400,
-        UnsignedByte = 0x1401,
-        Short = 0x1402,
-        UnsignedShort = 0x1403,
-        Int = 0x1404,
-        UnsignedInt = 0x1405,
-        Float = 0x1406,
-        Fixed = 0x140C,
+        Byte = ((int)0X1400),
+        Unsignedbyte = ((int)0X1401),
+        Short = ((int)0X1402),
+        Unsignedshort = ((int)0X1403),
+        Int = ((int)0X1404),
+        Unsignedint = ((int)0X1405),
+        Float = ((int)0X1406),
+        Fixed = ((int)0X140c),
     }
 
-    public enum PixelFormat
+    public enum EnableCap
     {
-        DepthComponent = 0x1902,
-        Alpha = 0x1906,
-        Rgb = 0x1907,
-        Rgba = 0x1908,
-        Luminance = 0x1909,
-        LuminanceAlpha = 0x190A,
+        Cullface = ((int)0X0b44),
+        Depthtest = ((int)0X0b71),
+        Stenciltest = ((int)0X0b90),
+        Dither = ((int)0X0bd0),
+        Blend = ((int)0X0be2),
+        Scissortest = ((int)0X0c11),
+        Texture2D = ((int)0X0de1),
+        Polygonoffsetfill = ((int)0X8037),
+        Samplealphatocoverage = ((int)0X809e),
+        Samplecoverage = ((int)0X80a0),
     }
 
-    public enum PixelType
+    public enum ErrorCode
     {
-        UnsignedShort4444 = 0x8033,
-        UnsignedShort5551 = 0x8034,
-        UnsignedShort565 = 0x8363,
-    }
-
-    public enum Shaders
-    {
-        FragmentShader = 0x8B30,
-        VertexShader = 0x8B31,
-        MaxVertexAttribs = 0x8869,
-        MaxVertexUniformVectors = 0x8DFB,
-        MaxVaryingVectors = 0x8DFC,
-        MaxCombinedTextureImageUnits = 0x8B4D,
-        MaxVertexTextureImageUnits = 0x8B4C,
-        MaxTextureImageUnits = 0x8872,
-        MaxFragmentUniformVectors = 0x8DFD,
-        ShaderType = 0x8B4F,
-        DeleteStatus = 0x8B80,
-        LinkStatus = 0x8B82,
-        ValidateStatus = 0x8B83,
-        AttachedShaders = 0x8B85,
-        ActiveUniforms = 0x8B86,
-        ActiveUniformMaxLength = 0x8B87,
-        ActiveAttributes = 0x8B89,
-        ActiveAttributeMaxLength = 0x8B8A,
-        ShadingLanguageVersion = 0x8B8C,
-        CurrentProgram = 0x8B8D,
-    }
-
-    public enum StencilFunction
-    {
-        Never = 0x0200,
-        Less = 0x0201,
-        Equal = 0x0202,
-        Lequal = 0x0203,
-        Greater = 0x0204,
-        Notequal = 0x0205,
-        Gequal = 0x0206,
-        Always = 0x0207,
-    }
-
-    public enum StencilOp
-    {
-        Keep = 0x1E00,
-        Replace = 0x1E01,
-        Incr = 0x1E02,
-        Decr = 0x1E03,
-        Invert = 0x150A,
-        IncrWrap = 0x8507,
-        DecrWrap = 0x8508,
-    }
-
-    public enum StringName
-    {
-        Vendor = 0x1F00,
-        Renderer = 0x1F01,
-        Version = 0x1F02,
-        Extensions = 0x1F03,
-    }
-
-    public enum TextureMagFilter
-    {
-        Nearest = 0x2600,
-        Linear = 0x2601,
-    }
-
-    public enum TextureMinFilter
-    {
-        NearestMipmapNearest = 0x2700,
-        LinearMipmapNearest = 0x2701,
-        NearestMipmapLinear = 0x2702,
-        LinearMipmapLinear = 0x2703,
-    }
-
-    public enum TextureParameterName
-    {
-        TextureMagFilter = 0x2800,
-        TextureMinFilter = 0x2801,
-        TextureWrapS = 0x2802,
-        TextureWrapT = 0x2803,
-    }
-
-    public enum TextureTarget
-    {
-        Texture = 0x1702,
-        TextureCubeMap = 0x8513,
-        TextureBindingCubeMap = 0x8514,
-        TextureCubeMapPositiveX = 0x8515,
-        TextureCubeMapNegativeX = 0x8516,
-        TextureCubeMapPositiveY = 0x8517,
-        TextureCubeMapNegativeY = 0x8518,
-        TextureCubeMapPositiveZ = 0x8519,
-        TextureCubeMapNegativeZ = 0x851A,
-        MaxCubeMapTextureSize = 0x851C,
-    }
-
-    public enum TextureUnit
-    {
-        Texture0 = 0x84C0,
-        Texture1 = 0x84C1,
-        Texture2 = 0x84C2,
-        Texture3 = 0x84C3,
-        Texture4 = 0x84C4,
-        Texture5 = 0x84C5,
-        Texture6 = 0x84C6,
-        Texture7 = 0x84C7,
-        Texture8 = 0x84C8,
-        Texture9 = 0x84C9,
-        Texture10 = 0x84CA,
-        Texture11 = 0x84CB,
-        Texture12 = 0x84CC,
-        Texture13 = 0x84CD,
-        Texture14 = 0x84CE,
-        Texture15 = 0x84CF,
-        Texture16 = 0x84D0,
-        Texture17 = 0x84D1,
-        Texture18 = 0x84D2,
-        Texture19 = 0x84D3,
-        Texture20 = 0x84D4,
-        Texture21 = 0x84D5,
-        Texture22 = 0x84D6,
-        Texture23 = 0x84D7,
-        Texture24 = 0x84D8,
-        Texture25 = 0x84D9,
-        Texture26 = 0x84DA,
-        Texture27 = 0x84DB,
-        Texture28 = 0x84DC,
-        Texture29 = 0x84DD,
-        Texture30 = 0x84DE,
-        Texture31 = 0x84DF,
-        ActiveTexture = 0x84E0,
-    }
-
-    public enum TextureWrapMode
-    {
-        Repeat = 0x2901,
-        ClampToEdge = 0x812F,
-        MirroredRepeat = 0x8370,
-    }
-
-    public enum UniformTypes
-    {
-        FloatVec2 = 0x8B50,
-        FloatVec3 = 0x8B51,
-        FloatVec4 = 0x8B52,
-        IntVec2 = 0x8B53,
-        IntVec3 = 0x8B54,
-        IntVec4 = 0x8B55,
-        Bool = 0x8B56,
-        BoolVec2 = 0x8B57,
-        BoolVec3 = 0x8B58,
-        BoolVec4 = 0x8B59,
-        FloatMat2 = 0x8B5A,
-        FloatMat3 = 0x8B5B,
-        FloatMat4 = 0x8B5C,
-        Sampler2d = 0x8B5E,
-        SamplerCube = 0x8B60,
-    }
-
-    public enum VertexArrays
-    {
-        VertexAttribArrayEnabled = 0x8622,
-        VertexAttribArraySize = 0x8623,
-        VertexAttribArrayStride = 0x8624,
-        VertexAttribArrayType = 0x8625,
-        VertexAttribArrayNormalized = 0x886A,
-        VertexAttribArrayPointer = 0x8645,
-        VertexAttribArrayBufferBinding = 0x889F,
-    }
-
-    public enum ReadFormat
-    {
-        ImplementationColorReadType = 0x8B9A,
-        ImplementationColorReadFormat = 0x8B9B,
-    }
-
-    public enum ShaderSource
-    {
-        CompileStatus = 0x8B81,
-        InfoLogLength = 0x8B84,
-        ShaderSourceLength = 0x8B88,
-        ShaderCompiler = 0x8DFA,
-    }
-
-    public enum ShaderBinary
-    {
-        ShaderBinaryFormats = 0x8DF8,
-        NumShaderBinaryFormats = 0x8DF9,
-    }
-
-    public enum ShaderPrecision
-    {
-        LowFloat = 0x8DF0,
-        MediumFloat = 0x8DF1,
-        HighFloat = 0x8DF2,
-        LowInt = 0x8DF3,
-        MediumInt = 0x8DF4,
-        HighInt = 0x8DF5,
+        Noerror = ((int)0),
+        Invalidenum = ((int)0X0500),
+        Invalidvalue = ((int)0X0501),
+        Invalidoperation = ((int)0X0502),
+        Outofmemory = ((int)0X0505),
     }
 
     public enum FramebufferObject
     {
-        Framebuffer = 0x8D40,
-        Renderbuffer = 0x8D41,
-
-        Rgba4 = 0x8056,
-        Rgb5A1 = 0x8057,
-        Rgb565 = 0x8D62,
-        DepthComponent16 = 0x81A5,
-        StencilIndex = 0x1901,
-        StencilIndex8 = 0x8D48,
-
-        RenderbufferWidth = 0x8D42,
-        RenderbufferHeight = 0x8D43,
-        RenderbufferInternalFormat = 0x8D44,
-        RenderbufferRedSize = 0x8D50,
-        RenderbufferGreenSize = 0x8D51,
-        RenderbufferBlueSize = 0x8D52,
-        RenderbufferAlphaSize = 0x8D53,
-        RenderbufferDepthSize = 0x8D54,
-        RenderbufferStencilSize = 0x8D55,
-
-        FramebufferAttachmentObjectType = 0x8CD0,
-        FramebufferAttachmentObjectName = 0x8CD1,
-        FramebufferAttachmentTextureLevel = 0x8CD2,
-        FramebufferAttachmentTextureCubeMapFace = 0x8CD3,
-
-        ColorAttachment0 = 0x8CE0,
-        DepthAttachment = 0x8D00,
-        StencilAttachment = 0x8D20,
-
-        None = 0,
-
-        FramebufferComplete = 0x8CD5,
-        FramebufferIncompleteAttachment = 0x8CD6,
-        FramebufferIncompleteMissingAttachment = 0x8CD7,
-        FramebufferIncompleteDimensions = 0x8CD9,
-        FramebufferUnsupported = 0x8CDD,
-
-        FramebufferBinding = 0x8CA6,
-        RenderbufferBinding = 0x8CA7,
-        MaxRenderbufferSize = 0x84E8,
-
-        InvalidFramebufferOperation = 0x0506,
+        None = ((int)0),
+        Invalidframebufferoperation = ((int)0X0506),
+        Stencilindex = ((int)0X1901),
+        Rgba4 = ((int)0X8056),
+        Rgb5a1 = ((int)0X8057),
+        Depthcomponent16 = ((int)0X81a5),
+        Maxrenderbuffersize = ((int)0X84e8),
+        Framebufferbinding = ((int)0X8ca6),
+        Renderbufferbinding = ((int)0X8ca7),
+        Framebufferattachmentobjecttype = ((int)0X8cd0),
+        Framebufferattachmentobjectname = ((int)0X8cd1),
+        Framebufferattachmenttexturelevel = ((int)0X8cd2),
+        Framebufferattachmenttexturecubemapface = ((int)0X8cd3),
+        Framebuffercomplete = ((int)0X8cd5),
+        Framebufferincompleteattachment = ((int)0X8cd6),
+        Framebufferincompletemissingattachment = ((int)0X8cd7),
+        Framebufferincompletedimensions = ((int)0X8cd9),
+        Framebufferunsupported = ((int)0X8cdd),
+        Colorattachment0 = ((int)0X8ce0),
+        Depthattachment = ((int)0X8d00),
+        Stencilattachment = ((int)0X8d20),
+        Framebuffer = ((int)0X8d40),
+        Renderbuffer = ((int)0X8d41),
+        Renderbufferwidth = ((int)0X8d42),
+        Renderbufferheight = ((int)0X8d43),
+        Renderbufferinternalformat = ((int)0X8d44),
+        Stencilindex8 = ((int)0X8d48),
+        Renderbufferredsize = ((int)0X8d50),
+        Renderbuffergreensize = ((int)0X8d51),
+        Renderbufferbluesize = ((int)0X8d52),
+        Renderbufferalphasize = ((int)0X8d53),
+        Renderbufferdepthsize = ((int)0X8d54),
+        Renderbufferstencilsize = ((int)0X8d55),
+        Rgb565 = ((int)0X8d62),
     }
-}
 
-#endif
+    public enum FrontFaceDirection
+    {
+        Cw = ((int)0X0900),
+        Ccw = ((int)0X0901),
+    }
+
+    public enum GetPName
+    {
+        Linewidth = ((int)0X0b21),
+        Cullfacemode = ((int)0X0b45),
+        Frontface = ((int)0X0b46),
+        Depthrange = ((int)0X0b70),
+        Depthwritemask = ((int)0X0b72),
+        Depthclearvalue = ((int)0X0b73),
+        Depthfunc = ((int)0X0b74),
+        Stencilclearvalue = ((int)0X0b91),
+        Stencilfunc = ((int)0X0b92),
+        Stencilvaluemask = ((int)0X0b93),
+        Stencilfail = ((int)0X0b94),
+        Stencilpassdepthfail = ((int)0X0b95),
+        Stencilpassdepthpass = ((int)0X0b96),
+        Stencilref = ((int)0X0b97),
+        Stencilwritemask = ((int)0X0b98),
+        Viewport = ((int)0X0ba2),
+        Scissorbox = ((int)0X0c10),
+        Colorclearvalue = ((int)0X0c22),
+        Colorwritemask = ((int)0X0c23),
+        Unpackalignment = ((int)0X0cf5),
+        Packalignment = ((int)0X0d05),
+        Maxtexturesize = ((int)0X0d33),
+        Maxviewportdims = ((int)0X0d3a),
+        Subpixelbits = ((int)0X0d50),
+        Redbits = ((int)0X0d52),
+        Greenbits = ((int)0X0d53),
+        Bluebits = ((int)0X0d54),
+        Alphabits = ((int)0X0d55),
+        Depthbits = ((int)0X0d56),
+        Stencilbits = ((int)0X0d57),
+        Polygonoffsetunits = ((int)0X2a00),
+        Polygonoffsetfactor = ((int)0X8038),
+        Texturebinding2D = ((int)0X8069),
+        Samplebuffers = ((int)0X80a8),
+        Samples = ((int)0X80a9),
+        Samplecoveragevalue = ((int)0X80aa),
+        Samplecoverageinvert = ((int)0X80ab),
+        Aliasedpointsizerange = ((int)0X846d),
+        Aliasedlinewidthrange = ((int)0X846e),
+        Stencilbackfunc = ((int)0X8800),
+        Stencilbackfail = ((int)0X8801),
+        Stencilbackpassdepthfail = ((int)0X8802),
+        Stencilbackpassdepthpass = ((int)0X8803),
+        Stencilbackref = ((int)0X8ca3),
+        Stencilbackvaluemask = ((int)0X8ca4),
+        Stencilbackwritemask = ((int)0X8ca5),
+    }
+
+    public enum GetTextureParameter
+    {
+        Numcompressedtextureformats = ((int)0X86a2),
+        Compressedtextureformats = ((int)0X86a3),
+    }
+
+    public enum HintMode
+    {
+        Dontcare = ((int)0X1100),
+        Fastest = ((int)0X1101),
+        Nicest = ((int)0X1102),
+    }
+
+    public enum HintTarget
+    {
+        Generatemipmaphint = ((int)0X8192),
+    }
+
+    public enum PixelFormat
+    {
+        Depthcomponent = ((int)0X1902),
+        Alpha = ((int)0X1906),
+        Rgb = ((int)0X1907),
+        Rgba = ((int)0X1908),
+        Luminance = ((int)0X1909),
+        Luminancealpha = ((int)0X190a),
+    }
+
+    public enum PixelType
+    {
+        Unsignedshort4444 = ((int)0X8033),
+        Unsignedshort5551 = ((int)0X8034),
+        Unsignedshort565 = ((int)0X8363),
+    }
+
+    public enum ReadFormat
+    {
+        Implementationcolorreadtype = ((int)0X8b9a),
+        Implementationcolorreadformat = ((int)0X8b9b),
+    }
+
+    public enum ShaderBinary
+    {
+        Shaderbinaryformats = ((int)0X8df8),
+        Numshaderbinaryformats = ((int)0X8df9),
+    }
+
+    public enum ShaderPrecision
+    {
+        Lowfloat = ((int)0X8df0),
+        Mediumfloat = ((int)0X8df1),
+        Highfloat = ((int)0X8df2),
+        Lowint = ((int)0X8df3),
+        Mediumint = ((int)0X8df4),
+        Highint = ((int)0X8df5),
+    }
+
+    public enum Shaders
+    {
+        Maxvertexattribs = ((int)0X8869),
+        Maxtextureimageunits = ((int)0X8872),
+        Fragmentshader = ((int)0X8b30),
+        Vertexshader = ((int)0X8b31),
+        Maxvertextextureimageunits = ((int)0X8b4c),
+        Maxcombinedtextureimageunits = ((int)0X8b4d),
+        Shadertype = ((int)0X8b4f),
+        Deletestatus = ((int)0X8b80),
+        Linkstatus = ((int)0X8b82),
+        Validatestatus = ((int)0X8b83),
+        Attachedshaders = ((int)0X8b85),
+        Activeuniforms = ((int)0X8b86),
+        Activeuniformmaxlength = ((int)0X8b87),
+        Activeattributes = ((int)0X8b89),
+        Activeattributemaxlength = ((int)0X8b8a),
+        Shadinglanguageversion = ((int)0X8b8c),
+        Currentprogram = ((int)0X8b8d),
+        Maxvertexuniformvectors = ((int)0X8dfb),
+        Maxvaryingvectors = ((int)0X8dfc),
+        Maxfragmentuniformvectors = ((int)0X8dfd),
+    }
+
+    public enum ShaderSource
+    {
+        Compilestatus = ((int)0X8b81),
+        Infologlength = ((int)0X8b84),
+        Shadersourcelength = ((int)0X8b88),
+        Shadercompiler = ((int)0X8dfa),
+    }
+
+    public enum StencilFunction
+    {
+        Never = ((int)0X0200),
+        Less = ((int)0X0201),
+        Equal = ((int)0X0202),
+        Lequal = ((int)0X0203),
+        Greater = ((int)0X0204),
+        Notequal = ((int)0X0205),
+        Gequal = ((int)0X0206),
+        Always = ((int)0X0207),
+    }
+
+    public enum StencilOp
+    {
+        Invert = ((int)0X150a),
+        Keep = ((int)0X1e00),
+        Replace = ((int)0X1e01),
+        Incr = ((int)0X1e02),
+        Decr = ((int)0X1e03),
+        Incrwrap = ((int)0X8507),
+        Decrwrap = ((int)0X8508),
+    }
+
+    public enum StringName
+    {
+        Vendor = ((int)0X1f00),
+        Renderer = ((int)0X1f01),
+        Version = ((int)0X1f02),
+        Extensions = ((int)0X1f03),
+    }
+
+    public enum TextureMagFilter
+    {
+        Nearest = ((int)0X2600),
+        Linear = ((int)0X2601),
+    }
+
+    public enum TextureMinFilter
+    {
+        Nearestmipmapnearest = ((int)0X2700),
+        Linearmipmapnearest = ((int)0X2701),
+        Nearestmipmaplinear = ((int)0X2702),
+        Linearmipmaplinear = ((int)0X2703),
+    }
+
+    public enum TextureParameterName
+    {
+        Texturemagfilter = ((int)0X2800),
+        Textureminfilter = ((int)0X2801),
+        Texturewraps = ((int)0X2802),
+        Texturewrapt = ((int)0X2803),
+    }
+
+    public enum TextureTarget
+    {
+        Texture = ((int)0X1702),
+        Texturecubemap = ((int)0X8513),
+        Texturebindingcubemap = ((int)0X8514),
+        Texturecubemappositivex = ((int)0X8515),
+        Texturecubemapnegativex = ((int)0X8516),
+        Texturecubemappositivey = ((int)0X8517),
+        Texturecubemapnegativey = ((int)0X8518),
+        Texturecubemappositivez = ((int)0X8519),
+        Texturecubemapnegativez = ((int)0X851a),
+        Maxcubemaptexturesize = ((int)0X851c),
+    }
+
+    public enum TextureUnit
+    {
+        Texture0 = ((int)0X84c0),
+        Texture1 = ((int)0X84c1),
+        Texture2 = ((int)0X84c2),
+        Texture3 = ((int)0X84c3),
+        Texture4 = ((int)0X84c4),
+        Texture5 = ((int)0X84c5),
+        Texture6 = ((int)0X84c6),
+        Texture7 = ((int)0X84c7),
+        Texture8 = ((int)0X84c8),
+        Texture9 = ((int)0X84c9),
+        Texture10 = ((int)0X84ca),
+        Texture11 = ((int)0X84cb),
+        Texture12 = ((int)0X84cc),
+        Texture13 = ((int)0X84cd),
+        Texture14 = ((int)0X84ce),
+        Texture15 = ((int)0X84cf),
+        Texture16 = ((int)0X84d0),
+        Texture17 = ((int)0X84d1),
+        Texture18 = ((int)0X84d2),
+        Texture19 = ((int)0X84d3),
+        Texture20 = ((int)0X84d4),
+        Texture21 = ((int)0X84d5),
+        Texture22 = ((int)0X84d6),
+        Texture23 = ((int)0X84d7),
+        Texture24 = ((int)0X84d8),
+        Texture25 = ((int)0X84d9),
+        Texture26 = ((int)0X84da),
+        Texture27 = ((int)0X84db),
+        Texture28 = ((int)0X84dc),
+        Texture29 = ((int)0X84dd),
+        Texture30 = ((int)0X84de),
+        Texture31 = ((int)0X84df),
+        Activetexture = ((int)0X84e0),
+    }
+
+    public enum TextureWrapMode
+    {
+        Repeat = ((int)0X2901),
+        Clamptoedge = ((int)0X812f),
+        Mirroredrepeat = ((int)0X8370),
+    }
+
+    public enum UniformTypes
+    {
+        Floatvec2 = ((int)0X8b50),
+        Floatvec3 = ((int)0X8b51),
+        Floatvec4 = ((int)0X8b52),
+        Intvec2 = ((int)0X8b53),
+        Intvec3 = ((int)0X8b54),
+        Intvec4 = ((int)0X8b55),
+        Bool = ((int)0X8b56),
+        Boolvec2 = ((int)0X8b57),
+        Boolvec3 = ((int)0X8b58),
+        Boolvec4 = ((int)0X8b59),
+        Floatmat2 = ((int)0X8b5a),
+        Floatmat3 = ((int)0X8b5b),
+        Floatmat4 = ((int)0X8b5c),
+        Sampler2D = ((int)0X8b5e),
+        Samplercube = ((int)0X8b60),
+    }
+
+    public enum Version
+    {
+        Esversion20 = ((int)1),
+    }
+
+    public enum VertexArrays
+    {
+        Vertexattribarrayenabled = ((int)0X8622),
+        Vertexattribarraysize = ((int)0X8623),
+        Vertexattribarraystride = ((int)0X8624),
+        Vertexattribarraytype = ((int)0X8625),
+        Vertexattribarraypointer = ((int)0X8645),
+        Vertexattribarraynormalized = ((int)0X886a),
+        Vertexattribarraybufferbinding = ((int)0X889f),
+    }
+
+}
