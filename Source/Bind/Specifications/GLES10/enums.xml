@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<functions>
-  <functions />
+<enums>
   <enum name="Extensions">
     <token name="OesVersion10" value="1" />
     <token name="OesReadFormat" value="1" />
@@ -315,4 +314,4 @@
     <token name="Light6" value="0x4006" />
     <token name="Light7" value="0x4007" />
   </enum>
-</functions>
+</enums>
