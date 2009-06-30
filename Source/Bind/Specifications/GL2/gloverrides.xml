@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<override>
+<overrides>
 
   <function name="TexImage1D" extension="Core">
     <param name="internalformat"><type>PixelInternalFormat</type></param>
@@ -473,5 +473,4 @@
     <param name="type"><type>VertexAttribParameterArb</type></param>
   </function>
 
-
-</override>
+</overrides>
