@@ -117,6 +117,9 @@ namespace Bind.Structures
 
         public static string TranslateName(string name)
         {
+            if (String.IsNullOrEmpty(name))
+                return name;
+
             if (Utilities.Keywords.Contains(name))
                 return name;
 

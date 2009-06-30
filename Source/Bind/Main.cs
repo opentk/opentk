@@ -21,6 +21,9 @@ namespace Bind
         Unknown,
         GL2,
         GL3,
+        GLES10,
+        GLES11,
+        GLES20,
         Wgl,
         Glx,
         Glu,
@@ -70,8 +73,14 @@ namespace Bind
                                 break;
                             case "mode":
                                 string arg = b[1].ToLower();
-                                if (arg.StartsWith("gl"))
+                                if (arg == "gl" || arg == "gl2")
                                     mode = GeneratorMode.GL2;
+                                else if (arg == "gles10")
+                                    mode = GeneratorMode.GLES10;
+                                else if (arg == "gles11")
+                                    mode = GeneratorMode.GLES11;
+                                else if (arg == "gles20")
+                                    mode = GeneratorMode.GLES20;
                                 else
                                     throw new NotImplementedException();
                                 break;
@@ -124,6 +133,18 @@ namespace Bind
                         Generator = new Bind.GL2.Generator();
                         break;
 
+                    case GeneratorMode.GLES10:
+                        Generator = new Bind.GLES.GlesGenerator("GLES10");
+                        break;
+                    
+                    case GeneratorMode.GLES11:
+                        Generator = new Bind.GLES.GlesGenerator("GLES11");
+                        break;
+                    
+                    case GeneratorMode.GLES20:
+                        Generator = new Bind.GLES.GlesGenerator("GLES20");
+                        break;
+                    
                     case GeneratorMode.Wgl:
                         Generator = new Bind.Wgl.Generator();
                         break;
