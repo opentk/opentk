@@ -1,8 +1,8 @@
-﻿#region License
+#region License
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2008 the Open Toolkit library, except where noted.
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,399 +25,401 @@
 //
 #endregion
 
-#if GLES10
+using System;
 
 namespace OpenTK.Graphics.GLES10
 {
-    public enum Extensions
-    {
-        OesVersion10 = 1,
-        OesReadFormat = 1,
-        OesCompressedPalettedTexture = 1,
-    }
+    #pragma warning disable 1591
 
-    public enum ClearBufferMask
+    public enum AlphaFunction
     {
-        DepthBufferBit = 0x00000100,
-        StencilBufferBit = 0x00000400,
-        ColorBufferBit = 0x00004000,
-    }
-
-    public enum Boolean
-    {
-        False = 0,
-        True = 1,
+        Never = ((int)0X0200),
+        Less = ((int)0X0201),
+        Equal = ((int)0X0202),
+        Lequal = ((int)0X0203),
+        Greater = ((int)0X0204),
+        Notequal = ((int)0X0205),
+        Gequal = ((int)0X0206),
+        Always = ((int)0X0207),
     }
 
     public enum BeginMode
     {
-        Points = 0x0000,
-        Lines = 0x0001,
-        LineLoop = 0x0002,
-        LineStrip = 0x0003,
-        Triangles = 0x0004,
-        TriangleStrip = 0x0005,
-        TriangleFan = 0x0006,
-    }
-
-    public enum AlphaFunction
-    {
-        Never = 0x0200,
-        Less = 0x0201,
-        Equal = 0x0202,
-        Lequal = 0x0203,
-        Greater = 0x0204,
-        Notequal = 0x0205,
-        Gequal = 0x0206,
-        Always = 0x0207,
+        Points = ((int)0X0000),
+        Lines = ((int)0X0001),
+        Lineloop = ((int)0X0002),
+        Linestrip = ((int)0X0003),
+        Triangles = ((int)0X0004),
+        Trianglestrip = ((int)0X0005),
+        Trianglefan = ((int)0X0006),
     }
 
     public enum BlendingFactorDest
     {
-        Zero = 0,
-        One = 1,
-        SrcColor = 0x0300,
-        OneMinusSrcColor = 0x0301,
-        SrcAlpha = 0x0302,
-        OneMinusSrcAlpha = 0x0303,
-        DstAlpha = 0x0304,
-        OneMinusDstAlpha = 0x0305,
+        Zero = ((int)0),
+        Srccolor = ((int)0X0300),
+        Oneminussrccolor = ((int)0X0301),
+        Srcalpha = ((int)0X0302),
+        Oneminussrcalpha = ((int)0X0303),
+        Dstalpha = ((int)0X0304),
+        Oneminusdstalpha = ((int)0X0305),
+        One = ((int)1),
     }
 
     public enum BlendingFactorSrc
     {
-        DstColor = 0x0306,
-        OneMinusDstColor = 0x0307,
-        SrcAlphaSaturate = 0x0308,
+        Dstcolor = ((int)0X0306),
+        Oneminusdstcolor = ((int)0X0307),
+        Srcalphasaturate = ((int)0X0308),
+    }
+
+    public enum Boolean
+    {
+        False = ((int)0),
+        True = ((int)1),
+    }
+
+    [Flags]
+    public enum ClearBufferMask
+    {
+        Depthbufferbit = ((int)0X00000100),
+        Stencilbufferbit = ((int)0X00000400),
+        Colorbufferbit = ((int)0X00004000),
     }
 
     public enum CullFaceMode
     {
-        Front = 0x0404,
-        Back = 0x0405,
-        FrontAndBack = 0x0408,
-    }
-
-    public enum EnableCap
-    {
-        Fog = 0x0B60,
-        Lighting = 0x0B50,
-        Texture2d = 0x0DE1,
-        CullFace = 0x0B44,
-        AlphaTest = 0x0BC0,
-        Blend = 0x0BE2,
-        ColorLogicOp = 0x0BF2,
-        Dither = 0x0BD0,
-        StencilTest = 0x0B90,
-        DepthTest = 0x0B71,
-        PointSmooth = 0x0B10,
-        LineSmooth = 0x0B20,
-        ScissorTest = 0x0C11,
-        ColorMaterial = 0x0B57,
-        Normalize = 0x0BA1,
-        RescaleNormal = 0x803A,
-        PolygonOffsetFill = 0x8037,
-        VertexArray = 0x8074,
-        NormalArray = 0x8075,
-        ColorArray = 0x8076,
-        TextureCoordArray = 0x8078,
-        Multisample = 0x809D,
-        SampleAlphaToCoverage = 0x809E,
-        SampleAlphaToOne = 0x809F,
-        SampleCoverage = 0x80A0,
-    }
-
-    public enum ErrorCode
-    {
-        NoError = 0,
-        InvalidEnum = 0x0500,
-        InvalidValue = 0x0501,
-        InvalidOperation = 0x0502,
-        StackOverflow = 0x0503,
-        StackUnderflow = 0x0504,
-        OutOfMemory = 0x0505,
-    }
-
-    public enum FogMode
-    {
-        Exp = 0x0800,
-        Exp2 = 0x0801,
-    }
-
-    public enum FogParameter
-    {
-        FogDensity = 0x0B62,
-        FogStart = 0x0B63,
-        FogEnd = 0x0B64,
-        FogMode = 0x0B65,
-        FogColor = 0x0B66,
-    }
-
-    public enum FrontFaceDirection
-    {
-        Cw = 0x0900,
-        Ccw = 0x0901,
-    }
-
-    public enum GetPName
-    {
-        SmoothPointSizeRange = 0x0B12,
-        SmoothLineWidthRange = 0x0B22,
-        AliasedPointSizeRange = 0x846D,
-        AliasedLineWidthRange = 0x846E,
-        ImplementationColorReadTypeOes = 0x8B9A,
-        ImplementationColorReadFormatOes = 0x8B9B,
-        MaxLights = 0x0D31,
-        MaxTextureSize = 0x0D33,
-        MaxModelviewStackDepth = 0x0D36,
-        MaxProjectionStackDepth = 0x0D38,
-        MaxTextureStackDepth = 0x0D39,
-        MaxViewportDims = 0x0D3A,
-        MaxElementsVertices = 0x80E8,
-        MaxElementsIndices = 0x80E9,
-        MaxTextureUnits = 0x84E2,
-        NumCompressedTextureFormats = 0x86A2,
-        CompressedTextureFormats = 0x86A3,
-        SubpixelBits = 0x0D50,
-        RedBits = 0x0D52,
-        GreenBits = 0x0D53,
-        BlueBits = 0x0D54,
-        AlphaBits = 0x0D55,
-        DepthBits = 0x0D56,
-        StencilBits = 0x0D57,
-    }
-
-    public enum HintMode
-    {
-        DontCare = 0x1100,
-        Fastest = 0x1101,
-        Nicest = 0x1102,
-    }
-
-    public enum HintTarget
-    {
-        PerspectiveCorrectionHint = 0x0C50,
-        PointSmoothHint = 0x0C51,
-        LineSmoothHint = 0x0C52,
-        PolygonSmoothHint = 0x0C53,
-        FogHint = 0x0C54,
-    }
-
-    public enum LightModelParameter
-    {
-        LightModelAmbient = 0x0B53,
-        LightModelTwoSide = 0x0B52,
-    }
-
-    public enum LightParameter
-    {
-        Ambient = 0x1200,
-        Diffuse = 0x1201,
-        Specular = 0x1202,
-        Position = 0x1203,
-        SpotDirection = 0x1204,
-        SpotExponent = 0x1205,
-        SpotCutoff = 0x1206,
-        ConstantAttenuation = 0x1207,
-        LinearAttenuation = 0x1208,
-        QuadraticAttenuation = 0x1209,
+        Front = ((int)0X0404),
+        Back = ((int)0X0405),
+        Frontandback = ((int)0X0408),
     }
 
     public enum DataType
     {
-        Byte = 0x1400,
-        UnsignedByte = 0x1401,
-        Short = 0x1402,
-        UnsignedShort = 0x1403,
-        Float = 0x1406,
-        Fixed = 0x140C,
+        Byte = ((int)0X1400),
+        Unsignedbyte = ((int)0X1401),
+        Short = ((int)0X1402),
+        Unsignedshort = ((int)0X1403),
+        Float = ((int)0X1406),
+        Fixed = ((int)0X140c),
     }
 
-    public enum LogicOp
+    public enum EnableCap
     {
-        Clear = 0x1500,
-        And = 0x1501,
-        AndReverse = 0x1502,
-        Copy = 0x1503,
-        AndInverted = 0x1504,
-        Noop = 0x1505,
-        Xor = 0x1506,
-        Or = 0x1507,
-        Nor = 0x1508,
-        Equiv = 0x1509,
-        Invert = 0x150A,
-        OrReverse = 0x150B,
-        CopyInverted = 0x150C,
-        OrInverted = 0x150D,
-        Nand = 0x150E,
-        Set = 0x150F,
+        Pointsmooth = ((int)0X0b10),
+        Linesmooth = ((int)0X0b20),
+        Cullface = ((int)0X0b44),
+        Lighting = ((int)0X0b50),
+        Colormaterial = ((int)0X0b57),
+        Fog = ((int)0X0b60),
+        Depthtest = ((int)0X0b71),
+        Stenciltest = ((int)0X0b90),
+        Normalize = ((int)0X0ba1),
+        Alphatest = ((int)0X0bc0),
+        Dither = ((int)0X0bd0),
+        Blend = ((int)0X0be2),
+        Colorlogicop = ((int)0X0bf2),
+        Scissortest = ((int)0X0c11),
+        Texture2D = ((int)0X0de1),
+        Polygonoffsetfill = ((int)0X8037),
+        Rescalenormal = ((int)0X803a),
+        Vertexarray = ((int)0X8074),
+        Normalarray = ((int)0X8075),
+        Colorarray = ((int)0X8076),
+        Texturecoordarray = ((int)0X8078),
+        Multisample = ((int)0X809d),
+        Samplealphatocoverage = ((int)0X809e),
+        Samplealphatoone = ((int)0X809f),
+        Samplecoverage = ((int)0X80a0),
     }
 
-    public enum MaterialParameter
+    public enum ErrorCode
     {
-        Emission = 0x1600,
-        Shininess = 0x1601,
-        AmbientAndDiffuse = 0x1602,
+        Noerror = ((int)0),
+        Invalidenum = ((int)0X0500),
+        Invalidvalue = ((int)0X0501),
+        Invalidoperation = ((int)0X0502),
+        Stackoverflow = ((int)0X0503),
+        Stackunderflow = ((int)0X0504),
+        Outofmemory = ((int)0X0505),
     }
 
-    public enum MatrixMode
+    public enum Extensions
     {
-        Modelview = 0x1700,
-        Projection = 0x1701,
-        Texture = 0x1702,
+        Oescompressedpalettedtexture = ((int)1),
+        Oesreadformat = ((int)1),
+        Oesversion10 = ((int)1),
     }
 
-    public enum PixelFormat
+    public enum FogMode
     {
-        Alpha = 0x1906,
-        Rgb = 0x1907,
-        Rgba = 0x1908,
-        Luminance = 0x1909,
-        LuminanceAlpha = 0x190A,
+        Exp = ((int)0X0800),
+        Exp2 = ((int)0X0801),
     }
 
-    public enum PixelStoreParameter
+    public enum FogParameter
     {
-        UnpackAlignment = 0x0CF5,
-        PackAlignment = 0x0D05,
+        Fogdensity = ((int)0X0b62),
+        Fogstart = ((int)0X0b63),
+        Fogend = ((int)0X0b64),
+        Fogmode = ((int)0X0b65),
+        Fogcolor = ((int)0X0b66),
     }
 
-    public enum PixelType
+    public enum FrontFaceDirection
     {
-        UnsignedShort4444 = 0x8033,
-        UnsignedShort5551 = 0x8034,
-        UnsignedShort565 = 0x8363,
+        Cw = ((int)0X0900),
+        Ccw = ((int)0X0901),
     }
 
-    public enum ShadingModel
+    public enum GetPName
     {
-        Flat = 0x1D00,
-        Smooth = 0x1D01,
+        Smoothpointsizerange = ((int)0X0b12),
+        Smoothlinewidthrange = ((int)0X0b22),
+        Maxlights = ((int)0X0d31),
+        Maxtexturesize = ((int)0X0d33),
+        Maxmodelviewstackdepth = ((int)0X0d36),
+        Maxprojectionstackdepth = ((int)0X0d38),
+        Maxtexturestackdepth = ((int)0X0d39),
+        Maxviewportdims = ((int)0X0d3a),
+        Subpixelbits = ((int)0X0d50),
+        Redbits = ((int)0X0d52),
+        Greenbits = ((int)0X0d53),
+        Bluebits = ((int)0X0d54),
+        Alphabits = ((int)0X0d55),
+        Depthbits = ((int)0X0d56),
+        Stencilbits = ((int)0X0d57),
+        Maxelementsvertices = ((int)0X80e8),
+        Maxelementsindices = ((int)0X80e9),
+        Aliasedpointsizerange = ((int)0X846d),
+        Aliasedlinewidthrange = ((int)0X846e),
+        Maxtextureunits = ((int)0X84e2),
+        Numcompressedtextureformats = ((int)0X86a2),
+        Compressedtextureformats = ((int)0X86a3),
+        Implementationcolorreadtypeoes = ((int)0X8b9a),
+        Implementationcolorreadformatoes = ((int)0X8b9b),
     }
 
-    public enum StencilOp
+    public enum HintMode
     {
-        Keep = 0x1E00,
-        Replace = 0x1E01,
-        Incr = 0x1E02,
-        Decr = 0x1E03,
+        Dontcare = ((int)0X1100),
+        Fastest = ((int)0X1101),
+        Nicest = ((int)0X1102),
     }
 
-    public enum StringName
+    public enum HintTarget
     {
-        Vendor = 0x1F00,
-        Renderer = 0x1F01,
-        Version = 0x1F02,
-        Extensions = 0x1F03,
+        Perspectivecorrectionhint = ((int)0X0c50),
+        Pointsmoothhint = ((int)0X0c51),
+        Linesmoothhint = ((int)0X0c52),
+        Polygonsmoothhint = ((int)0X0c53),
+        Foghint = ((int)0X0c54),
     }
 
-    public enum TextureEnvMode
+    public enum LightModelParameter
     {
-        Modulate = 0x2100,
-        Decal = 0x2101,
-        Add = 0x0104,
-    }
-
-    public enum TextureEnvParameter
-    {
-        TextureEnvMode = 0x2200,
-        TextureEnvColor = 0x2201,
-    }
-
-    public enum TextureEnvTarget
-    {
-        TextureEnv = 0x2300,
-    }
-
-    public enum TextureMagFilter
-    {
-        Nearest = 0x2600,
-        Linear = 0x2601,
-    }
-
-    public enum TextureMinFilter
-    {
-        NearestMipmapNearest = 0x2700,
-        LinearMipmapNearest = 0x2701,
-        NearestMipmapLinear = 0x2702,
-        LinearMipmapLinear = 0x2703,
-    }
-
-    public enum TextureParameterName
-    {
-        TextureMagFilter = 0x2800,
-        TextureMinFilter = 0x2801,
-        TextureWrapS = 0x2802,
-        TextureWrapT = 0x2803,
-    }
-
-    public enum TextureUnit
-    {
-        Texture0 = 0x84C0,
-        Texture1 = 0x84C1,
-        Texture2 = 0x84C2,
-        Texture3 = 0x84C3,
-        Texture4 = 0x84C4,
-        Texture5 = 0x84C5,
-        Texture6 = 0x84C6,
-        Texture7 = 0x84C7,
-        Texture8 = 0x84C8,
-        Texture9 = 0x84C9,
-        Texture10 = 0x84CA,
-        Texture11 = 0x84CB,
-        Texture12 = 0x84CC,
-        Texture13 = 0x84CD,
-        Texture14 = 0x84CE,
-        Texture15 = 0x84CF,
-        Texture16 = 0x84D0,
-        Texture17 = 0x84D1,
-        Texture18 = 0x84D2,
-        Texture19 = 0x84D3,
-        Texture20 = 0x84D4,
-        Texture21 = 0x84D5,
-        Texture22 = 0x84D6,
-        Texture23 = 0x84D7,
-        Texture24 = 0x84D8,
-        Texture25 = 0x84D9,
-        Texture26 = 0x84DA,
-        Texture27 = 0x84DB,
-        Texture28 = 0x84DC,
-        Texture29 = 0x84DD,
-        Texture30 = 0x84DE,
-        Texture31 = 0x84DF,
-    }
-
-    public enum TextureWrapMode
-    {
-        Repeat = 0x2901,
-        ClampToEdge = 0x812F,
-    }
-
-    public enum PixelInternalFormat
-    {
-        Palette4Rgb8Oes = 0x8B90,
-        Palette4Rgba8Oes = 0x8B91,
-        Palette4R5G6B5Oes = 0x8B92,
-        Palette4Rgba4Oes = 0x8B93,
-        Palette4Rgb5A1Oes = 0x8B94,
-        Palette8Rgb8Oes = 0x8B95,
-        Palette8Rgba8Oes = 0x8B96,
-        Palette8R5G6B5Oes = 0x8B97,
-        Palette8Rgba4Oes = 0x8B98,
-        Palette8Rgb5A1Oes = 0x8B99,
+        Lightmodeltwoside = ((int)0X0b52),
+        Lightmodelambient = ((int)0X0b53),
     }
 
     public enum LightName
     {
-        Light0 = 0x4000,
-        Light1 = 0x4001,
-        Light2 = 0x4002,
-        Light3 = 0x4003,
-        Light4 = 0x4004,
-        Light5 = 0x4005,
-        Light6 = 0x4006,
-        Light7 = 0x4007,
+        Light0 = ((int)0X4000),
+        Light1 = ((int)0X4001),
+        Light2 = ((int)0X4002),
+        Light3 = ((int)0X4003),
+        Light4 = ((int)0X4004),
+        Light5 = ((int)0X4005),
+        Light6 = ((int)0X4006),
+        Light7 = ((int)0X4007),
     }
-}
 
-#endif
+    public enum LightParameter
+    {
+        Ambient = ((int)0X1200),
+        Diffuse = ((int)0X1201),
+        Specular = ((int)0X1202),
+        Position = ((int)0X1203),
+        Spotdirection = ((int)0X1204),
+        Spotexponent = ((int)0X1205),
+        Spotcutoff = ((int)0X1206),
+        Constantattenuation = ((int)0X1207),
+        Linearattenuation = ((int)0X1208),
+        Quadraticattenuation = ((int)0X1209),
+    }
+
+    public enum LogicOp
+    {
+        Clear = ((int)0X1500),
+        And = ((int)0X1501),
+        Andreverse = ((int)0X1502),
+        Copy = ((int)0X1503),
+        Andinverted = ((int)0X1504),
+        Noop = ((int)0X1505),
+        Xor = ((int)0X1506),
+        Or = ((int)0X1507),
+        Nor = ((int)0X1508),
+        Equiv = ((int)0X1509),
+        Invert = ((int)0X150a),
+        Orreverse = ((int)0X150b),
+        Copyinverted = ((int)0X150c),
+        Orinverted = ((int)0X150d),
+        Nand = ((int)0X150e),
+        Set = ((int)0X150f),
+    }
+
+    public enum MaterialParameter
+    {
+        Emission = ((int)0X1600),
+        Shininess = ((int)0X1601),
+        Ambientanddiffuse = ((int)0X1602),
+    }
+
+    public enum MatrixMode
+    {
+        Modelview = ((int)0X1700),
+        Projection = ((int)0X1701),
+        Texture = ((int)0X1702),
+    }
+
+    public enum PixelFormat
+    {
+        Alpha = ((int)0X1906),
+        Rgb = ((int)0X1907),
+        Rgba = ((int)0X1908),
+        Luminance = ((int)0X1909),
+        Luminancealpha = ((int)0X190a),
+    }
+
+    public enum PixelInternalFormat
+    {
+        Palette4rgb8oes = ((int)0X8b90),
+        Palette4rgba8oes = ((int)0X8b91),
+        Palette4r5g6b5oes = ((int)0X8b92),
+        Palette4rgba4oes = ((int)0X8b93),
+        Palette4rgb5a1oes = ((int)0X8b94),
+        Palette8rgb8oes = ((int)0X8b95),
+        Palette8rgba8oes = ((int)0X8b96),
+        Palette8r5g6b5oes = ((int)0X8b97),
+        Palette8rgba4oes = ((int)0X8b98),
+        Palette8rgb5a1oes = ((int)0X8b99),
+    }
+
+    public enum PixelStoreParameter
+    {
+        Unpackalignment = ((int)0X0cf5),
+        Packalignment = ((int)0X0d05),
+    }
+
+    public enum PixelType
+    {
+        Unsignedshort4444 = ((int)0X8033),
+        Unsignedshort5551 = ((int)0X8034),
+        Unsignedshort565 = ((int)0X8363),
+    }
+
+    public enum ShadingModel
+    {
+        Flat = ((int)0X1d00),
+        Smooth = ((int)0X1d01),
+    }
+
+    public enum StencilOp
+    {
+        Keep = ((int)0X1e00),
+        Replace = ((int)0X1e01),
+        Incr = ((int)0X1e02),
+        Decr = ((int)0X1e03),
+    }
+
+    public enum StringName
+    {
+        Vendor = ((int)0X1f00),
+        Renderer = ((int)0X1f01),
+        Version = ((int)0X1f02),
+        Extensions = ((int)0X1f03),
+    }
+
+    public enum TextureEnvMode
+    {
+        Add = ((int)0X0104),
+        Modulate = ((int)0X2100),
+        Decal = ((int)0X2101),
+    }
+
+    public enum TextureEnvParameter
+    {
+        Textureenvmode = ((int)0X2200),
+        Textureenvcolor = ((int)0X2201),
+    }
+
+    public enum TextureEnvTarget
+    {
+        Textureenv = ((int)0X2300),
+    }
+
+    public enum TextureMagFilter
+    {
+        Nearest = ((int)0X2600),
+        Linear = ((int)0X2601),
+    }
+
+    public enum TextureMinFilter
+    {
+        Nearestmipmapnearest = ((int)0X2700),
+        Linearmipmapnearest = ((int)0X2701),
+        Nearestmipmaplinear = ((int)0X2702),
+        Linearmipmaplinear = ((int)0X2703),
+    }
+
+    public enum TextureParameterName
+    {
+        Texturemagfilter = ((int)0X2800),
+        Textureminfilter = ((int)0X2801),
+        Texturewraps = ((int)0X2802),
+        Texturewrapt = ((int)0X2803),
+    }
+
+    public enum TextureUnit
+    {
+        Texture0 = ((int)0X84c0),
+        Texture1 = ((int)0X84c1),
+        Texture2 = ((int)0X84c2),
+        Texture3 = ((int)0X84c3),
+        Texture4 = ((int)0X84c4),
+        Texture5 = ((int)0X84c5),
+        Texture6 = ((int)0X84c6),
+        Texture7 = ((int)0X84c7),
+        Texture8 = ((int)0X84c8),
+        Texture9 = ((int)0X84c9),
+        Texture10 = ((int)0X84ca),
+        Texture11 = ((int)0X84cb),
+        Texture12 = ((int)0X84cc),
+        Texture13 = ((int)0X84cd),
+        Texture14 = ((int)0X84ce),
+        Texture15 = ((int)0X84cf),
+        Texture16 = ((int)0X84d0),
+        Texture17 = ((int)0X84d1),
+        Texture18 = ((int)0X84d2),
+        Texture19 = ((int)0X84d3),
+        Texture20 = ((int)0X84d4),
+        Texture21 = ((int)0X84d5),
+        Texture22 = ((int)0X84d6),
+        Texture23 = ((int)0X84d7),
+        Texture24 = ((int)0X84d8),
+        Texture25 = ((int)0X84d9),
+        Texture26 = ((int)0X84da),
+        Texture27 = ((int)0X84db),
+        Texture28 = ((int)0X84dc),
+        Texture29 = ((int)0X84dd),
+        Texture30 = ((int)0X84de),
+        Texture31 = ((int)0X84df),
+    }
+
+    public enum TextureWrapMode
+    {
+        Repeat = ((int)0X2901),
+        Clamptoedge = ((int)0X812f),
+    }
+
+}
