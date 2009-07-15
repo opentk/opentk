@@ -562,8 +562,8 @@
     <param type="GLenum" name="pname" />
     <param type="GLint" name="*params" />
   </function>
-  <function name="IENTRY" extension="Core" profile="" category="1.0">
-    <returns type="GLubyte" />
+  <function name="GetString" extension="Core" profile="" category="1.0">
+    <returns type="GLubyte*" />
     <param type="GLenum" name="name" />
   </function>
   <function name="Hint" extension="Core" profile="" category="1.0">
