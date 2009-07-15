@@ -77,7 +77,7 @@ namespace Bind.Structures
             //get { return _type; }
             get
             {
-                if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) && Pointer && type.Contains("void"))
+                if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) && Pointer != 0 && type.Contains("void"))
                     return "IntPtr";
 
                 return type;
@@ -89,12 +89,10 @@ namespace Bind.Structures
                 if (!String.IsNullOrEmpty(value))
                     type = value.Trim();
 
-                //Translate();
-
-                if (type.EndsWith("*"))
+                while (type.EndsWith("*"))
                 {
-                    type = type.TrimEnd('*');
-                    Pointer = true;
+                    type = type.Substring(0, type.Length - 1);
+                    Pointer++;
                 }
             }
         }
@@ -151,11 +149,11 @@ namespace Bind.Structures
 
         #endregion
 
-        #region public bool Pointer
+        #region public int Pointer
 
-        bool pointer;
+        int pointer;
 
-        public bool Pointer
+        public int Pointer
         {
             get { return pointer; }
             set { pointer = value; }
@@ -170,7 +168,7 @@ namespace Bind.Structures
             get
             {
                 bool compliant = !(CurrentType.Contains("UInt") || CurrentType.Contains("SByte"));
-                if (Pointer)
+                if (Pointer != 0)
                 {
                     compliant &= CurrentType.Contains("IntPtr");    // IntPtr's are CLSCompliant.
                     // If the NoPublicUnsageFunctions is set, the pointer will be CLSCompliant.
@@ -227,7 +225,7 @@ namespace Bind.Structures
         {
             if (!CLSCompliant)
             {
-                if (Pointer && Settings.Compatibility == Settings.Legacy.Tao)
+                if (Pointer != 0 && Settings.Compatibility == Settings.Legacy.Tao)
                     return "IntPtr";
 
                 switch (CurrentType)
@@ -292,7 +290,7 @@ namespace Bind.Structures
                         CurrentType = CurrentType.Insert(0, String.Format("{0}.", Settings.EnumsAuxOutput));
                 }
             }
-            else if (Bind.Structures.Type.GLTypes.TryGetValue(CurrentType, out s))
+            else if (GLTypes.TryGetValue(CurrentType, out s))
             {
                 // Check if the parameter is a generic GLenum. If it is, search for a better match,
                 // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
@@ -349,7 +347,7 @@ namespace Bind.Structures
                 Bind.Structures.Type.CSTypes[CurrentType] : CurrentType;
 
             if (CurrentType == "IntPtr" && String.IsNullOrEmpty(PreviousType))
-                Pointer = false;
+                Pointer = 0;
         }
 
         #endregion

@@ -176,12 +176,12 @@ namespace Bind.Structures
                 //if ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None)
                 //    return false;
 
-                if (ReturnType.Pointer)
+                if (ReturnType.Pointer != 0)
                     return true;
 
                 foreach (Parameter p in Parameters)
                 {
-                    if (p.Pointer)
+                    if (p.Pointer != 0)
                     {
                         return true;
                     }
@@ -532,7 +532,7 @@ namespace Bind.Structures
 
             if (function_override != null)
             {
-                XPathNavigator return_override = function_override.SelectSingleNode("return");
+                XPathNavigator return_override = function_override.SelectSingleNode("returns");
                 if (return_override != null)
                 {
                     ReturnType.CurrentType = return_override.Value;
@@ -541,7 +541,7 @@ namespace Bind.Structures
 
             ReturnType.Translate(this.Category);
 
-            if (ReturnType.CurrentType.ToLower().Contains("void") && ReturnType.Pointer)
+            if (ReturnType.CurrentType.ToLower().Contains("void") && ReturnType.Pointer != 0)
             {
                 ReturnType.CurrentType = "IntPtr";
                 ReturnType.WrapperType = WrapperTypes.GenericReturnType;
@@ -589,13 +589,13 @@ namespace Bind.Structures
                             {
                                 case "type": Parameters[i].CurrentType = (string)node.TypedValue; break;
                                 case "name": Parameters[i].Name = (string)node.TypedValue; break;
+                                case "flow":  Parameters[i].Flow = Parameter.GetFlowDirection((string)node.TypedValue); break;
                             }
                         }
                     }
                 }
 
                 Parameters[i].Translate(this.Category);
-
                 if (Parameters[i].CurrentType == "UInt16" && Name.Contains("LineStipple"))
                     Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
 
@@ -616,6 +616,7 @@ namespace Bind.Structures
             string path = "/overrides/function[@name='{0}' and @extension='{1}']";
             string name = TrimName(Name, false);
             XPathNavigator function_override = overrides.CreateNavigator().SelectSingleNode(String.Format(path, name, Extension));
+            
             TranslateReturnType(function_override);
             TranslateParameters(function_override);
 

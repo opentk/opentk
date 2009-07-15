@@ -142,11 +142,11 @@ namespace Bind.GL2
 
                                 p.Name = Utilities.Keywords.Contains(words[1]) ? "@" + words[1] : words[1];
                                 p.CurrentType = words[2];
-                                p.Pointer |= words[4].Contains("array");
-                                p.Pointer |= words[4].Contains("reference");
-                                if (p.Pointer && words.Count > 5 && words[5].Contains("[1]"))
+                                p.Pointer += words[4].Contains("array") ? 1 : 0;
+                                p.Pointer += words[4].Contains("reference") ? 1 : 0;
+                                if (p.Pointer != 0 && words.Count > 5 && words[5].Contains("[1]"))
                                     p.ElementCount = 1;
-                                p.Flow = words[3] == "in" ? Parameter.FlowDirection.In : Parameter.FlowDirection.Out;
+                                p.Flow = words[3] == "in" ? FlowDirection.In : FlowDirection.Out;
 
                                 d.Parameters.Add(p);
                                 break;
@@ -671,7 +671,6 @@ namespace Bind.GL2
             sw.WriteLine();
 
             int current = 0;
-            int y = Console.CursorTop;
             foreach (string key in wrappers.Keys)
             {
                 if (((Settings.Compatibility & Settings.Legacy.NoSeparateFunctionNamespaces) == Settings.Legacy.None) && key != "Core")
