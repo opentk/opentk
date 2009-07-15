@@ -41,8 +41,9 @@ namespace Bind.ES
             DelegateCollection delegates = new DelegateCollection();
 
             XPathDocument overrides = new XPathDocument(new StreamReader(Path.Combine(Settings.InputPath, functionOverridesFile)));
-            XPathDocument doc = new XPathDocument(specFile);
-            XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/signatures");
+            
+            XPathNavigator nav = new XPathDocument(specFile).CreateNavigator().SelectSingleNode("/signatures");
+
             foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
             {
                 Bind.Structures.Delegate d = new Bind.Structures.Delegate();
@@ -62,9 +63,13 @@ namespace Bind.ES
                             Parameter p = new Parameter();
                             p.CurrentType = param.GetAttribute("type", String.Empty);
                             p.Name = param.GetAttribute("name", String.Empty);
+                            
                             string element_count = param.GetAttribute("elementcount", String.Empty);
                             if (!String.IsNullOrEmpty(element_count))
                                 p.ElementCount = Int32.Parse(element_count);
+
+                            p.Flow = Parameter.GetFlowDirection(param.GetAttribute("flow", String.Empty));
+                        
                             d.Parameters.Add(p);
                             break;
                     }
