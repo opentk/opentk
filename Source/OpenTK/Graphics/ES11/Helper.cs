@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Graphics.GLES20
+namespace OpenTK.Graphics.ES11
 {
     /// <summary>
-    /// Provides access to OpenGL ES 2.0 methods.
+    /// Provides access to OpenGL ES 1.1 methods.
     /// </summary>
-    public static partial class GL
+    public static partial class ES
     {
         const string Library = "libGLES.dll";
     }
