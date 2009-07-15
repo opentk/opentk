@@ -76,10 +76,10 @@ namespace Bind.Structures
         {
             foreach (Parameter p in this.Parameters)
             {
-                if (p.Pointer && p.CurrentType == "void")
+                if (p.Pointer != 0 && p.CurrentType == "void")
                 {
                     p.CurrentType = "IntPtr";
-                    p.Pointer = false;
+                    p.Pointer = 0;
                 }
             }
         }
@@ -253,7 +253,7 @@ namespace Bind.Structures
                     {
                         p.Reference = false;
                         p.Array = 1;
-                        p.Pointer = false;
+                        p.Pointer = 0;
                     }
                 }
                 f = new Function(this);
@@ -268,7 +268,7 @@ namespace Bind.Structures
                     {
                         p.Reference = true;
                         p.Array = 0;
-                        p.Pointer = false;
+                        p.Pointer = 0;
                     }
                 }
                 f = new Function(this);
@@ -285,7 +285,7 @@ namespace Bind.Structures
                     {
                         p.Reference = false;
                         p.Array = 0;
-                        p.Pointer = true;
+                        p.Pointer++;
                     }
                 }
                 f = new Function(this);
@@ -320,40 +320,40 @@ namespace Bind.Structures
                     // On stack rewind, create generic wrappers
                     Parameters[index].Reference = true;
                     Parameters[index].Array = 0;
-                    Parameters[index].Pointer = false;
+                    Parameters[index].Pointer = 0;
                     Parameters[index].Generic = true;
                     Parameters[index].CurrentType = "T" + index.ToString();
-                    Parameters[index].Flow = Parameter.FlowDirection.Undefined;
+                    Parameters[index].Flow = FlowDirection.Undefined;
                     Parameters.Rebuild = true;
                     CreateBody(false);
                     wrappers.Add(new Function(this));
 
                     Parameters[index].Reference = false;
                     Parameters[index].Array = 1;
-                    Parameters[index].Pointer = false;
+                    Parameters[index].Pointer = 0;
                     Parameters[index].Generic = true;
                     Parameters[index].CurrentType = "T" + index.ToString();
-                    Parameters[index].Flow = Parameter.FlowDirection.Undefined;
+                    Parameters[index].Flow = FlowDirection.Undefined;
                     Parameters.Rebuild = true;
                     CreateBody(false);
                     wrappers.Add(new Function(this));
 
                     Parameters[index].Reference = false;
                     Parameters[index].Array = 2;
-                    Parameters[index].Pointer = false;
+                    Parameters[index].Pointer = 0;
                     Parameters[index].Generic = true;
                     Parameters[index].CurrentType = "T" + index.ToString();
-                    Parameters[index].Flow = Parameter.FlowDirection.Undefined;
+                    Parameters[index].Flow = FlowDirection.Undefined;
                     Parameters.Rebuild = true;
                     CreateBody(false);
                     wrappers.Add(new Function(this));
 
                     Parameters[index].Reference = false;
                     Parameters[index].Array = 3;
-                    Parameters[index].Pointer = false;
+                    Parameters[index].Pointer = 0;
                     Parameters[index].Generic = true;
                     Parameters[index].CurrentType = "T" + index.ToString();
-                    Parameters[index].Flow = Parameter.FlowDirection.Undefined;
+                    Parameters[index].Flow = FlowDirection.Undefined;
                     Parameters.Rebuild = true;
                     CreateBody(false);
                     wrappers.Add(new Function(this));
@@ -420,7 +420,7 @@ namespace Bind.Structures
 
                         handle_release_statements.Add(String.Format("{0}_ptr.Free();", p.Name));
 
-                        if (p.Flow == Parameter.FlowDirection.Out)
+                        if (p.Flow == FlowDirection.Out)
                         {
                             assign_statements.Add(String.Format(
                                 "{0} = ({1}){0}_ptr.Target;",
@@ -441,7 +441,7 @@ namespace Bind.Structures
                             p.Name + "_ptr",
                             p.Array > 0 ? p.Name : "&" + p.Name));
 
-                        if (p.Flow == Parameter.FlowDirection.Out && p.Array == 0)  // Fixed Arrays of blittable types don't need explicit assignment.
+                        if (p.Flow == FlowDirection.Out && p.Array == 0)  // Fixed Arrays of blittable types don't need explicit assignment.
                         {
                             assign_statements.Add(String.Format("{0} = *{0}_ptr;", p.Name));
                         }

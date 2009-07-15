@@ -64,10 +64,10 @@ namespace Bind.Structures
             {
                 if (_name != value)
                 {
-                    if (value.StartsWith("*"))
+                    while (value.StartsWith("*"))
                     {
-                        Pointer = true;
-                        value = value.TrimStart("*".ToCharArray());
+                        Pointer++;
+                        value = value.Substring(1);
                     }
                     _name = value;
                     rebuild = true;
@@ -99,17 +99,6 @@ namespace Bind.Structures
         #endregion
 
         #region public FlowDirection Flow
-
-        /// <summary>
-        /// Enumarates the possible flows of a parameter (ie. is this parameter
-        /// used as input or as output?)
-        /// </summary>
-        public enum FlowDirection
-        {
-            Undefined = 0,
-            In,
-            Out
-        }
 
         FlowDirection _flow;
 
@@ -203,8 +192,8 @@ namespace Bind.Structures
         {
             return
                 CurrentType == other.CurrentType &&
-                (Reference && !(other.Reference || other.Array > 0 || other.Pointer) ||
-                other.Reference && !(Reference || Array > 0 || Pointer));
+                (Reference && !(other.Reference || other.Array > 0 || other.Pointer != 0) ||
+                other.Reference && !(Reference || Array > 0 || Pointer != 0));
         }
 
         #endregion
@@ -248,7 +237,7 @@ namespace Bind.Structures
 
                 if (!override_unsafe_setting && ((Settings.Compatibility & Settings.Legacy.NoPublicUnsafeFunctions) != Settings.Legacy.None))
                 {
-                    if (Pointer)
+                    if (Pointer != 0)
                     {
                         sb.Append("IntPtr");
                     }
@@ -267,7 +256,7 @@ namespace Bind.Structures
                 else
                 {
                     sb.Append(CurrentType);
-                    if (Pointer)
+                    for (int i = 0; i < Pointer; i++)
                         sb.Append("*");
                     if (Array > 0)
                     {
@@ -298,35 +287,35 @@ namespace Bind.Structures
             base.Translate(category);
 
             // Find out the necessary wrapper types.
-            if (Pointer)/* || CurrentType == "IntPtr")*/
+            if (Pointer != 0)/* || CurrentType == "IntPtr")*/
             {
-                if (CurrentType.ToLower().Contains("char"))
-                {
-                    // char* -> [In] String or [Out] StringBuilder
-                    CurrentType =
-                        Flow == Parameter.FlowDirection.Out ?
-                        "System.Text.StringBuilder" :
-                        "String";
-
-                    Pointer = false;
-                    WrapperType = WrapperTypes.None;
-                }
-                else if  (CurrentType.ToLower().Contains("string"))
+                if (CurrentType.ToLower().Contains("string"))
                 {
                     // string* -> [In] String[] or [Out] StringBuilder[]
                     CurrentType =
-                        Flow == Parameter.FlowDirection.Out ?
+                        Flow == FlowDirection.Out ?
                         "System.Text.StringBuilder[]" :
                         "String[]";
 
-                    Pointer = false;
+                    Pointer = 0;
+                    WrapperType = WrapperTypes.None;
+                }
+                else if (CurrentType.ToLower().Contains("char"))
+                {
+                    // char* -> [In] String or [Out] StringBuilder
+                    CurrentType =
+                        Flow == FlowDirection.Out ?
+                        "System.Text.StringBuilder" :
+                        "String";
+
+                    Pointer = 0;
                     WrapperType = WrapperTypes.None;
                 }
                 else if (CurrentType.ToLower().Contains("void") ||
                     (!String.IsNullOrEmpty(PreviousType) && PreviousType.ToLower().Contains("void"))) /*|| CurrentType.Contains("IntPtr"))*/
                 {
                     CurrentType = "IntPtr";
-                    Pointer = false;
+                    Pointer = 0;
                     WrapperType = WrapperTypes.GenericParameter;
                 }
                 else
@@ -346,6 +335,17 @@ namespace Bind.Structures
             //    WrapperType = WrapperTypes.BoolParameter;
         }
 
+        #endregion
+
+        #region Static Members
+
+        // Returns the FlowDirection that matches the specified string
+        // ("out" or "in", otherwise undefined).
+        public static FlowDirection GetFlowDirection(string direction)
+        {
+            return direction == "out" ? FlowDirection.Out : direction == "in" ? FlowDirection.In : FlowDirection.Undefined;
+        }
+        
         #endregion
     }
 
@@ -462,7 +462,7 @@ namespace Bind.Structures
         {
             foreach (Parameter p in this)
             {
-                if (p.Pointer || p.CurrentType.Contains("IntPtr"))
+                if (p.Pointer != 0 || p.CurrentType.Contains("IntPtr"))
                     hasPointerParameters = true;
 
                 if (p.Reference)
@@ -587,10 +587,10 @@ namespace Bind.Structures
                             sb.Append(String.Format("({0}{1})",
                                 p.CurrentType, (p.Array > 0) ? "[]" : ""));
                         }
-                        else if (p.Pointer || p.Array > 0 || p.Reference)
+                        else if (p.Pointer != 0 || p.Array > 0 || p.Reference)
                         {
                             if (((Settings.Compatibility & Settings.Legacy.TurnVoidPointersToIntPtr) != Settings.Legacy.None) &&
-                                p.Pointer && p.CurrentType.Contains("void"))
+                                p.Pointer != 0 && p.CurrentType.Contains("void"))
                                 sb.Append("(IntPtr)");
                             else 
                                 sb.Append(String.Format("({0}*)", p.CurrentType));
