@@ -554,10 +554,20 @@ namespace Bind.GL2
                 sw.WriteLine("}");
             }
 
-            File.Replace(temp_enums_file, Path.Combine(Settings.OutputPath, enumsFile), null);
-            File.Replace(temp_delegates_file, Path.Combine(Settings.OutputPath, delegatesFile), null);
-            File.Replace(temp_core_file, Path.Combine(Settings.OutputPath, importsFile), null);
-            File.Replace(temp_wrappers_file, Path.Combine(Settings.OutputPath, wrappersFile), null);
+            string output_enums = Path.Combine(Settings.OutputPath, enumsFile);
+            string output_delegates = Path.Combine(Settings.OutputPath, delegatesFile);
+            string output_core = Path.Combine(Settings.OutputPath, importsFile);
+            string output_wrappers = Path.Combine(Settings.OutputPath, wrappersFile);
+            
+            if (File.Exists(output_enums)) File.Delete(output_enums);
+            if (File.Exists(output_delegates)) File.Delete(output_delegates);
+            if (File.Exists(output_core)) File.Delete(output_core);
+            if (File.Exists(output_wrappers)) File.Delete(output_wrappers);
+
+            File.Move(temp_enums_file, output_enums);
+            File.Move(temp_delegates_file, output_delegates);
+            File.Move(temp_core_file, output_core);
+            File.Move(temp_wrappers_file, output_wrappers);
         }
 
         #endregion
