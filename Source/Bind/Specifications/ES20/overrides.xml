@@ -1,3 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <overrides>
+  <function name="GetString" extension="Core">
+    <returns>String</returns>
+  </function>
+  <function name="ShaderSource" extension="Core">
+    <param name="string"><type>String*</type></param>
+  </function>
+  <function name="GetShaderSource" extension="Core">
+    <param name="source"><flow>out</flow></param>
+  </function>
 </overrides>

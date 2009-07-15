@@ -498,7 +498,7 @@
   <function name="GetClipPlanef" extension="Core" profile="" category="1.1">
     <returns type="void" />
     <param type="GLenum" name="pname" />
-    <param type="GLfloat*" name="eqn" count="4" />
+    <param type="GLfloat*" name="eqn" elementcount="4" />
   </function>
   <function name="GetFloatv" extension="Core" profile="" category="1.1">
     <returns type="void" />
@@ -898,7 +898,7 @@
   <function name="GetClipPlanex" extension="Core" profile="" category="1.1">
     <returns type="void" />
     <param type="GLenum" name="pname" />
-    <param type="GLfixed*" name="eqn" count="4" />
+    <param type="GLfixed*" name="eqn" elementcount="4" />
   </function>
   <function name="GenBuffers" extension="Core" profile="" category="1.1">
     <returns type="void" />
@@ -940,7 +940,7 @@
     <param type="GLenum" name="pname" />
     <param type="void" name="**params" />
   </function>
-  <function name="_APIENTRY" extension="Core" profile="" category="1.1">
+  <function name="GetString" extension="Core" profile="" category="1.1">
     <returns type="GLubyte" />
     <param type="GLenum" name="name" />
   </function>
