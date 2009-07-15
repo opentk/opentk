@@ -294,18 +294,26 @@ namespace Bind.Structures
             }
             else if (Bind.Structures.Type.GLTypes.TryGetValue(CurrentType, out s))
             {
-                // Check if the parameter is a generic GLenum. If yes,
-                // check if a better match exists:
-                if (s.Contains("GLenum") && !String.IsNullOrEmpty(category))
+                // Check if the parameter is a generic GLenum. If it is, search for a better match,
+                // otherwise fallback to Settings.CompleteEnumName (named 'All' by default).
+                if (s.Contains("GLenum") /*&& !String.IsNullOrEmpty(category)*/)
                 {
                     if ((Settings.Compatibility & Settings.Legacy.ConstIntEnums) != Settings.Legacy.None)
+                    {
                         CurrentType = "int";
+                    }
                     else
+                    {
                         // Better match: enum.Name == function.Category (e.g. GL_VERSION_1_1 etc)
                         if (Enum.GLEnums.ContainsKey(category))
+                        {
                             CurrentType = String.Format("{0}.{1}", Settings.EnumsOutput, Enum.TranslateName(category));
+                        }
                         else
+                        {
                             CurrentType = String.Format("{0}.{1}", Settings.EnumsOutput, Settings.CompleteEnumName);
+                        }
+                    }
                 }
                 else
                 {
