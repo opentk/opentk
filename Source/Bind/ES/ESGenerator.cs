@@ -6,11 +6,11 @@ using System.Xml;
 using System.Xml.XPath;
 using Bind.Structures;
 
-namespace Bind.GLES
+namespace Bind.ES
 {
-    class GlesGenerator : Bind.GL2.Generator
+    class ESGenerator : Bind.GL2.Generator
     {
-        public GlesGenerator(string name)
+        public ESGenerator(string name)
         {
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -18,21 +18,22 @@ namespace Bind.GLES
             glTypemap = "GL2/gl.tm";
             csTypemap = "csharp.tm";
             
-            enumSpec = name + "/enums.xml";
+            enumSpec = name + "/signatures.xml";
             enumSpecExt = String.Empty;
-            glSpec = name + "/functions.xml";
+            glSpec = name + "/signatures.xml";
             glSpecExt = String.Empty;
             functionOverridesFile = name + "/overrides.xml";
 
             importsFile = "Core.cs";
             delegatesFile = "Delegates.cs";
             enumsFile = "Enums.cs";
-            wrappersFile = "GL.cs";
+            wrappersFile = "ES.cs";
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";
 
+            Settings.OutputClass = "ES";
             Settings.OutputNamespace = "OpenTK.Graphics." + name;
-            Settings.OutputPath = Path.Combine(Path.Combine(Settings.OutputPath, ".."), name);
+            Settings.OutputPath = Path.Combine(Directory.GetParent(Settings.OutputPath).FullName, name);
         }
 
         public override Bind.Structures.DelegateCollection ReadDelegates(System.IO.StreamReader specFile)
@@ -41,8 +42,8 @@ namespace Bind.GLES
 
             XPathDocument overrides = new XPathDocument(new StreamReader(Path.Combine(Settings.InputPath, functionOverridesFile)));
             XPathDocument doc = new XPathDocument(specFile);
-            XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/functions");
-            foreach (XPathNavigator node in nav.SelectChildren(XPathNodeType.Element))
+            XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/signatures");
+            foreach (XPathNavigator node in nav.SelectChildren("function", String.Empty))
             {
                 Bind.Structures.Delegate d = new Bind.Structures.Delegate();
                 d.Name = node.GetAttribute("name", String.Empty);
@@ -88,13 +89,15 @@ namespace Bind.GLES
         public override Bind.Structures.EnumCollection ReadEnums(StreamReader specFile)
         {
             EnumCollection enums = new EnumCollection();
-            Bind.Structures.Enum all = new Bind.Structures.Enum("All"); 
+            Bind.Structures.Enum all = new Bind.Structures.Enum(Settings.CompleteEnumName); 
             XPathDocument doc = new XPathDocument(specFile);
-            XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/enums");
+            XPathNavigator nav = doc.CreateNavigator().SelectSingleNode("/signatures");
             
-            foreach (XPathNavigator node in nav.SelectChildren(XPathNodeType.Element))
+            foreach (XPathNavigator node in nav.SelectChildren("enum", String.Empty))
             {
                 Bind.Structures.Enum e = new Bind.Structures.Enum(node.GetAttribute("name", String.Empty));
+                if (String.IsNullOrEmpty(e.Name))
+                    throw new InvalidOperationException(String.Format("Empty name for enum element {0}", node.ToString()));
 
                 foreach (XPathNavigator param in node.SelectChildren(XPathNodeType.Element))
                 {
@@ -107,6 +110,7 @@ namespace Bind.GLES
             }
 
             Utilities.Merge(enums, all);
+            enums.Translate();
             return enums;
         }
     }
