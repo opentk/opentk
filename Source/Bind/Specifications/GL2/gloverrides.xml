@@ -14,10 +14,10 @@
   </function>
 
   <function name="BlendFuncSeparate" extension="Core">
-    <param	name="sfactorRGB"><type>BlendingFactorSrc</type></param>
-    <param	name="dfactorRGB"><type>BlendingFactorDest</type></param>
-    <param	name="sfactorAlpha"><type>BlendingFactorSrc</type></param>
-    <param	name="dfactorAlpha"><type>BlendingFactorDest</type></param>
+    <param name="sfactorRGB"><type>BlendingFactorSrc</type></param>
+    <param name="dfactorRGB"><type>BlendingFactorDest</type></param>
+    <param name="sfactorAlpha"><type>BlendingFactorSrc</type></param>
+    <param name="dfactorAlpha"><type>BlendingFactorDest</type></param>
   </function>
 
   <function name="FogCoordPointer" extension="Core">
@@ -31,20 +31,20 @@
   <!-- Version 1.5 -->
 
   <function name="BeginQuery" extension="Core">
-    <param	name="target"><type>QueryTarget</type></param>
+    <param name="target"><type>QueryTarget</type></param>
   </function>
   
   <function name="EndQuery" extension="Core">
-    <param	name="target"><type>QueryTarget</type></param>
+    <param name="target"><type>QueryTarget</type></param>
   </function>
   
   <function name="GetQuery" extension="Core">
-    <param	name="target"><type>QueryTarget</type></param>
-    <param	name="pname"><type>GetQueryParam</type></param>
+    <param name="target"><type>QueryTarget</type></param>
+    <param name="pname"><type>GetQueryParam</type></param>
   </function>
 
     <function name="GetQueryObject" extension="Core">
-    <param	name="pname"><type>GetQueryObjectParam</type></param>
+    <param name="pname"><type>GetQueryObjectParam</type></param>
   </function>
 
   <function name="BindBuffer" extension="Core">
@@ -215,7 +215,7 @@
   </function>
 
   <function name="CheckFramebufferStatus" extension="Core">
-    <return>FramebufferErrorCode</return>
+    <returns>FramebufferErrorCode</returns>
   </function>
 
   <function name="GenerateMipmap" extension="Core">
@@ -367,7 +367,7 @@
   </function>
 
   <function name="CheckFramebufferStatus" extension="Ext">
-    <return>FramebufferErrorCode</return>
+    <returns>FramebufferErrorCode</returns>
   </function>
 
   <function name="FramebufferTexture1D" extension="Ext">
