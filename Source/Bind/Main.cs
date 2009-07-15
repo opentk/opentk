@@ -21,9 +21,9 @@ namespace Bind
         Unknown,
         GL2,
         GL3,
-        GLES10,
-        GLES11,
-        GLES20,
+        ES10,
+        ES11,
+        ES20,
         Wgl,
         Glx,
         Glu,
@@ -75,12 +75,12 @@ namespace Bind
                                 string arg = b[1].ToLower();
                                 if (arg == "gl" || arg == "gl2")
                                     mode = GeneratorMode.GL2;
-                                else if (arg == "gles10")
-                                    mode = GeneratorMode.GLES10;
-                                else if (arg == "gles11")
-                                    mode = GeneratorMode.GLES11;
-                                else if (arg == "gles20")
-                                    mode = GeneratorMode.GLES20;
+                                else if (arg == "es10")
+                                    mode = GeneratorMode.ES10;
+                                else if (arg == "es11")
+                                    mode = GeneratorMode.ES11;
+                                else if (arg == "es20")
+                                    mode = GeneratorMode.ES20;
                                 else
                                     throw new NotImplementedException();
                                 break;
@@ -133,16 +133,16 @@ namespace Bind
                         Generator = new Bind.GL2.Generator();
                         break;
 
-                    case GeneratorMode.GLES10:
-                        Generator = new Bind.GLES.GlesGenerator("GLES10");
+                    case GeneratorMode.ES10:
+                        Generator = new Bind.ES.ESGenerator("ES10");
                         break;
                     
-                    case GeneratorMode.GLES11:
-                        Generator = new Bind.GLES.GlesGenerator("GLES11");
+                    case GeneratorMode.ES11:
+                        Generator = new Bind.ES.ESGenerator("ES11");
                         break;
                     
-                    case GeneratorMode.GLES20:
-                        Generator = new Bind.GLES.GlesGenerator("GLES20");
+                    case GeneratorMode.ES20:
+                        Generator = new Bind.ES.ESGenerator("ES20");
                         break;
                     
                     case GeneratorMode.Wgl:
