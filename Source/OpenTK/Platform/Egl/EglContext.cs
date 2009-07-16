@@ -31,7 +31,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Platform.Egl
 {
-    public class EglContext : IGraphicsContext
+    public class EglContext /*: IGraphicsContext*/
     {
         public EglContext()
         {
