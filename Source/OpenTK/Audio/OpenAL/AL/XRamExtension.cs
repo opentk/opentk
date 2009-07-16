@@ -101,15 +101,21 @@ namespace OpenTK.Audio
         #region Public Methods
 
         /// <summary>Query total amount of X-RAM in bytes.</summary>
-        public int GetRamSize()
+        public int GetRamSize
         {
-            return AL.Get((ALGetInteger)AL_EAX_RAM_SIZE);
+            get
+            {
+                return AL.Get((ALGetInteger)AL_EAX_RAM_SIZE);
+            }
         }
 
         /// <summary>Query free X-RAM available in bytes.</summary>
-        public int GetRamFree()
+        public int GetRamFree
         {
-            return AL.Get((ALGetInteger)AL_EAX_RAM_FREE);
+            get
+            {
+                return AL.Get((ALGetInteger)AL_EAX_RAM_FREE);
+            }
         }
 
         /// <summary>This enum is used to abstract the need of using AL.GetEnumValue() with the Extension. The values do NOT correspond to AL_STORAGE_* tokens!</summary>
