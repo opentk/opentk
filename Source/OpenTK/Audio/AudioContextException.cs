@@ -13,7 +13,7 @@ using System.Text;
 namespace OpenTK.Audio
 {
     /// <summary>Represents exceptions related to an OpenTK.Audio.AudioContext.</summary>
-    public class AudioContextException : Exception
+    public class AudioContextException : AudioException
     {
         /// <summary>Constructs a new AudioContextException.</summary>
         public AudioContextException() : base() { }

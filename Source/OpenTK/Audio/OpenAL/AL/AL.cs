@@ -11,6 +11,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
+using OpenTK;
 
 /* Type Mapping
 // 8-bit boolean 
@@ -64,15 +65,13 @@ typedef void ALvoid;
 
 namespace OpenTK.Audio
 {
-    /// <summary>
-    /// Provides access to the OpenAL flat API.
-    /// </summary>
     public static partial class AL
     {
+
         #region Constants
 
-        internal const string Lib = "openal32.dll";
-        const CallingConvention Style = CallingConvention.Cdecl;
+        public const string Lib = "openal32.dll";
+        private const CallingConvention Style = CallingConvention.Cdecl;
 
         #endregion Constants
 
