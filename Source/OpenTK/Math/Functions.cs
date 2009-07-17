@@ -48,31 +48,30 @@ namespace OpenTK
 
         #endregion
 
+        /// <summary>        /// Calculates the factorial of a given natural number.
+        /// </summary>
+        /// <param name="n">The number.</param>
+        /// <returns>n!</returns>
+        public static long Factorial(int n)
+        {
+            long result = 1;
+
+            for (; n > 1; n--)
+                result *= n;
+
+            return result;
+        }
+
         /// <summary>
-		/// Calculates the factorial of a given natural number.
-		/// </summary>
-		/// <param name="n">The number.</param>
-		/// <returns>n!</returns>
-		public static long Factorial(int n)
-		{
-			long result = 1;
-
-			for (; n > 1; n--)
-				result *= n;
-
-			return result;
-		}
-
-		/// <summary>
-		/// Calculates the binomial coefficient <paramref name="n"/> above <paramref name="k"/>.
-		/// </summary>
-		/// <param name="n">The n.</param>
-		/// <param name="k">The k.</param>
-		/// <returns>n! / (k! * (n - k)!)</returns>
-		public static long BinomialCoefficient(int n, int k)
-		{
-			return Factorial(n) / (Factorial(k) * Factorial(n - k));
-		}
+        /// Calculates the binomial coefficient <paramref name="n"/> above <paramref name="k"/>.
+        /// </summary>
+        /// <param name="n">The n.</param>
+        /// <param name="k">The k.</param>
+        /// <returns>n! / (k! * (n - k)!)</returns>
+        public static long BinomialCoefficient(int n, int k)
+        {
+            return Factorial(n) / (Factorial(k) * Factorial(n - k));
+        }
 
         /// <summary>
         /// Returns an approximation of the inverse square root of left number.

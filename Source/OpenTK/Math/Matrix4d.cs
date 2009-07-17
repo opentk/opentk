@@ -36,46 +36,46 @@ namespace OpenTK
     {
         #region Fields
 
-		/// <summary>
-		/// Top row of the matrix
-		/// </summary>
+        /// <summary>
+        /// Top row of the matrix
+        /// </summary>
         public Vector4d  Row0;
-		/// <summary>
-		/// 2nd row of the matrix
-		/// </summary>
+        /// <summary>
+        /// 2nd row of the matrix
+        /// </summary>
         public Vector4d  Row1;
-		/// <summary>
-		/// 3rd row of the matrix
-		/// </summary>
+        /// <summary>
+        /// 3rd row of the matrix
+        /// </summary>
         public Vector4d  Row2;
-		/// <summary>
-		/// Bottom row of the matrix
-		/// </summary>
+        /// <summary>
+        /// Bottom row of the matrix
+        /// </summary>
         public Vector4d  Row3;
  
-		/// <summary>
-		/// The identity matrix
-		/// </summary>
-		public static Matrix4d Identity = new Matrix4d(Vector4d .UnitX, Vector4d .UnitY, Vector4d .UnitZ, Vector4d .UnitW);
+        /// <summary>
+        /// The identity matrix
+        /// </summary>
+        public static Matrix4d Identity = new Matrix4d(Vector4d .UnitX, Vector4d .UnitY, Vector4d .UnitZ, Vector4d .UnitW);
 
         #endregion
 
         #region Constructors
 
-		/// <summary>
-		/// Constructs a new instance.
-		/// </summary>
-		/// <param name="row0">Top row of the matrix</param>
-		/// <param name="row1">Second row of the matrix</param>
-		/// <param name="row2">Third row of the matrix</param>
-		/// <param name="row3">Bottom row of the matrix</param>
-		public Matrix4d(Vector4d row0, Vector4d row1, Vector4d row2, Vector4d row3)
-		{
-			Row0 = row0;
-			Row1 = row1;
-			Row2 = row2;
-			Row3 = row3;
-		}
+        /// <summary>
+        /// Constructs a new instance.
+        /// </summary>
+        /// <param name="row0">Top row of the matrix</param>
+        /// <param name="row1">Second row of the matrix</param>
+        /// <param name="row2">Third row of the matrix</param>
+        /// <param name="row3">Bottom row of the matrix</param>
+        public Matrix4d(Vector4d row0, Vector4d row1, Vector4d row2, Vector4d row3)
+        {
+            Row0 = row0;
+            Row1 = row1;
+            Row2 = row2;
+            Row3 = row3;
+        }
 
         /// <summary>
         /// Constructs a new instance.
@@ -680,35 +680,35 @@ namespace OpenTK
         public static Matrix4d Mult(Matrix4d left, Matrix4d right)
         {
             Matrix4d result;
-			Mult(ref left, ref right, out result);
-			return result;
+            Mult(ref left, ref right, out result);
+            return result;
         }
 
-		/// <summary>
-		/// Multiplies two instances.
-		/// </summary>
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication</param>
         public static void Mult(ref Matrix4d left, ref Matrix4d right, out Matrix4d result)
         {
-			result = new Matrix4d();
-			result.M11 = left.M11 * right.M11 + left.M12 * right.M21 + left.M13 * right.M31 + left.M14 * right.M41;
-			result.M12 = left.M11 * right.M12 + left.M12 * right.M22 + left.M13 * right.M32 + left.M14 * right.M42;
-			result.M13 = left.M11 * right.M13 + left.M12 * right.M23 + left.M13 * right.M33 + left.M14 * right.M43;
-			result.M14 = left.M11 * right.M14 + left.M12 * right.M24 + left.M13 * right.M34 + left.M14 * right.M44;
-			result.M21 = left.M21 * right.M11 + left.M22 * right.M21 + left.M23 * right.M31 + left.M24 * right.M41;
-			result.M22 = left.M21 * right.M12 + left.M22 * right.M22 + left.M23 * right.M32 + left.M24 * right.M42;
-			result.M23 = left.M21 * right.M13 + left.M22 * right.M23 + left.M23 * right.M33 + left.M24 * right.M43;
-			result.M24 = left.M21 * right.M14 + left.M22 * right.M24 + left.M23 * right.M34 + left.M24 * right.M44;
-			result.M31 = left.M31 * right.M11 + left.M32 * right.M21 + left.M33 * right.M31 + left.M34 * right.M41;
-			result.M32 = left.M31 * right.M12 + left.M32 * right.M22 + left.M33 * right.M32 + left.M34 * right.M42;
-			result.M33 = left.M31 * right.M13 + left.M32 * right.M23 + left.M33 * right.M33 + left.M34 * right.M43;
-			result.M34 = left.M31 * right.M14 + left.M32 * right.M24 + left.M33 * right.M34 + left.M34 * right.M44;
-			result.M41 = left.M41 * right.M11 + left.M42 * right.M21 + left.M43 * right.M31 + left.M44 * right.M41;
-			result.M42 = left.M41 * right.M12 + left.M42 * right.M22 + left.M43 * right.M32 + left.M44 * right.M42;
-			result.M43 = left.M41 * right.M13 + left.M42 * right.M23 + left.M43 * right.M33 + left.M44 * right.M43;
-			result.M44 = left.M41 * right.M14 + left.M42 * right.M24 + left.M43 * right.M34 + left.M44 * right.M44;
+            result = new Matrix4d();
+            result.M11 = left.M11 * right.M11 + left.M12 * right.M21 + left.M13 * right.M31 + left.M14 * right.M41;
+            result.M12 = left.M11 * right.M12 + left.M12 * right.M22 + left.M13 * right.M32 + left.M14 * right.M42;
+            result.M13 = left.M11 * right.M13 + left.M12 * right.M23 + left.M13 * right.M33 + left.M14 * right.M43;
+            result.M14 = left.M11 * right.M14 + left.M12 * right.M24 + left.M13 * right.M34 + left.M14 * right.M44;
+            result.M21 = left.M21 * right.M11 + left.M22 * right.M21 + left.M23 * right.M31 + left.M24 * right.M41;
+            result.M22 = left.M21 * right.M12 + left.M22 * right.M22 + left.M23 * right.M32 + left.M24 * right.M42;
+            result.M23 = left.M21 * right.M13 + left.M22 * right.M23 + left.M23 * right.M33 + left.M24 * right.M43;
+            result.M24 = left.M21 * right.M14 + left.M22 * right.M24 + left.M23 * right.M34 + left.M24 * right.M44;
+            result.M31 = left.M31 * right.M11 + left.M32 * right.M21 + left.M33 * right.M31 + left.M34 * right.M41;
+            result.M32 = left.M31 * right.M12 + left.M32 * right.M22 + left.M33 * right.M32 + left.M34 * right.M42;
+            result.M33 = left.M31 * right.M13 + left.M32 * right.M23 + left.M33 * right.M33 + left.M34 * right.M43;
+            result.M34 = left.M31 * right.M14 + left.M32 * right.M24 + left.M33 * right.M34 + left.M34 * right.M44;
+            result.M41 = left.M41 * right.M11 + left.M42 * right.M21 + left.M43 * right.M31 + left.M44 * right.M41;
+            result.M42 = left.M41 * right.M12 + left.M42 * right.M22 + left.M43 * right.M32 + left.M44 * right.M42;
+            result.M43 = left.M41 * right.M13 + left.M42 * right.M23 + left.M43 * right.M33 + left.M44 * right.M43;
+            result.M44 = left.M41 * right.M14 + left.M42 * right.M24 + left.M43 * right.M34 + left.M44 * right.M44;
         }
 
         #endregion
@@ -729,9 +729,9 @@ namespace OpenTK
 
             // convert the matrix to an array for easy looping
             double[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W}, 
-								{mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W}, 
-								{mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W}, 
-								{mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
+                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W}, 
+                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W}, 
+                                {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
             int icol = 0;
             int irow = 0;
             for (int i = 0; i < 4; i++)
