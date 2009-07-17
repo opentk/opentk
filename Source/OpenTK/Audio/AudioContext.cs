@@ -430,6 +430,9 @@ namespace OpenTK.Audio
         /// <exception cref="AudioContextException">Raised when an invalid context is detected.</exception>
         public void CheckErrors()
         {
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().FullName);
+
             new AudioDeviceErrorChecker(device_handle).Dispose();
         }
 
@@ -437,18 +440,23 @@ namespace OpenTK.Audio
 
         #region CurrentError
 
-        /// <summary>Returns the ALC error code for this device.</summary>
+        /// <summary>
+        /// Returns the ALC error code for this instance.
+        /// </summary>
         public AlcError CurrentError
         {
             get
             {
+                if (disposed)
+                    throw new ObjectDisposedException(this.GetType().FullName);
+
                 return Alc.GetError(device_handle);
             }
         }
 
         #endregion
 
-        #region public void MakeCurrent()
+        #region MakeCurrent
 
         /// <summary>Makes the AudioContext current in the calling thread.</summary>
         /// <exception cref="ObjectDisposedException">
@@ -463,12 +471,15 @@ namespace OpenTK.Audio
         /// </remarks>
         public void MakeCurrent()
         {
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().FullName);
+
             AudioContext.MakeCurrent(this);
         }
 
         #endregion
 
-        #region public bool IsProcessing
+        #region IsProcessing
 
         /// <summary>
         /// Gets a System.Boolean indicating whether the AudioContext is
@@ -478,13 +489,19 @@ namespace OpenTK.Audio
         /// <seealso cref="Suspend"/>
         public bool IsProcessing
         {
-            get { return is_processing; }
+            get
+            {
+                if (disposed)
+                    throw new ObjectDisposedException(this.GetType().FullName);
+
+                return is_processing;
+            }
             private set { is_processing = value; }
         }
 
         #endregion
 
-        #region public bool IsProcessing
+        #region IsSynchronized
 
         /// <summary>
         /// Gets a System.Boolean indicating whether the AudioContext is
@@ -493,7 +510,13 @@ namespace OpenTK.Audio
         /// <seealso cref="Process"/>
         public bool IsSynchronized
         {
-            get { return is_synchronized; }
+            get
+            {
+                if (disposed)
+                    throw new ObjectDisposedException(this.GetType().FullName);
+
+                return is_synchronized;
+            }
             private set { is_synchronized = value; }
         }
 
@@ -521,7 +544,9 @@ namespace OpenTK.Audio
         /// <seealso cref="IsSynchronized"/>
         public void Process()
         {
-            if (disposed) throw new ObjectDisposedException(this.ToString());
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().FullName);
+
             Alc.ProcessContext(this.context_handle);
             IsProcessing = true;
         }
@@ -552,7 +577,9 @@ namespace OpenTK.Audio
         /// <seealso cref="IsSynchronized"/>
         public void Suspend()
         {
-            if (disposed) throw new ObjectDisposedException(this.ToString());
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().FullName);
+
             Alc.SuspendContext(this.context_handle);
             IsProcessing = false;
         }
@@ -568,11 +595,35 @@ namespace OpenTK.Audio
         /// <returns>true if the extension is supported; false otherwise.</returns>
         public bool SupportsExtension(string extension)
         {
-            if (disposed) throw new ObjectDisposedException(this.GetType().FullName);
+            if (disposed)
+                throw new ObjectDisposedException(this.GetType().FullName);
+
             return Alc.IsExtensionPresent(this.Device, extension);
         }
 
         #endregion
+
+        #region CurrentDevice
+
+        /// <summary>
+        /// Gets a System.String with the name of the device used in this context.
+        /// </summary>
+        public string CurrentDevice
+        {
+            get
+            {
+                if (disposed)
+                    throw new ObjectDisposedException(this.GetType().FullName);
+
+                return device_name;
+            }
+        }
+
+        #endregion
+
+        #endregion --- Public Members ---
+
+        #region --- Static Members ---
 
         #region public static AudioContext CurrentContext
 
@@ -606,7 +657,10 @@ namespace OpenTK.Audio
         #endregion
 
         #region AvailableDevices
-        /// <summary>Returns a list of strings containing all known playback devices.</summary>
+
+        /// <summary>
+        /// Returns a list of strings containing all known playback devices.
+        /// </summary>
         public static IList<string> AvailableDevices
         {
             get
@@ -618,7 +672,9 @@ namespace OpenTK.Audio
 
         #region DefaultDevice
 
-        /// <summary>Returns the name of the device that will be used as playback default.</summary>
+        /// <summary>
+        /// Returns the name of the device that will be used as playback default.
+        /// </summary>
         public static string DefaultDevice
         {
             get
@@ -629,32 +685,7 @@ namespace OpenTK.Audio
 
         #endregion
 
-        #region public string CurrentDeviceName
-        /// <summary>Returns the name of the used device for the current context.</summary>
-        public string CurrentDeviceName
-        {
-            get
-            {
-                return device_name;
-            }
-        }
-        #endregion public string CurrentDeviceName
-
-        #region public AlcError CurrentAlcError
-        /// <summary>Returns the first encountered error by Alc for this device.</summary>
-        public AlcError CurrentAlcError
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.ToString());
-
-                return Alc.GetError(this.device_handle);
-            }
-        }
-        #endregion public AlcError CurrentAlcError
-
-        #endregion --- Public Members ---
+        #endregion
 
         #region --- IDisposable Members ---
 
