@@ -60,7 +60,7 @@ namespace OpenTK
         /// <summary>
         /// Defines a unit-length Vector4 that points towards the X-axis.
         /// </summary>
-		public static Vector4 UnitX = new Vector4(1, 0, 0, 0);
+        public static Vector4 UnitX = new Vector4(1, 0, 0, 0);
 
         /// <summary>
         /// Defines a unit-length Vector4 that points towards the Y-axis.
@@ -70,17 +70,17 @@ namespace OpenTK
         /// <summary>
         /// Defines a unit-length Vector4 that points towards the Z-axis.
         /// </summary>
-		public static Vector4 UnitZ = new Vector4(0, 0, 1, 0);
+        public static Vector4 UnitZ = new Vector4(0, 0, 1, 0);
 
         /// <summary>
         /// Defines a unit-length Vector4 that points towards the W-axis.
         /// </summary>
-		public static Vector4 UnitW = new Vector4(0, 0, 0, 1);
+        public static Vector4 UnitW = new Vector4(0, 0, 0, 1);
 
         /// <summary>
         /// Defines a zero-length Vector4.
         /// </summary>
-		public static Vector4 Zero = new Vector4(0, 0, 0, 0);
+        public static Vector4 Zero = new Vector4(0, 0, 0, 0);
 
         /// <summary>
         /// Defines an instance with all components set to 1.
@@ -849,58 +849,58 @@ namespace OpenTK
 
         public static Vector4 operator +(Vector4 left, Vector4 right)
         {
-			left.X += right.X;
-			left.Y += right.Y;
-			left.Z += right.Z;
-			left.W += right.W;
-			return left;
+            left.X += right.X;
+            left.Y += right.Y;
+            left.Z += right.Z;
+            left.W += right.W;
+            return left;
         }
 
         public static Vector4 operator -(Vector4 left, Vector4 right)
         {
-			left.X -= right.X;
-			left.Y -= right.Y;
-			left.Z -= right.Z;
-			left.W -= right.W;
-			return left;
+            left.X -= right.X;
+            left.Y -= right.Y;
+            left.Z -= right.Z;
+            left.W -= right.W;
+            return left;
         }
 
-		public static Vector4 operator -(Vector4 vec)
-		{
-			vec.X = -vec.X;
-			vec.Y = -vec.Y;
-			vec.Z = -vec.Z;
-			vec.W = -vec.W;
-			return vec;
-		}
+        public static Vector4 operator -(Vector4 vec)
+        {
+            vec.X = -vec.X;
+            vec.Y = -vec.Y;
+            vec.Z = -vec.Z;
+            vec.W = -vec.W;
+            return vec;
+        }
 
-		public static Vector4 operator *(Vector4 vec, float f)
-		{
-			vec.X *= f;
-			vec.Y *= f;
-			vec.Z *= f;
-			vec.W *= f;
-			return vec;
-		}
+        public static Vector4 operator *(Vector4 vec, float f)
+        {
+            vec.X *= f;
+            vec.Y *= f;
+            vec.Z *= f;
+            vec.W *= f;
+            return vec;
+        }
 
-		public static Vector4 operator *(float f, Vector4 vec)
-		{
-			vec.X *= f;
-			vec.Y *= f;
-			vec.Z *= f;
-			vec.W *= f;
-			return vec;
-		}
+        public static Vector4 operator *(float f, Vector4 vec)
+        {
+            vec.X *= f;
+            vec.Y *= f;
+            vec.Z *= f;
+            vec.W *= f;
+            return vec;
+        }
 
-		public static Vector4 operator /(Vector4 vec, float f)
-		{
-			float mult = 1.0f / f;
-			vec.X *= mult;
-			vec.Y *= mult;
-			vec.Z *= mult;
-			vec.W *= mult;
-			return vec;
-		}
+        public static Vector4 operator /(Vector4 vec, float f)
+        {
+            float mult = 1.0f / f;
+            vec.X *= mult;
+            vec.Y *= mult;
+            vec.Z *= mult;
+            vec.W *= mult;
+            return vec;
+        }
 
         public static bool operator ==(Vector4 left, Vector4 right)
         {
@@ -933,15 +933,15 @@ namespace OpenTK
         #region public override string ToString()
 
         /// <summary>
-		/// Returns a System.String that represents the current Vector4.
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
+        /// Returns a System.String that represents the current Vector4.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
         {
             return String.Format("({0}, {1}, {2}, {3})", X, Y, Z, W);
-		}
+        }
 
-		#endregion
+        #endregion
 
         #region public override int GetHashCode()
 

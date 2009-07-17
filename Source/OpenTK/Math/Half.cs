@@ -230,8 +230,8 @@ namespace OpenTK
 
                 if ((mantissa & 0x00800000) == 1)
                 {
-                    mantissa = 0;		// overflow in significand,
-                    exponent += 1;		// adjust exponent
+                    mantissa = 0;        // overflow in significand,
+                    exponent += 1;        // adjust exponent
                 }
 
                 // exponent overflow
