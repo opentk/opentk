@@ -342,11 +342,11 @@ namespace OpenTK.Audio
 
             device_name = Alc.GetString(device_handle, AlcGetString.DeviceSpecifier);
             int attribute_count;
-            Alc.GetInteger(device_handle, AlcGetInteger.AttributesSize, sizeof(int), out attribute_count);
+            Alc.GetInteger(device_handle, AlcGetInteger.AttributesSize, 1, out attribute_count);
             if (attribute_count > 0)
             {
                 int[] device_attributes = new int[attribute_count];
-                Alc.GetInteger(device_handle, AlcGetInteger.AllAttributes, device_attributes.Length * sizeof(int), out device_attributes[0]);
+                Alc.GetInteger(device_handle, AlcGetInteger.AllAttributes, device_attributes.Length, device_attributes);
                 foreach (int attr in device_attributes)
                 {
                     switch ((AlcContextAttributes)attr)
