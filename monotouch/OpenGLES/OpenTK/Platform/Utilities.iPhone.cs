@@ -63,10 +63,6 @@ namespace OpenTK.Platform
 
             Debug.Write("Load extensions for " + type.ToString() + "... ");
 
-            System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
-            time.Reset();
-            time.Start();
-
             foreach (FieldInfo f in delegates)
             {
                 Delegate d = LoadDelegate(f.Name, f.FieldType);
@@ -79,10 +75,6 @@ namespace OpenTK.Platform
             FieldInfo rebuildExtensionList = type.GetField("rebuildExtensionList", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (rebuildExtensionList != null)
                 rebuildExtensionList.SetValue(null, true);
-
-            time.Stop();
-            Debug.Print("{0} extensions loaded in {1} ms.", supported, time.ElapsedMilliseconds);
-            time.Reset();
         }
 
         #endregion
