@@ -270,8 +270,8 @@ namespace OpenTK.Audio
             }
             if (device_handle == IntPtr.Zero)
             {
-                device_name = AudioContext.Default;
-                device_handle = Alc.OpenDevice(AudioContext.Default); // try to open named default device
+                device_name = AudioContext.DefaultDevice;
+                device_handle = Alc.OpenDevice(AudioContext.DefaultDevice); // try to open named default device
             }
             if (device_handle == IntPtr.Zero)
             {
@@ -280,7 +280,7 @@ namespace OpenTK.Audio
                     String.IsNullOrEmpty(device) ? "default" : device));
             }
 
-            CheckForAlcErrors();
+            CheckErrors();
 
             // Build the attribute list
             List<int> attributes = new List<int>();
@@ -330,7 +330,7 @@ namespace OpenTK.Audio
                 throw new AudioContextException("The audio context could not be created with the specified parameters.");
             }
 
-            CheckForAlcErrors();
+            CheckErrors();
 
             // HACK: OpenAL SI on Linux/ALSA crashes on MakeCurrent. This hack avoids calling MakeCurrent when
             // an old OpenAL version is detect - it may affect outdated OpenAL versions different than OpenAL SI,
@@ -338,23 +338,10 @@ namespace OpenTK.Audio
             if (AudioDeviceEnumerator.AvailablePlaybackDevices.Count > 0)
                 MakeCurrent();
 
-            CheckForAlcErrors();
+            CheckErrors();
 
             device_name = Alc.GetString(device_handle, AlcGetString.DeviceSpecifier);
-            int attribute_count;
-            Alc.GetInteger(device_handle, AlcGetInteger.AttributesSize, 1, out attribute_count);
-            if (attribute_count > 0)
-            {
-                int[] device_attributes = new int[attribute_count];
-                Alc.GetInteger(device_handle, AlcGetInteger.AllAttributes, device_attributes.Length, device_attributes);
-                foreach (int attr in device_attributes)
-                {
-                    switch ((AlcContextAttributes)attr)
-                    {
-                        case AlcContextAttributes.Sync: IsSynchronized = true; break;
-                    }
-                }
-            }
+ 
 
             lock (audio_context_lock)
             {
@@ -364,17 +351,6 @@ namespace OpenTK.Audio
         }
 
         #endregion --- Private Methods ---
-
-        #region void CheckForAlcErrors()
-
-        void CheckForAlcErrors()
-        {
-            AlcError err = Alc.GetError(device_handle);
-            if (err != AlcError.NoError)
-                throw new AudioContextException("Device (" + device_handle + ") " + err.ToString());
-        }
-
-        #endregion
 
         #region static void MakeCurrent(AudioContext context)
 
@@ -442,6 +418,35 @@ namespace OpenTK.Audio
         #endregion
 
         #region --- Public Members ---
+
+        #region CheckErrors
+
+        /// <summary>
+        /// Checks for ALC error conditions.
+        /// </summary>
+        /// <exception cref="OutOfMemoryException">Raised when an out of memory error is detected.</exception>
+        /// <exception cref="AudioValueException">Raised when an invalid value is detected.</exception>
+        /// <exception cref="AudioDeviceException">Raised when an invalid device is detected.</exception>
+        /// <exception cref="AudioContextException">Raised when an invalid context is detected.</exception>
+        public void CheckErrors()
+        {
+            new AudioDeviceErrorChecker(device_handle).Dispose();
+        }
+
+        #endregion
+
+        #region CurrentError
+
+        /// <summary>Returns the ALC error code for this device.</summary>
+        public AlcError CurrentError
+        {
+            get
+            {
+                return Alc.GetError(device_handle);
+            }
+        }
+
+        #endregion
 
         #region public void MakeCurrent()
 
@@ -600,7 +605,7 @@ namespace OpenTK.Audio
 
         #endregion
 
-        #region public static IList<string> AvailableDevices
+        #region AvailableDevices
         /// <summary>Returns a list of strings containing all known playback devices.</summary>
         public static IList<string> AvailableDevices
         {
@@ -611,16 +616,18 @@ namespace OpenTK.Audio
         }
         #endregion public static IList<string> AvailablePlaybackDevices
 
-        #region public static string Default
+        #region DefaultDevice
+
         /// <summary>Returns the name of the device that will be used as playback default.</summary>
-        public static string Default
+        public static string DefaultDevice
         {
             get
             {
                 return AudioDeviceEnumerator.DefaultPlaybackDevice;
             }
         }
-        #endregion public static string DefaultPlaybackDevice
+
+        #endregion
 
         #region public string CurrentDeviceName
         /// <summary>Returns the name of the used device for the current context.</summary>
