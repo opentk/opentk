@@ -28,6 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Audio
 {
@@ -38,13 +39,18 @@ namespace OpenTK.Audio
     /// </summary>
     public sealed class AudioCapture : IDisposable
     {
-        #region private fields
-        /// <summary>This must stay private info so the end-user cannot call any Alc commands for the recording device.</summary>
-        private IntPtr Handle;
+        #region Fields
 
-        /// <summary>Alc.CaptureStop should be called prior to device shutdown, this keeps track of Alc.CaptureStart/Stop calls.</summary>
-        private bool _isrecording = false;
-        #endregion private fields
+        // This must stay private info so the end-user cannot call any Alc commands for the recording device.
+        IntPtr Handle;
+
+        // Alc.CaptureStop should be called prior to device shutdown, this keeps track of Alc.CaptureStart/Stop calls.
+        bool _isrecording = false;
+
+        ALFormat sample_format;
+        int sample_frequency;
+        
+        #endregion 
 
         #region Device Name
         private string device_name;
@@ -69,7 +75,7 @@ namespace OpenTK.Audio
         }
 
         /// <summary>Returns the name of the device that will be used as recording default.</summary>
-        public static string Default
+        public static string DefaultDevice
         {
             get
             {
@@ -87,106 +93,62 @@ namespace OpenTK.Audio
             }
         }
 
-        #region Internal Error handling
-        private string ErrorMessage(string devicename, uint frequency, ALFormat bufferformat, int buffersize)
-        {
-            string alcerrmsg;
-            AlcError alcerrcode = Alc.GetError(IntPtr.Zero);
-            switch (alcerrcode)
-            {
-                case AlcError.OutOfMemory:
-                    alcerrmsg = alcerrcode.ToString() + ": The specified device is invalid, or can not capture audio.";
-                    break;
-                case AlcError.InvalidValue:
-                    alcerrmsg = alcerrcode.ToString() + ": One of the parameters has an invalid value.";
-                    break;
-                default:
-                    alcerrmsg = alcerrcode.ToString();
-                    break;
-            }
-            return "The handle returned by Alc.CaptureOpenDevice is null." +
-                   "\nAlc Error: " + alcerrmsg +
-                   "\nDevice Name: " + devicename +
-                   "\nCapture frequency: " + frequency +
-                   "\nBuffer format: " + bufferformat +
-                   "\nBuffer Size: " + buffersize;
-        }
-
-        private List<string> ErrorMessages = new List<string>();
-        #endregion Internal Error handling
-
         /// <summary>
         /// Opens the default device for audio recording.
         /// Implicitly set parameters are: 22050Hz, 16Bit Mono, 4096 samples ringbuffer.
         /// </summary>
-        public AudioCapture():this(AudioCapture.Default, 22050, ALFormat.Mono16, 4096)
+        public AudioCapture()
+            : this(AudioCapture.DefaultDevice, 22050, ALFormat.Mono16, 4096)
         {
         }
 
         /// <summary>Opens a device for audio recording.</summary>
-        /// <param name="devicename">The device name.</param>
+        /// <param name="deviceName">The device name.</param>
         /// <param name="frequency">The frequency that the data should be captured at.</param>
-        /// <param name="bufferformat">The requested capture buffer format.</param>
-        /// <param name="buffersize">The size of OpenAL's capture internal ring-buffer. This value expects number of samples, not bytes.</param>
-        public AudioCapture(string devicename, int frequency, ALFormat bufferformat, int buffersize)
-            : this(devicename, (uint)frequency, bufferformat, buffersize)
-        {
-        }
-
-        /// <summary>Opens a device for audio recording.</summary>
-        /// <param name="devicename">The device name.</param>
-        /// <param name="frequency">The frequency that the data should be captured at.</param>
-        /// <param name="bufferformat">The requested capture buffer format.</param>
-        /// <param name="buffersize">The size of OpenAL's capture internal ring-buffer. This value expects number of samples, not bytes.</param>
-        [CLSCompliant(false)]
-        public AudioCapture(string devicename, uint frequency, ALFormat bufferformat, int buffersize)
+        /// <param name="sampleFormat">The requested capture buffer format.</param>
+        /// <param name="bufferSize">The size of OpenAL's capture internal ring-buffer. This value expects number of samples, not bytes.</param>
+        public AudioCapture(string deviceName, int frequency, ALFormat sampleFormat, int bufferSize)
         {
             if (!AudioDeviceEnumerator.IsOpenALSupported)
                 throw new DllNotFoundException("openal32.dll");
 
-            device_name = devicename;
-            Handle = Alc.CaptureOpenDevice(devicename, frequency, bufferformat, buffersize);
+            // Try to open specified device. If it fails, try to open default device.
+            device_name = deviceName;
+            Handle = Alc.CaptureOpenDevice(deviceName, frequency, sampleFormat, bufferSize);
+            
             if (Handle == IntPtr.Zero)
             {
-                ErrorMessages.Add(ErrorMessage(devicename, frequency, bufferformat, buffersize));
+                Debug.WriteLine(ErrorMessage(deviceName, frequency, sampleFormat, bufferSize));
                 device_name = "IntPtr.Zero";
-                Handle = Alc.CaptureOpenDevice(null, frequency, bufferformat, buffersize);
+                Handle = Alc.CaptureOpenDevice(null, frequency, sampleFormat, bufferSize);
             }
+
             if (Handle == IntPtr.Zero)
             {
-                ErrorMessages.Add(ErrorMessage("IntPtr.Zero", frequency, bufferformat, buffersize));
+                Debug.WriteLine(ErrorMessage("IntPtr.Zero", frequency, sampleFormat, bufferSize));
                 device_name = AudioDeviceEnumerator.DefaultRecordingDevice;
-                Handle = Alc.CaptureOpenDevice(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, bufferformat, buffersize);
+                Handle = Alc.CaptureOpenDevice(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat, bufferSize);
             }
+            
             if (Handle == IntPtr.Zero)
             {
-                ErrorMessages.Add(ErrorMessage(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, bufferformat, buffersize));
-                // everything failed 
+                // Everything we tried failed. Capture may not be supported, bail out.
+                Debug.WriteLine(ErrorMessage(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat, bufferSize));
                 device_name = "None";
-                foreach (string s in ErrorMessages)
-                    Debug.WriteLine(s);
+
                 throw new AudioDeviceException("All attempts to open capture devices returned IntPtr.Zero. See debug log for verbose list.");
             }
 
             // handle is not null, check for some Alc Error
-            AlcError err = this.CurrentAlcError;
-            switch (err)
-            {
-                case AlcError.NoError:
-                    // everything went fine, do nothing
-                    break;
-                case AlcError.OutOfMemory:
-                    throw new AudioDeviceException("Alc.CaptureOpenDevice (Handle: " + Handle + ") reports Alc Error (" + err.ToString() + ") The specified device is invalid, or can not capture audio.");
-                case AlcError.InvalidValue:
-                    throw new AudioDeviceException("Alc.CaptureOpenDevice (Handle: " + Handle + ") reports Alc Error (" + err.ToString() + ") One of the parameters has an invalid value.");
-                default:
-                    throw new AudioDeviceException("Alc.CaptureOpenDevice (Handle: " + Handle + ") reports Alc Error: " + err.ToString());
-            }
+            CheckErrors();
+
+            SampleFormat = sampleFormat;
+            SampleFrequency = frequency;
         }
 
         #endregion Constructor
 
-        #region Destructor
+        #region IDisposable Members
 
         ~AudioCapture()
         {
@@ -219,10 +181,28 @@ namespace OpenTK.Audio
 
         #endregion Destructor
 
-        #region Error Checking
+        #region Public Members
 
-        /// <summary>Returns the first encountered Alc Error by this device.</summary>
-        public AlcError CurrentAlcError
+        #region CheckErrors
+
+        /// <summary>
+        /// Checks for ALC error conditions.
+        /// </summary>
+        /// <exception cref="OutOfMemoryException">Raised when an out of memory error is detected.</exception>
+        /// <exception cref="AudioValueException">Raised when an invalid value is detected.</exception>
+        /// <exception cref="AudioDeviceException">Raised when an invalid device is detected.</exception>
+        /// <exception cref="AudioContextException">Raised when an invalid context is detected.</exception>
+        public void CheckErrors()
+        {
+            new AudioDeviceErrorChecker(Handle).Dispose();
+        }
+
+        #endregion
+
+        #region CurrentError
+
+        /// <summary>Returns the ALC error code for this device.</summary>
+        public AlcError CurrentError
         {
             get
             {
@@ -230,14 +210,14 @@ namespace OpenTK.Audio
             }
         }
 
-        #endregion Error Checking
+        #endregion
 
-        #region Start & Stop Capture
+        #region Start & Stop
 
         /// <summary>
         /// Start recording samples.
-        /// The number of available samples can be obtained through the AvailableSamples property.
-        /// The data can be queried with any GetSamples() method.
+        /// The number of available samples can be obtained through the <see cref="AvailableSamples"/> property.
+        /// The data can be queried with any <see cref="ReadSamples"/> method.
         /// </summary>
         public void Start()
         {
@@ -254,7 +234,7 @@ namespace OpenTK.Audio
 
         #endregion Start & Stop Capture
 
-        #region Available samples property
+        #region AvailableSamples
 
         /// <summary>Returns the number of available samples for capture.</summary>
         public int AvailableSamples
@@ -271,16 +251,129 @@ namespace OpenTK.Audio
 
         #endregion Available samples property
 
-        #region Capture previously recorded samples
+        #region ReadSamples
 
-        /// <summary>This function will write previously recorded samples to a location in memory. It does not block.</summary>
+        /// <summary>Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it is an error to specify a sampleCount larger than AvailableSamples.</summary>
         /// <param name="buffer">A pointer to a previously initialized and pinned array.</param>
-        /// <param name="samplecount">The number of samples to be written to the buffer.</param>
-        public void GetSamples(IntPtr buffer, int samplecount)
+        /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
+        public void ReadSamples(IntPtr buffer, int sampleCount)
         {
-            Alc.CaptureSamples(Handle, buffer, samplecount);
+            Alc.CaptureSamples(Handle, buffer, sampleCount);
         }
 
-        #endregion Capture previously recorded samples
+        /// <summary>Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it is an error to specify a sampleCount larger than AvailableSamples.</summary>
+        /// <param name="buffer">The buffer to fill.</param>
+        /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
+        /// <exception cref="System.ArgumentNullException">Raised when buffer is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Raised when sampleCount is larger than the buffer.</exception>
+        public void ReadSamples<TBuffer>(TBuffer[] buffer, int sampleCount)
+            where TBuffer : struct
+        {
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+
+            int buffer_size = BlittableValueType<TBuffer>.Stride * buffer.Length;
+            // This is more of a heuristic than a 100% valid check. However, it will work
+            // correctly for 99.9% of all use cases.
+            // This should never produce a false positive, but a false negative might
+            // be produced with compressed sample formats (which are very rare).
+            // Still, this is better than no check at all.
+            if (sampleCount * GetSampleSize(SampleFormat) > buffer_size)
+                throw new ArgumentOutOfRangeException("sampleCount");
+
+            GCHandle buffer_ptr = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+            try { ReadSamples(buffer_ptr.AddrOfPinnedObject(), sampleCount); }
+            finally { buffer_ptr.Free(); }
+        }
+
+        #endregion
+
+        #region SampleFormat & SampleFrequency
+
+        /// <summary>
+        /// Gets the OpenTK.Audio.ALFormat for this instance.
+        /// </summary>
+        public ALFormat SampleFormat
+        {
+            get { return sample_format; }
+            private set { sample_format = value; }
+        }
+
+        /// <summary>
+        /// Gets the sampling rate for this instance.
+        /// </summary>
+        public int SampleFrequency
+        {
+            get { return sample_frequency; }
+            private set { sample_frequency = value; }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Private Members
+
+        // Retrieves the sample size in bytes for various ALFormats.
+        // Compressed formats always return 1.
+        static int GetSampleSize(ALFormat format)
+        {
+            switch (format)
+            {
+                case ALFormat.Mono8: return 1;
+                case ALFormat.Mono16: return 2;
+                case ALFormat.Stereo8: return 2;
+                case ALFormat.Stereo16: return 4;
+                case ALFormat.MonoFloat32Ext: return 4;
+                case ALFormat.MonoDoubleExt: return 8;
+                case ALFormat.StereoFloat32Ext: return 8;
+                case ALFormat.StereoDoubleExt: return 16;
+
+                case ALFormat.MultiQuad8Ext: return 4;
+                case ALFormat.MultiQuad16Ext: return 8;
+                case ALFormat.MultiQuad32Ext: return 16;
+                
+                case ALFormat.Multi51Chn8Ext: return 6;
+                case ALFormat.Multi51Chn16Ext: return 12;
+                case ALFormat.Multi51Chn32Ext: return 24;
+
+                case ALFormat.Multi61Chn8Ext: return 7;
+                case ALFormat.Multi71Chn16Ext: return 14;
+                case ALFormat.Multi71Chn32Ext: return 28;
+
+                case ALFormat.MultiRear8Ext: return 1;
+                case ALFormat.MultiRear16Ext: return 2;
+                case ALFormat.MultiRear32Ext: return 4;
+
+                default: return 1; // Unknown sample size.
+            }
+        }
+
+        // Converts an error code to an error string with additional information.
+        string ErrorMessage(string devicename, int frequency, ALFormat bufferformat, int buffersize)
+        {
+            string alcerrmsg;
+            AlcError alcerrcode = CurrentError;
+            switch (alcerrcode)
+            {
+                case AlcError.OutOfMemory:
+                    alcerrmsg = alcerrcode.ToString() + ": The specified device is invalid, or can not capture audio.";
+                    break;
+                case AlcError.InvalidValue:
+                    alcerrmsg = alcerrcode.ToString() + ": One of the parameters has an invalid value.";
+                    break;
+                default:
+                    alcerrmsg = alcerrcode.ToString();
+                    break;
+            }
+            return "The handle returned by Alc.CaptureOpenDevice is null." +
+                   "\nAlc Error: " + alcerrmsg +
+                   "\nDevice Name: " + devicename +
+                   "\nCapture frequency: " + frequency +
+                   "\nBuffer format: " + bufferformat +
+                   "\nBuffer Size: " + buffersize;
+        }
+
+        #endregion
     }
 }
