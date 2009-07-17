@@ -36,46 +36,46 @@ namespace OpenTK
     {
         #region Fields
 
-		/// <summary>
-		/// Top row of the matrix
-		/// </summary>
-		public Vector4 Row0;
-		/// <summary>
-		/// 2nd row of the matrix
-		/// </summary>
-		public Vector4 Row1;
-		/// <summary>
-		/// 3rd row of the matrix
-		/// </summary>
-		public Vector4 Row2;
-		/// <summary>
-		/// Bottom row of the matrix
-		/// </summary>
-		public Vector4 Row3;
+        /// <summary>
+        /// Top row of the matrix
+        /// </summary>
+        public Vector4 Row0;
+        /// <summary>
+        /// 2nd row of the matrix
+        /// </summary>
+        public Vector4 Row1;
+        /// <summary>
+        /// 3rd row of the matrix
+        /// </summary>
+        public Vector4 Row2;
+        /// <summary>
+        /// Bottom row of the matrix
+        /// </summary>
+        public Vector4 Row3;
  
-		/// <summary>
-		/// The identity matrix
-		/// </summary>
-		public static Matrix4 Identity = new Matrix4(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW);
+        /// <summary>
+        /// The identity matrix
+        /// </summary>
+        public static Matrix4 Identity = new Matrix4(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW);
 
         #endregion
 
         #region Constructors
 
-		/// <summary>
+        /// <summary>
         /// Constructs a new instance.
-		/// </summary>
+        /// </summary>
         /// <param name="row0">Top row of the matrix</param>
         /// <param name="row1">Second row of the matrix</param>
         /// <param name="row2">Third row of the matrix</param>
         /// <param name="row3">Bottom row of the matrix</param>
-		public Matrix4(Vector4 row0, Vector4 row1, Vector4 row2, Vector4 row3)
-		{
-			Row0 = row0;
-			Row1 = row1;
-			Row2 = row2;
-			Row3 = row3;
-		}
+        public Matrix4(Vector4 row0, Vector4 row1, Vector4 row2, Vector4 row3)
+        {
+            Row0 = row0;
+            Row1 = row1;
+            Row2 = row2;
+            Row3 = row3;
+        }
 
         /// <summary>
         /// Constructs a new instance.
@@ -271,9 +271,9 @@ namespace OpenTK
         #endregion
 
         #region Static
-		
-		#region CreateFromAxisAngle
-		
+        
+        #region CreateFromAxisAngle
+        
         /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
@@ -289,11 +289,11 @@ namespace OpenTK
             axis.Normalize();
 
             result = new Matrix4(t * axis.X * axis.X + cos, t * axis.X * axis.Y - sin * axis.Z, t * axis.X * axis.Z + sin * axis.Y, 0.0f,
-			                     t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos, t * axis.Y * axis.Z - sin * axis.X, 0.0f,
-			                     t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X, t * axis.Z * axis.Z + cos, 0.0f,
-			                     0, 0, 0, 1);
+                                 t * axis.X * axis.Y + sin * axis.Z, t * axis.Y * axis.Y + cos, t * axis.Y * axis.Z - sin * axis.X, 0.0f,
+                                 t * axis.X * axis.Z - sin * axis.Y, t * axis.Y * axis.Z + sin * axis.X, t * axis.Z * axis.Z + cos, 0.0f,
+                                 0, 0, 0, 1);
         }
-		
+        
         /// <summary>
         /// Build a rotation matrix from the specified axis/angle rotation.
         /// </summary>
@@ -303,11 +303,11 @@ namespace OpenTK
         public static Matrix4 CreateFromAxisAngle(Vector3 axis, float angle)
         {
             Matrix4 result;
-		    CreateFromAxisAngle(axis, angle, out result);
-			return result;
+            CreateFromAxisAngle(axis, angle, out result);
+            return result;
         }
-		
-		#endregion
+        
+        #endregion
 
         #region CreateTranslation
 
@@ -443,9 +443,9 @@ namespace OpenTK
         }
 
         #endregion
-		
-		#region CreatePerspectiveFieldOfView
-		
+        
+        #region CreatePerspectiveFieldOfView
+        
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
@@ -466,17 +466,17 @@ namespace OpenTK
         /// </exception>
         public static void CreatePerspectiveFieldOfView(float fovy, float aspect, float zNear, float zFar, out Matrix4 result)
         {
-			if (fovy <= 0 || fovy > Math.PI)
-				throw new ArgumentOutOfRangeException("fovy");
-			if (aspect <= 0)
-				throw new ArgumentOutOfRangeException("aspect");
-			if (zNear <= 0)
-				throw new ArgumentOutOfRangeException("zNear");
-			if (zFar <= 0)
-				throw new ArgumentOutOfRangeException("zFar");
-			if (zNear >= zFar)
-				throw new ArgumentOutOfRangeException("zNear");
-			
+            if (fovy <= 0 || fovy > Math.PI)
+                throw new ArgumentOutOfRangeException("fovy");
+            if (aspect <= 0)
+                throw new ArgumentOutOfRangeException("aspect");
+            if (zNear <= 0)
+                throw new ArgumentOutOfRangeException("zNear");
+            if (zFar <= 0)
+                throw new ArgumentOutOfRangeException("zFar");
+            if (zNear >= zFar)
+                throw new ArgumentOutOfRangeException("zNear");
+            
             float yMax = zNear * (float)System.Math.Tan(0.5f * fovy);
             float yMin = -yMax;
             float xMin = yMin * aspect;
@@ -484,7 +484,7 @@ namespace OpenTK
 
             CreatePerspectiveOffCenter(xMin, xMax, yMin, yMax, zNear, zFar, out result);
         }
-		
+        
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
@@ -505,15 +505,15 @@ namespace OpenTK
         /// </exception>
         public static Matrix4 CreatePerspectiveFieldOfView(float fovy, float aspect, float zNear, float zFar)
         {
-			Matrix4 result;
-			CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out result);
-			return result;
+            Matrix4 result;
+            CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out result);
+            return result;
         }
-		
-		#endregion
-		
-		#region CreatePerspectiveOffCenter
-		
+        
+        #endregion
+        
+        #region CreatePerspectiveOffCenter
+        
         /// <summary>
         /// Creates an perspective projection matrix.
         /// </summary>
@@ -534,26 +534,26 @@ namespace OpenTK
         /// </exception>
         public static void CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float zNear, float zFar, out Matrix4 result)
         {
-			if (zNear <= 0)
-				throw new ArgumentOutOfRangeException("zNear");
-			if (zFar <= 0)
-				throw new ArgumentOutOfRangeException("zFar");
-			if (zNear >= zFar)
-				throw new ArgumentOutOfRangeException("zNear");
-			
-			float x = (2.0f * zNear) / (right - left);
-			float y = (2.0f * zNear) / (top - bottom);
-			float a = (right + left) / (right - left);
-			float b = (top + bottom) / (top - bottom);
-			float c = -(zFar + zNear) / (zFar - zNear);
-			float d = -(2.0f * zFar * zNear) / (zFar - zNear);
-			
+            if (zNear <= 0)
+                throw new ArgumentOutOfRangeException("zNear");
+            if (zFar <= 0)
+                throw new ArgumentOutOfRangeException("zFar");
+            if (zNear >= zFar)
+                throw new ArgumentOutOfRangeException("zNear");
+            
+            float x = (2.0f * zNear) / (right - left);
+            float y = (2.0f * zNear) / (top - bottom);
+            float a = (right + left) / (right - left);
+            float b = (top + bottom) / (top - bottom);
+            float c = -(zFar + zNear) / (zFar - zNear);
+            float d = -(2.0f * zFar * zNear) / (zFar - zNear);
+            
             result = new Matrix4(x, 0, 0,  0,
                                  0, y, 0,  0,
                                  a, b, c, -1,
-	                             0, 0, d,  0);
+                                 0, 0, d,  0);
         }
-		
+        
         /// <summary>
         /// Creates an perspective projection matrix.
         /// </summary>
@@ -574,12 +574,12 @@ namespace OpenTK
         /// </exception>
         public static Matrix4 CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float zNear, float zFar)
         {
-			Matrix4 result;
-			CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
-			return result;
+            Matrix4 result;
+            CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out result);
+            return result;
         }
-		
-		#endregion
+        
+        #endregion
 
         #region Obsolete Functions
 
@@ -832,35 +832,35 @@ namespace OpenTK
         public static Matrix4 Mult(Matrix4 left, Matrix4 right)
         {
             Matrix4 result;
-			Mult(ref left, ref right, out result);
-			return result;
+            Mult(ref left, ref right, out result);
+            return result;
         }
 
-		/// <summary>
-		/// Multiplies two instances.
-		/// </summary>
+        /// <summary>
+        /// Multiplies two instances.
+        /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication</param>
         public static void Mult(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
         {
-			result = new Matrix4(
-				left.M11 * right.M11 + left.M12 * right.M21 + left.M13 * right.M31 + left.M14 * right.M41,
-				left.M11 * right.M12 + left.M12 * right.M22 + left.M13 * right.M32 + left.M14 * right.M42,
-				left.M11 * right.M13 + left.M12 * right.M23 + left.M13 * right.M33 + left.M14 * right.M43,
-				left.M11 * right.M14 + left.M12 * right.M24 + left.M13 * right.M34 + left.M14 * right.M44,
-				left.M21 * right.M11 + left.M22 * right.M21 + left.M23 * right.M31 + left.M24 * right.M41,
-				left.M21 * right.M12 + left.M22 * right.M22 + left.M23 * right.M32 + left.M24 * right.M42,
-				left.M21 * right.M13 + left.M22 * right.M23 + left.M23 * right.M33 + left.M24 * right.M43,
-				left.M21 * right.M14 + left.M22 * right.M24 + left.M23 * right.M34 + left.M24 * right.M44,
-				left.M31 * right.M11 + left.M32 * right.M21 + left.M33 * right.M31 + left.M34 * right.M41,
-				left.M31 * right.M12 + left.M32 * right.M22 + left.M33 * right.M32 + left.M34 * right.M42,
-				left.M31 * right.M13 + left.M32 * right.M23 + left.M33 * right.M33 + left.M34 * right.M43,
-				left.M31 * right.M14 + left.M32 * right.M24 + left.M33 * right.M34 + left.M34 * right.M44,
-				left.M41 * right.M11 + left.M42 * right.M21 + left.M43 * right.M31 + left.M44 * right.M41,
-				left.M41 * right.M12 + left.M42 * right.M22 + left.M43 * right.M32 + left.M44 * right.M42,
-				left.M41 * right.M13 + left.M42 * right.M23 + left.M43 * right.M33 + left.M44 * right.M43,
-				left.M41 * right.M14 + left.M42 * right.M24 + left.M43 * right.M34 + left.M44 * right.M44);
+            result = new Matrix4(
+                left.M11 * right.M11 + left.M12 * right.M21 + left.M13 * right.M31 + left.M14 * right.M41,
+                left.M11 * right.M12 + left.M12 * right.M22 + left.M13 * right.M32 + left.M14 * right.M42,
+                left.M11 * right.M13 + left.M12 * right.M23 + left.M13 * right.M33 + left.M14 * right.M43,
+                left.M11 * right.M14 + left.M12 * right.M24 + left.M13 * right.M34 + left.M14 * right.M44,
+                left.M21 * right.M11 + left.M22 * right.M21 + left.M23 * right.M31 + left.M24 * right.M41,
+                left.M21 * right.M12 + left.M22 * right.M22 + left.M23 * right.M32 + left.M24 * right.M42,
+                left.M21 * right.M13 + left.M22 * right.M23 + left.M23 * right.M33 + left.M24 * right.M43,
+                left.M21 * right.M14 + left.M22 * right.M24 + left.M23 * right.M34 + left.M24 * right.M44,
+                left.M31 * right.M11 + left.M32 * right.M21 + left.M33 * right.M31 + left.M34 * right.M41,
+                left.M31 * right.M12 + left.M32 * right.M22 + left.M33 * right.M32 + left.M34 * right.M42,
+                left.M31 * right.M13 + left.M32 * right.M23 + left.M33 * right.M33 + left.M34 * right.M43,
+                left.M31 * right.M14 + left.M32 * right.M24 + left.M33 * right.M34 + left.M34 * right.M44,
+                left.M41 * right.M11 + left.M42 * right.M21 + left.M43 * right.M31 + left.M44 * right.M41,
+                left.M41 * right.M12 + left.M42 * right.M22 + left.M43 * right.M32 + left.M44 * right.M42,
+                left.M41 * right.M13 + left.M42 * right.M23 + left.M43 * right.M33 + left.M44 * right.M43,
+                left.M41 * right.M14 + left.M42 * right.M24 + left.M43 * right.M34 + left.M44 * right.M44);
         }
 
         #endregion
@@ -881,9 +881,9 @@ namespace OpenTK
 
             // convert the matrix to an array for easy looping
             float[,] inverse = {{mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W}, 
-								{mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W}, 
-								{mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W}, 
-								{mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
+                                {mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W}, 
+                                {mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W}, 
+                                {mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W} };
             int icol = 0;
             int irow = 0;
             for (int i = 0; i < 4; i++)

@@ -57,8 +57,8 @@ namespace OpenTK
         /// <param name="y">The y coordinate of the net Vector2.</param>
         public Vector2(float x, float y)
         {
-			X = x;
-			Y = y;
+            X = x;
+            Y = y;
         }
 
         /// <summary>
@@ -176,10 +176,10 @@ namespace OpenTK
         /// <seealso cref="LengthSquared"/>
         public float Length
         {
-			get
-			{
-				return (float)System.Math.Sqrt(X * X + Y * Y);
-			}
+            get
+            {
+                return (float)System.Math.Sqrt(X * X + Y * Y);
+            }
         }
 
         #endregion
@@ -197,10 +197,10 @@ namespace OpenTK
         /// <seealso cref="LengthSquared"/>
         public float LengthFast
         {
-			get
-			{
-				return 1.0f /OpenTK.Functions.InverseSqrtFast(X * X + Y * Y);
-			}
+            get
+            {
+                return 1.0f /OpenTK.Functions.InverseSqrtFast(X * X + Y * Y);
+            }
         }
 
         #endregion
@@ -218,43 +218,43 @@ namespace OpenTK
         /// <seealso cref="LengthFast"/>
         public float LengthSquared
         {
-			get
-			{
-				return X * X + Y * Y;
-			}
+            get
+            {
+                return X * X + Y * Y;
+            }
         }
 
-		#endregion
+        #endregion
 
-		#region public Vector2 PerpendicularRight
+        #region public Vector2 PerpendicularRight
 
-		/// <summary>
-		/// Gets the perpendicular vector on the right side of this vector.
-		/// </summary>
-		public Vector2 PerpendicularRight
-		{
-			get
-			{
-				return new Vector2(Y, -X);
-			}
-		}
+        /// <summary>
+        /// Gets the perpendicular vector on the right side of this vector.
+        /// </summary>
+        public Vector2 PerpendicularRight
+        {
+            get
+            {
+                return new Vector2(Y, -X);
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region public Vector2 PerpendicularLeft
+        #region public Vector2 PerpendicularLeft
 
-		/// <summary>
-		/// Gets the perpendicular vector on the left side of this vector.
-		/// </summary>
-		public Vector2 PerpendicularLeft
-		{
-			get
-			{
-				return new Vector2(-Y, X);
-			}
-		}
+        /// <summary>
+        /// Gets the perpendicular vector on the left side of this vector.
+        /// </summary>
+        public Vector2 PerpendicularLeft
+        {
+            get
+            {
+                return new Vector2(-Y, X);
+            }
+        }
 
-		#endregion
+        #endregion
 
         #region public void Normalize()
 
@@ -263,9 +263,9 @@ namespace OpenTK
         /// </summary>
         public void Normalize()
         {
-			float scale = 1.0f / this.Length;
-			X *= scale;
-			Y *= scale;
+            float scale = 1.0f / this.Length;
+            X *= scale;
+            Y *= scale;
         }
 
         #endregion
@@ -277,9 +277,9 @@ namespace OpenTK
         /// </summary>
         public void NormalizeFast()
         {
-			float scale = Functions.InverseSqrtFast(X * X + Y * Y);
-			X *= scale;
-			Y *= scale;
+            float scale = Functions.InverseSqrtFast(X * X + Y * Y);
+            X *= scale;
+            Y *= scale;
         }
 
         #endregion
@@ -293,8 +293,8 @@ namespace OpenTK
         /// <param name="sy">The scale of the Y component.</param>
         public void Scale(float sx, float sy)
         {
-			this.X = X * sx;
-			this.Y = Y * sy;
+            this.X = X * sx;
+            this.Y = Y * sy;
         }
 
         /// <summary>Scales this instance by the given parameter.</summary>
@@ -751,12 +751,12 @@ namespace OpenTK
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <returns>Result of addition.</returns>
-		public static Vector2 operator +(Vector2 left, Vector2 right)
-		{
-			left.X += right.X;
-			left.Y += right.Y;
-			return left;
-		}
+        public static Vector2 operator +(Vector2 left, Vector2 right)
+        {
+            left.X += right.X;
+            left.Y += right.Y;
+            return left;
+        }
 
         /// <summary>
         /// Subtracts the specified instances.
@@ -764,24 +764,24 @@ namespace OpenTK
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <returns>Result of subtraction.</returns>
-		public static Vector2 operator -(Vector2 left, Vector2 right)
-		{
-			left.X -= right.X;
-			left.Y -= right.Y;
-			return left;
-		}
+        public static Vector2 operator -(Vector2 left, Vector2 right)
+        {
+            left.X -= right.X;
+            left.Y -= right.Y;
+            return left;
+        }
 
         /// <summary>
         /// Negates the specified instance.
         /// </summary>
         /// <param name="vec">Operand.</param>
         /// <returns>Result of negation.</returns>
-		public static Vector2 operator -(Vector2 vec)
-		{
-			vec.X = -vec.X;
-			vec.Y = -vec.Y;
-			return vec;
-		}
+        public static Vector2 operator -(Vector2 vec)
+        {
+            vec.X = -vec.X;
+            vec.Y = -vec.Y;
+            return vec;
+        }
 
         /// <summary>
         /// Multiplies the specified instance by a scalar.
@@ -789,12 +789,12 @@ namespace OpenTK
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of multiplication.</returns>
-		public static Vector2 operator *(Vector2 vec, float scale)
-		{
+        public static Vector2 operator *(Vector2 vec, float scale)
+        {
             vec.X *= scale;
             vec.Y *= scale;
-			return vec;
-		}
+            return vec;
+        }
 
         /// <summary>
         /// Multiplies the specified instance by a scalar.
@@ -803,11 +803,11 @@ namespace OpenTK
         /// <param name="vec">Right operand.</param>
         /// <returns>Result of multiplication.</returns>
         public static Vector2 operator *(float scale, Vector2 vec)
-		{
+        {
             vec.X *= scale;
             vec.Y *= scale;
-			return vec;
-		}
+            return vec;
+        }
 
         /// <summary>
         /// Divides the specified instance by a scalar.
@@ -815,13 +815,13 @@ namespace OpenTK
         /// <param name="vec">Left operand</param>
         /// <param name="scale">Right operand</param>
         /// <returns>Result of the division.</returns>
-		public static Vector2 operator /(Vector2 vec, float scale)
-		{
+        public static Vector2 operator /(Vector2 vec, float scale)
+        {
             float mult = 1.0f / scale;
-			vec.X *= mult;
-			vec.Y *= mult;
-			return vec;
-		}
+            vec.X *= mult;
+            vec.Y *= mult;
+            return vec;
+        }
 
         /// <summary>
         /// Compares the specified instances for equality.
