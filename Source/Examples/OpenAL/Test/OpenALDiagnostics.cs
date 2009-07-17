@@ -121,8 +121,8 @@ namespace Examples
             AllPlaybackDevices = AudioContext.AvailableDevices;
             AllRecordingDevices = AudioCapture.AvailableDevices;
 
-            DefaultPlaybackDevice = AudioContext.Default;
-            DefaultRecordingDevice = AudioCapture.Default;
+            DefaultPlaybackDevice = AudioContext.DefaultDevice;
+            DefaultRecordingDevice = AudioCapture.DefaultDevice;
         }
 
         public void Print()
@@ -513,7 +513,7 @@ namespace Examples
 
         private void CheckRecorderError(string location)
         {
-            AlcError err = r.CurrentAlcError;
+            AlcError err = r.CurrentError;
             if (err != AlcError.NoError)
                 Errorlist.Add(location, err);
         }
@@ -525,7 +525,7 @@ namespace Examples
 
             try
             {
-                r = new AudioCapture(AudioCapture.Default, (uint)16000, ALFormat.Mono16, 4096);
+                r = new AudioCapture(AudioCapture.DefaultDevice, 16000, ALFormat.Mono16, 4096);
             }
             catch (AudioDeviceException ade)
             {
@@ -543,14 +543,13 @@ namespace Examples
             CheckRecorderError("Alc.CaptureStop");
 
             byte[] Buffer = new byte[8192];
-            GCHandle BufferHandle = GCHandle.Alloc(Buffer, GCHandleType.Pinned);
-            IntPtr BufferPtr = BufferHandle.AddrOfPinnedObject();
 
+            Thread.Sleep(10);  // Wait for a few samples to become available.
             int SamplesBefore = r.AvailableSamples;
+
             CheckRecorderError("Alc.GetInteger(...CaptureSamples...)");
-            r.GetSamples(BufferPtr, (SamplesBefore > 4096 ? 4096 : SamplesBefore));
+            r.ReadSamples(Buffer, (SamplesBefore > 4096 ? 4096 : SamplesBefore));
             CheckRecorderError("Alc.CaptureSamples");
-            Thread.Sleep(50); // getsamples doesn't block
 
             int SamplesCaptured = SamplesBefore - r.AvailableSamples;
 
@@ -597,8 +596,6 @@ namespace Examples
             AL.DeleteSource(ref src);
             AL.DeleteBuffer(ref buf);
             */
-
-            BufferHandle.Free();
         }
 
         public void Print()
