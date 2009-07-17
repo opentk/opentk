@@ -263,14 +263,41 @@ namespace OpenTK.Audio
             return (IList<string>)result;
         }
 
+        [DllImport(Alc.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
+        unsafe static extern void GetInteger(IntPtr device, AlcGetInteger param, int size, int* data);
+        // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *buffer );
+
         /// <summary>This function returns integers related to the context.</summary>
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">an attribute to be retrieved: ALC_MAJOR_VERSION, ALC_MINOR_VERSION, ALC_ATTRIBUTES_SIZE, ALC_ALL_ATTRIBUTES</param>
-        /// <param name="size">the size of the destination buffer provided. In bytes.</param>
+        /// <param name="size">the size of the destination buffer provided, in number of integers.</param>
         /// <param name="data">a pointer to the buffer to be returned</param>
-        [DllImport(Alc.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = Alc.Style, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity()]
-        public static extern void GetInteger([In] IntPtr device, AlcGetInteger param, int size, [Out] out int data);
-        // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *buffer );
+        public static void GetInteger(IntPtr device, AlcGetInteger param, int size, out int data)
+        {
+            unsafe
+            {
+                fixed (int* data_ptr = &data)
+                {
+                    GetInteger(device, param, size, data_ptr);
+                }
+            }
+        }
+
+        /// <summary>This function returns integers related to the context.</summary>
+        /// <param name="device">a pointer to the device to be queried.</param>
+        /// <param name="param">an attribute to be retrieved: ALC_MAJOR_VERSION, ALC_MINOR_VERSION, ALC_ATTRIBUTES_SIZE, ALC_ALL_ATTRIBUTES</param>
+        /// <param name="size">the size of the destination buffer provided, in number of integers.</param>
+        /// <param name="data">a pointer to the buffer to be returned</param>
+        public static void GetInteger(IntPtr device, AlcGetInteger param, int size, int[] data)
+        {
+            unsafe
+            {
+                fixed (int* data_ptr = data)
+                {
+                    GetInteger(device, param, size, data_ptr);
+                }
+            }
+        }
 
         #endregion Query functions
 
