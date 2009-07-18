@@ -28,6 +28,9 @@ namespace Examples.WinForms
             InitializeComponent();
             ResizeRedraw = true;
 
+            glControl1.Width = ClientSize.Width;
+            glControl1.Height = ClientSize.Height;
+            
             UpdateFontList(fontDialog.Font);
             glControl1_Resize(this, EventArgs.Empty);
         }
