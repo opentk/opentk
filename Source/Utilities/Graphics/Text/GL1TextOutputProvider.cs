@@ -88,6 +88,8 @@ namespace OpenTK.Graphics.Text
 
             RectangleF position;
 
+            SetColor(color);
+            
             int block_hash = block.GetHashCode();
             if (block_cache.ContainsKey(block_hash))
             {
@@ -165,8 +167,6 @@ namespace OpenTK.Graphics.Text
                     List<Vector2> list = active_lists[key];
 
                     key.Bind();
-
-                    SetColor(color);
 
                     GL.Begin(BeginMode.Triangles);
 
