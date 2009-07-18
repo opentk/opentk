@@ -1825,15 +1825,4 @@ Alternatively, you can disable the ""Just my code"" debugging mode (""Tools->Opt
 
     #endregion
 
-    #region public enum GameWindowFlags
-
-    /// <summary>Enumerates available GameWindow construction options.</summary>
-    [Flags]
-    public enum GameWindowFlags
-    {
-        /// <summary>Indicates that the GameWindow should cover the whole screen.</summary>
-        Fullscreen = 1,
-    }
-
-    #endregion
 }
