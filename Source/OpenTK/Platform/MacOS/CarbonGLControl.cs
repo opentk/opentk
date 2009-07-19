@@ -25,14 +25,14 @@ namespace OpenTK.Platform.MacOS
             return new GraphicsContext(mode, WindowInfo, major, minor, flags);
         }
 
-		// TODO: Fix this
-		bool lastIsIdle = false;
+        // TODO: Fix this
+        bool lastIsIdle = false;
         public bool IsIdle
         {
             get 
             { 
-            	lastIsIdle = !lastIsIdle;
-            	return lastIsIdle;
+                lastIsIdle = !lastIsIdle;
+                return lastIsIdle;
             }
         }
 

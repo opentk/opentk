@@ -59,7 +59,7 @@ namespace OpenTK.Platform.MacOS
                     int currentHeight = CG.DisplayPixelsHigh(currentDisplay);
                     Debug.Print("Display {0} is at  {1}x{2}", i, currentWidth, currentHeight);
 
-					IntPtr displayModesPtr = CG.DisplayAvailableModes(currentDisplay);				
+                    IntPtr displayModesPtr = CG.DisplayAvailableModes(currentDisplay);                
                     CFArray displayModes = new CFArray(displayModesPtr);
                     Debug.Print("Supports {0} display modes.", displayModes.Count);
 
