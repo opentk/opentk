@@ -20,7 +20,7 @@
 // Copyright (c) 2004 Novell, Inc.
 //
 // Authors:
-//	Peter Bartok	pbartok@novell.com
+//    Peter Bartok    pbartok@novell.com
 //
 
 
@@ -1008,20 +1008,20 @@ namespace OpenTK.Platform.X11
         Sibling = 1 << 5,
         StackMode = 1 << 6,
 
-        //BackPixmap	(1L<<0)
-        //BackPixel	(1L<<1)
-        //SaveUnder	(1L<<10)
-        //EventMask	(1L<<11)
-        //DontPropagate	(1L<<12)
-        //Colormap	(1L<<13)
-        //Cursor	(1L<<14)
-        //BorderPixmap	(1L<<2)
-        //BorderPixel	(1L<<3)
-        //BitGravity	(1L<<4)
-        //WinGravity	(1L<<5)
-        //BackingStore	(1L<<6)
-        //BackingPlanes	(1L<<7)
-        //BackingPixel	(1L<<8)
+        //BackPixmap    (1L<<0)
+        //BackPixel    (1L<<1)
+        //SaveUnder    (1L<<10)
+        //EventMask    (1L<<11)
+        //DontPropagate    (1L<<12)
+        //Colormap    (1L<<13)
+        //Cursor    (1L<<14)
+        //BorderPixmap    (1L<<2)
+        //BorderPixel    (1L<<3)
+        //BitGravity    (1L<<4)
+        //WinGravity    (1L<<5)
+        //BackingStore    (1L<<6)
+        //BackingPlanes    (1L<<7)
+        //BackingPixel    (1L<<8)
         OverrideRedirect = 1<<9,
     }
 
@@ -1229,22 +1229,22 @@ namespace OpenTK.Platform.X11
 
     internal enum GXFunction
     {
-        GXclear = 0x0,		/* 0 */
-        GXand = 0x1,		/* src AND dst */
-        GXandReverse = 0x2,		/* src AND NOT dst */
-        GXcopy = 0x3,		/* src */
-        GXandInverted = 0x4,		/* NOT src AND dst */
-        GXnoop = 0x5,		/* dst */
-        GXxor = 0x6,		/* src XOR dst */
-        GXor = 0x7,		/* src OR dst */
-        GXnor = 0x8,		/* NOT src AND NOT dst */
-        GXequiv = 0x9,		/* NOT src XOR dst */
-        GXinvert = 0xa,		/* NOT dst */
-        GXorReverse = 0xb,		/* src OR NOT dst */
-        GXcopyInverted = 0xc,		/* NOT src */
-        GXorInverted = 0xd,		/* NOT src OR dst */
-        GXnand = 0xe,		/* NOT src OR NOT dst */
-        GXset = 0xf		/* 1 */
+        GXclear = 0x0,        /* 0 */
+        GXand = 0x1,        /* src AND dst */
+        GXandReverse = 0x2,        /* src AND NOT dst */
+        GXcopy = 0x3,        /* src */
+        GXandInverted = 0x4,        /* NOT src AND dst */
+        GXnoop = 0x5,        /* dst */
+        GXxor = 0x6,        /* src XOR dst */
+        GXor = 0x7,        /* src OR dst */
+        GXnor = 0x8,        /* NOT src AND NOT dst */
+        GXequiv = 0x9,        /* NOT src XOR dst */
+        GXinvert = 0xa,        /* NOT dst */
+        GXorReverse = 0xb,        /* src OR NOT dst */
+        GXcopyInverted = 0xc,        /* NOT src */
+        GXorInverted = 0xd,        /* NOT src OR dst */
+        GXnand = 0xe,        /* NOT src OR NOT dst */
+        GXset = 0xf        /* 1 */
     }
 
     internal enum NetWindowManagerState
