@@ -949,6 +949,8 @@ namespace OpenTK.Platform.MacOS
 
         public event EventHandler<EventArgs> FocusedChanged;
 
+        public event EventHandler<KeyPressEventArgs> KeyPress;
+
         #endregion
     }
 }
