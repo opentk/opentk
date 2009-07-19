@@ -912,14 +912,14 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-		
+        
         #region public static string GetShaderInfoLog(Int32 shader)
 
         public static string GetShaderInfoLog(Int32 shader)
         {
-			string info;
+            string info;
             GetShaderInfoLog(shader, out info);
-			return info;
+            return info;
         }
 
         #endregion
@@ -944,14 +944,14 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-		
+        
         #region public static string GetProgramInfoLog(Int32 program)
 
         public static string GetProgramInfoLog(Int32 program)
         {
-			string info;
+            string info;
             GetProgramInfoLog(program, out info);
-			return info;
+            return info;
         }
 
         #endregion
