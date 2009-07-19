@@ -36,7 +36,6 @@ using OpenTK.Audio;
 
 namespace Examples
 {
-
     /// <summary>
     /// A text-based diagnosis program for OpenAL.
     /// The constructors will call the OpenAL commands, the Print() methods just show the information.
@@ -263,7 +262,7 @@ namespace Examples
         {
             Trace.WriteLine("--- AL related errors ---");
 
-            DeviceName = ac.CurrentDeviceName;
+            DeviceName = ac.CurrentDevice;
 
             ExtensionString = AL.Get(ALGetString.Extensions);
             Renderer = AL.Get(ALGetString.Renderer);
@@ -533,7 +532,7 @@ namespace Examples
                 return;
             }
             IsDeviceAvailable = true;
-            DeviceName = r.CurrentDeviceName;
+            DeviceName = r.CurrentDevice;
             CheckRecorderError("Alc.CaptureOpenDevice");
 
             r.Start();
