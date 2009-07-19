@@ -1412,7 +1412,7 @@ namespace OpenTK.Audio
         /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
         /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
-        /// <param name="buffer">Pointer to the audio buffer. YOU MUST PIN THIS MANUALLY.</param>
+        /// <param name="buffer">Pointer to a pinned audio buffer.</param>
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
         [CLSCompliant(false), DllImport(AL.Lib, EntryPoint = "alBufferData", ExactSpelling = true, CallingConvention = AL.Style), SuppressUnmanagedCodeSecurity()]
@@ -1422,7 +1422,7 @@ namespace OpenTK.Audio
         /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
         /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
-        /// <param name="buffer">Pointer to the audio buffer. YOU MUST PIN THIS MANUALLY.</param>
+        /// <param name="buffer">Pointer to a pinned audio buffer.</param>
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
         [CLSCompliant(true)]
@@ -1431,10 +1431,28 @@ namespace OpenTK.Audio
             BufferData((uint)bid, format, buffer, size, freq);
         }
 
+        /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
+        /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
+        /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
+        /// <param name="buffer">The audio buffer.</param>
+        /// <param name="size">The size of the audio buffer in bytes.</param>
+        /// <param name="freq">The frequency of the audio buffer.</param>
+        public static void BufferData<TBuffer>(int bid, ALFormat format, TBuffer[] buffer, int size, int freq)
+            where TBuffer : struct
+        {
+            if (!BlittableValueType.Check(buffer))
+                throw new ArgumentException("buffer");
+
+            GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+            try { BufferData(bid, format, handle.AddrOfPinnedObject(), size, freq); }
+            finally { handle.Free(); }
+        }
+
         /// <summary>This function fills a buffer with audio buffer (PCM format).</summary>
         /// <param name="bid">Buffer Handle/Name to be filled with buffer.</param>
         /// <param name="buffer">A SoundData object containing the buffer to upload.</param>
         [CLSCompliant(false)]
+        [Obsolete("Use BufferData<TBuffer> instead.")]
         public static void BufferData(uint bid, SoundData buffer)
         {
             unsafe
