@@ -48,7 +48,38 @@ namespace OpenTK
 
         #endregion
 
-        /// <summary>        /// Calculates the factorial of a given natural number.
+        #region public static int NextPowerOfTwo(int n)
+
+        /// <summary>
+        /// Returns the next power of two that is larger than the specified number.
+        /// </summary>
+        /// <param name="n">The specified number.</param>
+        /// <returns>The next power of two.</returns>
+        public static float NextPowerOfTwo(float n)
+        {
+            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            return (float)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
+        }
+
+        #endregion
+
+
+        #region public static int NextPowerOfTwo(int n)
+
+        /// <summary>
+        /// Returns the next power of two that is larger than the specified number.
+        /// </summary>
+        /// <param name="n">The specified number.</param>
+        /// <returns>The next power of two.</returns>
+        public static double NextPowerOfTwo(double n)
+        {
+            if (n < 0) throw new ArgumentOutOfRangeException("n", "Must be positive.");
+            return System.Math.Pow(2, System.Math.Ceiling(System.Math.Log((double)n, 2)));
+        }
+
+        #endregion
+
+        /// <summary>Calculates the factorial of a given natural number.
         /// </summary>
         /// <param name="n">The number.</param>
         /// <returns>n!</returns>
