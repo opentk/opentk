@@ -110,8 +110,9 @@ namespace OpenTK.Audio
 
         #endregion Alc Version number
 
-        #region static constructor
-        /// <summary>Loads all available audio devices into the available_*_devices lists.</summary>
+        #region Constructors
+
+        // Loads all available audio devices into the available_*_devices lists.
         static AudioDeviceEnumerator()
         {
             IntPtr dummy_device = IntPtr.Zero;
@@ -209,6 +210,7 @@ namespace OpenTK.Audio
                     Alc.CloseDevice(dummy_device);
             }
         }
-        #endregion static constructor
+
+        #endregion
     }
 }
