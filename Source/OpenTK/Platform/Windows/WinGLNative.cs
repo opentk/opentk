@@ -907,6 +907,8 @@ namespace OpenTK.Platform.Windows
 
         public event EventHandler<EventArgs> FocusedChanged;
 
+        public event EventHandler<KeyPressEventArgs> KeyPress;
+        
         #endregion
 
         #endregion

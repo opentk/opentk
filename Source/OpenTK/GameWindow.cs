@@ -1052,31 +1052,6 @@ namespace OpenTK
 
         #region --- INativeWindow Members ---
 
-        #region Icon
-
-        /// <summary>
-        /// Gets or sets the System.Drawing.Icon for this GameWindow.
-        /// </summary>
-        public Icon Icon
-        {
-            get
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                return glWindow.Icon;
-            }
-            set
-            {
-                if (disposed)
-                    throw new ObjectDisposedException(this.GetType().Name);
-
-                glWindow.Icon = value;
-            }
-        }
-
-        #endregion
-
         #region Focused
 
         /// <summary>
@@ -1457,11 +1432,6 @@ namespace OpenTK
         public event EventHandler<EventArgs> Disposed = delegate { };
 
         /// <summary>
-        /// Occurs when the <see cref="Icon"/> property of the window changes. 
-        /// </summary>
-        public event EventHandler<EventArgs> IconChanged = delegate { };
-
-        /// <summary>
         /// Occurs when the <see cref="Title"/> property of the window changes.
         /// </summary>
         public event EventHandler<EventArgs> TitleChanged = delegate { };
@@ -1476,6 +1446,11 @@ namespace OpenTK
         /// </summary>
         public event EventHandler<EventArgs> FocusedChanged = delegate { };
 
+        /// <summary>
+        /// Occurs whenever a character is typed.
+        /// </summary>
+        public event EventHandler<KeyPressEventArgs> KeyPress = delegate { };
+        
         #endregion
 
         #endregion

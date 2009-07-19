@@ -46,5 +46,7 @@ namespace OpenTK.Platform
         OpenTK.Graphics.GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext();
         
         OpenTK.Graphics.IGraphicsMode CreateGraphicsMode();
+        
+        OpenTK.Input.IKeyboardDriver CreateKeyboardDriver();
     }
 }

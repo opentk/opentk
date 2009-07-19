@@ -609,11 +609,19 @@ namespace OpenTK.Platform.X11
                         break;
 
                     case XEventName.KeyPress:
+                        driver.ProcessEvent(ref e);
+                        break;
+
                     case XEventName.KeyRelease:
+                        // Todo: raise KeyPress event. Use code from
+                        // http://anonsvn.mono-project.com/viewvc/trunk/mcs/class/Managed.Windows.Forms/System.Windows.Forms/X11Keyboard.cs?view=markup
+                        
+                        driver.ProcessEvent(ref e);
+                        break;
+                        
                     case XEventName.MotionNotify:
                     case XEventName.ButtonPress:
                     case XEventName.ButtonRelease:
-                        //Functions.XPutBackEvent(window.Display, ref e);
                         driver.ProcessEvent(ref e);
                         break;
 
@@ -852,6 +860,8 @@ namespace OpenTK.Platform.X11
 
         public event EventHandler<EventArgs> FocusedChanged;
 
+        public event EventHandler<KeyPressEventArgs> KeyPress;
+        
         #endregion
 
         #endregion
