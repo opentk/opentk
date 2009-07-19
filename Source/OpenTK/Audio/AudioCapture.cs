@@ -52,39 +52,7 @@ namespace OpenTK.Audio
         
         #endregion 
 
-        #region Device Name
-        private string device_name;
-        /// <summary>The name of the device associated with this instance.</summary>
-        public string CurrentDeviceName
-        {
-            get
-            {
-                return device_name;
-            }
-        }
-        #endregion Device Name
-
-        #region public static properties
-        /// <summary>Returns a list of strings containing all known recording devices.</summary>
-        public static IList<string> AvailableDevices
-        {
-            get
-            {
-                return AudioDeviceEnumerator.AvailableRecordingDevices;
-            }
-        }
-
-        /// <summary>Returns the name of the device that will be used as recording default.</summary>
-        public static string DefaultDevice
-        {
-            get
-            {
-                return AudioDeviceEnumerator.DefaultRecordingDevice;
-            }
-        }
-        #endregion public static properties
-
-        #region Constructor
+        #region Constructors
 
         static AudioCapture()
         {
@@ -111,11 +79,15 @@ namespace OpenTK.Audio
         {
             if (!AudioDeviceEnumerator.IsOpenALSupported)
                 throw new DllNotFoundException("openal32.dll");
+            if (frequency <= 0)
+                throw new ArgumentOutOfRangeException("frequency");
+            if (bufferSize <= 0)
+                throw new ArgumentOutOfRangeException("bufferSize");
 
             // Try to open specified device. If it fails, try to open default device.
             device_name = deviceName;
             Handle = Alc.CaptureOpenDevice(deviceName, frequency, sampleFormat, bufferSize);
-            
+
             if (Handle == IntPtr.Zero)
             {
                 Debug.WriteLine(ErrorMessage(deviceName, frequency, sampleFormat, bufferSize));
@@ -129,7 +101,7 @@ namespace OpenTK.Audio
                 device_name = AudioDeviceEnumerator.DefaultRecordingDevice;
                 Handle = Alc.CaptureOpenDevice(AudioDeviceEnumerator.DefaultRecordingDevice, frequency, sampleFormat, bufferSize);
             }
-            
+
             if (Handle == IntPtr.Zero)
             {
                 // Everything we tried failed. Capture may not be supported, bail out.
@@ -148,40 +120,54 @@ namespace OpenTK.Audio
 
         #endregion Constructor
 
-        #region IDisposable Members
+        #region Public Members
 
-        ~AudioCapture()
+        #region CurrentDevice
+
+        private string device_name;
+
+        /// <summary>
+        /// The name of the device associated with this instance.
+        /// </summary>
+        public string CurrentDevice
         {
-            Dispose();
-        }
-
-        private bool IsDisposed;
-
-        /// <summary>Closes the device and disposes the instance.</summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool manual)
-        {
-            if (!this.IsDisposed)
+            get
             {
-                if (this.Handle != IntPtr.Zero)
-                {
-                    if (this._isrecording)
-                        this.Stop();
-
-                    Alc.CaptureCloseDevice(this.Handle);
-                }
-                this.IsDisposed = true;
+                return device_name;
             }
         }
 
-        #endregion Destructor
+        #endregion
 
-        #region Public Members
+        #region AvailableDevices
+
+        /// <summary>
+        /// Returns a list of strings containing all known recording devices.
+        /// </summary>
+        public static IList<string> AvailableDevices
+        {
+            get
+            {
+                return AudioDeviceEnumerator.AvailableRecordingDevices;
+            }
+        }
+
+        #endregion
+
+        #region DefaultDevice
+
+        /// <summary>
+        /// Returns the name of the device that will be used as recording default.
+        /// </summary>
+        public static string DefaultDevice
+        {
+            get
+            {
+                return AudioDeviceEnumerator.DefaultRecordingDevice;
+            }
+        }
+
+        #endregion
 
         #region CheckErrors
 
@@ -310,6 +296,18 @@ namespace OpenTK.Audio
 
         #endregion
 
+        #region IsRunning
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is currently capturing samples.
+        /// </summary>
+        public bool IsRunning
+        {
+            get { return _isrecording; }
+        }
+
+        #endregion
+
         #endregion
 
         #region Private Members
@@ -332,7 +330,7 @@ namespace OpenTK.Audio
                 case ALFormat.MultiQuad8Ext: return 4;
                 case ALFormat.MultiQuad16Ext: return 8;
                 case ALFormat.MultiQuad32Ext: return 16;
-                
+
                 case ALFormat.Multi51Chn8Ext: return 6;
                 case ALFormat.Multi51Chn16Ext: return 12;
                 case ALFormat.Multi51Chn32Ext: return 24;
@@ -375,5 +373,38 @@ namespace OpenTK.Audio
         }
 
         #endregion
+
+        #region IDisposable Members
+
+        ~AudioCapture()
+        {
+            Dispose();
+        }
+
+        private bool IsDisposed;
+
+        /// <summary>Closes the device and disposes the instance.</summary>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool manual)
+        {
+            if (!this.IsDisposed)
+            {
+                if (this.Handle != IntPtr.Zero)
+                {
+                    if (this._isrecording)
+                        this.Stop();
+
+                    Alc.CaptureCloseDevice(this.Handle);
+                }
+                this.IsDisposed = true;
+            }
+        }
+
+        #endregion Destructor
     }
 }
