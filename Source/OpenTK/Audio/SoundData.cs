@@ -36,7 +36,6 @@ namespace OpenTK.Audio
     public class SoundData
     {
         byte[] buffer;
-        //int data_length;        // The actual position of the last sample (the buffer may be larger than this).
         SoundFormat format;
 
         #region --- Constructors ---
@@ -49,17 +48,11 @@ namespace OpenTK.Audio
         {
             if (data == null) throw new ArgumentNullException("buffer", "Must be a valid array of samples.");
             if (data.Length == 0) throw new ArgumentOutOfRangeException("buffer", "Data length must be higher than 0.");
-            //Type t = typeof(SampleType);
-            //if (!(t == typeof(Byte) || t == typeof(SByte) || t == typeof(Int16) || t == typeof(UInt16) || t == typeof(Int32) ||
-            //      t == typeof(UInt32) || t == typeof(Int64) || t == typeof(UInt64) || t == typeof(Single)))
-            //    throw new ArgumentException(
-            //        "SoundData must have one of the following types: byte, short, int, long, float or their unsigned equivalents.");
 
             this.SoundFormat = format;
 
-            buffer = new byte[OpenTK.Functions.NextPowerOfTwo(data.Length)];
+            buffer = new byte[data.Length];
             Array.Copy(data, buffer, data.Length);
-            //buffer = (byte[])data.Clone();
         }
 
         #endregion
