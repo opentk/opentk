@@ -17,11 +17,10 @@ using OpenTK.Graphics;
 namespace OpenTK.Platform.X11
 {
     class X11GraphicsMode : IGraphicsMode
-    {
-		// Todo: Add custom visual selection algorithm, instead of ChooseFBConfig/ChooseVisual.
-		// It seems the Choose* methods do not take multisampling into account (at least on some
-		// drivers).
-		
+    {        // Todo: Add custom visual selection algorithm, instead of ChooseFBConfig/ChooseVisual.
+        // It seems the Choose* methods do not take multisampling into account (at least on some
+        // drivers).
+        
         #region Constructors
 
         public X11GraphicsMode()
@@ -141,14 +140,14 @@ namespace OpenTK.Platform.X11
                 visualAttributes.Add((int)GLXAttribute.ACCUM_RED_SIZE);
                 visualAttributes.Add(accum.Red);
             }
-			
-			if (samples > 0)
-			{
-				visualAttributes.Add((int)GLXAttribute.SAMPLE_BUFFERS);
-				visualAttributes.Add(1);
-				visualAttributes.Add((int)GLXAttribute.SAMPLES);
-				visualAttributes.Add(samples);
-			}
+            
+            if (samples > 0)
+            {
+                visualAttributes.Add((int)GLXAttribute.SAMPLE_BUFFERS);
+                visualAttributes.Add(1);
+                visualAttributes.Add((int)GLXAttribute.SAMPLES);
+                visualAttributes.Add(samples);
+            }
 
             if (stereo)
             {
@@ -240,14 +239,14 @@ namespace OpenTK.Platform.X11
                 visualAttributes.Add((int)GLXAttribute.ACCUM_RED_SIZE);
                 visualAttributes.Add(accum.Red);
             }
-			
-			if (samples > 0)
-			{
-				visualAttributes.Add((int)GLXAttribute.SAMPLE_BUFFERS);
-				visualAttributes.Add(1);
-				visualAttributes.Add((int)GLXAttribute.SAMPLES);
-				visualAttributes.Add(samples);
-			}
+            
+            if (samples > 0)
+            {
+                visualAttributes.Add((int)GLXAttribute.SAMPLE_BUFFERS);
+                visualAttributes.Add(1);
+                visualAttributes.Add((int)GLXAttribute.SAMPLES);
+                visualAttributes.Add(samples);
+            }
 
             if (stereo)
                 visualAttributes.Add((int)GLXAttribute.STEREO);
