@@ -94,42 +94,57 @@ namespace OpenTK.Platform
         {
             return implementation.CreateGraphicsMode();
         }
+        
+        public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+        {
+            return implementation.CreateKeyboardDriver();
+        }
 
         class UnsupportedPlatform : IPlatformFactory
         {
+            #region Fields
+            
+            static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
+            
+            #endregion
+            
             #region IPlatformFactory Members
 
             public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             {
-                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+                throw new PlatformNotSupportedException(error_string);
             }
 
             public IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
             {
-                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+                throw new PlatformNotSupportedException(error_string);
             }
 
             public IDisplayDeviceDriver CreateDisplayDeviceDriver()
             {
-                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+                throw new PlatformNotSupportedException(error_string);
             }
 
             public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering, int major, int minor, GraphicsContextFlags flags)
             {
-                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+                throw new PlatformNotSupportedException(error_string);
             }
 
             public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
             {
-                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+                throw new PlatformNotSupportedException(error_string);
             }
-
 
             public IGraphicsMode CreateGraphicsMode()
             {
-                throw new PlatformNotSupportedException("Please, refer to http://www.opentk.com for more information.");
+                throw new PlatformNotSupportedException(error_string);
             }
 
+            public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+            {
+                throw new PlatformNotSupportedException(error_string);
+            }
+            
             #endregion
         }
 

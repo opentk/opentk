@@ -70,6 +70,11 @@ namespace OpenTK.Platform.MacOS
             return new MacOSGraphicsMode();
         }
 
+        public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+        {
+            throw new NotImplementedException();
+        }
+        
         #endregion
     }
 }

@@ -71,6 +71,11 @@ using OpenTK.Input;
             return new WinGraphicsMode();
         }
 
+        public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+        {
+            throw new NotImplementedException();
+        }
+        
         #endregion
     }
 }
