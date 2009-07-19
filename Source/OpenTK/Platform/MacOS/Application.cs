@@ -15,8 +15,8 @@ using System.Text;
 
 namespace OpenTK.Platform.MacOS.Carbon
 {
-	static class Application
-	{
+    static class Application
+    {
         static bool mInitialized = false;
         static IntPtr uppHandler;
         static CarbonGLNative eventHandler;
@@ -30,7 +30,7 @@ namespace OpenTK.Platform.MacOS.Carbon
         internal static void Initialize()
         {
             if (mInitialized) return;
-			
+            
             API.AcquireRootMenu();
 
             ConnectEvents();
@@ -124,7 +124,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         static void MainWindowClosed(object sender, EventArgs e)
         {
-        	Debug.Print("Quitting application event loop.");
+            Debug.Print("Quitting application event loop.");
             API.QuitApplicationEventLoop();
         }
 

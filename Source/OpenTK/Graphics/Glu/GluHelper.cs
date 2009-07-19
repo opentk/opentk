@@ -294,7 +294,7 @@ namespace OpenTK.Graphics
         /// string Filter = "FirstName = 'Ton'"
         /// MethodInfo mi = typeof(Person).GetMethod("GetAll");
         /// snoei.net.Reflection.FastInvoker.FastInvokeHandler fi = snoei.net.Reflection.FastInvoker.GetMethodInvoker( mi );
-        ///	return fi.Invoke( Person, new object[]{Filter} );
+        //    return fi.Invoke( Person, new object[]{Filter} );
         /// //Calls Person.GetAll(string Filter);
         /// </example>
         /// </summary>
