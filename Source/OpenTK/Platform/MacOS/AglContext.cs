@@ -92,12 +92,12 @@ namespace OpenTK.Platform.MacOS
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_BLUE_SIZE, mode.AccumulatorFormat.Blue);
                 AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_ACCUM_ALPHA_SIZE, mode.AccumulatorFormat.Alpha);
             }
-			
-			if (mode.Samples > 0)
-			{
-				AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLE_BUFFERS_ARB, 1);
-				AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLES_ARB, mode.Samples);
-			}
+            
+            if (mode.Samples > 0)
+            {
+                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLE_BUFFERS_ARB, 1);
+                AddPixelAttrib(aglAttributes, Agl.PixelFormatAttribute.AGL_SAMPLES_ARB, mode.Samples);
+            }
 
             if (fullscreen)
             {

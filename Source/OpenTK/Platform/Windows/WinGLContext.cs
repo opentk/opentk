@@ -170,8 +170,7 @@ namespace OpenTK.Platform.Windows
                     "Failed to make context {0} current. Error: {1}", this, Marshal.GetLastWin32Error()));
 
         }
-
-	    #endregion
+        #endregion
 
         #region public bool IsCurrent
 

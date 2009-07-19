@@ -7,7 +7,7 @@ namespace OpenTK.Graphics
 
     partial class Glu
     {
-		[Obsolete]		
+        [Obsolete]        
         internal static partial class Imports
         {
 

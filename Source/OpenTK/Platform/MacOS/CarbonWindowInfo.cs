@@ -60,7 +60,7 @@ namespace OpenTK.Platform.MacOS
 
             if (ownHandle)
             {
-            	Debug.Print("Disposing window {0}.", windowRef);
+                Debug.Print("Disposing window {0}.", windowRef);
                 Carbon.API.DisposeWindow(this.windowRef);
                 windowRef = IntPtr.Zero;
             }

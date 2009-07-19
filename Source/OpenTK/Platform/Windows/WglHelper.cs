@@ -3,7 +3,7 @@
  * See license.txt for license info
  *
  * Date: 12/8/2007
- * Time: 6:43 ìì
+ * Time: 6:43 ï¿½ï¿½
  */
 #endregion
 
@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace OpenTK.Platform.Windows
 {
-	internal partial class Wgl
+    internal partial class Wgl
     {
         #region --- Constructors ---
 
