@@ -896,6 +896,11 @@ namespace OpenTK.Graphics
             GL.Uniform4(location, color.R, color.G, color.B, color.A);
         }
 
+        public static void Uniform4(int location, Quaternion quaternion)
+        {
+            GL.Uniform4(location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
+        }
+
         #endregion
 
         #endregion
