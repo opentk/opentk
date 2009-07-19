@@ -34,6 +34,8 @@ using System.Reflection;
 
 namespace OpenTK
 {
+    #region BlittableValueType<T>
+
     /// <summary>
     /// Checks whether the specified type parameter is a blittable value type.
     /// </summary>
@@ -41,25 +43,57 @@ namespace OpenTK
     /// A blittable value type is a struct that only references other value types recursively,
     /// which allows it to be passed to unmanaged code directly.
     /// </remarks>
-    /// <typeparam name="T">The struct to check.</typeparam>
-    /// <exception cref="System.NotSupportedException">Raised when T is not a blittable value type.</exception>
-    public struct BlittableValueType<T> where T : struct
+    public static class BlittableValueType<T> where T : struct
     {
+        #region Fields
+
+        static readonly Type Type;
+
+        #endregion
+
+        #region Constructors
+
+        static BlittableValueType()
+        {
+            Type = typeof(T);
+        }
+
+        #endregion
+
+        #region Public Members
+
         /// <summary>
         /// Gets the size of the type in bytes.
         /// </summary>
         public static readonly int Stride = Marshal.SizeOf(typeof(T));
 
-        static BlittableValueType()
+        #region Check
+
+        /// <summary>
+        /// Checks whether the current typename T is blittable.
+        /// </summary>
+        public static bool Check()
         {
-            Type type = typeof(T);
-            
+            return Check(Type);
+        }
+
+        /// <summary>
+        /// Checks whether type is a blittable value type.
+        /// </summary>
+        /// <param name="type">A System.Type to check.</param>
+        public static bool Check(Type type)
+        {
             if (!CheckStructLayoutAttribute(type))
                 Debug.Print("Warning: type {0} does not specify a StructLayoutAttribute with Pack=1. The memory layout of the struct may change between platforms.", type.Name);
 
-            if (!CheckType(type))
-                throw new NotSupportedException(String.Format("Type {0} contains non-primitive fields.", type.Name));
+            return CheckType(type);
         }
+
+        #endregion
+
+        #endregion
+
+        #region Private Members
 
         // Checks whether the parameter is a primitive type or consists of primitive types recursively.
         // Throws a NotSupportedException if it is not.
@@ -94,5 +128,141 @@ namespace OpenTK
 
             return true;
         }
+
+        #endregion
     }
+
+    #endregion
+
+    #region BlittableValueType
+
+    /// <summary>
+    /// Checks whether the specified type parameter is a blittable value type.
+    /// </summary>
+    /// <remarks>
+    /// A blittable value type is a struct that only references other value types recursively,
+    /// which allows it to be passed to unmanaged code directly.
+    /// </remarks>
+    public static class BlittableValueType
+    {
+        #region Check
+
+        /// <summary>
+        /// Checks whether type is a blittable value type.
+        /// </summary>
+        /// <param name="type">An instance of the type to check.</param>
+        public static bool Check<T>(T type) where T : struct
+        {
+            return BlittableValueType<T>.Check();
+        }
+
+        /// <summary>
+        /// Checks whether type is a blittable value type.
+        /// </summary>
+        /// <param name="type">An instance of the type to check.</param>
+        public static bool Check<T>(T[] type) where T : struct
+        {
+            return BlittableValueType<T>.Check();
+        }
+
+        /// <summary>
+        /// Checks whether type is a blittable value type.
+        /// </summary>
+        /// <param name="type">An instance of the type to check.</param>
+        public static bool Check<T>(T[,] type) where T : struct
+        {
+            return BlittableValueType<T>.Check();
+        }
+
+        /// <summary>
+        /// Checks whether type is a blittable value type.
+        /// </summary>
+        /// <param name="type">An instance of the type to check.</param>
+        public static bool Check<T>(T[, ,] type) where T : struct
+        {
+            return BlittableValueType<T>.Check();
+        }
+
+        /// <summary>
+        /// Checks whether type is a blittable value type.
+        /// </summary>
+        /// <param name="type">An instance of the type to check.</param>
+        [CLSCompliant(false)]
+        public static bool Check<T>(T[][] type) where T : struct
+        {
+            return BlittableValueType<T>.Check();
+        }
+
+        #endregion
+
+        #region From
+
+        /// <summary>
+        /// Returns the size of the specified value type in bytes.
+        /// </summary>
+        /// <typeparam name="T">The value type. Must be blittable.</typeparam>
+        /// <param name="type">An instance of the value type.</param>
+        /// <returns>An integer, specifying the size of the type in bytes.</returns>
+        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        public static int StrideOf<T>(T type)
+            where T : struct
+        {
+            if (!Check(type))
+                throw new ArgumentException("type");
+
+            return BlittableValueType<T>.Stride;
+        }
+
+        /// <summary>
+        /// Returns the size of a single array element in bytes.
+        /// </summary>
+        /// <typeparam name="T">The value type.</typeparam>
+        /// <param name="type">An instance of the value type.</param>
+        /// <returns>An integer, specifying the size of the type in bytes.</returns>
+        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        public static int StrideOf<T>(T[] type)
+            where T : struct
+        {
+            if (!Check(type))
+                throw new ArgumentException("type");
+
+            return BlittableValueType<T>.Stride;
+        }
+
+        /// <summary>
+        /// Returns the size of a single array element in bytes.
+        /// </summary>
+        /// <typeparam name="T">The value type.</typeparam>
+        /// <param name="type">An instance of the value type.</param>
+        /// <returns>An integer, specifying the size of the type in bytes.</returns>
+        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        public static int StrideOf<T>(T[,] type)
+            where T : struct
+        {
+            if (!Check(type))
+                throw new ArgumentException("type");
+
+            return BlittableValueType<T>.Stride;
+        }
+
+        /// <summary>
+        /// Returns the size of a single array element in bytes.
+        /// </summary>
+        /// <typeparam name="T">The value type.</typeparam>
+        /// <param name="type">An instance of the value type.</param>
+        /// <returns>An integer, specifying the size of the type in bytes.</returns>
+        /// <exception cref="System.ArgumentException">Occurs when type is not blittable.</exception>
+        public static int StrideOf<T>(T[, ,] type)
+            where T : struct
+        {
+            if (!Check(type))
+                throw new ArgumentException("type");
+
+            return BlittableValueType<T>.Stride;
+        }
+
+        #endregion
+    }
+
+    #endregion
 }
