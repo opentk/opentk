@@ -61,7 +61,9 @@ namespace OpenTK.Platform
             LoadDelegateFunction LoadDelegate = (LoadDelegateFunction)Delegate.CreateDelegate(
                 typeof(LoadDelegateFunction), load_delegate_method_info);
 
+#if !MINIMAL
             Debug.Write("Load extensions for " + type.ToString() + "... ");
+#endif
 
             foreach (FieldInfo f in delegates)
             {
@@ -100,7 +102,9 @@ namespace OpenTK.Platform
             Type extensions_class = type.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (extensions_class == null)
             {
+#if !MINIMAL
                 Debug.Print(type.ToString(), " does not contain extensions.");
+#endif
                 return false;
             }
 
@@ -108,14 +112,18 @@ namespace OpenTK.Platform
                 type.GetMethod("LoadDelegate", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public));
             if (LoadDelegate == null)
             {
+#if !MINIMAL
                 Debug.Print(type.ToString(), " does not contain a static LoadDelegate method.");
+#endif
                 return false;
             }
 
             FieldInfo f = extensions_class.GetField(extension, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
             if (f == null)
             {
+#if !MINIMAL
                 Debug.Print("Extension \"", extension, "\" not found in ", type.ToString());
+#endif
                 return false;
             }
 
