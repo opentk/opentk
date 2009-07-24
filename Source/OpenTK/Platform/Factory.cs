@@ -33,7 +33,7 @@ namespace OpenTK.Platform
 {
     using Graphics;
 
-    class Factory : IPlatformFactory
+    sealed class Factory : IPlatformFactory
     {
         #region Fields
 
@@ -125,7 +125,12 @@ namespace OpenTK.Platform
                 throw new PlatformNotSupportedException(error_string);
             }
 
-            public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering, int major, int minor, GraphicsContextFlags flags)
+            public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+            {
+                throw new PlatformNotSupportedException(error_string);
+            }
+
+            public IGraphicsContext CreateESContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, int major, int minor, GraphicsContextFlags flags)
             {
                 throw new PlatformNotSupportedException(error_string);
             }

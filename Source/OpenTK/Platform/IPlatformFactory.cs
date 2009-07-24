@@ -41,7 +41,7 @@ namespace OpenTK.Platform
 
         IDisplayDeviceDriver CreateDisplayDeviceDriver();
 
-        IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering, int major, int minor, GraphicsContextFlags flags);
+        IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags);
 
         OpenTK.Graphics.GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext();
         

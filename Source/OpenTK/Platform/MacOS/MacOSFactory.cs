@@ -37,27 +37,27 @@ namespace OpenTK.Platform.MacOS
     {
         #region IPlatformFactory Members
 
-        public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public virtual INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new CarbonGLNative(x, y, width, height, title, mode, options, device);
         }
 
-        public IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
+        public virtual IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
         {
             return new CarbonGLControl(mode, owner);
         }
 
-        public IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new QuartzDisplayDeviceDriver();
         }
 
-        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool DirectRendering, int major, int minor, GraphicsContextFlags flags)
+        public virtual IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new AglContext(mode, window, shareContext);
         }
 
-        public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        public virtual GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
@@ -65,12 +65,12 @@ namespace OpenTK.Platform.MacOS
             };
         }
 
-        public IGraphicsMode CreateGraphicsMode()
+        public virtual IGraphicsMode CreateGraphicsMode()
         {
             return new MacOSGraphicsMode();
         }
 
-        public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+        public virtual OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
         {
             throw new NotImplementedException();
         }

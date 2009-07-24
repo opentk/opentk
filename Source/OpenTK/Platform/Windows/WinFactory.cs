@@ -32,33 +32,33 @@ using System.Text;
 namespace OpenTK.Platform.Windows
 {
     using Graphics;
-using OpenTK.Input;
+    using OpenTK.Input;
 
     class WinFactory : IPlatformFactory 
     {
         #region IPlatformFactory Members
 
-        public INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
+        public virtual INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
             return new WinGLNative(x, y, width, height, title, options, device);
         }
 
-        public IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
+        public virtual IGLControl CreateGLControl(GraphicsMode mode, GLControl owner)
         {
             return new WinGLControl(mode, owner);
         }
 
-        public IDisplayDeviceDriver CreateDisplayDeviceDriver()
+        public virtual IDisplayDeviceDriver CreateDisplayDeviceDriver()
         {
             return new WinDisplayDeviceDriver();
         }
 
-        public IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
+        public virtual IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
             return new WinGLContext(mode, (WinWindowInfo)window, shareContext, major, minor, flags);
         }
 
-        public GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
+        public virtual GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
@@ -66,12 +66,12 @@ using OpenTK.Input;
             };
         }
 
-        public IGraphicsMode CreateGraphicsMode()
+        public virtual IGraphicsMode CreateGraphicsMode()
         {
             return new WinGraphicsMode();
         }
 
-        public OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
+        public virtual OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
         {
             throw new NotImplementedException();
         }
