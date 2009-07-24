@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace OpenTK.Platform.Egl
 {
@@ -12,6 +13,7 @@ namespace OpenTK.Platform.Egl
         IntPtr handle;
         EGLDisplay display;
         EGLSurface surface;
+        bool disposed;
 
         #endregion
 
@@ -49,13 +51,41 @@ namespace OpenTK.Platform.Egl
         //    Surface = Egl.CreatePbufferSurface(Display, config, null);
         //}
 
+        public void DestroySurface()
+        {
+            if (Surface.Handle != EGLSurface.None.Handle)
+                if (!Egl.DestroySurface(Display, Surface))
+                    Debug.Print("[Warning] Failed to destroy {0}:{1}.", Surface.GetType().Name, Surface);
+        }
+
         #endregion
 
         #region IDisposable Members
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    DestroySurface();
+                }
+                else
+                {
+                    Debug.Print("[Warning] Failed to destroy {0}:{1}.", this.GetType().Name, Handle);
+                }
+            }
+        }
+
+        ~EglWindowInfo()
+        {
+            Dispose(false);
         }
 
         #endregion
