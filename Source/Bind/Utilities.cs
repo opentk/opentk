@@ -196,27 +196,28 @@ namespace Bind
 
         internal static string GetGL2Extension(string name)
         {
+            if (name.EndsWith("3DFX")) { return "3dfx"; }
+            if (name.EndsWith("APPLE")) { return "Apple"; }
             if (name.EndsWith("ARB")) { return "Arb"; }
-            if (name.EndsWith("EXT")) { return "Ext"; }
             if (name.EndsWith("ATI")) { return "Ati"; }
             if (name.EndsWith("ATIX")) { return "Atix"; }
+            if (name.EndsWith("EXT")) { return "Ext"; }
+            if (name.EndsWith("GREMEDY")) { return "Gremedy"; }
+            if (name.EndsWith("HP")) { return "HP"; }
+            if (name.EndsWith("I3D")) { return "I3d"; }
+            if (name.EndsWith("IBM")) { return "Ibm"; }
+            if (name.EndsWith("INGR")) { return "Ingr"; }
+            if (name.EndsWith("INTEL")) { return "Intel"; }
+            if (name.EndsWith("MESA")) { return "Mesa"; }
             if (name.EndsWith("NV")) { return "NV"; }
-            if (name.EndsWith("SUN")) { return "Sun"; }
-            if (name.EndsWith("SUNX")) { return "Sunx"; }
+            if (name.EndsWith("OES")) { return "Oes"; }
+            if (name.EndsWith("OML")) { return "Oml"; }
+            if (name.EndsWith("PGI")) { return "Pgi"; }
             if (name.EndsWith("SGI")) { return "Sgi"; }
             if (name.EndsWith("SGIS")) { return "Sgis"; }
             if (name.EndsWith("SGIX")) { return "Sgix"; }
-            if (name.EndsWith("MESA")) { return "Mesa"; }
-            if (name.EndsWith("3DFX")) { return "3dfx"; }
-            if (name.EndsWith("INTEL")) { return "Intel"; }
-            if (name.EndsWith("IBM")) { return "Ibm"; }
-            if (name.EndsWith("GREMEDY")) { return "Gremedy"; }
-            if (name.EndsWith("HP")) { return "HP"; }
-            if (name.EndsWith("PGI")) { return "Pgi"; }
-            if (name.EndsWith("INGR")) { return "Ingr"; }
-            if (name.EndsWith("APPLE")) { return "Apple"; }
-            if (name.EndsWith("OML")) { return "Oml"; }
-            if (name.EndsWith("I3D")) { return "I3d"; }
+            if (name.EndsWith("SUN")) { return "Sun"; }
+            if (name.EndsWith("SUNX")) { return "Sunx"; }
             return String.Empty;
         }
 
@@ -226,26 +227,7 @@ namespace Bind
 
         private static bool IsGL2Extension(string function)
         {
-            return (function.EndsWith("ARB") ||
-                    function.EndsWith("EXT") ||
-                    function.EndsWith("ATI") ||
-                    function.EndsWith("NV") ||
-                    function.EndsWith("SUN") ||
-                    function.EndsWith("SUNX") ||
-                    function.EndsWith("SGI") ||
-                    function.EndsWith("SGIS") ||
-                    function.EndsWith("SGIX") ||
-                    function.EndsWith("MESA") ||
-                    function.EndsWith("3DFX") ||
-                    function.EndsWith("IBM") ||
-                    function.EndsWith("GREMEDY") ||
-                    function.EndsWith("HP") ||
-                    function.EndsWith("INTEL") ||
-                    function.EndsWith("PGI") ||
-                    function.EndsWith("INGR") ||
-                    function.EndsWith("APPLE") ||
-                    function.EndsWith("OML") ||
-                    function.EndsWith("I3D"));
+            return !String.IsNullOrEmpty(GetGL2Extension(function));
         }
 
         #endregion
