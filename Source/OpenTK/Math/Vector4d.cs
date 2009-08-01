@@ -51,7 +51,7 @@ namespace OpenTK
         public double Z;
 
         /// <summary>
-        /// The Z component of the Vector4d.
+        /// The W component of the Vector4d.
         /// </summary>
         public double W;
 
