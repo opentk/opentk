@@ -199,6 +199,7 @@ namespace Bind
             if (name.EndsWith("3DFX")) { return "3dfx"; }
             if (name.EndsWith("APPLE")) { return "Apple"; }
             if (name.EndsWith("ARB")) { return "Arb"; }
+            if (name.EndsWith("AMD")) { return "Amd"; }
             if (name.EndsWith("ATI")) { return "Ati"; }
             if (name.EndsWith("ATIX")) { return "Atix"; }
             if (name.EndsWith("EXT")) { return "Ext"; }
@@ -238,7 +239,7 @@ namespace Bind
         {
             return p.Substring(0, p.Length - GetGL2Extension(p).Length);
         }
-        
+
         #endregion
     }
 }
