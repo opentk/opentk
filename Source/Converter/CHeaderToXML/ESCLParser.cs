@@ -164,8 +164,8 @@ namespace CHeaderToXML
 
                 Func<string, string> GetExtension = name =>
                 {
-                    var ext = extensions.Match(name).Value;
-                    return String.IsNullOrEmpty(ext) ? "Core" : ext;
+                    var match = extensions.Match(name);
+                    return match != null && String.IsNullOrEmpty(match.Value) ? "Core" : match.Value;
                 };
 
                 var words = line.Split(splitters, StringSplitOptions.RemoveEmptyEntries);
