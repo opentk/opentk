@@ -968,7 +968,7 @@ namespace OpenTK.Graphics
             unsafe
             {
                 int length;
-                GL.GetProgram(program, ProgramParameter.InfoLogLength, out length);
+                GL.GetProgram(program, OpenTK.Graphics.ProgramParameter.InfoLogLength, out length);
                 if (length == 0)
                 {
                     info = String.Empty;
