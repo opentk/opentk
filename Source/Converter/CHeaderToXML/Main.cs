@@ -123,7 +123,9 @@ namespace CHeaderToXML
                 {
                     new XElement("signatures",
                         entries.Values.OrderBy(s => s.Attribute("name").Value),  // only enums
-                        sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "function").OrderBy(s => s.Attribute("name").Value)   // only functions
+                        sigs.SelectMany(s => s).Where(s => s.Name.LocalName == "function")    // only functions
+                             .OrderBy(s => s.Attribute("extension").Value)
+                             .ThenBy(s => s.Attribute("name").Value)
                     ).WriteTo(writer);
                     writer.Flush();
                     writer.Close();
