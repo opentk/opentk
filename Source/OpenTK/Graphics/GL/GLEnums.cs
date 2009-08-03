@@ -110,12 +110,15 @@ namespace OpenTK.Graphics
         Zero = ((int)0),
         Points = ((int)0X0000),
         ClientPixelStoreBit = ((int)0X00000001),
+        ContextCoreProfileBit = ((int)0X00000001),
         CurrentBit = ((int)0X00000001),
         Gl2XBitAti = ((int)0X00000001),
         RedBitAti = ((int)0X00000001),
+        SyncFlushCommandsBit = ((int)0X00000001),
         TextureDeformationBitSgix = ((int)0X00000001),
         ClientVertexArrayBit = ((int)0X00000002),
         CompBitAti = ((int)0X00000002),
+        ContextCompatibilityProfileBit = ((int)0X00000002),
         GeometryDeformationBitSgix = ((int)0X00000002),
         Gl4XBitAti = ((int)0X00000002),
         GreenBitAti = ((int)0X00000002),
@@ -169,12 +172,16 @@ namespace OpenTK.Graphics
         IndexBitPgi = ((int)0X00080000),
         ScissorBit = ((int)0X00080000),
         Polygon = ((int)0X0009),
+        LinesAdjacency = ((int)0X000a),
         LinesAdjacencyArb = ((int)0X000a),
         LinesAdjacencyExt = ((int)0X000a),
+        LineStripAdjacency = ((int)0X000b),
         LineStripAdjacencyArb = ((int)0X000b),
         LineStripAdjacencyExt = ((int)0X000b),
+        TrianglesAdjacency = ((int)0X000c),
         TrianglesAdjacencyArb = ((int)0X000c),
         TrianglesAdjacencyExt = ((int)0X000c),
+        TriangleStripAdjacency = ((int)0X000d),
         TriangleStripAdjacencyArb = ((int)0X000d),
         TriangleStripAdjacencyExt = ((int)0X000d),
         MapFlushExplicitBit = ((int)0X0010),
@@ -501,6 +508,7 @@ namespace OpenTK.Graphics
         Gl4Bytes = ((int)0X1409),
         Double = ((int)0X140a),
         DoubleExt = ((int)0X140a),
+        HalfApple = ((int)0X140b),
         HalfFloat = ((int)0X140b),
         HalfFloatArb = ((int)0X140b),
         HalfFloatNv = ((int)0X140b),
@@ -647,6 +655,8 @@ namespace OpenTK.Graphics
         ClipPlane4 = ((int)0X3004),
         ClipDistance5 = ((int)0X3005),
         ClipPlane5 = ((int)0X3005),
+        ClipDistance6 = ((int)0X3006),
+        ClipDistance7 = ((int)0X3007),
         Light0 = ((int)0X4000),
         Texcoord3BitPgi = ((int)0X40000000),
         Light1 = ((int)0X4001),
@@ -1859,13 +1869,18 @@ namespace OpenTK.Graphics
         LightModelSpecularVectorApple = ((int)0X85b0),
         TransformHintApple = ((int)0X85b1),
         UnpackClientStorageApple = ((int)0X85b2),
+        BufferObjectApple = ((int)0X85b3),
         VertexArrayBinding = ((int)0X85b5),
         VertexArrayBindingApple = ((int)0X85b5),
+        TextureRangeLengthApple = ((int)0X85b7),
+        TextureRangePointerApple = ((int)0X85b8),
         Ycbcr422Apple = ((int)0X85b9),
         UnsignedShort88Apple = ((int)0X85ba),
         UnsignedShort88Mesa = ((int)0X85ba),
         UnsignedShort88RevApple = ((int)0X85bb),
         UnsignedShort88RevMesa = ((int)0X85bb),
+        TextureStorageHintApple = ((int)0X85bc),
+        StoragePrivateApple = ((int)0X85bd),
         StorageCachedApple = ((int)0X85be),
         StorageSharedApple = ((int)0X85bf),
         ReplacementCodeArraySun = ((int)0X85c0),
@@ -1932,6 +1947,7 @@ namespace OpenTK.Graphics
         CurrentMatrixStackDepthNv = ((int)0X8640),
         CurrentMatrixArb = ((int)0X8641),
         CurrentMatrixNv = ((int)0X8641),
+        ProgramPointSize = ((int)0X8642),
         ProgramPointSizeArb = ((int)0X8642),
         ProgramPointSizeExt = ((int)0X8642),
         VertexProgramPointSize = ((int)0X8642),
@@ -1955,6 +1971,7 @@ namespace OpenTK.Graphics
         OffsetTextureRectangleNv = ((int)0X864c),
         OffsetTextureRectangleScaleNv = ((int)0X864d),
         DotProductTextureRectangleNv = ((int)0X864e),
+        DepthClamp = ((int)0X864f),
         DepthClampNv = ((int)0X864f),
         VertexAttribArray0Nv = ((int)0X8650),
         VertexAttribArray1Nv = ((int)0X8651),
@@ -2357,31 +2374,43 @@ namespace OpenTK.Graphics
         MaxProgramNativeTexIndirectionsArb = ((int)0X8810),
         Rgba32f = ((int)0X8814),
         Rgba32fArb = ((int)0X8814),
+        RgbaFloat32Apple = ((int)0X8814),
         RgbaFloat32Ati = ((int)0X8814),
         Rgb32f = ((int)0X8815),
         Rgb32fArb = ((int)0X8815),
+        RgbFloat32Apple = ((int)0X8815),
         RgbFloat32Ati = ((int)0X8815),
         Alpha32fArb = ((int)0X8816),
+        AlphaFloat32Apple = ((int)0X8816),
         AlphaFloat32Ati = ((int)0X8816),
         Intensity32fArb = ((int)0X8817),
+        IntensityFloat32Apple = ((int)0X8817),
         IntensityFloat32Ati = ((int)0X8817),
         Luminance32fArb = ((int)0X8818),
+        LuminanceFloat32Apple = ((int)0X8818),
         LuminanceFloat32Ati = ((int)0X8818),
         LuminanceAlpha32fArb = ((int)0X8819),
+        LuminanceAlphaFloat32Apple = ((int)0X8819),
         LuminanceAlphaFloat32Ati = ((int)0X8819),
         Rgba16f = ((int)0X881a),
         Rgba16fArb = ((int)0X881a),
+        RgbaFloat16Apple = ((int)0X881a),
         RgbaFloat16Ati = ((int)0X881a),
         Rgb16f = ((int)0X881b),
         Rgb16fArb = ((int)0X881b),
+        RgbFloat16Apple = ((int)0X881b),
         RgbFloat16Ati = ((int)0X881b),
         Alpha16fArb = ((int)0X881c),
+        AlphaFloat16Apple = ((int)0X881c),
         AlphaFloat16Ati = ((int)0X881c),
         Intensity16fArb = ((int)0X881d),
+        IntensityFloat16Apple = ((int)0X881d),
         IntensityFloat16Ati = ((int)0X881d),
         Luminance16fArb = ((int)0X881e),
+        LuminanceFloat16Apple = ((int)0X881e),
         LuminanceFloat16Ati = ((int)0X881e),
         LuminanceAlpha16fArb = ((int)0X881f),
+        LuminanceAlphaFloat16Apple = ((int)0X881f),
         LuminanceAlphaFloat16Ati = ((int)0X881f),
         RgbaFloatMode = ((int)0X8820),
         RgbaFloatModeArb = ((int)0X8820),
@@ -2462,6 +2491,7 @@ namespace OpenTK.Graphics
         CompareRefToTexture = ((int)0X884e),
         CompareRToTexture = ((int)0X884e),
         CompareRToTextureArb = ((int)0X884e),
+        TextureCubeMapSeamless = ((int)0X884f),
         OffsetProjectiveTexture2DNv = ((int)0X8850),
         OffsetProjectiveTexture2DScaleNv = ((int)0X8851),
         OffsetProjectiveTextureRectangleNv = ((int)0X8852),
@@ -2756,6 +2786,9 @@ namespace OpenTK.Graphics
         MirrorClampToBorderExt = ((int)0X8912),
         SamplesPassed = ((int)0X8914),
         SamplesPassedArb = ((int)0X8914),
+        GeometryVerticesOut = ((int)0X8916),
+        GeometryInputType = ((int)0X8917),
+        GeometryOutputType = ((int)0X8918),
         ClampVertexColor = ((int)0X891a),
         ClampVertexColorArb = ((int)0X891a),
         ClampFragmentColor = ((int)0X891b),
@@ -2865,11 +2898,30 @@ namespace OpenTK.Graphics
         ResampleZeroFillOml = ((int)0X8987),
         ResampleAverageOml = ((int)0X8988),
         ResampleDecimateOml = ((int)0X8989),
+        VertexAttribMap1Apple = ((int)0X8a00),
+        VertexAttribMap2Apple = ((int)0X8a01),
+        VertexAttribMap1SizeApple = ((int)0X8a02),
+        VertexAttribMap1CoeffApple = ((int)0X8a03),
+        VertexAttribMap1OrderApple = ((int)0X8a04),
+        VertexAttribMap1DomainApple = ((int)0X8a05),
+        VertexAttribMap2SizeApple = ((int)0X8a06),
+        VertexAttribMap2CoeffApple = ((int)0X8a07),
+        VertexAttribMap2OrderApple = ((int)0X8a08),
+        VertexAttribMap2DomainApple = ((int)0X8a09),
         DrawPixelsApple = ((int)0X8a0a),
         FenceApple = ((int)0X8a0b),
+        ColorFloatApple = ((int)0X8a0f),
         UniformBuffer = ((int)0X8a11),
         BufferSerializedModifyApple = ((int)0X8a12),
         BufferFlushingUnmapApple = ((int)0X8a13),
+        AuxDepthStencilApple = ((int)0X8a14),
+        PackRowBytesApple = ((int)0X8a15),
+        UnpackRowBytesApple = ((int)0X8a16),
+        ReleasedApple = ((int)0X8a19),
+        VolatileApple = ((int)0X8a1a),
+        RetainedApple = ((int)0X8a1b),
+        UndefinedApple = ((int)0X8a1c),
+        PurgeableApple = ((int)0X8a1d),
         UniformBufferBinding = ((int)0X8a28),
         UniformBufferStart = ((int)0X8a29),
         UniformBufferSize = ((int)0X8a2a),
@@ -3037,6 +3089,7 @@ namespace OpenTK.Graphics
         GeometryProgramNv = ((int)0X8c26),
         MaxProgramOutputVerticesNv = ((int)0X8c27),
         MaxProgramTotalOutputComponentsNv = ((int)0X8c28),
+        MaxGeometryTextureImageUnits = ((int)0X8c29),
         MaxGeometryTextureImageUnitsArb = ((int)0X8c29),
         MaxGeometryTextureImageUnitsExt = ((int)0X8c29),
         TextureBuffer = ((int)0X8c2a),
@@ -3054,6 +3107,8 @@ namespace OpenTK.Graphics
         TextureBufferFormat = ((int)0X8c2e),
         TextureBufferFormatArb = ((int)0X8c2e),
         TextureBufferFormatExt = ((int)0X8c2e),
+        SampleShading = ((int)0X8c36),
+        MinSampleShadingValue = ((int)0X8c37),
         R11fG11fB10f = ((int)0X8c3a),
         R11fG11fB10fExt = ((int)0X8c3a),
         UnsignedInt10F11F11FRev = ((int)0X8c3b),
@@ -3346,8 +3401,10 @@ namespace OpenTK.Graphics
         FragmentProgramParameterBufferNv = ((int)0X8da4),
         MaxProgramGenericAttribsNv = ((int)0X8da5),
         MaxProgramGenericResultsNv = ((int)0X8da6),
+        FramebufferAttachmentLayered = ((int)0X8da7),
         FramebufferAttachmentLayeredArb = ((int)0X8da7),
         FramebufferAttachmentLayeredExt = ((int)0X8da7),
+        FramebufferIncompleteLayerTargets = ((int)0X8da8),
         FramebufferIncompleteLayerTargetsArb = ((int)0X8da8),
         FramebufferIncompleteLayerTargetsExt = ((int)0X8da8),
         FramebufferIncompleteLayerCountArb = ((int)0X8da9),
@@ -3418,6 +3475,7 @@ namespace OpenTK.Graphics
         UnsignedIntSampler2DArrayExt = ((int)0X8dd7),
         UnsignedIntSamplerBuffer = ((int)0X8dd8),
         UnsignedIntSamplerBufferExt = ((int)0X8dd8),
+        GeometryShader = ((int)0X8dd9),
         GeometryShaderArb = ((int)0X8dd9),
         GeometryShaderExt = ((int)0X8dd9),
         GeometryVerticesOutArb = ((int)0X8dda),
@@ -3430,10 +3488,13 @@ namespace OpenTK.Graphics
         MaxGeometryVaryingComponentsExt = ((int)0X8ddd),
         MaxVertexVaryingComponentsArb = ((int)0X8dde),
         MaxVertexVaryingComponentsExt = ((int)0X8dde),
+        MaxGeometryUniformComponents = ((int)0X8ddf),
         MaxGeometryUniformComponentsArb = ((int)0X8ddf),
         MaxGeometryUniformComponentsExt = ((int)0X8ddf),
+        MaxGeometryOutputVertices = ((int)0X8de0),
         MaxGeometryOutputVerticesArb = ((int)0X8de0),
         MaxGeometryOutputVerticesExt = ((int)0X8de0),
+        MaxGeometryTotalOutputComponents = ((int)0X8de1),
         MaxGeometryTotalOutputComponentsArb = ((int)0X8de1),
         MaxGeometryTotalOutputComponentsExt = ((int)0X8de1),
         MaxVertexBindableUniformsExt = ((int)0X8de2),
@@ -3471,12 +3532,19 @@ namespace OpenTK.Graphics
         TextureSwizzleBExt = ((int)0X8e44),
         TextureSwizzleAExt = ((int)0X8e45),
         TextureSwizzleRgbaExt = ((int)0X8e46),
+        QuadsFollowProvokingVertexConvention = ((int)0X8e4c),
         QuadsFollowProvokingVertexConventionExt = ((int)0X8e4c),
+        FirstVertexConvention = ((int)0X8e4d),
         FirstVertexConventionExt = ((int)0X8e4d),
+        LastVertexConvention = ((int)0X8e4e),
         LastVertexConventionExt = ((int)0X8e4e),
+        ProvokingVertex = ((int)0X8e4f),
         ProvokingVertexExt = ((int)0X8e4f),
+        SamplePosition = ((int)0X8e50),
         SamplePositionNv = ((int)0X8e50),
+        SampleMask = ((int)0X8e51),
         SampleMaskNv = ((int)0X8e51),
+        SampleMaskValue = ((int)0X8e52),
         SampleMaskValueNv = ((int)0X8e52),
         TextureBindingRenderbufferNv = ((int)0X8e53),
         TextureRenderbufferDataStoreBindingNv = ((int)0X8e54),
@@ -3484,7 +3552,10 @@ namespace OpenTK.Graphics
         SamplerRenderbufferNv = ((int)0X8e56),
         IntSamplerRenderbufferNv = ((int)0X8e57),
         UnsignedIntSamplerRenderbufferNv = ((int)0X8e58),
+        MaxSampleMaskWords = ((int)0X8e59),
         MaxSampleMaskWordsNv = ((int)0X8e59),
+        MinProgramTextureGatherOffset = ((int)0X8e5e),
+        MaxProgramTextureGatherOffset = ((int)0X8e5f),
         CopyReadBuffer = ((int)0X8f36),
         CopyWriteBuffer = ((int)0X8f37),
         RedSnorm = ((int)0X8f90),
@@ -3502,6 +3573,7 @@ namespace OpenTK.Graphics
         SignedNormalized = ((int)0X8f9c),
         PrimitiveRestart = ((int)0X8f9d),
         PrimitiveRestartIndex = ((int)0X8f9e),
+        MaxProgramTextureGatherComponents = ((int)0X8f9f),
         SamplerBufferAmd = ((int)0X9001),
         IntSamplerBufferAmd = ((int)0X9002),
         UnsignedIntSamplerBufferAmd = ((int)0X9003),
@@ -3509,9 +3581,67 @@ namespace OpenTK.Graphics
         TessellationFactorAmd = ((int)0X9005),
         DiscreteAmd = ((int)0X9006),
         ContinuousAmd = ((int)0X9007),
+        TextureCubeMapArray = ((int)0X9009),
+        TextureBindingCubeMapArray = ((int)0X900a),
+        ProxyTextureCubeMapArray = ((int)0X900b),
+        SamplerCubeMapArray = ((int)0X900c),
+        SamplerCubeMapArrayShadow = ((int)0X900d),
+        IntSamplerCubeMapArray = ((int)0X900e),
+        UnsignedIntSamplerCubeMapArray = ((int)0X900f),
+        AlphaSnorm = ((int)0X9010),
+        LuminanceSnorm = ((int)0X9011),
+        LuminanceAlphaSnorm = ((int)0X9012),
+        IntensitySnorm = ((int)0X9013),
+        Alpha8Snorm = ((int)0X9014),
+        Luminance8Snorm = ((int)0X9015),
+        Luminance8Alpha8Snorm = ((int)0X9016),
+        Intensity8Snorm = ((int)0X9017),
+        Alpha16Snorm = ((int)0X9018),
+        Luminance16Snorm = ((int)0X9019),
+        Luminance16Alpha16Snorm = ((int)0X901a),
+        Intensity16Snorm = ((int)0X901b),
+        Texture2DMultisample = ((int)0X9100),
+        ProxyTexture2DMultisample = ((int)0X9101),
+        Texture2DMultisampleArray = ((int)0X9102),
+        ProxyTexture2DMultisampleArray = ((int)0X9103),
+        TextureBinding2DMultisample = ((int)0X9104),
+        TextureBinding2DMultisampleArray = ((int)0X9105),
+        TextureSamples = ((int)0X9106),
+        TextureFixedSampleLocations = ((int)0X9107),
+        Sampler2DMultisample = ((int)0X9108),
+        IntSampler2DMultisample = ((int)0X9109),
+        UnsignedIntSampler2DMultisample = ((int)0X910a),
+        Sampler2DMultisampleArray = ((int)0X910b),
+        IntSampler2DMultisampleArray = ((int)0X910c),
+        UnsignedIntSampler2DMultisampleArray = ((int)0X910d),
+        MaxColorTextureSamples = ((int)0X910e),
+        MaxDepthTextureSamples = ((int)0X910f),
+        MaxIntegerSamples = ((int)0X9110),
+        MaxServerWaitTimeout = ((int)0X9111),
+        ObjectType = ((int)0X9112),
+        SyncCondition = ((int)0X9113),
+        SyncStatus = ((int)0X9114),
+        SyncFlags = ((int)0X9115),
+        SyncFence = ((int)0X9116),
+        SyncGpuCommandsComplete = ((int)0X9117),
+        Unsignaled = ((int)0X9118),
+        Signaled = ((int)0X9119),
+        AlreadySignaled = ((int)0X911a),
+        TimeoutExpired = ((int)0X911b),
+        ConditionSatisfied = ((int)0X911c),
+        WaitFailed = ((int)0X911d),
+        BufferAccessFlags = ((int)0X911f),
+        BufferMapLength = ((int)0X9120),
+        BufferMapOffset = ((int)0X9121),
+        MaxVertexOutputComponents = ((int)0X9122),
+        MaxGeometryInputComponents = ((int)0X9123),
+        MaxGeometryOutputComponents = ((int)0X9124),
+        MaxFragmentInputComponents = ((int)0X9125),
+        ContextProfileMask = ((int)0X9126),
         AllAttribBits = unchecked((int)0Xffffffff),
         ClientAllAttribBits = unchecked((int)0Xffffffff),
         InvalidIndex = unchecked((int)0Xffffffff),
+        TimeoutIgnored = unchecked((int)0Xffffffffffffffff),
         One = ((int)1),
         True = ((int)1),
         CullVertexIbm = ((int)103050),
@@ -3548,6 +3678,10 @@ namespace OpenTK.Graphics
         Always = ((int)0X0207),
     }
 
+    public enum AmdDrawBuffersBlend
+    {
+    }
+
     public enum AmdPerformanceMonitor
     {
         CounterTypeAmd = ((int)0X8bc0),
@@ -3574,6 +3708,11 @@ namespace OpenTK.Graphics
         ContinuousAmd = ((int)0X9007),
     }
 
+    public enum AppleAuxDepthStencil
+    {
+        AuxDepthStencilApple = ((int)0X8a14),
+    }
+
     public enum AppleClientStorage
     {
         UnpackClientStorageApple = ((int)0X85b2),
@@ -3592,15 +3731,59 @@ namespace OpenTK.Graphics
         FenceApple = ((int)0X8a0b),
     }
 
+    public enum AppleFloatPixels
+    {
+        HalfApple = ((int)0X140b),
+        RgbaFloat32Apple = ((int)0X8814),
+        RgbFloat32Apple = ((int)0X8815),
+        AlphaFloat32Apple = ((int)0X8816),
+        IntensityFloat32Apple = ((int)0X8817),
+        LuminanceFloat32Apple = ((int)0X8818),
+        LuminanceAlphaFloat32Apple = ((int)0X8819),
+        RgbaFloat16Apple = ((int)0X881a),
+        RgbFloat16Apple = ((int)0X881b),
+        AlphaFloat16Apple = ((int)0X881c),
+        IntensityFloat16Apple = ((int)0X881d),
+        LuminanceFloat16Apple = ((int)0X881e),
+        LuminanceAlphaFloat16Apple = ((int)0X881f),
+        ColorFloatApple = ((int)0X8a0f),
+    }
+
     public enum AppleFlushBufferRange
     {
         BufferSerializedModifyApple = ((int)0X8a12),
         BufferFlushingUnmapApple = ((int)0X8a13),
     }
 
+    public enum AppleObjectPurgeable
+    {
+        BufferObjectApple = ((int)0X85b3),
+        ReleasedApple = ((int)0X8a19),
+        VolatileApple = ((int)0X8a1a),
+        RetainedApple = ((int)0X8a1b),
+        UndefinedApple = ((int)0X8a1c),
+        PurgeableApple = ((int)0X8a1d),
+    }
+
+    public enum AppleRowBytes
+    {
+        PackRowBytesApple = ((int)0X8a15),
+        UnpackRowBytesApple = ((int)0X8a16),
+    }
+
     public enum AppleSpecularVector
     {
         LightModelSpecularVectorApple = ((int)0X85b0),
+    }
+
+    public enum AppleTextureRange
+    {
+        TextureRangeLengthApple = ((int)0X85b7),
+        TextureRangePointerApple = ((int)0X85b8),
+        TextureStorageHintApple = ((int)0X85bc),
+        StoragePrivateApple = ((int)0X85bd),
+        StorageCachedApple = ((int)0X85be),
+        StorageSharedApple = ((int)0X85bf),
     }
 
     public enum AppleTransformHint
@@ -3621,6 +3804,20 @@ namespace OpenTK.Graphics
         VertexArrayRangePointerApple = ((int)0X8521),
         StorageCachedApple = ((int)0X85be),
         StorageSharedApple = ((int)0X85bf),
+    }
+
+    public enum AppleVertexProgramEvaluators
+    {
+        VertexAttribMap1Apple = ((int)0X8a00),
+        VertexAttribMap2Apple = ((int)0X8a01),
+        VertexAttribMap1SizeApple = ((int)0X8a02),
+        VertexAttribMap1CoeffApple = ((int)0X8a03),
+        VertexAttribMap1OrderApple = ((int)0X8a04),
+        VertexAttribMap1DomainApple = ((int)0X8a05),
+        VertexAttribMap2SizeApple = ((int)0X8a06),
+        VertexAttribMap2CoeffApple = ((int)0X8a07),
+        VertexAttribMap2OrderApple = ((int)0X8a08),
+        VertexAttribMap2DomainApple = ((int)0X8a09),
     }
 
     public enum AppleYcbcr422
@@ -3656,6 +3853,11 @@ namespace OpenTK.Graphics
         Float32UnsignedInt248Rev = ((int)0X8dad),
     }
 
+    public enum ArbDepthClamp
+    {
+        DepthClamp = ((int)0X864f),
+    }
+
     public enum ArbDepthTexture
     {
         DepthComponent16Arb = ((int)0X81a5),
@@ -3686,7 +3888,19 @@ namespace OpenTK.Graphics
         DrawBuffer15Arb = ((int)0X8834),
     }
 
+    public enum ArbDrawBuffersBlend
+    {
+    }
+
+    public enum ArbDrawElementsBaseVertex
+    {
+    }
+
     public enum ArbDrawInstanced
+    {
+    }
+
+    public enum ArbFragmentCoordConventions
     {
     }
 
@@ -4042,6 +4256,25 @@ namespace OpenTK.Graphics
         CoordReplaceArb = ((int)0X8862),
     }
 
+    public enum ArbProvokingVertex
+    {
+        QuadsFollowProvokingVertexConvention = ((int)0X8e4c),
+        FirstVertexConvention = ((int)0X8e4d),
+        LastVertexConvention = ((int)0X8e4e),
+        ProvokingVertex = ((int)0X8e4f),
+    }
+
+    public enum ArbSampleShading
+    {
+        SampleShading = ((int)0X8c36),
+        MinSampleShadingValue = ((int)0X8c37),
+    }
+
+    public enum ArbSeamlessCubeMap
+    {
+        TextureCubeMapSeamless = ((int)0X884f),
+    }
+
     public enum ArbShaderObjects
     {
         ProgramObjectArb = ((int)0X8b40),
@@ -4101,6 +4334,25 @@ namespace OpenTK.Graphics
         TextureCompareFailValueArb = ((int)0X80bf),
     }
 
+    public enum ArbSync
+    {
+        SyncFlushCommandsBit = ((int)0X00000001),
+        MaxServerWaitTimeout = ((int)0X9111),
+        ObjectType = ((int)0X9112),
+        SyncCondition = ((int)0X9113),
+        SyncStatus = ((int)0X9114),
+        SyncFlags = ((int)0X9115),
+        SyncFence = ((int)0X9116),
+        SyncGpuCommandsComplete = ((int)0X9117),
+        Unsignaled = ((int)0X9118),
+        Signaled = ((int)0X9119),
+        AlreadySignaled = ((int)0X911a),
+        TimeoutExpired = ((int)0X911b),
+        ConditionSatisfied = ((int)0X911c),
+        WaitFailed = ((int)0X911d),
+        TimeoutIgnored = unchecked((int)0Xffffffffffffffff),
+    }
+
     public enum ArbTextureBorderClamp
     {
         ClampToBorderArb = ((int)0X812d),
@@ -4152,6 +4404,17 @@ namespace OpenTK.Graphics
         TextureCubeMapNegativeZArb = ((int)0X851a),
         ProxyTextureCubeMapArb = ((int)0X851b),
         MaxCubeMapTextureSizeArb = ((int)0X851c),
+    }
+
+    public enum ArbTextureCubeMapArray
+    {
+        TextureCubeMapArray = ((int)0X9009),
+        TextureBindingCubeMapArray = ((int)0X900a),
+        ProxyTextureCubeMapArray = ((int)0X900b),
+        SamplerCubeMapArray = ((int)0X900c),
+        SamplerCubeMapArrayShadow = ((int)0X900d),
+        IntSamplerCubeMapArray = ((int)0X900e),
+        UnsignedIntSamplerCubeMapArray = ((int)0X900f),
     }
 
     public enum ArbTextureEnvAdd
@@ -4218,12 +4481,48 @@ namespace OpenTK.Graphics
         UnsignedNormalizedArb = ((int)0X8c17),
     }
 
+    public enum ArbTextureGather
+    {
+        MinProgramTextureGatherOffset = ((int)0X8e5e),
+        MaxProgramTextureGatherOffset = ((int)0X8e5f),
+        MaxProgramTextureGatherComponents = ((int)0X8f9f),
+    }
+
     public enum ArbTextureMirroredRepeat
     {
         MirroredRepeatArb = ((int)0X8370),
     }
 
+    public enum ArbTextureMultisample
+    {
+        SamplePosition = ((int)0X8e50),
+        SampleMask = ((int)0X8e51),
+        SampleMaskValue = ((int)0X8e52),
+        MaxSampleMaskWords = ((int)0X8e59),
+        Texture2DMultisample = ((int)0X9100),
+        ProxyTexture2DMultisample = ((int)0X9101),
+        Texture2DMultisampleArray = ((int)0X9102),
+        ProxyTexture2DMultisampleArray = ((int)0X9103),
+        TextureBinding2DMultisample = ((int)0X9104),
+        TextureBinding2DMultisampleArray = ((int)0X9105),
+        TextureSamples = ((int)0X9106),
+        TextureFixedSampleLocations = ((int)0X9107),
+        Sampler2DMultisample = ((int)0X9108),
+        IntSampler2DMultisample = ((int)0X9109),
+        UnsignedIntSampler2DMultisample = ((int)0X910a),
+        Sampler2DMultisampleArray = ((int)0X910b),
+        IntSampler2DMultisampleArray = ((int)0X910c),
+        UnsignedIntSampler2DMultisampleArray = ((int)0X910d),
+        MaxColorTextureSamples = ((int)0X910e),
+        MaxDepthTextureSamples = ((int)0X910f),
+        MaxIntegerSamples = ((int)0X9110),
+    }
+
     public enum ArbTextureNonPowerOfTwo
+    {
+    }
+
+    public enum ArbTextureQueryLod
     {
     }
 
@@ -4304,6 +4603,11 @@ namespace OpenTK.Graphics
         UniformBlockReferencedByGeometryShader = ((int)0X8a45),
         UniformBlockReferencedByFragmentShader = ((int)0X8a46),
         InvalidIndex = unchecked((int)0Xffffffff),
+    }
+
+    public enum ArbVertexArrayBgra
+    {
+        Bgra = ((int)0X80e1),
     }
 
     public enum ArbVertexArrayObject
@@ -6218,6 +6522,34 @@ namespace OpenTK.Graphics
         Rgb9E5Ext = ((int)0X8c3d),
         UnsignedInt5999RevExt = ((int)0X8c3e),
         TextureSharedSizeExt = ((int)0X8c3f),
+    }
+
+    public enum ExtTextureSnorm
+    {
+        RgSnorm = ((int)0X8f91),
+        RgbSnorm = ((int)0X8f92),
+        RgbaSnorm = ((int)0X8f93),
+        R8Snorm = ((int)0X8f94),
+        Rg8Snorm = ((int)0X8f95),
+        Rgb8Snorm = ((int)0X8f96),
+        Rgba8Snorm = ((int)0X8f97),
+        R16Snorm = ((int)0X8f98),
+        Rg16Snorm = ((int)0X8f99),
+        Rgb16Snorm = ((int)0X8f9a),
+        Rgba16Snorm = ((int)0X8f9b),
+        SignedNormalized = ((int)0X8f9c),
+        AlphaSnorm = ((int)0X9010),
+        LuminanceSnorm = ((int)0X9011),
+        LuminanceAlphaSnorm = ((int)0X9012),
+        IntensitySnorm = ((int)0X9013),
+        Alpha8Snorm = ((int)0X9014),
+        Luminance8Snorm = ((int)0X9015),
+        Luminance8Alpha8Snorm = ((int)0X9016),
+        Intensity8Snorm = ((int)0X9017),
+        Alpha16Snorm = ((int)0X9018),
+        Luminance16Snorm = ((int)0X9019),
+        Luminance16Alpha16Snorm = ((int)0X901a),
+        Intensity16Snorm = ((int)0X901b),
     }
 
     public enum ExtTextureSrgb
@@ -11029,6 +11361,8 @@ namespace OpenTK.Graphics
         ClipDistance3 = ((int)0X3003),
         ClipDistance4 = ((int)0X3004),
         ClipDistance5 = ((int)0X3005),
+        ClipDistance6 = ((int)0X3006),
+        ClipDistance7 = ((int)0X3007),
         FramebufferAttachmentColorEncoding = ((int)0X8210),
         FramebufferAttachmentComponentType = ((int)0X8211),
         FramebufferAttachmentRedSize = ((int)0X8212),
@@ -11225,6 +11559,9 @@ namespace OpenTK.Graphics
         QueryNoWait = ((int)0X8e14),
         QueryByRegionWait = ((int)0X8e15),
         QueryByRegionNoWait = ((int)0X8e16),
+        BufferAccessFlags = ((int)0X911f),
+        BufferMapLength = ((int)0X9120),
+        BufferMapOffset = ((int)0X9121),
     }
 
     public enum Version30Deprecated
@@ -11299,6 +11636,76 @@ namespace OpenTK.Graphics
         PrimitiveRestart = ((int)0X8f9d),
         PrimitiveRestartIndex = ((int)0X8f9e),
         InvalidIndex = unchecked((int)0Xffffffff),
+    }
+
+    public enum Version32
+    {
+        ContextCoreProfileBit = ((int)0X00000001),
+        SyncFlushCommandsBit = ((int)0X00000001),
+        ContextCompatibilityProfileBit = ((int)0X00000002),
+        LinesAdjacency = ((int)0X000a),
+        LineStripAdjacency = ((int)0X000b),
+        TrianglesAdjacency = ((int)0X000c),
+        TriangleStripAdjacency = ((int)0X000d),
+        ProgramPointSize = ((int)0X8642),
+        DepthClamp = ((int)0X864f),
+        TextureCubeMapSeamless = ((int)0X884f),
+        GeometryVerticesOut = ((int)0X8916),
+        GeometryInputType = ((int)0X8917),
+        GeometryOutputType = ((int)0X8918),
+        MaxVaryingComponents = ((int)0X8b4b),
+        MaxGeometryTextureImageUnits = ((int)0X8c29),
+        FramebufferAttachmentTextureLayer = ((int)0X8cd4),
+        FramebufferAttachmentLayered = ((int)0X8da7),
+        FramebufferIncompleteLayerTargets = ((int)0X8da8),
+        GeometryShader = ((int)0X8dd9),
+        MaxGeometryUniformComponents = ((int)0X8ddf),
+        MaxGeometryOutputVertices = ((int)0X8de0),
+        MaxGeometryTotalOutputComponents = ((int)0X8de1),
+        QuadsFollowProvokingVertexConvention = ((int)0X8e4c),
+        FirstVertexConvention = ((int)0X8e4D),
+        LastVertexConvention = ((int)0X8e4e),
+        ProvokingVertex = ((int)0X8e4f),
+        SamplePosition = ((int)0X8e50),
+        SampleMask = ((int)0X8e51),
+        SampleMaskValue = ((int)0X8e52),
+        MaxSampleMaskWords = ((int)0X8e59),
+        Texture2DMultisample = ((int)0X9100),
+        ProxyTexture2DMultisample = ((int)0X9101),
+        Texture2DMultisampleArray = ((int)0X9102),
+        ProxyTexture2DMultisampleArray = ((int)0X9103),
+        TextureBinding2DMultisample = ((int)0X9104),
+        TextureBinding2DMultisampleArray = ((int)0X9105),
+        TextureSamples = ((int)0X9106),
+        TextureFixedSampleLocations = ((int)0X9107),
+        Sampler2DMultisample = ((int)0X9108),
+        IntSampler2DMultisample = ((int)0X9109),
+        UnsignedIntSampler2DMultisample = ((int)0X910a),
+        Sampler2DMultisampleArray = ((int)0X910b),
+        IntSampler2DMultisampleArray = ((int)0X910c),
+        UnsignedIntSampler2DMultisampleArray = ((int)0X910D),
+        MaxColorTextureSamples = ((int)0X910e),
+        MaxDepthTextureSamples = ((int)0X910f),
+        MaxIntegerSamples = ((int)0X9110),
+        MaxServerWaitTimeout = ((int)0X9111),
+        ObjectType = ((int)0X9112),
+        SyncCondition = ((int)0X9113),
+        SyncStatus = ((int)0X9114),
+        SyncFlags = ((int)0X9115),
+        SyncFence = ((int)0X9116),
+        SyncGpuCommandsComplete = ((int)0X9117),
+        Unsignaled = ((int)0X9118),
+        Signaled = ((int)0X9119),
+        AlreadySignaled = ((int)0X911a),
+        TimeoutExpired = ((int)0X911b),
+        ConditionSatisfied = ((int)0X911c),
+        WaitFailed = ((int)0X911D),
+        MaxVertexOutputComponents = ((int)0X9122),
+        MaxGeometryInputComponents = ((int)0X9123),
+        MaxGeometryOutputComponents = ((int)0X9124),
+        MaxFragmentInputComponents = ((int)0X9125),
+        ContextProfileMask = ((int)0X9126),
+        TimeoutIgnored = unchecked((int)0Xffffffffffffffff),
     }
 
     public enum VertexAttribParameter

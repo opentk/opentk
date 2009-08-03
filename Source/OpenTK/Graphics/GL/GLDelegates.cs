@@ -278,20 +278,44 @@ namespace OpenTK.Graphics
             internal delegate void BlendEquationEXT(OpenTK.Graphics.ExtBlendMinmax mode);
             internal static BlendEquationEXT glBlendEquationEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BlendEquationi(UInt32 buf, OpenTK.Graphics.ArbDrawBuffersBlend mode);
+            internal static BlendEquationi glBlendEquationi;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BlendEquationIndexedAMD(UInt32 buf, OpenTK.Graphics.AmdDrawBuffersBlend mode);
+            internal static BlendEquationIndexedAMD glBlendEquationIndexedAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendEquationSeparate(OpenTK.Graphics.BlendEquationMode modeRGB, OpenTK.Graphics.BlendEquationMode modeAlpha);
             internal static BlendEquationSeparate glBlendEquationSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendEquationSeparateEXT(OpenTK.Graphics.ExtBlendEquationSeparate modeRGB, OpenTK.Graphics.ExtBlendEquationSeparate modeAlpha);
             internal static BlendEquationSeparateEXT glBlendEquationSeparateEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BlendEquationSeparatei(UInt32 buf, OpenTK.Graphics.BlendEquationMode modeRGB, OpenTK.Graphics.BlendEquationMode modeAlpha);
+            internal static BlendEquationSeparatei glBlendEquationSeparatei;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BlendEquationSeparateIndexedAMD(UInt32 buf, OpenTK.Graphics.AmdDrawBuffersBlend modeRGB, OpenTK.Graphics.AmdDrawBuffersBlend modeAlpha);
+            internal static BlendEquationSeparateIndexedAMD glBlendEquationSeparateIndexedAMD;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFunc(OpenTK.Graphics.BlendingFactorSrc sfactor, OpenTK.Graphics.BlendingFactorDest dfactor);
             internal static BlendFunc glBlendFunc;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BlendFunci(UInt32 buf, OpenTK.Graphics.ArbDrawBuffersBlend src, OpenTK.Graphics.ArbDrawBuffersBlend dst);
+            internal static BlendFunci glBlendFunci;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BlendFuncIndexedAMD(UInt32 buf, OpenTK.Graphics.AmdDrawBuffersBlend src, OpenTK.Graphics.AmdDrawBuffersBlend dst);
+            internal static BlendFuncIndexedAMD glBlendFuncIndexedAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFuncSeparate(OpenTK.Graphics.BlendingFactorSrc sfactorRGB, OpenTK.Graphics.BlendingFactorDest dfactorRGB, OpenTK.Graphics.BlendingFactorSrc sfactorAlpha, OpenTK.Graphics.BlendingFactorDest dfactorAlpha);
             internal static BlendFuncSeparate glBlendFuncSeparate;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFuncSeparateEXT(OpenTK.Graphics.ExtBlendFuncSeparate sfactorRGB, OpenTK.Graphics.ExtBlendFuncSeparate dfactorRGB, OpenTK.Graphics.ExtBlendFuncSeparate sfactorAlpha, OpenTK.Graphics.ExtBlendFuncSeparate dfactorAlpha);
             internal static BlendFuncSeparateEXT glBlendFuncSeparateEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BlendFuncSeparatei(UInt32 buf, OpenTK.Graphics.ArbDrawBuffersBlend srcRGB, OpenTK.Graphics.ArbDrawBuffersBlend dstRGB, OpenTK.Graphics.ArbDrawBuffersBlend srcAlpha, OpenTK.Graphics.ArbDrawBuffersBlend dstAlpha);
+            internal static BlendFuncSeparatei glBlendFuncSeparatei;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void BlendFuncSeparateIndexedAMD(UInt32 buf, OpenTK.Graphics.AmdDrawBuffersBlend srcRGB, OpenTK.Graphics.AmdDrawBuffersBlend dstRGB, OpenTK.Graphics.AmdDrawBuffersBlend srcAlpha, OpenTK.Graphics.AmdDrawBuffersBlend dstAlpha);
+            internal static BlendFuncSeparateIndexedAMD glBlendFuncSeparateIndexedAMD;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void BlendFuncSeparateINGR(OpenTK.Graphics.All sfactorRGB, OpenTK.Graphics.All dfactorRGB, OpenTK.Graphics.All sfactorAlpha, OpenTK.Graphics.All dfactorAlpha);
             internal static BlendFuncSeparateINGR glBlendFuncSeparateINGR;
@@ -388,6 +412,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ClientAttribDefaultEXT(OpenTK.Graphics.ClientAttribMask mask);
             internal static ClientAttribDefaultEXT glClientAttribDefaultEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate OpenTK.Graphics.ArbSync ClientWaitSync(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal static ClientWaitSync glClientWaitSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void ClipPlane(OpenTK.Graphics.ClipPlaneName plane, Double* equation);
             internal unsafe static ClipPlane glClipPlane;
@@ -902,6 +929,9 @@ namespace OpenTK.Graphics
             internal delegate void DeleteShader(UInt32 shader);
             internal static DeleteShader glDeleteShader;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DeleteSync(IntPtr sync);
+            internal static DeleteSync glDeleteSync;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void DeleteTextures(Int32 n, UInt32* textures);
             internal unsafe static DeleteTextures glDeleteTextures;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -965,6 +995,9 @@ namespace OpenTK.Graphics
             internal delegate void DisableVariantClientStateEXT(UInt32 id);
             internal static DisableVariantClientStateEXT glDisableVariantClientStateEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DisableVertexAttribAPPLE(UInt32 index, OpenTK.Graphics.AppleVertexProgramEvaluators pname);
+            internal static DisableVertexAttribAPPLE glDisableVertexAttribAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DisableVertexAttribArray(UInt32 index);
             internal static DisableVertexAttribArray glDisableVertexAttribArray;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1007,11 +1040,17 @@ namespace OpenTK.Graphics
             internal delegate void DrawElements(OpenTK.Graphics.BeginMode mode, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices);
             internal static DrawElements glDrawElements;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DrawElementsBaseVertex(OpenTK.Graphics.ArbDrawElementsBaseVertex mode, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices, Int32 basevertex);
+            internal static DrawElementsBaseVertex glDrawElementsBaseVertex;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElementsInstanced(OpenTK.Graphics.BeginMode mode, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal static DrawElementsInstanced glDrawElementsInstanced;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElementsInstancedARB(OpenTK.Graphics.BeginMode mode, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal static DrawElementsInstancedARB glDrawElementsInstancedARB;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DrawElementsInstancedBaseVertex(OpenTK.Graphics.ArbDrawElementsBaseVertex mode, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices, Int32 primcount, Int32 basevertex);
+            internal static DrawElementsInstancedBaseVertex glDrawElementsInstancedBaseVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawElementsInstancedEXT(OpenTK.Graphics.BeginMode mode, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal static DrawElementsInstancedEXT glDrawElementsInstancedEXT;
@@ -1030,6 +1069,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawRangeElements(OpenTK.Graphics.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices);
             internal static DrawRangeElements glDrawRangeElements;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void DrawRangeElementsBaseVertex(OpenTK.Graphics.ArbDrawElementsBaseVertex mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices, Int32 basevertex);
+            internal static DrawRangeElementsBaseVertex glDrawRangeElementsBaseVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void DrawRangeElementsEXT(OpenTK.Graphics.BeginMode mode, UInt32 start, UInt32 end, Int32 count, OpenTK.Graphics.DrawElementsType type, IntPtr indices);
             internal static DrawRangeElementsEXT glDrawRangeElementsEXT;
@@ -1075,6 +1117,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void EnableVariantClientStateEXT(UInt32 id);
             internal static EnableVariantClientStateEXT glEnableVariantClientStateEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void EnableVertexAttribAPPLE(UInt32 index, OpenTK.Graphics.AppleVertexProgramEvaluators pname);
+            internal static EnableVertexAttribAPPLE glEnableVertexAttribAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void EnableVertexAttribArray(UInt32 index);
             internal static EnableVertexAttribArray glEnableVertexAttribArray;
@@ -1168,6 +1213,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void FeedbackBuffer(Int32 size, OpenTK.Graphics.FeedbackType type, [Out] Single* buffer);
             internal unsafe static FeedbackBuffer glFeedbackBuffer;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate IntPtr FenceSync(OpenTK.Graphics.ArbSync condition, UInt32 flags);
+            internal static FenceSync glFenceSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FinalCombinerInputNV(OpenTK.Graphics.NvRegisterCombiners variable, OpenTK.Graphics.NvRegisterCombiners input, OpenTK.Graphics.NvRegisterCombiners mapping, OpenTK.Graphics.NvRegisterCombiners componentUsage);
             internal static FinalCombinerInputNV glFinalCombinerInputNV;
@@ -1319,6 +1367,9 @@ namespace OpenTK.Graphics
             internal delegate void FramebufferRenderbufferEXT(OpenTK.Graphics.FramebufferTarget target, OpenTK.Graphics.FramebufferAttachment attachment, OpenTK.Graphics.RenderbufferTarget renderbuffertarget, UInt32 renderbuffer);
             internal static FramebufferRenderbufferEXT glFramebufferRenderbufferEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void FramebufferTexture(OpenTK.Graphics.Version32 target, OpenTK.Graphics.Version32 attachment, UInt32 texture, Int32 level);
+            internal static FramebufferTexture glFramebufferTexture;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferTexture1D(OpenTK.Graphics.FramebufferTarget target, OpenTK.Graphics.FramebufferAttachment attachment, OpenTK.Graphics.TextureTarget textarget, UInt32 texture, Int32 level);
             internal static FramebufferTexture1D glFramebufferTexture1D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1342,6 +1393,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferTextureEXT(OpenTK.Graphics.FramebufferTarget target, OpenTK.Graphics.FramebufferAttachment attachment, UInt32 texture, Int32 level);
             internal static FramebufferTextureEXT glFramebufferTextureEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void FramebufferTextureFace(OpenTK.Graphics.Version32 target, OpenTK.Graphics.Version32 attachment, UInt32 texture, Int32 level, OpenTK.Graphics.Version32 face);
+            internal static FramebufferTextureFace glFramebufferTextureFace;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void FramebufferTextureFaceARB(OpenTK.Graphics.FramebufferTarget target, OpenTK.Graphics.FramebufferAttachment attachment, UInt32 texture, Int32 level, OpenTK.Graphics.TextureTarget face);
             internal static FramebufferTextureFaceARB glFramebufferTextureFaceARB;
@@ -1510,6 +1564,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetBooleanv(OpenTK.Graphics.GetPName pname, [Out] bool* @params);
             internal unsafe static GetBooleanv glGetBooleanv;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetBufferParameteri64v(OpenTK.Graphics.Version32 target, OpenTK.Graphics.Version32 pname, [Out] Int64* @params);
+            internal unsafe static GetBufferParameteri64v glGetBufferParameteri64v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetBufferParameteriv(OpenTK.Graphics.BufferTarget target, OpenTK.Graphics.BufferParameterName pname, [Out] Int32* @params);
             internal unsafe static GetBufferParameteriv glGetBufferParameteriv;
@@ -1694,6 +1751,12 @@ namespace OpenTK.Graphics
             internal delegate Int32 GetInstrumentsSGIX();
             internal static GetInstrumentsSGIX glGetInstrumentsSGIX;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetInteger64i_v(OpenTK.Graphics.Version32 target, UInt32 index, [Out] Int64* data);
+            internal unsafe static GetInteger64i_v glGetInteger64i_v;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetInteger64v(OpenTK.Graphics.ArbSync pname, [Out] Int64* @params);
+            internal unsafe static GetInteger64v glGetInteger64v;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetIntegeri_v(OpenTK.Graphics.GetIndexedPName target, UInt32 index, [Out] Int32* data);
             internal unsafe static GetIntegeri_v glGetIntegeri_v;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1781,6 +1844,9 @@ namespace OpenTK.Graphics
             internal unsafe delegate void GetMinmaxParameterivEXT(OpenTK.Graphics.ExtHistogram target, OpenTK.Graphics.ExtHistogram pname, [Out] Int32* @params);
             internal unsafe static GetMinmaxParameterivEXT glGetMinmaxParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetMultisamplefv(OpenTK.Graphics.ArbTextureMultisample pname, UInt32 index, [Out] Single* val);
+            internal unsafe static GetMultisamplefv glGetMultisamplefv;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetMultisamplefvNV(OpenTK.Graphics.NvExplicitMultisample pname, UInt32 index, [Out] Single* val);
             internal unsafe static GetMultisamplefvNV glGetMultisamplefvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -1861,6 +1927,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetObjectParameterfvARB(UInt32 obj, OpenTK.Graphics.ArbShaderObjects pname, [Out] Single* @params);
             internal unsafe static GetObjectParameterfvARB glGetObjectParameterfvARB;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetObjectParameterivAPPLE(OpenTK.Graphics.AppleObjectPurgeable objectType, UInt32 name, OpenTK.Graphics.AppleObjectPurgeable pname, [Out] Int32* @params);
+            internal unsafe static GetObjectParameterivAPPLE glGetObjectParameterivAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetObjectParameterivARB(UInt32 obj, OpenTK.Graphics.ArbShaderObjects pname, [Out] Int32* @params);
             internal unsafe static GetObjectParameterivARB glGetObjectParameterivARB;
@@ -2027,6 +2096,9 @@ namespace OpenTK.Graphics
             internal delegate IntPtr GetStringi(OpenTK.Graphics.StringName name, UInt32 index);
             internal static GetStringi glGetStringi;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void GetSynciv(IntPtr sync, OpenTK.Graphics.ArbSync pname, Int32 bufSize, [Out] Int32* length, [Out] Int32* values);
+            internal unsafe static GetSynciv glGetSynciv;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTexBumpParameterfvATI(OpenTK.Graphics.AtiEnvmapBumpmap pname, [Out] Single* param);
             internal unsafe static GetTexBumpParameterfvATI glGetTexBumpParameterfvATI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2077,6 +2149,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void GetTexParameteriv(OpenTK.Graphics.TextureTarget target, OpenTK.Graphics.GetTextureParameter pname, [Out] Int32* @params);
             internal unsafe static GetTexParameteriv glGetTexParameteriv;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void GetTexParameterPointervAPPLE(OpenTK.Graphics.AppleTextureRange target, OpenTK.Graphics.AppleTextureRange pname, [Out] IntPtr @params);
+            internal static GetTexParameterPointervAPPLE glGetTexParameterPointervAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void GetTextureImageEXT(UInt32 texture, OpenTK.Graphics.TextureTarget target, Int32 level, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, [Out] IntPtr pixels);
             internal static GetTextureImageEXT glGetTextureImageEXT;
@@ -2408,6 +2483,9 @@ namespace OpenTK.Graphics
             internal delegate bool IsShader(UInt32 shader);
             internal static IsShader glIsShader;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate bool IsSync(IntPtr sync);
+            internal static IsSync glIsSync;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate bool IsTexture(UInt32 texture);
             internal static IsTexture glIsTexture;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2425,6 +2503,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate bool IsVertexArrayAPPLE(UInt32 array);
             internal static IsVertexArrayAPPLE glIsVertexArrayAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate bool IsVertexAttribEnabledAPPLE(UInt32 index, OpenTK.Graphics.AppleVertexProgramEvaluators pname);
+            internal static IsVertexAttribEnabledAPPLE glIsVertexAttribEnabledAPPLE;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void LightEnviSGIX(OpenTK.Graphics.SgixFragmentLighting pname, Int32 param);
             internal static LightEnviSGIX glLightEnviSGIX;
@@ -2564,6 +2645,18 @@ namespace OpenTK.Graphics
             internal unsafe delegate void MapParameterivNV(OpenTK.Graphics.NvEvaluators target, OpenTK.Graphics.NvEvaluators pname, Int32* @params);
             internal unsafe static MapParameterivNV glMapParameterivNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void MapVertexAttrib1dAPPLE(UInt32 index, UInt32 size, Double u1, Double u2, Int32 stride, Int32 order, Double* points);
+            internal unsafe static MapVertexAttrib1dAPPLE glMapVertexAttrib1dAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void MapVertexAttrib1fAPPLE(UInt32 index, UInt32 size, Single u1, Single u2, Int32 stride, Int32 order, Single* points);
+            internal unsafe static MapVertexAttrib1fAPPLE glMapVertexAttrib1fAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void MapVertexAttrib2dAPPLE(UInt32 index, UInt32 size, Double u1, Double u2, Int32 ustride, Int32 uorder, Double v1, Double v2, Int32 vstride, Int32 vorder, Double* points);
+            internal unsafe static MapVertexAttrib2dAPPLE glMapVertexAttrib2dAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void MapVertexAttrib2fAPPLE(UInt32 index, UInt32 size, Single u1, Single u2, Int32 ustride, Int32 uorder, Single v1, Single v2, Int32 vstride, Int32 vorder, Single* points);
+            internal unsafe static MapVertexAttrib2fAPPLE glMapVertexAttrib2fAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Materialf(OpenTK.Graphics.MaterialFace face, OpenTK.Graphics.MaterialParameter pname, Single param);
             internal static Materialf glMaterialf;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2654,6 +2747,9 @@ namespace OpenTK.Graphics
             internal delegate void MinmaxEXT(OpenTK.Graphics.ExtHistogram target, OpenTK.Graphics.PixelInternalFormat internalformat, bool sink);
             internal static MinmaxEXT glMinmaxEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void MinSampleShading(Single value);
+            internal static MinSampleShading glMinSampleShading;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawArrays(OpenTK.Graphics.BeginMode mode, [Out] Int32* first, [Out] Int32* count, Int32 primcount);
             internal unsafe static MultiDrawArrays glMultiDrawArrays;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -2665,6 +2761,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawElements(OpenTK.Graphics.BeginMode mode, Int32* count, OpenTK.Graphics.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal unsafe static MultiDrawElements glMultiDrawElements;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal unsafe delegate void MultiDrawElementsBaseVertex(OpenTK.Graphics.ArbDrawElementsBaseVertex mode, Int32* count, OpenTK.Graphics.DrawElementsType type, IntPtr indices, Int32 primcount, Int32* basevertex);
+            internal unsafe static MultiDrawElementsBaseVertex glMultiDrawElementsBaseVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void MultiDrawElementsEXT(OpenTK.Graphics.BeginMode mode, Int32* count, OpenTK.Graphics.DrawElementsType type, IntPtr indices, Int32 primcount);
             internal unsafe static MultiDrawElementsEXT glMultiDrawElementsEXT;
@@ -3149,6 +3248,12 @@ namespace OpenTK.Graphics
             internal unsafe delegate void NormalStream3svATI(OpenTK.Graphics.AtiVertexStreams stream, Int16* coords);
             internal unsafe static NormalStream3svATI glNormalStream3svATI;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate IntPtr ObjectPurgeableAPPLE(OpenTK.Graphics.AppleObjectPurgeable objectType, UInt32 name, OpenTK.Graphics.AppleObjectPurgeable option);
+            internal static ObjectPurgeableAPPLE glObjectPurgeableAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate IntPtr ObjectUnpurgeableAPPLE(OpenTK.Graphics.AppleObjectPurgeable objectType, UInt32 name, OpenTK.Graphics.AppleObjectPurgeable option);
+            internal static ObjectUnpurgeableAPPLE glObjectUnpurgeableAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Ortho(Double left, Double right, Double bottom, Double top, Double zNear, Double zFar);
             internal static Ortho glOrtho;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3410,6 +3515,9 @@ namespace OpenTK.Graphics
             internal unsafe delegate void ProgramParameter4fvNV(OpenTK.Graphics.AssemblyProgramTargetArb target, UInt32 index, Single* v);
             internal unsafe static ProgramParameter4fvNV glProgramParameter4fvNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void ProgramParameteri(UInt32 program, OpenTK.Graphics.Version32 pname, Int32 value);
+            internal static ProgramParameteri glProgramParameteri;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ProgramParameteriARB(UInt32 program, OpenTK.Graphics.ArbGeometryShader4 pname, Int32 value);
             internal static ProgramParameteriARB glProgramParameteriARB;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -3526,6 +3634,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ProgramVertexLimitNV(OpenTK.Graphics.NvGeometryProgram4 target, Int32 limit);
             internal static ProgramVertexLimitNV glProgramVertexLimitNV;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void ProvokingVertex(OpenTK.Graphics.ArbProvokingVertex mode);
+            internal static ProvokingVertex glProvokingVertex;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void ProvokingVertexEXT(OpenTK.Graphics.ExtProvokingVertex mode);
             internal static ProvokingVertexEXT glProvokingVertexEXT;
@@ -3778,6 +3889,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void SampleMaskEXT(Single value, bool invert);
             internal static SampleMaskEXT glSampleMaskEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void SampleMaski(UInt32 index, UInt32 mask);
+            internal static SampleMaski glSampleMaski;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void SampleMaskIndexedNV(UInt32 index, UInt32 mask);
             internal static SampleMaskIndexedNV glSampleMaskIndexedNV;
@@ -4292,11 +4406,17 @@ namespace OpenTK.Graphics
             internal delegate void TexImage2D(OpenTK.Graphics.TextureTarget target, Int32 level, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 border, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr pixels);
             internal static TexImage2D glTexImage2D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TexImage2DMultisample(OpenTK.Graphics.ArbTextureMultisample target, Int32 samples, Int32 internalformat, Int32 width, Int32 height, bool fixedsamplelocations);
+            internal static TexImage2DMultisample glTexImage2DMultisample;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexImage3D(OpenTK.Graphics.TextureTarget target, Int32 level, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr pixels);
             internal static TexImage3D glTexImage3D;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexImage3DEXT(OpenTK.Graphics.TextureTarget target, Int32 level, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 border, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr pixels);
             internal static TexImage3DEXT glTexImage3DEXT;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TexImage3DMultisample(OpenTK.Graphics.ArbTextureMultisample target, Int32 samples, Int32 internalformat, Int32 width, Int32 height, Int32 depth, bool fixedsamplelocations);
+            internal static TexImage3DMultisample glTexImage3DMultisample;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TexImage4DSGIS(OpenTK.Graphics.TextureTarget target, Int32 level, OpenTK.Graphics.PixelInternalFormat internalformat, Int32 width, Int32 height, Int32 depth, Int32 size4d, Int32 border, OpenTK.Graphics.PixelFormat format, OpenTK.Graphics.PixelType type, IntPtr pixels);
             internal static TexImage4DSGIS glTexImage4DSGIS;
@@ -4391,6 +4511,9 @@ namespace OpenTK.Graphics
             internal unsafe delegate void TextureParameterivEXT(UInt32 texture, OpenTK.Graphics.TextureTarget target, OpenTK.Graphics.TextureParameterName pname, Int32* @params);
             internal unsafe static TextureParameterivEXT glTextureParameterivEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void TextureRangeAPPLE(OpenTK.Graphics.AppleTextureRange target, Int32 length, IntPtr pointer);
+            internal static TextureRangeAPPLE glTextureRangeAPPLE;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void TextureRenderbufferEXT(UInt32 texture, OpenTK.Graphics.TextureTarget target, UInt32 renderbuffer);
             internal static TextureRenderbufferEXT glTextureRenderbufferEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
@@ -4415,8 +4538,8 @@ namespace OpenTK.Graphics
             internal delegate void TransformFeedbackVaryingsEXT(UInt32 program, Int32 count, String[] varyings, OpenTK.Graphics.ExtTransformFeedback bufferMode);
             internal static TransformFeedbackVaryingsEXT glTransformFeedbackVaryingsEXT;
             [System.Security.SuppressUnmanagedCodeSecurity()]
-            internal unsafe delegate void TransformFeedbackVaryingsNV(UInt32 program, Int32 count, Int32* locations, OpenTK.Graphics.NvTransformFeedback bufferMode);
-            internal unsafe static TransformFeedbackVaryingsNV glTransformFeedbackVaryingsNV;
+            internal delegate void TransformFeedbackVaryingsNV(UInt32 program, Int32 count, String[] varyings, OpenTK.Graphics.NvTransformFeedback bufferMode);
+            internal static TransformFeedbackVaryingsNV glTransformFeedbackVaryingsNV;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Translated(Double x, Double y, Double z);
             internal static Translated glTranslated;
@@ -5413,6 +5536,9 @@ namespace OpenTK.Graphics
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal delegate void Viewport(Int32 x, Int32 y, Int32 width, Int32 height);
             internal static Viewport glViewport;
+            [System.Security.SuppressUnmanagedCodeSecurity()]
+            internal delegate void WaitSync(IntPtr sync, UInt32 flags, UInt64 timeout);
+            internal static WaitSync glWaitSync;
             [System.Security.SuppressUnmanagedCodeSecurity()]
             internal unsafe delegate void WeightbvARB(Int32 size, SByte* weights);
             internal unsafe static WeightbvARB glWeightbvARB;
