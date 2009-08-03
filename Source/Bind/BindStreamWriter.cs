@@ -17,6 +17,7 @@ namespace Bind
     {
         int indent_level = 0;
         Regex splitLines = new Regex(System.Environment.NewLine, RegexOptions.Compiled);
+        //Regex splitLines = new Regex("(\r\n|\n\r|\n|\r)", RegexOptions.Compiled);
 
         public BindStreamWriter(string file)
             : base(file)
@@ -41,7 +42,7 @@ namespace Bind
 
             base.Write(value);
         }
-
+/*
         public override void WriteLine(string value)
         {
             for (int i = indent_level; i > 0; i--)
@@ -49,7 +50,7 @@ namespace Bind
 
             base.WriteLine(value);
         }
-
+*/
         public void Write(Bind.Structures.Enum e)
         {
             foreach (string s in splitLines.Split(e.ToString()))
