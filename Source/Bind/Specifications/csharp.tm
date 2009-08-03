@@ -3,10 +3,10 @@ GLsizei,            Int32
 GLsizeiptr,         IntPtr
 GLintptr,           IntPtr
 # GLenum,             Int32
-GLboolean,          bool		# Boolean # Int32
+GLboolean,          bool        # Boolean # Int32
 GLbitfield,         UInt32
 # GLvoid*,            IntPtr
-# GLvoid,             Void	#Object
+# GLvoid,             Void    #Object
 GLchar,             Char
 GLbyte,             SByte
 GLubyte,            Byte
@@ -20,7 +20,7 @@ GLdouble,           Double
 GLclampd,           Double
 GLstring,           String
 
-PixelInternalFormat,	PixelInternalFormat
+PixelInternalFormat,    PixelInternalFormat
 
 # ARB and NV types.
 GLsizeiptrARB,      IntPtr
@@ -36,6 +36,9 @@ GLuint64EXT,        UInt64
 GLint64,            Int64
 GLuint64,           UInt64
 
+# ARB_sync (introduced in 3.2)
+sync,           IntPtr
+
 # Wgl types.
 PROC,           IntPtr
 LPCSTR,         String
@@ -46,8 +49,8 @@ FLOAT,          Single
 HANDLE,         IntPtr
 HDC,            IntPtr
 HGLRC,          IntPtr
-HPBUFFERARB,    IntPtr		#HPBUFFERARB
-HPBUFFEREXT,    IntPtr		#HPBUFFEREXT
+HPBUFFERARB,    IntPtr        #HPBUFFERARB
+HPBUFFEREXT,    IntPtr        #HPBUFFEREXT
 INT32,          Int32
 INT64,          Int64
 LPVOID,         void*
@@ -67,25 +70,25 @@ Float32         float
 Float32Pointer  float*
 
 # Glx types.
-Void			void
-Bool			bool
-int64_t			long
-int32_t			int
+Void            void
+Bool            bool
+int64_t            long
+int32_t            int
 
-Display			IntPtr
-Window			IntPtr
-Pixmap			IntPtr
-Colormap		IntPtr
+Display            IntPtr
+Window            IntPtr
+Pixmap            IntPtr
+Colormap        IntPtr
 
-GLXWindow		IntPtr
-GLXContext		IntPtr
-GLXDrawable		IntPtr
-GLXPixmap		IntPtr
+GLXWindow        IntPtr
+GLXContext        IntPtr
+GLXDrawable        IntPtr
+GLXPixmap        IntPtr
 __GLXextFuncPtr IntPtr
 
-VLServer		IntPtr
-VLPath			IntPtr
-VLNode			IntPtr
+VLServer        IntPtr
+VLPath            IntPtr
+VLNode            IntPtr
 
 # Gles types.
 GLclampx, int
