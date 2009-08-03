@@ -244,6 +244,14 @@ namespace Bind.GL2
                             c.Name = words[0];
 
                             uint number;
+                            // Trim the unsigned or long specifiers used in C constants ('u' or 'ull').
+                            if (words[2].ToLower().StartsWith("0x"))
+                            {
+                                if (words[2].ToLower().EndsWith("ull"))
+                                    words[2] = words[2].Substring(0, words[2].Length - 3);
+                                if (words[2].ToLower().EndsWith("u"))
+                                    words[2] = words[2].Substring(0, words[2].Length - 1);
+                            }
                             if (UInt32.TryParse(words[2].Replace("0x", String.Empty), System.Globalization.NumberStyles.AllowHexSpecifier, null, out number))
                             {
                                 // The value is a number, check if it should be unchecked.
@@ -630,18 +638,15 @@ namespace Bind.GL2
             sw.WriteLine();
             foreach (Bind.Structures.Delegate d in delegates.Values)
             {
-                if (String.IsNullOrEmpty(d.Extension) || d.Extension == "Core")
-                {
-                    sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
-                    sw.WriteLine(
-                        "[System.Runtime.InteropServices.DllImport({0}.Library, EntryPoint = \"{1}{2}\"{3})]",
-                        Settings.OutputClass,
-                        Settings.FunctionPrefix,
-                        d.Name,
-                        d.Name.EndsWith("W") || d.Name.EndsWith("A") ? ", CharSet = CharSet.Auto" : ", ExactSpelling = true"
-                    );
-                    sw.WriteLine("internal extern static {0};", d.DeclarationString());
-                }
+                sw.WriteLine("[System.Security.SuppressUnmanagedCodeSecurity()]");
+                sw.WriteLine(
+                    "[System.Runtime.InteropServices.DllImport({0}.Library, EntryPoint = \"{1}{2}\"{3})]",
+                    Settings.OutputClass,
+                    Settings.FunctionPrefix,
+                    d.Name,
+                    d.Name.EndsWith("W") || d.Name.EndsWith("A") ? ", CharSet = CharSet.Auto" : ", ExactSpelling = true"
+                );
+                sw.WriteLine("internal extern static {0};", d.DeclarationString());
             }
             sw.Unindent();
             sw.WriteLine("}");
