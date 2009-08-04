@@ -55,6 +55,11 @@ namespace OpenTK.Platform.X11
                 int resolution_count = 0;
                 foreach (XRRScreenSize size in FindAvailableResolutions(screen))
                 {
+                    if (size.Width == 0 || size.Height == 0)
+                    {
+                        Debug.Print("[Warning] XRandR returned an invalid resolution ({0}) for display device {1}", size, screen);
+                        continue;
+                    }
                     short[] rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
 
                     // It seems that XRRRates returns 0 for modes that are larger than the screen
