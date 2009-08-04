@@ -5,8 +5,11 @@ The Open Toolkit 0.9.9-1 Beta
 [Overview]
 
 This is the first preview release of what will become OpenTK 1.0. Major changes:
+* Initial OpenGL ES support
 * OpenCL bugfixes.
 * Math API improvements.
+* Internal improvements to DisplayDevice and DisplayResolution.
+
 
 Please note that this is a work-in-progress snapshot release and should only be used for testing purposes.
 
@@ -16,7 +19,17 @@ Visit http://www.opentk.com to report issues or request features.
 
 [Resolved issues]
 
+[#744]
+[#917]
+[#955]
 [#964]
+[#1005]
+[#1021]
+[#1032]
+[#1035]
+[#1037]
+[#1050]
+[#1060]
 
 
 
