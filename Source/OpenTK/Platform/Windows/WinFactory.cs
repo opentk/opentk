@@ -73,7 +73,12 @@ namespace OpenTK.Platform.Windows
 
         public virtual OpenTK.Input.IKeyboardDriver CreateKeyboardDriver()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();            
+            // If Windows version is NT5 or higher, we are able to use raw input.
+            if (System.Environment.OSVersion.Version.Major >= 5)
+                return new WinRawKeyboard();
+            else
+                return new WMInput(null);
         }
         
         #endregion
