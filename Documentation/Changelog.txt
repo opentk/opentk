@@ -8,7 +8,13 @@
     
 + OpenTK
     + Graphics
-	+ Fixed wrappers for functions taking string arrays: TranformFeedbackVaryings, GetUniformIndices, GetShaderSource.
+        + Fixed wrappers for functions taking string arrays: TranformFeedbackVaryings, GetUniformIndices, GetShaderSource.
+    + Platform
+        + X11XrandrDisplayDevice now ignores invalid resolutions returned by XRandR.
+        
++ OpenTK.Utilities
+    + TextPrinter
+        + Fixed handling of text color parameter in TextPrinter.Print().
 
 -------------------------
  OpenTK 0.9.9 -> 0.9.9-1
@@ -17,15 +23,15 @@
     + Enabled documentation generation in debug builds.
     + Added several missing XML comments to OpenTK.Input, OpenTK.Audio, OpenTK.Math and other namespaces.
     + Audio
-		+ AL.Lib is now internal, not public.
+        + AL.Lib is now internal, not public.
     + Compute
         + Bitfields are now mapped to 'long' instead of 'int'.
     + GLControl
         + Removed unused code.
     + Input
-		+ Added Mouse and Keyboard stubs for the new input API.
-		+ Added common alternative names to OpenTK.Input.Key (e.g. LControl, RControl, ...)
-		+ Removed None and MaxKeys tokens from OpenTK.Input.Key. Adde Unknown token.
+        + Added Mouse and Keyboard stubs for the new input API.
+        + Added common alternative names to OpenTK.Input.Key (e.g. LControl, RControl, ...)
+        + Removed None and MaxKeys tokens from OpenTK.Input.Key. Adde Unknown token.
     + Math
         + Namespace OpenTK.Math no longer exists. Math functions are now placed directly inside the OpenTK namespace.
         + Matrix4.Frustum was obsoleted in favor of Matrix4.CreatePerspectiveOffCenter.
@@ -35,71 +41,71 @@
  OpenTK 0.9.8-1 -> 0.9.9
 -------------------------
 + OpenTK
-	+ Compute
-		+ Initial support for the OpenCL flat API.
-	+ Input
-		+ Keyboard/Mouse/JoystickDevice are now marked as obsolete.
-	+ GameWindow
-		+ New properties: Bounds, Size, Location, ClientRectangle, ClientSize, Icon.
-		+ Size should now contain the correct value inside the GameWindow constructor.
-		+ The GameWindow should now start at the center of the specified DisplayDevice (Windows-only at the moment).
-		+ GameWindow no longer relies on Windows.Forms.
-	+ Graphics
-		+ Glu is now marked as obsolete.
-		+ Support for multisampled contexts (Windows-only at the moment).
+    + Compute
+        + Initial support for the OpenCL flat API.
+    + Input
+        + Keyboard/Mouse/JoystickDevice are now marked as obsolete.
+    + GameWindow
+        + New properties: Bounds, Size, Location, ClientRectangle, ClientSize, Icon.
+        + Size should now contain the correct value inside the GameWindow constructor.
+        + The GameWindow should now start at the center of the specified DisplayDevice (Windows-only at the moment).
+        + GameWindow no longer relies on Windows.Forms.
+    + Graphics
+        + Glu is now marked as obsolete.
+        + Support for multisampled contexts (Windows-only at the moment).
 
 -------------------------
  OpenTK 0.9.8 -> 0.9.8-1
 -------------------------
 + Bind
-	+ Fixed wrappers for methods ending in "nv" without being "NV" extensions (e.g. Booleanv).
+    + Fixed wrappers for methods ending in "nv" without being "NV" extensions (e.g. Booleanv).
 
 + OpenTK
-	+ Graphics
-		+ Fixed wrappers for methods ending in "nv" without being "NV" extensions (e.g. GetBooleanv).
-	+ Math
-		+ Improved performance for Matrix4/Matrix4d.Mult().
+    + Graphics
+        + Fixed wrappers for methods ending in "nv" without being "NV" extensions (e.g. GetBooleanv).
+    + Math
+        + Improved performance for Matrix4/Matrix4d.Mult().
 
 + OpenTK.Utilities
-	+ TextPrinter
-		+ Fixed corruption after calling TextPrinter.Clear()
+    + TextPrinter
+        + Fixed corruption after calling TextPrinter.Clear()
 
 ---------------------
 OpenTK 0.9.7 -> 0.9.8
 ---------------------
 + Bind
-	+ Merged 3.1 specs.
-	+ Function overrides are now specified in 'gloverrides.xml' instead of gl.spec. Merging updated specs should now be much easier.
-	+ Bindings are now generated in alphabetical order. This makes side-by-side comparisons easier whenever the generator or the specs are updated.
+    + Merged 3.1 specs.
+    + Function overrides are now specified in 'gloverrides.xml' instead of gl.spec. Merging updated specs should now be much easier.
+    + Bindings are now generated in alphabetical order. This makes side-by-side comparisons easier whenever the generator or the specs are updated.
 
 + OpenTK
-	+ Audio
-		+ Fixed Alc.CaptureSamples signature and added convenience overloads.
-	+ Graphics
-		+ Full OpenGL 3.1 support.
-		+ All instances of Version* enums have now been replaced. Only a few Version12Deprecated enums remain, pertaining to the ARB_imaging subset.
-		+ Debug builds now throw an exception whenever an OpenGL error is encountered. Simplifies debugging.
-		+ GraphicsContext.CreateDummyContext() no longer causes a NullReferenceException.
-		+ Several new helpers for getting matrices, vectors or setting the viewport.
-	+ Input 
-		+ Keyboard repeat is now turned off on X11.
-		+ Mouse deltas are now reported correctly during mouse movements..
-	+ Platform
-		+ Device contexts are no longer leaked on Windows. This significantly improves stability of long-running processes and processes with multiple OpenGL contexts.
-		+ Internal improvements to DummyGLContext.
-		+ Internal improvements to IPlatformFactory.
+    + Audio
+        + Fixed Alc.CaptureSamples signature and added convenience overloads.
+    + Graphics
+        + Full OpenGL 3.1 support.
+        + All instances of Version* enums have now been replaced. Only a few Version12Deprecated enums remain, pertaining to the ARB_imaging subset.
+        + Debug builds now throw an exception whenever an OpenGL error is encountered. Simplifies debugging.
+        + GraphicsContext.CreateDummyContext() no longer causes a NullReferenceException.
+        + Several new helpers for getting matrices, vectors or setting the viewport.
+    + Input 
+        + Keyboard repeat is now turned off on X11.
+        + Mouse deltas are now reported correctly during mouse movements..
+    + Platform
+        + Device contexts are no longer leaked on Windows. This significantly improves stability of long-running processes and processes with multiple OpenGL contexts.
+        + Internal improvements to DummyGLContext.
+        + Internal improvements to IPlatformFactory.
 
 + OpenTK.Utilities
-	+ TextPrinter
-		+ Up to 2x better performance with TextPrinterOptions.NoCache.
-		+ Up to 20x better performance with TextPrinterOptions.Default.
-		+ Specifying text location now works on Mono. Text width and height is still broken (Mono GDI+ bug).
-		+ Replaced matrix stack with custom implementation for improved compatibility with buggy drivers or newer OpenGL versions.
-		+ GL1TextOutputProvider now resets / restores the TextureMatrix.
+    + TextPrinter
+        + Up to 2x better performance with TextPrinterOptions.NoCache.
+        + Up to 20x better performance with TextPrinterOptions.Default.
+        + Specifying text location now works on Mono. Text width and height is still broken (Mono GDI+ bug).
+        + Replaced matrix stack with custom implementation for improved compatibility with buggy drivers or newer OpenGL versions.
+        + GL1TextOutputProvider now resets / restores the TextureMatrix.
 
 + Examples
-	+ New sample browser that includes documentation and source code (in progress).
-	+ Removed the console window. Debug messages are now shown inside the sample browser.
+    + New sample browser that includes documentation and source code (in progress).
+    + Removed the console window. Debug messages are now shown inside the sample browser.
 
 ---------------------
 OpenTK 0.9.6 -> 0.9.7
@@ -110,63 +116,63 @@ OpenTK 0.9.6 -> 0.9.7
     
 + OpenTK
     + Graphics
-	* Initial support for OpenGL 3.1. Some functions and tokens aren't yet available in the specs - these will be added in due time.
-	* Improved type-safety in the OpenGL 3.0 bindings.
-	+ Automatic error checks now display stacktraces.
+    * Initial support for OpenGL 3.1. Some functions and tokens aren't yet available in the specs - these will be added in due time.
+    * Improved type-safety in the OpenGL 3.0 bindings.
+    + Automatic error checks now display stacktraces.
 
 ---------------------
 OpenTK 0.9.5 -> 0.9.6
 ---------------------
 + Bind
-	+ Improved heuristics for inline OpenGL documentation.
-	* Void pointers are now mapped to generic arrays (T[]) or references (ref T), where T : struct. Work in progress (see http://www.opentk.com/node/703).
-	+ Generated bindings now automatically check for OpenGL errors, when compiled in debug mode.
-	+ Disabled all generator modes except for GL.
+    + Improved heuristics for inline OpenGL documentation.
+    * Void pointers are now mapped to generic arrays (T[]) or references (ref T), where T : struct. Work in progress (see http://www.opentk.com/node/703).
+    + Generated bindings now automatically check for OpenGL errors, when compiled in debug mode.
+    + Disabled all generator modes except for GL.
 
 + OpenTK
-	+ Fixed all build warnings (apart from missing documentation comments).
-	+ Graphics
-		+ Improved inline documentation.
-		+ Added automatic OpenGL error checking in debug builds.
-		+ Replaced object overloads with generics for improved type-safety and performance.
-		+ Updated to version 48 specs (fixed some problems with the transform feedback extension).
-	+ Platform
-		+ Fixed GLX context attributes in the GLX_ARB_create_context code path.
-		+ Revert to the legacy GLX code path for pre-GL3.0 contexts (AMD drivers do not support vsync on GL3.0+).
-	+ Audio
-		+ AudioContext now initializes the maximum number of effect slots supported by the drivers.
-		+ Added IsSynchronized property.
+    + Fixed all build warnings (apart from missing documentation comments).
+    + Graphics
+        + Improved inline documentation.
+        + Added automatic OpenGL error checking in debug builds.
+        + Replaced object overloads with generics for improved type-safety and performance.
+        + Updated to version 48 specs (fixed some problems with the transform feedback extension).
+    + Platform
+        + Fixed GLX context attributes in the GLX_ARB_create_context code path.
+        + Revert to the legacy GLX code path for pre-GL3.0 contexts (AMD drivers do not support vsync on GL3.0+).
+    + Audio
+        + AudioContext now initializes the maximum number of effect slots supported by the drivers.
+        + Added IsSynchronized property.
 
 + Examples
-	+ New OpenAL example (EFX reverb).
+    + New OpenAL example (EFX reverb).
 
 ---------------------
 OpenTK 0.9.4 -> 0.9.5
 ---------------------
 
 + Bind
-	+ Added support for inline OpenGL documentation.
-	+ Fixed mapping between signed / unsigned wrappers -> signed / unsigned entry points (casts should no longer be necessary).
+    + Added support for inline OpenGL documentation.
+    + Fixed mapping between signed / unsigned wrappers -> signed / unsigned entry points (casts should no longer be necessary).
 
 + Build
-	+ Added System.Xml reference to Bind project.
-	+ Added new documentation files to Bind project.
+    + Added System.Xml reference to Bind project.
+    + Added new documentation files to Bind project.
 
 + OpenTK
-	+ GameWindow / GLControl
-		+ Added new constructors to select the desired GraphicsContext version and flags.
-	+ Graphics
-		+ The GL class now contains inline documentation.
-		+ It is now possible to specify desired version and flags for the OpenGL context (forward-compatible, debug).
-	+ Input
-		+ It is now possible to use devices without axes and/or buttons (e.g. keyboard extensions, tablets).
-	+ Platform
-		+ X11 platform driver now uses glXChooseFBConfig for visual selection, if available.
-		+ X11 platform driver now supports GLX_ARB_create_context (OpenGL 3.0).
+    + GameWindow / GLControl
+        + Added new constructors to select the desired GraphicsContext version and flags.
+    + Graphics
+        + The GL class now contains inline documentation.
+        + It is now possible to specify desired version and flags for the OpenGL context (forward-compatible, debug).
+    + Input
+        + It is now possible to use devices without axes and/or buttons (e.g. keyboard extensions, tablets).
+    + Platform
+        + X11 platform driver now uses glXChooseFBConfig for visual selection, if available.
+        + X11 platform driver now supports GLX_ARB_create_context (OpenGL 3.0).
 
 + Examples
-	+ Extension test now requests an OpenGL 3.0 context.
-	+ Extension test now shows the parameters of each OpenTK.Graphics.GL function.
+    + Extension test now requests an OpenGL 3.0 context.
+    + Extension test now shows the parameters of each OpenTK.Graphics.GL function.
 
 
 
@@ -175,35 +181,35 @@ OpenTK 0.9.3 -> 0.9.4
 ---------------------
 
 + Bind
-	+ Emits metadata for GL wrappers: entry point, OpenGL version and extension.
-	+ Adds license information to the generated bindings.
+    + Emits metadata for GL wrappers: entry point, OpenGL version and extension.
+    + Adds license information to the generated bindings.
 
 + Build
-	+ Promps for input when no arguments are specified. This means you can now build or create the OpenTK solution without opening a terminal.
+    + Promps for input when no arguments are specified. This means you can now build or create the OpenTK solution without opening a terminal.
 
 + OpenTK
-	+ GameWindow
-		+ Added support for JoystickDevices.
-	+ Input
-		+ Added JoystickDevice and IJoystickDriver.
-	+ Platform
-		* Implemented joystick support (Windows and Linux only at the moment).
-	+ Graphics
-		+ Added typesafe support for GL3 functions and enums: ARB_framebuffer_object, ARB_color_buffer_float, ARB_texture_rg, ARB_texture_ compression_rgtc, ARB_texture_float, EXT_texture_integer, EXT_texture_array
-		+ Added support for the complete GL3 spec.
-		* Added support for creating GL3.0-level contexts (Windows only at the moment).
-		+ Added metadata to the GL wrappers.
-		+ Implemented GL.SupportsFunction(MethodInfo).
+    + GameWindow
+        + Added support for JoystickDevices.
+    + Input
+        + Added JoystickDevice and IJoystickDriver.
+    + Platform
+        * Implemented joystick support (Windows and Linux only at the moment).
+    + Graphics
+        + Added typesafe support for GL3 functions and enums: ARB_framebuffer_object, ARB_color_buffer_float, ARB_texture_rg, ARB_texture_ compression_rgtc, ARB_texture_float, EXT_texture_integer, EXT_texture_array
+        + Added support for the complete GL3 spec.
+        * Added support for creating GL3.0-level contexts (Windows only at the moment).
+        + Added metadata to the GL wrappers.
+        + Implemented GL.SupportsFunction(MethodInfo).
 
 + Utilities
-	+ Fixed GL1.1 fallback when GL.BlendColor is not supported.
+    + Fixed GL1.1 fallback when GL.BlendColor is not supported.
 
 + Examples
-	+ New Extensions viewer that displays the new GL metadata (needs .Net or Mono 2.4+ for full compatibility, but will run on older Mono versions).
-	+ Moved extensions viewer to the Tests category.
+    + New Extensions viewer that displays the new GL metadata (needs .Net or Mono 2.4+ for full compatibility, but will run on older Mono versions).
+    + Moved extensions viewer to the Tests category.
 
 + General
-	+ Set mime-type and eol-style properties to the .spec and .tm files.
+    + Set mime-type and eol-style properties to the .spec and .tm files.
 
 
 
@@ -212,31 +218,31 @@ OpenTK 0.9.2 -> 0.9.3
 ---------------------
 
 + OpenTK
-	+ GameWindow
-		+ Added cancelable Closing event.
-		+ Exit() method is now thread-safe.
-		+ Removed ExitAsync() method - use Exit() instead.
-	+ Graphics
-		+ Fixed version strings in GL.SupportsExtension().
-	+ Input
-		+ Added support for the MouseDevice.Move and .WheelChanged events and improved MouseDevice interface (Issue: "Fix MouseDevice.Move", http://www.opentk.com/node/652).
-	+ Math
-		+ Fixed infinite loop in quaternion constructors (Issue: "Quaternion bug", http://www.opentk.com/node/663)
-	+ Platform
-		+ MacOS support.
-		+ Suppressed build warnings for unused methods and fields in the platform bindings.
+    + GameWindow
+        + Added cancelable Closing event.
+        + Exit() method is now thread-safe.
+        + Removed ExitAsync() method - use Exit() instead.
+    + Graphics
+        + Fixed version strings in GL.SupportsExtension().
+    + Input
+        + Added support for the MouseDevice.Move and .WheelChanged events and improved MouseDevice interface (Issue: "Fix MouseDevice.Move", http://www.opentk.com/node/652).
+    + Math
+        + Fixed infinite loop in quaternion constructors (Issue: "Quaternion bug", http://www.opentk.com/node/663)
+    + Platform
+        + MacOS support.
+        + Suppressed build warnings for unused methods and fields in the platform bindings.
 
 + Utilities
-	+ Fixed TextPrinter bug with colors in high quality (Issue: "TextPrinter (TextQuality.High) failure (with patch to fix)", http://www.opentk.com/node/660)
+    + Fixed TextPrinter bug with colors in high quality (Issue: "TextPrinter (TextQuality.High) failure (with patch to fix)", http://www.opentk.com/node/660)
 
 + Examples
-	+ Fixed the JuliaSetFractal and Framebuffer Object examples when the video cards don't support GLSL and FBOs, respectively.
+    + Fixed the JuliaSetFractal and Framebuffer Object examples when the video cards don't support GLSL and FBOs, respectively.
 
 + General
-	+ Set mime-type and eol-style properties for .cs and .txt files.
-	+ Replaced stray tabs with spaces in several files.
+    + Set mime-type and eol-style properties for .cs and .txt files.
+    + Replaced stray tabs with spaces in several files.
 
-		
+        
 
 ---------------------
 OpenTK 0.9.1 -> 0.9.2
@@ -283,45 +289,45 @@ OpenTK 0.9.1 -> 0.9.2
 OpenTK 0.9.0 -> 0.9.1
 ---------------------
 + Bind
-	+ Corrected Glu.NewTess and Glu.DeleteTess (were NewTes and DeleteTes respectively).
-	+ Corrected typemaping for NurbsObj, QuadricObj, TesselatorObj and FunctionPointer.
-	+ Fixed a bug that resulted in missing overloads in functions with both pointers and generic parameters (like Glu.TessVertex).
-	+ Worked around an Intellisense bug, where some overloads might not be reported if the pointer overload was the first one encountered.
-	+ Fixed naming of 1D, 2D, 3D etc (e.g. Texture2D, which used to be Texture2d).
-	+ Corrected GL.ReadPixels (was GL.ReadPixel).
-	
+    + Corrected Glu.NewTess and Glu.DeleteTess (were NewTes and DeleteTes respectively).
+    + Corrected typemaping for NurbsObj, QuadricObj, TesselatorObj and FunctionPointer.
+    + Fixed a bug that resulted in missing overloads in functions with both pointers and generic parameters (like Glu.TessVertex).
+    + Worked around an Intellisense bug, where some overloads might not be reported if the pointer overload was the first one encountered.
+    + Fixed naming of 1D, 2D, 3D etc (e.g. Texture2D, which used to be Texture2d).
+    + Corrected GL.ReadPixels (was GL.ReadPixel).
+    
 + OpenTK
-	+ Graphics
-		+ Fixed Glu tessellation.
-		+ Refactored/updated DisplayMode and ColorMode. Added docs, fixed a few problematic corner cases. Width/Height are no longer available in DisplayMode.
-		+ Added DisplayDevice class, to enumerate available display devices (i.e. monitors) and switch resolutions.
-		+ Added DisplayResolution class, to hold resolution information.
-	+ Audio
-		+ Added AudioContext class.
-		+ Added AudioReader class.
-	+ GameWindow
-		+ Implemented WindowBorder property.
-		+ Implemented WindowState property.
-	+ Input
-		+ Fixed MouseDevice events on Linux.
-		+ Fixed MouseDevice deltas.
-	+ Platform.X11
-		+ Simplified input handling.
-	+ Fonts
-		+ Moved to OpenTK.Utilities.
+    + Graphics
+        + Fixed Glu tessellation.
+        + Refactored/updated DisplayMode and ColorMode. Added docs, fixed a few problematic corner cases. Width/Height are no longer available in DisplayMode.
+        + Added DisplayDevice class, to enumerate available display devices (i.e. monitors) and switch resolutions.
+        + Added DisplayResolution class, to hold resolution information.
+    + Audio
+        + Added AudioContext class.
+        + Added AudioReader class.
+    + GameWindow
+        + Implemented WindowBorder property.
+        + Implemented WindowState property.
+    + Input
+        + Fixed MouseDevice events on Linux.
+        + Fixed MouseDevice deltas.
+    + Platform.X11
+        + Simplified input handling.
+    + Fonts
+        + Moved to OpenTK.Utilities.
 
  + OpenTK.Utilities
-	 + Fonts
-		+ Moved to OpenTK.Graphics from OpenTK.Fonts.
-		+ Implemented immediate text printing (without caching).
-		+ Improved width calculation for space characters.
-		+ Fixed width calucalated by TextureFont.MeasureString.
+     + Fonts
+        + Moved to OpenTK.Graphics from OpenTK.Fonts.
+        + Implemented immediate text printing (without caching).
+        + Improved width calculation for space characters.
+        + Fixed width calucalated by TextureFont.MeasureString.
 
 + Examples
-	+ Added GluTessellator example.
-	+ Added Inertia's Julia Set GLSL example.
-	+ Added Inertia's OpenAL Playback example.
-	+ Made several tests public (Input Logger, Resolutions, GameWindow states).
+    + Added GluTessellator example.
+    + Added Inertia's Julia Set GLSL example.
+    + Added Inertia's OpenAL Playback example.
+    + Made several tests public (Input Logger, Resolutions, GameWindow states).
 
 
 
@@ -331,37 +337,37 @@ OpenTK 0.3.13 -> 0.9.0
 Minor version changed to reflect current progress.
 
 + Bind
-	+ Improved token matching rule. More tokens will reference actual enums now, instead of referencing Enums.All.
-	+ Initial work on duplicate enum removal (still disabled).
-	+ 'Public' specifier not specified on the generated classes anymore. This is now controlled in the *Helper.cs files.
-	+ Fixed a couple of possible NRE exceptions.
+    + Improved token matching rule. More tokens will reference actual enums now, instead of referencing Enums.All.
+    + Initial work on duplicate enum removal (still disabled).
+    + 'Public' specifier not specified on the generated classes anymore. This is now controlled in the *Helper.cs files.
+    + Fixed a couple of possible NRE exceptions.
 
 + Build
-	+ Now generates xml documentation on release builds.
+    + Now generates xml documentation on release builds.
 
 + OpenTK
-	+ Fonts
-		+ Fixed a bug in the VboTextPrinter implementation (still disabled).
-	+ OpenAL
-		+ AL, Alc, Alu and Alut bindings.
-		+ Inline documentation.
-	+ OpenGL
-		+ Version12-Version21 enums removed in favour of specific tokens.
-		+ A few new function overloads.
-	+ Platform
-		+ Added several new functions to the Windows and X11 namespaces (mouse handling, coordinate transformations, current context query)
-		+ Initial support for garbage collection of OpenGL resources (disabled).
-		+ Support for Win 9x and 2000 platforms through new WMInput InputDriver implementation.
-		+ Fixes to WinRawInput driver (disabled due to memory leaks).
-	+ GameWindow
-		+ Now uses GLContext instead of Win/X11GLContext.
-	+ Math
-		+ Fix to Vector4.Perspective()
+    + Fonts
+        + Fixed a bug in the VboTextPrinter implementation (still disabled).
+    + OpenAL
+        + AL, Alc, Alu and Alut bindings.
+        + Inline documentation.
+    + OpenGL
+        + Version12-Version21 enums removed in favour of specific tokens.
+        + A few new function overloads.
+    + Platform
+        + Added several new functions to the Windows and X11 namespaces (mouse handling, coordinate transformations, current context query)
+        + Initial support for garbage collection of OpenGL resources (disabled).
+        + Support for Win 9x and 2000 platforms through new WMInput InputDriver implementation.
+        + Fixes to WinRawInput driver (disabled due to memory leaks).
+    + GameWindow
+        + Now uses GLContext instead of Win/X11GLContext.
+    + Math
+        + Fix to Vector4.Perspective()
 
 + Examples
-	+ Hidden examples now displayed on Ctrl+F1.
-	+ Bugfixes to GLSL and VBO examples.
-	+ Input logger works again (hidden example).
+    + Hidden examples now displayed on Ctrl+F1.
+    + Bugfixes to GLSL and VBO examples.
+    + Input logger works again (hidden example).
 
 
 
@@ -370,48 +376,48 @@ OpenTK 0.3.12 -> 0.3.13
 -----------------------
 
 + Bind
-	+ New transformation to OpenGL enums follows .Net naming conventions (PascalCase, no_underscores).
-	+ Void* parameters are turned to IntPtr, to improve interop with .Net BCL methods (e.g. BitmapData.Scan0).
-	+ Now generates only one ref/array/pointer overload for each function, not all possible permutations. Brings Glu down to ~40KB of code (was ~3MB before). Improves compilation times.
-	+ Improved layout of generated code. Removed some generated local variables (improves speed).
+    + New transformation to OpenGL enums follows .Net naming conventions (PascalCase, no_underscores).
+    + Void* parameters are turned to IntPtr, to improve interop with .Net BCL methods (e.g. BitmapData.Scan0).
+    + Now generates only one ref/array/pointer overload for each function, not all possible permutations. Brings Glu down to ~40KB of code (was ~3MB before). Improves compilation times.
+    + Improved layout of generated code. Removed some generated local variables (improves speed).
 
 + Build
-	+ Now copies example data to output directory.
+    + Now copies example data to output directory.
 
 + OpenTK
-	+ Platform
-		+ Improved [..]GLNative shutdown sequence for all platforms. Fixes shutdown crash under Linux.
-		+ Removed X11GLControl, WinGLControl. The platform specific code is handled in the WindowInfo and GLContext classes.
-		+ Fixed issue with flickering GLControls.
-		* Added VSync support to Windows. Linux will obtain this on next release.
-	+ GameWindow
-		+ Improved timing precision.
-		+ More detailed timing information available.
-		+ Can now set target UpdateFrame and RenderFrame periods during runtime.
-		+ VSync support.
-		+ Improved GameWindow.Exit() handling.
-		+ Removed obsolete GameWindow.Create and GameWindow.Destroy events.
-	+ Math
-		+ Andy Gill implemented Vector2/3/4, Matrix4 and Quaternion methods for OpenTK.
-		+ Added Box2 struct which defines a rectangular region. Used in OpenTK.Fonts (see below).
-		- Removed (float*) and (IntPtr) cast operators from Vector234. Added this[] operator.
-	+ Fonts
-		+ High quality Texture fonts on all supported platforms (TextureFont class).
-		+ TextPrinter to draw text on all supported platform (TextPrinter class).
-	+ OpenGL
-		+ .Net naming conventions.
-		+ Many, many more function overloads.
-		+ Smaller and faster.
-		+ Even better startup performance.
+    + Platform
+        + Improved [..]GLNative shutdown sequence for all platforms. Fixes shutdown crash under Linux.
+        + Removed X11GLControl, WinGLControl. The platform specific code is handled in the WindowInfo and GLContext classes.
+        + Fixed issue with flickering GLControls.
+        * Added VSync support to Windows. Linux will obtain this on next release.
+    + GameWindow
+        + Improved timing precision.
+        + More detailed timing information available.
+        + Can now set target UpdateFrame and RenderFrame periods during runtime.
+        + VSync support.
+        + Improved GameWindow.Exit() handling.
+        + Removed obsolete GameWindow.Create and GameWindow.Destroy events.
+    + Math
+        + Andy Gill implemented Vector2/3/4, Matrix4 and Quaternion methods for OpenTK.
+        + Added Box2 struct which defines a rectangular region. Used in OpenTK.Fonts (see below).
+        - Removed (float*) and (IntPtr) cast operators from Vector234. Added this[] operator.
+    + Fonts
+        + High quality Texture fonts on all supported platforms (TextureFont class).
+        + TextPrinter to draw text on all supported platform (TextPrinter class).
+    + OpenGL
+        + .Net naming conventions.
+        + Many, many more function overloads.
+        + Smaller and faster.
+        + Even better startup performance.
 
 + Examples
-	+ Improved example layout. Now every example contains a Main() method, exactly like it would be if it wasn't launched by the ExampleLauncher.
-	+ Added ExampleAttribute.
-	+ Added Fonts, Textures and Text examples.
-	+ Improved GLSL example (now loads the shader from disk, uses VBO).
-	- Disabled Vertex Array and Lighting examples, as they were seriously broken.
-	+ Background changed to Color.SteelBlue for all examples.
-	+ Kostas Soulakellis created a logo for the OpenTK library. A scaled-down image of the first version is used in the Textures example.
+    + Improved example layout. Now every example contains a Main() method, exactly like it would be if it wasn't launched by the ExampleLauncher.
+    + Added ExampleAttribute.
+    + Added Fonts, Textures and Text examples.
+    + Improved GLSL example (now loads the shader from disk, uses VBO).
+    - Disabled Vertex Array and Lighting examples, as they were seriously broken.
+    + Background changed to Color.SteelBlue for all examples.
+    + Kostas Soulakellis created a logo for the OpenTK library. A scaled-down image of the first version is used in the Textures example.
 
 
 
@@ -420,40 +426,40 @@ OpenTK 0.3.11 -> 0.3.12
 -----------------------
 
 + Bind
-	+ Minor output layout updates.
+    + Minor output layout updates.
 
 + OpenTK
-	+ Platform
-		+ Renamed Windows.API to Windows.Functions, to match X11.Functions.
-		+ Added many new functions to both Windows and X11 bindings.
-		+ Improved inline documentation to Windows and X11 bindings.
-	+ GameWindow
-		+ Added timing logic to the Run() function. The target UpdateFrame and RenderFrame rates can be set independently. The GameWindow will try to maintain the UpdateFrame rate, dropping RenderFrames if necessary.
-		+ GameWindow.Run() now releases unused CPU time.
-		+ Improved event firing. Resize event called only once now. No need for users to call base.OnXYZ functions.
-		+ Corrected an issue where GameWindow could could fail to shutdown properly under Windows, due to WinRawInput driver eating up the CLOSE event.
-		+ GameWindow exposes only one Mouse and Keyboard now. Multiple keyboard/mouse support is provided through the InputDriver, but is still very much a WIP, so better to use the default Keyboard and Mouse devices reported by GameWindow.
-		+ Added the GameWindow.Title property, which can be used to retrieve or set the GameWindow caption.
-		+ Added new constructors and CreateWindow overloads.
-		+ Greatly improved documentation.
-		+ Internal layout changes, and general performance optimizations.
-	+ Input
-		+ Mouse input support through WinRawMouse and X11Mouse drivers.
-		- Mouse.Wheel and Mouse.WheelDelta are broken on both platforms.
-		- WinRawMouse is very resource intensive. Expect great performance improvements in the next releases.
-		+ Added some missing Keyboard keys.
-	+ Math
-		+ Added Vector2, Vector3 and Vector4 structs, and basic vector math functions. You can pass these structs directly to functions expecting float*, by casting to (float*).
+    + Platform
+        + Renamed Windows.API to Windows.Functions, to match X11.Functions.
+        + Added many new functions to both Windows and X11 bindings.
+        + Improved inline documentation to Windows and X11 bindings.
+    + GameWindow
+        + Added timing logic to the Run() function. The target UpdateFrame and RenderFrame rates can be set independently. The GameWindow will try to maintain the UpdateFrame rate, dropping RenderFrames if necessary.
+        + GameWindow.Run() now releases unused CPU time.
+        + Improved event firing. Resize event called only once now. No need for users to call base.OnXYZ functions.
+        + Corrected an issue where GameWindow could could fail to shutdown properly under Windows, due to WinRawInput driver eating up the CLOSE event.
+        + GameWindow exposes only one Mouse and Keyboard now. Multiple keyboard/mouse support is provided through the InputDriver, but is still very much a WIP, so better to use the default Keyboard and Mouse devices reported by GameWindow.
+        + Added the GameWindow.Title property, which can be used to retrieve or set the GameWindow caption.
+        + Added new constructors and CreateWindow overloads.
+        + Greatly improved documentation.
+        + Internal layout changes, and general performance optimizations.
+    + Input
+        + Mouse input support through WinRawMouse and X11Mouse drivers.
+        - Mouse.Wheel and Mouse.WheelDelta are broken on both platforms.
+        - WinRawMouse is very resource intensive. Expect great performance improvements in the next releases.
+        + Added some missing Keyboard keys.
+    + Math
+        + Added Vector2, Vector3 and Vector4 structs, and basic vector math functions. You can pass these structs directly to functions expecting float*, by casting to (float*).
 
 + Examples
-	+ Merged T02: Resizable Window example into T01: Simple Window.
-	+ Added T02: Vertex Array example.
-	+ Added T04: Lighting example.
-	+ Improved keyboard handling.
-	+ Improved documentation, especially T01: Simple Window.
-	+ Slightly cleaned up T10: GLSL Example.
-	+ Examples now use many of the new GameWindow capabilities. Check out T01.
-	+ Added Shape, IsoSphere, and Cube shapes. OpenTK.Example.Shape for more.
+    + Merged T02: Resizable Window example into T01: Simple Window.
+    + Added T02: Vertex Array example.
+    + Added T04: Lighting example.
+    + Improved keyboard handling.
+    + Improved documentation, especially T01: Simple Window.
+    + Slightly cleaned up T10: GLSL Example.
+    + Examples now use many of the new GameWindow capabilities. Check out T01.
+    + Added Shape, IsoSphere, and Cube shapes. OpenTK.Example.Shape for more.
 
 
 
@@ -462,36 +468,36 @@ OpenTK 0.3.10 -> 0.3.11
 -----------------------
 
 + Bind
-	+ Preliminary support for GLU and GLX.
-	+ Improved generator speed. GLU generation down to 5 seconds (from 6 minutes).
-	+ Enhanced overload trimming using Regexes. All endings should be handled correctly now.
+    + Preliminary support for GLU and GLX.
+    + Improved generator speed. GLU generation down to 5 seconds (from 6 minutes).
+    + Enhanced overload trimming using Regexes. All endings should be handled correctly now.
 
 + OpenTK
-	+ Platform
-		+ Replaced System.Windows.Forms.Message with OpenTK.Platform.Windows.MSG. Corrects deadlocks under 32-bit windows.
-		+ Added WindowMessage enum from Mono's bindings.
-	+ GameWindow, GLControl and GLContext
-		+ Improved shutdown sequence (finalizers only on classes that actually need them).
-		+ Improved stability (exceptions no longer thrown in finalizers).
-		+ Corrected deadlock under 32-bit Windows (see above).
-		+ Added DummyGLControl and DummyGLContext, used in design mode. Improves design speed and resolves Visual Studio crashes.
-		+ GameWindow Create event marked as obsolete. Use the Load event instead.
-	+ Input
-		+ Correctly implemented disposable pattern.
-	+ OpenGL
-		+ GL.ClearColor() now accepts a System.Drawing.Color
-		+ All function endings are trimmed now (see Bind changelog).
-		+ GCHandles where not freed (bug introduced in 0.3.10).
-		+ Added preliminary GLU bindings. Tesselation not working yet.
+    + Platform
+        + Replaced System.Windows.Forms.Message with OpenTK.Platform.Windows.MSG. Corrects deadlocks under 32-bit windows.
+        + Added WindowMessage enum from Mono's bindings.
+    + GameWindow, GLControl and GLContext
+        + Improved shutdown sequence (finalizers only on classes that actually need them).
+        + Improved stability (exceptions no longer thrown in finalizers).
+        + Corrected deadlock under 32-bit Windows (see above).
+        + Added DummyGLControl and DummyGLContext, used in design mode. Improves design speed and resolves Visual Studio crashes.
+        + GameWindow Create event marked as obsolete. Use the Load event instead.
+    + Input
+        + Correctly implemented disposable pattern.
+    + OpenGL
+        + GL.ClearColor() now accepts a System.Drawing.Color
+        + All function endings are trimmed now (see Bind changelog).
+        + GCHandles where not freed (bug introduced in 0.3.10).
+        + Added preliminary GLU bindings. Tesselation not working yet.
 
 + Examples
-	+ Improved ExampleLauncer behavior. Examples are now launched in the main ExampleLauncher thread, and the ExampleLauncher becomes invisible whenever and example is active.
-	+ Improved example names inside the ExampleLauncher. Renamed some examples to better reflect their contents.
-	+ Added two new tutorials: 'T01: Simple Window' and 'T02: Resizable Window'
-	+ Updated the DrawCube() immediate mode functions to use System.Drawing.Colors
-	+ Resolved issue where 'T10: GLSL Cube' example failed with an NRE when compiled with Mono 1.2.x
-	+ Added 'W03: Extensions' example.
-	+ Added 'T04: Lit Cube' example (still needs work).
+    + Improved ExampleLauncer behavior. Examples are now launched in the main ExampleLauncher thread, and the ExampleLauncher becomes invisible whenever and example is active.
+    + Improved example names inside the ExampleLauncher. Renamed some examples to better reflect their contents.
+    + Added two new tutorials: 'T01: Simple Window' and 'T02: Resizable Window'
+    + Updated the DrawCube() immediate mode functions to use System.Drawing.Colors
+    + Resolved issue where 'T10: GLSL Cube' example failed with an NRE when compiled with Mono 1.2.x
+    + Added 'W03: Extensions' example.
+    + Added 'T04: Lit Cube' example (still needs work).
 
 
 
@@ -500,187 +506,187 @@ OpenTK 0.3.9 -> 0.3.10
 -----------------------
 
 + Bind
-	+ Added Generator for WGL.
-	+ Corrected bug where trimmed overloads (like Color3) did not call the correct delegates internally (Color3ub called glColor3b)
-	+ Improved configuration capabilities - can now change the function prefix/postfix, and more.
-	+ Improved commandline argument handling.
+    + Added Generator for WGL.
+    + Corrected bug where trimmed overloads (like Color3) did not call the correct delegates internally (Color3ub called glColor3b)
+    + Improved configuration capabilities - can now change the function prefix/postfix, and more.
+    + Improved commandline argument handling.
 
 + OpenTK
-	+ Platform
-		+ Added complete WGL bindings (Wgl.cs, WglCore.cs, WglDelegates.cs, WglEnums.cs)
-		* Should request up-to-date specs from Khronos.
-	+ GameWindow and GLControl
-		+ Improved creation/destruction event sequence.
-		+ Improved loading speed.
-		+ Corrected long-standing stability issues (moving between GameWindow/GLControl examples no longer results in a crash)
-		+ Improved compatibility (now works with Mesa3d 7.0.x as well as 6.5.x)
-		+ Better error handling (although not completely safe by any measure).
-		+ Corrected client rectangle under Windows GameWindow implementation - now the Viewport correctly corresponds the rendering area.
-		* Critical bug: deadlock on Windows XP 32-bit. Investigating.
-	+ Input
-		+ Slightly improved keyboard handling functions.
-	+ OpenGL
-		+ Added convenience overloads for Color[34] that can directly take a System.Drawing.Color struct.
+    + Platform
+        + Added complete WGL bindings (Wgl.cs, WglCore.cs, WglDelegates.cs, WglEnums.cs)
+        * Should request up-to-date specs from Khronos.
+    + GameWindow and GLControl
+        + Improved creation/destruction event sequence.
+        + Improved loading speed.
+        + Corrected long-standing stability issues (moving between GameWindow/GLControl examples no longer results in a crash)
+        + Improved compatibility (now works with Mesa3d 7.0.x as well as 6.5.x)
+        + Better error handling (although not completely safe by any measure).
+        + Corrected client rectangle under Windows GameWindow implementation - now the Viewport correctly corresponds the rendering area.
+        * Critical bug: deadlock on Windows XP 32-bit. Investigating.
+    + Input
+        + Slightly improved keyboard handling functions.
+    + OpenGL
+        + Added convenience overloads for Color[34] that can directly take a System.Drawing.Color struct.
 
 + Examples
-	+ Slight improvements to event handling.
-	+ Improved the ExampleLauncher interface (now responds to key events, added a 'Run Example' button).
+    + Slight improvements to event handling.
+    + Improved the ExampleLauncher interface (now responds to key events, added a 'Run Example' button).
 
-	
+    
 OpenTK 0.3.8 -> 0.3.9
 
 + Bind
-	+ Does not rely on CodeDOM anymore (wasn't flexible enough).
-		+ Initial work on gl3, wgl, glx, glu compatibility.
-	+ Implemented almost all pending features:
-		+ Extensions in different classes (e.g. GL.ARB.ActiveTexture)
-		+ Fixed statement instead of GCHandle for improved performance
-		+ Real pointers instead of IntPtrs
-		+ CLS-Compliant and non CLS-Compliant overloads (e.g. functions with unsigned parameters).
-		+ Overloads over the 'basic' function (e.g. GL.Vertex3fv -> GL.Vertex3)
-		+ Enums now inside the GL class.
-	+ New commandline options
-		+ 'legacy':	defines compatibility with Tao ('-legacy:tao')
-		+ 'mode':	defines translation mode (e.g. gl2, gl3, wgl etc)
-	+ 4 files are now generated: GL.cs, GLCore.cs, GLDelegates.cs, GLEnums.cs
+    + Does not rely on CodeDOM anymore (wasn't flexible enough).
+        + Initial work on gl3, wgl, glx, glu compatibility.
+    + Implemented almost all pending features:
+        + Extensions in different classes (e.g. GL.ARB.ActiveTexture)
+        + Fixed statement instead of GCHandle for improved performance
+        + Real pointers instead of IntPtrs
+        + CLS-Compliant and non CLS-Compliant overloads (e.g. functions with unsigned parameters).
+        + Overloads over the 'basic' function (e.g. GL.Vertex3fv -> GL.Vertex3)
+        + Enums now inside the GL class.
+    + New commandline options
+        + 'legacy':    defines compatibility with Tao ('-legacy:tao')
+        + 'mode':    defines translation mode (e.g. gl2, gl3, wgl etc)
+    + 4 files are now generated: GL.cs, GLCore.cs, GLDelegates.cs, GLEnums.cs
 
 + Build
-	+ Corrected sharpdev target (was generating monodev projects before)
-	+ Added sharpdev2 target.
+    + Corrected sharpdev target (was generating monodev projects before)
+    + Added sharpdev2 target.
 
 + OpenTK
-	+ GameWindow
-		+ Added support for keyboard input. Windows (raw input) and linux drivers.
-		* Improved GameWindow events (Load, Create, Destroy). Still incomplete.
-		* Fixed several crash bugs.
-		- Crashes observed when frequently creating/destroying GameWindows.
-	+ Input
-		* Interface for input devices: keyboard, mouse.
-		* Driver implementation for windows (raw input) and linux.
-		+ Works with GameWindow.
-		- Does not work with GLControl, yet.
-	+ Platform
-		+ X11 enhanced with Mono's X11 bindings.
-		* Work on platform interop utilities.
-		+ Minor additions to Windows.API
+    + GameWindow
+        + Added support for keyboard input. Windows (raw input) and linux drivers.
+        * Improved GameWindow events (Load, Create, Destroy). Still incomplete.
+        * Fixed several crash bugs.
+        - Crashes observed when frequently creating/destroying GameWindows.
+    + Input
+        * Interface for input devices: keyboard, mouse.
+        * Driver implementation for windows (raw input) and linux.
+        + Works with GameWindow.
+        - Does not work with GLControl, yet.
+    + Platform
+        + X11 enhanced with Mono's X11 bindings.
+        * Work on platform interop utilities.
+        + Minor additions to Windows.API
 
 + Examples
-	+ New GL interface.
-	* Temporarily disabled incomplete examples.
+    + New GL interface.
+    * Temporarily disabled incomplete examples.
 
 
 OpenTK 0.3.7 -> 0.3.8
 
 + New project layout. Only four projects remain under the 'Source' directory: Bind, Build, Examples, OpenTK
-	+ The whole library (Platform, Windowing, OpenGL, etc.) is now contained in the OpenTK.dll.
-	+ Build contains the new build system.
-	+ Bind contains the opengl binding generator.
-	+ Examples contains examples showcasing OpenTK and OpenGL.
+    + The whole library (Platform, Windowing, OpenGL, etc.) is now contained in the OpenTK.dll.
+    + Build contains the new build system.
+    + Bind contains the opengl binding generator.
+    + Examples contains examples showcasing OpenTK and OpenGL.
 
 + Build
-	+ Improved console output.
-	+ Added support for debug target.
-	+ Better handling of wrong targets.
-	+ Moved Prebuild.xml to the Build folder.
-	
+    + Improved console output.
+    + Added support for debug target.
+    + Better handling of wrong targets.
+    + Moved Prebuild.xml to the Build folder.
+    
 + OpenTK
-	- Removed OpenTK.Framework (superseded by GameWindow)
-	+ GameWindow (new, incomplete)
-		+ Creates render window through system calls.
-		+ Interface suited for games.
-		+ Resize event support.
-		+ Error handling.
-		- No keyboard input yet.
-	+ Platform
-		+ Numerous additions, bugfixes in OpenTK.Platform.Windows, OpenTK.Platform.X11.
-		+ Changed the class and namespace names.
-		+ Added IGLContext, IGLControl, IGameWindow, INativeWindow, IResizable interfaces.
-		+ Added class GLContext : IGLContext. Platform specific implementations in WinGLContext and X11GLContext.
-		+ Added class GLControl : IGLControl. Platform specific implementations in WinGLControl and X11GLControl.
-		+ Added classes WinGLNative, X11GLNative : INativeWindow.
-		+ Added visual studio design support for GLControl.
-	+ Input
-		* Do not use yet, it is not ready.
+    - Removed OpenTK.Framework (superseded by GameWindow)
+    + GameWindow (new, incomplete)
+        + Creates render window through system calls.
+        + Interface suited for games.
+        + Resize event support.
+        + Error handling.
+        - No keyboard input yet.
+    + Platform
+        + Numerous additions, bugfixes in OpenTK.Platform.Windows, OpenTK.Platform.X11.
+        + Changed the class and namespace names.
+        + Added IGLContext, IGLControl, IGameWindow, INativeWindow, IResizable interfaces.
+        + Added class GLContext : IGLContext. Platform specific implementations in WinGLContext and X11GLContext.
+        + Added class GLControl : IGLControl. Platform specific implementations in WinGLControl and X11GLControl.
+        + Added classes WinGLNative, X11GLNative : INativeWindow.
+        + Added visual studio design support for GLControl.
+    + Input
+        * Do not use yet, it is not ready.
 
 + Examples
-	+ Added an example launcher
-	+ Two example categories for now: Tutorials (showcasing GameWindow) and WinForms (showcasing GLControl)
-	+ Added Tutorials.VBO example (incomplete)
-	+ Added WinForms.FirstWindow example.
-	+ Ported some of the old examples over.
-	* More work on examples and tutorials on the next version.
-	
+    + Added an example launcher
+    + Two example categories for now: Tutorials (showcasing GameWindow) and WinForms (showcasing GLControl)
+    + Added Tutorials.VBO example (incomplete)
+    + Added WinForms.FirstWindow example.
+    + Ported some of the old examples over.
+    * More work on examples and tutorials on the next version.
+    
 
 OpenTK 0.3.6 -> 0.3.7
 
 + OpenTK.Build
-	+ Added new, (more) cross-platform build system, written on C#. This takes the place of the scripts and batch files used to compile OpenTK up till now.
-	+ Removed all build scripts.
+    + Added new, (more) cross-platform build system, written on C#. This takes the place of the scripts and batch files used to compile OpenTK up till now.
+    + Removed all build scripts.
 
 + OpenTK.Framework
-	+ Now builds under Linux.
+    + Now builds under Linux.
 
 + OpenTK.OpenGL.Bind
-	+ Synced with Tao.GlBindGen beta 2.1.3.6
-	+ Enabled ref/out overloads.
-	+ Added GLenum, which contains all opengl enumerants (useful for 'polymorphic' opengl functions).
+    + Synced with Tao.GlBindGen beta 2.1.3.6
+    + Enabled ref/out overloads.
+    + Added GLenum, which contains all opengl enumerants (useful for 'polymorphic' opengl functions).
 
 + OpenTK.OpenGL
-	+ ref/out overloads and GLenum (see above).
-	+ Fixed extension loading under Mac OS X.
-	+ Improved compatibility with 64bit platforms.
+    + ref/out overloads and GLenum (see above).
+    + Fixed extension loading under Mac OS X.
+    + Improved compatibility with 64bit platforms.
 
 
 OpenTK 0.3.5 -> 0.3.6
 
 + OpenTK.OpenGL.Bind
-	+ Synced with Tao.GlBindGen codebase.
-	+ Uses CodeDOM internally for code generation.
-	+ Updated to latest specs (which include shader model 4).
+    + Synced with Tao.GlBindGen codebase.
+    + Uses CodeDOM internally for code generation.
+    + Updated to latest specs (which include shader model 4).
 
 + OpenTK.OpenGL (Low level)
-	+ All OpenGL extensions are now generated (up to shader model 4).
-	+ Decorated imports and delegates with the SuppressUnmanagedCodeSecurity attribute. Major speed improvements in CPU-bound applications.
-	+ More robust and faster static initialisation for the GL class.
-	+ Updated GLHelper.cs, with methods to obtain or reload OpenGL entry points, as well as query for supported extensions.
-	+ Got rid of "object" overloads for typed arrays.
-	+ All known bugs are now fixed.
+    + All OpenGL extensions are now generated (up to shader model 4).
+    + Decorated imports and delegates with the SuppressUnmanagedCodeSecurity attribute. Major speed improvements in CPU-bound applications.
+    + More robust and faster static initialisation for the GL class.
+    + Updated GLHelper.cs, with methods to obtain or reload OpenGL entry points, as well as query for supported extensions.
+    + Got rid of "object" overloads for typed arrays.
+    + All known bugs are now fixed.
 
 + OpenTK.OpenGL (High level)
-	+ Added the DisplayList class.
+    + Added the DisplayList class.
 
 + OpenTK.Examples.OpenGL
-	+ Added the Basic.DisplayLists example.
+    + Added the Basic.DisplayLists example.
 
 
 
 OpenTK 0.3.4 -> 0.3.5
 + Thanks to Erik Ylvisaker's hard work, OpenTK now works under both Windows and X11.
-	+ The GLContext class now contains all needed code for mode switching.
-	+ The Framework class structure has been updated. Less code is duplicated between GLContext and Framework now.
-	+ Three new examples have been added: OpenGL.Basic.Lesson01 (equivalent to OpenGL.GLSL.Lesson01 without the shaders), OpenGL.Basic.QueryDisplayModes which shows a list of all available display modes, and OpenGL.Basic.NoFramework which shows how to use OpenGL Contexts directly (without relying on the framework).
-	+ New bindings for X and the XF86 extension.
+    + The GLContext class now contains all needed code for mode switching.
+    + The Framework class structure has been updated. Less code is duplicated between GLContext and Framework now.
+    + Three new examples have been added: OpenGL.Basic.Lesson01 (equivalent to OpenGL.GLSL.Lesson01 without the shaders), OpenGL.Basic.QueryDisplayModes which shows a list of all available display modes, and OpenGL.Basic.NoFramework which shows how to use OpenGL Contexts directly (without relying on the framework).
+    + New bindings for X and the XF86 extension.
 + New build system based on Prebuild and NAnt (similar to the one used in Tao or Mono.XNA).
 + Updates to the OpenTK.OpenGL.DisplayMode and ColorDepth classes.
 + More XML documentation blocks added to functions and classes.
 + Major update to OpenTK.OpenGL.Bind (see that changelog for more info).
-	+ Revamped GL class (it is self contained now).
-	+ Revamped GLContext class (it is no longer bound to the GL class initialisation).
-	+ Cleaner code, new functions, comments and many new wrappers.
-	+ Updated the spec files for opengl 2.1.
-	+ Added the new 64 bit types to the typemaps (gl.tm and csharp.tm)
+    + Revamped GL class (it is self contained now).
+    + Revamped GLContext class (it is no longer bound to the GL class initialisation).
+    + Cleaner code, new functions, comments and many new wrappers.
+    + Updated the spec files for opengl 2.1.
+    + Added the new 64 bit types to the typemaps (gl.tm and csharp.tm)
 + The bugs in the specs are still there:
-	+ SGIX_icc_texture is still commented out, while enums use it.
-	+ LightProperty is still used by constants (the correct enum is LightParameter).
-		+ I think I should contact someone at the Khronos group about these. For the time being I worked around them, by adding a special case for LightProperty in the translator, and adding the SGIX enum to the missing parameters.
-		+ See also: http://www.haskell.org/HOpenGL/spec_bugs.html (lots of useful information on that site).
+    + SGIX_icc_texture is still commented out, while enums use it.
+    + LightProperty is still used by constants (the correct enum is LightParameter).
+        + I think I should contact someone at the Khronos group about these. For the time being I worked around them, by adding a special case for LightProperty in the translator, and adding the SGIX enum to the missing parameters.
+        + See also: http://www.haskell.org/HOpenGL/spec_bugs.html (lots of useful information on that site).
 + Directory structure updates.
-	+ Now every project has its own documentation.
-	+ The spec files for OpenGL now reside in the Source/OpenTK/OpenGL directory.
+    + Now every project has its own documentation.
+    + The spec files for OpenGL now reside in the Source/OpenTK/OpenGL directory.
 + Minor updates to the wgl bindings (int -> IntPtr).
 + Tested the binding generator with the glx specs (the reader and the enum writer work ok, the trnaslator and the other writers will need updating).
 + Renamed the GLForm to Framework.
-	+ The Framework now resides in its own project directory.
+    + The Framework now resides in its own project directory.
 
 
 OpenTK 0.3.3 -> 0.3.4
