@@ -27,6 +27,15 @@ namespace OpenTK.Input
         #region Public Members
 
         /// <summary>
+        /// Retrieves the KeyboardState for the default keyboard device.
+        /// </summary>
+        /// <returns>A <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
+        public static KeyboardState GetState()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Retrieves the KeyboardState for the specified keyboard device.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>
