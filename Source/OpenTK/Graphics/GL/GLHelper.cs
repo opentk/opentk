@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.Reflection.Emit;
 
 
-
 #endregion
 
 // Add a dummy namespace to keep old code compiling.
@@ -618,7 +617,7 @@ namespace OpenTK.Graphics
 #pragma warning disable 1591
 #pragma warning disable 1572
 #pragma warning disable 1573
-
+        
         #region public static void Color[34]() overloads
 
         public static void Color3(System.Drawing.Color color)
@@ -900,7 +899,7 @@ namespace OpenTK.Graphics
         {
             GL.Uniform4(location, quaternion.X, quaternion.Y, quaternion.Z, quaternion.W);
         }
-
+        
         #endregion
 
         #endregion
@@ -917,14 +916,14 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-        
+
         #region public static string GetShaderInfoLog(Int32 shader)
 
         public static string GetShaderInfoLog(Int32 shader)
         {
             string info;
             GetShaderInfoLog(shader, out info);
-            return info;
+            return info;        
         }
 
         #endregion
@@ -949,18 +948,18 @@ namespace OpenTK.Graphics
         }
 
         #endregion
-        
-        #region public static string GetProgramInfoLog(Int32 program)
 
+        #region public static string GetProgramInfoLog(Int32 program)
+        
         public static string GetProgramInfoLog(Int32 program)
         {
             string info;
             GetProgramInfoLog(program, out info);
             return info;
         }
-
+        
         #endregion
-
+        
         #region public static void GetProgramInfoLog(Int32 program, out string info)
 
         public static void GetProgramInfoLog(Int32 program, out string info)
@@ -968,8 +967,7 @@ namespace OpenTK.Graphics
             unsafe
             {
                 int length;
-                GL.GetProgram(program, OpenTK.Graphics.ProgramParameter.InfoLogLength, out length);
-                if (length == 0)
+                GL.GetProgram(program, OpenTK.Graphics.ProgramParameter.InfoLogLength, out length);                if (length == 0)
                 {
                     info = String.Empty;
                     return;
@@ -1270,6 +1268,27 @@ namespace OpenTK.Graphics
         public static void Viewport(System.Drawing.Rectangle rectangle)
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+        }
+
+        #endregion
+
+        #region TexEnv
+
+        public static void TexEnv(TextureEnvTarget target, TextureEnvParameter pname, System.Drawing.Color color)
+        {
+            Color4 c = new Color4(color);
+            unsafe
+            {
+                TexEnv(target, pname, &c.R);
+            }
+        }
+
+        public static void TexEnv(TextureEnvTarget target, TextureEnvParameter pname, Color4 color)
+        {
+            unsafe
+            {
+                TexEnv(target, pname, &color.R);
+            }
         }
 
         #endregion

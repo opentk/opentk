@@ -86,6 +86,14 @@ namespace OpenTK.Graphics.Text
 
             GL.Disable(EnableCap.DepthTest);
 
+            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)All.Modulate);
+            GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvColor, new Color4(0, 0, 0, 0));
+
+            GL.Disable(EnableCap.TextureGenQ);
+            GL.Disable(EnableCap.TextureGenR);
+            GL.Disable(EnableCap.TextureGenS);
+            GL.Disable(EnableCap.TextureGenT);
+
             RectangleF position;
 
             SetColor(color);
