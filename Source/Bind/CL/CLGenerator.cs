@@ -31,9 +31,11 @@ namespace Bind.CL
             Settings.ImportsClass = "Core";
             Settings.DelegatesClass = "Delegates";
 
+            Settings.FunctionPrefix = "cl";
+
             Settings.OutputClass = "CL";
             Settings.OutputNamespace = "OpenTK.Compute." + name;
-            Settings.OutputPath = Path.Combine(Directory.GetParent(Settings.OutputPath).FullName, name);
+            Settings.OutputPath = Path.Combine("../../Source/OpenTK/Compute", name);
         }
 
         public override Bind.Structures.DelegateCollection ReadDelegates(System.IO.StreamReader specFile)
