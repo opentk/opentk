@@ -42,7 +42,7 @@ namespace OpenTK.Compute
         [DllImport(Configuration.Library, EntryPoint = "clCreateKernel")]
         public static extern cl_kernel CreateKernel(cl_program program,
             string kernel_name,
-            out int errcode_ret);
+            out ErrorCode errcode_ret);
 
         // OpenCL 1.0
         [DllImport(Configuration.Library, EntryPoint = "clCreateKernelsInProgram")]
