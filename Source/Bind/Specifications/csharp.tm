@@ -90,6 +90,47 @@ VLServer        IntPtr
 VLPath            IntPtr
 VLNode            IntPtr
 
-# Gles types.
+
+# OpenGL|ES types.
 GLclampx, int
 GLfixed, int
+
+
+# OpenCL types.
+cl_command_queue, IntPtr
+cl_context, IntPtr
+cl_device_id, IntPtr
+cl_event, IntPtr
+cl_kernel, IntPtr
+cl_mem, IntPtr
+cl_platform_id, IntPtr
+cl_program, IntPtr
+cl_sampler, IntPtr
+size_t, IntPtr
+
+cl_bool, bool
+cl_int, int
+cl_uint, uint
+
+cl_addressing_mode, AddressingMode
+cl_command_queue_info, CommandQueueInfo
+cl_command_queue_properties, CommandQueueProperties
+cl_context_info, ContextInfo
+cl_context_properties, ContextProperties
+cl_device_info, DeviceInfo
+cl_device_type, DeviceType
+cl_event_info, EventInfo
+cl_filter_mode, FilterMode
+cl_image_format, ImageFormat
+cl_image_info, ImageInfo
+cl_kernel_group_info, KernelGroupInfo
+cl_kernel_info, KernelInfo
+cl_map_flags, MapFlags
+cl_mem_info, MemInfo
+cl_mem_flags, MemFlags
+cl_mem_object_type, MemObjectType
+cl_platform_info, PlatformInfo
+cl_profiling_info, ProfilingInfo
+cl_program_build_info, ProgramBuildInfo
+cl_sampler_info, SamplerInfo
+cl_work_group_info, WorkGroupInfo
