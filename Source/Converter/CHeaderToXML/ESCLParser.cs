@@ -273,12 +273,15 @@ namespace CHeaderToXML
                     case "const":
                         // ignore
                         break;
-                    case "GL_API":
-                    case "CL_API_ENTRY":
+                    case "GLAPI":   // ES 1.0
+                    case "GL_API": // ES 1.1
+                    case "GL_APICALL":  // ES 2.0
+                    case "CL_API_ENTRY": // CL 1.0
                         inRettype = true;
                         break;
-                    case "GL_APIENTRY":
-                    case "CL_API_CALL":
+                    case "APIENTRY":  // ES 1.0
+                    case "GL_APIENTRY":  // ES 1.1 & 2.0
+                    case "CL_API_CALL": // CL 1.0
                         inRettype = false;
                         funcname = words [i+1].Substring(Prefix.Length);
                         quit = true;
