@@ -329,6 +329,8 @@ namespace Bind.Structures
 
             if (Name == "params")
                 Name = "@params";
+            if (Name == "event")
+                Name = "@event";
 
             // This causes problems with bool arrays
             //if (CurrentType.ToLower().Contains("bool"))
