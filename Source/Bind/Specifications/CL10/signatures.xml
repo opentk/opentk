@@ -251,89 +251,89 @@
     <returns type="cl_int" />
     <param type="cl_program" name="program" />
     <param type="cl_uint" name="num_devices" />
-    <param type="device_list" name="device_list" />
-    <param type="options" name="options" />
+    <param type="cl_device_id*" name="device_list" />
+    <param type="char*" name="options" />
   </function>
   <function name="CreateBuffer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_mem" />
     <param type="cl_context" name="context" />
     <param type="cl_mem_flags" name="flags" />
     <param type="size_t" name="size" />
-    <param type="void" name="host_ptr" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="void*" name="host_ptr" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="CreateCommandQueue" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_command_queue" />
     <param type="cl_context" name="context" />
     <param type="cl_device_id" name="device" />
     <param type="cl_command_queue_properties" name="properties" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="CreateContext" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_context" />
-    <param type="cl_context_properties" name="properties" />
+    <param type="cl_context_properties*" name="properties" />
     <param type="cl_uint" name="num_devices" />
-    <param type="devices" name="devices" />
+    <param type="cl_device_id*" name="devices" />
   </function>
   <function name="CreateContextFromType" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_context" />
-    <param type="cl_context_properties" name="properties" />
+    <param type="cl_context_properties*" name="properties" />
     <param type="cl_device_type" name="device_type" />
   </function>
   <function name="CreateImage2D" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_mem" />
     <param type="cl_context" name="context" />
     <param type="cl_mem_flags" name="flags" />
-    <param type="image_format" name="image_format" />
+    <param type="cl_image_format*" name="image_format" />
     <param type="size_t" name="image_width" />
     <param type="size_t" name="image_height" />
     <param type="size_t" name="image_row_pitch" />
-    <param type="void" name="host_ptr" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="void*" name="host_ptr" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="CreateImage3D" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_mem" />
     <param type="cl_context" name="context" />
     <param type="cl_mem_flags" name="flags" />
-    <param type="image_format" name="image_format" />
+    <param type="cl_image_format*" name="image_format" />
     <param type="size_t" name="image_width" />
     <param type="size_t" name="image_height" />
     <param type="size_t" name="image_depth" />
     <param type="size_t" name="image_row_pitch" />
     <param type="size_t" name="image_slice_pitch" />
-    <param type="void" name="host_ptr" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="void*" name="host_ptr" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="CreateKernel" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_kernel" />
     <param type="cl_program" name="program" />
-    <param type="kernel_name" name="kernel_name" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="char*" name="kernel_name" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="CreateKernelsInProgram" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_program" name="program" />
     <param type="cl_uint" name="num_kernels" />
-    <param type="cl_kernel" name="kernels" />
-    <param type="cl_uint" name="num_kernels_ret" />
+    <param type="cl_kernel*" name="kernels" />
+    <param type="cl_uint*" name="num_kernels_ret" />
   </function>
   <function name="CreateProgramWithBinary" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_program" />
     <param type="cl_context" name="context" />
     <param type="cl_uint" name="num_devices" />
-    <param type="device_list" name="device_list" />
-    <param type="lengths" name="lengths" />
-    <param type="binaries" name="binaries" />
-    <param type="cl_int" name="binary_status" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="cl_device_id*" name="device_list" />
+    <param type="size_t*" name="lengths" />
+    <param type="unsigned**" name="binaries" />
+    <param type="cl_int*" name="binary_status" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="CreateProgramWithSource" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_program" />
     <param type="cl_context" name="context" />
     <param type="cl_uint" name="count" />
-    <param type="strings" name="strings" />
-    <param type="lengths" name="lengths" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="char**" name="strings" />
+    <param type="size_t*" name="lengths" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="CreateSampler" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_sampler" />
@@ -341,7 +341,7 @@
     <param type="cl_bool" name="normalized_coords" />
     <param type="cl_addressing_mode" name="addressing_mode" />
     <param type="cl_filter_mode" name="filter_mode" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="EnqueueBarrier" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -356,8 +356,8 @@
     <param type="size_t" name="dst_offset" />
     <param type="size_t" name="cb" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueCopyBufferToImage" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -365,35 +365,35 @@
     <param type="cl_mem" name="src_buffer" />
     <param type="cl_mem" name="dst_image" />
     <param type="size_t" name="src_offset" />
-    <param type="dst_origin[3]*" name="dst_origin" count="3" />
-    <param type="region[3]*" name="region" count="3" />
+    <param type="size_t**" name="dst_origin" count="3" />
+    <param type="size_t**" name="region" count="3" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueCopyImage" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_mem" name="src_image" />
     <param type="cl_mem" name="dst_image" />
-    <param type="src_origin[3]*" name="src_origin" count="3" />
-    <param type="dst_origin[3]*" name="dst_origin" count="3" />
-    <param type="region[3]*" name="region" count="3" />
+    <param type="size_t**" name="src_origin" count="3" />
+    <param type="size_t**" name="dst_origin" count="3" />
+    <param type="size_t**" name="region" count="3" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueCopyImageToBuffer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_mem" name="src_image" />
     <param type="cl_mem" name="dst_buffer" />
-    <param type="src_origin[3]*" name="src_origin" count="3" />
-    <param type="region[3]*" name="region" count="3" />
+    <param type="size_t**" name="src_origin" count="3" />
+    <param type="size_t**" name="region" count="3" />
     <param type="size_t" name="dst_offset" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueMapBuffer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void*" />
@@ -404,9 +404,9 @@
     <param type="size_t" name="offset" />
     <param type="size_t" name="cb" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="EnqueueMapImage" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="void*" />
@@ -414,19 +414,19 @@
     <param type="cl_mem" name="image" />
     <param type="cl_bool" name="blocking_map" />
     <param type="cl_map_flags" name="map_flags" />
-    <param type="origin[3]*" name="origin" count="3" />
-    <param type="region[3]*" name="region" count="3" />
-    <param type="size_t" name="image_row_pitch" />
-    <param type="size_t" name="image_slice_pitch" />
+    <param type="size_t**" name="origin" count="3" />
+    <param type="size_t**" name="region" count="3" />
+    <param type="size_t*" name="image_row_pitch" />
+    <param type="size_t*" name="image_slice_pitch" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
-    <param type="cl_int" name="errcode_ret" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
+    <param type="cl_int*" name="errcode_ret" />
   </function>
   <function name="EnqueueMarker" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_command_queue" name="command_queue" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueNativeKernel" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -437,12 +437,12 @@
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_kernel" name="kernel" />
     <param type="cl_uint" name="work_dim" />
-    <param type="global_work_offset" name="global_work_offset" />
-    <param type="global_work_size" name="global_work_size" />
-    <param type="local_work_size" name="local_work_size" />
+    <param type="size_t*" name="global_work_offset" />
+    <param type="size_t*" name="global_work_size" />
+    <param type="size_t*" name="local_work_size" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueReadBuffer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -451,47 +451,47 @@
     <param type="cl_bool" name="blocking_read" />
     <param type="size_t" name="offset" />
     <param type="size_t" name="cb" />
-    <param type="void" name="ptr" />
+    <param type="void*" name="ptr" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueReadImage" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_mem" name="image" />
     <param type="cl_bool" name="blocking_read" />
-    <param type="origin[3]*" name="origin" count="3" />
-    <param type="region[3]*" name="region" count="3" />
+    <param type="size_t**" name="origin" count="3" />
+    <param type="size_t**" name="region" count="3" />
     <param type="size_t" name="row_pitch" />
     <param type="size_t" name="slice_pitch" />
-    <param type="void" name="ptr" />
+    <param type="void*" name="ptr" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueTask" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_kernel" name="kernel" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueUnmapMemObject" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_mem" name="memobj" />
-    <param type="void" name="mapped_ptr" />
+    <param type="void*" name="mapped_ptr" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueWaitForEvents" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_uint" name="num_events" />
-    <param type="event_list" name="event_list" />
+    <param type="cl_event*" name="event_list" />
   </function>
   <function name="EnqueueWriteBuffer" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -500,24 +500,24 @@
     <param type="cl_bool" name="blocking_write" />
     <param type="size_t" name="offset" />
     <param type="size_t" name="cb" />
-    <param type="ptr" name="ptr" />
+    <param type="void*" name="ptr" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="EnqueueWriteImage" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_mem" name="image" />
     <param type="cl_bool" name="blocking_write" />
-    <param type="origin[3]*" name="origin" count="3" />
-    <param type="region[3]*" name="region" count="3" />
+    <param type="size_t**" name="origin" count="3" />
+    <param type="size_t**" name="region" count="3" />
     <param type="size_t" name="input_row_pitch" />
     <param type="size_t" name="input_slice_pitch" />
-    <param type="ptr" name="ptr" />
+    <param type="void*" name="ptr" />
     <param type="cl_uint" name="num_events_in_wait_list" />
-    <param type="event_wait_list" name="event_wait_list" />
-    <param type="cl_event" name="event" />
+    <param type="cl_event*" name="event_wait_list" />
+    <param type="cl_event*" name="event" />
   </function>
   <function name="Finish" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -532,64 +532,64 @@
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_command_queue_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetContextInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_context" name="context" />
     <param type="cl_context_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetDeviceIDs" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_platform_id" name="platform" />
     <param type="cl_device_type" name="device_type" />
     <param type="cl_uint" name="num_entries" />
-    <param type="cl_device_id" name="devices" />
-    <param type="cl_uint" name="num_devices" />
+    <param type="cl_device_id*" name="devices" />
+    <param type="cl_uint*" name="num_devices" />
   </function>
   <function name="GetDeviceInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_device_id" name="device" />
     <param type="cl_device_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetEventInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_event" name="event" />
     <param type="cl_event_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetEventProfilingInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_event" name="event" />
     <param type="cl_profiling_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetImageInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_mem" name="image" />
     <param type="cl_image_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetKernelInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_kernel" name="kernel" />
     <param type="cl_kernel_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetKernelWorkGroupInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -597,30 +597,30 @@
     <param type="cl_device_id" name="device" />
     <param type="cl_kernel_work_group_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetMemObjectInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_mem" name="memobj" />
     <param type="cl_mem_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetPlatformIDs" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_uint" name="num_entries" />
-    <param type="cl_platform_id" name="platforms" />
-    <param type="cl_uint" name="num_platforms" />
+    <param type="cl_platform_id*" name="platforms" />
+    <param type="cl_uint*" name="num_platforms" />
   </function>
   <function name="GetPlatformInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_platform_id" name="platform" />
     <param type="cl_platform_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetProgramBuildInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -628,24 +628,24 @@
     <param type="cl_device_id" name="device" />
     <param type="cl_program_build_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetProgramInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_program" name="program" />
     <param type="cl_program_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetSamplerInfo" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_sampler" name="sampler" />
     <param type="cl_sampler_info" name="param_name" />
     <param type="size_t" name="param_value_size" />
-    <param type="void" name="param_value" />
-    <param type="size_t" name="param_value_size_ret" />
+    <param type="void*" name="param_value" />
+    <param type="size_t*" name="param_value_size_ret" />
   </function>
   <function name="GetSupportedImageFormats" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -653,8 +653,8 @@
     <param type="cl_mem_flags" name="flags" />
     <param type="cl_mem_object_type" name="image_type" />
     <param type="cl_uint" name="num_entries" />
-    <param type="cl_image_format" name="image_formats" />
-    <param type="cl_uint" name="num_image_formats" />
+    <param type="cl_image_format*" name="image_formats" />
+    <param type="cl_uint*" name="num_image_formats" />
   </function>
   <function name="ReleaseCommandQueue" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -717,14 +717,14 @@
     <param type="cl_command_queue" name="command_queue" />
     <param type="cl_command_queue_properties" name="properties" />
     <param type="cl_bool" name="enable" />
-    <param type="cl_command_queue_properties" name="old_properties" />
+    <param type="cl_command_queue_properties*" name="old_properties" />
   </function>
   <function name="SetKernelArg" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_kernel" name="kernel" />
     <param type="cl_uint" name="arg_index" />
     <param type="size_t" name="arg_size" />
-    <param type="arg_value" name="arg_value" />
+    <param type="void*" name="arg_value" />
   </function>
   <function name="UnloadCompiler" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
@@ -732,6 +732,6 @@
   <function name="WaitForEvents" extension="Core" profile="" category="1.0" version="1.0">
     <returns type="cl_int" />
     <param type="cl_uint" name="num_events" />
-    <param type="event_list" name="event_list" />
+    <param type="cl_event*" name="event_list" />
   </function>
 </signatures>
