@@ -24,7 +24,7 @@ namespace Bind
         ES10,
         ES11,
         ES20,
-        CL,
+        CL10,
         [Obsolete] Wgl,
         [Obsolete] Glx,
         [Obsolete] Glu,
@@ -83,7 +83,7 @@ namespace Bind
                                 else if (arg == "es20")
                                     mode = GeneratorMode.ES20;
                                 else if (arg == "cl10")
-                                    mode = GeneratorMode.CL;
+                                    mode = GeneratorMode.CL10;
                                 else
                                     throw new NotImplementedException();
                                 break;
@@ -148,8 +148,8 @@ namespace Bind
                         Generator = new Bind.ES.ESGenerator("ES20");
                         break;
 
-                    case GeneratorMode.CL:
-                        Generator = new Bind.CL.CLGenerator("CL");
+                    case GeneratorMode.CL10:
+                        Generator = new Bind.CL.CLGenerator("CL10");
                         break;
                     
                     case GeneratorMode.Wgl:
