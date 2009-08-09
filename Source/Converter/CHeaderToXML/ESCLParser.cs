@@ -191,7 +191,7 @@ namespace CHeaderToXML
                             from item in line.Split("()".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                             let tokens = item.Trim().Split(' ')
                             let param_name = (tokens.Last().Trim() != "*/" ? tokens.Last() : tokens[tokens.Length - 2]).Trim()
-                            let param_type = (tokens.First().Trim() != "const" ? tokens.First().Trim() : tokens[tokens.Length - 2]).Trim()
+                            let param_type = (tokens.First().Trim() != "const" ? tokens.First().Trim() : tokens.Skip(1).First().Trim())
                             let has_array_size = array_size.IsMatch(param_name)
                             let indirection_level =
                                 (from c in param_name where c == '*' select c).Count() +
