@@ -193,7 +193,13 @@ namespace CHeaderToXML
                             let param_name = (tokens.Last().Trim() != "*/" ? tokens.Last() : tokens[tokens.Length - 2]).Trim()
                             let param_type = (tokens.First().Trim() != "const" ? tokens.First().Trim() : tokens[tokens.Length - 2]).Trim()
                             let has_array_size = array_size.IsMatch(param_name)
-                            let indirection_level = (from c in param_name where c == '*' select c).Count() + (from c in param_type where c == '*' select c).Count() + (has_array_size ? 1 : 0)
+                            let indirection_level =
+                                (from c in param_name where c == '*' select c).Count() +
+                                (from c in param_type where c == '*' select c).Count() +
+                                (from t in tokens where t == "***" select t).Count() * 3 +
+                                (from t in tokens where t == "**" select t).Count() * 2 +
+                                (from t in tokens where t == "*" select t).Count() +
+                                (has_array_size ? 1 : 0)
                             let pointers = new string[] { "*", "*", "*", "*" } // for adding indirection levels (pointers) to param_type
                             where tokens.Length > 1
                             select new
