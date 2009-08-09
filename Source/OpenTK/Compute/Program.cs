@@ -46,7 +46,7 @@ namespace OpenTK.Compute
             int count,
             string[] strings,
             IntPtr[] lengths,
-            out int errcode_ret);
+            out ErrorCode errcode_ret);
 
         // OpenCL 1.0
         [DllImport(Configuration.Library, EntryPoint = "clCreateProgramWithBinary")]
@@ -56,7 +56,7 @@ namespace OpenTK.Compute
         IntPtr[] lengths,
         byte[][] binaries,
         out int binary_status,
-        out int errcode_ret);
+        out ErrorCode errcode_ret);
 
         // OpenCL 1.0
         [DllImport(Configuration.Library, EntryPoint = "clRetainProgram")]
