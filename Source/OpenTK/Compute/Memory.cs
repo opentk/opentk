@@ -43,7 +43,7 @@ namespace OpenTK.Compute
            MemFlags flags,
             /* size_t */ IntPtr size,
            /* void * */ IntPtr host_ptr,
-           out int errcode_ret);
+           out ErrorCode errcode_ret);
 
         // OpenCL 1.0
         [DllImport(Configuration.Library, EntryPoint = "clCreateImage2D")]
@@ -54,7 +54,7 @@ namespace OpenTK.Compute
             /* size_t */ IntPtr image_height,
             /* size_t */ IntPtr image_row_pitch,
            /* void * */ IntPtr host_ptr,
-           out int errcode_ret);
+           out ErrorCode errcode_ret);
 
         // OpenCL 1.0
         [DllImport(Configuration.Library, EntryPoint = "clCreateImage3D")]
@@ -66,7 +66,7 @@ namespace OpenTK.Compute
             /* size_t */ IntPtr image_row_pitch,
             /* size_t */ IntPtr image_slice_pitch,
            /* void * */ IntPtr host_ptr,
-           out int errcode_ret);
+           out ErrorCode errcode_ret);
 
         // OpenCL 1.0
         [DllImport(Configuration.Library, EntryPoint = "clRetainMemObject")]
