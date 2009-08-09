@@ -274,9 +274,11 @@ namespace CHeaderToXML
                         // ignore
                         break;
                     case "GL_API":
+                    case "CL_API_ENTRY":
                         inRettype = true;
                         break;
                     case "GL_APIENTRY":
+                    case "CL_API_CALL":
                         inRettype = false;
                         funcname = words [i+1].Substring(Prefix.Length);
                         quit = true;
