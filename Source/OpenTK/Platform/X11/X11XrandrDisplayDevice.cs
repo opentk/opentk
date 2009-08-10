@@ -67,7 +67,9 @@ namespace OpenTK.Platform.X11
                     // "Screens and Graphics" does report these modes, though.
                     foreach (short rate in rates)
                     {
-                        if (rate != 0)
+                        // Note: some X servers (like Xming on Windows) do not report any rates other than 0.
+                        // If we only have 1 rate, add it even if it is 0.
+                        if (rate != 0 || rates.Length == 1)
                             foreach (int depth in depths)
                                 available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate));
                     }
