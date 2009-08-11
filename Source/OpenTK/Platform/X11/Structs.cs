@@ -834,8 +834,10 @@ namespace OpenTK.Platform.X11
         XK_Hyper_R = 0xFFEE,
     }
 
+
+
     [Flags]
-    internal enum EventMask
+    public enum EventMask
     {
         NoEventMask = 0,
         KeyPressMask = 1 << 0,
