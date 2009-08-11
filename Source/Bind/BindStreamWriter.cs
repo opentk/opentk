@@ -42,15 +42,26 @@ namespace Bind
 
             base.Write(value);
         }
-/*
+
         public override void WriteLine(string value)
         {
-            for (int i = indent_level; i > 0; i--)
-                base.Write("    ");
+            // Todo: it seems that spacing is not correct if this code
+            // is enabled on Linux/Mono. However, it works as it should on Windows/.Net.
+            // This could be related to line-ending differences, but I haven't been able to
+            // find the cause yet.
+            // This ugly workaround should work until the real cause is found.
+            if (Environment.OSVersion.Platform == PlatformID.Win32Windows ||
+                Environment.OSVersion.Platform == PlatformID.Win32NT ||
+                Environment.OSVersion.Platform == PlatformID.Win32S ||
+                Environment.OSVersion.Platform == PlatformID.WinCE)
+            {
+                for (int i = indent_level; i > 0; i--)
+                    base.Write("    ");
 
-            base.WriteLine(value);
+                base.WriteLine(value);
+            }
         }
-*/
+
         public void Write(Bind.Structures.Enum e)
         {
             foreach (string s in splitLines.Split(e.ToString()))
