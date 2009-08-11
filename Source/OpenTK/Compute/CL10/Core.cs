@@ -40,19 +40,19 @@ namespace OpenTK.Compute.CL10
 
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clBuildProgram", ExactSpelling = true)]
-            internal extern static unsafe int BuildProgram(IntPtr program, uint num_devices, IntPtr* device_list, String options);
+            internal extern static unsafe int BuildProgram(IntPtr program, uint num_devices, IntPtr* device_list, String options, IntPtr pfn_notify, IntPtr user_data);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateBuffer", ExactSpelling = true)]
             internal extern static unsafe IntPtr CreateBuffer(IntPtr context, MemFlags flags, IntPtr size, IntPtr host_ptr, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateCommandQueue", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueProperties properties, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueFlags properties, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateContext", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices);
+            internal extern static unsafe IntPtr CreateContext(ContextProperties* properties, uint num_devices, IntPtr* devices, IntPtr pfn_notify, IntPtr user_data, [Out] int* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateContextFromType", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type);
+            internal extern static unsafe IntPtr CreateContextFromType(ContextProperties* properties, DeviceTypeFlags device_type, IntPtr pfn_notify, IntPtr user_data, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateImage2D", ExactSpelling = true)]
             internal extern static unsafe IntPtr CreateImage2D(IntPtr context, MemFlags flags, ImageFormat* image_format, IntPtr image_width, IntPtr image_height, IntPtr image_row_pitch, IntPtr host_ptr, [Out] int* errcode_ret);
@@ -67,7 +67,7 @@ namespace OpenTK.Compute.CL10
             internal extern static unsafe int CreateKernelsInProgram(IntPtr program, uint num_kernels, IntPtr* kernels, [Out] uint* num_kernels_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateProgramWithBinary", ExactSpelling = true)]
-            internal extern static unsafe IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, String binaries, int* binary_status, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
+            internal extern static unsafe IntPtr CreateProgramWithBinary(IntPtr context, uint num_devices, IntPtr* device_list, IntPtr* lengths, byte @char, int* binary_status, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clCreateProgramWithSource", ExactSpelling = true)]
             internal extern static unsafe IntPtr CreateProgramWithSource(IntPtr context, uint count, String[] strings, IntPtr* lengths, [Out] OpenTK.Compute.CL10.ErrorCode* errcode_ret);
@@ -100,7 +100,7 @@ namespace OpenTK.Compute.CL10
             internal extern static unsafe int EnqueueMarker(IntPtr command_queue, IntPtr* @event);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clEnqueueNativeKernel", ExactSpelling = true)]
-            internal extern static int EnqueueNativeKernel(IntPtr command_queue);
+            internal extern static unsafe int EnqueueNativeKernel(IntPtr command_queue, IntPtr user_func, IntPtr args, IntPtr cb_args, uint num_mem_objects, IntPtr* mem_list, IntPtr args_mem_loc, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clEnqueueNDRangeKernel", ExactSpelling = true)]
             internal extern static unsafe int EnqueueNDRangeKernel(IntPtr command_queue, IntPtr kernel, uint work_dim, IntPtr* global_work_offset, IntPtr* global_work_size, IntPtr* local_work_size, uint num_events_in_wait_list, IntPtr* event_wait_list, IntPtr* @event);
@@ -223,7 +223,7 @@ namespace OpenTK.Compute.CL10
             internal extern static int RetainSampler(IntPtr sampler);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clSetCommandQueueProperty", ExactSpelling = true)]
-            internal extern static unsafe int SetCommandQueueProperty(IntPtr command_queue, CommandQueueProperties properties, bool enable, CommandQueueProperties* old_properties);
+            internal extern static unsafe int SetCommandQueueProperty(IntPtr command_queue, CommandQueueFlags properties, bool enable, CommandQueueFlags* old_properties);
             [System.Security.SuppressUnmanagedCodeSecurity()]
             [System.Runtime.InteropServices.DllImport(CL.Library, EntryPoint = "clSetKernelArg", ExactSpelling = true)]
             internal extern static int SetKernelArg(IntPtr kernel, uint arg_index, IntPtr arg_size, IntPtr arg_value);
