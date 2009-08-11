@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Xml.XPath;
 
 namespace Bind.Structures
 {
@@ -156,7 +157,19 @@ namespace Bind.Structures
         public int Pointer
         {
             get { return pointer; }
-            set { pointer = value; }
+            set { pointer = value > 0 ? value : 0; }
+        }
+
+        #endregion
+
+        #region IndirectionLevel
+
+        // Gets the the level of indirection for this type. For example,
+        // type 'foo' has indirection level = 0, while 'ref foo*[]' has
+        // an indirection level of 3.
+        public int IndirectionLevel
+        {
+            get { return Pointer + Array + (Reference ? 1 : 0); }
         }
 
         #endregion
@@ -261,9 +274,9 @@ namespace Bind.Structures
         
         #endregion
 
-        #region public virtual void Translate(string category)
+        #region public virtual void Translate(XPathNavigator overrides, string category)
 
-        public virtual void Translate(string category)
+        public virtual void Translate(XPathNavigator overrides, string category)
         {
             Enum @enum;
             string s;
@@ -345,6 +358,13 @@ namespace Bind.Structures
             CurrentType =
                 Bind.Structures.Type.CSTypes.ContainsKey(CurrentType) ?
                 Bind.Structures.Type.CSTypes[CurrentType] : CurrentType;
+
+            // Make sure that enum parameters follow enum overrides, i.e.
+            // if enum ErrorCodes is overriden to ErrorCode, then parameters
+            // of type ErrorCodes should also be overriden to ErrorCode.
+            XPathNavigator enum_override = overrides.SelectSingleNode(String.Format("/overrides/enum[@name='{0}']/name", CurrentType));
+            if (enum_override != null)
+                CurrentType = enum_override.Value;
 
             if (CurrentType == "IntPtr" && String.IsNullOrEmpty(PreviousType))
                 Pointer = 0;

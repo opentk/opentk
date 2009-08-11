@@ -507,29 +507,17 @@ namespace Bind.Structures
 
         #region TranslateReturnType
 
-        /// <summary>
-        /// Translates the opengl return type to the equivalent C# type.
-        /// </summary>
-        /// <param name="d">The opengl function to translate.</param>
-        /// <remarks>
-        /// First, we use the official typemap (gl.tm) to get the correct type.
-        /// Then we override this, when it is:
-        /// 1) A string (we have to use Marshal.PtrToStringAnsi, to avoid heap corruption)
-        /// 2) An array (translates to IntPtr)
-        /// 3) A generic object or void* (translates to IntPtr)
-        /// 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
-        /// Return types must always be CLS-compliant, because .Net does not support overloading on return types.
-        /// </remarks>
-        void TranslateReturnType(XPathNavigator function_override)
+        // Translates the opengl return type to the equivalent C# type.
+        //
+        // First, we use the official typemap (gl.tm) to get the correct type.
+        // Then we override this, when it is:
+        // 1) A string (we have to use Marshal.PtrToStringAnsi, to avoid heap corruption)
+        // 2) An array (translates to IntPtr)
+        // 3) A generic object or void* (translates to IntPtr)
+        // 4) A GLenum (translates to int on Legacy.Tao or GL.Enums.GLenum otherwise).
+        // Return types must always be CLS-compliant, because .Net does not support overloading on return types.
+        void TranslateReturnType(XPathNavigator overrides, XPathNavigator function_override)
         {
-            /*
-            if (Bind.Structures.Type.GLTypes.ContainsKey(ReturnType.CurrentType))
-                ReturnType.CurrentType = Bind.Structures.Type.GLTypes[ReturnType.CurrentType];
-
-            if (Bind.Structures.Type.CSTypes.ContainsKey(ReturnType.CurrentType))
-                ReturnType.CurrentType = Bind.Structures.Type.CSTypes[ReturnType.CurrentType];
-            */
-
             if (function_override != null)
             {
                 XPathNavigator return_override = function_override.SelectSingleNode("returns");
@@ -539,7 +527,7 @@ namespace Bind.Structures
                 }
             }
 
-            ReturnType.Translate(this.Category);
+            ReturnType.Translate(overrides, this.Category);
 
             if (ReturnType.CurrentType.ToLower().Contains("void") && ReturnType.Pointer != 0)
             {
@@ -574,7 +562,7 @@ namespace Bind.Structures
 
         #region TranslateParameters
 
-        protected virtual void TranslateParameters(XPathNavigator function_override)
+        protected virtual void TranslateParameters(XPathNavigator overrides, XPathNavigator function_override)
         {
             for (int i = 0; i < Parameters.Count; i++)
             {
@@ -595,7 +583,7 @@ namespace Bind.Structures
                     }
                 }
 
-                Parameters[i].Translate(this.Category);
+                Parameters[i].Translate(overrides, this.Category);
                 if (Parameters[i].CurrentType == "UInt16" && Name.Contains("LineStipple"))
                     Parameters[i].WrapperType = WrapperTypes.UncheckedParameter;
 
@@ -616,9 +604,9 @@ namespace Bind.Structures
             string path = "/overrides/function[@name='{0}' and @extension='{1}']";
             string name = TrimName(Name, false);
             XPathNavigator function_override = overrides.CreateNavigator().SelectSingleNode(String.Format(path, name, Extension));
-            
-            TranslateReturnType(function_override);
-            TranslateParameters(function_override);
+
+            TranslateReturnType(overrides.CreateNavigator(), function_override);
+            TranslateParameters(overrides.CreateNavigator(), function_override);
 
             CreateWrappers();
         }
