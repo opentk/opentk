@@ -32,10 +32,15 @@ namespace Bind.CL
             Settings.DelegatesClass = "Delegates";
 
             Settings.FunctionPrefix = "cl";
+            Settings.ConstantPrefix = "CL_";
+            Settings.EnumPrefix = "Cl";
 
             Settings.OutputClass = "CL";
             Settings.OutputNamespace = "OpenTK.Compute." + name;
             Settings.OutputPath = Path.Combine("../../Source/OpenTK/Compute", name);
+
+            //Settings.Compatibility &= ~Settings.Legacy.TurnVoidPointersToIntPtr;
+            Settings.Compatibility |= Settings.Legacy.NoDebugHelpers;
         }
 
         public override Bind.Structures.DelegateCollection ReadDelegates(System.IO.StreamReader specFile)
@@ -95,6 +100,8 @@ namespace Bind.CL
 
         public override Bind.Structures.EnumCollection ReadEnums(StreamReader specFile)
         {
+            XPathDocument overrides = new XPathDocument(new StreamReader(Path.Combine(Settings.InputPath, functionOverridesFile)));
+
             EnumCollection enums = new EnumCollection();
             Bind.Structures.Enum all = new Bind.Structures.Enum(Settings.CompleteEnumName); 
             XPathDocument doc = new XPathDocument(specFile);
@@ -117,7 +124,7 @@ namespace Bind.CL
             }
 
             Utilities.Merge(enums, all);
-            enums.Translate();
+            enums.Translate(overrides);
             return enums;
         }
     }

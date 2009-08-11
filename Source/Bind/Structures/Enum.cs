@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Globalization;
+using System.Xml.XPath;
 
 namespace Bind.Structures
 {
@@ -157,7 +158,11 @@ namespace Bind.Structures
 
             translator.Replace("Pname", "PName");
             translator.Replace("SRgb", "Srgb");
-            return translator.ToString();
+
+            string ret = translator.ToString();
+            if (ret.StartsWith(Settings.EnumPrefix))
+                return ret.Substring(Settings.EnumPrefix.Length);
+            return ret;
         }
 
         #endregion
@@ -210,14 +215,31 @@ namespace Bind.Structures
                 Utilities.Merge(this, e);
         }
 
-        internal void Translate()
+        internal void Translate(XPathDocument overrides)
         {
+            if (overrides == null)
+                throw new ArgumentNullException("overrides");
+
+            string path = "/overrides/enum[@name='{0}']";
+
             // Translate enum names.
             {
                 List<string> keys_to_update = new List<string>();
                 foreach (Enum e in this.Values)
                 {
-                    string name = Enum.TranslateName(e.Name);
+                    string name = e.Name;
+
+                    XPathNavigator enum_override = overrides.CreateNavigator().SelectSingleNode(String.Format(path, name));
+                    if (enum_override != null)
+                    {
+                        XPathNavigator name_override = enum_override.SelectSingleNode("name");
+                        if (name_override != null)
+                        {
+                            name = name_override.Value;
+                        }
+                    }
+
+                    name = Enum.TranslateName(name);
                     if (name != e.Name)
                     {
                         keys_to_update.Add(e.Name);
@@ -237,8 +259,26 @@ namespace Bind.Structures
 
             foreach (Enum e in this.Values)
             {
+                XPathNavigator enum_override = overrides.CreateNavigator().SelectSingleNode(String.Format(path, e.Name));
                 foreach (Constant c in e.ConstantCollection.Values)
                 {
+                    if (enum_override != null)
+                    {
+                        XPathNavigator constant_override = enum_override.SelectSingleNode(String.Format("token[@name='{0}']", c.PreviousName)) ??
+                            enum_override.SelectSingleNode(String.Format("token[@name={0}]", c.Name));
+                        if (constant_override != null)
+                        {
+                            foreach (XPathNavigator node in constant_override.SelectChildren(XPathNodeType.Element))
+                            {
+                                switch (node.Name)
+                                {
+                                    case "name": c.Name = (string)node.TypedValue; break;
+                                    case "value": c.Value = (string)node.TypedValue; break;
+                                }
+                            }
+                        }
+                    }
+
                     // There are cases when a value is an aliased constant, with no enum specified.
                     // (e.g. FOG_COORD_ARRAY_TYPE = GL_FOG_COORDINATE_ARRAY_TYPE)
                     // In this case try searching all enums for the correct constant to alias (stupid opengl specs).
