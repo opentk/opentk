@@ -321,16 +321,16 @@ namespace OpenTK.Platform
 
             // get the X11 Visual info for the display.
             Platform.X11.XVisualInfo info = new Platform.X11.XVisualInfo();
-            info.visualid = mode.Index;
+            info.VisualID = mode.Index;
             int dummy;
             window.VisualInfo = (Platform.X11.XVisualInfo)Marshal.PtrToStructure(
                 Platform.X11.Functions.XGetVisualInfo(window.Display, Platform.X11.XVisualInfoMask.ID,
                                          ref info, out dummy), typeof(Platform.X11.XVisualInfo));
 
             // set the X11 colormap.
-            SetStaticFieldValue(xplatui, "CustomVisual", window.VisualInfo.visual);
+            SetStaticFieldValue(xplatui, "CustomVisual", window.VisualInfo.Visual);
             SetStaticFieldValue(xplatui, "CustomColormap",
-                Platform.X11.Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.visual, 0));
+                Platform.X11.Functions.XCreateColormap(window.Display, window.RootWindow, window.VisualInfo.Visual, 0));
 
             return window;
         }
