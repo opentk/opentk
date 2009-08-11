@@ -31,7 +31,5 @@ using System.Text;
 
 namespace OpenTK.Compute
 {
-    public static partial class CL
-    {
-    }
+
 }

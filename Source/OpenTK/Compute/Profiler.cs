@@ -30,20 +30,5 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute
 {
-    using cl_event = IntPtr;
 
-    #region Flat API
-
-    partial class CL
-    {
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetEventProfilingInfo")]
-        public static extern int GetEventProfilingInfo(cl_event @event,
-            ProfilingInfo param_name,
-            IntPtr param_value_size,
-            IntPtr param_value,
-            out IntPtr param_value_size_ret);
-    }
-
-    #endregion
 }

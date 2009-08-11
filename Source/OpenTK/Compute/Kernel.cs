@@ -30,59 +30,5 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute
 {
-    using cl_device_id = IntPtr;
-    using cl_kernel = IntPtr;
-    using cl_program = IntPtr;
 
-    #region Flat API
-
-    partial class CL
-    {
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clCreateKernel")]
-        public static extern cl_kernel CreateKernel(cl_program program,
-            string kernel_name,
-            out ErrorCode errcode_ret);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clCreateKernelsInProgram")]
-        public static extern int CreateKernels(cl_program program,
-            int num_kernels,
-            cl_kernel[] kernels,
-            out int num_kernels_ret);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clRetainKernel")]
-        public static extern int RetainKernel(cl_kernel kernel);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clReleaseKernel")]
-        public static extern int ReleaseKernel(cl_kernel kernel);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clSetKernelArg")]
-        public static extern int SetKernelArg(cl_kernel kernel,
-            int arg_index,
-            /* size_t */ IntPtr arg_size,
-            /* const void * */ IntPtr arg_value);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetKernelInfo")]
-        public static extern int GetKernelInfo(cl_kernel kernel,
-            KernelInfo param_name,
-            /* size_t */ IntPtr param_value_size,
-            /* void * */ IntPtr param_value,
-            /* size_t * */ IntPtr param_value_size_ret);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetKernelWorkGroupInfo")]
-        public static extern int GetKernelWorkGroupInfo(cl_kernel kernel,
-            cl_device_id device,
-            KernelWorkGroupInfo param_name,
-            /* size_t */ IntPtr param_value_size,
-            /* void * */ IntPtr param_value,
-            /* size_t * */ out IntPtr param_value_size_ret);
-    }
-
-    #endregion
 }

@@ -30,26 +30,5 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute
 {
-    using cl_platform_id = IntPtr;
 
-    #region Flat API
-
-    partial class CL
-    {
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetPlatformIDs")]
-        public static extern int GetPlatformIDs(int num_entries,
-            [Out] cl_platform_id[] platforms,
-            out int num_platforms);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetPlatformInfo")]
-        public static extern int GetPlatformInfo(cl_platform_id platform,
-            PlatformInfo param_name,
-            /* size_t */ IntPtr param_value_size,
-            /* void * */ IntPtr param_value,
-            /* size_t* */ out IntPtr param_value_size_ret);
-    }
-
-    #endregion
 }
