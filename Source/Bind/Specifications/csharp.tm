@@ -111,6 +111,7 @@ size_t, IntPtr
 cl_bool, bool
 cl_int, int
 cl_uint, uint
+uchar, byte
 
 cl_addressing_mode, AddressingMode
 cl_command_queue_info, CommandQueueInfo
