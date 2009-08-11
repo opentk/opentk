@@ -10,6 +10,9 @@
   
   <enum name="DeviceType"><name>DeviceTypeFlags</name></enum>
 
+  <enum name="CommandQueuePropertiesFlags"><name>CommandQueueFlags</name></enum>
+  <enum name="CommandQueueProperties"><name>CommandQueueFlags</name></enum>
+
   <function name="CreateBuffer" extension="Core">
     <param name="errcode_ret"><type>ErrorCode</type></param>
   </function>
@@ -17,7 +20,7 @@
   <function name="CreateCommandQueue" extension="Core">
     <param name="errcode_ret"><type>ErrorCode</type></param>
   </function>
-
+  
   <function name="CreateKernel" extension="Core">
     <param name="errcode_ret"><type>ErrorCode</type></param>
   </function>
