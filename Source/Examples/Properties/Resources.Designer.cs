@@ -80,31 +80,17 @@ namespace Examples.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to #region --- License ---
-        ////* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
-        /// * See license.txt for license info
-        /// */
-        ///#endregion
-        ///
-        ///#region --- Using Directives ---
-        ///
-        ///using System;
-        ///using System.Collections.Generic;
-        ///using System.ComponentModel;
-        ///using System.Data;
-        ///using System.Drawing;
-        ///using System.Text;
-        ///using System.Windows.Forms;
-        ///using System.Threading;
-        ///
-        ///using OpenTK;
-        ///using OpenTK.Graphics;
-        ///
-        ///#endregion --- Using Directives ---
-        ///
-        ///namespace Examples.Tutorial
-        ///{
-        ///    [Example(&quot;Display Lists&quot;, E [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to #region License
+        /////
+        ///// The Open Toolkit Library License
+        /////
+        ///// Copyright (c) 2006 - 2009 the Open Toolkit library.
+        /////
+        ///// Permission is hereby granted, free of charge, to any person obtaining a copy
+        ///// of this software and associated documentation files (the &quot;Software&quot;), to deal
+        ///// in the Software without restriction, including without limitation the rights to 
+        ///// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+        ///// the Software, and to permit persons to whom the Softwa [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DisplayLists {
             get {
@@ -249,13 +235,12 @@ namespace Examples.Properties {
         ///
         ///using OpenTK;
         ///using OpenTK.Input;
-        //
         ///using OpenTK.Graphics;
         ///using OpenTK.Graphics.OpenGL;
         ///
         ///namespace Examples.Tutorial
         ///{
-        ///    [Example(&quot;Framebuffer Objects&quot;, ExampleCategory.OpenGL, &quot;FB [rest of string was truncated]&quot;;.
+        ///    [Example(&quot;Framebuffer Objects&quot;, ExampleCategory.OpenGL, &quot;FBO&quot;, Documentation=&quot;F [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string FramebufferObject {
             get {
@@ -792,12 +777,11 @@ namespace Examples.Properties {
         ///using OpenTK.Graphics;
         ///using OpenTK.Platform;
         ///
-        ///
         ///#endregion
         ///
         ///namespace Examples.Tutorial
         ///{
-        ///    [Example(&quot;Vertex Buffer Objects&quot;, ExampleCategory.OpenGL, &quot;1.5&quot;, false, [rest of string was truncated]&quot;;.
+        ///    [Example(&quot;Vertex Buffer Objects&quot;, ExampleCategory.OpenGL, &quot;1.5&quot;, false, Documentation=&quot;Vert [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VertexBufferObject {
             get {
@@ -821,13 +805,12 @@ namespace Examples.Properties {
         ///using OpenTK.Graphics;
         ///using Examples.Shapes;
         ///
-        ///
         ///namespace Examples.Tutorial
         ///{
         ///    /// &lt;summary&gt;
         ///    /// Demonstrates fixed-function OpenGL lighting.  Example is incomplete (documentation).
         ///    /// &lt;/summary&gt;
-        ///    [Example(&quot;Vertex Lighting&quot;, E [rest of string was truncated]&quot;;.
+        ///    [Example(&quot;Vertex Lighting&quot;, ExampleCategory.OpenG [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string VertexLighting {
             get {

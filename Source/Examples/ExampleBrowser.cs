@@ -305,6 +305,10 @@ namespace Examples
                 return list.Images.IndexOfKey(subcategory.ToString() + ".jpg");
             if (list.Images.ContainsKey(category.ToString() + ".jpg"))
                 return list.Images.IndexOfKey(category.ToString() + ".jpg");
+            if (list.Images.ContainsKey(subcategory.ToString() + ".png"))
+                return list.Images.IndexOfKey(subcategory.ToString() + ".png");
+            if (list.Images.ContainsKey(category.ToString() + ".png"))
+                return list.Images.IndexOfKey(category.ToString() + ".png");
 
             return 0;
         }
