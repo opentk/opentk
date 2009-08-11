@@ -33,6 +33,7 @@ namespace Bind
         public static string OutputClass = "GL";    // The real output class. Can be set through -class:"xxx".
         public static string FunctionPrefix = "gl";
         public static string ConstantPrefix = "GL_";
+        public static string EnumPrefix = "";
 
         // TODO: This code is too fragile.
         // Old enums code:
@@ -124,6 +125,8 @@ namespace Bind
             NoDropMultipleTokens = 0x200,
             /// <summary>Do not emit inline documentation.</summary>
             NoDocumentation = 0x400,
+            /// <summary>Disables ErrorHelper generation.</summary>
+            NoDebugHelpers = 0x800,
             Tao = ConstIntEnums |
                   NoAdvancedEnumProcessing |
                   NoPublicUnsafeFunctions |
@@ -134,7 +137,8 @@ namespace Bind
                   NestedEnums |
                   NoBoolParameters |
                   NoDropMultipleTokens |
-                  NoDocumentation
+                  NoDocumentation | 
+                  NoDebugHelpers
                   /*GenerateAllPermutations,*/
         }
 
