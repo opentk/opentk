@@ -190,6 +190,21 @@ namespace CHeaderToXML
                 string funcname = null;
                 GetFunctionNameAndType(words, out funcname, out rettype);
 
+                if (funcname == "BufferData")
+                    Debugger.Break();
+
+                var paramaters_string = Regex.Match(line, @"\(.*\)").Captures[0].Value.TrimStart('(').TrimEnd(')');
+
+                // This regex matches function parameters. The first part (before the '|') matches parameters of the following formats:
+                // '[return type] [parameter name]', '[return type] * [parameter name]', 'const [return type]* [parameter name]'
+                // where [parameter name] can either be inside comments (/* ... */) or not.
+                // The second part matches functions pointers in the following format:
+                // '[return type] (*[function pointer name])([parameter list]) [parameter name]
+                // where [parameter name] may or may not be in comments.
+                var get_param = new Regex(@"((const\s)?\w+\s*\**\s*(/\*.*?\*/|\w+(\[.*?\])?)   |   \w+\s\(\*\w+\)\(.*\)\s*(/\*.*?\*/|\w+)),?", RegexOptions.IgnorePatternWhitespace);
+
+                var ars = get_param.Matches(paramaters_string).OfType<Match>().Select(m => m.Captures[0].Value.TrimEnd(','));
+
                 var fun =
                     new
                     {
@@ -199,13 +214,17 @@ namespace CHeaderToXML
                         Extension = GetExtension(funcname),
                         Profile = String.Empty,
                         Parameters =
-                            from item in line.Split("()".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[1].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                            from item in get_param.Matches(paramaters_string).OfType<Match>().Select(m => m.Captures[0].Value.TrimEnd(','))
+                                //paramaters_string.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                             let tokens = item.Trim().Split(' ')
                             let param_name = (tokens.Last().Trim() != "*/" ? tokens.Last() : tokens[tokens.Length - 2]).Trim()
-                            //let param_type = (tokens.First().Trim() != "const" ? tokens.First().Trim() : tokens.Skip(1).First().Trim())
-                            let param_type = (from t in tokens where t.Trim() != "const" && t.Trim() != "unsigned" select t).First().Trim()
+                            let is_function_pointer = param_name.StartsWith("pfn")
+                            let param_type =
+                                is_function_pointer ? "IntPtr" :
+                                (from t in tokens where t.Trim() != "const" && t.Trim() != "unsigned" select t).First().Trim()
                             let has_array_size = array_size.IsMatch(param_name)
                             let indirection_level =
+                                is_function_pointer ? 0 :
                                 (from c in param_name where c == '*' select c).Count() +
                                 (from c in param_type where c == '*' select c).Count() +
                                 (from t in tokens where t == "***" select t).Count() * 3 +
@@ -217,7 +236,9 @@ namespace CHeaderToXML
                             select new
                             {
                                 Name = (has_array_size ? array_size.Replace(param_name, "") : param_name).Replace("*", ""), // Pointers are placed into the parameter Type, not Name
-                                Type = (tokens.Contains("unsigned") && !param_type.StartsWith("byte") ? "u" : "") +    // Make sure we don't ignore the unsigned part of unsigned parameters (e.g. unsigned int -> uint)
+                                Type =
+                                    is_function_pointer ? param_type :
+                                    (tokens.Contains("unsigned") && !param_type.StartsWith("byte") ? "u" : "") +    // Make sure we don't ignore the unsigned part of unsigned parameters (e.g. unsigned int -> uint)
                                     param_type.Replace("*", "") + String.Join("", pointers, 0, indirection_level),  // Normalize pointer indirection level (place as many asterisks as in indirection_level variable)
                                 Count = has_array_size ? Int32.Parse(array_size.Match(param_name).Value.Trim('[', ']')) : 0,
                                 Flow = param_name.EndsWith("ret") ? "out" : "in"
