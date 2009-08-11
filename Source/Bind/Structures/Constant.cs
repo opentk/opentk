@@ -19,6 +19,19 @@ namespace Bind.Structures
     {
         static StringBuilder translator = new StringBuilder();
 
+        #region PreviousName
+
+        string previous_name;
+
+        // Gets the name prior to translation.
+        public string PreviousName
+        {
+            get { return previous_name; }
+            private set { previous_name = value; }
+        }
+
+        #endregion
+
         #region public string Name
 
         string _name;
@@ -35,6 +48,8 @@ namespace Bind.Structures
                 if (!String.IsNullOrEmpty(value))
                     _name = Translate(value.Trim());
                 else _name = value;
+                
+                PreviousName = value;
             }
         }
 
@@ -56,8 +71,41 @@ namespace Bind.Structures
             set
             {
                 if (!String.IsNullOrEmpty(value))
-                    _value = Translate(value.Trim());
-                else _value = value;
+                {
+                    value = value.Trim();
+
+                    if (value.ToLower() == " 0xffffffffffffffff") System.Diagnostics.Debugger.Break();
+                    // Check whether this value is a number and make sure the Unchecked property is set correctly.
+                    ulong number;
+                    if (value.ToLower().StartsWith("0x"))
+                    {
+                        // Trim the unsigned or long specifiers used in C constants ('u' or 'ull').
+                        if (value.ToLower().EndsWith("ull"))
+                            value = value.Substring(0, value.Length - 3);
+                        if (value.ToLower().EndsWith("u"))
+                            value = value.Substring(0, value.Length - 1);
+                    }
+                    if (UInt64.TryParse(value.ToLower().Replace("0x", String.Empty), System.Globalization.NumberStyles.AllowHexSpecifier, null, out number))
+                    {
+                        // The value is a number, check if it should be unchecked.
+                        if (number > 0x7FFFFFFF)
+                            Unchecked = true;
+                    }
+                    else
+                    {
+                        // The value is not a number. Strip the prefix.
+                        if (value.StartsWith(Settings.ConstantPrefix))
+                            value = value.Substring(Settings.ConstantPrefix.Length);
+
+                        // If the name now starts with a digit (doesn't matter whether we
+                        // stripped "GL_" above), add a "GL_" prefix.
+                        // (e.g. GL_4_BYTES).
+                        if (Char.IsDigit(value[0]))
+                            value = Settings.ConstantPrefix + value;
+                    }
+                }
+
+                _value = Translate(value);
             }
         }
 
