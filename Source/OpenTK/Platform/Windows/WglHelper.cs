@@ -24,7 +24,9 @@ namespace OpenTK.Platform.Windows
             delegatesClass = wglClass.GetNestedType("Delegates", BindingFlags.Static | BindingFlags.NonPublic);
             importsClass = wglClass.GetNestedType("Imports", BindingFlags.Static | BindingFlags.NonPublic);
 
-            //LoadAll();
+            // Ensure core entry points are ready prior to accessing any method.
+            // Resolves bug [#993]: "Possible bug in GraphicsContext.CreateDummyContext()" 
+            LoadAll();
         }
 
         #endregion

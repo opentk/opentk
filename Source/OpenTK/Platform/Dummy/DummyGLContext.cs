@@ -19,7 +19,8 @@ namespace OpenTK.Platform.Dummy
     /// </summary>
     internal sealed class DummyGLContext : IGraphicsContext, IGraphicsContextInternal
     {
-        GraphicsMode format = GraphicsMode.Default;
+        // This mode is not real. To receive a real mode we'd have to create a temporary context, which is not desirable!
+        GraphicsMode format = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         bool vsync;
         ContextHandle handle;
         static int handle_count;
