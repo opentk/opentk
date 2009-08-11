@@ -33,27 +33,5 @@ using System.Security;
 
 namespace OpenTK.Compute
 {
-    using cl_device_id = IntPtr;
 
-    #region Flat API
-
-    partial class CL
-    {
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetDeviceIDs"), SuppressUnmanagedCodeSecurity]
-        public static extern ErrorCode Getcl_device_ids(DeviceType deviceType,
-            int numEntries,
-            [Out] cl_device_id[] devices,
-            out int numDevices);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetDeviceInfo"), SuppressUnmanagedCodeSecurity]
-        public static extern int GetDeviceInfo(cl_device_id device,
-            DeviceInfo param_name,
-            IntPtr param_value_size,
-            IntPtr param_value,
-            out IntPtr param_value_size_ret);
-    }
-
-    #endregion
 }

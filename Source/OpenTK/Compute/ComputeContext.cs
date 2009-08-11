@@ -31,56 +31,5 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute
 {
-    using cl_context = IntPtr;
-    using cl_device_id = IntPtr;
 
-    #region Flat API
-
-    partial class CL
-    {
-        // OpenCL 1.0
-        public delegate void NotifyContext(string errinfo,
-            /* const void * */ IntPtr private_info,
-            /* size_t */ IntPtr cb,
-            /* void * */ IntPtr user_data);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clCreateContext")]
-        public static extern cl_context CreateContext(
-           IntPtr[] properties,
-           int num_devices,
-           cl_device_id[] devices,
-           [MarshalAs(UnmanagedType.FunctionPtr)] NotifyContext pfn_notify,
-           IntPtr user_data, // void*
-           out ErrorCode errorcode_ret);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clCreateContextFromType")]
-        public static extern cl_context CreateContextFromType(
-           IntPtr[] properties,
-           DeviceType device_type,
-           int num_devices,
-           cl_device_id[] devices,
-           [MarshalAs(UnmanagedType.FunctionPtr)] NotifyContext pfn_notify,
-            /* void * */ IntPtr user_data,
-           out ErrorCode errorcode_ret);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clRetainContext")]
-        public static extern int RetainContext(cl_context context);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clReleaseContext")]
-        public static extern int ReleaseContext(cl_context context);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetContextInfo")]
-        public static extern int GetContextInfo(cl_context context,
-            ContextInfo param_name,
-            /* size_t */ IntPtr param_value_size,
-            /* void * */ IntPtr param_value,
-            /* size_t * */ out IntPtr param_value_size_ret);
-    }
-
-    #endregion
 }

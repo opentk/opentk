@@ -30,32 +30,5 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute
 {
-    using cl_event = IntPtr;
 
-    #region Flat API
-
-    partial class CL
-    {
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clWaitForEvents")]
-        public static extern int WaitForEvents(int num_events, ref cl_event event_list);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clGetEventInfo")]
-        public static extern int GetEventInfo(cl_event id,
-            EventInfo param_name,
-            /* size_t */ IntPtr param_value_size,
-            /* void * */ IntPtr param_value,
-            /* size_t* */ IntPtr param_value_size_ret);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clRetainEvent")]
-        public static extern int RetainEvent(cl_event @event);
-
-        // OpenCL 1.0
-        [DllImport(Configuration.Library, EntryPoint = "clReleaseEvent")]
-        public static extern int ReleaseEvent(cl_event @event);
-    }
-
-    #endregion
 }
